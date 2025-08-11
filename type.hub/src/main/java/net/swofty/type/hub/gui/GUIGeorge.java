@@ -10,17 +10,17 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.Rarity;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointDouble;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.components.PetItemComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class GUIGeorge extends SkyBlockInventoryGUI {
+public class GUIGeorge extends HypixelInventoryGUI {
 
     boolean pricePaid = false;
 

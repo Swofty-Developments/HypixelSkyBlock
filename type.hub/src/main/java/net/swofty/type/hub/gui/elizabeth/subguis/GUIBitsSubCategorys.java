@@ -9,9 +9,9 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.CommunityShopItem;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointToggles;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -19,7 +19,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
+public class GUIBitsSubCategorys extends HypixelInventoryGUI {
 
     private final int[] displaySlots = {
             10, 11, 12, 13, 14, 15, 16,
@@ -29,9 +29,9 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
 
     private final List<CommunityShopItem> items;
     private final String guiName;
-    private final SkyBlockInventoryGUI previousGUI;
+    private final HypixelInventoryGUI previousGUI;
 
-    public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, SkyBlockInventoryGUI previousGUI) {
+public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, HypixelInventoryGUI previousGUI) {
         super("Bits Shop - " + guiName, InventoryType.CHEST_5_ROW);
         this.items = items;
         this.guiName = guiName;

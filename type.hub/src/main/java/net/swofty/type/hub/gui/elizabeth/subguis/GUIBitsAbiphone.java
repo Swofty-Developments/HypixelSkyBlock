@@ -11,16 +11,16 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointToggles;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 
-public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
+public class GUIBitsAbiphone extends HypixelInventoryGUI {
 
     public GUIBitsAbiphone() {
         super("Bits Shop - Abiphone", InventoryType.CHEST_4_ROW);

@@ -8,14 +8,14 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.Rarity;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags.GUIAccessoryBag;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class GUIMaxwell extends SkyBlockInventoryGUI {
+public class GUIMaxwell extends HypixelInventoryGUI {
 
     public GUIMaxwell() {
         super("Accessory Bag Thaumaturgy", InventoryType.CHEST_6_ROW);

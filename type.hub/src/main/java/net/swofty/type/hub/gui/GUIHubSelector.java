@@ -11,19 +11,19 @@ import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.skyblockgeneric.SkyBlockConst;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.RefreshingGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockPaginatedGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.RefreshingGUI;
+import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.utility.PaginationList;
+import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class GUIHubSelector extends SkyBlockPaginatedGUI<UnderstandableProxyServer> implements RefreshingGUI {
+public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServer> implements RefreshingGUI {
     private final ProxyInformation information;
     private List<UnderstandableProxyServer> servers;
     private int counter = 0;

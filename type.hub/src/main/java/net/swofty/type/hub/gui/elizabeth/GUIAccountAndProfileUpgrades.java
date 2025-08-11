@@ -12,16 +12,16 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class GUIAccountAndProfileUpgrades extends SkyBlockInventoryGUI {
+public class GUIAccountAndProfileUpgrades extends HypixelInventoryGUI {
 
     public GUIAccountAndProfileUpgrades() {
         super("Community Shop", InventoryType.CHEST_6_ROW);
@@ -75,10 +75,10 @@ public class GUIAccountAndProfileUpgrades extends SkyBlockInventoryGUI {
                 "§7§6[MVP§2++§6] §7rank.",
                 " "))),
         ;
-        public final SkyBlockInventoryGUI gui;
+        public final HypixelInventoryGUI gui;
         public final ItemStack.Builder stack;
 
-        ShopCategorys(SkyBlockInventoryGUI gui, ItemStack.Builder stack) {
+        ShopCategorys(HypixelInventoryGUI gui, ItemStack.Builder stack) {
             this.gui = gui;
             this.stack = stack;
         }

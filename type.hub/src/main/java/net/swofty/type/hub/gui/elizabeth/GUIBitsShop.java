@@ -16,10 +16,10 @@ import net.swofty.type.hub.gui.elizabeth.subguis.GUIBitsAbiphone;
 import net.swofty.type.hub.gui.elizabeth.subguis.GUIBitsConfirmBuy;
 import net.swofty.type.hub.gui.elizabeth.subguis.GUIBitsSubCategorys;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointToggles;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GUIBitsShop extends SkyBlockInventoryGUI {
+public class GUIBitsShop extends HypixelInventoryGUI {
 
     public GUIBitsShop() {
         super("Community Shop", InventoryType.CHEST_6_ROW);
@@ -156,11 +156,11 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
         ;
 
         private final String guiName;
-        private final SkyBlockInventoryGUI previousGUI;
+        private final HypixelInventoryGUI previousGUI;
         private final ItemStack.Builder item;
         private final List<CommunityShopItem> shopItems;
 
-        SubCategorys(String guiName, SkyBlockInventoryGUI previousGUI, ItemStack.Builder item, List<CommunityShopItem> shopItems) {
+        SubCategorys(String guiName, HypixelInventoryGUI previousGUI, ItemStack.Builder item, List<CommunityShopItem> shopItems) {
             this.guiName = guiName;
             this.previousGUI = previousGUI;
             this.item = item;
