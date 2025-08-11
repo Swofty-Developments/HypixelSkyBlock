@@ -178,14 +178,14 @@ public class SkyBlockVelocity {
     public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
         Player player = event.getPlayer();
 
-        if (!GameManager.hasType(ServerType.ISLAND) || !GameManager.isAnyEmpty(ServerType.ISLAND)) {
+        if (!GameManager.hasType(ServerType.SKYBLOCK_ISLAND) || !GameManager.isAnyEmpty(ServerType.SKYBLOCK_ISLAND)) {
             player.disconnect(
                     Component.text("§cThere are no SkyBlock (type=ISLAND) servers available at the moment.")
             );
             return;
         }
 
-        List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.ISLAND);
+        List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.SKYBLOCK_ISLAND);
         if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
             TestFlowManager.ProxyTestFlowInstance instance = TestFlowManager.getTestFlowForPlayer(player.getUsername());
             player.sendPlainMessage("§7You are currently in test flow " + instance.getName() + ".");
@@ -217,7 +217,7 @@ public class SkyBlockVelocity {
             return;
         }
 
-        List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.ISLAND);
+        List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.SKYBLOCK_ISLAND);
         GameManager.GameServer toSendTo = gameServers.getFirst();
 
         for (BalanceConfiguration configuration : configurations) {
@@ -276,7 +276,7 @@ public class SkyBlockVelocity {
             try {
                 ServerType serverTypeToTry = serverType;
                 if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
-                    serverTypeToTry = ServerType.ISLAND;
+                    serverTypeToTry = ServerType.SKYBLOCK_ISLAND;
                 }
 
                 GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverTypeToTry);

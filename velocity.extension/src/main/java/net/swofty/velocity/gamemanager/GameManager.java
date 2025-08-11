@@ -117,7 +117,7 @@ public class GameManager {
 
                             TestFlowManager.handleServerDisconnect(registeredServer.internalID);
                         }
-                    }).delay(Duration.ofMillis(SLEEP_TIME - 100)).schedule();
+                    }).delay(Duration.ofMillis(SLEEP_TIME)).schedule();
                 });
             });
         }).repeat(Duration.ofMillis(SLEEP_TIME)).schedule();

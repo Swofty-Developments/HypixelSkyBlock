@@ -2,11 +2,11 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.hub.gui.GUIShopBartender;
-import net.swofty.types.generic.entity.npc.NPCDialogue;
-import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.mission.missions.MissionKillZombies;
-import net.swofty.types.generic.mission.missions.MissionTalkToBartender;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.entity.npc.NPCDialogue;
+import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
+import net.swofty.type.skyblockgeneric.mission.missions.MissionKillZombies;
+import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToBartender;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 

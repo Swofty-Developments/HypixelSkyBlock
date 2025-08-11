@@ -28,6 +28,7 @@ dependencies {
     implementation(project(":type.hub"))
     implementation(project(":type.thefarmingislands"))
     implementation(project(":type.dungeonhub"))
+    implementation(project(":type.skyblockgeneric"))
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
@@ -42,13 +43,13 @@ dependencies {
 }
 
 application {
-    mainClass.set("net.swofty.loader.SkyBlock")
+    mainClass.set("net.swofty.loader.Hypixel")
     applicationDefaultJvmArgs = listOf("--enable-preview", "-Duser.dir=${rootProject.projectDir}")
 }
 
 tasks {
     named<ShadowJar>("shadowJar") {
-        archiveBaseName.set("SkyBlockCore")
+        archiveBaseName.set("HypixelCore")
         archiveClassifier.set("")
         archiveVersion.set("")
     }
@@ -75,7 +76,7 @@ tasks.register<JavaExec>("runServer") {
     }
     workingDir = rootProject.projectDir
 
-    mainClass.set("net.swofty.loader.SkyBlock")
+    mainClass.set("net.swofty.loader.Hypixel")
     classpath = sourceSets["main"].runtimeClasspath
     jvmArgs("--enable-preview")
     args(serverType)
@@ -161,7 +162,7 @@ tasks.register("runWithTestFlow") {
                     "--enable-preview",
                     "-Duser.dir=${rootProject.projectDir}",
                     "-cp", sourceSets["main"].runtimeClasspath.asPath,
-                    "net.swofty.loader.SkyBlock",
+                    "net.swofty.loader.Hypixel",
                     serverType,
                     "--test-flow", testFlowName,
                     "--test-flow-handler", handler,

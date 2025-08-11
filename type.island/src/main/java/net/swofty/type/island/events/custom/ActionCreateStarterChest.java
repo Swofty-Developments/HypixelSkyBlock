@@ -3,12 +3,12 @@ package net.swofty.type.island.events.custom;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.chest.ChestBuilder;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.event.custom.IslandFirstCreatedEvent;
-import net.swofty.types.generic.utility.MathUtility;
+import net.swofty.type.skyblockgeneric.chest.ChestBuilder;
+import net.swofty.type.skyblockgeneric.event.EventNodes;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.event.custom.IslandFirstCreatedEvent;
+import net.swofty.type.skyblockgeneric.utility.MathUtility;
 
 public class ActionCreateStarterChest implements SkyBlockEventClass {
 

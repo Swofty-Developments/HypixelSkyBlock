@@ -43,7 +43,7 @@ public class IslandCheck extends BalanceConfiguration {
 
         for (Map.Entry<ServerType, ArrayList<GameManager.GameServer>> entry : GameManager.getServers().entrySet()) {
             ServerType serverType = entry.getKey();
-            if (serverType == ServerType.ISLAND) {
+            if (serverType == ServerType.SKYBLOCK_ISLAND) {
                 ArrayList<GameManager.GameServer> gameServers = entry.getValue();
 
                 gameServers.forEach(gameServer -> {

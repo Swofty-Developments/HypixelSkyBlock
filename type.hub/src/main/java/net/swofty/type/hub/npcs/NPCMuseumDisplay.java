@@ -1,13 +1,12 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointMuseum;
-import net.swofty.types.generic.data.datapoints.DatapointString;
-import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.gui.inventory.inventories.museum.GUIYourMuseum;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointString;
+import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
+import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
+import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIYourMuseum;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.UUID;
 

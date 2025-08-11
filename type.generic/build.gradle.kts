@@ -1,17 +1,9 @@
 plugins {
-    java
+    id("java")
 }
 
 group = "net.swofty"
-version = "3.0"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
-}
+version = "1.0"
 
 repositories {
     maven("https://jitpack.io")
@@ -26,10 +18,8 @@ dependencies {
     implementation("net.minestom:minestom-snapshots:1_21_4-7599413490") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("dev.hollowcube:polar:1.14.0")
-    implementation("org.yaml:snakeyaml:2.2")
 }
 
-tasks.withType<JavaCompile> {
-    options.compilerArgs.add("--enable-preview")
+tasks.test {
+    useJUnitPlatform()
 }

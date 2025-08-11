@@ -3,8 +3,8 @@ package net.swofty.type.hub.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
-import net.swofty.types.generic.entity.animalnpc.NPCAnimalParameters;
-import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
+import net.swofty.type.skyblockgeneric.entity.animalnpc.NPCAnimalParameters;
+import net.swofty.type.skyblockgeneric.entity.animalnpc.SkyBlockAnimalNPC;
 
 public class NPCAlchemist extends SkyBlockAnimalNPC {
     public NPCAlchemist() {

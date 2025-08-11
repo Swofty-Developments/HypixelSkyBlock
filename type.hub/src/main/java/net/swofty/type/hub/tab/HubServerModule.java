@@ -1,9 +1,9 @@
 package net.swofty.type.hub.tab;
 
-import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.tab.TablistModule;
-import net.swofty.types.generic.tab.TablistSkinRegistry;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.SkyBlockConst;
+import net.swofty.type.skyblockgeneric.tab.TablistModule;
+import net.swofty.type.skyblockgeneric.tab.TablistSkinRegistry;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

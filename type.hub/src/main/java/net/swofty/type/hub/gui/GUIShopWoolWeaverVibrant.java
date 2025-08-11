@@ -3,12 +3,12 @@ package net.swofty.type.hub.gui;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.shop.type.CoinShopPrice;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
+import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIShopWoolWeaverVibrant extends SkyBlockShopGUI {
     public GUIShopWoolWeaverVibrant() {

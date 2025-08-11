@@ -1,13 +1,13 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.types.generic.entity.npc.NPCDialogue;
-import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.mission.MissionData;
-import net.swofty.types.generic.mission.missions.lumber.MissionBreakOaklog;
-import net.swofty.types.generic.mission.missions.lumber.MissionTalkToLumberjack;
-import net.swofty.types.generic.mission.missions.lumber.MissionTalkToLumberjackAgain;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.entity.npc.NPCDialogue;
+import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionBreakOaklog;
+import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
+import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjackAgain;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 

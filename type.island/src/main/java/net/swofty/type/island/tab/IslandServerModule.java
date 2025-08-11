@@ -1,14 +1,13 @@
 package net.swofty.type.island.tab;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointMinionData;
-import net.swofty.types.generic.minion.IslandMinionData;
-import net.swofty.types.generic.minion.MinionHandler;
-import net.swofty.types.generic.tab.TablistModule;
-import net.swofty.types.generic.tab.TablistSkinRegistry;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.SkyBlockConst;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
+import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
+import net.swofty.type.skyblockgeneric.minion.MinionHandler;
+import net.swofty.type.skyblockgeneric.tab.TablistModule;
+import net.swofty.type.skyblockgeneric.tab.TablistSkinRegistry;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

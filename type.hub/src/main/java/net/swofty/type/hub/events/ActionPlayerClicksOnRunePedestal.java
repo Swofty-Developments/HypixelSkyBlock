@@ -3,10 +3,10 @@ package net.swofty.type.hub.events;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.type.hub.gui.GUIRunicPedestal;
 import net.swofty.type.hub.runes.RuneEntityImpl;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.event.EventNodes;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerClicksOnRunePedestal implements SkyBlockEventClass {
 

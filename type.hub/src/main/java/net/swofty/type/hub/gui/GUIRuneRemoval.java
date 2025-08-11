@@ -8,14 +8,14 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.components.RuneableComponent;
-import net.swofty.types.generic.item.updater.PlayerItemUpdater;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
+import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.RuneableComponent;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIRuneRemoval extends SkyBlockInventoryGUI {
     private final int[] borderSlots = {

@@ -3,9 +3,9 @@ package net.swofty.type.hub.villagers;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.hub.gui.GUIJamie;
-import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.mission.MissionData;
+import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerDialogue;
+import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerParameters;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
 
 import java.util.stream.Stream;
 

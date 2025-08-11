@@ -1,12 +1,21 @@
 package net.swofty.commons;
 
 import lombok.Getter;
+
 @Getter
 public enum ServerType {
-    ISLAND,
-    HUB,
-    DUNGEON_HUB,
-    THE_FARMING_ISLANDS;
+    SKYBLOCK_ISLAND(true),
+    SKYBLOCK_HUB(true),
+    DUNGEON_HUB(true),
+    SKYBLOCK_THE_FARMING_ISLANDS(true),
+    PROTOTYPE_LOBBY(false),
+    ;
+
+    private final boolean isSkyBlock;
+
+    ServerType(boolean isSkyBlock) {
+        this.isSkyBlock = isSkyBlock;
+    }
 
     public static boolean isServerType(String type) {
         for (ServerType a : values())

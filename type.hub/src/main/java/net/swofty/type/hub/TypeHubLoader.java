@@ -12,18 +12,17 @@ import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.hub.runes.RuneEntityImpl;
 import net.swofty.type.hub.tab.HubServerModule;
-import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.SkyBlockTypeLoader;
-import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.museum.MuseumDisplays;
-import net.swofty.types.generic.tab.TablistManager;
-import net.swofty.types.generic.tab.TablistModule;
-import net.swofty.types.generic.tab.modules.AccountInformationModule;
-import net.swofty.types.generic.tab.modules.PlayersOnlineModule;
+import net.swofty.type.skyblockgeneric.SkyBlockConst;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.entity.animalnpc.SkyBlockAnimalNPC;
+import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
+import net.swofty.type.skyblockgeneric.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
+import net.swofty.type.skyblockgeneric.tab.TablistManager;
+import net.swofty.type.skyblockgeneric.tab.TablistModule;
+import net.swofty.type.skyblockgeneric.tab.modules.AccountInformationModule;
+import net.swofty.type.skyblockgeneric.tab.modules.PlayersOnlineModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -36,7 +35,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
     @Override
     public ServerType getType() {
-        return ServerType.HUB;
+        return ServerType.SKYBLOCK_HUB;
     }
 
     @Override
@@ -100,7 +99,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
                 (type) -> switch (type) {
-                    case THE_FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
+                    case SKYBLOCK_THE_FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
                     case DUNGEON_HUB -> new Pos(-44, 88, 11.5, 0, 0);
                     default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
                 }, // Spawn position
@@ -170,6 +169,6 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
     @Override
     public @Nullable CustomWorlds getMainInstance() {
-        return CustomWorlds.HUB;
+        return CustomWorlds.SKYBLOCK_HUB;
     }
 }

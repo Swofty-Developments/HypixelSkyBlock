@@ -1,13 +1,13 @@
 package net.swofty.type.hub.events;
 
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.gui.inventory.inventories.museum.GUIMuseumEmptyDisplay;
-import net.swofty.types.generic.gui.inventory.inventories.museum.GUIMuseumNonEmptyDisplay;
-import net.swofty.types.generic.museum.MuseumDisplayEntityImpl;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.event.EventNodes;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIMuseumEmptyDisplay;
+import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIMuseumNonEmptyDisplay;
+import net.swofty.type.skyblockgeneric.museum.MuseumDisplayEntityImpl;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerClickMuseumDisplay implements SkyBlockEventClass {
 

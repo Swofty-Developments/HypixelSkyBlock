@@ -8,6 +8,7 @@ include(":proxy.api")
 
 include(":service.generic")
 include(":type.generic")
+include(":type.skyblockgeneric")
 include(":spark")
 include(":loader")
 

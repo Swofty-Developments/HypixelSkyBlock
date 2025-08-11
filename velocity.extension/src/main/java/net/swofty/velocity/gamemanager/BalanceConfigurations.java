@@ -13,16 +13,16 @@ import java.util.Map;
 
 public class BalanceConfigurations {
     public static HashMap<ServerType, List<BalanceConfiguration>> configurations = new HashMap<>(Map.of(
-            ServerType.HUB, List.of(
+            ServerType.SKYBLOCK_HUB, List.of(
                     new LowestPlayerCount()
             ),
             ServerType.DUNGEON_HUB, List.of(
                     new LowestPlayerCount()
             ),
-            ServerType.THE_FARMING_ISLANDS, List.of(
+            ServerType.SKYBLOCK_THE_FARMING_ISLANDS, List.of(
                     new LowestPlayerCount()
             ),
-            ServerType.ISLAND, List.of(
+            ServerType.SKYBLOCK_ISLAND, List.of(
                     new IslandCheck(),
                     new LowestPlayerCount()
             ))

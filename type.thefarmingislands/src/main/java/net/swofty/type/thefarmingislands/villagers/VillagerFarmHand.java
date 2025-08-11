@@ -2,12 +2,12 @@ package net.swofty.type.thefarmingislands.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.mission.MissionData;
-import net.swofty.types.generic.mission.missions.barn.MissionCraftWheatMinion;
-import net.swofty.types.generic.mission.missions.barn.MissionTalkToFarmHand;
-import net.swofty.types.generic.mission.missions.barn.MissionTalkToFarmhandAgain;
+import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerDialogue;
+import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerParameters;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.missions.barn.MissionCraftWheatMinion;
+import net.swofty.type.skyblockgeneric.mission.missions.barn.MissionTalkToFarmHand;
+import net.swofty.type.skyblockgeneric.mission.missions.barn.MissionTalkToFarmhandAgain;
 
 import java.util.List;
 

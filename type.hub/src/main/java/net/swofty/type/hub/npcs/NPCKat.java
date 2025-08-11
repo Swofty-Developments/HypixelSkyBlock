@@ -3,12 +3,12 @@ package net.swofty.type.hub.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.hub.gui.kat.GUIKat;
-import net.swofty.types.generic.data.datapoints.DatapointKat;
-import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.components.KatComponent;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointKat;
+import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
+import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.KatComponent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCKat extends SkyBlockNPC {
 

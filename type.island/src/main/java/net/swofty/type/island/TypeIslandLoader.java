@@ -8,16 +8,15 @@ import net.swofty.commons.ServiceType;
 import net.swofty.type.island.tab.IslandGuestsModule;
 import net.swofty.type.island.tab.IslandMemberModule;
 import net.swofty.type.island.tab.IslandServerModule;
-import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.SkyBlockTypeLoader;
-import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.minion.MinionHandler;
-import net.swofty.types.generic.tab.TablistManager;
-import net.swofty.types.generic.tab.TablistModule;
-import net.swofty.types.generic.tab.modules.AccountInformationModule;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.entity.animalnpc.SkyBlockAnimalNPC;
+import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
+import net.swofty.type.skyblockgeneric.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.minion.MinionHandler;
+import net.swofty.type.skyblockgeneric.tab.TablistManager;
+import net.swofty.type.skyblockgeneric.tab.TablistModule;
+import net.swofty.type.skyblockgeneric.tab.modules.AccountInformationModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -28,7 +27,7 @@ import java.util.stream.Collectors;
 public class TypeIslandLoader implements SkyBlockTypeLoader {
     @Override
     public ServerType getType() {
-        return ServerType.ISLAND;
+        return ServerType.SKYBLOCK_ISLAND;
     }
 
     @Override

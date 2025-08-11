@@ -2,11 +2,11 @@ package net.swofty.type.hub.events;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerSpawnEvent;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.museum.MuseumDisplays;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.event.EventNodes;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerDisplayMuseum implements SkyBlockEventClass {
 

@@ -14,7 +14,7 @@ java {
 }
 
 dependencies {
-    implementation(project(":type.generic"))
+    implementation(project(":type.skyblockgeneric"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
     implementation("net.minestom:minestom-snapshots:1_21_4-7599413490") {

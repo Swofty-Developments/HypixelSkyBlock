@@ -26,7 +26,7 @@ dependencies {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation(files("dependencies/spark-1.10.1.10-minestom.jar"))
-    implementation(project(":type.generic"))
+    implementation(project(":type.skyblockgeneric"))
 }
 
 application {

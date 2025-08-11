@@ -1,12 +1,12 @@
 package net.swofty.type.island.events.traditional;
 
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
-import net.swofty.types.generic.entity.MinionEntityImpl;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.gui.inventory.inventories.GUIMinion;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.entity.MinionEntityImpl;
+import net.swofty.type.skyblockgeneric.event.EventNodes;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.gui.inventories.GUIMinion;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerClickMinion implements SkyBlockEventClass {
 

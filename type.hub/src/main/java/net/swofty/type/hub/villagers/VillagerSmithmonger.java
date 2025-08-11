@@ -4,8 +4,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerParameters;
+import net.swofty.type.skyblockgeneric.entity.villager.SkyBlockVillagerNPC;
 
 public class VillagerSmithmonger extends SkyBlockVillagerNPC {
     public VillagerSmithmonger() {

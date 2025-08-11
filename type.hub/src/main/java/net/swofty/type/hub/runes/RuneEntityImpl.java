@@ -7,8 +7,8 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.skyblockgeneric.SkyBlockConst;
+import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
 
 public class RuneEntityImpl extends LivingEntity {
     public RuneEntityImpl(Pos position, boolean isHead) {

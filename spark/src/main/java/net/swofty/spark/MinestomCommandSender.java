@@ -5,10 +5,9 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.ConsoleSender;
 import net.minestom.server.entity.Player;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointRank;
-import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointRank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.categories.Rank;
 
 import java.util.UUID;
 

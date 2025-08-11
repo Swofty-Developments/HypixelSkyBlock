@@ -1,10 +1,10 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.gui.inventory.inventories.auction.GUIAuctionHouse;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
+import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
+import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionHouse;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCAuctionAgent2 extends SkyBlockNPC {
     public NPCAuctionAgent2() {

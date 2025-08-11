@@ -9,14 +9,14 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.RefreshingGUI;
-import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.PaginationList;
+import net.swofty.type.skyblockgeneric.SkyBlockConst;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
+import net.swofty.type.skyblockgeneric.gui.inventory.RefreshingGUI;
+import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockPaginatedGUI;
+import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.utility.PaginationList;
 
 import java.util.Comparator;
 import java.util.List;
@@ -48,7 +48,7 @@ public class GUIHubSelector extends SkyBlockPaginatedGUI<UnderstandableProxyServ
     @Override
     protected PaginationList<UnderstandableProxyServer> fillPaged(SkyBlockPlayer player, PaginationList<UnderstandableProxyServer> paged) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        servers = information.getServerInformation(ServerType.HUB).join();
+        servers = information.getServerInformation(ServerType.SKYBLOCK_HUB).join();
         paged.addAll(servers);
 
         set(GUIClickableItem.getCloseItem(49));
@@ -216,7 +216,7 @@ public class GUIHubSelector extends SkyBlockPaginatedGUI<UnderstandableProxyServ
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        servers = information.getServerInformation(ServerType.HUB).join();
+        servers = information.getServerInformation(ServerType.SKYBLOCK_HUB).join();
         PaginationList<UnderstandableProxyServer> paged = fillPaged(player, new PaginationList<>(getPaginatedSlots().length));
         int page = 1;
         counter = 0;

@@ -5,13 +5,13 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.components.PetComponent;
-import net.swofty.types.generic.item.handlers.pet.KatUpgrade;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
+import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.PetComponent;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIConfirmKat extends SkyBlockInventoryGUI {
 

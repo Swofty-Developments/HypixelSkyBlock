@@ -6,16 +6,15 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.type.thefarmingislands.tab.TheFarmingIslandsServerModule;
-import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.SkyBlockTypeLoader;
-import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.tab.TablistManager;
-import net.swofty.types.generic.tab.TablistModule;
-import net.swofty.types.generic.tab.modules.AccountInformationModule;
-import net.swofty.types.generic.tab.modules.PlayersOnlineModule;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.entity.animalnpc.SkyBlockAnimalNPC;
+import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
+import net.swofty.type.skyblockgeneric.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.tab.TablistManager;
+import net.swofty.type.skyblockgeneric.tab.TablistModule;
+import net.swofty.type.skyblockgeneric.tab.modules.AccountInformationModule;
+import net.swofty.type.skyblockgeneric.tab.modules.PlayersOnlineModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -26,7 +25,7 @@ import java.util.stream.Collectors;
 public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
     @Override
     public ServerType getType() {
-        return ServerType.THE_FARMING_ISLANDS;
+        return ServerType.SKYBLOCK_THE_FARMING_ISLANDS;
     }
 
     @Override
@@ -108,6 +107,6 @@ public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
 
     @Override
     public @Nullable CustomWorlds getMainInstance() {
-        return CustomWorlds.HUB;
+        return CustomWorlds.SKYBLOCK_HUB;
     }
 }

@@ -2,11 +2,11 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.entity.npc.NPCDialogue;
-import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.mission.MissionData;
-import net.swofty.types.generic.mission.missions.MissionGiveWoolToCarpenter;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.entity.npc.NPCDialogue;
+import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.missions.MissionGiveWoolToCarpenter;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
