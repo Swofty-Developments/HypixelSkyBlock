@@ -97,7 +97,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public SkyBlockDataHandler getDataHandler() {
-        return SkyBlockDataHandler.getUser(this.getUuid());
+        return HypixelDataHandler.getUser(this.getUuid());
     }
 
     public SkyBlockDataHandler getSkyBlockData() {
