@@ -5,6 +5,9 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.mission.missions.shepherd.MissionShearSheep;
+import net.swofty.types.generic.mission.missions.shepherd.MissionTalkToShepherd;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class NPCShepherd extends SkyBlockNPC {
@@ -12,7 +15,7 @@ public class NPCShepherd extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms(SkyBlockPlayer player) {
-                return new String[]{"Shepherd", "§e§lCLICK"};
+                return new String[]{"§fShepherd", "§e§lCLICK"};
             }
 
             @Override
@@ -39,7 +42,28 @@ public class NPCShepherd extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        MissionData data = e.player().getMissionData();
+
+        if (!data.hasCompleted(MissionTalkToShepherd.class) && !data.isCurrentlyActive(MissionTalkToShepherd.class)) {
+            sendNPCMessage(e.player(), "Howdy! Mind helping shear some sheep around §bShepherd's Keep§f?");
+            data.setSkyBlockPlayer(e.player());
+            data.startMission(MissionTalkToShepherd.class);
+            return;
+        }
+
+        if (!data.hasCompleted(MissionShearSheep.class) && data.isCurrentlyActive(MissionShearSheep.class)) {
+            sendNPCMessage(e.player(), "You're doing great! Keep shearing those sheep.");
+            return;
+        }
+
+        if (!data.hasCompleted(MissionShearSheep.class) && !data.isCurrentlyActive(MissionShearSheep.class)) {
+            // If they talked already but didn't get the shearing mission for some reason, start it
+            data.setSkyBlockPlayer(e.player());
+            data.startMission(MissionShearSheep.class);
+            sendNPCMessage(e.player(), "Shear a few sheep and come back to me.");
+            return;
+        }
+
+        sendNPCMessage(e.player(), "Thanks for helping out with the flock!");
     }
 }
