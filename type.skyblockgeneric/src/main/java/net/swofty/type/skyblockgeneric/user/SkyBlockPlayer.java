@@ -100,6 +100,10 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return SkyBlockDataHandler.getUser(this.getUuid());
     }
 
+    public SkyBlockDataHandler getSkyBlockData() {
+        return SkyBlockDataHandler.getUser(this.getUuid());
+    }
+
     public DatapointMuseum.MuseumData getMuseumData() {
         return getDataHandler().get(SkyBlockDataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
     }

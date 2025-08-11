@@ -116,7 +116,7 @@ public class GUIGeorge extends HypixelInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                DatapointDouble coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
+                DatapointDouble coins = player.getSkyBlockData().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                 Rarity rarity = item.getAttributeHandler().getRarity();
                 PetComponent petComponent = item.getComponent(PetComponent.class);
                 Integer price = petComponent.getGeorgePrice().getForRarity(rarity);

@@ -16,8 +16,8 @@ public class IslandServerModule extends TablistModule {
     @Override
     public List<TablistEntry> getEntries(SkyBlockPlayer player) {
         List<IslandMinionData.IslandMinion> minions = player.getSkyBlockIsland().getMinionData().getMinions();
-        DatapointMinionData.ProfileMinionData data = player.getDataHandler().get(
-                DataHandler.Data.MINION_DATA,
+        DatapointMinionData.ProfileMinionData data = player.getSkyBlockData().get(
+                SkyBlockDataHandler.Data.MINION_DATA,
                 DatapointMinionData.class
         ).getValue();
 

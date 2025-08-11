@@ -45,7 +45,7 @@ public class NPCLonelyPhilosopher extends NPCDialogue {
     public void onClick(PlayerClickNPCEvent e) {
         if (isInDialogue(e.player())) return;
 
-        Rank rank = e.player().getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
+        Rank rank = e.player().getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
         if (rank.isEqualOrHigherThan(Rank.MVP_PLUS)) {
             setDialogue(e.player(), "open_shop").thenRun(() -> {
                 new GUILonelyPhilosopher().open(e.player());

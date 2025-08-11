@@ -42,7 +42,7 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
 
                 player.closeInventory();
                 player.getFairySouls().exchange();
-                player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
+                player.getSkyBlockData().get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
                                 .setValue(player.getFairySouls());
                 player.sendMessage("§aYou have exchanged your Fairy Souls for rewards!");
                 nextLevel.getDisplay().forEach(player::sendMessage);
@@ -51,12 +51,12 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
                         SkyBlockLevelCause.getFairySoulExchangeCause(nextLevel.ordinal())
                 );
 
-                DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getDataHandler().get(
-                        DataHandler.Data.BACKPACKS, DatapointBackpacks.class
+                DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getSkyBlockData().get(
+                        SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class
                 ).getValue();
                 backpacks.setUnlockedSlots(backpacks.getUnlockedSlots() +
                         nextLevel.getBackpackSlots());
-                getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class)
+                getPlayer().getSkyBlockData().get(SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class)
                         .setValue(backpacks);
             }
 
