@@ -880,9 +880,10 @@ public class SkyBlockPlayer extends HypixelPlayer {
         if (SkyBlockGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
             return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getFullDisplayName();
         } else {
-            SkyBlockDataHandler profile = SkyBlockDataHandler.getSelectedOfOfflinePlayer(uuid);
-            return profile.get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
-                    profile.get(HypixelDataHandler.Data.IGN, DatapointString.class).getValue();
+            // Fallback for offline name display: use Hypixel account data (rank + ign)
+            HypixelDataHandler account = HypixelDataHandler.getUser(uuid);
+            return account.get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
+                    account.get(HypixelDataHandler.Data.IGN, DatapointString.class).getValue();
         }
     }
 
@@ -890,8 +891,8 @@ public class SkyBlockPlayer extends HypixelPlayer {
         if (SkyBlockGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
             return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getUsername();
         } else {
-            SkyBlockDataHandler profile = SkyBlockDataHandler.getSelectedOfOfflinePlayer(uuid);
-            return profile.get(HypixelDataHandler.Data.IGN, DatapointString.class).getValue();
+            HypixelDataHandler account = HypixelDataHandler.getUser(uuid);
+            return account.get(HypixelDataHandler.Data.IGN, DatapointString.class).getValue();
         }
     }
 }
