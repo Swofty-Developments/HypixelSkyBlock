@@ -12,6 +12,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIPatchNotes extends HypixelInventoryGUI {
     public GUIPatchNotes() {
@@ -23,12 +24,12 @@ public class GUIPatchNotes extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(31) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 new GUIJerry().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
                         "§7To Jerry the Assistant"
                 );
@@ -37,13 +38,14 @@ public class GUIPatchNotes extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(16) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+                skyBlockPlayer.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
                         .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/channels/830345347867476000/849739331278733332/1225968992909525056")));
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack("§aSkyBlock v1.0.2", Material.BOOK, 1,
                         "§76th April 2024",
                         "",
@@ -53,8 +55,9 @@ public class GUIPatchNotes extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(15) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+                skyBlockPlayer.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
                         .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/channels/830345347867476000/849739331278733332/1226864370122887229")));
             }
 

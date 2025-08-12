@@ -11,6 +11,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIJerry extends HypixelInventoryGUI {
     public GUIJerry() {
@@ -24,12 +25,12 @@ public class GUIJerry extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(11) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 new GUIPatchNotes().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack("§aPatch Notes", Material.BOOK, 1,
                         "§7View the latest features and",
                         "§7changes to the game.",
@@ -41,12 +42,13 @@ public class GUIJerry extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(13) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.sendMessage("§cNo new deliveries.");
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+                skyBlockPlayer.sendMessage("§cNo new deliveries.");
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack("§aDeliveries", Material.ENDER_CHEST, 1,
                         "§7Any items that may be delivered to",
                         "§7yourself or your island will appear",
@@ -59,12 +61,12 @@ public class GUIJerry extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(15) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 new GUIGuests().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack("§aVisits and Guestings", Material.EMERALD, 1,
                         "§7Learn all about how to §a/visit",
                         "§7players across the SkyBlock universe!",
@@ -76,15 +78,16 @@ public class GUIJerry extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(35) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
                 player.closeInventory();
-                player.sendMessage("§aI have given you an egg, place this where you would like me to move to!");
+                skyBlockPlayer.sendMessage("§aI have given you an egg, place this where you would like me to move to!");
 
-                player.addAndUpdateItem(ItemType.MOVE_JERRY);
+                skyBlockPlayer.addAndUpdateItem(ItemType.MOVE_JERRY);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.createNamedItemStack(Material.BEDROCK, "§aMove Jerry");
             }
         });
@@ -103,7 +106,7 @@ public class GUIJerry extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
 
     }
 

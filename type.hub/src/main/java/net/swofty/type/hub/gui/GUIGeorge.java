@@ -19,6 +19,7 @@ import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.components.PetItemComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIGeorge extends HypixelInventoryGUI {
 
@@ -41,7 +42,7 @@ public class GUIGeorge extends HypixelInventoryGUI {
         if (item == null) {
             set(new GUIClickableItem(13) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -59,18 +60,19 @@ public class GUIGeorge extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer player) {
                     return ItemStack.builder(Material.AIR);
                 }
             });
             set(new GUIClickableItem(22) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    player.sendMessage("§cPlace a pet in the empty slot for George to evaluate it!");
+                public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                    SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+                    skyBlockPlayer.sendMessage("§cPlace a pet in the empty slot for George to evaluate it!");
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer player) {
                     return ItemStackCreator.getStack(
                             "§eOffer a Pet", Material.RED_TERRACOTTA, 1,
                             "§7Place a pet above and George will",
@@ -84,25 +86,27 @@ public class GUIGeorge extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(13) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
+            public ItemStack.Builder getItem(HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+                return PlayerItemUpdater.playerUpdate(skyBlockPlayer , item.getItemStack());
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
                 ItemStack stack = e.getClickedItem();
                 if (stack.isAir()) return;
 
                 updateFromItem(null);
 
-                player.addAndUpdateItem(stack);
+                skyBlockPlayer.addAndUpdateItem(stack);
             }
         });
 
         if (item.getAmount() > 1 || item.hasComponent(PetItemComponent.class)) {
             set(new GUIItem(22) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer player) {
                     return ItemStackCreator.getStack(
                             "§cError!", Material.BARRIER, 1,
                             "§7George only wants to buy pets!"
@@ -115,8 +119,9 @@ public class GUIGeorge extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                DatapointDouble coins = player.getSkyBlockData().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+                DatapointDouble coins = skyBlockPlayer.getSkyBlockData().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                 Rarity rarity = item.getAttributeHandler().getRarity();
                 PetComponent petComponent = item.getComponent(PetComponent.class);
                 Integer price = petComponent.getGeorgePrice().getForRarity(rarity);
@@ -128,7 +133,8 @@ public class GUIGeorge extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
                 return ItemStackCreator.getStack(
                         "§aAccept Offer", Material.GREEN_TERRACOTTA, 1,
                         "§7George is willing to make an offer on",
@@ -159,8 +165,9 @@ public class GUIGeorge extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(13)));
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
+        SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+        skyBlockPlayer.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(13)));
     }
 
     @Override
