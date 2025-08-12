@@ -30,7 +30,8 @@ public class GUIChest extends HypixelInventoryGUI {
         IntStream.range(0 , chest.getItems().size()).forEach(index->{
             set(new GUIItem(index) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.getFromStack(chest.getItem(index));
                 }
 

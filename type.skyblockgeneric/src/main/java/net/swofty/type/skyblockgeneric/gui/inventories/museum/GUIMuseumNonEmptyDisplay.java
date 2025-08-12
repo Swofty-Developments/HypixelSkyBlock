@@ -84,7 +84,8 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(35) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 player.closeInventory();
                 data.getDisplayHandler().removeAllFromSlot(display, position);
@@ -92,7 +93,8 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cRemove From Display",
                         Material.BEDROCK, 1,
                         "§7Removes " + (items.size() == 1 ? "this item" : "these " + items.size() + " items") + " from being",
@@ -112,7 +114,8 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
 
             set(new GUIItem(slotIndex) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return createItemDisplay(item, player);
                 }
             });

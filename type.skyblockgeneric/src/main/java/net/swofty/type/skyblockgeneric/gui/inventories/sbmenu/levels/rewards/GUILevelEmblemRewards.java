@@ -35,12 +35,14 @@ public class GUILevelEmblemRewards extends HypixelInventoryGUI {
         set(GUIClickableItem.getGoBackItem(48, new GUILevelEmblemRewards()));
         set(new GUIClickableItem(50) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 new GUIEmblems().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aPrefix Emblems", Material.NAME_TAG, 1,
                         "§7Add some spice by having an emblem",
                         "§7next to your name in chat and in tab!",
@@ -58,7 +60,8 @@ public class GUILevelEmblemRewards extends HypixelInventoryGUI {
 
         set(new GUIItem(14) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Emblems to show next to your name");
                 lore.add("§7that signify special achievements.");
@@ -97,7 +100,8 @@ public class GUILevelEmblemRewards extends HypixelInventoryGUI {
 
             set(new GUIItem(slot) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(emblem.displayName() + " " + emblem.emblem(),
                             Material.NAME_TAG, 1,
                             "§8Level " + ((LevelCause) emblem.cause()).getLevel(),

@@ -43,7 +43,8 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
 
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
 
                 BestiaryEntry[] entries = category.getEntries();
                 int total = entries.length;
@@ -114,11 +115,13 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
             if (kills > 0) {
                 set(new GUIClickableItem(slot) {
                     @Override
-                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                         new GUIBestiaryMob(category, bestiaryEntry).open(player);
                     }
 
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                         ArrayList<String> lore = new ArrayList<>();
 
                         player.getBestiaryData().getMobDisplay(lore, kills, mob, bestiaryEntry);
@@ -137,7 +140,8 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
             } else {
                 set(new GUIItem(slot) {
                     @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                         return ItemStackCreator.getStack("§c" + bestiaryEntry.getName(), Material.GRAY_DYE, 1,
                                 "§7Kill a mob belonging to this Family to",
                                 "§7unlock it in your Bestiary!");

@@ -97,7 +97,8 @@ public class GUISack extends HypixelInventoryGUI {
                 ItemType linker = skyBlockItem.getAttributeHandler().getPotentialType();
                 set(new GUIClickableItem(slot) {
                     @Override
-                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                         Integer amount = player.getSackItems().getAmount(linker);
                         if (e.getClickType() == ClickType.RIGHT_CLICK) {
                             if (amount == 0) return;
@@ -139,7 +140,8 @@ public class GUISack extends HypixelInventoryGUI {
                     }
 
                     @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                         ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack());
                         ArrayList<String> lore = new ArrayList<>();
                         Integer amount = player.getSackItems().getAmount(linker);

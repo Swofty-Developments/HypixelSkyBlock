@@ -47,12 +47,14 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(40) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 new GUIMuseumRewards().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§6Museum Rewards", Material.GOLD_BLOCK, 1,
                         "§7Each time you donate an item to your",
                         "§7Museum, the §bCurator §7will reward you.",
@@ -68,7 +70,8 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
         });
         set(new GUIItem(45) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aEdit NPC Tags", Material.NAME_TAG, 1,
                         "§7Edit the tags that appear above",
                         "§7your NPC. Show off your SkyBlock",
@@ -81,7 +84,8 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
         });
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>(List.of(
                         "§7The §9Museum §7is a compendium of all of",
                         "§7your items in SkyBlock. Donate items",
@@ -131,14 +135,16 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     if (category == MuseumableItemCategory.ARMOR_SETS)
                         new GUIMuseumArmorCategory().open(player);
                     else new GUIMuseumCategory(category).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     List<String> lore = new ArrayList<>(List.of(
                             "§7View all of the " + category.getColor() + category.getCategory() + " §7that you",
                             "§7have donated to the §9Museum§7!",

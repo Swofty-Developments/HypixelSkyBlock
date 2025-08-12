@@ -40,7 +40,8 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(13) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 player.closeInventory();
                 player.sendMessage("§7Warping you to " + island.getDescriptiveName() + "§7...");
 
@@ -50,7 +51,8 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
 
                 lore.add("§8/warp " + island.getInternalName());
@@ -95,7 +97,8 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     if (!isUnlocked) {
                         player.sendMessage("§cYou haven't unlocked this fast travel destination!");
                         return;
@@ -111,7 +114,8 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     List<String> lore = new ArrayList<>();
 
                     lore.add("§8/warp " + scroll.getInternalName());

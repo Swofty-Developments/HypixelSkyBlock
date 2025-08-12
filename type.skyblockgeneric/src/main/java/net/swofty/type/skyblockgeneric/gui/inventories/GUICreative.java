@@ -85,7 +85,8 @@ public class GUICreative extends HypixelPaginatedGUI<SkyBlockItem> {
 
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
 
                 if (e.getClickType().equals(ClickType.RIGHT_CLICK) && stackable) {
@@ -102,7 +103,8 @@ public class GUICreative extends HypixelPaginatedGUI<SkyBlockItem> {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 ArrayList<String> lore = new ArrayList<>(skyBlockItem.getLore());
                 lore.add(" ");
                 if (stackable)

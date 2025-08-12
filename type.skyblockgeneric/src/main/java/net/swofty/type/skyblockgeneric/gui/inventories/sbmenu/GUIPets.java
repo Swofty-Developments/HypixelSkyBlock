@@ -111,7 +111,8 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
         set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
         set(new GUIClickableItem(47) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 player.sendMessage("§aPet conversion to item is now " + (!convertToItem ? "§aENABLED" : "§cDISABLED") + "§a!");
 
                 convertToItem = !convertToItem;
@@ -122,7 +123,8 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 ItemStack.Builder itemStack = ItemStackCreator.getStack("§aConvert to item", Material.DIAMOND, 1,
                         "§7Toggle between converting your pets to an item",
                         "§7so you can pick it up and",
@@ -139,7 +141,8 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
 
         set(new GUIClickableItem(51) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 boolean isRightClick = e.getClickType().equals(ClickType.RIGHT_CLICK);
 
                 int ordinal = sortType.ordinal();
@@ -160,7 +163,8 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add(" ");
 
@@ -179,7 +183,8 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
         });
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aPets", Material.BONE, 1,
                         "§7View and manage all of your",
                         "§7Pets.",
@@ -227,7 +232,8 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
         ItemStack.Builder finalItemStack = itemStack;
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 boolean selected = player.getPetData().getEnabledPet() == item;
                 if (selected) {
                     player.getPetData().deselectCurrent();
@@ -261,7 +267,8 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return finalItemStack;
             }
         };

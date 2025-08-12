@@ -48,7 +48,8 @@ public class AuctionViewThirdNormal implements AuctionView {
 
         gui.set(new GUIItem(33) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Total bids: §a" + item.getBids().size() + " bids");
 
@@ -84,7 +85,8 @@ public class AuctionViewThirdNormal implements AuctionView {
                 if (activeBids.getValue().contains(item.getUuid())) {
                     gui.set(new GUIClickableItem(29) {
                         @Override
-                        public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                        public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                             player.sendMessage("§8Claiming your bid coins back...");
                             DatapointDouble coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                             coins.setValue(coins.getValue() + highestBidMadeByPlayer.value());
@@ -100,7 +102,8 @@ public class AuctionViewThirdNormal implements AuctionView {
                         }
 
                         @Override
-                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                             return ItemStackCreator.getStack("§cAuction Ended", Material.BARRIER, 1,
                                     "§7This auction has ended.",
                                     "§7You did not win this auction.",
@@ -113,7 +116,8 @@ public class AuctionViewThirdNormal implements AuctionView {
                 } else {
                     gui.set(new GUIItem(29) {
                         @Override
-                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                             return ItemStackCreator.getStack("§cAuction Ended", Material.BARRIER, 1,
                                     "§7This auction has ended.",
                                     "§7You did not win this auction.",
@@ -129,7 +133,8 @@ public class AuctionViewThirdNormal implements AuctionView {
                 if (activeBids.getValue().contains(item.getUuid())) {
                     gui.set(new GUIClickableItem(29) {
                         @Override
-                        public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                        public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                             player.sendMessage("§8Claiming your item...");
                             activeBids.setValue(new ArrayList<>(activeBids.getValue()) {{
                                 remove(item.getUuid());
@@ -145,7 +150,8 @@ public class AuctionViewThirdNormal implements AuctionView {
                         }
 
                         @Override
-                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                             return ItemStackCreator.getStack("§aAuction Ended", Material.EMERALD, 1,
                                     "§7This auction has ended.",
                                     "§7You won this auction.",
@@ -158,7 +164,8 @@ public class AuctionViewThirdNormal implements AuctionView {
                 } else {
                     gui.set(new GUIItem(29) {
                         @Override
-                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                             return ItemStackCreator.getStack("§aAuction Ended", Material.EMERALD, 1,
                                     "§7This auction has ended.",
                                     "§7You won this auction.",
@@ -192,7 +199,8 @@ public class AuctionViewThirdNormal implements AuctionView {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("Bid Amount: §6" + gui.bidAmount, Material.GOLD_INGOT, 1,
                         "§7You need to bid at least §6" + gui.minimumBidAmount + " coins §7to",
                         "§7hold the top bid on this auction.",
@@ -208,7 +216,8 @@ public class AuctionViewThirdNormal implements AuctionView {
         });
         gui.set(new GUIClickableItem( 29) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 if (gui.bidAmount < gui.minimumBidAmount) {
                     player.sendMessage("§cYou need to bid at least §6" + gui.minimumBidAmount + " coins §cto hold the top bid on this auction.");
                     return;
@@ -313,7 +322,8 @@ public class AuctionViewThirdNormal implements AuctionView {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§6Submit Bid", Material.GOLD_NUGGET, 1,
                         " ",
                         "§7New Bid: §6" + gui.bidAmount + " coins",

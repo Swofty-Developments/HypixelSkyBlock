@@ -81,7 +81,8 @@ public class GUIEmblem extends HypixelPaginatedGUI<SkyBlockEmblems.SkyBlockEmble
 
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 if (!unlocked) {
                     player.sendMessage("§cYou have not unlocked this emblem yet!");
                     return;
@@ -92,7 +93,8 @@ public class GUIEmblem extends HypixelPaginatedGUI<SkyBlockEmblems.SkyBlockEmble
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 String name = (unlocked ? "§a" : "§c") + item.displayName() + " " + item.emblem();
 
                 List<String> lore;

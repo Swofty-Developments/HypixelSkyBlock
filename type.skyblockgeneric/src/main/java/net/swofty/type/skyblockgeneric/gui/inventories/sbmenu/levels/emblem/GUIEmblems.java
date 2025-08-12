@@ -32,12 +32,14 @@ public class GUIEmblems extends HypixelInventoryGUI {
         Arrays.stream(SkyBlockEmblems.values()).forEach(emblem -> {
             set(new GUIClickableItem(SLOTS[emblem.ordinal()]) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     new GUIEmblem(emblem).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     String displayName = emblem.toString();
                     Material material = emblem.getDisplayMaterial();
                     ArrayList<String> description = new ArrayList<>(emblem.getDescription());

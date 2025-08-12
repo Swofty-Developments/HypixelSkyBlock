@@ -38,7 +38,8 @@ public class AuctionViewThirdBin implements AuctionView {
                 if (activeBids.getValue().contains(item.getUuid())) {
                     gui.set(new GUIClickableItem(31) {
                         @Override
-                        public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                        public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                             player.sendMessage("§8Claiming your item...");
                             activeBids.setValue(new ArrayList<>(activeBids.getValue()) {{
                                 remove(item.getUuid());
@@ -54,7 +55,8 @@ public class AuctionViewThirdBin implements AuctionView {
                         }
 
                         @Override
-                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                             return ItemStackCreator.getStack("§aClaim Item", Material.GOLD_BLOCK, 1,
                                     " ",
                                     "§7This item has been sold!",
@@ -67,7 +69,8 @@ public class AuctionViewThirdBin implements AuctionView {
                 } else {
                     gui.set(new GUIItem(31) {
                         @Override
-                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                             return ItemStackCreator.getStack("§cItem Has Been Sold", Material.BEDROCK, 1,
                                     " ",
                                     "§7This item has been sold!",
@@ -83,7 +86,8 @@ public class AuctionViewThirdBin implements AuctionView {
 
             gui.set(new GUIItem(31) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§cItem Has Been Sold", Material.BEDROCK, 1,
                             " ",
                             "§7This item has been sold!",
@@ -98,7 +102,8 @@ public class AuctionViewThirdBin implements AuctionView {
 
         gui.set(new GUIClickableItem(31) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 double coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
                 if (coins < item.getStartingPrice()) {
                     player.sendMessage("§cYou do not have enough coins to purchase this item!");
@@ -161,7 +166,8 @@ public class AuctionViewThirdBin implements AuctionView {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§6Buy Item Right Now", Material.GOLD_NUGGET, 1,
                         " ",
                         "§7Price: §6" + item.getStartingPrice() + " coins",

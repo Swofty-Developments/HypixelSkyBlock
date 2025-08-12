@@ -58,7 +58,8 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
         ItemType finalItemType = itemType;
         set(new GUIItem(13) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer p) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
 
                 double totalQuantity = completions.stream()
@@ -117,7 +118,8 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
     private void setupTransactionHistory() {
         set(new GUIItem(10) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer p) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Transaction Details");
                 lore.add(" ");
@@ -155,12 +157,14 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
     private void setupClaimButton() {
         set(new GUIClickableItem(16) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 claimRewards(p);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer p) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Claim all rewards from this");
                 lore.add("§7completed order:");
@@ -199,12 +203,14 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 new GUIBazaarOrderOptions(activeOrder).open(p);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer p) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§eView Unfilled Order", Material.COMPASS, 1,
                         "§7Switch to view the remaining",
                         "§7unfilled portion of this order.",

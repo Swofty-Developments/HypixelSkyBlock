@@ -36,7 +36,8 @@ public class GUILevelPrefixRewards extends HypixelInventoryGUI {
 
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7New colors for your level prefix");
                 lore.add("§7shown in TAB and in chat!");
@@ -69,7 +70,8 @@ public class GUILevelPrefixRewards extends HypixelInventoryGUI {
 
             set(new GUIItem(slot) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(level.getPrefix() + level.getPrefixDisplay(),
                             level.getPrefixItem(), 1,
                             "§8Level " + level.asInt(),

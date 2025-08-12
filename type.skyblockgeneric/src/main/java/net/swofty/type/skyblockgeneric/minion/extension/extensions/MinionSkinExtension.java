@@ -33,7 +33,8 @@ public class MinionSkinExtension extends MinionExtension {
         if (getItemTypePassedIn() == null) {
             return new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     SkyBlockItem skinItem = new SkyBlockItem(e.getCursorItem());
 
                     if (skinItem.hasComponent(MinionSkinComponent.class)) {
@@ -48,7 +49,8 @@ public class MinionSkinExtension extends MinionExtension {
                 }
 
                 @Override
-                public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {
+                public void runPost(InventoryClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     new GUIMinion(minion).open(player);
                 }
 
@@ -58,7 +60,8 @@ public class MinionSkinExtension extends MinionExtension {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§aMinion Skin Slot", Material.LIME_STAINED_GLASS_PANE, 1,
                             "§7You can insert a Minion Skin",
                             "§7here to change the appearance of",
@@ -68,7 +71,8 @@ public class MinionSkinExtension extends MinionExtension {
         } else {
             return new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     if (!e.getCursorItem().isAir()) {
                         player.sendMessage("§cYour cursor must be empty to pick this item up!");
                         e.setCancelled(true);
@@ -83,7 +87,8 @@ public class MinionSkinExtension extends MinionExtension {
                 }
 
                 @Override
-                public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {
+                public void runPost(InventoryClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     new GUIMinion(minion).open(player);
                 }
 
@@ -93,7 +98,8 @@ public class MinionSkinExtension extends MinionExtension {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn())).getUpdatedItem();
                     item.set(ItemComponent.CUSTOM_NAME, Component.text("§aMinion Skin Slot").decoration(TextDecoration.ITALIC, false));
                     item = ItemStackCreator.updateLore(item, Stream.of(

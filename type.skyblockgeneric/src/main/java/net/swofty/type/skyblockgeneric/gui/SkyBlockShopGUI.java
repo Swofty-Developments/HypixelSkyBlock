@@ -147,13 +147,15 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
         if (page > 1)
             set(new GUIClickableItem(45) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     SkyBlockShopGUI.this.page -= 1;
                     SkyBlockShopGUI.this.open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.createNamedItemStack(Material.ARROW, "§a<-");
                 }
             });
@@ -161,13 +163,15 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
         if (page != paginatedItems.getPageCount())
             set(new GUIClickableItem(53) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     SkyBlockShopGUI.this.page += 1;
                     SkyBlockShopGUI.this.open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.createNamedItemStack(Material.ARROW, "§a->");
                 }
             });
@@ -177,7 +181,8 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
         */
         set(new GUIClickableItem(49) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 if (!player.getShoppingData().hasAnythingToBuyback())
                     return;
 
@@ -204,7 +209,8 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 if (!player.getShoppingData().hasAnythingToBuyback()) {
                     return ItemStackCreator.getStack("§aSell Item", Material.HOPPER, 1,
                             "§7Click items in your inventory to",
@@ -246,7 +252,8 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     if (item.isHasStock() && !player.getShoppingData().canPurchase(item.item.toUnderstandable(), item.amount)) {
                         player.sendMessage("§cYou have reached the maximum amount of items you can buy!");
                         return;
@@ -275,7 +282,8 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     try {
                         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
                                 player, sbItem.getItemStackBuilder().build()

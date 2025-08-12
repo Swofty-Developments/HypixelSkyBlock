@@ -27,12 +27,14 @@ public class GUIMaxwell extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(47) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 new GUIAccessoryBag().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStackHead("§aAccessory Bag Shortcut", "961a918c0c49ba8d053e522cb91abc74689367b4d8aa06bfc1ba9154730985ff", 1,
                         "§7Quickly access your accessory bag",
                         "§7from right here!",
@@ -42,7 +44,8 @@ public class GUIMaxwell extends HypixelInventoryGUI {
         });
         set(new GUIItem(48) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 int mythic = player.getAccessoryBag().getUniqueAccessories(Rarity.MYTHIC).size();
                 int legendary = player.getAccessoryBag().getUniqueAccessories(Rarity.LEGENDARY).size();
                 int epic = player.getAccessoryBag().getUniqueAccessories(Rarity.EPIC).size();

@@ -121,7 +121,8 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
             // GUI is empty
             set(new GUIItem(22) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§a" + display.toString() + " Slot #" + (position + 1),
                             Material.BARRIER, 1,
                             "§7You don't have any displayable items",
@@ -150,10 +151,12 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
         Logger.error("Unknown item type: " + item.getClass().getName());
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {}
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cError", Material.BARRIER, 1, "§7Unknown item type");
             }
         };
@@ -169,7 +172,8 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
 
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 player.closeInventory();
                 player.sendMessage("§aYou set " + display.toString() + " Slot #" + (position + 1) + " to display " + item.getDisplayName() + "§a!");
                 DatapointMuseum.MuseumData data = player.getMuseumData();
@@ -179,7 +183,8 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 ItemStack.Builder stack = new NonPlayerItemUpdater(item).getUpdatedItem();
                 ArrayList<String> lore = new ArrayList<>(item.getLore());
@@ -219,7 +224,8 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
 
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 player.closeInventory();
                 player.sendMessage("§aYou set " + display.toString() + " Slot #" + (position + 1) + " to display " + armorSet.getDisplayName() + " Set§a!");
                 DatapointMuseum.MuseumData data = player.getMuseumData();
@@ -231,7 +237,8 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 ArrayList<String> lore = new ArrayList<>();
 

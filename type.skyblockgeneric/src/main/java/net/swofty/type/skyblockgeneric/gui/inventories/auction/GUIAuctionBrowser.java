@@ -90,7 +90,8 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
 
         set(new GUIClickableItem(50) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 AuctionsSorting nextSort = sorting.next();
                 setSorting(nextSort);
 
@@ -105,7 +106,8 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>(List.of(" "));
 
                 Arrays.stream(AuctionsSorting.values()).forEach(sort -> {
@@ -132,7 +134,8 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
         });
         set(new GUIClickableItem(52) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
                     AuctionsFilter nextFilter = filter.previous();
                     setFilter(nextFilter);
@@ -147,7 +150,8 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>(List.of(" "));
 
                 Arrays.stream(AuctionsFilter.values()).forEach(filter -> {
@@ -170,7 +174,8 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             AuctionCategories category = AuctionCategories.values()[i];
             set(new GUIClickableItem(i * 9) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     if (category.equals(getCategory())) {
                         return;
                     }
@@ -180,7 +185,8 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     List<String> lore = new ArrayList<>(List.of("§8Category", " ", "§7Examples:"));
                     category.getExamples().forEach(example -> lore.add("§8◼ §7" + example));
                     lore.add(" ");
@@ -209,12 +215,14 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
 
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     new GUIAuctionViewItem(auctionItem.getUuid(), GUIAuctionBrowser.this).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     SkyBlockItem skyBlockItem = new SkyBlockItem(auctionItem.getItem());
                     ItemStack builtItem = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack()).build();
 
@@ -233,7 +241,8 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             int slot = PAGINATED_SLOTS[i];
             set(new GUIItem(slot) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(" ", Material.AIR, 1);
                 }
             });

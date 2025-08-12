@@ -44,7 +44,8 @@ public class MinionShippingExtension extends MinionExtension {
         if (getItemTypePassedIn() == null) {
             return new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     SkyBlockItem shippingItem = new SkyBlockItem(e.getCursorItem());
 
                     if (!shippingItem.hasComponent(MinionShippingComponent.class)) {
@@ -59,7 +60,8 @@ public class MinionShippingExtension extends MinionExtension {
                 }
 
                 @Override
-                public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {
+                public void runPost(InventoryClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     new GUIMinion(minion).open(player);
                 }
 
@@ -69,7 +71,8 @@ public class MinionShippingExtension extends MinionExtension {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§aAutomated Shipping", Material.BLUE_STAINED_GLASS_PANE, 1,
                             "§7Add a §aBudget Hopper §7or",
                             "§9Enchanted Hopper §7here to make",
@@ -81,7 +84,8 @@ public class MinionShippingExtension extends MinionExtension {
         } else {
             return new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     if (!e.getCursorItem().isAir()) {
                         player.sendMessage("§cYour cursor must be empty to pick this item up!");
                         e.setCancelled(true);
@@ -108,7 +112,8 @@ public class MinionShippingExtension extends MinionExtension {
                 }
 
                 @Override
-                public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {
+                public void runPost(InventoryClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     new GUIMinion(minion).open(player);
                 }
 
@@ -118,7 +123,8 @@ public class MinionShippingExtension extends MinionExtension {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     SkyBlockItem shippingItem = new SkyBlockItem(getItemTypePassedIn());
                     ArrayList<String> lore = new ArrayList<>(shippingItem.getLore());
 

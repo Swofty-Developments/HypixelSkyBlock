@@ -59,7 +59,8 @@ public class GUIFairySoulsGuide extends HypixelInventoryGUI {
 
         set(new GUIItem(10) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 int x = player.getFairySoulHandler().getFound(FairySoulZone.MISC_DUNGEONS) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_FISHING) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_GARDEN) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_PLACEABLE);
                 int y = player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_FISHING) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_GARDEN) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE);
                 return ItemStackCreator.getStackHead("§dMiscellaneous", "126ec1ca185b47aad39f931db8b0a8500ded86a127a204886ed4b3783ad1775c", 1,
@@ -76,7 +77,8 @@ public class GUIFairySoulsGuide extends HypixelInventoryGUI {
             FairySouls fairySouls = allFairySouls[index];
 
             set(new GUIItem(slot) {
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                     return ItemStackCreator.getStackHead("§d" + fairySouls.regionName, fairySouls.texture, 1,
                             "§7Fairy Souls: §e" + player.getFairySoulHandler().getFound(fairySouls.zone) + "§7/§d" + player.getFairySoulHandler().getMax(fairySouls.zone));
                 }

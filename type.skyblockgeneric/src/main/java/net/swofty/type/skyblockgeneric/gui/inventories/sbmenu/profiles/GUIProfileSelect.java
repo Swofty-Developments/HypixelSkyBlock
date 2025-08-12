@@ -38,7 +38,8 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(11) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 SkyBlockPlayerProfiles profiles = player.getProfiles();
                 SkyBlockPlayerProfiles toSet = new SkyBlockPlayerProfiles();
                 toSet.setProfiles(profiles.getProfiles());
@@ -54,7 +55,8 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
 
             @SneakyThrows
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aSwitch to Profile", Material.GRASS_BLOCK, 1,
                         "§7Teleports you to your island on",
                         "§7another profile and loads your",
@@ -70,7 +72,8 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(15) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cDelete profile", Material.RED_STAINED_GLASS, 1,
                         "§7Clear this profile slot by",
                         "§7deleting the profile forever.",
@@ -83,7 +86,8 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
 
             @SneakyThrows
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
+                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
                 if (CoopDatabase.getFromMemberProfile(profileUuid) != null) {
                     player.sendMessage("§cYou cannot delete a profile that is in a coop!");
                     player.sendMessage("§eInstead run §a/coopleave §eto leave your coop.");
