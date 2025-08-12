@@ -4,6 +4,7 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIShopBuilderGreenThumb extends SkyBlockShopGUI {
     public GUIShopBuilderGreenThumb() {

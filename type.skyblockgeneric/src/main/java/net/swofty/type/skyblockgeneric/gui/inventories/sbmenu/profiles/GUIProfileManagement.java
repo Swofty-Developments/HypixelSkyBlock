@@ -11,6 +11,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointLong;
 import net.swofty.type.generic.data.datapoints.DatapointString;
@@ -170,7 +171,7 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
 
     }
 

@@ -9,7 +9,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.type.skyblockgeneric.SkyBlockConst;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServer> implements RefreshingGUI {
     private final ProxyInformation information;
@@ -46,7 +47,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
     }
 
     @Override
-    protected PaginationList<UnderstandableProxyServer> fillPaged(SkyBlockPlayer player, PaginationList<UnderstandableProxyServer> paged) {
+    protected PaginationList<UnderstandableProxyServer> fillPaged(HypixelPlayer player, PaginationList<UnderstandableProxyServer> paged) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         servers = information.getServerInformation(ServerType.SKYBLOCK_HUB).join();
         paged.addAll(servers);
@@ -65,7 +66,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
 
                 // Exclude current server
                 List<UnderstandableProxyServer> serversToUse = servers.stream()
-                        .filter(server -> !server.name().equals(SkyBlockConst.getServerName()))
+                        .filter(server -> !server.name().equals(HypixelConst.getServerName()))
                         .toList();
 
                 if (serversToUse.isEmpty()) {
@@ -122,7 +123,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
                         "§7or the other?",
                         " ",
                         "§7Hub Servers: §a" + servers.size(),
-                        "§7Current: §3" + SkyBlockConst.getServerName() + " §7(" + SkyBlockGenericLoader.getLoadedPlayers().size() + "/" + SkyBlockConst.getMaxPlayers() + ")",
+                        "§7Current: §3" + HypixelConst.getServerName() + " §7(" + SkyBlockGenericLoader.getLoadedPlayers().size() + "/" + HypixelConst.getMaxPlayers() + ")",
                         " ",
                         "§bRight-Click for a small server!",
                         "§eClick to join a random hub!"
@@ -139,17 +140,17 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
     }
 
     @Override
-    protected void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
+    protected void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
     }
 
     @Override
-    protected String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<UnderstandableProxyServer> paged) {
+    protected String getTitle(HypixelPlayer player, String query, int page, PaginationList<UnderstandableProxyServer> paged) {
         return "SkyBlock Hub Selector";
     }
 
     @Override
-    protected GUIClickableItem createItemFor(UnderstandableProxyServer server, int slot, SkyBlockPlayer player) {
-        boolean isThisServer = server.port() == SkyBlockConst.getPort();
+    protected GUIClickableItem createItemFor(UnderstandableProxyServer server, int slot, HypixelPlayer player) {
+        boolean isThisServer = server.port() == HypixelConst.getPort();
         boolean isFull = server.players().size() >= server.maxPlayers();
 
         return new GUIClickableItem(slot) {
@@ -219,7 +220,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    public void refreshItems(HypixelPlayer player) {
         servers = information.getServerInformation(ServerType.SKYBLOCK_HUB).join();
         PaginationList<UnderstandableProxyServer> paged = fillPaged(player, new PaginationList<>(getPaginatedSlots().length));
         int page = 1;

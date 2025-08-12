@@ -16,6 +16,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.RuneableComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIRuneRemoval extends HypixelInventoryGUI {
     private final int[] borderSlots = {
@@ -167,8 +168,8 @@ public class GUIRuneRemoval extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(13)));
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
+        ((SkyBlockPlayer) player).addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(13)));
     }
 
     @Override

@@ -12,6 +12,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.StandardItemComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -308,7 +309,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
     public void onClose(InventoryCloseEvent e, CloseReason reason) {}
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {}
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {}
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {

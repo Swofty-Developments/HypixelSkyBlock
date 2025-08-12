@@ -6,6 +6,7 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -41,7 +42,7 @@ public class GUICollectionCategory extends HypixelPaginatedGUI<CollectionCategor
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
 
     }
 

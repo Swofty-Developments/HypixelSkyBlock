@@ -10,6 +10,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
@@ -104,7 +105,7 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
 
     }
 

@@ -271,9 +271,6 @@ public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandle
                 DatapointShopData.class, new DatapointShopData("shopping_data", new PlayerShopData()),
                 (player, datapoint) -> {}),
 
-        TOGGLES("toggles", true, false, false,
-                DatapointToggles.class, new DatapointToggles("toggles")),
-
         FAIRY_SOULS("player_fairy_souls", false, false, false,
                 DatapointFairySouls.class, new DatapointFairySouls("player_fairy_souls")),
 

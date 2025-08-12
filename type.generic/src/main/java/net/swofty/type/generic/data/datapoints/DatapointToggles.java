@@ -1,13 +1,13 @@
-package net.swofty.type.skyblockgeneric.data.datapoints;
+package net.swofty.type.generic.data.datapoints;
 
 import lombok.AllArgsConstructor;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.generic.data.Datapoint;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DatapointToggles extends SkyBlockDatapoint<DatapointToggles.Toggles> {
+public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
 
     public DatapointToggles(String key, DatapointToggles.Toggles value) {
         super(key, value, new Serializer<>() {

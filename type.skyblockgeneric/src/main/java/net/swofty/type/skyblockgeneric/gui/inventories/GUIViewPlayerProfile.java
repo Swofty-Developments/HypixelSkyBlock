@@ -9,6 +9,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointLong;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.generic.data.datapoints.DatapointString;
@@ -239,7 +240,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
     public void onClose(InventoryCloseEvent e, CloseReason reason) {}
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {}
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {}
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {

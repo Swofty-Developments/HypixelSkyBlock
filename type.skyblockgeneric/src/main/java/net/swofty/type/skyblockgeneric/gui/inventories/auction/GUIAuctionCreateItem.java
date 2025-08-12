@@ -15,6 +15,7 @@ import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionEscrow;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
@@ -287,7 +288,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
 
     }
 

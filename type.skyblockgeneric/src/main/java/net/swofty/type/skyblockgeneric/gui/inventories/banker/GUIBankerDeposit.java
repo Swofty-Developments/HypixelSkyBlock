@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.DataMutexService;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
@@ -123,7 +124,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
         player.setBankDelayed(false);
     }
 

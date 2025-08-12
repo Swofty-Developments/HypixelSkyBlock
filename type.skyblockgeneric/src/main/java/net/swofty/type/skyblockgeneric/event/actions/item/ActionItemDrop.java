@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.event.actions.item;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.item.ItemDropEvent;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;

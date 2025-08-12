@@ -139,6 +139,8 @@ public class HypixelDataHandler extends DataHandler {
         CHAT_TYPE("chat_type", DatapointChatType.class,
                 new DatapointChatType("chat_type", new DatapointChatType.ChatType(DatapointChatType.Chats.ALL))),
 
+        TOGGLES("toggles", DatapointToggles.class, new DatapointToggles("toggles")),
+
         GAMEMODE("gamemode", DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL),
                 (player, datapoint) -> player.setGameMode((GameMode) datapoint.getValue()),
                 (player, datapoint) -> player.setGameMode((GameMode) datapoint.getValue()),

@@ -114,10 +114,6 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return new PlayerSkin(texture , signature);
     }
 
-    public DatapointToggles.Toggles getToggles() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.TOGGLES, DatapointToggles.class).getValue();
-    }
-
     public SkyBlockSongsHandler getSongHandler() {
         return new SkyBlockSongsHandler(this);
     }

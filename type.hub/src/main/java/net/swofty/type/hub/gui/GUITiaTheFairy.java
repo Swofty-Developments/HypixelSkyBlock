@@ -6,6 +6,7 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointFairySouls;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -17,6 +18,7 @@ import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulExchangeLevels;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUITiaTheFairy extends HypixelInventoryGUI {
     public GUITiaTheFairy() {
@@ -28,9 +30,9 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
 
-        int collectedAmount = getPlayer().getFairySouls().getCollectedFairySouls().size();
+        int collectedAmount = ((SkyBlockPlayer) getPlayer()).getFairySouls().getCollectedFairySouls().size();
         boolean canExchange = collectedAmount >= 5;
-        FairySoulExchangeLevels nextLevel = getPlayer().getFairySouls().getNextExchangeLevel();
+        FairySoulExchangeLevels nextLevel = ((SkyBlockPlayer) getPlayer()).getFairySouls().getNextExchangeLevel();
 
         set(new GUIClickableItem(22) {
             @Override
@@ -52,12 +54,12 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
                         SkyBlockLevelCause.getFairySoulExchangeCause(nextLevel.ordinal())
                 );
 
-                DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getSkyBlockData().get(
+                DatapointBackpacks.PlayerBackpacks backpacks = ((SkyBlockPlayer) getPlayer()).getSkyBlockData().get(
                         SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class
                 ).getValue();
                 backpacks.setUnlockedSlots(backpacks.getUnlockedSlots() +
                         nextLevel.getBackpackSlots());
-                getPlayer().getSkyBlockData().get(SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class)
+                ((SkyBlockPlayer) getPlayer()).getSkyBlockData().get(SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class)
                         .setValue(backpacks);
             }
 
@@ -100,7 +102,7 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

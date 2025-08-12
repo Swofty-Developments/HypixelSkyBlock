@@ -11,6 +11,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AnvilCombinableComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
@@ -363,7 +364,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
         player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(sacrificeItemSlot)));
         player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(upgradeItemSlot)));
 

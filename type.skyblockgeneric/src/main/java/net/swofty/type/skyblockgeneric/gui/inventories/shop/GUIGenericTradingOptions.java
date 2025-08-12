@@ -13,6 +13,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -38,11 +39,11 @@ public final class GUIGenericTradingOptions extends HypixelInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
-        set(createTradeItem(item, 20, 1, getPlayer(), stackPrice));
-        set(createTradeItem(item, 21, 5, getPlayer(), stackPrice));
-        set(createTradeItem(item, 22, 10, getPlayer(), stackPrice));
-        set(createTradeItem(item, 23, 32, getPlayer(), stackPrice));
-        set(createTradeItem(item, 24, 64, getPlayer(), stackPrice));
+        set(createTradeItem(item, 20, 1, (SkyBlockPlayer) getPlayer(), stackPrice));
+        set(createTradeItem(item, 21, 5, (SkyBlockPlayer) getPlayer(), stackPrice));
+        set(createTradeItem(item, 22, 10, (SkyBlockPlayer) getPlayer(), stackPrice));
+        set(createTradeItem(item, 23, 32, (SkyBlockPlayer) getPlayer(), stackPrice));
+        set(createTradeItem(item, 24, 64, (SkyBlockPlayer) getPlayer(), stackPrice));
 
         set(GUIClickableItem.getGoBackItem(49, retPointer));
 
@@ -117,7 +118,7 @@ public final class GUIGenericTradingOptions extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
 
     }
 

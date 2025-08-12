@@ -14,6 +14,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
@@ -59,7 +60,7 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
         Arrays.stream(CRAFT_SLOTS).forEach(slot -> {
             player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(slot)));
         });

@@ -25,6 +25,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIRunicPedestal extends HypixelInventoryGUI {
     private static final int MAX_RUNE_LEVEL = 3;
@@ -426,10 +427,10 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        player.addAndUpdateItem(itemOnLeft);
-        player.addAndUpdateItem(itemOnRight);
-        player.addAndUpdateItem(outputItem);
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
+        ((SkyBlockPlayer) player).addAndUpdateItem(itemOnLeft);
+        ((SkyBlockPlayer) player).addAndUpdateItem(itemOnRight);
+        ((SkyBlockPlayer) player).addAndUpdateItem(outputItem);
         if (fusingAnimation != null && !fusingAnimation.isDone()) {
             fusingAnimation.complete(true);
         }

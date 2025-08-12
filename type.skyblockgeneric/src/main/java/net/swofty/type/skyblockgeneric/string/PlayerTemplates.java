@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.string;
 
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 

@@ -14,6 +14,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags.GUIAccessoryB
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIMaxwell extends HypixelInventoryGUI {
 
@@ -83,7 +84,7 @@ public class GUIMaxwell extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

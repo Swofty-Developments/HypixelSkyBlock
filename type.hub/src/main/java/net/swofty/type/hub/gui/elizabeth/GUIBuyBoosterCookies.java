@@ -21,6 +21,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
     public GUIBuyBoosterCookies() {
@@ -327,7 +328,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

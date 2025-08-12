@@ -15,7 +15,7 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.subguis.GUIBitsAbiphone;
 import net.swofty.type.hub.gui.elizabeth.subguis.GUIBitsConfirmBuy;
 import net.swofty.type.hub.gui.elizabeth.subguis.GUIBitsSubCategorys;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -27,6 +27,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIBitsShop extends HypixelInventoryGUI {
 

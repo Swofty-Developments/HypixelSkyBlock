@@ -10,6 +10,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,5 +54,9 @@ public class HypixelPlayer extends Player {
 
     public LogHandler getLogHandler() {
         return new LogHandler(this);
+    }
+
+    public DatapointToggles.Toggles getToggles() {
+        return getDataHandler().get(HypixelDataHandler.Data.TOGGLES, DatapointToggles.class).getValue();
     }
 }
