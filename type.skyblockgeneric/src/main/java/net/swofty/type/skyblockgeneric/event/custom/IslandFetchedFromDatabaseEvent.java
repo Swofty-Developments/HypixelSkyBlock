@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.event.custom;
 
 import lombok.Getter;
 import net.minestom.server.event.Event;
-import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.SkyBlockIsland;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,10 +12,10 @@ import java.util.UUID;
 public class IslandFetchedFromDatabaseEvent implements Event {
     private final SkyBlockIsland island;
     private final boolean isCoop;
-    private final List<SkyBlockPlayer> membersOnline;
+    private final List<HypixelPlayer> membersOnline;
     private final List<UUID> allMembers;
 
-    public IslandFetchedFromDatabaseEvent(SkyBlockIsland island, boolean isCoop, List<SkyBlockPlayer> membersOnline, List<UUID> allMembers) {
+    public IslandFetchedFromDatabaseEvent(SkyBlockIsland island, boolean isCoop, List<HypixelPlayer> membersOnline, List<UUID> allMembers) {
         this.island = island;
         this.isCoop = isCoop;
         this.membersOnline = membersOnline;

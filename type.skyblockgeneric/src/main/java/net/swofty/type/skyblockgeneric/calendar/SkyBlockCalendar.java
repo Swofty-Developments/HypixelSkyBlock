@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.skyblockgeneric.commands.MinionGenerationCommand;
+import net.swofty.type.generic.commands.MinionGenerationCommand;
 
 import java.util.Arrays;
 import java.util.List;

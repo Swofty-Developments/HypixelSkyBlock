@@ -20,20 +20,20 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
-import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
+import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.generic.entity.DroppedItemEntityImpl;
+import net.swofty.type.generic.entity.mob.impl.RegionPopulator;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.ArmorComponent;
-import net.swofty.type.skyblockgeneric.loottable.LootAffector;
-import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
-import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.PlayerKilledSkyBlockMobEvent;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.ArmorComponent;
+import net.swofty.type.generic.loottable.LootAffector;
+import net.swofty.type.generic.loottable.OtherLoot;
+import net.swofty.type.generic.loottable.SkyBlockLootTable;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.region.SkyBlockRegion;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -131,7 +131,7 @@ public abstract class SkyBlockMob extends EntityCreature {
         super.kill();
         mobs.remove(this);
 
-        if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer player)) return;
+        if (!(getLastDamageSource().getAttacker() instanceof HypixelPlayer player)) return;
 
         HypixelEventHandler.callCustomEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 

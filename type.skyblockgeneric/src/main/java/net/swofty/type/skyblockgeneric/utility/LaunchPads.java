@@ -12,10 +12,10 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.generic.SkyBlockGenericLoader;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -64,14 +64,14 @@ public enum LaunchPads {
     private final List<Pos> slimeBlocks;
     private final ServerType serverType;
     private final Pos destination;
-    private final Consumer<SkyBlockPlayer> afterFinished;
-    private final Function<SkyBlockPlayer, Boolean> shouldAllow;
+    private final Consumer<HypixelPlayer> afterFinished;
+    private final Function<HypixelPlayer, Boolean> shouldAllow;
     private final String rejectionMessage;
-    private final Function<SkyBlockPlayer, PlayerHolograms.ExternalPlayerHologram> hologramDisplay;
+    private final Function<HypixelPlayer, PlayerHolograms.ExternalPlayerHologram> hologramDisplay;
 
     LaunchPads(List<Pos> slimeBlocks, ServerType serverType, Pos destination,
-               Consumer<@NonNull SkyBlockPlayer> afterFinished, Function<SkyBlockPlayer, Boolean> shouldAllow, String rejectionMessage,
-               Function<@NonNull SkyBlockPlayer, PlayerHolograms.ExternalPlayerHologram> hologramDisplay) {
+               Consumer<@NonNull HypixelPlayer> afterFinished, Function<HypixelPlayer, Boolean> shouldAllow, String rejectionMessage,
+               Function<@NonNull HypixelPlayer, PlayerHolograms.ExternalPlayerHologram> hologramDisplay) {
         this.slimeBlocks = slimeBlocks;
         this.serverType = serverType;
         this.destination = destination;

@@ -13,10 +13,10 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.SackComponent;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.SackComponent;
+import net.swofty.type.generic.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -99,7 +99,7 @@ public class GUISack extends HypixelInventoryGUI {
                 set(new GUIClickableItem(slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                         Integer amount = player.getSackItems().getAmount(linker);
                         if (e.getClickType() == ClickType.RIGHT_CLICK) {
                             if (amount == 0) return;
@@ -142,7 +142,7 @@ public class GUISack extends HypixelInventoryGUI {
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                         ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack());
                         ArrayList<String> lore = new ArrayList<>();
                         Integer amount = player.getSackItems().getAmount(linker);

@@ -6,9 +6,9 @@ import net.minestom.server.command.builder.arguments.number.ArgumentNumber;
 import net.minestom.server.particle.Particle;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.particle.ParticleEngine;
-import net.swofty.type.skyblockgeneric.particle.shapes.Particle3DCube;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.particle.ParticleEngine;
+import net.swofty.type.generic.particle.shapes.Particle3DCube;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.time.Duration;
@@ -31,7 +31,7 @@ public class TestParticleEngineCommand extends HypixelCommand
                  int intensity = context.get(intArg);
                  int duration = context.get(durationArg);
 
-                 SkyBlockPlayer player = (SkyBlockPlayer) sender;
+                 HypixelPlayer player = (HypixelPlayer) sender;
 
                  if (player.getFullDisplayName().contains("dified")) {
                      return;

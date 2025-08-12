@@ -6,7 +6,7 @@ import net.swofty.commons.protocol.objects.api.APIAuthenticateCodeProtocolObject
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "allowaccessforapiauthentication",
@@ -33,7 +33,7 @@ public class VerifyApiCommand extends HypixelCommand {
                 sender.sendMessage("§7API is online, checking if code is valid...");
                 String codeString = context.get(code);
 
-                SkyBlockPlayer player = (SkyBlockPlayer) sender;
+                HypixelPlayer player = (HypixelPlayer) sender;
                 ProxyService apiService = new ProxyService(ServiceType.API);
                 apiService.handleRequest(new APIAuthenticateCodeProtocolObject.AuthenticateCodeMessage(
                         codeString,

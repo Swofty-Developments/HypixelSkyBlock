@@ -8,9 +8,9 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.TieredTalismanComponent;
+import net.swofty.type.generic.data.SkyBlockDatapoint;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.TieredTalismanComponent;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 

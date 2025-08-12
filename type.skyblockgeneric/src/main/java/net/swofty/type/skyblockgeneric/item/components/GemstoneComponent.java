@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
-import net.swofty.type.skyblockgeneric.gems.Gemstone;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
+import net.swofty.type.generic.gems.Gemstone;
+import net.swofty.type.generic.item.SkyBlockItemComponent;
 
 import java.util.List;
 

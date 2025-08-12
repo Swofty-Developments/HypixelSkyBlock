@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.block.attribute;
 
-import net.swofty.type.skyblockgeneric.block.BlockType;
-import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
-import net.swofty.type.skyblockgeneric.block.attribute.attributes.BlockAttributeType;
+import net.swofty.type.generic.block.BlockType;
+import net.swofty.type.generic.block.SkyBlockBlock;
+import net.swofty.type.generic.block.attribute.attributes.BlockAttributeType;
 
 public class BlockAttributeHandler {
     SkyBlockBlock block;

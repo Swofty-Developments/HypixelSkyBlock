@@ -4,9 +4,9 @@ import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.ItemQuantifiable;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
 import java.util.*;
@@ -22,7 +22,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
     public ShapedRecipe(RecipeType type,
                         SkyBlockItem result, Map<Character, ItemQuantifiable> ingredientMap,
-                        List<String> pattern, Function<SkyBlockPlayer, CraftingResult> canCraft) {
+                        List<String> pattern, Function<HypixelPlayer, CraftingResult> canCraft) {
         super(result, type, canCraft);
         this.ingredientMap = ingredientMap;
         this.pattern = normalizedPattern(pattern);

@@ -10,16 +10,16 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
-import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
-import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
-import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
-import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
-import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
-import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.entity.mob.BestiaryMob;
+import net.swofty.type.generic.entity.mob.ai.ClosestEntityRegionTarget;
+import net.swofty.type.generic.entity.mob.ai.MeleeAttackWithinRegionGoal;
+import net.swofty.type.generic.entity.mob.ai.RandomRegionStrollGoal;
+import net.swofty.type.generic.entity.mob.impl.RegionPopulator;
+import net.swofty.type.generic.loottable.OtherLoot;
+import net.swofty.type.generic.loottable.SkyBlockLootTable;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,7 +60,7 @@ public class MobGraveyardZombieVillager extends BestiaryMob implements RegionPop
                 new LastEntityDamagerTarget(this, 16), // First target the last entity which attacked you
                 new ClosestEntityRegionTarget(this,
                         16,
-                        entity -> entity instanceof SkyBlockPlayer,
+                        entity -> entity instanceof HypixelPlayer,
                         RegionType.GRAVEYARD) // If there is none, target the nearest player
         );
     }

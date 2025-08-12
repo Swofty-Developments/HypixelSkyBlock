@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.warps.unlocks;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.type.skyblockgeneric.warps.ScrollUnlockReason;
+import net.swofty.type.generic.warps.ScrollUnlockReason;
 
 public class ScrollUnlockPurchase extends ScrollUnlockReason {
     private final String npc;

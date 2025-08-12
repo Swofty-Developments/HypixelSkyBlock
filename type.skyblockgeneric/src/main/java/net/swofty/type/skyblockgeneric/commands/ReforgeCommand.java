@@ -5,10 +5,10 @@ import net.swofty.commons.item.reforge.ReforgeLoader;
 import net.swofty.commons.item.reforge.ReforgeType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
-import net.swofty.type.skyblockgeneric.item.components.ReforgableComponent;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.ItemAttributeHandler;
+import net.swofty.type.generic.item.components.ReforgableComponent;
+import net.swofty.type.generic.item.updater.PlayerItemOrigin;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.generic.utility.MathUtility;
 
@@ -25,7 +25,7 @@ public class ReforgeCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            ((SkyBlockPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
+            ((HypixelPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
                 ReforgeType reforgeType = item.getComponent(ReforgableComponent.class).getReforgeType();
 

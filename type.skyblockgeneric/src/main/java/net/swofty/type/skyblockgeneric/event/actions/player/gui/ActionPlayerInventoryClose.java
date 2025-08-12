@@ -5,14 +5,14 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.skyblockgeneric.event.actions.player.ActionPlayerChangeHypixelMenuDisplay;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.actions.player.ActionPlayerChangeHypixelMenuDisplay;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerInventoryClose implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(InventoryCloseEvent event) {
-        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         ActionPlayerChangeHypixelMenuDisplay.runCheck(player);
 
         if (HypixelInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {

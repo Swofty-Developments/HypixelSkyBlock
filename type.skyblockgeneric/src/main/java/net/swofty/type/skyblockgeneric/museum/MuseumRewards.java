@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.museum;
 
-import net.swofty.type.skyblockgeneric.museum.rewards.MuseumXPReward;
+import net.swofty.type.generic.museum.rewards.MuseumXPReward;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

@@ -8,9 +8,9 @@ import net.minestom.server.utils.location.RelativeVec;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.region.SkyBlockRegion;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "regions",
@@ -52,8 +52,8 @@ public class RegionCommand extends HypixelCommand {
             String regionId = context.get(addRegion).get("region_id");
             RelativeVec position1 = context.get(addRegion).get("pos1");
             RelativeVec position2 = context.get(addRegion).get("pos2");
-            Vec vectorPosition1 = position1.from((SkyBlockPlayer) sender);
-            Vec vectorPosition2 = position2.from((SkyBlockPlayer) sender);
+            Vec vectorPosition1 = position1.from((HypixelPlayer) sender);
+            Vec vectorPosition2 = position2.from((HypixelPlayer) sender);
             RegionType regionType = context.get(addRegion).get("region_type");
 
             sender.sendMessage("§aSuccessfully created region §e" + regionId + "§a with type §e" + regionType.name() + "§a.");

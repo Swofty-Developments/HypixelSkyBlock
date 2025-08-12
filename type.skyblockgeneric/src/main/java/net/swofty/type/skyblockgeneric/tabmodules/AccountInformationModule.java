@@ -4,21 +4,21 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkillCategory;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
+import net.swofty.type.generic.data.datapoints.DatapointBankData;
+import net.swofty.type.generic.data.datapoints.DatapointSkillCategory;
+import net.swofty.type.generic.data.datapoints.DatapointSkills;
 import net.swofty.type.generic.data.datapoints.DatapointString;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
+import net.swofty.type.generic.skill.SkillCategories;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.tab.TablistSkinRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountInformationModule extends TablistModule {
 
-    public List<TablistEntry> getEntries(SkyBlockPlayer player) {
+    public List<TablistEntry> getEntries(HypixelPlayer player) {
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
                 new TablistEntry(getCentered("§6§lAccount Info"), TablistSkinRegistry.ORANGE)
         ));
@@ -62,6 +62,6 @@ public class AccountInformationModule extends TablistModule {
 
     @Override
     public List<TablistEntry> getEntries(HypixelPlayer player) {
-        return getEntries((SkyBlockPlayer) player);
+        return getEntries((HypixelPlayer) player);
     }
 }

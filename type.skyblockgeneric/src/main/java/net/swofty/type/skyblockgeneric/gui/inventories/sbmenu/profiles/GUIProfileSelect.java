@@ -12,14 +12,14 @@ import net.swofty.commons.ServerType;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.generic.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.actions.data.ActionPlayerDataSave;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.commons.SkyBlockPlayerProfiles;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.commons.HypixelPlayerProfiles;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.UUID;
 
@@ -40,9 +40,9 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                SkyBlockPlayerProfiles profiles = player.getProfiles();
-                SkyBlockPlayerProfiles toSet = new SkyBlockPlayerProfiles();
+                HypixelPlayer player = (HypixelPlayer) p; 
+                HypixelPlayerProfiles profiles = player.getProfiles();
+                HypixelPlayerProfiles toSet = new HypixelPlayerProfiles();
                 toSet.setProfiles(profiles.getProfiles());
 
                 player.getHookManager().registerHook(ActionPlayerDataSave.class, (nil) -> {
@@ -57,7 +57,7 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
             @SneakyThrows
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aSwitch to Profile", Material.GRASS_BLOCK, 1,
                         "§7Teleports you to your island on",
                         "§7another profile and loads your",
@@ -74,7 +74,7 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
         set(new GUIClickableItem(15) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§cDelete profile", Material.RED_STAINED_GLASS, 1,
                         "§7Clear this profile slot by",
                         "§7deleting the profile forever.",
@@ -88,14 +88,14 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
             @SneakyThrows
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 if (CoopDatabase.getFromMemberProfile(profileUuid) != null) {
                     player.sendMessage("§cYou cannot delete a profile that is in a coop!");
                     player.sendMessage("§eInstead run §a/coopleave §eto leave your coop.");
                     return;
                 }
 
-                SkyBlockPlayerProfiles profiles = player.getProfiles();
+                HypixelPlayerProfiles profiles = player.getProfiles();
                 profiles.removeProfile(profileUuid);
 
                 DataHandler handler = DataHandler.fromDocument(new ProfilesDatabase(profileUuid.toString()).getDocument());

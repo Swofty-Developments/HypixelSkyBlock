@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.block.placement;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.block.Block;
-import net.swofty.type.skyblockgeneric.block.placement.rules.*;
+import net.swofty.type.generic.block.placement.rules.*;
 
 import java.util.function.Function;
 import java.util.function.Predicate;

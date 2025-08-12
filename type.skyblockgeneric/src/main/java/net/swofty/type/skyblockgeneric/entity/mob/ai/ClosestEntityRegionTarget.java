@@ -5,8 +5,8 @@ import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.instance.Instance;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.region.SkyBlockRegion;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;

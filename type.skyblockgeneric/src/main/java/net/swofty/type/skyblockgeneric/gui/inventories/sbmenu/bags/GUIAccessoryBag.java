@@ -9,17 +9,17 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAccessoryBag;
+import net.swofty.type.generic.collection.CustomCollectionAward;
+import net.swofty.type.generic.data.datapoints.DatapointAccessoryBag;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
-import net.swofty.type.skyblockgeneric.item.components.TieredTalismanComponent;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.AccessoryComponent;
+import net.swofty.type.generic.item.components.TieredTalismanComponent;
+import net.swofty.type.generic.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.levels.SkyBlockLevelCause;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.Map;
 import java.util.SortedMap;
@@ -69,7 +69,7 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
             set(new GUIClickableItem(i) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     if (item == null) {
                         return ItemStack.builder(Material.AIR);
                     } else {
@@ -84,13 +84,13 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
 
                 @Override
                 public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     save(player);
                 }
 
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 }
             });
         }
@@ -102,7 +102,7 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
                 set(new GUIItem(i) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                         return ItemStackCreator.getStack("§cLocked", Material.RED_STAINED_GLASS_PANE,
                                 1,
                                 "§7You need to unlock the",
@@ -117,13 +117,13 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
             set(new GUIClickableItem(45) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1);
                 }
 
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     GUIAccessoryBag gui = new GUIAccessoryBag();
                     gui.setPage(page - 1);
                     gui.open(player);
@@ -135,13 +135,13 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
             set(new GUIClickableItem(53) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1);
                 }
 
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     GUIAccessoryBag gui = new GUIAccessoryBag();
                     gui.setPage(page + 1);
                     gui.open(player);
@@ -177,7 +177,7 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
         save(getPlayer());
     }
 
-    private int getTotalSlots(SkyBlockPlayer player) {
+    private int getTotalSlots(HypixelPlayer player) {
         int totalSlots = 0;
         for (CustomCollectionAward entry : SLOTS_PER_UPGRADE.keySet()) {
             if (player.hasCustomCollectionAward(entry)) {
@@ -196,7 +196,7 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
         return null;
     }
 
-    private void save(SkyBlockPlayer player) {
+    private void save(HypixelPlayer player) {
         DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = player.getAccessoryBag();
         for (int i = 0; i < this.slotToSaveUpTo; i++) {
             int slot = i + ((page - 1) * 45);

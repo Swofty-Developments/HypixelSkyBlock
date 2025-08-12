@@ -7,9 +7,9 @@ import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelTypeLoader;
-import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
+import net.swofty.type.generic.calendar.SkyBlockCalendar;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
-import net.swofty.type.skyblockgeneric.server.attribute.attributes.AttributeLong;
+import net.swofty.type.generic.server.attribute.attributes.AttributeLong;
 import org.bson.Document;
 
 import java.util.Arrays;

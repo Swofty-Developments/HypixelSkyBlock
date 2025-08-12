@@ -16,15 +16,15 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
-import net.swofty.type.skyblockgeneric.data.monogdb.IslandDatabase;
+import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.generic.data.monogdb.CoopDatabase;
+import net.swofty.type.generic.data.monogdb.IslandDatabase;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.skyblockgeneric.event.custom.IslandFetchedFromDatabaseEvent;
-import net.swofty.type.skyblockgeneric.event.custom.IslandFirstCreatedEvent;
-import net.swofty.type.skyblockgeneric.event.custom.IslandSavedIntoDatabaseEvent;
-import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
-import net.swofty.type.skyblockgeneric.utility.JerryInformation;
+import net.swofty.type.generic.event.custom.IslandFetchedFromDatabaseEvent;
+import net.swofty.type.generic.event.custom.IslandFirstCreatedEvent;
+import net.swofty.type.generic.event.custom.IslandSavedIntoDatabaseEvent;
+import net.swofty.type.generic.minion.IslandMinionData;
+import net.swofty.type.generic.utility.JerryInformation;
 import net.swofty.type.generic.utility.MathUtility;
 import org.bson.types.Binary;
 import org.jetbrains.annotations.Nullable;
@@ -83,7 +83,7 @@ public class SkyBlockIsland {
             InstanceContainer temporaryInstance = manager.createInstanceContainer(dimensionTypeKey);
             islandInstance = manager.createSharedInstance(temporaryInstance);
 
-            List<SkyBlockPlayer> onlinePlayers;
+            List<HypixelPlayer> onlinePlayers;
             if (coop != null) {
                 onlinePlayers = coop.getOnlineMembers();
             } else {

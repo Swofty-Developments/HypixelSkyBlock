@@ -10,17 +10,17 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
-import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
+import net.swofty.type.generic.calendar.SkyBlockCalendar;
+import net.swofty.type.generic.data.monogdb.FairySoulDatabase;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
+import net.swofty.type.generic.gui.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.MissionSet;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
-import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.generic.mission.MissionSet;
+import net.swofty.type.generic.mission.HypixelMission;
+import net.swofty.type.generic.mission.HypixelProgressMission;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,19 +52,19 @@ public class GUIMissionLog extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aQuest Log " + (completed ? "(Completed)" : ""), Material.WRITABLE_BOOK, 1, "§7View your active quests,", "§7progress, and rewards.");
             }
         });
         set(new GUIClickableItem(10) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIFairySoulsGuide().open(player);
             }
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStackHead("§eFind all Fairy Souls", "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387", 1,
                         "",
                         "  §c✖ §eFound: " + player.getFairySoulHandler().getTotalFoundFairySouls() + "/" + FairySoulDatabase.getAllSouls().size(),
@@ -78,13 +78,13 @@ public class GUIMissionLog extends HypixelInventoryGUI {
             set(new GUIClickableItem(50) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     display(false);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStack("§aOngoing Quests", Material.BOOK, 1,
                             "§7View quests you are currently",
                             "§7working towards.",
@@ -96,13 +96,13 @@ public class GUIMissionLog extends HypixelInventoryGUI {
             set(new GUIClickableItem(50) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     display(true);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStack("§aCompleted Quests", Material.BOOK, 1,
                             "§7Take a peek at the past and",
                             "§7browse quests you've,",
@@ -148,7 +148,7 @@ public class GUIMissionLog extends HypixelInventoryGUI {
             set(new GUIItem(MISSION_SLOTS[i]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     List<String> lore = new ArrayList<>(List.of("§7 "));
 
                     Arrays.stream(missionSet.getMissions()).forEach(mission -> {

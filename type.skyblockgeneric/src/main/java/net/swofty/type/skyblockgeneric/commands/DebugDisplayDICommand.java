@@ -5,9 +5,9 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
+import net.swofty.type.generic.utility.DamageIndicator;
 
 @CommandParameters(aliases = "dmgindicdisplaydebugcmd",
         description = "Display damage indic",
@@ -23,7 +23,7 @@ public class DebugDisplayDICommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            SkyBlockPlayer player = (SkyBlockPlayer) sender;
+            HypixelPlayer player = (HypixelPlayer) sender;
 
             new DamageIndicator()
                     .damage(context.get(damage))

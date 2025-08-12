@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.item.set.impl;
 
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public interface SetEvents {
-    void setPutOn(SkyBlockPlayer player);
-    void setTakeOff(SkyBlockPlayer player);
+    void setPutOn(HypixelPlayer player);
+    void setTakeOff(HypixelPlayer player);
 }

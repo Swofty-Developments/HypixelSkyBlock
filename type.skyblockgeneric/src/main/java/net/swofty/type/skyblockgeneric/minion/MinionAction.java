@@ -6,12 +6,12 @@ import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.MinionShippingComponent;
-import net.swofty.type.skyblockgeneric.item.components.SellableComponent;
-import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensionData;
-import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensions;
-import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionShippingExtension;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.MinionShippingComponent;
+import net.swofty.type.generic.item.components.SellableComponent;
+import net.swofty.type.generic.minion.extension.MinionExtensionData;
+import net.swofty.type.generic.minion.extension.MinionExtensions;
+import net.swofty.type.generic.minion.extension.extensions.MinionShippingExtension;
 
 import java.util.List;
 

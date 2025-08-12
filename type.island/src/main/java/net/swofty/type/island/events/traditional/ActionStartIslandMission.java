@@ -1,18 +1,18 @@
 package net.swofty.type.island.events.traditional;
 
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
-import net.swofty.type.skyblockgeneric.event.EventNodes;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.missions.MissionBreakLog;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.SkyBlockEventClass;
+import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.generic.mission.missions.MissionBreakLog;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.event.SkyBlockEvent;
 
 public class ActionStartIslandMission implements SkyBlockEventClass {
 
     @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(AsyncPlayerConfigurationEvent event) {
-        MissionData data = ((SkyBlockPlayer) event.getPlayer()).getMissionData();
+        MissionData data = ((HypixelPlayer) event.getPlayer()).getMissionData();
 
         if (data.isCurrentlyActive("break_log")) return;
         if (data.hasCompleted("break_log")) return;

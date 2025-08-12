@@ -2,10 +2,10 @@ package net.swofty.type.skyblockgeneric.minion.minions.farming;
 
 import net.minestom.server.color.Color;
 import net.minestom.server.item.Material;
-import net.swofty.type.skyblockgeneric.entity.mob.mobs.minionMobs.MobMinionChicken;
-import net.swofty.type.skyblockgeneric.minion.MinionAction;
-import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
-import net.swofty.type.skyblockgeneric.minion.actions.MinionKillMobAction;
+import net.swofty.type.generic.entity.mob.mobs.minionMobs.MobMinionChicken;
+import net.swofty.type.generic.minion.MinionAction;
+import net.swofty.type.generic.minion.SkyBlockMinion;
+import net.swofty.type.generic.minion.actions.MinionKillMobAction;
 
 import java.util.List;
 

@@ -1,13 +1,13 @@
 package net.swofty.type.skyblockgeneric.utility;
 
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
-import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
-import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
-import net.swofty.type.skyblockgeneric.string.PlayerTemplateProcessor;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.ItemQuantifiable;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.crafting.ShapedRecipe;
+import net.swofty.type.generic.item.crafting.ShapelessRecipe;
+import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.type.generic.string.PlayerTemplateProcessor;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class RecipeParser {
     }
 
     private record RequirementCheck(String leftVariable, String operation, String rightVariable, String failMessage) {
-        public boolean check(SkyBlockPlayer player) {
+        public boolean check(HypixelPlayer player) {
             PlayerTemplateProcessor processor = new PlayerTemplateProcessor(player);
             String leftValue = processor.parseMessage(leftVariable).trim();
             String rightValue = processor.parseMessage(rightVariable).trim();
@@ -149,7 +149,7 @@ public class RecipeParser {
                 (player) -> checkRequirements(player, requirements));
     }
 
-    private static SkyBlockRecipe.CraftingResult checkRequirements(SkyBlockPlayer player, List<RequirementCheck> requirements) {
+    private static SkyBlockRecipe.CraftingResult checkRequirements(HypixelPlayer player, List<RequirementCheck> requirements) {
         if (requirements.isEmpty()) return new SkyBlockRecipe.CraftingResult(true, null);
 
         List<String> failureMessages = new ArrayList<>();

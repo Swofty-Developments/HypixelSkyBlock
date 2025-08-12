@@ -6,9 +6,9 @@ import net.swofty.commons.ChatColor;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.GemstoneComponent;
-import net.swofty.type.skyblockgeneric.item.components.GemstoneImplComponent;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.GemstoneComponent;
+import net.swofty.type.generic.item.components.GemstoneImplComponent;
 
 import java.util.List;
 

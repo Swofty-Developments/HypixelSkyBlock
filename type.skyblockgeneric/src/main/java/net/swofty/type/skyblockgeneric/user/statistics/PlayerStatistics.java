@@ -19,30 +19,30 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookDa
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
-import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
-import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
-import net.swofty.type.skyblockgeneric.enchantment.abstr.EventBasedEnchant;
-import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
-import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
-import net.swofty.type.skyblockgeneric.event.value.events.RegenerationValueUpdateEvent;
-import net.swofty.type.skyblockgeneric.gems.Gemstone;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.ConstantStatisticsComponent;
-import net.swofty.type.skyblockgeneric.item.components.PetComponent;
-import net.swofty.type.skyblockgeneric.item.components.StandardItemComponent;
-import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
-import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
-import net.swofty.type.skyblockgeneric.levels.unlocks.SkyBlockLevelStatisticUnlock;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.user.SkyBlockActionBar;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.generic.bestiary.BestiaryData;
+import net.swofty.type.generic.data.datapoints.DatapointSkills;
+import net.swofty.type.generic.data.datapoints.DatapointSkyBlockExperience;
+import net.swofty.type.generic.enchantment.EnchantmentType;
+import net.swofty.type.generic.enchantment.SkyBlockEnchantment;
+import net.swofty.type.generic.enchantment.abstr.EventBasedEnchant;
+import net.swofty.type.generic.entity.mob.BestiaryMob;
+import net.swofty.type.generic.event.value.SkyBlockValueEvent;
+import net.swofty.type.generic.event.value.events.RegenerationValueUpdateEvent;
+import net.swofty.type.generic.gems.Gemstone;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.ConstantStatisticsComponent;
+import net.swofty.type.generic.item.components.PetComponent;
+import net.swofty.type.generic.item.components.StandardItemComponent;
+import net.swofty.type.generic.item.set.ArmorSetRegistry;
+import net.swofty.type.generic.item.set.impl.ArmorSet;
+import net.swofty.type.generic.item.updater.PlayerItemOrigin;
+import net.swofty.type.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
+import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.generic.mission.HypixelProgressMission;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.user.SkyBlockActionBar;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
@@ -51,7 +51,7 @@ import java.util.*;
 public class PlayerStatistics {
     private static final Map<Player, BossBar> barCache = new HashMap<>();
 
-    private final SkyBlockPlayer player;
+    private final HypixelPlayer player;
     @Setter
     @Getter
     private double healthRegenerationPercentBonus;
@@ -63,7 +63,7 @@ public class PlayerStatistics {
     private final List<TemporaryConditionalStatistic> temporaryConditionalStatistics = Collections.synchronizedList(new ArrayList<>());
     BestiaryData bestiaryData = new BestiaryData();
 
-    public PlayerStatistics(SkyBlockPlayer player) {
+    public PlayerStatistics(HypixelPlayer player) {
         this.player = player;
     }
 
@@ -95,7 +95,7 @@ public class PlayerStatistics {
         return piecesToCheck;
     }
 
-    public ItemStatistics allArmorStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
+    public ItemStatistics allArmorStatistics(HypixelPlayer causer, LivingEntity enemy) {
         PlayerItemOrigin.OriginCache cache = PlayerItemOrigin.getFromCache(player.getUuid());
         ArrayList<SkyBlockItem> armorPieces = new ArrayList<>();
 
@@ -159,7 +159,7 @@ public class PlayerStatistics {
         return enchantLevels;
     }
 
-    public ItemStatistics mainHandStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
+    public ItemStatistics mainHandStatistics(HypixelPlayer causer, LivingEntity enemy) {
         SkyBlockItem item = PlayerItemOrigin.getFromCache(player.getUuid()).get(PlayerItemOrigin.MAIN_HAND);
 
         if (item.hasComponent(ConstantStatisticsComponent.class))
@@ -219,7 +219,7 @@ public class PlayerStatistics {
         return allStatistics(null, null);
     }
 
-    public ItemStatistics allStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
+    public ItemStatistics allStatistics(HypixelPlayer causer, LivingEntity enemy) {
         ItemStatistics total = ItemStatistics.builder().build();
         if (enemy instanceof BestiaryMob bestiaryMob) total = ItemStatistics.add(total, getBestiaryStatistics(causer, bestiaryMob));
         total = ItemStatistics.add(total, allArmorStatistics(causer, enemy));
@@ -267,7 +267,7 @@ public class PlayerStatistics {
         accessoryStatistics = total;
     }
 
-    private ItemStatistics calculateExtraItemStatisticsToAdd(SkyBlockItem item, SkyBlockPlayer causer, LivingEntity enemy) {
+    private ItemStatistics calculateExtraItemStatisticsToAdd(SkyBlockItem item, HypixelPlayer causer, LivingEntity enemy) {
         ItemStatistics statistics = ItemStatistics.builder().build();
         statistics = getReforgeStatistics(item, statistics);
         statistics = getGemstoneStatistics(item, statistics);
@@ -298,7 +298,7 @@ public class PlayerStatistics {
     }
 
     private ItemStatistics getEnchantStatistics(SkyBlockItem item, ItemStatistics statistics,
-                                                SkyBlockPlayer causer, LivingEntity enemy) {
+                                                HypixelPlayer causer, LivingEntity enemy) {
         for (SkyBlockEnchantment enchantment : item.getAttributeHandler().getEnchantments().toList()) {
             ItemStatistics enchantmentStatistics = enchantment.type().getEnch().getStatistics(enchantment.level()).clone();
             statistics = ItemStatistics.add(statistics, enchantmentStatistics);
@@ -344,7 +344,7 @@ public class PlayerStatistics {
         return statistics;
     }
 
-    private ItemStatistics getBestiaryStatistics(SkyBlockPlayer causer, BestiaryMob enemy) {
+    private ItemStatistics getBestiaryStatistics(HypixelPlayer causer, BestiaryMob enemy) {
         ItemStatistics statistics = ItemStatistics.builder().build();
 
         int kills = causer.getBestiaryData().getAmount(enemy);
@@ -358,7 +358,7 @@ public class PlayerStatistics {
         return statistics;
     }
 
-    public Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics enemyStatistics, SkyBlockPlayer causer, LivingEntity enemy) {
+    public Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics enemyStatistics, HypixelPlayer causer, LivingEntity enemy) {
         ItemStatistics all = allStatistics(causer, enemy);
         return runPrimaryDamageFormula(all, enemyStatistics);
     }

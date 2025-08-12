@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.item.updater;
 import lombok.NonNull;
 import lombok.Setter;
 import net.minestom.server.item.ItemStack;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import java.util.function.Function;
 
 public enum PlayerItemOrigin {
     MAIN_HAND((entry) -> {
-        SkyBlockPlayer player = entry.getKey();
+        HypixelPlayer player = entry.getKey();
         // We don't want to update the item of a player who is in a ShopGUI
         if (player.getOpenInventory() == null)
             return entry.getKey().getItemInMainHand();
@@ -31,25 +31,25 @@ public enum PlayerItemOrigin {
 
     private final static Map<UUID, OriginCache> cache = new HashMap<>();
 
-    private final Function<Map.Entry<SkyBlockPlayer, Object>, ItemStack> retriever;
-    private final BiConsumer<SkyBlockPlayer, Map.Entry<ItemStack, Object>> setter;
+    private final Function<Map.Entry<HypixelPlayer, Object>, ItemStack> retriever;
+    private final BiConsumer<HypixelPlayer, Map.Entry<ItemStack, Object>> setter;
     private final boolean loop;
     @Setter
     private Object data;
 
-    PlayerItemOrigin(Function<Map.Entry<SkyBlockPlayer, Object>, ItemStack> retriever,
-                     BiConsumer<SkyBlockPlayer, Map.Entry<ItemStack, Object>> setter, boolean loop) {
+    PlayerItemOrigin(Function<Map.Entry<HypixelPlayer, Object>, ItemStack> retriever,
+                     BiConsumer<HypixelPlayer, Map.Entry<ItemStack, Object>> setter, boolean loop) {
         this.retriever = retriever;
         this.setter = setter;
         this.loop = loop;
         this.data = new Object();
     }
 
-    public ItemStack getStack(SkyBlockPlayer player) {
+    public ItemStack getStack(HypixelPlayer player) {
         return retriever.apply(Map.entry(player, data));
     }
 
-    public void setStack(SkyBlockPlayer player, ItemStack stack) {
+    public void setStack(HypixelPlayer player, ItemStack stack) {
         setter.accept(player, Map.entry(stack, data));
     }
 

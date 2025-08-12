@@ -1,10 +1,10 @@
 package net.swofty.type.skyblockgeneric.user;
 
-import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
-import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
-import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
+import net.swofty.type.generic.data.monogdb.FairySoulDatabase;
+import net.swofty.type.generic.user.fairysouls.FairySoul;
+import net.swofty.type.generic.user.fairysouls.FairySoulZone;
 
-public record FairySoulHandler(SkyBlockPlayer player) {
+public record FairySoulHandler(HypixelPlayer player) {
 
     public int getFound(FairySoulZone zone) {
         int amount = 0;

@@ -2,13 +2,13 @@ package net.swofty.type.hub.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerParameters;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIReforge;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionMineCoal;
-import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionTalkToBlacksmith;
-import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
+import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
+import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.type.generic.gui.inventories.GUIReforge;
+import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.generic.mission.missions.blacksmith.MissionMineCoal;
+import net.swofty.type.generic.mission.missions.blacksmith.MissionTalkToBlacksmith;
+import net.swofty.type.generic.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
 
 import java.util.List;
 

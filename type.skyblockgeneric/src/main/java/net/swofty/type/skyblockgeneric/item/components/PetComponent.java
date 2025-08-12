@@ -11,17 +11,17 @@ import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointPetData;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
-import net.swofty.type.skyblockgeneric.item.handlers.lore.LoreConfig;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetHandler;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetRegistry;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.utility.RarityValue;
+import net.swofty.type.generic.data.datapoints.DatapointPetData;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.generic.item.handlers.lore.LoreConfig;
+import net.swofty.type.generic.item.handlers.pet.KatUpgrade;
+import net.swofty.type.generic.item.handlers.pet.PetAbility;
+import net.swofty.type.generic.item.handlers.pet.PetHandler;
+import net.swofty.type.generic.item.handlers.pet.PetRegistry;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.RarityValue;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class PetComponent extends SkyBlockItemComponent {
         , true));
     }
 
-    private void interact(SkyBlockPlayer player, SkyBlockItem item) {
+    private void interact(HypixelPlayer player, SkyBlockItem item) {
         DatapointPetData.UserPetData petData = player.getPetData();
         ItemType type = item.getAttributeHandler().getPotentialType();
         Rarity rarity = item.getAttributeHandler().getRarity();
@@ -83,7 +83,7 @@ public class PetComponent extends SkyBlockItemComponent {
                 .build());
     }
 
-    public List<String> getAbsoluteLore(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
+    public List<String> getAbsoluteLore(@Nullable HypixelPlayer player, SkyBlockItem item) {
         List<String> lore = new ArrayList<>();
         ItemAttributePetData.PetData petData = item.getAttributeHandler().getPetData();
         Rarity rarity = item.getAttributeHandler().getRarity();

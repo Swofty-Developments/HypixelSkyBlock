@@ -4,11 +4,11 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.instance.block.Block;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
-import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointMinionData;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.MinionComponent;
+import net.swofty.type.generic.minion.IslandMinionData;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class PlaceEventRegistry {
     static {
         register("minion", new PlaceEventHandler() {
             @Override
-            public void onPlace(PlayerBlockPlaceEvent event, SkyBlockPlayer player, SkyBlockItem item) {
+            public void onPlace(PlayerBlockPlaceEvent event, HypixelPlayer player, SkyBlockItem item) {
                 if (!HypixelConst.isIslandServer()) {
                     player.sendMessage("§cYou can only place minions on your island!");
                     event.setCancelled(true);
@@ -57,7 +57,7 @@ public class PlaceEventRegistry {
         });
         register("CARROT_CRYSTAL_PLACE", new PlaceEventHandler() {
             @Override
-            public void onPlace(PlayerBlockPlaceEvent event, SkyBlockPlayer player, SkyBlockItem item) {
+            public void onPlace(PlayerBlockPlaceEvent event, HypixelPlayer player, SkyBlockItem item) {
 
             }
         });

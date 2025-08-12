@@ -7,11 +7,11 @@ import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.AbilityComponent;
-import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredAbility;
-import net.swofty.type.skyblockgeneric.user.PlayerAbilityHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.AbilityComponent;
+import net.swofty.type.generic.item.handlers.ability.RegisteredAbility;
+import net.swofty.type.generic.user.PlayerAbilityHandler;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionItemAbilityRightUse implements HypixelEventClass {
 
@@ -20,7 +20,7 @@ public class ActionItemAbilityRightUse implements HypixelEventClass {
     public void run(PlayerUseItemEvent event) {
         ItemStack itemStack = event.getItemStack();
         SkyBlockItem item = new SkyBlockItem(itemStack);
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         UnderstandableSkyBlockItem understandable = item.toUnderstandable();
         String string = understandable.serialize();

@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "runhash",
@@ -17,7 +17,7 @@ public class TestBankHashCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            SkyBlockPlayer player = (SkyBlockPlayer) sender;
+            HypixelPlayer player = (HypixelPlayer) sender;
             ProxyPlayer proxyPlayer = player.asProxyPlayer();
 
             player.sendMessage("§8Sending out request for bank hash...");

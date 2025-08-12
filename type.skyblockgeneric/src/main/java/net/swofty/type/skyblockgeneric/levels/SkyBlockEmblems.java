@@ -3,10 +3,10 @@ package net.swofty.type.skyblockgeneric.levels;
 import lombok.Getter;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.skyblockgeneric.levels.causes.LevelCause;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.generic.levels.causes.LevelCause;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,7 +104,7 @@ public enum SkyBlockEmblems {
         this.emblems = emblems;
     }
 
-    public int amountUnlocked(SkyBlockPlayer player) {
+    public int amountUnlocked(HypixelPlayer player) {
         int amount = 0;
         for (SkyBlockEmblem emblem : emblems) {
             if (player.hasUnlockedXPCause(emblem.cause())) {

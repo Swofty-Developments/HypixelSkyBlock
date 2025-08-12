@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.handlers.anvilcombine;
 
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public record AnvilCombineHandler(
         CombineFunction combineFunction,
@@ -15,11 +15,11 @@ public record AnvilCombineHandler(
 
     @FunctionalInterface
     public interface ValidateFunction {
-        boolean canApply(SkyBlockPlayer player, SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem);
+        boolean canApply(HypixelPlayer player, SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem);
     }
 
     @FunctionalInterface
     public interface CostFunction {
-        int getCost(SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem, SkyBlockPlayer player);
+        int getCost(SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem, HypixelPlayer player);
     }
 }

@@ -5,8 +5,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import net.swofty.proxyapi.ProxyPlayerSet;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -105,11 +105,11 @@ public class CoopDatabase {
             return document;
         }
 
-        public List<SkyBlockPlayer> getOnlineInvitedPlayers() {
+        public List<HypixelPlayer> getOnlineInvitedPlayers() {
             return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> memberInvites.contains(player.getUuid())).toList();
         }
 
-        public List<SkyBlockPlayer> getOnlineMembers() {
+        public List<HypixelPlayer> getOnlineMembers() {
             return SkyBlockGenericLoader.getLoadedPlayers().stream()
                     .filter(player -> members.contains(player.getUuid()))
                     .filter(player -> memberProfiles.contains(player.getProfiles().getCurrentlySelected()))

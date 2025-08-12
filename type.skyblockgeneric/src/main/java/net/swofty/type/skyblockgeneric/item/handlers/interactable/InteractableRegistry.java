@@ -4,9 +4,9 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.entity.hologram.ServerHolograms;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
-import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
-import net.swofty.type.skyblockgeneric.utility.JerryInformation;
+import net.swofty.type.generic.gui.inventories.sbmenu.GUISkyBlockMenu;
+import net.swofty.type.generic.user.SkyBlockIsland;
+import net.swofty.type.generic.utility.JerryInformation;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,15 +1,15 @@
 package net.swofty.type.skyblockgeneric.enchantment.impl;
 
-import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
-import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
-import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
-import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
-import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
-import net.swofty.type.skyblockgeneric.event.value.ValueUpdateEvent;
-import net.swofty.type.skyblockgeneric.event.value.events.MiningValueUpdateEvent;
-import net.swofty.type.skyblockgeneric.user.PlayerEnchantmentHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
+import net.swofty.type.generic.collection.CustomCollectionAward;
+import net.swofty.type.generic.enchantment.EnchantmentType;
+import net.swofty.type.generic.enchantment.abstr.Ench;
+import net.swofty.type.generic.enchantment.abstr.EnchFromTable;
+import net.swofty.type.generic.event.value.SkyBlockValueEvent;
+import net.swofty.type.generic.event.value.ValueUpdateEvent;
+import net.swofty.type.generic.event.value.events.MiningValueUpdateEvent;
+import net.swofty.type.generic.user.PlayerEnchantmentHandler;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
     }
 
     @Override
-    public ApplyLevels getLevelsToApply(@NotNull SkyBlockPlayer player) {
+    public ApplyLevels getLevelsToApply(@NotNull HypixelPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 9,
                 2, 13,
@@ -47,7 +47,7 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {
+    public TableLevels getLevelsFromTableToApply(@NotNull HypixelPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 10,
                 2, 15,

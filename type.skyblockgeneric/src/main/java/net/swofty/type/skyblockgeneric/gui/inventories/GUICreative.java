@@ -15,10 +15,10 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.TrackedUniqueComponent;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.TrackedUniqueComponent;
+import net.swofty.type.generic.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class GUICreative extends HypixelPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    public PaginationList<SkyBlockItem> fillPaged(SkyBlockPlayer player, PaginationList<SkyBlockItem> paged) {
+    public PaginationList<SkyBlockItem> fillPaged(HypixelPlayer player, PaginationList<SkyBlockItem> paged) {
         paged.addAll(Arrays.stream(ItemType.values()).map(SkyBlockItem::new).toList());
 
         List<SkyBlockItem> vanilla = new ArrayList<>(Material.values().stream().map(SkyBlockItem::new).toList());
@@ -58,7 +58,7 @@ public class GUICreative extends HypixelPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    protected void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
+    protected void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
         set(GUIClickableItem.getCloseItem(50));
         set(createSearchItem(this, 48, query));
@@ -72,12 +72,12 @@ public class GUICreative extends HypixelPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
+    public String getTitle(HypixelPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
         return "Creative Menu | Page " + page + "/" + paged.getPageCount();
     }
 
     @Override
-    protected GUIClickableItem createItemFor(SkyBlockItem skyBlockItem, int slot, SkyBlockPlayer player) {
+    protected GUIClickableItem createItemFor(SkyBlockItem skyBlockItem, int slot, HypixelPlayer player) {
         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
                 player, skyBlockItem.getItemStack()
         );
@@ -87,7 +87,7 @@ public class GUICreative extends HypixelPaginatedGUI<SkyBlockItem> {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
 
                 if (e.getClickType().equals(ClickType.RIGHT_CLICK) && stackable) {
@@ -105,7 +105,7 @@ public class GUICreative extends HypixelPaginatedGUI<SkyBlockItem> {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 ArrayList<String> lore = new ArrayList<>(skyBlockItem.getLore());
                 lore.add(" ");
                 if (stackable)

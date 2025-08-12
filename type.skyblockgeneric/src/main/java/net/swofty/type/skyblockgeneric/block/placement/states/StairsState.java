@@ -1,9 +1,9 @@
 package net.swofty.type.skyblockgeneric.block.placement.states;
 
 import net.minestom.server.instance.block.Block;
-import net.swofty.type.skyblockgeneric.block.placement.states.state.Facing;
-import net.swofty.type.skyblockgeneric.block.placement.states.state.Half;
-import net.swofty.type.skyblockgeneric.block.placement.states.state.StairsShape;
+import net.swofty.type.generic.block.placement.states.state.Facing;
+import net.swofty.type.generic.block.placement.states.state.Half;
+import net.swofty.type.generic.block.placement.states.state.StairsShape;
 import org.jetbrains.annotations.NotNull;
 
 public class StairsState extends WaterloggedState {

@@ -5,7 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Changes chat mode",
@@ -22,7 +22,7 @@ public class ChatCommand extends HypixelCommand {
             if (!permissionCheck(sender)) return;
 
             PickerChatType type = context.get(chatType);
-            SkyBlockPlayer player = (SkyBlockPlayer) sender;
+            HypixelPlayer player = (HypixelPlayer) sender;
 
             player.getChatType().switchTo(type.getChatType());
             sender.sendMessage("§aYou are now in the §6" + type.chatType.name() + " §achannel");

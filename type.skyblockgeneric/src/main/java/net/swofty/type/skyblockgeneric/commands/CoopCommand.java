@@ -8,9 +8,9 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.generic.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.Arrays;
@@ -30,7 +30,7 @@ public class CoopCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            SkyBlockPlayer player = (SkyBlockPlayer) sender;
+            HypixelPlayer player = (HypixelPlayer) sender;
 
             if (checkIfAlreadyExisting(player)) return;
 
@@ -40,7 +40,7 @@ public class CoopCommand extends HypixelCommand {
         });
 
         command.addSyntax((sender, context) -> {
-            SkyBlockPlayer player = (SkyBlockPlayer) sender;
+            HypixelPlayer player = (HypixelPlayer) sender;
             String[] players = context.get(args);
 
             if (checkIfAlreadyExisting(player)) return;
@@ -118,7 +118,7 @@ public class CoopCommand extends HypixelCommand {
         }, args);
     }
 
-    private boolean checkIfAlreadyExisting(SkyBlockPlayer player) {
+    private boolean checkIfAlreadyExisting(HypixelPlayer player) {
         CoopDatabase.Coop coop = CoopDatabase.getFromMember(player.getUuid());
 
         if (coop != null) {

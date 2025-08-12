@@ -7,18 +7,18 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointQuiver;
+import net.swofty.type.generic.collection.CustomCollectionAward;
+import net.swofty.type.generic.data.datapoints.DatapointQuiver;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.ArrowComponent;
-import net.swofty.type.skyblockgeneric.item.components.QuiverDisplayComponent;
-import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.ArrowComponent;
+import net.swofty.type.generic.item.components.QuiverDisplayComponent;
+import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.generic.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.List;
 
@@ -26,11 +26,11 @@ public class ActionPlayerChangeHypixelMenuDisplay implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
     public void run(PlayerChangeHeldSlotEvent event) {
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         runCheck(player);
     }
 
-    public static void runCheck(SkyBlockPlayer player) {
+    public static void runCheck(HypixelPlayer player) {
         SkyBlockItem switchedTo = new SkyBlockItem(player.getItemInMainHand());
         if (switchedTo.isNA() || switchedTo.toConfigurableItem() == null) {
             setMainMenu(player);
@@ -94,7 +94,7 @@ public class ActionPlayerChangeHypixelMenuDisplay implements HypixelEventClass {
         setMainMenu(player);
     }
 
-    public static void setMainMenu(SkyBlockPlayer player) {
+    public static void setMainMenu(HypixelPlayer player) {
         for (int index = 0; index < player.getInventory().getSize(); index++) {
             SkyBlockItem item = new SkyBlockItem(player.getInventory().getItemStack(index));
             if (item.hasComponent(ArrowComponent.class)) {

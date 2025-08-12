@@ -17,12 +17,12 @@ import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
-import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
-import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
-import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.crafting.ShapedRecipe;
+import net.swofty.type.generic.item.crafting.ShapelessRecipe;
+import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.generic.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
     }
 
     @Override
-    protected PaginationList<SkyBlockRecipe> fillPaged(SkyBlockPlayer player, PaginationList<SkyBlockRecipe> paged) {
+    protected PaginationList<SkyBlockRecipe> fillPaged(HypixelPlayer player, PaginationList<SkyBlockRecipe> paged) {
         paged.addAll(ShapedRecipe.CACHED_RECIPES);
         paged.addAll(ShapelessRecipe.CACHED_RECIPES);
 
@@ -100,7 +100,7 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
     }
 
     @Override
-    protected void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
+    protected void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
         set(createSearchItem(this, 50, query));
@@ -112,7 +112,7 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
 
                 ArrayList<SkyBlockRecipe> typeRecipes = new ArrayList<>();
                 ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
@@ -165,12 +165,12 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
     }
 
     @Override
-    protected String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<SkyBlockRecipe> paged) {
+    protected String getTitle(HypixelPlayer player, String query, int page, PaginationList<SkyBlockRecipe> paged) {
         return "(" + page + "/" + paged.getPages().size() + ") " + StringUtility.toNormalCase(type.name()) + " Recipes";
     }
 
     @Override
-    protected GUIClickableItem createItemFor(SkyBlockRecipe item, int slot, SkyBlockPlayer player) {
+    protected GUIClickableItem createItemFor(SkyBlockRecipe item, int slot, HypixelPlayer player) {
         SkyBlockRecipe.CraftingResult result = (SkyBlockRecipe.CraftingResult) item.getCanCraft().apply(player);
         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
                 player, item.getResult().getItemStack()
@@ -180,7 +180,7 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     new GUIRecipe(
                             item.getResult().getAttributeHandler().getPotentialType(),
                             GUIRecipeCategory.this).open(player);
@@ -188,7 +188,7 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     ArrayList<String> lore = new ArrayList<>(
                             itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList()
                     );
@@ -205,13 +205,13 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     player.sendMessage("§cYou haven't unlocked that recipe!");
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     List<String> lore = Arrays.asList(result.errorMessage());
                     // Add gray text to the start of each line
                     lore = lore.stream().map(line -> "§7" + line).toList();

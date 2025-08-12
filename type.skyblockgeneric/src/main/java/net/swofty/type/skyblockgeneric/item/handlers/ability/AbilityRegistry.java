@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.item.handlers.ability;
 
-import net.swofty.type.skyblockgeneric.item.handlers.ability.abilities.BuildersWandAbility;
+import net.swofty.type.generic.item.handlers.ability.abilities.BuildersWandAbility;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -7,16 +7,16 @@ import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.HashMap;
 
 public class ActionPlayerFall implements HypixelEventClass {
-    public static HashMap<SkyBlockPlayer, Integer> fallHeight = new HashMap<>();
+    public static HashMap<HypixelPlayer, Integer> fallHeight = new HashMap<>();
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(PlayerMoveEvent event) {
-        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         Pos newPosition = event.getNewPosition();
         Pos currentPosition = player.getPosition();
 

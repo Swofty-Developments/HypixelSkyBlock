@@ -12,20 +12,20 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags.GUIYourBags;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.collection.GUICollections;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.fasttravel.GUIFastTravel;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.profiles.GUIProfileManagement;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.questlog.GUIMissionLog;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipeBook;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.skills.GUISkills;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.storage.GUIStorage;
+import net.swofty.type.generic.gui.inventories.sbmenu.bags.GUIYourBags;
+import net.swofty.type.generic.gui.inventories.sbmenu.collection.GUICollections;
+import net.swofty.type.generic.gui.inventories.sbmenu.fasttravel.GUIFastTravel;
+import net.swofty.type.generic.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
+import net.swofty.type.generic.gui.inventories.sbmenu.profiles.GUIProfileManagement;
+import net.swofty.type.generic.gui.inventories.sbmenu.questlog.GUIMissionLog;
+import net.swofty.type.generic.gui.inventories.sbmenu.recipe.GUIRecipeBook;
+import net.swofty.type.generic.gui.inventories.sbmenu.skills.GUISkills;
+import net.swofty.type.generic.gui.inventories.sbmenu.storage.GUIStorage;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
-import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
+import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.type.generic.levels.SkyBlockLevelRequirement;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.user.statistics.PlayerStatistics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +40,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(13) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUISkyBlockProfile().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7View your equipment, stats, and more!", "§e "));
                 List<String> stats = new ArrayList<>(List.of("Health", "Defense", "Speed", "Strength", "Intelligence",
@@ -72,13 +72,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUISkyBlockLevels().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 SkyBlockLevelRequirement levelRequirement = player.getSkyBlockExperience().getLevel();
                 SkyBlockLevelRequirement nextLevel = levelRequirement.getNextLevel();
 
@@ -100,13 +100,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(29) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIYourBags().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStackHead("§aYour Bags", "961a918c0c49ba8d053e522cb91abc74689367b4d8aa06bfc1ba9154730985ff", 1,
                         "§7Different bags allow you to store",
                         "§7many different items inside!",
@@ -118,13 +118,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(30) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIPets().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aPets", Material.BONE, 1,
                         "§7View and manage all of your",
                         "§7Pets.",
@@ -143,13 +143,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(21) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIRecipeBook().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 List<String> lore = new ArrayList<>(List.of(
                         "§7Through your adventure, you will",
                         "§7unlock recipes for all kinds of",
@@ -168,13 +168,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(25) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIStorage().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aStorage", Material.CHEST, 1,
                         "§7Store global items that you",
                         "§7want to access at any time",
@@ -188,13 +188,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(23) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIMissionLog().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aQuest Log", Material.WRITABLE_BOOK, 1,
                         "§7View your active quests, progress",
                         "§7and rewards.",
@@ -207,13 +207,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(19) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUISkills().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aYour Skills", Material.DIAMOND_SWORD, 1,
                         "§7View your Skill progression and",
                         "§7rewards.",
@@ -226,13 +226,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(20) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUICollections().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 List<String> lore = new ArrayList<>(List.of(
                         "§7View all of the items available in",
                         "§7SkyBlock. Collect more of an item to",
@@ -252,13 +252,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(31) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUICrafting().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aCrafting Table", Material.CRAFTING_TABLE, 1,
                         "§7Opens the crafting grid.",
                         " ",
@@ -269,7 +269,7 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(47) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
                     player.closeInventory();
                     player.sendTo(ServerType.SKYBLOCK_ISLAND);
@@ -281,7 +281,7 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStackHead("§bFast Travel", "f151cffdaf303673531a7651b36637cad912ba485643158e548d59b2ead5011", 1,
                         "§7Teleport to islands you've already",
                         "§7visited.",
@@ -295,13 +295,13 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(48) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIProfileManagement().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aProfile Management", Material.NAME_TAG, 1,
                         "§7You can have multiple SkyBlock",
                         "§7profiles at the same time.",

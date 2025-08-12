@@ -1,9 +1,9 @@
 package net.swofty.type.island.tab;
 
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointRank;
-import net.swofty.type.skyblockgeneric.tab.TablistModule;
-import net.swofty.type.skyblockgeneric.tab.TablistSkinRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointRank;
+import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.generic.tab.TablistSkinRegistry;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,8 +11,8 @@ import java.util.List;
 
 public class IslandMemberModule extends TablistModule {
     @Override
-    public List<TablistEntry> getEntries(SkyBlockPlayer player) {
-        ArrayList<SkyBlockPlayer> toShow;
+    public List<TablistEntry> getEntries(HypixelPlayer player) {
+        ArrayList<HypixelPlayer> toShow;
         if (player.isCoop())
             toShow = new ArrayList<>(player.getSkyBlockIsland().getCoop().getOnlineMembers());
         else
@@ -33,7 +33,7 @@ public class IslandMemberModule extends TablistModule {
                 continue;
             }
 
-            SkyBlockPlayer tablistPlayer = toShow.get(x);
+            HypixelPlayer tablistPlayer = toShow.get(x);
 
             entries.add(new TablistEntry(tablistPlayer.getFullDisplayName(), TablistSkinRegistry.GRAY));
         }

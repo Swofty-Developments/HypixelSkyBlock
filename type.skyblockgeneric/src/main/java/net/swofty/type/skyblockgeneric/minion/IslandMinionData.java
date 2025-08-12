@@ -8,14 +8,14 @@ import net.minestom.server.instance.SharedInstance;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
-import net.swofty.type.skyblockgeneric.entity.MinionEntityImpl;
-import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.MinionFuelComponent;
-import net.swofty.type.skyblockgeneric.item.components.MinionUpgradeComponent;
-import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensionData;
-import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionFuelExtension;
-import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
+import net.swofty.type.generic.entity.MinionEntityImpl;
+import net.swofty.type.generic.item.ItemQuantifiable;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.MinionFuelComponent;
+import net.swofty.type.generic.item.components.MinionUpgradeComponent;
+import net.swofty.type.generic.minion.extension.MinionExtensionData;
+import net.swofty.type.generic.minion.extension.extensions.MinionFuelExtension;
+import net.swofty.type.generic.user.SkyBlockIsland;
 
 import java.util.*;
 

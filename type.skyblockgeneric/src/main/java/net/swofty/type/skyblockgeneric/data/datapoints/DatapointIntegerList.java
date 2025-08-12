@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.data.datapoints;
 
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.generic.data.SkyBlockDatapoint;
 
 import java.util.ArrayList;
 import java.util.List;

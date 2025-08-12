@@ -4,15 +4,15 @@ import net.minestom.server.event.item.PlayerBeginItemUseEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.DisableAnimationComponent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.DisableAnimationComponent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionItemDisableEatingAnimation implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(PlayerBeginItemUseEvent event) {
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
 
         if (!(item.hasComponent(DisableAnimationComponent.class))) return;

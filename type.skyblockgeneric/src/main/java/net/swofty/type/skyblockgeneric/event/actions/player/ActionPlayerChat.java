@@ -4,15 +4,15 @@ import net.minestom.server.event.player.PlayerChatEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.generic.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.generic.data.SkyBlockDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.party.PartyManager;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.party.PartyManager;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
     public void run(PlayerChatEvent event) {
-        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         event.setCancelled(true);
 
         SkyBlockDataHandler dataHandler = player.getDataHandler();
@@ -48,7 +48,7 @@ public class ActionPlayerChat implements HypixelEventClass {
             return;
         }
 
-        List<SkyBlockPlayer> receivers = SkyBlockGenericLoader.getLoadedPlayers();
+        List<HypixelPlayer> receivers = SkyBlockGenericLoader.getLoadedPlayers();
 
         receivers.removeIf(receiver -> {
             return HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_ISLAND &&

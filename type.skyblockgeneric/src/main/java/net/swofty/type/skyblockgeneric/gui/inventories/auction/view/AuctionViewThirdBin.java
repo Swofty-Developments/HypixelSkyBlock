@@ -13,21 +13,21 @@ import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObje
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.generic.data.datapoints.DatapointUUIDList;
+import net.swofty.type.generic.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionViewItem;
+import net.swofty.type.generic.gui.inventories.auction.GUIAuctionViewItem;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 public class AuctionViewThirdBin implements AuctionView {
     @Override
-    public void open(GUIAuctionViewItem gui, AuctionItem item, SkyBlockPlayer player) {
+    public void open(GUIAuctionViewItem gui, AuctionItem item, HypixelPlayer player) {
         // Check if BIN item has already been bought
         if (!item.getBids().isEmpty()) {
             // Check if bidder is the player
@@ -39,7 +39,7 @@ public class AuctionViewThirdBin implements AuctionView {
                     gui.set(new GUIClickableItem(31) {
                         @Override
                         public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                             player.sendMessage("§8Claiming your item...");
                             activeBids.setValue(new ArrayList<>(activeBids.getValue()) {{
                                 remove(item.getUuid());
@@ -56,12 +56,12 @@ public class AuctionViewThirdBin implements AuctionView {
 
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                             return ItemStackCreator.getStack("§aClaim Item", Material.GOLD_BLOCK, 1,
                                     " ",
                                     "§7This item has been sold!",
                                     " ",
-                                    SkyBlockPlayer.getDisplayName(item.getBids().getFirst().uuid()) + " §7bought it for §6" + item.getBids().getFirst().value() + " coins",
+                                    HypixelPlayer.getDisplayName(item.getBids().getFirst().uuid()) + " §7bought it for §6" + item.getBids().getFirst().value() + " coins",
                                     " ",
                                     "§eClick to claim item!");
                         }
@@ -70,12 +70,12 @@ public class AuctionViewThirdBin implements AuctionView {
                     gui.set(new GUIItem(31) {
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                             return ItemStackCreator.getStack("§cItem Has Been Sold", Material.BEDROCK, 1,
                                     " ",
                                     "§7This item has been sold!",
                                     " ",
-                                    SkyBlockPlayer.getDisplayName(item.getBids().getFirst().uuid()) + " §7bought it for §6" + item.getBids().getFirst().value() + " coins",
+                                    HypixelPlayer.getDisplayName(item.getBids().getFirst().uuid()) + " §7bought it for §6" + item.getBids().getFirst().value() + " coins",
                                     " ",
                                     "§cYou have already claimed this item!");
                         }
@@ -87,12 +87,12 @@ public class AuctionViewThirdBin implements AuctionView {
             gui.set(new GUIItem(31) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStack("§cItem Has Been Sold", Material.BEDROCK, 1,
                             " ",
                             "§7This item has been sold!",
                             " ",
-                            SkyBlockPlayer.getDisplayName(item.getBids().getFirst().uuid()) + " §7bought it for §6" + item.getBids().getFirst().value() + " coins",
+                            HypixelPlayer.getDisplayName(item.getBids().getFirst().uuid()) + " §7bought it for §6" + item.getBids().getFirst().value() + " coins",
                             " ",
                             "§7You can no longer purchase this item.");
                 }
@@ -103,7 +103,7 @@ public class AuctionViewThirdBin implements AuctionView {
         gui.set(new GUIClickableItem(31) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 double coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
                 if (coins < item.getStartingPrice()) {
                     player.sendMessage("§cYou do not have enough coins to purchase this item!");
@@ -167,7 +167,7 @@ public class AuctionViewThirdBin implements AuctionView {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§6Buy Item Right Now", Material.GOLD_NUGGET, 1,
                         " ",
                         "§7Price: §6" + item.getStartingPrice() + " coins",

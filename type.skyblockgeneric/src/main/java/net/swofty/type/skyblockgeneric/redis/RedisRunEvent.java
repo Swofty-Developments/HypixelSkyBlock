@@ -3,9 +3,9 @@ package net.swofty.type.skyblockgeneric.redis;
 import net.minestom.server.event.Event;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.generic.SkyBlockGenericLoader;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.json.JSONObject;
 
 import java.lang.reflect.InvocationTargetException;
@@ -23,11 +23,11 @@ public class RedisRunEvent implements ProxyToClient {
         String eventClassName = message.getString("event");
         String eventArgs = message.getString("data");
 
-        SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
+        HypixelPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
         if (player == null) return new JSONObject();
 
         // Access static method
-        // public static CollectionUpdateEvent fromProxyUnderstandable(SkyBlockPlayer player, String string) {
+        // public static CollectionUpdateEvent fromProxyUnderstandable(HypixelPlayer player, String string) {
         // with the arguments player and eventArgsWithoutPlayerName
 
         Class<?> eventClass = null;
@@ -39,7 +39,7 @@ public class RedisRunEvent implements ProxyToClient {
 
         Event event = null;
         try {
-            event = (Event) eventClass.getMethod("fromProxyUnderstandable", SkyBlockPlayer.class, String.class)
+            event = (Event) eventClass.getMethod("fromProxyUnderstandable", HypixelPlayer.class, String.class)
                     .invoke(null, player, eventArgs);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();

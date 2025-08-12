@@ -4,8 +4,8 @@ package net.swofty.type.skyblockgeneric.string;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.function.BiFunction;
 
@@ -84,13 +84,13 @@ public enum PlayerTemplates {
     }),
     ;
 
-    private final BiFunction<SkyBlockPlayer, String, Component> processor;
+    private final BiFunction<HypixelPlayer, String, Component> processor;
 
-    PlayerTemplates(BiFunction<SkyBlockPlayer, String, Component> processor) {
+    PlayerTemplates(BiFunction<HypixelPlayer, String, Component> processor) {
         this.processor = processor;
     }
 
-    public Component process(SkyBlockPlayer player, String input) {
+    public Component process(HypixelPlayer player, String input) {
         return processor.apply(player, input);
     }
 }

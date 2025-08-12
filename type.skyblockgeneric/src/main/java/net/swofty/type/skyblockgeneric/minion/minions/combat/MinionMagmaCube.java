@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.minion.minions.combat;
 
 import net.minestom.server.color.Color;
 import net.minestom.server.item.Material;
-import net.swofty.type.skyblockgeneric.minion.MinionAction;
-import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
+import net.swofty.type.generic.minion.MinionAction;
+import net.swofty.type.generic.minion.SkyBlockMinion;
 
 import java.util.List;
 

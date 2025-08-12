@@ -2,9 +2,9 @@ package net.swofty.type.skyblockgeneric.enchantment.abstr;
 
 import lombok.NonNull;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.enchantment.EnchantmentSource;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
+import net.swofty.type.generic.enchantment.EnchantmentSource;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.groups.EnchantItemGroups;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public interface Ench {
 
     String getDescription(int level);
 
-    ApplyLevels getLevelsToApply(@NonNull SkyBlockPlayer player);
+    ApplyLevels getLevelsToApply(@NonNull HypixelPlayer player);
 
     List<EnchantItemGroups> getGroups();
 
@@ -22,7 +22,7 @@ public interface Ench {
         return ItemStatistics.empty();
     }
 
-    default List<EnchantmentSource> getSources(SkyBlockPlayer player) {
+    default List<EnchantmentSource> getSources(HypixelPlayer player) {
         List<EnchantmentSource> sources = new ArrayList<>(List.of());
 
         if (this instanceof EnchFromTable tableEnchant)

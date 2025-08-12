@@ -15,18 +15,18 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.enchantment.EnchantmentSource;
-import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
-import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
+import net.swofty.type.generic.enchantment.EnchantmentSource;
+import net.swofty.type.generic.enchantment.EnchantmentType;
+import net.swofty.type.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.EnchantableComponent;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
+import net.swofty.type.generic.item.ItemAttributeHandler;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.EnchantableComponent;
+import net.swofty.type.generic.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.groups.EnchantItemGroups;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +60,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack(
                         "§dBookshelf Power", Material.BOOKSHELF, 1,
                         "§7Stronger enchantments require",
@@ -75,7 +75,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
         set(new GUIItem(50) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack(
                         "§aEnchantments Guide", Material.BOOK, 1,
                         "§7View a complete list of all",
@@ -88,7 +88,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
         set(new GUIItem(28) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack(
                         "§aEnchant Item", Material.ENCHANTING_TABLE, 1,
                         "§7Add and remove enchantments from",
@@ -115,7 +115,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
             set(new GUIItem(23) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§cEnchant Item", Material.GRAY_DYE, 1,
                             "§7Place an item in the open slot",
@@ -126,7 +126,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
             set(new GUIClickableItem(19) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) return;
@@ -142,7 +142,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -153,7 +153,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
         set(new GUIClickableItem(19) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 ItemStack stack = e.getCursorItem();
 
                 if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -172,7 +172,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
             }
         });
@@ -184,7 +184,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
             set(new GUIItem(23) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§cInvalid Item!", Material.RED_DYE, 1,
                             "§7You cannot enchant stacked items!"
@@ -206,7 +206,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
             set(new GUIItem(23) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§cCannot Enchant Item!", Material.RED_DYE, 1,
                             "§7This item cannot be enchanted!"
@@ -226,7 +226,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                 set(new GUIClickableItem(PAGINATED_SLOTS_LIST_ENCHANTS[finalI]) {
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                         if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
                             player.sendMessage("§cThis enchantment requires " +
                                     enchantmentType.getEnchFromTable().getRequiredBookshelfPower() + " Bookshelf Power!");
@@ -238,7 +238,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                         ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
 
                         List<String> lore = new ArrayList<>();
@@ -294,7 +294,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     int levelCost = selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel);
                     List<String> lore = new ArrayList<>();
                     StringUtility.splitByWordAndLength(selected.getDescription(finalLevel, player), 30)
@@ -346,7 +346,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
 
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     if (e.getClickedItem().material() == Material.GRAY_DYE)
                         return;
 
@@ -390,13 +390,13 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
         set(new GUIClickableItem(45) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 updateFromItem(item, null);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.createNamedItemStack(
                         Material.ARROW, "§aGo Back"
                 );
@@ -413,7 +413,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(19)));
+        ((HypixelPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(19)));
     }
 
     @Override

@@ -3,11 +3,11 @@ package net.swofty.type.skyblockgeneric.item.components;
 import lombok.Getter;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.skyblockgeneric.warps.TravelScrollType;
+import net.swofty.type.generic.warps.TravelScrollType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class TravelScrollComponent extends SkyBlockItemComponent {
         addInheritedComponent(new TrackedUniqueComponent());
     }
 
-    private void onInteract(SkyBlockPlayer player, SkyBlockItem item) {
+    private void onInteract(HypixelPlayer player, SkyBlockItem item) {
         List<String> scrolls = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.USED_SCROLLS, DatapointStringList.class).getValue();
 
         if (scrolls.contains(getTravelScrollType().getInternalName())) {

@@ -1,9 +1,9 @@
 package net.swofty.type.skyblockgeneric.levels.causes;
 
 import lombok.Getter;
-import net.swofty.type.skyblockgeneric.levels.abstr.CauseEmblem;
-import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.levels.abstr.CauseEmblem;
+import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 @Getter
 public class LevelCause extends SkyBlockLevelCauseAbstr implements CauseEmblem {
@@ -29,7 +29,7 @@ public class LevelCause extends SkyBlockLevelCauseAbstr implements CauseEmblem {
     }
 
     @Override
-    public boolean shouldDisplayMessage(SkyBlockPlayer player) {
+    public boolean shouldDisplayMessage(HypixelPlayer player) {
         return false; // Only used for emblems, should not display
     }
 }

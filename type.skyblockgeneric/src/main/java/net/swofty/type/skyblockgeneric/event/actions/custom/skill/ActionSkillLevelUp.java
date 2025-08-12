@@ -7,10 +7,10 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.skill.SkillCategory;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.SkillUpdateEvent;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.skill.SkillCategory;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.Arrays;
 
@@ -21,7 +21,7 @@ public class ActionSkillLevelUp implements HypixelEventClass {
     public void run(SkillUpdateEvent event) {
         if (event.getNewValueRaw() <= event.getOldValueRaw()) return;
 
-        SkyBlockPlayer player = event.getPlayer();
+        HypixelPlayer player = event.getPlayer();
         SkillCategories skillCategory = event.getSkillCategory();
 
         int oldLevel = skillCategory.asCategory().getLevel(event.getOldValueRaw());

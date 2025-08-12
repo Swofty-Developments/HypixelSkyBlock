@@ -15,30 +15,30 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.generic.SkyBlockGenericLoader;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
-import net.swofty.type.skyblockgeneric.item.ItemLore;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.GemstoneComponent;
-import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
-import net.swofty.type.skyblockgeneric.item.components.TrackedUniqueComponent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.ItemAttributeHandler;
+import net.swofty.type.generic.item.ItemLore;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.GemstoneComponent;
+import net.swofty.type.generic.item.components.SkullHeadComponent;
+import net.swofty.type.generic.item.components.TrackedUniqueComponent;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.json.JSONObject;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public class PlayerItemUpdater {
-    public static ItemStack.Builder playerUpdate(SkyBlockPlayer player, ItemStack stack) {
+    public static ItemStack.Builder playerUpdate(HypixelPlayer player, ItemStack stack) {
         return playerUpdateFull(player, stack, false).getValue();
     }
 
-    public static ItemStack.Builder playerUpdate(SkyBlockPlayer player, ItemStack stack, boolean isOwnedByPlayer) {
+    public static ItemStack.Builder playerUpdate(HypixelPlayer player, ItemStack stack, boolean isOwnedByPlayer) {
         return playerUpdateFull(player, stack, isOwnedByPlayer).getValue();
     }
 
-    public static Map.Entry<SkyBlockItem, ItemStack.Builder> playerUpdateFull(SkyBlockPlayer player, ItemStack stack, boolean isOwnedByPlayer) {
+    public static Map.Entry<SkyBlockItem, ItemStack.Builder> playerUpdateFull(HypixelPlayer player, ItemStack stack, boolean isOwnedByPlayer) {
         if (stack.hasTag(Tag.Boolean("uneditable")) && stack.getTag(Tag.Boolean("uneditable")))
             return Map.entry(new SkyBlockItem(stack), ItemStackCreator.getFromStack(stack));
 

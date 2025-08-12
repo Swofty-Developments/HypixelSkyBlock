@@ -10,13 +10,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
-import net.swofty.type.skyblockgeneric.block.impl.BlockBreakable;
-import net.swofty.type.skyblockgeneric.block.impl.BlockPlaceable;
-import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.block.SkyBlockBlock;
+import net.swofty.type.generic.block.impl.BlockBreakable;
+import net.swofty.type.generic.block.impl.BlockPlaceable;
+import net.swofty.type.generic.block.impl.CustomSkyBlockBlock;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.SkullHeadComponent;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.BlockUtility;
 
 public class BlockDecoration implements CustomSkyBlockBlock, BlockPlaceable, BlockBreakable {
@@ -29,12 +29,12 @@ public class BlockDecoration implements CustomSkyBlockBlock, BlockPlaceable, Blo
     }
 
     @Override
-    public @NonNull Boolean shouldPlace(SkyBlockPlayer player) {
+    public @NonNull Boolean shouldPlace(HypixelPlayer player) {
         return HypixelConst.isIslandServer();
     }
 
     @Override
-    public @NonNull Boolean shouldDestroy(SkyBlockPlayer player) {
+    public @NonNull Boolean shouldDestroy(HypixelPlayer player) {
         return HypixelConst.isIslandServer();
     }
 
@@ -42,7 +42,7 @@ public class BlockDecoration implements CustomSkyBlockBlock, BlockPlaceable, Blo
     public void onPlace(PlayerBlockPlaceEvent event, SkyBlockBlock block) {
         ItemStack itemStack = event.getPlayer().getItemInMainHand();
         SkyBlockItem item = new SkyBlockItem(itemStack);
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         if (item.getAttributeHandler().getPotentialType() == null) return;
         if (!(item.hasComponent(SkullHeadComponent.class))) return;
@@ -71,7 +71,7 @@ public class BlockDecoration implements CustomSkyBlockBlock, BlockPlaceable, Blo
 
         SkyBlockItem skyBlockItem = new SkyBlockItem(ItemType.valueOf(type));
 
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         player.addAndUpdateItem(skyBlockItem);
     }
 }

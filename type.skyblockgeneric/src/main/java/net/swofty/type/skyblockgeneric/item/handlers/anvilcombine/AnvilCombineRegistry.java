@@ -2,12 +2,12 @@ package net.swofty.type.skyblockgeneric.item.handlers.anvilcombine;
 
 import net.swofty.commons.item.PotatoType;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
-import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.EnchantableComponent;
-import net.swofty.type.skyblockgeneric.item.components.HotPotatoableComponent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
+import net.swofty.type.generic.enchantment.SkyBlockEnchantment;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.EnchantableComponent;
+import net.swofty.type.generic.item.components.HotPotatoableComponent;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.groups.EnchantItemGroups;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +43,7 @@ public class AnvilCombineRegistry {
                     }
                     return false;
                 },
-                (SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem, SkyBlockPlayer player) -> 0
+                (SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem, HypixelPlayer player) -> 0
         ));
         register("ENCHANTED_BOOK", new AnvilCombineHandler(
                 (upgradeItem, sacrificeItem) -> {
@@ -70,7 +70,7 @@ public class AnvilCombineRegistry {
                     }
                     return false;
                 }),
-                (SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem, SkyBlockPlayer player) -> {
+                (SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem, HypixelPlayer player) -> {
                     List<SkyBlockEnchantment> enchantments = sacrificeItem.getAttributeHandler().getEnchantments().toList();
                     return enchantments.stream()
                             .mapToInt(enchant -> enchant.type().getApplyCost(enchant.level(), player))

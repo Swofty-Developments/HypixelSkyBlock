@@ -2,12 +2,12 @@ package net.swofty.type.skyblockgeneric.string;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class PlayerTemplateProcessor {
-    private final SkyBlockPlayer player;
+    private final HypixelPlayer player;
 
-    public PlayerTemplateProcessor(SkyBlockPlayer player) {
+    public PlayerTemplateProcessor(HypixelPlayer player) {
         this.player = player;
     }
 

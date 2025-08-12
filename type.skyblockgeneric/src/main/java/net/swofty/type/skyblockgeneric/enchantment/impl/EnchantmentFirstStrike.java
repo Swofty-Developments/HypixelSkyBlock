@@ -3,13 +3,13 @@ package net.swofty.type.skyblockgeneric.enchantment.impl;
 import net.minestom.server.entity.LivingEntity;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
-import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
-import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
-import net.swofty.type.skyblockgeneric.enchantment.abstr.EventBasedEnchant;
-import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
+import net.swofty.type.generic.collection.CustomCollectionAward;
+import net.swofty.type.generic.enchantment.abstr.Ench;
+import net.swofty.type.generic.enchantment.abstr.EnchFromTable;
+import net.swofty.type.generic.enchantment.abstr.EventBasedEnchant;
+import net.swofty.type.generic.entity.mob.SkyBlockMob;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class EnchantmentFirstStrike implements Ench, EnchFromTable, EventBasedEn
     }
 
     @Override
-    public ApplyLevels getLevelsToApply(@NotNull SkyBlockPlayer player) {
+    public ApplyLevels getLevelsToApply(@NotNull HypixelPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 3, 36,
                 4, 48,
@@ -51,7 +51,7 @@ public class EnchantmentFirstStrike implements Ench, EnchFromTable, EventBasedEn
     }
 
     @Override
-    public ItemStatistics getStatisticsOnDamage(SkyBlockPlayer causer, LivingEntity receiver, int level) {
+    public ItemStatistics getStatisticsOnDamage(HypixelPlayer causer, LivingEntity receiver, int level) {
         SkyBlockMob mob;
         if (receiver instanceof SkyBlockMob skyBlockMob) {
             mob = skyBlockMob;
@@ -64,7 +64,7 @@ public class EnchantmentFirstStrike implements Ench, EnchFromTable, EventBasedEn
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {
+    public TableLevels getLevelsFromTableToApply(@NotNull HypixelPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 20,
                 2, 30,

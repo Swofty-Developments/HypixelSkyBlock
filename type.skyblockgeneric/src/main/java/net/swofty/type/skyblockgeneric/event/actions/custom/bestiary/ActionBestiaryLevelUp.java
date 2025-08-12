@@ -2,13 +2,13 @@ package net.swofty.type.skyblockgeneric.event.actions.custom.bestiary;
 
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
-import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
+import net.swofty.type.generic.bestiary.BestiaryData;
+import net.swofty.type.generic.entity.mob.BestiaryMob;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.event.custom.BestiaryUpdateEvent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.BestiaryUpdateEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class ActionBestiaryLevelUp implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(BestiaryUpdateEvent event) {
-        SkyBlockPlayer player = event.getPlayer();
+        HypixelPlayer player = event.getPlayer();
         BestiaryMob mob = event.getBestiaryMob();
         int oldKills = event.getOldTotalValue();
         int newKills = event.getNewTotalValue();

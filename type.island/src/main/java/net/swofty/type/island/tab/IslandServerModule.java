@@ -1,20 +1,20 @@
 package net.swofty.type.island.tab;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.type.skyblockgeneric.SkyBlockConst;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
-import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
-import net.swofty.type.skyblockgeneric.minion.MinionHandler;
-import net.swofty.type.skyblockgeneric.tab.TablistModule;
-import net.swofty.type.skyblockgeneric.tab.TablistSkinRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.SkyBlockConst;
+import net.swofty.type.generic.data.datapoints.DatapointMinionData;
+import net.swofty.type.generic.minion.IslandMinionData;
+import net.swofty.type.generic.minion.MinionHandler;
+import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.generic.tab.TablistSkinRegistry;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class IslandServerModule extends TablistModule {
     @Override
-    public List<TablistEntry> getEntries(SkyBlockPlayer player) {
+    public List<TablistEntry> getEntries(HypixelPlayer player) {
         List<IslandMinionData.IslandMinion> minions = player.getSkyBlockIsland().getMinionData().getMinions();
         DatapointMinionData.ProfileMinionData data = player.getSkyBlockData().get(
                 SkyBlockDataHandler.Data.MINION_DATA,

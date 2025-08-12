@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.user;
 
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.generic.item.SkyBlockItem;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -3,10 +3,10 @@ package net.swofty.type.hub.events;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.type.hub.gui.GUIRunicPedestal;
 import net.swofty.type.hub.runes.RuneEntityImpl;
-import net.swofty.type.skyblockgeneric.event.EventNodes;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.SkyBlockEvent;
+import net.swofty.type.generic.event.SkyBlockEventClass;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerClicksOnRunePedestal implements SkyBlockEventClass {
 
@@ -15,6 +15,6 @@ public class ActionPlayerClicksOnRunePedestal implements SkyBlockEventClass {
     public void run(PlayerEntityInteractEvent event) {
         if (!(event.getTarget() instanceof RuneEntityImpl)) return;
 
-        new GUIRunicPedestal().open((SkyBlockPlayer) event.getPlayer());
+        new GUIRunicPedestal().open((HypixelPlayer) event.getPlayer());
     }
 }

@@ -10,7 +10,7 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIBuilder extends HypixelInventoryGUI {
     public GUIBuilder() {
@@ -22,26 +22,26 @@ public class GUIBuilder extends HypixelInventoryGUI {
         set(new GUIClickableItem(10) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIShopBuilderWoodworking().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aWoodworking", Material.OAK_PLANKS, 1, "§7Wood-related blocks!");
             }
         });
         set(new GUIClickableItem(12) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIShopBuilderRocksBricks().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aRocks & Bricks", Material.STONE, 1,
                         "§7Rocks, stones, sands and brick",
                         "§7blocks.");
@@ -50,13 +50,13 @@ public class GUIBuilder extends HypixelInventoryGUI {
         set(new GUIClickableItem(14) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIShopBuilderGreenThumb().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aGreen Thumb", Material.ROSE_BUSH, 1,
                         "§7Everything you need to grow a",
                         "§7nice garden.");
@@ -65,13 +65,13 @@ public class GUIBuilder extends HypixelInventoryGUI {
         set(new GUIClickableItem(16) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIShopBuilderVariety().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStackHead("§aVariety", "3c2d8e8ec2737b599a48fc07ea58b806969e6021802019992dda32a653794df6", 1,
                         "§7Weird blocks and an assortment",
                         "§7of decorative fruits.");

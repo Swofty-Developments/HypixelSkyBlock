@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.utility;
 
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.EntityDamage;
-import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
+import net.swofty.type.generic.entity.mob.SkyBlockMob;
 import org.tinylog.Logger;
 
 public record DeathMessageCreator(Damage type) {

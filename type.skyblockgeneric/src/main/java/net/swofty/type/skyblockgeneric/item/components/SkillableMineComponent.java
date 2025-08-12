@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
+import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.generic.skill.SkillCategories;
 
 public class SkillableMineComponent extends SkyBlockItemComponent {
     @Getter

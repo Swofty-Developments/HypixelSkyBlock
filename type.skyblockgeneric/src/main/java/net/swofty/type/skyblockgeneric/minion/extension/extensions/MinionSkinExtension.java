@@ -9,14 +9,14 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIMinion;
+import net.swofty.type.generic.gui.inventories.GUIMinion;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.MinionSkinComponent;
-import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
-import net.swofty.type.skyblockgeneric.minion.extension.MinionExtension;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.MinionSkinComponent;
+import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.generic.minion.IslandMinionData;
+import net.swofty.type.generic.minion.extension.MinionExtension;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,7 +34,7 @@ public class MinionSkinExtension extends MinionExtension {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     SkyBlockItem skinItem = new SkyBlockItem(e.getCursorItem());
 
                     if (skinItem.hasComponent(MinionSkinComponent.class)) {
@@ -50,7 +50,7 @@ public class MinionSkinExtension extends MinionExtension {
 
                 @Override
                 public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     new GUIMinion(minion).open(player);
                 }
 
@@ -61,7 +61,7 @@ public class MinionSkinExtension extends MinionExtension {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStack("§aMinion Skin Slot", Material.LIME_STAINED_GLASS_PANE, 1,
                             "§7You can insert a Minion Skin",
                             "§7here to change the appearance of",
@@ -72,7 +72,7 @@ public class MinionSkinExtension extends MinionExtension {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     if (!e.getCursorItem().isAir()) {
                         player.sendMessage("§cYour cursor must be empty to pick this item up!");
                         e.setCancelled(true);
@@ -88,7 +88,7 @@ public class MinionSkinExtension extends MinionExtension {
 
                 @Override
                 public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     new GUIMinion(minion).open(player);
                 }
 
@@ -99,7 +99,7 @@ public class MinionSkinExtension extends MinionExtension {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn())).getUpdatedItem();
                     item.set(ItemComponent.CUSTOM_NAME, Component.text("§aMinion Skin Slot").decoration(TextDecoration.ITALIC, false));
                     item = ItemStackCreator.updateLore(item, Stream.of(

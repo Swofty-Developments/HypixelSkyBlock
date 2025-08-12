@@ -14,12 +14,12 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.generic.gui.SkyBlockShopGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.shop.ShopPrice;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.generic.shop.ShopPrice;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,18 +39,18 @@ public final class GUIGenericTradingOptions extends HypixelInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
-        set(createTradeItem(item, 20, 1, (SkyBlockPlayer) getPlayer(), stackPrice));
-        set(createTradeItem(item, 21, 5, (SkyBlockPlayer) getPlayer(), stackPrice));
-        set(createTradeItem(item, 22, 10, (SkyBlockPlayer) getPlayer(), stackPrice));
-        set(createTradeItem(item, 23, 32, (SkyBlockPlayer) getPlayer(), stackPrice));
-        set(createTradeItem(item, 24, 64, (SkyBlockPlayer) getPlayer(), stackPrice));
+        set(createTradeItem(item, 20, 1, (HypixelPlayer) getPlayer(), stackPrice));
+        set(createTradeItem(item, 21, 5, (HypixelPlayer) getPlayer(), stackPrice));
+        set(createTradeItem(item, 22, 10, (HypixelPlayer) getPlayer(), stackPrice));
+        set(createTradeItem(item, 23, 32, (HypixelPlayer) getPlayer(), stackPrice));
+        set(createTradeItem(item, 24, 64, (HypixelPlayer) getPlayer(), stackPrice));
 
         set(GUIClickableItem.getGoBackItem(49, retPointer));
 
         updateItemStacks(e.inventory(), getPlayer());
     }
 
-    private GUIClickableItem createTradeItem(SkyBlockShopGUI.ShopItem item, int slot, int amount, SkyBlockPlayer player, ShopPrice stackprice) {
+    private GUIClickableItem createTradeItem(SkyBlockShopGUI.ShopItem item, int slot, int amount, HypixelPlayer player, ShopPrice stackprice) {
         stackprice = stackprice.multiply(amount);
 
         SkyBlockItem sbItem = item.getItem();
@@ -72,7 +72,7 @@ public final class GUIGenericTradingOptions extends HypixelInventoryGUI {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 if (!player.getShoppingData().canPurchase(item.getItem().toUnderstandable(), amount)) {
                     player.sendMessage("§cYou have reached the maximum amount of items you can buy!");
                     return;
@@ -95,7 +95,7 @@ public final class GUIGenericTradingOptions extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 String displayName = StringUtility.getTextFromComponent(itemStack.build().get(ItemComponent.CUSTOM_NAME)
                         .append(Component.text(" §8x" + amount)));
                 return ItemStackCreator.getStack(displayName, itemStack.build().material(), amount, lore);
@@ -103,7 +103,7 @@ public final class GUIGenericTradingOptions extends HypixelInventoryGUI {
         };
     }
 
-    private void updateThis(SkyBlockPlayer player) {
+    private void updateThis(HypixelPlayer player) {
         this.open(player);
     }
 

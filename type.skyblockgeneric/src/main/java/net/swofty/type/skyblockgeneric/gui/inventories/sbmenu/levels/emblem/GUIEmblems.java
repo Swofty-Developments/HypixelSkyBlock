@@ -6,10 +6,10 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
+import net.swofty.type.generic.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.levels.SkyBlockEmblems;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.levels.SkyBlockEmblems;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,13 +33,13 @@ public class GUIEmblems extends HypixelInventoryGUI {
             set(new GUIClickableItem(SLOTS[emblem.ordinal()]) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     new GUIEmblem(emblem).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     String displayName = emblem.toString();
                     Material material = emblem.getDisplayMaterial();
                     ArrayList<String> description = new ArrayList<>(emblem.getDescription());

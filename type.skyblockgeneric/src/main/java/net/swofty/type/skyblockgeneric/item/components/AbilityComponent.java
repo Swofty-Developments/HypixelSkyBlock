@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
-import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
-import net.swofty.type.skyblockgeneric.item.handlers.ability.AbilityRegistry;
-import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredAbility;
+import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.generic.item.handlers.ability.AbilityRegistry;
+import net.swofty.type.generic.item.handlers.ability.RegisteredAbility;
 
 import java.util.List;
 import java.util.Objects;

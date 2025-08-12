@@ -1,9 +1,9 @@
 package net.swofty.type.skyblockgeneric.skill.skills;
 
 import net.minestom.server.item.Material;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.skill.SkillCategory;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.skill.SkillCategory;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class RunecraftingSkill extends SkillCategory {
         ).toArray(new SkillReward[0]);
     }
 
-    public static Integer getUnlockedRune(SkyBlockPlayer player) {
+    public static Integer getUnlockedRune(HypixelPlayer player) {
         int level = player.getSkills().getCurrentLevel(SkillCategories.RUNECRAFTING);
         SkillReward reward = SkillCategories.RUNECRAFTING.asCategory().getReward(level);
         for (Reward unlock : reward.unlocks()) {
@@ -57,7 +57,7 @@ public class RunecraftingSkill extends SkillCategory {
         }
 
         @Override
-        public void onUnlock(SkyBlockPlayer player) {}
+        public void onUnlock(HypixelPlayer player) {}
 
         public abstract int getRuneLevel();
     }

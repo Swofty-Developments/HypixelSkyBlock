@@ -1,10 +1,10 @@
 package net.swofty.type.skyblockgeneric.levels.causes;
 
 import lombok.Getter;
-import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.skyblockgeneric.museum.MuseumRewards;
-import net.swofty.type.skyblockgeneric.museum.rewards.MuseumXPReward;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.generic.museum.MuseumRewards;
+import net.swofty.type.generic.museum.rewards.MuseumXPReward;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 @Getter
 public class MuseumLevelCause extends SkyBlockLevelCauseAbstr {
@@ -26,7 +26,7 @@ public class MuseumLevelCause extends SkyBlockLevelCauseAbstr {
     }
 
     @Override
-    public boolean shouldDisplayMessage(SkyBlockPlayer player) {
+    public boolean shouldDisplayMessage(HypixelPlayer player) {
         return false;
     }
 }

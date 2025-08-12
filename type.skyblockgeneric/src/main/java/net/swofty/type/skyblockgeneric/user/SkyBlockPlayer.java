@@ -30,35 +30,35 @@ import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.commons.SkyBlockPlayerProfiles;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.bazaar.BazaarConnector;
-import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
-import net.swofty.type.skyblockgeneric.data.datapoints.*;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
-import net.swofty.type.skyblockgeneric.event.actions.player.ActionPlayerChangeHypixelMenuDisplay;
-import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
-import net.swofty.type.skyblockgeneric.event.value.ValueUpdateEvent;
-import net.swofty.type.skyblockgeneric.event.value.events.MaxHealthValueUpdateEvent;
-import net.swofty.type.skyblockgeneric.event.value.events.MiningValueUpdateEvent;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
-import net.swofty.type.skyblockgeneric.item.components.ArrowComponent;
-import net.swofty.type.skyblockgeneric.item.components.SackComponent;
-import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
-import net.swofty.type.skyblockgeneric.levels.SkyBlockEmblems;
-import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
-import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
-import net.swofty.type.skyblockgeneric.region.mining.MineableBlock;
-import net.swofty.type.skyblockgeneric.skill.skills.RunecraftingSkill;
-import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
-import net.swofty.type.skyblockgeneric.utility.DeathMessageCreator;
+import net.swofty.commons.HypixelPlayerProfiles;
+import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.generic.bazaar.BazaarConnector;
+import net.swofty.type.generic.collection.CustomCollectionAward;
+import net.swofty.type.generic.data.SkyBlockDataHandler;
+import net.swofty.type.generic.data.datapoints.*;
+import net.swofty.type.generic.data.monogdb.CoopDatabase;
+import net.swofty.type.generic.event.actions.player.ActionPlayerChangeHypixelMenuDisplay;
+import net.swofty.type.generic.event.value.SkyBlockValueEvent;
+import net.swofty.type.generic.event.value.ValueUpdateEvent;
+import net.swofty.type.generic.event.value.events.MaxHealthValueUpdateEvent;
+import net.swofty.type.generic.event.value.events.MiningValueUpdateEvent;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.AccessoryComponent;
+import net.swofty.type.generic.item.components.ArrowComponent;
+import net.swofty.type.generic.item.components.SackComponent;
+import net.swofty.type.generic.item.set.ArmorSetRegistry;
+import net.swofty.type.generic.item.updater.PlayerItemOrigin;
+import net.swofty.type.generic.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.levels.CustomLevelAward;
+import net.swofty.type.generic.levels.SkyBlockEmblems;
+import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.generic.noteblock.SkyBlockSongsHandler;
+import net.swofty.type.generic.region.SkyBlockRegion;
+import net.swofty.type.generic.region.mining.MineableBlock;
+import net.swofty.type.generic.skill.skills.RunecraftingSkill;
+import net.swofty.type.generic.user.statistics.PlayerStatistics;
+import net.swofty.type.generic.utility.DeathMessageCreator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -71,7 +71,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
-public class SkyBlockPlayer extends HypixelPlayer {
+public class HypixelPlayer extends HypixelPlayer {
     private final PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
     @Getter
     private final PlayerStatistics statistics = new PlayerStatistics(this);
@@ -92,7 +92,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     private static final Pattern SACK_PATTERN = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$");
 
 
-    public SkyBlockPlayer(@NotNull GameProfile gameProfile, @NotNull PlayerConnection playerConnection) {
+    public HypixelPlayer(@NotNull GameProfile gameProfile, @NotNull PlayerConnection playerConnection) {
         super(playerConnection, gameProfile);
     }
 
@@ -126,8 +126,8 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return new FairySoulHandler(this);
     }
 
-    public SkyBlockPlayerProfiles getProfiles() {
-        return SkyBlockPlayerProfiles.get(this.getUuid());
+    public HypixelPlayerProfiles getProfiles() {
+        return HypixelPlayerProfiles.get(this.getUuid());
     }
 
     public DatapointPetData.UserPetData getPetData() {
@@ -136,7 +136,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
     public MissionData getMissionData() {
         MissionData data = getDataHandler().get(SkyBlockDataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
-        data.setSkyBlockPlayer(this);
+        data.setHypixelPlayer(this);
         return data;
     }
 

@@ -13,8 +13,8 @@ import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.tinylog.Logger;
@@ -71,7 +71,7 @@ public class RedisPropagatePartyEvent implements ServiceToClient {
         List<UUID> playersHandled = new ArrayList<>();
 
         for (UUID participantUUID : participants) {
-            SkyBlockPlayer player = SkyBlockGenericLoader.getLoadedPlayers().stream()
+            HypixelPlayer player = SkyBlockGenericLoader.getLoadedPlayers().stream()
                     .filter(p -> p.getUuid().equals(participantUUID))
                     .findFirst()
                     .orElse(null);
@@ -89,7 +89,7 @@ public class RedisPropagatePartyEvent implements ServiceToClient {
         return playersHandled;
     }
 
-    private void handleEventForPlayer(SkyBlockPlayer player, PartyEvent event) {
+    private void handleEventForPlayer(HypixelPlayer player, PartyEvent event) {
         switch (event) {
             case PartyInviteResponseEvent inviteEvent -> handleInviteEvent(player, inviteEvent);
             case PartyMemberJoinResponseEvent startedEvent -> handleStartedEvent(player, startedEvent);
@@ -107,17 +107,17 @@ public class RedisPropagatePartyEvent implements ServiceToClient {
         }
     }
 
-    private void handleChatMessageEvent(SkyBlockPlayer player, PartyChatMessageResponseEvent event) {
+    private void handleChatMessageEvent(HypixelPlayer player, PartyChatMessageResponseEvent event) {
         UUID messenger = event.getPlayer();
         String message = event.getMessage();
 
-        String messengerName = SkyBlockPlayer.getDisplayName(messenger);
+        String messengerName = HypixelPlayer.getDisplayName(messenger);
         player.sendMessage("§9Party §8> " + messengerName + "§f: " + message);
     }
 
-    private void handlePlayerSwitchedServerEvent(SkyBlockPlayer player, PartyPlayerSwitchedServerResponseEvent event) {
+    private void handlePlayerSwitchedServerEvent(HypixelPlayer player, PartyPlayerSwitchedServerResponseEvent event) {
         if (!event.getMover().equals(player.getUuid())) {
-            String moverName = SkyBlockPlayer.getDisplayName(event.getMover());
+            String moverName = HypixelPlayer.getDisplayName(event.getMover());
             ProxyPlayer mover = new ProxyPlayer(event.getMover());
 
             if (!mover.isOnline().join()) {
@@ -143,41 +143,41 @@ public class RedisPropagatePartyEvent implements ServiceToClient {
         }
     }
 
-    private void handleWarpOverviewEvent(SkyBlockPlayer player, PartyWarpOverviewResponseEvent event) {
+    private void handleWarpOverviewEvent(HypixelPlayer player, PartyWarpOverviewResponseEvent event) {
         if (event.getWarper().equals(player.getUuid())) {
             player.sendMessage("§9§m-----------------------------------------------------");
             int amountToWarp = event.getSuccessfullyWarped().size() + event.getFailedToWarp().size();
             boolean isPlural = amountToWarp > 1;
             player.sendMessage("§eSkyBlock Party Warp §7(" + amountToWarp + (isPlural ? " players" : " player") + ")");
             for (UUID uuid : event.getSuccessfullyWarped()) {
-                player.sendMessage("§a§l✔ " + SkyBlockPlayer.getDisplayName(uuid) + " §awarped to your server");
+                player.sendMessage("§a§l✔ " + HypixelPlayer.getDisplayName(uuid) + " §awarped to your server");
             }
             for (UUID uuid : event.getFailedToWarp()) {
-                player.sendMessage("§c§l✖ " + SkyBlockPlayer.getDisplayName(uuid) + " §cwas unable to be warped");
+                player.sendMessage("§c§l✖ " + HypixelPlayer.getDisplayName(uuid) + " §cwas unable to be warped");
             }
             player.sendMessage("§9§m-----------------------------------------------------");
         }
     }
 
-    private void handleInviteExpiredEvent(SkyBlockPlayer player, PartyInviteExpiredResponseEvent event) {
+    private void handleInviteExpiredEvent(HypixelPlayer player, PartyInviteExpiredResponseEvent event) {
         if (event.getInvitee().equals(player.getUuid())) {
             player.sendMessage("§9§m-----------------------------------------------------");
-            player.sendMessage("§eThe party invite from " + SkyBlockPlayer.getDisplayName(event.getInviter()) + " §ehas expired!");
+            player.sendMessage("§eThe party invite from " + HypixelPlayer.getDisplayName(event.getInviter()) + " §ehas expired!");
             player.sendMessage("§9§m-----------------------------------------------------");
         } else if (event.getInviter().equals(player.getUuid())) {
             player.sendMessage("§9§m-----------------------------------------------------");
-            player.sendMessage("§eThe party invite to " + SkyBlockPlayer.getDisplayName(event.getInvitee()) + " §ehas expired.");
+            player.sendMessage("§eThe party invite to " + HypixelPlayer.getDisplayName(event.getInvitee()) + " §ehas expired.");
             player.sendMessage("§9§m-----------------------------------------------------");
         }
     }
 
-    private void handleInviteEvent(SkyBlockPlayer player, PartyInviteResponseEvent event) {
+    private void handleInviteEvent(HypixelPlayer player, PartyInviteResponseEvent event) {
         if (event.getInvitee().equals(player.getUuid())) {
             UUID inviter = event.getInviter();
-            String inviterName = SkyBlockPlayer.getRawName(inviter);
+            String inviterName = HypixelPlayer.getRawName(inviter);
 
             player.sendMessage("§9§m-----------------------------------------------------");
-            player.sendMessage(SkyBlockPlayer.getDisplayName(event.getInviter()) + " §ehas invited you to join their party!");
+            player.sendMessage(HypixelPlayer.getDisplayName(event.getInviter()) + " §ehas invited you to join their party!");
             TextComponent component = LegacyComponentSerializer.legacySection().deserialize("§eYou have §c60 §eseconds to accept. §6Click here to join!");
             component = component.hoverEvent(Component.text("§eClick here to join!"));
             component = component.clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/p accept " + inviterName));
@@ -185,65 +185,65 @@ public class RedisPropagatePartyEvent implements ServiceToClient {
             player.sendMessage("§9§m-----------------------------------------------------");
         } else {
             player.sendMessage("§9§m-----------------------------------------------------");
-            player.sendMessage(SkyBlockPlayer.getDisplayName(event.getInviter()) + " §einvited " + SkyBlockPlayer.getDisplayName(event.getInvitee()) + " §eto join the party! They have §c60 §eseconds to accept.");
+            player.sendMessage(HypixelPlayer.getDisplayName(event.getInviter()) + " §einvited " + HypixelPlayer.getDisplayName(event.getInvitee()) + " §eto join the party! They have §c60 §eseconds to accept.");
             player.sendMessage("§9§m-----------------------------------------------------");
         }
     }
 
-    private void handleStartedEvent(SkyBlockPlayer player, PartyMemberJoinResponseEvent event) {
+    private void handleStartedEvent(HypixelPlayer player, PartyMemberJoinResponseEvent event) {
         UUID leaderUUID = event.getParty().getLeader().getUuid();
         if (!event.getJoiner().equals(player.getUuid())) {
             if (leaderUUID.equals(event.getInviter())) {
-                sendMessage(player, SkyBlockPlayer.getDisplayName(event.getJoiner()) + " §ejoined the party.");
+                sendMessage(player, HypixelPlayer.getDisplayName(event.getJoiner()) + " §ejoined the party.");
             } else {
-                sendMessage(player, SkyBlockPlayer.getDisplayName(event.getJoiner()) + " §ejoined the party using an invite from " + SkyBlockPlayer.getDisplayName(event.getInviter()) + "!");
+                sendMessage(player, HypixelPlayer.getDisplayName(event.getJoiner()) + " §ejoined the party using an invite from " + HypixelPlayer.getDisplayName(event.getInviter()) + "!");
             }
         } else {
             if (leaderUUID.equals(event.getInviter())) {
-                sendMessage(player, "§eYou have joined " + SkyBlockPlayer.getDisplayName(leaderUUID) + "'s §eparty!");
+                sendMessage(player, "§eYou have joined " + HypixelPlayer.getDisplayName(leaderUUID) + "'s §eparty!");
             } else {
-                sendMessage(player, "§eYou have joined " + SkyBlockPlayer.getDisplayName(leaderUUID) + "'s §eparty using an invite from " + SkyBlockPlayer.getDisplayName(event.getInviter()) + "!");
+                sendMessage(player, "§eYou have joined " + HypixelPlayer.getDisplayName(leaderUUID) + "'s §eparty using an invite from " + HypixelPlayer.getDisplayName(event.getInviter()) + "!");
             }
         }
     }
 
-    private void handleDisbandEvent(SkyBlockPlayer player, PartyDisbandResponseEvent event) {
-        sendMessage(player, SkyBlockPlayer.getDisplayName(event.getDisbander()) + " §ehas disbanded the party!");
+    private void handleDisbandEvent(HypixelPlayer player, PartyDisbandResponseEvent event) {
+        sendMessage(player, HypixelPlayer.getDisplayName(event.getDisbander()) + " §ehas disbanded the party!");
     }
 
-    private void handleTransferEvent(SkyBlockPlayer player, PartyLeaderTransferResponseEvent event) {
+    private void handleTransferEvent(HypixelPlayer player, PartyLeaderTransferResponseEvent event) {
         if (event.getNewLeader().equals(player.getUuid())) {
             sendMessage(player, "§eYou are now the party leader!");
         } else {
             UUID newLeader = event.getNewLeader();
-            String newLeaderName = SkyBlockPlayer.getDisplayName(newLeader);
+            String newLeaderName = HypixelPlayer.getDisplayName(newLeader);
 
             sendMessage(player, "§eThe party was transferred to " + newLeaderName);
         }
     }
 
-    private void handleKickEvent(SkyBlockPlayer player, PartyMemberKickResponseEvent event) {
+    private void handleKickEvent(HypixelPlayer player, PartyMemberKickResponseEvent event) {
         if (event.getKicked().equals(player.getUuid())) {
             sendMessage(player, "§cYou have been kicked from the party!");
         } else {
             UUID kicked = event.getKicked();
-            String kickedName = SkyBlockPlayer.getDisplayName(kicked);
+            String kickedName = HypixelPlayer.getDisplayName(kicked);
             UUID kicker = event.getKicker();
-            String kickerName = SkyBlockPlayer.getDisplayName(kicker);
+            String kickerName = HypixelPlayer.getDisplayName(kicker);
 
             sendMessage(player, kickerName + " §ehas kicked " + kickedName + " §efrom the party!");
         }
     }
 
-    private void handleLeaveEvent(SkyBlockPlayer player, PartyMemberLeaveResponseEvent event) {
+    private void handleLeaveEvent(HypixelPlayer player, PartyMemberLeaveResponseEvent event) {
         if (!event.getLeaver().equals(player.getUuid())) {
-            sendMessage(player, SkyBlockPlayer.getDisplayName(event.getLeaver()) + " §ehas left the party.");
+            sendMessage(player, HypixelPlayer.getDisplayName(event.getLeaver()) + " §ehas left the party.");
         } else {
             sendMessage(player, "§eYou left the party.");
         }
     }
 
-    private void handlePromotionEvent(SkyBlockPlayer player, PartyPromotionResponseEvent event) {
+    private void handlePromotionEvent(HypixelPlayer player, PartyPromotionResponseEvent event) {
         if (event.getPromoted().equals(player.getUuid())) {
             if (event.getNewRole() == FullParty.Role.MEMBER) {
                 sendMessage(player, "§cYou have been demoted to member!");
@@ -255,18 +255,18 @@ public class RedisPropagatePartyEvent implements ServiceToClient {
             String role = event.getNewRole().name().toLowerCase();
 
             UUID promoted = event.getPromoted();
-            String promotedName = SkyBlockPlayer.getDisplayName(promoted);
+            String promotedName = HypixelPlayer.getDisplayName(promoted);
             UUID promoter = event.getPromoter();
-            String promoterName = SkyBlockPlayer.getDisplayName(promoter);
+            String promoterName = HypixelPlayer.getDisplayName(promoter);
 
             sendMessage(player, promoterName + " §e" + action + " " + promotedName + " §eto " + role + "!");
         }
     }
 
-    private void handleWarpEvent(SkyBlockPlayer player, PartyWarpResponseEvent event) {
+    private void handleWarpEvent(HypixelPlayer player, PartyWarpResponseEvent event) {
         if (!event.getWarper().equals(player.getUuid())) {
             UUID warper = event.getWarper();
-            String warperName = SkyBlockPlayer.getDisplayName(warper);
+            String warperName = HypixelPlayer.getDisplayName(warper);
             FullParty party = (FullParty) event.getParty();
             FullParty.Member warperMember = party.getFromUuid(warper);
 
@@ -298,7 +298,7 @@ public class RedisPropagatePartyEvent implements ServiceToClient {
         }
     }
 
-    private void sendMessage(SkyBlockPlayer player, String message) {
+    private void sendMessage(HypixelPlayer player, String message) {
         player.sendMessage("§9§m-----------------------------------------------------");
         player.sendMessage(message);
         player.sendMessage("§9§m-----------------------------------------------------");

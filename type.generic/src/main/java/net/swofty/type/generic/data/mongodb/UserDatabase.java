@@ -5,7 +5,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
-import net.swofty.commons.SkyBlockPlayerProfiles;
+import net.swofty.commons.HypixelPlayerProfiles;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import org.bson.Document;
 
@@ -31,19 +31,19 @@ public class UserDatabase {
         collection = database.getCollection("profiles");
     }
 
-    public SkyBlockPlayerProfiles getProfiles() {
+    public HypixelPlayerProfiles getProfiles() {
         Document document = collection.find(new Document("_id", id.toString())).first();
         if (document == null) {
-            return new SkyBlockPlayerProfiles(id);
+            return new HypixelPlayerProfiles(id);
         }
-        return SkyBlockPlayerProfiles.deserialize(document);
+        return HypixelPlayerProfiles.deserialize(document);
     }
 
     public void deleteProfiles() {
         collection.deleteOne(new Document("_id", id.toString()));
     }
 
-    public void saveProfiles(SkyBlockPlayerProfiles profiles) {
+    public void saveProfiles(HypixelPlayerProfiles profiles) {
         Map<String, Object> map = profiles.serialize();
 
         Document document = new Document("_id", id.toString());

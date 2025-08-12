@@ -10,11 +10,11 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.skills.GUISkillCategory;
+import net.swofty.type.generic.gui.inventories.sbmenu.skills.GUISkillCategory;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public class GUIBestiary extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 player.getBestiaryData().getTotalDisplay(lore);
 
@@ -91,13 +91,13 @@ public class GUIBestiary extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     if (bestiaryRegion.gui == null) return;
                     bestiaryRegion.gui.open(player);
                 }
 
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     if (bestiaryRegion.material == Material.PLAYER_HEAD) {
                         return ItemStackCreator.getStackHead(bestiaryRegion.regionName, bestiaryRegion.texture, 1, bestiaryRegion.lore);
                     } else {

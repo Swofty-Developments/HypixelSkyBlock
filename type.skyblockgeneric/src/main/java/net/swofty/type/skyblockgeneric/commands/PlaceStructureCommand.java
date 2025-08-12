@@ -5,8 +5,8 @@ import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.minestom.server.instance.SharedInstance;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.structure.structures.IslandPortal;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.structure.structures.IslandPortal;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "structure",
@@ -22,7 +22,7 @@ public class PlaceStructureCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            SkyBlockPlayer player = (SkyBlockPlayer) sender;
+            HypixelPlayer player = (HypixelPlayer) sender;
 
             IslandPortal portal = new IslandPortal(context.get(rotation),
                     player.getPosition().blockX(),

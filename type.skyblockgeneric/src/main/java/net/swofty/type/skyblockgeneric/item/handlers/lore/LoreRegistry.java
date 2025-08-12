@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.item.handlers.lore;
 
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.PotatoType;
-import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
-import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
+import net.swofty.type.generic.enchantment.SkyBlockEnchantment;
+import net.swofty.type.generic.utility.groups.EnchantItemGroups;
 
 import java.util.*;
 import java.util.stream.Collectors;
