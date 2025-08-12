@@ -25,7 +25,8 @@ public class GUIProfileSelectMode extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(11) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aClassic Profile", Material.GRASS_BLOCK, 1,
                         "§8SkyBlock Mode",
                         "",
@@ -43,14 +44,16 @@ public class GUIProfileSelectMode extends HypixelInventoryGUI {
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIProfileCreate().open(player);
             }
         });
 
         set(new GUIClickableItem(15) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§6Special Modes", Material.BLAZE_POWDER, 1,
                         "§7Choose a SkyBlock mode with",
                         "§7special rules and unique",
@@ -61,7 +64,8 @@ public class GUIProfileSelectMode extends HypixelInventoryGUI {
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.sendMessage("§cSpecial Modes in SkyBlock are currently unavailable. Please check back another time.");
             }
         });

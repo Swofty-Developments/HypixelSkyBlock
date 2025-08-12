@@ -63,7 +63,8 @@ public class MinionFuelExtension extends MinionExtension {
         if (!shouldDisplayItem)
             return new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     SkyBlockItem fuelItem = new SkyBlockItem(e.getCursorItem());
 
                     if (fuelItem.hasComponent(MinionFuelComponent.class)) {
@@ -76,7 +77,8 @@ public class MinionFuelExtension extends MinionExtension {
                 }
 
                 @Override
-                public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {
+                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIMinion(minion).open(player);
                 }
 
@@ -86,7 +88,8 @@ public class MinionFuelExtension extends MinionExtension {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§aFuel", Material.ORANGE_STAINED_GLASS_PANE, 1,
                             "§7Increase the speed of your",
                             "§7minion by adding minion fuel",
@@ -101,7 +104,8 @@ public class MinionFuelExtension extends MinionExtension {
         return new GUIClickableItem(slot) {
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 SkyBlockItem item = new SkyBlockItem(e.getClickedItem());
                 if (item.getComponent(MinionFuelComponent.class).getFuelLastTimeInMS() == 0) {
                     player.addAndUpdateItem(getItemTypePassedIn());
@@ -137,12 +141,14 @@ public class MinionFuelExtension extends MinionExtension {
             }
 
             @Override
-            public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {
+            public void runPost(InventoryClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIMinion(minion).open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 long timeFuelLasts = new SkyBlockItem(getItemTypePassedIn()).getComponent(MinionFuelComponent.class).getFuelLastTimeInMS();
 
                 ItemStack.Builder itemBuilder = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn(), count)).getUpdatedItem();

@@ -59,12 +59,14 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 right.set(e.getClickType().equals(ClickType.RIGHT_CLICK));
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aCustom Duration", Material.COMPASS, 1,
                         "§7Specify how long you want",
                         "§7the auction to last.",
@@ -102,7 +104,8 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
         return new GUIClickableItem(slot) {
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack.Builder stack = ItemStackCreator.getStack("§a" + hours + " Hours", color, 1,
                         " ",
                         "§eClick to set this duration!");
@@ -115,7 +118,8 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 user.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().setDuration(millis);
                 new GUIAuctionDuration().open(player);
             }

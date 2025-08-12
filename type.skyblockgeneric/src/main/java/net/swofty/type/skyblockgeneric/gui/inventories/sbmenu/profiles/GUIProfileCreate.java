@@ -35,7 +35,8 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(11) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aCreate New Profile", Material.GREEN_TERRACOTTA, 1,
                         "§7You are creating a new SkyBlock",
                         "§7profile.",
@@ -51,7 +52,8 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 SkyBlockPlayerProfiles profiles = player.getProfiles();
                 UUID profileId = UUID.randomUUID();
 
@@ -76,12 +78,14 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(15) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, "§cCancel");
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIProfileSelectMode().open(player);
             }
         });

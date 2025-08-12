@@ -39,13 +39,15 @@ public class GUIFastTravel extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(53) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.getToggles().inverse(DatapointToggles.Toggles.ToggleType.PAPER_ICONS);
                 new GUIFastTravel().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aPaper Icons", shouldBePaper ? Material.FILLED_MAP : Material.MAP,
                         1,
                         "§7Use paper icons, which may load this menu",
@@ -68,7 +70,8 @@ public class GUIFastTravel extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(SLOTS[i]) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (!hasUnlockedIsland) {
                         player.sendMessage("§cYou haven't unlocked this fast travel destination!");
                         return;
@@ -97,7 +100,8 @@ public class GUIFastTravel extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     List<String> lore = new ArrayList<>();
 
                     lore.add("§8/warp " + island.getInternalName());

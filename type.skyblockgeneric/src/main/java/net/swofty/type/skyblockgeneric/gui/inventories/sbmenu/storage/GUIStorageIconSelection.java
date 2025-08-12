@@ -101,7 +101,8 @@ public class GUIStorageIconSelection extends HypixelPaginatedGUI<Material> {
     protected GUIClickableItem createItemFor(Material item, int slot, SkyBlockPlayer player) {
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 DatapointStorage.PlayerStorage storage = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class).getValue();
 
                 if (item == Material.BARRIER) {
@@ -115,7 +116,8 @@ public class GUIStorageIconSelection extends HypixelPaginatedGUI<Material> {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack(
                         (item == Material.BARRIER ? "§cReset" :
                                 StringUtility.toNormalCase(item.name().replace("minecraft:", ""))),

@@ -60,12 +60,14 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIRecipeCategory(type, new GUIRecipeSlayers()).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ArrayList<String> lore = new ArrayList<>(Arrays.asList(
                             "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
                             "§7that you have unlocked!", " "));
@@ -103,7 +105,8 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
             });
             set(new GUIItem(4) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
 
                     SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.SLAYER;
 

@@ -75,7 +75,8 @@ public class GUIBestiary extends HypixelInventoryGUI {
         set(GUIClickableItem.getGoBackItem(48, new GUISkillCategory(SkillCategories.COMBAT, 0)));
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 player.getBestiaryData().getTotalDisplay(lore);
 
@@ -88,12 +89,14 @@ public class GUIBestiary extends HypixelInventoryGUI {
             BestiaryRegions bestiaryRegion = allBestiaryRegions[index];
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (bestiaryRegion.gui == null) return;
                     bestiaryRegion.gui.open(player);
                 }
 
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (bestiaryRegion.material == Material.PLAYER_HEAD) {
                         return ItemStackCreator.getStackHead(bestiaryRegion.regionName, bestiaryRegion.texture, 1, bestiaryRegion.lore);
                     } else {

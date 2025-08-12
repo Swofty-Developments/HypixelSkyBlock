@@ -110,7 +110,8 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
         allRecipes.addAll(ShapelessRecipe.CACHED_RECIPES);
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
 
                 ArrayList<SkyBlockRecipe> typeRecipes = new ArrayList<>();
                 ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
@@ -177,14 +178,16 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
         if (result.allowed()) {
             return new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIRecipe(
                             item.getResult().getAttributeHandler().getPotentialType(),
                             GUIRecipeCategory.this).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ArrayList<String> lore = new ArrayList<>(
                             itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList()
                     );
@@ -200,12 +203,14 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
         } else {
             return new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     player.sendMessage("§cYou haven't unlocked that recipe!");
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     List<String> lore = Arrays.asList(result.errorMessage());
                     // Add gray text to the start of each line
                     lore = lore.stream().map(line -> "§7" + line).toList();

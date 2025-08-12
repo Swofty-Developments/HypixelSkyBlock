@@ -36,12 +36,14 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
         set(GUIClickableItem.getGoBackItem(22, new GUIAuctionHouse()));
         set(new GUIClickableItem(23) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIAuctionCreateItem(GUIManageAuctions.this).open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aCreate Auction", Material.GOLDEN_HORSE_ARMOR, 1,
                         "§7Set your own items on auction for",
                         "§7other players to purchase.",
@@ -93,7 +95,8 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
             if (i >= auctionItems.size()) {
                 set(new GUIItem(slot) {
                     @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStack.builder(Material.AIR);
                     }
                 });
@@ -103,12 +106,14 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
             AuctionItem item = auctionItemsPage.get(i);
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIAuctionViewItem(item.getUuid(), GUIManageAuctions.this).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item.getItem()).getUpdatedItem().build()
                                     .get(ItemComponent.CUSTOM_NAME)),

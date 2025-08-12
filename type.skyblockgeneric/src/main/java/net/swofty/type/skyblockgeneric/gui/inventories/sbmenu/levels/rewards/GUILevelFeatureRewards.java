@@ -40,7 +40,8 @@ public class GUILevelFeatureRewards extends HypixelInventoryGUI {
 
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Specific game features such as the");
                 lore.add("§7Bazaar or Community Shop.");
@@ -76,7 +77,8 @@ public class GUILevelFeatureRewards extends HypixelInventoryGUI {
 
             set(new GUIItem(slot) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack.Builder item = award.getItem();
                     List<String> lore = new ArrayList<>(Arrays.asList(
                             "§8Level " + level,

@@ -56,12 +56,14 @@ public class GUIMinionRecipes extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIRecipe(minion, new GUIMinionRecipes(minionRegistry, previousGUI), minionTier.tier() - 1).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStackHead(minion.getDisplayName(), minionTier.texture(), 1,
                             minion.getLore());
                 }

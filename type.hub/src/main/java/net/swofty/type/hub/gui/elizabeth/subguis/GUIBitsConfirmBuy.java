@@ -29,14 +29,16 @@ public class GUIBitsConfirmBuy extends HypixelInventoryGUI {
         set(new GUIClickableItem(11) {
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.addAndUpdateItem(item);
                 player.removeBits(price);
                 new GUIBitsShop().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aConfirm", Material.LIME_TERRACOTTA, 1,
                         "§7Buying: " + item.getDisplayName(),
                         "§7Cost: §b" + StringUtility.commaify(price));
@@ -44,12 +46,14 @@ public class GUIBitsConfirmBuy extends HypixelInventoryGUI {
         });
         set(new GUIClickableItem(15) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.closeInventory();
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cCancel", Material.RED_TERRACOTTA, 1);
             }
         });

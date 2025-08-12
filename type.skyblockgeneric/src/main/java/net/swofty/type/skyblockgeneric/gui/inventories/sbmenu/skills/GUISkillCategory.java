@@ -47,12 +47,14 @@ public class GUISkillCategory extends HypixelInventoryGUI {
         if (category == SkillCategories.COMBAT) {
             set(new GUIClickableItem(39) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIBestiary().open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ArrayList<String> lore = new ArrayList<>();
                     player.getBestiaryData().getTotalDisplay(lore);
                     lore.add("");
@@ -65,7 +67,8 @@ public class GUISkillCategory extends HypixelInventoryGUI {
 
         set(new GUIItem(0) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>(category.asCategory().getDescription());
 
                 lore.add(" ");
@@ -93,12 +96,14 @@ public class GUISkillCategory extends HypixelInventoryGUI {
         if (rewards.size() > (page + 1) * displaySlots.length) {
             set(new GUIClickableItem(50) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUISkillCategory(category, page + 1).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1, "§7Click to view the next page of rewards.");
                 }
             });
@@ -107,12 +112,14 @@ public class GUISkillCategory extends HypixelInventoryGUI {
         if (page > 0) {
             set(new GUIClickableItem(48) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUISkillCategory(category, page - 1).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1, "§7Click to view the previous page of rewards.");
                 }
             });
@@ -127,7 +134,8 @@ public class GUISkillCategory extends HypixelInventoryGUI {
 
             set(new GUIItem(slot) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     List<String> lore = new ArrayList<>();
                     reward.getDisplay(lore);
 

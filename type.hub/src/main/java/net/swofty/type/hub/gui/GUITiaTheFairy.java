@@ -34,7 +34,8 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (!canExchange) {
                     player.sendMessage("§cYou don't have enough Fairy Souls!");
                     return;
@@ -61,7 +62,8 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>(List.of(
                         "§7Find §dFairy Souls §7around the",
                         "§7world and bring them back to me",

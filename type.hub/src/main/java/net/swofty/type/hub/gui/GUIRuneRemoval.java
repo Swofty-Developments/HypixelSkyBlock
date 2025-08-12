@@ -47,7 +47,8 @@ public class GUIRuneRemoval extends HypixelInventoryGUI {
         if (item == null) {
             set(new GUIClickableItem(13) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -65,18 +66,21 @@ public class GUIRuneRemoval extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStack.builder(Material.AIR);
                 }
             });
             set(new GUIClickableItem(22) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     player.sendMessage("§cYou must place an item in the above slot!");
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§aRune Removal", Material.BARRIER, 1,
                             "§7Place an item with a rune attached to",
@@ -90,12 +94,14 @@ public class GUIRuneRemoval extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(13) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack stack = e.getClickedItem();
                 if (stack.isAir()) return;
                 updateFromItem(null);
@@ -111,7 +117,8 @@ public class GUIRuneRemoval extends HypixelInventoryGUI {
                 !runeData.hasRune()) {
             set(new GUIItem(22) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§cError!", Material.BARRIER, 1,
                             "§7Place an item with a rune attached to",
@@ -126,7 +133,8 @@ public class GUIRuneRemoval extends HypixelInventoryGUI {
         border(ItemStackCreator.createNamedItemStack(Material.GREEN_STAINED_GLASS_PANE));
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 runeData.setRuneType(null);
                 runeData.setLevel(null);
 
@@ -136,7 +144,8 @@ public class GUIRuneRemoval extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack(
                         "§aClick to Remove Rune!", Material.CAULDRON, 1,
                         "§cWARNING: The rune will be lost",

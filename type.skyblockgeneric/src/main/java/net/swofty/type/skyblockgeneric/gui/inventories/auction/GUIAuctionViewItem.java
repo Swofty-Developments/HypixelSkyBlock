@@ -58,7 +58,8 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
 
         set(new GUIItem(13) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.updateLore(
                         PlayerItemUpdater.playerUpdate(player, new SkyBlockItem(item.getItem()).getItemStack()),
                         new AuctionItemLoreHandler(item).getLore(player)

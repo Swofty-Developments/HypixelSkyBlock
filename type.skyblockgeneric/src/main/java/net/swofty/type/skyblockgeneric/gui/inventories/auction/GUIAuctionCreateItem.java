@@ -52,7 +52,8 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
 
         set(new GUIClickableItem(13) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (escrow.getItem() == null)
                     return ItemStackCreator.getStack("§eClick an item in your inventory!", Material.STONE_BUTTON, 1,
                             "§7Selects it for auction");
@@ -73,7 +74,8 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (escrow.getItem() == null) return;
                 player.addAndUpdateItem(escrow.getItem());
                 escrow.setItem(null);
@@ -84,12 +86,14 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
 
         set(new GUIClickableItem(33) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIAuctionDuration().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 if (escrow.isBin()) {
                     lore.add("§7How long the item will be");
@@ -113,13 +117,15 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
         });
         set(new GUIClickableItem(48) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 escrow.setBin(!escrow.isBin());
                 new GUIAuctionCreateItem(previousGUI).open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (escrow.isBin()) {
                     return ItemStackCreator.getStack("§aSwitch to Auction", Material.POWERED_RAIL, 1,
                             "§7With traditional auctions, multiple",
@@ -142,7 +148,8 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
         });
         set(new GUIClickableItem(29) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ProxyService auctionService = new ProxyService(ServiceType.AUCTION_HOUSE);
 
                 auctionService.isOnline().thenAccept((response) -> {
@@ -187,7 +194,8 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (escrow.getItem() == null) {
                     return ItemStackCreator.getStack("§cCreate Auction", Material.RED_TERRACOTTA, 1,
                             "§7No item selected!",
@@ -233,7 +241,8 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 Material material;
                 List<String> lore = new ArrayList<>();
                 if (escrow.isBin()) {

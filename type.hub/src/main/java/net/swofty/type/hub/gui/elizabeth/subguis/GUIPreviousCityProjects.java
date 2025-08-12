@@ -121,7 +121,8 @@ public class GUIPreviousCityProjects extends HypixelInventoryGUI {
                 CityProjects cityProject = cityProjects[index];
                 set(new GUIItem(slot) {
                     @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return cityProject.item;
                     }
                 });

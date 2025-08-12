@@ -59,12 +59,14 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(44) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIRuneRemoval().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack(
                         "§eRune Removal", Material.CAULDRON, 1,
                         "§7Sometimes, simplicity is most beautiful."
@@ -88,7 +90,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
         if (itemOnLeft == null) {
             set(new GUIClickableItem(19) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -104,7 +107,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -112,7 +116,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
             setGlassPanes(LEFT_RUNIC_SLOTS, Material.PURPLE_STAINED_GLASS_PANE);
             set(new GUIClickableItem(19) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (isFusing) {
                         player.sendMessage("§cYou cannot remove the item on the left while fusing!");
                         return;
@@ -123,7 +128,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return PlayerItemUpdater.playerUpdate(player, itemOnLeft.getItemStack());
                 }
             });
@@ -132,7 +138,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
         if (itemOnRight == null) {
             set(new GUIClickableItem(25) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -149,7 +156,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -157,7 +165,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
             setGlassPanes(RIGHT_RUNIC_SLOTS, Material.PURPLE_STAINED_GLASS_PANE);
             set(new GUIClickableItem(25) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (isFusing) {
                         player.sendMessage("§cYou cannot remove the item on the right while fusing!");
                         return;
@@ -168,7 +177,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return PlayerItemUpdater.playerUpdate(player, itemOnRight.getItemStack());
                 }
             });
@@ -178,7 +188,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
                 || itemOnRight == null || itemOnRight.isAir()) {
             set(new GUIItem(13) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§aApply a Rune or Fuse Two Runes", Material.END_PORTAL_FRAME, 1,
                             "§7Add the rune to your provided item",
@@ -189,7 +200,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
             });
             set(new GUIItem(31) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§cRunic Pedestal", Material.BARRIER, 1,
                             "§7Place a target item in the left slot",
@@ -215,7 +227,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
         if (runicMerge == null) {
             set(new GUIItem(13) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§aApply a Rune or Fuse Two Runes", Material.END_PORTAL_FRAME, 1,
                             "§7Add the rune to your provided item",
@@ -226,7 +239,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
             });
             set(new GUIItem(31) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§cError!", Material.BARRIER, 1,
                             "§7You cannot combine those items!"
@@ -240,7 +254,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(13) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (isFusing) {
                         player.sendMessage("§cYou cannot apply a rune while fusing!");
                         return;
@@ -264,7 +279,8 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§aCombine Items", Material.END_PORTAL_FRAME, 1,
                             "§7Combine the provided items.",
@@ -275,12 +291,14 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
             });
             set(new GUIClickableItem(31) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     player.sendMessage("§cYou must click the Portal Frame above to combine the two items!");
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     SkyBlockItem mergedItem = finalRunicMerge.merge(itemOnLeft, itemOnRight);
                     ArrayList<String> lore = new ArrayList<>(mergedItem.getLore());
                     lore.add("§8§m-------------------");

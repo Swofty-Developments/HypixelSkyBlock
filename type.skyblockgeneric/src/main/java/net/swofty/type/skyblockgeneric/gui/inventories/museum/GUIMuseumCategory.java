@@ -166,7 +166,8 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
 
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (!inMuseum || hasTakenItOut) {
                     return;
                 }
@@ -184,7 +185,8 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (!inMuseum) {
                     return ItemStackCreator.getStack("§c" + item.getDisplayName(),
                             Material.GRAY_DYE, 1,

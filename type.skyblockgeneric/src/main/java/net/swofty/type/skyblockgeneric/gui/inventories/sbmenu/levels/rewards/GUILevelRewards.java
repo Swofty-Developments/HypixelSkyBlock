@@ -35,12 +35,14 @@ public class GUILevelRewards extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(11) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUILevelFeatureRewards().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Specific game features such as the");
                 lore.add("§7Bazaar or Community Shop.");
@@ -71,12 +73,14 @@ public class GUILevelRewards extends HypixelInventoryGUI {
         });
         set(new GUIClickableItem(12) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUILevelPrefixRewards().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7New colors for your level prefix");
                 lore.add("§7shown in TAB and in chat!");
@@ -105,12 +109,14 @@ public class GUILevelRewards extends HypixelInventoryGUI {
         });
         set(new GUIClickableItem(13) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUILevelEmblemRewards().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Emblems to show next to your name");
                 lore.add("§7that signify special achievements.");
@@ -146,7 +152,8 @@ public class GUILevelRewards extends HypixelInventoryGUI {
         });
         set(new GUIItem(14) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 SkyBlockLevelRequirement nextLevel = player.getSkyBlockExperience().getLevel().getNextLevel();
 
                 return ItemStackCreator.getStack("§aStatistic Rewards",

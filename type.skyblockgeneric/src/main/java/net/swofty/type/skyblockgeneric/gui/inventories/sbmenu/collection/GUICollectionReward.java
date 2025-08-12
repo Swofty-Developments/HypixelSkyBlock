@@ -61,7 +61,8 @@ public class GUICollectionReward extends HypixelInventoryGUI {
 
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>(Arrays.asList(
                         "§7View your " + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(placement) + " Collection rewards!",
                         " "
@@ -82,7 +83,8 @@ public class GUICollectionReward extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (unlock instanceof CollectionCategory.UnlockRecipe) {
                         try {
                             SkyBlockItem skyBlockItem = ((CollectionCategory.UnlockRecipe) unlock).getRecipes().getFirst().getResult();
@@ -98,7 +100,8 @@ public class GUICollectionReward extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return unlock.getDisplay(player);
                 }
             });

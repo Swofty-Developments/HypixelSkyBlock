@@ -50,7 +50,8 @@ public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, Hypixe
                     int amount = shopItem.getAmount();
                     set(new GUIClickableItem(slot) {
                         @Override
-                        public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                        public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             if (player.getBits() >= price) {
                                 SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                                 ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
@@ -69,7 +70,8 @@ public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, Hypixe
                         }
 
                         @Override
-                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                             ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
                             itemStack.amount(amount);

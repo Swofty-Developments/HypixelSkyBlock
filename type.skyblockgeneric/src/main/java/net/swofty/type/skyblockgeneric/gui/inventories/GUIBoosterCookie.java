@@ -22,19 +22,22 @@ public class GUIBoosterCookie extends HypixelInventoryGUI {
         set(new GUIClickableItem(15) {
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cCancel", Material.RED_CONCRETE,1,
                         "§7I'm not hungry...");
             }
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.closeInventory();
             }
         });
 
         set(new GUIClickableItem(11) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 long time;
                 if (player.getBoosterCookieExpirationDate() - System.currentTimeMillis() > System.currentTimeMillis()) {
                     time = player.getBoosterCookieExpirationDate() - System.currentTimeMillis() + System.currentTimeMillis();
@@ -49,7 +52,8 @@ public class GUIBoosterCookie extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§eConsume Cookie", Material.COOKIE,1,
                         "§7Gain the §dCookie Buff§!",
                         " ",
