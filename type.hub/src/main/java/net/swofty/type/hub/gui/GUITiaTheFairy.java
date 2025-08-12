@@ -8,11 +8,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointFairySouls;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulExchangeLevels;
 
 import java.util.ArrayList;
@@ -34,20 +36,21 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
                 if (!canExchange) {
-                    player.sendMessage("§cYou don't have enough Fairy Souls!");
+                    skyBlockPlayer.sendMessage("§cYou don't have enough Fairy Souls!");
                     return;
                 }
 
                 player.closeInventory();
-                player.getFairySouls().exchange();
-                player.getSkyBlockData().get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
-                                .setValue(player.getFairySouls());
-                player.sendMessage("§aYou have exchanged your Fairy Souls for rewards!");
-                nextLevel.getDisplay().forEach(player::sendMessage);
+                skyBlockPlayer.getFairySouls().exchange();
+                skyBlockPlayer.getSkyBlockData().get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
+                                .setValue(skyBlockPlayer.getFairySouls());
+                skyBlockPlayer.sendMessage("§aYou have exchanged your Fairy Souls for rewards!");
+                nextLevel.getDisplay().forEach(skyBlockPlayer::sendMessage);
 
-                player.getSkyBlockExperience().addExperience(
+                skyBlockPlayer.getSkyBlockExperience().addExperience(
                         SkyBlockLevelCause.getFairySoulExchangeCause(nextLevel.ordinal())
                 );
 
@@ -61,7 +64,8 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
                 List<String> lore = new ArrayList<>(List.of(
                         "§7Find §dFairy Souls §7around the",
                         "§7world and bring them back to me",
@@ -98,7 +102,7 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

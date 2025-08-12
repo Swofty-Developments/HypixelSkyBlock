@@ -12,6 +12,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIConfirmKat extends HypixelInventoryGUI {
 
@@ -28,20 +29,21 @@ public class GUIConfirmKat extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(11) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
                 if (pet.getComponent(PetComponent.class).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade()) == null) return;
                 KatUpgrade katUpgrade = pet.getComponent(PetComponent.class).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade());
                 int coins = katUpgrade.getCoins();
                 long time = katUpgrade.getTime();
 
                 Long timeWhenFinished = time + System.currentTimeMillis();
-                player.getKatData().setKatMap(timeWhenFinished, pet);
-                player.removeCoins(coins);
+                skyBlockPlayer.getKatData().setKatMap(timeWhenFinished, pet);
+                skyBlockPlayer.removeCoins(coins);
                 player.closeInventory();
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 if (pet.getComponent(PetComponent.class).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade()) == null) {
                     return ItemStackCreator.getStack("§aSomething went wrong!", Material.RED_TERRACOTTA, 1);
                 }
@@ -57,13 +59,14 @@ public class GUIConfirmKat extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(15) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
                 player.closeInventory();
-                player.addAndUpdateItem(pet);
+                skyBlockPlayer.addAndUpdateItem(pet);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack("§cCancel", Material.RED_TERRACOTTA, 1);
             }
         });

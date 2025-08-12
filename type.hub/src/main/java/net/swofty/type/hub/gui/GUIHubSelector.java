@@ -16,6 +16,7 @@ import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.Comparator;
@@ -46,7 +47,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
     }
 
     @Override
-    protected PaginationList<UnderstandableProxyServer> fillPaged(SkyBlockPlayer player, PaginationList<UnderstandableProxyServer> paged) {
+    protected PaginationList<UnderstandableProxyServer> fillPaged(HypixelPlayer player, PaginationList<UnderstandableProxyServer> paged) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         servers = information.getServerInformation(ServerType.SKYBLOCK_HUB).join();
         paged.addAll(servers);
@@ -54,11 +55,12 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
         set(GUIClickableItem.getCloseItem(49));
         set(new GUIClickableItem(50) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
                 ClickType clickType = e.getClickType();
 
                 if (sending) {
-                    player.sendMessage("§cWe are currently trying to queue you into another server!");
+                    skyBlockPlayer.sendMessage("§cWe are currently trying to queue you into another server!");
                     return;
                 }
 
@@ -68,7 +70,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
                         .toList();
 
                 if (serversToUse.isEmpty()) {
-                    player.sendMessage("§cNo servers with enough players found!");
+                    skyBlockPlayer.sendMessage("§cNo servers with enough players found!");
                     return;
                 }
 
@@ -84,9 +86,9 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
                             .orTimeout(3, TimeUnit.SECONDS)
                             .exceptionally(throwable -> {
                                 if (throwable instanceof TimeoutException) {
-                                    player.sendMessage("§cYour transfer failed! The server took too long to respond.");
+                                    skyBlockPlayer.sendMessage("§cYour transfer failed! The server took too long to respond.");
                                 } else {
-                                    player.sendMessage("§cYour transfer failed! An error occurred.");
+                                    skyBlockPlayer.sendMessage("§cYour transfer failed! An error occurred.");
                                 }
                                 sending = false;
                                 return null; // Return value for the CompletableFuture
@@ -102,9 +104,9 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
                         .orTimeout(3, TimeUnit.SECONDS)
                         .exceptionally(throwable -> {
                             if (throwable instanceof TimeoutException) {
-                                player.sendMessage("§cYour transfer failed! The server took too long to respond.");
+                                skyBlockPlayer.sendMessage("§cYour transfer failed! The server took too long to respond.");
                             } else {
-                                player.sendMessage("§cYour transfer failed! An error occurred.");
+                                skyBlockPlayer.sendMessage("§cYour transfer failed! An error occurred.");
                             }
                             sending = false;
                             return null; // Return value for the CompletableFuture
@@ -112,7 +114,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack(
                         "§aRandom Hub",
                         Material.COMPASS, 1,
@@ -137,16 +139,16 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
     }
 
     @Override
-    protected void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
+    protected void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
     }
 
     @Override
-    protected String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<UnderstandableProxyServer> paged) {
+    protected String getTitle(HypixelPlayer player, String query, int page, PaginationList<UnderstandableProxyServer> paged) {
         return "SkyBlock Hub Selector";
     }
 
     @Override
-    protected GUIClickableItem createItemFor(UnderstandableProxyServer server, int slot, SkyBlockPlayer player) {
+    protected GUIClickableItem createItemFor(UnderstandableProxyServer server, int slot, HypixelPlayer player) {
         boolean isThisServer = server.port() == SkyBlockConst.getPort();
         boolean isFull = server.players().size() >= server.maxPlayers();
 
@@ -154,7 +156,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
             private int counterAtThisMoment;
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 counter++;
                 counterAtThisMoment = counter;
                 return ItemStackCreator.getStack(
@@ -169,20 +171,21 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
                 if (isThisServer) {
-                    player.sendMessage("§cYou are already on this server!");
+                    skyBlockPlayer.sendMessage("§cYou are already on this server!");
                     player.closeInventory();
                     return;
                 }
 
                 if (isFull) {
-                    player.sendMessage("§cYou cannot join this server because it is full!");
+                    skyBlockPlayer.sendMessage("§cYou cannot join this server because it is full!");
                     return;
                 }
 
                 if (sending) {
-                    player.sendMessage("§cWe are currently trying to queue you into another server!");
+                    skyBlockPlayer.sendMessage("§cWe are currently trying to queue you into another server!");
                     return;
                 }
 
@@ -193,9 +196,9 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
                         .orTimeout(3, TimeUnit.SECONDS)
                         .exceptionally(throwable -> {
                             if (throwable instanceof TimeoutException) {
-                                player.sendMessage("§cYour transfer failed! The server took too long to respond.");
+                                skyBlockPlayer.sendMessage("§cYour transfer failed! The server took too long to respond.");
                             } else {
-                                player.sendMessage("§cYour transfer failed! An error occurred.");
+                                skyBlockPlayer.sendMessage("§cYour transfer failed! An error occurred.");
                             }
                             sending = false;
                             return null; // Return value for the CompletableFuture
@@ -215,7 +218,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    public void refreshItems(HypixelPlayer player) {
         servers = information.getServerInformation(ServerType.SKYBLOCK_HUB).join();
         PaginationList<UnderstandableProxyServer> paged = fillPaged(player, new PaginationList<>(getPaginatedSlots().length));
         int page = 1;
