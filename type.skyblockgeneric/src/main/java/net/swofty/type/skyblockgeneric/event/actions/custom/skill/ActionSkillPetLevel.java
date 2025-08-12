@@ -4,10 +4,10 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.PetComponent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.SkillUpdateEvent;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.PetComponent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionSkillPetLevel implements HypixelEventClass {
 
@@ -17,7 +17,7 @@ public class ActionSkillPetLevel implements HypixelEventClass {
         double xp = event.getNewValueRaw() - event.getOldValueRaw();
         if (xp <= 0) return;
 
-        SkyBlockPlayer player = event.getPlayer();
+        HypixelPlayer player = event.getPlayer();
         SkyBlockItem enabledPet = player.getPetData().getEnabledPet();
 
         if (enabledPet == null) return;

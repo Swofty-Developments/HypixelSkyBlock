@@ -3,11 +3,11 @@ package net.swofty.type.skyblockgeneric.mission.missions;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.ItemCraftEvent;
+import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.generic.mission.HypixelMission;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class MissionCraftWoodenPickaxe extends HypixelMission {
 
         if (!event.getCraftedItem().getMaterial().equals(Material.WOODEN_PICKAXE)) return;
 
-        data.setSkyBlockPlayer(event.getPlayer());
+        data.setHypixelPlayer(event.getPlayer());
         data.endMission(MissionCraftWoodenPickaxe.class);
     }
 
@@ -38,13 +38,13 @@ public class MissionCraftWoodenPickaxe extends HypixelMission {
     }
 
     @Override
-    public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
+    public Map<String, Object> onStart(HypixelPlayer player, MissionData.ActiveMission mission) {
         mission.getNewObjectiveText().forEach(player::sendMessage);
         return new HashMap<>();
     }
 
     @Override
-    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+    public void onEnd(HypixelPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         player.getMissionData().startMission(MissionTalkJerry.class);
     }
 

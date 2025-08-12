@@ -2,11 +2,11 @@ package net.swofty.type.skyblockgeneric.server.eventcaller;
 
 import lombok.Getter;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
-import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
-import net.swofty.type.skyblockgeneric.item.set.impl.SetEvents;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.PlayerRegionChangeEvent;
+import net.swofty.type.generic.item.set.ArmorSetRegistry;
+import net.swofty.type.generic.item.set.impl.SetEvents;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class PlayerValues {
     private final Map<Value, Object> cache = new HashMap<>();
 
-    public PlayerValues(SkyBlockPlayer player, List<Value> values) {
+    public PlayerValues(HypixelPlayer player, List<Value> values) {
         for (Value value : values) {
             cache.put(value, value.function.apply(player));
         }
@@ -50,7 +50,7 @@ public class PlayerValues {
                     (RegionType) regionTypes.getKey(),
                     (RegionType) regionTypes.getValue()));
         }),
-        ARMOR_SET(ArmorSetRegistry.class, SkyBlockPlayer::getArmorSet, (player, armorSet) -> {
+        ARMOR_SET(ArmorSetRegistry.class, HypixelPlayer::getArmorSet, (player, armorSet) -> {
             ArmorSetRegistry oldSet = (ArmorSetRegistry) armorSet.getKey();
             ArmorSetRegistry newSet = (ArmorSetRegistry) armorSet.getValue();
 
@@ -69,10 +69,10 @@ public class PlayerValues {
         ;
 
         private final Class<?> type;
-        private final Function<SkyBlockPlayer, ?> function;
-        private final BiConsumer<SkyBlockPlayer, Map.Entry<Object, Object>> consumer;
+        private final Function<HypixelPlayer, ?> function;
+        private final BiConsumer<HypixelPlayer, Map.Entry<Object, Object>> consumer;
 
-        Value(Class<?> type, Function<SkyBlockPlayer, ?> function, BiConsumer<SkyBlockPlayer, Map.Entry<Object, Object>> consumer) {
+        Value(Class<?> type, Function<HypixelPlayer, ?> function, BiConsumer<HypixelPlayer, Map.Entry<Object, Object>> consumer) {
             this.type = type;
             this.function = function;
             this.consumer = consumer;

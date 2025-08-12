@@ -2,9 +2,9 @@ package net.swofty.type.skyblockgeneric.redis;
 
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.generic.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 import org.json.JSONObject;
 
@@ -21,7 +21,7 @@ public class RedisRefreshCoopData implements ProxyToClient {
         UUID uuid = UUID.fromString(message.getString("uuid"));
         String datapoint = message.getString("datapoint");
 
-        SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
+        HypixelPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
         if (player == null) return new JSONObject();
 
         DataHandler dataHandler = DataHandler.fromDocument(

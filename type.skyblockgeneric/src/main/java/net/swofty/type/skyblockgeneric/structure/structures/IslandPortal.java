@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import net.swofty.type.skyblockgeneric.structure.SkyBlockStructure;
+import net.swofty.type.generic.structure.SkyBlockStructure;
 
 import java.util.List;
 import java.util.Map;

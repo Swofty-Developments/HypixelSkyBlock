@@ -2,18 +2,18 @@ package net.swofty.type.skyblockgeneric.event.custom;
 
 import lombok.Getter;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBestiary;
-import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
-import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointBestiary;
+import net.swofty.type.generic.entity.mob.BestiaryMob;
+import net.swofty.type.generic.entity.mob.SkyBlockMob;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerKilledSkyBlockMobEvent implements PlayerInstanceEvent {
-    private final SkyBlockPlayer player;
+    private final HypixelPlayer player;
     @Getter
     private final SkyBlockMob killedMob;
 
-    public PlayerKilledSkyBlockMobEvent(SkyBlockPlayer player, SkyBlockMob killedMob) {
+    public PlayerKilledSkyBlockMobEvent(HypixelPlayer player, SkyBlockMob killedMob) {
         this.player = player;
         this.killedMob = killedMob;
 
@@ -24,7 +24,7 @@ public class PlayerKilledSkyBlockMobEvent implements PlayerInstanceEvent {
     }
 
     @Override
-    public @NotNull SkyBlockPlayer getPlayer() {
+    public @NotNull HypixelPlayer getPlayer() {
         return player;
     }
 }

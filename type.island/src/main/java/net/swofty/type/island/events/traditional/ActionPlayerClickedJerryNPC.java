@@ -4,18 +4,18 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.type.island.gui.GUIJerry;
-import net.swofty.type.skyblockgeneric.event.EventNodes;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEventHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
-import net.swofty.type.skyblockgeneric.event.custom.JerryClickedEvent;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.SkyBlockEventClass;
+import net.swofty.type.generic.event.SkyBlockEventHandler;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.event.SkyBlockEvent;
+import net.swofty.type.generic.event.custom.JerryClickedEvent;
 
 public class ActionPlayerClickedJerryNPC implements SkyBlockEventClass {
 
     @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(PlayerEntityInteractEvent event) {
-        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         if (event.getHand() != PlayerHand.MAIN) return;
         if (event.getTarget().getEntityType() != EntityType.VILLAGER) return;

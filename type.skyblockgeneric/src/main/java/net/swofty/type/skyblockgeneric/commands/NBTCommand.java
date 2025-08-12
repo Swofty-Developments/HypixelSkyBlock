@@ -5,7 +5,7 @@ import net.minestom.server.tag.Tag;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class NBTCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            ItemStack item = ((SkyBlockPlayer) sender).getItemInMainHand();
+            ItemStack item = ((HypixelPlayer) sender).getItemInMainHand();
             AtomicReference<String> values = new AtomicReference<>("");
 
             for (ItemAttribute possibleAttribute : ItemAttribute.getPossibleAttributes()) {
@@ -38,14 +38,14 @@ public class NBTCommand extends HypixelCommand {
                 }
             }
 
-            if (itemNBTCache.containsKey(((SkyBlockPlayer) sender).getUuid())) {
-                if (itemNBTCache.get(((SkyBlockPlayer) sender).getUuid()).equals(values.get())) {
+            if (itemNBTCache.containsKey(((HypixelPlayer) sender).getUuid())) {
+                if (itemNBTCache.get(((HypixelPlayer) sender).getUuid()).equals(values.get())) {
                     sender.sendMessage("Item NBT has not changed since last check");
                 } else {
                     sender.sendMessage("Item NBT has changed since last check");
                     sender.sendMessage("This is what has changed:");
 
-                    String[] oldValues = itemNBTCache.get(((SkyBlockPlayer) sender).getUuid()).split("\n");
+                    String[] oldValues = itemNBTCache.get(((HypixelPlayer) sender).getUuid()).split("\n");
                     String[] newValues = values.get().split("\n");
 
                     for (int i = 0; i < oldValues.length; i++) {
@@ -55,10 +55,10 @@ public class NBTCommand extends HypixelCommand {
                         }
                     }
 
-                    itemNBTCache.put(((SkyBlockPlayer) sender).getUuid(), values.get());
+                    itemNBTCache.put(((HypixelPlayer) sender).getUuid(), values.get());
                 }
             } else {
-                itemNBTCache.put(((SkyBlockPlayer) sender).getUuid(), values.get());
+                itemNBTCache.put(((HypixelPlayer) sender).getUuid(), values.get());
             }
         });
     }

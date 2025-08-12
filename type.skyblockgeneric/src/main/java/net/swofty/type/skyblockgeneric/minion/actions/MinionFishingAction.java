@@ -2,9 +2,9 @@ package net.swofty.type.skyblockgeneric.minion.actions;
 
 import lombok.Getter;
 import net.minestom.server.instance.Instance;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
-import net.swofty.type.skyblockgeneric.minion.MinionAction;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.minion.IslandMinionData;
+import net.swofty.type.generic.minion.MinionAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

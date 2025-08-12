@@ -1,21 +1,21 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
-import net.swofty.type.skyblockgeneric.item.handlers.interactable.InteractableRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.generic.item.handlers.interactable.InteractableRegistry;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 public class InteractableComponent extends SkyBlockItemComponent {
-    private final BiConsumer<SkyBlockPlayer, SkyBlockItem> rightClickHandler;
-    private final BiConsumer<SkyBlockPlayer, SkyBlockItem> leftClickHandler;
-    private final BiFunction<SkyBlockPlayer, SkyBlockItem, Boolean> inventoryInteractHandler;
+    private final BiConsumer<HypixelPlayer, SkyBlockItem> rightClickHandler;
+    private final BiConsumer<HypixelPlayer, SkyBlockItem> leftClickHandler;
+    private final BiFunction<HypixelPlayer, SkyBlockItem, Boolean> inventoryInteractHandler;
 
-    public InteractableComponent(BiConsumer<SkyBlockPlayer, SkyBlockItem> rightClickHandler,
-                                 BiConsumer<SkyBlockPlayer, SkyBlockItem> leftClickHandler,
-                                 BiFunction<SkyBlockPlayer, SkyBlockItem, Boolean> inventoryInteractHandler) {
+    public InteractableComponent(BiConsumer<HypixelPlayer, SkyBlockItem> rightClickHandler,
+                                 BiConsumer<HypixelPlayer, SkyBlockItem> leftClickHandler,
+                                 BiFunction<HypixelPlayer, SkyBlockItem, Boolean> inventoryInteractHandler) {
         this.rightClickHandler = rightClickHandler;
         this.leftClickHandler = leftClickHandler;
         this.inventoryInteractHandler = inventoryInteractHandler;
@@ -27,15 +27,15 @@ public class InteractableComponent extends SkyBlockItemComponent {
                 InteractableRegistry.getHandler(handlerId).getInventoryInteractHandler());
     }
 
-    public void onRightClick(SkyBlockPlayer player, SkyBlockItem item) {
+    public void onRightClick(HypixelPlayer player, SkyBlockItem item) {
         if (rightClickHandler != null) rightClickHandler.accept(player, item);
     }
 
-    public void onLeftClick(SkyBlockPlayer player, SkyBlockItem item) {
+    public void onLeftClick(HypixelPlayer player, SkyBlockItem item) {
         if (leftClickHandler != null) leftClickHandler.accept(player, item);
     }
 
-    public boolean onInventoryInteract(SkyBlockPlayer player, SkyBlockItem item) {
+    public boolean onInventoryInteract(HypixelPlayer player, SkyBlockItem item) {
         return inventoryInteractHandler != null && inventoryInteractHandler.apply(player, item);
     }
 }

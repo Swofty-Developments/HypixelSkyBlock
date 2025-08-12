@@ -2,13 +2,13 @@ package net.swofty.type.skyblockgeneric.mission.missions.barn;
 
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
-import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.PlayerRegionChangeEvent;
+import net.swofty.type.generic.levels.SkyBlockLevelCause;
+import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.generic.mission.HypixelMission;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.*;
 
@@ -25,7 +25,7 @@ public class MissionTalkToFarmHand extends HypixelMission {
             return;
         }
 
-        data.setSkyBlockPlayer(event.getPlayer());
+        data.setHypixelPlayer(event.getPlayer());
         data.startMission(this.getClass());
     }
 
@@ -40,12 +40,12 @@ public class MissionTalkToFarmHand extends HypixelMission {
     }
 
     @Override
-    public HashMap<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
+    public HashMap<String, Object> onStart(HypixelPlayer player, MissionData.ActiveMission mission) {
         return new HashMap<>();
     }
 
     @Override
-    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+    public void onEnd(HypixelPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§b5 SkyBlock XP", "§3100 §7Farming Experience"))).forEach(player::sendMessage);
         player.getSkills().increase(player, SkillCategories.FARMING, 100D);
         player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(getID()));

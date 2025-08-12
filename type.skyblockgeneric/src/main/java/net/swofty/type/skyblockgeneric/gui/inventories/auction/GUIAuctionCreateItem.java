@@ -16,17 +16,17 @@ import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionEscrow;
+import net.swofty.type.generic.data.datapoints.DatapointAuctionEscrow;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
+import net.swofty.type.generic.data.datapoints.DatapointUUIDList;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.AuctionCategoryComponent;
-import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.AuctionCategoryComponent;
+import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
         set(new GUIClickableItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 if (escrow.getItem() == null)
                     return ItemStackCreator.getStack("§eClick an item in your inventory!", Material.STONE_BUTTON, 1,
                             "§7Selects it for auction");
@@ -76,7 +76,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 if (escrow.getItem() == null) return;
                 player.addAndUpdateItem(escrow.getItem());
                 escrow.setItem(null);
@@ -88,13 +88,13 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
         set(new GUIClickableItem(33) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIAuctionDuration().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 if (escrow.isBin()) {
                     lore.add("§7How long the item will be");
@@ -119,14 +119,14 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
         set(new GUIClickableItem(48) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 escrow.setBin(!escrow.isBin());
                 new GUIAuctionCreateItem(previousGUI).open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 if (escrow.isBin()) {
                     return ItemStackCreator.getStack("§aSwitch to Auction", Material.POWERED_RAIL, 1,
                             "§7With traditional auctions, multiple",
@@ -150,7 +150,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
         set(new GUIClickableItem(29) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 ProxyService auctionService = new ProxyService(ServiceType.AUCTION_HOUSE);
 
                 auctionService.isOnline().thenAccept((response) -> {
@@ -196,7 +196,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 if (escrow.getItem() == null) {
                     return ItemStackCreator.getStack("§cCreate Auction", Material.RED_TERRACOTTA, 1,
                             "§7No item selected!",
@@ -224,7 +224,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
         set(new GUIQueryItem(31) {
 
             @Override
-            public HypixelInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
+            public HypixelInventoryGUI onQueryFinish(String query, HypixelPlayer player) {
                 long l;
                 try {
                     l = Long.parseLong(query);
@@ -243,7 +243,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 Material material;
                 List<String> lore = new ArrayList<>();
                 if (escrow.isBin()) {
@@ -314,7 +314,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();

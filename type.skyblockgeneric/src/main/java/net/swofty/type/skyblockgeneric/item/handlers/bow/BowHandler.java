@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.function.BiConsumer;
 
@@ -14,5 +14,5 @@ import java.util.function.BiConsumer;
 @AllArgsConstructor
 @Builder
 public class BowHandler {
-    private final BiConsumer<SkyBlockPlayer, SkyBlockItem> shootHandler;
+    private final BiConsumer<HypixelPlayer, SkyBlockItem> shootHandler;
 }

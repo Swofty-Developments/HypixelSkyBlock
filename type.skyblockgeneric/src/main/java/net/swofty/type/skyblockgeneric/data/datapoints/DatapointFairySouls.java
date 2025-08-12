@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.data.datapoints;
 
 import lombok.Getter;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
-import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulExchangeLevels;
+import net.swofty.type.generic.data.SkyBlockDatapoint;
+import net.swofty.type.generic.user.fairysouls.FairySoulExchangeLevels;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

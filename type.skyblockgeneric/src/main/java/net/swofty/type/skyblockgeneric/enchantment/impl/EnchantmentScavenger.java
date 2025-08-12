@@ -1,16 +1,16 @@
 
         package net.swofty.type.skyblockgeneric.enchantment.impl;
 
-import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
-import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
-import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
-import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
+import net.swofty.type.generic.collection.CustomCollectionAward;
+import net.swofty.type.generic.enchantment.EnchantmentType;
+import net.swofty.type.generic.enchantment.abstr.Ench;
+import net.swofty.type.generic.enchantment.abstr.EnchFromTable;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
-import net.swofty.type.skyblockgeneric.user.PlayerEnchantmentHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.PlayerKilledSkyBlockMobEvent;
+import net.swofty.type.generic.user.PlayerEnchantmentHandler;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
-import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
+import net.swofty.type.generic.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class EnchantmentScavenger implements Ench, EnchFromTable, HypixelEventCl
     }
 
     @Override
-    public ApplyLevels getLevelsToApply(@NotNull SkyBlockPlayer player) {
+    public ApplyLevels getLevelsToApply(@NotNull HypixelPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 9,
                 2, 18,
@@ -51,7 +51,7 @@ public class EnchantmentScavenger implements Ench, EnchFromTable, HypixelEventCl
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {
+    public TableLevels getLevelsFromTableToApply(@NotNull HypixelPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 10,
                 2, 20,
@@ -72,7 +72,7 @@ public class EnchantmentScavenger implements Ench, EnchFromTable, HypixelEventCl
     }
 
     public int getScavengedCoins(PlayerKilledSkyBlockMobEvent event) {
-        SkyBlockPlayer player = event.getPlayer();
+        HypixelPlayer player = event.getPlayer();
 
         PlayerEnchantmentHandler enchantmentHandler = player.getEnchantmentHandler();
         PlayerEnchantmentHandler.EnchantmentHandlerResponse response = enchantmentHandler.getItemWithHighestLevelOf(

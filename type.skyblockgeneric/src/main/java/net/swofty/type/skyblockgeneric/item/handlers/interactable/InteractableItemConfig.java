@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.item.handlers.interactable;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -13,27 +13,27 @@ import java.util.function.BiFunction;
 @Setter
 @Builder
 public class InteractableItemConfig {
-    private BiConsumer<SkyBlockPlayer, SkyBlockItem> rightClickHandler;
-    private BiConsumer<SkyBlockPlayer, SkyBlockItem> leftClickHandler;
-    private BiFunction<SkyBlockPlayer, SkyBlockItem, Boolean> inventoryInteractHandler;
+    private BiConsumer<HypixelPlayer, SkyBlockItem> rightClickHandler;
+    private BiConsumer<HypixelPlayer, SkyBlockItem> leftClickHandler;
+    private BiFunction<HypixelPlayer, SkyBlockItem, Boolean> inventoryInteractHandler;
 
-    public InteractableItemConfig(BiConsumer<SkyBlockPlayer, SkyBlockItem> rightClickHandler,
-                                  BiConsumer<SkyBlockPlayer, SkyBlockItem> leftClickHandler,
-                                  BiFunction<SkyBlockPlayer, SkyBlockItem, Boolean> inventoryInteractHandler) {
+    public InteractableItemConfig(BiConsumer<HypixelPlayer, SkyBlockItem> rightClickHandler,
+                                  BiConsumer<HypixelPlayer, SkyBlockItem> leftClickHandler,
+                                  BiFunction<HypixelPlayer, SkyBlockItem, Boolean> inventoryInteractHandler) {
         this.rightClickHandler = rightClickHandler;
         this.leftClickHandler = leftClickHandler;
         this.inventoryInteractHandler = inventoryInteractHandler;
     }
 
-    public void onRightClick(SkyBlockPlayer player, SkyBlockItem item) {
+    public void onRightClick(HypixelPlayer player, SkyBlockItem item) {
         if (rightClickHandler != null) rightClickHandler.accept(player, item);
     }
 
-    public void onLeftClick(SkyBlockPlayer player, SkyBlockItem item) {
+    public void onLeftClick(HypixelPlayer player, SkyBlockItem item) {
         if (leftClickHandler != null) leftClickHandler.accept(player, item);
     }
 
-    public boolean onInventoryInteract(SkyBlockPlayer player, SkyBlockItem item) {
+    public boolean onInventoryInteract(HypixelPlayer player, SkyBlockItem item) {
         return inventoryInteractHandler != null && inventoryInteractHandler.apply(player, item);
     }
 }

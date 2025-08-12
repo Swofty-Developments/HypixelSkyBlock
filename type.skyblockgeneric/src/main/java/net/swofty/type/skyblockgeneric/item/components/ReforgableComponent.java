@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
 import net.swofty.commons.item.reforge.ReforgeType;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
+import net.swofty.type.generic.item.SkyBlockItemComponent;
 
 @Getter
 public class ReforgableComponent extends SkyBlockItemComponent {

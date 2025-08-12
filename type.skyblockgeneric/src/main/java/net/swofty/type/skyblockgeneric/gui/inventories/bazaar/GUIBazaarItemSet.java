@@ -10,13 +10,13 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.bazaar.BazaarCategories;
-import net.swofty.type.skyblockgeneric.bazaar.BazaarItemSet;
+import net.swofty.type.generic.bazaar.BazaarCategories;
+import net.swofty.type.generic.bazaar.BazaarItemSet;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -51,13 +51,13 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
         set(new GUIClickableItem(32) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIBazaarOrders().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
                         "§7View your pending Bazaar orders",
                         " ",
@@ -79,13 +79,13 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                         set(new GUIClickableItem(slot) {
                             @Override
                             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                                 new GUIBazaarItem(itemType).open(player);
                             }
 
                             @Override
                             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                                 List<String> lore = new ArrayList<>();
                                 lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
                                 lore.add(" ");
@@ -130,13 +130,13 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                         set(new GUIClickableItem(slot) {
                             @Override
                             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                                 new GUIBazaarItem(itemType).open(player);
                             }
 
                             @Override
                             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                                 List<String> lore = new ArrayList<>();
                                 lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
                                 lore.add(" ");
@@ -197,12 +197,12 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
         }
 
         Thread.startVirtualThread(() -> {
-            new GUIBazaarItemSet(entry.getKey(), entry.getValue()).open((SkyBlockPlayer) e.getPlayer());
+            new GUIBazaarItemSet(entry.getKey(), entry.getValue()).open((HypixelPlayer) e.getPlayer());
         });
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    public void refreshItems(HypixelPlayer player) {
         player.getBazaarConnector().isOnline().thenAccept(online -> {
             if (!online) {
                 player.sendMessage("§cThe Bazaar is currently offline!");

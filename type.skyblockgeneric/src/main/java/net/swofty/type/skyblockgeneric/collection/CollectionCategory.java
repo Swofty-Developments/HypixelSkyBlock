@@ -7,12 +7,12 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
-import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
-import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.MinionComponent;
+import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.generic.minion.MinionRegistry;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,7 +78,7 @@ public abstract class CollectionCategory {
 
     public abstract static class Unlock {
         public abstract UnlockType type();
-        public abstract ItemStack.Builder getDisplay(SkyBlockPlayer player);
+        public abstract ItemStack.Builder getDisplay(HypixelPlayer player);
 
         public enum UnlockType {
             RECIPE,
@@ -94,7 +94,7 @@ public abstract class CollectionCategory {
         }
 
         @Override
-        public ItemStack.Builder getDisplay(SkyBlockPlayer player) {
+        public ItemStack.Builder getDisplay(HypixelPlayer player) {
             SkyBlockItem skyBlockItem = getRecipes().getFirst().getResult();
             ItemStack.Builder updatedItem = new NonPlayerItemUpdater(getRecipes().getFirst().getResult()).getUpdatedItem();
             ArrayList<String> lore = new ArrayList<>(updatedItem.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
@@ -138,7 +138,7 @@ public abstract class CollectionCategory {
         }
 
         @Override
-        public ItemStack.Builder getDisplay(SkyBlockPlayer player) {
+        public ItemStack.Builder getDisplay(HypixelPlayer player) {
             return ItemStackCreator.getStack("§8+§b" + xp() + " SkyBlock XP", Material.EXPERIENCE_BOTTLE, 1);
         }
 
@@ -152,7 +152,7 @@ public abstract class CollectionCategory {
         }
 
         @Override
-        public ItemStack.Builder getDisplay(SkyBlockPlayer player) {
+        public ItemStack.Builder getDisplay(HypixelPlayer player) {
             return ItemStackCreator.getStack(getAward().getDisplay(), Material.PURPLE_STAINED_GLASS_PANE, 1);
         }
 

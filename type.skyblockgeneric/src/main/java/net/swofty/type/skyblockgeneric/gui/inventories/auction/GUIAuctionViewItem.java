@@ -12,18 +12,18 @@ import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObje
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
+import net.swofty.type.generic.auction.AuctionItemLoreHandler;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
-import net.swofty.type.skyblockgeneric.gui.inventories.auction.view.AuctionViewSelfBIN;
-import net.swofty.type.skyblockgeneric.gui.inventories.auction.view.AuctionViewSelfNormal;
-import net.swofty.type.skyblockgeneric.gui.inventories.auction.view.AuctionViewThirdBin;
-import net.swofty.type.skyblockgeneric.gui.inventories.auction.view.AuctionViewThirdNormal;
+import net.swofty.type.generic.gui.inventories.auction.view.AuctionViewSelfBIN;
+import net.swofty.type.generic.gui.inventories.auction.view.AuctionViewSelfNormal;
+import net.swofty.type.generic.gui.inventories.auction.view.AuctionViewThirdBin;
+import net.swofty.type.generic.gui.inventories.auction.view.AuctionViewThirdNormal;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -60,7 +60,7 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
         set(new GUIItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.updateLore(
                         PlayerItemUpdater.playerUpdate(player, new SkyBlockItem(item.getItem()).getItemStack()),
                         new AuctionItemLoreHandler(item).getLore(player)
@@ -86,7 +86,7 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();

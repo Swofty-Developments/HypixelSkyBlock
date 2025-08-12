@@ -2,20 +2,20 @@ package net.swofty.type.skyblockgeneric.mission;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.swofty.type.skyblockgeneric.mission.missions.*;
-import net.swofty.type.skyblockgeneric.mission.missions.barn.MissionCraftWheatMinion;
-import net.swofty.type.skyblockgeneric.mission.missions.barn.MissionTalkToFarmHand;
-import net.swofty.type.skyblockgeneric.mission.missions.barn.MissionTalkToFarmhandAgain;
-import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionMineCoal;
-import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionTalkToBlacksmith;
-import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
-import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionCollectWheat;
-import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarmer;
-import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarmerAgain;
-import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionBreakOaklog;
-import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
-import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjackAgain;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.mission.missions.*;
+import net.swofty.type.generic.mission.missions.barn.MissionCraftWheatMinion;
+import net.swofty.type.generic.mission.missions.barn.MissionTalkToFarmHand;
+import net.swofty.type.generic.mission.missions.barn.MissionTalkToFarmhandAgain;
+import net.swofty.type.generic.mission.missions.blacksmith.MissionMineCoal;
+import net.swofty.type.generic.mission.missions.blacksmith.MissionTalkToBlacksmith;
+import net.swofty.type.generic.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
+import net.swofty.type.generic.mission.missions.farmer.MissionCollectWheat;
+import net.swofty.type.generic.mission.missions.farmer.MissionTalkToFarmer;
+import net.swofty.type.generic.mission.missions.farmer.MissionTalkToFarmerAgain;
+import net.swofty.type.generic.mission.missions.lumber.MissionBreakOaklog;
+import net.swofty.type.generic.mission.missions.lumber.MissionTalkToLumberjack;
+import net.swofty.type.generic.mission.missions.lumber.MissionTalkToLumberjackAgain;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
@@ -61,7 +61,7 @@ public enum MissionSet {
      * @return Whether the player has completed all missions in the set
      */
     @SneakyThrows
-    public boolean hasCompleted(SkyBlockPlayer player) {
+    public boolean hasCompleted(HypixelPlayer player) {
         for (Class<? extends HypixelMission> mission : missions) {
             if (!player.getMissionData().hasCompleted(mission.newInstance().getID())) {
                 return false;
@@ -76,7 +76,7 @@ public enum MissionSet {
      * @return The next mission in the set, or null if there are no more missions
      */
     @SneakyThrows
-    public @Nullable Class<? extends HypixelMission> getNextMission(SkyBlockPlayer player) {
+    public @Nullable Class<? extends HypixelMission> getNextMission(HypixelPlayer player) {
         for (Class<? extends HypixelMission> mission : missions) {
             if (!player.getMissionData().hasCompleted(mission.newInstance().getID())) {
                 return mission;

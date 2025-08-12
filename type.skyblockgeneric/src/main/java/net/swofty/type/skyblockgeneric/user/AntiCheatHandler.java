@@ -4,7 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 
-public record AntiCheatHandler(SkyBlockPlayer player) {
+public record AntiCheatHandler(HypixelPlayer player) {
     public Double getDistanceFromClosestBlockBelow() {
         Instance instance = player.getInstance();
 

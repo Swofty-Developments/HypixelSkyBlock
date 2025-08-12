@@ -4,21 +4,21 @@ import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.swofty.commons.item.reforge.ReforgeType;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
-import net.swofty.type.skyblockgeneric.item.handlers.bow.BowRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.generic.item.handlers.bow.BowRegistry;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.groups.EnchantItemGroups;
 
 import java.util.List;
 import java.util.function.BiConsumer;
 
 @Getter
 public class BowComponent extends SkyBlockItemComponent {
-    private final BiConsumer<SkyBlockPlayer, SkyBlockItem> shootHandler;
+    private final BiConsumer<HypixelPlayer, SkyBlockItem> shootHandler;
     private final boolean shouldBeArrow;
 
-    public BowComponent(BiConsumer<SkyBlockPlayer, SkyBlockItem> shootHandler, boolean shouldBeArrow) {
+    public BowComponent(BiConsumer<HypixelPlayer, SkyBlockItem> shootHandler, boolean shouldBeArrow) {
         this.shootHandler = shootHandler;
         this.shouldBeArrow = shouldBeArrow;
         addInheritedComponent(new ExtraRarityComponent("BOW"));
@@ -33,7 +33,7 @@ public class BowComponent extends SkyBlockItemComponent {
         this(BowRegistry.getHandler(handlerId).getShootHandler(), shouldBeArrow);
     }
 
-    public void onBowShoot(SkyBlockPlayer player, SkyBlockItem item) {
+    public void onBowShoot(HypixelPlayer player, SkyBlockItem item) {
         if (shootHandler != null) {
             shootHandler.accept(player, item);
         }
@@ -52,7 +52,7 @@ public class BowComponent extends SkyBlockItemComponent {
         return new Vec(velocityX, velocityY, velocityZ).mul(20, 20, 20);
     }
 
-    public Pos calculateArrowSpawnPosition(SkyBlockPlayer player) {
+    public Pos calculateArrowSpawnPosition(HypixelPlayer player) {
         return player.getPosition().add(0, player.getEyeHeight(), 0);
     }
 }

@@ -7,7 +7,7 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 
 public class ActionRegionBlockPlace implements HypixelEventClass {
@@ -16,7 +16,7 @@ public class ActionRegionBlockPlace implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerBlockPlaceEvent event) {
-        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         if (player.isBypassBuild()) {
             return;

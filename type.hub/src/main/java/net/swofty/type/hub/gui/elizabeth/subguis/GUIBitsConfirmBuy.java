@@ -11,8 +11,8 @@ import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIBitsConfirmBuy extends HypixelInventoryGUI {
@@ -31,7 +31,7 @@ public class GUIBitsConfirmBuy extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 player.addAndUpdateItem(item);
                 player.removeBits(price);
                 new GUIBitsShop().open(player);
@@ -39,7 +39,7 @@ public class GUIBitsConfirmBuy extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aConfirm", Material.LIME_TERRACOTTA, 1,
                         "§7Buying: " + item.getDisplayName(),
                         "§7Cost: §b" + StringUtility.commaify(price));
@@ -48,13 +48,13 @@ public class GUIBitsConfirmBuy extends HypixelInventoryGUI {
         set(new GUIClickableItem(15) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 player.closeInventory();
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§cCancel", Material.RED_TERRACOTTA, 1);
             }
         });

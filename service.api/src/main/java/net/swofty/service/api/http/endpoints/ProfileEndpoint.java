@@ -5,7 +5,7 @@ import net.swofty.service.api.http.APIResponse;
 import net.swofty.service.api.http.ApiRateLimiterHandler;
 import net.swofty.service.api.http.EndpointType;
 import net.swofty.service.api.http.SkyBlockEndpoint;
-import net.swofty.type.skyblockgeneric.data.mongodb.ProfilesDatabase;
+import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import org.jetbrains.annotations.Nullable;
 import spark.Request;
 import spark.Response;

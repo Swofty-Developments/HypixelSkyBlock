@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.generic.calendar.SkyBlockCalendar;
+import net.swofty.type.generic.data.SkyBlockDatapoint;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

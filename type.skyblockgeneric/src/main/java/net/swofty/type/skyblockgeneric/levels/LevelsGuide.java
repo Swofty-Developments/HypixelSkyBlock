@@ -4,11 +4,11 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.starter.GUIStarterAccessories;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.starter.GUIStarterSkills;
-import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.gui.inventories.sbmenu.levels.starter.GUIStarterAccessories;
+import net.swofty.type.generic.gui.inventories.sbmenu.levels.starter.GUIStarterSkills;
+import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -58,9 +58,9 @@ public enum LevelsGuide {
         private String name;
         private ItemStack material;
         private HypixelInventoryGUI guiToOpen;
-        private Function<SkyBlockPlayer, List<String>> display;
+        private Function<HypixelPlayer, List<String>> display;
 
-        public static Builder builder(ItemStack material, HypixelInventoryGUI guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
+        public static Builder builder(ItemStack material, HypixelInventoryGUI guiToOpen, Function<HypixelPlayer, List<String>> display) {
             return new Builder(material, guiToOpen, display);
         }
 
@@ -68,9 +68,9 @@ public enum LevelsGuide {
             private Map<SkyBlockLevelCauseAbstr, String> causes;
             private ItemStack material;
             private HypixelInventoryGUI guiToOpen;
-            private Function<SkyBlockPlayer, List<String>> display;
+            private Function<HypixelPlayer, List<String>> display;
 
-            public Builder(ItemStack material, HypixelInventoryGUI guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
+            public Builder(ItemStack material, HypixelInventoryGUI guiToOpen, Function<HypixelPlayer, List<String>> display) {
                 this.material = material;
                 this.guiToOpen = guiToOpen;
                 this.display = display;

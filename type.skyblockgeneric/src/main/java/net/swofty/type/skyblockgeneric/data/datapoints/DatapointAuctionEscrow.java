@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.generic.data.SkyBlockDatapoint;
+import net.swofty.type.generic.item.SkyBlockItem;
 import org.json.JSONObject;
 
 public class DatapointAuctionEscrow extends SkyBlockDatapoint<DatapointAuctionEscrow.AuctionEscrow> {

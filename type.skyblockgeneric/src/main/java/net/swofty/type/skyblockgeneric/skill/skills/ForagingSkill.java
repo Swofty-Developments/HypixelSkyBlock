@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.skill.skills;
 
 import net.minestom.server.item.Material;
 import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.skill.SkillCategory;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.skill.SkillCategory;
 
 import java.util.List;
 

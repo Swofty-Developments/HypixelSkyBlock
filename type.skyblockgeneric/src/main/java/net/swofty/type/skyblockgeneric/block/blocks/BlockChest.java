@@ -10,13 +10,13 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
-import net.swofty.type.skyblockgeneric.block.impl.BlockBreakable;
-import net.swofty.type.skyblockgeneric.block.impl.BlockInteractable;
-import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
-import net.swofty.type.skyblockgeneric.chest.*;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIChest;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.block.SkyBlockBlock;
+import net.swofty.type.generic.block.impl.BlockBreakable;
+import net.swofty.type.generic.block.impl.BlockInteractable;
+import net.swofty.type.generic.block.impl.CustomSkyBlockBlock;
+import net.swofty.type.generic.chest.*;
+import net.swofty.type.generic.gui.inventories.GUIChest;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.ChestUtility;
 
 import java.util.List;
@@ -28,18 +28,18 @@ public class BlockChest implements CustomSkyBlockBlock, BlockInteractable, Block
     }
 
     @Override
-    public @NonNull Boolean shouldPlace(SkyBlockPlayer player) {
+    public @NonNull Boolean shouldPlace(HypixelPlayer player) {
         return HypixelConst.isIslandServer();
     }
 
     @Override
-    public @NonNull Boolean shouldDestroy(SkyBlockPlayer player) {
+    public @NonNull Boolean shouldDestroy(HypixelPlayer player) {
         return HypixelConst.isIslandServer();
     }
 
     @Override
     public void onInteract(PlayerBlockInteractEvent event, SkyBlockBlock block) {
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         if (!HypixelConst.isIslandServer()) return;
         event.setBlockingItemUse(true);
 
@@ -66,7 +66,7 @@ public class BlockChest implements CustomSkyBlockBlock, BlockInteractable, Block
 
     @Override
     public void onBreak(PlayerBlockBreakEvent event, SkyBlockBlock block) {
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         Instance instance = event.getInstance();
         Point position = event.getBlockPosition();

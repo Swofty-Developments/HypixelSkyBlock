@@ -6,11 +6,11 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
-import net.swofty.type.skyblockgeneric.entity.PetEntityImpl;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.SkyBlockDatapoint;
+import net.swofty.type.generic.entity.PetEntityImpl;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.SkullHeadComponent;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -88,7 +88,7 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
                 enabledPetEntityImpl.remove();
         }
 
-        public void updatePetEntityImpl(SkyBlockPlayer player) {
+        public void updatePetEntityImpl(HypixelPlayer player) {
             if (enabledPetEntityImpl != null) {
                 enabledPetEntityImpl.kill();
                 enabledPetEntityImpl.remove();

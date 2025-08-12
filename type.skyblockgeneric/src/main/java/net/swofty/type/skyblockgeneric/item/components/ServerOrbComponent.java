@@ -3,9 +3,9 @@ package net.swofty.type.skyblockgeneric.item.components;
 import lombok.Getter;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
-import net.swofty.type.skyblockgeneric.item.handlers.orbs.ServerOrbRegistry;
+import net.swofty.type.generic.entity.ServerCrystalImpl;
+import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.generic.item.handlers.orbs.ServerOrbRegistry;
 import org.tinylog.Logger;
 
 import java.util.List;

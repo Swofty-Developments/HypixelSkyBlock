@@ -11,18 +11,18 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.generic.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointString;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.generic.data.datapoints.DatapointUUID;
+import net.swofty.type.generic.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.commons.SkyBlockPlayerProfiles;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.commons.HypixelPlayerProfiles;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,9 +59,9 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
         set(new GUIItem(slots[0]) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStackHead(
-                        SkyBlockPlayer.getDisplayName(coop.originator()), PlayerSkin.fromUuid(String.valueOf(coop.originator())), 1,
+                        HypixelPlayer.getDisplayName(coop.originator()), PlayerSkin.fromUuid(String.valueOf(coop.originator())), 1,
                         " ",
                         "§bCreated the invite!"
                 );
@@ -71,12 +71,12 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
         for (int i = 0; i < invites.size(); i++) {
             UUID target = (UUID) invites.keySet().toArray()[i];
             boolean accepted = invites.get(target);
-            String displayName = SkyBlockPlayer.getDisplayName(target);
+            String displayName = HypixelPlayer.getDisplayName(target);
 
             set(new GUIItem(slots[i + 1]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStackHead(
                             displayName, PlayerSkin.fromUuid(String.valueOf(target)), 1,
                             " ",
@@ -89,13 +89,13 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
         set(new GUIClickableItem(33) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 coop.removeInvite(player.getUuid());
                 coop.save();
                 player.sendMessage("§b[Co-op] §eYou have denied the co-op invite!");
                 player.closeInventory();
 
-                SkyBlockPlayer target = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
+                HypixelPlayer target = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
                 if (target != null &&
                         (coop.memberInvites().contains(target.getUuid()) || coop.members().contains(target.getUuid())))
                     target.sendMessage("§b[Co-op] §e" + player.getUsername() + " §chas denied your co-op invite!");
@@ -103,7 +103,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§cDeny Invite", Material.BARRIER, 1);
             }
         });
@@ -112,7 +112,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
         set(new GUIClickableItem(29) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 coop.memberInvites().remove(player.getUuid());
                 coop.members().add(player.getUuid());
                 coop.save();
@@ -123,7 +123,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                 handler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).setValue(true);
                 if (coop.memberProfiles().isEmpty()) {
                     handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(UUID.randomUUID());
-                    handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(SkyBlockPlayerProfiles.getRandomName());
+                    handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(HypixelPlayerProfiles.getRandomName());
                 } else {
                     UUID otherCoopMember = coop.memberProfiles().getFirst();
                     ProfilesDatabase islandDatabase = new ProfilesDatabase(otherCoopMember.toString());
@@ -132,7 +132,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                         handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(islandHandler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
                         handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(islandHandler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
                     } else {
-                        SkyBlockPlayer profileOwner = SkyBlockGenericLoader.getPlayerFromProfileUUID(otherCoopMember);
+                        HypixelPlayer profileOwner = SkyBlockGenericLoader.getPlayerFromProfileUUID(otherCoopMember);
 
                         handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(
                                 profileOwner.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
@@ -149,13 +149,13 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                 coop.save();
 
                 MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                    SkyBlockPlayerProfiles profiles = player.getProfiles();
+                    HypixelPlayerProfiles profiles = player.getProfiles();
                     profiles.getProfiles().add(profileId);
                     profiles.setCurrentlySelected(profileId);
                     new UserDatabase(player.getUuid()).saveProfiles(profiles);
                 }, TaskSchedule.tick(5), TaskSchedule.stop());
 
-                SkyBlockPlayer target = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
+                HypixelPlayer target = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
                 if (target != null &&
                         (coop.memberInvites().contains(target.getUuid()) || coop.members().contains(target.getUuid())))
                     target.sendMessage("§b[Co-op] §a" + player.getUsername() + " §ahas accepted your co-op invite!");
@@ -163,7 +163,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 return ItemStackCreator.getStack("§aAccept Invite", Material.GREEN_TERRACOTTA, 1,
                         "§7Creates a NEW §bco-op §7profile on your",
                         "§7account with the above player.",

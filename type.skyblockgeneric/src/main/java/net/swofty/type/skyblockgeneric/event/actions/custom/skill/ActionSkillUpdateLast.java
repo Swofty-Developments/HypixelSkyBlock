@@ -1,10 +1,10 @@
 package net.swofty.type.skyblockgeneric.event.actions.custom.skill;
 
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkillCategory;
+import net.swofty.type.generic.data.datapoints.DatapointSkillCategory;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
+import net.swofty.type.generic.event.custom.SkillUpdateEvent;
 
 public class ActionSkillUpdateLast implements HypixelEventClass {
 

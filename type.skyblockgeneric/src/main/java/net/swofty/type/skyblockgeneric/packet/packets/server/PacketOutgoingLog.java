@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.packet.packets.server;
 
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.configuration.FinishConfigurationPacket;
-import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketServerListener;
+import net.swofty.type.generic.packet.SkyBlockPacketServerListener;
 
 public class PacketOutgoingLog extends SkyBlockPacketServerListener {
     @Override

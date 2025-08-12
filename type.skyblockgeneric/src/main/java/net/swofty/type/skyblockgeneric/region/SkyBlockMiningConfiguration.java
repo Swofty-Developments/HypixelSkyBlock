@@ -12,7 +12,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.*;
 
@@ -28,7 +28,7 @@ public abstract class SkyBlockMiningConfiguration {
 
     public abstract long getRegenerationTime();
 
-    public void addToQueue(SkyBlockPlayer player, Pos block, SharedInstance instance) {
+    public void addToQueue(HypixelPlayer player, Pos block, SharedInstance instance) {
         Optional<MiningTask> taskExists = findMiningTask(block);
 
         if (taskExists.isPresent()) {
@@ -137,7 +137,7 @@ public abstract class SkyBlockMiningConfiguration {
     @Getter
     @Setter
     public static class MiningTask {
-        SkyBlockPlayer playerWhoInitiated;
+        HypixelPlayer playerWhoInitiated;
         Pos position;
         Block intermediaryBlock;
         Block reviveBlock;

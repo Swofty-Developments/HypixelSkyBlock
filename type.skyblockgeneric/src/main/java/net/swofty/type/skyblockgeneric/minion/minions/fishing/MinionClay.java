@@ -3,9 +3,9 @@ package net.swofty.type.skyblockgeneric.minion.minions.fishing;
 import net.minestom.server.color.Color;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.type.skyblockgeneric.minion.MinionAction;
-import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
-import net.swofty.type.skyblockgeneric.minion.actions.MinionMineAction;
+import net.swofty.type.generic.minion.MinionAction;
+import net.swofty.type.generic.minion.SkyBlockMinion;
+import net.swofty.type.generic.minion.actions.MinionMineAction;
 
 import java.util.List;
 

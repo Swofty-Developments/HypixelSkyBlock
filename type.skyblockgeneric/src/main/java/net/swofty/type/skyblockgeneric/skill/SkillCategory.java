@@ -5,10 +5,10 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.skill.skills.RunecraftingSkill;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointSkills;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.skill.skills.RunecraftingSkill;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -77,7 +77,7 @@ public abstract class SkillCategory {
     public abstract static class Reward {
         public abstract UnlockType type();
 
-        public abstract void onUnlock(SkyBlockPlayer player);
+        public abstract void onUnlock(HypixelPlayer player);
 
         public enum UnlockType {
             REGION_ACCESS,
@@ -96,7 +96,7 @@ public abstract class SkillCategory {
         }
 
         @Override
-        public void onUnlock(SkyBlockPlayer player) {
+        public void onUnlock(HypixelPlayer player) {
             DatapointDouble coins = player.getSkyBlockData().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
             coins.setValue(coins.getValue() + getCoins());
         }
@@ -111,7 +111,7 @@ public abstract class SkillCategory {
         }
 
         @Override
-        public void onUnlock(SkyBlockPlayer player) {
+        public void onUnlock(HypixelPlayer player) {
             // TODO
         }
 
@@ -125,7 +125,7 @@ public abstract class SkillCategory {
         }
 
         @Override
-        public void onUnlock(SkyBlockPlayer player) {
+        public void onUnlock(HypixelPlayer player) {
             DatapointSkills.PlayerSkills skills = player.getSkills();
             ItemStatistics statistics = ItemStatistics.builder()
                     .withBase(getStatistic(), amountAdded())
@@ -145,7 +145,7 @@ public abstract class SkillCategory {
         }
 
         @Override
-        public void onUnlock(SkyBlockPlayer player) {
+        public void onUnlock(HypixelPlayer player) {
             DatapointSkills.PlayerSkills skills = player.getSkills();
             ItemStatistics statistics = ItemStatistics.builder()
                     .withMultiplicativePercentage(getStatistic(), amountAdded())
@@ -165,7 +165,7 @@ public abstract class SkillCategory {
         }
 
         @Override
-        public void onUnlock(SkyBlockPlayer player) {
+        public void onUnlock(HypixelPlayer player) {
             // Handled by the region system
         }
 

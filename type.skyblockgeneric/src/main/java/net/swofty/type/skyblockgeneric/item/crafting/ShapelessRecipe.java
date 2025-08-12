@@ -4,9 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.item.ItemStack;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.ItemQuantifiable;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,14 +23,14 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
     private SkyBlockItem[] customRecipeDisplay = null;
 
     public ShapelessRecipe(RecipeType type, SkyBlockItem result,
-                           int amount, Function<SkyBlockPlayer, CraftingResult> canCraft) {
+                           int amount, Function<HypixelPlayer, CraftingResult> canCraft) {
         super(result, type, canCraft);
 
         setAmount(amount);
         this.ingredientList = new ArrayList<>();
     }
 
-    public ShapelessRecipe(RecipeType type, SkyBlockItem result, Function<SkyBlockPlayer, CraftingResult> canCraft) {
+    public ShapelessRecipe(RecipeType type, SkyBlockItem result, Function<HypixelPlayer, CraftingResult> canCraft) {
         super(result, type, canCraft);
 
         this.ingredientList = new ArrayList<>();

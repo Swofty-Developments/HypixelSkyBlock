@@ -10,11 +10,11 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.DyedItemColor;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.MinionSkinComponent;
-import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
-import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
-import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionSkinExtension;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.MinionSkinComponent;
+import net.swofty.type.generic.minion.IslandMinionData;
+import net.swofty.type.generic.minion.SkyBlockMinion;
+import net.swofty.type.generic.minion.extension.extensions.MinionSkinExtension;
 import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.ArrayList;

@@ -10,13 +10,13 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
+import net.swofty.type.generic.gui.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
-import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
-import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.crafting.ShapedRecipe;
+import net.swofty.type.generic.item.crafting.ShapelessRecipe;
+import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +45,7 @@ public class GUIRecipeBook extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 List<String> lore = new ArrayList<>(List.of(
                         "§7Through your adventure, you will",
                         "§7unlock recipes for all kinds of",
@@ -75,13 +75,13 @@ public class GUIRecipeBook extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     new GUIRecipeCategory(type, new GUIRecipeBook()).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     ArrayList<String> lore = new ArrayList<>(Arrays.asList(
                             "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
                             "§7that you have unlocked!", " "));
@@ -121,13 +121,13 @@ public class GUIRecipeBook extends HypixelInventoryGUI {
         set(new GUIClickableItem(32) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUIRecipeSlayers().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
 
                 SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.SLAYER;
 

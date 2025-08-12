@@ -2,16 +2,16 @@ package net.swofty.type.skyblockgeneric.levels;
 
 import lombok.NonNull;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
-import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
-import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.skyblockgeneric.levels.causes.*;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.museum.MuseumRewards;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulExchangeLevels;
+import net.swofty.type.generic.collection.CollectionCategories;
+import net.swofty.type.generic.collection.CollectionCategory;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.AccessoryComponent;
+import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.generic.levels.causes.*;
+import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.generic.museum.MuseumRewards;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.fairysouls.FairySoulExchangeLevels;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

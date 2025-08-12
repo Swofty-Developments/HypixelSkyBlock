@@ -3,10 +3,10 @@ package net.swofty.type.skyblockgeneric.entity.mob.impl;
 import lombok.Builder;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
-import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.generic.entity.mob.MobRegistry;
+import net.swofty.type.generic.entity.mob.SkyBlockMob;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.region.SkyBlockRegion;
 
 import java.util.List;
 

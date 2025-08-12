@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.region;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.commons.Songs;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.*;
+import net.swofty.type.generic.region.mining.configurations.*;
 
 import java.util.ArrayList;
 import java.util.List;

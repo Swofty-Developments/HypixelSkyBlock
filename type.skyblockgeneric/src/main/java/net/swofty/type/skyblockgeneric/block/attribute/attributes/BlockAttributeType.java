@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.block.attribute.attributes;
 
-import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
-import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
+import net.swofty.type.generic.block.attribute.BlockAttribute;
+import net.swofty.type.generic.block.impl.CustomSkyBlockBlock;
 import org.jetbrains.annotations.Nullable;
 
 public class BlockAttributeType extends BlockAttribute<String> {

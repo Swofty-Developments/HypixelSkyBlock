@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.data.datapoints;
 
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.generic.data.SkyBlockDatapoint;
+import net.swofty.type.generic.item.SkyBlockItem;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 

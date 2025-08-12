@@ -5,9 +5,9 @@ import net.swofty.commons.bazaar.OrderExpiredBazaarTransaction;
 import net.swofty.commons.bazaar.SuccessfulBazaarTransaction;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.bazaar.BazaarAwarder;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.generic.bazaar.BazaarAwarder;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
@@ -80,7 +80,7 @@ public class RedisPropogateBazaarTransaction implements ServiceToClient {
         boolean buyerHandled = false;
         boolean sellerHandled = false;
 
-        SkyBlockPlayer buyer = SkyBlockGenericLoader.getFromUUID(transaction.buyer());
+        HypixelPlayer buyer = SkyBlockGenericLoader.getFromUUID(transaction.buyer());
         if (buyer != null && buyer.getProfiles().getCurrentlySelected().equals(transaction.buyerProfile())) {
             buyerHandled = BazaarAwarder.processSuccessfulTransaction(buyer, transaction);
             Logger.info("Buyer " + transaction.buyer() + " processed successfully: " + buyerHandled);
@@ -88,7 +88,7 @@ public class RedisPropogateBazaarTransaction implements ServiceToClient {
             Logger.info("Buyer " + transaction.buyer() + " is offline or on different profile");
         }
 
-        SkyBlockPlayer seller = SkyBlockGenericLoader.getFromUUID(transaction.seller());
+        HypixelPlayer seller = SkyBlockGenericLoader.getFromUUID(transaction.seller());
         if (seller != null && seller.getProfiles().getCurrentlySelected().equals(transaction.sellerProfile())) {
             sellerHandled = BazaarAwarder.processSuccessfulTransaction(seller, transaction);
             Logger.info("Seller " + transaction.seller() + " processed successfully: " + sellerHandled);
@@ -112,7 +112,7 @@ public class RedisPropogateBazaarTransaction implements ServiceToClient {
 
         boolean ownerHandled = false;
 
-        SkyBlockPlayer owner = SkyBlockGenericLoader.getFromUUID(transaction.owner());
+        HypixelPlayer owner = SkyBlockGenericLoader.getFromUUID(transaction.owner());
         if (owner != null && owner.getProfiles().getCurrentlySelected().equals(transaction.ownerProfile())) {
             ownerHandled = BazaarAwarder.processExpiredOrder(owner, transaction);
             Logger.info("Owner " + transaction.owner() + " processed successfully: " + ownerHandled);

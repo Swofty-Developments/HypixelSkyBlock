@@ -3,14 +3,14 @@ package net.swofty.type.skyblockgeneric.event.actions.item;
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.item.ItemStack;
-import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
+import net.swofty.type.generic.block.SkyBlockBlock;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.PlaceEventComponent;
-import net.swofty.type.skyblockgeneric.item.components.PlaceableComponent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.PlaceEventComponent;
+import net.swofty.type.generic.item.components.PlaceableComponent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionItemPlace implements HypixelEventClass {
 
@@ -19,7 +19,7 @@ public class ActionItemPlace implements HypixelEventClass {
     public void run(PlayerBlockPlaceEvent event) {
         ItemStack itemStack = event.getPlayer().getItemInMainHand();
         SkyBlockItem item = new SkyBlockItem(itemStack);
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         if (item.hasComponent(PlaceEventComponent.class)) {
             PlaceEventComponent placeEvent = item.getComponent(PlaceEventComponent.class);

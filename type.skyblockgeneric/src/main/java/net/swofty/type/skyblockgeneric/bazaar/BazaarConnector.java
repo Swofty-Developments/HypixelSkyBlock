@@ -4,7 +4,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.bazaar.*;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -13,11 +13,11 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 public class BazaarConnector {
-    private final SkyBlockPlayer player;
+    private final HypixelPlayer player;
     private final ProxyService bazaarService;
     private static final DecimalFormat FORMATTER = new DecimalFormat("#,###.##");
 
-    public BazaarConnector(SkyBlockPlayer player) {
+    public BazaarConnector(HypixelPlayer player) {
         this.player = player;
         this.bazaarService = new ProxyService(ServiceType.BAZAAR);
     }

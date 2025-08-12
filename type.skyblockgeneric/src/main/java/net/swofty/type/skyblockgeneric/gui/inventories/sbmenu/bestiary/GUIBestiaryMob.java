@@ -10,14 +10,14 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.Rarity;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
-import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
+import net.swofty.type.generic.bestiary.BestiaryData;
+import net.swofty.type.generic.entity.mob.BestiaryMob;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
-import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.loottable.OtherLoot;
+import net.swofty.type.generic.loottable.SkyBlockLootTable;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,7 +63,7 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 ArrayList<String> lore = new ArrayList<>();
                 BestiaryMob mob = bestiaryEntry.getMobs().getFirst();
                 int kills = getPlayer().getBestiaryData().getAmount(bestiaryEntry.getMobs());
@@ -92,7 +92,7 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
 
             set(new GUIItem(slot) {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     ArrayList<String> lore = new ArrayList<>();
                     int kills = getPlayer().getBestiaryData().getAmount(mob);
                     int deaths = getPlayer().getDeathData().getAmount(mob.getMobID());

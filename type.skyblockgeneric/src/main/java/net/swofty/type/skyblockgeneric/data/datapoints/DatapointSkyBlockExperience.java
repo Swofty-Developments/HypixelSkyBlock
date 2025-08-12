@@ -5,14 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.generic.data.SkyBlockDatapoint;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.skyblockgeneric.event.custom.SkyBlockXPModificationEvent;
-import net.swofty.type.skyblockgeneric.levels.SkyBlockEmblems;
-import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
-import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
-import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.SkyBlockXPModificationEvent;
+import net.swofty.type.generic.levels.SkyBlockEmblems;
+import net.swofty.type.generic.levels.SkyBlockLevelCause;
+import net.swofty.type.generic.levels.SkyBlockLevelRequirement;
+import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -75,7 +75,7 @@ public class DatapointSkyBlockExperience extends SkyBlockDatapoint<DatapointSkyB
         private List<SkyBlockLevelCauseAbstr> completedExperienceCauses = new ArrayList<>();
         private Map.Entry<SkyBlockEmblems, Integer> currentEmblem = null;
         @Setter
-        private SkyBlockPlayer attachedPlayer = null;
+        private HypixelPlayer attachedPlayer = null;
 
         public PlayerSkyBlockExperience(List<SkyBlockLevelCauseAbstr> completedExperienceCauses, Map.Entry<SkyBlockEmblems, Integer> currentEmblem) {
             this.completedExperienceCauses = completedExperienceCauses;

@@ -2,10 +2,10 @@ package net.swofty.type.skyblockgeneric.item.set.sets;
 
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
-import net.swofty.type.skyblockgeneric.event.value.ValueUpdateEvent;
-import net.swofty.type.skyblockgeneric.event.value.events.MaxHealthValueUpdateEvent;
-import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
+import net.swofty.type.generic.event.value.SkyBlockValueEvent;
+import net.swofty.type.generic.event.value.ValueUpdateEvent;
+import net.swofty.type.generic.event.value.events.MaxHealthValueUpdateEvent;
+import net.swofty.type.generic.item.set.impl.ArmorSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;

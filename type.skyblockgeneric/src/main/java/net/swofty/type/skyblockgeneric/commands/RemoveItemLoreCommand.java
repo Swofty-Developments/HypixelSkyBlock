@@ -5,9 +5,9 @@ import net.swofty.commons.Configuration;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.updater.PlayerItemOrigin;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "rll",
@@ -27,7 +27,7 @@ public class RemoveItemLoreCommand extends HypixelCommand {
                 return;
             }
 
-            SkyBlockPlayer player = (SkyBlockPlayer) sender;
+            HypixelPlayer player = (HypixelPlayer) sender;
             int line = context.get(lineNumber);
 
             SkyBlockItem itemInHand = new SkyBlockItem(player.getItemInMainHand());

@@ -6,14 +6,14 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUICrafting;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.gui.inventories.sbmenu.GUICrafting;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionCraftingTableClick implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(PlayerBlockInteractEvent event) {
-        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         if (Material.fromKey(event.getBlock().key()) != Material.CRAFTING_TABLE) {
             return;

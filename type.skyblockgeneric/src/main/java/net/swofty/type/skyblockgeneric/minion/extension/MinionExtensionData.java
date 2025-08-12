@@ -2,11 +2,11 @@ package net.swofty.type.skyblockgeneric.minion.extension;
 
 import lombok.SneakyThrows;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionFuelExtension;
-import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionShippingExtension;
-import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionSkinExtension;
-import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionUpgradeExtension;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.minion.extension.extensions.MinionFuelExtension;
+import net.swofty.type.generic.minion.extension.extensions.MinionShippingExtension;
+import net.swofty.type.generic.minion.extension.extensions.MinionSkinExtension;
+import net.swofty.type.generic.minion.extension.extensions.MinionUpgradeExtension;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 

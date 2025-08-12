@@ -1,9 +1,9 @@
 package net.swofty.type.hub.gui;
 
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
+import net.swofty.type.generic.gui.SkyBlockShopGUI;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.shop.type.CoinShopPrice;
 
 public class GUIShopBartender extends SkyBlockShopGUI {
 

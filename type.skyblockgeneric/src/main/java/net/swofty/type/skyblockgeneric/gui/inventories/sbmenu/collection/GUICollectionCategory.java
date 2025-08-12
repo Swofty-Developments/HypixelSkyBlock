@@ -7,13 +7,13 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
+import net.swofty.type.generic.collection.CollectionCategory;
+import net.swofty.type.generic.data.datapoints.DatapointCollection;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class GUICollectionCategory extends HypixelPaginatedGUI<CollectionCategor
     }
 
     @Override
-    public PaginationList<CollectionCategory.ItemCollection> fillPaged(SkyBlockPlayer player, PaginationList<CollectionCategory.ItemCollection> paged) {
+    public PaginationList<CollectionCategory.ItemCollection> fillPaged(HypixelPlayer player, PaginationList<CollectionCategory.ItemCollection> paged) {
         paged.addAll(Arrays.asList(type.getCollections()));
         return paged;
     }
@@ -73,14 +73,14 @@ public class GUICollectionCategory extends HypixelPaginatedGUI<CollectionCategor
     }
 
     @Override
-    public void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
+    public void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
         set(GUIClickableItem.getCloseItem(49));
         set(GUIClickableItem.getGoBackItem(48, new GUICollections()));
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 List<String> lore = new ArrayList<>(List.of(
                         "§7View your " + type.getName() + " Collections!",
                         " "
@@ -102,25 +102,25 @@ public class GUICollectionCategory extends HypixelPaginatedGUI<CollectionCategor
     }
 
     @Override
-    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<CollectionCategory.ItemCollection> paged) {
+    public String getTitle(HypixelPlayer player, String query, int page, PaginationList<CollectionCategory.ItemCollection> paged) {
         return type.getName() + " Collections";
     }
 
     @Override
-    public GUIClickableItem createItemFor(CollectionCategory.ItemCollection item, int slot, SkyBlockPlayer player) {
+    public GUIClickableItem createItemFor(CollectionCategory.ItemCollection item, int slot, HypixelPlayer player) {
         DatapointCollection.PlayerCollection collection = player.getCollection();
 
         if (!collection.unlocked(item.type())) {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     player.sendMessage("§cYou haven't found this item yet!");
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§c" + item.type().getDisplayName(), Material.GRAY_DYE, 1,
                             "§7Find this item to add it to your",
@@ -133,13 +133,13 @@ public class GUICollectionCategory extends HypixelPaginatedGUI<CollectionCategor
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 new GUICollectionItem(item.type()).open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                HypixelPlayer player = (HypixelPlayer) p; 
                 List<String> lore = new ArrayList<>(List.of(
                         "§7View all your " + item.type().getDisplayName() + " Collection",
                         "§7progress and rewards!",

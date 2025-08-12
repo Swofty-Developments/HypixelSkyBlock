@@ -5,8 +5,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
-import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
+import net.swofty.type.generic.user.fairysouls.FairySoul;
+import net.swofty.type.generic.user.fairysouls.FairySoulZone;
 import org.bson.Document;
 
 import java.util.ArrayList;

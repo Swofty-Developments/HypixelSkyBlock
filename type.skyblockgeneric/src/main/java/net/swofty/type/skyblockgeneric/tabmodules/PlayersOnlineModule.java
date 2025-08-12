@@ -1,11 +1,11 @@
 package net.swofty.type.skyblockgeneric.tabmodules;
 
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.generic.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.tab.TablistSkinRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,14 +19,14 @@ public class PlayersOnlineModule extends TablistModule {
     }
 
 
-    public List<TablistEntry> getEntries(SkyBlockPlayer player) {
-        List<SkyBlockPlayer> players = SkyBlockGenericLoader.getLoadedPlayers();
+    public List<TablistEntry> getEntries(HypixelPlayer player) {
+        List<HypixelPlayer> players = SkyBlockGenericLoader.getLoadedPlayers();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
                 new TablistEntry(getCentered("§a§lPlayers §f(" + players.size() + ")"), TablistSkinRegistry.GREEN)
         ));
 
-        List<SkyBlockPlayer> toShow = new ArrayList<>();
+        List<HypixelPlayer> toShow = new ArrayList<>();
 
         // Sort players by their rank ordinal in reverse
         players.sort((o1, o2) -> o2.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.RANK, DatapointRank.class).getValue().ordinal()
@@ -48,7 +48,7 @@ public class PlayersOnlineModule extends TablistModule {
                 continue;
             }
 
-            SkyBlockPlayer tablistPlayer = toShow.get(x);
+            HypixelPlayer tablistPlayer = toShow.get(x);
 
             entries.add(new TablistEntry(tablistPlayer.getFullDisplayName(), TablistSkinRegistry.GRAY));
         }
@@ -58,6 +58,6 @@ public class PlayersOnlineModule extends TablistModule {
 
     @Override
     public List<TablistEntry> getEntries(HypixelPlayer player) {
-        return getEntries((SkyBlockPlayer) player);
+        return getEntries((HypixelPlayer) player);
     }
 }

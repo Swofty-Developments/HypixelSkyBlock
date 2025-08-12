@@ -9,7 +9,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.PlayerShopData;
-import net.swofty.commons.SkyBlockPlayerProfiles;
+import net.swofty.commons.HypixelPlayerProfiles;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.HypixelDataHandler;
@@ -17,16 +17,16 @@ import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.data.datapoints.*;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockInventory;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.generic.data.datapoints.*;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.generic.item.updater.PlayerItemOrigin;
+import net.swofty.type.generic.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.SkyBlockInventory;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -156,7 +156,7 @@ public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandle
     @Override
     public void runOnLoad(HypixelPlayer player) {
         account.runOnLoad(player);
-        if (player instanceof SkyBlockPlayer sbp) {
+        if (player instanceof HypixelPlayer sbp) {
             for (Data data : Data.values()) {
                 if (data.onLoad != null) data.onLoad.accept(sbp, get(data));
             }
@@ -167,7 +167,7 @@ public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandle
     @Override
     public void runOnSave(HypixelPlayer player) {
         account.runOnSave(player);
-        if (player instanceof SkyBlockPlayer sbp) {
+        if (player instanceof HypixelPlayer sbp) {
             for (Data data : Data.values()) {
                 if (data.onQuit != null) {
                     Datapoint<?> target = get(data);
@@ -191,7 +191,7 @@ public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandle
                 (player, datapoint) -> {},
                 (player, datapoint) -> {
                     if (Objects.equals(datapoint.getValue(), "null")) {
-                        ((DatapointString) datapoint).setValue(SkyBlockPlayerProfiles.getRandomName());
+                        ((DatapointString) datapoint).setValue(HypixelPlayerProfiles.getRandomName());
                     }
                 }),
 
@@ -263,7 +263,7 @@ public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandle
                 (player, datapoint) -> {},
                 (player, datapoint) -> {
                     MissionData data = (MissionData) datapoint.getValue();
-                    data.setSkyBlockPlayer(player);
+                    data.setHypixelPlayer(player);
                     ((DatapointMissionData) datapoint).setValue(data);
                 }),
 
@@ -377,7 +377,7 @@ public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandle
 
         BUILD_MODE("build_mode", true, false, false, DatapointBoolean.class,
                 new DatapointBoolean("build_mode", false),
-                (player, datapoint) -> ((SkyBlockPlayer) player).setBypassBuild((Boolean) datapoint.getValue()),
+                (player, datapoint) -> ((HypixelPlayer) player).setBypassBuild((Boolean) datapoint.getValue()),
                 (player, datapoint) -> player.setBypassBuild((Boolean) datapoint.getValue()),
                 (player) -> new DatapointBoolean("build_mode", player.isBypassBuild())),
 
@@ -410,19 +410,19 @@ public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandle
         @Getter private final Class<? extends Datapoint<?>> type;
         @Getter private final Datapoint<?> defaultDatapoint;
         public final BiConsumer<Player, Datapoint<?>> onChange;
-        public final BiConsumer<SkyBlockPlayer, Datapoint<?>> onLoad;
-        public final Function<SkyBlockPlayer, Datapoint<?>> onQuit;
+        public final BiConsumer<HypixelPlayer, Datapoint<?>> onLoad;
+        public final Function<HypixelPlayer, Datapoint<?>> onQuit;
 
         Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue,
              Class<? extends Datapoint<?>> type, Datapoint<?> defaultDatapoint,
-             BiConsumer<Player, Datapoint<?>> onChange, BiConsumer<SkyBlockPlayer, Datapoint<?>> onLoad, Function<SkyBlockPlayer, Datapoint<?>> onQuit) {
+             BiConsumer<Player, Datapoint<?>> onChange, BiConsumer<HypixelPlayer, Datapoint<?>> onLoad, Function<HypixelPlayer, Datapoint<?>> onQuit) {
             this.key = key; this.isProfilePersistent = isProfilePersistent; this.isCoopPersistent = isCoopPersistent;
             this.repeatSetValue = repeatSetValue; this.type = type; this.defaultDatapoint = defaultDatapoint;
             this.onChange = onChange; this.onLoad = onLoad; this.onQuit = onQuit;
         }
         Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue,
              Class<? extends Datapoint<?>> type, Datapoint<?> defaultDatapoint,
-             BiConsumer<Player, Datapoint<?>> onChange, BiConsumer<SkyBlockPlayer, Datapoint<?>> onLoad) {
+             BiConsumer<Player, Datapoint<?>> onChange, BiConsumer<HypixelPlayer, Datapoint<?>> onLoad) {
             this(key, isProfilePersistent, isCoopPersistent, repeatSetValue, type, defaultDatapoint, onChange, onLoad, null);
         }
         Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue,

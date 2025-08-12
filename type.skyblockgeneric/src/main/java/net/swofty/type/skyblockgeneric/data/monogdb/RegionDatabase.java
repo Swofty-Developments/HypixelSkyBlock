@@ -9,8 +9,8 @@ import com.mongodb.client.model.Updates;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.data.mongodb.MongoDB;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.region.SkyBlockRegion;
 import org.bson.Document;
 
 import java.util.ArrayList;

@@ -8,8 +8,8 @@ import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.SkyBlockDataHandler;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 import org.tinylog.Logger;
 
@@ -22,7 +22,7 @@ public class ActionPlayerSkyBlockDataSave implements HypixelEventClass {
     @SneakyThrows
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
     public void run(PlayerDisconnectEvent event) {
-        if (!(event.getPlayer() instanceof SkyBlockPlayer player)) return;
+        if (!(event.getPlayer() instanceof HypixelPlayer player)) return;
 
         UUID playerUuid = player.getUuid();
         SkyBlockDataHandler handler = (SkyBlockDataHandler) DataHandler.userCache.get(playerUuid);

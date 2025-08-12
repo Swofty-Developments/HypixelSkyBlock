@@ -3,14 +3,14 @@ package net.swofty.type.skyblockgeneric.event.custom;
 import lombok.Getter;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 @Getter
 public class JerryClickedEvent implements PlayerInstanceEvent, CancellableEvent {
-    SkyBlockPlayer player;
+    HypixelPlayer player;
     boolean cancelled;
 
-    public JerryClickedEvent(SkyBlockPlayer player) {
+    public JerryClickedEvent(HypixelPlayer player) {
         this.player = player;
         this.cancelled = false;
     }

@@ -3,12 +3,12 @@ package net.swofty.type.skyblockgeneric.minion;
 import lombok.Getter;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.minion.minions.combat.*;
-import net.swofty.type.skyblockgeneric.minion.minions.farming.*;
-import net.swofty.type.skyblockgeneric.minion.minions.fishing.MinionClay;
-import net.swofty.type.skyblockgeneric.minion.minions.fishing.MinionFishing;
-import net.swofty.type.skyblockgeneric.minion.minions.foraging.*;
-import net.swofty.type.skyblockgeneric.minion.minions.mining.*;
+import net.swofty.type.generic.minion.minions.combat.*;
+import net.swofty.type.generic.minion.minions.farming.*;
+import net.swofty.type.generic.minion.minions.fishing.MinionClay;
+import net.swofty.type.generic.minion.minions.fishing.MinionFishing;
+import net.swofty.type.generic.minion.minions.foraging.*;
+import net.swofty.type.generic.minion.minions.mining.*;
 
 import java.util.Arrays;
 

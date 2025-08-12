@@ -4,13 +4,13 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
-import net.swofty.type.skyblockgeneric.item.components.SellableComponent;
-import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.ItemCraftEvent;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.CraftableComponent;
+import net.swofty.type.generic.item.components.SellableComponent;
+import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class ActionSkillCarpentryGain implements HypixelEventClass {
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(ItemCraftEvent event) {
-        SkyBlockPlayer player = event.getPlayer();
+        HypixelPlayer player = event.getPlayer();
         if (!player.getMissionData().hasCompleted("give_wool_to_carpenter")) return;
 
         SkyBlockItem craftedItem = event.getCraftedItem();

@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.data.datapoints;
 
 import net.swofty.commons.PlayerShopData;
 import net.swofty.commons.protocol.serializers.PlayerShopDataSerializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.generic.data.SkyBlockDatapoint;
 
 public class DatapointShopData extends SkyBlockDatapoint<PlayerShopData> {
     private static final PlayerShopDataSerializer serializer = new PlayerShopDataSerializer();

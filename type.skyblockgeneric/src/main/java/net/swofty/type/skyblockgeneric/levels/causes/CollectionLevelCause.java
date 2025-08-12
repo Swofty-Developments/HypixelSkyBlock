@@ -2,10 +2,10 @@ package net.swofty.type.skyblockgeneric.levels.causes;
 
 import lombok.Getter;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
-import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
-import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.collection.CollectionCategories;
+import net.swofty.type.generic.collection.CollectionCategory;
+import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 @Getter
 public class CollectionLevelCause extends SkyBlockLevelCauseAbstr {
@@ -42,7 +42,7 @@ public class CollectionLevelCause extends SkyBlockLevelCauseAbstr {
     }
 
     @Override
-    public boolean shouldDisplayMessage(SkyBlockPlayer player) {
+    public boolean shouldDisplayMessage(HypixelPlayer player) {
         return false; // This is handled by the Collection Level up message
     }
 }

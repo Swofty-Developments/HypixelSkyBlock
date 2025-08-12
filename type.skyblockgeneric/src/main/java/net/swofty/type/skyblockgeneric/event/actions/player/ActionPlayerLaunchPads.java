@@ -14,9 +14,9 @@ import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.utility.LaunchPads;
+import net.swofty.type.generic.data.SkyBlockDataHandler;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.LaunchPads;
 import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true , isAsync = true)
     public void run(PlayerMoveEvent event) {
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         LaunchPads pad;
         try {

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.generic.data.SkyBlockDatapoint;
 import org.json.JSONObject;
 
 import java.util.HashMap;

@@ -5,11 +5,11 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
-import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
-import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.enchantment.EnchantmentType;
+import net.swofty.type.generic.enchantment.SkyBlockEnchantment;
+import net.swofty.type.generic.item.ItemAttributeHandler;
+import net.swofty.type.generic.item.updater.PlayerItemOrigin;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "ench",
@@ -27,7 +27,7 @@ public class EnchantCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            ((SkyBlockPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
+            ((HypixelPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
                 itemAttributeHandler.addEnchantment(
                         SkyBlockEnchantment.builder()

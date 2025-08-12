@@ -2,11 +2,11 @@ package net.swofty.type.skyblockgeneric.event.custom;
 
 import lombok.Getter;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
-import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointMinionData;
+import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.generic.item.components.MinionComponent;
+import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -15,11 +15,11 @@ import java.util.Objects;
 
 @Getter
 public class ItemCraftEvent implements PlayerInstanceEvent {
-    private final SkyBlockPlayer player;
+    private final HypixelPlayer player;
     private final SkyBlockItem craftedItem;
     private final SkyBlockRecipe<?> recipe;
 
-    public ItemCraftEvent(SkyBlockPlayer player, SkyBlockItem craftedItem, SkyBlockRecipe<?> recipe) {
+    public ItemCraftEvent(HypixelPlayer player, SkyBlockItem craftedItem, SkyBlockRecipe<?> recipe) {
         this.player = player;
         this.craftedItem = craftedItem;
         this.recipe = recipe;

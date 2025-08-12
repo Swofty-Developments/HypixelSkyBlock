@@ -1,11 +1,11 @@
 package net.swofty.type.skyblockgeneric.levels.causes;
 
 import lombok.Getter;
-import net.swofty.type.skyblockgeneric.levels.abstr.CauseEmblem;
-import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.skill.SkillCategory;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.levels.abstr.CauseEmblem;
+import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.generic.skill.SkillCategory;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 @Getter
 public class SkillLevelCause extends SkyBlockLevelCauseAbstr implements CauseEmblem {
@@ -38,7 +38,7 @@ public class SkillLevelCause extends SkyBlockLevelCauseAbstr implements CauseEmb
     }
 
     @Override
-    public boolean shouldDisplayMessage(SkyBlockPlayer player) {
+    public boolean shouldDisplayMessage(HypixelPlayer player) {
         return false; // This is handled by the Skill up message
     }
 }

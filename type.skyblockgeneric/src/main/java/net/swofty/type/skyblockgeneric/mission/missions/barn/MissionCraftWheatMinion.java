@@ -3,11 +3,11 @@ package net.swofty.type.skyblockgeneric.mission.missions.barn;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
-import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.custom.ItemCraftEvent;
+import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.generic.mission.HypixelMission;
+import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +25,7 @@ public class MissionCraftWheatMinion extends HypixelMission {
             return;
         }
 
-        data.setSkyBlockPlayer(event.getPlayer());
+        data.setHypixelPlayer(event.getPlayer());
         data.startMission(MissionCraftWheatMinion.class);
     }
 
@@ -40,12 +40,12 @@ public class MissionCraftWheatMinion extends HypixelMission {
     }
 
     @Override
-    public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
+    public Map<String, Object> onStart(HypixelPlayer player, MissionData.ActiveMission mission) {
         return Map.of();
     }
 
     @Override
-    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+    public void onEnd(HypixelPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         player.getMissionData().startMission(MissionTalkToFarmhandAgain.class);
     }
 
