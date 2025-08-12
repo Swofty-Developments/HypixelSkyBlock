@@ -4,7 +4,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.bazaar.*;
 import net.swofty.proxyapi.ProxyService;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.text.DecimalFormat;
 import java.util.List;

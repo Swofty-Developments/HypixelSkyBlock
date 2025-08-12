@@ -6,7 +6,7 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointString;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
 import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIYourMuseum;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.UUID;
 

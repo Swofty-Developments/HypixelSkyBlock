@@ -4,7 +4,7 @@ import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUICreative;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "e",

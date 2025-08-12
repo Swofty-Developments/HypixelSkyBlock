@@ -14,7 +14,7 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.tinylog.Logger;

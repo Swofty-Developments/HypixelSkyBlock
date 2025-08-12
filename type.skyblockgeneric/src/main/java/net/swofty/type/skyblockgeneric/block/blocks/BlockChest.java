@@ -16,7 +16,7 @@ import net.swofty.type.skyblockgeneric.block.impl.BlockInteractable;
 import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
 import net.swofty.type.skyblockgeneric.chest.*;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIChest;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.utility.ChestUtility;
 
 import java.util.List;

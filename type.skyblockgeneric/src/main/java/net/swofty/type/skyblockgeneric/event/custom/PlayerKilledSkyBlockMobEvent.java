@@ -5,7 +5,7 @@ import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBestiary;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerKilledSkyBlockMobEvent implements PlayerInstanceEvent {

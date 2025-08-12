@@ -9,7 +9,7 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUICrafting;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerInteractWithCrafting implements HypixelEventClass {
 

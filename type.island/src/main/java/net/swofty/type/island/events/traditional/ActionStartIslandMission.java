@@ -5,7 +5,7 @@ import net.swofty.type.skyblockgeneric.event.EventNodes;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionBreakLog;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
 
 public class ActionStartIslandMission implements SkyBlockEventClass {

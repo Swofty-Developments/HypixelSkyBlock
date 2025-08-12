@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionStatistic
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIAuctionHouseStats extends HypixelInventoryGUI {
     public GUIAuctionHouseStats() {

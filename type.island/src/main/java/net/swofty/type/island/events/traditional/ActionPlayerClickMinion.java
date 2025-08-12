@@ -6,7 +6,7 @@ import net.swofty.type.skyblockgeneric.event.EventNodes;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIMinion;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerClickMinion implements SkyBlockEventClass {
 

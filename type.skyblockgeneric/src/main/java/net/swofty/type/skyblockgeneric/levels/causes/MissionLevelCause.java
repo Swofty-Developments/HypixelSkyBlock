@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.levels.causes;
 import lombok.Getter;
 import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @Getter
 public class MissionLevelCause extends SkyBlockLevelCauseAbstr {

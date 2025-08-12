@@ -16,7 +16,7 @@ import net.swofty.type.skyblockgeneric.block.impl.BlockPlaceable;
 import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.utility.BlockUtility;
 
 public class BlockDecoration implements CustomSkyBlockBlock, BlockPlaceable, BlockBreakable {

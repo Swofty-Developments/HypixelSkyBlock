@@ -6,7 +6,7 @@ import net.swofty.type.skyblockgeneric.SkyBlockConst;
 import net.swofty.type.skyblockgeneric.event.EventNodes;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.tinylog.Logger;
 
 public class ActionPlayerJoin implements SkyBlockEventClass {

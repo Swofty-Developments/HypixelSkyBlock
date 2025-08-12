@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.event.custom;
 import lombok.Getter;
 import net.minestom.server.event.Event;
 import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 import java.util.UUID;

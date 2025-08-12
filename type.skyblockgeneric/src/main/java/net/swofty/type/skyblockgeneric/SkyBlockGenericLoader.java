@@ -71,7 +71,7 @@ import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
 import net.swofty.type.skyblockgeneric.server.eventcaller.CustomEventCaller;
 import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockScoreboard;
 import net.swofty.type.generic.user.categories.CustomGroups;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;

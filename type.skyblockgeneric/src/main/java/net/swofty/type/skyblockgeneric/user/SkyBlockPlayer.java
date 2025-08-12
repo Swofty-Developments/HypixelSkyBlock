@@ -28,7 +28,7 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.data.*;
 import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import HypixelPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.commons.SkyBlockPlayerProfiles;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;

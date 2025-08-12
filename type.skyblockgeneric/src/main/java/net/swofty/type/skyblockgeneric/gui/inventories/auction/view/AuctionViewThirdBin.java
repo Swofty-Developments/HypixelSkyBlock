@@ -20,7 +20,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionViewIte
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;

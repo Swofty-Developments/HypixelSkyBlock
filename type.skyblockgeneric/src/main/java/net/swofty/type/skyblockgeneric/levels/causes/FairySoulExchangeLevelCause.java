@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.levels.causes;
 
 import lombok.Getter;
 import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulExchangeLevels;
 
 @Getter

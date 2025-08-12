@@ -7,7 +7,7 @@ import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
 import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIMuseumEmptyDisplay;
 import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIMuseumNonEmptyDisplay;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplayEntityImpl;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerClickMuseumDisplay implements SkyBlockEventClass {
 

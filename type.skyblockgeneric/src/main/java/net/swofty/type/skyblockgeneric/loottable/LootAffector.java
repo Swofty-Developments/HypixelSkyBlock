@@ -6,7 +6,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.enchantment.impl.EnchantmentLooting;
 import net.swofty.type.skyblockgeneric.enchantment.impl.EnchantmentLuck;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
 

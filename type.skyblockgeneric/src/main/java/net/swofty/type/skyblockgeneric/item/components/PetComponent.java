@@ -20,7 +20,7 @@ import net.swofty.type.skyblockgeneric.item.handlers.pet.PetAbility;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.PetHandler;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.PetRegistry;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
 import org.jetbrains.annotations.Nullable;
 

@@ -6,7 +6,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.bson.Document;
 
 import java.util.ArrayList;

@@ -6,7 +6,7 @@ import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEvent;
 import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketClientListener;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class PacketListenerPlayerDig extends SkyBlockPacketClientListener {
     @Override

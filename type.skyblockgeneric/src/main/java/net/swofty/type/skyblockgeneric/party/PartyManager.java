@@ -10,7 +10,7 @@ import net.swofty.commons.protocol.objects.party.IsPlayerInPartyProtocolObject;
 import net.swofty.commons.protocol.objects.party.SendPartyEventToServiceProtocolObject;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.Nullable;
 

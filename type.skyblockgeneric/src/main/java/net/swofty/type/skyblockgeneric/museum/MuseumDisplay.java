@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.museum;
 
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public abstract class MuseumDisplay {
     public abstract MuseumDisplayEntityInformation display(SkyBlockPlayer player,

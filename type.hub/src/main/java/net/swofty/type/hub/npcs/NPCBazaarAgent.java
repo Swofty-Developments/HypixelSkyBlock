@@ -6,7 +6,7 @@ import net.swofty.type.skyblockgeneric.entity.npc.NPCDialogue;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.gui.inventories.bazaar.GUIBazaar;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.categories.Rank;
 
 import java.util.stream.Stream;

@@ -20,7 +20,7 @@ import net.swofty.type.skyblockgeneric.item.components.RuneComponent;
 import net.swofty.type.skyblockgeneric.item.components.RuneableComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

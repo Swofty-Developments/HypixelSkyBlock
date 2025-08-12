@@ -5,7 +5,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMissionData;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionBreakLog;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Clears your missions",

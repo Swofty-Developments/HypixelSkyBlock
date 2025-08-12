@@ -6,7 +6,7 @@ import net.swofty.commons.bazaar.SuccessfulBazaarTransaction;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCompletedBazaarTransactions;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;

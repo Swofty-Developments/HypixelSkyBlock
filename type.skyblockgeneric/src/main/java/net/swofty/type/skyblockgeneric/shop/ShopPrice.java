@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.shop;
 
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 

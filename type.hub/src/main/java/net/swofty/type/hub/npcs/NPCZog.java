@@ -5,7 +5,7 @@ import net.swofty.type.hub.gui.GUIShopZog;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointToggles;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCDialogue;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCZog extends NPCDialogue {
 

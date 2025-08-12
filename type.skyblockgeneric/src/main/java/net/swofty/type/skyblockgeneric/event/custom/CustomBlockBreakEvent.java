@@ -5,7 +5,7 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.Material;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 

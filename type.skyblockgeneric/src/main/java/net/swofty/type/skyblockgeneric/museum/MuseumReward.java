@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.museum;
 
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public abstract class MuseumReward {
     public abstract void onUnlock(MuseumRewards rewards, SkyBlockPlayer player);

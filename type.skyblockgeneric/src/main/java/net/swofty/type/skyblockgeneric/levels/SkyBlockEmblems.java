@@ -6,7 +6,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.type.skyblockgeneric.levels.causes.LevelCause;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;

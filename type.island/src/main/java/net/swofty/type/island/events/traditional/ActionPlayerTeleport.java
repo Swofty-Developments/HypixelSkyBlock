@@ -5,7 +5,7 @@ import net.minestom.server.instance.SharedInstance;
 import net.swofty.type.skyblockgeneric.event.EventNodes;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerTeleport implements SkyBlockEventClass {
 

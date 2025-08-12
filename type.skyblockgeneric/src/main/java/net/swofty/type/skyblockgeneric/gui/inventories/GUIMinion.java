@@ -29,7 +29,7 @@ import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
 import net.swofty.type.skyblockgeneric.minion.extension.MinionExtension;
 import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensionData;
 import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensions;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

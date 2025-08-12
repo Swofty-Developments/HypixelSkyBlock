@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.tabmodules;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import HypixelPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkillCategory;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
@@ -11,7 +11,7 @@ import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.tab.TablistSkinRegistry;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

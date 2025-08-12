@@ -6,7 +6,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;

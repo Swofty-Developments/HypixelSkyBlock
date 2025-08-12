@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.item.handlers.place;
 
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @FunctionalInterface
 public interface PlaceEventHandler {

@@ -15,7 +15,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.RuneableComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIRuneRemoval extends HypixelInventoryGUI {
     private final int[] borderSlots = {

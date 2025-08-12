@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.event.custom;
 import lombok.Getter;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.swofty.type.skyblockgeneric.region.RegionType;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerRegionChangeEvent implements PlayerInstanceEvent {

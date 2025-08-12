@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.event.value;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @Getter
 public abstract class ValueUpdateEvent implements PlayerInstanceEvent {

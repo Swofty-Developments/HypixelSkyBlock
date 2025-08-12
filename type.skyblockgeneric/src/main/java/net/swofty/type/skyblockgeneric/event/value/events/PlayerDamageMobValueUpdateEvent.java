@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.event.value.events;
 import lombok.Getter;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.value.ValueUpdateEvent;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @Getter
 public class PlayerDamageMobValueUpdateEvent extends ValueUpdateEvent {

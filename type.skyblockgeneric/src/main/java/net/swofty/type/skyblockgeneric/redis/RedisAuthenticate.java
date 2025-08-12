@@ -5,7 +5,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.type.generic.data.mongodb.AuthenticationDatabase;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

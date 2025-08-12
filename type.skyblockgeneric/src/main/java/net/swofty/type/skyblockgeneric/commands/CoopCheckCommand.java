@@ -5,7 +5,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.gui.inventories.coop.GUICoopInviteSender;
 import net.swofty.type.skyblockgeneric.gui.inventories.coop.GUICoopInviteTarget;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "cooperativecheck",

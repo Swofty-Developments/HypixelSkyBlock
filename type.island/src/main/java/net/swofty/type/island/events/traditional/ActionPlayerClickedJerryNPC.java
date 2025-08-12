@@ -7,7 +7,7 @@ import net.swofty.type.island.gui.GUIJerry;
 import net.swofty.type.skyblockgeneric.event.EventNodes;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEventHandler;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
 import net.swofty.type.skyblockgeneric.event.custom.JerryClickedEvent;
 

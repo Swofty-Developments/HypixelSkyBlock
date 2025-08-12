@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.item.components;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.interactable.InteractableRegistry;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;

@@ -5,7 +5,7 @@ import net.swofty.type.hub.gui.GUILonelyPhilosopher;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointRank;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCDialogue;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.categories.Rank;
 
 import java.util.stream.Stream;

@@ -8,7 +8,7 @@ import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerPositionPacket;
 import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketClientListener;
 import net.swofty.type.skyblockgeneric.user.AntiCheatHandler;
-import SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.HashMap;
 
