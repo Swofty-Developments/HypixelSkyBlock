@@ -4,7 +4,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class GUILevelsGuide extends HypixelInventoryGUI {
     public GUILevelsGuide() {

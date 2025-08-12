@@ -20,7 +20,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.BackpackComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.Map;
 
@@ -34,8 +34,8 @@ public class GUIStorage extends HypixelInventoryGUI {
 
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aEnder Chest", Material.ENDER_CHEST, 1,
                         "§7Store global items you can",
                         "§7access anywhere in your ender",
@@ -44,8 +44,8 @@ public class GUIStorage extends HypixelInventoryGUI {
         });
         set(new GUIItem(22) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aBackpacks", Material.CHEST, 1,
                         "§7Place backpack items in these slots",
                         "§7to use them as additional storage",
@@ -71,8 +71,8 @@ public class GUIStorage extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(ender_slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (!storage.hasPage(page)) return;
 
                     if (e.getClickType() == ClickType.RIGHT_CLICK) {
@@ -83,8 +83,8 @@ public class GUIStorage extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (!storage.hasPage(page))
                         return ItemStackCreator.getStack("§cLocked Page", Material.RED_STAINED_GLASS_PANE, 1,
                                 "§7Unlock more Ender Chest pages in",
@@ -112,8 +112,8 @@ public class GUIStorage extends HypixelInventoryGUI {
             if (backpacks.getUnlockedSlots() < slot) {
                 set(new GUIItem(backpack_slot) {
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStackCreator.getStack("§cLocked Backpack Slot " + slot,
                                 Material.GRAY_DYE, 1,
                                 "§7Talk to Tia the Fairy to unlock more",
@@ -126,8 +126,8 @@ public class GUIStorage extends HypixelInventoryGUI {
             if (!backpackItems.containsKey(slot)) {
                 set(new GUIClickableItem(backpack_slot) {
                     @Override
-                    public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
 
                         if (item.isNA()) return;
@@ -156,8 +156,8 @@ public class GUIStorage extends HypixelInventoryGUI {
                     }
 
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStackCreator.getStack("§eEmpty Backpack Slot " + slot,
                                 Material.BROWN_STAINED_GLASS_PANE, slot,
                                 " ",
@@ -199,8 +199,8 @@ public class GUIStorage extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStackHead("§6Backpack Slot " + slot,
                             item.getComponent(SkullHeadComponent.class).getSkullTexture(item), slot,
                             item.getAttributeHandler().getRarity().getColor() +

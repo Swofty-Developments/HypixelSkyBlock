@@ -10,7 +10,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelUnlock;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,8 +48,8 @@ public class GUISkyBlockLevel extends HypixelInventoryGUI {
             SkyBlockLevelUnlock unlock = unlocks.get(i);
             set(new GUIItem(slots.get(i)) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return unlock.getItemDisplay(player, levelRequirement.asInt());
                 }
             });

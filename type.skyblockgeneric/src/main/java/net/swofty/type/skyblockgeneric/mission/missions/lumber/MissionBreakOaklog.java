@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.*;
 

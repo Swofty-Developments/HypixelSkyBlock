@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.mission;
 
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.Map;
 import java.util.Set;

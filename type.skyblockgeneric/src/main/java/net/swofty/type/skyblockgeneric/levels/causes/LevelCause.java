@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.levels.causes;
 import lombok.Getter;
 import net.swofty.type.skyblockgeneric.levels.abstr.CauseEmblem;
 import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 @Getter
 public class LevelCause extends SkyBlockLevelCauseAbstr implements CauseEmblem {

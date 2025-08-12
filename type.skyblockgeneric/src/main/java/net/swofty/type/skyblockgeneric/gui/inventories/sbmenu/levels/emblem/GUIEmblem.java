@@ -9,7 +9,7 @@ import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockEmblems;
 import net.swofty.type.skyblockgeneric.levels.abstr.CauseEmblem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
@@ -81,8 +81,8 @@ public class GUIEmblem extends HypixelPaginatedGUI<SkyBlockEmblems.SkyBlockEmble
 
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (!unlocked) {
                     player.sendMessage("§cYou have not unlocked this emblem yet!");
                     return;
@@ -93,8 +93,8 @@ public class GUIEmblem extends HypixelPaginatedGUI<SkyBlockEmblems.SkyBlockEmble
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 String name = (unlocked ? "§a" : "§c") + item.displayName() + " " + item.emblem();
 
                 List<String> lore;

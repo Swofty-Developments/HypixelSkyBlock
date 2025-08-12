@@ -13,7 +13,7 @@ import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +43,8 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
 
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
 
                 BestiaryEntry[] entries = category.getEntries();
                 int total = entries.length;
@@ -115,13 +115,13 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
             if (kills > 0) {
                 set(new GUIClickableItem(slot) {
                     @Override
-                    public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         new GUIBestiaryMob(category, bestiaryEntry).open(player);
                     }
 
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         ArrayList<String> lore = new ArrayList<>();
 
                         player.getBestiaryData().getMobDisplay(lore, kills, mob, bestiaryEntry);
@@ -140,8 +140,8 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
             } else {
                 set(new GUIItem(slot) {
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStackCreator.getStack("§c" + bestiaryEntry.getName(), Material.GRAY_DYE, 1,
                                 "§7Kill a mob belonging to this Family to",
                                 "§7unlock it in your Bestiary!");

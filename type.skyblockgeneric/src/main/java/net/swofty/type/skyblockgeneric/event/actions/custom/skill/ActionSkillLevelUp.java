@@ -10,7 +10,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.skill.SkillCategory;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.Arrays;
 

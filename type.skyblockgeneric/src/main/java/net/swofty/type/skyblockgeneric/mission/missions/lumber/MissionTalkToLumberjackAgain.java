@@ -4,7 +4,7 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.HypixelMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.Map;

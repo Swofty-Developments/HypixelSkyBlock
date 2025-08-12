@@ -7,7 +7,7 @@ import net.swofty.commons.item.reforge.ReforgeType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.bow.BowRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 
 import java.util.List;

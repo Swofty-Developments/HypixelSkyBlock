@@ -4,7 +4,7 @@ import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.client.play.ClientHeldItemChangePacket;
 import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketClientListener;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class PacketListenerItemSwitch extends SkyBlockPacketClientListener {
     @Override

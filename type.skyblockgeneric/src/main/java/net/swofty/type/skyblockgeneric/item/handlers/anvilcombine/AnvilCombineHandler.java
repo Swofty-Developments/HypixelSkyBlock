@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.handlers.anvilcombine;
 
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public record AnvilCombineHandler(
         CombineFunction combineFunction,

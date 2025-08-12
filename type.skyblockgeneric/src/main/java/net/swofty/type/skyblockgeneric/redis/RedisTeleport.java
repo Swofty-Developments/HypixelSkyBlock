@@ -4,7 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.util.UUID;

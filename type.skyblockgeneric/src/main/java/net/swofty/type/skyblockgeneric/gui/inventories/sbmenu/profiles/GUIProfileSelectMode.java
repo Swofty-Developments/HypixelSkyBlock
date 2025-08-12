@@ -10,7 +10,7 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class GUIProfileSelectMode extends HypixelInventoryGUI {
     public GUIProfileSelectMode() {
@@ -25,8 +25,8 @@ public class GUIProfileSelectMode extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(11) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aClassic Profile", Material.GRASS_BLOCK, 1,
                         "§8SkyBlock Mode",
                         "",
@@ -44,16 +44,16 @@ public class GUIProfileSelectMode extends HypixelInventoryGUI {
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIProfileCreate().open(player);
             }
         });
 
         set(new GUIClickableItem(15) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§6Special Modes", Material.BLAZE_POWDER, 1,
                         "§7Choose a SkyBlock mode with",
                         "§7special rules and unique",
@@ -64,8 +64,8 @@ public class GUIProfileSelectMode extends HypixelInventoryGUI {
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.sendMessage("§cSpecial Modes in SkyBlock are currently unavailable. Please check back another time.");
             }
         });

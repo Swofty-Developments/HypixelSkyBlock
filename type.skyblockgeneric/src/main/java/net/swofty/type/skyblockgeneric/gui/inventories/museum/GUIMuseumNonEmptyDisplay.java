@@ -18,7 +18,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.ItemPriceCalculator;
 
 import java.util.ArrayList;
@@ -84,8 +84,8 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(35) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 player.closeInventory();
                 data.getDisplayHandler().removeAllFromSlot(display, position);
@@ -93,8 +93,8 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cRemove From Display",
                         Material.BEDROCK, 1,
                         "§7Removes " + (items.size() == 1 ? "this item" : "these " + items.size() + " items") + " from being",
@@ -114,8 +114,8 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
 
             set(new GUIItem(slotIndex) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return createItemDisplay(item, player);
                 }
             });

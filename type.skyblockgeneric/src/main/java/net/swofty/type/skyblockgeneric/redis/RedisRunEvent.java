@@ -5,7 +5,7 @@ import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.lang.reflect.InvocationTargetException;

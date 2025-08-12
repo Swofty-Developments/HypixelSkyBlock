@@ -15,7 +15,7 @@ import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.custom.CollectionUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockActionBar;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 
 public class ActionCollectionAdd implements HypixelEventClass {

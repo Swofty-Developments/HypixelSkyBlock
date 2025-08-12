@@ -13,7 +13,7 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStorage;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
@@ -101,8 +101,8 @@ public class GUIStorageIconSelection extends HypixelPaginatedGUI<Material> {
     protected GUIClickableItem createItemFor(Material item, int slot, SkyBlockPlayer player) {
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 DatapointStorage.PlayerStorage storage = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class).getValue();
 
                 if (item == Material.BARRIER) {
@@ -116,8 +116,8 @@ public class GUIStorageIconSelection extends HypixelPaginatedGUI<Material> {
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack(
                         (item == Material.BARRIER ? "§cReset" :
                                 StringUtility.toNormalCase(item.name().replace("minecraft:", ""))),

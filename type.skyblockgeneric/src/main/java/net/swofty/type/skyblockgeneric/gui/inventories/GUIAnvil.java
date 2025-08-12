@@ -14,7 +14,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AnvilCombinableComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,16 +50,16 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         set(GUIClickableItem.getCloseItem(49));
         set(new GUIItem(resultSlot) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
             }
         });
 
         set(new GUIItem(22) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, "§7Combine the items in the slots to the", "§7left and right below.");
             }
         });
@@ -74,8 +74,8 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         if (item == null) {
             set(new GUIClickableItem(upgradeItemSlot) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -94,8 +94,8 @@ public class GUIAnvil  extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -107,14 +107,14 @@ public class GUIAnvil  extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(upgradeItemSlot) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack stack = e.getClickedItem();
 
                 if (stack.isAir()) return;
@@ -139,8 +139,8 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         if (item == null) {
             set(new GUIClickableItem(sacrificeItemSlot) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -159,8 +159,8 @@ public class GUIAnvil  extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -173,14 +173,14 @@ public class GUIAnvil  extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(sacrificeItemSlot) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack stack = e.getClickedItem();
 
                 if (stack.isAir()) return;
@@ -224,24 +224,24 @@ public class GUIAnvil  extends HypixelInventoryGUI {
             if (isUpgradeItemValid && isSacrificeItemValid)
                 set(new GUIItem(13) {
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStackCreator.getStack("§cError!", Material.BARRIER, 1, "§7You can not combine those Items");
                     }
                 });
             else
                 set(new GUIItem(13) {
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
                     }
                 });
 
             set(new GUIItem(22) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, "§7Combine the items in the slots to the", "§7left and right below.");
                 }
             });
@@ -256,8 +256,8 @@ public class GUIAnvil  extends HypixelInventoryGUI {
 
         set(new GUIItem(13) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return PlayerItemUpdater.playerUpdate(player , result.getItemStack());
             }
         });
@@ -282,14 +282,14 @@ public class GUIAnvil  extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 craftResult(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return applyItemStack;
             }
         });
@@ -317,23 +317,23 @@ public class GUIAnvil  extends HypixelInventoryGUI {
 
         set(new GUIItem(22) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aAnvil", Material.OAK_SIGN, 1, "§7Claim the result item above!");
             }
         });
 
         set(new GUIClickableItem(resultSlot) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 giveResult((Inventory) e.getInventory(),player);
                 new GUIAnvil().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return PlayerItemUpdater.playerUpdate(player , result.getItemStack());
             }
         });
@@ -346,8 +346,8 @@ public class GUIAnvil  extends HypixelInventoryGUI {
             player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(resultSlot)));
             set(new GUIItem(resultSlot) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
                 }
             });

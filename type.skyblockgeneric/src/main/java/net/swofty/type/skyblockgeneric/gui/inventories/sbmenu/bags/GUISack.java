@@ -15,7 +15,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.SackComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -97,8 +97,8 @@ public class GUISack extends HypixelInventoryGUI {
                 ItemType linker = skyBlockItem.getAttributeHandler().getPotentialType();
                 set(new GUIClickableItem(slot) {
                     @Override
-                    public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         Integer amount = player.getSackItems().getAmount(linker);
                         if (e.getClickType() == ClickType.RIGHT_CLICK) {
                             if (amount == 0) return;
@@ -140,8 +140,8 @@ public class GUISack extends HypixelInventoryGUI {
                     }
 
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack());
                         ArrayList<String> lore = new ArrayList<>();
                         Integer amount = player.getSackItems().getAmount(linker);

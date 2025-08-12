@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.enchantment.abstr;
 
 import lombok.NonNull;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.Map;
 

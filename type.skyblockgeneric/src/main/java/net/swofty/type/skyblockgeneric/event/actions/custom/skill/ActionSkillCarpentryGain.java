@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
 import net.swofty.type.skyblockgeneric.item.components.SellableComponent;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.Map;

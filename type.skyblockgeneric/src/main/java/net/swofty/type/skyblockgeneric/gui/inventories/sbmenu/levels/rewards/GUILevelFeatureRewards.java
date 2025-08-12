@@ -13,7 +13,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,8 +40,8 @@ public class GUILevelFeatureRewards extends HypixelInventoryGUI {
 
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Specific game features such as the");
                 lore.add("§7Bazaar or Community Shop.");
@@ -77,8 +77,8 @@ public class GUILevelFeatureRewards extends HypixelInventoryGUI {
 
             set(new GUIItem(slot) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack.Builder item = award.getItem();
                     List<String> lore = new ArrayList<>(Arrays.asList(
                             "§8Level " + level,

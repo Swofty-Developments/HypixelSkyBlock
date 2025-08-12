@@ -6,7 +6,7 @@ import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.HypixelMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.Collections;
 import java.util.HashMap;

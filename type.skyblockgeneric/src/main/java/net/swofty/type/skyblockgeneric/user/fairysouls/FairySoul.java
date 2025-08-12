@@ -7,7 +7,7 @@ import net.minestom.server.instance.Instance;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointFairySouls;
 import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
 import net.swofty.type.skyblockgeneric.entity.EntityFairySoul;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

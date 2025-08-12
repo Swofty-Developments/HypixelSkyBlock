@@ -14,7 +14,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,14 +60,14 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIRecipeCategory(type, new GUIRecipeSlayers()).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ArrayList<String> lore = new ArrayList<>(Arrays.asList(
                             "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
                             "§7that you have unlocked!", " "));
@@ -105,8 +105,8 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
             });
             set(new GUIItem(4) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
 
                     SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.SLAYER;
 

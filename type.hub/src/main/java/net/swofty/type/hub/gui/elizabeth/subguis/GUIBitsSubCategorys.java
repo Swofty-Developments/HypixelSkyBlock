@@ -14,7 +14,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +50,8 @@ public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, Hypixe
                     int amount = shopItem.getAmount();
                     set(new GUIClickableItem(slot) {
                         @Override
-                        public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                        public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             if (player.getBits() >= price) {
                                 SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                                 ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
@@ -70,8 +70,8 @@ public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, Hypixe
                         }
 
                         @Override
-                        public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                        public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                             ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
                             itemStack.amount(amount);

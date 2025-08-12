@@ -11,7 +11,7 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class GUIJamie extends HypixelInventoryGUI {
     public GUIJamie() {
@@ -24,16 +24,16 @@ public class GUIJamie extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.addAndUpdateItem(ItemType.ROGUE_SWORD);
                 player.closeInventory();
                 player.sendMessage(Component.text("§aYou claimed a §fRogue Sword§a!"));
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§fRogue Sword", Material.GOLDEN_SWORD, 1,
                         "§7Damage: §c+20",
                         "",

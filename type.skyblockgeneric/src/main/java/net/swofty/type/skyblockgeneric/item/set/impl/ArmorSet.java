@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.item.set.impl;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

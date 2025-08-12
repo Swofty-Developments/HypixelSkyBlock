@@ -16,7 +16,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +54,8 @@ public class GUIRecipe extends HypixelInventoryGUI {
 
         set(new GUIItem(23) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack(
                         "§aCrafting Table", Material.CRAFTING_TABLE, 1,
                         "§7Craft this recipe by using a",
@@ -84,8 +84,8 @@ public class GUIRecipe extends HypixelInventoryGUI {
         if (recipes.size() > recipeIndex + 1) {
             set(new GUIClickableItem(32) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIRecipe(
                             item,
                             GUIRecipe.this,
@@ -94,8 +94,8 @@ public class GUIRecipe extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§aNext Recipe", Material.ARROW, 1,
                             "§7Click to view the next recipe!"
@@ -106,8 +106,8 @@ public class GUIRecipe extends HypixelInventoryGUI {
         if (recipeIndex > 0) {
             set(new GUIClickableItem(14) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIRecipe(
                             item,
                             GUIRecipe.this,
@@ -116,8 +116,8 @@ public class GUIRecipe extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§aPrevious Recipe", Material.ARROW, 1,
                             "§7Click to view the previous recipe!"
@@ -128,8 +128,8 @@ public class GUIRecipe extends HypixelInventoryGUI {
 
         set(new GUIItem(25) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return PlayerItemUpdater.playerUpdate(player, recipe.getResult().getItemStack())
                         .amount(recipe.getResult().getAmount());
             }
@@ -144,8 +144,8 @@ public class GUIRecipe extends HypixelInventoryGUI {
                 if (ingredient != null) {
                     set(new GUIClickableItem(craftSlot) {
                         @Override
-                        public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                        public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             if (!(ingredient.hasComponent(CraftableComponent.class)))
                                 return;
 
@@ -157,8 +157,8 @@ public class GUIRecipe extends HypixelInventoryGUI {
                         }
 
                         @Override
-                        public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                        public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, ingredient.getItemStack());
 
                             if (ingredient.hasComponent(CraftableComponent.class)) {

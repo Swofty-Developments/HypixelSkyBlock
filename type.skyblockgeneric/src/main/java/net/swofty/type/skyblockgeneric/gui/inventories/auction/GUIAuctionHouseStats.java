@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionStatistic
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class GUIAuctionHouseStats extends HypixelInventoryGUI {
     public GUIAuctionHouseStats() {
@@ -22,8 +22,8 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
 
         set(new GUIItem(11) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 DatapointAuctionStatistics.AuctionStatistics stats = player.getDataHandler().get(
                         DataHandler.Data.AUCTION_STATISTICS,
                         DatapointAuctionStatistics.class
@@ -50,8 +50,8 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
         });
         set(new GUIItem(15) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 DatapointAuctionStatistics.AuctionStatistics stats = player.getDataHandler().get(
                         DataHandler.Data.AUCTION_STATISTICS,
                         DatapointAuctionStatistics.class

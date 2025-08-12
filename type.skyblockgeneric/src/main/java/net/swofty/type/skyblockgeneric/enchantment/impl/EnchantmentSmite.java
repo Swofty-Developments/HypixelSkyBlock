@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.EventBasedEnchant;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.NotNull;
 

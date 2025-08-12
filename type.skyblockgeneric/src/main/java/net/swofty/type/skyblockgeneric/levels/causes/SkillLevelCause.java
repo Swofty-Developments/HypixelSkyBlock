@@ -5,7 +5,7 @@ import net.swofty.type.skyblockgeneric.levels.abstr.CauseEmblem;
 import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.skill.SkillCategory;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 @Getter
 public class SkillLevelCause extends SkyBlockLevelCauseAbstr implements CauseEmblem {

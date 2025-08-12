@@ -6,7 +6,7 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.metadata.item.ItemEntityMeta;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.time.Duration;
 import java.util.ArrayList;

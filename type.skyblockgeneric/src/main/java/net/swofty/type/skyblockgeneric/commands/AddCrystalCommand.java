@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ServerOrbComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "spawncrystal",

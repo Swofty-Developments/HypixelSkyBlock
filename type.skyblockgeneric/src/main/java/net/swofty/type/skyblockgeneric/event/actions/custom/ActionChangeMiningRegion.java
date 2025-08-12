@@ -6,7 +6,7 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class ActionChangeMiningRegion implements HypixelEventClass {
     @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)

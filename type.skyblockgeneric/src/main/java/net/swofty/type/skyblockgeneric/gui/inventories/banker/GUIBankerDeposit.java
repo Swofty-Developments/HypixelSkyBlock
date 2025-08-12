@@ -15,7 +15,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionDepositCoinsInBank;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class GUIBankerDeposit extends HypixelInventoryGUI {
 
@@ -30,8 +30,8 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(11) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aYour whole purse", Material.CHEST, 64,
                         "§8Bank deposit",
                         " ",
@@ -45,8 +45,8 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.closeInventory();
                 attemptDeposit(player, player.getCoins());
             }
@@ -54,8 +54,8 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(13) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aHalf of your purse", Material.CHEST, 32,
                         "§8Bank deposit",
                         " ",
@@ -69,8 +69,8 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.closeInventory();
                 attemptDeposit(player, player.getCoins() / 2);
             }
@@ -99,8 +99,8 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aCustom amount", Material.OAK_SIGN, 1,
                         "§8Bank deposit",
                         " ",

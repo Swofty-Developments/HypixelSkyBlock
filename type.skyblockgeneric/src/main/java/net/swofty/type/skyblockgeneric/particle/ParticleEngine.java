@@ -9,7 +9,7 @@ import net.minestom.server.particle.Particle;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.skyblockgeneric.particle.shapes.ParticleShape;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicLong;

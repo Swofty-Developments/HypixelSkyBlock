@@ -4,7 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.hub.gui.GUIShopPat;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class NPCPat extends SkyBlockNPC {
 

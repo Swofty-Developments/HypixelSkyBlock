@@ -21,7 +21,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,8 +106,8 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
         SkyBlockRecipe<?> finalRecipe = recipe;
         set(new GUIClickableItem(RESULT_SLOT) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
                 ItemType cursorItemType = cursorItem.getAttributeHandler().getPotentialType();
                 ItemType resultItemType = finalRecipe.getResult().getAttributeHandler().getPotentialType();
@@ -157,8 +157,8 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, finalRecipe.getResult().getItemStack()).amount(amount);
 
                 ArrayList<String> lore = new ArrayList<>();

@@ -5,7 +5,7 @@ import net.minestom.server.potion.PotionEffect;
 import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
 import net.swofty.type.skyblockgeneric.item.set.impl.MuseumableSet;
 import net.swofty.type.skyblockgeneric.item.set.impl.SetEvents;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;

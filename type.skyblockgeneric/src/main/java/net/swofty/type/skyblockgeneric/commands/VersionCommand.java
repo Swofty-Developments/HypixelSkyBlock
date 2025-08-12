@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.swofty.commons.MinecraftVersion;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Tells the player their version",

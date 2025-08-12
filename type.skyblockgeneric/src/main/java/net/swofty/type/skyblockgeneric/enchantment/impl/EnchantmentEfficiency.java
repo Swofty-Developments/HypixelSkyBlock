@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.ValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.MiningValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.user.PlayerEnchantmentHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.NotNull;
 

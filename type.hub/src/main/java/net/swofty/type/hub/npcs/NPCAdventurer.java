@@ -5,7 +5,7 @@ import net.swofty.type.hub.gui.GUIShopAdventurer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointToggles;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCDialogue;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class NPCAdventurer extends NPCDialogue {
     public NPCAdventurer() {

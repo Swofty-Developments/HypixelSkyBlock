@@ -2,7 +2,7 @@ package net.swofty.type.island.tab;
 
 import net.swofty.type.skyblockgeneric.tab.TablistModule;
 import net.swofty.type.skyblockgeneric.tab.TablistSkinRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

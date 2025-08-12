@@ -11,7 +11,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
 import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.time.Duration;
 import java.util.List;

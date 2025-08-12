@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.entity.PetEntityImpl;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 

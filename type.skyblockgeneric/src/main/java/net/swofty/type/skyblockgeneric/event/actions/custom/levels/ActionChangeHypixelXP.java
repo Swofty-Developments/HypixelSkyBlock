@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelUnlock;
 import net.swofty.type.skyblockgeneric.levels.causes.LevelCause;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.List;
 

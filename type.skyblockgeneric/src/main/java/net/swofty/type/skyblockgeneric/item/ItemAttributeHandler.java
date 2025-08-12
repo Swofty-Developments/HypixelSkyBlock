@@ -14,7 +14,7 @@ import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
 import net.swofty.type.skyblockgeneric.item.components.*;
 import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;

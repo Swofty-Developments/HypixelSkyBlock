@@ -4,7 +4,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.anvilcombine.AnvilCombineHandler;
 import net.swofty.type.skyblockgeneric.item.handlers.anvilcombine.AnvilCombineRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class AnvilCombinableComponent extends SkyBlockItemComponent {
     private final String handlerId;

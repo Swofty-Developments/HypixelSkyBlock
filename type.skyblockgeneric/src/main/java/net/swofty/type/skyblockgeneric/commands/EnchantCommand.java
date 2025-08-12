@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
 import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "ench",

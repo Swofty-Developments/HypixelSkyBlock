@@ -5,7 +5,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class NPCFann extends SkyBlockNPC {
 

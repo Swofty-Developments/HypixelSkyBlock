@@ -12,7 +12,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
 import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.bson.Document;
 import org.tinylog.Logger;
 

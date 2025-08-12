@@ -14,7 +14,7 @@ import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEve
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.region.mining.BreakingTask;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.Map;

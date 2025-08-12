@@ -14,7 +14,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -51,14 +51,14 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
             double spreadPrice = isSellOrder ? highestPrice - (spread / 10) : lowestPrice + (spread / 10);
             set(new GUIClickableItem(14) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     future.complete(spreadPrice);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§610% of Spread",
                             Material.GOLDEN_HORSE_ARMOR, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -80,14 +80,14 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
             double incrementedOffer = isSellOrder ? lowestPrice - 0.1 : highestPrice + 0.1;
             set(new GUIClickableItem(12) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     future.complete(incrementedOffer);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§6Best Offer " + (isSellOrder ? "-" : "+") + "0.1",
                             Material.GOLD_NUGGET, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -107,14 +107,14 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
             double bestOffer = isSellOrder ? highestPrice : lowestPrice;
             set(new GUIClickableItem(10) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     future.complete(bestOffer);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§6Same as Best Offer",
                             itemTypeLinker.material, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -147,8 +147,8 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§6Custom Price",
                             Material.OAK_SIGN, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",

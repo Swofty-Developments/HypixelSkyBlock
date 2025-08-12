@@ -13,7 +13,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.Map;
 
@@ -46,8 +46,8 @@ public class GUIQuiver extends HypixelInventoryGUI {
                 for (int i = 0; i < entry.getValue(); i++) {
                     set(new GUIItem(i + rawAmountOfSlots) {
                         @Override
-                        public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                        public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             return ItemStackCreator.getStack("§cLocked", Material.RED_STAINED_GLASS_PANE,
                                     1,
                                     "§7You must have the §a" + entry.getKey().getDisplay() + " §7upgrade",
@@ -68,8 +68,8 @@ public class GUIQuiver extends HypixelInventoryGUI {
             set(new GUIClickableItem(i) {
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (item == null) {
                         return ItemStack.builder(Material.AIR);
                     } else {
@@ -83,14 +83,14 @@ public class GUIQuiver extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public void runPost(InventoryClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     save(player, slotToSaveUpTo);
                 }
 
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; }
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; }
             });
         }
 

@@ -12,7 +12,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.text.DecimalFormat;
 import java.time.ZoneId;
@@ -45,8 +45,8 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
         set(new GUIItem(13) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
 
                 var relatedTransactions = getRelatedTransactions(p);
@@ -89,8 +89,8 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
     private void setupTransactionHistory() {
         set(new GUIItem(10) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Transaction History");
                 lore.add(" ");
@@ -136,8 +136,8 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
         set(new GUIItem(16) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Financial Summary");
                 lore.add(" ");
@@ -199,8 +199,8 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(20) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 p.sendMessage("§6[Bazaar] §7Cancelling order...");
 
                 p.getBazaarConnector().cancelOrder(order.orderId())
@@ -229,8 +229,8 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Cancel this bazaar order and");
                 lore.add("§7receive back your remaining:");
@@ -255,14 +255,14 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(24) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIBazaarItem(itemType).open(p);
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aView Market", Material.EMERALD, 1,
                         "§7View the current market for",
                         "§a" + itemType.getDisplayName(),
@@ -278,8 +278,8 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
     private void setupToggleButton() {
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 var completedTransactions = p.getDataHandler().get(
                         DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                         DatapointCompletedBazaarTransactions.class
@@ -297,8 +297,8 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 var completedTransactions = p.getDataHandler().get(
                         DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                         DatapointCompletedBazaarTransactions.class

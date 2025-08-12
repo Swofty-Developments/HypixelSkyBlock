@@ -5,7 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.gui.HypixelSignGUI;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "signgraphicaluserinterface",

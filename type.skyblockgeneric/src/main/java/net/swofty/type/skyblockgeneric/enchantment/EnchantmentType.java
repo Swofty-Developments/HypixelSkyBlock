@@ -6,7 +6,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
 import net.swofty.type.skyblockgeneric.enchantment.impl.*;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

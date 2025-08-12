@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.user.statistics;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.function.Function;
 

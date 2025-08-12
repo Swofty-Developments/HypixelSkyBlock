@@ -15,7 +15,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.Comparator;
@@ -54,8 +54,8 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
         set(GUIClickableItem.getCloseItem(49));
         set(new GUIClickableItem(50) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ClickType clickType = e.getClickType();
 
                 if (sending) {
@@ -113,8 +113,8 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack(
                         "§aRandom Hub",
                         Material.COMPASS, 1,
@@ -156,8 +156,8 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
             private int counterAtThisMoment;
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 counter++;
                 counterAtThisMoment = counter;
                 return ItemStackCreator.getStack(
@@ -172,8 +172,8 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (isThisServer) {
                     player.sendMessage("§cYou are already on this server!");
                     player.closeInventory();

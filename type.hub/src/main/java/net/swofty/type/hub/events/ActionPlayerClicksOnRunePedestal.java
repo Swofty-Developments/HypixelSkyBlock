@@ -6,7 +6,7 @@ import net.swofty.type.hub.runes.RuneEntityImpl;
 import net.swofty.type.skyblockgeneric.event.EventNodes;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
 import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class ActionPlayerClicksOnRunePedestal implements SkyBlockEventClass {
 

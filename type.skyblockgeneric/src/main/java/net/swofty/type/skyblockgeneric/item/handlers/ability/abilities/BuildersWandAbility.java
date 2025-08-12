@@ -8,7 +8,7 @@ import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredAbility;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

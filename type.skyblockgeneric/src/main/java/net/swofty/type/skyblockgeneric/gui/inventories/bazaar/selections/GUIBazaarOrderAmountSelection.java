@@ -10,7 +10,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -87,13 +87,13 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
 
     private void addButton(int slot, int qty, String title, String subtitle, int amount, SkyBlockPlayer p) {
         set(new GUIClickableItem(slot) {
-            @Override public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            @Override public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 future.complete(amount);
                 pl.closeInventory();
             }
-            @Override public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7" + subtitle);
                 lore.add("§7Per unit: §6" + F.format(unitPrice));
@@ -112,13 +112,13 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
 
     private void addLimitButton(int slot, int qty, String title, String amountLine, SkyBlockPlayer p) {
         set(new GUIClickableItem(slot) {
-            @Override public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            @Override public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 future.complete(qty);
                 // *don’t* close—so your price‐selection GUI will open next
             }
-            @Override public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Buy Order Setup");
                 lore.add("§7" + amountLine);
@@ -149,8 +149,8 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                 }
                 return null;
             }
-            @Override public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add(isInstant
                         ? "§7Type a custom amount"

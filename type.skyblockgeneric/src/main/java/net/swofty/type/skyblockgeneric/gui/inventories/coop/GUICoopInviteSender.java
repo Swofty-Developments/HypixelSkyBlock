@@ -22,7 +22,7 @@ import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.commons.SkyBlockPlayerProfiles;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,8 +52,8 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
 
         set(new GUIClickableItem(29) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 coop = CoopDatabase.getFromMember(player.getUuid());
                 coop.memberInvites().clear();
                 coop.members().add(player.getUuid());
@@ -100,8 +100,8 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aConfirm co-op", Material.GREEN_TERRACOTTA, 1,
                         "§7Ends the invitation so that you may",
                         "§bplay §7on this co-op profile.",
@@ -111,8 +111,8 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
         });
         set(new GUIClickableItem(33) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 coop = CoopDatabase.getFromMember(player.getUuid());
 
                 coop.removeInvite(player.getUuid());
@@ -122,8 +122,8 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cCancel invite", Material.RED_TERRACOTTA, 1,
                         "§7Cancels the invite and removes",
                         "§7the co-op profile.",
@@ -140,8 +140,8 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
 
         set(new GUIItem(slots[0]) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStackHead(
                         player.getFullDisplayName(), PlayerSkin.fromUuid(String.valueOf(player.getUuid())), 1,
                         " ",
@@ -166,8 +166,8 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
 
             set(new GUIItem(slots[i + 1]) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStackHead(
                             displayName, PlayerSkin.fromUuid(String.valueOf(target)), 1,
                             " ",

@@ -18,7 +18,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
 import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
 import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.*;
@@ -78,16 +78,16 @@ public class GUICraftedMinions extends HypixelPaginatedGUI<SkyBlockItem> {
 
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (e.getClickedItem().material() != Material.GRAY_DYE) {
                     new GUIMinionRecipes(item.getAttributeHandler().getMinionType(), new GUICraftedMinions(new GUICollections())).open(player);
                 }
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack.Builder itemStack;
                 MinionRegistry minionRegistry = item.getAttributeHandler().getMinionType();
                 DatapointMinionData.ProfileMinionData playerData = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.MINION_DATA, DatapointMinionData.class).getValue();

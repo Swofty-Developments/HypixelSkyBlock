@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.handlers.lore;
 
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

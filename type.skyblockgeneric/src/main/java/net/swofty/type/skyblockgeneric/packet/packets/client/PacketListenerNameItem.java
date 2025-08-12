@@ -6,7 +6,7 @@ import net.minestom.server.network.packet.client.play.ClientNameItemPacket;
 import net.minestom.server.network.packet.server.play.WindowPropertyPacket;
 import net.swofty.type.generic.gui.HypixelAnvilGUI;
 import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketClientListener;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.Map;
 

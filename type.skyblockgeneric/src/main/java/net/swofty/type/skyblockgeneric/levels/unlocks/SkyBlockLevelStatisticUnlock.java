@@ -6,7 +6,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelUnlock;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

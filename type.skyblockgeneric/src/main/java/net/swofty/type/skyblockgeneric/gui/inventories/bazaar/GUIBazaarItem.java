@@ -17,7 +17,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -40,13 +40,13 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
         set(new GUIClickableItem(32) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIBazaarOrders().open(p);
             }
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
                         "§7View your pending Bazaar orders", "§eClick to open");
             }
@@ -54,14 +54,14 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
         set(new GUIClickableItem(31) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIBazaar(BazaarCategories.getFromItem(itemType).getKey()).open(p);
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStackHead("§6Go Back", "c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7", 1,
                         "§7To Bazaar");
             }
@@ -69,8 +69,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
         set(new GUIItem(13) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return new NonPlayerItemUpdater(new SkyBlockItem(itemType)).getUpdatedItem();
             }
         });
@@ -88,8 +88,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
     private void updateItems(BazaarConnector.BazaarStatistics stats) {
         set(new GUIClickableItem(10) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (stats.bestAsk() <= 0) {
                     p.sendMessage("§6[Bazaar] §cNo sell offers available!");
                     return;
@@ -123,8 +123,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Instant Buy");
                 lore.add(" ");
@@ -145,8 +145,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
         set(new GUIClickableItem(11) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 int have = p.getAmountInInventory(itemType);
                 if (have <= 0) {
                     p.sendMessage("§6[Bazaar] §cYou don't have any " + itemType.getDisplayName() + "!");
@@ -172,8 +172,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Instant Sell");
                 lore.add(" ");
@@ -197,8 +197,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
         set(new GUIClickableItem(15) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
 
                 new GUIBazaarOrderAmountSelection(GUIBazaarItem.this, itemType, true, false, 71680, p.getCoins())
                         .openAmountSelection(p)
@@ -237,8 +237,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Create Buy Order");
                 lore.add(" ");
@@ -255,8 +255,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
         set(new GUIClickableItem(16) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 int have = p.getAmountInInventory(itemType);
                 if (have <= 0) {
                     p.sendMessage("§6[Bazaar] §cYou don't have any " + itemType.getDisplayName() + "!");
@@ -299,8 +299,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Create Sell Order");
                 lore.add(" ");

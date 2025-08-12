@@ -5,7 +5,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.commons.SkyBlockPlayerProfiles;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.generic.utility.MathUtility;
 

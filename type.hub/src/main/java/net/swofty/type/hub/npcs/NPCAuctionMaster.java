@@ -6,7 +6,7 @@ import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionHouse;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToAuctionMaster;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.stream.Stream;
 

@@ -5,7 +5,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.place.PlaceEventHandler;
 import net.swofty.type.skyblockgeneric.item.handlers.place.PlaceEventRegistry;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class PlaceEventComponent extends SkyBlockItemComponent {
     private final String handlerId;

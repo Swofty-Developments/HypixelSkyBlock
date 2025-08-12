@@ -22,7 +22,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.ItemPriceCalculator;
 import net.swofty.type.generic.utility.PaginationList;
 
@@ -242,8 +242,8 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
 
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (!inMuseum || hasTakenItOut) {
                     return;
                 }
@@ -270,8 +270,8 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (!inMuseum) {
                     return ItemStackCreator.getStack("§c" + armorSet.getDisplayName(),
                             Material.GRAY_DYE, 1,

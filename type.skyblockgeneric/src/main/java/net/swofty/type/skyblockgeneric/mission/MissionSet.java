@@ -15,7 +15,7 @@ import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarm
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionBreakOaklog;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjackAgain;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 @Getter

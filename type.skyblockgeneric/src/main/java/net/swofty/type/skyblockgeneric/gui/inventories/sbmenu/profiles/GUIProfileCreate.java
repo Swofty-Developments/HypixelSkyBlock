@@ -17,7 +17,7 @@ import net.swofty.type.generic.event.actions.data.ActionPlayerDataSave;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.commons.SkyBlockPlayerProfiles;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.bson.Document;
 
 import java.util.UUID;
@@ -35,8 +35,8 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(11) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aCreate New Profile", Material.GREEN_TERRACOTTA, 1,
                         "§7You are creating a new SkyBlock",
                         "§7profile.",
@@ -52,8 +52,8 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 SkyBlockPlayerProfiles profiles = player.getProfiles();
                 UUID profileId = UUID.randomUUID();
 
@@ -78,14 +78,14 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(15) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, "§cCancel");
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIProfileSelectMode().open(player);
             }
         });

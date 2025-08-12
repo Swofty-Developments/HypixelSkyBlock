@@ -6,7 +6,7 @@ import net.minestom.server.network.packet.client.play.ClientUpdateSignPacket;
 import net.minestom.server.network.packet.server.play.BlockChangePacket;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketClientListener;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class PacketListenerSignUpdate extends SkyBlockPacketClientListener {
     @Override

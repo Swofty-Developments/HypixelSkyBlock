@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.mission;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.Task;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.museum.MuseumDisplay;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplayEntityImpl;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplayEntityInformation;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

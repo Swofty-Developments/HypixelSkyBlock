@@ -4,7 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
 import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionHouse;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class NPCAuctionAgent2 extends SkyBlockNPC {
     public NPCAuctionAgent2() {

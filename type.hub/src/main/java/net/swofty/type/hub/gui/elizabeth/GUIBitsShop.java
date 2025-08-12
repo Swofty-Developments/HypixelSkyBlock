@@ -22,7 +22,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -178,15 +178,15 @@ public class GUIBitsShop extends HypixelInventoryGUI {
             GUIAccountAndProfileUpgrades.ShopCategorys shopCategorys = allShopCategorys[index];
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (slot != 4) {
                         shopCategorys.gui.open(player);
                     }
                 }
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack.Builder itemStack = shopCategorys.stack;
                     ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (slot != 4) {
@@ -212,8 +212,8 @@ public class GUIBitsShop extends HypixelInventoryGUI {
 
         for (int slot : categoriesItemsSlots) {
             set(new GUIItem(slot) {
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (slot != 13) {
                         return ItemStackCreator.getStack("§8▲ §7Categories", Material.GRAY_STAINED_GLASS_PANE, 1, "§8▼ §7Items");
                     } else {
@@ -229,8 +229,8 @@ public class GUIBitsShop extends HypixelInventoryGUI {
                 BitItems bitItems = allBitItems[indexBitItems];
                 set(new GUIClickableItem(slot) {
                     @Override
-                    public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         if (player.getBits() >= bitItems.price) {
                             SkyBlockItem skyBlockItem = new SkyBlockItem(bitItems.item);
                             ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
@@ -249,8 +249,8 @@ public class GUIBitsShop extends HypixelInventoryGUI {
                     }
 
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         SkyBlockItem item = new SkyBlockItem(bitItems.item);
                         ItemStack.Builder itemStack = new NonPlayerItemUpdater(item).getUpdatedItem();
                         ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
@@ -271,14 +271,14 @@ public class GUIBitsShop extends HypixelInventoryGUI {
             SubCategorys subCategorys = allSubCategorys[indexSubCategorys];
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIBitsSubCategorys(subCategorys.getShopItems(), subCategorys.getGuiName(), subCategorys.getPreviousGUI()).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack.Builder itemstack = subCategorys.item;
                     ArrayList<String> lore = new ArrayList<>(itemstack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (!Objects.equals(lore.getLast(), "§eClick to browse!")) {
@@ -292,8 +292,8 @@ public class GUIBitsShop extends HypixelInventoryGUI {
         }
         set(new GUIClickableItem(49) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.openBook(Book.builder()
                         .addPage(Component.text("Purchase ranks, gems and more on our webstore!")
                                 .appendNewline()
@@ -305,8 +305,8 @@ public class GUIBitsShop extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.enchant(ItemStackCreator.getStack("§aCommunity Shop", Material.EMERALD, 1,
                         "§8Elizabeth",
                         " ",
@@ -324,15 +324,15 @@ public class GUIBitsShop extends HypixelInventoryGUI {
         });
         set(new GUIClickableItem(48) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.getToggles().set(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS, false);
                 new GUIBitsShop().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 String status;
                 if (player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
                     status = "§aEnabled!";
@@ -350,14 +350,14 @@ public class GUIBitsShop extends HypixelInventoryGUI {
         });
         set(new GUIClickableItem(33) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIBitsAbiphone().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStackHead("§5Abiphone Supershop", "785d157db6c9fcc1a5bb24c4590988849933bd355608cae3a6a420660676bc33", 1,
                         "§7Obtain upgrades and special cases",
                         "§7for your Abiphone.",

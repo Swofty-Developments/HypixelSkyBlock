@@ -21,7 +21,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.commons.SkyBlockPlayerProfiles;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,8 +55,8 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
                 set(new GUIClickableItem(slot) {
 
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStackCreator.getStack("§eEmpty Profile Slot", Material.OAK_BUTTON, 1,
                                 "§8Available",
                                 " ",
@@ -81,8 +81,8 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
                     }
 
                     @Override
-                    public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         new GUIProfileSelectMode().open(player);
                     }
                 });
@@ -106,15 +106,15 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
                 DataHandler finalDataHandler = dataHandler;
                 set(new GUIClickableItem(slot) {
                     @Override
-                    public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         player.sendMessage("§aYep! §e" + finalDataHandler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue() + "§a is the profile you are playing on!");
                         player.sendMessage("§cIf you want to delete this profile, switch to another one first!");
                     }
 
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         List<String> lore = new ArrayList<>(Arrays.asList("§8Selected slot", " "));
 
                         updateLore(player.getUuid(), finalDataHandler, lore);
@@ -134,14 +134,14 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
             DataHandler finalDataHandler1 = dataHandler;
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIProfileSelect(profileId).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     List<String> lore = new ArrayList<>(Arrays.asList("§8Slot in use", " "));
 
                     updateLore(player.getUuid(), finalDataHandler1, lore);

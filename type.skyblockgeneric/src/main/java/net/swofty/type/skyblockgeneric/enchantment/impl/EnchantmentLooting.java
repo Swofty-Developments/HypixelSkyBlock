@@ -4,7 +4,7 @@ import lombok.NonNull;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 
 import java.util.HashMap;

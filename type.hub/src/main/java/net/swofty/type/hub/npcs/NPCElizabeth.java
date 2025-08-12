@@ -5,7 +5,7 @@ import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCDialogue;
 import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.stream.Stream;
 

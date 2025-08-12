@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.warps;
 import lombok.Getter;
 import net.swofty.commons.ServerType;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

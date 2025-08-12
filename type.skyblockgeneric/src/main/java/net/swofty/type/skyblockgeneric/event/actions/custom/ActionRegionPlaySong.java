@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSong;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockActionBar;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.List;
 

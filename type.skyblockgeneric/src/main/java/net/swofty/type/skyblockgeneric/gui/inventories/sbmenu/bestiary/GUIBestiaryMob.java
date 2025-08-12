@@ -16,7 +16,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,8 +61,8 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
 
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ArrayList<String> lore = new ArrayList<>();
                 BestiaryMob mob = bestiaryEntry.getMobs().getFirst();
                 int kills = getPlayer().getBestiaryData().getAmount(bestiaryEntry.getMobs());
@@ -90,8 +90,8 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
             int slot = chosenSlots[i];
 
             set(new GUIItem(slot) {
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ArrayList<String> lore = new ArrayList<>();
                     int kills = getPlayer().getBestiaryData().getAmount(mob);
                     int deaths = getPlayer().getDeathData().getAmount(mob.getMobID());

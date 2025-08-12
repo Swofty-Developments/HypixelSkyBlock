@@ -14,7 +14,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.ArrayList;
@@ -46,13 +46,13 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
         set(GUIClickableItem.getCloseItem(49));
 
         set(new GUIClickableItem(50) {
-            @Override public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            @Override public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIBazaarOrders().open(p);
             }
 
-            @Override public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aManage Orders",
                         Material.BOOK, 1,
                         "§7View your pending Bazaar orders",
@@ -86,12 +86,12 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
         for (BazaarCategories cat : BazaarCategories.values()) {
             int slot = idx * 9;
             set(new GUIClickableItem(slot) {
-                @Override public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                @Override public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIBazaar(cat).open(p);
                 }
-                @Override public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     var b = ItemStackCreator.getStack(
                             cat.getColor() + StringUtility.toNormalCase(cat.name()),
                             cat.getDisplayItem(), 1,
@@ -112,8 +112,8 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
     private void renderPlaceholders() {
         for (int slot : SLOTS) {
             set(new GUIItem(slot) {
-                @Override public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§7Loading...", Material.GRAY_STAINED_GLASS_PANE, 1);
                 }
             });
@@ -203,8 +203,8 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                     MathUtility.delay(() -> {
                         for (int slot : SLOTS) {
                             set(new GUIItem(slot) {
-                                @Override public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                                @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                                     return ItemStackCreator.getStack("§cError Loading", Material.BARRIER, 1,
                                             "§7Failed to load bazaar data",
                                             "§7Please try again later");
@@ -221,8 +221,8 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
         // Clear existing slots first
         for (int slot : SLOTS) {
             set(new GUIItem(slot) {
-                @Override public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -231,12 +231,12 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
         // Set the new slots
         for (CacheEntry.CachedSlot cs : slots) {
             set(new GUIClickableItem(cs.slot()) {
-                @Override public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                @Override public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIBazaarItemSet(category, cs.itemSet()).open(p);
                 }
-                @Override public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             category.getColor() + cs.itemSet().displayName,
                             cs.itemSet().displayMaterial.material,

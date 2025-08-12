@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.skill.skills;
 import net.minestom.server.item.Material;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.skill.SkillCategory;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.List;
 

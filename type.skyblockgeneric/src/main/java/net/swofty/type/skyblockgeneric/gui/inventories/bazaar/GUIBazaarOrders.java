@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCompletedBazaarT
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -31,8 +31,8 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
 
         set(new GUIItem(4) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§6§lSELL ORDERS", Material.GOLD_INGOT, 1,
                         "§7Your active sell orders");
             }
@@ -40,8 +40,8 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
 
         set(new GUIItem(31) {
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§a§lBUY ORDERS", Material.EMERALD, 1,
                         "§7Your active buy orders");
             }
@@ -113,8 +113,8 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
         if (sellIndex == 0) {
             set(new GUIItem(SELL_SLOTS[0]) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§7No Sell Orders", Material.BARRIER, 1,
                             "§7You don't have any active",
                             "§7sell orders in the Bazaar.");
@@ -125,8 +125,8 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
         if (buyIndex == 0) {
             set(new GUIItem(BUY_SLOTS[0]) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§7No Buy Orders", Material.BARRIER, 1,
                             "§7You don't have any active",
                             "§7buy orders in the Bazaar.");
@@ -140,8 +140,8 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
     private GUIClickableItem createOrderItem(int slot, OrderDisplayItem item) {
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (item.isCompleted()) {
                     new GUIBazaarOrderCompletedOptions(item.getCompletions(), item.getActiveOrder()).open(p);
                 } else {
@@ -150,8 +150,8 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return item.createDisplayItem();
             }
         };
@@ -161,8 +161,8 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
         for (int slot : SELL_SLOTS) {
             set(new GUIItem(slot) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -170,8 +170,8 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
         for (int slot : BUY_SLOTS) {
             set(new GUIItem(slot) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStack.builder(Material.AIR);
                 }
             });

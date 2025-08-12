@@ -16,7 +16,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.BackpackComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -50,16 +50,16 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
         if (page != data.getHighestBackpackSlot()) {
             set(new GUIClickableItem(8) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIStorageBackpackPage(data.getHighestBackpackSlot(),
                             new SkyBlockItem(data.getBackpacks().get(data.getHighestBackpackSlot()))
                     ).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStackHead("§eLast Page >>",
                             "1ceb50d0d79b9fb790a7392660bc296b7ad2f856c5cbe1c566d99cfec191e668");
                 }
@@ -68,14 +68,14 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
             if (data.getBackpacks().containsKey(page + 1))
                 set(new GUIClickableItem(7) {
                     @Override
-                    public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         new GUIStorageBackpackPage(page + 1, new SkyBlockItem(data.getBackpacks().get(page + 1))).open(player);
                     }
 
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStackCreator.getStackHead("§aNext Page >>",
                                 "848ca732a6e35dafd15e795ebc10efedd9ef58ff2df9b17af6e3d807bdc0708b");
                     }
@@ -84,14 +84,14 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
         if (page != data.getLowestBackpackSlot()) {
             set(new GUIClickableItem(5) {
                 @Override
-                public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIStorageBackpackPage(data.getLowestBackpackSlot(), new SkyBlockItem(data.getBackpacks().get(data.getLowestBackpackSlot()))).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStackHead("§e< First Page",
                             "8af22a97292de001079a5d98a0ae3a82c427172eabc370ed6d4a31c7e3a0024f");
                 }
@@ -100,14 +100,14 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
             if (data.getBackpacks().containsKey(page - 1))
                 set(new GUIClickableItem(6) {
                     @Override
-                    public void run(InventoryPreClickEvent e, net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         new GUIStorageBackpackPage(page - 1, new SkyBlockItem(data.getBackpacks().get(page - 1))).open(player);
                     }
 
                     @Override
-                    public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                    public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStackCreator.getStackHead("§a< Previous Page",
                                 "9c042597eda9f061794fe11dacf78926d247f9eea8ddef39dfbe6022989b8395");
                     }
@@ -123,8 +123,8 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (item == null || new SkyBlockItem(item).isNA())
                         return ItemStackCreator.createNamedItemStack(Material.AIR);
                     return PlayerItemUpdater.playerUpdate(player, new SkyBlockItem(item).getItemStack());

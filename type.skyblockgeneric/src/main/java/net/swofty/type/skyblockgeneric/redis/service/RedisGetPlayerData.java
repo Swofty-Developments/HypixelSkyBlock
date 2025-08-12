@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.redis.service;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.util.UUID;

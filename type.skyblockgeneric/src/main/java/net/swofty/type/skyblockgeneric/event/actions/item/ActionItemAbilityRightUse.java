@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AbilityComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredAbility;
 import net.swofty.type.skyblockgeneric.user.PlayerAbilityHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class ActionItemAbilityRightUse implements HypixelEventClass {
 

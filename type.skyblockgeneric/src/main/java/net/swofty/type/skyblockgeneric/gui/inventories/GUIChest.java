@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.chest.Chest;
 import net.swofty.type.skyblockgeneric.chest.ChestAnimationType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.stream.IntStream;
 
@@ -30,8 +30,8 @@ public class GUIChest extends HypixelInventoryGUI {
         IntStream.range(0 , chest.getItems().size()).forEach(index->{
             set(new GUIItem(index) {
                 @Override
-                public ItemStack.Builder getItem(net.swofty.type.generic.user.HypixelPlayer p) {
-                net.swofty.type.skyblockgeneric.user.SkyBlockPlayer player = (net.swofty.type.skyblockgeneric.user.SkyBlockPlayer) p; 
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getFromStack(chest.getItem(index));
                 }
 

@@ -18,7 +18,7 @@ import net.swofty.type.skyblockgeneric.item.components.ArrowComponent;
 import net.swofty.type.skyblockgeneric.item.components.QuiverDisplayComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.List;
 

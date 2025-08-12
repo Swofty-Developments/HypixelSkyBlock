@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.string;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 public class PlayerTemplateProcessor {
     private final SkyBlockPlayer player;

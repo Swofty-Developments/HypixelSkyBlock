@@ -7,7 +7,7 @@ import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.string.PlayerTemplateProcessor;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

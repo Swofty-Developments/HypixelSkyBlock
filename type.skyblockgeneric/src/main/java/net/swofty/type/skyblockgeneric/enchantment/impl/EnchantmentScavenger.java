@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.type.skyblockgeneric.user.PlayerEnchantmentHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.NotNull;

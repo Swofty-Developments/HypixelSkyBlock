@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.starter.GUI
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.starter.GUIStarterSkills;
 import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
