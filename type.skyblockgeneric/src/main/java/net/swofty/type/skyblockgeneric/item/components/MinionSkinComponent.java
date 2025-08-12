@@ -8,7 +8,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.item.component.DyedItemColor;
 import net.minestom.server.utils.Unit;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

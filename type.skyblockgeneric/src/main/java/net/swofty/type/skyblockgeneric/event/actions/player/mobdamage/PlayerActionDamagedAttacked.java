@@ -4,15 +4,15 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.damage.EntityDamage;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.value.SkyBlockValueEvent;
-import net.swofty.type.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.user.statistics.PlayerStatistics;
-import net.swofty.type.generic.utility.DamageIndicator;
+import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
+import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamagedByMobValueUpdateEvent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
+import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
 
 import java.util.Map;
 
@@ -27,16 +27,16 @@ public class PlayerActionDamagedAttacked implements HypixelEventClass {
             mob.setLastAttack(System.currentTimeMillis());
 
             ItemStatistics mobStatistics = mob.getStatistics();
-            ItemStatistics playerStatistics = ((HypixelPlayer) event.getTarget()).getStatistics().allStatistics();
+            ItemStatistics playerStatistics = ((SkyBlockPlayer) event.getTarget()).getStatistics().allStatistics();
 
             Map.Entry<Double, Boolean> damageDealt =
                     PlayerStatistics.runPrimaryDamageFormula(mobStatistics, playerStatistics);
 
             PlayerDamagedByMobValueUpdateEvent valueEvent = new PlayerDamagedByMobValueUpdateEvent(
-                    (HypixelPlayer) event.getTarget(), damageDealt.getKey().floatValue(), mob);
+                    (SkyBlockPlayer) event.getTarget(), damageDealt.getKey().floatValue(), mob);
             SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
 
-            ((HypixelPlayer) event.getTarget()).damage(new EntityDamage(mob, (float) valueEvent.getValue()));
+            ((SkyBlockPlayer) event.getTarget()).damage(new EntityDamage(mob, (float) valueEvent.getValue()));
 
             new DamageIndicator()
                     .damage((float) valueEvent.getValue())

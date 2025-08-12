@@ -15,14 +15,14 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.event.custom.ItemCraftEvent;
+import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
-import net.swofty.type.generic.item.updater.PlayerItemUpdater;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +55,7 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
         Arrays.stream(CRAFT_SLOTS).forEach(slot -> {
-            ((HypixelPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(slot)));
+            ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(slot)));
         });
     }
 
@@ -73,7 +73,7 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
     }
 
     @Override
-    public void refreshItems(HypixelPlayer player) {
+    public void refreshItems(SkyBlockPlayer player) {
         Inventory inventory = getInventory();
         SkyBlockRecipe<?> recipe = SkyBlockRecipe.parseRecipe(getCurrentRecipe(inventory));
 
@@ -108,7 +108,7 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(RESULT_SLOT) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
                 ItemType cursorItemType = cursorItem.getAttributeHandler().getPotentialType();
                 ItemType resultItemType = finalRecipe.getResult().getAttributeHandler().getPotentialType();
@@ -159,7 +159,7 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, finalRecipe.getResult().getItemStack()).amount(amount);
 
                 ArrayList<String> lore = new ArrayList<>();

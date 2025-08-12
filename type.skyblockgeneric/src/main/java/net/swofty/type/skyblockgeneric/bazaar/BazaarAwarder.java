@@ -4,9 +4,9 @@ import net.swofty.commons.bazaar.BuyOrderRefundTransaction;
 import net.swofty.commons.bazaar.OrderExpiredBazaarTransaction;
 import net.swofty.commons.bazaar.SuccessfulBazaarTransaction;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.data.datapoints.DatapointCompletedBazaarTransactions;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCompletedBazaarTransactions;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
@@ -21,7 +21,7 @@ public class BazaarAwarder {
      * @param transaction The successful transaction
      * @return true if the player was the buyer or seller and was processed
      */
-    public static boolean processSuccessfulTransaction(HypixelPlayer player, SuccessfulBazaarTransaction transaction) {
+    public static boolean processSuccessfulTransaction(SkyBlockPlayer player, SuccessfulBazaarTransaction transaction) {
         UUID playerUuid = player.getUuid();
         UUID currentProfile = player.getProfiles().getCurrentlySelected();
 
@@ -39,7 +39,7 @@ public class BazaarAwarder {
         return false;
     }
 
-    public static boolean processRefundTransaction(HypixelPlayer player, BuyOrderRefundTransaction transaction) {
+    public static boolean processRefundTransaction(SkyBlockPlayer player, BuyOrderRefundTransaction transaction) {
         UUID playerUuid = player.getUuid();
         UUID currentProfile = player.getProfiles().getCurrentlySelected();
 
@@ -56,7 +56,7 @@ public class BazaarAwarder {
      * @param transaction The expired order transaction
      * @return true if the player was the owner and was processed
      */
-    public static boolean processExpiredOrder(HypixelPlayer player, OrderExpiredBazaarTransaction transaction) {
+    public static boolean processExpiredOrder(SkyBlockPlayer player, OrderExpiredBazaarTransaction transaction) {
         UUID playerUuid = player.getUuid();
         UUID currentProfile = player.getProfiles().getCurrentlySelected();
 
@@ -76,7 +76,7 @@ public class BazaarAwarder {
      * @param transactionData The transaction data as JSON
      * @return true if the transaction was processed successfully
      */
-    public static boolean processPendingTransaction(HypixelPlayer player, String transactionType, JSONObject transactionData) {
+    public static boolean processPendingTransaction(SkyBlockPlayer player, String transactionType, JSONObject transactionData) {
         try {
             switch (transactionType) {
                 case "SuccessfulBazaarTransaction" -> {
@@ -102,7 +102,7 @@ public class BazaarAwarder {
         }
     }
 
-    private static boolean processBuyer(HypixelPlayer player, SuccessfulBazaarTransaction transaction) {
+    private static boolean processBuyer(SkyBlockPlayer player, SuccessfulBazaarTransaction transaction) {
         try {
             String itemName = transaction.itemName();
             double quantity = transaction.quantity();
@@ -142,7 +142,7 @@ public class BazaarAwarder {
         }
     }
 
-    private static boolean processRefund(HypixelPlayer player, BuyOrderRefundTransaction transaction) {
+    private static boolean processRefund(SkyBlockPlayer player, BuyOrderRefundTransaction transaction) {
         try {
             String displayName = getItemDisplayName(transaction.itemName());
 
@@ -178,7 +178,7 @@ public class BazaarAwarder {
         }
     }
 
-    private static boolean processSeller(HypixelPlayer player, SuccessfulBazaarTransaction transaction) {
+    private static boolean processSeller(SkyBlockPlayer player, SuccessfulBazaarTransaction transaction) {
         try {
             String itemName = transaction.itemName();
             double quantity = transaction.quantity();
@@ -218,7 +218,7 @@ public class BazaarAwarder {
         }
     }
 
-    private static boolean processExpiredOrderOwner(HypixelPlayer player, OrderExpiredBazaarTransaction transaction) {
+    private static boolean processExpiredOrderOwner(SkyBlockPlayer player, OrderExpiredBazaarTransaction transaction) {
         try {
             String itemName = transaction.itemName();
             String side = transaction.side();

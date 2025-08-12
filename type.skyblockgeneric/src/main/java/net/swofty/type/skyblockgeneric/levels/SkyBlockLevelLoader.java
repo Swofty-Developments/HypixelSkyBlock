@@ -5,8 +5,8 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.YamlFileUtils;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.levels.unlocks.CustomLevelUnlock;
-import net.swofty.type.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
+import net.swofty.type.skyblockgeneric.levels.unlocks.CustomLevelUnlock;
+import net.swofty.type.skyblockgeneric.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import org.jetbrains.annotations.Nullable;
 import org.yaml.snakeyaml.Yaml;
 

@@ -6,13 +6,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.bazaar.BazaarConnector;
-import net.swofty.type.generic.data.datapoints.DatapointCompletedBazaarTransactions;
+import net.swofty.type.skyblockgeneric.bazaar.BazaarConnector;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCompletedBazaarTransactions;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.text.DecimalFormat;
 import java.time.ZoneId;
@@ -59,7 +59,7 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
         set(new GUIItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
 
                 double totalQuantity = completions.stream()
@@ -119,7 +119,7 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
         set(new GUIItem(10) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Transaction Details");
                 lore.add(" ");
@@ -158,13 +158,13 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
         set(new GUIClickableItem(16) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 claimRewards(p);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Claim all rewards from this");
                 lore.add("§7completed order:");
@@ -204,13 +204,13 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIBazaarOrderOptions(activeOrder).open(p);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§eView Unfilled Order", Material.COMPASS, 1,
                         "§7Switch to view the remaining",
                         "§7unfilled portion of this order.",
@@ -223,7 +223,7 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
         });
     }
 
-    private void claimRewards(HypixelPlayer player) {
+    private void claimRewards(SkyBlockPlayer player) {
         if (completions == null || completions.isEmpty()) {
             player.sendMessage("§6[Bazaar] §cNo rewards to claim!");
             return;

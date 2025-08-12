@@ -2,17 +2,17 @@ package net.swofty.type.skyblockgeneric.event.actions.player.data;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
-import net.swofty.commons.HypixelPlayerProfiles;
+import net.swofty.commons.SkyBlockPlayerProfiles;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.data.SkyBlockDataHandler;
-import net.swofty.type.generic.data.datapoints.DatapointUUID;
-import net.swofty.type.generic.user.SkyBlockIsland;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
+import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.bson.Document;
 import org.tinylog.Logger;
 
@@ -25,12 +25,12 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
     public void run(AsyncPlayerConfigurationEvent event) {
         Logger.info("Loading SkyBlock data for: " + event.getPlayer().getUsername() + "...");
 
-        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         UUID playerUuid = player.getUuid();
         UUID islandUUID;
 
         // Ensure profiles cache is registered
-        HypixelPlayerProfiles profiles = player.getProfiles();
+        SkyBlockPlayerProfiles profiles = player.getProfiles();
         UUID profileId = profiles.getCurrentlySelected();
         if (profileId == null) {
             profileId = UUID.randomUUID();

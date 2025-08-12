@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.shop.ShopPrice;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.shop.ShopPrice;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
@@ -29,12 +29,12 @@ public class ItemShopPrice implements ShopPrice {
     }
 
     @Override
-    public boolean canAfford(HypixelPlayer player) {
+    public boolean canAfford(SkyBlockPlayer player) {
         return player.getAmountInInventory(type) >= amount;
     }
 
     @Override
-    public void processPurchase(HypixelPlayer player) {
+    public void processPurchase(SkyBlockPlayer player) {
         player.takeItem(type, amount);
     }
 

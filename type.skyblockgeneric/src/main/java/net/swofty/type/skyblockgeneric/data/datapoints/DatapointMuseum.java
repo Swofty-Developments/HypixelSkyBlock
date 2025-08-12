@@ -7,10 +7,10 @@ import lombok.Setter;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.generic.data.SkyBlockDatapoint;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.museum.MuseumDisplays;
-import net.swofty.type.generic.museum.MuseumableItemCategory;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
+import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import org.json.JSONObject;
 
 import java.util.*;

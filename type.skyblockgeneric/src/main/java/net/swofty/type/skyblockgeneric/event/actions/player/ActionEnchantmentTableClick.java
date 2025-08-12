@@ -6,14 +6,14 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.gui.inventories.GUIEnchantmentTable;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.GUIEnchantmentTable;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionEnchantmentTableClick implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(PlayerBlockInteractEvent event) {
-        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (Material.fromKey(event.getBlock().key()) != Material.ENCHANTING_TABLE) {
             return;

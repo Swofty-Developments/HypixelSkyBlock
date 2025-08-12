@@ -1,11 +1,11 @@
 package net.swofty.type.skyblockgeneric.item.set.sets;
 
-import net.swofty.type.generic.event.value.SkyBlockValueEvent;
-import net.swofty.type.generic.event.value.ValueUpdateEvent;
-import net.swofty.type.generic.event.value.events.RegenerationValueUpdateEvent;
-import net.swofty.type.generic.item.set.impl.ArmorSet;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.region.SkyBlockRegion;
+import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
+import net.swofty.type.skyblockgeneric.event.value.ValueUpdateEvent;
+import net.swofty.type.skyblockgeneric.event.value.events.RegenerationValueUpdateEvent;
+import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 
 import java.util.ArrayList;
 import java.util.Arrays;

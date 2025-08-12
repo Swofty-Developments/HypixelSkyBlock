@@ -7,8 +7,8 @@ import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtoc
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.UUID;
@@ -25,7 +25,7 @@ public class GetTrackedItemInformationCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            SkyBlockItem item = new SkyBlockItem(((HypixelPlayer) sender).getItemInMainHand());
+            SkyBlockItem item = new SkyBlockItem(((SkyBlockPlayer) sender).getItemInMainHand());
             if (item.getAttributeHandler().getUniqueTrackedID() == null) {
                 sender.sendMessage("§cThis item is not tracked.");
                 return;
@@ -45,7 +45,7 @@ public class GetTrackedItemInformationCommand extends HypixelCommand {
 
             TrackedItem trackedItem = trackedItemFuture.join().trackedItem();
 
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
             player.sendMessage("§aInformation for tracked item in hand:");
             player.sendMessage("§7- §eItem Type: §7" + trackedItem.getItemType());
             player.sendMessage("§7- §eItem UUID: §7" + trackedItem.getItemUUID());

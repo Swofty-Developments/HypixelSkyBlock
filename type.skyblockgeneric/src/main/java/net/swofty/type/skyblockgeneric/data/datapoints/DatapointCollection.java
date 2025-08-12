@@ -5,9 +5,9 @@ import lombok.Getter;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.generic.collection.CollectionCategories;
-import net.swofty.type.generic.collection.CollectionCategory;
-import net.swofty.type.generic.data.SkyBlockDatapoint;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import org.json.JSONObject;
 
 import java.util.*;

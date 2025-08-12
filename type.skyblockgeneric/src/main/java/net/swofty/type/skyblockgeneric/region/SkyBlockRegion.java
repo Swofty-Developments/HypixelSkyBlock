@@ -8,8 +8,8 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.instance.Instance;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.data.monogdb.RegionDatabase;
-import net.swofty.type.generic.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.data.monogdb.RegionDatabase;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;

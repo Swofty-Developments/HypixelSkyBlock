@@ -5,12 +5,12 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.custom.PlayerRegionChangeEvent;
-import net.swofty.type.generic.noteblock.SkyBlockSong;
-import net.swofty.type.generic.noteblock.SkyBlockSongsHandler;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.user.SkyBlockActionBar;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
+import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSong;
+import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.user.SkyBlockActionBar;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class ActionRegionPlaySong implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false , isAsync = true)
     public void run(PlayerRegionChangeEvent event) {
-        HypixelPlayer player = event.getPlayer();
+        SkyBlockPlayer player = event.getPlayer();
         SkyBlockSongsHandler songHandler = player.getSongHandler();
 
         if (event.getTo() != null && event.getFrom() != null

@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.block;
 
-import net.swofty.type.generic.block.blocks.BlockChest;
-import net.swofty.type.generic.block.blocks.BlockDecoration;
-import net.swofty.type.generic.block.impl.CustomSkyBlockBlock;
+import net.swofty.type.skyblockgeneric.block.blocks.BlockChest;
+import net.swofty.type.skyblockgeneric.block.blocks.BlockDecoration;
+import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
 
 public enum BlockType {
     CHEST(BlockChest.class),

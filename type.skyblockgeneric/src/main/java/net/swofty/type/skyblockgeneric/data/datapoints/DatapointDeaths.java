@@ -5,8 +5,8 @@ import lombok.NoArgsConstructor;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.EntityDamage;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.generic.data.SkyBlockDatapoint;
-import net.swofty.type.generic.entity.mob.BestiaryMob;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import org.json.JSONObject;
 
 import java.util.HashMap;

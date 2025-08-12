@@ -7,13 +7,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.calendar.SkyBlockCalendar;
-import net.swofty.type.generic.data.datapoints.DatapointBankData;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
     }
 
     @Override
-    public void refreshItems(HypixelPlayer player) {
+    public void refreshItems(SkyBlockPlayer player) {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getCloseItem(31));
 
@@ -51,7 +51,7 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIItem(32) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aInformation", Material.REDSTONE_TORCH, 1,
                         "§7Keep your coins safe in the bank!",
                         "§7You lose half the coins in your purse when dying in combat.",
@@ -69,13 +69,13 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIBankerDeposit().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aDeposit Coins", Material.CHEST, 1,
                         "§7Current balance: §6" + StringUtility.decimalify(bankData.getAmount(), 1),
                         " ",
@@ -97,13 +97,13 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(13) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIBankerWithdraw().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aWithdraw Coins", Material.DISPENSER, 1,
                         "§7Current balance: §6" + StringUtility.decimalify(bankData.getAmount(), 1),
                         " ",
@@ -119,7 +119,7 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIItem(15) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 List<DatapointBankData.Transaction> transactions = bankData.getTransactions();
 

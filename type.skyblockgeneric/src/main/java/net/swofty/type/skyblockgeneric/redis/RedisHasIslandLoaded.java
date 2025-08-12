@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.redis;
 
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.type.generic.user.SkyBlockIsland;
+import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
 import org.json.JSONObject;
 
 import java.util.UUID;

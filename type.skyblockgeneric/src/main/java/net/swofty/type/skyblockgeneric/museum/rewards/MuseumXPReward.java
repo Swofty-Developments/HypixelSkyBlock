@@ -1,10 +1,10 @@
 package net.swofty.type.skyblockgeneric.museum.rewards;
 
 import lombok.Getter;
-import net.swofty.type.generic.levels.SkyBlockLevelCause;
-import net.swofty.type.generic.museum.MuseumReward;
-import net.swofty.type.generic.museum.MuseumRewards;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
+import net.swofty.type.skyblockgeneric.museum.MuseumReward;
+import net.swofty.type.skyblockgeneric.museum.MuseumRewards;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @Getter
 public class MuseumXPReward extends MuseumReward {
@@ -14,7 +14,7 @@ public class MuseumXPReward extends MuseumReward {
         this.xp = xp;
     }
     @Override
-    public void onUnlock(MuseumRewards rewards, HypixelPlayer player) {
+    public void onUnlock(MuseumRewards rewards, SkyBlockPlayer player) {
         player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMuseumCause(rewards));
     }
 

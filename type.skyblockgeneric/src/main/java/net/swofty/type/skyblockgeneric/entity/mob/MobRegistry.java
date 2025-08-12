@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.entity.mob;
 
 import lombok.Getter;
 import net.minestom.server.entity.EntityType;
-import net.swofty.type.generic.entity.mob.impl.RegionPopulator;
+import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

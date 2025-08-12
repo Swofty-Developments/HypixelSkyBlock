@@ -11,18 +11,18 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
-import net.swofty.type.generic.data.SkyBlockDataHandler;
-import net.swofty.type.generic.data.datapoints.DatapointUUID;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.CustomGroups;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.generic.utility.MathUtility;
-import net.swofty.type.generic.warps.TravelScrollIslands;
+import net.swofty.type.skyblockgeneric.warps.TravelScrollIslands;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -34,7 +34,7 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
     @SneakyThrows
     @HypixelEvent(node = EventNodes.PLAYER_DATA , requireDataLoaded = true)
     public void run(PlayerSpawnEvent event) {
-        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (!player.hasAuthenticated) return;
         if (!event.isFirstSpawn()) return;
@@ -53,7 +53,7 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
 
                 if (SkyBlockGenericLoader.getLoadedPlayers().stream().anyMatch(player1 -> coop.members().contains(player1.getUuid()))) {
                     // A coop member is online, use their data
-                    HypixelPlayer otherCoopMember = SkyBlockGenericLoader.getLoadedPlayers().stream()
+                    SkyBlockPlayer otherCoopMember = SkyBlockGenericLoader.getLoadedPlayers().stream()
                             .filter(player1 -> coop.members().contains(player1.getUuid())).findFirst().get();
                     data = otherCoopMember.getDataHandler();
                 } else {

@@ -7,8 +7,8 @@ import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.network.packet.client.ClientPacket;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.SkyBlockGenericLoader;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public abstract class SkyBlockPacketClientListener {
 
     public abstract Class<? extends ClientPacket> getPacket();
 
-    public abstract void run(PlayerPacketEvent event, ClientPacket packet, HypixelPlayer player);
+    public abstract void run(PlayerPacketEvent event, ClientPacket packet, SkyBlockPlayer player);
 
     public abstract boolean overrideMinestomProcessing();
 
@@ -46,7 +46,7 @@ public abstract class SkyBlockPacketClientListener {
         toOverride.forEach((packetType, packetEvents) -> {
             MinecraftServer.getPacketListenerManager().setPlayListener(packetType, (packet, player) -> {
                 packetEvents.forEach((packetEvent) -> {
-                    packetEvent.run(null, packet, (HypixelPlayer) player);
+                    packetEvent.run(null, packet, (SkyBlockPlayer) player);
                 });
             });
         });
@@ -59,9 +59,9 @@ public abstract class SkyBlockPacketClientListener {
                 if (packetType.isInstance(rawEvent.getPacket())) {
                     if (SkyBlockGenericLoader.getFromUUID(rawEvent.getPlayer().getUuid()) == null) return;
                     if (HypixelConst.isIslandServer() &&
-                            !((HypixelPlayer) rawEvent.getPlayer()).getSkyBlockIsland().getCreated()) return;
+                            !((SkyBlockPlayer) rawEvent.getPlayer()).getSkyBlockIsland().getCreated()) return;
 
-                    packetEvent.run(rawEvent, rawEvent.getPacket(), (HypixelPlayer) rawEvent.getPlayer());
+                    packetEvent.run(rawEvent, rawEvent.getPacket(), (SkyBlockPlayer) rawEvent.getPlayer());
                 }
             });
         });

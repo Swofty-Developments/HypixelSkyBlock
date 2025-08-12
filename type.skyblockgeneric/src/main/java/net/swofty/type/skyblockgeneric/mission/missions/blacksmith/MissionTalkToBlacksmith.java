@@ -3,12 +3,12 @@ package net.swofty.type.skyblockgeneric.mission.missions.blacksmith;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.generic.event.custom.PlayerRegionChangeEvent;
-import net.swofty.type.generic.mission.LocationAssociatedMission;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.mission.HypixelMission;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
+import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,12 +42,12 @@ public class MissionTalkToBlacksmith extends HypixelMission implements LocationA
     }
 
     @Override
-    public HashMap<String, Object> onStart(HypixelPlayer player, MissionData.ActiveMission mission) {
+    public HashMap<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
         return new HashMap<>();
     }
 
     @Override
-    public void onEnd(HypixelPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         player.getMissionData().startMission(MissionMineCoal.class);
     }
 

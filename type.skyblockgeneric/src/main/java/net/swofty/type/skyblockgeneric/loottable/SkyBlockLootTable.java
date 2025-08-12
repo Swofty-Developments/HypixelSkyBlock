@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -72,7 +72,7 @@ public abstract class SkyBlockLootTable {
      * @param player The player to run the chances for
      * @return A map of the loot that the player will receive
      */
-    public @NonNull Map<ItemType, LootRecord> runChances(HypixelPlayer player, LootAffector... affectors) {
+    public @NonNull Map<ItemType, LootRecord> runChances(SkyBlockPlayer player, LootAffector... affectors) {
         Map<ItemType, LootRecord> loot = new HashMap<>();
         CalculationMode mode = getCalculationMode();
 
@@ -127,13 +127,13 @@ public abstract class SkyBlockLootTable {
         private final ItemType itemType;
         private final int amount;
         private final double chancePercent;
-        private Function<HypixelPlayer, Boolean> shouldCalculate = player -> true;
+        private Function<SkyBlockPlayer, Boolean> shouldCalculate = player -> true;
 
         public static LootRecord none(int chance) {
             return new LootRecord(ItemType.AIR, 0, chance, player -> true);
         }
 
-        public static LootRecord none(int chance, Function<HypixelPlayer, Boolean> shouldCalculate) {
+        public static LootRecord none(int chance, Function<SkyBlockPlayer, Boolean> shouldCalculate) {
             return new LootRecord(ItemType.AIR, 0, chance, shouldCalculate);
         }
 

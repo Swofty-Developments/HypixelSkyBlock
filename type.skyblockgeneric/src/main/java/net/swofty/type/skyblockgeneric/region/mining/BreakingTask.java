@@ -10,18 +10,18 @@ import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
 import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.generic.event.custom.PlayerDamageSkyBlockBlockEvent;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEvent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class BreakingTask {
     private int counter = 0;
-    private final HypixelPlayer player;
+    private final SkyBlockPlayer player;
     private final PositionedBlock block;
     private final double breakTime;
     private TaskSchedule nextSchedule;
 
-    public BreakingTask(HypixelPlayer player, PositionedBlock block, SkyBlockItem item) {
+    public BreakingTask(SkyBlockPlayer player, PositionedBlock block, SkyBlockItem item) {
         this.player = player;
         this.block = block;
 

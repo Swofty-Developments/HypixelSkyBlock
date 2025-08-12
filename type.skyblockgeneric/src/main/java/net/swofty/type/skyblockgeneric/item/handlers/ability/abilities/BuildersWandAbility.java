@@ -7,8 +7,8 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.item.handlers.ability.RegisteredAbility;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredAbility;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class BuildersWandAbility extends RegisteredAbility {
                 });
     }
 
-    private static void fillConnectedFaces(HypixelPlayer player, Pos origin, BlockFace face) {
+    private static void fillConnectedFaces(SkyBlockPlayer player, Pos origin, BlockFace face) {
         Material fillMaterial = Material.fromKey(player.getInstance().getBlock(origin).key());
         int blocksInInventory = player.countItem(ItemType.fromMaterial(fillMaterial));
         int blockLimit = 164;

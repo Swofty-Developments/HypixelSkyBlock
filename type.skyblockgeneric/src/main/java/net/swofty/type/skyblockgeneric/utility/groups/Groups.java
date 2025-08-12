@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.utility.groups;
 
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.region.RegionType;
+import net.swofty.type.skyblockgeneric.region.RegionType;
 
 import java.util.Arrays;
 import java.util.List;

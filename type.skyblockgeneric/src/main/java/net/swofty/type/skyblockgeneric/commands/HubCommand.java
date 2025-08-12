@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.mission.MissionSet;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.mission.MissionSet;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "h",
@@ -18,7 +18,7 @@ public class HubCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            HypixelPlayer player = ((HypixelPlayer) sender);
+            SkyBlockPlayer player = ((SkyBlockPlayer) sender);
 
             if (!MissionSet.GETTING_STARTED.hasCompleted(player)) {
                 player.sendMessage("§cYou must complete your starting missions!");

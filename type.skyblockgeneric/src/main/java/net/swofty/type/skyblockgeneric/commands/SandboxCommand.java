@@ -4,7 +4,7 @@ import net.swofty.commons.Configuration;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "getsandboxitem",
@@ -21,7 +21,7 @@ public class SandboxCommand extends HypixelCommand {
                 sender.sendMessage("§cThis command is disabled on this server.");
                 return;
             }
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
             player.addAndUpdateItem(ItemType.SANDBOX_ITEM);
             player.sendMessage("§aAdded a sandbox item to your inventory.");
         });

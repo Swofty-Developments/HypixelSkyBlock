@@ -6,8 +6,8 @@ import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "i",
@@ -27,7 +27,7 @@ public class ItemCommand extends HypixelCommand {
             final ItemType itemTypeLinker = context.get(itemArgument);
 
             SkyBlockItem item = new SkyBlockItem(itemTypeLinker);
-            ((HypixelPlayer) sender).addAndUpdateItem(item);
+            ((SkyBlockPlayer) sender).addAndUpdateItem(item);
 
             sender.sendMessage("§aGiven you item §e" + itemTypeLinker.name() + "§a.");
         }, itemArgument);
@@ -38,7 +38,7 @@ public class ItemCommand extends HypixelCommand {
 
             SkyBlockItem item = new SkyBlockItem(itemTypeLinker);
             item.setAmount(amount);
-            ((HypixelPlayer) sender).addAndUpdateItem(item);
+            ((SkyBlockPlayer) sender).addAndUpdateItem(item);
 
             sender.sendMessage("§aGiven you item §e" + itemTypeLinker.name() + "§8 x" + amount + "§a.");
         }, itemArgument, amountArgument);

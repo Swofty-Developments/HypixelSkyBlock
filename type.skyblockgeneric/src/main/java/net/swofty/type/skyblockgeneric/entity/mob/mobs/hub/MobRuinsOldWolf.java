@@ -10,16 +10,16 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.entity.mob.BestiaryMob;
-import net.swofty.type.generic.entity.mob.ai.ClosestEntityRegionTarget;
-import net.swofty.type.generic.entity.mob.ai.MeleeAttackWithinRegionGoal;
-import net.swofty.type.generic.entity.mob.ai.RandomRegionStrollGoal;
-import net.swofty.type.generic.entity.mob.impl.RegionPopulator;
-import net.swofty.type.generic.loottable.OtherLoot;
-import net.swofty.type.generic.loottable.SkyBlockLootTable;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.skill.SkillCategories;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
+import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
+import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
+import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
+import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
+import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
+import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -59,7 +59,7 @@ public class MobRuinsOldWolf extends BestiaryMob implements RegionPopulator {
                 new LastEntityDamagerTarget(this, 16), // First target the last entity which attacked you
                 new ClosestEntityRegionTarget(this,
                         16,
-                        entity -> entity instanceof HypixelPlayer,
+                        entity -> entity instanceof SkyBlockPlayer,
                         RegionType.RUINS) // If there is none, target the nearest player
         );
     }

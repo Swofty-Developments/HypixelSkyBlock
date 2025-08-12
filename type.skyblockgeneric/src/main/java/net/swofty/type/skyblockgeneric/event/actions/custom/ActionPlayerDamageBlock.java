@@ -10,11 +10,11 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.custom.PlayerDamageSkyBlockBlockEvent;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.region.SkyBlockRegion;
-import net.swofty.type.generic.region.mining.BreakingTask;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEvent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.skyblockgeneric.region.mining.BreakingTask;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class ActionPlayerDamageBlock implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
     public void run(PlayerDamageSkyBlockBlockEvent event) {
-        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(event.getBlockPosition());
 
         if (event.getStatus() != ClientPlayerDiggingPacket.Status.STARTED_DIGGING

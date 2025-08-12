@@ -4,13 +4,13 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.collection.CustomCollectionAward;
-import net.swofty.type.generic.enchantment.abstr.Ench;
-import net.swofty.type.generic.enchantment.abstr.EnchFromTable;
-import net.swofty.type.generic.enchantment.abstr.EventBasedEnchant;
-import net.swofty.type.generic.entity.mob.SkyBlockMob;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.groups.EnchantItemGroups;
+import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.EventBasedEnchant;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class EnchantmentEnderSlayer implements Ench, EnchFromTable, EventBasedEn
     }
 
     @Override
-    public ApplyLevels getLevelsToApply(@NotNull HypixelPlayer player) {
+    public ApplyLevels getLevelsToApply(@NotNull SkyBlockPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 4, 27,
                 5, 36,
@@ -49,7 +49,7 @@ public class EnchantmentEnderSlayer implements Ench, EnchFromTable, EventBasedEn
     }
 
     @Override
-    public ItemStatistics getStatisticsOnDamage(HypixelPlayer causer, LivingEntity receiver, int level) {
+    public ItemStatistics getStatisticsOnDamage(SkyBlockPlayer causer, LivingEntity receiver, int level) {
         if (receiver instanceof SkyBlockMob skyBlockMob) {
             if (skyBlockMob.getEntityType() == EntityType.ENDERMITE || skyBlockMob.getEntityType() == EntityType.ENDERMAN || skyBlockMob.getEntityType() == EntityType.ENDER_DRAGON) {
                 return ItemStatistics.builder().withBase(ItemStatistic.DAMAGE, MULTIPLIERS[level - 1]).build();
@@ -59,7 +59,7 @@ public class EnchantmentEnderSlayer implements Ench, EnchFromTable, EventBasedEn
     };
 
     @Override
-    public TableLevels getLevelsFromTableToApply(@NotNull HypixelPlayer player) {
+    public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 10,
                 2, 20,

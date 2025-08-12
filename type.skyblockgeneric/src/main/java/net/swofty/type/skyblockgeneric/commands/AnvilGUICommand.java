@@ -5,7 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.gui.HypixelAnvilGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "anvilgraphicaluserinterface",
@@ -22,7 +22,7 @@ public class AnvilGUICommand extends HypixelCommand {
             if (!permissionCheck(sender)) return;
 
             String anvilText = context.get(text);
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             new HypixelAnvilGUI(player).open(anvilText).thenAccept(line -> {
                 if (line == null) {

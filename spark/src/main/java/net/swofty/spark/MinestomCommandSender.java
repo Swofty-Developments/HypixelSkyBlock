@@ -5,9 +5,9 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.ConsoleSender;
 import net.minestom.server.entity.Player;
-import net.swofty.type.generic.data.datapoints.DatapointRank;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointRank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.categories.Rank;
 
 import java.util.UUID;
 
@@ -43,7 +43,7 @@ public class MinestomCommandSender extends AbstractCommandSender<CommandSender> 
     @Override
     public boolean hasPermission(String permission) {
         if (delegate instanceof Player player){
-            return ((HypixelPlayer) player).getDataHandler()
+            return ((SkyBlockPlayer) player).getDataHandler()
                     .get(DataHandler.Data.RANK, DatapointRank.class)
                     .getValue() == Rank.ADMIN;
         }

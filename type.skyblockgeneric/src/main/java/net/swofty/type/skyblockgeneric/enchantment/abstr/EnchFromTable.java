@@ -1,13 +1,13 @@
 package net.swofty.type.skyblockgeneric.enchantment.abstr;
 
 import lombok.NonNull;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
 
 public interface EnchFromTable {
 
-    TableLevels getLevelsFromTableToApply(@NonNull HypixelPlayer player);
+    TableLevels getLevelsFromTableToApply(@NonNull SkyBlockPlayer player);
 
     int getRequiredBookshelfPower();
 

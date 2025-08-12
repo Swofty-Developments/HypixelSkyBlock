@@ -11,19 +11,19 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointString;
-import net.swofty.type.generic.data.datapoints.DatapointUUID;
-import net.swofty.type.generic.data.monogdb.CoopDatabase;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
+import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.commons.HypixelPlayerProfiles;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.commons.SkyBlockPlayerProfiles;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +54,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
         set(new GUIClickableItem(29) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 coop = CoopDatabase.getFromMember(player.getUuid());
                 coop.memberInvites().clear();
                 coop.members().add(player.getUuid());
@@ -67,7 +67,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
 
                 if (coop.memberProfiles().isEmpty()) {
                     handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(UUID.randomUUID());
-                    handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(HypixelPlayerProfiles.getRandomName());
+                    handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(SkyBlockPlayerProfiles.getRandomName());
                 } else {
                     UUID otherCoopMember = coop.memberProfiles().getFirst();
                     ProfilesDatabase islandDatabase = new ProfilesDatabase(otherCoopMember.toString());
@@ -76,7 +76,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                         handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(islandHandler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
                         handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(islandHandler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
                     } else {
-                        HypixelPlayer profileOwner = SkyBlockGenericLoader.getPlayerFromProfileUUID(otherCoopMember);
+                        SkyBlockPlayer profileOwner = SkyBlockGenericLoader.getPlayerFromProfileUUID(otherCoopMember);
 
                         handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(
                                 profileOwner.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
@@ -93,7 +93,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                 coop.save();
 
                 MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                    HypixelPlayerProfiles profiles = player.getProfiles();
+                    SkyBlockPlayerProfiles profiles = player.getProfiles();
                     profiles.getProfiles().add(profileId);
                     profiles.setCurrentlySelected(profileId);
                     new UserDatabase(player.getUuid()).saveProfiles(profiles);
@@ -102,7 +102,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aConfirm co-op", Material.GREEN_TERRACOTTA, 1,
                         "§7Ends the invitation so that you may",
                         "§bplay §7on this co-op profile.",
@@ -113,7 +113,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
         set(new GUIClickableItem(33) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 coop = CoopDatabase.getFromMember(player.getUuid());
 
                 coop.removeInvite(player.getUuid());
@@ -124,7 +124,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cCancel invite", Material.RED_TERRACOTTA, 1,
                         "§7Cancels the invite and removes",
                         "§7the co-op profile.",
@@ -135,14 +135,14 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
     }
 
     @Override
-    public void refreshItems(HypixelPlayer player) {
+    public void refreshItems(SkyBlockPlayer player) {
         int amountInProfile = coop.memberInvites().size() + coop.members().size();
         int[] slots = SLOTS_MAP.get(amountInProfile).stream().mapToInt(Integer::intValue).toArray();
 
         set(new GUIItem(slots[0]) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStackHead(
                         player.getFullDisplayName(), PlayerSkin.fromUuid(String.valueOf(player.getUuid())), 1,
                         " ",
@@ -163,12 +163,12 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
         for (int i = 0; i < invites.size(); i++) {
             UUID target = (UUID) invites.keySet().toArray()[i];
             boolean accepted = invites.get(target);
-            String displayName = HypixelPlayer.getDisplayName(target);
+            String displayName = SkyBlockPlayer.getDisplayName(target);
 
             set(new GUIItem(slots[i + 1]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStackHead(
                             displayName, PlayerSkin.fromUuid(String.valueOf(target)), 1,
                             " ",

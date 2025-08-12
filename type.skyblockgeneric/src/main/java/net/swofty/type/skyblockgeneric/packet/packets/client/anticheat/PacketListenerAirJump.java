@@ -6,9 +6,9 @@ import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerPositionPacket;
-import net.swofty.type.generic.packet.SkyBlockPacketClientListener;
-import net.swofty.type.generic.user.AntiCheatHandler;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketClientListener;
+import net.swofty.type.skyblockgeneric.user.AntiCheatHandler;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.HashMap;
 
@@ -21,7 +21,7 @@ public class PacketListenerAirJump extends SkyBlockPacketClientListener {
     }
 
     @Override
-    public void run(PlayerPacketEvent event, ClientPacket packet, HypixelPlayer player) {
+    public void run(PlayerPacketEvent event, ClientPacket packet, SkyBlockPlayer player) {
         ClientPlayerPositionPacket positionPacket = (ClientPlayerPositionPacket) packet;
         double newY = positionPacket.position().y();
         AntiCheatHandler handler = player.getAntiCheatHandler();
@@ -57,7 +57,7 @@ public class PacketListenerAirJump extends SkyBlockPacketClientListener {
         return false;
     }
 
-    private boolean isInFluid(HypixelPlayer player) {
+    private boolean isInFluid(SkyBlockPlayer player) {
         Block blockBelow = player.getInstance().getBlock(player.getPosition().sub(0, 1, 0));
         Block block = player.getInstance().getBlock(player.getPosition());
 
@@ -65,7 +65,7 @@ public class PacketListenerAirJump extends SkyBlockPacketClientListener {
                 blockBelow == Block.WATER || blockBelow == Block.LAVA || blockBelow == Block.WATER_CAULDRON || blockBelow == Block.LAVA_CAULDRON;
     }
 
-    private PlayerData getPlayerData(HypixelPlayer player) {
+    private PlayerData getPlayerData(SkyBlockPlayer player) {
         return playerData.computeIfAbsent(player, p -> new PlayerData());
     }
 

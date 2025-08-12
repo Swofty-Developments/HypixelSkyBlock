@@ -4,9 +4,9 @@ import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.swofty.commons.Songs;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.noteblock.SkyBlockSong;
-import net.swofty.type.generic.noteblock.SkyBlockSongsHandler;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSong;
+import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "playsong",
@@ -22,7 +22,7 @@ public class PlayMusicCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
             if (!SkyBlockSongsHandler.isEnabled) {
                 player.sendMessage("§cSkyBlock songs are not enabled on this server.");
                 return;

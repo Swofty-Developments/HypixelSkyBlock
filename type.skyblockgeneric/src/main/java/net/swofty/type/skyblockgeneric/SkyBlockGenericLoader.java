@@ -24,60 +24,60 @@ import net.swofty.commons.item.reforge.ReforgeLoader;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.data.mongodb.*;
-import net.swofty.type.generic.block.attribute.BlockAttribute;
-import net.swofty.type.generic.block.placement.BlockPlacementManager;
-import net.swofty.type.generic.calendar.SkyBlockCalendar;
-import net.swofty.type.generic.collection.CollectionCategories;
-import net.swofty.type.generic.collection.CollectionCategory;
-import net.swofty.type.generic.collection.CustomCollectionAward;
+import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
+import net.swofty.type.skyblockgeneric.block.placement.BlockPlacementManager;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
+import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.data.monogdb.*;
-import net.swofty.type.generic.data.SkyBlockDataHandler;
-import net.swofty.type.generic.entity.ServerCrystalImpl;
+import net.swofty.type.skyblockgeneric.data.monogdb.*;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.hologram.ServerHolograms;
-import net.swofty.type.generic.entity.mob.MobRegistry;
-import net.swofty.type.generic.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.generic.event.value.SkyBlockValueEvent;
-import net.swofty.type.generic.item.ItemConfigParser;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.components.CraftableComponent;
-import net.swofty.type.generic.item.components.MuseumComponent;
-import net.swofty.type.generic.item.components.ServerOrbComponent;
-import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
-import net.swofty.type.generic.item.set.impl.SetRepeatable;
-import net.swofty.type.generic.item.updater.PlayerItemUpdater;
-import net.swofty.type.generic.levels.CustomLevelAward;
-import net.swofty.type.generic.levels.SkyBlockLevelCause;
-import net.swofty.type.generic.levels.SkyBlockLevelRequirement;
-import net.swofty.type.generic.levels.unlocks.CustomLevelUnlock;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.mission.MissionRepeater;
-import net.swofty.type.generic.mission.HypixelMission;
-import net.swofty.type.generic.museum.MuseumableItemCategory;
-import net.swofty.type.generic.noteblock.SkyBlockSongsHandler;
-import net.swofty.type.generic.packet.SkyBlockPacketClientListener;
-import net.swofty.type.generic.packet.SkyBlockPacketServerListener;
-import net.swofty.type.generic.redis.RedisAuthenticate;
-import net.swofty.type.generic.redis.RedisOriginServer;
-import net.swofty.type.generic.region.SkyBlockMiningConfiguration;
-import net.swofty.type.generic.region.SkyBlockRegion;
-import net.swofty.type.generic.server.attribute.SkyBlockServerAttributes;
-import net.swofty.type.generic.server.eventcaller.CustomEventCaller;
-import net.swofty.type.generic.user.SkyBlockIsland;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.user.SkyBlockScoreboard;
+import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
+import net.swofty.type.skyblockgeneric.item.ItemConfigParser;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
+import net.swofty.type.skyblockgeneric.item.components.MuseumComponent;
+import net.swofty.type.skyblockgeneric.item.components.ServerOrbComponent;
+import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
+import net.swofty.type.skyblockgeneric.item.set.impl.SetRepeatable;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
+import net.swofty.type.skyblockgeneric.levels.unlocks.CustomLevelUnlock;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.MissionRepeater;
+import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
+import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
+import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketClientListener;
+import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketServerListener;
+import net.swofty.type.skyblockgeneric.redis.RedisAuthenticate;
+import net.swofty.type.skyblockgeneric.redis.RedisOriginServer;
+import net.swofty.type.skyblockgeneric.region.SkyBlockMiningConfiguration;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
+import net.swofty.type.skyblockgeneric.server.eventcaller.CustomEventCaller;
+import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockScoreboard;
 import net.swofty.type.generic.user.categories.CustomGroups;
-import net.swofty.type.generic.user.fairysouls.FairySoul;
-import net.swofty.type.generic.user.fairysouls.FairySoulZone;
-import net.swofty.type.generic.user.statistics.PlayerStatistics;
-import net.swofty.type.generic.utility.LaunchPads;
+import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
+import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
+import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
+import net.swofty.type.skyblockgeneric.utility.LaunchPads;
 import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
@@ -278,7 +278,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
         benchmarkManager.enable(Duration.ofDays(3));
         MinecraftServer.getSchedulerManager().buildTask(() -> {
-            Collection<HypixelPlayer> players = getLoadedPlayers();
+            Collection<SkyBlockPlayer> players = getLoadedPlayers();
             if (players.isEmpty())
                 return;
 
@@ -503,7 +503,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          * Handle ConnectionManager
          */
         MinecraftServer.getConnectionManager().setPlayerProvider((gameProfile, playerConnection) -> {
-            HypixelPlayer player = new HypixelPlayer(playerConnection, gameProfile);
+            SkyBlockPlayer player = new SkyBlockPlayer(playerConnection, gameProfile);
 
             UUID uuid = gameProfile.getPlayer().getUuid();
             String username = gameProfile.getPlayer().getUsername();
@@ -524,8 +524,8 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         });
     }
 
-    public static List<HypixelPlayer> getLoadedPlayers() {
-        List<HypixelPlayer> players = new ArrayList<>();
+    public static List<SkyBlockPlayer> getLoadedPlayers() {
+        List<SkyBlockPlayer> players = new ArrayList<>();
         MinecraftServer.getConnectionManager().getOnlinePlayers()
                 .stream()
                 .filter(player -> {
@@ -537,15 +537,15 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                     return true;
                 })
                 .filter(player -> player.getInstance() != null)
-                .forEach(player -> players.add((HypixelPlayer) player));
+                .forEach(player -> players.add((SkyBlockPlayer) player));
         return players;
     }
 
-    public static @Nullable HypixelPlayer getFromUUID(UUID uuid) {
+    public static @Nullable SkyBlockPlayer getFromUUID(UUID uuid) {
         return getLoadedPlayers().stream().filter(player -> player.getUuid().toString().equalsIgnoreCase(uuid.toString())).findFirst().orElse(null);
     }
 
-    public static @Nullable HypixelPlayer getPlayerFromProfileUUID(UUID uuid) {
+    public static @Nullable SkyBlockPlayer getPlayerFromProfileUUID(UUID uuid) {
         return getLoadedPlayers().stream().filter(player -> player.getProfiles().getCurrentlySelected().equals(uuid)).findFirst().orElse(null);
     }
 

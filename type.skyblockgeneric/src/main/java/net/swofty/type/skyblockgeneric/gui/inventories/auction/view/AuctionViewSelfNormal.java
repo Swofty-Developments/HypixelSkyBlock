@@ -6,12 +6,12 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.generic.data.datapoints.DatapointUUIDList;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventories.auction.GUIAuctionViewItem;
+import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionViewItem;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,11 +20,11 @@ import java.util.UUID;
 
 public class AuctionViewSelfNormal implements AuctionView {
     @Override
-    public void open(GUIAuctionViewItem gui, AuctionItem item, HypixelPlayer player) {
+    public void open(GUIAuctionViewItem gui, AuctionItem item, SkyBlockPlayer player) {
         gui.set(new GUIItem(33) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Total bids: §a" + item.getBids().size() + " bids");
 
@@ -38,7 +38,7 @@ public class AuctionViewSelfNormal implements AuctionView {
 
                     lore.add("§8§m---------------");
                     lore.add("§7Bid: §6" + bid.value() + " coins");
-                    lore.add("§7By: " + HypixelPlayer.getDisplayName(bid.uuid()));
+                    lore.add("§7By: " + SkyBlockPlayer.getDisplayName(bid.uuid()));
                     lore.add("§b" + StringUtility.formatTimeAsAgo(bid.timestamp()));
                 }
 
@@ -55,7 +55,7 @@ public class AuctionViewSelfNormal implements AuctionView {
                     gui.set(new GUIClickableItem(29) {
                         @Override
                         public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             ownedActive.remove(item.getUuid());
                             player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
                             ownedInactive.add(item.getUuid());
@@ -67,7 +67,7 @@ public class AuctionViewSelfNormal implements AuctionView {
 
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             return ItemStackCreator.getStack("§6Collect Auction", Material.GOLD_BLOCK, 1,
                                     " ",
                                     "§7This auction has ended!",
@@ -81,7 +81,7 @@ public class AuctionViewSelfNormal implements AuctionView {
                     gui.set(new GUIClickableItem(29) {
                         @Override
                         public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             double coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
                             long highestBid = item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L);
                             player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + highestBid);
@@ -97,7 +97,7 @@ public class AuctionViewSelfNormal implements AuctionView {
 
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             return ItemStackCreator.getStack("§6Collect Auction", Material.GOLD_BLOCK, 1,
                                     " ",
                                     "§7This auction has ended!",
@@ -113,7 +113,7 @@ public class AuctionViewSelfNormal implements AuctionView {
                 gui.set(new GUIItem(29) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStackCreator.getStack("§6Auction Ended", Material.BARRIER, 1,
                                 " ",
                                 "§7This auction has ended!",
@@ -130,7 +130,7 @@ public class AuctionViewSelfNormal implements AuctionView {
         gui.set(new GUIItem(29) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cYour Own Auction", Material.BEDROCK, 1,
                         "§7You cannot buy your own item!",
                         "§7Allow it to end and collect your coins.");

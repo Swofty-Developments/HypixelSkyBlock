@@ -4,12 +4,12 @@ import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.LivingEntity;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.generic.data.datapoints.DatapointMuseum;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.museum.display.ArmorMuseumDisplayHandler;
-import net.swofty.type.generic.museum.display.ItemMuseumDisplayHandler;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.museum.display.ArmorMuseumDisplayHandler;
+import net.swofty.type.skyblockgeneric.museum.display.ItemMuseumDisplayHandler;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -75,7 +75,7 @@ public enum MuseumDisplays {
         return allPositions;
     }
 
-    public static void updateDisplay(@NotNull HypixelPlayer player) {
+    public static void updateDisplay(@NotNull SkyBlockPlayer player) {
         DatapointMuseum.MuseumData playerMuseumData = player.getMuseumData();
         UUID museumPlayerToView = playerMuseumData.getCurrentlyViewing().playerUuid();
         UUID museumProfileToView = playerMuseumData.getCurrentlyViewing().profileUuid();

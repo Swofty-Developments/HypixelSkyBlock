@@ -9,7 +9,7 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.HeadProfile;
-import net.swofty.type.generic.user.fairysouls.FairySoul;
+import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
 
 public class EntityFairySoul extends EntityCreature {
 

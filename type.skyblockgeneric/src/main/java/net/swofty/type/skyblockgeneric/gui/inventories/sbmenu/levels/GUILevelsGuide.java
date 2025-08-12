@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.levels.CustomLevelAward;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUILevelsGuide extends HypixelInventoryGUI {
     public GUILevelsGuide() {
@@ -13,7 +13,7 @@ public class GUILevelsGuide extends HypixelInventoryGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        HypixelPlayer player = e.player();
+        SkyBlockPlayer player = e.player();
         if (player.hasCustomLevelAward(CustomLevelAward.ACCESS_TO_WARDROBE)) {
 
         }

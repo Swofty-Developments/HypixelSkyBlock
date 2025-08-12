@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.chest;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.ItemStack;
-import net.swofty.type.generic.block.BlockType;
-import net.swofty.type.generic.block.SkyBlockBlock;
+import net.swofty.type.skyblockgeneric.block.BlockType;
+import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
 import net.swofty.type.generic.utility.ChestUtility;
 
 public class ChestBuilder {

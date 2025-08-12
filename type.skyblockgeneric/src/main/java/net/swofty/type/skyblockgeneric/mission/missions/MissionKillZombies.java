@@ -3,13 +3,13 @@ package net.swofty.type.skyblockgeneric.mission.missions;
 import net.minestom.server.entity.EntityType;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.generic.event.custom.PlayerKilledSkyBlockMobEvent;
-import net.swofty.type.generic.levels.SkyBlockLevelCause;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.mission.HypixelProgressMission;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.skill.SkillCategories;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
 
@@ -37,13 +37,13 @@ public class MissionKillZombies extends HypixelProgressMission {
     }
 
     @Override
-    public Map<String, Object> onStart(HypixelPlayer player, MissionData.ActiveMission mission) {
+    public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
         mission.getNewObjectiveText().forEach(player::sendMessage);
         return new HashMap<>();
     }
 
     @Override
-    public void onEnd(HypixelPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§b5 SkyBlock XP", "§3100 §7Combat XP"))).forEach(player::sendMessage);
         player.getSkills().increase(player, SkillCategories.COMBAT, 100D);
         player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(getID()));

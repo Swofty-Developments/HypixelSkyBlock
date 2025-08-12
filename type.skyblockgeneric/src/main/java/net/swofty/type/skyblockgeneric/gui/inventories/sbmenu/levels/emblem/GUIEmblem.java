@@ -7,9 +7,9 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.levels.SkyBlockEmblems;
-import net.swofty.type.generic.levels.abstr.CauseEmblem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockEmblems;
+import net.swofty.type.skyblockgeneric.levels.abstr.CauseEmblem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class GUIEmblem extends HypixelPaginatedGUI<SkyBlockEmblems.SkyBlockEmble
     }
 
     @Override
-    public PaginationList<SkyBlockEmblems.SkyBlockEmblem> fillPaged(HypixelPlayer player, PaginationList<SkyBlockEmblems.SkyBlockEmblem> paged) {
+    public PaginationList<SkyBlockEmblems.SkyBlockEmblem> fillPaged(SkyBlockPlayer player, PaginationList<SkyBlockEmblems.SkyBlockEmblem> paged) {
         paged.addAll(emblemCategory.getEmblems());
         return paged;
     }
@@ -55,7 +55,7 @@ public class GUIEmblem extends HypixelPaginatedGUI<SkyBlockEmblems.SkyBlockEmble
     }
 
     @Override
-    public void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
+    public void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
         set(GUIClickableItem.getCloseItem(40));
         set(createSearchItem(this, 41, query));
@@ -70,19 +70,19 @@ public class GUIEmblem extends HypixelPaginatedGUI<SkyBlockEmblems.SkyBlockEmble
     }
 
     @Override
-    public String getTitle(HypixelPlayer player, String query, int page, PaginationList<SkyBlockEmblems.SkyBlockEmblem> paged) {
+    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<SkyBlockEmblems.SkyBlockEmblem> paged) {
         return "Emblems - " + emblemCategory.toString() + " (" + page + "/" + paged.getPageCount() + ")";
     }
 
     @Override
-    public GUIClickableItem createItemFor(SkyBlockEmblems.SkyBlockEmblem item, int slot, HypixelPlayer player) {
+    public GUIClickableItem createItemFor(SkyBlockEmblems.SkyBlockEmblem item, int slot, SkyBlockPlayer player) {
         boolean unlocked = player.hasUnlockedXPCause(item.cause());
         CauseEmblem causeEmblem = (CauseEmblem) item.cause();
 
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (!unlocked) {
                     player.sendMessage("§cYou have not unlocked this emblem yet!");
                     return;
@@ -94,7 +94,7 @@ public class GUIEmblem extends HypixelPaginatedGUI<SkyBlockEmblems.SkyBlockEmble
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 String name = (unlocked ? "§a" : "§c") + item.displayName() + " " + item.emblem();
 
                 List<String> lore;

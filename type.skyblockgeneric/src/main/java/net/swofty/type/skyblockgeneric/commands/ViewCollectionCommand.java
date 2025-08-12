@@ -3,11 +3,11 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.collection.CollectionCategories;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.gui.inventories.sbmenu.collection.GUICollectionItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.collection.GUICollectionItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Opens up a collections GUI",
@@ -31,7 +31,7 @@ public class ViewCollectionCommand extends HypixelCommand {
                 return;
             }
 
-            new GUICollectionItem(itemTypeLinker).open((HypixelPlayer) sender);
+            new GUICollectionItem(itemTypeLinker).open((SkyBlockPlayer) sender);
         }, itemArgument);
     }
 }

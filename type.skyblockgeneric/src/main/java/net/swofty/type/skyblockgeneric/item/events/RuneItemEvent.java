@@ -6,14 +6,14 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.custom.PlayerKilledSkyBlockMobEvent;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class RuneItemEvent implements HypixelEventClass {
     @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true , isAsync = true)
     public void run(PlayerKilledSkyBlockMobEvent event) {
-        HypixelPlayer player = event.getPlayer();
+        SkyBlockPlayer player = event.getPlayer();
 
         SkyBlockItem runedItem = player.getStatistics().getItemWithRune(ItemType.BLOOD_RUNE);
         if (runedItem == null) return;

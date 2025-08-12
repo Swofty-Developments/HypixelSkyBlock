@@ -6,11 +6,11 @@ import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.components.AbilityComponent;
-import net.swofty.type.generic.item.handlers.ability.RegisteredAbility;
-import net.swofty.type.generic.user.PlayerAbilityHandler;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.AbilityComponent;
+import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredAbility;
+import net.swofty.type.skyblockgeneric.user.PlayerAbilityHandler;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionItemAbilityBlockRightUse implements HypixelEventClass {
     @SneakyThrows
@@ -18,7 +18,7 @@ public class ActionItemAbilityBlockRightUse implements HypixelEventClass {
     public void run(PlayerBlockInteractEvent event) {
         ItemStack itemStack = event.getPlayer().getItemInMainHand();
         SkyBlockItem item = new SkyBlockItem(itemStack);
-        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (item.hasComponent(AbilityComponent.class)) {
             AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);

@@ -4,12 +4,12 @@ import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.data.monogdb.CrystalDatabase;
-import net.swofty.type.generic.entity.ServerCrystalImpl;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.components.ServerOrbComponent;
-import net.swofty.type.generic.item.components.SkullHeadComponent;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.monogdb.CrystalDatabase;
+import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.ServerOrbComponent;
+import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "spawncrystal",
@@ -35,10 +35,10 @@ public class AddCrystalCommand extends HypixelCommand {
                     item.getComponent(SkullHeadComponent.class).getSkullTexture(item),
                     asOrb.getValidBlocks()
             );
-            crystal.setInstance(((HypixelPlayer) sender).getInstance(), ((HypixelPlayer) sender).getPosition());
+            crystal.setInstance(((SkyBlockPlayer) sender).getInstance(), ((SkyBlockPlayer) sender).getPosition());
 
             CrystalDatabase.addCrystal(item.getComponent(SkullHeadComponent.class).getSkullTexture(item),
-                    ((HypixelPlayer) sender).getPosition(),
+                    ((SkyBlockPlayer) sender).getPosition(),
                     type);
         }, itemType);
     }

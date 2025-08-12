@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.shop.type;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import net.swofty.type.generic.shop.ShopPrice;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.shop.ShopPrice;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +30,13 @@ public class CombinedShopPrice implements ShopPrice {
     }
 
     @Override
-    public boolean canAfford(HypixelPlayer player) {
+    public boolean canAfford(SkyBlockPlayer player) {
         return priceElements.stream()
                 .allMatch(price -> price.canAfford(player));
     }
 
     @Override
-    public void processPurchase(HypixelPlayer player) {
+    public void processPurchase(SkyBlockPlayer player) {
         priceElements.forEach(price -> price.processPurchase(player));
     }
 

@@ -10,14 +10,14 @@ import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.value.SkyBlockValueEvent;
-import net.swofty.type.generic.event.value.events.PlayerDamageMobValueUpdateEvent;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.DamageIndicator;
+import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
+import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamageMobValueUpdateEvent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
 import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.HashMap;
@@ -33,7 +33,7 @@ public class PlayerActionDamageMob implements HypixelEventClass {
     public void run(EntityAttackEvent event) {
         if (event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
         if (!event.getEntity().getEntityType().equals(EntityType.PLAYER)) return;
-        HypixelPlayer player = (HypixelPlayer) event.getEntity();
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getEntity();
 
         Entity targetEntity = event.getTarget();
         SkyBlockMob mob;
@@ -51,7 +51,7 @@ public class PlayerActionDamageMob implements HypixelEventClass {
         boolean critical = hit.getValue();
 
         PlayerDamageMobValueUpdateEvent valueEvent = new PlayerDamageMobValueUpdateEvent(
-                (HypixelPlayer) event.getEntity(), (float) damage, mob);
+                (SkyBlockPlayer) event.getEntity(), (float) damage, mob);
         SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
 
         if (COOLDOWN.containsKey(player.getUuid()) && System.currentTimeMillis() < COOLDOWN.get(player.getUuid()))

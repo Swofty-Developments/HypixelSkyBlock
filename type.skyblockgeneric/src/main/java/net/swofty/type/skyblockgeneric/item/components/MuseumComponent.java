@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
-import net.swofty.type.generic.item.SkyBlockItemComponent;
-import net.swofty.type.generic.museum.MuseumableItemCategory;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
+import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 
 @Getter
 public class MuseumComponent extends SkyBlockItemComponent {

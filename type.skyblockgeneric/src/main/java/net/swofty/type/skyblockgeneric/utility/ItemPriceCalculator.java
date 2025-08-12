@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.utility;
 
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.components.SellableComponent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.SellableComponent;
 
 public record ItemPriceCalculator(SkyBlockItem item) {
     private static final Double BASE_PRICE = 1.0D; // Base price of all items

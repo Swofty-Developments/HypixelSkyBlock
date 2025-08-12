@@ -3,10 +3,10 @@ package net.swofty.type.skyblockgeneric.mission;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import net.swofty.type.generic.calendar.SkyBlockCalendar;
-import net.swofty.type.generic.levels.SkyBlockLevelCause;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -20,7 +20,7 @@ public class MissionData {
     private List<ActiveMission> activeMissions = new ArrayList<>();
     private List<ActiveMission> completedMissions = new ArrayList<>();
     @Setter
-    private HypixelPlayer skyBlockPlayer;
+    private SkyBlockPlayer skyBlockPlayer;
 
     public Map.Entry<ActiveMission, Boolean> getMission(String missionID) {
         for (ActiveMission mission : activeMissions) {
@@ -79,7 +79,7 @@ public class MissionData {
         HypixelMission mission = getMissionFromCache(missionID);
         ActiveMission activeMission = new ActiveMission(missionID, 0, mission instanceof HypixelProgressMission);
 
-        Map<String, Object> data = mission.onStart(getHypixelPlayer(), activeMission);
+        Map<String, Object> data = mission.onStart(getSkyBlockPlayer(), activeMission);
         if (data != null) {
             activeMission.setCustomData(data);
         }
@@ -93,8 +93,8 @@ public class MissionData {
         }
 
         ActiveMission activeMission = activeMissions.stream().filter(mission -> mission.getMissionID().equals(missionID)).findFirst().get();
-        getMissionFromCache(missionID).onEnd(getHypixelPlayer(), activeMission.getCustomData(), activeMission);
-        getHypixelPlayer().getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(activeMission.getMissionID()));
+        getMissionFromCache(missionID).onEnd(getSkyBlockPlayer(), activeMission.getCustomData(), activeMission);
+        getSkyBlockPlayer().getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(activeMission.getMissionID()));
         activeMission.setMissionEnded((int) SkyBlockCalendar.getElapsed());
         activeMissions.remove(activeMission);
         completedMissions.add(activeMission);
@@ -197,7 +197,7 @@ public class MissionData {
             return getMissionFromCache(missionID).getName();
         }
 
-        public void checkIfMissionEnded(HypixelPlayer player) {
+        public void checkIfMissionEnded(SkyBlockPlayer player) {
             HypixelProgressMission mission = (HypixelProgressMission) getMissionFromCache(missionID);
 
             if (missionProgress >= mission.getMaxProgress()) {

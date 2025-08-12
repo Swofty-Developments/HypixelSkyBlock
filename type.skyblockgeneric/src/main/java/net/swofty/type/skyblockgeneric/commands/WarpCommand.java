@@ -5,10 +5,10 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.generic.warps.TravelScrollIslands;
-import net.swofty.type.generic.warps.TravelScrollType;
+import net.swofty.type.skyblockgeneric.warps.TravelScrollIslands;
+import net.swofty.type.skyblockgeneric.warps.TravelScrollType;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class WarpCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
             final String warp = context.get(warpArgument);
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             TravelScrollIslands island = TravelScrollIslands.getFromInternalName(warp);
             if (island != null) {

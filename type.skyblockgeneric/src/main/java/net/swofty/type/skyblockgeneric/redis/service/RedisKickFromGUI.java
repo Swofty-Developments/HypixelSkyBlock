@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.redis.service;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.SkyBlockGenericLoader;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -27,7 +27,7 @@ public class RedisKickFromGUI implements ServiceToClient {
 
         for (int i = 0; i < playerUUIDs.length(); i++) {
             UUID playerUUID = UUID.fromString(playerUUIDs.getString(i));
-            HypixelPlayer player = SkyBlockGenericLoader.getFromUUID(playerUUID);
+            SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(playerUUID);
 
             if (player != null && HypixelInventoryGUI.GUI_MAP.containsKey(playerUUID)) {
                 HypixelInventoryGUI gui = net.swofty.type.generic.gui.inventory.HypixelInventoryGUI.GUI_MAP.get(playerUUID);

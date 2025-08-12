@@ -5,7 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.gui.HypixelSignGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "signgraphicaluserinterface",
@@ -22,7 +22,7 @@ public class SignGUICommand extends HypixelCommand {
             if (!permissionCheck(sender)) return;
 
             String signContent = context.get(text);
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             new HypixelSignGUI(player).open(new String[]{"Test1", "Test2"}).thenAccept(line -> {
                 if (line == null) {

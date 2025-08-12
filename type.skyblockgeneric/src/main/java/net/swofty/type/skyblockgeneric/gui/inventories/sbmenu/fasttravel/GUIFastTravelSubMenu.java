@@ -10,10 +10,10 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.warps.ScrollUnlockReason;
-import net.swofty.type.generic.warps.TravelScrollIslands;
-import net.swofty.type.generic.warps.TravelScrollType;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.warps.ScrollUnlockReason;
+import net.swofty.type.skyblockgeneric.warps.TravelScrollIslands;
+import net.swofty.type.skyblockgeneric.warps.TravelScrollType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(13) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.closeInventory();
                 player.sendMessage("§7Warping you to " + island.getDescriptiveName() + "§7...");
 
@@ -52,7 +52,7 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
 
                 lore.add("§8/warp " + island.getInternalName());
@@ -98,7 +98,7 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (!isUnlocked) {
                         player.sendMessage("§cYou haven't unlocked this fast travel destination!");
                         return;
@@ -115,7 +115,7 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     List<String> lore = new ArrayList<>();
 
                     lore.add("§8/warp " + scroll.getInternalName());

@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
 import net.minestom.server.color.Color;
-import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 
 public class LeatherColorComponent extends SkyBlockItemComponent {
     @Getter

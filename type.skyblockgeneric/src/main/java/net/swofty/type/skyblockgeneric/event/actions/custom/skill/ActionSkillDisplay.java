@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.event.actions.custom.skill;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.custom.SkillUpdateEvent;
-import net.swofty.type.generic.user.SkyBlockActionBar;
+import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockActionBar;
 
 public class ActionSkillDisplay implements HypixelEventClass {
 

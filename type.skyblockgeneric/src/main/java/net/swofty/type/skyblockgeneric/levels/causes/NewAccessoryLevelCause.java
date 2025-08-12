@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.levels.causes;
 
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NewAccessoryLevelCause extends SkyBlockLevelCauseAbstr {
     public ItemType itemTypeLinker;
@@ -17,7 +17,7 @@ public class NewAccessoryLevelCause extends SkyBlockLevelCauseAbstr {
     }
 
     @Override
-    public boolean shouldDisplayMessage(HypixelPlayer player) {
+    public boolean shouldDisplayMessage(SkyBlockPlayer player) {
         return true;
     }
 }

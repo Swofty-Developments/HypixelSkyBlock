@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
-import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
 import java.util.HashMap;
 import java.util.Map;

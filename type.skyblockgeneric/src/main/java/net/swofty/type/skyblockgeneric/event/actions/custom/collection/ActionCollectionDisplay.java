@@ -4,14 +4,14 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.generic.collection.CollectionCategories;
-import net.swofty.type.generic.collection.CollectionCategory;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.custom.CollectionUpdateEvent;
-import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.CollectionUpdateEvent;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Arrays;
 
@@ -44,7 +44,7 @@ public class ActionCollectionDisplay implements HypixelEventClass {
         if (oldReward == newReward) return;
 
         if (oldReward != null && newReward != null) {
-            HypixelPlayer player = event.getPlayer();
+            SkyBlockPlayer player = event.getPlayer();
 
             player.sendMessage("§e§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
             int placement = collection.getPlacementOf(oldReward);

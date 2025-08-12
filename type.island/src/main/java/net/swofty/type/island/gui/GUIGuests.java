@@ -9,7 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIGuests extends HypixelInventoryGUI {
     public GUIGuests() {
@@ -23,13 +23,13 @@ public class GUIGuests extends HypixelInventoryGUI {
         set(new GUIClickableItem(31) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer  = (HypixelPlayer) p; 
+                SkyBlockPlayer  = (SkyBlockPlayer) p; 
                 new GUIJerry().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer  = (HypixelPlayer) p; 
+                SkyBlockPlayer  = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
                         "§7To Jerry the Assistant"
                 );
@@ -39,12 +39,12 @@ public class GUIGuests extends HypixelInventoryGUI {
         set(new GUIClickableItem(10) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer  = (HypixelPlayer) p; 
+                SkyBlockPlayer  = (SkyBlockPlayer) p; 
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer  = (HypixelPlayer) p; 
+                SkyBlockPlayer  = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aVisit player islands", Material.FEATHER, 1,
                         "§7You can get Guest on other islands",
                         "§7using §a/visit <player>",
@@ -59,14 +59,14 @@ public class GUIGuests extends HypixelInventoryGUI {
         set(new GUIClickableItem(12) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer  = (HypixelPlayer) p; 
+                SkyBlockPlayer  = (SkyBlockPlayer) p; 
                 player.closeInventory();
                 player.sendMessage("§eVisit our web store: §6https://store.hypixel.net");
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer  = (HypixelPlayer) p; 
+                SkyBlockPlayer  = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aGuests limit", Material.SHORT_GRASS, 1,
                         "§7You can only host a limited",
                         "§7number of §aguests §7on your",
@@ -92,12 +92,12 @@ public class GUIGuests extends HypixelInventoryGUI {
         set(new GUIClickableItem(14) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer  = (HypixelPlayer) p; 
+                SkyBlockPlayer  = (SkyBlockPlayer) p; 
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer  = (HypixelPlayer) p; 
+                SkyBlockPlayer  = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aAccess Permissions", Material.OAK_FENCE, 1,
                         "§7You may edit who is able to",
                         "§7guest on your island in your",
@@ -115,12 +115,12 @@ public class GUIGuests extends HypixelInventoryGUI {
         set(new GUIClickableItem(16) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer  = (HypixelPlayer) p; 
+                SkyBlockPlayer  = (SkyBlockPlayer) p; 
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer  = (HypixelPlayer) p; 
+                SkyBlockPlayer  = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aModeration", Material.REPEATER, 1,
                         "§7Manage online guests using the",
                         "§eGuests Management §7menu.",

@@ -3,12 +3,12 @@ package net.swofty.type.skyblockgeneric.mission.missions.farmer;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.generic.event.custom.CustomBlockBreakEvent;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.mission.HypixelProgressMission;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.skill.SkillCategories;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
 
@@ -39,12 +39,12 @@ public class MissionCollectWheat extends HypixelProgressMission {
     }
 
     @Override
-    public Map<String, Object> onStart(HypixelPlayer player, MissionData.ActiveMission mission) {
+    public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
         return new HashMap<>();
     }
 
     @Override
-    public void onEnd(HypixelPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§b20 Farming XP"))).forEach(player::sendMessage);
         player.getSkills().increase(player, SkillCategories.FARMING, 20D);
         player.getMissionData().startMission(MissionTalkToFarmerAgain.class);

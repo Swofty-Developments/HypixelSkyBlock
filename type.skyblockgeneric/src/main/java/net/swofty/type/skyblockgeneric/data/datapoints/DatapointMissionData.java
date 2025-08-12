@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.data.datapoints;
 
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.generic.data.SkyBlockDatapoint;
-import net.swofty.type.generic.mission.MissionData;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
 import org.json.JSONObject;
 
 import java.util.Map;

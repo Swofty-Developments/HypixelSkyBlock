@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.redis.service;
 
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
-import net.swofty.type.generic.redis.service.manager.ServerLockManager;
+import net.swofty.type.skyblockgeneric.redis.service.manager.ServerLockManager;
 import org.json.JSONObject;
 
 import java.util.UUID;

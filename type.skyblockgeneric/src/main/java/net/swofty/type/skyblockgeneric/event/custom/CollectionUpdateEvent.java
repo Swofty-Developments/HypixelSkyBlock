@@ -4,15 +4,15 @@ import lombok.Getter;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.swofty.commons.item.ItemType;
 import net.swofty.proxyapi.impl.ProxyUnderstandableEvent;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @Getter
 public class CollectionUpdateEvent implements PlayerInstanceEvent, ProxyUnderstandableEvent {
-    private final HypixelPlayer player;
+    private final SkyBlockPlayer player;
     private final ItemType itemType;
     private final int oldValue;
 
-    public CollectionUpdateEvent(HypixelPlayer player, ItemType itemType, int oldValue) {
+    public CollectionUpdateEvent(SkyBlockPlayer player, ItemType itemType, int oldValue) {
         this.player = player;
         this.itemType = itemType;
         this.oldValue = oldValue;
@@ -23,7 +23,7 @@ public class CollectionUpdateEvent implements PlayerInstanceEvent, ProxyUndersta
         return itemType.toString() + "," + oldValue;
     }
 
-    public static CollectionUpdateEvent fromProxyUnderstandable(HypixelPlayer player, String string) {
+    public static CollectionUpdateEvent fromProxyUnderstandable(SkyBlockPlayer player, String string) {
         String[] split = string.split(",");
         ItemType type = ItemType.valueOf(split[0]);
         int oldValue = Integer.parseInt(split[1]);

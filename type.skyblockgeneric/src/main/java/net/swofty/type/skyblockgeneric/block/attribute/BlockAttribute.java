@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.block.attribute;
 
-import net.swofty.type.generic.SkyBlockGenericLoader;
-import net.swofty.type.generic.block.impl.CustomSkyBlockBlock;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

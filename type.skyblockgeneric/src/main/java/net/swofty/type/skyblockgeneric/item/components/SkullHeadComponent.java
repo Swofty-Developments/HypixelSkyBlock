@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 
 import java.util.function.Function;
 

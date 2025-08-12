@@ -5,9 +5,9 @@ import lombok.Setter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.SkyBlockGenericLoader;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -19,13 +19,13 @@ import java.util.function.Function;
 public abstract class SkyBlockRecipe<T> {
     protected SkyBlockItem result;
     @Setter
-    protected Function<HypixelPlayer, CraftingResult> canCraft;
+    protected Function<SkyBlockPlayer, CraftingResult> canCraft;
     @Setter
     protected int amount = 1;
     @Getter
     protected RecipeType recipeType;
 
-    protected SkyBlockRecipe(SkyBlockItem result, RecipeType recipeType, Function<HypixelPlayer, CraftingResult> canCraft) {
+    protected SkyBlockRecipe(SkyBlockItem result, RecipeType recipeType, Function<SkyBlockPlayer, CraftingResult> canCraft) {
         this.result = result;
         this.recipeType = recipeType;
         this.canCraft = canCraft;

@@ -1,12 +1,12 @@
 package net.swofty.type.hub.gui.rosetta;
 
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.enchantment.EnchantmentType;
-import net.swofty.type.generic.enchantment.SkyBlockEnchantment;
-import net.swofty.type.generic.gui.SkyBlockShopGUI;
-import net.swofty.type.generic.item.ItemAttributeHandler;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.shop.type.CoinShopPrice;
+import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
+import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
+import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
 import java.util.Map;
 

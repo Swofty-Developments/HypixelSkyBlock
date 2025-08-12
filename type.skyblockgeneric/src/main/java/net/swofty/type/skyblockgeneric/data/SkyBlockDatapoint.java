@@ -11,9 +11,9 @@ import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.type.generic.SkyBlockGenericLoader;
-import net.swofty.type.generic.data.monogdb.CoopDatabase;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.bson.Document;
 
 import java.util.*;
@@ -60,7 +60,7 @@ public abstract class SkyBlockDatapoint<T> extends Datapoint<T> {
         Set<UUID> updatedProfiles = new HashSet<>();
 
         for (UUID memberUuid : coopMembers) {
-            HypixelPlayer member = SkyBlockGenericLoader.getFromUUID(memberUuid);
+            SkyBlockPlayer member = SkyBlockGenericLoader.getFromUUID(memberUuid);
             if (member == null) continue;
 
             UUID selectedProfile = member.getProfiles().getCurrentlySelected();

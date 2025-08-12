@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.mission;
 
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.Task;
-import net.swofty.type.generic.SkyBlockGenericLoader;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import java.util.List;
 public interface MissionRepeater {
     Task getTask(Scheduler scheduler);
 
-    default List<HypixelPlayer> getPlayersWithMissionActive() {
-        List<HypixelPlayer> toReturn = new ArrayList<>();
+    default List<SkyBlockPlayer> getPlayersWithMissionActive() {
+        List<SkyBlockPlayer> toReturn = new ArrayList<>();
         HypixelMission mission = (HypixelMission) this;
 
         SkyBlockGenericLoader.getLoadedPlayers().forEach((player) -> {
@@ -24,8 +24,8 @@ public interface MissionRepeater {
         return toReturn;
     }
 
-    default List<HypixelPlayer> getPlayersWithMissionNotStarted() {
-        List<HypixelPlayer> toReturn = new ArrayList<>();
+    default List<SkyBlockPlayer> getPlayersWithMissionNotStarted() {
+        List<SkyBlockPlayer> toReturn = new ArrayList<>();
         HypixelMission mission = (HypixelMission) this;
 
         SkyBlockGenericLoader.getLoadedPlayers().forEach((player) -> {
@@ -38,8 +38,8 @@ public interface MissionRepeater {
         return toReturn;
     }
 
-    default List<HypixelPlayer> getPlayersWithMissionCompleted() {
-        List<HypixelPlayer> toReturn = new ArrayList<>();
+    default List<SkyBlockPlayer> getPlayersWithMissionCompleted() {
+        List<SkyBlockPlayer> toReturn = new ArrayList<>();
         HypixelMission mission = (HypixelMission) this;
 
         SkyBlockGenericLoader.getLoadedPlayers().forEach((player) -> {

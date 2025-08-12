@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.block.placement;
 
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.rule.BlockPlacementRule;
-import net.swofty.type.generic.block.placement.states.BlockState;
-import net.swofty.type.generic.block.placement.states.BlockStateManager;
+import net.swofty.type.skyblockgeneric.block.placement.states.BlockState;
+import net.swofty.type.skyblockgeneric.block.placement.states.BlockStateManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

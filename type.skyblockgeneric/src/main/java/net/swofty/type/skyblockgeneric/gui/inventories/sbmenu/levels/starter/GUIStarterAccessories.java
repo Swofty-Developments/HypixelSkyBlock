@@ -4,8 +4,8 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.levels.SkyBlockLevelCause;
-import net.swofty.type.generic.levels.causes.NewAccessoryLevelCause;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
+import net.swofty.type.skyblockgeneric.levels.causes.NewAccessoryLevelCause;
 
 import java.util.List;
 import java.util.stream.Stream;

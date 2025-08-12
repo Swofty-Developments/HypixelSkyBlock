@@ -3,9 +3,9 @@ package net.swofty.type.skyblockgeneric.block.placement.states;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockHandler;
-import net.swofty.type.generic.block.placement.states.error.StateError;
-import net.swofty.type.generic.block.placement.states.error.UnknownBlockStatesKey;
-import net.swofty.type.generic.block.placement.states.state.State;
+import net.swofty.type.skyblockgeneric.block.placement.states.error.StateError;
+import net.swofty.type.skyblockgeneric.block.placement.states.error.UnknownBlockStatesKey;
+import net.swofty.type.skyblockgeneric.block.placement.states.state.State;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;

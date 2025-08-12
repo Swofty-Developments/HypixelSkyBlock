@@ -2,9 +2,9 @@ package net.swofty.type.skyblockgeneric.server.eventcaller;
 
 import kotlin.jvm.functions.Function0;
 import lombok.Getter;
-import net.swofty.type.generic.calendar.SkyBlockCalendar;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.generic.event.custom.CalenderHourlyUpdateEvent;
+import net.swofty.type.skyblockgeneric.event.custom.CalenderHourlyUpdateEvent;
 
 import java.util.HashMap;
 import java.util.List;

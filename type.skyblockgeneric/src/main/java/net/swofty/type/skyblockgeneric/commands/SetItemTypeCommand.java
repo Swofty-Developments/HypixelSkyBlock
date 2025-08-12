@@ -5,9 +5,9 @@ import net.swofty.commons.Configuration;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.updater.PlayerItemOrigin;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "settype",
@@ -27,7 +27,7 @@ public class SetItemTypeCommand extends HypixelCommand {
                 return;
             }
 
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
             SkyBlockItem itemInHand = new SkyBlockItem(player.getItemInMainHand());
             ItemType type = itemInHand.getAttributeHandler().getPotentialType();
 

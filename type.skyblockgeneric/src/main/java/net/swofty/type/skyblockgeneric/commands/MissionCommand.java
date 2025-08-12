@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.commands;
 
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "missiondata",
@@ -17,7 +17,7 @@ public class MissionCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            MissionData data = ((HypixelPlayer) sender).getMissionData();
+            MissionData data = ((SkyBlockPlayer) sender).getMissionData();
 
             sender.sendMessage("Active Missions: " + data.getActiveMissions().size());
             sender.sendMessage("Completed Missions: " + data.getCompletedMissions().size());

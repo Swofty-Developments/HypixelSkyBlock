@@ -12,11 +12,11 @@ import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.custom.VillagerSpokenToEvent;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.mission.MissionRepeater;
-import net.swofty.type.generic.mission.HypixelProgressMission;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.MissionRepeater;
+import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
 
@@ -42,7 +42,7 @@ public class MissionTalkToVillagers extends HypixelProgressMission implements Mi
 
         if (!data.isCurrentlyActive(MissionTalkToVillagers.class) &&
                 !data.hasCompleted(MissionTalkToVillagers.class)) {
-            data.setHypixelPlayer(event.getPlayer());
+            data.setSkyBlockPlayer(event.getPlayer());
             data.startMission(MissionTalkToVillagers.class);
             return;
         }
@@ -79,12 +79,12 @@ public class MissionTalkToVillagers extends HypixelProgressMission implements Mi
     }
 
     @Override
-    public Map<String, Object> onStart(HypixelPlayer player, MissionData.ActiveMission mission) {
+    public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
         return new HashMap<>();
     }
 
     @Override
-    public void onEnd(HypixelPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§61000 §7Coins"))).forEach(player::sendMessage);
         player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(
                 player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000

@@ -1,16 +1,16 @@
 package net.swofty.type.island.events.custom;
 
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.SkyBlockEvent;
-import net.swofty.type.generic.event.SkyBlockEventClass;
-import net.swofty.type.generic.event.custom.IslandFetchedFromDatabaseEvent;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.minion.IslandMinionData;
-import net.swofty.type.generic.minion.MinionAction;
-import net.swofty.type.generic.minion.SkyBlockMinion;
-import net.swofty.type.generic.minion.extension.MinionExtensionData;
-import net.swofty.type.generic.minion.extension.extensions.MinionFuelExtension;
+import net.swofty.type.skyblockgeneric.event.EventNodes;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.event.custom.IslandFetchedFromDatabaseEvent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
+import net.swofty.type.skyblockgeneric.minion.MinionAction;
+import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
+import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensionData;
+import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionFuelExtension;
 import org.bson.Document;
 
 import java.util.List;

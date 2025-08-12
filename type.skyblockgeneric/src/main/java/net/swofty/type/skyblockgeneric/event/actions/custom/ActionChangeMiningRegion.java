@@ -5,13 +5,13 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.custom.PlayerRegionChangeEvent;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionChangeMiningRegion implements HypixelEventClass {
     @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
     public void run(PlayerRegionChangeEvent event) {
-        HypixelPlayer player = event.getPlayer();
+        SkyBlockPlayer player = event.getPlayer();
 
         if (HypixelConst.isIslandServer()) return;
 

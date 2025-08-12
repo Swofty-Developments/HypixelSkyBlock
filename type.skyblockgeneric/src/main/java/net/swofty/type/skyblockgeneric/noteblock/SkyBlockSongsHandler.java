@@ -6,7 +6,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public record SkyBlockSongsHandler(HypixelPlayer player) {
+public record SkyBlockSongsHandler(SkyBlockPlayer player) {
     private static final Map<Player, PlayerSong> playerSongs = new HashMap<>();
     @Getter
     public static boolean isEnabled;

@@ -8,10 +8,10 @@ import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.data.SkyBlockDataHandler;
-import net.swofty.type.generic.event.custom.PlayerRegionChangeEvent;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.time.Duration;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
     public void run(PlayerRegionChangeEvent event) {
-        HypixelPlayer player = event.getPlayer();
+        SkyBlockPlayer player = event.getPlayer();
 
         if (event.getTo() == null || event.getTo().equals(event.getFrom())) {
             return;
@@ -102,7 +102,7 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
         }
     }
 
-    public void onNewZone(HypixelPlayer player, RegionType zone, String... features) {
+    public void onNewZone(SkyBlockPlayer player, RegionType zone, String... features) {
         player.sendMessage("");
         player.sendMessage("§6§l NEW AREA DISCOVERED!");
         player.sendMessage("§7  ⏣ " + zone.getColor() + zone.getName());

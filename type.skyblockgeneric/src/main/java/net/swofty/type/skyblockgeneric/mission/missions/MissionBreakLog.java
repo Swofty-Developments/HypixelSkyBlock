@@ -3,11 +3,11 @@ package net.swofty.type.skyblockgeneric.mission.missions;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.generic.event.custom.CustomBlockBreakEvent;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.mission.HypixelMission;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,18 +23,18 @@ public class MissionBreakLog extends HypixelMission {
 
         if (!data.isCurrentlyActive(MissionBreakLog.class) || data.hasCompleted(MissionBreakLog.class)) return;
 
-        data.setHypixelPlayer(event.getPlayer());
+        data.setSkyBlockPlayer(event.getPlayer());
         data.endMission(MissionBreakLog.class);
     }
 
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
     public void startMission(PlayerSpawnEvent event) {
         if (!event.isFirstSpawn()) return;
-        MissionData data = ((HypixelPlayer) event.getPlayer()).getMissionData();
+        MissionData data = ((SkyBlockPlayer) event.getPlayer()).getMissionData();
 
         if (data.isCurrentlyActive(MissionBreakLog.class) || data.hasCompleted(MissionBreakLog.class)) return;
 
-        data.setHypixelPlayer(((HypixelPlayer) event.getPlayer()));
+        data.setSkyBlockPlayer(((SkyBlockPlayer) event.getPlayer()));
         data.startMission(MissionBreakLog.class);
     }
 
@@ -49,12 +49,12 @@ public class MissionBreakLog extends HypixelMission {
     }
 
     @Override
-    public Map<String, Object> onStart(HypixelPlayer player, MissionData.ActiveMission mission) {
+    public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
         return new HashMap<>();
     }
 
     @Override
-    public void onEnd(HypixelPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         player.getMissionData().startMission(MissionCraftWorkbench.class);
     }
 

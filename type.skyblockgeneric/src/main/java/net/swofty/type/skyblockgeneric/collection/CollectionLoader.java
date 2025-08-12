@@ -4,10 +4,10 @@ import lombok.Data;
 import net.minestom.server.item.Material;
 import net.swofty.commons.YamlFileUtils;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.components.CraftableComponent;
-import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
-import net.swofty.type.generic.utility.RecipeParser;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
+import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
+import net.swofty.type.skyblockgeneric.utility.RecipeParser;
 import org.jetbrains.annotations.Nullable;
 import org.yaml.snakeyaml.Yaml;
 

@@ -3,17 +3,17 @@ package net.swofty.type.skyblockgeneric.user.statistics;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.function.Function;
 
 @Getter
 @Setter
 public class TemporaryConditionalStatistic {
-    private Function<HypixelPlayer, ItemStatistics>  statistics;
-    private Function<HypixelPlayer, Boolean> expiry;
+    private Function<SkyBlockPlayer, ItemStatistics>  statistics;
+    private Function<SkyBlockPlayer, Boolean> expiry;
 
-    public TemporaryConditionalStatistic(Function<HypixelPlayer, ItemStatistics>  statistics, Function<HypixelPlayer, Boolean> expiry) {
+    public TemporaryConditionalStatistic(Function<SkyBlockPlayer, ItemStatistics>  statistics, Function<SkyBlockPlayer, Boolean> expiry) {
         this.statistics = statistics;
         this.expiry = expiry;
     }
@@ -23,16 +23,16 @@ public class TemporaryConditionalStatistic {
     }
 
     public static class Builder {
-        private Function<HypixelPlayer, ItemStatistics>  statistics;
-        private Function<HypixelPlayer, Boolean> expiry;
+        private Function<SkyBlockPlayer, ItemStatistics>  statistics;
+        private Function<SkyBlockPlayer, Boolean> expiry;
 
-        public Builder withStatistics(Function<HypixelPlayer, ItemStatistics> statistics) {
+        public Builder withStatistics(Function<SkyBlockPlayer, ItemStatistics> statistics) {
             this.statistics = statistics;
             return this;
         }
 
         // When returning false, the statistic will be removed from the player
-        public Builder withExpiry(Function<HypixelPlayer, Boolean> expiry) {
+        public Builder withExpiry(Function<SkyBlockPlayer, Boolean> expiry) {
             this.expiry = expiry;
             return this;
         }

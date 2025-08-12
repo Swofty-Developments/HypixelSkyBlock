@@ -1,14 +1,14 @@
 package net.swofty.type.skyblockgeneric.event.actions.custom.loot;
 
-import net.swofty.type.generic.bestiary.BestiaryData;
-import net.swofty.type.generic.enchantment.impl.EnchantmentScavenger;
-import net.swofty.type.generic.entity.mob.BestiaryMob;
-import net.swofty.type.generic.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
+import net.swofty.type.skyblockgeneric.enchantment.impl.EnchantmentScavenger;
+import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.custom.PlayerKilledSkyBlockMobEvent;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class CoinDropHandler implements HypixelEventClass {
     BestiaryData bestiaryData = new BestiaryData();
@@ -16,7 +16,7 @@ public class CoinDropHandler implements HypixelEventClass {
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(PlayerKilledSkyBlockMobEvent event) {
 
-        HypixelPlayer player = event.getPlayer();
+        SkyBlockPlayer player = event.getPlayer();
         SkyBlockMob mob = event.getKilledMob();
 
         if (mob == null) return;

@@ -8,19 +8,19 @@ import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.entity.DroppedItemEntityImpl;
+import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.generic.event.custom.CustomBlockBreakEvent;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.components.CustomDropComponent;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.region.SkyBlockMiningConfiguration;
-import net.swofty.type.generic.region.SkyBlockRegion;
-import net.swofty.type.generic.region.mining.MineableBlock;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.CustomDropComponent;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.region.SkyBlockMiningConfiguration;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.skyblockgeneric.region.mining.MineableBlock;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerBlockBreakEvent event) {
-        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         // Skip if player has build bypass
         if (player.isBypassBuild()) return;

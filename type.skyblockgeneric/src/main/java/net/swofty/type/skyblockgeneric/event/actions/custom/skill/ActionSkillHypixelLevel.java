@@ -3,10 +3,10 @@ package net.swofty.type.skyblockgeneric.event.actions.custom.skill;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.custom.SkillUpdateEvent;
-import net.swofty.type.generic.levels.SkyBlockLevelCause;
-import net.swofty.type.generic.skill.SkillCategories;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionSkillHypixelLevel implements HypixelEventClass {
 
@@ -14,7 +14,7 @@ public class ActionSkillHypixelLevel implements HypixelEventClass {
     public void run(SkillUpdateEvent event) {
         if (event.getNewValueRaw() <= event.getOldValueRaw()) return;
 
-        HypixelPlayer player = event.getPlayer();
+        SkyBlockPlayer player = event.getPlayer();
         SkillCategories skillCategory = event.getSkillCategory();
 
         int oldLevel = skillCategory.asCategory().getLevel(event.getOldValueRaw());

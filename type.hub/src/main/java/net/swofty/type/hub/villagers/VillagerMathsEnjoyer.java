@@ -2,8 +2,8 @@ package net.swofty.type.hub.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerDialogue;
+import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerParameters;
 
 public class VillagerMathsEnjoyer extends NPCVillagerDialogue {
 

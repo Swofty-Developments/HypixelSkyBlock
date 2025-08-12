@@ -1,10 +1,10 @@
 package net.swofty.type.island.events.custom;
 
-import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.SkyBlockEvent;
-import net.swofty.type.generic.event.SkyBlockEventClass;
-import net.swofty.type.generic.event.custom.IslandSavedIntoDatabaseEvent;
-import net.swofty.type.generic.utility.JerryInformation;
+import net.swofty.type.skyblockgeneric.event.EventNodes;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.event.custom.IslandSavedIntoDatabaseEvent;
+import net.swofty.type.skyblockgeneric.utility.JerryInformation;
 
 public class ActionIslandSaveJerry implements SkyBlockEventClass {
 
