@@ -10,11 +10,11 @@ import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.entity.mob.SkyBlockMob;
-import net.swofty.type.generic.loottable.OtherLoot;
-import net.swofty.type.generic.loottable.SkyBlockLootTable;
-import net.swofty.type.generic.skill.SkillCategories;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
+import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -47,7 +47,7 @@ public class MobMinionZombie extends SkyBlockMob {
     public List<TargetSelector> getTargetSelectors() {
         return List.of(
                 new LastEntityDamagerTarget(this, 16), // First target the last entity which attacked you
-                new ClosestEntityTarget(this, 16, entity -> entity instanceof HypixelPlayer)
+                new ClosestEntityTarget(this, 16, entity -> entity instanceof SkyBlockPlayer)
         );
     }
 

@@ -7,7 +7,7 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.hologram.HologramEntity;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "spawnholo",
@@ -25,7 +25,7 @@ public class SpawnHologramCommand extends HypixelCommand {
 
             String[] nameArray = context.get(nameArgument);
             String name = String.join(" ", nameArray);
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             Entity entity = new HologramEntity(name);
             entity.setAutoViewable(true);

@@ -1,11 +1,11 @@
 package net.swofty.type.island.events.custom;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.SkyBlockEvent;
-import net.swofty.type.generic.event.SkyBlockEventClass;
-import net.swofty.type.generic.event.custom.IslandFirstCreatedEvent;
-import net.swofty.type.generic.utility.JerryInformation;
+import net.swofty.type.skyblockgeneric.event.EventNodes;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.event.custom.IslandFirstCreatedEvent;
+import net.swofty.type.skyblockgeneric.utility.JerryInformation;
 
 public class ActionIslandInitJerry implements SkyBlockEventClass {
 

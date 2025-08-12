@@ -13,12 +13,12 @@ import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.item.ItemLore;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.components.EnchantedComponent;
-import net.swofty.type.generic.item.components.GemstoneComponent;
-import net.swofty.type.generic.item.components.SkullHeadComponent;
-import net.swofty.type.generic.item.components.TrackedUniqueComponent;
+import net.swofty.type.skyblockgeneric.item.ItemLore;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
+import net.swofty.type.skyblockgeneric.item.components.GemstoneComponent;
+import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
+import net.swofty.type.skyblockgeneric.item.components.TrackedUniqueComponent;
 import org.json.JSONObject;
 
 import java.util.Base64;

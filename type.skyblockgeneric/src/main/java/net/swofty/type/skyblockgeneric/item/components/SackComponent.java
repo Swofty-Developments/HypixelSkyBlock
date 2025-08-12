@@ -2,9 +2,9 @@ package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.SkyBlockItemComponent;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class SackComponent extends SkyBlockItemComponent {
         addInheritedComponent(new InteractableComponent(this::onInteract, this::onInteract, null));
     }
 
-    private void onInteract(HypixelPlayer player, SkyBlockItem item) {
+    private void onInteract(SkyBlockPlayer player, SkyBlockItem item) {
         // TODO
     }
 }

@@ -4,12 +4,12 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
-import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class ActionPlayerRemoveTab implements HypixelEventClass {
 
         SkyBlockGenericLoader.getLoadedPlayers().forEach(player2 -> {
             Rank player2Rank = player2.getRank();
-            Rank playerRank = ((HypixelPlayer) player).getRank();
+            Rank playerRank = ((SkyBlockPlayer) player).getRank();
 
             if (player2.getUuid().equals(player.getUuid())) return;
 

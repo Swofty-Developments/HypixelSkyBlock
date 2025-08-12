@@ -1,9 +1,9 @@
 package net.swofty.type.skyblockgeneric.block.placement.states;
 
 import net.minestom.server.instance.block.Block;
-import net.swofty.type.generic.block.placement.states.state.BooleanState;
-import net.swofty.type.generic.block.placement.states.state.Directional;
-import net.swofty.type.generic.block.placement.states.state.Facing;
+import net.swofty.type.skyblockgeneric.block.placement.states.state.BooleanState;
+import net.swofty.type.skyblockgeneric.block.placement.states.state.Directional;
+import net.swofty.type.skyblockgeneric.block.placement.states.state.Facing;
 import org.jetbrains.annotations.NotNull;
 
 public class FenceGateState extends WaterloggedState {

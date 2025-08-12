@@ -10,7 +10,7 @@ import net.swofty.commons.protocol.objects.party.IsPlayerInPartyProtocolObject;
 import net.swofty.commons.protocol.objects.party.SendPartyEventToServiceProtocolObject;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class PartyManager {
     private static final ProxyService partyService = new ProxyService(ServiceType.PARTY);
 
-    public static boolean isInParty(HypixelPlayer player) {
+    public static boolean isInParty(SkyBlockPlayer player) {
         if (!partyService.isOnline().join()) return false;
         IsPlayerInPartyProtocolObject.IsPlayerInPartyMessage message = new IsPlayerInPartyProtocolObject.IsPlayerInPartyMessage(player.getUuid());
         return partyService.<IsPlayerInPartyProtocolObject.IsPlayerInPartyMessage,
@@ -28,7 +28,7 @@ public class PartyManager {
                 .join();
     }
 
-    public static void invitePlayer(HypixelPlayer inviter, String targetName) {
+    public static void invitePlayer(SkyBlockPlayer inviter, String targetName) {
         @Nullable UUID targetUUID = DataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
             sendError(inviter, "§cCouldn't find a player with that name!");
@@ -59,7 +59,7 @@ public class PartyManager {
         sendEventToService(event);
     }
 
-    public static void acceptInvite(HypixelPlayer player, String inviterName) {
+    public static void acceptInvite(SkyBlockPlayer player, String inviterName) {
         @Nullable UUID inviterUUID = DataHandler.getPotentialUUIDFromName(inviterName);
         if (inviterUUID == null) {
             sendError(player, "§cCouldn't find a player with that name!");
@@ -75,17 +75,17 @@ public class PartyManager {
         sendEventToService(event);
     }
 
-    public static void leaveParty(HypixelPlayer player) {
+    public static void leaveParty(SkyBlockPlayer player) {
         PartyLeaveRequestEvent event = new PartyLeaveRequestEvent(player.getUuid());
         sendEventToService(event);
     }
 
-    public static void disbandParty(HypixelPlayer player) {
+    public static void disbandParty(SkyBlockPlayer player) {
         PartyDisbandRequestEvent event = new PartyDisbandRequestEvent(player.getUuid());
         sendEventToService(event);
     }
 
-    public static void transferLeadership(HypixelPlayer leader, String targetName) {
+    public static void transferLeadership(SkyBlockPlayer leader, String targetName) {
         @Nullable UUID targetUUID = DataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
             sendError(leader, "§cCouldn't find a player with that name!");
@@ -96,7 +96,7 @@ public class PartyManager {
         sendEventToService(event);
     }
 
-    public static void kickPlayer(HypixelPlayer kicker, String targetName) {
+    public static void kickPlayer(SkyBlockPlayer kicker, String targetName) {
         @Nullable UUID targetUUID = DataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
             sendError(kicker, "§cCouldn't find a player with that name!");
@@ -107,7 +107,7 @@ public class PartyManager {
         sendEventToService(event);
     }
 
-    public static void promotePlayer(HypixelPlayer promoter, String targetName) {
+    public static void promotePlayer(SkyBlockPlayer promoter, String targetName) {
         @Nullable UUID targetUUID = DataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
             sendError(promoter, "§cCouldn't find a player with that name!");
@@ -118,7 +118,7 @@ public class PartyManager {
         sendEventToService(event);
     }
 
-    public static void demotePlayer(HypixelPlayer demoter, String targetName) {
+    public static void demotePlayer(SkyBlockPlayer demoter, String targetName) {
         @Nullable UUID targetUUID = DataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
             sendError(demoter, "§cCouldn't find a player with that name!");
@@ -129,12 +129,12 @@ public class PartyManager {
         sendEventToService(event);
     }
 
-    public static void warpParty(HypixelPlayer warper) {
+    public static void warpParty(SkyBlockPlayer warper) {
         PartyWarpRequestEvent event = new PartyWarpRequestEvent(warper.getUuid());
         sendEventToService(event);
     }
 
-    public static @Nullable FullParty getPartyFromPlayer(HypixelPlayer player) {
+    public static @Nullable FullParty getPartyFromPlayer(SkyBlockPlayer player) {
         if (!partyService.isOnline().join()) return null;
 
         GetPartyProtocolObject.GetPartyMessage message = new GetPartyProtocolObject.GetPartyMessage(player.getUuid());
@@ -144,17 +144,17 @@ public class PartyManager {
                 .join();
     }
 
-    public static void sendChat(HypixelPlayer player, String message) {
+    public static void sendChat(SkyBlockPlayer player, String message) {
         PartyChatMessageEvent event = new PartyChatMessageEvent(player.getUuid(), message);
         sendEventToService(event);
     }
 
-    public static void switchPartyServer(HypixelPlayer player) {
+    public static void switchPartyServer(SkyBlockPlayer player) {
         PartyPlayerSwitchedServerEvent event = new PartyPlayerSwitchedServerEvent(player.getUuid());
         sendEventToService(event);
     }
 
-    public static void hijackParty(HypixelPlayer hijacker, String targetName) {
+    public static void hijackParty(SkyBlockPlayer hijacker, String targetName) {
         if (!hijacker.getRank().isEqualOrHigherThan(Rank.ADMIN)) {
             hijacker.sendMessage("§cYou need ADMIN or above to do this command");
             return;
@@ -181,13 +181,13 @@ public class PartyManager {
         partyService.handleRequest(message);
     }
 
-    private static void sendError(HypixelPlayer player, String message) {
+    private static void sendError(SkyBlockPlayer player, String message) {
         player.sendMessage("§9§m-----------------------------------------------------");
         player.sendMessage(message);
         player.sendMessage("§9§m-----------------------------------------------------");
     }
 
-    private static void sendSuccess(HypixelPlayer player, String message) {
+    private static void sendSuccess(SkyBlockPlayer player, String message) {
         player.sendMessage("§9§m-----------------------------------------------------");
         player.sendMessage(message);
         player.sendMessage("§9§m-----------------------------------------------------");

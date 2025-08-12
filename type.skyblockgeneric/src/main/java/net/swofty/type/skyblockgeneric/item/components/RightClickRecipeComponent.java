@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.gui.inventories.sbmenu.recipe.GUIRecipe;
-import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipe;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 
 public class RightClickRecipeComponent extends SkyBlockItemComponent {
     @Getter

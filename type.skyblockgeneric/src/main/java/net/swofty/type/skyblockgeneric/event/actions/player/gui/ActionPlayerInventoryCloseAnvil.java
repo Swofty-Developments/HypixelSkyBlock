@@ -6,13 +6,13 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.gui.HypixelAnvilGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerInventoryCloseAnvil implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(InventoryCloseEvent event) {
-        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (HypixelAnvilGUI.anvilGUIs.containsKey(player)) {
             if (event.getInventory() instanceof AnvilInventory) {

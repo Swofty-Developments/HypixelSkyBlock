@@ -3,10 +3,10 @@ package net.swofty.type.skyblockgeneric.enchantment;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.generic.enchantment.abstr.Ench;
-import net.swofty.type.generic.enchantment.abstr.EnchFromTable;
-import net.swofty.type.generic.enchantment.impl.*;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
+import net.swofty.type.skyblockgeneric.enchantment.impl.*;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -41,14 +41,14 @@ public enum EnchantmentType {
         this.ench = ench.getConstructor().newInstance();
     }
 
-    public int getApplyCost(int level, HypixelPlayer player) {
+    public int getApplyCost(int level, SkyBlockPlayer player) {
         if (level < 1 || level > ench.getLevelsToApply(player).maximumLevel())
             throw new IllegalArgumentException("level cannot be less than 1 and more than " +
                     ench.getLevelsToApply(player).maximumLevel() + " for " + name());
         return ench.getLevelsToApply(player).get(level);
     }
 
-    public String getDescription(int level, HypixelPlayer player) {
+    public String getDescription(int level, SkyBlockPlayer player) {
         if (level < 1 || level > ench.getLevelsToApply(player).maximumLevel())
             return ("level cannot be less than 1 and more than " +
                     ench.getLevelsToApply(player).maximumLevel() + " for " + name());

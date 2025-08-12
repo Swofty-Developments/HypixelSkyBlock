@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.server.eventcaller;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.generic.SkyBlockGenericLoader;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.AbstractMap;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomEventCaller {
-    private static final Map<HypixelPlayer, PlayerValues> playerValuesCache = new HashMap<>();
+    private static final Map<SkyBlockPlayer, PlayerValues> playerValuesCache = new HashMap<>();
     private static ServerValues serverValuesCache = null;
 
     public static void start() {
@@ -20,7 +20,7 @@ public class CustomEventCaller {
 
         // Per Player Caller
         scheduler.submitTask(() -> {
-            for (HypixelPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
+            for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
                 if (!playerValuesCache.containsKey(player)) {
                     playerValuesCache.put(player, new PlayerValues(player, PlayerValues.Value.getValues()));
                     return TaskSchedule.seconds(1);
@@ -63,7 +63,7 @@ public class CustomEventCaller {
         });
     }
 
-    public static void clearCache(HypixelPlayer player) {
+    public static void clearCache(SkyBlockPlayer player) {
         playerValuesCache.remove(player);
     }
 

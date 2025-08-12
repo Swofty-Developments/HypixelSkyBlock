@@ -1,11 +1,11 @@
 package net.swofty.type.skyblockgeneric.enchantment.impl;
 
 import lombok.NonNull;
-import net.swofty.type.generic.collection.CustomCollectionAward;
-import net.swofty.type.generic.enchantment.abstr.Ench;
-import net.swofty.type.generic.enchantment.abstr.EnchFromTable;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.groups.EnchantItemGroups;
+import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +20,7 @@ public class EnchantmentLooting implements Ench, EnchFromTable {
     }
 
     @Override
-    public ApplyLevels getLevelsToApply(@NonNull HypixelPlayer player) {
+    public ApplyLevels getLevelsToApply(@NonNull SkyBlockPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 15,
                 2, 30,
@@ -48,7 +48,7 @@ public class EnchantmentLooting implements Ench, EnchFromTable {
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply(@NonNull HypixelPlayer player) {
+    public TableLevels getLevelsFromTableToApply(@NonNull SkyBlockPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 15,
                 2, 30,

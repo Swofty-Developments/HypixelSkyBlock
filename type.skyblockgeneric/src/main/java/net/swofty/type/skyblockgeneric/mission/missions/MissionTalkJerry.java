@@ -6,11 +6,11 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.generic.event.custom.JerryClickedEvent;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.mission.HypixelMission;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.JerryClickedEvent;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class MissionTalkJerry extends HypixelMission {
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onJerryClicked(JerryClickedEvent event) {
         MissionData data = event.getPlayer().getMissionData();
-        HypixelPlayer player = event.getPlayer();
+        SkyBlockPlayer player = event.getPlayer();
 
         if (!HypixelConst.isIslandServer()) return;
 
@@ -61,13 +61,13 @@ public class MissionTalkJerry extends HypixelMission {
     }
 
     @Override
-    public HashMap<String, Object> onStart(HypixelPlayer player, MissionData.ActiveMission mission) {
+    public HashMap<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
         mission.getNewObjectiveText().forEach(player::sendMessage);
         return new HashMap<>();
     }
 
     @Override
-    public void onEnd(HypixelPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         player.getMissionData().startMission(MissionUseTeleporter.class);
     }
 

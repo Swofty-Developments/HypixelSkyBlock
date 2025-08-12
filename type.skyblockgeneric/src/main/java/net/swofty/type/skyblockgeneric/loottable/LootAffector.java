@@ -3,10 +3,10 @@ package net.swofty.type.skyblockgeneric.loottable;
 import lombok.Getter;
 import net.minestom.server.entity.LivingEntity;
 import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.type.generic.enchantment.EnchantmentType;
-import net.swofty.type.generic.enchantment.impl.EnchantmentLooting;
-import net.swofty.type.generic.enchantment.impl.EnchantmentLuck;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
+import net.swofty.type.skyblockgeneric.enchantment.impl.EnchantmentLooting;
+import net.swofty.type.skyblockgeneric.enchantment.impl.EnchantmentLuck;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
 
@@ -53,16 +53,16 @@ public enum LootAffector {
         this.affector = affector;
     }
 
-    public double apply(HypixelPlayer player, double original) {
+    public double apply(SkyBlockPlayer player, double original) {
         return affector.apply(player, original, null);
     }
 
-    public double apply(HypixelPlayer player, double original, LivingEntity mob) {
+    public double apply(SkyBlockPlayer player, double original, LivingEntity mob) {
         return affector.apply(player, original, mob);
     }
 
     @FunctionalInterface
     public interface LootAffectorFunction {
-        double apply(HypixelPlayer player, double original, LivingEntity mob);
+        double apply(SkyBlockPlayer player, double original, LivingEntity mob);
     }
 }

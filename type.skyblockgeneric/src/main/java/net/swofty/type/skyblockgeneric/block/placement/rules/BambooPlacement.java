@@ -4,9 +4,9 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.rule.BlockPlacementRule;
-import net.swofty.type.generic.block.placement.BlockUtils;
-import net.swofty.type.generic.block.placement.PlacementRule;
-import net.swofty.type.generic.block.placement.states.BlockState;
+import net.swofty.type.skyblockgeneric.block.placement.BlockUtils;
+import net.swofty.type.skyblockgeneric.block.placement.PlacementRule;
+import net.swofty.type.skyblockgeneric.block.placement.states.BlockState;
 
 public class BambooPlacement extends PlacementRule {
     public BambooPlacement() {

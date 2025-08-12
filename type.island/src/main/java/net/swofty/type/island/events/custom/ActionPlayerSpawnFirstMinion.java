@@ -2,13 +2,13 @@ package net.swofty.type.island.events.custom;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
-import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.SkyBlockEvent;
-import net.swofty.type.generic.event.SkyBlockEventClass;
-import net.swofty.type.generic.event.custom.IslandFirstCreatedEvent;
-import net.swofty.type.generic.minion.IslandMinionData;
-import net.swofty.type.generic.minion.MinionRegistry;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.skyblockgeneric.event.EventNodes;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
+import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.skyblockgeneric.event.custom.IslandFirstCreatedEvent;
+import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
+import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
+import net.swofty.type.skyblockgeneric.utility.MathUtility;
 
 public class ActionPlayerSpawnFirstMinion implements SkyBlockEventClass {
 

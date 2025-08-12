@@ -17,14 +17,14 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.commons.item.reforge.Reforge;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.collection.CollectionCategories;
-import net.swofty.type.generic.gems.GemRarity;
-import net.swofty.type.generic.gems.Gemstone;
-import net.swofty.type.generic.item.components.*;
-import net.swofty.type.generic.item.handlers.lore.LoreConfig;
-import net.swofty.type.generic.item.set.ArmorSetRegistry;
-import net.swofty.type.generic.item.set.impl.ArmorSet;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
+import net.swofty.type.skyblockgeneric.gems.GemRarity;
+import net.swofty.type.skyblockgeneric.gems.Gemstone;
+import net.swofty.type.skyblockgeneric.item.components.*;
+import net.swofty.type.skyblockgeneric.item.handlers.lore.LoreConfig;
+import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
+import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class ItemLore {
     }
 
     @SneakyThrows
-    public void updateLore(@Nullable HypixelPlayer player) {
+    public void updateLore(@Nullable SkyBlockPlayer player) {
         SkyBlockItem item = new SkyBlockItem(stack);
         @Nullable ItemType type = item.getAttributeHandler().getPotentialType();
         ItemAttributeHandler handler = item.getAttributeHandler();

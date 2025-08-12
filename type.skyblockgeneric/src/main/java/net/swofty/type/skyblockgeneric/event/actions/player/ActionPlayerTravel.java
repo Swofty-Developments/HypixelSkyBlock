@@ -9,10 +9,10 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.mission.MissionSet;
-import net.swofty.type.generic.mission.missions.MissionUseTeleporter;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.MissionSet;
+import net.swofty.type.skyblockgeneric.mission.missions.MissionUseTeleporter;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class ActionPlayerTravel implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(PlayerMoveEvent event) {
-        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (delay.contains(player.getUuid())) return;
 

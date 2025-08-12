@@ -5,7 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.region.SkyBlockMiningConfiguration;
+import net.swofty.type.skyblockgeneric.region.SkyBlockMiningConfiguration;
 
 import java.util.List;
 

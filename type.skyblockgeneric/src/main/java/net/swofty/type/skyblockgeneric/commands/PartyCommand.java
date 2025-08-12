@@ -8,8 +8,8 @@ import net.swofty.commons.party.FullParty;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.party.PartyManager;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.party.PartyManager;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.ArrayList;
@@ -33,12 +33,12 @@ public class PartyCommand extends HypixelCommand {
         ProxyService partyService = new ProxyService(ServiceType.PARTY);
 
         command.addSyntax((sender, context) -> {
-            showHelp((HypixelPlayer) sender);
+            showHelp((SkyBlockPlayer) sender);
         });
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             if (pendingCommands.contains(player.getUuid())) {
                 return;
@@ -70,7 +70,7 @@ public class PartyCommand extends HypixelCommand {
                     player.sendMessage("§f ");
 
                     FullParty.Member leader = party.getLeader();
-                    player.sendMessage("§eParty Leader: " + HypixelPlayer.getDisplayName(leader.getUuid()));
+                    player.sendMessage("§eParty Leader: " + SkyBlockPlayer.getDisplayName(leader.getUuid()));
 
                     boolean hasMods = false;
                     for (FullParty.Member member : party.getMembers()) {
@@ -84,7 +84,7 @@ public class PartyCommand extends HypixelCommand {
                         player.sendMessage("§f ");
                         String modList = party.getMembers().stream()
                                 .filter(member -> member.getRole() == FullParty.Role.MODERATOR)
-                                .map(member -> HypixelPlayer.getDisplayName(member.getUuid()))
+                                .map(member -> SkyBlockPlayer.getDisplayName(member.getUuid()))
                                 .collect(Collectors.joining(", "));
                         player.sendMessage("§eParty Moderators: " + modList);
                     }
@@ -99,7 +99,7 @@ public class PartyCommand extends HypixelCommand {
 
                     String memberList = party.getMembers().stream()
                             .filter(member -> member.getRole() != FullParty.Role.LEADER && member.getRole() != FullParty.Role.MODERATOR)
-                            .map(member -> HypixelPlayer.getDisplayName(member.getUuid()))
+                            .map(member -> SkyBlockPlayer.getDisplayName(member.getUuid()))
                             .collect(Collectors.joining(", "));
                     if (hasMembers) {
                         player.sendMessage("§f ");
@@ -118,7 +118,7 @@ public class PartyCommand extends HypixelCommand {
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             if (pendingCommands.contains(player.getUuid())) {
                 return;
@@ -156,7 +156,7 @@ public class PartyCommand extends HypixelCommand {
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             if (pendingCommands.contains(player.getUuid())) {
                 return;
@@ -182,7 +182,7 @@ public class PartyCommand extends HypixelCommand {
         }, subcommand, new ArgumentStringArray("message"));
     }
 
-    private void showHelp(HypixelPlayer player) {
+    private void showHelp(SkyBlockPlayer player) {
         player.sendMessage("§9§m-----------------------------------------------------");
         player.sendMessage("§6Party Commands");
         player.sendMessage("§e/p accept §8- §7§oAccept a party invite from a player");

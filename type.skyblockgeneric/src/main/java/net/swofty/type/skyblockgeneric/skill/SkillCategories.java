@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.skill;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.type.generic.skill.skills.*;
+import net.swofty.type.skyblockgeneric.skill.skills.*;
 
 public enum SkillCategories {
     COMBAT(CombatSkill.class),

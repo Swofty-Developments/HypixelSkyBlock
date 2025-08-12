@@ -2,10 +2,10 @@ package net.swofty.type.skyblockgeneric.commands;
 
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.data.monogdb.CoopDatabase;
-import net.swofty.type.generic.gui.inventories.coop.GUICoopInviteSender;
-import net.swofty.type.generic.gui.inventories.coop.GUICoopInviteTarget;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.skyblockgeneric.gui.inventories.coop.GUICoopInviteSender;
+import net.swofty.type.skyblockgeneric.gui.inventories.coop.GUICoopInviteTarget;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "cooperativecheck",
@@ -19,7 +19,7 @@ public class CoopCheckCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
             CoopDatabase.Coop coop = CoopDatabase.getFromMember(player.getUuid());
 
             if (coop == null) {

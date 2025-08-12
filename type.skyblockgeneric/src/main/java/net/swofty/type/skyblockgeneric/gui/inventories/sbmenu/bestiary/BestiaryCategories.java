@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary;
 
 import lombok.Getter;
-import net.swofty.type.generic.entity.mob.BestiaryMob;
+import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 
 import java.util.Arrays;
 import java.util.List;

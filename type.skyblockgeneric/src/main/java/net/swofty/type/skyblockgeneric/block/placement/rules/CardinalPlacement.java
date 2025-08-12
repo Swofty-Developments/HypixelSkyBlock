@@ -5,12 +5,12 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.instance.block.rule.BlockPlacementRule;
-import net.swofty.type.generic.block.placement.BlockUtils;
-import net.swofty.type.generic.block.placement.PlacementRule;
-import net.swofty.type.generic.block.placement.states.BlockState;
-import net.swofty.type.generic.block.placement.states.state.BooleanState;
-import net.swofty.type.generic.block.placement.states.state.Directional;
-import net.swofty.type.generic.block.placement.states.state.Facing;
+import net.swofty.type.skyblockgeneric.block.placement.BlockUtils;
+import net.swofty.type.skyblockgeneric.block.placement.PlacementRule;
+import net.swofty.type.skyblockgeneric.block.placement.states.BlockState;
+import net.swofty.type.skyblockgeneric.block.placement.states.state.BooleanState;
+import net.swofty.type.skyblockgeneric.block.placement.states.state.Directional;
+import net.swofty.type.skyblockgeneric.block.placement.states.state.Facing;
 
 import java.util.Arrays;
 import java.util.List;

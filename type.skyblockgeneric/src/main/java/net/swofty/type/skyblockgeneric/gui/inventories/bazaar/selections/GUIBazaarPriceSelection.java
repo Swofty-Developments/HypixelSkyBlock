@@ -15,7 +15,7 @@ import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -43,7 +43,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
         set(GUIClickableItem.getGoBackItem(31, previousGUI));
     }
 
-    public CompletableFuture<Double> openPriceSelection(HypixelPlayer player) {
+    public CompletableFuture<Double> openPriceSelection(SkyBlockPlayer player) {
         future = new CompletableFuture<>();
         open(player);
 
@@ -53,13 +53,13 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
             set(new GUIClickableItem(14) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     future.complete(spreadPrice);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§610% of Spread",
                             Material.GOLDEN_HORSE_ARMOR, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -82,13 +82,13 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
             set(new GUIClickableItem(12) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     future.complete(incrementedOffer);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§6Best Offer " + (isSellOrder ? "-" : "+") + "0.1",
                             Material.GOLD_NUGGET, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -109,13 +109,13 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
             set(new GUIClickableItem(10) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     future.complete(bestOffer);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§6Same as Best Offer",
                             itemTypeLinker.material, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -133,7 +133,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
             });
             set(new GUIQueryItem(16) {
                 @Override
-                public HypixelInventoryGUI onQueryFinish(String query, HypixelPlayer player) {
+                public HypixelInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
                     try {
                         double price = Double.parseDouble(query);
                         if (price <= 0) {
@@ -149,7 +149,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack("§6Custom Price",
                             Material.OAK_SIGN, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -191,7 +191,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
     }
 
     @Override
-    public void refreshItems(HypixelPlayer player) {
+    public void refreshItems(SkyBlockPlayer player) {
         if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
             player.sendMessage("§cThe Bazaar is currently offline!");
             player.closeInventory();

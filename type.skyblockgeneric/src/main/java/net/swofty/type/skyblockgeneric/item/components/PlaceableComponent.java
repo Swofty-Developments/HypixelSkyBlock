@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
-import net.swofty.type.generic.block.BlockType;
-import net.swofty.type.generic.item.SkyBlockItemComponent;
+import net.swofty.type.skyblockgeneric.block.BlockType;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import org.jetbrains.annotations.Nullable;
 
 public class PlaceableComponent extends SkyBlockItemComponent {

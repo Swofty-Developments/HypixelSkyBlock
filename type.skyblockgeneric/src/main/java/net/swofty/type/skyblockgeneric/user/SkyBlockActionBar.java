@@ -13,7 +13,7 @@ public class SkyBlockActionBar {
     private final EnumMap<BarSection, PriorityQueue<DisplayReplacement>> replacements = new EnumMap<>(BarSection.class);
     private final Map<BarSection, String> defaultDisplays = new EnumMap<>(BarSection.class);
 
-    public static SkyBlockActionBar getFor(HypixelPlayer player) {
+    public static SkyBlockActionBar getFor(SkyBlockPlayer player) {
         return playerBars.computeIfAbsent(player.getUuid(), k -> new SkyBlockActionBar());
     }
 

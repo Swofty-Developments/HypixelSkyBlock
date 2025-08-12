@@ -5,14 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.generic.bestiary.BestiaryData;
-import net.swofty.type.generic.data.SkyBlockDatapoint;
-import net.swofty.type.generic.entity.mob.BestiaryMob;
+import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.generic.event.custom.BestiaryUpdateEvent;
-import net.swofty.type.generic.gui.inventories.sbmenu.bestiary.BestiaryCategories;
-import net.swofty.type.generic.gui.inventories.sbmenu.bestiary.BestiaryEntry;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.BestiaryUpdateEvent;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary.BestiaryCategories;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary.BestiaryEntry;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -55,7 +55,7 @@ public class DatapointBestiary extends SkyBlockDatapoint<DatapointBestiary.Playe
     public static class PlayerBestiary {
         private Map<String, Integer> mobs = new HashMap<>();
         @Setter
-        private HypixelPlayer attachedPlayer = null;
+        private SkyBlockPlayer attachedPlayer = null;
 
         BestiaryData bestiaryData = new BestiaryData();
 

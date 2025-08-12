@@ -4,9 +4,9 @@ import lombok.Getter;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.metadata.item.ItemEntityMeta;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -17,11 +17,11 @@ import java.util.Map;
 @Getter
 public class DroppedItemEntityImpl extends Entity {
     @Getter
-    private static final Map<HypixelPlayer, List<DroppedItemEntityImpl>> droppedItems = new HashMap<>();
-    private final HypixelPlayer player;
+    private static final Map<SkyBlockPlayer, List<DroppedItemEntityImpl>> droppedItems = new HashMap<>();
+    private final SkyBlockPlayer player;
     private final long endPickupDelay;
 
-    public DroppedItemEntityImpl(SkyBlockItem item, HypixelPlayer player) {
+    public DroppedItemEntityImpl(SkyBlockItem item, SkyBlockPlayer player) {
         super(EntityType.ITEM);
 
         this.player = player;

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.generic.data.SkyBlockDatapoint;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import org.json.JSONObject;
 
 import java.util.HashMap;

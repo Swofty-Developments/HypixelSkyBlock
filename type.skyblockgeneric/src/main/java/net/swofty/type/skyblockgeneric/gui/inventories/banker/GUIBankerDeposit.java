@@ -9,14 +9,14 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.data.DataMutexService;
-import net.swofty.type.generic.data.datapoints.DatapointBankData;
-import net.swofty.type.generic.data.monogdb.CoopDatabase;
+import net.swofty.type.skyblockgeneric.data.DataMutexService;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
+import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
-import net.swofty.type.generic.mission.missions.MissionDepositCoinsInBank;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.mission.missions.MissionDepositCoinsInBank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIBankerDeposit extends HypixelInventoryGUI {
 
@@ -32,7 +32,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aYour whole purse", Material.CHEST, 64,
                         "§8Bank deposit",
                         " ",
@@ -47,7 +47,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.closeInventory();
                 attemptDeposit(player, player.getCoins());
             }
@@ -56,7 +56,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
         set(new GUIClickableItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aHalf of your purse", Material.CHEST, 32,
                         "§8Bank deposit",
                         " ",
@@ -71,7 +71,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.closeInventory();
                 attemptDeposit(player, player.getCoins() / 2);
             }
@@ -79,7 +79,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
         set(new GUIQueryItem(15) {
             @Override
-            public HypixelInventoryGUI onQueryFinish(String query, HypixelPlayer player) {
+            public HypixelInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
                 try {
                     double amount = Double.parseDouble(query);
                     if (amount > player.getCoins()) {
@@ -101,7 +101,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aCustom amount", Material.OAK_SIGN, 1,
                         "§8Bank deposit",
                         " ",
@@ -119,7 +119,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
         if (e == null) return;
-        HypixelPlayer player = (HypixelPlayer) e.getPlayer();
+        SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
         player.setBankDelayed(false);
     }
 
@@ -128,7 +128,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
         player.setBankDelayed(false);
     }
 
-    private void attemptDeposit(HypixelPlayer player, double amount) {
+    private void attemptDeposit(SkyBlockPlayer player, double amount) {
         if (player.getMissionData().isCurrentlyActive(MissionDepositCoinsInBank.class)) {
             player.getMissionData().endMission(MissionDepositCoinsInBank.class);
         }

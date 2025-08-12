@@ -4,7 +4,7 @@ import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "transfer",
@@ -20,7 +20,7 @@ public class SendToCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
             ServerType type = context.get(serverType);
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             player.sendTo(type, true);
         }, serverType);

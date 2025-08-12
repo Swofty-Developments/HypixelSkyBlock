@@ -19,11 +19,11 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributeStatistics;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeType;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.item.components.EnchantedComponent;
-import net.swofty.type.generic.item.components.SkullHeadComponent;
-import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.generic.item.updater.PlayerItemUpdater;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
+import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -335,7 +335,7 @@ public class SkyBlockItem {
         ).toList();
     }
 
-    public List<String> getLore(@NotNull HypixelPlayer player) {
+    public List<String> getLore(@NotNull SkyBlockPlayer player) {
         return PlayerItemUpdater.playerUpdate(player, getItemStackBuilder().build(), false).build()
                 .get(ItemComponent.LORE).stream().map(
                         StringUtility::getTextFromComponent).toList();

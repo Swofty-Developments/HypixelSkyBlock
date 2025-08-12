@@ -8,8 +8,8 @@ import lombok.Setter;
 import net.minestom.server.item.Material;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
-import net.swofty.type.generic.data.SkyBlockDatapoint;
-import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

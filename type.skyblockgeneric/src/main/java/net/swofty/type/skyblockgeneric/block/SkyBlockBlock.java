@@ -2,10 +2,10 @@ package net.swofty.type.skyblockgeneric.block;
 
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.tag.Tag;
-import net.swofty.type.generic.block.attribute.BlockAttribute;
-import net.swofty.type.generic.block.attribute.BlockAttributeHandler;
-import net.swofty.type.generic.block.attribute.attributes.BlockAttributeType;
-import net.swofty.type.generic.block.impl.CustomSkyBlockBlock;
+import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
+import net.swofty.type.skyblockgeneric.block.attribute.BlockAttributeHandler;
+import net.swofty.type.skyblockgeneric.block.attribute.attributes.BlockAttributeType;
+import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
 
 import java.util.ArrayList;
 import java.util.List;

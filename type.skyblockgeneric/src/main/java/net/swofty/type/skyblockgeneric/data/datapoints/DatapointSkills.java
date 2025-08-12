@@ -7,12 +7,12 @@ import net.kyori.adventure.sound.Sound;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.data.SkyBlockDatapoint;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.generic.event.custom.SkillUpdateEvent;
-import net.swofty.type.generic.skill.SkillCategories;
-import net.swofty.type.generic.skill.SkillCategory;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
+import net.swofty.type.skyblockgeneric.skill.SkillCategory;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -130,7 +130,7 @@ public class DatapointSkills extends SkyBlockDatapoint<DatapointSkills.PlayerSki
          * @param category The skill category to update.
          * @param value    The new raw experience value for the given category.
          */
-        public void setRaw(HypixelPlayer player, SkillCategories category, Double value) {
+        public void setRaw(SkyBlockPlayer player, SkillCategories category, Double value) {
             HypixelEventHandler.callCustomEvent(new SkillUpdateEvent(
                     player,
                     category,
@@ -150,7 +150,7 @@ public class DatapointSkills extends SkyBlockDatapoint<DatapointSkills.PlayerSki
          * @param category The skill category to update.
          * @param value    The experience value to add to the existing skill.
          */
-        public void increase(HypixelPlayer player, SkillCategories category, Double value) {
+        public void increase(SkyBlockPlayer player, SkillCategories category, Double value) {
             setRaw(player, category, getRaw(category) + value);
         }
 

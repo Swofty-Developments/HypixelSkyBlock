@@ -5,9 +5,9 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "cl",
@@ -21,7 +21,7 @@ public class ClearCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
             player.getInventory().clear();
             MinecraftServer.getSchedulerManager().scheduleTask(() -> player.getInventory().setItemStack(8,
                     new NonPlayerItemUpdater(new SkyBlockItem(ItemType.SKYBLOCK_MENU).getItemStack())

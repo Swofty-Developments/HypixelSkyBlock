@@ -4,8 +4,8 @@ import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.mission.MissionSet;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.mission.MissionSet;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.Arrays;
@@ -27,7 +27,7 @@ public class FinishMissionSetCommand extends HypixelCommand {
 
             Arrays.stream(missionSet.getMissions()).forEach(mission -> {
                 try {
-                    ((HypixelPlayer) sender).getMissionData().endMission(mission);
+                    ((SkyBlockPlayer) sender).getMissionData().endMission(mission);
                 } catch (Exception e) {}
             });
 

@@ -2,13 +2,13 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.entity.mob.BestiaryMob;
-import net.swofty.type.generic.entity.mob.mobs.hub.MobGraveyardZombie;
-import net.swofty.type.generic.entity.mob.mobs.hub.MobGraveyardZombieVillager;
-import net.swofty.type.generic.entity.mob.mobs.hub.MobRuinsOldWolf;
-import net.swofty.type.generic.entity.mob.mobs.hub.MobRuinsWolf;
-import net.swofty.type.generic.entity.mob.mobs.island.MobZombie_1;
-import net.swofty.type.generic.entity.mob.mobs.island.MobZombie_2;
+import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.hub.MobGraveyardZombie;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.hub.MobGraveyardZombieVillager;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.hub.MobRuinsOldWolf;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.hub.MobRuinsWolf;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.island.MobZombie_1;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.island.MobZombie_2;
 
 import java.util.List;
 

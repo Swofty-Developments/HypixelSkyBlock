@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import net.swofty.commons.item.reforge.ReforgeType;
-import net.swofty.type.generic.item.SkyBlockItemComponent;
-import net.swofty.type.generic.utility.groups.EnchantItemGroups;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
+import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 
 import java.util.List;
 

@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.redis.service;
 
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
-import net.swofty.type.generic.SkyBlockGenericLoader;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.util.UUID;
@@ -19,7 +19,7 @@ public class RedisGetPlayerData implements ServiceToClient {
         UUID playerUUID = UUID.fromString(message.getString("playerUUID"));
         String dataKey = message.getString("dataKey");
 
-        HypixelPlayer player = SkyBlockGenericLoader.getFromUUID(playerUUID);
+        SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(playerUUID);
         if (player == null) {
             return new JSONObject()
                     .put("success", false)

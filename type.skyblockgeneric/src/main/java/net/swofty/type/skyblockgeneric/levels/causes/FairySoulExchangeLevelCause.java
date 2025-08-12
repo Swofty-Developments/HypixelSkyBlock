@@ -1,9 +1,9 @@
 package net.swofty.type.skyblockgeneric.levels.causes;
 
 import lombok.Getter;
-import net.swofty.type.generic.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.user.fairysouls.FairySoulExchangeLevels;
+import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulExchangeLevels;
 
 @Getter
 public class FairySoulExchangeLevelCause extends SkyBlockLevelCauseAbstr {
@@ -21,7 +21,7 @@ public class FairySoulExchangeLevelCause extends SkyBlockLevelCauseAbstr {
     }
 
     @Override
-    public boolean shouldDisplayMessage(HypixelPlayer player) {
+    public boolean shouldDisplayMessage(SkyBlockPlayer player) {
         return false;
     }
 }

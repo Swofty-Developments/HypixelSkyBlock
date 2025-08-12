@@ -6,15 +6,15 @@ import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.entity.metadata.other.InteractionMeta;
-import net.swofty.type.generic.data.datapoints.DatapointMuseum;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.set.ArmorSetRegistry;
-import net.swofty.type.generic.museum.MuseumDisplay;
-import net.swofty.type.generic.museum.MuseumDisplayEntityImpl;
-import net.swofty.type.generic.museum.MuseumDisplayEntityInformation;
-import net.swofty.type.generic.museum.MuseumDisplays;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
+import net.swofty.type.skyblockgeneric.museum.MuseumDisplay;
+import net.swofty.type.skyblockgeneric.museum.MuseumDisplayEntityImpl;
+import net.swofty.type.skyblockgeneric.museum.MuseumDisplayEntityInformation;
+import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ArmorMuseumDisplayHandler extends MuseumDisplay {
     @Override
-    public MuseumDisplayEntityInformation display(HypixelPlayer player, MuseumDisplays display, boolean empty, int position) {
+    public MuseumDisplayEntityInformation display(SkyBlockPlayer player, MuseumDisplays display, boolean empty, int position) {
         DatapointMuseum.MuseumData museumData = player.getMuseumData();
         Pos pos = display.getPositions().get(position);
         PlayerHolograms.ExternalPlayerHologram hologram;

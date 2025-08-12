@@ -4,10 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
-import net.swofty.type.generic.data.datapoints.DatapointFairySouls;
-import net.swofty.type.generic.data.monogdb.FairySoulDatabase;
-import net.swofty.type.generic.entity.EntityFairySoul;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointFairySouls;
+import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
+import net.swofty.type.skyblockgeneric.entity.EntityFairySoul;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +40,7 @@ public class FairySoul {
         new EntityFairySoul(this).spawn(instance);
     }
 
-    public void collect(HypixelPlayer player) {
+    public void collect(SkyBlockPlayer player) {
         DatapointFairySouls.PlayerFairySouls fairySouls = player.getFairySouls();
         if (!fairySouls.getAllFairySouls().contains(id)) {
             fairySouls.addCollectedFairySouls(id);

@@ -11,17 +11,17 @@ import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.generic.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.components.PetComponent;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.PetComponent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 
 public class PetEntityImpl extends LivingEntity {
     private final String url;
-    private final HypixelPlayer player;
+    private final SkyBlockPlayer player;
     private final Particle particle;
     private Task upAndDownTask;
     private Task moveTowardsPlayer;
@@ -30,7 +30,7 @@ public class PetEntityImpl extends LivingEntity {
     @Getter
     private boolean goingDown = false;
 
-    public PetEntityImpl(@NotNull HypixelPlayer player, @NotNull String url, @NotNull SkyBlockItem pet) {
+    public PetEntityImpl(@NotNull SkyBlockPlayer player, @NotNull String url, @NotNull SkyBlockItem pet) {
         super(EntityType.ARMOR_STAND);
 
         this.collidesWithEntities = false;

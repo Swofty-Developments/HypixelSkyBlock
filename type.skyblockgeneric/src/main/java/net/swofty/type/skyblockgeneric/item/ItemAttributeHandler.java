@@ -10,11 +10,11 @@ import net.swofty.commons.item.reforge.ReforgeLoader;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocolObject;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.generic.enchantment.EnchantmentType;
-import net.swofty.type.generic.enchantment.SkyBlockEnchantment;
-import net.swofty.type.generic.item.components.*;
-import net.swofty.type.generic.minion.MinionRegistry;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
+import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
+import net.swofty.type.skyblockgeneric.item.components.*;
+import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -166,7 +166,7 @@ public class ItemAttributeHandler {
         return value;
     }
 
-    public void setUniqueTrackedID(String uniqueTrackedID, HypixelPlayer player) {
+    public void setUniqueTrackedID(String uniqueTrackedID, SkyBlockPlayer player) {
         item.getAttribute("unique-tracked-id").setValue(uniqueTrackedID);
 
         Thread.startVirtualThread(() -> {

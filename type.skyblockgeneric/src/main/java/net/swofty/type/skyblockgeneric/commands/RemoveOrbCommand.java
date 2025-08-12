@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.commands;
 
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.data.monogdb.CrystalDatabase;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.monogdb.CrystalDatabase;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "deleteorb",
@@ -17,7 +17,7 @@ public class RemoveOrbCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            new CrystalDatabase().removeCrystals(((HypixelPlayer) sender).getPosition(), 1.5);
+            new CrystalDatabase().removeCrystals(((SkyBlockPlayer) sender).getPosition(), 1.5);
         });
     }
 }

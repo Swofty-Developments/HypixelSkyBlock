@@ -3,10 +3,10 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.collection.CollectionCategories;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "updatecollection",
@@ -23,7 +23,7 @@ public class SetCollectionCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
             ItemType type = context.get(itemType);
             int amount = context.get(amountArgument);
 

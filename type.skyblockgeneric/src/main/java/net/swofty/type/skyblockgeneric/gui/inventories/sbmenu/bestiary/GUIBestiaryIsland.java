@@ -9,12 +9,12 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.bestiary.BestiaryData;
-import net.swofty.type.generic.entity.mob.BestiaryMob;
+import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
+import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
 
                 BestiaryEntry[] entries = category.getEntries();
                 int total = entries.length;
@@ -117,12 +117,12 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
                 set(new GUIClickableItem(slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         new GUIBestiaryMob(category, bestiaryEntry).open(player);
                     }
 
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         ArrayList<String> lore = new ArrayList<>();
 
                         player.getBestiaryData().getMobDisplay(lore, kills, mob, bestiaryEntry);
@@ -142,7 +142,7 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
                 set(new GUIItem(slot) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         return ItemStackCreator.getStack("§c" + bestiaryEntry.getName(), Material.GRAY_DYE, 1,
                                 "§7Kill a mob belonging to this Family to",
                                 "§7unlock it in your Bestiary!");

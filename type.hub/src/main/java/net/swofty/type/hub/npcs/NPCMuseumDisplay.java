@@ -1,12 +1,12 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.data.datapoints.DatapointMuseum;
-import net.swofty.type.generic.data.datapoints.DatapointString;
-import net.swofty.type.generic.entity.npc.NPCParameters;
-import net.swofty.type.generic.entity.npc.SkyBlockNPC;
-import net.swofty.type.generic.gui.inventories.museum.GUIYourMuseum;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointString;
+import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
+import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
+import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIYourMuseum;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ public class NPCMuseumDisplay extends SkyBlockNPC {
     private static class MuseumNPCParameters extends NPCParameters {
         private DataHandler handler = null;
         @Override
-        public String[] holograms(HypixelPlayer player) {
+        public String[] holograms(SkyBlockPlayer player) {
             if (handler == null) {
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 UUID currentlyViewing = data.getCurrentlyViewing().playerUuid();
@@ -36,7 +36,7 @@ public class NPCMuseumDisplay extends SkyBlockNPC {
         }
 
         @Override
-        public String signature(HypixelPlayer player) {
+        public String signature(SkyBlockPlayer player) {
             if (handler == null) {
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 UUID currentlyViewing = data.getCurrentlyViewing().playerUuid();
@@ -48,7 +48,7 @@ public class NPCMuseumDisplay extends SkyBlockNPC {
         }
 
         @Override
-        public String texture(HypixelPlayer player) {
+        public String texture(SkyBlockPlayer player) {
             if (handler == null) {
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 UUID currentlyViewing = data.getCurrentlyViewing().playerUuid();
@@ -60,7 +60,7 @@ public class NPCMuseumDisplay extends SkyBlockNPC {
         }
 
         @Override
-        public Pos position(HypixelPlayer player) {
+        public Pos position(SkyBlockPlayer player) {
             return new Pos(-22.5, 67, 80.5, 90, 0);
         }
 

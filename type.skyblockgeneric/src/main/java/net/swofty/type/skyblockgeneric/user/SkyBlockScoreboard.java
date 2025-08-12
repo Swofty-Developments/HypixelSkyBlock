@@ -8,15 +8,15 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.SkyBlockGenericLoader;
-import net.swofty.type.generic.calendar.SkyBlockCalendar;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
-import net.swofty.type.generic.mission.LocationAssociatedMission;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.mission.HypixelMission;
-import net.swofty.type.generic.mission.HypixelProgressMission;
-import net.swofty.type.generic.region.SkyBlockRegion;
+import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.generic.utility.BlockUtility;
 
 import java.text.SimpleDateFormat;
@@ -39,7 +39,7 @@ public class SkyBlockScoreboard {
                 skyblockName = 0;
             }
 
-            for (HypixelPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
+            for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
                 DataHandler dataHandler = player.getDataHandler();
                 SkyBlockRegion region = player.getRegion();
                 MissionData missionData = player.getMissionData();

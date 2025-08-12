@@ -3,9 +3,9 @@ package net.swofty.type.skyblockgeneric.item.components;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.type.generic.item.SkyBlockItemComponent;
-import net.swofty.type.generic.item.crafting.SkyBlockRecipe;
-import net.swofty.type.generic.utility.RecipeParser;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
+import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
+import net.swofty.type.skyblockgeneric.utility.RecipeParser;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;

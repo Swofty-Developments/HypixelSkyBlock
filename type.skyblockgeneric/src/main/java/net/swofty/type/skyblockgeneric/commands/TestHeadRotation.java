@@ -8,7 +8,7 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Tests the head rotation of ArmorStands",
@@ -25,7 +25,7 @@ public class TestHeadRotation extends HypixelCommand {
             if (!permissionCheck(sender)) return;
 
             Double xValue = context.get(x);
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             LivingEntity entity = new LivingEntity(EntityType.ARMOR_STAND);
             entity.setInstance(player.getInstance(), player.getPosition());

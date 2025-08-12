@@ -1,16 +1,16 @@
 package net.swofty.type.skyblockgeneric.user;
 
 import net.minestom.server.entity.PlayerHand;
-import net.swofty.type.generic.enchantment.EnchantmentType;
-import net.swofty.type.generic.enchantment.SkyBlockEnchantment;
-import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
+import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-public record PlayerEnchantmentHandler(HypixelPlayer player) {
+public record PlayerEnchantmentHandler(SkyBlockPlayer player) {
     public @Nullable EnchantmentHandlerResponse getItemWithHighestLevelOf(EnchantmentType type, EnchantedItemSource... sources) {
         SkyBlockItem highest = null;
         int highestLevel = 0;
@@ -51,9 +51,9 @@ public record PlayerEnchantmentHandler(HypixelPlayer player) {
         INVENTORY(player -> Arrays.stream(player.getAllInventoryItems()).toList()),
         ;
 
-        private Function<HypixelPlayer, List<SkyBlockItem>> items;
+        private Function<SkyBlockPlayer, List<SkyBlockItem>> items;
 
-        EnchantedItemSource(Function<HypixelPlayer, List<SkyBlockItem>> items) {
+        EnchantedItemSource(Function<SkyBlockPlayer, List<SkyBlockItem>> items) {
             this.items = items;
         }
     }

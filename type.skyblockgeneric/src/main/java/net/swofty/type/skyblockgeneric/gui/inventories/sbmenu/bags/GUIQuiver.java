@@ -6,14 +6,14 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.collection.CustomCollectionAward;
-import net.swofty.type.generic.data.datapoints.DatapointQuiver;
+import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointQuiver;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.updater.PlayerItemUpdater;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
 
@@ -47,7 +47,7 @@ public class GUIQuiver extends HypixelInventoryGUI {
                     set(new GUIItem(i + rawAmountOfSlots) {
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             return ItemStackCreator.getStack("§cLocked", Material.RED_STAINED_GLASS_PANE,
                                     1,
                                     "§7You must have the §a" + entry.getKey().getDisplay() + " §7upgrade",
@@ -69,7 +69,7 @@ public class GUIQuiver extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (item == null) {
                         return ItemStack.builder(Material.AIR);
                     } else {
@@ -84,13 +84,13 @@ public class GUIQuiver extends HypixelInventoryGUI {
 
                 @Override
                 public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     save(player, slotToSaveUpTo);
                 }
 
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; }
+                SkyBlockPlayer player = (SkyBlockPlayer) p; }
             });
         }
 
@@ -123,7 +123,7 @@ public class GUIQuiver extends HypixelInventoryGUI {
         return item.getMaterial() == Material.ARROW;
     }
 
-    public void save(HypixelPlayer player, int slotToSaveUpTo) {
+    public void save(SkyBlockPlayer player, int slotToSaveUpTo) {
         DatapointQuiver.PlayerQuiver quiver = player.getQuiver();
         for (int i = 0; i < slotToSaveUpTo; i++) {
             SkyBlockItem item = new SkyBlockItem(getInventory().getItemStack(i));

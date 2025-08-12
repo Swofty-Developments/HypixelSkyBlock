@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.item.handlers.orbs;
 
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.utility.groups.Groups;
+import net.swofty.type.skyblockgeneric.utility.groups.Groups;
 
 import java.util.HashMap;
 import java.util.List;

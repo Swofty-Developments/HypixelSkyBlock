@@ -14,16 +14,16 @@ import net.swofty.commons.TrackedItem;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.generic.data.datapoints.DatapointMuseum;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.set.ArmorSetRegistry;
-import net.swofty.type.generic.museum.MuseumDisplays;
-import net.swofty.type.generic.museum.MuseumableItemCategory;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.ItemPriceCalculator;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
+import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
+import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.utility.ItemPriceCalculator;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
             return;
         }
 
-        HypixelPlayer player = (HypixelPlayer) e.getPlayer();
+        SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
         if (data.getItemInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
@@ -154,7 +154,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
     }
 
     @Override
-    public PaginationList<ArmorSetRegistry> fillPaged(HypixelPlayer player, PaginationList<ArmorSetRegistry> paged) {
+    public PaginationList<ArmorSetRegistry> fillPaged(SkyBlockPlayer player, PaginationList<ArmorSetRegistry> paged) {
         MuseumableItemCategory.ARMOR_SETS.getItems().forEach(item -> {
             ArmorSetRegistry armorSet = ArmorSetRegistry.getArmorSet(item);
             if (paged.contains(armorSet))
@@ -170,7 +170,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
     }
 
     @Override
-    public void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
+    public void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
         set(createSearchItem(this, 50, query));
@@ -224,12 +224,12 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
     }
 
     @Override
-    public String getTitle(HypixelPlayer player, String query, int page, PaginationList<ArmorSetRegistry> paged) {
+    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<ArmorSetRegistry> paged) {
         return "Museum -> Armor Sets";
     }
 
     @Override
-    public GUIClickableItem createItemFor(ArmorSetRegistry armorSet, int slot, HypixelPlayer player) {
+    public GUIClickableItem createItemFor(ArmorSetRegistry armorSet, int slot, SkyBlockPlayer player) {
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
         SkyBlockItem helmet = data.getItem(MuseumableItemCategory.ARMOR_SETS, armorSet.getHelmet());
@@ -243,7 +243,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (!inMuseum || hasTakenItOut) {
                     return;
                 }
@@ -271,7 +271,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (!inMuseum) {
                     return ItemStackCreator.getStack("§c" + armorSet.getDisplayName(),
                             Material.GRAY_DYE, 1,
@@ -351,7 +351,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        HypixelPlayer player = (HypixelPlayer) e.getPlayer();
+        SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
 
         DataHandler.Data.INVENTORY.onLoad.accept(
                 player, DataHandler.Data.INVENTORY.onQuit.apply(player)

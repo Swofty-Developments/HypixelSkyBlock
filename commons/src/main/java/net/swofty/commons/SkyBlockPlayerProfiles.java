@@ -7,7 +7,7 @@ import java.util.*;
 
 @Getter
 @Setter
-public class HypixelPlayerProfiles {
+public class SkyBlockPlayerProfiles {
     private final static String[] PROFILE_NAMES = {
             "Zucchini", "Papaya", "Watermelon", "Pineapple",
             "Lemon", "Apple", "Banana", "Orange", "Pear",
@@ -17,16 +17,16 @@ public class HypixelPlayerProfiles {
             "Potato", "Onion", "Garlic", "Celery",
             "Broccoli", "Cauliflower", "Spinach", "Asparagus"
     };
-    private static final Map<UUID, HypixelPlayerProfiles> profilesCache = new HashMap<>();
+    private static final Map<UUID, SkyBlockPlayerProfiles> profilesCache = new HashMap<>();
 
     UUID currentlySelected = null;
     ArrayList<UUID> profiles = new ArrayList<>();
 
-    public HypixelPlayerProfiles(UUID playerUuid) {
+    public SkyBlockPlayerProfiles(UUID playerUuid) {
         profilesCache.put(playerUuid, this);
     }
 
-    public HypixelPlayerProfiles() {
+    public SkyBlockPlayerProfiles() {
     }
 
     public void addProfile(UUID profile) {
@@ -46,8 +46,8 @@ public class HypixelPlayerProfiles {
         );
     }
 
-    public static HypixelPlayerProfiles deserialize(Map<String, Object> map) {
-        HypixelPlayerProfiles skyBlockPlayerProfiles = new HypixelPlayerProfiles(UUID.fromString((String) map.get("_id"))); // Player UUID
+    public static SkyBlockPlayerProfiles deserialize(Map<String, Object> map) {
+        SkyBlockPlayerProfiles skyBlockPlayerProfiles = new SkyBlockPlayerProfiles(UUID.fromString((String) map.get("_id"))); // Player UUID
         skyBlockPlayerProfiles.currentlySelected = UUID.fromString((String) map.get("selected")); // Profile UUID
         skyBlockPlayerProfiles.profiles = new ArrayList<>();
         for (String profile : (List<String>) map.get("profiles")) {
@@ -60,7 +60,7 @@ public class HypixelPlayerProfiles {
         return PROFILE_NAMES[new Random().nextInt(PROFILE_NAMES.length)];
     }
 
-    public static HypixelPlayerProfiles get(UUID uuid) {
+    public static SkyBlockPlayerProfiles get(UUID uuid) {
         return profilesCache.get(uuid);
     }
 }

@@ -1,10 +1,10 @@
 package net.swofty.type.skyblockgeneric.mission.missions.lumber;
 
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.mission.MissionData;
-import net.swofty.type.generic.mission.HypixelMission;
-import net.swofty.type.generic.region.RegionType;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,13 +22,13 @@ public class MissionTalkToLumberjackAgain extends HypixelMission {
     }
 
     @Override
-    public Map<String, Object> onStart(HypixelPlayer player, MissionData.ActiveMission mission) {
+    public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
         mission.getNewObjectiveText().forEach(player::sendMessage);
         return new HashMap<>();
     }
 
     @Override
-    public void onEnd(HypixelPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         player.addAndUpdateItem(ItemType.SWEET_AXE);
     }
 

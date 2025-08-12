@@ -7,13 +7,13 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.components.SkullHeadComponent;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 
 public class DecorationEntityImpl extends EntityCreature {
-    public DecorationEntityImpl(SkyBlockItem item, HypixelPlayer player) {
+    public DecorationEntityImpl(SkyBlockItem item, SkyBlockPlayer player) {
         super(EntityType.ARMOR_STAND);
         this.setInvisible(true);
 

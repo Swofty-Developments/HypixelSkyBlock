@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.minestom.server.item.ItemComponent;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.auctions.AuctionItem;
-import net.swofty.type.generic.data.monogdb.CoopDatabase;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.type.generic.item.updater.PlayerItemUpdater;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.beans.Transient;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public record AuctionItemLoreHandler(AuctionItem auctionItem) {
 
     @JsonIgnore
     @Transient
-    public List<String> getLore(HypixelPlayer player) {
+    public List<String> getLore(SkyBlockPlayer player) {
         List<String> toReturn = new ArrayList<>();
         SkyBlockItem skyBlockItem = new SkyBlockItem(auctionItem.getItem());
 
@@ -39,7 +39,7 @@ public record AuctionItemLoreHandler(AuctionItem auctionItem) {
         }
 
         toReturn.add("§8§m----------------------");
-        toReturn.add("§7Seller: " + HypixelPlayer.getDisplayName(auctionItem.getOriginator()));
+        toReturn.add("§7Seller: " + SkyBlockPlayer.getDisplayName(auctionItem.getOriginator()));
 
         if (auctionItem.isBin()) {
             toReturn.add("§7Buy it now: §6" + auctionItem.getStartingPrice() + " coins");
@@ -53,7 +53,7 @@ public record AuctionItemLoreHandler(AuctionItem auctionItem) {
                 AuctionItem.Bid topBid = auctionItem.getBids().stream().max(Comparator.comparing(AuctionItem.Bid::value)).orElse(null);
 
                 toReturn.add("§7Top bid: §6" + topBid.value() + " coins");
-                toReturn.add("§7Bidder: " + HypixelPlayer.getDisplayName(topBid.uuid()));
+                toReturn.add("§7Bidder: " + SkyBlockPlayer.getDisplayName(topBid.uuid()));
             }
         }
 

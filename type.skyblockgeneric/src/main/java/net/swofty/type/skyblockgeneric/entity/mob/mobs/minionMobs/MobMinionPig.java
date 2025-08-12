@@ -6,10 +6,10 @@ import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.goal.RandomStrollGoal;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.entity.mob.SkyBlockMob;
-import net.swofty.type.generic.loottable.OtherLoot;
-import net.swofty.type.generic.loottable.SkyBlockLootTable;
-import net.swofty.type.generic.skill.SkillCategories;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
+import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

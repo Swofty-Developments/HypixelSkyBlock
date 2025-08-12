@@ -7,15 +7,15 @@ import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.gui.inventories.sbmenu.GUICrafting;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUICrafting;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerInteractWithCrafting implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(InventoryPreClickEvent event) {
-        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (!(event.getInventory() instanceof PlayerInventory)) return;
         if (event.getSlot() < 37 || event.getSlot() > 40) return;
@@ -26,6 +26,6 @@ public class ActionPlayerInteractWithCrafting implements HypixelEventClass {
         event.setCancelled(true);
         event.setCursorItem(ItemStack.AIR);
         player.getInventory().setCursorItem(ItemStack.AIR);
-        new GUICrafting().open((HypixelPlayer) event.getPlayer());
+        new GUICrafting().open((SkyBlockPlayer) event.getPlayer());
     }
 }

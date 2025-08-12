@@ -6,12 +6,12 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventories.sbmenu.levels.emblem.GUIEmblems;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.emblem.GUIEmblems;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.generic.levels.SkyBlockEmblems;
-import net.swofty.type.generic.levels.causes.LevelCause;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockEmblems;
+import net.swofty.type.skyblockgeneric.levels.causes.LevelCause;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +36,13 @@ public class GUILevelEmblemRewards extends HypixelInventoryGUI {
         set(new GUIClickableItem(50) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIEmblems().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aPrefix Emblems", Material.NAME_TAG, 1,
                         "§7Add some spice by having an emblem",
                         "§7next to your name in chat and in tab!",
@@ -61,7 +61,7 @@ public class GUILevelEmblemRewards extends HypixelInventoryGUI {
         set(new GUIItem(14) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Emblems to show next to your name");
                 lore.add("§7that signify special achievements.");
@@ -101,7 +101,7 @@ public class GUILevelEmblemRewards extends HypixelInventoryGUI {
             set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(emblem.displayName() + " " + emblem.emblem(),
                             Material.NAME_TAG, 1,
                             "§8Level " + ((LevelCause) emblem.cause()).getLevel(),

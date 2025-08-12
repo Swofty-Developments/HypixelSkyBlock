@@ -1,10 +1,10 @@
 package net.swofty.type.skyblockgeneric.minion.extension;
 
 import lombok.Getter;
-import net.swofty.type.generic.minion.extension.extensions.MinionFuelExtension;
-import net.swofty.type.generic.minion.extension.extensions.MinionShippingExtension;
-import net.swofty.type.generic.minion.extension.extensions.MinionSkinExtension;
-import net.swofty.type.generic.minion.extension.extensions.MinionUpgradeExtension;
+import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionFuelExtension;
+import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionShippingExtension;
+import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionSkinExtension;
+import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionUpgradeExtension;
 
 @Getter
 public enum MinionExtensions {

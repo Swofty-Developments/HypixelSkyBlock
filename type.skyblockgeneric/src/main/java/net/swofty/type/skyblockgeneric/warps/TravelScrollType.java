@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.warps;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.generic.warps.unlocks.ScrollUnlockCustomRecipe;
-import net.swofty.type.generic.warps.unlocks.ScrollUnlockPurchase;
+import net.swofty.type.skyblockgeneric.warps.unlocks.ScrollUnlockCustomRecipe;
+import net.swofty.type.skyblockgeneric.warps.unlocks.ScrollUnlockPurchase;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

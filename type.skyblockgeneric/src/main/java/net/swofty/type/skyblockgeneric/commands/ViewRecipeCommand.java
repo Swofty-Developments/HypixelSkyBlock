@@ -5,8 +5,8 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.gui.inventories.sbmenu.recipe.GUIRecipe;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipe;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Opens up a recipe GUI",
@@ -23,7 +23,7 @@ public class ViewRecipeCommand extends HypixelCommand {
             if (!permissionCheck(sender)) return;
 
             final ItemType item = context.get(itemArgument);
-            new GUIRecipe(item, null).open((HypixelPlayer) sender);
+            new GUIRecipe(item, null).open((SkyBlockPlayer) sender);
         }, itemArgument);
     }
 }

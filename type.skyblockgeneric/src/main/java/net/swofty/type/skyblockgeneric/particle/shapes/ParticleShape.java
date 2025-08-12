@@ -5,7 +5,7 @@ import net.minestom.server.coordinate.Vec;
 import net.minestom.server.network.packet.server.SendablePacket;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
-import net.swofty.type.generic.particle.ParticleEngine;
+import net.swofty.type.skyblockgeneric.particle.ParticleEngine;
 
 import java.util.ArrayList;
 import java.util.Collection;

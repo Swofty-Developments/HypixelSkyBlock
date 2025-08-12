@@ -5,7 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.GameMode;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "gm",
@@ -25,7 +25,7 @@ public class GamemodeCommand extends HypixelCommand {
 
             final GameMode gamemodeType = context.get(gamemode);
 
-            ((HypixelPlayer) sender).setGameMode(gamemodeType);
+            ((SkyBlockPlayer) sender).setGameMode(gamemodeType);
 
             sender.sendMessage("§aSet your gamemode to §e" + gamemodeType.name() + "§a.");
         }, gamemode);

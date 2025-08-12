@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.block.placement;
 
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.rule.BlockPlacementRule;
-import net.swofty.type.generic.block.placement.states.BlockState;
+import net.swofty.type.skyblockgeneric.block.placement.states.BlockState;
 
 public abstract class PlacementRule {
     private final Block block;

@@ -5,7 +5,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.type.generic.data.mongodb.AuthenticationDatabase;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class RedisAuthenticate implements ProxyToClient {
     public static ArrayList<UUID> toAuthenticate = new ArrayList<>();
 
-    public static void promptAuthentication(HypixelPlayer player) {
+    public static void promptAuthentication(SkyBlockPlayer player) {
         player.sendMessage("§aHey! You need to authenticate your account to play on this server.");
         player.sendMessage("§aAll passwords are encrypted using modern standards, so you're safe!");
         player.sendMessage(" ");

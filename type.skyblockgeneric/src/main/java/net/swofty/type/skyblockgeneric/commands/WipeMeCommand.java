@@ -4,8 +4,8 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
-import net.swofty.commons.HypixelPlayerProfiles;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.commons.SkyBlockPlayerProfiles;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.generic.utility.MathUtility;
 
@@ -20,12 +20,12 @@ public class WipeMeCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
             player.kick("§cYou have been wiped");
 
             MathUtility.delay(() -> {
                 UserDatabase database = new UserDatabase(player.getUuid());
-                HypixelPlayerProfiles profiles = database.getProfiles();
+                SkyBlockPlayerProfiles profiles = database.getProfiles();
 
                 database.deleteProfiles();
                 profiles.getProfiles().forEach(uuid ->

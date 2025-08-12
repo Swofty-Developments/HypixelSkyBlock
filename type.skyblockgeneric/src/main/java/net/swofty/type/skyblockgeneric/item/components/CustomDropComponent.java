@@ -2,11 +2,11 @@ package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.enchantment.EnchantmentType;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.SkyBlockItemComponent;
-import net.swofty.type.generic.region.SkyBlockRegion;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
      * @param isOnIsland Whether the break is happening on a player's island
      * @return List of items that would drop
      */
-    public static List<SkyBlockItem> simulateDrop(SkyBlockItem brokenItem, HypixelPlayer player,
+    public static List<SkyBlockItem> simulateDrop(SkyBlockItem brokenItem, SkyBlockPlayer player,
                                                   SkyBlockItem brokenWith, SkyBlockRegion region,
                                                   boolean isOnIsland) {
         List<SkyBlockItem> drops = new ArrayList<>();

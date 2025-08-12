@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.shop;
 
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
@@ -23,12 +23,12 @@ public interface ShopPrice {
      * @param player the player who is purchasing the item
      * @return whether the player can afford the item
      */
-    boolean canAfford(HypixelPlayer player);
+    boolean canAfford(SkyBlockPlayer player);
 
     /**
      * @param player the player who is purchasing the item
      */
-    void processPurchase(HypixelPlayer player);
+    void processPurchase(SkyBlockPlayer player);
 
     /**
      * @param amount the amount to multiply the price by

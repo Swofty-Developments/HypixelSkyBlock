@@ -3,11 +3,11 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.minestom.server.item.ItemComponent;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.item.ItemAttributeHandler;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.item.components.MinionComponent;
-import net.swofty.type.generic.item.updater.PlayerItemOrigin;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "mithrilinfuse",
@@ -20,7 +20,7 @@ public class MithrilInfuseCommand extends HypixelCommand {
     public void registerUsage(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
-            HypixelPlayer player = ((HypixelPlayer) sender);
+            SkyBlockPlayer player = ((SkyBlockPlayer) sender);
             if(!(new SkyBlockItem(player.getItemInMainHand()).hasComponent(MinionComponent.class))){
                 player.sendMessage("§cMithril Infusions can only be applied to minions.");
                 return;

@@ -10,11 +10,11 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.data.datapoints.DatapointStorage;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStorage;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class GUIStorageIconSelection extends HypixelPaginatedGUI<Material> {
     }
 
     @Override
-    protected PaginationList<Material> fillPaged(HypixelPlayer player, PaginationList<Material> paged) {
+    protected PaginationList<Material> fillPaged(SkyBlockPlayer player, PaginationList<Material> paged) {
         paged.add(Material.BARRIER);
 
         List<Material> vanilla = new ArrayList<>(Material.values().stream().toList());
@@ -78,7 +78,7 @@ public class GUIStorageIconSelection extends HypixelPaginatedGUI<Material> {
     }
 
     @Override
-    protected void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
+    protected void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
         set(GUIClickableItem.getCloseItem(49));
         if (previous != null)
@@ -94,16 +94,16 @@ public class GUIStorageIconSelection extends HypixelPaginatedGUI<Material> {
     }
 
     @Override
-    protected String getTitle(HypixelPlayer player, String query, int page, PaginationList<Material> paged) {
+    protected String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<Material> paged) {
         return "Choose an Icon (" + page + "/" + paged.getPageCount() + ")";
     }
 
     @Override
-    protected GUIClickableItem createItemFor(Material item, int slot, HypixelPlayer player) {
+    protected GUIClickableItem createItemFor(Material item, int slot, SkyBlockPlayer player) {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 DatapointStorage.PlayerStorage storage = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class).getValue();
 
                 if (item == Material.BARRIER) {
@@ -118,7 +118,7 @@ public class GUIStorageIconSelection extends HypixelPaginatedGUI<Material> {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                HypixelPlayer player = (HypixelPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack(
                         (item == Material.BARRIER ? "§cReset" :
                                 StringUtility.toNormalCase(item.name().replace("minecraft:", ""))),

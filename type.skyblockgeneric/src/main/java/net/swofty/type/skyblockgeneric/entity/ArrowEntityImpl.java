@@ -12,7 +12,7 @@ import net.minestom.server.entity.metadata.projectile.ArrowMeta;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.generic.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 

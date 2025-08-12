@@ -6,8 +6,8 @@ import net.minestom.server.entity.PlayerHand;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.item.SkyBlockItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Modifies the NBT of the item in your hand",
@@ -27,7 +27,7 @@ public class ChangeNBTCommand extends HypixelCommand {
             String key = context.get(keyArgument);
             String value = context.get(valueArgument);
 
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
             SkyBlockItem item = new SkyBlockItem(player.getItemInHand(PlayerHand.MAIN));
 
             ItemAttribute attribute = item.getAttribute(key);

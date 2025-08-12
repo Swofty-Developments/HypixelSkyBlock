@@ -5,8 +5,8 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.region.SkyBlockRegion;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public class ActionPlayerStrayTooFar implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(PlayerMoveEvent event) {
-        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockRegion region = player.getRegion();
 
         if (player.getRank().isEqualOrHigherThan(Rank.DEVELOPER)) return;

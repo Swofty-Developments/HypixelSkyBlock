@@ -4,9 +4,9 @@ import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.data.DataMutexService;
-import net.swofty.type.generic.data.datapoints.DatapointBankData;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.DataMutexService;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class TestMutexCommand extends HypixelCommand {
             if (!permissionCheck(sender)) return;
 
             String key = context.get(globalKey);
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             player.sendMessage("§eTesting mutex with global key: §f" + key);
             player.sendMessage("§7Performing simple read operation...");
@@ -40,7 +40,7 @@ public class TestMutexCommand extends HypixelCommand {
 
             String key = context.get(globalKey);
             String op = context.get(operation);
-            HypixelPlayer player = (HypixelPlayer) sender;
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             player.sendMessage("§eTesting mutex with global key: §f" + key);
             player.sendMessage("§7Operation: §f" + op);
@@ -55,7 +55,7 @@ public class TestMutexCommand extends HypixelCommand {
         }, globalKey, operation);
     }
 
-    private void testMutexRead(HypixelPlayer player, String globalKey) {
+    private void testMutexRead(SkyBlockPlayer player, String globalKey) {
         DataMutexService mutexService = new DataMutexService();
 
         // Create a fake coop with just this player for testing
@@ -80,7 +80,7 @@ public class TestMutexCommand extends HypixelCommand {
         );
     }
 
-    private void testMutexWrite(HypixelPlayer player, String globalKey) {
+    private void testMutexWrite(SkyBlockPlayer player, String globalKey) {
         DataMutexService mutexService = new DataMutexService();
         List<UUID> testCoop = List.of(player.getUuid());
 
@@ -108,7 +108,7 @@ public class TestMutexCommand extends HypixelCommand {
         );
     }
 
-    private void testMutexIncrement(HypixelPlayer player, String globalKey) {
+    private void testMutexIncrement(SkyBlockPlayer player, String globalKey) {
         DataMutexService mutexService = new DataMutexService();
         List<UUID> testCoop = List.of(player.getUuid());
 
@@ -132,7 +132,7 @@ public class TestMutexCommand extends HypixelCommand {
         );
     }
 
-    private void testMutexStress(HypixelPlayer player, String globalKey) {
+    private void testMutexStress(SkyBlockPlayer player, String globalKey) {
         player.sendMessage("§eStarting stress test with 10 concurrent operations...");
 
         DataMutexService mutexService = new DataMutexService();

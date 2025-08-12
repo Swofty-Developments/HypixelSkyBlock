@@ -8,8 +8,8 @@ import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.particle.shapes.ParticleShape;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.particle.shapes.ParticleShape;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicLong;
@@ -70,7 +70,7 @@ public class ParticleEngine
        * @param target TARGET
        */
       @SuppressWarnings("deprecation")
-      public void show(HypixelPlayer target) {
+      public void show(SkyBlockPlayer target) {
             if (shape == null) {
                   // If there is no shape just send it
                   target.sendPacket(new ParticlePacket(
@@ -107,6 +107,6 @@ public class ParticleEngine
        * Shows the particle to every player online
        */
       public void show() {
-            HypixelConst.getInstanceContainer().getPlayers().forEach(player -> show((HypixelPlayer) player));
+            HypixelConst.getInstanceContainer().getPlayers().forEach(player -> show((SkyBlockPlayer) player));
       }
 }
