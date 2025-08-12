@@ -200,7 +200,7 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
             }
         }
 
-        player.getDataHandler().get(DataHandler.Data.ACCESSORY_BAG, DatapointAccessoryBag.class).setValue(
+        player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.ACCESSORY_BAG, DatapointAccessoryBag.class).setValue(
                 accessoryBag
         );
     }

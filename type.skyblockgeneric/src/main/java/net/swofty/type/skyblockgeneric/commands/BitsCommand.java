@@ -23,7 +23,7 @@ public class BitsCommand extends HypixelCommand {
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
-            player.getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).setValue(context.get(bitsArgument));
+            player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BITS, DatapointInteger.class).setValue(context.get(bitsArgument));
             sender.sendMessage("§aSuccessfully set bits to to §e" + context.getRaw(bitsArgument) + "§a.");
         }, bitsArgument);
     }

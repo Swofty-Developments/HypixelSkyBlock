@@ -84,8 +84,9 @@ public enum MuseumDisplays {
         if (museumPlayerToView.equals(player.getUuid())) {
             museumDataViewing = playerMuseumData;
         } else {
-            museumDataViewing = DataHandler.getProfileOfOfflinePlayer(museumPlayerToView, museumProfileToView)
-                    .get(DataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
+            museumDataViewing = SkyBlockDataHandler.createFromProfileOnly(
+                    ProfilesDatabase.fetchDocument(museumProfileToView)
+            ).get(SkyBlockDataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
         }
 
         if (displayEntities.containsKey(player.getUuid())) {

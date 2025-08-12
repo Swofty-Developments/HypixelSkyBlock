@@ -27,7 +27,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(31, new GUIBanker()));
 
-        double bankBalance = e.player().getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount();
+        double bankBalance = e.player().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount();
 
         set(new GUIClickableItem(10) {
             @Override
@@ -125,7 +125,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                         "§8Bank withdrawal",
                         " ",
                         "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
+                                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
                         ),
                         " ",
                         "§eClick to withdraw coins!"
@@ -151,7 +151,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
 
         if (!player.isCoop()) {
             // Single player - no synchronization needed
-            DatapointBankData.BankData bankData = player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
+            DatapointBankData.BankData bankData = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
             if (amount > bankData.getAmount()) {
                 player.sendMessage("§cYou do not have that many coins to withdraw!");
                 return;

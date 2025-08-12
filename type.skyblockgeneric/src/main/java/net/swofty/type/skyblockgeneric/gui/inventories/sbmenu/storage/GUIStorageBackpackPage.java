@@ -40,7 +40,7 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         SkyBlockPlayer player = getPlayer();
-        DatapointBackpacks.PlayerBackpacks data = player.getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue();
+        DatapointBackpacks.PlayerBackpacks data = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue();
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 0, 8);
 
@@ -139,7 +139,7 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
             item.getAttributeHandler().getBackpackData().items().add(new SkyBlockItem(getInventory().getItemStack(i)).toUnderstandable());
         }
 
-        getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue().getBackpacks().put(page, item.toUnderstandable());
+        getPlayer().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue().getBackpacks().put(page, item.toUnderstandable());
     }
 
     @Override
@@ -150,7 +150,7 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
             item.getAttributeHandler().getBackpackData().items().add(new SkyBlockItem(getInventory().getItemStack(i)).toUnderstandable());
         }
 
-        getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue().getBackpacks().put(page, item.toUnderstandable());
+        getPlayer().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue().getBackpacks().put(page, item.toUnderstandable());
     }
 
     @Override

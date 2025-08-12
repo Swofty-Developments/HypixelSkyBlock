@@ -102,7 +102,7 @@ public class GUIStorageIconSelection extends HypixelPaginatedGUI<Material> {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                DatapointStorage.PlayerStorage storage = player.getDataHandler().get(DataHandler.Data.STORAGE, DatapointStorage.class).getValue();
+                DatapointStorage.PlayerStorage storage = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class).getValue();
 
                 if (item == Material.BARRIER) {
                     storage.setDisplay(page, Material.PURPLE_STAINED_GLASS_PANE);

@@ -176,7 +176,7 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
     }
 
     private void save(SkyBlockPlayer player) {
-        DatapointSackOfSacks.PlayerSackOfSacks sackOfSacks = player.getDataHandler().get(DataHandler.Data.SACK_OF_SACKS, DatapointSackOfSacks.class).getValue();
+        DatapointSackOfSacks.PlayerSackOfSacks sackOfSacks = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.SACK_OF_SACKS, DatapointSackOfSacks.class).getValue();
         for (int i = 0; i < this.slotToSaveUpTo; i++) {
             int slot = i + ((page - 1) * 45);
             SkyBlockItem item = new SkyBlockItem(getInventory().getItemStack(i));

@@ -11,16 +11,16 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.CommunityShopItem;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GUIBitsAbicases extends SkyBlockInventoryGUI {
+public class GUIBitsAbicases extends HypixelInventoryGUI {
 
     public GUIBitsAbicases() {
         super("Bits Shop - Abicases", InventoryType.CHEST_4_ROW);
@@ -81,11 +81,11 @@ public class GUIBitsAbicases extends SkyBlockInventoryGUI {
         ;
 
         private final String guiName;
-        private final SkyBlockInventoryGUI previousGUI;
+        private final HypixelInventoryGUI previousGUI;
         private final ItemStack.Builder item;
         private final List<CommunityShopItem> shopItems;
 
-        SubCategorys(String guiName, SkyBlockInventoryGUI previousGUI, ItemStack.Builder item, List<CommunityShopItem> shopItems) {
+        SubCategorys(String guiName, HypixelInventoryGUI previousGUI, ItemStack.Builder item, List<CommunityShopItem> shopItems) {
             this.guiName = guiName;
             this.previousGUI = previousGUI;
             this.item = item;

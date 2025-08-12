@@ -194,8 +194,8 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
         lore.add("§cNo Skills Yet!");
         lore.add(" ");
 
-        if (handler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue() > 0)
-            lore.add("§7Purse Coins: §6" + handler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue());
+        if (handler.get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() > 0)
+            lore.add("§7Purse Coins: §6" + handler.get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue());
 
         String age = StringUtility.profileAge(
                         System.currentTimeMillis() - handler.get(DataHandler.Data.CREATED, DatapointLong.class).getValue());

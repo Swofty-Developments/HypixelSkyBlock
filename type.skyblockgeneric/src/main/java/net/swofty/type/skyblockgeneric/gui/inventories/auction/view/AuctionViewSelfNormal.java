@@ -46,8 +46,8 @@ public class AuctionViewSelfNormal implements AuctionView {
         });
 
         if (item.getEndTime() < System.currentTimeMillis()) {
-            List<UUID> ownedActive = player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue();
-            List<UUID> ownedInactive = player.getDataHandler().get(DataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).getValue();
+            List<UUID> ownedActive = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue();
+            List<UUID> ownedInactive = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).getValue();
 
             if (ownedActive.contains(item.getUuid())) {
                 if (item.getBids().isEmpty()) {
@@ -55,9 +55,9 @@ public class AuctionViewSelfNormal implements AuctionView {
                         @Override
                         public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                             ownedActive.remove(item.getUuid());
-                            player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
+                            player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
                             ownedInactive.add(item.getUuid());
-                            player.getDataHandler().get(DataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedInactive);
+                            player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedInactive);
                             player.closeInventory();
 
                             player.addAndUpdateItem(item.getItem());
@@ -78,14 +78,14 @@ public class AuctionViewSelfNormal implements AuctionView {
                     gui.set(new GUIClickableItem(29) {
                         @Override
                         public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                            double coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
+                            double coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
                             long highestBid = item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L);
-                            player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins + highestBid);
+                            player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + highestBid);
 
                             ownedActive.remove(item.getUuid());
-                            player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
+                            player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
                             ownedInactive.add(item.getUuid());
-                            player.getDataHandler().get(DataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedInactive);
+                            player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedInactive);
 
                             player.sendMessage("§eYou collected §6" + highestBid + " coins §efrom the auction!");
                             player.closeInventory();

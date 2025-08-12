@@ -15,7 +15,7 @@ public class ActionSkillUpdateLast implements HypixelEventClass {
         double difference = newValue - oldValue;
 
         if (difference <= 0) return;
-        event.getPlayer().getDataHandler().get(DataHandler.Data.LAST_EDITED_SKILL, DatapointSkillCategory.class)
+        event.getPlayer().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.LAST_EDITED_SKILL, DatapointSkillCategory.class)
                 .setValue(event.getSkillCategory());
     }
 }

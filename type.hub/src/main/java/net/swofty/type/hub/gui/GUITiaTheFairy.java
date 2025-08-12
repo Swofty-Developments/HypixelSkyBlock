@@ -8,9 +8,9 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointFairySouls;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulExchangeLevels;
@@ -18,7 +18,7 @@ import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulExchangeLevels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUITiaTheFairy extends SkyBlockInventoryGUI {
+public class GUITiaTheFairy extends HypixelInventoryGUI {
     public GUITiaTheFairy() {
         super("Fairy", InventoryType.CHEST_6_ROW);
     }
@@ -42,7 +42,7 @@ public class GUITiaTheFairy extends SkyBlockInventoryGUI {
 
                 player.closeInventory();
                 player.getFairySouls().exchange();
-                player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
+                player.getSkyBlockData().get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
                                 .setValue(player.getFairySouls());
                 player.sendMessage("§aYou have exchanged your Fairy Souls for rewards!");
                 nextLevel.getDisplay().forEach(player::sendMessage);
@@ -51,12 +51,12 @@ public class GUITiaTheFairy extends SkyBlockInventoryGUI {
                         SkyBlockLevelCause.getFairySoulExchangeCause(nextLevel.ordinal())
                 );
 
-                DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getDataHandler().get(
-                        DataHandler.Data.BACKPACKS, DatapointBackpacks.class
+                DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getSkyBlockData().get(
+                        SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class
                 ).getValue();
                 backpacks.setUnlockedSlots(backpacks.getUnlockedSlots() +
                         nextLevel.getBackpackSlots());
-                getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class)
+                getPlayer().getSkyBlockData().get(SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class)
                         .setValue(backpacks);
             }
 

@@ -23,8 +23,8 @@ public class IslandMemberModule extends TablistModule {
         ));
 
         // Sort players by their rank ordinal in reverse
-        toShow.sort((o1, o2) -> o2.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().ordinal()
-                - o1.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().ordinal());
+        toShow.sort((o1, o2) -> o2.getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().ordinal()
+                - o1.getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().ordinal());
         Collections.reverse(toShow);
 
         for (int x = 0; x < 19; x++) {

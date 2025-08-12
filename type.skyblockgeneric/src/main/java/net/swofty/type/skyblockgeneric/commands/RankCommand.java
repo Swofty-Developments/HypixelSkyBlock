@@ -29,7 +29,7 @@ public class RankCommand extends HypixelCommand {
 
             final String playerName = player.getUsername();
 
-            DataHandler.getUser(player).get(DataHandler.Data.RANK, DatapointRank.class).setValue(rank);
+            DataHandler.getUser(player).get(net.swofty.type.generic.data.HypixelDataHandler.Data.RANK, DatapointRank.class).setValue(rank);
 
             sender.sendMessage("§aSuccessfully set §e" + playerName + "§a's rank to §e" + rank.name() + "§a.");
         }, entityArgument, rankArgument);

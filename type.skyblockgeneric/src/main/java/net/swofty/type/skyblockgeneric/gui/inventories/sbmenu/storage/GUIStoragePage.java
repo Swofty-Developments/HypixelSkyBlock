@@ -30,7 +30,7 @@ public class GUIStoragePage extends HypixelInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         SkyBlockPlayer player = getPlayer();
-        int highestPage = player.getDataHandler().get(DataHandler.Data.STORAGE, DatapointStorage.class)
+        int highestPage = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class)
                 .getValue().getHighestPage();
 
         e.inventory().setTitle(Component.text(

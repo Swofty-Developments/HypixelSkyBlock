@@ -11,10 +11,10 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.RuneComponent;
 import net.swofty.type.skyblockgeneric.item.components.RuneableComponent;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class GUIRunicPedestal extends SkyBlockInventoryGUI {
+public class GUIRunicPedestal extends HypixelInventoryGUI {
     private static final int MAX_RUNE_LEVEL = 3;
     private static final int[] BOTTOM_SLOTS = {45, 46, 47, 48, 50, 51, 52, 53};
     private static final int[] LEFT_RUNIC_SLOTS = {10, 11, 12};

@@ -157,7 +157,7 @@ public class GUIReforge extends HypixelInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                DatapointDouble coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
+                DatapointDouble coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                 int cost = COST_MAP.get(item.getAttributeHandler().getRarity());
 
                 if (coins.getValue() - cost < 0) {

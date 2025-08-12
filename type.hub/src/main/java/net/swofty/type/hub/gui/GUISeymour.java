@@ -9,12 +9,12 @@ import net.minestom.server.item.Material;
 import net.minestom.server.item.component.DyedItemColor;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.type.skyblockgeneric.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class GUISeymour extends SkyBlockInventoryGUI {
+public class GUISeymour extends HypixelInventoryGUI {
     public GUISeymour() {
         super("Seymour's Fancy Suits", InventoryType.CHEST_4_ROW);
     }

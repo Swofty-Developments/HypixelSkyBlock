@@ -34,7 +34,7 @@ public class ActionCollectionAdd implements HypixelEventClass {
 
         HypixelEventHandler.callCustomEvent(new CollectionUpdateEvent(player, type, oldAmount));
 
-        player.getDataHandler().get(DataHandler.Data.COLLECTION, DatapointCollection.class).setValue(
+        player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COLLECTION, DatapointCollection.class).setValue(
                 player.getCollection()
         );
 
