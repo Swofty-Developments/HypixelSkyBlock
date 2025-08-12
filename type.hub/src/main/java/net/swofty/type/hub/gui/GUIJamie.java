@@ -12,6 +12,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIJamie extends HypixelInventoryGUI {
     public GUIJamie() {
@@ -24,14 +25,15 @@ public class GUIJamie extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.addAndUpdateItem(ItemType.ROGUE_SWORD);
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+                skyBlockPlayer.addAndUpdateItem(ItemType.ROGUE_SWORD);
                 player.closeInventory();
-                player.sendMessage(Component.text("§aYou claimed a §fRogue Sword§a!"));
+                skyBlockPlayer.sendMessage(Component.text("§aYou claimed a §fRogue Sword§a!"));
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack("§fRogue Sword", Material.GOLDEN_SWORD, 1,
                         "§7Damage: §c+20",
                         "",
@@ -58,7 +60,7 @@ public class GUIJamie extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

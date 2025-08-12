@@ -9,6 +9,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIShopWoolWeaverVibrant extends SkyBlockShopGUI {
     public GUIShopWoolWeaverVibrant() {
@@ -19,12 +20,12 @@ public class GUIShopWoolWeaverVibrant extends SkyBlockShopGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         set(new GUIClickableItem(53) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 new GUIShopWoolWeaverCool().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.createNamedItemStack(Material.ARROW, "§a->");
             }
         });

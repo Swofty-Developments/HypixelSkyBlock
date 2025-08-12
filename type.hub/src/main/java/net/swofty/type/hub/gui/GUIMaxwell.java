@@ -28,12 +28,12 @@ public class GUIMaxwell extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(47) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 new GUIAccessoryBag().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStackHead("§aAccessory Bag Shortcut", "961a918c0c49ba8d053e522cb91abc74689367b4d8aa06bfc1ba9154730985ff", 1,
                         "§7Quickly access your accessory bag",
                         "§7from right here!",
@@ -43,15 +43,16 @@ public class GUIMaxwell extends HypixelInventoryGUI {
         });
         set(new GUIItem(48) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                int mythic = player.getAccessoryBag().getUniqueAccessories(Rarity.MYTHIC).size();
-                int legendary = player.getAccessoryBag().getUniqueAccessories(Rarity.LEGENDARY).size();
-                int epic = player.getAccessoryBag().getUniqueAccessories(Rarity.EPIC).size();
-                int rare = player.getAccessoryBag().getUniqueAccessories(Rarity.RARE).size();
-                int uncommon = player.getAccessoryBag().getUniqueAccessories(Rarity.UNCOMMON).size();
-                int common = player.getAccessoryBag().getUniqueAccessories(Rarity.COMMON).size();
-                int special = player.getAccessoryBag().getUniqueAccessories(Rarity.SPECIAL).size();
-                int verySpecial = player.getAccessoryBag().getUniqueAccessories(Rarity.VERY_SPECIAL).size();
+            public ItemStack.Builder getItem(HypixelPlayer player) {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+                int mythic = skyBlockPlayer.getAccessoryBag().getUniqueAccessories(Rarity.MYTHIC).size();
+                int legendary = skyBlockPlayer.getAccessoryBag().getUniqueAccessories(Rarity.LEGENDARY).size();
+                int epic = skyBlockPlayer.getAccessoryBag().getUniqueAccessories(Rarity.EPIC).size();
+                int rare = skyBlockPlayer.getAccessoryBag().getUniqueAccessories(Rarity.RARE).size();
+                int uncommon = skyBlockPlayer.getAccessoryBag().getUniqueAccessories(Rarity.UNCOMMON).size();
+                int common = skyBlockPlayer.getAccessoryBag().getUniqueAccessories(Rarity.COMMON).size();
+                int special = skyBlockPlayer.getAccessoryBag().getUniqueAccessories(Rarity.SPECIAL).size();
+                int verySpecial = skyBlockPlayer.getAccessoryBag().getUniqueAccessories(Rarity.VERY_SPECIAL).size();
 
                 return ItemStackCreator.getStack("§aAccessories Breakdown", Material.FILLED_MAP, 1,
                         "§8From your bag",
@@ -81,7 +82,7 @@ public class GUIMaxwell extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override
