@@ -6,7 +6,9 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarConnector;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCompletedBazaarTransactions;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -32,7 +34,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§6§lSELL ORDERS", Material.GOLD_INGOT, 1,
                         "§7Your active sell orders");
             }
@@ -41,7 +43,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
         set(new GUIItem(31) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§a§lBUY ORDERS", Material.EMERALD, 1,
                         "§7Your active buy orders");
             }
@@ -50,13 +52,13 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        e.player().getBazaarConnector().getPendingOrders()
-                .thenAccept(orders -> loadAndDisplayOrders(e.player(), orders));
+        ((SkyBlockPlayer) e.player()).getBazaarConnector().getPendingOrders()
+                .thenAccept(orders -> loadAndDisplayOrders(((SkyBlockPlayer) e.player()), orders));
     }
 
     private void loadAndDisplayOrders(SkyBlockPlayer player, List<BazaarConnector.BazaarOrder> activeOrders) {
         var completedTransactions = player.getDataHandler().get(
-                DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
+                SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                 DatapointCompletedBazaarTransactions.class
         ).getValue();
 
@@ -114,7 +116,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(SELL_SLOTS[0]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§7No Sell Orders", Material.BARRIER, 1,
                             "§7You don't have any active",
                             "§7sell orders in the Bazaar.");
@@ -126,7 +128,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(BUY_SLOTS[0]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§7No Buy Orders", Material.BARRIER, 1,
                             "§7You don't have any active",
                             "§7buy orders in the Bazaar.");
@@ -141,7 +143,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (item.isCompleted()) {
                     new GUIBazaarOrderCompletedOptions(item.getCompletions(), item.getActiveOrder()).open(p);
                 } else {
@@ -151,7 +153,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return item.createDisplayItem();
             }
         };
@@ -162,7 +164,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -171,7 +173,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });

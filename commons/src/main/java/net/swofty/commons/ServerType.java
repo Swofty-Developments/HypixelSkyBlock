@@ -9,6 +9,8 @@ public enum ServerType {
     DUNGEON_HUB(true),
     SKYBLOCK_THE_FARMING_ISLANDS(true),
     PROTOTYPE_LOBBY(false),
+    BEDWARS_LOBBY(false),
+    BEDWARS_GAME(false),
     ;
 
     private final boolean isSkyBlock;

@@ -6,11 +6,16 @@ import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
+import net.swofty.commons.SkyBlockPlayerProfiles;
 import net.swofty.packer.SkyBlockTexture;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
+import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
+import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
@@ -18,6 +23,9 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.CustomGroups;
 import net.swofty.type.generic.user.categories.Rank;
@@ -42,7 +50,7 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
         Logger.info("Loading SkyBlock data for spawned player: " + event.getPlayer().getUsername() + "...");
 
         UUID playerUuid = player.getUuid();
-        PlayerProfiles profiles = player.getProfiles();
+        SkyBlockPlayerProfiles profiles = player.getProfiles();
         SkyBlockDataHandler handler = player.getDataHandler();
 
         // Handle coop synchronization

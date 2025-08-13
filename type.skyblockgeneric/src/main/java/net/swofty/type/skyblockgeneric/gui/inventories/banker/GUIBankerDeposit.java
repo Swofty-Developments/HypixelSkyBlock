@@ -10,6 +10,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.DataMutexService;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -32,7 +33,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aYour whole purse", Material.CHEST, 64,
                         "§8Bank deposit",
                         " ",
@@ -47,7 +48,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.closeInventory();
                 attemptDeposit(player, player.getCoins());
             }
@@ -56,7 +57,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
         set(new GUIClickableItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aHalf of your purse", Material.CHEST, 32,
                         "§8Bank deposit",
                         " ",
@@ -71,7 +72,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.closeInventory();
                 attemptDeposit(player, player.getCoins() / 2);
             }
@@ -79,7 +80,8 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
         set(new GUIQueryItem(15) {
             @Override
-            public HypixelInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
+            public HypixelInventoryGUI onQueryFinish(String query, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 try {
                     double amount = Double.parseDouble(query);
                     if (amount > player.getCoins()) {
@@ -101,7 +103,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aCustom amount", Material.OAK_SIGN, 1,
                         "§8Bank deposit",
                         " ",
@@ -125,7 +127,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
 
     @Override
     public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
-        player.setBankDelayed(false);
+        ((SkyBlockPlayer) player).setBankDelayed(false);
     }
 
     private void attemptDeposit(SkyBlockPlayer player, double amount) {
@@ -163,7 +165,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
         mutexService.withSynchronizedData(
                 lockKey,
                 coop.members(),
-                DataHandler.Data.BANK_DATA,
+                SkyBlockDataHandler.Data.BANK_DATA,
                 (DatapointBankData.BankData latestBankData) -> {
                     if (latestBankData.getAmount() + amount > latestBankData.getBalanceLimit()) {
                         player.sendMessage("§cYou cannot deposit that much, you would exceed your balance limit of §6" +

@@ -6,7 +6,9 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarConnector;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCompletedBazaarTransactions;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -46,11 +48,11 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
         set(new GUIItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
 
-                var relatedTransactions = getRelatedTransactions(p);
-                double originalQuantity = getOriginalQuantity(p);
+                var relatedTransactions = getRelatedTransactions(player);
+                double originalQuantity = getOriginalQuantity(player);
                 double filledQuantity = getFilledQuantity(relatedTransactions);
 
                 lore.add("§8" + (isSell ? "Sell" : "Buy") + " Order");
@@ -90,12 +92,12 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
         set(new GUIItem(10) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Transaction History");
                 lore.add(" ");
 
-                var transactions = getRelatedTransactions(p);
+                var transactions = getRelatedTransactions(player);
                 if (transactions.isEmpty()) {
                     lore.add("§7No transactions yet");
                     lore.add("§7Your order is still pending");
@@ -137,13 +139,13 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
         set(new GUIItem(16) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Financial Summary");
                 lore.add(" ");
 
-                var transactions = getRelatedTransactions(p);
-                double originalValue = getOriginalQuantity(p) * order.price();
+                var transactions = getRelatedTransactions(player);
+                double originalValue = getOriginalQuantity(player) * order.price();
                 double currentValue = order.amount() * order.price();
 
                 lore.add("§7Original Order Value:");
@@ -200,10 +202,10 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
         set(new GUIClickableItem(20) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 p.sendMessage("§6[Bazaar] §7Cancelling order...");
 
-                p.getBazaarConnector().cancelOrder(order.orderId())
+                player.getBazaarConnector().cancelOrder(order.orderId())
                         .thenAccept(success -> {
                             if (success) {
                                 p.sendMessage("§6[Bazaar] §aOrder cancelled successfully!");
@@ -211,12 +213,12 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                                 if (isSell) {
                                     SkyBlockItem item = new SkyBlockItem(order.getItemType());
                                     item.setAmount((int) order.amount());
-                                    p.addAndUpdateItem(item);
+                                    player.addAndUpdateItem(item);
                                     p.sendMessage("§6[Bazaar] §7Returned §a" + (int)order.amount() +
                                             "x " + itemType.getDisplayName() + " §7to your inventory.");
                                 } else {
                                     double refund = order.price() * order.amount();
-                                    p.addCoins(refund);
+                                    player.addCoins(refund);
                                     p.sendMessage("§6[Bazaar] §7Refunded §6" + FORMATTER.format(refund) +
                                             " coins §7to your wallet.");
                                 }
@@ -230,7 +232,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Cancel this bazaar order and");
                 lore.add("§7receive back your remaining:");
@@ -256,13 +258,13 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
         set(new GUIClickableItem(24) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUIBazaarItem(itemType).open(p);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aView Market", Material.EMERALD, 1,
                         "§7View the current market for",
                         "§a" + itemType.getDisplayName(),
@@ -279,9 +281,9 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                var completedTransactions = p.getDataHandler().get(
-                        DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                var completedTransactions = player.getDataHandler().get(
+                        SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                         DatapointCompletedBazaarTransactions.class
                 ).getValue();
 
@@ -298,9 +300,9 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                var completedTransactions = p.getDataHandler().get(
-                        DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                var completedTransactions = player.getDataHandler().get(
+                        SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                         DatapointCompletedBazaarTransactions.class
                 ).getValue();
 
@@ -337,7 +339,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
     private List<DatapointCompletedBazaarTransactions.CompletedBazaarTransaction> getRelatedTransactions(SkyBlockPlayer p) {
         var completedTransactions = p.getDataHandler().get(
-                DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
+                SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                 DatapointCompletedBazaarTransactions.class
         ).getValue();
 

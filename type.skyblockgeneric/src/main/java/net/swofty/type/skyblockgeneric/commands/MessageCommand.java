@@ -6,6 +6,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.Nullable;

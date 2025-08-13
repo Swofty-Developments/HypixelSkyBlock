@@ -4,6 +4,7 @@ import net.swofty.commons.bazaar.BuyOrderRefundTransaction;
 import net.swofty.commons.bazaar.OrderExpiredBazaarTransaction;
 import net.swofty.commons.bazaar.SuccessfulBazaarTransaction;
 import net.swofty.commons.item.ItemType;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCompletedBazaarTransactions;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -116,7 +117,7 @@ public class BazaarAwarder {
                     .createBuyTransaction(itemName, quantity, actualPrice, originalBid, transaction.buyerOrderId());
 
             var completedTransactions = player.getDataHandler().get(
-                    DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
+                    SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                     DatapointCompletedBazaarTransactions.class
             ).getValue();
 
@@ -151,7 +152,7 @@ public class BazaarAwarder {
                             transaction.reason(), transaction.orderId());
 
             var completedTransactions = player.getDataHandler().get(
-                    DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
+                    SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                     DatapointCompletedBazaarTransactions.class
             ).getValue();
 
@@ -196,7 +197,7 @@ public class BazaarAwarder {
                             itemName, quantity, pricePerUnit, taxTaken, transaction.sellerOrderId());
 
             var completedTransactions = player.getDataHandler().get(
-                    DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
+                    SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                     DatapointCompletedBazaarTransactions.class
             ).getValue();
 
@@ -254,7 +255,7 @@ public class BazaarAwarder {
 
             // Store the completed transaction in player data (unclaimed)
             var completedTransactions = player.getDataHandler().get(
-                    DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
+                    SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                     DatapointCompletedBazaarTransactions.class
             ).getValue();
 

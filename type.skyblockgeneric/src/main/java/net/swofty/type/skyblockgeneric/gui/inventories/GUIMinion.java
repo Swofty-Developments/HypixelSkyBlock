@@ -12,6 +12,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -55,8 +56,8 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        if (e.player().isCoop()) {
-            CoopDatabase.Coop coop = e.player().getCoop();
+        if (((SkyBlockPlayer) e.player()).isCoop()) {
+            CoopDatabase.Coop coop = ((SkyBlockPlayer) e.player()).getCoop();
             coop.getOnlineMembers().forEach(member -> {
                 if (member.getUuid() == e.player().getUuid()) return;
 
@@ -73,7 +74,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(53) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.closeInventory();
                 player.addAndUpdateItem(minion.asSkyBlockItem());
                 minion.getItemsInMinion().forEach(item -> player.addAndUpdateItem(item.toSkyBlockItem()));
@@ -94,14 +95,14 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                 player.sendMessage("§aYou picked up a minion! You currently have " +
                         player.getSkyBlockIsland().getMinionData().getMinions().size() +
                 " out of a maximum of " + player.getDataHandler().get(
-                        DataHandler.Data.MINION_DATA,
+                        SkyBlockDataHandler.Data.MINION_DATA,
                         DatapointMinionData.class).getValue().getSlots()
                 + " minions placed.");
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aPickup Minion", Material.BEDROCK, 1,
                         "§eClick to pickup!");
             }
@@ -110,7 +111,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(48) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (minion.getItemsInMinion().isEmpty()) {
                     player.sendMessage("§cThis Minion does not have any items stored!");
                     return;
@@ -128,7 +129,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aCollect All", Material.CHEST, 1,
                         "§eClick to collect all items!");
             }
@@ -137,13 +138,13 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(3) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
 
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aIdeal Layout", Material.REDSTONE_TORCH, 1,
                         "§7View the most efficient spot for this",
                         "§7minion to be placed in.",
@@ -155,7 +156,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<Component> lore = new ArrayList<>();
                 MinionComponent.getLore(minion.asSkyBlockItem(), minion.getSpeedPercentage()).forEach(line -> {
                     lore.add(Component.text("§r" + line.replace("&", "§"))
@@ -169,13 +170,13 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(5) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUIMinionRecipes(minion.getMinion(), GUIMinion.this).open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<SkyBlockMinion.MinionTier> minionTiers = minion.getMinion().asSkyBlockMinion().getTiers();
 
                 int speedPercentage = minion.getSpeedPercentage();
@@ -214,7 +215,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
             set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return unlocked ? ItemStack.builder(Material.AIR) :
                             ItemStackCreator.createNamedItemStack(Material.WHITE_STAINED_GLASS_PANE);
                 }
@@ -223,7 +224,8 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    public void refreshItems(HypixelPlayer p) {
+        SkyBlockPlayer player = (SkyBlockPlayer) p;
         if (!player.getSkyBlockIsland().getMinionData().getMinions().contains(minion)) {
             player.closeInventory();
             return;
@@ -250,7 +252,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!e.getCursorItem().isAir()) {
                         player.sendMessage("§cYou can't put items in this inventory!");
 
@@ -274,7 +276,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!unlocked) return ItemStackCreator.createNamedItemStack(Material.WHITE_STAINED_GLASS_PANE);
 
                     if (minion.getItemsInMinion().size() < finalI) return ItemStack.builder(Material.AIR);

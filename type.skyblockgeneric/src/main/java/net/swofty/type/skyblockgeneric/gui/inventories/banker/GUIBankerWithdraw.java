@@ -10,6 +10,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.DataMutexService;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -28,12 +29,12 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(31, new GUIBanker()));
 
-        double bankBalance = e.player().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount();
+        double bankBalance = ((SkyBlockPlayer) e.player()).getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount();
 
         set(new GUIClickableItem(10) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aEverything in the account", Material.DISPENSER, 64,
                         "§8Bank withdrawal",
                         " ",
@@ -50,7 +51,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.closeInventory();
                 attemptWithdrawal(player, bankBalance);
             }
@@ -59,7 +60,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
         set(new GUIClickableItem(12) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aHalf of the account", Material.DISPENSER, 32,
                         "§8Bank withdrawal",
                         " ",
@@ -76,7 +77,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.closeInventory();
                 attemptWithdrawal(player, bankBalance / 2);
             }
@@ -85,14 +86,14 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
         set(new GUIClickableItem(14) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.closeInventory();
                 attemptWithdrawal(player, bankBalance / 5);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§a20% of the account", Material.DISPENSER, 1,
                         "§8Bank withdrawal",
                         " ",
@@ -106,7 +107,8 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
 
         set(new GUIQueryItem(16) {
             @Override
-            public HypixelInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
+            public HypixelInventoryGUI onQueryFinish(String query, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 try {
                     double amount = Double.parseDouble(query);
                     if (amount > bankBalance) {
@@ -128,7 +130,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aCustom amount", Material.OAK_SIGN, 1,
                         "§8Bank withdrawal",
                         " ",
@@ -151,7 +153,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
 
     @Override
     public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
-        player.setBankDelayed(false);
+        ((SkyBlockPlayer) player).setBankDelayed(false);
     }
 
     private void attemptWithdrawal(SkyBlockPlayer player, double amount) {
@@ -185,7 +187,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
         mutexService.withSynchronizedData(
                 lockKey,
                 coop.members(),
-                DataHandler.Data.BANK_DATA,
+                SkyBlockDataHandler.Data.BANK_DATA,
 
                 // This callback receives the LATEST bank data from across all servers
                 (DatapointBankData.BankData latestBankData) -> {

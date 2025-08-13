@@ -52,7 +52,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         set(new GUIItem(resultSlot) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
             }
         });
@@ -60,7 +60,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         set(new GUIItem(22) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, "§7Combine the items in the slots to the", "§7left and right below.");
             }
         });
@@ -76,7 +76,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
             set(new GUIClickableItem(upgradeItemSlot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -96,7 +96,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -109,13 +109,13 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         set(new GUIClickableItem(upgradeItemSlot) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
             }
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack stack = e.getClickedItem();
 
                 if (stack.isAir()) return;
@@ -141,7 +141,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
             set(new GUIClickableItem(sacrificeItemSlot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -161,7 +161,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -175,13 +175,13 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         set(new GUIClickableItem(sacrificeItemSlot) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
             }
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack stack = e.getClickedItem();
 
                 if (stack.isAir()) return;
@@ -211,7 +211,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         boolean isSacrificeItemValid = !(sacrificeItem.isAir() || sacrificeItem.isNA());
 
         boolean canCraft = isUpgradeItemValid && isSacrificeItemValid && (sacrificeItem.hasComponent(AnvilCombinableComponent.class)) &&
-                sacrificeItem.getComponent(AnvilCombinableComponent.class).canApply(getPlayer(), upgradeItem, sacrificeItem);
+                sacrificeItem.getComponent(AnvilCombinableComponent.class).canApply((SkyBlockPlayer) getPlayer(), upgradeItem, sacrificeItem);
 
         updateItemToSacrificeValid(canCraft || (isSacrificeItemValid && !isUpgradeItemValid) ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
         updateItemToUpgradeValid(canCraft || (!isSacrificeItemValid && isUpgradeItemValid) ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
@@ -226,7 +226,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
                 set(new GUIItem(13) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§cError!", Material.BARRIER, 1, "§7You can not combine those Items");
                     }
                 });
@@ -234,7 +234,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
                 set(new GUIItem(13) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
                     }
                 });
@@ -242,7 +242,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
             set(new GUIItem(22) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, "§7Combine the items in the slots to the", "§7left and right below.");
                 }
             });
@@ -258,7 +258,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         set(new GUIItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return PlayerItemUpdater.playerUpdate(player , result.getItemStack());
             }
         });
@@ -266,7 +266,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         int levelCost = sacrificeItem.getComponent(AnvilCombinableComponent.class).applyCostLevels(
                 upgradeItem,
                 sacrificeItem,
-                getPlayer());
+                (SkyBlockPlayer) getPlayer());
         List<String> lore = new ArrayList<>();
         lore.add("§7Combine the items in the slots to the");
         lore.add("§7left and right below.");
@@ -284,13 +284,13 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 craftResult(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return applyItemStack;
             }
         });
@@ -319,7 +319,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         set(new GUIItem(22) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aAnvil", Material.OAK_SIGN, 1, "§7Claim the result item above!");
             }
         });
@@ -327,14 +327,14 @@ public class GUIAnvil  extends HypixelInventoryGUI {
         set(new GUIClickableItem(resultSlot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 giveResult((Inventory) e.getInventory(),player);
                 new GUIAnvil().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return PlayerItemUpdater.playerUpdate(player , result.getItemStack());
             }
         });
@@ -348,7 +348,7 @@ public class GUIAnvil  extends HypixelInventoryGUI {
             set(new GUIItem(resultSlot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
                 }
             });
@@ -364,7 +364,8 @@ public class GUIAnvil  extends HypixelInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer p) {
+        SkyBlockPlayer player = (SkyBlockPlayer) p;
         player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(sacrificeItemSlot)));
         player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(upgradeItemSlot)));
 

@@ -101,7 +101,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public SkyBlockDataHandler getSkyBlockData() {
-        return SkyBlockDataHandler.getUser(this.getUuid());
+        return (SkyBlockDataHandler) SkyBlockDataHandler.getUser(this.getUuid());
     }
 
     public DatapointMuseum.MuseumData getMuseumData() {
@@ -161,7 +161,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
         return "§8[" + levelColor + experience.getLevel() + "§8] " +
                 (displayEmblem == null ? "" : displayEmblem.emblem() + " ") +
-                getDataHandler().get(net.swofty.type.generic.data.HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
+                getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
                 this.getUsername();
     }
 
@@ -557,7 +557,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
     public String getShortenedDisplayName() {
         return StringUtility.getTextFromComponent(Component.text(this.getUsername(),
-                getDataHandler().get(net.swofty.type.generic.data.HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor())
+                getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor())
         );
     }
 
