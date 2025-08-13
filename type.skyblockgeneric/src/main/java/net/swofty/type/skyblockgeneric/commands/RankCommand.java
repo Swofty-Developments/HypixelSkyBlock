@@ -6,6 +6,7 @@ import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
 import net.minestom.server.entity.Player;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -30,7 +31,7 @@ public class RankCommand extends HypixelCommand {
 
             final String playerName = player.getUsername();
 
-            SkyBlockDataHandler.getUser(player.getUuid()).get(net.swofty.type.generic.data.HypixelDataHandler.Data.RANK, DatapointRank.class).setValue(rank);
+            SkyBlockDataHandler.getUser(player.getUuid()).get(HypixelDataHandler.Data.RANK, DatapointRank.class).setValue(rank);
 
             sender.sendMessage("§aSuccessfully set §e" + playerName + "§a's rank to §e" + rank.name() + "§a.");
         }, entityArgument, rankArgument);

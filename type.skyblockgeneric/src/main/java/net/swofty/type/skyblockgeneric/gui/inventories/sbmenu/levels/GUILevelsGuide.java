@@ -13,7 +13,7 @@ public class GUILevelsGuide extends HypixelInventoryGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        SkyBlockPlayer player = e.player();
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (player.hasCustomLevelAward(CustomLevelAward.ACCESS_TO_WARDROBE)) {
 
         }

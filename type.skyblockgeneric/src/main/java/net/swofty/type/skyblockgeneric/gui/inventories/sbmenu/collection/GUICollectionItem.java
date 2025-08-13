@@ -40,12 +40,12 @@ public class GUICollectionItem extends HypixelInventoryGUI {
         set(GUIClickableItem.getCloseItem(49));
         set(GUIClickableItem.getGoBackItem(48, new GUICollectionCategory(
                 category,
-                getPlayer().getCollection().getDisplay(new ArrayList<>(), category)
+                ((SkyBlockPlayer) getPlayer()).getCollection().getDisplay(new ArrayList<>(), category)
         )));
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§e" + item.getDisplayName(), item.material, 1,
                         "§7View all your " + item.getDisplayName() + " Collection",
                         "§7progress and rewards!",
@@ -61,13 +61,13 @@ public class GUICollectionItem extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUICollectionReward(item, reward).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     DatapointCollection.PlayerCollection playerCollection = player.getCollection();
 
                     List<String> lore = new ArrayList<>();

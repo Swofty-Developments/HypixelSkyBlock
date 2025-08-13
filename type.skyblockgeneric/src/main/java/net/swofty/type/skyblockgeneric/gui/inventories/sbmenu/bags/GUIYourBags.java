@@ -25,7 +25,7 @@ public class GUIYourBags extends HypixelInventoryGUI {
         set(GUIClickableItem.getCloseItem(49));
         set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
 
-        SkyBlockPlayer player = e.player();
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.SACK_OF_SACKS))
             set(new GUIClickableItem(20) {

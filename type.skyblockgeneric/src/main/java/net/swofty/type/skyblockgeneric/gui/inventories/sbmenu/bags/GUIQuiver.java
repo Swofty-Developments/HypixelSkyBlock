@@ -33,6 +33,7 @@ public class GUIQuiver extends HypixelInventoryGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(40));
         set(GUIClickableItem.getGoBackItem(39, new GUIYourBags()));
@@ -41,14 +42,13 @@ public class GUIQuiver extends HypixelInventoryGUI {
         int rawAmountOfSlots = 0;
 
         for (Map.Entry<CustomCollectionAward, Integer> entry : SLOTS_PER_UPGRADE.entrySet()) {
-            if (e.player().hasCustomCollectionAward(entry.getKey())) {
+            if (player.hasCustomCollectionAward(entry.getKey())) {
                 amountOfSlots += entry.getValue();
             } else {
                 for (int i = 0; i < entry.getValue(); i++) {
                     set(new GUIItem(i + rawAmountOfSlots) {
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                             return ItemStackCreator.getStack("§cLocked", Material.RED_STAINED_GLASS_PANE,
                                     1,
                                     "§7You must have the §a" + entry.getKey().getDisplay() + " §7upgrade",
@@ -61,8 +61,7 @@ public class GUIQuiver extends HypixelInventoryGUI {
         }
 
         slotToSaveUpTo = amountOfSlots;
-
-        DatapointQuiver.PlayerQuiver quiver = e.player().getQuiver();
+        DatapointQuiver.PlayerQuiver quiver = player.getQuiver();
 
         for (int i = 0; i < amountOfSlots; i++) {
             SkyBlockItem item = quiver.getInSlot(i);
@@ -109,7 +108,7 @@ public class GUIQuiver extends HypixelInventoryGUI {
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
 
         if (isItemAllowed(cursorItem) && isItemAllowed(clickedItem)) {
-            save(getPlayer(), slotToSaveUpTo);
+            save((SkyBlockPlayer) getPlayer(), slotToSaveUpTo);
             return;
         }
 

@@ -177,7 +177,7 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
 
         e.setCancelled(true);
         getPlayer().sendMessage("§cYou cannot put this item in the Accessory Bag!");
-        save(getPlayer());
+        save((SkyBlockPlayer) getPlayer());
     }
 
     private int getTotalSlots(SkyBlockPlayer player) {
@@ -220,11 +220,12 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
         if (item.isNA()) return true;
         if (item.getMaterial().equals(Material.AIR)) return true;
 
+        SkyBlockPlayer player = (SkyBlockPlayer) getPlayer();
         if (item.hasComponent(AccessoryComponent.class) || item.hasComponent(TieredTalismanComponent.class)) {
-            DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = getPlayer().getAccessoryBag();
+            DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = player.getAccessoryBag();
             accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getPotentialType());
 
-            getPlayer().getSkyBlockExperience().addExperience(
+            player.getSkyBlockExperience().addExperience(
                     SkyBlockLevelCause.getAccessoryCause(item.getAttributeHandler().getPotentialType())
             );
 

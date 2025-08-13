@@ -10,6 +10,8 @@ import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -40,14 +42,13 @@ public class GUIFastTravel extends HypixelInventoryGUI {
         set(new GUIClickableItem(53) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.getToggles().inverse(DatapointToggles.Toggles.ToggleType.PAPER_ICONS);
                 new GUIFastTravel().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aPaper Icons", shouldBePaper ? Material.FILLED_MAP : Material.MAP,
                         1,
                         "§7Use paper icons, which may load this menu",
@@ -63,15 +64,15 @@ public class GUIFastTravel extends HypixelInventoryGUI {
         for (int i = 0; i < values.length; i++) {
             TravelScrollIslands island = values[i];
             boolean hasSubMenu = !island.getAssociatedScrolls().isEmpty();
-            boolean hasUnlockedIsland = e.player().getDataHandler()
-                    .get(DataHandler.Data.VISITED_ISLANDS, DatapointStringList.class)
+            boolean hasUnlockedIsland = ((SkyBlockPlayer) e.player()).getDataHandler()
+                    .get(SkyBlockDataHandler.Data.VISITED_ISLANDS, DatapointStringList.class)
                     .getValue()
                     .contains(island.getInternalName());
 
             set(new GUIClickableItem(SLOTS[i]) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!hasUnlockedIsland) {
                         player.sendMessage("§cYou haven't unlocked this fast travel destination!");
                         return;
@@ -101,7 +102,7 @@ public class GUIFastTravel extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     List<String> lore = new ArrayList<>();
 
                     lore.add("§8/warp " + island.getInternalName());

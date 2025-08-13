@@ -44,7 +44,7 @@ public class GUICraftedMinions extends HypixelPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    protected PaginationList<SkyBlockItem> fillPaged(SkyBlockPlayer player, PaginationList<SkyBlockItem> paged) {
+    protected PaginationList<SkyBlockItem> fillPaged(HypixelPlayer player, PaginationList<SkyBlockItem> paged) {
         paged.addAll(Arrays.stream(ItemType.values()).map(SkyBlockItem::new).toList());
         paged.removeIf(item -> !(item.hasComponent(MinionComponent.class)));
         return paged;
@@ -56,7 +56,7 @@ public class GUICraftedMinions extends HypixelPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    protected void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
+    protected void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
         set(GUIClickableItem.getCloseItem(49));
         set(GUIClickableItem.getGoBackItem(48, previousGUI));
@@ -70,17 +70,17 @@ public class GUICraftedMinions extends HypixelPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    protected String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
+    protected String getTitle(HypixelPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
         return "Crafted Minions";
     }
 
     @Override
-    protected GUIClickableItem createItemFor(SkyBlockItem item, int slot, SkyBlockPlayer player) {
+    protected GUIClickableItem createItemFor(SkyBlockItem item, int slot, HypixelPlayer player) {
 
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (e.getClickedItem().material() != Material.GRAY_DYE) {
                     new GUIMinionRecipes(item.getAttributeHandler().getMinionType(), new GUICraftedMinions(new GUICollections())).open(player);
                 }
@@ -88,7 +88,7 @@ public class GUICraftedMinions extends HypixelPaginatedGUI<SkyBlockItem> {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack.Builder itemStack;
                 MinionRegistry minionRegistry = item.getAttributeHandler().getMinionType();
                 DatapointMinionData.ProfileMinionData playerData = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.MINION_DATA, DatapointMinionData.class).getValue();
