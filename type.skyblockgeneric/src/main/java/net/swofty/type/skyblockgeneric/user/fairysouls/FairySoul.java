@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointFairySouls;
 import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
 import net.swofty.type.skyblockgeneric.entity.EntityFairySoul;
@@ -48,7 +49,7 @@ public class FairySoul {
             player.sendMessage("§d§lSOUL! §fYou found a §dFairy Soul§f!");
             player.sendMessage("§7Go to Tia the Fairy in the §eHub§7 to exchange it for rewards!");
             player.getDataHandler()
-                    .get(DataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
+                    .get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
                     .setValue(fairySouls);
             return;
         }

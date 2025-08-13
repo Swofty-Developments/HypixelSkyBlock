@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionStatistics;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -24,9 +25,9 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
         set(new GUIItem(11) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 DatapointAuctionStatistics.AuctionStatistics stats = player.getDataHandler().get(
-                        DataHandler.Data.AUCTION_STATISTICS,
+                        SkyBlockDataHandler.Data.AUCTION_STATISTICS,
                         DatapointAuctionStatistics.class
                 ).getValue();
 
@@ -52,7 +53,7 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
         set(new GUIItem(15) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 DatapointAuctionStatistics.AuctionStatistics stats = player.getDataHandler().get(
                         DataHandler.Data.AUCTION_STATISTICS,
                         DatapointAuctionStatistics.class
