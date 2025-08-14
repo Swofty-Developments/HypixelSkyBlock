@@ -43,7 +43,7 @@ public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
     }
 
     public void setItems() {
-        List<UUID> auctions = getPlayer().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue();
+        List<UUID> auctions = ((SkyBlockPlayer) getPlayer()).getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue();
         List<CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse>> futures = new ArrayList<>(auctions.size());
         PaginationList<AuctionItem> auctionItems = new PaginationList<>(7);
 
@@ -80,7 +80,7 @@ public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
                 set(new GUIItem(slot) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStack.builder(Material.AIR);
                     }
                 });
@@ -91,13 +91,13 @@ public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIAuctionViewItem(item.getUuid(), GUIViewBids.this).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item.getItem()).getUpdatedItem().build()
                                     .get(ItemComponent.CUSTOM_NAME)),
@@ -128,7 +128,7 @@ public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();

@@ -90,7 +90,7 @@ public class GUISack extends HypixelInventoryGUI {
 
         int index = 0;
         for (Integer slot : getSackSize(itemTypeLinker).getSlots()) {
-            int finalMaxStorage = e.player().getMaxSackStorage(itemTypeLinker);
+            int finalMaxStorage = ((SkyBlockPlayer) e.player()).getMaxSackStorage(itemTypeLinker);
             int finalIndex = index;
 
             if (finalIndex < sackItems.size()) {
@@ -99,7 +99,7 @@ public class GUISack extends HypixelInventoryGUI {
                 set(new GUIClickableItem(slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         Integer amount = player.getSackItems().getAmount(linker);
                         if (e.getClickType() == ClickType.RIGHT_CLICK) {
                             if (amount == 0) return;
@@ -142,7 +142,7 @@ public class GUISack extends HypixelInventoryGUI {
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack());
                         ArrayList<String> lore = new ArrayList<>();
                         Integer amount = player.getSackItems().getAmount(linker);

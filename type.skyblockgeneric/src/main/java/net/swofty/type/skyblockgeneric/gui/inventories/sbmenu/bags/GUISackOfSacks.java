@@ -10,6 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSackOfSacks;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -48,17 +49,19 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
         set(GUIClickableItem.getCloseItem(40));
         set(GUIClickableItem.getGoBackItem(39, new GUIYourBags()));
 
-        int totalSlots = getTotalSlots(e.player());
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
+
+        int totalSlots = getTotalSlots(player);
         int slotsPerPage = 45;
         slotToSaveUpTo = totalSlots;
 
         for (int i = 0; i < totalSlots; i++) {
-            SkyBlockItem item = e.player().getSackOfSacks().getInSlot(i);
+            SkyBlockItem item = player.getSackOfSacks().getInSlot(i);
 
             set(new GUIClickableItem(i) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (e.getClickType() == ClickType.RIGHT_CLICK) {
                         e.setCancelled(true);
                         SkyBlockItem skyBlockItem = new SkyBlockItem(e.getClickedItem());
@@ -69,7 +72,7 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (item == null) {
                         return ItemStack.builder(Material.AIR);
                     } else {
@@ -84,7 +87,7 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
 
                 @Override
                 public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     save(player);
                 }
             });
@@ -96,7 +99,7 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
                 set(new GUIItem(i) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§cLocked", Material.RED_STAINED_GLASS_PANE,
                                 1,
                                 "§7You need to unlock the",
@@ -110,7 +113,7 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
         set(new GUIClickableItem(38) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int slot = 0;
                 for (ItemStack itemStack : player.getInventory().getItemStacks()) {
                     SkyBlockItem item = new SkyBlockItem(itemStack);
@@ -125,7 +128,6 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aInsert inventory", Material.CHEST, 1,
                         "§7Inserts your inventory items into",
                         "§7your sacks.",
@@ -144,7 +146,7 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        save(getPlayer());
+        save((SkyBlockPlayer) getPlayer());
     }
 
     @Override
@@ -153,13 +155,13 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
 
         if (isItemAllowed(cursorItem) && isItemAllowed(clickedItem)) {
-            save(getPlayer());
+            save((SkyBlockPlayer) getPlayer());
             return;
         }
 
         e.setCancelled(true);
         getPlayer().sendMessage("§cYou cannot put this item in the Sack of Sacks!");
-        save(getPlayer());
+        save((SkyBlockPlayer) getPlayer());
     }
 
     private int getTotalSlots(SkyBlockPlayer player) {

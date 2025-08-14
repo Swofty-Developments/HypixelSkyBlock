@@ -5,6 +5,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionViewItem;
@@ -26,7 +27,7 @@ public class AuctionViewSelfBIN implements AuctionView {
                 gui.set(new GUIClickableItem(31) {
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         double coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
 
                         player.sendMessage("§8Claiming your coins...");
@@ -43,7 +44,7 @@ public class AuctionViewSelfBIN implements AuctionView {
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§6Collect Auction", Material.GOLD_BLOCK, 1,
                                 " ",
                                 "§7This item has been sold!",
@@ -57,7 +58,7 @@ public class AuctionViewSelfBIN implements AuctionView {
                 gui.set(new GUIItem(31) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§cYou Cannot Buy Your Own Item", Material.BEDROCK, 1,
                                 " ",
                                 "§7You cannot buy your own item!",
@@ -78,7 +79,7 @@ public class AuctionViewSelfBIN implements AuctionView {
                 gui.set(new GUIClickableItem(31) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§eClaim Item Back", Material.GOLD_INGOT, 1,
                                 " ",
                                 "§7This auction has ended!",
@@ -89,7 +90,7 @@ public class AuctionViewSelfBIN implements AuctionView {
 
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         player.sendMessage("§8Claiming your item...");
                         ownedActive.remove(item.getUuid());
                         player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
@@ -106,7 +107,7 @@ public class AuctionViewSelfBIN implements AuctionView {
                 gui.set(new GUIItem(31) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§cYou Cannot Buy Your Own Item", Material.BEDROCK, 1,
                                 " ",
                                 "§7You cannot buy your own item!",
@@ -121,7 +122,7 @@ public class AuctionViewSelfBIN implements AuctionView {
         gui.set(new GUIItem(31) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§cYou Cannot Buy Your Own Item", Material.BEDROCK, 1,
                         " ",
                         "§7You cannot buy your own item!",

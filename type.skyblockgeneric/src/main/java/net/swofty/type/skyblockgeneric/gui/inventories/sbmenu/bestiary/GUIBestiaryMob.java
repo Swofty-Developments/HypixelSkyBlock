@@ -63,10 +63,10 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ArrayList<String> lore = new ArrayList<>();
                 BestiaryMob mob = bestiaryEntry.getMobs().getFirst();
-                int kills = getPlayer().getBestiaryData().getAmount(bestiaryEntry.getMobs());
+                int kills = ((SkyBlockPlayer) getPlayer()).getBestiaryData().getAmount(bestiaryEntry.getMobs());
                 int tier = bestiaryData.getCurrentBestiaryTier(mob, kills);
 
                 player.getBestiaryData().getMobDisplay(lore, kills, mob, bestiaryEntry);
@@ -92,7 +92,7 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
 
             set(new GUIItem(slot) {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     ArrayList<String> lore = new ArrayList<>();
                     int kills = getPlayer().getBestiaryData().getAmount(mob);
                     int deaths = getPlayer().getDeathData().getAmount(mob.getMobID());

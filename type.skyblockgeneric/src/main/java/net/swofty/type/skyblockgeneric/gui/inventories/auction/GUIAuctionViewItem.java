@@ -60,7 +60,7 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
         set(new GUIItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.updateLore(
                         PlayerItemUpdater.playerUpdate(player, new SkyBlockItem(item.getItem()).getItemStack()),
                         new AuctionItemLoreHandler(item).getLore(player)
@@ -70,23 +70,23 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
 
         if (!item.getOriginator().equals(getPlayer().getUuid())) {
             if (item.isBin()) {
-                new AuctionViewThirdBin().open(this, item, getPlayer());
+                new AuctionViewThirdBin().open(this, item, (SkyBlockPlayer) getPlayer());
                 return;
             }
 
-            new AuctionViewThirdNormal().open(this, item, getPlayer());
+            new AuctionViewThirdNormal().open(this, item, (SkyBlockPlayer) getPlayer());
         } else {
             if (item.isBin()) {
-                new AuctionViewSelfBIN().open(this, item, getPlayer());
+                new AuctionViewSelfBIN().open(this, item, (SkyBlockPlayer) getPlayer());
                 return;
             }
 
-            new AuctionViewSelfNormal().open(this, item, getPlayer());
+            new AuctionViewSelfNormal().open(this, item, (SkyBlockPlayer) getPlayer());
         }
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();

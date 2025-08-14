@@ -14,6 +14,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -55,8 +56,8 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    public PaginationList<SkyBlockItem> fillPaged(SkyBlockPlayer player, PaginationList<SkyBlockItem> paged) {
-        List<SkyBlockItem> pets = new ArrayList<>(player.getPetData().getPetsMap().keySet().stream().toList());
+    public PaginationList<SkyBlockItem> fillPaged(HypixelPlayer player, PaginationList<SkyBlockItem> paged) {
+        List<SkyBlockItem> pets = new ArrayList<>(((SkyBlockPlayer) player).getPetData().getPetsMap().keySet().stream().toList());
 
         switch (sortType) {
             case LEVEL:
@@ -104,7 +105,7 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    public void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
+    public void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
         set(GUIClickableItem.getCloseItem(49));
         set(createSearchItem(this, 50, query));
@@ -112,7 +113,7 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
         set(new GUIClickableItem(47) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage("§aPet conversion to item is now " + (!convertToItem ? "§aENABLED" : "§cDISABLED") + "§a!");
 
                 convertToItem = !convertToItem;
@@ -124,7 +125,7 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack.Builder itemStack = ItemStackCreator.getStack("§aConvert to item", Material.DIAMOND, 1,
                         "§7Toggle between converting your pets to an item",
                         "§7so you can pick it up and",
@@ -142,7 +143,7 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
         set(new GUIClickableItem(51) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 boolean isRightClick = e.getClickType().equals(ClickType.RIGHT_CLICK);
 
                 int ordinal = sortType.ordinal();
@@ -164,7 +165,7 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add(" ");
 
@@ -184,7 +185,7 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aPets", Material.BONE, 1,
                         "§7View and manage all of your",
                         "§7Pets.",
@@ -208,12 +209,13 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
+    public String getTitle(HypixelPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
         return "(" + page + "/" + paged.getPageCount() + ") Pets";
     }
 
     @Override
-    public GUIClickableItem createItemFor(SkyBlockItem item, int slot, SkyBlockPlayer player) {
+    public GUIClickableItem createItemFor(SkyBlockItem item, int slot, HypixelPlayer p) {
+        SkyBlockPlayer player = (SkyBlockPlayer) p;
         boolean isPetEnabled = player.getPetData().getEnabledPet() == item;
 
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(item).getUpdatedItem();
@@ -233,7 +235,7 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 boolean selected = player.getPetData().getEnabledPet() == item;
                 if (selected) {
                     player.getPetData().deselectCurrent();
@@ -268,7 +270,7 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return finalItemStack;
             }
         };

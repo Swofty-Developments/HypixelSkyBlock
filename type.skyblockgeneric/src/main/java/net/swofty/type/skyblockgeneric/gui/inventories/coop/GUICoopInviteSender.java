@@ -9,11 +9,13 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointString;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
@@ -54,33 +56,33 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
         set(new GUIClickableItem(29) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 coop = CoopDatabase.getFromMember(player.getUuid());
                 coop.memberInvites().clear();
                 coop.members().add(player.getUuid());
                 coop.save();
 
                 UUID profileId = UUID.randomUUID();
-                DataHandler handler = DataHandler.initUserWithDefaultData(player.getUuid());
+                SkyBlockDataHandler handler = SkyBlockDataHandler.initUserWithDefaultData(player.getUuid()); // TODO: make this for SkyblockDataHandler
 
-                handler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).setValue(true);
+                handler.get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).setValue(true);
 
                 if (coop.memberProfiles().isEmpty()) {
-                    handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(UUID.randomUUID());
-                    handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(SkyBlockPlayerProfiles.getRandomName());
+                    handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(UUID.randomUUID());
+                    handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(SkyBlockPlayerProfiles.getRandomName());
                 } else {
                     UUID otherCoopMember = coop.memberProfiles().getFirst();
                     ProfilesDatabase islandDatabase = new ProfilesDatabase(otherCoopMember.toString());
                     if (islandDatabase.exists()) {
-                        DataHandler islandHandler = DataHandler.fromDocument(islandDatabase.getDocument());
-                        handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(islandHandler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
-                        handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(islandHandler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
+                        SkyBlockDataHandler islandHandler = SkyBlockDataHandler.fromDocument(islandDatabase.getDocument()); // TODO: invalid fromDocument usage?
+                        handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(islandHandler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
+                        handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(islandHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
                     } else {
                         SkyBlockPlayer profileOwner = SkyBlockGenericLoader.getPlayerFromProfileUUID(otherCoopMember);
 
-                        handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(
+                        handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(
                                 profileOwner.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
-                        handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(
+                        handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(
                                 profileOwner.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
                         );
                     }
@@ -102,7 +104,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aConfirm co-op", Material.GREEN_TERRACOTTA, 1,
                         "§7Ends the invitation so that you may",
                         "§bplay §7on this co-op profile.",
@@ -113,7 +115,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
         set(new GUIClickableItem(33) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 coop = CoopDatabase.getFromMember(player.getUuid());
 
                 coop.removeInvite(player.getUuid());
@@ -124,7 +126,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§cCancel invite", Material.RED_TERRACOTTA, 1,
                         "§7Cancels the invite and removes",
                         "§7the co-op profile.",
@@ -135,14 +137,14 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    public void refreshItems(HypixelPlayer player) {
         int amountInProfile = coop.memberInvites().size() + coop.members().size();
         int[] slots = SLOTS_MAP.get(amountInProfile).stream().mapToInt(Integer::intValue).toArray();
 
         set(new GUIItem(slots[0]) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStackHead(
                         player.getFullDisplayName(), PlayerSkin.fromUuid(String.valueOf(player.getUuid())), 1,
                         " ",
@@ -168,7 +170,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
             set(new GUIItem(slots[i + 1]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStackHead(
                             displayName, PlayerSkin.fromUuid(String.valueOf(target)), 1,
                             " ",

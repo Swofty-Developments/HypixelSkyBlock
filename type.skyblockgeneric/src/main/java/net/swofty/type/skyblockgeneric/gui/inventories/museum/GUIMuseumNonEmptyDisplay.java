@@ -11,6 +11,7 @@ import net.swofty.commons.TrackedItem;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -85,7 +86,7 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
         set(new GUIClickableItem(35) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 player.closeInventory();
                 data.getDisplayHandler().removeAllFromSlot(display, position);
@@ -94,7 +95,7 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§cRemove From Display",
                         Material.BEDROCK, 1,
                         "§7Removes " + (items.size() == 1 ? "this item" : "these " + items.size() + " items") + " from being",
@@ -115,7 +116,7 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
             set(new GUIItem(slotIndex) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return createItemDisplay(item, player);
                 }
             });

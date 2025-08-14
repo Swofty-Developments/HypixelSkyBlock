@@ -26,16 +26,16 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getGoBackItem(31, new GUIAuctionCreateItem(new GUIAuctionHouse())));
-        set(createTime(Material.RED_TERRACOTTA, 1, 10, getPlayer()));
-        set(createTime(Material.PINK_TERRACOTTA, 6, 11, getPlayer()));
-        set(createTime(Material.ORANGE_TERRACOTTA, 12, 12, getPlayer()));
-        set(createTime(Material.YELLOW_TERRACOTTA, 24, 13, getPlayer()));
-        set(createTime(Material.WHITE_TERRACOTTA, 48, 14, getPlayer()));
+        set(createTime(Material.RED_TERRACOTTA, 1, 10, (SkyBlockPlayer) getPlayer()));
+        set(createTime(Material.PINK_TERRACOTTA, 6, 11, (SkyBlockPlayer) getPlayer()));
+        set(createTime(Material.ORANGE_TERRACOTTA, 12, 12, (SkyBlockPlayer) getPlayer()));
+        set(createTime(Material.YELLOW_TERRACOTTA, 24, 13, (SkyBlockPlayer) getPlayer()));
+        set(createTime(Material.WHITE_TERRACOTTA, 48, 14, (SkyBlockPlayer) getPlayer()));
 
         AtomicBoolean right = new AtomicBoolean();
         set(new GUIQueryItem(16) {
             @Override
-            public HypixelInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
+            public HypixelInventoryGUI onQueryFinish(String query, HypixelPlayer player) {
                 long l;
                 try {
                     l = Long.parseLong(query);
@@ -52,7 +52,7 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
                     return null;
                 }
 
-                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().setDuration(
+                ((SkyBlockPlayer) player).getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().setDuration(
                         l * (right.get() ? 60000 : 3600000)
                 );
 
@@ -61,13 +61,13 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 right.set(e.getClickType().equals(ClickType.RIGHT_CLICK));
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aCustom Duration", Material.COMPASS, 1,
                         "§7Specify how long you want",
                         "§7the auction to last.",
@@ -106,7 +106,7 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack.Builder stack = ItemStackCreator.getStack("§a" + hours + " Hours", color, 1,
                         " ",
                         "§eClick to set this duration!");
@@ -120,7 +120,7 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 user.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().setDuration(millis);
                 new GUIAuctionDuration().open(player);
             }

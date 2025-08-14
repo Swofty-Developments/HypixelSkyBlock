@@ -5,6 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.data.DataMutexService;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
@@ -64,7 +65,7 @@ public class TestMutexCommand extends HypixelCommand {
         mutexService.withSynchronizedData(
                 globalKey,
                 testCoop,
-                DataHandler.Data.BANK_DATA,
+                SkyBlockDataHandler.Data.BANK_DATA,
                 (DatapointBankData.BankData bankData) -> {
                     player.sendMessage("§aSuccessfully read bank data!");
                     player.sendMessage("§7Current balance: §6" + bankData.getAmount());
@@ -87,7 +88,7 @@ public class TestMutexCommand extends HypixelCommand {
         mutexService.withSynchronizedData(
                 globalKey,
                 testCoop,
-                DataHandler.Data.BANK_DATA,
+                SkyBlockDataHandler.Data.BANK_DATA,
                 (DatapointBankData.BankData bankData) -> {
                     // Add a test transaction
                     bankData.addTransaction(new DatapointBankData.Transaction(
@@ -115,7 +116,7 @@ public class TestMutexCommand extends HypixelCommand {
         mutexService.withSynchronizedData(
                 globalKey,
                 testCoop,
-                DataHandler.Data.BANK_DATA,
+                SkyBlockDataHandler.Data.BANK_DATA,
                 (DatapointBankData.BankData bankData) -> {
                     double oldAmount = bankData.getAmount();
                     bankData.addAmount(100.0);
@@ -146,7 +147,7 @@ public class TestMutexCommand extends HypixelCommand {
                 mutexService.withSynchronizedData(
                         globalKey + "_stress",
                         testCoop,
-                        DataHandler.Data.BANK_DATA,
+                        SkyBlockDataHandler.Data.BANK_DATA,
                         (DatapointBankData.BankData bankData) -> {
                             // Simulate some processing time
                             try {

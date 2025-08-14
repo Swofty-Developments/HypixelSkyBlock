@@ -5,6 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.warps.TravelScrollIslands;
@@ -30,7 +31,7 @@ public class WarpCommand extends HypixelCommand {
             TravelScrollIslands island = TravelScrollIslands.getFromInternalName(warp);
             if (island != null) {
                 List<String> unlockedIslands = player.getDataHandler()
-                        .get(DataHandler.Data.VISITED_ISLANDS, DatapointStringList.class)
+                        .get(SkyBlockDataHandler.Data.VISITED_ISLANDS, DatapointStringList.class)
                         .getValue();
                 if (unlockedIslands.contains(warp)) {
                     player.asProxyPlayer().transferToWithIndication(island.getServerType()).thenRun(() -> {
@@ -45,7 +46,7 @@ public class WarpCommand extends HypixelCommand {
             TravelScrollType scroll = TravelScrollType.getFromInternalName(warp);
             if (scroll != null) {
                 List<String> unlockedWarps = player.getDataHandler()
-                        .get(DataHandler.Data.USED_SCROLLS, DatapointStringList.class)
+                        .get(SkyBlockDataHandler.Data.USED_SCROLLS, DatapointStringList.class)
                         .getValue();
                 TravelScrollIslands islandFromScroll = TravelScrollIslands.getFromTravelScroll(scroll);
                 if (unlockedWarps.contains(warp)) {
