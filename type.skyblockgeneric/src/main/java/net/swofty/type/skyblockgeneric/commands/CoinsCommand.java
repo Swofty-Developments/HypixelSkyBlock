@@ -5,6 +5,7 @@ import net.minestom.server.command.builder.arguments.number.ArgumentNumber;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
@@ -22,7 +23,7 @@ public class CoinsCommand extends HypixelCommand {
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
-            player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(context.get(doubleArgument));
+            player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(context.get(doubleArgument));
 
             sender.sendMessage("§aSuccessfully set coins to to §e" + context.getRaw(doubleArgument) + "§a.");
         }, doubleArgument);

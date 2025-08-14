@@ -3,16 +3,16 @@ package net.swofty.type.island.events.custom;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.chest.ChestBuilder;
-import net.swofty.type.skyblockgeneric.event.EventNodes;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
 import net.swofty.type.skyblockgeneric.event.custom.IslandFirstCreatedEvent;
-import net.swofty.type.skyblockgeneric.utility.MathUtility;
 
-public class ActionCreateStarterChest implements SkyBlockEventClass {
+public class ActionCreateStarterChest implements HypixelEventClass {
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
     public void run(IslandFirstCreatedEvent event) {
         MathUtility.delay(()->{
             new ChestBuilder(event.getIsland().getIslandInstance(), new Pos(3 , 93 , 30))

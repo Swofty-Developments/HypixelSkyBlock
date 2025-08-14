@@ -2,10 +2,10 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
-import net.swofty.type.skyblockgeneric.entity.animalnpc.NPCAnimalParameters;
-import net.swofty.type.skyblockgeneric.entity.animalnpc.SkyBlockAnimalNPC;
+import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
+import net.swofty.type.generic.entity.animalnpc.NPCAnimalParameters;
 
-public class NPCShania extends SkyBlockAnimalNPC {
+public class NPCShania extends HypixelAnimalNPC {
     public NPCShania() {
         super(new NPCAnimalParameters() {
             @Override

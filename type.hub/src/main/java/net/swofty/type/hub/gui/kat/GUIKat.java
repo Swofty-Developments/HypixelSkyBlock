@@ -44,7 +44,7 @@ public class GUIKat extends HypixelInventoryGUI {
             set(new GUIClickableItem(13) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -63,20 +63,20 @@ public class GUIKat extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
             set(new GUIClickableItem(22) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     player.sendMessage("§cPlace a pet in the empty slot for Kat to take care of!");
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             "§ePet Sitter", Material.RED_TERRACOTTA, 1,
                             "§7Place a pet above for Kat to take",
@@ -94,13 +94,13 @@ public class GUIKat extends HypixelInventoryGUI {
         set(new GUIClickableItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
             }
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack stack = e.getClickedItem();
                 if (stack.isAir()) return;
 
@@ -114,7 +114,7 @@ public class GUIKat extends HypixelInventoryGUI {
             set(new GUIItem(22) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             "§cError!", Material.BARRIER, 1,
                             "§cKat only takes care of pets!"
@@ -128,7 +128,7 @@ public class GUIKat extends HypixelInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (item.getComponent(PetComponent.class).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade()) == null) return;
                 KatUpgrade katUpgrade = item.getComponent(PetComponent.class).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade());
                 int coins = katUpgrade.getCoins();
@@ -144,7 +144,7 @@ public class GUIKat extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (item.getComponent(PetComponent.class).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade()) == null) {
                     return ItemStackCreator.getStack("§aSomething went wrong!", Material.RED_TERRACOTTA, 1);
                 }

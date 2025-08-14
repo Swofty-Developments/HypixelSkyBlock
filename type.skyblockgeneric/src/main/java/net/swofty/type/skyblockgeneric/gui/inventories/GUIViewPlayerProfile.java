@@ -107,7 +107,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                SkyBlockDataHandler dataHandler = viewedPlayer.getDataHandler();
+                SkyBlockDataHandler dataHandler = viewedPlayer.getSkyblockDataHandler();
                 String age = StringUtility.profileAge(System.currentTimeMillis() - dataHandler.get(SkyBlockDataHandler.Data.CREATED, DatapointLong.class).getValue());
                 List<String> lore = new ArrayList<>(List.of());
 
@@ -132,7 +132,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>(List.of());
-                SkyBlockDataHandler dataHandler = viewedPlayer.getDataHandler();
+                SkyBlockDataHandler dataHandler = viewedPlayer.getSkyblockDataHandler();
                 String name;
                 Material material;
                 if (dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem() != null) {
@@ -219,7 +219,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>(List.of());
-                SkyBlockDataHandler dataHandler = viewedPlayer.getDataHandler();
+                SkyBlockDataHandler dataHandler = viewedPlayer.getSkyblockDataHandler();
                 lore.add("§fProfile: §a" + dataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
                 lore.add(" ");
                 lore.add("§fItems Donated: §bMuseum not there yet :)");

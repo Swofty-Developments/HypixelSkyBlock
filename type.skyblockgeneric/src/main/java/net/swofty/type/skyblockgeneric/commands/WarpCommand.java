@@ -30,7 +30,7 @@ public class WarpCommand extends HypixelCommand {
 
             TravelScrollIslands island = TravelScrollIslands.getFromInternalName(warp);
             if (island != null) {
-                List<String> unlockedIslands = player.getDataHandler()
+                List<String> unlockedIslands = player.getSkyblockDataHandler()
                         .get(SkyBlockDataHandler.Data.VISITED_ISLANDS, DatapointStringList.class)
                         .getValue();
                 if (unlockedIslands.contains(warp)) {
@@ -45,7 +45,7 @@ public class WarpCommand extends HypixelCommand {
 
             TravelScrollType scroll = TravelScrollType.getFromInternalName(warp);
             if (scroll != null) {
-                List<String> unlockedWarps = player.getDataHandler()
+                List<String> unlockedWarps = player.getSkyblockDataHandler()
                         .get(SkyBlockDataHandler.Data.USED_SCROLLS, DatapointStringList.class)
                         .getValue();
                 TravelScrollIslands islandFromScroll = TravelScrollIslands.getFromTravelScroll(scroll);

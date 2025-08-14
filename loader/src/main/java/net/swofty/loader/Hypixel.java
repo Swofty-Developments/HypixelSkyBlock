@@ -26,6 +26,7 @@ import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
+import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -111,7 +112,7 @@ public class Hypixel {
          * Initialize TypeLoader
          */
         if (typeLoader instanceof SkyBlockTypeLoader) {
-            new SkyBlockGenericLoader((SkyBlockTypeLoader) typeLoader).initialize(minecraftServer);
+            new SkyBlockGenericLoader(typeLoader).initialize(minecraftServer);
         }
 
         /**

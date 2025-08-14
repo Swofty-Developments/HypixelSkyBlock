@@ -3,9 +3,11 @@ package net.swofty.type.hub.villagers;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.hub.gui.GUIShopLibrarian;
-import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerParameters;
+import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
+import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
@@ -36,18 +38,19 @@ public class VillagerLibrarian extends NPCVillagerDialogue {
 
     @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
-        if (isInDialogue(e.player())) return;
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
+        if (isInDialogue(player)) return;
 
-        MissionData data = e.player().getMissionData();
+        MissionData data = player.getMissionData();
 
         if (data.isCurrentlyActive("speak_to_librarian")) {
-            setDialogue(e.player(), "quest-hello").thenRun(() -> {
+            setDialogue(player, "quest-hello").thenRun(() -> {
                 data.endMission("speak_to_librarian");
             });
             return;
         }
 
-        new GUIShopLibrarian().open(e.player());
+        new GUIShopLibrarian().open(player);
     }
 
     @Override

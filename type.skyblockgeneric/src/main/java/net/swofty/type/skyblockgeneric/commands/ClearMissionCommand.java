@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.commands;
 
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMissionData;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionBreakLog;
@@ -21,7 +22,7 @@ public class ClearMissionCommand extends HypixelCommand {
 
             sender.sendMessage("§aYour missions have been cleared.");
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
-            player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.MISSION_DATA, DatapointMissionData.class)
+            player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.MISSION_DATA, DatapointMissionData.class)
                     .setValue(new MissionData());
             player.getMissionData().startMission(MissionBreakLog.class);
         });

@@ -11,6 +11,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.PlayerShopData;
 import net.swofty.commons.SkyBlockPlayerProfiles;
 import net.swofty.commons.item.ItemType;
+import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.*;
@@ -35,7 +36,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandler {
+public class SkyBlockDataHandler extends DataHandler {
     @Getter
     private HypixelDataHandler account;
     @Getter
@@ -140,6 +141,22 @@ public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandle
         return account.getDatapoint(key);
     }
 
+    public SkyBlockDatapoint<?> getSkyBlockDatapoint(String key) {
+        return (SkyBlockDatapoint<?>) getDatapoint(key);
+    }
+
+    // from https://github.com/Swofty-Developments/HypixelSkyBlock/blob/583d8fa4949fd16e06a4f21e94381cbbade3da31/type.generic/src/main/java/net/swofty/types/generic/data/DataHandler.java#L85
+    public static SkyBlockDataHandler getProfileOfOfflinePlayer(UUID uuid, UUID profileUUID) throws RuntimeException {
+        if (userCache.containsKey(uuid))
+            return (SkyBlockDataHandler) userCache.get(uuid);
+
+        // SkyBlockPlayerProfiles playerProfiles = new UserDatabase(uuid).getProfiles(); // what is this for? - ArikSquad
+        if (profileUUID == null)
+            throw new RuntimeException("No profile selected for user " + uuid.toString());
+
+        return createFromProfileOnly(ProfilesDatabase.fetchDocument(profileUUID));
+    }
+
     /** SB datapoint by enum (no generic param). */
     public Datapoint<?> get(Data datapoint) {
         Datapoint<?> dp = skyblockPoints.get(datapoint.key);
@@ -176,6 +193,33 @@ public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandle
                 }
             }
         }
+    }
+
+    public static SkyBlockDataHandler initUserWithDefaultData(UUID uuid) {
+        SkyBlockDataHandler h = new SkyBlockDataHandler();
+        h.uuid = uuid;
+        for (HypixelDataHandler.Data data : HypixelDataHandler.Data.values()) {
+            try {
+                h.datapoints.put(
+                        data.getKey(),
+                        data.getDefaultDatapoint().deepClone().setUser(h).setData(data)
+                );
+            } catch (Exception e) {
+                Logger.error("Issue with datapoint " + data.getKey() + " for user " + uuid + " - fix");
+                e.printStackTrace();
+            }
+        }
+        return h;
+    }
+
+    public Map<String, Object> getCoopValues() {
+        Map<String, Object> values = new HashMap<>();
+        Arrays.stream(Data.values()).forEach(data -> {
+            if (data.isCoopPersistent) {
+                values.put(data.getKey(), getDatapoint(data.getKey()).getValue());
+            }
+        });
+        return values;
     }
 
     public static @Nullable UUID getPotentialUUIDFromName(String name) throws RuntimeException {
@@ -443,7 +487,7 @@ public class SkyBlockDataHandler extends net.swofty.type.generic.data.DataHandle
     public static void startRepeatSetValueLoop() {
         MinecraftServer.getSchedulerManager().submitTask(() -> {
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
-                SkyBlockDataHandler h = player.getDataHandler();
+                SkyBlockDataHandler h = player.getSkyblockDataHandler();
                 for (Data data : Data.values()) {
                     if (data.repeatSetValue) {
                         Datapoint<?> dp = h.get(data);

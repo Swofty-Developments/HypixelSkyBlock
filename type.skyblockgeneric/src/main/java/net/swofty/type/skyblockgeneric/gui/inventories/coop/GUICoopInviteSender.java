@@ -9,7 +9,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
@@ -63,7 +62,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                 coop.save();
 
                 UUID profileId = UUID.randomUUID();
-                SkyBlockDataHandler handler = SkyBlockDataHandler.initUserWithDefaultData(player.getUuid()); // TODO: make this for SkyblockDataHandler
+                SkyBlockDataHandler handler = SkyBlockDataHandler.initUserWithDefaultData(player.getUuid());
 
                 handler.get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).setValue(true);
 
@@ -74,23 +73,23 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                     UUID otherCoopMember = coop.memberProfiles().getFirst();
                     ProfilesDatabase islandDatabase = new ProfilesDatabase(otherCoopMember.toString());
                     if (islandDatabase.exists()) {
-                        SkyBlockDataHandler islandHandler = SkyBlockDataHandler.fromDocument(islandDatabase.getDocument()); // TODO: invalid fromDocument usage?
+                        SkyBlockDataHandler islandHandler = SkyBlockDataHandler.createFromProfileOnly(islandDatabase.getDocument());
                         handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(islandHandler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
                         handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(islandHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
                     } else {
                         SkyBlockPlayer profileOwner = SkyBlockGenericLoader.getPlayerFromProfileUUID(otherCoopMember);
 
                         handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(
-                                profileOwner.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
+                                profileOwner.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
                         handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(
-                                profileOwner.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
+                                profileOwner.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
                         );
                     }
                 }
 
                 player.kick("§cYou must reconnect to switch profiles");
 
-                ProfilesDatabase.collection.insertOne(handler.toDocument(profileId));
+                ProfilesDatabase.collection.insertOne(handler.toProfileDocument(profileId));
                 coop.memberProfiles().add(profileId);
                 coop.save();
 

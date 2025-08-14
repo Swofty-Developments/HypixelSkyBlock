@@ -68,7 +68,7 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
             }
         });
 
-        if (((SkyBlockPlayer) getPlayer()).getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().isEmpty()) {
+        if (((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().isEmpty()) {
             set(new GUIClickableItem(15) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
@@ -98,7 +98,7 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§aManage Auctions", Material.GOLDEN_HORSE_ARMOR, 1,
-                            "§7You own §e" + player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size() + " auctions §7in progress or",
+                            "§7You own §e" + player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size() + " auctions §7in progress or",
                             "§7which recently ended.",
                             " ",
                             "§eClick to manage!");
@@ -106,7 +106,7 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
             });
         }
 
-        if (!((SkyBlockPlayer) getPlayer()).getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue().isEmpty()) {
+        if (!((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue().isEmpty()) {
             set(new GUIClickableItem(13) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {

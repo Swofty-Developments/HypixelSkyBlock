@@ -33,8 +33,8 @@ public class AuctionViewThirdBin implements AuctionView {
         if (!item.getBids().isEmpty()) {
             // Check if bidder is the player
             if (item.getBids().getFirst().uuid().equals(player.getUuid())) {
-                DatapointUUIDList activeBids = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
-                DatapointUUIDList inactiveBids = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_BIDS, DatapointUUIDList.class);
+                DatapointUUIDList activeBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
+                DatapointUUIDList inactiveBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_BIDS, DatapointUUIDList.class);
 
                 if (activeBids.getValue().contains(item.getUuid())) {
                     gui.set(new GUIClickableItem(31) {
@@ -105,14 +105,14 @@ public class AuctionViewThirdBin implements AuctionView {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                double coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
+                double coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
                 if (coins < item.getStartingPrice()) {
                     player.sendMessage("§cYou do not have enough coins to purchase this item!");
                     return;
                 }
 
                 player.sendMessage("§7Putting coins in escrow...");
-                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins - item.getStartingPrice());
+                player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins - item.getStartingPrice());
 
                 player.sendMessage("§7Processing purchase...");
 
@@ -125,7 +125,7 @@ public class AuctionViewThirdBin implements AuctionView {
                 if (!item.getBids().isEmpty()) {
                     player.sendMessage("§cCouldn't purchase the item, it has been sold!");
                     player.sendMessage("§8Returning escrowed coins...");
-                    player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + item.getStartingPrice());
+                    player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + item.getStartingPrice());
                     return;
                 }
 
@@ -134,15 +134,15 @@ public class AuctionViewThirdBin implements AuctionView {
                 if (originatorCoop != null && purchaserCoop != null && originatorCoop.isSameAs(purchaserCoop)) {
                     player.sendMessage("§cCannot purchase an item from someone in the same coop!");
                     player.sendMessage("§8Returning escrowed coins...");
-                    player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + item.getStartingPrice());
+                    player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + item.getStartingPrice());
                     return;
                 }
 
-                DatapointUUIDList activeBids = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
+                DatapointUUIDList activeBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
                 activeBids.setValue(new ArrayList<>(activeBids.getValue()) {{
                     add(item.getUuid());
                 }});
-                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).setValue(activeBids.getValue());
+                player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).setValue(activeBids.getValue());
 
                 // Add player bid to item and update it
                 item.setBids(new ArrayList<>(item.getBids()) {{

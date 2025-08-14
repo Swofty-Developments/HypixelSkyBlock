@@ -3,6 +3,8 @@ package net.swofty.type.skyblockgeneric.redis.service;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
@@ -27,15 +29,15 @@ public class RedisGetPlayerData implements ServiceToClient {
         }
 
         try {
-            DataHandler.Data dataType = DataHandler.Data.fromKey(dataKey);
+            SkyBlockDataHandler.Data dataType = SkyBlockDataHandler.Data.fromKey(dataKey);
             if (dataType == null) {
                 return new JSONObject()
                         .put("success", false)
                         .put("error", "Invalid data key: " + dataKey);
             }
 
-            Object data = player.getDataHandler().get(dataType, dataType.getType()).getValue();
-            String serializedData = dataType.getDefaultDatapoint().getSerializer().serialize(data);
+            Object data = player.getSkyblockDataHandler().get(dataType, dataType.getType()).getValue();
+            String serializedData = ((SkyBlockDatapoint) dataType.getDefaultDatapoint()).getSerializer().serialize(data);
 
             return new JSONObject()
                     .put("success", true)

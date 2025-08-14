@@ -6,7 +6,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
@@ -47,7 +46,7 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getCloseItem(31));
 
-        DatapointBankData.BankData bankData = (((SkyBlockPlayer) player).getDataHandler())
+        DatapointBankData.BankData bankData = (((SkyBlockPlayer) player).getSkyblockDataHandler())
                 .get(SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class)
                 .getValue();
 

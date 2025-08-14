@@ -5,6 +5,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -32,12 +33,12 @@ public class GUILevelPrefixRewards extends HypixelInventoryGUI {
         set(GUIClickableItem.getCloseItem(49));
         set(GUIClickableItem.getGoBackItem(48, new GUILevelRewards()));
 
-        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getPlayer().getSkyBlockExperience();
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = ((SkyBlockPlayer) getPlayer()).getSkyBlockExperience();
 
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add("§7New colors for your level prefix");
                 lore.add("§7shown in TAB and in chat!");
@@ -71,7 +72,7 @@ public class GUILevelPrefixRewards extends HypixelInventoryGUI {
             set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(level.getPrefix() + level.getPrefixDisplay(),
                             level.getPrefixItem(), 1,
                             "§8Level " + level.asInt(),

@@ -73,8 +73,8 @@ public class AuctionViewThirdNormal implements AuctionView {
         });
 
         if (System.currentTimeMillis() > item.getEndTime()) {
-            DatapointUUIDList activeBids = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
-            DatapointUUIDList inactiveBids = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_BIDS, DatapointUUIDList.class);
+            DatapointUUIDList activeBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
+            DatapointUUIDList inactiveBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_BIDS, DatapointUUIDList.class);
 
             // If UUID is in here, it hasn't been claimed yet, if it's not, it has been claimed,
             // goes for both coins and items
@@ -89,7 +89,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                         public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                             player.sendMessage("§8Claiming your bid coins back...");
-                            DatapointDouble coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
+                            DatapointDouble coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                             coins.setValue(coins.getValue() + highestBidMadeByPlayer.value());
                             activeBids.setValue(new ArrayList<>(activeBids.getValue()) {{
                                 remove(item.getUuid());
@@ -224,7 +224,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                     return;
                 }
 
-                DatapointDouble coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
+                DatapointDouble coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                 if (coins.getValue() < gui.bidAmount) {
                     player.sendMessage("§cYou do not have enough coins to bid this amount!");
                     return;
@@ -294,7 +294,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                     new GUIAuctionViewItem(gui.auctionID, gui.previousGUI).open(player);
 
                     // Add auction uuid to activebids
-                    DatapointUUIDList activeBids = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
+                    DatapointUUIDList activeBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
                     activeBids.setValue(new ArrayList<>(activeBids.getValue()) {{
                         add(item.getUuid());
                     }});

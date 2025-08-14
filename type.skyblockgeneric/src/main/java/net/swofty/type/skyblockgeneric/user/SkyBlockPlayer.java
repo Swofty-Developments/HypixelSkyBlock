@@ -96,21 +96,17 @@ public class SkyBlockPlayer extends HypixelPlayer {
         super(playerConnection, gameProfile);
     }
 
-    public SkyBlockDataHandler getDataHandler() {
-        return HypixelDataHandler.getUser(this.getUuid());
-    }
-
-    public SkyBlockDataHandler getSkyBlockData() {
+	public SkyBlockDataHandler getSkyblockDataHandler() {
         return (SkyBlockDataHandler) SkyBlockDataHandler.getUser(this.getUuid());
     }
 
     public DatapointMuseum.MuseumData getMuseumData() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
     }
 
     public PlayerSkin getPlayerSkin(){
-        String texture = getDataHandler().get(SkyBlockDataHandler.Data.SKIN_TEXTURE , DatapointString.class).getValue();
-        String signature = getDataHandler().get(SkyBlockDataHandler.Data.SKIN_SIGNATURE , DatapointString.class).getValue();
+        String texture = getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SKIN_TEXTURE , DatapointString.class).getValue();
+        String signature = getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SKIN_SIGNATURE , DatapointString.class).getValue();
         return new PlayerSkin(texture , signature);
     }
 
@@ -131,11 +127,11 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public DatapointPetData.UserPetData getPetData() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.PET_DATA, DatapointPetData.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.PET_DATA, DatapointPetData.class).getValue();
     }
 
     public MissionData getMissionData() {
-        MissionData data = getDataHandler().get(SkyBlockDataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
+        MissionData data = getSkyblockDataHandler().get(SkyBlockDataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
         data.setSkyBlockPlayer(this);
         return data;
     }
@@ -166,15 +162,15 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public PlayerShopData getShoppingData() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.SHOPPING_DATA, DatapointShopData.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SHOPPING_DATA, DatapointShopData.class).getValue();
     }
 
     public DatapointCollection.PlayerCollection getCollection() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.COLLECTION, DatapointCollection.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COLLECTION, DatapointCollection.class).getValue();
     }
 
     public DatapointSkills.PlayerSkills getSkills() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.SKILLS, DatapointSkills.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SKILLS, DatapointSkills.class).getValue();
     }
 
     public boolean isOnIsland() {
@@ -240,7 +236,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
         } else {
             quiver.setFirstItemInQuiver(null);
         }
-        getDataHandler().get(SkyBlockDataHandler.Data.QUIVER, DatapointQuiver.class).setValue(quiver);
+        getSkyblockDataHandler().get(SkyBlockDataHandler.Data.QUIVER, DatapointQuiver.class).setValue(quiver);
         ActionPlayerChangeHypixelMenuDisplay.runCheck(this);
         return item;
     }
@@ -280,7 +276,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public void setMuseumData(DatapointMuseum.MuseumData data) {
-        getDataHandler().get(SkyBlockDataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).setValue(data);
+        getSkyblockDataHandler().get(SkyBlockDataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).setValue(data);
     }
 
     public SkyBlockItem[] getAllInventoryItems() {
@@ -319,7 +315,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public boolean isCoop() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue();
     }
 
     public CoopDatabase.Coop getCoop() {
@@ -463,19 +459,19 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public DatapointQuiver.PlayerQuiver getQuiver() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.QUIVER, DatapointQuiver.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.QUIVER, DatapointQuiver.class).getValue();
     }
 
     public DatapointAccessoryBag.PlayerAccessoryBag getAccessoryBag() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.ACCESSORY_BAG, DatapointAccessoryBag.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.ACCESSORY_BAG, DatapointAccessoryBag.class).getValue();
     }
 
     public DatapointSackOfSacks.PlayerSackOfSacks getSackOfSacks() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.SACK_OF_SACKS, DatapointSackOfSacks.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SACK_OF_SACKS, DatapointSackOfSacks.class).getValue();
     }
 
     public DatapointItemsInSacks.PlayerItemsInSacks getSackItems() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.ITEMS_IN_SACKS, DatapointItemsInSacks.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.ITEMS_IN_SACKS, DatapointItemsInSacks.class).getValue();
     }
 
     public BazaarConnector getBazaarConnector() {
@@ -577,11 +573,11 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public DatapointFairySouls.PlayerFairySouls getFairySouls() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class).getValue();
     }
 
     public DatapointSkyBlockExperience.PlayerSkyBlockExperience getSkyBlockExperience() {
-        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getDataHandler().get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE,
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE,
                 DatapointSkyBlockExperience.class
         ).getValue();
         experience.setAttachedPlayer(this);
@@ -657,11 +653,11 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public double getCoins() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
     }
 
     public void setCoins(double amount) {
-        getDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(amount);
+        getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(amount);
     }
 
     public void addCoins(double amount) {
@@ -673,11 +669,11 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public Integer getBits() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue();
     }
 
     public void setBits(int amount) {
-        getDataHandler().get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).setValue(amount);
+        getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).setValue(amount);
     }
 
     public void addBits(int amount) {
@@ -689,11 +685,11 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public Integer getGems() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.GEMS, DatapointInteger.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.GEMS, DatapointInteger.class).getValue();
     }
 
     public void setGems(int amount) {
-        getDataHandler().get(SkyBlockDataHandler.Data.GEMS, DatapointInteger.class).setValue(amount);
+        getSkyblockDataHandler().get(SkyBlockDataHandler.Data.GEMS, DatapointInteger.class).setValue(amount);
     }
 
     public void addGems(int amount) {
@@ -726,11 +722,11 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public Long getBoosterCookieExpirationDate() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.BOOSTER_COOKIE_EXPIRATION_DATE, DatapointLong.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BOOSTER_COOKIE_EXPIRATION_DATE, DatapointLong.class).getValue();
     }
 
     public void setBoosterCookieExpirationDate(long timestamp) {
-        getDataHandler().get(SkyBlockDataHandler.Data.BOOSTER_COOKIE_EXPIRATION_DATE, DatapointLong.class).setValue(timestamp);
+        getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BOOSTER_COOKIE_EXPIRATION_DATE, DatapointLong.class).setValue(timestamp);
     }
 
     public boolean isBoosterCookieActive() {
@@ -738,21 +734,21 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public DatapointKat.PlayerKat getKatData() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.KAT, DatapointKat.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.KAT, DatapointKat.class).getValue();
     }
 
     public DatapointBestiary.PlayerBestiary getBestiaryData() {
-        DatapointBestiary.PlayerBestiary bestiary = getDataHandler().get(SkyBlockDataHandler.Data.BESTIARY, DatapointBestiary.class).getValue();
+        DatapointBestiary.PlayerBestiary bestiary = getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BESTIARY, DatapointBestiary.class).getValue();
         bestiary.setAttachedPlayer(this);
         return bestiary;
     }
 
     public Long getExperience() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue();
     }
 
     public void setExperience(long value) {
-        getDataHandler().get(SkyBlockDataHandler.Data.EXPERIENCE, DatapointLong.class).setValue(value);
+        getSkyblockDataHandler().get(SkyBlockDataHandler.Data.EXPERIENCE, DatapointLong.class).setValue(value);
 
         int level;
         float progressToNext;
@@ -797,7 +793,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public DatapointDeaths.PlayerDeaths getDeathData() {
-        return getDataHandler().get(SkyBlockDataHandler.Data.DEATHS, DatapointDeaths.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.DEATHS, DatapointDeaths.class).getValue();
     }
 
     @Override

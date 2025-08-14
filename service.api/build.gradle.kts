@@ -24,7 +24,7 @@ repositories {
 dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
     implementation(project(":service.generic"))
-    implementation(project(":type.skyblockgeneric"))
+    implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.sparkjava:spark-core:2.9.4")

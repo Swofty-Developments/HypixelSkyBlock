@@ -116,7 +116,7 @@ public class BazaarAwarder {
             var completedTransaction = DatapointCompletedBazaarTransactions.CompletedBazaarTransaction
                     .createBuyTransaction(itemName, quantity, actualPrice, originalBid, transaction.buyerOrderId());
 
-            var completedTransactions = player.getDataHandler().get(
+            var completedTransactions = player.getSkyblockDataHandler().get(
                     SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                     DatapointCompletedBazaarTransactions.class
             ).getValue();
@@ -151,7 +151,7 @@ public class BazaarAwarder {
                     .createRefundTransaction(transaction.itemName(), transaction.refundAmount(),
                             transaction.reason(), transaction.orderId());
 
-            var completedTransactions = player.getDataHandler().get(
+            var completedTransactions = player.getSkyblockDataHandler().get(
                     SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                     DatapointCompletedBazaarTransactions.class
             ).getValue();
@@ -196,7 +196,7 @@ public class BazaarAwarder {
                     DatapointCompletedBazaarTransactions.CompletedBazaarTransaction.createSellTransaction(
                             itemName, quantity, pricePerUnit, taxTaken, transaction.sellerOrderId());
 
-            var completedTransactions = player.getDataHandler().get(
+            var completedTransactions = player.getSkyblockDataHandler().get(
                     SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                     DatapointCompletedBazaarTransactions.class
             ).getValue();
@@ -254,7 +254,7 @@ public class BazaarAwarder {
             }
 
             // Store the completed transaction in player data (unclaimed)
-            var completedTransactions = player.getDataHandler().get(
+            var completedTransactions = player.getSkyblockDataHandler().get(
                     SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                     DatapointCompletedBazaarTransactions.class
             ).getValue();

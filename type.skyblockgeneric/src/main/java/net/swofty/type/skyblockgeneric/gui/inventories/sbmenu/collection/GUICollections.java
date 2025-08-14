@@ -41,7 +41,7 @@ public class GUICollections extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>(List.of(
                         "§7View all of the items available in",
                         "§7SkyBlock. Collect more of an item to",
@@ -61,13 +61,13 @@ public class GUICollections extends HypixelInventoryGUI {
         set(new GUIClickableItem(50) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUICraftedMinions(new GUICollections()).open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStackHead("§aCrafted Minions", "ebcc099f3a00ece0e5c4b31d31c828e52b06348d0a4eac11f3fcbef3c05cb407", 1,
                 "§7View all the unique minions that you",
                         "§7have crafted.",
@@ -81,18 +81,18 @@ public class GUICollections extends HypixelInventoryGUI {
             CollectionCategory category = allCategories.get(index);
 
             ArrayList<String> display = new ArrayList<>();
-            getPlayer().getCollection().getDisplay(display, category);
+            ((SkyBlockPlayer) getPlayer()).getCollection().getDisplay(display, category);
 
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUICollectionCategory(category, display).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     ArrayList<String> lore = new ArrayList<>(Arrays.asList(
                             "§7View your " + category.getName() + " Collections!",
                             " "

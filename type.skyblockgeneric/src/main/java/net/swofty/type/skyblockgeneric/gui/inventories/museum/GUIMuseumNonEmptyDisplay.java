@@ -58,7 +58,7 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
     @SneakyThrows
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        SkyBlockPlayer player = e.player();
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
         // Get all items at this display position

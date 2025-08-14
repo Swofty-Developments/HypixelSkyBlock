@@ -37,7 +37,7 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!canExchange) {
                     player.sendMessage("§cYou don't have enough Fairy Souls!");
                     return;
@@ -45,7 +45,7 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
 
                 player.closeInventory();
                 player.getFairySouls().exchange();
-                player.getSkyBlockData().get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
+                player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
                                 .setValue(player.getFairySouls());
                 player.sendMessage("§aYou have exchanged your Fairy Souls for rewards!");
                 nextLevel.getDisplay().forEach(player::sendMessage);
@@ -54,18 +54,18 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
                         SkyBlockLevelCause.getFairySoulExchangeCause(nextLevel.ordinal())
                 );
 
-                DatapointBackpacks.PlayerBackpacks backpacks = ((SkyBlockPlayer) getPlayer()).getSkyBlockData().get(
+                DatapointBackpacks.PlayerBackpacks backpacks = ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(
                         SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class
                 ).getValue();
                 backpacks.setUnlockedSlots(backpacks.getUnlockedSlots() +
                         nextLevel.getBackpackSlots());
-                ((SkyBlockPlayer) getPlayer()).getSkyBlockData().get(SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class)
+                ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class)
                         .setValue(backpacks);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>(List.of(
                         "§7Find §dFairy Souls §7around the",
                         "§7world and bring them back to me",

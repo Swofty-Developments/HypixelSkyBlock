@@ -18,6 +18,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.gui.inventories.shop.GUIGenericTradingOptions;
@@ -110,15 +111,16 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
         PaginationList<ShopItem> paginatedItems = new PaginationList<>(INTERIOR.length);
         paginatedItems.addAll(shopItemList);
 
+        SkyBlockPlayer player = (SkyBlockPlayer) getPlayer();
         for (int slot = 0; slot < 36; slot++) {
-            ItemStack stack = getPlayer().getInventory().getItemStack(slot);
+            ItemStack stack = player.getInventory().getItemStack(slot);
 
             if (stack.material().equals(Material.AIR)) continue;
 
             SkyBlockItem item = new SkyBlockItem(stack);
             if (item.hasComponent(SellableComponent.class)) {
                 ItemStack.Builder toReplace = PlayerItemUpdater.playerUpdate(
-                        getPlayer(), stack
+                        player, stack
                 );
 
                 double sellPrice = item.getComponent(SellableComponent.class).getSellValue() * stack.amount();
@@ -139,7 +141,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                                 " §8x" + stack.amount()
                 ).decoration(TextDecoration.ITALIC, false));
 
-                getPlayer().getInventory().setItemStack(slot, toReplace.build());
+                player.getInventory().setItemStack(slot, toReplace.build());
             }
         }
 
@@ -148,14 +150,14 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
             set(new GUIClickableItem(45) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     SkyBlockShopGUI.this.page -= 1;
                     SkyBlockShopGUI.this.open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.createNamedItemStack(Material.ARROW, "§a<-");
                 }
             });
@@ -164,14 +166,14 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
             set(new GUIClickableItem(53) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     SkyBlockShopGUI.this.page += 1;
                     SkyBlockShopGUI.this.open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.createNamedItemStack(Material.ARROW, "§a->");
                 }
             });
@@ -182,7 +184,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
         set(new GUIClickableItem(49) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!player.getShoppingData().hasAnythingToBuyback())
                     return;
 
@@ -195,7 +197,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
 
                 double value = last.getComponent(SellableComponent.class).getSellValue() * amountOfLast;
 
-                double playerCoins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
+                double playerCoins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
                 if (playerCoins < value) {
                     player.sendMessage("§cYou don't have enough coins!");
                     return;
@@ -204,13 +206,13 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                 player.addAndUpdateItem(new SkyBlockItem(itemStack.build()));
                 player.playSuccessSound();
                 player.getShoppingData().popBuyback();
-                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(playerCoins - value);
+                player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(playerCoins - value);
                 updateThis(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!player.getShoppingData().hasAnythingToBuyback()) {
                     return ItemStackCreator.getStack("§aSell Item", Material.HOPPER, 1,
                             "§7Click items in your inventory to",
@@ -253,7 +255,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (item.isHasStock() && !player.getShoppingData().canPurchase(item.item.toUnderstandable(), item.amount)) {
                         player.sendMessage("§cYou have reached the maximum amount of items you can buy!");
                         return;
@@ -283,7 +285,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     try {
                         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
                                 player, sbItem.getItemStackBuilder().build()
@@ -311,7 +313,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                         lore.add("");
                         if (item.hasStock) {
                             lore.add("§7Stock");
-                            lore.add("§6" + getPlayer().getShoppingData().getStock(item.getItem().toUnderstandable()) + " §7remaining");
+                            lore.add("§6" + player.getShoppingData().getStock(item.getItem().toUnderstandable()) + " §7remaining");
                             lore.add("");
                         }
                         lore.add("§eClick to trade!");
@@ -333,6 +335,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
+        SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
         ItemStack stack = e.getClickedItem();
         e.setCancelled(true);
         if (stack.material().equals(Material.AIR)) return;
@@ -342,23 +345,23 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
         if (item.hasComponent(SellableComponent.class)) {
             sellable = item.getComponent(SellableComponent.class);
         } else {
-            e.getPlayer().sendMessage("§cYou can't sell this item!");
+            player.sendMessage("§cYou can't sell this item!");
             return;
         }
 
         double sellPrice = sellable.getSellValue() * stack.amount();
 
-        getPlayer().getShoppingData().pushBuyback(item.toUnderstandable(), stack.amount());
-        getPlayer().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(
-                getPlayer().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() + sellPrice
+        player.getShoppingData().pushBuyback(item.toUnderstandable(), stack.amount());
+        player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(
+                player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() + sellPrice
         );
-        getPlayer().sendMessage(
+        player.sendMessage(
                 "§aYou sold §f" + StringUtility.getTextFromComponent(stack.get(ItemComponent.CUSTOM_NAME)) + "§a for §6"
                         + StringUtility.commaify(sellPrice) + " Coin" + (sellPrice != 1 ? "s" : "") + "§a!"
         );
 
-        getPlayer().getInventory().setItemStack(e.getSlot(), ItemStack.AIR);
-        updateThis(getPlayer());
+        player.getInventory().setItemStack(e.getSlot(), ItemStack.AIR);
+        updateThis(player);
     }
 
     public abstract void initializeShopItems();
@@ -391,7 +394,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
             this.stackable = stackable;
             this.hasStock = hasStock;
         }
-        
+
         public void setDisplayLore(List<String> lores) {
             this.lore = lores;
         }

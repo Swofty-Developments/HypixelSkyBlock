@@ -98,7 +98,7 @@ public abstract class SkillCategory {
 
         @Override
         public void onUnlock(SkyBlockPlayer player) {
-            DatapointDouble coins = player.getSkyBlockData().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
+            DatapointDouble coins = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
             coins.setValue(coins.getValue() + getCoins());
         }
 

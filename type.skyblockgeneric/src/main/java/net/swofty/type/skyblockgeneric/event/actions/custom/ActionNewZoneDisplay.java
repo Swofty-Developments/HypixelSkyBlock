@@ -26,7 +26,7 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
             return;
         }
 
-        DatapointStringList discoveredZones = player.getDataHandler().get(
+        DatapointStringList discoveredZones = player.getSkyblockDataHandler().get(
                 SkyBlockDataHandler.Data.VISITED_REGIONS,
                 DatapointStringList.class
         );

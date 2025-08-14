@@ -1,4 +1,3 @@
-// net/swofty/type/skyblockgeneric/data/SkyBlockDatapoint.java
 package net.swofty.type.skyblockgeneric.data;
 
 import lombok.SneakyThrows;
@@ -9,7 +8,6 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
@@ -71,7 +69,7 @@ public abstract class SkyBlockDatapoint<T> extends Datapoint<T> {
 
             if (!coopMembersProfiles.contains(selectedProfile)) continue;
 
-            DataHandler dh = member.getDataHandler();
+            DataHandler dh = member.getSkyblockDataHandler();
             Datapoint<?> dp = dh.getDatapoint(getKey());
             if (dp instanceof SkyBlockDatapoint<?> sbdp) {
                 ((SkyBlockDatapoint<Object>) sbdp).setValueBypassCoop(value);

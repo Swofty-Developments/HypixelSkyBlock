@@ -52,7 +52,7 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
                     return null;
                 }
 
-                ((SkyBlockPlayer) player).getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().setDuration(
+                ((SkyBlockPlayer) player).getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().setDuration(
                         l * (right.get() ? 60000 : 3600000)
                 );
 
@@ -111,7 +111,7 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
                         " ",
                         "§eClick to set this duration!");
 
-                if (user.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().getDuration() == millis) {
+                if (user.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().getDuration() == millis) {
                     stack = ItemStackCreator.enchant(stack);
                 }
 
@@ -121,7 +121,7 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                user.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().setDuration(millis);
+                user.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().setDuration(millis);
                 new GUIAuctionDuration().open(player);
             }
         };

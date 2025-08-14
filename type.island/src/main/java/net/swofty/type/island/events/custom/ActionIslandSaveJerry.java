@@ -1,14 +1,14 @@
 package net.swofty.type.island.events.custom;
 
-import net.swofty.type.skyblockgeneric.event.EventNodes;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.event.custom.IslandSavedIntoDatabaseEvent;
 import net.swofty.type.skyblockgeneric.utility.JerryInformation;
 
-public class ActionIslandSaveJerry implements SkyBlockEventClass {
+public class ActionIslandSaveJerry implements HypixelEventClass {
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
     public void run(IslandSavedIntoDatabaseEvent event) {
         JerryInformation jerryInformation = event.getIsland().getJerryInformation();
 

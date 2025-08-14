@@ -64,7 +64,7 @@ public class GUIFastTravel extends HypixelInventoryGUI {
         for (int i = 0; i < values.length; i++) {
             TravelScrollIslands island = values[i];
             boolean hasSubMenu = !island.getAssociatedScrolls().isEmpty();
-            boolean hasUnlockedIsland = ((SkyBlockPlayer) e.player()).getDataHandler()
+            boolean hasUnlockedIsland = ((SkyBlockPlayer) e.player()).getSkyblockDataHandler()
                     .get(SkyBlockDataHandler.Data.VISITED_ISLANDS, DatapointStringList.class)
                     .getValue()
                     .contains(island.getInternalName());

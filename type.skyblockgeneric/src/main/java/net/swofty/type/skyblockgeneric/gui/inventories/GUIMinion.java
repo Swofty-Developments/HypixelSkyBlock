@@ -94,7 +94,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
 
                 player.sendMessage("§aYou picked up a minion! You currently have " +
                         player.getSkyBlockIsland().getMinionData().getMinions().size() +
-                " out of a maximum of " + player.getDataHandler().get(
+                " out of a maximum of " + player.getSkyblockDataHandler().get(
                         SkyBlockDataHandler.Data.MINION_DATA,
                         DatapointMinionData.class).getValue().getSlots()
                 + " minions placed.");

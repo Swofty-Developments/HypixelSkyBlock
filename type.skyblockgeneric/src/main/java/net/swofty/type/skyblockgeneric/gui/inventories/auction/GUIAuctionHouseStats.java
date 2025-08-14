@@ -26,7 +26,7 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                DatapointAuctionStatistics.AuctionStatistics stats = player.getDataHandler().get(
+                DatapointAuctionStatistics.AuctionStatistics stats = player.getSkyblockDataHandler().get(
                         SkyBlockDataHandler.Data.AUCTION_STATISTICS,
                         DatapointAuctionStatistics.class
                 ).getValue();
@@ -54,8 +54,8 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                DatapointAuctionStatistics.AuctionStatistics stats = player.getDataHandler().get(
-                        DataHandler.Data.AUCTION_STATISTICS,
+                DatapointAuctionStatistics.AuctionStatistics stats = player.getSkyblockDataHandler().get(
+                        SkyBlockDataHandler.Data.AUCTION_STATISTICS,
                         DatapointAuctionStatistics.class
                 ).getValue();
 

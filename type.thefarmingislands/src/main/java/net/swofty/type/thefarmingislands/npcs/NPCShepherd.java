@@ -6,7 +6,6 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCShepherd extends HypixelNPC {
     public NPCShepherd() {

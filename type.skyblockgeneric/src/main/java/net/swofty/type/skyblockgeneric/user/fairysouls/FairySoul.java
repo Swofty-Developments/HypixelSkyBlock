@@ -48,7 +48,7 @@ public class FairySoul {
 
             player.sendMessage("§d§lSOUL! §fYou found a §dFairy Soul§f!");
             player.sendMessage("§7Go to Tia the Fairy in the §eHub§7 to exchange it for rewards!");
-            player.getDataHandler()
+            player.getSkyblockDataHandler()
                     .get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
                     .setValue(fairySouls);
             return;

@@ -4,12 +4,10 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
-import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCHunterAva extends SkyBlockNPC {
+public class NPCHunterAva extends HypixelNPC {
     public NPCHunterAva() {
         super(new NPCParameters() {
             @Override
