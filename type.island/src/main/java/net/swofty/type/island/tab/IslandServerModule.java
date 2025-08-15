@@ -1,22 +1,26 @@
 package net.swofty.type.island.tab;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.type.skyblockgeneric.SkyBlockConst;
+import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.generic.tab.TablistSkinRegistry;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
 import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
 import net.swofty.type.skyblockgeneric.minion.MinionHandler;
-import net.swofty.type.skyblockgeneric.tab.TablistModule;
-import net.swofty.type.skyblockgeneric.tab.TablistSkinRegistry;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class IslandServerModule extends TablistModule {
+
     @Override
-    public List<TablistEntry> getEntries(SkyBlockPlayer player) {
+    public List<TablistModule.TablistEntry> getEntries(HypixelPlayer p) {
+        SkyBlockPlayer player = (SkyBlockPlayer) p;
         List<IslandMinionData.IslandMinion> minions = player.getSkyBlockIsland().getMinionData().getMinions();
-        DatapointMinionData.ProfileMinionData data = player.getSkyBlockData().get(
+        DatapointMinionData.ProfileMinionData data = player.getSkyblockDataHandler().get(
                 SkyBlockDataHandler.Data.MINION_DATA,
                 DatapointMinionData.class
         ).getValue();
@@ -26,7 +30,7 @@ public class IslandServerModule extends TablistModule {
         ));
 
         entries.add(new TablistEntry("§b§lArea: §7Private Island", TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(" Server: §8" + SkyBlockConst.getServerName(), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(" Server: §8" + HypixelConst.getServerName(), TablistSkinRegistry.GRAY));
         entries.add(new TablistEntry(" Minions: §9" + minions.size() + "§7/§9" + data.getSlots(), TablistSkinRegistry.GRAY));
 
         entries.add(getGrayEntry());

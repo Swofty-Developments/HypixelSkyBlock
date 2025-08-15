@@ -530,7 +530,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                 .stream()
                 .filter(player -> {
                     try {
-                        SkyBlockDataHandler.getUser(player);
+                        SkyBlockDataHandler.getUser(player.getUuid());
                     } catch (Exception e) {
                         return false;
                     }

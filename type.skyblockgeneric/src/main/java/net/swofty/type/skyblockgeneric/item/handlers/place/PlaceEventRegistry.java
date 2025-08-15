@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.instance.block.Block;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
@@ -26,8 +27,8 @@ public class PlaceEventRegistry {
                     return;
                 }
 
-                DatapointMinionData.ProfileMinionData playerData = player.getDataHandler().get(
-                        DataHandler.Data.MINION_DATA, DatapointMinionData.class
+                DatapointMinionData.ProfileMinionData playerData = player.getSkyblockDataHandler().get(
+                        SkyBlockDataHandler.Data.MINION_DATA, DatapointMinionData.class
                 ).getValue();
 
                 int slots = playerData.getSlots();

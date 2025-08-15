@@ -11,6 +11,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStorage;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -36,7 +37,7 @@ public class GUIStorage extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aEnder Chest", Material.ENDER_CHEST, 1,
                         "§7Store global items you can",
                         "§7access anywhere in your ender",
@@ -46,7 +47,7 @@ public class GUIStorage extends HypixelInventoryGUI {
         set(new GUIItem(22) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aBackpacks", Material.CHEST, 1,
                         "§7Place backpack items in these slots",
                         "§7to use them as additional storage",
@@ -57,8 +58,8 @@ public class GUIStorage extends HypixelInventoryGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        DatapointStorage.PlayerStorage storage = getPlayer().getDataHandler().get(
-                DataHandler.Data.STORAGE, DatapointStorage.class
+        DatapointStorage.PlayerStorage storage = ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(
+                SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class
         ).getValue();
 
         // Initialize empty storages
@@ -73,7 +74,7 @@ public class GUIStorage extends HypixelInventoryGUI {
             set(new GUIClickableItem(ender_slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!storage.hasPage(page)) return;
 
                     if (e.getClickType() == ClickType.RIGHT_CLICK) {
@@ -85,7 +86,7 @@ public class GUIStorage extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!storage.hasPage(page))
                         return ItemStackCreator.getStack("§cLocked Page", Material.RED_STAINED_GLASS_PANE, 1,
                                 "§7Unlock more Ender Chest pages in",
@@ -101,8 +102,8 @@ public class GUIStorage extends HypixelInventoryGUI {
             });
         }
 
-        DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getDataHandler().get(
-                DataHandler.Data.BACKPACKS, DatapointBackpacks.class
+        DatapointBackpacks.PlayerBackpacks backpacks = ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(
+                SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class
         ).getValue();
 
         Map<Integer, UnderstandableSkyBlockItem> backpackItems = backpacks.getBackpacks();
@@ -114,7 +115,7 @@ public class GUIStorage extends HypixelInventoryGUI {
                 set(new GUIItem(backpack_slot) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§cLocked Backpack Slot " + slot,
                                 Material.GRAY_DYE, 1,
                                 "§7Talk to Tia the Fairy to unlock more",
@@ -128,7 +129,7 @@ public class GUIStorage extends HypixelInventoryGUI {
                 set(new GUIClickableItem(backpack_slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
 
                         if (item.isNA()) return;
@@ -139,14 +140,15 @@ public class GUIStorage extends HypixelInventoryGUI {
                     }
 
                     @Override
-                    public void runPost(InventoryClickEvent e2, SkyBlockPlayer player) {
+                    public void runPost(InventoryClickEvent e2, HypixelPlayer p) {
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         SkyBlockItem item = new SkyBlockItem(e2.getCursorItem());
 
                         if (item.isNA()) return;
                         if (!(item.hasComponent(BackpackComponent.class))) return;
 
                         backpackItems.put(slot, item.toUnderstandable());
-                        player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
+                        player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
                                 new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.getUnlockedSlots())
                         );
 
@@ -158,7 +160,7 @@ public class GUIStorage extends HypixelInventoryGUI {
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§eEmpty Backpack Slot " + slot,
                                 Material.BROWN_STAINED_GLASS_PANE, slot,
                                 " ",
@@ -173,7 +175,8 @@ public class GUIStorage extends HypixelInventoryGUI {
 
             set(new GUIClickableItem(backpack_slot) {
                 @Override
-                public void run(InventoryPreClickEvent e2, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e2, HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (e2.getClickType() == ClickType.RIGHT_CLICK) {
                         if (!item.getAttributeHandler().getBackpackData().items().isEmpty()
                                 && !item.getAttributeHandler().getBackpackData().items()
@@ -195,13 +198,13 @@ public class GUIStorage extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public void runPost(InventoryClickEvent e2, SkyBlockPlayer player) {
+                public void runPost(InventoryClickEvent e2, HypixelPlayer player) {
                     onOpen(e);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStackHead("§6Backpack Slot " + slot,
                             item.getComponent(SkullHeadComponent.class).getSkullTexture(item), slot,
                             item.getAttributeHandler().getRarity().getColor() +

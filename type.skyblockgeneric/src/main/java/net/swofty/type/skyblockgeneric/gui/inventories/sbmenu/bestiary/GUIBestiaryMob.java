@@ -92,10 +92,10 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
 
             set(new GUIItem(slot) {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     ArrayList<String> lore = new ArrayList<>();
-                    int kills = getPlayer().getBestiaryData().getAmount(mob);
-                    int deaths = getPlayer().getDeathData().getAmount(mob.getMobID());
+                    int kills = player.getBestiaryData().getAmount(mob);
+                    int deaths = player.getDeathData().getAmount(mob.getMobID());
                     OtherLoot otherLoot = mob.getOtherLoot();
 
                     List<SkyBlockLootTable.LootRecord> commonLoot = new ArrayList<>();

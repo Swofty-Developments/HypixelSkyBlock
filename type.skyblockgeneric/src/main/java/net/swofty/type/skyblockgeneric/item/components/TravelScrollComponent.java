@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
+import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -31,7 +32,7 @@ public class TravelScrollComponent extends SkyBlockItemComponent {
     }
 
     private void onInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        List<String> scrolls = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.USED_SCROLLS, DatapointStringList.class).getValue();
+        List<String> scrolls = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.USED_SCROLLS, DatapointStringList.class).getValue();
 
         if (scrolls.contains(getTravelScrollType().getInternalName())) {
             player.sendMessage("§cYou have already unlocked this travel scroll!");
@@ -39,7 +40,7 @@ public class TravelScrollComponent extends SkyBlockItemComponent {
         }
 
         Rank requiredRank = getTravelScrollType().getRequiredRank();
-        if (!player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(requiredRank)) {
+        if (!player.getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(requiredRank)) {
             player.sendMessage("§cYou must be at least " + requiredRank.getPrefix() + "§c to unlock this travel scroll!");
             return;
         }
@@ -47,7 +48,7 @@ public class TravelScrollComponent extends SkyBlockItemComponent {
         player.takeItem(item.getAttributeHandler().getPotentialType(), 1);
 
         scrolls.add(getTravelScrollType().getInternalName());
-        player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.USED_SCROLLS, DatapointStringList.class).setValue(scrolls);
+        player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.USED_SCROLLS, DatapointStringList.class).setValue(scrolls);
         player.sendMessage("§aYou have unlocked the " + getTravelScrollType().getInternalName() + " §atravel scroll!");
 
     }

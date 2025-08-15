@@ -24,7 +24,7 @@ public class ActionPlayerChat implements HypixelEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         event.setCancelled(true);
 
-        SkyBlockDataHandler dataHandler = player.getDataHandler();
+        SkyBlockDataHandler dataHandler = player.getSkyblockDataHandler();
         if (dataHandler == null) return;
 
         String message = event.getRawMessage();

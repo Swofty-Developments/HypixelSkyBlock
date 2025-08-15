@@ -91,7 +91,7 @@ public class GUICraftedMinions extends HypixelPaginatedGUI<SkyBlockItem> {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack.Builder itemStack;
                 MinionRegistry minionRegistry = item.getAttributeHandler().getMinionType();
-                DatapointMinionData.ProfileMinionData playerData = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.MINION_DATA, DatapointMinionData.class).getValue();
+                DatapointMinionData.ProfileMinionData playerData = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.MINION_DATA, DatapointMinionData.class).getValue();
                 ArrayList<String> lore = new ArrayList<>();
                 List<Integer> tiers = List.of();
                 boolean unlocked = false;

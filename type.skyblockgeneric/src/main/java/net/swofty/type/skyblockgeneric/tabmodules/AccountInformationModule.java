@@ -4,6 +4,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkillCategory;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
@@ -23,18 +24,18 @@ public class AccountInformationModule extends TablistModule {
                 new TablistEntry(getCentered("§6§lAccount Info"), TablistSkinRegistry.ORANGE)
         ));
 
-        DataHandler dataHandler = player.getDataHandler();
-        DatapointBankData.BankData bankData = dataHandler.get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
+        SkyBlockDataHandler dataHandler = player.getSkyblockDataHandler();
+        DatapointBankData.BankData bankData = dataHandler.get(SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
 
         entries.add(new TablistEntry("§e§lProfile: §a" +
-                dataHandler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
+                dataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
                 TablistSkinRegistry.GRAY));
         entries.add(new TablistEntry(" Pet Sitter: §bN/A", TablistSkinRegistry.GRAY));
         entries.add(new TablistEntry(" Bank: §6" + StringUtility.shortenNumber(bankData.getAmount())
                 + " §7/ §6" + StringUtility.shortenNumber(bankData.getBalanceLimit()), TablistSkinRegistry.GRAY));
         entries.add(getGrayEntry());
 
-        SkillCategories skillCategory = dataHandler.get(DataHandler.Data.LAST_EDITED_SKILL, DatapointSkillCategory.class).getValue();
+        SkillCategories skillCategory = dataHandler.get(SkyBlockDataHandler.Data.LAST_EDITED_SKILL, DatapointSkillCategory.class).getValue();
         DatapointSkills.PlayerSkills skills = player.getSkills();
         ItemStatistics playerStatistics = player.getStatistics().allStatistics();
         entries.add(new TablistEntry("§e§lSkills: §a" +

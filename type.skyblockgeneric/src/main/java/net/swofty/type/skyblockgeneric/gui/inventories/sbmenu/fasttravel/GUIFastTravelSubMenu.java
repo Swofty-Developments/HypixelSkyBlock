@@ -92,7 +92,7 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
         List<TravelScrollType> scrolls = island.getAssociatedScrolls();
         for (TravelScrollType scroll : scrolls) {
             int slot = SLOTS[scrolls.indexOf(scroll)];
-            boolean isUnlocked = ((SkyBlockPlayer) getPlayer()).getDataHandler()
+            boolean isUnlocked = ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler()
                     .get(SkyBlockDataHandler.Data.USED_SCROLLS, DatapointStringList.class)
                     .getValue()
                     .contains(scroll.getInternalName());

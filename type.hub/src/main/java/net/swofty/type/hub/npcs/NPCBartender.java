@@ -1,9 +1,10 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.entity.npc.NPCDialogue;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopBartender;
-import net.swofty.type.skyblockgeneric.entity.npc.NPCDialogue;
-import net.swofty.type.skyblockgeneric.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionKillZombies;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToBartender;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -15,22 +16,22 @@ public class NPCBartender extends NPCDialogue {
     public NPCBartender() {
         super(new NPCParameters() {
             @Override
-            public String[] holograms(SkyBlockPlayer player) {
+            public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§9Bartender", "§e§lCLICK"};
             }
 
             @Override
-            public String signature(SkyBlockPlayer player) {
+            public String signature(HypixelPlayer player) {
                 return "XV4wRQHNf+t8UNPxyCQWe9OTKABW2H2q8dKQJD6opc/UpjN8Ho5BZkqeCbCJ0Zdkq6YVzyQTctxOAVx99gi7FCUmtT02Z5lujim8zSemuzAN5ndYvHOBAjOJL51sbftnuGoCPBklmEAJ4uWWl+77mHe2GfXZkHTrBw0yvw777u2vtA8QJwoq2eh/8OPUFWSRtJVeW9kIggwfjJbVYjP7w1im5DKklvL7Tw71TuRx+1VebWhpD3lOTtfq1Vo6ri+LOs4o36Ix/Ec2xnmjeV2BF0CK6gkIbzaMcF4efFHxonmW2GRXL+E/tIpvAm4sY5JR5z/jV4Mp6qEN0CaU5WR8DSdkwLMTrRGuzRoZUjvZL2B6kZ7yaVmpOo7PeNVAr8hPRjAB489qJVLDawfpVCNt4jgQMMDBJUPk8F4DJPBaUMFZXNM4BO9B6DH6xVHNsaZhOZZu5tKKyXBg0yuT7FA1OgaFcye8z+JSIDHNd3kxcR02idHDmI1pDL6da2pdPoAmz19I5Ao7rI9kXPMdJUPmY7aIEd4j6RXXXnJ3UqUcKnDQqf3ElwSbZXayTo/Wn6P9KFa2aTjR/gfvIjf7+Jn9vyVGtbFG8x+xg1oSZR4RE2rmOhHQKEETaXakqbRMWUt1EHWm4c/HpxpxuRSNvFAwkvdrV4mt8VrCo0x+A/Z/3cQ=";
             }
 
             @Override
-            public String texture(SkyBlockPlayer player) {
+            public String texture(HypixelPlayer player) {
                 return "ewogICJ0aW1lc3RhbXAiIDogMTYwODIxODk0MDY5NiwKICAicHJvZmlsZUlkIiA6ICI3MzgyZGRmYmU0ODU0NTVjODI1ZjkwMGY4OGZkMzJmOCIsCiAgInByb2ZpbGVOYW1lIiA6ICJJb3lhbCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8xYzkyNTgwODcwNzRlYjEzMTRkN2EwZGQzM2QxZmNiNWNlYmYzZjZmMWE0ZThkMjM1NzIxYmMyNTliNGU0OTZhIiwKICAgICAgIm1ldGFkYXRhIiA6IHsKICAgICAgICAibW9kZWwiIDogInNsaW0iCiAgICAgIH0KICAgIH0KICB9Cn0=";
             }
 
             @Override
-            public Pos position(SkyBlockPlayer player) {
+            public Pos position(HypixelPlayer player) {
                 return new Pos(-83.5, 71, -47.5, 0, 0);
             }
 
@@ -43,27 +44,28 @@ public class NPCBartender extends NPCDialogue {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        if (!e.player().getMissionData().hasCompleted(MissionKillZombies.class)) {
-            if (isInDialogue(e.player())) return;
-            if (e.player().getMissionData().isCurrentlyActive(MissionKillZombies.class))
-                setDialogue(e.player(), "quest-talk");
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
+        if (!player.getMissionData().hasCompleted(MissionKillZombies.class)) {
+            if (isInDialogue(player)) return;
+            if (player.getMissionData().isCurrentlyActive(MissionKillZombies.class))
+                setDialogue(player, "quest-talk");
             else
-                setDialogue(e.player(), "quest-hello").thenRun(() -> {
-                    e.player().getMissionData().startMission(MissionKillZombies.class);
+                setDialogue(player, "quest-hello").thenRun(() -> {
+                    player.getMissionData().startMission(MissionKillZombies.class);
                 });
             return;
         }
-        if (!e.player().getMissionData().hasCompleted(MissionTalkToBartender.class)) {
-            if (isInDialogue(e.player())) return;
-            setDialogue(e.player(), "quest-complete").thenRun(() -> {
-                e.player().getMissionData().endMission(MissionTalkToBartender.class);
+        if (!player.getMissionData().hasCompleted(MissionTalkToBartender.class)) {
+            if (isInDialogue(player)) return;
+            setDialogue(player, "quest-complete").thenRun(() -> {
+                player.getMissionData().endMission(MissionTalkToBartender.class);
             });
         }
-        new GUIShopBartender().open(e.player());
+        new GUIShopBartender().open(player);
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{

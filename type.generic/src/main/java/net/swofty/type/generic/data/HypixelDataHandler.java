@@ -125,6 +125,12 @@ public class HypixelDataHandler extends DataHandler {
         return h;
     }
 
+    public static String getPotentialIGNFromUUID(UUID uuid) {
+        if (userCache.containsKey(uuid))
+            return ((HypixelDataHandler) userCache.get(uuid)).get(Data.IGN, DatapointString.class).getValue();
+        return null; // TODO: implement name lookup
+    }
+
     /** Account-wide data (non-generic enum). */
     public enum Data {
         RANK("rank", DatapointRank.class, new DatapointRank("rank", Rank.DEFAULT),

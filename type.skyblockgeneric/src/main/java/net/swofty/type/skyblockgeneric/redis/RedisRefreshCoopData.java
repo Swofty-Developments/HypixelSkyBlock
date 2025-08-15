@@ -4,6 +4,8 @@ import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.bson.Document;
 import org.json.JSONObject;
@@ -24,15 +26,16 @@ public class RedisRefreshCoopData implements ProxyToClient {
         SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
         if (player == null) return new JSONObject();
 
-        DataHandler dataHandler = DataHandler.fromDocument(
+        SkyBlockDataHandler dataHandler = SkyBlockDataHandler.createFromProfileOnly(
                 new ProfilesDatabase(player.getProfiles().getCurrentlySelected().toString()).getDocument()
         );
 
-        player.getDataHandler().getDatapoint(datapoint).setValueBypassCoop(
-                dataHandler.getDatapoint(datapoint).getValue()
-        );
+        @SuppressWarnings("unchecked")
+        SkyBlockDatapoint<Object> targetDatapoint = (SkyBlockDatapoint<Object>) player.getSkyblockDataHandler().getSkyBlockDatapoint(datapoint);
+        Object value = dataHandler.getSkyBlockDatapoint(datapoint).getValue();
+        targetDatapoint.setValueBypassCoop(value); // starting to remind me of Python - ArikSquad
 
-        Document toReplace = player.getDataHandler().toDocument(player.getProfiles().getCurrentlySelected());
+        Document toReplace = player.getSkyblockDataHandler().toProfileDocument(player.getProfiles().getCurrentlySelected());
         ProfilesDatabase.replaceDocument(player.getProfiles().getCurrentlySelected().toString(), toReplace);
 
         return new JSONObject();

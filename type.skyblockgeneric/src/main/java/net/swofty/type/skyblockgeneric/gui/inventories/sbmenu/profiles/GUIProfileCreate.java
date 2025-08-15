@@ -11,6 +11,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
@@ -37,7 +38,7 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aCreate New Profile", Material.GREEN_TERRACOTTA, 1,
                         "§7You are creating a new SkyBlock",
                         "§7profile.",
@@ -54,14 +55,14 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 SkyBlockPlayerProfiles profiles = player.getProfiles();
                 UUID profileId = UUID.randomUUID();
 
-                DataHandler handler = DataHandler.initUserWithDefaultData(player.getUuid());
-                handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(profileName);
-                handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(profileId);
-                Document document = handler.toDocument(profileId);
+                SkyBlockDataHandler handler = SkyBlockDataHandler.initUserWithDefaultData(player.getUuid());
+                handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(profileName);
+                handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(profileId);
+                Document document = handler.toProfileDocument(profileId);
 
                 profiles.addProfile(profileId);
                 ProfilesDatabase.collection.insertOne(document);
@@ -80,13 +81,13 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
         set(new GUIClickableItem(15) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, "§cCancel");
             }
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUIProfileSelectMode().open(player);
             }
         });

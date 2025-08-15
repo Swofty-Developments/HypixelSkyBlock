@@ -2,9 +2,10 @@ package net.swofty.type.hub.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerParameters;
+import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
+import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
@@ -36,9 +37,10 @@ public class VillagerLiam extends NPCVillagerDialogue {
 
     @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
-        if (isInDialogue(e.player())) return;
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
+        if (isInDialogue(player)) return;
 
-        MissionData data = e.player().getMissionData();
+        MissionData data = player.getMissionData();
         if (data.isCurrentlyActive("speak_to_villagers")) {
             if (data.getMission("speak_to_villagers").getKey().getCustomData()
                     .values()
@@ -46,7 +48,7 @@ public class VillagerLiam extends NPCVillagerDialogue {
                     .anyMatch(value -> value.toString().contains(getID()))) {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
-                    setDialogue(e.player(), "quest-hello");
+                    setDialogue(player, "quest-hello");
                 }
             }
         }

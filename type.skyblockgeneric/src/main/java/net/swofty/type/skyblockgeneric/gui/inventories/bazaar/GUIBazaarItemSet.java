@@ -16,6 +16,8 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
+import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.text.DecimalFormat;
@@ -23,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+
+import static net.swofty.type.generic.gui.inventory.ItemStackCreator.*;
 
 public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingGUI {
     private static final Map<Integer, int[]> SLOTS = Map.of(
@@ -58,7 +62,7 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
+                return getStack("§aManage Orders", Material.BOOK, 1,
                         "§7View your pending Bazaar orders",
                         " ",
                         "§eClick to manage!");
@@ -121,7 +125,7 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
 
                                 SkyBlockItem item = new SkyBlockItem(itemType);
 
-                                return ItemStackCreator.updateLore(ItemStackCreator.getFromSkyBlockItem(item), lore);
+                                return ItemStackCreator.updateLore(getFromSkyBlockItem(item), lore);
                             }
                         });
                     })
@@ -145,7 +149,7 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                                 lore.add(" ");
                                 lore.add("§eClick to view details!");
 
-                                return ItemStackCreator.getStack(
+                                return getStack(
                                         itemType.rarity.getColor() + itemType.getDisplayName(),
                                         itemType.material, 1, lore);
                             }
@@ -218,4 +222,25 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
     public int refreshRate() {
         return 10;
     }
+
+    /**
+     * Creates an {@link ItemStack.Builder} from an existing {@link SkyBlockItem}.
+     *
+     * @param item the original {@link SkyBlockItem} to create a builder from
+     * @return an {@link ItemStack.Builder} with the properties of the original item
+     * @implNote moved from {@link ItemStackCreator} to here until a better place is found
+     */
+    private ItemStack.Builder getFromSkyBlockItem(SkyBlockItem item) {
+        ItemStack.Builder builder;
+
+        if (item.hasComponent(SkullHeadComponent.class)) {
+            builder = getStackHead(item.getDisplayName(), item.getComponent(SkullHeadComponent.class).getSkullTexture(item), item.getAmount());
+        } else {
+            builder = getStack(item.getDisplayName(), item.getMaterial(), item.getAmount());
+        }
+
+        if (item.hasComponent(EnchantedComponent.class)) return enchant(builder);
+        else return builder;
+    }
 }
+

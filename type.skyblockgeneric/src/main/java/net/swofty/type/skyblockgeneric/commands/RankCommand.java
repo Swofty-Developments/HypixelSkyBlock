@@ -31,7 +31,7 @@ public class RankCommand extends HypixelCommand {
 
             final String playerName = player.getUsername();
 
-            SkyBlockDataHandler.getUser(player.getUuid()).get(HypixelDataHandler.Data.RANK, DatapointRank.class).setValue(rank);
+            HypixelDataHandler.getUser(player.getUuid()).get(HypixelDataHandler.Data.RANK, DatapointRank.class).setValue(rank);
 
             sender.sendMessage("§aSuccessfully set §e" + playerName + "§a's rank to §e" + rank.name() + "§a.");
         }, entityArgument, rankArgument);

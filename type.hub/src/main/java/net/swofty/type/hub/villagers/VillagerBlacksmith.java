@@ -2,13 +2,14 @@ package net.swofty.type.hub.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.skyblockgeneric.entity.villager.NPCVillagerParameters;
+import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
+import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIReforge;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionMineCoal;
 import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionTalkToBlacksmith;
 import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
@@ -39,27 +40,28 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
 
     @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
-        if (isInDialogue(e.player())) return;
-        MissionData data = e.player().getMissionData();
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
+        if (isInDialogue(player)) return;
+        MissionData data = player.getMissionData();
 
         if (data.isCurrentlyActive(MissionTalkToBlacksmith.class)) {
-            setDialogue(e.player(), "initial-hello").thenRun(() -> {
+            setDialogue(player, "initial-hello").thenRun(() -> {
                 data.endMission(MissionTalkToBlacksmith.class);
             });
             return;
         }
         if  (!data.hasCompleted(MissionMineCoal.class)) {
-            e.player().sendMessage("§e[NPC] Blacksmith§f: Retrieve 10 coal from the Coal Mines!");
+            player.sendMessage("§e[NPC] Blacksmith§f: Retrieve 10 coal from the Coal Mines!");
             return;
         }
         if (!data.hasCompleted(MissionTalkToBlacksmithAgain.class)) {
-            setDialogue(e.player(), "spoke-again").thenRun(() -> {
+            setDialogue(player, "spoke-again").thenRun(() -> {
                 data.endMission(MissionTalkToBlacksmithAgain.class);
             });
             return;
         }
 
-        new GUIReforge().open(e.player());
+        new GUIReforge().open(player);
     }
 
     @Override

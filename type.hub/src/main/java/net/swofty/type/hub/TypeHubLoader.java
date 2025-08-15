@@ -10,19 +10,21 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
+import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.HypixelTypeLoader;
+import net.swofty.type.generic.SkyBlockTypeLoader;
+import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.tab.TablistManager;
+import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.hub.runes.RuneEntityImpl;
 import net.swofty.type.hub.tab.HubServerModule;
-import net.swofty.type.skyblockgeneric.SkyBlockConst;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.entity.animalnpc.SkyBlockAnimalNPC;
-import net.swofty.type.skyblockgeneric.entity.npc.SkyBlockNPC;
-import net.swofty.type.skyblockgeneric.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
-import net.swofty.type.skyblockgeneric.tab.TablistManager;
-import net.swofty.type.skyblockgeneric.tab.TablistModule;
-import net.swofty.type.skyblockgeneric.tab.modules.AccountInformationModule;
-import net.swofty.type.skyblockgeneric.tab.modules.PlayersOnlineModule;
+import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
+import net.swofty.type.skyblockgeneric.tabmodules.PlayersOnlineModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -91,7 +93,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
          */
         Logger.info("Registering museum chunks");
         MuseumDisplays.getAllPositions().forEach(displayPosition -> {
-            SkyBlockConst.getInstanceContainer().loadChunk(displayPosition).join();
+            HypixelConst.getInstanceContainer().loadChunk(displayPosition).join();
         });
     }
 
@@ -122,25 +124,25 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
     }
 
     @Override
-    public List<SkyBlockEventClass> getTraditionalEvents() {
+    public List<HypixelEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.hub.events",
-                SkyBlockEventClass.class
+                HypixelEventClass.class
         ).collect(Collectors.toList());
     }
 
     @Override
-    public List<SkyBlockEventClass> getCustomEvents() {
+    public List<HypixelEventClass> getCustomEvents() {
         return new ArrayList<>();
     }
 
     @Override
-    public List<SkyBlockNPC> getNPCs() {
-        List<SkyBlockNPC> npcs = new ArrayList<>();
+    public List<HypixelNPC> getNPCs() {
+        List<HypixelNPC> npcs = new ArrayList<>();
 
         npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.hub.npcs",
-                SkyBlockNPC.class
+                HypixelNPC.class
         ).toList());
 
         return npcs;
@@ -152,18 +154,18 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
     }
 
     @Override
-    public List<SkyBlockVillagerNPC> getVillagerNPCs() {
+    public List<HypixelVillagerNPC> getVillagerNPCs() {
         return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.hub.villagers",
-                SkyBlockVillagerNPC.class
+                HypixelVillagerNPC.class
         ).toList());
     }
 
     @Override
-    public List<SkyBlockAnimalNPC> getAnimalNPCs() {
+    public List<HypixelAnimalNPC> getAnimalNPCs() {
         return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.hub.animalnpcs",
-                SkyBlockAnimalNPC.class
+                HypixelAnimalNPC.class
         ).toList());
     }
 

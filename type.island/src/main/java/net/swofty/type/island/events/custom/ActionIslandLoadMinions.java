@@ -1,9 +1,9 @@
 package net.swofty.type.island.events.custom;
 
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.event.EventNodes;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEvent;
-import net.swofty.type.skyblockgeneric.event.SkyBlockEventClass;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.event.custom.IslandFetchedFromDatabaseEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
@@ -16,10 +16,10 @@ import org.bson.Document;
 import java.util.List;
 import java.util.Map;
 
-public class ActionIslandLoadMinions implements SkyBlockEventClass {
+public class ActionIslandLoadMinions implements HypixelEventClass {
 
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
     public void run(IslandFetchedFromDatabaseEvent event) {
         Document document = event.getIsland().getDatabase().getDocument();
 

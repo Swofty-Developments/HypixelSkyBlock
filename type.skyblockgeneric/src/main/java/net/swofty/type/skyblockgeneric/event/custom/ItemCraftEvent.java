@@ -25,7 +25,7 @@ public class ItemCraftEvent implements PlayerInstanceEvent {
         this.recipe = recipe;
 
         if (craftedItem.hasComponent(MinionComponent.class)) {
-            DatapointMinionData.ProfileMinionData playerData = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.MINION_DATA, DatapointMinionData.class).getValue();
+            DatapointMinionData.ProfileMinionData playerData = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.MINION_DATA, DatapointMinionData.class).getValue();
             String name = craftedItem.getAttributeHandler().getMinionType().name();
             Integer tier = craftedItem.getAttributeHandler().getMinionData().tier();
             AbstractMap.SimpleEntry<String, List<Integer>> minion = new AbstractMap.SimpleEntry<>(name, List.of(tier));

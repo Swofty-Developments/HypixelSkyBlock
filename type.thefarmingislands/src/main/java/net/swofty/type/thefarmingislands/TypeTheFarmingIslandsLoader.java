@@ -6,6 +6,7 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.type.generic.HypixelTypeLoader;
+import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TypeTheFarmingIslandsLoader implements HypixelTypeLoader {
+public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
     @Override
     public ServerType getType() {
         return ServerType.SKYBLOCK_THE_FARMING_ISLANDS;

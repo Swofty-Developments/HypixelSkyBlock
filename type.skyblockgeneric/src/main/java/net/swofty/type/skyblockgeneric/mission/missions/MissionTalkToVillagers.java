@@ -38,11 +38,12 @@ public class MissionTalkToVillagers extends HypixelProgressMission implements Mi
 
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onVillagerSpokenTo(VillagerSpokenToEvent event) {
-        MissionData data = event.getPlayer().getMissionData();
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        MissionData data = player.getMissionData();
 
         if (!data.isCurrentlyActive(MissionTalkToVillagers.class) &&
                 !data.hasCompleted(MissionTalkToVillagers.class)) {
-            data.setSkyBlockPlayer(event.getPlayer());
+            data.setSkyBlockPlayer(player);
             data.startMission(MissionTalkToVillagers.class);
             return;
         }
@@ -65,7 +66,7 @@ public class MissionTalkToVillagers extends HypixelProgressMission implements Mi
         customData.put("last_updated", System.currentTimeMillis());
 
         mission.setMissionProgress(mission.getMissionProgress() + 1);
-        mission.checkIfMissionEnded(event.getPlayer());
+        mission.checkIfMissionEnded(player);
     }
 
     @Override
@@ -86,8 +87,8 @@ public class MissionTalkToVillagers extends HypixelProgressMission implements Mi
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§61000 §7Coins"))).forEach(player::sendMessage);
-        player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(
-                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000
+        player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(
+                player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000
         );
     }
 

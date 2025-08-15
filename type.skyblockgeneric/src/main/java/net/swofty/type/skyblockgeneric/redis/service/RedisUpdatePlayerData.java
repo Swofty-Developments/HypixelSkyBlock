@@ -2,6 +2,8 @@ package net.swofty.type.skyblockgeneric.redis.service;
 
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.generic.data.Datapoint;
+import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
@@ -28,7 +30,7 @@ public class RedisUpdatePlayerData implements ServiceToClient {
         }
 
         try {
-            DataHandler.Data dataType = DataHandler.Data.fromKey(dataKey);
+            HypixelDataHandler.Data dataType = HypixelDataHandler.Data.fromKey(dataKey);
             if (dataType == null) {
                 return new JSONObject()
                         .put("success", false)
@@ -38,9 +40,9 @@ public class RedisUpdatePlayerData implements ServiceToClient {
             // Deserialize and set the new data
             Datapoint datapoint = dataType.getDefaultDatapoint().getClass().getDeclaredConstructor(String.class).newInstance(dataKey);
             datapoint.deserializeValue(newDataSerialized);
-            datapoint.setUser(player.getDataHandler()).setData(dataType);
+            datapoint.setUser(player.getSkyblockDataHandler()).setData(dataType);
 
-            player.getDataHandler().getDatapoints().put(dataKey, datapoint);
+            player.getSkyblockDataHandler().getDatapoints().put(dataKey, datapoint);
 
             return new JSONObject()
                     .put("success", true)

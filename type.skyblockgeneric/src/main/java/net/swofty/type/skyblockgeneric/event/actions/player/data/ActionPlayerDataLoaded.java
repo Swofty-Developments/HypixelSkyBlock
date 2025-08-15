@@ -10,13 +10,13 @@ import net.swofty.commons.SkyBlockPlayerProfiles;
 import net.swofty.packer.SkyBlockTexture;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
-import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -51,7 +51,7 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
 
         UUID playerUuid = player.getUuid();
         SkyBlockPlayerProfiles profiles = player.getProfiles();
-        SkyBlockDataHandler handler = player.getDataHandler();
+        SkyBlockDataHandler handler = player.getSkyblockDataHandler();
 
         // Handle coop synchronization
         if (handler.get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {
@@ -63,11 +63,11 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
                     // A coop member is online, use their data
                     SkyBlockPlayer otherCoopMember = SkyBlockGenericLoader.getLoadedPlayers().stream()
                             .filter(player1 -> coop.members().contains(player1.getUuid())).findFirst().get();
-                    data = otherCoopMember.getDataHandler();
+                    data = otherCoopMember.getSkyblockDataHandler();
                 } else {
                     // No coop members are online, use the first member's data
                     UUID finalProfileId = profiles.getCurrentlySelected();
-                    data = SkyBlockDataHandler.createFromDocument(
+                    data = SkyBlockDataHandler.createFromProfileOnly(
                             new ProfilesDatabase(coop.memberProfiles().stream()
                                     .filter(uuid -> !uuid.equals(finalProfileId))
                                     .findFirst().get().toString()).getDocument()
@@ -75,7 +75,8 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
                 }
 
                 data.getCoopValues().forEach((key, value) -> {
-                    handler.getDatapoint(key).setValueBypassCoop(value);
+                    SkyBlockDatapoint<Object> targetDatapoint = (SkyBlockDatapoint<Object>) handler.getSkyBlockDatapoint(key);
+                    targetDatapoint.setValueBypassCoop(value);
                 });
             }
         }
@@ -111,11 +112,11 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
             }
 
             player.sendMessage("§7 ");
-            player.sendMessage("§aYou are playing on profile: §e" + player.getDataHandler().get(
+            player.sendMessage("§aYou are playing on profile: §e" + player.getSkyblockDataHandler().get(
                     SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
             player.sendMessage("§8Profile ID: " + player.getProfiles().getCurrentlySelected());
 
-            UUID islandUuid = player.getDataHandler().get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue();
+            UUID islandUuid = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue();
             if (islandUuid != player.getProfiles().getCurrentlySelected())
                 player.sendMessage("§8Island ID: " + islandUuid);
             player.sendMessage(" ");
@@ -134,10 +135,10 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
 
             TravelScrollIslands island = TravelScrollIslands.getFromType(HypixelConst.getTypeLoader().getType());
             if (island != null) {
-                List<String> visitedIslands = player.getDataHandler().get(SkyBlockDataHandler.Data.VISITED_ISLANDS, DatapointStringList.class).getValue();
+                List<String> visitedIslands = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.VISITED_ISLANDS, DatapointStringList.class).getValue();
                 if (!visitedIslands.contains(island.getInternalName())) {
                     visitedIslands.add(island.getInternalName());
-                    player.getDataHandler().get(SkyBlockDataHandler.Data.VISITED_ISLANDS, DatapointStringList.class).setValue(visitedIslands);
+                    player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.VISITED_ISLANDS, DatapointStringList.class).setValue(visitedIslands);
                 }
             }
 

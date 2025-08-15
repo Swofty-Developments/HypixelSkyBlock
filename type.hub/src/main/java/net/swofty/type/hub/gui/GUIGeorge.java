@@ -44,7 +44,7 @@ public class GUIGeorge extends HypixelInventoryGUI {
             set(new GUIClickableItem(13) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -63,20 +63,20 @@ public class GUIGeorge extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
             set(new GUIClickableItem(22) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     player.sendMessage("§cPlace a pet in the empty slot for George to evaluate it!");
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             "§eOffer a Pet", Material.RED_TERRACOTTA, 1,
                             "§7Place a pet above and George will",
@@ -91,13 +91,13 @@ public class GUIGeorge extends HypixelInventoryGUI {
         set(new GUIClickableItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
             }
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack stack = e.getClickedItem();
                 if (stack.isAir()) return;
 
@@ -111,7 +111,7 @@ public class GUIGeorge extends HypixelInventoryGUI {
             set(new GUIItem(22) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             "§cError!", Material.BARRIER, 1,
                             "§7George only wants to buy pets!"
@@ -125,8 +125,8 @@ public class GUIGeorge extends HypixelInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                DatapointDouble coins = player.getSkyBlockData().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                DatapointDouble coins = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                 Rarity rarity = item.getAttributeHandler().getRarity();
                 PetComponent petComponent = item.getComponent(PetComponent.class);
                 Integer price = petComponent.getGeorgePrice().getForRarity(rarity);
@@ -139,7 +139,7 @@ public class GUIGeorge extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack(
                         "§aAccept Offer", Material.GREEN_TERRACOTTA, 1,
                         "§7George is willing to make an offer on",

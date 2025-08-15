@@ -47,7 +47,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getGoBackItem(49, previousGUI));
 
-        DatapointAuctionEscrow.AuctionEscrow escrow = ((SkyBlockPlayer) getPlayer()).getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue();
+        DatapointAuctionEscrow.AuctionEscrow escrow = ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue();
         if (escrow.isBin())
             e.inventory().setTitle(Component.text("Create BIN Auction"));
 
@@ -158,7 +158,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                         return;
 
                     long fee = (long) ((escrow.getPrice() * 0.05) + ((double) escrow.getDuration() / 180000));
-                    DatapointDouble coins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
+                    DatapointDouble coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                     if (coins.getValue() < fee) {
                         player.sendMessage("§cYou don't have enough coins to create this auction!");
                         return;
@@ -178,8 +178,8 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                     if (escrow.getItem().hasComponent(AuctionCategoryComponent.class))
                         category = escrow.getItem().getComponent(AuctionCategoryComponent.class).getCategory();
 
-                    player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).clearEscrow();
-                    player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().add(item.getUuid());
+                    player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).clearEscrow();
+                    player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().add(item.getUuid());
 
                     player.sendMessage("§7Setting up the auction...");
 
@@ -300,7 +300,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
         if (item.isNA()) return;
         if (item.isAir()) return;
 
-        DatapointAuctionEscrow.AuctionEscrow escrow = ((SkyBlockPlayer) getPlayer()).getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue();
+        DatapointAuctionEscrow.AuctionEscrow escrow = ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue();
 
         if (escrow.getItem() != null) {
             e.getPlayer().sendMessage("§cYou already have an item in the auction slot!");

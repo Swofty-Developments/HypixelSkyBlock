@@ -261,7 +261,7 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
                 }
             }
 
-            var completedTransactions = player.getDataHandler().get(
+            var completedTransactions = player.getSkyblockDataHandler().get(
                     SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                     DatapointCompletedBazaarTransactions.class
             ).getValue();

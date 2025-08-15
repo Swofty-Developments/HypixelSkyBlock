@@ -7,7 +7,7 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.skyblockgeneric.SkyBlockConst;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
 public class RuneEntityImpl extends LivingEntity {
@@ -32,6 +32,6 @@ public class RuneEntityImpl extends LivingEntity {
             setHelmet(ItemStack.builder(Material.STONE_SLAB).build());
         }
 
-        setInstance(SkyBlockConst.getInstanceContainer(), position);
+        setInstance(HypixelConst.getInstanceContainer(), position);
     }
 }

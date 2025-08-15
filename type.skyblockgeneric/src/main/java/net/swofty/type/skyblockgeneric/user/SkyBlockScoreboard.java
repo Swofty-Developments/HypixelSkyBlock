@@ -12,6 +12,7 @@ import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.HypixelMission;
@@ -40,7 +41,7 @@ public class SkyBlockScoreboard {
             }
 
             for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
-                DataHandler dataHandler = player.getDataHandler();
+                SkyBlockDataHandler dataHandler = player.getSkyblockDataHandler();
                 SkyBlockRegion region = player.getRegion();
                 MissionData missionData = player.getMissionData();
 
@@ -65,8 +66,8 @@ public class SkyBlockScoreboard {
                     addLine(" §7Unknown", sidebar);
                 }
                 addLine("§7 ", sidebar);
-                addLine("§fPurse: §6" + StringUtility.commaify(dataHandler.get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()), sidebar);
-                addLine("§fBits: §b" + StringUtility.commaify(dataHandler.get(DataHandler.Data.BITS, DatapointInteger.class).getValue()), sidebar);
+                addLine("§fPurse: §6" + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()), sidebar);
+                addLine("§fBits: §b" + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()), sidebar);
                 addLine("§7 ", sidebar);
                 if (region != null &&
                         !missionData.getActiveMissions(region.getType()).isEmpty()) {

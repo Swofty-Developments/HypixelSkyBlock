@@ -12,6 +12,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
@@ -40,7 +41,7 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 SkyBlockPlayerProfiles profiles = player.getProfiles();
                 SkyBlockPlayerProfiles toSet = new SkyBlockPlayerProfiles();
                 toSet.setProfiles(profiles.getProfiles());
@@ -57,16 +58,16 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
             @SneakyThrows
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aSwitch to Profile", Material.GRASS_BLOCK, 1,
                         "§7Teleports you to your island on",
                         "§7another profile and loads your",
                         "§7inventory, skills, collections",
                         "§7and more...",
                         "",
-                        "§7Current: §e" + player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
-                        "§7Switching to: §a" + DataHandler.fromDocument(new ProfilesDatabase(profileUuid.toString()).getDocument())
-                                .get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
+                        "§7Current: §e" + player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
+                        "§7Switching to: §a" + SkyBlockDataHandler.createFromProfileOnly(new ProfilesDatabase(profileUuid.toString()).getDocument())
+                                .get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
                         "", "§eClick to switch");
             }
         });
@@ -74,7 +75,7 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
         set(new GUIClickableItem(15) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§cDelete profile", Material.RED_STAINED_GLASS, 1,
                         "§7Clear this profile slot by",
                         "§7deleting the profile forever.",
@@ -88,7 +89,7 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
             @SneakyThrows
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (CoopDatabase.getFromMemberProfile(profileUuid) != null) {
                     player.sendMessage("§cYou cannot delete a profile that is in a coop!");
                     player.sendMessage("§eInstead run §a/coopleave §eto leave your coop.");
@@ -98,11 +99,11 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
                 SkyBlockPlayerProfiles profiles = player.getProfiles();
                 profiles.removeProfile(profileUuid);
 
-                DataHandler handler = DataHandler.fromDocument(new ProfilesDatabase(profileUuid.toString()).getDocument());
+                SkyBlockDataHandler handler = SkyBlockDataHandler.createFromProfileOnly(new ProfilesDatabase(profileUuid.toString()).getDocument());
 
                 player.sendMessage(
                         "§aDone! Your §e"
-                                + handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
+                                + handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
                                 + " §aprofile was deleted!");
 
                 ProfilesDatabase.collection.deleteOne(Filters.eq("_id", profileUuid.toString()));

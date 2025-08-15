@@ -282,7 +282,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                var completedTransactions = player.getDataHandler().get(
+                var completedTransactions = player.getSkyblockDataHandler().get(
                         SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                         DatapointCompletedBazaarTransactions.class
                 ).getValue();
@@ -301,7 +301,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                var completedTransactions = player.getDataHandler().get(
+                var completedTransactions = player.getSkyblockDataHandler().get(
                         SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                         DatapointCompletedBazaarTransactions.class
                 ).getValue();
@@ -338,7 +338,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
     }
 
     private List<DatapointCompletedBazaarTransactions.CompletedBazaarTransaction> getRelatedTransactions(SkyBlockPlayer p) {
-        var completedTransactions = p.getDataHandler().get(
+        var completedTransactions = p.getSkyblockDataHandler().get(
                 SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                 DatapointCompletedBazaarTransactions.class
         ).getValue();
