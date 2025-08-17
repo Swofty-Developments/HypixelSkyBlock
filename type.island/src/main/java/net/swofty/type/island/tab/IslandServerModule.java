@@ -1,24 +1,27 @@
 package net.swofty.type.island.tab;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointMinionData;
-import net.swofty.types.generic.minion.IslandMinionData;
-import net.swofty.types.generic.minion.MinionHandler;
-import net.swofty.types.generic.tab.TablistModule;
-import net.swofty.types.generic.tab.TablistSkinRegistry;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.generic.tab.TablistSkinRegistry;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
+import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
+import net.swofty.type.skyblockgeneric.minion.MinionHandler;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class IslandServerModule extends TablistModule {
+
     @Override
-    public List<TablistEntry> getEntries(SkyBlockPlayer player) {
+    public List<TablistModule.TablistEntry> getEntries(HypixelPlayer p) {
+        SkyBlockPlayer player = (SkyBlockPlayer) p;
         List<IslandMinionData.IslandMinion> minions = player.getSkyBlockIsland().getMinionData().getMinions();
-        DatapointMinionData.ProfileMinionData data = player.getDataHandler().get(
-                DataHandler.Data.MINION_DATA,
+        DatapointMinionData.ProfileMinionData data = player.getSkyblockDataHandler().get(
+                SkyBlockDataHandler.Data.MINION_DATA,
                 DatapointMinionData.class
         ).getValue();
 
@@ -27,7 +30,7 @@ public class IslandServerModule extends TablistModule {
         ));
 
         entries.add(new TablistEntry("§b§lArea: §7Private Island", TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(" Server: §8" + SkyBlockConst.getServerName(), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(" Server: §8" + HypixelConst.getServerName(), TablistSkinRegistry.GRAY));
         entries.add(new TablistEntry(" Minions: §9" + minions.size() + "§7/§9" + data.getSlots(), TablistSkinRegistry.GRAY));
 
         entries.add(getGrayEntry());

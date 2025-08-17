@@ -1,0 +1,53 @@
+package net.swofty.type.skyblockgeneric.redis.service;
+
+import net.swofty.commons.service.FromServiceChannels;
+import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.json.JSONObject;
+
+import java.util.UUID;
+
+public class RedisGetPlayerData implements ServiceToClient {
+    @Override
+    public FromServiceChannels getChannel() {
+        return FromServiceChannels.GET_SKYBLOCK_DATA;
+    }
+
+    @Override
+    public JSONObject onMessage(JSONObject message) {
+        UUID playerUUID = UUID.fromString(message.getString("playerUUID"));
+        String dataKey = message.getString("dataKey");
+
+        SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(playerUUID);
+        if (player == null) {
+            return new JSONObject()
+                    .put("success", false)
+                    .put("error", "Player not found on this server");
+        }
+
+        try {
+            SkyBlockDataHandler.Data dataType = SkyBlockDataHandler.Data.fromKey(dataKey);
+            if (dataType == null) {
+                return new JSONObject()
+                        .put("success", false)
+                        .put("error", "Invalid data key: " + dataKey);
+            }
+
+            Object data = player.getSkyblockDataHandler().get(dataType, dataType.getType()).getValue();
+            String serializedData = ((SkyBlockDatapoint) dataType.getDefaultDatapoint()).getSerializer().serialize(data);
+
+            return new JSONObject()
+                    .put("success", true)
+                    .put("data", serializedData)
+                    .put("timestamp", System.currentTimeMillis());
+
+        } catch (Exception e) {
+            return new JSONObject()
+                    .put("success", false)
+                    .put("error", "Failed to get data: " + e.getMessage());
+        }
+    }
+}

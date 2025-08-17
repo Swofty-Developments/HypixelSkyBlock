@@ -31,6 +31,11 @@ public record TransferHandler(Player player) {
     }
 
     public void standardTransferTo(RegisteredServer currentServer, ServerType type) {
+        if (type == null) {
+            player.disconnect(Component.text("§cWe encountered an error while trying to transfer you to a server. Please try again later."));
+            return;
+        }
+
         new Thread(() -> {
             boolean hasEmptyServer = GameManager.hasType(type) && GameManager.isAnyEmpty(type);
             if (!hasEmptyServer) {
@@ -102,7 +107,7 @@ public record TransferHandler(Player player) {
             GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
 
             if (server == null) {
-                player.disconnect(Component.text("§cThere are no SkyBlock (type=" + type.name() + ") servers available at the moment."));
+                player.disconnect(Component.text("§cThere are no Hypixel (type=" + type.name() + ") servers available at the moment."));
                 return;
             }
 
@@ -146,7 +151,7 @@ public record TransferHandler(Player player) {
             GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
 
             if (server == null) {
-                player.disconnect(Component.text("§cThere are no SkyBlock (type=" + type.name() + ") servers available at the moment."));
+                player.disconnect(Component.text("§cThere are no Hypixel (type=" + type.name() + ") servers available at the moment."));
                 return;
             }
 

@@ -111,8 +111,8 @@ public class SkyBlockDungeon {
                     builder.append(DungeonUtilities.center(" ", 30, ' '));
                 } else {
                     builder.append(DungeonUtilities.center(
-                            (isConnected(x, y, x - 1, y) ? "║" : " ") +
-                                    room + (isConnected(x, y, x + 1, y) ? "║" : " "),
+                            (isConnected(x, y, x - 1, y) ? "|" : " ") +
+                                    room + (isConnected(x, y, x + 1, y) ? "|" : " "),
                             30, ' '));
                 }
             }
@@ -125,7 +125,7 @@ public class SkyBlockDungeon {
                         builder.append(DungeonUtilities.center(" ", 30, ' '));
                     } else {
                         builder.append(DungeonUtilities.center(
-                                (isConnected(x, y, x, y + 1) ? "══" : "   "),
+                                (isConnected(x, y, x, y + 1) ? "--" : "   "),
                                 30, ' '));
                     }
                 }

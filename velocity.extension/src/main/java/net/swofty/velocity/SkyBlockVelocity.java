@@ -178,14 +178,14 @@ public class SkyBlockVelocity {
     public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
         Player player = event.getPlayer();
 
-        if (!GameManager.hasType(ServerType.ISLAND) || !GameManager.isAnyEmpty(ServerType.ISLAND)) {
+        if (!GameManager.hasType(ServerType.PROTOTYPE_LOBBY) || !GameManager.isAnyEmpty(ServerType.PROTOTYPE_LOBBY)) {
             player.disconnect(
-                    Component.text("§cThere are no SkyBlock (type=ISLAND) servers available at the moment.")
+                    Component.text("§cThere are no Prototype Lobby servers available at the moment.")
             );
             return;
         }
 
-        List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.ISLAND);
+        List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.PROTOTYPE_LOBBY);
         if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
             TestFlowManager.ProxyTestFlowInstance instance = TestFlowManager.getTestFlowForPlayer(player.getUsername());
             player.sendPlainMessage("§7You are currently in test flow " + instance.getName() + ".");
@@ -212,12 +212,12 @@ public class SkyBlockVelocity {
 
         if (gameServers.isEmpty()) {
             player.disconnect(
-                    Component.text("§cThere are no SkyBlock (type=ISLAND) servers available at the moment.")
+                    Component.text("§cThere are no servers (type=PROTOTYPE_LOBBY) servers available at the moment.")
             );
             return;
         }
 
-        List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.ISLAND);
+        List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.PROTOTYPE_LOBBY);
         GameManager.GameServer toSendTo = gameServers.getFirst();
 
         for (BalanceConfiguration configuration : configurations) {
@@ -276,7 +276,7 @@ public class SkyBlockVelocity {
             try {
                 ServerType serverTypeToTry = serverType;
                 if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
-                    serverTypeToTry = ServerType.ISLAND;
+                    serverTypeToTry = ServerType.PROTOTYPE_LOBBY;
                 }
 
                 GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverTypeToTry);
@@ -286,7 +286,12 @@ public class SkyBlockVelocity {
                     return;
                 }
                 transferHandler.noLimboTransferTo(server.registeredServer());
-                event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into another SkyBlock server.");
+
+                if (!serverTypeToTry.isSkyBlock()) {
+                    event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into the Prototype Lobby.");
+                } else {
+                    event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into another SkyBlock server.");
+                }
                 event.getPlayer().sendPlainMessage("§7Sending to server " + server.displayName() + "...");
             } catch (Exception e) {
                 Logger.getAnonymousLogger().log(Level.SEVERE, "An exception occurred while trying to transfer " + event.getPlayer().getUsername() + " to " + serverType, e);
@@ -301,7 +306,7 @@ public class SkyBlockVelocity {
         event.setPing(new ServerPing(
                 event.getPing().getVersion(),
                 null,
-                Component.text("                §aSkyBlock Recreation §c[1.8-1.20]"),
+                Component.text("                §aHypixel Recreation §c[1.8-1.20]"),
                 event.getPing().getFavicon().orElse(null)
         ));
     }

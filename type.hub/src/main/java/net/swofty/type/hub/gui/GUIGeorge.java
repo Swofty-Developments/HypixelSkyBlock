@@ -9,19 +9,20 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.Rarity;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointDouble;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.components.PetComponent;
-import net.swofty.types.generic.item.components.PetItemComponent;
-import net.swofty.types.generic.item.updater.PlayerItemUpdater;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointDouble;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.PetComponent;
+import net.swofty.type.skyblockgeneric.item.components.PetItemComponent;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class GUIGeorge extends SkyBlockInventoryGUI {
+public class GUIGeorge extends HypixelInventoryGUI {
 
     boolean pricePaid = false;
 
@@ -42,7 +43,8 @@ public class GUIGeorge extends SkyBlockInventoryGUI {
         if (item == null) {
             set(new GUIClickableItem(13) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -60,18 +62,21 @@ public class GUIGeorge extends SkyBlockInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
             set(new GUIClickableItem(22) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     player.sendMessage("§cPlace a pet in the empty slot for George to evaluate it!");
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             "§eOffer a Pet", Material.RED_TERRACOTTA, 1,
                             "§7Place a pet above and George will",
@@ -85,12 +90,14 @@ public class GUIGeorge extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(13) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack stack = e.getClickedItem();
                 if (stack.isAir()) return;
 
@@ -103,7 +110,8 @@ public class GUIGeorge extends SkyBlockInventoryGUI {
         if (item.getAmount() > 1 || item.hasComponent(PetItemComponent.class)) {
             set(new GUIItem(22) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             "§cError!", Material.BARRIER, 1,
                             "§7George only wants to buy pets!"
@@ -116,8 +124,9 @@ public class GUIGeorge extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                DatapointDouble coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                DatapointDouble coins = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                 Rarity rarity = item.getAttributeHandler().getRarity();
                 PetComponent petComponent = item.getComponent(PetComponent.class);
                 Integer price = petComponent.getGeorgePrice().getForRarity(rarity);
@@ -129,7 +138,8 @@ public class GUIGeorge extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack(
                         "§aAccept Offer", Material.GREEN_TERRACOTTA, 1,
                         "§7George is willing to make an offer on",
@@ -160,8 +170,8 @@ public class GUIGeorge extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(13)));
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
+        ((SkyBlockPlayer) player).addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(13)));
     }
 
     @Override

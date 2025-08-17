@@ -3,31 +3,32 @@ package net.swofty.type.hub.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCMort extends SkyBlockNPC {
+public class NPCMort extends HypixelNPC {
 
     public NPCMort() {
         super(new NPCParameters() {
             @Override
-            public String[] holograms(SkyBlockPlayer player) {
+            public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§9Mort", "§e§lGATE KEEPER"};
             }
 
             @Override
-            public String signature(SkyBlockPlayer player) {
+            public String signature(HypixelPlayer player) {
                 return "";
             }
 
             @Override
-            public String texture(SkyBlockPlayer player) {
+            public String texture(HypixelPlayer player) {
                 return "";
             }
 
             @Override
-            public Pos position(SkyBlockPlayer player) {
+            public Pos position(HypixelPlayer player) {
                 return new Pos(-88.5, 55, -128.5, -90, 0);
             }
 

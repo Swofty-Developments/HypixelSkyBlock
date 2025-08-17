@@ -22,7 +22,7 @@ public class IslandCheck extends BalanceConfiguration {
     @Override
     public GameManager.GameServer getServer(Player player, List<GameManager.GameServer> servers) {
         Document userDatabase = new UserDatabase(player.getUniqueId()).getDocument();
-        if (userDatabase == null) {
+        if (userDatabase == null || !userDatabase.containsKey("selected")) {
             return null;
         }
         UUID activeProfile = UUID.fromString(userDatabase.getString("selected"));
@@ -43,7 +43,7 @@ public class IslandCheck extends BalanceConfiguration {
 
         for (Map.Entry<ServerType, ArrayList<GameManager.GameServer>> entry : GameManager.getServers().entrySet()) {
             ServerType serverType = entry.getKey();
-            if (serverType == ServerType.ISLAND) {
+            if (serverType == ServerType.SKYBLOCK_ISLAND) {
                 ArrayList<GameManager.GameServer> gameServers = entry.getValue();
 
                 gameServers.forEach(gameServer -> {

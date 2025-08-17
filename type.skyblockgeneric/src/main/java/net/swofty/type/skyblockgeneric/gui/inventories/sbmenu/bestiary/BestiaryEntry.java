@@ -1,0 +1,15 @@
+package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary;
+
+import net.minestom.server.item.Material;
+import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
+
+import java.util.List;
+
+public interface BestiaryEntry {
+    String getName();
+    String getDescription();
+    Material getMaterial();
+    String getTexture();
+    List<BestiaryMob> getMobs();
+}
+

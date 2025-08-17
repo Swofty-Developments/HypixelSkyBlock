@@ -1,0 +1,16 @@
+package net.swofty.type.generic.data.datapoints;
+
+import net.swofty.commons.protocol.JacksonSerializer;
+import net.swofty.type.generic.data.Datapoint;
+
+public class DatapointFloat extends Datapoint<Float> {
+    private static final JacksonSerializer<Float> serializer = new JacksonSerializer<>(Float.class);
+
+    public DatapointFloat(String key, Float value) {
+        super(key, value, serializer);
+    }
+
+    public DatapointFloat(String key) {
+        super(key, null, serializer);
+    }
+}

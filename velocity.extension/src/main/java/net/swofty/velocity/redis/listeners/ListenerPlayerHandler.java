@@ -88,7 +88,7 @@ public class ListenerPlayerHandler extends RedisListener {
                 transferHandler.sendToLimbo().join();
 
                 // Trick the packet blocker into thinking player is in normal transfer process
-                TransferHandler.playersGoalServerType.put(player, ServerType.HUB);
+                TransferHandler.playersGoalServerType.put(player, ServerType.SKYBLOCK_HUB);
 
                 try {
                     Thread.sleep(Long.parseLong(Configuration.get("transfer-timeout")));

@@ -8,14 +8,15 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.Rarity;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags.GUIAccessoryBag;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags.GUIAccessoryBag;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUIMaxwell extends SkyBlockInventoryGUI {
+public class GUIMaxwell extends HypixelInventoryGUI {
 
     public GUIMaxwell() {
         super("Accessory Bag Thaumaturgy", InventoryType.CHEST_6_ROW);
@@ -27,12 +28,14 @@ public class GUIMaxwell extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(47) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIAccessoryBag().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStackHead("§aAccessory Bag Shortcut", "961a918c0c49ba8d053e522cb91abc74689367b4d8aa06bfc1ba9154730985ff", 1,
                         "§7Quickly access your accessory bag",
                         "§7from right here!",
@@ -42,7 +45,8 @@ public class GUIMaxwell extends SkyBlockInventoryGUI {
         });
         set(new GUIItem(48) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 int mythic = player.getAccessoryBag().getUniqueAccessories(Rarity.MYTHIC).size();
                 int legendary = player.getAccessoryBag().getUniqueAccessories(Rarity.LEGENDARY).size();
                 int epic = player.getAccessoryBag().getUniqueAccessories(Rarity.EPIC).size();
@@ -80,7 +84,7 @@ public class GUIMaxwell extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override
