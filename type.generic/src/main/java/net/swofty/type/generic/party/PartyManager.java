@@ -11,6 +11,7 @@ import net.swofty.commons.protocol.objects.party.SendPartyEventToServiceProtocol
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.data.DataHandler;
+import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
@@ -31,7 +32,7 @@ public class PartyManager {
     }
 
     public static void invitePlayer(HypixelPlayer inviter, String targetName) {
-        @Nullable UUID targetUUID = DataHandler.getPotentialUUIDFromName(targetName);
+        @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
             sendError(inviter, "§cCouldn't find a player with that name!");
             return;

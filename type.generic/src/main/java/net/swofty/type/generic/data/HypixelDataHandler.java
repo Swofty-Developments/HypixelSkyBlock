@@ -2,13 +2,19 @@ package net.swofty.type.generic.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
+import net.minestom.server.scoreboard.Team;
+import net.minestom.server.scoreboard.TeamBuilder;
+import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
+import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.generic.utility.MathUtility;
 import org.bson.Document;
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.Nullable;
@@ -145,10 +151,42 @@ public class HypixelDataHandler extends DataHandler {
         return handler.get(Data.IGN, DatapointString.class).getValue();
     }
 
+    public static @Nullable UUID getPotentialUUIDFromName(String name) throws RuntimeException {
+        Document doc = UserDatabase.collection.find(new Document("ignLowercase", "\"" + name.toLowerCase() + "\"")).first();
+        if (doc == null)
+            return null;
+        return UUID.fromString(doc.getString("_id"));
+    }
+
     /** Account-wide data (non-generic enum). */
     public enum Data {
         RANK("rank", DatapointRank.class, new DatapointRank("rank", Rank.DEFAULT),
-                (player, datapoint) -> player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player))),
+                (player, datapoint) -> {
+            player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
+
+            Rank rank = (Rank) datapoint.getValue();
+
+            // Delay this as player needs to be loaded
+            MathUtility.delay(() -> {
+                if (!player.isOnline()) return;
+
+                String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + "_" + player.getUsername(), 16);
+                Team team = new TeamBuilder("ZZZZZ" + teamName, MinecraftServer.getTeamManager())
+                        .prefix(Component.text(rank.getPrefix()))
+                        .teamColor(rank.getTextColor())
+                        .build();
+                player.setTeam(team);
+                player.getTeam().sendUpdatePacket();
+            }, 5);
+        }, (player, datapoint) -> {
+            player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
+            Rank rank = (Rank) datapoint.getValue();
+            player.setTeam(new TeamBuilder("ZZZZZ" + rank.getPriorityCharacter() + "_" + player.getUsername(), MinecraftServer.getTeamManager())
+                    .prefix(Component.text(rank.getPrefix()))
+                    .teamColor(rank.getTextColor())
+                    .build());
+            player.getTeam().sendUpdatePacket();
+        }),
 
         IGN_LOWER("ignLowercase", DatapointString.class, new DatapointString("ignLowercase", "null"),
                 null, (player, datapoint) -> ((DatapointString) datapoint).setValue(player.getUsername().toLowerCase())),

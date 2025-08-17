@@ -14,6 +14,7 @@ import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.StandardTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
@@ -51,10 +52,10 @@ public class TypePrototypeLobbyLoader implements HypixelTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return List.of(
-                        new StandardTabModule(1),
-                        new StandardTabModule(2),
-                        new StandardTabModule(3),
-                        new StandardTabModule(4)
+                        new EmptyTabModule(),
+                        new EmptyTabModule(),
+                        new EmptyTabModule(),
+                        new EmptyTabModule()
                 );
             }
         };
