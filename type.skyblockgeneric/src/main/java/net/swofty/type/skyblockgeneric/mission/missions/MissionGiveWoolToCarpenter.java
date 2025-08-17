@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.mission.missions;
 
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -12,7 +12,7 @@ import java.util.Set;
 
 //Opens Carpentry Table Recipe on mission complete
 
-public class MissionGiveWoolToCarpenter extends HypixelMission {
+public class MissionGiveWoolToCarpenter extends SkyBlockMission {
 
     @Override
     public String getID() {

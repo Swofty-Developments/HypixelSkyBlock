@@ -7,7 +7,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class HypixelMission implements HypixelEventClass {
+public abstract class SkyBlockMission implements HypixelEventClass {
     public abstract String getID();
 
     public abstract String getName();

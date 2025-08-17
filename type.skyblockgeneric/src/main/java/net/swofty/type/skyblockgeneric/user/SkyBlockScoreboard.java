@@ -15,8 +15,8 @@ import net.swofty.type.generic.data.datapoints.DatapointInteger;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
-import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.generic.utility.BlockUtility;
 
@@ -72,7 +72,7 @@ public class SkyBlockScoreboard {
                 if (region != null &&
                         !missionData.getActiveMissions(region.getType()).isEmpty()) {
                     MissionData.ActiveMission mission = missionData.getActiveMissions(region.getType()).getFirst();
-                    HypixelMission skyBlockMission = MissionData.getMissionClass(mission.getMissionID());
+                    SkyBlockMission skyBlockMission = MissionData.getMissionClass(mission.getMissionID());
 
                     if (skyBlockMission instanceof LocationAssociatedMission locationAssociatedMission) {
                         addLine("§fObjective §e" + BlockUtility.getArrow(
@@ -85,7 +85,7 @@ public class SkyBlockScoreboard {
                         addLine("§e" + mission, sidebar);
                     }
 
-                    HypixelProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
+                    SkyBlockProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
                     if (progressMission != null)
                         addLine("§7 (" + mission.getMissionProgress() + "§7/" + progressMission.getMaxProgress() + "§7)", sidebar);
                     addLine("§7 ", sidebar);

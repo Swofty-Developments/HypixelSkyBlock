@@ -5,14 +5,14 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
 
-public class MissionMineCoal extends HypixelProgressMission {
+public class MissionMineCoal extends SkyBlockProgressMission {
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onBlockBreak(CustomBlockBreakEvent event) {
         MissionData data = event.getPlayer().getMissionData();

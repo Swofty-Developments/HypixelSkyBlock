@@ -6,14 +6,14 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
 
-public class MissionKillZombies extends HypixelProgressMission {
+public class MissionKillZombies extends SkyBlockProgressMission {
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onKilledZombie(PlayerKilledSkyBlockMobEvent event) {
         if (event.getKilledMob().getEntityType() != EntityType.ZOMBIE) return;

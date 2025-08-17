@@ -27,7 +27,6 @@ import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.data.mongodb.*;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
 import net.swofty.type.skyblockgeneric.block.placement.BlockPlacementManager;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
@@ -63,7 +62,7 @@ import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.levels.unlocks.CustomLevelUnlock;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.MissionRepeater;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.redis.RedisAuthenticate;
@@ -90,7 +89,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
@@ -373,7 +371,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         loopThroughPackage("net.swofty.type.skyblockgeneric.mission.missions", HypixelEventClass.class).forEach(HypixelEventHandler::registerEventMethods);
 
         // Register missions
-        loopThroughPackage("net.swofty.type.skyblockgeneric.mission.missions", HypixelMission.class)
+        loopThroughPackage("net.swofty.type.skyblockgeneric.mission.missions", SkyBlockMission.class)
                 .forEach((event) -> {
                     MissionData.registerMission(event.getClass());
                 });

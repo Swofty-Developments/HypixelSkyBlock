@@ -4,7 +4,7 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionTalkToFarmer extends HypixelMission {
+public class MissionTalkToFarmer extends SkyBlockMission {
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onRegionChange(PlayerRegionChangeEvent event) {
         MissionData data = event.getPlayer().getMissionData();

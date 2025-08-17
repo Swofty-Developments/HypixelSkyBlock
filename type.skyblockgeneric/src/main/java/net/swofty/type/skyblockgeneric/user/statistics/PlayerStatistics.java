@@ -39,7 +39,7 @@ import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockActionBar;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -506,7 +506,7 @@ public class PlayerStatistics {
                 BossBar bar;
 
                 if (activeMission.isProgress()) {
-                    int maxProgress = ((HypixelProgressMission) MissionData.getMissionClass(activeMission)).getMaxProgress();
+                    int maxProgress = ((SkyBlockProgressMission) MissionData.getMissionClass(activeMission)).getMaxProgress();
                     float progress = (float) activeMission.getMissionProgress() / maxProgress;
 
                     bar = BossBar.bossBar(

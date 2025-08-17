@@ -18,8 +18,8 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.MissionSet;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
-import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
@@ -123,7 +123,7 @@ public class GUIMissionLog extends HypixelInventoryGUI {
         for (MissionSet set : MissionSet.values()) {
             boolean completedSet = true;
 
-            for (Class<? extends HypixelMission> mission : set.getMissions()) {
+            for (Class<? extends SkyBlockMission> mission : set.getMissions()) {
                 if (missionData.getMission(mission) == null || !missionData.getMission(mission).getValue()) {
                     completedSet = false;
                     break;
@@ -163,8 +163,8 @@ public class GUIMissionLog extends HypixelInventoryGUI {
                             return;
                         }
 
-                        HypixelMission skyBlockMission = MissionData.getMissionClass(activeMission.getKey().getMissionID());
-                        HypixelProgressMission progressMission = missionData.getAsProgressMission(skyBlockMission.getID());
+                        SkyBlockMission skyBlockMission = MissionData.getMissionClass(activeMission.getKey().getMissionID());
+                        SkyBlockProgressMission progressMission = missionData.getAsProgressMission(skyBlockMission.getID());
 
                         lore.add(" " + (activeMission.getValue() ? "§a✓§f " : "§c✗§e ") + skyBlockMission.getName()
                                 + (progressMission != null ? ". §7(§b" + activeMission.getKey().getMissionProgress()

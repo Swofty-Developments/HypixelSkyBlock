@@ -1,21 +1,21 @@
-package net.swofty.types.generic.mission.missions.shepherd;
+package net.swofty.type.skyblockgeneric.mission.missions.sheperd;
 
 import net.minestom.server.entity.EntityType;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
-import net.swofty.types.generic.levels.SkyBlockLevelCause;
-import net.swofty.types.generic.mission.MissionData;
-import net.swofty.types.generic.mission.SkyBlockProgressMission;
-import net.swofty.types.generic.region.RegionType;
-import net.swofty.types.generic.skill.SkillCategories;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
 
 public class MissionShearSheep extends SkyBlockProgressMission {
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onKilledSheep(PlayerKilledSkyBlockMobEvent event) {
         if (event.getKilledMob().getEntityType() != EntityType.SHEEP) return;
 

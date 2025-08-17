@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Getter
 public class MissionData {
-    private static final HashMap<String, HypixelMission> missionClassCache = new HashMap<>();
+    private static final HashMap<String, SkyBlockMission> missionClassCache = new HashMap<>();
 
     private List<ActiveMission> activeMissions = new ArrayList<>();
     private List<ActiveMission> completedMissions = new ArrayList<>();
@@ -39,13 +39,13 @@ public class MissionData {
     }
 
     @SneakyThrows
-    public Map.Entry<ActiveMission, Boolean> getMission(Class<? extends HypixelMission> skyBlockMission) {
+    public Map.Entry<ActiveMission, Boolean> getMission(Class<? extends SkyBlockMission> skyBlockMission) {
         return getMission(getMissionIDFromClass(skyBlockMission));
     }
 
     public List<ActiveMission> getActiveMissions(RegionType regionType) {
         return activeMissions.stream().filter(mission -> {
-            HypixelMission skyBlockMission = getMissionFromCache(mission.getMissionID());
+            SkyBlockMission skyBlockMission = getMissionFromCache(mission.getMissionID());
             return skyBlockMission.getValidRegions().contains(regionType);
         }).collect(Collectors.toList());
     }
@@ -54,7 +54,7 @@ public class MissionData {
         return activeMissions.stream().anyMatch(mission -> mission.getMissionID().equals(missionID));
     }
 
-    public boolean isCurrentlyActive(Class<? extends HypixelMission> skyBlockMission) {
+    public boolean isCurrentlyActive(Class<? extends SkyBlockMission> skyBlockMission) {
         return isCurrentlyActive(getMissionIDFromClass(skyBlockMission));
     }
 
@@ -62,12 +62,12 @@ public class MissionData {
         return completedMissions.stream().anyMatch(mission -> mission.getMissionID().equals(missionID));
     }
 
-    public boolean hasCompleted(Class<? extends HypixelMission> skyBlockMission) {
+    public boolean hasCompleted(Class<? extends SkyBlockMission> skyBlockMission) {
         return hasCompleted(getMissionIDFromClass(skyBlockMission));
     }
 
     @SneakyThrows
-    public void startMission(Class<? extends HypixelMission> skyBlockMission) {
+    public void startMission(Class<? extends SkyBlockMission> skyBlockMission) {
         String missionID = getMissionIDFromClass(skyBlockMission);
         if (activeMissions.stream().anyMatch(mission -> mission.getMissionID().equals(missionID))) {
             throw new RuntimeException("Mission already started");
@@ -76,8 +76,8 @@ public class MissionData {
             throw new RuntimeException("Mission already started, was previously completed");
         }
 
-        HypixelMission mission = getMissionFromCache(missionID);
-        ActiveMission activeMission = new ActiveMission(missionID, 0, mission instanceof HypixelProgressMission);
+        SkyBlockMission mission = getMissionFromCache(missionID);
+        ActiveMission activeMission = new ActiveMission(missionID, 0, mission instanceof SkyBlockProgressMission);
 
         Map<String, Object> data = mission.onStart(getSkyBlockPlayer(), activeMission);
         if (data != null) {
@@ -100,16 +100,16 @@ public class MissionData {
         completedMissions.add(activeMission);
     }
 
-    public void endMission(Class<? extends HypixelMission> skyBlockMission) {
+    public void endMission(Class<? extends SkyBlockMission> skyBlockMission) {
         endMission(getMissionIDFromClass(skyBlockMission));
     }
 
-    public @Nullable HypixelProgressMission getAsProgressMission(String missionID) {
-        HypixelMission mission = getMissionFromCache(missionID);
-        return (mission instanceof HypixelProgressMission) ? (HypixelProgressMission) mission : null;
+    public @Nullable SkyBlockProgressMission getAsProgressMission(String missionID) {
+        SkyBlockMission mission = getMissionFromCache(missionID);
+        return (mission instanceof SkyBlockProgressMission) ? (SkyBlockProgressMission) mission : null;
     }
 
-    public @Nullable HypixelProgressMission getAsProgressMission(Class<? extends HypixelMission> skyBlockMission) {
+    public @Nullable SkyBlockProgressMission getAsProgressMission(Class<? extends SkyBlockMission> skyBlockMission) {
         return getAsProgressMission(getMissionIDFromClass(skyBlockMission));
     }
 
@@ -198,7 +198,7 @@ public class MissionData {
         }
 
         public void checkIfMissionEnded(SkyBlockPlayer player) {
-            HypixelProgressMission mission = (HypixelProgressMission) getMissionFromCache(missionID);
+            SkyBlockProgressMission mission = (SkyBlockProgressMission) getMissionFromCache(missionID);
 
             if (missionProgress >= mission.getMaxProgress()) {
                 player.getMissionData().endMission(missionID);
@@ -206,7 +206,7 @@ public class MissionData {
         }
 
         public List<String> getObjectiveCompleteText(ArrayList<String> rewards) {
-            HypixelMission mission = getMissionFromCache(missionID);
+            SkyBlockMission mission = getMissionFromCache(missionID);
 
             if (rewards == null || rewards.isEmpty())
                 return Arrays.asList(
@@ -228,7 +228,7 @@ public class MissionData {
         }
 
         public List<String> getNewObjectiveText() {
-            HypixelMission mission = getMissionFromCache(missionID);
+            SkyBlockMission mission = getMissionFromCache(missionID);
 
             return Arrays.asList(
                     "§7 ",
@@ -238,8 +238,8 @@ public class MissionData {
         }
     }
 
-    private static HypixelMission getMissionFromCache(String missionID) {
-        HypixelMission mission = missionClassCache.get(missionID);
+    private static SkyBlockMission getMissionFromCache(String missionID) {
+        SkyBlockMission mission = missionClassCache.get(missionID);
         if (mission == null) {
             throw new IllegalArgumentException("Mission not found in cache: " + missionID);
         }
@@ -247,15 +247,15 @@ public class MissionData {
     }
 
     @SneakyThrows
-    private static String getMissionIDFromClass(Class<? extends HypixelMission> skyBlockMission) {
+    private static String getMissionIDFromClass(Class<? extends SkyBlockMission> skyBlockMission) {
         return skyBlockMission.newInstance().getID();
     }
 
-    public static HypixelMission getMissionClass(String missionID) {
+    public static SkyBlockMission getMissionClass(String missionID) {
         return missionClassCache.get(missionID);
     }
 
-    public static HypixelMission getMissionClass(ActiveMission skyBlockMission) {
+    public static SkyBlockMission getMissionClass(ActiveMission skyBlockMission) {
         return missionClassCache.get(skyBlockMission.getMissionID());
     }
 
@@ -263,9 +263,9 @@ public class MissionData {
         return new ArrayList<>(missionClassCache.keySet());
     }
 
-    public static void registerMission(Class<? extends HypixelMission> skyBlockMission) {
+    public static void registerMission(Class<? extends SkyBlockMission> skyBlockMission) {
         try {
-            HypixelMission mission = skyBlockMission.newInstance();
+            SkyBlockMission mission = skyBlockMission.newInstance();
             missionClassCache.put(mission.getID(), mission);
         } catch (InstantiationException | IllegalAccessException e) {
             Logger.info(e.getStackTrace());

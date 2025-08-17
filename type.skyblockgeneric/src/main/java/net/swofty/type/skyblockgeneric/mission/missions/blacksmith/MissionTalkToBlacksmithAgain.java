@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.mission.missions.blacksmith;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionTalkToBlacksmithAgain extends HypixelMission implements LocationAssociatedMission {
+public class MissionTalkToBlacksmithAgain extends SkyBlockMission implements LocationAssociatedMission {
     @Override
     public String getID() {
         return "talk_to_blacksmith_again";

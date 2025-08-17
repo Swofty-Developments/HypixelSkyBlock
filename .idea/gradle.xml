@@ -28,6 +28,7 @@
             <option value="$PROJECT_DIR$/type.generic" />
             <option value="$PROJECT_DIR$/type.hub" />
             <option value="$PROJECT_DIR$/type.island" />
+            <option value="$PROJECT_DIR$/type.prototypelobby" />
             <option value="$PROJECT_DIR$/type.skyblockgeneric" />
             <option value="$PROJECT_DIR$/type.thefarmingislands" />
             <option value="$PROJECT_DIR$/velocity.extension" />

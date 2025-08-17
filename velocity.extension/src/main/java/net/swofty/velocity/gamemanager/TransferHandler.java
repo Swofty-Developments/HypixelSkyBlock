@@ -31,6 +31,11 @@ public record TransferHandler(Player player) {
     }
 
     public void standardTransferTo(RegisteredServer currentServer, ServerType type) {
+        if (type == null) {
+            player.disconnect(Component.text("§cWe encountered an error while trying to transfer you to a server. Please try again later."));
+            return;
+        }
+
         new Thread(() -> {
             boolean hasEmptyServer = GameManager.hasType(type) && GameManager.isAnyEmpty(type);
             if (!hasEmptyServer) {

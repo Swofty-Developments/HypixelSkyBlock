@@ -2,13 +2,13 @@ package net.swofty.type.skyblockgeneric.mission.missions;
 
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
 
-public class MissionDepositCoinsInBank extends HypixelMission {
+public class MissionDepositCoinsInBank extends SkyBlockMission {
 
     @Override
     public String getID() {

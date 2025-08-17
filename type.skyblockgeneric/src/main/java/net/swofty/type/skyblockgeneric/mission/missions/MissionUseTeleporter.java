@@ -5,13 +5,13 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
 
-public class MissionUseTeleporter extends HypixelMission {
+public class MissionUseTeleporter extends SkyBlockMission {
 
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onRegionChange(PlayerRegionChangeEvent event) {

@@ -32,10 +32,10 @@ public enum MissionSet {
     CARPENTRY(MissionGiveWoolToCarpenter.class),
     ;
 
-    private final Class<? extends HypixelMission>[] missions;
+    private final Class<? extends SkyBlockMission>[] missions;
 
     @SafeVarargs
-    MissionSet(Class<? extends HypixelMission>... missions) {
+    MissionSet(Class<? extends SkyBlockMission>... missions) {
         this.missions = missions;
     }
 
@@ -46,7 +46,7 @@ public enum MissionSet {
     @SneakyThrows
     public static MissionSet getFromMission(String missionID) {
         for (MissionSet missionSet : MissionSet.values()) {
-            for (Class<? extends HypixelMission> mission : missionSet.missions) {
+            for (Class<? extends SkyBlockMission> mission : missionSet.missions) {
                 if (mission.newInstance().getID().equalsIgnoreCase(missionID)) {
                     return missionSet;
                 }
@@ -62,7 +62,7 @@ public enum MissionSet {
      */
     @SneakyThrows
     public boolean hasCompleted(SkyBlockPlayer player) {
-        for (Class<? extends HypixelMission> mission : missions) {
+        for (Class<? extends SkyBlockMission> mission : missions) {
             if (!player.getMissionData().hasCompleted(mission.newInstance().getID())) {
                 return false;
             }
@@ -76,8 +76,8 @@ public enum MissionSet {
      * @return The next mission in the set, or null if there are no more missions
      */
     @SneakyThrows
-    public @Nullable Class<? extends HypixelMission> getNextMission(SkyBlockPlayer player) {
-        for (Class<? extends HypixelMission> mission : missions) {
+    public @Nullable Class<? extends SkyBlockMission> getNextMission(SkyBlockPlayer player) {
+        for (Class<? extends SkyBlockMission> mission : missions) {
             if (!player.getMissionData().hasCompleted(mission.newInstance().getID())) {
                 return mission;
             }

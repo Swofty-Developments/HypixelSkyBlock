@@ -14,13 +14,13 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.custom.VillagerSpokenToEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.MissionRepeater;
-import net.swofty.type.skyblockgeneric.mission.HypixelProgressMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
 
-public class MissionTalkToVillagers extends HypixelProgressMission implements MissionRepeater {
+public class MissionTalkToVillagers extends SkyBlockProgressMission implements MissionRepeater {
     private static final List<String> villagers = List.of(
             "Andrew",
             "Jack",

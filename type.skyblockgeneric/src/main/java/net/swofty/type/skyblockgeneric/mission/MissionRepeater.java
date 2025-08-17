@@ -13,7 +13,7 @@ public interface MissionRepeater {
 
     default List<SkyBlockPlayer> getPlayersWithMissionActive() {
         List<SkyBlockPlayer> toReturn = new ArrayList<>();
-        HypixelMission mission = (HypixelMission) this;
+        SkyBlockMission mission = (SkyBlockMission) this;
 
         SkyBlockGenericLoader.getLoadedPlayers().forEach((player) -> {
             if (player.getMissionData().isCurrentlyActive(mission.getID())) {
@@ -26,7 +26,7 @@ public interface MissionRepeater {
 
     default List<SkyBlockPlayer> getPlayersWithMissionNotStarted() {
         List<SkyBlockPlayer> toReturn = new ArrayList<>();
-        HypixelMission mission = (HypixelMission) this;
+        SkyBlockMission mission = (SkyBlockMission) this;
 
         SkyBlockGenericLoader.getLoadedPlayers().forEach((player) -> {
             if (!player.getMissionData().hasCompleted(mission.getID())
@@ -40,7 +40,7 @@ public interface MissionRepeater {
 
     default List<SkyBlockPlayer> getPlayersWithMissionCompleted() {
         List<SkyBlockPlayer> toReturn = new ArrayList<>();
-        HypixelMission mission = (HypixelMission) this;
+        SkyBlockMission mission = (SkyBlockMission) this;
 
         SkyBlockGenericLoader.getLoadedPlayers().forEach((player) -> {
             if (player.getMissionData().hasCompleted(mission.getID())) {

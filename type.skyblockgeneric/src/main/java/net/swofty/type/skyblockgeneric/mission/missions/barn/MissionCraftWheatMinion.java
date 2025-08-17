@@ -5,14 +5,14 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.HypixelMission;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
 import java.util.Set;
 
-public class MissionCraftWheatMinion extends HypixelMission {
+public class MissionCraftWheatMinion extends SkyBlockMission {
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onCraftEvent(ItemCraftEvent event) {
         MissionData data = event.getPlayer().getMissionData();
