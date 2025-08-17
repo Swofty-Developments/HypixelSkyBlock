@@ -158,7 +158,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         /**
          * Register commands
          */
-        loopThroughPackage("net.swofty.type.skyblockgeneric.command.commands", HypixelCommand.class).forEach(command -> {
+        loopThroughPackage("net.swofty.type.skyblockgeneric.commands", HypixelCommand.class).forEach(command -> {
             try {
                 MinecraftServer.getCommandManager().register(command.getCommand());
             } catch (Exception e) {
