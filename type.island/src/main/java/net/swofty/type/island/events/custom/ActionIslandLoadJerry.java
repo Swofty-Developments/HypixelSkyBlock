@@ -3,19 +3,19 @@ package net.swofty.type.island.events.custom;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
-import net.swofty.types.generic.entity.hologram.ServerHolograms;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
-import net.swofty.types.generic.utility.JerryInformation;
-import net.swofty.types.generic.utility.MathUtility;
+import net.swofty.type.generic.entity.hologram.ServerHolograms;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.skyblockgeneric.event.custom.IslandFetchedFromDatabaseEvent;
+import net.swofty.type.skyblockgeneric.utility.JerryInformation;
 import org.bson.Document;
 
-public class ActionIslandLoadJerry implements SkyBlockEventClass {
+public class ActionIslandLoadJerry implements HypixelEventClass {
 
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
     public void run(IslandFetchedFromDatabaseEvent event) {
         Document document = event.getIsland().getDatabase().getDocument();
         JerryInformation jerryInformation = event.getIsland().getJerryInformation();

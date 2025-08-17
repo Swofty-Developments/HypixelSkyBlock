@@ -5,17 +5,19 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.generic.SkyBlockTypeLoader;
+import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.tab.TablistManager;
+import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
+import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
 import net.swofty.type.thefarmingislands.tab.TheFarmingIslandsServerModule;
-import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.SkyBlockTypeLoader;
-import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.tab.TablistManager;
-import net.swofty.types.generic.tab.TablistModule;
-import net.swofty.types.generic.tab.modules.AccountInformationModule;
-import net.swofty.types.generic.tab.modules.PlayersOnlineModule;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -54,8 +56,8 @@ public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return new ArrayList<>(List.of(
-                        new PlayersOnlineModule(1),
-                        new PlayersOnlineModule(2),
+                        new SkyBlockPlayersOnlineModule(1),
+                        new SkyBlockPlayersOnlineModule(2),
                         new TheFarmingIslandsServerModule(),
                         new AccountInformationModule()
                 ));
@@ -64,40 +66,50 @@ public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
     }
 
     @Override
-    public List<SkyBlockEventClass> getTraditionalEvents() {
+    public List<HypixelEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.thefarmingislands.events",
-                SkyBlockEventClass.class
+                HypixelEventClass.class
         ).collect(Collectors.toList());
     }
 
     @Override
-    public List<SkyBlockEventClass> getCustomEvents() {
+    public List<HypixelEventClass> getCustomEvents() {
         return new ArrayList<>();
     }
 
     @Override
-    public List<SkyBlockNPC> getNPCs() {
-        List<SkyBlockNPC> npcs = new ArrayList<>();
+    public List<HypixelNPC> getNPCs() {
+        List<HypixelNPC> npcs = new ArrayList<>();
 
         npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.thefarmingislands.npcs",
-                SkyBlockNPC.class
+                HypixelNPC.class
         ).toList());
 
         return npcs;
     }
 
     @Override
-    public List<SkyBlockVillagerNPC> getVillagerNPCs() {
+    public List<ServiceToClient> getServiceRedisListeners() {
+        return List.of();
+    }
+
+    @Override
+    public List<ProxyToClient> getProxyRedisListeners() {
+        return List.of();
+    }
+
+    @Override
+    public List<HypixelVillagerNPC> getVillagerNPCs() {
         return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.thefarmingislands.villagers",
-                SkyBlockVillagerNPC.class
+                HypixelVillagerNPC.class
         ).toList());
     }
 
     @Override
-    public List<SkyBlockAnimalNPC> getAnimalNPCs() {
+    public List<HypixelAnimalNPC> getAnimalNPCs() {
         return new ArrayList<>();
     }
 
@@ -108,6 +120,6 @@ public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
 
     @Override
     public @Nullable CustomWorlds getMainInstance() {
-        return CustomWorlds.HUB;
+        return CustomWorlds.SKYBLOCK_HUB;
     }
 }

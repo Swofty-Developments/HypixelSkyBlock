@@ -1,15 +1,15 @@
 package net.swofty.type.island.events.custom;
 
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
-import net.swofty.types.generic.structure.structures.IslandPortal;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.event.custom.IslandFetchedFromDatabaseEvent;
+import net.swofty.type.skyblockgeneric.structure.structures.IslandPortal;
 
-public class ActionIslandCreatePortals implements SkyBlockEventClass {
+public class ActionIslandCreatePortals implements HypixelEventClass {
 
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
     public void run(IslandFetchedFromDatabaseEvent event) {
         IslandPortal portal = new IslandPortal(0, -1, 100, 35);
         portal.setType(IslandPortal.PortalType.HUB);

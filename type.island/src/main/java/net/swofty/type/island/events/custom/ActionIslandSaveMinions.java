@@ -1,14 +1,14 @@
 package net.swofty.type.island.events.custom;
 
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.event.custom.IslandSavedIntoDatabaseEvent;
-import net.swofty.types.generic.minion.IslandMinionData;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.event.custom.IslandSavedIntoDatabaseEvent;
+import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
 
-public class ActionIslandSaveMinions implements SkyBlockEventClass {
+public class ActionIslandSaveMinions implements HypixelEventClass {
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM ,requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM ,requireDataLoaded = false)
     public void run(IslandSavedIntoDatabaseEvent event) {
         IslandMinionData minionData = event.getIsland().getMinionData();
         minionData.getMinions().forEach(IslandMinionData.IslandMinion::removeMinion);

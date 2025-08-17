@@ -2,12 +2,13 @@ package net.swofty.type.thefarmingislands.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.mission.MissionData;
-import net.swofty.types.generic.mission.missions.barn.MissionCraftWheatMinion;
-import net.swofty.types.generic.mission.missions.barn.MissionTalkToFarmHand;
-import net.swofty.types.generic.mission.missions.barn.MissionTalkToFarmhandAgain;
+import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
+import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.missions.barn.MissionCraftWheatMinion;
+import net.swofty.type.skyblockgeneric.mission.missions.barn.MissionTalkToFarmHand;
+import net.swofty.type.skyblockgeneric.mission.missions.barn.MissionTalkToFarmhandAgain;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class VillagerFarmHand extends NPCVillagerDialogue {
     @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
         if (isInDialogue(e.player())) return;
-        MissionData data = e.player().getMissionData();
+        MissionData data = ((SkyBlockPlayer) e.player()).getMissionData();
 
         if (data.isCurrentlyActive(MissionTalkToFarmHand.class)) {
             setDialogue(e.player(), "quest-hello").thenRun(() -> {

@@ -7,12 +7,13 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUILonelyPhilosopher extends SkyBlockInventoryGUI {
+public class GUILonelyPhilosopher extends HypixelInventoryGUI {
 
     public GUILonelyPhilosopher() {
         super("Lonely Philosopher", InventoryType.CHEST_6_ROW);
@@ -24,7 +25,8 @@ public class GUILonelyPhilosopher extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 double coins = player.getCoins();
                 double price = 150000;
                 if (coins < price) {
@@ -37,7 +39,8 @@ public class GUILonelyPhilosopher extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§5Travel Scroll To Hub Castle", Material.MAP, 1,
                         "§7Consume this item to add its",
                         "§7destination to your fast travel",
@@ -67,7 +70,7 @@ public class GUILonelyPhilosopher extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

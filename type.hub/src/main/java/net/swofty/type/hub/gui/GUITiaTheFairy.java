@@ -6,20 +6,21 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointBackpacks;
-import net.swofty.types.generic.data.datapoints.DatapointFairySouls;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.levels.SkyBlockLevelCause;
-import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.fairysouls.FairySoulExchangeLevels;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointFairySouls;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulExchangeLevels;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUITiaTheFairy extends SkyBlockInventoryGUI {
+public class GUITiaTheFairy extends HypixelInventoryGUI {
     public GUITiaTheFairy() {
         super("Fairy", InventoryType.CHEST_6_ROW);
     }
@@ -29,13 +30,14 @@ public class GUITiaTheFairy extends SkyBlockInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
 
-        int collectedAmount = getPlayer().getFairySouls().getCollectedFairySouls().size();
+        int collectedAmount = ((SkyBlockPlayer) getPlayer()).getFairySouls().getCollectedFairySouls().size();
         boolean canExchange = collectedAmount >= 5;
-        FairySoulExchangeLevels nextLevel = getPlayer().getFairySouls().getNextExchangeLevel();
+        FairySoulExchangeLevels nextLevel = ((SkyBlockPlayer) getPlayer()).getFairySouls().getNextExchangeLevel();
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!canExchange) {
                     player.sendMessage("§cYou don't have enough Fairy Souls!");
                     return;
@@ -43,7 +45,7 @@ public class GUITiaTheFairy extends SkyBlockInventoryGUI {
 
                 player.closeInventory();
                 player.getFairySouls().exchange();
-                player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
+                player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
                                 .setValue(player.getFairySouls());
                 player.sendMessage("§aYou have exchanged your Fairy Souls for rewards!");
                 nextLevel.getDisplay().forEach(player::sendMessage);
@@ -52,17 +54,18 @@ public class GUITiaTheFairy extends SkyBlockInventoryGUI {
                         SkyBlockLevelCause.getFairySoulExchangeCause(nextLevel.ordinal())
                 );
 
-                DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getDataHandler().get(
-                        DataHandler.Data.BACKPACKS, DatapointBackpacks.class
+                DatapointBackpacks.PlayerBackpacks backpacks = ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(
+                        SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class
                 ).getValue();
                 backpacks.setUnlockedSlots(backpacks.getUnlockedSlots() +
                         nextLevel.getBackpackSlots());
-                getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class)
+                ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class)
                         .setValue(backpacks);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>(List.of(
                         "§7Find §dFairy Souls §7around the",
                         "§7world and bring them back to me",
@@ -99,7 +102,7 @@ public class GUITiaTheFairy extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

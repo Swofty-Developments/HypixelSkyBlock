@@ -102,7 +102,7 @@ public record TransferHandler(Player player) {
             GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
 
             if (server == null) {
-                player.disconnect(Component.text("§cThere are no SkyBlock (type=" + type.name() + ") servers available at the moment."));
+                player.disconnect(Component.text("§cThere are no Hypixel (type=" + type.name() + ") servers available at the moment."));
                 return;
             }
 
@@ -146,7 +146,7 @@ public record TransferHandler(Player player) {
             GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
 
             if (server == null) {
-                player.disconnect(Component.text("§cThere are no SkyBlock (type=" + type.name() + ") servers available at the moment."));
+                player.disconnect(Component.text("§cThere are no Hypixel (type=" + type.name() + ") servers available at the moment."));
                 return;
             }
 

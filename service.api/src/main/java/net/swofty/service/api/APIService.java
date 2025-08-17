@@ -10,8 +10,8 @@ import net.swofty.service.api.http.APIResponse;
 import net.swofty.service.api.http.SkyBlockEndpoint;
 import net.swofty.service.generic.SkyBlockService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
-import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.types.generic.data.mongodb.UserDatabase;
+import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
+import net.swofty.type.generic.data.mongodb.UserDatabase;
 import org.jetbrains.annotations.Nullable;
 import spark.Spark;
 

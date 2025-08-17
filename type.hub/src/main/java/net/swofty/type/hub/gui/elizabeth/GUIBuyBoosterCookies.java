@@ -13,16 +13,17 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
+public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
     public GUIBuyBoosterCookies() {
         super("Community Shop", InventoryType.CHEST_6_ROW);
     }
@@ -53,13 +54,15 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
             GUIAccountAndProfileUpgrades.ShopCategorys shopCategorys = allShopCategorys[index];
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (slot != 3) {
                         shopCategorys.gui.open(player);
                     }
                 }
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack.Builder itemStack = shopCategorys.stack;
                     ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (slot != 3) {
@@ -85,7 +88,8 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
 
         for (int slot : categoriesItemsSlots) {
             set(new GUIItem(slot) {
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (slot != 12) {
                         return ItemStackCreator.getStack("§8▲ §7Categories", Material.GRAY_STAINED_GLASS_PANE, 1, "§8▼ §7Items");
                     } else {
@@ -97,7 +101,8 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(29) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (player.getGems() >= cookieCost) {
                     player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
                     player.removeGems(cookieCost);
@@ -108,7 +113,8 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack.Builder itemStack = ItemStackCreator.enchant(ItemStackCreator.getStack("§6Single Cookie", Material.COOKIE, 1,
                         " ",
                         "§6Booster Cookie §8x1",
@@ -160,7 +166,8 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
             final int totalCookiePrice = boosterCookieAmount*cookieCost;
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (player.getGems() >= totalCookiePrice) {
                     player.addAndUpdateItem(ItemType.BOOSTER_COOKIE, boosterCookieAmount);
                     player.removeGems(totalCookiePrice);
@@ -171,7 +178,8 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack.Builder itemStack = ItemStackCreator.enchant(ItemStackCreator.getStack("§6Half-Dozen Cookies", Material.COOKIE, 1,
                         " ",
                         "§6Booster Cookie §8x6",
@@ -223,7 +231,8 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
             final int totalCookiePrice = boosterCookieAmount*cookieCost;
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (player.getGems() >= totalCookiePrice) {
                     player.addAndUpdateItem(ItemType.BOOSTER_COOKIE, boosterCookieAmount);
                     player.removeGems(totalCookiePrice);
@@ -234,7 +243,8 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack.Builder itemStack = ItemStackCreator.enchant(ItemStackCreator.getStack("§6A Dozen Cookies", Material.COOKIE, 1,
                         " ",
                         "§6Booster Cookie §8x12",
@@ -283,12 +293,14 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
         });
         set(new GUIClickableItem(49) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.openBook(book);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.enchant(ItemStackCreator.getStack("§aCommunity Shop", Material.EMERALD, 1,
                         "§8Elizabeth",
                         " ",
@@ -316,7 +328,7 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

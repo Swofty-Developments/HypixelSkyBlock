@@ -8,12 +8,13 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUIJamie extends SkyBlockInventoryGUI {
+public class GUIJamie extends HypixelInventoryGUI {
     public GUIJamie() {
         super("Claim Reward", InventoryType.CHEST_6_ROW);
     }
@@ -24,14 +25,16 @@ public class GUIJamie extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.addAndUpdateItem(ItemType.ROGUE_SWORD);
                 player.closeInventory();
                 player.sendMessage(Component.text("§aYou claimed a §fRogue Sword§a!"));
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§fRogue Sword", Material.GOLDEN_SWORD, 1,
                         "§7Damage: §c+20",
                         "",
@@ -58,7 +61,7 @@ public class GUIJamie extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

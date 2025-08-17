@@ -10,17 +10,18 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
-import net.swofty.types.generic.data.datapoints.DatapointToggles;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
+public class GUIBitsAbiphone extends HypixelInventoryGUI {
 
     public GUIBitsAbiphone() {
         super("Bits Shop - Abiphone", InventoryType.CHEST_4_ROW);
@@ -35,7 +36,8 @@ public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
             final ItemType item = ItemType.ABIPHONE_CONTACTS_TRIO;
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 if (player.getBits() >= price) {
                     SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                     ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
@@ -52,7 +54,8 @@ public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                 ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
                 ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
@@ -66,12 +69,14 @@ public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
         });
         set(new GUIClickableItem(14) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 new GUIBitsAbicases().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStackHead("§5Abicases", "a3c153c391c34e2d328a60839e683a9f82ad3048299d8bc6a39e6f915cc5a", 1,
                         "§7Any expensive Abiphone needs some",
                         "§7accessories!",
@@ -98,7 +103,7 @@ public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

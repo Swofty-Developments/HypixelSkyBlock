@@ -1,17 +1,17 @@
 package net.swofty.type.hub.events;
 
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.gui.inventory.inventories.museum.GUIMuseumEmptyDisplay;
-import net.swofty.types.generic.gui.inventory.inventories.museum.GUIMuseumNonEmptyDisplay;
-import net.swofty.types.generic.museum.MuseumDisplayEntityImpl;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIMuseumEmptyDisplay;
+import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIMuseumNonEmptyDisplay;
+import net.swofty.type.skyblockgeneric.museum.MuseumDisplayEntityImpl;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class ActionPlayerClickMuseumDisplay implements SkyBlockEventClass {
+public class ActionPlayerClickMuseumDisplay implements HypixelEventClass {
 
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(PlayerEntityInteractEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

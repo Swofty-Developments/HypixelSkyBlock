@@ -11,16 +11,17 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.CommunityShopItem;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUIBitsAbicases extends SkyBlockInventoryGUI {
+public class GUIBitsAbicases extends HypixelInventoryGUI {
 
     public GUIBitsAbicases() {
         super("Bits Shop - Abicases", InventoryType.CHEST_4_ROW);
@@ -81,11 +82,11 @@ public class GUIBitsAbicases extends SkyBlockInventoryGUI {
         ;
 
         private final String guiName;
-        private final SkyBlockInventoryGUI previousGUI;
+        private final HypixelInventoryGUI previousGUI;
         private final ItemStack.Builder item;
         private final List<CommunityShopItem> shopItems;
 
-        SubCategorys(String guiName, SkyBlockInventoryGUI previousGUI, ItemStack.Builder item, List<CommunityShopItem> shopItems) {
+        SubCategorys(String guiName, HypixelInventoryGUI previousGUI, ItemStack.Builder item, List<CommunityShopItem> shopItems) {
             this.guiName = guiName;
             this.previousGUI = previousGUI;
             this.item = item;
@@ -104,12 +105,14 @@ public class GUIBitsAbicases extends SkyBlockInventoryGUI {
             SubCategorys subCategorys = allSubCategorys[indexSubCategorys];
             set(new GUIClickableItem(slot) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     new GUIBitsSubCategorys(subCategorys.getShopItems(), subCategorys.getGuiName(), subCategorys.getPreviousGUI()).open(player);
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack.Builder itemstack = subCategorys.item;
                     ArrayList<String> lore = new ArrayList<>(itemstack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (!Objects.equals(lore.getLast(), "§eClick to browse!")) {
@@ -135,7 +138,7 @@ public class GUIBitsAbicases extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

@@ -8,13 +8,14 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUIBitsConfirmBuy extends SkyBlockInventoryGUI {
+public class GUIBitsConfirmBuy extends HypixelInventoryGUI {
 
     SkyBlockItem item;
     Integer price;
@@ -29,14 +30,16 @@ public class GUIBitsConfirmBuy extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(11) {
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.addAndUpdateItem(item);
                 player.removeBits(price);
                 new GUIBitsShop().open(player);
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§aConfirm", Material.LIME_TERRACOTTA, 1,
                         "§7Buying: " + item.getDisplayName(),
                         "§7Cost: §b" + StringUtility.commaify(price));
@@ -44,12 +47,14 @@ public class GUIBitsConfirmBuy extends SkyBlockInventoryGUI {
         });
         set(new GUIClickableItem(15) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 player.closeInventory();
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack("§cCancel", Material.RED_TERRACOTTA, 1);
             }
         });
@@ -66,7 +71,7 @@ public class GUIBitsConfirmBuy extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

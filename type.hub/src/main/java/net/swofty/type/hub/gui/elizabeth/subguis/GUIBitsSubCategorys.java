@@ -8,18 +8,19 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.CommunityShopItem;
-import net.swofty.types.generic.data.datapoints.DatapointToggles;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
+public class GUIBitsSubCategorys extends HypixelInventoryGUI {
 
     private final int[] displaySlots = {
             10, 11, 12, 13, 14, 15, 16,
@@ -29,9 +30,9 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
 
     private final List<CommunityShopItem> items;
     private final String guiName;
-    private final SkyBlockInventoryGUI previousGUI;
+    private final HypixelInventoryGUI previousGUI;
 
-    public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, SkyBlockInventoryGUI previousGUI) {
+public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, HypixelInventoryGUI previousGUI) {
         super("Bits Shop - " + guiName, InventoryType.CHEST_5_ROW);
         this.items = items;
         this.guiName = guiName;
@@ -50,7 +51,8 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
                     int amount = shopItem.getAmount();
                     set(new GUIClickableItem(slot) {
                         @Override
-                        public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                        public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             if (player.getBits() >= price) {
                                 SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                                 ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
@@ -69,7 +71,8 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
                         }
 
                         @Override
-                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                             SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                             ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
                             itemStack.amount(amount);

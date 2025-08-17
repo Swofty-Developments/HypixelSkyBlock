@@ -1,18 +1,21 @@
 package net.swofty.type.island.tab;
 
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointRank;
-import net.swofty.types.generic.tab.TablistModule;
-import net.swofty.types.generic.tab.TablistSkinRegistry;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.data.datapoints.DatapointRank;
+import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.generic.tab.TablistSkinRegistry;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class IslandMemberModule extends TablistModule {
+
     @Override
-    public List<TablistEntry> getEntries(SkyBlockPlayer player) {
+    public List<TablistEntry> getEntries(HypixelPlayer p) {
+        SkyBlockPlayer player = (SkyBlockPlayer) p;
         ArrayList<SkyBlockPlayer> toShow;
         if (player.isCoop())
             toShow = new ArrayList<>(player.getSkyBlockIsland().getCoop().getOnlineMembers());
@@ -24,8 +27,8 @@ public class IslandMemberModule extends TablistModule {
         ));
 
         // Sort players by their rank ordinal in reverse
-        toShow.sort((o1, o2) -> o2.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().ordinal()
-                - o1.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().ordinal());
+        toShow.sort((o1, o2) -> o2.getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().ordinal()
+                - o1.getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().ordinal());
         Collections.reverse(toShow);
 
         for (int x = 0; x < 19; x++) {

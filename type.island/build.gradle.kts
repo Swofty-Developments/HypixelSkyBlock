@@ -14,6 +14,7 @@ java {
 }
 
 dependencies {
+    implementation(project(":type.skyblockgeneric"))
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))

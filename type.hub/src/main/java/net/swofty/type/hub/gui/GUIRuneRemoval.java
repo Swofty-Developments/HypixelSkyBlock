@@ -8,16 +8,17 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.components.RuneableComponent;
-import net.swofty.types.generic.item.updater.PlayerItemUpdater;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.RuneableComponent;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUIRuneRemoval extends SkyBlockInventoryGUI {
+public class GUIRuneRemoval extends HypixelInventoryGUI {
     private final int[] borderSlots = {
             0, 8, 9, 17, 18, 26, 27, 35, 36, 44
     };
@@ -47,7 +48,8 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
         if (item == null) {
             set(new GUIClickableItem(13) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack stack = e.getCursorItem();
 
                     if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
@@ -65,18 +67,21 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStack.builder(Material.AIR);
                 }
             });
             set(new GUIClickableItem(22) {
                 @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     player.sendMessage("§cYou must place an item in the above slot!");
                 }
 
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§aRune Removal", Material.BARRIER, 1,
                             "§7Place an item with a rune attached to",
@@ -90,12 +95,14 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(13) {
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack stack = e.getClickedItem();
                 if (stack.isAir()) return;
                 updateFromItem(null);
@@ -111,7 +118,8 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
                 !runeData.hasRune()) {
             set(new GUIItem(22) {
                 @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     return ItemStackCreator.getStack(
                             "§cError!", Material.BARRIER, 1,
                             "§7Place an item with a rune attached to",
@@ -126,7 +134,8 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
         border(ItemStackCreator.createNamedItemStack(Material.GREEN_STAINED_GLASS_PANE));
         set(new GUIClickableItem(22) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 runeData.setRuneType(null);
                 runeData.setLevel(null);
 
@@ -136,7 +145,8 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 return ItemStackCreator.getStack(
                         "§aClick to Remove Rune!", Material.CAULDRON, 1,
                         "§cWARNING: The rune will be lost",
@@ -158,8 +168,8 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(13)));
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
+        ((SkyBlockPlayer) player).addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(13)));
     }
 
     @Override

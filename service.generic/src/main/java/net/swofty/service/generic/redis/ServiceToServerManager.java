@@ -156,7 +156,7 @@ public class ServiceToServerManager {
                 .put("playerUUID", playerUUID.toString())
                 .put("dataKey", dataKey);
 
-        return sendToServer(serverUUID, FromServiceChannels.GET_PLAYER_DATA, message);
+        return sendToServer(serverUUID, FromServiceChannels.GET_SKYBLOCK_DATA, message);
     }
 
     /**

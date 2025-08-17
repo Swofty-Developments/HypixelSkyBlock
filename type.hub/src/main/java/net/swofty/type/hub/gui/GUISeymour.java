@@ -9,12 +9,13 @@ import net.minestom.server.item.Material;
 import net.minestom.server.item.component.DyedItemColor;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUISeymour extends SkyBlockInventoryGUI {
+public class GUISeymour extends HypixelInventoryGUI {
     public GUISeymour() {
         super("Seymour's Fancy Suits", InventoryType.CHEST_4_ROW);
     }
@@ -29,7 +30,8 @@ public class GUISeymour extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(11) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 double coins = player.getCoins();
                 if (coins < cheapTuxedoPrice) {
                     return;
@@ -42,7 +44,8 @@ public class GUISeymour extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack.Builder builder = ItemStackCreator.getStack("§5Cheap Tuxedo", Material.LEATHER_CHESTPLATE, 1,
                         "",
                         "§8Complete suit",
@@ -66,7 +69,8 @@ public class GUISeymour extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(13) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 double coins = player.getCoins();
                 if (coins < fancyTuxedoPrice) {
                     return;
@@ -79,7 +83,8 @@ public class GUISeymour extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack.Builder builder = ItemStackCreator.getStack("§6Fancy Tuxedo", Material.LEATHER_CHESTPLATE, 1,
                         "",
                         "§8Complete suit",
@@ -104,7 +109,8 @@ public class GUISeymour extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(15) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 double coins = player.getCoins();
                 if (coins < elegantTuxedoPrice) {
                     return;
@@ -117,7 +123,8 @@ public class GUISeymour extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 ItemStack.Builder builder = ItemStackCreator.getStack("§6Elegant Tuxedo", Material.LEATHER_CHESTPLATE, 1,
                         "",
                         "§8Complete suit",
