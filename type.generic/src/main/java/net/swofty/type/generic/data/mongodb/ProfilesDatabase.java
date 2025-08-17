@@ -80,6 +80,14 @@ public record ProfilesDatabase(String id) implements MongoDB {
         collection.insertOne(New);
     }
 
+    public void saveDocument(Document document) {
+        if (exists()) {
+            collection.replaceOne(Filters.eq("_id", id), document);
+        } else {
+            collection.insertOne(document);
+        }
+    }
+
     public boolean exists() {
         Document query = new Document("_id", id);
         Document found = collection.find(query).first();

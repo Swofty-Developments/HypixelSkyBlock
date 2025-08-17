@@ -33,7 +33,7 @@ public class ActionPlayerDataSave implements HypixelEventClass {
 
         // Save Hypixel data to UserDatabase (account-wide data)
         UserDatabase userDatabase = new UserDatabase(uuid);
-        userDatabase.saveHypixelData(handler);
+        userDatabase.saveData(handler);
 
         // Remove from cache
         HypixelDataHandler.userCache.remove(uuid);

@@ -59,16 +59,19 @@ public class GUIProfileCreate extends HypixelInventoryGUI {
                 SkyBlockPlayerProfiles profiles = player.getProfiles();
                 UUID profileId = UUID.randomUUID();
 
-                SkyBlockDataHandler handler = SkyBlockDataHandler.initUserWithDefaultData(player.getUuid());
+                // Create new SkyBlock data handler with the profile ID
+                SkyBlockDataHandler handler = SkyBlockDataHandler.initUserWithDefaultData(player.getUuid(), profileId);
                 handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(profileName);
                 handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(profileId);
-                Document document = handler.toProfileDocument(profileId);
+
+                // Convert to document for saving
+                Document document = handler.toProfileDocument();
 
                 profiles.addProfile(profileId);
                 ProfilesDatabase.collection.insertOne(document);
 
                 player.getHookManager().registerHook(ActionPlayerDataSave.class, (nil) -> {
-                profiles.setCurrentlySelected(profileId);
+                    profiles.setCurrentlySelected(profileId);
 
                     UserDatabase database = new UserDatabase(player.getUuid());
                     database.saveProfiles(profiles);

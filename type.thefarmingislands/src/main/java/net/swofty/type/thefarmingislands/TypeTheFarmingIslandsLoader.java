@@ -5,7 +5,8 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.type.generic.HypixelTypeLoader;
+import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -14,7 +15,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
-import net.swofty.type.skyblockgeneric.tabmodules.PlayersOnlineModule;
+import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
 import net.swofty.type.thefarmingislands.tab.TheFarmingIslandsServerModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
     @Override
     public ServerType getType() {
-        return ServerType.SKYBLOCK_THE_FARMING_ISLANDS;
+        return ServerType.THE_FARMING_ISLANDS;
     }
 
     @Override
@@ -55,8 +56,8 @@ public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return new ArrayList<>(List.of(
-                        new PlayersOnlineModule(1),
-                        new PlayersOnlineModule(2),
+                        new SkyBlockPlayersOnlineModule(1),
+                        new SkyBlockPlayersOnlineModule(2),
                         new TheFarmingIslandsServerModule(),
                         new AccountInformationModule()
                 ));
@@ -87,6 +88,16 @@ public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
         ).toList());
 
         return npcs;
+    }
+
+    @Override
+    public List<ServiceToClient> getServiceRedisListeners() {
+        return List.of();
+    }
+
+    @Override
+    public List<ProxyToClient> getProxyRedisListeners() {
+        return List.of();
     }
 
     @Override

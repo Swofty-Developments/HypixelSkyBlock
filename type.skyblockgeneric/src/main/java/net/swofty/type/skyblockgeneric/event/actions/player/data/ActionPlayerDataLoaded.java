@@ -40,11 +40,9 @@ import java.util.UUID;
 public class ActionPlayerDataLoaded implements HypixelEventClass {
 
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER_DATA , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER_DATA , requireDataLoaded = false)
     public void run(PlayerSpawnEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
-
-        if (!player.hasAuthenticated) return;
         if (!event.isFirstSpawn()) return;
 
         Logger.info("Loading SkyBlock data for spawned player: " + event.getPlayer().getUsername() + "...");
@@ -52,6 +50,7 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
         UUID playerUuid = player.getUuid();
         SkyBlockPlayerProfiles profiles = player.getProfiles();
         SkyBlockDataHandler handler = player.getSkyblockDataHandler();
+        handler.runOnLoad(player);
 
         // Handle coop synchronization
         if (handler.get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {
@@ -82,9 +81,6 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
         }
 
         player.sendMessage("");
-
-        // Run onLoad callbacks for SkyBlock functionality
-        handler.runOnLoad(player);
 
         // Manually call region event with a delay
         MathUtility.delay(() -> {
@@ -141,10 +137,6 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
                     player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.VISITED_ISLANDS, DatapointStringList.class).setValue(visitedIslands);
                 }
             }
-
-            if (HypixelConst.isIslandServer()) return;
-            PlayerHolograms.spawnAll(player);
-            HypixelNPC.updateForPlayer(player);
         });
     }
 }

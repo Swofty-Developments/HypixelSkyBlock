@@ -5,6 +5,8 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
@@ -37,6 +39,10 @@ public interface HypixelTypeLoader {
     List<HypixelAnimalNPC> getAnimalNPCs();
 
     List<HypixelNPC> getNPCs();
+
+    List<ServiceToClient> getServiceRedisListeners();
+
+    List<ProxyToClient> getProxyRedisListeners();
 
     record LoaderValues(Function<ServerType, Pos> spawnPosition, boolean announceDeathMessages) { }
 

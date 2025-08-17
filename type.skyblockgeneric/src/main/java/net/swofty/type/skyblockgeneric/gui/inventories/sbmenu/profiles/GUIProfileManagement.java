@@ -57,7 +57,7 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§eEmpty Profile Slot", Material.OAK_BUTTON, 1,
                                 "§8Available",
                                 " ",
@@ -83,7 +83,7 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
 
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         new GUIProfileSelectMode().open(player);
                     }
                 });
@@ -93,13 +93,17 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
             UUID profileId = profileIds.get(profileCount);
             boolean selected = profileId.equals(profiles.getCurrentlySelected());
             SkyBlockDataHandler dataHandler;
+
             if (selected) {
-                dataHandler = player.getSkyblockDataHandler();
+                // Use the cached handler for the current profile
+                dataHandler = SkyBlockDataHandler.getUser(player.getUuid());
             } else {
+                // Load the other profile's data temporarily (not cached)
                 try {
-                    dataHandler = SkyBlockDataHandler.createFromProfileOnly(new ProfilesDatabase(profileId.toString()).getDocument());
+                    ProfilesDatabase profileDb = new ProfilesDatabase(profileId.toString());
+                    dataHandler = SkyBlockDataHandler.createFromProfileOnly(profileDb.getDocument());
                 } catch (NullPointerException profileNotYetSaved) {
-                    dataHandler = SkyBlockDataHandler.initUserWithDefaultData(profileId);
+                    dataHandler = SkyBlockDataHandler.initUserWithDefaultData(player.getUuid(), profileId);
                 }
             }
 
@@ -108,14 +112,15 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
                 set(new GUIClickableItem(slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        player.sendMessage("§aYep! §e" + finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue() + "§a is the profile you are playing on!");
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        String profileName = finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
+                        player.sendMessage("§aYep! §e" + profileName + "§a is the profile you are playing on!");
                         player.sendMessage("§cIf you want to delete this profile, switch to another one first!");
                     }
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         List<String> lore = new ArrayList<>(Arrays.asList("§8Selected slot", " "));
 
                         updateLore(player.getUuid(), finalDataHandler, lore);
@@ -123,8 +128,9 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
                         lore.add(" ");
                         lore.add("§aYou are playing on this profile!");
 
+                        String profileName = finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
                         return ItemStackCreator.getStack(
-                                "§eProfile: §a" + finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
+                                "§eProfile: §a" + profileName,
                                 Material.EMERALD_BLOCK, 1,
                                 lore);
                     }
@@ -150,8 +156,9 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
                     lore.add(" ");
                     lore.add("§eClick to manage!");
 
+                    String profileName = finalDataHandler1.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
                     return ItemStackCreator.getStack(
-                            "§eProfile: §a" + finalDataHandler1.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
+                            "§eProfile: §a" + profileName,
                             Material.GRASS_BLOCK, 1,
                             lore);
                 }
@@ -201,12 +208,13 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
         lore.add("§cNo Skills Yet!");
         lore.add(" ");
 
-        if (handler.get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() > 0)
-            lore.add("§7Purse Coins: §6" + handler.get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue());
+        Double coins = handler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
+        if (coins > 0) {
+            lore.add("§7Purse Coins: §6" + coins);
+        }
 
-        String age = StringUtility.profileAge(
-                        System.currentTimeMillis() - handler.get(SkyBlockDataHandler.Data.CREATED, DatapointLong.class).getValue());
-
+        Long createdTime = handler.get(SkyBlockDataHandler.Data.CREATED, DatapointLong.class).getValue();
+        String age = StringUtility.profileAge(System.currentTimeMillis() - createdTime);
         lore.add("§7Age: §9" + age);
 
         return lore;

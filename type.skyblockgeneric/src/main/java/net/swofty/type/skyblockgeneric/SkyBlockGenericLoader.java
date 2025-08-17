@@ -22,8 +22,12 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.item.reforge.ReforgeLoader;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.data.mongodb.*;
+import net.swofty.type.generic.packet.HypixelPacketClientListener;
+import net.swofty.type.generic.packet.HypixelPacketServerListener;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
 import net.swofty.type.skyblockgeneric.block.placement.BlockPlacementManager;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
@@ -62,10 +66,8 @@ import net.swofty.type.skyblockgeneric.mission.MissionRepeater;
 import net.swofty.type.skyblockgeneric.mission.HypixelMission;
 import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
-import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketClientListener;
-import net.swofty.type.skyblockgeneric.packet.SkyBlockPacketServerListener;
 import net.swofty.type.skyblockgeneric.redis.RedisAuthenticate;
-import net.swofty.type.skyblockgeneric.redis.RedisOriginServer;
+import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.skyblockgeneric.region.SkyBlockMiningConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
@@ -92,8 +94,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
-    private static final AtomicReference<TickMonitor> LAST_TICK = new AtomicReference<>();
-
     @Getter
     private static MinecraftServer server;
 
@@ -191,6 +191,55 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
 
         MathUtility.delay(() -> SkyBlockMob.runRegionPopulators(MinecraftServer.getSchedulerManager()), 50);
 
+        /**
+         * Start generic SkyBlock tablist
+         */
+        MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
+                HypixelGenericLoader.LAST_TICK.set(event.getTickMonitor()));
+        BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
+        benchmarkManager.enable(Duration.ofDays(3));
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            Collection<SkyBlockPlayer> players = getLoadedPlayers();
+            if (players.isEmpty())
+                return;
+
+            long ramUsage = benchmarkManager.getUsedMemory();
+            ramUsage /= (long) 1e6; // bytes to MB
+            TickMonitor tickMonitor = HypixelGenericLoader.LAST_TICK.get();
+            double TPS = 1000 / tickMonitor.getTickTime();
+
+            if (TPS < 20) {
+                HypixelGenericLoader.getLoadedPlayers().forEach(player -> {
+                    player.getLogHandler().debug("§cServer TPS is below 20! TPS: " + TPS);
+                });
+                Logger.error("Server TPS is below 20! TPS: " + TPS);
+            }
+
+            final Component header = Component.text("§bYou are playing on §e§lMC.HYPIXEL.NET")
+                    .append(Component.newline())
+                    .append(Component.text("§7RAM USAGE: §8" + ramUsage + " MB"))
+                    .append(Component.newline())
+                    .append(Component.text("§7TPS: §8" + TPS))
+                    .append(Component.newline());
+            final Component footer = Component.newline()
+                    .append(Component.text("§a§lActive Effects"))
+                    .append(Component.newline())
+                    .append(Component.text("§7No effects active. Drink potions or splash them on the"))
+                    .append(Component.newline())
+                    .append(Component.text("§7ground to buff yourself!"))
+                    .append(Component.newline())
+                    .append(Component.newline())
+                    .append(Component.text("§d§lCookie Buff"))
+                    .append(Component.newline())
+                    .append(Component.text("§7Not active! Obtain booster cookies from the community"))
+                    .append(Component.newline())
+                    .append(Component.text("§7shop in the hub."))
+                    .append(Component.newline())
+                    .append(Component.newline())
+                    .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
+            Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
+        }).repeat(10, TimeUnit.SERVER_TICK).schedule();
+
 
         /**
          * Handle server attributes
@@ -222,19 +271,14 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         }
 
         /**
-         * Start Tablist loop
-         */
-        typeLoader.getTablistManager().runScheduler(MinecraftServer.getSchedulerManager());
-
-        /**
          * Register packet event
          */
-        loopThroughPackage("net.swofty.type.skyblockgeneric.packet.packets.client", SkyBlockPacketClientListener.class)
-                .forEach(SkyBlockPacketClientListener::cacheListener);
-        loopThroughPackage("net.swofty.type.skyblockgeneric.packet.packets.server", SkyBlockPacketServerListener.class)
-                .forEach(SkyBlockPacketServerListener::cacheListener);
-        SkyBlockPacketClientListener.register(HypixelConst.getEventHandler());
-        SkyBlockPacketServerListener.register(HypixelConst.getEventHandler());
+        loopThroughPackage("net.swofty.type.skyblockgeneric.packets.client", HypixelPacketClientListener.class)
+                .forEach(HypixelPacketClientListener::cacheListener);
+        loopThroughPackage("net.swofty.type.skyblockgeneric.packets.server", HypixelPacketServerListener.class)
+                .forEach(HypixelPacketServerListener::cacheListener);
+        HypixelPacketClientListener.register(HypixelConst.getEventHandler());
+        HypixelPacketServerListener.register(HypixelConst.getEventHandler());
 
         /**
          * Load regions
@@ -269,55 +313,6 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          */
         SkyBlockScoreboard.start();
         PlayerHolograms.updateAll(MinecraftServer.getSchedulerManager());
-
-        /**
-         * Start generic tablist
-         */
-        MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
-                LAST_TICK.set(event.getTickMonitor()));
-        BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
-        benchmarkManager.enable(Duration.ofDays(3));
-        MinecraftServer.getSchedulerManager().buildTask(() -> {
-            Collection<SkyBlockPlayer> players = getLoadedPlayers();
-            if (players.isEmpty())
-                return;
-
-            long ramUsage = benchmarkManager.getUsedMemory();
-            ramUsage /= (long) 1e6; // bytes to MB
-            TickMonitor tickMonitor = LAST_TICK.get();
-            double TPS = 1000 / tickMonitor.getTickTime();
-
-            if (TPS < 20) {
-                SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
-                    player.getLogHandler().debug("§cServer TPS is below 20! TPS: " + TPS);
-                });
-                Logger.error("Server TPS is below 20! TPS: " + TPS);
-            }
-
-            final Component header = Component.text("§bYou are playing on §e§lMC.HYPIXEL.NET")
-                    .append(Component.newline())
-                    .append(Component.text("§7RAM USAGE: §8" + ramUsage + " MB"))
-                    .append(Component.newline())
-                    .append(Component.text("§7TPS: §8" + TPS))
-                    .append(Component.newline());
-            final Component footer = Component.newline()
-                    .append(Component.text("§a§lActive Effects"))
-                    .append(Component.newline())
-                    .append(Component.text("§7No effects active. Drink potions or splash them on the"))
-                    .append(Component.newline())
-                    .append(Component.text("§7ground to buff yourself!"))
-                    .append(Component.newline())
-                    .append(Component.newline())
-                    .append(Component.text("§d§lCookie Buff"))
-                    .append(Component.newline())
-                    .append(Component.text("§7Not active! Obtain booster cookies from the community"))
-                    .append(Component.newline())
-                    .append(Component.text("§7shop in the hub."))
-                    .append(Component.newline())
-                    .append(Component.newline())
-                    .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
-            Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
-        }).repeat(10, TimeUnit.SERVER_TICK).schedule();
 
         /**
          * Register Bazaar propagator

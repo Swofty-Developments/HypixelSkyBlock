@@ -93,7 +93,7 @@ public abstract class SkyBlockDatapoint<T> extends Datapoint<T> {
                 Datapoint<?> dp = temp.getDatapoint(getKey());
                 ((Datapoint<Object>) dp).setValue(value);
 
-                Document newDoc = temp.toProfileDocument(profileId);
+                Document newDoc = temp.toProfileDocument();
                 ProfilesDatabase.collection.replaceOne(new org.bson.Document("_id", profileId.toString()), newDoc);
 
                 if (proxy.isOnline().join()) {

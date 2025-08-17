@@ -35,7 +35,7 @@ public class RedisRefreshCoopData implements ProxyToClient {
         Object value = dataHandler.getSkyBlockDatapoint(datapoint).getValue();
         targetDatapoint.setValueBypassCoop(value); // starting to remind me of Python - ArikSquad
 
-        Document toReplace = player.getSkyblockDataHandler().toProfileDocument(player.getProfiles().getCurrentlySelected());
+        Document toReplace = player.getSkyblockDataHandler().toProfileDocument();
         ProfilesDatabase.replaceDocument(player.getProfiles().getCurrentlySelected().toString(), toReplace);
 
         return new JSONObject();

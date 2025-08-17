@@ -19,8 +19,6 @@ public class ActionPlayerDataLoad implements HypixelEventClass {
     @SneakyThrows
     @HypixelEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false)
     public void run(AsyncPlayerConfigurationEvent event) {
-        if (HypixelConst.getTypeLoader().getType().isSkyBlock()) return; // SkyBlock uses its own loader
-
         Logger.info("Loading Hypixel account data for player: " + event.getPlayer().getUsername() + "...");
 
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
@@ -36,10 +34,9 @@ public class ActionPlayerDataLoad implements HypixelEventClass {
         } else {
             handler = HypixelDataHandler.initUserWithDefaultData(playerUuid);
             HypixelDataHandler.userCache.put(playerUuid, handler);
-            userDatabase.saveHypixelData(handler);
+            userDatabase.saveData(handler);
         }
 
-        handler.runOnLoad(player);
         Logger.info("Successfully loaded Hypixel account data for player: " + player.getUsername());
     }
 }

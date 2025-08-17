@@ -28,6 +28,7 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.data.*;
 import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.user.AntiCheatHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.commons.SkyBlockPlayerProfiles;
@@ -104,25 +105,15 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
     }
 
-    public PlayerSkin getPlayerSkin(){
-        String texture = getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SKIN_TEXTURE , DatapointString.class).getValue();
-        String signature = getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SKIN_SIGNATURE , DatapointString.class).getValue();
-        return new PlayerSkin(texture , signature);
-    }
-
     public SkyBlockSongsHandler getSongHandler() {
         return new SkyBlockSongsHandler(this);
-    }
-
-    public AntiCheatHandler getAntiCheatHandler() {
-        return new AntiCheatHandler(this);
     }
 
     public FairySoulHandler getFairySoulHandler() {
         return new FairySoulHandler(this);
     }
 
-    public SkyBlockPlayerProfiles getProfiles() {
+    public @Nullable SkyBlockPlayerProfiles getProfiles() {
         return SkyBlockPlayerProfiles.get(this.getUuid());
     }
 
@@ -136,6 +127,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return data;
     }
 
+    @Override
     public String getFullDisplayName() {
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
         SkyBlockEmblems.SkyBlockEmblem emblem = experience.getEmblem();
@@ -151,6 +143,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
         return getFullDisplayName(displayEmblem, experience.getLevel().getColor());
     }
+
 
     public String getFullDisplayName(SkyBlockEmblems.SkyBlockEmblem displayEmblem, String levelColor) {
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
@@ -355,10 +348,6 @@ public class SkyBlockPlayer extends HypixelPlayer {
                 new SkyBlockItem(getLeggings()),
                 new SkyBlockItem(getBoots())
         };
-    }
-
-    public ProxyPlayer asProxyPlayer() {
-        return new ProxyPlayer(this);
     }
 
     public SkyBlockItem updateItem(PlayerItemOrigin origin, Consumer<SkyBlockItem> update) {
@@ -594,34 +583,6 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
     public Double getMiningSpeed() {
         return this.getStatistics().allStatistics().getOverall(ItemStatistic.MINING_SPEED);
-    }
-
-    public void sendTo(ServerType type) {
-        sendTo(type, false, false);
-    }
-
-    public void sendTo(ServerType type, boolean force) {
-        sendTo(type, force, false);
-    }
-
-    public void sendTo(ServerType type, boolean force, boolean authenticationBypass) {
-        if (!authenticationBypass && !hasAuthenticated) return;
-        ProxyPlayer player = asProxyPlayer();
-
-        if (type == HypixelConst.getTypeLoader().getType() && !force) {
-            this.teleport(HypixelConst.getTypeLoader().getLoaderValues().spawnPosition().apply(this.getOriginServer()));
-            return;
-        }
-
-        HypixelConst.getTypeLoader().getTablistManager().nullifyCache(this);
-
-        /*showTitle(Title.title(
-                Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
-                Component.empty(),
-                Title.Times.times(Duration.ofSeconds(1), Duration.ofMillis(300), Duration.ZERO)
-        ));*/
-
-        player.transferTo(type);
     }
 
     public double getTimeToMine(SkyBlockItem item, Block b) {

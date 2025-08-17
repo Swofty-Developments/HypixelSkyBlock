@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum FromServiceChannels {
-    GET_PLAYER_DATA("get-player-data"),
+    GET_SKYBLOCK_DATA("get-skyblock-player-data"),
     UPDATE_PLAYER_DATA("update-player-data"),
     LOCK_PLAYER_DATA("lock-player-data"),
     UNLOCK_PLAYER_DATA("unlock-player-data"),

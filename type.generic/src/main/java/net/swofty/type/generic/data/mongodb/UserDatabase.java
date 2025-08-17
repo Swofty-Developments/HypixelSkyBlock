@@ -3,9 +3,9 @@ package net.swofty.type.generic.data.mongodb;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import net.swofty.commons.SkyBlockPlayerProfiles;
+import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import org.bson.Document;
 
@@ -33,7 +33,7 @@ public class UserDatabase {
 
     public SkyBlockPlayerProfiles getProfiles() {
         Document document = collection.find(new Document("_id", id.toString())).first();
-        if (document == null) {
+        if (document == null || !document.containsKey("profiles")) {
             return new SkyBlockPlayerProfiles(id);
         }
         return SkyBlockPlayerProfiles.deserialize(document);
@@ -67,7 +67,7 @@ public class UserDatabase {
     /**
      * Saves Hypixel data to the user document (account-wide data)
      */
-    public void saveHypixelData(HypixelDataHandler handler) {
+    public void saveData(DataHandler handler) {
         Document userDoc;
         boolean exists = collection.find(new Document("_id", id.toString())).first() != null;
 
@@ -77,18 +77,24 @@ public class UserDatabase {
             userDoc = new Document("_id", id.toString());
         }
 
-        // Add all Hypixel data to the user document
-        for (HypixelDataHandler.Data data : HypixelDataHandler.Data.values()) {
-            try {
-                userDoc.put(data.getKey(), handler.getDatapoint(data.getKey()).getSerializedValue());
-            } catch (Exception e) {
-                e.printStackTrace();
+        // Add the handler's document data to the user document, only updating fields from this handler
+        Document handlerDoc = handler.toDocument();
+        Document updateFields = new Document();
+
+        for (String key : handlerDoc.keySet()) {
+            if (!key.equals("_owner")) { // Skip the _owner field to avoid conflicts
+                updateFields.put(key, handlerDoc.get(key));
             }
         }
 
         if (exists) {
-            collection.replaceOne(new Document("_id", id.toString()), userDoc);
+            // Use $set to only update specific fields, never removing existing ones
+            collection.updateOne(
+                    new Document("_id", id.toString()),
+                    new Document("$set", updateFields)
+            );
         } else {
+            userDoc.putAll(updateFields);
             collection.insertOne(userDoc);
         }
     }

@@ -62,7 +62,8 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                 coop.save();
 
                 UUID profileId = UUID.randomUUID();
-                SkyBlockDataHandler handler = SkyBlockDataHandler.initUserWithDefaultData(player.getUuid());
+                // Fixed: Pass both player UUID and profile ID
+                SkyBlockDataHandler handler = SkyBlockDataHandler.initUserWithDefaultData(player.getUuid(), profileId);
 
                 handler.get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).setValue(true);
 
@@ -79,17 +80,20 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                     } else {
                         SkyBlockPlayer profileOwner = SkyBlockGenericLoader.getPlayerFromProfileUUID(otherCoopMember);
 
+                        // Fixed: Access SkyBlock data handler through separate cache
+                        SkyBlockDataHandler profileOwnerHandler = SkyBlockDataHandler.getUser(profileOwner.getUuid());
                         handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(
-                                profileOwner.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
+                                profileOwnerHandler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
                         handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(
-                                profileOwner.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
+                                profileOwnerHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
                         );
                     }
                 }
 
                 player.kick("§cYou must reconnect to switch profiles");
 
-                ProfilesDatabase.collection.insertOne(handler.toProfileDocument(profileId));
+                // Fixed: Use the updated method signature
+                ProfilesDatabase.collection.insertOne(handler.toProfileDocument());
                 coop.memberProfiles().add(profileId);
                 coop.save();
 
@@ -169,7 +173,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
             set(new GUIItem(slots[i + 1]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStackHead(
                             displayName, PlayerSkin.fromUuid(String.valueOf(target)), 1,
                             " ",

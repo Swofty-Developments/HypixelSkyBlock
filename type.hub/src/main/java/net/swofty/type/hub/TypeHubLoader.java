@@ -10,8 +10,9 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
+import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -24,7 +25,7 @@ import net.swofty.type.hub.tab.HubServerModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
-import net.swofty.type.skyblockgeneric.tabmodules.PlayersOnlineModule;
+import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -101,7 +102,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
                 (type) -> switch (type) {
-                    case SKYBLOCK_THE_FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
+                    case THE_FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
                     case DUNGEON_HUB -> new Pos(-44, 88, 11.5, 0, 0);
                     default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
                 }, // Spawn position
@@ -114,8 +115,8 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return new ArrayList<>(List.of(
-                        new PlayersOnlineModule(1),
-                        new PlayersOnlineModule(2),
+                        new SkyBlockPlayersOnlineModule(1),
+                        new SkyBlockPlayersOnlineModule(2),
                         new HubServerModule(),
                         new AccountInformationModule()
                 ));
@@ -146,6 +147,16 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
         ).toList());
 
         return npcs;
+    }
+
+    @Override
+    public List<ServiceToClient> getServiceRedisListeners() {
+        return List.of();
+    }
+
+    @Override
+    public List<ProxyToClient> getProxyRedisListeners() {
+        return List.of();
     }
 
     @Override

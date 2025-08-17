@@ -13,7 +13,7 @@ import java.util.UUID;
 public class RedisGetPlayerData implements ServiceToClient {
     @Override
     public FromServiceChannels getChannel() {
-        return FromServiceChannels.GET_PLAYER_DATA;
+        return FromServiceChannels.GET_SKYBLOCK_DATA;
     }
 
     @Override

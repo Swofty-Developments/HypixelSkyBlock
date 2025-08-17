@@ -29,6 +29,7 @@ dependencies {
     implementation(project(":type.thefarmingislands"))
     implementation(project(":type.dungeonhub"))
     implementation(project(":type.skyblockgeneric"))
+    implementation(project(":type.prototypelobby"))
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))

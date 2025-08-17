@@ -1,7 +1,6 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -20,7 +19,9 @@ public class NPCMuseumDisplay extends HypixelNPC {
     }
 
     private static class MuseumNPCParameters extends NPCParameters {
-        private SkyBlockDataHandler handler = null;
+        private SkyBlockDataHandler skyblockHandler = null;
+        private HypixelDataHandler dataHandler = null;
+
         @Override
         public String[] holograms(HypixelPlayer p) {
 			SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -28,11 +29,14 @@ public class NPCMuseumDisplay extends HypixelNPC {
 
             UUID currentlyViewing = data.getCurrentlyViewing().playerUuid();
             UUID profileUUID = data.getCurrentlyViewing().profileUuid();
-			if (handler == null) {
-				handler = SkyBlockDataHandler.getProfileOfOfflinePlayer(currentlyViewing, profileUUID);
+			if (skyblockHandler == null) {
+				skyblockHandler = SkyBlockDataHandler.getProfileOfOfflinePlayer(currentlyViewing, profileUUID);
 			}
+            if (dataHandler == null) {
+                dataHandler = HypixelDataHandler.getOfOfflinePlayer(currentlyViewing);
+            }
 			String username = HypixelDataHandler.getPotentialIGNFromUUID(profileUUID);
-			String profileName = handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
+			String profileName = skyblockHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
 
 			return new String[]{
 					"§b" + username,
@@ -43,27 +47,25 @@ public class NPCMuseumDisplay extends HypixelNPC {
         @Override
         public String signature(HypixelPlayer p) {
             SkyBlockPlayer player = (SkyBlockPlayer) p;
-            if (handler == null) {
+            if (dataHandler == null) {
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 UUID currentlyViewing = data.getCurrentlyViewing().playerUuid();
-                UUID profileUUID = data.getCurrentlyViewing().profileUuid();
 
-                handler = SkyBlockDataHandler.getProfileOfOfflinePlayer(currentlyViewing, profileUUID);
+                dataHandler = HypixelDataHandler.getOfOfflinePlayer(currentlyViewing);
             }
-            return handler.get(SkyBlockDataHandler.Data.SKIN_SIGNATURE, DatapointString.class).getValue();
+            return dataHandler.get(HypixelDataHandler.Data.SKIN_SIGNATURE, DatapointString.class).getValue();
         }
 
         @Override
         public String texture(HypixelPlayer p) {
             SkyBlockPlayer player = (SkyBlockPlayer) p;
-            if (handler == null) {
+            if (dataHandler == null) {
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 UUID currentlyViewing = data.getCurrentlyViewing().playerUuid();
-                UUID profileUUID = data.getCurrentlyViewing().profileUuid();
 
-                handler = SkyBlockDataHandler.getProfileOfOfflinePlayer(currentlyViewing, profileUUID);
+                dataHandler = HypixelDataHandler.getOfOfflinePlayer(currentlyViewing);
             }
-            return handler.get(SkyBlockDataHandler.Data.SKIN_TEXTURE, DatapointString.class).getValue();
+            return dataHandler.get(HypixelDataHandler.Data.SKIN_TEXTURE, DatapointString.class).getValue();
         }
 
         @Override

@@ -1,4 +1,3 @@
-// net/swofty/type/skyblockgeneric/data/SkyBlockDataHandler.java
 package net.swofty.type.skyblockgeneric.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,34 +36,38 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class SkyBlockDataHandler extends DataHandler {
-    @Getter
-    private HypixelDataHandler account;
+
+    // SkyBlock specific cache
+    public static final Map<UUID, SkyBlockDataHandler> skyBlockCache = new HashMap<>();
+
     @Getter
     private UUID currentProfileId;
-    private final Map<String, Datapoint<?>> skyblockPoints = new HashMap<>();
 
     protected SkyBlockDataHandler() { super(); }
-    protected SkyBlockDataHandler(UUID uuid, UUID profileId, HypixelDataHandler account) {
+    protected SkyBlockDataHandler(UUID uuid, UUID profileId) {
         super(uuid);
-        this.account = account;
         this.currentProfileId = profileId;
     }
 
-    public static SkyBlockDataHandler createFrom(UserDatabase userDb, ProfilesDatabase profileDb,
-                                                 UUID playerUuid, UUID profileId) {
-        HypixelDataHandler account = userDb.exists()
-                ? HypixelDataHandler.createFromDocument(userDb.getHypixelData())
-                : HypixelDataHandler.initUserWithDefaultData(playerUuid);
-        SkyBlockDataHandler sb = new SkyBlockDataHandler(playerUuid, profileId, account);
-        sb.loadSkyBlock(profileDb.getDocument());
-        return sb;
+    public static SkyBlockDataHandler getUser(UUID uuid) {
+        if (!skyBlockCache.containsKey(uuid)) throw new RuntimeException("User " + uuid + " does not exist!");
+        return skyBlockCache.get(uuid);
+    }
+
+    public static @Nullable SkyBlockDataHandler getUser(HypixelPlayer player) {
+        try { return getUser(player.getUuid()); } catch (Exception e) { return null; }
     }
 
     public static SkyBlockDataHandler createFromProfileOnly(Document profileDoc) {
         UUID owner = UUID.fromString(profileDoc.getString("_owner"));
         UUID profileId = UUID.fromString(profileDoc.getString("_id"));
-        HypixelDataHandler dummy = new HypixelDataHandler(owner);
-        SkyBlockDataHandler sb = new SkyBlockDataHandler(owner, profileId, dummy);
+        SkyBlockDataHandler sb = new SkyBlockDataHandler(owner, profileId);
+        sb.loadSkyBlock(profileDoc);
+        return sb;
+    }
+
+    public static SkyBlockDataHandler createFromProfile(UUID playerUuid, UUID profileId, Document profileDoc) {
+        SkyBlockDataHandler sb = new SkyBlockDataHandler(playerUuid, profileId);
         sb.loadSkyBlock(profileDoc);
         return sb;
     }
@@ -77,7 +80,7 @@ public class SkyBlockDataHandler extends DataHandler {
         for (Data data : Data.values()) {
             String key = data.getKey();
             if (!document.containsKey(key)) {
-                skyblockPoints.put(key, data.getDefaultDatapoint().setUser(this).setData(data));
+                datapoints.put(key, data.getDefaultDatapoint().setUser(this).setData(data));
                 continue;
             }
             String jsonValue = document.getString(key);
@@ -85,9 +88,9 @@ public class SkyBlockDataHandler extends DataHandler {
                 Datapoint<?> dp = data.getDefaultDatapoint().getClass()
                         .getDeclaredConstructor(String.class).newInstance(key);
                 dp.deserializeValue(jsonValue);
-                skyblockPoints.put(key, dp.setUser(this).setData(data));
+                datapoints.put(key, dp.setUser(this).setData(data));
             } catch (Exception e) {
-                skyblockPoints.put(key, data.getDefaultDatapoint().setUser(this).setData(data));
+                datapoints.put(key, data.getDefaultDatapoint().setUser(this).setData(data));
                 Logger.info("Issue with SB datapoint " + key + " for user " + this.uuid + " - defaulted");
                 e.printStackTrace();
             }
@@ -97,7 +100,7 @@ public class SkyBlockDataHandler extends DataHandler {
     private void initSkyBlockDefaults() {
         for (Data data : Data.values()) {
             try {
-                skyblockPoints.put(
+                datapoints.put(
                         data.getKey(),
                         data.getDefaultDatapoint().deepClone().setUser(this).setData(data)
                 );
@@ -108,10 +111,10 @@ public class SkyBlockDataHandler extends DataHandler {
         }
     }
 
-    public Document toProfileDocument(UUID profileUuid) {
+    public Document toProfileDocument() {
         Document document = new Document();
         document.put("_owner", this.uuid.toString());
-        document.put("_id", profileUuid.toString());
+        document.put("_id", currentProfileId.toString());
 
         for (Data data : Data.values()) {
             try {
@@ -125,32 +128,22 @@ public class SkyBlockDataHandler extends DataHandler {
 
     @Override
     public SkyBlockDataHandler fromDocument(Document document) {
-        throw new UnsupportedOperationException("Use SkyBlockDataHandler.createFrom(UserDatabase, ProfilesDatabase, ...)");
+        throw new UnsupportedOperationException("Use SkyBlockDataHandler.createFromProfile(...) instead");
     }
 
     @Override
     public Document toDocument() {
-        throw new UnsupportedOperationException("Use toProfileDocument(UUID) for SkyBlock profiles");
-    }
-
-    /** Merged view: SB first, then account layer. */
-    @Override
-    public Datapoint<?> getDatapoint(String key) {
-        Datapoint<?> sb = skyblockPoints.get(key);
-        if (sb != null) return sb;
-        return account.getDatapoint(key);
+        return toProfileDocument();
     }
 
     public SkyBlockDatapoint<?> getSkyBlockDatapoint(String key) {
         return (SkyBlockDatapoint<?>) getDatapoint(key);
     }
 
-    // from https://github.com/Swofty-Developments/HypixelSkyBlock/blob/583d8fa4949fd16e06a4f21e94381cbbade3da31/type.generic/src/main/java/net/swofty/types/generic/data/DataHandler.java#L85
     public static SkyBlockDataHandler getProfileOfOfflinePlayer(UUID uuid, UUID profileUUID) throws RuntimeException {
-        if (userCache.containsKey(uuid))
-            return (SkyBlockDataHandler) userCache.get(uuid);
+        if (skyBlockCache.containsKey(uuid))
+            return skyBlockCache.get(uuid);
 
-        // SkyBlockPlayerProfiles playerProfiles = new UserDatabase(uuid).getProfiles(); // what is this for? - ArikSquad
         if (profileUUID == null)
             throw new RuntimeException("No profile selected for user " + uuid.toString());
 
@@ -159,31 +152,27 @@ public class SkyBlockDataHandler extends DataHandler {
 
     /** SB datapoint by enum (no generic param). */
     public Datapoint<?> get(Data datapoint) {
-        Datapoint<?> dp = skyblockPoints.get(datapoint.key);
+        Datapoint<?> dp = datapoints.get(datapoint.key);
         return dp != null ? dp : datapoint.defaultDatapoint;
     }
 
-    public <V> V get(Data datapoint, Class<V> type) {
-        Datapoint<?> dp = skyblockPoints.get(datapoint.key);
-        return ((Datapoint<V>) dp).getValue();
+    /** Optionally typed getter (casts to the class you pass). */
+    @SuppressWarnings("unchecked")
+    public <R extends Datapoint<?>> R get(Data datapoint, Class<R> type) {
+        Datapoint<?> dp = datapoints.get(datapoint.key);
+        return (R) (dp != null ? type.cast(dp) : type.cast(datapoint.defaultDatapoint));
     }
-
-    public Map<String, Datapoint<?>> getSkyblockDatapoints() { return skyblockPoints; }
 
     @Override
     public void runOnLoad(HypixelPlayer player) {
-        account.runOnLoad(player);
-        if (player instanceof SkyBlockPlayer sbp) {
-            for (Data data : Data.values()) {
-                if (data.onLoad != null) data.onLoad.accept(sbp, get(data));
-            }
+        for (Data data : Data.values()) {
+            if (data.onLoad != null) data.onLoad.accept((SkyBlockPlayer) player, get(data));
         }
     }
 
     @SneakyThrows
     @Override
     public void runOnSave(HypixelPlayer player) {
-        account.runOnSave(player);
         if (player instanceof SkyBlockPlayer sbp) {
             for (Data data : Data.values()) {
                 if (data.onQuit != null) {
@@ -195,20 +184,9 @@ public class SkyBlockDataHandler extends DataHandler {
         }
     }
 
-    public static SkyBlockDataHandler initUserWithDefaultData(UUID uuid) {
-        SkyBlockDataHandler h = new SkyBlockDataHandler();
-        h.uuid = uuid;
-        for (HypixelDataHandler.Data data : HypixelDataHandler.Data.values()) {
-            try {
-                h.datapoints.put(
-                        data.getKey(),
-                        data.getDefaultDatapoint().deepClone().setUser(h).setData(data)
-                );
-            } catch (Exception e) {
-                Logger.error("Issue with datapoint " + data.getKey() + " for user " + uuid + " - fix");
-                e.printStackTrace();
-            }
-        }
+    public static SkyBlockDataHandler initUserWithDefaultData(UUID uuid, UUID profileId) {
+        SkyBlockDataHandler h = new SkyBlockDataHandler(uuid, profileId);
+        h.initSkyBlockDefaults();
         return h;
     }
 
@@ -229,6 +207,7 @@ public class SkyBlockDataHandler extends DataHandler {
         return id != null ? UUID.fromString(id) : null;
     }
 
+    // Same Data enum as before - unchanged
     public enum Data {
         PROFILE_NAME("profile_name", false, true, false,
                 DatapointString.class, new DatapointString("profile_name", "null"),

@@ -22,37 +22,31 @@ public class ActionPlayerSkyBlockDataSave implements HypixelEventClass {
     @SneakyThrows
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
     public void run(PlayerDisconnectEvent event) {
-        if (!(event.getPlayer() instanceof SkyBlockPlayer player)) return;
-
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         UUID playerUuid = player.getUuid();
-        SkyBlockDataHandler handler = (SkyBlockDataHandler) DataHandler.userCache.get(playerUuid);
+        SkyBlockDataHandler handler = SkyBlockDataHandler.skyBlockCache.get(playerUuid);
 
         if (handler == null) return;
 
-        Logger.info("Saving SkyBlock (and account) data for: " + player.getUsername() + "...");
+        Logger.info("Saving SkyBlock data for: " + player.getUsername() + "...");
 
-        // Run onSave for both layers
+        // Run onSave for SkyBlock data
         handler.runOnSave(player);
-
-        // Save account-wide data to UserDatabase
-        UserDatabase userDb = new UserDatabase(playerUuid);
-        userDb.saveHypixelData(handler.getAccount());
 
         // Save profile-scoped data to ProfilesDatabase
         UUID profileId = handler.getCurrentProfileId();
         ProfilesDatabase profileDb = new ProfilesDatabase(profileId.toString());
-        Document newDoc = handler.toProfileDocument(profileId);
+        Document newDoc = handler.toProfileDocument();
 
         if (profileDb.exists()) {
-            // FIX: replaceOne by key, not whole doc
             ProfilesDatabase.collection.replaceOne(eq("_id", profileId.toString()), newDoc);
         } else {
             ProfilesDatabase.collection.insertOne(newDoc);
         }
 
-        // Evict cache
-        DataHandler.userCache.remove(playerUuid);
+        // Evict from SkyBlock cache
+        SkyBlockDataHandler.skyBlockCache.remove(playerUuid);
 
-        Logger.info("Successfully saved SkyBlock (profile " + profileId + ") and account data for: " + player.getUsername());
+        Logger.info("Successfully saved SkyBlock (profile " + profileId + ") for: " + player.getUsername());
     }
 }

@@ -6,9 +6,11 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.swofty.type.generic.data.datapoints.*;
+import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import org.bson.Document;
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -34,7 +36,7 @@ public class HypixelDataHandler extends DataHandler {
     public HypixelDataHandler fromDocument(Document document) {
         if (document == null) return initUserWithDefaultData(this.uuid);
 
-        this.uuid = UUID.fromString(document.getString("_owner"));
+        this.uuid = UUID.fromString(document.getString("_id"));
         for (Data data : Data.values()) {
             String key = data.getKey();
             if (!document.containsKey(key)) {
@@ -125,10 +127,22 @@ public class HypixelDataHandler extends DataHandler {
         return h;
     }
 
+    public static HypixelDataHandler getOfOfflinePlayer(UUID uuid) throws RuntimeException {
+        if (userCache.containsKey(uuid))
+            return (HypixelDataHandler) userCache.get(uuid);
+
+        ProfilesDatabase profilesDatabase = new ProfilesDatabase(uuid.toString());
+        Document doc = profilesDatabase.getDocument();
+        return createFromDocument(doc);
+    }
+
+    @Blocking
     public static String getPotentialIGNFromUUID(UUID uuid) {
         if (userCache.containsKey(uuid))
             return ((HypixelDataHandler) userCache.get(uuid)).get(Data.IGN, DatapointString.class).getValue();
-        return null; // TODO: implement name lookup
+        Document doc = ProfilesDatabase.collection.find(new Document("_id", uuid.toString())).first();
+        HypixelDataHandler handler = HypixelDataHandler.createFromDocument(doc);
+        return handler.get(Data.IGN, DatapointString.class).getValue();
     }
 
     /** Account-wide data (non-generic enum). */
@@ -152,10 +166,16 @@ public class HypixelDataHandler extends DataHandler {
                 (player, datapoint) -> player.setGameMode((GameMode) datapoint.getValue()),
                 (player) -> new DatapointGamemode("gamemode", player.getGameMode())),
 
-        HOTBAR_SLOT("hotbar_slot", DatapointByte.class, new DatapointByte("hotbar_slot", (byte) 1),
-                (player, datapoint) -> player.setHeldItemSlot((Byte) datapoint.getValue()),
-                (player, datapoint) -> player.setHeldItemSlot((Byte) datapoint.getValue()),
-                (player) -> new DatapointByte("hotbar_slot", player.getHeldSlot()));
+        SKIN_SIGNATURE("skin_signature",
+                DatapointString.class, new DatapointString("skin_signature", "null"),
+                (player, datapoint) -> {},
+                (player, datapoint) -> ((DatapointString) datapoint).setValue(player.getSkin().signature())),
+
+        SKIN_TEXTURE("skin_texture",
+                DatapointString.class, new DatapointString("skin_texture", "null"),
+                (player, datapoint) -> {},
+                (player, datapoint) -> ((DatapointString) datapoint).setValue(player.getSkin().textures())),
+        ;
 
         @Getter private final String key;
         @Getter private final Class<? extends Datapoint<?>> type;

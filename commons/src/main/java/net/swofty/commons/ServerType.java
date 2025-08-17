@@ -7,7 +7,7 @@ public enum ServerType {
     SKYBLOCK_ISLAND(true),
     SKYBLOCK_HUB(true),
     DUNGEON_HUB(true),
-    SKYBLOCK_THE_FARMING_ISLANDS(true),
+    THE_FARMING_ISLANDS(true),
     PROTOTYPE_LOBBY(false),
     BEDWARS_LOBBY(false),
     BEDWARS_GAME(false),

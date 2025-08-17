@@ -22,7 +22,7 @@ public class IslandCheck extends BalanceConfiguration {
     @Override
     public GameManager.GameServer getServer(Player player, List<GameManager.GameServer> servers) {
         Document userDatabase = new UserDatabase(player.getUniqueId()).getDocument();
-        if (userDatabase == null) {
+        if (userDatabase == null || !userDatabase.containsKey("selected")) {
             return null;
         }
         UUID activeProfile = UUID.fromString(userDatabase.getString("selected"));

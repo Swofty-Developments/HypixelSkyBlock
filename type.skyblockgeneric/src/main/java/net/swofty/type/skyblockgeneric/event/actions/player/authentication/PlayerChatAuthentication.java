@@ -61,7 +61,7 @@ public class PlayerChatAuthentication implements HypixelEventClass {
 
             if (data.matches(args[1])) {
                 player.sendMessage("§aYou have successfully logged in!");
-                player.sendTo(ServerType.SKYBLOCK_ISLAND, true, true);
+                player.sendTo(ServerType.SKYBLOCK_ISLAND, true);
             } else {
                 player.sendMessage("§cYour password is incorrect.");
                 player.sendMessage("§8Salt: §7" + data.salt());
