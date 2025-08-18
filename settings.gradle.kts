@@ -25,3 +25,5 @@ include(":service.api")
 include(":service.datamutex")
 include(":service.party")
 include(":anticheat")
+
+include("pvp")
