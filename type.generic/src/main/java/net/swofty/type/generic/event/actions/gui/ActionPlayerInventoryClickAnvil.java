@@ -1,4 +1,4 @@
-package net.swofty.type.skyblockgeneric.event.actions.player.gui;
+package net.swofty.type.generic.event.actions.gui;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -9,13 +9,13 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.gui.HypixelAnvilGUI;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerInventoryClickAnvil implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(InventoryPreClickEvent event) {
-        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         if (HypixelAnvilGUI.anvilGUIs.containsKey(player)) {
             // Needed because for some reason if you send this packet too early Client won't register it

@@ -1,0 +1,78 @@
+package net.swofty.type.bedwarsgame.events;
+
+import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Player;
+import net.minestom.server.event.player.PlayerBlockPlaceEvent;
+import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.Material;
+import net.minestom.server.sound.SoundEvent;
+import net.minestom.server.tag.Tag;
+import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.entity.TntEntity;
+import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.map.MapsConfig;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
+
+public class ActionGamePlace implements HypixelEventClass {
+
+	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+	public void run(PlayerBlockPlaceEvent event) {
+		Player player = event.getPlayer();
+		if (!player.hasTag(Tag.String("gameId"))) {
+			event.setCancelled(true); // Prevent placing if not in a game
+			return;
+		}
+
+		if (event.getBlockPosition().y() >= 105) {
+			player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You cannot place blocks this high!</red>"));
+			event.setCancelled(true);
+			return;
+		}
+
+		String gameId = player.getTag(Tag.String("gameId"));
+		Game game = TypeBedWarsGameLoader.getGameById(gameId);
+
+		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
+			event.setCancelled(true);
+			return;
+		}
+
+		Point blockPosition = event.getBlockPosition();
+		for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : game.getMapEntry().getConfiguration().getTeams()) {
+			MapsConfig.PitchYawPosition spawnPos = team.getSpawn();
+			if (spawnPos != null) {
+				Point spawnPoint = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z());
+				if (blockPosition.distance(spawnPoint) <= 6) {
+					player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You cannot build here.</red>"));
+					event.setCancelled(true);
+					return;
+				}
+			}
+		}
+
+		if (event.getBlock().registry().material() == Material.TNT) {
+			TntEntity entity = new TntEntity(event.getPlayer());
+			entity.setFuse(50);
+			entity.setInstance(event.getInstance(), blockPosition.add(0.5, 0, 0.5));
+			entity.getViewersAsAudience().playSound(Sound.sound(
+					SoundEvent.ENTITY_TNT_PRIMED, Sound.Source.BLOCK,
+					1.0f, 1.0f
+			), entity);
+			MinecraftServer.getSchedulerManager().buildTask(() -> {
+				player.getInstance().setBlock(blockPosition, Block.AIR);
+			}).delay(TaskSchedule.millis(300)).schedule();
+			return;
+		}
+
+		event.setBlock(event.getBlock().withTag(TypeBedWarsGameLoader.PLAYER_PLACED_TAG, true));
+	}
+
+}

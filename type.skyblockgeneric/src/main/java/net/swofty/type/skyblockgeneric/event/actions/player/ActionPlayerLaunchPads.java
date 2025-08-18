@@ -93,4 +93,5 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
         player.sendMessage("Done");
         pad.getAfterFinished().accept(player);
     }
+
 }

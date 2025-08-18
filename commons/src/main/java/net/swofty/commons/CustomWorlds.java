@@ -6,6 +6,7 @@ public enum CustomWorlds {
     DUNGEON_HUB("hypixel_dungeon_hub"),
     PROTOTYPE_LOBBY("hypixel_prototype_lobby"),
     BEDWARS_LOBBY("hypixel_bedwars_lobby"),
+    PLACEHOLDER("placeholder")
     ;
 
     private final String folderName;

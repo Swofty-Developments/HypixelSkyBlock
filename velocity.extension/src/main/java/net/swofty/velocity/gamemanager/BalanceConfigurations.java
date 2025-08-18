@@ -4,6 +4,7 @@ import com.velocitypowered.api.proxy.Player;
 import net.swofty.commons.ServerType;
 import net.swofty.velocity.gamemanager.balanceconfigurations.IslandCheck;
 import net.swofty.velocity.gamemanager.balanceconfigurations.LowestPlayerCount;
+import net.swofty.velocity.gamemanager.balanceconfigurations.ReadyGames;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,6 +19,12 @@ public class BalanceConfigurations {
             ),
             ServerType.PROTOTYPE_LOBBY, List.of(
                     new LowestPlayerCount()
+            ),
+            ServerType.BEDWARS_LOBBY, List.of(
+                    new LowestPlayerCount()
+            ),
+            ServerType.BEDWARS_GAME, List.of(
+                    new ReadyGames()
             ),
             ServerType.DUNGEON_HUB, List.of(
                     new LowestPlayerCount()

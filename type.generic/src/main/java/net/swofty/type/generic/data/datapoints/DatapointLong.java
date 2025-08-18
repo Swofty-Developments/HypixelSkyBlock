@@ -1,9 +1,9 @@
-package net.swofty.type.skyblockgeneric.data.datapoints;
+package net.swofty.type.generic.data.datapoints;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import net.swofty.type.generic.data.Datapoint;
 
-public class DatapointLong extends SkyBlockDatapoint<Long> {
+public class DatapointLong extends Datapoint<Long> {
     private static final JacksonSerializer<Long> serializer = new JacksonSerializer<>(Long.class);
 
     public DatapointLong(String key, Long value) {
