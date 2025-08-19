@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
+    implementation(project(":pvp"))
     implementation("org.mongodb:bson:4.11.2")
     implementation("net.kyori:adventure-text-minimessage:4.21.0")
     implementation("dev.hollowcube:polar:1.14.0")

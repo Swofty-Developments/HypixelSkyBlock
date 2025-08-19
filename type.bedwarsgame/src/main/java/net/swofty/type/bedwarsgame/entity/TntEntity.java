@@ -21,7 +21,7 @@ public class TntEntity extends Entity {
 		super(EntityType.TNT);
 		this.causingEntity = causingEntity;
 
-		double angle = ThreadLocalRandom.current().nextDouble() * 6.2831854820251465;
+		double angle = ThreadLocalRandom.current().nextDouble() * Math.PI * 2;
 		setVelocity(new Vec(-Math.sin(angle) * 0.02, 0.2f, -Math.cos(angle) * 0.02)
 				.mul(ServerFlag.SERVER_TICKS_PER_SECOND));
 	}

@@ -16,16 +16,16 @@ public class FinalDamageEvent implements EntityInstanceEvent, CancellableEvent {
 	private final LivingEntity entity;
 	private final Damage damage;
 	private int invulnerabilityTicks;
-	private AnimationType animationType;
+	private boolean animation;
 	
 	private boolean cancelled;
 	
 	public FinalDamageEvent(@NotNull LivingEntity entity, @NotNull Damage damage,
-	                        int invulnerabilityTicks, @NotNull AnimationType animationType) {
+	                        int invulnerabilityTicks, boolean animation) {
 		this.entity = entity;
 		this.damage = damage;
 		this.invulnerabilityTicks = invulnerabilityTicks;
-		this.animationType = animationType;
+		this.animation = animation;
 	}
 	
 	@NotNull
@@ -62,27 +62,14 @@ public class FinalDamageEvent implements EntityInstanceEvent, CancellableEvent {
 	public void setInvulnerabilityTicks(int invulnerabilityTicks) {
 		this.invulnerabilityTicks = invulnerabilityTicks;
 	}
-	
-	/**
-	 * Gets the animation type, which determines how the client tilts the camera on damage.
-	 *
-	 * @return the animation type
-	 * @see AnimationType
-	 */
-	public @NotNull AnimationType getAnimationType() {
-		return animationType;
+
+	public boolean shouldAnimate() {
+		return animation;
 	}
 	
-	/**
-	 * Sets the animation type, which determines how the client tilts the camera on damage.
-	 *
-	 * @param animationType the animation type
-	 * @see AnimationType
-	 */
-	public void setAnimationType(@NotNull AnimationType animationType) {
-		this.animationType = animationType;
-	}
-	
+	public void setAnimate(boolean animate) {
+        this.animation = animate;
+    }
 	/**
 	 * Checks if the damage will kill the entity.
 	 * <br><br>
@@ -119,24 +106,5 @@ public class FinalDamageEvent implements EntityInstanceEvent, CancellableEvent {
 	public void setCancelled(boolean cancel) {
 		this.cancelled = cancel;
 	}
-	
-	/**
-	 * @see #NONE
-	 * @see #MODERN
-	 * @see #LEGACY
-	 */
-	public enum AnimationType {
-		/**
-		 * No damage animation
-		 */
-		NONE,
-		/**
-		 * Modern damage animation, which tilts the camera based on the location of the damage source
-		 */
-		MODERN,
-		/**
-		 * Legacy damage animation, which always tilts the camera in the same way
-		 */
-		LEGACY
-	}
+
 }

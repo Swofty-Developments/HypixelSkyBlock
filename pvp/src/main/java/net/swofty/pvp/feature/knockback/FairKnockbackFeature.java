@@ -89,7 +89,12 @@ public class FairKnockbackFeature extends VanillaKnockbackFeature {
 					velocity.z() / 2d - values.horizontalModifier().z()
 			));
 		}
-		
+
+        if (values.animationType() == EntityKnockbackEvent.AnimationType.DIRECTIONAL) {
+            // Send player a packet with its hurt direction
+            sendDirectionalEvent(player, dx, dz);
+        }
+
 		return true;
 	}
 	

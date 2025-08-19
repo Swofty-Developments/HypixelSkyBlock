@@ -89,6 +89,7 @@ public class VanillaDamageFeature implements DamageFeature, RegistrableFeature {
 	}
 	
 	protected void handleDamage(EntityDamageEvent event) {
+        boolean shouldAnimate = event.shouldAnimate();
 		// We will handle sound and animation ourselves
 		event.setAnimation(false);
 		SoundEvent sound = event.getSound();
@@ -151,7 +152,7 @@ public class VanillaDamageFeature implements DamageFeature, RegistrableFeature {
 		amount = armorFeature.getDamageWithProtection(entity, damageType, amount);
 		
 		damage.setAmount(amount);
-		FinalDamageEvent finalDamageEvent = new FinalDamageEvent(entity, damage, 10, FinalDamageEvent.AnimationType.MODERN);
+		FinalDamageEvent finalDamageEvent = new FinalDamageEvent(entity, damage, 10, shouldAnimate);
 		EventDispatcher.call(finalDamageEvent);
 		// New amount has been set in the Damage class
 		amount = damage.getAmount();
@@ -178,20 +179,14 @@ public class VanillaDamageFeature implements DamageFeature, RegistrableFeature {
 			if (fullyBlocked) {
 				// Shield status
 				entity.triggerStatus((byte) 29);
-			} else {
-				// Send damage animation
-				FinalDamageEvent.AnimationType animationType = finalDamageEvent.getAnimationType();
-				
-				if (animationType != FinalDamageEvent.AnimationType.NONE) {
-					boolean legacyAnimation = animationType == FinalDamageEvent.AnimationType.LEGACY;
-					entity.sendPacketToViewersAndSelf(new DamageEventPacket(
-							entity.getEntityId(),
-							MinecraftServer.getDamageTypeRegistry().getId(damage.getType()),
-							legacyAnimation || damage.getAttacker() == null ? 0 : damage.getAttacker().getEntityId() + 1,
-							legacyAnimation || damage.getSource() == null ? 0 : damage.getSource().getEntityId() + 1,
-							null
-					));
-				}
+			} else if (finalDamageEvent.shouldAnimate()) {
+                entity.sendPacketToViewersAndSelf(new DamageEventPacket(
+                        entity.getEntityId(),
+                        MinecraftServer.getDamageTypeRegistry().getId(damage.getType()),
+                        damage.getAttacker() == null ? 0 : damage.getAttacker().getEntityId() + 1,
+                        damage.getSource() == null ? 0 : damage.getSource().getEntityId() + 1,
+                        null
+                ));
 			}
 			
 			if (!fullyBlocked && damage.getType() != DamageType.DROWN) {
