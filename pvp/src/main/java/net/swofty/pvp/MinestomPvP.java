@@ -4,7 +4,6 @@ import net.swofty.pvp.enchantment.CombatEnchantments;
 import net.swofty.pvp.feature.CombatFeatures;
 import net.swofty.pvp.feature.config.CombatFeatureRegistry;
 import net.swofty.pvp.player.CombatPlayer;
-import net.swofty.pvp.player.CombatPlayerImpl;
 import net.swofty.pvp.potion.effect.CombatPotionEffects;
 import net.swofty.pvp.potion.item.CombatPotionTypes;
 import net.swofty.pvp.utils.AccurateLatencyListener;
@@ -31,7 +30,7 @@ public class MinestomPvP {
 	public static EventNode<EntityInstanceEvent> events() {
 		return CombatFeatures.modernVanilla().createNode();
 	}
-	
+
 	/**
 	 * Equivalent to creating a new event node from {@link CombatFeatures#legacyVanilla()}
 	 *
@@ -40,7 +39,7 @@ public class MinestomPvP {
 	public static EventNode<EntityInstanceEvent> legacyEvents() {
 		return CombatFeatures.legacyVanilla().createNode();
 	}
-	
+
 	/**
 	 * Disables or enables legacy attack for a player.
 	 * With legacy attack, the player has no attack speed.
@@ -56,14 +55,14 @@ public class MinestomPvP {
 			speed.setBaseValue(speed.attribute().defaultValue());
 		}
 	}
-	
+
 	/**
 	 * Initializes the PvP library. This has a few side effects, for more details see {@link #init(boolean, boolean)}.
 	 */
 	public static void init() {
 		init(true, true);
 	}
-	
+
 	/**
 	 * Initializes the PvP library.
 	 * This method will always initialize the registries and register some global event handlers.
@@ -78,15 +77,16 @@ public class MinestomPvP {
 		CombatEnchantments.registerAll();
 		CombatPotionEffects.registerAll();
 		CombatPotionTypes.registerAll();
-		
+
 		CombatFeatureRegistry.init();
-		
+
 		CombatPlayer.init(MinecraftServer.getGlobalEventHandler());
-		
-		if (player) {
+
+		// You need to implement this yourself in a gamemode, look for an example in BedWarsPlayer - ArikSquad
+		/*if (player) {
 			MinecraftServer.getConnectionManager().setPlayerProvider(CombatPlayerImpl::new);
-		}
-		
+		}*/
+
 		if (keepAlive) {
 			MinecraftServer.getPacketListenerManager().setPlayListener(ClientKeepAlivePacket.class, AccurateLatencyListener::listener);
 			MinecraftServer.getGlobalEventHandler().addListener(PlayerPacketOutEvent.class, AccurateLatencyListener::onSend);

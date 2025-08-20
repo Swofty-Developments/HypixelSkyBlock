@@ -18,7 +18,9 @@ import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.gui.GUIEnderChest;
 import net.swofty.type.bedwarsgame.gui.GUIItemShop;
+import net.swofty.type.bedwarsgame.gui.GUITeamChest;
 import net.swofty.type.bedwarsgame.gui.GUITeamShop;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
 import net.swofty.type.bedwarsgame.util.InventoryManipulation;
@@ -127,10 +129,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			return;
 		}
 		if (block.registry().material() == Material.ENDER_CHEST) {
-			/*Server.getInstance().getViewFrame().open(
-					Server.getInstance().getViewManager().getView("enderchest"),
-					player
-			);*/
+			new GUIEnderChest().open((HypixelPlayer) player);
 			return;
 		}
 
@@ -140,14 +139,6 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		Game game = TypeBedWarsGameLoader.getGameById(gameId);
 		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
 			event.setCancelled(true);
-			return;
-		}
-
-		if (block.registry().material() == Material.ENDER_CHEST) {
-			/*Server.getInstance().getViewFrame().open(
-					Server.getInstance().getViewManager().getView("enderchest"),
-					player
-			);*/
 			return;
 		}
 
@@ -187,32 +178,14 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			return;
 		}
 
-		try {
-			if (ACTIVE_TEAM_CHESTS.get(chestTeamName) != null) {
-				String existingContextId = ACTIVE_TEAM_CHESTS.get(chestTeamName);
-				/*Server.getInstance().getViewFrame().openActive(
-						Server.getInstance().getViewManager().getView("chest"),
-						existingContextId,
-						player
-				);
-
-				Server.getLogger().info("Player {} joined existing team chest context for team {}",
-						player.getUsername(), chestTeamName);*/
-			} else {
-				/*String contextId = Server.getInstance().getViewFrame().open(
-						Server.getInstance().getViewManager().getView("chest"),
-						player,
-						ImmutableMap.of(ChestView.TEAM_NAME, chestTeamName)
-				);
-
-				ACTIVE_TEAM_CHESTS.put(chestTeamName, contextId);
-				Server.getLogger().info("Player {} opened a {} chest for team {}, contextId: {}",
-						player.getUsername(), sameTeam ? "team" : "enemy", chestTeamName, contextId);*/
-			}
-		} catch (Exception e) {
-			/*Server.getLogger().error("Failed to open {} chest view for team {}: {}",
-					sameTeam ? "team" : "enemy", chestTeamName, e.getMessage());*/
-			player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Failed to open chest!</red>"));
+		String existingContextId = ACTIVE_TEAM_CHESTS.get(chestTeamName);
+		GUITeamChest teamChest = new GUITeamChest(chestTeamName);
+		
+		if (existingContextId != null) {
+			teamChest.joinSharedContext((HypixelPlayer) player, existingContextId);
+		} else {
+			String contextId = teamChest.createSharedContext((HypixelPlayer) player);
+			ACTIVE_TEAM_CHESTS.put(chestTeamName, contextId);
 		}
 	}
 

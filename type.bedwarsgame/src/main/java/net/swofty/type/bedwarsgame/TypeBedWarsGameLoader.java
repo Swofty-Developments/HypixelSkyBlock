@@ -20,6 +20,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.pvp.MinestomPvP;
 import net.swofty.pvp.feature.CombatFeatureSet;
 import net.swofty.pvp.feature.CombatFeatures;
 import net.swofty.pvp.feature.FeatureType;
@@ -30,6 +31,7 @@ import net.swofty.type.bedwarsgame.map.MapsConfig;
 import net.swofty.type.bedwarsgame.shop.ShopService;
 import net.swofty.type.bedwarsgame.shop.TeamShopService;
 import net.swofty.type.bedwarsgame.shop.TrapService;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -38,6 +40,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
@@ -53,10 +56,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static net.swofty.pvp.feature.CombatFeatures.*;
@@ -83,7 +83,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 
     static CombatFeatureSet combatFeatures = CombatFeatures.empty().version(CombatVersion.LEGACY).addAll(List.of(
             VANILLA_ARMOR, VANILLA_ATTACK, VANILLA_CRITICAL, /*VANILLA_SWEEPING,*/
-            VANILLA_EQUIPMENT, VANILLA_BLOCK, VANILLA_ATTACK_COOLDOWN, //VANILLA_ITEM_COOLDOWN,
+            VANILLA_EQUIPMENT, VANILLA_BLOCK, VANILLA_ATTACK_COOLDOWN, VANILLA_ITEM_COOLDOWN,
             VANILLA_DAMAGE, VANILLA_EFFECT, VANILLA_ENCHANTMENT, VANILLA_EXPLOSION,
             VANILLA_EXPLOSIVE, VANILLA_FALL, VANILLA_FOOD, LEGACY_VANILLA_BLOCK,
             VANILLA_REGENERATION, VANILLA_KNOCKBACK, VANILLA_POTION, //VANILLA_BOW,
@@ -118,6 +118,22 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 			//logger.error("Failed to load maps.json", e);
 			return;
 		}
+
+		MinecraftServer.getConnectionManager().setPlayerProvider((gameProfile, playerConnection) -> {
+			BedWarsPlayer player = new BedWarsPlayer(gameProfile, playerConnection);
+
+			UUID uuid = gameProfile.getPlayer().getUuid();
+			String username = gameProfile.getPlayer().getUsername();
+
+			if (RedisOriginServer.origin.containsKey(uuid)) {
+				player.setOriginServer(RedisOriginServer.origin.get(uuid));
+				RedisOriginServer.origin.remove(uuid);
+			}
+
+			Logger.info("Received new player: " + username + " (" + uuid + ")");
+
+			return player;
+		});
 	}
 
 	public static Game getGameById(@NotNull String gameId) {
@@ -143,6 +159,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 				e.printStackTrace();
 			}
 		});
+		MinestomPvP.init();
 	}
 
 	@Override
