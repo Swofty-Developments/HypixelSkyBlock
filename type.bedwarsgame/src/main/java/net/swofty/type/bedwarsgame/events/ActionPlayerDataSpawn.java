@@ -1,7 +1,10 @@
 package net.swofty.type.bedwarsgame.events;
 
+import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.commons.ServerType;
+import net.swofty.pvp.projectile.BowModule;
+import net.swofty.pvp.projectile.entities.ArrowProjectile;
 import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -25,5 +28,7 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
 
         BedWarsDataHandler handler = BedWarsDataHandler.getUser(player.getUuid());
         handler.runOnLoad(player);
+
+		new BowModule(player.eventNode(), (p, i) -> new ArrowProjectile(EntityType.ARROW, p));
     }
 }

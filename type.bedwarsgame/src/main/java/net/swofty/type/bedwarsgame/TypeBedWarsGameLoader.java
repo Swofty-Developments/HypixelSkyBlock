@@ -8,6 +8,8 @@ import net.hollowcube.polar.PolarLoader;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.Event;
+import net.minestom.server.event.EventNode;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.registry.DynamicRegistry;
@@ -20,6 +22,8 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.pvp.feature.CombatFeatureSet;
 import net.swofty.pvp.feature.CombatFeatures;
+import net.swofty.pvp.feature.FeatureType;
+import net.swofty.pvp.projectile.BowModule;
 import net.swofty.pvp.utils.CombatVersion;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
@@ -32,6 +36,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
@@ -76,12 +81,12 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	public static final Tag<Integer> ARMOR_LEVEL_TAG = Tag.Integer("armor_level");
 	private static DynamicRegistry.Key<DimensionType> fullbrightDimension = null;
 
-    CombatFeatureSet combatFeatures = CombatFeatures.empty().version(CombatVersion.LEGACY).addAll(List.of(
+    static CombatFeatureSet combatFeatures = CombatFeatures.empty().version(CombatVersion.LEGACY).addAll(List.of(
             VANILLA_ARMOR, VANILLA_ATTACK, VANILLA_CRITICAL, /*VANILLA_SWEEPING,*/
-            VANILLA_EQUIPMENT, VANILLA_BLOCK, VANILLA_ATTACK_COOLDOWN, VANILLA_ITEM_COOLDOWN,
+            VANILLA_EQUIPMENT, VANILLA_BLOCK, VANILLA_ATTACK_COOLDOWN, //VANILLA_ITEM_COOLDOWN,
             VANILLA_DAMAGE, VANILLA_EFFECT, VANILLA_ENCHANTMENT, VANILLA_EXPLOSION,
             VANILLA_EXPLOSIVE, VANILLA_FALL, VANILLA_FOOD, LEGACY_VANILLA_BLOCK,
-            VANILLA_REGENERATION, VANILLA_KNOCKBACK, VANILLA_POTION, VANILLA_BOW,
+            VANILLA_REGENERATION, VANILLA_KNOCKBACK, VANILLA_POTION, //VANILLA_BOW,
             VANILLA_CROSSBOW, VANILLA_FISHING_ROD, VANILLA_MISC_PROJECTILE,
             VANILLA_PROJECTILE_ITEM, VANILLA_TRIDENT, VANILLA_SPECTATE,
             VANILLA_PLAYER_STATE, VANILLA_TOTEM//, VANILLA_DEATH_MESSAGE
@@ -233,6 +238,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 		}
 		InstanceContainer mapInstance = instanceManager.createInstanceContainer(fullbrightDimension);
 		mapInstance.setChunkLoader(new PolarLoader(new File("./configuration/bedwars/" + entry.getId() + ".polar").toPath()));
+		mapInstance.setExplosionSupplier(combatFeatures.get(FeatureType.EXPLOSION).getExplosionSupplier());
 
 		Game game = new Game(entry, mapInstance);
 		games.add(game);

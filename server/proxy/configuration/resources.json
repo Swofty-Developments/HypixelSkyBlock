@@ -1,7 +1,7 @@
 {
   "mongodb": "mongodb://localhost",
   "redis-uri": "redis://localhost:6379",
-  "velocity-secret": "ixmSUgWOgvs7",
+  "velocity-secret": "QAbRb6cuGocz",
   "limbo-port": "65535",
   "pterodactyl-mode": false,
   "spark": false,

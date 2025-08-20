@@ -25,29 +25,29 @@ public class VanillaItemCooldownFeature implements ItemCooldownFeature, Registra
 			FeatureType.ITEM_COOLDOWN, configuration -> new VanillaItemCooldownFeature(),
 			VanillaItemCooldownFeature::initPlayer
 	);
-	
+
 	public static final Tag<Map<Material, Long>> COOLDOWN_END = Tag.Transient("cooldownEnd");
-	
+
 	private static void initPlayer(Player player, boolean firstInit) {
 		player.setTag(COOLDOWN_END, new HashMap<>());
 	}
-	
+
 	@Override
 	public int getPriority() {
 		// Needs to stop every item usage event
 		return -5;
 	}
-	
+
 	@Override
 	public void init(EventNode<EntityInstanceEvent> node) {
 		node.addListener(PlayerTickEvent.class, event -> {
 			Player player = event.getPlayer();
 			Map<Material, Long> cooldown = player.getTag(COOLDOWN_END);
-			if (cooldown.isEmpty()) return;
+			if (cooldown == null || cooldown.isEmpty()) return;
 			long time = System.currentTimeMillis();
-			
+
 			Iterator<Map.Entry<Material, Long>> iterator = cooldown.entrySet().iterator();
-			
+
 			while (iterator.hasNext()) {
 				Map.Entry<Material, Long> entry = iterator.next();
 				if (entry.getValue() <= time) {
@@ -56,26 +56,26 @@ public class VanillaItemCooldownFeature implements ItemCooldownFeature, Registra
 				}
 			}
 		});
-		
+
 		node.addListener(PlayerUseItemEvent.class, event -> {
 			if (hasCooldown(event.getPlayer(), event.getItemStack().material()))
 				event.setCancelled(true);
 		});
 	}
-	
+
 	@Override
 	public boolean hasCooldown(Player player, Material material) {
 		Map<Material, Long> cooldown = player.getTag(COOLDOWN_END);
 		return cooldown.containsKey(material) && cooldown.get(material) > System.currentTimeMillis();
 	}
-	
+
 	@Override
 	public void setCooldown(Player player, Material material, int ticks) {
 		Map<Material, Long> cooldown = player.getTag(COOLDOWN_END);
 		cooldown.put(material, System.currentTimeMillis() + (long) ticks * MinecraftServer.TICK_MS);
 		sendCooldownPacket(player, material, ticks);
 	}
-	
+
 	protected void sendCooldownPacket(Player player, Material material, int ticks) {
 		player.getPlayerConnection().sendPacket(new SetCooldownPacket(material.key().asString(), ticks));
 	}

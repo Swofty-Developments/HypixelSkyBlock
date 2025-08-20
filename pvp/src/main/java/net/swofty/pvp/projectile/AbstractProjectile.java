@@ -1,5 +1,6 @@
 package net.swofty.pvp.projectile;
 
+import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.ServerFlag;
 import net.minestom.server.collision.*;
@@ -20,7 +21,8 @@ import net.minestom.server.utils.chunk.ChunkUtils;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractProjectile extends Entity implements Projectile {
-    protected final Entity shooter;
+    @Getter
+	protected final Entity shooter;
     protected PhysicsResult previousPhysicsResult;
     protected Pos previousPosition;
     protected boolean inBlock = false;
@@ -180,5 +182,5 @@ public abstract class AbstractProjectile extends Entity implements Projectile {
         return callEntityCollisionEvent(Pos.fromPoint(hitPos), result.entity());
     }
 
-    protected abstract @NotNull Vec updateVelocity(@NotNull Pos entityPosition, @NotNull Vec currentVelocity, @NotNull Block.@NotNull Getter blockGetter, @NotNull Aerodynamics aerodynamics, boolean positionChanged, boolean entityFlying, boolean entityOnGround, boolean entityNoGravity);
+	protected abstract @NotNull Vec updateVelocity(@NotNull Pos entityPosition, @NotNull Vec currentVelocity, @NotNull Block.@NotNull Getter blockGetter, @NotNull Aerodynamics aerodynamics, boolean positionChanged, boolean entityFlying, boolean entityOnGround, boolean entityNoGravity);
 }
