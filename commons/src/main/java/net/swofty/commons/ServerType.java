@@ -6,8 +6,8 @@ import lombok.Getter;
 public enum ServerType {
     SKYBLOCK_ISLAND(true),
     SKYBLOCK_HUB(true),
-    DUNGEON_HUB(true),
-    THE_FARMING_ISLANDS(true),
+    SKYBLOCK_DUNGEON_HUB(true),
+    SKYBLOCK_THE_FARMING_ISLANDS(true),
     PROTOTYPE_LOBBY(false),
     BEDWARS_LOBBY(false),
     BEDWARS_GAME(false),
@@ -28,5 +28,17 @@ public enum ServerType {
 
     public String formatName() {
         return StringUtility.toNormalCase(name());
+    }
+
+    public static ServerType getSkyblockServer(String name) {
+        if (!name.startsWith("SKYBLOCK_")) {
+            return valueOf("SKYBLOCK_" + name.toUpperCase());
+        } else {
+            return valueOf(name);
+        }
+    }
+
+    public String skyblockName() {
+        return name().replace("SKYBLOCK_", "");
     }
 }

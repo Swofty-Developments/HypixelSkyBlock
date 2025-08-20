@@ -33,9 +33,9 @@ public class NPCSkyBlock extends HypixelNPC {
                     return server.players().size();
                 }).reduce(0, Integer::sum);
 
-                String commmaified = StringUtility.commaify(amountOnline);
+                String commaified = StringUtility.commaify(amountOnline);
                 return new String[]{
-                        "§e" + commmaified + " Playing",
+                        "§e" + commaified + " Playing",
                         "§bSkyBlock §7[v0.23.3]",
                         "§e§lCLICK"
                 };

@@ -41,5 +41,10 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Islands ###
 /configuration/hypixel_island_template/
 /configuration/hypixel_hub/
+/configuration/hypixel_prototype_lobby/
+
+/.gradle/

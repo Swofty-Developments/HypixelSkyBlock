@@ -97,7 +97,7 @@ public record RegionDatabase(String id) implements MongoDB {
             int x2 = doc.getInteger("x2");
             int y2 = doc.getInteger("y2");
             int z2 = doc.getInteger("z2");
-            ServerType serverType = ServerType.valueOf(doc.getOrDefault("serverType", ServerType.SKYBLOCK_HUB.name()).toString());
+            ServerType serverType = ServerType.getSkyblockServer(doc.getOrDefault("serverType", ServerType.SKYBLOCK_HUB.name()).toString());
             SkyBlockRegion region = new SkyBlockRegion(
                     name,
                     new Pos(x1, y1, z1),

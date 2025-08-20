@@ -46,7 +46,7 @@ public class ActionPlayerTravel implements HypixelEventClass {
                 return;
             }
 
-            player.sendTo(HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_HUB ? ServerType.DUNGEON_HUB : ServerType.SKYBLOCK_HUB);
+            player.sendTo(HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_HUB ? ServerType.SKYBLOCK_DUNGEON_HUB : ServerType.SKYBLOCK_HUB);
         }
 
         if (block == Block.END_PORTAL.key()) {
