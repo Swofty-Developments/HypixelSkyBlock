@@ -47,7 +47,7 @@ DIRECTORY_ART = """[yellow]
    │   └── 📂 pack_textures
    ├── 📂 plugins
    │   └── 📄 SkyBlockProxy.jar
-   ├── 📄 SkyBlockCore.jar
+   ├── 📄 HypixelCore.jar
    ├── 📄 NanoLimbo.jar
    ├── 📄 velocity.toml
    └── 📄 resources.json[/yellow]"""
@@ -229,7 +229,7 @@ def create_server_scripts(install_path, server_type):
 title {server_type} Server Manager
 set /p INSTANCES="How many {server_type} instances would you like to start? "
 for /l %%i in (1,1,!INSTANCES!) do (
-    start "{server_type} Server %%i" java --enable-preview -jar SkyBlockCore.jar {server_type}
+    start "{server_type} Server %%i" java --enable-preview -jar HypixelCore.jar {server_type}
     timeout /t 2
 )
 '''
@@ -389,9 +389,9 @@ def main():
                               install_path / 'plugins' / 'SkyBlockProxy.jar',
                               progress,
                               download_task)
-            elif 'SkyBlockCore' in asset['name']:
+            elif 'HypixelCore' in asset['name']:
                 download_file(asset['browser_download_url'],
-                              install_path / 'SkyBlockCore.jar',
+                              install_path / 'HypixelCore.jar',
                               progress,
                               download_task)
 

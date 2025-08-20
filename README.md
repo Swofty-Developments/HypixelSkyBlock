@@ -44,7 +44,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 10. Start the proxy again using `java -jar velocity-3.4.0-SNAPSHOT-463.jar`. This will need to be on for your game servers to work.
 
 ### Game Server Setup Guide
-1. Download 'SkyBlockCore.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
+1. Download 'HypixelCore.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
 2. Make a folder called `configuration` in the same directory as the JAR file. (Note this should be placed differently to where your Proxy is)
 3. Download `resources.json` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
 4. Move this file into the `configuration` folder you just made.
@@ -82,7 +82,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 
 Most parts about downloading and setting up files will be automated for you, but you will need to add the following files to the `configuration` folder:
 
-- Download the [world files for the Hub and Island worlds](https://www.mediafire.com/file/5oko5y8h7uj6i9z/world.zip/file). Make sure they are named as **world.zip**
+- Download the [world files for the Hub and Island worlds](https://www.mediafire.com/file/xxnxgkqejlh17fn/HypixelRecreationWorlds.zip/file). And rename it to **world.zip**
 
 - In your configuration file Remove the default `resources.json` and rename `resources.json.docker` to `resources.json`
 
@@ -118,7 +118,7 @@ To add new servers like the Hub, Islands or Farming Island follow these steps:
 2. Add the following line to the end of the file, replacing `ServerType` with the type of server you want to add (e.g., `HUB`, `ISLAND`, etc.):
 
 ```bash
-screen -dmS SkyBlockCore_HUB java --enable-preview -jar SkyBlockCore.jar ServerType
+screen -dmS HypixelCore_HUB java --enable-preview -jar HypixelCore.jar ServerType
 ```
 
 3. Save the file and run `docker-compose up --build` again to apply the changes.
@@ -141,7 +141,7 @@ and then run the service command inside there. It will create its own screen ses
     => Your Memurai isn't running. If this can not be fixed, try out [this](https://github.com/tporadowski/redis/releases) instead.
 2. `Preview features are not enabled for... Try running with '--enable-preview'`
 
-    => try `java --enable-preview -jar SkyBlockCore.jar {ServerType}`
+    => try `java --enable-preview -jar HypixelCore.jar {ServerType}`
 3. Having issues connecting to the server?
 
     => Check if your velocity secret is the same everywhere including the limbo config.
