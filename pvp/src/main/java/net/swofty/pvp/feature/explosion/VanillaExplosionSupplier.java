@@ -1,9 +1,5 @@
 package net.swofty.pvp.feature.explosion;
 
-import net.minestom.server.tag.Tag;
-import net.swofty.pvp.events.ExplosionEvent;
-import net.swofty.pvp.feature.enchantment.EnchantmentFeature;
-import net.swofty.pvp.player.CombatPlayer;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.minestom.server.ServerFlag;
 import net.minestom.server.collision.BoundingBox;
@@ -26,7 +22,10 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.server.play.ExplosionPacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.sound.SoundEvent;
-
+import net.minestom.server.tag.Tag;
+import net.swofty.pvp.events.ExplosionEvent;
+import net.swofty.pvp.feature.enchantment.EnchantmentFeature;
+import net.swofty.pvp.player.CombatPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,9 +42,46 @@ public final class VanillaExplosionSupplier implements ExplosionSupplier {
 		this.enchantmentFeature = enchantmentFeature;
 	}
 
+	public static double getExposure(Point center, Entity entity) {
+		BoundingBox box = entity.getBoundingBox();
+		double xStep = 1 / (box.width() * 2 + 1);
+		double yStep = 1 / (box.height() * 2 + 1);
+		double zStep = 1 / (box.depth() * 2 + 1);
+		double g = (1 - Math.floor(1 / xStep) * xStep) / 2;
+		double h = (1 - Math.floor(1 / zStep) * zStep) / 2;
+		if (xStep < 0 || yStep < 0 || zStep < 0) return 0;
+
+		int exposedCount = 0;
+		int rayCount = 0;
+		double dx = 0;
+		while (dx <= 1) {
+			double dy = 0;
+			while (dy <= 1) {
+				double dz = 0;
+				while (dz <= 1) {
+					double rayX = box.minX() + dx * box.width();
+					double rayY = box.minY() + dy * box.height();
+					double rayZ = box.minZ() + dz * box.depth();
+					Point point = new Vec(rayX + g, rayY, rayZ + h).add(entity.getPosition());
+					if (noBlocking(entity.getInstance(), point, center)) exposedCount++;
+					rayCount++;
+					dz += zStep;
+				}
+				dy += yStep;
+			}
+			dx += xStep;
+		}
+
+		return exposedCount / (double) rayCount;
+	}
+
+	public static boolean noBlocking(Instance instance, Point start, Point end) {
+		return CollisionUtils.isLineOfSightReachingShape(instance, null, start, end, new BoundingBox(1, 1, 1));
+	}
+
 	@Override
 	public Explosion createExplosion(float centerX, float centerY, float centerZ,
-	                                 float strength, @Nullable CompoundBinaryTag additionalData) {
+									 float strength, @Nullable CompoundBinaryTag additionalData) {
 		return new Explosion(centerX, centerY, centerZ, strength) {
 			private final Map<Player, Vec> playerKnockback = new HashMap<>();
 
@@ -106,8 +142,8 @@ public final class VanillaExplosionSupplier implements ExplosionSupplier {
 										Block block = instance.getBlock(position);
 
 										if (!block.isAir()) {
-											double explosionResistance = block.registry().explosionResistance();
-											strengthLeft -= (float) ((explosionResistance + 0.3F) * 0.3F);
+											float explosionResistance = block.registry().explosionResistance();
+											strengthLeft -= (explosionResistance + 0.3F) * 0.3F;
 
 											if (strengthLeft > 0.0F) {
 												Vec blockPosition = position.apply(Vec.Operator.FLOOR);
@@ -215,7 +251,7 @@ public final class VanillaExplosionSupplier implements ExplosionSupplier {
 							double knockback = currentStrength;
 							if (entity instanceof LivingEntity living) {
 								// UNOFFICIAL - START
-								if( ignorePlayerTag != null && living.hasTag(Tag.String(ignorePlayerTag))) {
+								if (ignorePlayerTag != null && living.hasTag(Tag.String(ignorePlayerTag))) {
 									continue;
 								}
 								if (shooterUuid != null && living.getUuid().equals(shooterUuid)) {
@@ -316,42 +352,5 @@ public final class VanillaExplosionSupplier implements ExplosionSupplier {
 				return causingEntity;
 			}
 		};
-	}
-
-	public static double getExposure(Point center, Entity entity) {
-		BoundingBox box = entity.getBoundingBox();
-		double xStep = 1 / (box.width() * 2 + 1);
-		double yStep = 1 / (box.height() * 2 + 1);
-		double zStep = 1 / (box.depth() * 2 + 1);
-		double g = (1 - Math.floor(1 / xStep) * xStep) / 2;
-		double h = (1 - Math.floor(1 / zStep) * zStep) / 2;
-		if (xStep < 0 || yStep < 0 || zStep < 0) return 0;
-
-		int exposedCount = 0;
-		int rayCount = 0;
-		double dx = 0;
-		while (dx <= 1) {
-			double dy = 0;
-			while (dy <= 1) {
-				double dz = 0;
-				while (dz <= 1) {
-					double rayX = box.minX() + dx * box.width();
-					double rayY = box.minY() + dy * box.height();
-					double rayZ = box.minZ() + dz * box.depth();
-					Point point = new Vec(rayX + g, rayY, rayZ + h).add(entity.getPosition());
-					if (noBlocking(entity.getInstance(), point, center)) exposedCount++;
-					rayCount++;
-					dz += zStep;
-				}
-				dy += yStep;
-			}
-			dx += xStep;
-		}
-
-		return exposedCount / (double) rayCount;
-	}
-
-	public static boolean noBlocking(Instance instance, Point start, Point end) {
-		return CollisionUtils.isLineOfSightReachingShape(instance, null, start, end, new BoundingBox(1, 1, 1));
 	}
 }

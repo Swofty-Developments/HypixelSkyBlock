@@ -1,8 +1,6 @@
 package net.swofty.pvp.feature.state;
 
-import net.swofty.pvp.feature.FeatureType;
-import net.swofty.pvp.feature.RegistrableFeature;
-import net.swofty.pvp.feature.config.DefinedFeature;
+import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.LivingEntity;
@@ -13,6 +11,9 @@ import net.minestom.server.event.player.PlayerTickEvent;
 import net.minestom.server.event.trait.EntityInstanceEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.tag.Tag;
+import net.swofty.pvp.feature.FeatureType;
+import net.swofty.pvp.feature.RegistrableFeature;
+import net.swofty.pvp.feature.config.DefinedFeature;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -24,9 +25,9 @@ public class VanillaPlayerStateFeature implements PlayerStateFeature, Registrabl
 	public static final DefinedFeature<VanillaPlayerStateFeature> DEFINED = new DefinedFeature<>(
 			FeatureType.PLAYER_STATE, configuration -> new VanillaPlayerStateFeature()
 	);
-	
+
 	public static final Tag<Block> LAST_CLIMBED_BLOCK = Tag.Transient("lastClimbedBlock");
-	
+
 	@Override
 	public void init(EventNode<EntityInstanceEvent> node) {
 		node.addListener(PlayerTickEvent.class, event -> {
@@ -37,7 +38,7 @@ public class VanillaPlayerStateFeature implements PlayerStateFeature, Registrabl
 				player.scheduleNextTick(p -> p.removeTag(LAST_CLIMBED_BLOCK));
 			}
 		});
-		
+
 		node.addListener(PlayerMoveEvent.class, event -> {
 			Player player = event.getPlayer();
 			if (isClimbing(player)) {
@@ -45,18 +46,20 @@ public class VanillaPlayerStateFeature implements PlayerStateFeature, Registrabl
 			}
 		});
 	}
-	
+
 	@Override
 	public boolean isClimbing(LivingEntity entity) {
 		if (entity instanceof Player player && player.getGameMode() == GameMode.SPECTATOR) return false;
-		
-		var tag = MinecraftServer.getTagManager().getTag(net.minestom.server.gamedata.tags.Tag.BasicType.BLOCKS, "minecraft:climbable");
+
+		var tag = MinecraftServer.process().blocks().getTag(Key.key("minecraft:climbable"));
 		assert tag != null;
-		
+
 		Block block = Objects.requireNonNull(entity.getInstance()).getBlock(entity.getPosition());
-		return tag.contains(block.key());
+		var key = block.asKey();
+		assert key != null;
+		return tag.contains(key);
 	}
-	
+
 	@Override
 	public @Nullable Block getLastClimbedBlock(LivingEntity entity) {
 		return entity.getTag(LAST_CLIMBED_BLOCK);

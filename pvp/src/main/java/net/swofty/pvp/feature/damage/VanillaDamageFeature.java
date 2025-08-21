@@ -1,6 +1,20 @@
 package net.swofty.pvp.feature.damage;
 
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.*;
+import net.minestom.server.entity.damage.Damage;
+import net.minestom.server.entity.damage.DamageType;
+import net.minestom.server.event.EventDispatcher;
+import net.minestom.server.event.EventNode;
+import net.minestom.server.event.entity.EntityDamageEvent;
+import net.minestom.server.event.trait.EntityInstanceEvent;
+import net.minestom.server.network.packet.server.play.DamageEventPacket;
+import net.minestom.server.network.packet.server.play.SoundEffectPacket;
+import net.minestom.server.potion.PotionEffect;
+import net.minestom.server.sound.SoundEvent;
+import net.minestom.server.tag.Tag;
 import net.swofty.pvp.damage.DamageTypeInfo;
 import net.swofty.pvp.events.EntityPreDeathEvent;
 import net.swofty.pvp.events.FinalDamageEvent;
@@ -18,19 +32,6 @@ import net.swofty.pvp.feature.totem.TotemFeature;
 import net.swofty.pvp.feature.tracking.TrackingFeature;
 import net.swofty.pvp.utils.CombatVersion;
 import net.swofty.pvp.utils.EntityUtil;
-import net.kyori.adventure.sound.Sound;
-import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.damage.Damage;
-import net.minestom.server.entity.damage.DamageType;
-import net.minestom.server.event.EventDispatcher;
-import net.minestom.server.event.EventNode;
-import net.minestom.server.event.entity.EntityDamageEvent;
-import net.minestom.server.event.trait.EntityInstanceEvent;
-import net.minestom.server.network.packet.server.play.DamageEventPacket;
-import net.minestom.server.network.packet.server.play.SoundEffectPacket;
-import net.minestom.server.potion.PotionEffect;
-import net.minestom.server.sound.SoundEvent;
-import net.minestom.server.tag.Tag;
 
 import java.util.Objects;
 
@@ -67,6 +68,25 @@ public class VanillaDamageFeature implements DamageFeature, RegistrableFeature {
 		this.configuration = configuration;
 	}
 
+	private static void damageManually(LivingEntity entity, float damage) {
+		// Additional hearts support
+		if (entity instanceof Player player) {
+			final float additionalHearts = player.getAdditionalHearts();
+			if (additionalHearts > 0) {
+				if (damage > additionalHearts) {
+					damage -= additionalHearts;
+					player.setAdditionalHearts(0);
+				} else {
+					player.setAdditionalHearts(additionalHearts - damage);
+					damage = 0;
+				}
+			}
+		}
+
+		// Set the final entity health
+		entity.setHealth(entity.getHealth() - damage);
+	}
+
 	@Override
 	public void initDependencies() {
 		this.difficultyProvider = configuration.get(FeatureType.DIFFICULTY);
@@ -86,7 +106,7 @@ public class VanillaDamageFeature implements DamageFeature, RegistrableFeature {
 	}
 
 	protected void handleDamage(EntityDamageEvent event) {
-        boolean shouldAnimate = event.shouldAnimate();
+		boolean shouldAnimate = event.shouldAnimate();
 		// We will handle sound and animation ourselves
 		event.setAnimation(false);
 		SoundEvent sound = event.getSound();
@@ -98,7 +118,7 @@ public class VanillaDamageFeature implements DamageFeature, RegistrableFeature {
 
 		// UNOFFICIAL -- START
 		if (entity instanceof Player player) {
-			if (player.getGameMode()  == GameMode.SPECTATOR || player.getGameMode() == GameMode.CREATIVE) {
+			if (player.getGameMode() == GameMode.SPECTATOR || player.getGameMode() == GameMode.CREATIVE) {
 				event.setCancelled(true);
 				return;
 			}
@@ -138,9 +158,10 @@ public class VanillaDamageFeature implements DamageFeature, RegistrableFeature {
 
 		float amount = damage.getAmount();
 
-		if (typeInfo.freeze() && Objects.requireNonNull(MinecraftServer.getTagManager().getTag(
-						net.minestom.server.gamedata.tags.Tag.BasicType.ENTITY_TYPES, "minecraft:freeze_hurts_extra_types"))
-				.contains(entity.getEntityType().key())) {
+		var key = entity.getEntityType().asKey();
+		assert key != null;
+		if (typeInfo.freeze() && Objects.requireNonNull(MinecraftServer.process().entityType().getTag(Key.key("minecraft:freeze_hurts_extra_types")))
+				.contains(key)) {
 			amount *= 5.0F;
 		}
 
@@ -198,13 +219,13 @@ public class VanillaDamageFeature implements DamageFeature, RegistrableFeature {
 				// Shield status
 				entity.triggerStatus((byte) 29);
 			} else if (finalDamageEvent.shouldAnimate()) {
-                entity.sendPacketToViewersAndSelf(new DamageEventPacket(
-                        entity.getEntityId(),
-                        MinecraftServer.getDamageTypeRegistry().getId(damage.getType()),
-                        damage.getAttacker() == null ? 0 : damage.getAttacker().getEntityId() + 1,
-                        damage.getSource() == null ? 0 : damage.getSource().getEntityId() + 1,
-                        null
-                ));
+				entity.sendPacketToViewersAndSelf(new DamageEventPacket(
+						entity.getEntityId(),
+						MinecraftServer.getDamageTypeRegistry().getId(damage.getType()),
+						damage.getAttacker() == null ? 0 : damage.getAttacker().getEntityId() + 1,
+						damage.getSource() == null ? 0 : damage.getSource().getEntityId() + 1,
+						null
+				));
 			}
 
 			if (!fullyBlocked && damage.getType() != DamageType.DROWN) {
@@ -241,7 +262,7 @@ public class VanillaDamageFeature implements DamageFeature, RegistrableFeature {
 			// Workaround to have different types make a different sound,
 			// but only if the sound has not been changed by damage#getSound
 			if (entity instanceof Player && sound == SoundEvent.ENTITY_PLAYER_HURT) {
-				String effects = Objects.requireNonNull(damageType.registry()).effects();
+				String effects = damageType.effects();
 				if (effects != null) sound = switch (effects) {
 					case "thorns" -> SoundEvent.ENCHANT_THORNS_HIT;
 					case "drowning" -> SoundEvent.ENTITY_PLAYER_HURT_DROWN;
@@ -292,24 +313,5 @@ public class VanillaDamageFeature implements DamageFeature, RegistrableFeature {
 			case HARD -> amount * 3.0f / 2.0f;
 			default -> amount;
 		};
-	}
-
-	private static void damageManually(LivingEntity entity, float damage) {
-		// Additional hearts support
-		if (entity instanceof Player player) {
-			final float additionalHearts = player.getAdditionalHearts();
-			if (additionalHearts > 0) {
-				if (damage > additionalHearts) {
-					damage -= additionalHearts;
-					player.setAdditionalHearts(0);
-				} else {
-					player.setAdditionalHearts(additionalHearts - damage);
-					damage = 0;
-				}
-			}
-		}
-
-		// Set the final entity health
-		entity.setHealth(entity.getHealth() - damage);
 	}
 }

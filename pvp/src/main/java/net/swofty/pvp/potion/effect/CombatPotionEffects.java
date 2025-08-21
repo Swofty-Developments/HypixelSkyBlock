@@ -11,24 +11,24 @@ import java.util.Map;
 
 public class CombatPotionEffects {
 	private static final Map<PotionEffect, CombatPotionEffect> POTION_EFFECTS = new HashMap<>();
-	
+
 	public static CombatPotionEffect get(PotionEffect potionEffect) {
 		return POTION_EFFECTS.get(potionEffect);
 	}
-	
+
 	public static void register(CombatPotionEffect... potionEffects) {
 		for (CombatPotionEffect potionEffect : potionEffects) {
 			POTION_EFFECTS.put(potionEffect.getPotionEffect(), potionEffect);
 		}
 	}
-	
+
 	public static void registerAll() {
 		register(
-				new CombatPotionEffect(PotionEffect.SPEED).addAttributeModifier(Attribute.MOVEMENT_SPEED, Key.key("minecraft:effect.speed"), 0.2, AttributeOperation.MULTIPLY_TOTAL),
-				new CombatPotionEffect(PotionEffect.SLOWNESS).addAttributeModifier(Attribute.MOVEMENT_SPEED, Key.key("minecraft:effect.slowness"), -0.15, AttributeOperation.MULTIPLY_TOTAL),
-				new CombatPotionEffect(PotionEffect.HASTE).addAttributeModifier(Attribute.ATTACK_SPEED, Key.key("minecraft:effect.haste"), 0.1, AttributeOperation.MULTIPLY_TOTAL),
-				new CombatPotionEffect(PotionEffect.MINING_FATIGUE).addAttributeModifier(Attribute.ATTACK_SPEED, Key.key("minecraft:effect.mining_fatigue"), -0.1, AttributeOperation.MULTIPLY_TOTAL),
-				new CombatPotionEffect(PotionEffect.STRENGTH).addAttributeModifier(Attribute.ATTACK_DAMAGE, Key.key("minecraft:effect.strength"), 3.0, AttributeOperation.ADD_VALUE).addLegacyAttributeModifier(Attribute.ATTACK_DAMAGE, Key.key("minecraft:effect.strength"), 1.3, AttributeOperation.MULTIPLY_TOTAL),
+				new CombatPotionEffect(PotionEffect.SPEED).addAttributeModifier(Attribute.MOVEMENT_SPEED, Key.key("minecraft:effect.speed"), 0.2, AttributeOperation.ADD_MULTIPLIED_TOTAL),
+				new CombatPotionEffect(PotionEffect.SLOWNESS).addAttributeModifier(Attribute.MOVEMENT_SPEED, Key.key("minecraft:effect.slowness"), -0.15, AttributeOperation.ADD_MULTIPLIED_TOTAL),
+				new CombatPotionEffect(PotionEffect.HASTE).addAttributeModifier(Attribute.ATTACK_SPEED, Key.key("minecraft:effect.haste"), 0.1, AttributeOperation.ADD_MULTIPLIED_TOTAL),
+				new CombatPotionEffect(PotionEffect.MINING_FATIGUE).addAttributeModifier(Attribute.ATTACK_SPEED, Key.key("minecraft:effect.mining_fatigue"), -0.1, AttributeOperation.ADD_MULTIPLIED_TOTAL),
+				new CombatPotionEffect(PotionEffect.STRENGTH).addAttributeModifier(Attribute.ATTACK_DAMAGE, Key.key("minecraft:effect.strength"), 3.0, AttributeOperation.ADD_VALUE).addLegacyAttributeModifier(Attribute.ATTACK_DAMAGE, Key.key("minecraft:effect.strength"), 1.3, AttributeOperation.ADD_MULTIPLIED_TOTAL),
 				new CombatPotionEffect(PotionEffect.INSTANT_HEALTH),
 				new CombatPotionEffect(PotionEffect.INSTANT_DAMAGE),
 				new CombatPotionEffect(PotionEffect.JUMP_BOOST).addAttributeModifier(Attribute.SAFE_FALL_DISTANCE, Key.key("minecraft:effect.jump_boost"), 1.0, AttributeOperation.ADD_VALUE),

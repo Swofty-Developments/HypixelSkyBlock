@@ -4,31 +4,17 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
-import net.minestom.server.registry.DynamicRegistry;
+import net.minestom.server.registry.RegistryKey;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public record DamageTypeInfo(boolean damagesHelmet, boolean bypassesArmor, boolean outOfWorld,
-                             boolean unblockable, boolean fire, ScaleWithDifficulty scaleWithDifficulty,
-                             boolean magic, boolean explosive, boolean fall, boolean thorns, boolean projectile,
-                             boolean freeze) {
-	private static final DamageTypeInfo DEFAULT = new DamageTypeInfo();
-
-	public DamageTypeInfo() {
-		this(
-				false, false, false,
-				false, false, ScaleWithDifficulty.NEVER,
-				false, false, false, false, false, false
-		);
-	}
-
-	public static DamageTypeInfo of(DynamicRegistry.Key<DamageType> type) {
-		return INFO_MAP.getOrDefault(type, DEFAULT);
-	}
-
+							 boolean unblockable, boolean fire, ScaleWithDifficulty scaleWithDifficulty,
+							 boolean magic, boolean explosive, boolean fall, boolean thorns, boolean projectile,
+							 boolean freeze) {
 	//TODO check source and add missing
-	public static final Map<DynamicRegistry.Key<DamageType>, DamageTypeInfo> INFO_MAP = new HashMap<>() {
+	public static final Map<RegistryKey<DamageType>, DamageTypeInfo> INFO_MAP = new HashMap<>() {
 		{
 			put(DamageType.IN_FIRE, new DamageTypeInfo().bypassesArmor(true).fire(true));
 			put(DamageType.ON_FIRE, new DamageTypeInfo().bypassesArmor(true).fire(true));
@@ -71,6 +57,19 @@ public record DamageTypeInfo(boolean damagesHelmet, boolean bypassesArmor, boole
 			put(DamageType.OUTSIDE_BORDER, new DamageTypeInfo().bypassesArmor(true));
 		}
 	};
+	private static final DamageTypeInfo DEFAULT = new DamageTypeInfo();
+
+	public DamageTypeInfo() {
+		this(
+				false, false, false,
+				false, false, ScaleWithDifficulty.NEVER,
+				false, false, false, false, false, false
+		);
+	}
+
+	public static DamageTypeInfo of(RegistryKey<DamageType> type) {
+		return INFO_MAP.getOrDefault(type, DEFAULT);
+	}
 
 	public DamageTypeInfo damagesHelmet(boolean damagesHelmet) {
 		return new DamageTypeInfo(
@@ -180,17 +179,18 @@ public record DamageTypeInfo(boolean damagesHelmet, boolean bypassesArmor, boole
 		);
 	}
 
+	public boolean shouldScaleWithDifficulty(Damage damage) {
+		return switch (scaleWithDifficulty) {
+			case ALWAYS -> true;
+			case WHEN_CAUSED_BY_LIVING_NON_PLAYER ->
+					damage.getAttacker() instanceof LivingEntity living && !(living instanceof Player);
+			case NEVER -> false;
+		};
+	}
+
 	public enum ScaleWithDifficulty {
 		ALWAYS,
 		WHEN_CAUSED_BY_LIVING_NON_PLAYER,
 		NEVER
-	}
-
-	public boolean shouldScaleWithDifficulty(Damage damage) {
-		return switch (scaleWithDifficulty) {
-			case ALWAYS -> true;
-			case WHEN_CAUSED_BY_LIVING_NON_PLAYER -> damage.getAttacker() instanceof LivingEntity living && !(living instanceof Player);
-			case NEVER -> false;
-		};
 	}
 }

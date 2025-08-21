@@ -1,26 +1,26 @@
 package net.swofty.pvp.enchantment.enchantments;
 
-import net.swofty.pvp.damage.DamageTypeInfo;
-import net.swofty.pvp.enchantment.CombatEnchantment;
-import net.swofty.pvp.feature.config.FeatureConfiguration;
-import net.swofty.pvp.feature.enchantment.EnchantmentFeature;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.item.enchant.Enchantment;
-import net.minestom.server.registry.DynamicRegistry;
+import net.minestom.server.registry.RegistryKey;
+import net.swofty.pvp.damage.DamageTypeInfo;
+import net.swofty.pvp.enchantment.CombatEnchantment;
+import net.swofty.pvp.feature.config.FeatureConfiguration;
+import net.swofty.pvp.feature.enchantment.EnchantmentFeature;
 
 public class ProtectionEnchantment extends CombatEnchantment {
 	private final Type type;
-	
-	public ProtectionEnchantment(DynamicRegistry.Key<Enchantment> enchantment, Type type, EquipmentSlot... slotTypes) {
+
+	public ProtectionEnchantment(RegistryKey<Enchantment> enchantment, Type type, EquipmentSlot... slotTypes) {
 		super(enchantment, slotTypes);
 		this.type = type;
 	}
-	
+
 	@Override
 	public int getProtectionAmount(int level, DamageType damageType,
-	                               EnchantmentFeature feature, FeatureConfiguration configuration) {
+								   EnchantmentFeature feature, FeatureConfiguration configuration) {
 		DamageTypeInfo damageTypeInfo = DamageTypeInfo.of(MinecraftServer.getDamageTypeRegistry().getKey(damageType));
 		if (damageTypeInfo.outOfWorld()) {
 			return 0;
@@ -36,7 +36,7 @@ public class ProtectionEnchantment extends CombatEnchantment {
 			return type == Type.PROJECTILE && damageTypeInfo.projectile() ? level * 2 : 0;
 		}
 	}
-	
+
 	public enum Type {
 		ALL, FIRE, FALL, EXPLOSION, PROJECTILE
 	}

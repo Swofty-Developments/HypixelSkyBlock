@@ -1,13 +1,13 @@
 package net.swofty.pvp.enchantment;
 
+import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.item.enchant.Enchantment;
+import net.minestom.server.registry.RegistryKey;
 import net.swofty.pvp.enchantment.enchantments.DamageEnchantment;
 import net.swofty.pvp.enchantment.enchantments.ImpalingEnchantment;
 import net.swofty.pvp.enchantment.enchantments.ProtectionEnchantment;
 import net.swofty.pvp.enchantment.enchantments.ThornsEnchantment;
 import net.swofty.pvp.feature.FeatureType;
-import net.minestom.server.entity.EquipmentSlot;
-import net.minestom.server.item.enchant.Enchantment;
-import net.minestom.server.registry.DynamicRegistry;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,40 +15,39 @@ import java.util.Map;
 import java.util.Set;
 
 public class CombatEnchantments {
-	private static final Map<DynamicRegistry.Key<Enchantment>, CombatEnchantment> ENCHANTMENTS = new HashMap<>();
-	
-	public static CombatEnchantment get(DynamicRegistry.Key<Enchantment> enchantment) {
+	private static final Map<RegistryKey<Enchantment>, CombatEnchantment> ENCHANTMENTS = new HashMap<>();
+	private static boolean registered = false;
+
+	static {
+		registerAll();
+	}
+
+	public static CombatEnchantment get(RegistryKey<Enchantment> enchantment) {
 		return ENCHANTMENTS.get(enchantment);
 	}
-	
+
 	public static void register(CombatEnchantment... enchantments) {
 		for (CombatEnchantment enchantment : enchantments) {
 			ENCHANTMENTS.put(enchantment.getEnchantment(), enchantment);
 		}
 	}
-	
+
 	public static FeatureType<?>[] getAllFeatureDependencies() {
 		Set<FeatureType<?>> features = new HashSet<>();
-		
+
 		for (CombatEnchantment enchantment : ENCHANTMENTS.values()) {
 			features.addAll(enchantment.getDependencies());
 		}
-		
+
 		return features.toArray(FeatureType[]::new);
 	}
-	
-	private static boolean registered = false;
-	
-	static {
-		registerAll();
-	}
-	
+
 	public static void registerAll() {
 		if (registered) return;
 		registered = true;
-		
+
 		EquipmentSlot[] ALL_ARMOR_SLOTS = EquipmentSlot.armors().toArray(EquipmentSlot[]::new);
-		
+
 		register(
 				new ProtectionEnchantment(Enchantment.PROTECTION, ProtectionEnchantment.Type.ALL, ALL_ARMOR_SLOTS),
 				new ProtectionEnchantment(Enchantment.FIRE_PROTECTION, ProtectionEnchantment.Type.FIRE, ALL_ARMOR_SLOTS),

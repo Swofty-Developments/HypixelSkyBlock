@@ -2,6 +2,7 @@ package net.swofty.pvp.utils;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.entity.LivingEntity;
@@ -16,16 +17,17 @@ import java.util.Objects;
 public class EntityUtil {
 	public static void spawnItemAtLocation(Entity entity, ItemStack itemStack, double up) {
 		if (itemStack.isAir()) return;
-		
+
 		ItemEntity item = new ItemEntity(itemStack);
 		item.setPickupDelay(10, TimeUnit.SERVER_TICK); // Default 0.5 seconds
 		item.setInstance(Objects.requireNonNull(entity.getInstance()), entity.getPosition().add(0, up, 0));
 	}
-	
+
 	public static Component getName(Entity entity) {
 		HoverEvent<HoverEvent.ShowEntity> hoverEvent = HoverEvent.showEntity(entity.getEntityType().key(), entity.getUuid());
-		if (entity.getCustomName() != null) {
-			return entity.getCustomName().hoverEvent(hoverEvent);
+		var customName = entity.get(DataComponents.CUSTOM_NAME);
+		if (customName != null) {
+			return customName.hoverEvent(hoverEvent);
 		} else if (entity instanceof Player) {
 			return ((Player) entity).getName().hoverEvent(hoverEvent);
 		} else {
@@ -35,7 +37,7 @@ public class EntityUtil {
 			return Component.text(name).hoverEvent(hoverEvent);
 		}
 	}
-	
+
 	public static void setLastDamage(LivingEntity livingEntity, Damage lastDamage) {
 		// Use reflection to set lastDamage field
 		try {
