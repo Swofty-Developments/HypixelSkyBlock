@@ -14,7 +14,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 public class ActionBlockPlaceable implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
-    public void onPlace(PlayerBlockPlaceEvent event){
+    public void onPlace(PlayerBlockPlaceEvent event) {
         ItemStack itemStack = event.getPlayer().getItemInMainHand();
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
@@ -25,7 +25,7 @@ public class ActionBlockPlaceable implements HypixelEventClass {
             PlaceableComponent placeable = item.getComponent(PlaceableComponent.class);
             if (placeable.getBlockType() == null) return;
             SkyBlockBlock skyBlockBlock = new SkyBlockBlock(placeable.getBlockType());
-            if (skyBlockBlock.getGenericInstance() instanceof BlockPlaceable blockPlaceable){
+            if (skyBlockBlock.getGenericInstance() instanceof BlockPlaceable blockPlaceable) {
                 blockPlaceable.onPlace(event, skyBlockBlock);
             }
         }

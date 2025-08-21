@@ -82,7 +82,7 @@ public class BuildersWandAbility extends RegisteredAbility {
             blocks.removeIf(blocks.getFirst()::equals);
             blockLimit--;
         }
-        if(blocksPlaced == 0) {
+        if (blocksPlaced == 0) {
             player.sendMessage("§cYou cannot place any blocks! You do not have enough blocks to place with your Builder's wand!");
         }
         if (blocksPlaced != 0) {

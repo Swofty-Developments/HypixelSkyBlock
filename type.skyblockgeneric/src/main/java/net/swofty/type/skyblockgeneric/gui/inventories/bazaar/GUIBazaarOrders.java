@@ -6,13 +6,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarConnector;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCompletedBazaarTransactions;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.text.DecimalFormat;
@@ -23,8 +23,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class GUIBazaarOrders extends HypixelInventoryGUI {
-    private static final int[] SELL_SLOTS = {10,11,12,13,14,15,16};
-    private static final int[] BUY_SLOTS  = {19,20,21,22,23,24,25};
+    private static final int[] SELL_SLOTS = {10, 11, 12, 13, 14, 15, 16};
+    private static final int[] BUY_SLOTS = {19, 20, 21, 22, 23, 24, 25};
     private static final DecimalFormat FORMATTER = new DecimalFormat("#,###.##");
 
     public GUIBazaarOrders() {
@@ -116,7 +116,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(SELL_SLOTS[0]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§7No Sell Orders", Material.BARRIER, 1,
                             "§7You don't have any active",
                             "§7sell orders in the Bazaar.");
@@ -128,7 +128,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(BUY_SLOTS[0]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§7No Buy Orders", Material.BARRIER, 1,
                             "§7You don't have any active",
                             "§7buy orders in the Bazaar.");
@@ -164,7 +164,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -173,7 +173,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -250,11 +250,10 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             lore.add("§7Total value: §6" + FORMATTER.format(Math.abs(totalValue)) + " coins");
             lore.add(" ");
 
+            lore.add("§7You will receive:");
             if (isSell) {
-                lore.add("§7You will receive:");
                 lore.add("  §6+" + FORMATTER.format(Math.abs(totalValue)) + " coins");
             } else {
-                lore.add("§7You will receive:");
                 lore.add("  §a+" + (int)totalQuantity + "x " + itemType.getDisplayName());
                 if (totalValue > 0) {
                     lore.add("  §6+" + FORMATTER.format(totalRefund) + " coins refund");

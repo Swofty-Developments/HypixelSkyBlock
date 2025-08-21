@@ -3,18 +3,17 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.fasttravel;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
-import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.warps.TravelScrollIslands;
 
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GUIFastTravel extends HypixelInventoryGUI {
-    private static int[] SLOTS = new int[]{
+    private static final int[] SLOTS = new int[]{
             10, 11, 12, 13, 14, 15, 16,
                 20, 21, 22, 23, 24,
                     30,     32
@@ -73,7 +72,7 @@ public class GUIFastTravel extends HypixelInventoryGUI {
             set(new GUIClickableItem(SLOTS[i]) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!hasUnlockedIsland) {
                         player.sendMessage("§cYou haven't unlocked this fast travel destination!");
                         return;
@@ -103,7 +102,7 @@ public class GUIFastTravel extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     List<String> lore = new ArrayList<>();
 
                     lore.add("§8/warp " + island.getInternalName());

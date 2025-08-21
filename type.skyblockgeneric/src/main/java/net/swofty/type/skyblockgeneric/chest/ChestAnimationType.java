@@ -10,7 +10,7 @@ public enum ChestAnimationType {
     OPEN,
     CLOSE;
 
-    public void play(Instance instance , Point[] positions){
+    public void play(Instance instance , Point[] positions) {
         Arrays.stream(positions).forEach((position) -> {
             BlockActionPacket actionPacket = new BlockActionPacket(
                     position,

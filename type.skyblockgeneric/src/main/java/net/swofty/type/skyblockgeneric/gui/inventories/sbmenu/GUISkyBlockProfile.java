@@ -27,6 +27,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
     public GUISkyBlockProfile() {
         super("Your Equipment and Stats", InventoryType.CHEST_6_ROW);
     }
+
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
@@ -36,7 +37,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
         set(new GUIItem(2) { //Held Item
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!player.getItemInMainHand().isAir()) {
                     return ItemStackCreator.getFromStack(player.getItemInMainHand());
                 } else {
@@ -44,10 +45,11 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 }
             }
         });
+
         set(new GUIClickableItem(11) { //Helmet
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 SkyBlockItem item = new SkyBlockItem(p.getInventory().getCursorItem());
                 if (!player.getHelmet().isAir() && p.getInventory().getCursorItem().isAir()) {
                     player.addAndUpdateItem(player.getHelmet());
@@ -63,9 +65,10 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                     guiSkyBlockProfile.open(player);
                 }
             }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!player.getHelmet().isAir()) {
                     return ItemStackCreator.getFromStack(player.getHelmet());
                 } else {
@@ -73,10 +76,11 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 }
             }
         });
+
         set(new GUIClickableItem(20) { //Chestplate
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 SkyBlockItem item = new SkyBlockItem(p.getInventory().getCursorItem());
                 if (!player.getChestplate().isAir() && p.getInventory().getCursorItem().isAir()) {
                     player.addAndUpdateItem(player.getChestplate());
@@ -92,9 +96,10 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                     guiSkyBlockProfile.open(player);
                 }
             }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!player.getChestplate().isAir()) {
                     return ItemStackCreator.getFromStack(player.getChestplate());
                 } else {
@@ -106,7 +111,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
         set(new GUIClickableItem(29) { //Leggings
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 SkyBlockItem item = new SkyBlockItem(p.getInventory().getCursorItem());
                 if (!player.getLeggings().isAir() && p.getInventory().getCursorItem().isAir()) {
                     player.addAndUpdateItem(player.getLeggings());
@@ -127,7 +132,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!player.getLeggings().isAir()) {
                     return ItemStackCreator.getFromStack(player.getLeggings());
                 } else {
@@ -135,10 +140,11 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 }
             }
         });
+
         set(new GUIClickableItem(38) { //Boots
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 SkyBlockItem item = new SkyBlockItem(p.getInventory().getCursorItem());
                 if (!player.getBoots().isAir() && p.getInventory().getCursorItem().isAir()) {
                     player.addAndUpdateItem(player.getBoots());
@@ -155,9 +161,10 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                     guiSkyBlockProfile.open(player);
                 }
             }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!player.getBoots().isAir()) {
                     return ItemStackCreator.getFromStack(player.getBoots());
                 } else {
@@ -165,16 +172,17 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 }
             }
         });
+
         set(new GUIClickableItem(47) { //Pet
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUIPets().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (player.getPetData().getEnabledPet() != null && !player.getPetData().getEnabledPet().getItemStack().isAir()) {
                     SkyBlockItem pet = player.getPetData().getEnabledPet();
                     return new NonPlayerItemUpdater(pet).getUpdatedItem();
@@ -187,12 +195,12 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
         set(new GUIClickableItem(15) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7Gives you a better chance at", "§7fighting strong monsters. "));
                 List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.HEALTH, ItemStatistic.DEFENSE, ItemStatistic.STRENGTH, ItemStatistic.INTELLIGENCE,
@@ -214,15 +222,16 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 );
             }
         });
+
         set(new GUIClickableItem(16) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7Lets you collect and harvest better", "§7items, or more of them. "));
                 List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.MINING_SPEED, ItemStatistic.MINING_FORTUNE, ItemStatistic.BREAKING_POWER,
@@ -238,21 +247,20 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
 
                 lore.add("");
                 lore.add("§eClick for details!");
-                return ItemStackCreator.getStack("§eGathering Stats", Material.IRON_PICKAXE, 1,
-                        lore
-                );
+
+                return ItemStackCreator.getStack("§eGathering Stats", Material.IRON_PICKAXE, 1, lore);
             }
         });
 
         set(new GUIClickableItem(24) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7Increases the §3XP §7you gain on your", "§7skills "));
                 List<ItemStatistic> stats = new ArrayList<>(List.of()); // WISDOM STATS
@@ -275,12 +283,12 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
         set(new GUIClickableItem(25) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7Augments various aspects of your", "§7gameplay! "));
                 List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.SPEED, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK,
@@ -303,13 +311,17 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
     }
 
     @Override
-    public boolean allowHotkeying() { return false; }
+    public boolean allowHotkeying() {
+        return false;
+    }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {}
+    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {}
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
+    }
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {

@@ -43,7 +43,7 @@ public class MinestomCommandSender extends AbstractCommandSender<CommandSender> 
 
     @Override
     public boolean hasPermission(String permission) {
-        if (delegate instanceof Player player){
+        if (delegate instanceof Player player) {
             return HypixelGenericLoader.getFromUUID(player.getUuid()).getDataHandler()
                     .get(HypixelDataHandler.Data.RANK, DatapointRank.class)
                     .getValue() == Rank.ADMIN;

@@ -21,7 +21,7 @@ public class MithrilInfuseCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
             SkyBlockPlayer player = ((SkyBlockPlayer) sender);
-            if(!(new SkyBlockItem(player.getItemInMainHand()).hasComponent(MinionComponent.class))){
+            if (!(new SkyBlockItem(player.getItemInMainHand()).hasComponent(MinionComponent.class))) {
                 player.sendMessage("§cMithril Infusions can only be applied to minions.");
                 return;
             }

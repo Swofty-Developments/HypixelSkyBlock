@@ -8,11 +8,11 @@ import net.minestom.server.inventory.AbstractInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.chest.Chest;
 import net.swofty.type.skyblockgeneric.chest.ChestAnimationType;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.IntStream;
@@ -28,11 +28,11 @@ public class GUIChest extends HypixelInventoryGUI {
 
     @Override
     public void setItems(InventoryGUIOpenEvent e) {
-        IntStream.range(0 , chest.getItems().size()).forEach(index->{
+        IntStream.range(0, chest.getItems().size()).forEach(index -> {
             set(new GUIItem(index) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getFromStack(chest.getItem(index));
                 }
 
