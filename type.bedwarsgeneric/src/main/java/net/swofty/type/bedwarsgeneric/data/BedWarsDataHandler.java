@@ -58,8 +58,8 @@ public class BedWarsDataHandler extends DataHandler {
 	}
 
 	public static BedWarsDataHandler createFromDocument(Document document) {
-		BedWarsDataHandler h = new BedWarsDataHandler();
-		return h.fromDocument(document);
+		BedWarsDataHandler handler = new BedWarsDataHandler();
+		return handler.fromDocument(document);
 	}
 
 	@Override
@@ -110,20 +110,20 @@ public class BedWarsDataHandler extends DataHandler {
 	}
 
 	public static BedWarsDataHandler initUserWithDefaultData(UUID uuid) {
-		BedWarsDataHandler h = new BedWarsDataHandler();
-		h.uuid = uuid;
+		BedWarsDataHandler handler = new BedWarsDataHandler();
+		handler.uuid = uuid;
 		for (Data data : Data.values()) {
 			try {
-				h.datapoints.put(
+				handler.datapoints.put(
 						data.getKey(),
-						data.getDefaultDatapoint().deepClone().setUser(h).setData(data)
+						data.getDefaultDatapoint().deepClone().setUser(handler).setData(data)
 				);
 			} catch (Exception e) {
 				Logger.error("Issue with datapoint " + data.getKey() + " for user " + uuid + " - fix");
 				e.printStackTrace();
 			}
 		}
-		return h;
+		return handler;
 	}
 
 	/** BedWars specific data enum. */

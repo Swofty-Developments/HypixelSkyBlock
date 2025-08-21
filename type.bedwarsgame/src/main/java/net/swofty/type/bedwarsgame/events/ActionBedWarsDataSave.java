@@ -25,7 +25,7 @@ public class ActionBedWarsDataSave implements HypixelEventClass {
 
         if (handler == null) return;
 
-        // Run onSave callbacks for basic Hypixel functionality
+        // Run onSave callbacks for BedWars functionality
         handler.runOnSave(player);
 
         UserDatabase userDatabase = new UserDatabase(uuid);

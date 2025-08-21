@@ -4,6 +4,7 @@ import net.minestom.server.entity.Player;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
@@ -19,11 +20,7 @@ public class ForceStartCommand extends HypixelCommand {
 	public void registerUsage(MinestomCommand command) {
 		command.addSyntax((sender, context) -> {
 			if (!permissionCheck(sender)) return;
-			if (!(sender instanceof Player player)) {
-				sender.sendMessage("This command can only be used by players.");
-				return;
-			}
-
+			BedWarsPlayer player = (BedWarsPlayer) sender;
 			Game game = TypeBedWarsGameLoader.getPlayerGame(player);
 			if (game == null) {
 				player.sendMessage("You are not in a game.");

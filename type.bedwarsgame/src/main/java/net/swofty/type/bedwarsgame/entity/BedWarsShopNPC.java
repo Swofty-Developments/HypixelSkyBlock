@@ -9,12 +9,12 @@ import net.minestom.server.entity.VillagerType;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.minestom.server.tag.Tag;
 
-public class NPC extends EntityCreature {
+public class BedWarsShopNPC extends EntityCreature {
 
     @Getter
     private final String name;
 
-    public NPC(String name, NPCType type) {
+    public BedWarsShopNPC(String name, NPCType type) {
         super(EntityType.VILLAGER);
         this.name = name;
 

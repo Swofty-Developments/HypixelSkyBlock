@@ -10,7 +10,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.component.DataComponent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EquipmentSlot;
@@ -28,7 +27,7 @@ import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.entity.NPC;
+import net.swofty.type.bedwarsgame.entity.BedWarsShopNPC;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
 import net.swofty.type.bedwarsgame.util.C;
@@ -304,12 +303,12 @@ public class Game {
 				MapsConfig.PitchYawPosition shopPos = team.getShop().item();
 				MapsConfig.PitchYawPosition teamPos = team.getShop().team();
 				if (shopPos != null) {
-					NPC npc = new NPC("Item Shop", NPC.NPCType.SHOP);
-					npc.setInstance(instanceContainer, new Pos(shopPos.x(), shopPos.y(), shopPos.z(), shopPos.yaw(), shopPos.pitch())).join();
+					BedWarsShopNPC bedWarsShopNpc = new BedWarsShopNPC("Item Shop", BedWarsShopNPC.NPCType.SHOP);
+					bedWarsShopNpc.setInstance(instanceContainer, new Pos(shopPos.x(), shopPos.y(), shopPos.z(), shopPos.yaw(), shopPos.pitch())).join();
 				}
 				if (teamPos != null) {
-					NPC npc = new NPC("Team Upgrades", NPC.NPCType.TEAM);
-					npc.setInstance(instanceContainer, new Pos(teamPos.x(), teamPos.y(), teamPos.z(), teamPos.yaw(), shopPos.yaw())).join();
+					BedWarsShopNPC bedWarsShopNpc = new BedWarsShopNPC("Team Upgrades", BedWarsShopNPC.NPCType.TEAM);
+					bedWarsShopNpc.setInstance(instanceContainer, new Pos(teamPos.x(), teamPos.y(), teamPos.z(), teamPos.yaw(), shopPos.yaw())).join();
 				}
 			}
 		}
