@@ -49,7 +49,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 3. Download `resources.json` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
 4. Move this file into the `configuration` folder you just made.
 5. Download the [world files for the SkyBlock Hub, Prototype Lobby, and Island worlds.](https://www.mediafire.com/file/xxnxgkqejlh17fn/HypixelRecreationWorlds.zip/file)
-6. Get the Hypixel SkyBlock hub from the above download and put it in the configuration folder you made under the name `hypixel_hub`, and the Prototype Lobby under `hypixel_prototype_lobby`.
+6. Get the Hypixel SkyBlock hub from the above download and put it in the configuration folder you made under the name `hypixel_skyblock_hub`, and the Prototype Lobby under `hypixel_prototype_lobby`.
 7. Get the Hypixel Island default template from the above download and put it in the configuration folder you made under the name `hypixel_island_template`.
 8. Get the item and collection folders from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and put them into your configuration folder.
 9. There should be a `forwarding.secret` file where your Velocity JAR is, take this and put it into your `resources.json` under `velocity-secret`.

@@ -19,10 +19,10 @@ public class BalanceConfigurations {
             ServerType.PROTOTYPE_LOBBY, List.of(
                     new LowestPlayerCount()
             ),
-            ServerType.DUNGEON_HUB, List.of(
+            ServerType.SKYBLOCK_DUNGEON_HUB, List.of(
                     new LowestPlayerCount()
             ),
-            ServerType.THE_FARMING_ISLANDS, List.of(
+            ServerType.SKYBLOCK_THE_FARMING_ISLANDS, List.of(
                     new LowestPlayerCount()
             ),
             ServerType.SKYBLOCK_ISLAND, List.of(

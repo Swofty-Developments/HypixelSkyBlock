@@ -29,7 +29,7 @@ public class RuneEntityImpl extends LivingEntity {
             ((ArmorStandMeta) this.entityMeta).setHeadRotation(new Vec( -90, 0.4, 0));
             setHelmet(ItemStackCreator.getStackHead("5c540298a017b25f9cfae9281fe5b585d770db1852b73804d1bb7c7ee53733a4").build());
         } else {
-            setHelmet(ItemStack.builder(Material.STONE_SLAB).build());
+            setHelmet(ItemStack.builder(Material.SMOOTH_STONE_SLAB).build());
         }
 
         setInstance(HypixelConst.getInstanceContainer(), position);

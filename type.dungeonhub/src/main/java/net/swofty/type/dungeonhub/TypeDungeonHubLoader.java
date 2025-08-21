@@ -30,7 +30,7 @@ public class TypeDungeonHubLoader implements SkyBlockTypeLoader {
 
     @Override
     public ServerType getType() {
-        return ServerType.DUNGEON_HUB;
+        return ServerType.SKYBLOCK_DUNGEON_HUB;
     }
 
     @Override
