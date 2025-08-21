@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.item;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import net.minestom.server.item.ItemComponent;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
@@ -250,8 +250,7 @@ public class SkyBlockItem {
             itemStackBuilder.setTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
         }
 
-        itemStackBuilder.set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
-        return itemStackBuilder;
+        return ItemStackCreator.clearAttributes(itemStackBuilder);
     }
 
     public <T extends SkyBlockItemComponent> boolean hasComponent(Class<T> componentClass) {
@@ -326,18 +325,18 @@ public class SkyBlockItem {
     }
 
     public String getDisplayName() {
-        return StringUtility.getTextFromComponent(new NonPlayerItemUpdater(this).getUpdatedItem().build().get(ItemComponent.CUSTOM_NAME));
+        return StringUtility.getTextFromComponent(new NonPlayerItemUpdater(this).getUpdatedItem().build().get(DataComponents.CUSTOM_NAME));
     }
 
     public List<String> getLore() {
-        return new NonPlayerItemUpdater(this).getUpdatedItem().build().get(ItemComponent.LORE).stream().map(
+        return new NonPlayerItemUpdater(this).getUpdatedItem().build().get(DataComponents.LORE).stream().map(
                 StringUtility::getTextFromComponent
         ).toList();
     }
 
     public List<String> getLore(@NotNull SkyBlockPlayer player) {
         return PlayerItemUpdater.playerUpdate(player, getItemStackBuilder().build(), false).build()
-                .get(ItemComponent.LORE).stream().map(
+                .get(DataComponents.LORE).stream().map(
                         StringUtility::getTextFromComponent).toList();
     }
 }

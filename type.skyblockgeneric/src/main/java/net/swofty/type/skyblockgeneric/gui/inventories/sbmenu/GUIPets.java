@@ -1,10 +1,11 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
 import lombok.Setter;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -144,7 +145,7 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                boolean isRightClick = e.getClickType().equals(ClickType.RIGHT_CLICK);
+                boolean isRightClick = e.getClick() instanceof Click.Right;
 
                 int ordinal = sortType.ordinal();
                 if (isRightClick) {
@@ -219,7 +220,7 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
         boolean isPetEnabled = player.getPetData().getEnabledPet() == item;
 
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(item).getUpdatedItem();
-        List<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+        List<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
         lore.add(" ");
         if (isPetEnabled) {
             ItemStackCreator.enchant(itemStack);

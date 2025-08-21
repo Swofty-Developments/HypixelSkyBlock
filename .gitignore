@@ -41,10 +41,13 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Islands ###
 /configuration/hypixel_island_template/
+/configuration/hypixel_hub/
+/configuration/hypixel_prototype_lobby/
 /configuration/hypixel_skyblock_hub/
 /configuration/bedwars/*.polar
-/configuration/hypixel_prototype_lobby/
 /configuration/hypixel_bedwars_lobby/
 /server/proxy/logs/
 /server/proxy/lang/

@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.commands;
 
-import net.minestom.server.item.ItemComponent;
+import net.minestom.server.component.DataComponents;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
@@ -29,9 +29,7 @@ public class MithrilInfuseCommand extends HypixelCommand {
                 ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
                 try {
                     itemAttributeHandler.setMithrilInfused(true);
-                    player.sendMessage("§aMithril Infusion applied to " + player.getItemInMainHand().get(
-                            ItemComponent.CUSTOM_NAME
-                    ).toString() + ".");
+                    player.sendMessage("§aMithril Infusion applied to " + item.getDisplayName() + ".");
                 } catch (IllegalArgumentException e) {
                     player.sendMessage("§c" + e.getMessage());
                 }

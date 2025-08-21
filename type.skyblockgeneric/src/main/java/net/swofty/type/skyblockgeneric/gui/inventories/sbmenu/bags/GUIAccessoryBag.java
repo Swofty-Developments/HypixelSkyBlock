@@ -168,7 +168,7 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
-        SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
+        SkyBlockItem cursorItem = new SkyBlockItem(e.getPlayer().getInventory().getCursorItem());
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
 
         if (isItemAllowed(cursorItem) && isItemAllowed(clickedItem)) {

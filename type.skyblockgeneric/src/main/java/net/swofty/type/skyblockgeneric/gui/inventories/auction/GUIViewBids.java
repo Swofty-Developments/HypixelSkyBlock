@@ -1,10 +1,10 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.auction;
 
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -100,7 +100,7 @@ public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item.getItem()).getUpdatedItem().build()
-                                    .get(ItemComponent.CUSTOM_NAME)),
+                                    .get(DataComponents.CUSTOM_NAME)),
                             item.getItem().material(), item.getItem().amount(), new AuctionItemLoreHandler(item).getLore(player));
                 }
             });

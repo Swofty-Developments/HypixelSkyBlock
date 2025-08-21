@@ -2,10 +2,10 @@ package net.swofty.type.skyblockgeneric.gui.inventories.museum;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -148,7 +148,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
                 lore.add("§eClick to donate item!");
 
                 player.getInventory().setItemStack(i, ItemStackCreator.updateLore(toReturn, lore)
-                        .set(ItemComponent.CUSTOM_NAME, Component.text(item.getDisplayName()).decoration(
+                        .set(DataComponents.CUSTOM_NAME, Component.text(item.getDisplayName()).decoration(
                                 TextDecoration.ITALIC, false
                         ))
                         .build());

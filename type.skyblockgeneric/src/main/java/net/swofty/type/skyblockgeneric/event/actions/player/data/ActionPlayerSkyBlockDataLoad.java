@@ -29,7 +29,7 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
         UUID islandUUID;
 
         // Check if player has ever joined SkyBlock before
-        SkyBlockPlayerProfiles profiles = player.getProfiles();
+        SkyBlockPlayerProfiles profiles = new UserDatabase(playerUuid).getProfiles();
         UUID profileId;
 
         if (profiles == null) {
@@ -47,7 +47,6 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
             // Save the new profiles to database
             UserDatabase userDb = new UserDatabase(playerUuid);
             userDb.saveProfiles(profiles);
-
         } else {
             // Existing player
             profileId = profiles.getCurrentlySelected();
@@ -74,6 +73,7 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
                 }
             }
         }
+
 
         // Set up the island
         SkyBlockIsland island = (SkyBlockIsland.getIsland(islandUUID) == null)

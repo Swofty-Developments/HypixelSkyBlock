@@ -8,11 +8,12 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -124,7 +125,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                 );
 
                 double sellPrice = item.getComponent(SellableComponent.class).getSellValue() * stack.amount();
-                List<String> lore = new ArrayList<>(toReplace.build().get(ItemComponent.LORE)
+                List<String> lore = new ArrayList<>(toReplace.build().get(DataComponents.LORE)
                         .stream()
                         .map(StringUtility::getTextFromComponent)
                         .toList());
@@ -136,8 +137,8 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                 lore.add("§eClick to sell!");
 
                 toReplace = ItemStackCreator.updateLore(toReplace, lore);
-                toReplace.set(ItemComponent.CUSTOM_NAME, Component.text(
-                        "§a" + StringUtility.getTextFromComponent(toReplace.build().get(ItemComponent.CUSTOM_NAME)) +
+                toReplace.set(DataComponents.CUSTOM_NAME, Component.text(
+                        "§a" + StringUtility.getTextFromComponent(toReplace.build().get(DataComponents.CUSTOM_NAME)) +
                                 " §8x" + stack.amount()
                 ).decoration(TextDecoration.ITALIC, false));
 
@@ -227,7 +228,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
 
                 double buyBackPrice = last.getComponent(SellableComponent.class).getSellValue() * amountOfLast;
 
-                List<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE)
+                List<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE)
                         .stream()
                         .map(StringUtility::getTextFromComponent)
                         .toList());
@@ -261,7 +262,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                         return;
                     }
 
-                    if (item.isStackable() && e.getClickType().equals(ClickType.RIGHT_CLICK)) {
+                    if (item.isStackable() && e.getClick() instanceof Click.Right) {
                         new GUIGenericTradingOptions(item, SkyBlockShopGUI.this, stackPrice).open(player);
                         return;
                     }
@@ -293,7 +294,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                         itemStack.amount(item.amount);
 
                         if (item.getDisplayName() != null)
-                            itemStack.set(ItemComponent.CUSTOM_NAME, Component.text(item.getDisplayName())
+                            itemStack.set(DataComponents.CUSTOM_NAME, Component.text(item.getDisplayName())
                                     .decoration(TextDecoration.ITALIC, false));
 
                         List<String> lore;
@@ -301,7 +302,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                         if (item.getLore() != null) {
                             lore = item.lore;
                         } else {
-                            lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE)
+                            lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE)
                                     .stream()
                                     .map(StringUtility::getTextFromComponent)
                                     .toList());
@@ -356,7 +357,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                 player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() + sellPrice
         );
         player.sendMessage(
-                "§aYou sold §f" + StringUtility.getTextFromComponent(stack.get(ItemComponent.CUSTOM_NAME)) + "§a for §6"
+                "§aYou sold §f" + StringUtility.getTextFromComponent(stack.get(DataComponents.CUSTOM_NAME)) + "§a for §6"
                         + StringUtility.commaify(sellPrice) + " Coin" + (sellPrice != 1 ? "s" : "") + "§a!"
         );
 

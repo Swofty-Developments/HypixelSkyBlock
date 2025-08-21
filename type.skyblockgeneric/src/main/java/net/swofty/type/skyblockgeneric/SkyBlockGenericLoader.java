@@ -329,7 +329,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          */
         if (mainInstance != null) {
             ServerHolograms.spawnAll(HypixelConst.getInstanceContainer());
-            String zone = typeLoader.getType().toString();
+            String zone = typeLoader.getType().skyblockName();
             FairySoul.spawnEntities(HypixelConst.getInstanceContainer(), FairySoulZone.valueOf(zone.toUpperCase()));
         }
 

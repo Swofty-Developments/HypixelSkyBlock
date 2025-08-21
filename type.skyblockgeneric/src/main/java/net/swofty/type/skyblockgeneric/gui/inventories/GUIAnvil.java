@@ -1,10 +1,10 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -77,9 +77,9 @@ public class GUIAnvil  extends HypixelInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    ItemStack stack = e.getCursorItem();
+                    ItemStack stack = p.getInventory().getCursorItem();
 
-                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
+                    if (stack.get(DataComponents.CUSTOM_NAME) == null) {
                         updateItemToUpgrade(null);
                         return;
                     }
@@ -142,9 +142,9 @@ public class GUIAnvil  extends HypixelInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    ItemStack stack = e.getCursorItem();
+                    ItemStack stack = p.getInventory().getCursorItem();
 
-                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
+                    if (stack.get(DataComponents.CUSTOM_NAME) == null) {
                         updateItemToSacrifice(null);
                         return;
                     }

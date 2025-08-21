@@ -9,7 +9,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "lbby",
+@CommandParameters(aliases = "l",
         description = "Takes the player to the lobby",
         usage = "/lobby",
         permission = Rank.DEFAULT,

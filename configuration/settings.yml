@@ -4,10 +4,10 @@
 
 # Server's host address and port. Set ip empty to use public address
 bind:
-  ip: '0.0.0.0'
+  ip: 'localhost'
   port: 65535
 
-# Max amount of players can join to server
+# Max number of players can join to server
 # Set -1 to make it infinite
 maxPlayers: 100
 
@@ -15,8 +15,8 @@ maxPlayers: 100
 ping:
   description: '{"text": "&9NanoLimbo"}'
   version: 'NanoLimbo'
-  # Return static protocols version number in ping result
-  # By default, its -1 to return the client version, if it supported
+  # Return static protocol version number in ping result
+  # By default, its -1 to return the client version if it supported
   # https://wiki.vg/Protocol_version_numbers
   protocol: -1
 
@@ -24,7 +24,7 @@ ping:
 dimension: THE_END
 
 # Whether to display the player in the player list
-# For 1.16.5 clients, player list will be sent even if disabled, to avoid crash
+# For 1.16.5 clients, the player list will be sent even if disabled, to avoid crash
 playerList:
   enable: false
   username: 'NanoLimbo'
@@ -44,21 +44,25 @@ headerAndFooter:
 # Spectator works on 1.8+ clients
 gameMode: 3
 
+# Remove secure-chat toast
+# For 1.20.5+ clients
+secureProfile: false
+
 # Server name which is shown under F3
 # For 1.13+ clients
 brandName:
   enable: true
   content: 'NanoLimbo'
 
-# Message sends when player join to server
+# Message sends when player joins to the server
 joinMessage:
-  enable: true
+  enable: false
   text: '{"text": "&eWelcome to the Limbo!"}'
 
-# BossBar displays when player join to server
+# BossBar displays when player joins to the server
 # For 1.9+ clients
 bossBar:
-  enable: true
+  enable: false
   text: '{"text": "Welcome to the Limbo!"}'
   health: 1.0
   # Available colors: PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
@@ -87,7 +91,7 @@ title:
 #  - LEGACY
 #  - MODERN
 #  - BUNGEE_GUARD
-# Don't use secret if you not use MODERN type
+# Don't use secret if you do not use MODERN type
 infoForwarding:
   type: MODERN
   secret: 'ixmSUgWOgvs7'
@@ -105,27 +109,33 @@ readTimeout: 30000
 # 3 - Display errors, warnings, info, debug
 debugLevel: 2
 
-# Warning! Do not touch params of this block, if you not completely sure what is this!
+# Warning! Do not touch params of this block if you are not completely sure what is this!
 netty:
-  # Use Linux native transport type, if it possible
+  # Use a Linux native transport type, if it possible
   useEpoll: true
   # EventLoopGroup threads count
   threads:
     bossGroup: 1
     workerGroup: 4
 
-# [Experimental]
 # Options to check incoming traffic and kick potentially malicious connections.
-# Take into account that player can send many small packets, for example just moving mouse.
+# Take into account that player can send many small packets, for example, just moving mouse.
 traffic:
-  # If true, then additional handler will be added to channel pipeline
-  enable: false
+  # If true, then additional handler will be added to the channel pipeline
+  enable: true
   # Max packet size in bytes
   # Unlimited if -1
-  packetSize: 1024
-  # How many packets per second allowed for single connection
-  # Ignored if -1
-  packets: -1
-  # How many bytes per second allowed for single connection
-  # Ignored if -1
-  bytes: 2048
+  maxPacketSize: 8192
+  # The interval to measure packets over
+  # Lowering this value will limit peak packets from players which would target people with bad connections
+  # Raising this value will allow higher peak packet rates, which will help with people who have poor connections
+  # Ignored if -1.0
+  interval: 7.0
+  # The maximum packets per second for players
+  # It is measured over the configured interval
+  # Ignored if -1.0
+  maxPacketRate: 500.0
+  # The maximum packet bytes per second for players
+  # It is measured over the configured interval as an average bytes/sec
+  # Ignored if -1.0
+  maxPacketBytesRate: 2048.0

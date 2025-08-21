@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.minion.extension.extensions;
 import lombok.NonNull;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -47,7 +48,7 @@ public class MinionShippingExtension extends MinionExtension {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    SkyBlockItem shippingItem = new SkyBlockItem(e.getCursorItem());
+                    SkyBlockItem shippingItem = new SkyBlockItem(p.getInventory().getCursorItem());
 
                     if (!shippingItem.hasComponent(MinionShippingComponent.class)) {
                         player.sendMessage("§cThis item is not a valid Minion Shipping item.");
@@ -55,25 +56,15 @@ public class MinionShippingExtension extends MinionExtension {
                         return;
                     }
 
-                    e.setClickedItem(ItemStack.AIR);
+                    p.getInventory().setCursorItem(ItemStack.AIR);
+                    e.setCancelled(true);
                     setItemTypePassedIn(shippingItem.getAttributeHandler().getPotentialType());
                     minion.getExtensionData().setData(slot, MinionShippingExtension.this);
-                }
-
-                @Override
-                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIMinion(minion).open(player);
                 }
 
                 @Override
-                public boolean canPickup() {
-                    return true;
-                }
-
-                @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§aAutomated Shipping", Material.BLUE_STAINED_GLASS_PANE, 1,
                             "§7Add a §aBudget Hopper §7or",
                             "§9Enchanted Hopper §7here to make",
@@ -87,13 +78,13 @@ public class MinionShippingExtension extends MinionExtension {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    if (!e.getCursorItem().isAir()) {
+                    if (!p.getInventory().getCursorItem().isAir()) {
                         player.sendMessage("§cYour cursor must be empty to pick this item up!");
                         e.setCancelled(true);
                         return;
                     }
 
-                    if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
+                    if (e.getClick() instanceof Click.Right) {
                         e.setCancelled(true);
 
                         if (heldCoins == 0)
@@ -108,19 +99,10 @@ public class MinionShippingExtension extends MinionExtension {
                     player.addAndUpdateItem(getItemTypePassedIn());
                     setItemTypePassedIn(null);
                     itemsSold = 0;
-                    e.setClickedItem(ItemStack.AIR);
+                    p.getInventory().setCursorItem(ItemStack.AIR);
+                    e.setCancelled(true);
                     minion.getExtensionData().setData(slot, MinionShippingExtension.this);
-                }
-
-                @Override
-                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIMinion(minion).open(player);
-                }
-
-                @Override
-                public boolean canPickup() {
-                    return true;
                 }
 
                 @Override

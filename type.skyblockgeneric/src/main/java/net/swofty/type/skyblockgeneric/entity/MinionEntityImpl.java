@@ -1,14 +1,13 @@
 package net.swofty.type.skyblockgeneric.entity;
 
 import lombok.Getter;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.DyedItemColor;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionSkinComponent;
@@ -67,12 +66,12 @@ public class MinionEntityImpl extends LivingEntity {
             setChestplate(skinItem.getChestplateStack());
         } else {
             setHelmet(ItemStackCreator.getStackHead(minionTier.texture()).build());
-            setBoots(ItemStack.builder(Material.LEATHER_BOOTS).set(ItemComponent.DYED_COLOR,
-                    new DyedItemColor(minion.getBootColour(), false)).build());
-            setLeggings(ItemStack.builder(Material.LEATHER_LEGGINGS).set(ItemComponent.DYED_COLOR,
-                    new DyedItemColor(minion.getLeggingsColour(), false)).build());
-            setChestplate(ItemStack.builder(Material.LEATHER_CHESTPLATE).set(ItemComponent.DYED_COLOR,
-                    new DyedItemColor(minion.getChestplateColour(), false)).build());
+            setBoots(ItemStack.builder(Material.LEATHER_BOOTS).set(DataComponents.DYED_COLOR,
+                    minion.getBootColour()).build());
+            setLeggings(ItemStack.builder(Material.LEATHER_LEGGINGS).set(DataComponents.DYED_COLOR,
+                    minion.getBootColour()).build());
+            setChestplate(ItemStack.builder(Material.LEATHER_CHESTPLATE).set(DataComponents.DYED_COLOR,
+                    minion.getBootColour()).build());
         }
 
         try {

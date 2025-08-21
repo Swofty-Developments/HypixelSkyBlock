@@ -9,6 +9,7 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.registry.DynamicRegistry;
+import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -28,6 +29,7 @@ import net.swofty.type.skyblockgeneric.utility.JerryInformation;
 import net.swofty.type.generic.utility.MathUtility;
 import org.bson.types.Binary;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -77,8 +79,8 @@ public class SkyBlockIsland {
                 future.complete(islandInstance);
                 return;
             }
-            DynamicRegistry.Key<DimensionType> dimensionTypeKey = MinecraftServer.getDimensionTypeRegistry().getKey(
-                    MinecraftServer.getDimensionTypeRegistry().getId(Key.key("skyblock:island"))
+            RegistryKey<DimensionType> dimensionTypeKey = MinecraftServer.getDimensionTypeRegistry().getKey(
+                    Key.key("skyblock:island")
             );
             InstanceContainer temporaryInstance = manager.createInstanceContainer(dimensionTypeKey);
             islandInstance = manager.createSharedInstance(temporaryInstance);
@@ -101,8 +103,8 @@ public class SkyBlockIsland {
                 try {
                     world = AnvilPolar.anvilToPolar(Path.of(ISLAND_TEMPLATE_NAME), ChunkSelector.radius(3));
                 } catch (IOException e) {
-                    // TODO: Proper error handling
-                    throw new RuntimeException(e);
+                    Logger.error("Failed to create island world", e);
+                    throw new RuntimeException("Failed to create island world", e);
                 }
 
                 HypixelEventHandler.callCustomEvent(new IslandFirstCreatedEvent(

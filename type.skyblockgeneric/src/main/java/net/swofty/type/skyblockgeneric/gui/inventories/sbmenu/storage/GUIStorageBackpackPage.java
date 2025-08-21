@@ -1,9 +1,9 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.storage;
 
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -29,7 +29,7 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
 
     public GUIStorageBackpackPage(int page, SkyBlockItem item) {
         super(StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item).getUpdatedItem().build()
-                        .get(ItemComponent.CUSTOM_NAME))
+                        .get(DataComponents.CUSTOM_NAME))
                 + " (Slot #" + page + ")",
                 MathUtility.getFromSize(9 + item.getComponent(BackpackComponent.class).getRows() * 9));
 

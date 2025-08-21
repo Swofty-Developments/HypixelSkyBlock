@@ -2,10 +2,9 @@ package net.swofty.type.skyblockgeneric.item.updater;
 
 import lombok.Getter;
 import net.minestom.server.color.Color;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.PlayerSkin;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.component.DyedItemColor;
 import net.minestom.server.item.component.HeadProfile;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.Unit;
@@ -57,7 +56,7 @@ public class NonPlayerItemUpdater {
         ItemStack.Builder stack = updateItemLore(builder);
 
         if (item.hasComponent(EnchantedComponent.class))
-            stack.set(ItemComponent.ENCHANTMENT_GLINT_OVERRIDE, true);
+            stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
 
         if (item.hasComponent(TrackedUniqueComponent.class))
             stack.setTag(Tag.UUID("unique-tracked-id"), UUID.randomUUID());
@@ -73,7 +72,7 @@ public class NonPlayerItemUpdater {
 
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
-            stack.set(ItemComponent.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
+            stack.set(DataComponents.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
         }
 
         if (item.hasComponent(GemstoneComponent.class)) {
@@ -99,8 +98,8 @@ public class NonPlayerItemUpdater {
 
         Color leatherColour = item.getAttributeHandler().getLeatherColour();
         if (leatherColour != null) {
-            stack.set(ItemComponent.DYED_COLOR, new DyedItemColor(leatherColour, false));
-            stack.set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+            stack.set(DataComponents.DYED_COLOR, leatherColour);
+            stack = ItemStackCreator.clearAttributes(stack);
         }
 
         for(ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
@@ -116,7 +115,7 @@ public class NonPlayerItemUpdater {
         ItemLore lore = new ItemLore(stack.build());
         lore.updateLore(null);
 
-        return stack.set(ItemComponent.LORE, lore.getStack().get(ItemComponent.LORE))
-                .set(ItemComponent.CUSTOM_NAME, lore.getStack().get(ItemComponent.CUSTOM_NAME));
+        return stack.set(DataComponents.LORE, lore.getStack().get(DataComponents.LORE))
+                .set(DataComponents.CUSTOM_NAME, lore.getStack().get(DataComponents.CUSTOM_NAME));
     }
 }

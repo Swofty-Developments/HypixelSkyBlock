@@ -1,11 +1,11 @@
 package net.swofty.type.hub.gui.elizabeth.subguis;
 
 import lombok.Getter;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -114,7 +114,7 @@ public class GUIBitsAbicases extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack.Builder itemstack = subCategorys.item;
-                    ArrayList<String> lore = new ArrayList<>(itemstack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                    ArrayList<String> lore = new ArrayList<>(itemstack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (!Objects.equals(lore.getLast(), "§eClick to browse!")) {
                         lore.add(" ");
                         lore.add("§eClick to browse!");

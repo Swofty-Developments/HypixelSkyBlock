@@ -1,10 +1,10 @@
 package net.swofty.type.hub.gui.kat;
 
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -44,10 +44,9 @@ public class GUIKat extends HypixelInventoryGUI {
             set(new GUIClickableItem(13) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    ItemStack stack = e.getCursorItem();
+                    ItemStack stack = p.getInventory().getCursorItem();
 
-                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
+                    if (stack.get(DataComponents.CUSTOM_NAME) == null) {
                         updateFromItem(null);
                         return;
                     }

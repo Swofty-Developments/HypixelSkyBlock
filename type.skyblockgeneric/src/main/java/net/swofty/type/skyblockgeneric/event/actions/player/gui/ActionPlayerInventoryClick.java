@@ -1,11 +1,12 @@
 package net.swofty.type.skyblockgeneric.event.actions.player.gui;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.PlayerInventory;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
-import net.minestom.server.item.ItemComponent;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -25,10 +26,10 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
     public void run(InventoryPreClickEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockItem clickedItem = new SkyBlockItem(event.getClickedItem());
-        SkyBlockItem cursorItem = new SkyBlockItem(event.getCursorItem());
+        SkyBlockItem cursorItem = new SkyBlockItem(player.getInventory().getCursorItem());
 
         // Check for offhand
-        if (event.getSlot() == 45 && event.getInventory() == null) {
+        if (event.getSlot() == 45 && event.getInventory() instanceof PlayerInventory) {
             event.setCancelled(true);
             return;
         }
@@ -41,13 +42,14 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
             }
         }
 
-        if (player.getOpenInventory() == null && event.getSlot() == 8) {
+        // Check for SkyBlock menu
+        if (event.getInventory() instanceof PlayerInventory && event.getSlot() == 8) {
             event.setCancelled(true);
             return;
         }
 
-        Component displayNameCursor = event.getCursorItem().get(ItemComponent.CUSTOM_NAME);
-        Component displayNameClicked = event.getClickedItem().get(ItemComponent.CUSTOM_NAME);
+        Component displayNameCursor = player.getInventory().getCursorItem().get(DataComponents.CUSTOM_NAME);
+        Component displayNameClicked = event.getClickedItem().get(DataComponents.CUSTOM_NAME);
         if ((displayNameCursor != null && StringUtility.getTextFromComponent(displayNameCursor).contains("Switch your held"))
         || (displayNameClicked != null && StringUtility.getTextFromComponent(displayNameClicked).contains("Switch your held"))) {
             event.setCancelled(true);
@@ -59,19 +61,18 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
 
             if (gui == null) return;
 
-            if (event.getClickType().equals(ClickType.DOUBLE_CLICK)) {
+            if (event.getClick() instanceof Click.Double) {
                 event.setCancelled(true);
                 return;
             }
 
-            if (event.getInventory() == null) {
-                if (!gui.allowHotkeying() && isHotKey(event)) {
-                    event.setCancelled(true);
-                }
+            if (!gui.allowHotkeying() && isHotKey(event)) {
+                event.setCancelled(true);
                 return;
             }
+
             if (event.getInventory() instanceof PlayerInventory){
-              gui.onBottomClick(event);
+                gui.onBottomClick(event);
             } else {
                 int slot = event.getSlot();
                 GUIItem item = gui.get(slot);
@@ -88,7 +89,7 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
                 if (item instanceof GUIClickableItem clickable) {
                     clickable.run(event, player);
                     if (!cursorItem.isNA() && player.getOpenInventory() != event.getInventory()
-                            && player.getOpenInventory() != null && event.getClickType() != ClickType.CHANGE_HELD) {
+                            && player.getOpenInventory() != null && event.getClick() instanceof Click.HotbarSwap) {
                         player.addAndUpdateItem(cursorItem);
                     }
                 }
@@ -111,11 +112,10 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
     }
 
     public boolean isHotKey(InventoryPreClickEvent inventoryClick) {
-        return inventoryClick.getClickType().equals(ClickType.LEFT_DRAGGING) ||
-                inventoryClick.getClickType().equals(ClickType.SHIFT_CLICK) ||
-                inventoryClick.getClickType().equals(ClickType.START_SHIFT_CLICK) ||
-                inventoryClick.getClickType().equals(ClickType.CHANGE_HELD) ||
-                inventoryClick.getClickType().equals(ClickType.RIGHT_DRAGGING);
+        return inventoryClick.getClick() instanceof Click.Drag ||
+                inventoryClick.getClick() instanceof Click.HotbarSwap ||
+                inventoryClick.getClick() instanceof Click.LeftShift ||
+                inventoryClick.getClick() instanceof Click.RightShift;
     }
 }
 

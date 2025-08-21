@@ -5,6 +5,7 @@ import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -62,7 +63,7 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    if (e.getClickType() == ClickType.RIGHT_CLICK) {
+                    if (e.getClick() instanceof Click.Right) {
                         e.setCancelled(true);
                         SkyBlockItem skyBlockItem = new SkyBlockItem(e.getClickedItem());
                         if (skyBlockItem.isNA() || skyBlockItem.isAir()) return;
@@ -151,7 +152,7 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
-        SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
+        SkyBlockItem cursorItem = new SkyBlockItem(e.getPlayer().getInventory().getCursorItem());
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
 
         if (isItemAllowed(cursorItem) && isItemAllowed(clickedItem)) {

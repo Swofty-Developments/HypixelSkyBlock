@@ -27,7 +27,8 @@ public class IslandCheck extends BalanceConfiguration {
         }
         UUID activeProfile = UUID.fromString(userDatabase.getString("selected"));
         Document document = new ProfilesDatabase(activeProfile.toString()).getDocument();
-        if (document == null) {
+        if (document == null || !document.containsKey("island_uuid") ||
+                document.getString("island_uuid").equals("null")) {
             return null;
         }
         UUID islandUUID = UUID.fromString(document.getString("island_uuid").replace("\"", ""));

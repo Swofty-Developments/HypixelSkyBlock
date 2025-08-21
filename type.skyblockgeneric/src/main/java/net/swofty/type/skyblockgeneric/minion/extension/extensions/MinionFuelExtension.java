@@ -3,10 +3,11 @@ package net.swofty.type.skyblockgeneric.minion.extension.extensions;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -65,21 +66,17 @@ public class MinionFuelExtension extends MinionExtension {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    SkyBlockItem fuelItem = new SkyBlockItem(e.getCursorItem());
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockItem fuelItem = new SkyBlockItem(p.getInventory().getCursorItem());
+                    e.setCancelled(true);
 
                     if (fuelItem.hasComponent(MinionFuelComponent.class)) {
-                        e.setClickedItem(ItemStack.AIR);
+                        p.getInventory().setCursorItem(ItemStack.AIR);
                         MinionFuelExtension.this.addFuel(minion, slot, fuelItem);
                     } else {
                         player.sendMessage("§cThis item is not a valid Minion Fuel item.");
-                        e.setCancelled(true);
                     }
-                }
 
-                @Override
-                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIMinion(minion).open(player);
                 }
 
@@ -114,15 +111,15 @@ public class MinionFuelExtension extends MinionExtension {
                     new GUIMinion(minion).open(player);
                     return;
                 }
-                if (e.getClickType() == ClickType.RIGHT_CLICK) {
+
+                if (e.getClick() instanceof Click.Right) {
                     setItemTypePassedIn(null);
                     minion.getExtensionData().setData(slot, MinionFuelExtension.this);
                     new GUIMinion(minion).open(player);
                     return;
-
                 }
 
-                SkyBlockItem fuelItem = new SkyBlockItem(e.getCursorItem());
+                SkyBlockItem fuelItem = new SkyBlockItem(p.getInventory().getCursorItem());
                 if (!(fuelItem.hasComponent(MinionFuelComponent.class))){
                     player.sendMessage("§cYou can only put fuel in this slot.");
                     return;
@@ -136,13 +133,9 @@ public class MinionFuelExtension extends MinionExtension {
                     fuelItem.setAmount(fuelItem.getAmount() - added);
 
                 if (fuelItem.getAmount() > 0) {
-                    e.setCursorItem(new NonPlayerItemUpdater(fuelItem.getItemStack()).getUpdatedItem().build());
-                } else e.setCursorItem(ItemStack.AIR);
-            }
+                    p.getInventory().setCursorItem(new NonPlayerItemUpdater(fuelItem.getItemStack()).getUpdatedItem().build());
+                } else p.getInventory().setCursorItem(ItemStack.AIR);
 
-            @Override
-            public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUIMinion(minion).open(player);
             }
 
@@ -152,7 +145,7 @@ public class MinionFuelExtension extends MinionExtension {
 
                 ItemStack.Builder itemBuilder = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn(), count)).getUpdatedItem();
 
-                List<Component> lore = new ArrayList<>(itemBuilder.build().get(ItemComponent.LORE));
+                List<Component> lore = new ArrayList<>(itemBuilder.build().get(DataComponents.LORE));
 
                 if(timeFuelLasts > 0) {
                     lore.add(Component.text(""));
@@ -167,7 +160,7 @@ public class MinionFuelExtension extends MinionExtension {
                             .decorations(Collections.singleton(TextDecoration.ITALIC), false));
                 }
 
-                return itemBuilder.set(ItemComponent.LORE, lore);
+                return itemBuilder.set(DataComponents.LORE, lore);
             }
         };
     }

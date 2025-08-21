@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.fasttravel;
 
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -88,7 +89,7 @@ public class GUIFastTravel extends HypixelInventoryGUI {
                         return;
                     }
 
-                    if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
+                    if (e.getClick() instanceof Click.Right) {
                         player.closeInventory();
                         player.sendMessage("§7Warping you to " + island.getDescriptiveName() + "§7...");
 

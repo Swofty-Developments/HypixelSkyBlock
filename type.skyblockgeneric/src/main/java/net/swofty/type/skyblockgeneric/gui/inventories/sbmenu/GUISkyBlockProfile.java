@@ -48,8 +48,8 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
-                if (!player.getHelmet().isAir() && e.getCursorItem().isAir()) {
+                SkyBlockItem item = new SkyBlockItem(p.getInventory().getCursorItem());
+                if (!player.getHelmet().isAir() && p.getInventory().getCursorItem().isAir()) {
                     player.addAndUpdateItem(player.getHelmet());
                     player.setHelmet(ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
@@ -57,7 +57,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 } else if (item.hasComponent(StandardItemComponent.class)
                         && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.HELMET
                         && player.getHelmet().isAir()) {
-                    player.setHelmet(e.getCursorItem());
+                    player.setHelmet(p.getInventory().getCursorItem());
                     ((Inventory) e.getInventory()).setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
@@ -77,8 +77,8 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
-                if (!player.getChestplate().isAir() && e.getCursorItem().isAir()) {
+                SkyBlockItem item = new SkyBlockItem(p.getInventory().getCursorItem());
+                if (!player.getChestplate().isAir() && p.getInventory().getCursorItem().isAir()) {
                     player.addAndUpdateItem(player.getChestplate());
                     player.setChestplate(ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
@@ -86,7 +86,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 } else if (item.hasComponent(StandardItemComponent.class)
                         && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.CHESTPLATE
                         && player.getChestplate().isAir()) {
-                    player.setChestplate(e.getCursorItem());
+                    player.setChestplate(p.getInventory().getCursorItem());
                     ((Inventory) e.getInventory()).setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
@@ -107,8 +107,8 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
-                if (!player.getLeggings().isAir() && e.getCursorItem().isAir()) {
+                SkyBlockItem item = new SkyBlockItem(p.getInventory().getCursorItem());
+                if (!player.getLeggings().isAir() && p.getInventory().getCursorItem().isAir()) {
                     player.addAndUpdateItem(player.getLeggings());
                     player.setLeggings(ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
@@ -118,7 +118,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 if (item.hasComponent(StandardItemComponent.class)
                         && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.LEGGINGS
                         && player.getLeggings().isAir()) {
-                    player.setLeggings(e.getCursorItem());
+                    player.setLeggings(p.getInventory().getCursorItem());
                     ((Inventory) e.getInventory()).setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
@@ -139,8 +139,8 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
-                if (!player.getBoots().isAir() && e.getCursorItem().isAir()) {
+                SkyBlockItem item = new SkyBlockItem(p.getInventory().getCursorItem());
+                if (!player.getBoots().isAir() && p.getInventory().getCursorItem().isAir()) {
                     player.addAndUpdateItem(player.getBoots());
                     player.setBoots(ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
@@ -149,7 +149,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 if (item.hasComponent(StandardItemComponent.class)
                         && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.BOOTS
                         && player.getBoots().isAir()) {
-                    player.setBoots(e.getCursorItem());
+                    player.setBoots(p.getInventory().getCursorItem());
                     ((Inventory) e.getInventory()).setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
