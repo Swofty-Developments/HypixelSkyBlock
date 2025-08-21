@@ -2,33 +2,24 @@ package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.player.PlayerSpawnEvent;
-import net.swofty.commons.ServerType;
 import net.swofty.pvp.projectile.BowModule;
 import net.swofty.pvp.projectile.entities.ArrowProjectile;
 import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
-import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.user.categories.Rank;
 
 public class ActionPlayerDataSpawn implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true)
-    public void run(PlayerSpawnEvent event) {
-        if (!event.isFirstSpawn()) return;
-        if (!(HypixelConst.getTypeLoader().getType() == ServerType.BEDWARS_GAME)) return;
+	@HypixelEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true)
+	public void run(PlayerSpawnEvent event) {
+		if (!event.isFirstSpawn()) return;
+		final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
-        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
-
-        //Rank rank = player.getRank();
-        //if (rank == Rank.DEFAULT) return;
-
-        BedWarsDataHandler handler = BedWarsDataHandler.getUser(player.getUuid());
-        handler.runOnLoad(player);
+		BedWarsDataHandler handler = BedWarsDataHandler.getUser(player.getUuid());
+		handler.runOnLoad(player);
 
 		new BowModule(player.eventNode(), (p, i) -> new ArrowProjectile(EntityType.ARROW, p));
-    }
+	}
 }

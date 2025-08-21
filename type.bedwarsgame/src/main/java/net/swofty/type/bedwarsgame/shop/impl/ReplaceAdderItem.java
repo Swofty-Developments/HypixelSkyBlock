@@ -36,7 +36,7 @@ public class ReplaceAdderItem extends ShopItem {
 			String team = player.getTag(Tag.String("team"));
 			String gameId = player.getTag(Tag.String("gameId"));
 
-			TypeBedWarsGameLoader.getTeamShopService().getUpgrade("sharpness").applyEffect(TypeBedWarsGameLoader.getGameById(gameId), team, player.getTag(Tag.Integer("upgrade_sharpness")));
+			TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("sharpness").applyEffect(TypeBedWarsGameLoader.getGameById(gameId), team, player.getTag(Tag.Integer("upgrade_sharpness")));
 		}
 	}
 

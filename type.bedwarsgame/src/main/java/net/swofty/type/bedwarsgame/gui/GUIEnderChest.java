@@ -21,8 +21,8 @@ public class GUIEnderChest extends HypixelInventoryGUI {
     }
 
     @Override
-    public void setItems(InventoryGUIOpenEvent e) {
-        HypixelPlayer player = e.player();
+    public void setItems(InventoryGUIOpenEvent event) {
+        HypixelPlayer player = event.player();
         String gameId = player.getTag(Tag.String("gameId"));
         if (gameId == null) return;
 
@@ -40,10 +40,10 @@ public class GUIEnderChest extends HypixelInventoryGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        super.onClose(e, reason);
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+        super.onClose(event, reason);
 
-        HypixelPlayer player = (HypixelPlayer) e.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         closeSave(player);
     }
 
@@ -77,7 +77,7 @@ public class GUIEnderChest extends HypixelInventoryGUI {
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
+    public void onBottomClick(InventoryPreClickEvent event) {
 
     }
 }

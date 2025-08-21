@@ -9,19 +9,16 @@ import net.kyori.adventure.title.Title;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.color.Color;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
-import net.minestom.server.event.player.PlayerChatEvent;
 import net.minestom.server.event.player.PlayerDeathEvent;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.DyedItemColor;
-import net.minestom.server.registry.DynamicRegistry;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
@@ -35,7 +32,6 @@ import net.swofty.type.bedwarsgame.util.ColorUtil;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import org.jetbrains.annotations.NotNull;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -44,7 +40,77 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ActionGameDeath implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+	private static Component calculateDeathMessage(Player player, TextColor victimTeamColor) {
+		Damage lastDamage = player.getLastDamageSource();
+
+		Component genericDeathMessage = Component.text(player.getUsername()).color(victimTeamColor)
+				.append(Component.text(" died.").color(NamedTextColor.GRAY));
+
+		if (lastDamage == null) {
+			if (player.getPosition().y() <= 1) {
+				return Component.text(player.getUsername()).color(victimTeamColor)
+						.append(Component.text(" fell into the void.").color(NamedTextColor.GRAY));
+			}
+
+			return genericDeathMessage;
+		}
+
+		Entity attacker = lastDamage.getAttacker();
+		DamageType damageType = lastDamage.getType().asValue();
+
+		// Case 1: Killed by another player
+		if (attacker instanceof Player killer) {
+			String killerTeamColorName = killer.getTag(Tag.String("teamColor"));
+			TextColor killerActualColor = NamedTextColor.GRAY;
+
+			if (killerTeamColorName != null && !killerTeamColorName.isEmpty()) {
+				TextColor parsedColor = NamedTextColor.NAMES.value(killerTeamColorName.toLowerCase());
+				if (parsedColor != null) {
+					killerActualColor = parsedColor;
+				}
+			}
+
+			// Subcase 1.1: Knocked off / into void by a player
+			if (damageType == DamageType.OUT_OF_WORLD.asValue()) {
+				return Component.text(player.getUsername()).color(victimTeamColor)
+						.append(Component.text(" was knocked into the void by ").color(NamedTextColor.GRAY))
+						.append(Component.text(killer.getUsername()).color(killerActualColor))
+						.append(Component.text(".").color(NamedTextColor.GRAY));
+			} else {
+				// Subcase 1.2: Regular kill by a player
+				return Component.text(player.getUsername()).color(victimTeamColor)
+						.append(Component.text(" was slain by ").color(NamedTextColor.GRAY))
+						.append(Component.text(killer.getUsername()).color(killerActualColor))
+						.append(Component.text(".").color(NamedTextColor.GRAY));
+			}
+		}
+		// Case 2: Killed by a non-player entity (mob)
+		else if (attacker != null) {
+			String entityTypeName = attacker.getEntityType().name().toLowerCase().replace("_", " ");
+			// Consider a mapping for more friendly entity names if desired
+			return Component.text(player.getUsername()).color(victimTeamColor)
+					.append(Component.text(" was slain by a ").color(NamedTextColor.GRAY))
+					.append(Component.text(entityTypeName).color(NamedTextColor.GRAY))
+					.append(Component.text(".").color(NamedTextColor.GRAY));
+		} else {
+			if (damageType == DamageType.OUT_OF_WORLD.asValue()) {
+				return Component.text(player.getUsername()).color(victimTeamColor)
+						.append(Component.text(" fell into the void.").color(NamedTextColor.GRAY));
+			} else if (damageType == DamageType.FALL.asValue()) {
+				if (player.getPosition().y() <= 1) {
+					return Component.text(player.getUsername()).color(victimTeamColor)
+							.append(Component.text(" fell into the void.").color(NamedTextColor.GRAY));
+				}
+				return Component.text(player.getUsername()).color(victimTeamColor)
+						.append(Component.text(" fell from a high place.").color(NamedTextColor.GRAY));
+			} else {
+				return Component.text(player.getUsername()).color(victimTeamColor)
+						.append(Component.text(" died due to environmental causes.").color(NamedTextColor.GRAY));
+			}
+		}
+	}
+
+	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerDeathEvent event) {
 		Player player = event.getPlayer();
 
@@ -212,28 +278,28 @@ public class ActionGameDeath implements HypixelEventClass {
 									player.setEquipment(net.minestom.server.entity.EquipmentSlot.BOOTS, ItemStack.of(boots));
 									player.setEquipment(net.minestom.server.entity.EquipmentSlot.LEGGINGS, ItemStack.of(leggings));
 								} else {
-									player.setEquipment(net.minestom.server.entity.EquipmentSlot.BOOTS, ItemStack.of(Material.LEATHER_BOOTS).with(ItemComponent.DYED_COLOR, new DyedItemColor(minestomColor.asRGB())));
-									player.setEquipment(net.minestom.server.entity.EquipmentSlot.LEGGINGS, ItemStack.of(Material.LEATHER_LEGGINGS).with(ItemComponent.DYED_COLOR, new DyedItemColor(minestomColor.asRGB())));
+									player.setEquipment(net.minestom.server.entity.EquipmentSlot.BOOTS, ItemStack.of(Material.LEATHER_BOOTS).with(DataComponents.DYED_COLOR, minestomColor));
+									player.setEquipment(net.minestom.server.entity.EquipmentSlot.LEGGINGS, ItemStack.of(Material.LEATHER_LEGGINGS).with(DataComponents.DYED_COLOR, minestomColor));
 								}
-								player.setEquipment(net.minestom.server.entity.EquipmentSlot.CHESTPLATE, ItemStack.of(Material.LEATHER_CHESTPLATE).with(ItemComponent.DYED_COLOR, new DyedItemColor(minestomColor.asRGB())));
-								player.setEquipment(net.minestom.server.entity.EquipmentSlot.HELMET, ItemStack.of(Material.LEATHER_HELMET).with(ItemComponent.DYED_COLOR, new DyedItemColor(minestomColor.asRGB())));
+								player.setEquipment(net.minestom.server.entity.EquipmentSlot.CHESTPLATE, ItemStack.of(Material.LEATHER_CHESTPLATE).with(DataComponents.DYED_COLOR, minestomColor));
+								player.setEquipment(net.minestom.server.entity.EquipmentSlot.HELMET, ItemStack.of(Material.LEATHER_HELMET).with(DataComponents.DYED_COLOR, minestomColor));
 							} else {
 								Logger.warn("Could not parse color: " + javaColorName + " for player " + player.getUsername() + "'s armor.");
 							}
 
 							Integer protectionLevel = player.getTag(Tag.Integer("upgrade_reinforced_armor"));
 							if (protectionLevel != null) {
-								TypeBedWarsGameLoader.getTeamShopService().getUpgrade("reinforced_armor").applyEffect(game, teamName, protectionLevel);
+								TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("reinforced_armor").applyEffect(game, teamName, protectionLevel);
 							}
 
 							Integer cushionedBootsLevel = player.getTag(Tag.Integer("upgrade_cushioned_boots"));
 							if (cushionedBootsLevel != null) {
-								TypeBedWarsGameLoader.getTeamShopService().getUpgrade("cushioned_boots").applyEffect(game, teamName, cushionedBootsLevel);
+								TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("cushioned_boots").applyEffect(game, teamName, cushionedBootsLevel);
 							}
 
 							Integer sharpnessLevel = player.getTag(Tag.Integer("upgrade_sharpness"));
 							if (sharpnessLevel != null) {
-								TypeBedWarsGameLoader.getTeamShopService().getUpgrade("sharpness").applyEffect(game, teamName, sharpnessLevel);
+								TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("sharpness").applyEffect(game, teamName, sharpnessLevel);
 							}
 
 
@@ -272,76 +338,6 @@ public class ActionGameDeath implements HypixelEventClass {
 		// Notify sidebar update immediately on death (player becomes spectator or is eliminated)
 		if (game != null && teamName != null) {
 			game.notifyPlayerOrBedStateChanged(teamName);
-		}
-	}
-
-	private static Component calculateDeathMessage(Player player, TextColor victimTeamColor) {
-		Damage lastDamage = player.getLastDamageSource();
-
-		Component genericDeathMessage = Component.text(player.getUsername()).color(victimTeamColor)
-				.append(Component.text(" died.").color(NamedTextColor.GRAY));
-
-		if (lastDamage == null) {
-			if (player.getPosition().y() <= 1) {
-				return Component.text(player.getUsername()).color(victimTeamColor)
-						.append(Component.text(" fell into the void.").color(NamedTextColor.GRAY));
-			}
-
-			return genericDeathMessage;
-		}
-
-		Entity attacker = lastDamage.getAttacker();
-		DynamicRegistry.@NotNull Key<DamageType> damageType = lastDamage.getType();
-
-		// Case 1: Killed by another player
-		if (attacker instanceof Player killer) {
-			String killerTeamColorName = killer.getTag(Tag.String("teamColor"));
-			TextColor killerActualColor = NamedTextColor.GRAY;
-
-			if (killerTeamColorName != null && !killerTeamColorName.isEmpty()) {
-				TextColor parsedColor = NamedTextColor.NAMES.value(killerTeamColorName.toLowerCase());
-				if (parsedColor != null) {
-					killerActualColor = parsedColor;
-				}
-			}
-
-			// Subcase 1.1: Knocked off / into void by a player
-			if (damageType == DamageType.OUT_OF_WORLD) {
-				return Component.text(player.getUsername()).color(victimTeamColor)
-						.append(Component.text(" was knocked into the void by ").color(NamedTextColor.GRAY))
-						.append(Component.text(killer.getUsername()).color(killerActualColor))
-						.append(Component.text(".").color(NamedTextColor.GRAY));
-			} else {
-				// Subcase 1.2: Regular kill by a player
-				return Component.text(player.getUsername()).color(victimTeamColor)
-						.append(Component.text(" was slain by ").color(NamedTextColor.GRAY))
-						.append(Component.text(killer.getUsername()).color(killerActualColor))
-						.append(Component.text(".").color(NamedTextColor.GRAY));
-			}
-		}
-		// Case 2: Killed by a non-player entity (mob)
-		else if (attacker != null) {
-			String entityTypeName = attacker.getEntityType().name().toLowerCase().replace("_", " ");
-			// Consider a mapping for more friendly entity names if desired
-			return Component.text(player.getUsername()).color(victimTeamColor)
-					.append(Component.text(" was slain by a ").color(NamedTextColor.GRAY))
-					.append(Component.text(entityTypeName).color(NamedTextColor.GRAY))
-					.append(Component.text(".").color(NamedTextColor.GRAY));
-		} else {
-			if (damageType == DamageType.OUT_OF_WORLD) {
-				return Component.text(player.getUsername()).color(victimTeamColor)
-						.append(Component.text(" fell into the void.").color(NamedTextColor.GRAY));
-			} else if (damageType == DamageType.FALL) {
-				if (player.getPosition().y() <= 1) {
-					return Component.text(player.getUsername()).color(victimTeamColor)
-							.append(Component.text(" fell into the void.").color(NamedTextColor.GRAY));
-				}
-				return Component.text(player.getUsername()).color(victimTeamColor)
-						.append(Component.text(" fell from a high place.").color(NamedTextColor.GRAY));
-			} else {
-				return Component.text(player.getUsername()).color(victimTeamColor)
-						.append(Component.text(" died due to environmental causes.").color(NamedTextColor.GRAY));
-			}
 		}
 	}
 

@@ -1,32 +1,31 @@
 package net.swofty.type.bedwarsgame.gui;
 
-import net.minestom.server.entity.Player;
-import net.minestom.server.entity.EquipmentSlot;
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.entity.Player;
+import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
-import net.swofty.type.bedwarsgame.shop.ShopService;
+import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.UpgradeableItemTier;
 import net.swofty.type.bedwarsgame.shop.UpgradeableShopItem;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.tinylog.Logger;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static net.kyori.adventure.text.format.TextDecoration.ITALIC;
+import static net.swofty.type.bedwarsgame.util.ComponentManipulator.noItalic;
 
 public class GUIItemShop extends HypixelInventoryGUI {
 
@@ -65,8 +64,10 @@ public class GUIItemShop extends HypixelInventoryGUI {
 	private static final ItemStack ROTATING_ITEMS = ItemStack.builder(Material.REDSTONE_TORCH)
 			.customName(Component.text("Rotating Items").decorationIfAbsent(ITALIC, TextDecoration.State.FALSE).color(NamedTextColor.GREEN))
 			.build();
-
-	private final ShopService shopService = TypeBedWarsGameLoader.shopService;
+	private static final List<List<Material>> TIERED_ITEM_GROUPS = List.of(
+			List.of(Material.LEATHER_BOOTS, Material.GOLDEN_BOOTS, Material.CHAINMAIL_BOOTS, Material.IRON_BOOTS, Material.DIAMOND_BOOTS, Material.NETHERITE_BOOTS)
+	);
+	private final ShopManager shopService = TypeBedWarsGameLoader.shopManager;
 	private int currentPage = 0;
 
 	public GUIItemShop() {
@@ -179,7 +180,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
 				currentPage = 6;
-			 updateGUI(player);
+				updateGUI(player);
 				playClickSound(player);
 			}
 
@@ -223,9 +224,9 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 	private void populateShopItems(HypixelPlayer player) {
 		int[] shopSlots = {
-			19, 20, 21, 22, 23, 24, 25,
-			28, 29, 30, 31, 32, 33, 34,
-			37, 38, 39, 40, 41, 42, 43
+				19, 20, 21, 22, 23, 24, 25,
+				28, 29, 30, 31, 32, 33, 34,
+				37, 38, 39, 40, 41, 42, 43
 		};
 
 		for (int i = 0; i < shopSlots.length; i++) {
@@ -247,9 +248,9 @@ public class GUIItemShop extends HypixelInventoryGUI {
 						UpgradeableItemTier nextTier = upgradeableShopItem.getNextTier(player);
 						if (!hasPlayerEnoughCurrencyForTier(player, nextTier)) {
 							int owned = Arrays.stream(player.getInventory().getItemStacks())
-								.filter(s -> s.material() == nextTier.getCurrency().getMaterial())
-								.mapToInt(ItemStack::amount)
-								.sum();
+									.filter(s -> s.material() == nextTier.getCurrency().getMaterial())
+									.mapToInt(ItemStack::amount)
+									.sum();
 							int needed = nextTier.getPrice() - owned;
 							player.sendMessage(noItalic(Component.text("You don't have enough " + nextTier.getCurrency().getName() + "! Need " + needed + " more!").color(NamedTextColor.RED)));
 							return;
@@ -290,33 +291,33 @@ public class GUIItemShop extends HypixelInventoryGUI {
 						if (nextLevel >= upgradeableShopItem.getTiers().size()) {
 							UpgradeableItemTier lastTier = upgradeableShopItem.getTiers().getLast();
 							return ItemStack.builder(lastTier.getMaterial())
-								.customName(noItalic(Component.text(upgradeableShopItem.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE)))
-								.lore(List.of(
-									noItalic(Component.text("You own the highest level available!").color(NamedTextColor.GREEN)),
-									Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
-									noItalic(Component.text(upgradeableShopItem.getDescription()).color(NamedTextColor.GRAY))
-								));
+									.customName(noItalic(Component.text(upgradeableShopItem.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE)))
+									.lore(List.of(
+											noItalic(Component.text("You own the highest level available!").color(NamedTextColor.GREEN)),
+											Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
+											noItalic(Component.text(upgradeableShopItem.getDescription()).color(NamedTextColor.GRAY))
+									));
 						}
 						UpgradeableItemTier nextTier = upgradeableShopItem.getNextTier(player);
 						boolean hasEnough = hasPlayerEnoughCurrencyForTier(player, nextTier);
 						Component buy = hasEnough
-							? noItalic(Component.text("Click to buy!").color(NamedTextColor.YELLOW))
-							: noItalic(Component.text("You don't have enough " + nextTier.getCurrency().getName() + "!").color(NamedTextColor.RED));
+								? noItalic(Component.text("Click to buy!").color(NamedTextColor.YELLOW))
+								: noItalic(Component.text("You don't have enough " + nextTier.getCurrency().getName() + "!").color(NamedTextColor.RED));
 						return ItemStack.builder(nextTier.getMaterial())
-							.amount(1)
-							.customName(
-									hasEnough
-											? noItalic(Component.text(nextTier.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE))
-											: noItalic(Component.text(nextTier.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE).color(NamedTextColor.RED)
-									))
-							.lore(List.of(
-								noItalic(Component.text("Cost: ").color(NamedTextColor.GRAY)
-									.append(Component.text(nextTier.getPrice() + " " + nextTier.getCurrency().getName()).color(nextTier.getCurrency().getColor()))),
-								Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
-								noItalic(Component.text(upgradeableShopItem.getDescription()).color(NamedTextColor.GRAY)),
-								Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
-								buy
-							));
+								.amount(1)
+								.customName(
+										hasEnough
+												? noItalic(Component.text(nextTier.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE))
+												: noItalic(Component.text(nextTier.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE).color(NamedTextColor.RED)
+										))
+								.lore(List.of(
+										noItalic(Component.text("Cost: ").color(NamedTextColor.GRAY)
+												.append(Component.text(nextTier.getPrice() + " " + nextTier.getCurrency().getName()).color(nextTier.getCurrency().getColor()))),
+										Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
+										noItalic(Component.text(upgradeableShopItem.getDescription()).color(NamedTextColor.GRAY)),
+										Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
+										buy
+								));
 					}
 
 					boolean hasEnough = hasPlayerEnoughCurrency(player, shopItem);
@@ -331,19 +332,19 @@ public class GUIItemShop extends HypixelInventoryGUI {
 						buy = noItalic(Component.text("Click to buy!").color(NamedTextColor.YELLOW));
 					}
 					return shopItem.getDisplay().builder()
-						.amount(shopItem.getAmount())
-						.customName(hasEnough
-								? noItalic(Component.text(shopItem.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE))
-								: noItalic(Component.text(shopItem.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE).color(NamedTextColor.RED)
-								))
-						.lore(List.of(
-							noItalic(Component.text("Cost: ").color(NamedTextColor.GRAY)
-								.append(Component.text(shopItem.getPrice() + " " + shopItem.getCurrency().getName()).color(shopItem.getCurrency().getColor()))),
-							Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
-							noItalic(Component.text(shopItem.getDescription()).color(NamedTextColor.GRAY)),
-							Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
-							buy
-						));
+							.amount(shopItem.getAmount())
+							.customName(hasEnough
+									? noItalic(Component.text(shopItem.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE))
+									: noItalic(Component.text(shopItem.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE).color(NamedTextColor.RED)
+							))
+							.lore(List.of(
+									noItalic(Component.text("Cost: ").color(NamedTextColor.GRAY)
+											.append(Component.text(shopItem.getPrice() + " " + shopItem.getCurrency().getName()).color(shopItem.getCurrency().getColor()))),
+									Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
+									noItalic(Component.text(shopItem.getDescription()).color(NamedTextColor.GRAY)),
+									Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
+									buy
+							));
 				}
 			});
 		}
@@ -373,30 +374,28 @@ public class GUIItemShop extends HypixelInventoryGUI {
 		return have >= required;
 	}
 
-	private static final List<List<Material>> TIERED_ITEM_GROUPS = List.of(
-			List.of(Material.LEATHER_BOOTS, Material.GOLDEN_BOOTS, Material.CHAINMAIL_BOOTS, Material.IRON_BOOTS, Material.DIAMOND_BOOTS, Material.NETHERITE_BOOTS)
-	);
-
 	private boolean hasBetterItem(Player player, Material materialToBuy) {
 		for (List<Material> group : TIERED_ITEM_GROUPS) {
-			if (group.contains(materialToBuy)) {
-				int tierToBuy = group.indexOf(materialToBuy);
-				for (ItemStack stack : player.getInventory().getItemStacks()) {
-					if (group.contains(stack.material()) && group.indexOf(stack.material()) > tierToBuy) {
-						return true;
-					}
+			if (!group.contains(materialToBuy)) {
+				continue;
+			}
+
+			int tierToBuy = group.indexOf(materialToBuy);
+			for (ItemStack stack : player.getInventory().getItemStacks()) {
+				if (group.contains(stack.material()) && group.indexOf(stack.material()) > tierToBuy) {
+					return true;
 				}
-				for (ItemStack stack : List.of(
+			}
+			for (ItemStack stack : List.of(
 					player.getEquipment(EquipmentSlot.BOOTS),
 					player.getEquipment(EquipmentSlot.LEGGINGS),
 					player.getEquipment(EquipmentSlot.CHESTPLATE),
 					player.getEquipment(EquipmentSlot.HELMET))) {
-					if (group.contains(stack.material()) && group.indexOf(stack.material()) > tierToBuy) {
-						return true;
-					}
+				if (group.contains(stack.material()) && group.indexOf(stack.material()) > tierToBuy) {
+					return true;
 				}
-				return false;
 			}
+			return false;
 		}
 
 		return false;
@@ -410,7 +409,4 @@ public class GUIItemShop extends HypixelInventoryGUI {
 		player.playSound(Sound.sound(Key.key("minecraft:entity.experience_orb.pickup"), Sound.Source.MASTER, 1.0f, 1.0f));
 	}
 
-	private Component noItalic(Component component) {
-		return component.decorationIfAbsent(ITALIC, TextDecoration.State.FALSE);
-	}
 }

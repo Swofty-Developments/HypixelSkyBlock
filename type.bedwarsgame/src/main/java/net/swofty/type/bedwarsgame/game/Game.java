@@ -10,6 +10,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EquipmentSlot;
@@ -18,10 +19,8 @@ import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.DyedItemColor;
 import net.minestom.server.scoreboard.BelowNameTag;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
@@ -30,21 +29,20 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.entity.BedWarsShopNPC;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
-import net.swofty.type.bedwarsgame.util.C;
 import net.swofty.type.bedwarsgame.util.ColorUtil;
+import net.swofty.type.bedwarsgame.util.ComponentManipulator;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.intellij.lang.annotations.Subst;
 import org.tinylog.Logger;
 
-import java.awt.*;
 import java.time.Duration;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 public class Game {
 
+	public static final Tag<Boolean> ELIMINATED_TAG = Tag.Boolean("eliminated");
 	private final InstanceContainer instanceContainer;
 	private final GameType gameType = GameType.SOLO;
 	private final List<Player> players = new ArrayList<>();
@@ -58,11 +56,10 @@ public class Game {
 	private final Map<String, Map<Integer, ItemStack>> chests = new HashMap<>();
 	private final Map<Player, Map<Integer, ItemStack>> enderchests = new HashMap<>();
 	private final Map<String, List<GeneratorDisplays>> generatorDisplays = new HashMap<>();
+	private final MapsConfig.MapEntry mapEntry;
 	@Setter
 	private GameStatus gameStatus;
 	private boolean countdownStarted = false;
-	private final MapsConfig.MapEntry mapEntry;
-	public static final Tag<Boolean> ELIMINATED_TAG = Tag.Boolean("eliminated");
 
 	public Game(MapsConfig.MapEntry mapEntry, InstanceContainer instanceContainer) {
 		this.mapEntry = mapEntry;
@@ -134,7 +131,7 @@ public class Game {
 		player.getInventory().setItemStack(
 				8,
 				ItemStack.of(Material.RED_BED)
-						.withCustomName(C.noItalic(Component.text("Leave").color(NamedTextColor.RED)))
+						.withCustomName(ComponentManipulator.noItalic(Component.text("Leave").color(NamedTextColor.RED)))
 						.withTag(Tag.String("action"), "leave")
 		);
 		//sidebar.addViewer(player);
@@ -229,13 +226,13 @@ public class Game {
 
 				java.awt.Color awtColor = ColorUtil.getColorByName(team.getJavacolor());
 				if (awtColor != null) {
-					Color minestomColor = new Color(awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue());
-					p.setEquipment(EquipmentSlot.BOOTS, ItemStack.of(Material.LEATHER_BOOTS).with(ItemComponent.DYED_COLOR, new DyedItemColor(minestomColor.getRGB())));
-					p.setEquipment(EquipmentSlot.LEGGINGS, ItemStack.of(Material.LEATHER_LEGGINGS).with(ItemComponent.DYED_COLOR, new DyedItemColor(minestomColor.getRGB())));
-					p.setEquipment(EquipmentSlot.CHESTPLATE, ItemStack.of(Material.LEATHER_CHESTPLATE).with(ItemComponent.DYED_COLOR, new DyedItemColor(minestomColor.getRGB())));
-					p.setEquipment(EquipmentSlot.HELMET, ItemStack.of(Material.LEATHER_HELMET).with(ItemComponent.DYED_COLOR, new DyedItemColor(minestomColor.getRGB())));
+					net.minestom.server.color.Color minestomColor = new net.minestom.server.color.Color(awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue());
+					p.setEquipment(EquipmentSlot.BOOTS, ItemStack.of(Material.LEATHER_BOOTS).with(DataComponents.DYED_COLOR, minestomColor));
+					p.setEquipment(EquipmentSlot.LEGGINGS, ItemStack.of(Material.LEATHER_LEGGINGS).with(DataComponents.DYED_COLOR, minestomColor));
+					p.setEquipment(EquipmentSlot.CHESTPLATE, ItemStack.of(Material.LEATHER_CHESTPLATE).with(DataComponents.DYED_COLOR, minestomColor));
+					p.setEquipment(EquipmentSlot.HELMET, ItemStack.of(Material.LEATHER_HELMET).with(DataComponents.DYED_COLOR, minestomColor));
 				} else {
-					/*Server.getLogger().warn("Invalid color name '{}' for team '{}'. Player '{}' will not have colored armor.", team.getColor(), team.getName(), p.getUsername());*/
+					Logger.warn("Invalid color name '{}' for team '{}'. Player '{}' will not have colored armor.", team.getColor(), team.getName(), p.getUsername());
 				}
 				playerAssignIndex++;
 				teamReceivedPlayers = true;
@@ -246,7 +243,7 @@ public class Game {
 		}
 
 		if (playerAssignIndex < playersToAssign.size()) {
-			/*Server.getLogger().warn("{} players were not assigned to a team as all team slots were filled.", playersToAssign.size() - playerAssignIndex);*/
+			Logger.warn("{} players were not assigned to a team as all team slots were filled.", playersToAssign.size() - playerAssignIndex);
 			for (int i = playerAssignIndex; i < playersToAssign.size(); i++) {
 				Player unassignedPlayer = playersToAssign.get(i);
 				unassignedPlayer.sendMessage(Component.text("All team slots were full. You have been moved to spectator.", NamedTextColor.YELLOW));

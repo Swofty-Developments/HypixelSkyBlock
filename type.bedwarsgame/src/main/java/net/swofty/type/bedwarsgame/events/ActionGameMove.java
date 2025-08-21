@@ -6,7 +6,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
-import net.minestom.server.event.player.PlayerDeathEvent;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class ActionGameMove implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
 		if (player.getPosition().y() <= 0) {
@@ -71,7 +70,7 @@ public class ActionGameMove implements HypixelEventClass {
 						continue;
 					}
 
-					var trap = TypeBedWarsGameLoader.getTrapService().getTrap(teamTraps.getFirst());
+					var trap = TypeBedWarsGameLoader.getTrapManager().getTrap(teamTraps.getFirst());
 					if (trap != null) {
 						trap.trigger(game, team.getName(), player);
 					}

@@ -1,17 +1,20 @@
 package net.swofty.type.bedwarsgame.shop;
 
 import lombok.Getter;
-import net.swofty.type.bedwarsgame.shop.traps.*;
+import net.swofty.type.bedwarsgame.shop.traps.BlindnessTrap;
+import net.swofty.type.bedwarsgame.shop.traps.CounterOffensiveTrap;
+import net.swofty.type.bedwarsgame.shop.traps.MinerFatigueTrap;
+import net.swofty.type.bedwarsgame.shop.traps.RevealTrap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrapService {
+public class TrapManager {
 
 	@Getter
 	private final List<Trap> traps = new ArrayList<>();
 
-	public TrapService() {
+	public TrapManager() {
 		traps.add(new BlindnessTrap());
 		traps.add(new CounterOffensiveTrap());
 		traps.add(new RevealTrap());

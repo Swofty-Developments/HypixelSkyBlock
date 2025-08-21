@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("FieldCanBeLocal")
-public class ShopService {
+public class ShopManager {
 
 	private final Map<Integer, List<ShopItem>> categorizedShopItems = new HashMap<>();
 
@@ -22,7 +22,7 @@ public class ShopService {
 	private final ShopItem LADDER = new BasicItem("Ladder", "A simple ladder", 8, 8, Currency.IRON, Material.LADDER);
 	private final ShopItem PLANKS = new BasicItem("Planks", "Planks", 4, 16, Currency.GOLD, Material.OAK_PLANKS);
 	private final ShopItem STONE_SWORD = new ReplaceAdderItem("Stone Sword", "Weapon", 10, Currency.IRON, Material.STONE_SWORD);
-	private final ShopItem IRON_SWORD = new ReplaceAdderItem("Iron Sword", "Weapon",  7, Currency.GOLD, Material.IRON_SWORD);
+	private final ShopItem IRON_SWORD = new ReplaceAdderItem("Iron Sword", "Weapon", 7, Currency.GOLD, Material.IRON_SWORD);
 	private final ShopItem DIAMOND_SWORD = new ReplaceAdderItem("Diamond Sword", "Weapon", 4, Currency.EMERALD, Material.DIAMOND_SWORD);
 	private final ShopItem ENDER_PEARL = new ReplaceAdderItem("Ender Pearl", "Pearl is for pearling", 2, Currency.EMERALD, Material.ENDER_PEARL);
 	private final ShopItem TNT = new BasicItem("TNT", "Explosions are fun", 4, 1, Currency.GOLD, Material.TNT);
@@ -41,7 +41,7 @@ public class ShopService {
 	private final ShopItem DIAMOND_ARMOR = new ArmorShopItem("Diamond Armor", "Permanent diamond armor", 6, Currency.EMERALD, Material.DIAMOND_BOOTS, Material.DIAMOND_LEGGINGS, 3);
 
 
-	public ShopService() {
+	public ShopManager() {
 		addItemToCategories(WOOL, 0, 1);
 		addItemToCategories(HARDENED_CLAY, 0, 1);
 		addItemToCategories(GLASS, 0, 1);

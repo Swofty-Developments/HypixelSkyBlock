@@ -31,7 +31,7 @@ dependencies {
     implementation("net.minestom:minestom:2025.08.18-1.21.8") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("dev.hollowcube:polar:1.14.0")
+    implementation("dev.hollowcube:polar:1.14.7")
     implementation("org.yaml:snakeyaml:2.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
 }
