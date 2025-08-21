@@ -29,7 +29,7 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
         UUID islandUUID;
 
         // Check if player has ever joined SkyBlock before
-        SkyBlockPlayerProfiles profiles = player.getProfiles();
+        SkyBlockPlayerProfiles profiles = new UserDatabase(playerUuid).getProfiles();
         UUID profileId;
 
         if (profiles == null) {
