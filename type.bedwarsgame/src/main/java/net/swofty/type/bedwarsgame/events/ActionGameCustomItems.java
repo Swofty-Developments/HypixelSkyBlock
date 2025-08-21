@@ -42,6 +42,63 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ActionGameCustomItems implements HypixelEventClass {
 
+	private static Block getWoolBlockFromTeamColor(String teamColor) {
+		return switch (teamColor.toLowerCase()) {
+			case "red" -> Block.RED_WOOL;
+			case "blue" -> Block.BLUE_WOOL;
+			case "green" -> Block.LIME_WOOL; // Minecraft uses "lime" for bright green
+			case "yellow" -> Block.YELLOW_WOOL;
+			case "aqua" -> Block.LIGHT_BLUE_WOOL;
+			case "pink" -> Block.PINK_WOOL;
+			case "gray", "grey" -> Block.GRAY_WOOL;
+			case "white" -> Block.WHITE_WOOL;
+			case "black" -> Block.BLACK_WOOL;
+			case "purple" -> Block.PURPLE_WOOL;
+			case "orange" -> Block.ORANGE_WOOL;
+			case "cyan" -> Block.CYAN_WOOL;
+			default -> Block.WHITE_WOOL;
+		};
+	}
+
+	private static void handleFireballExplosion(FireballProjectile fireball) {
+		final Instance instance = fireball.getInstance();
+		if (instance == null) {
+			fireball.remove();
+			return;
+		}
+
+		final Player shooter = (Player) fireball.getShooter();
+		if (shooter == null) {
+			fireball.remove();
+			return;
+		}
+
+		String gameId = shooter.getTag(Tag.String("gameId"));
+		Game game = TypeBedWarsGameLoader.getGameById(gameId);
+		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
+			fireball.remove();
+			return;
+		}
+
+		final Pos explosionPos = fireball.getPosition();
+		final UUID shooterUuid = shooter.getUuid();
+		final long msb = shooterUuid.getMostSignificantBits();
+		final long lsb = shooterUuid.getLeastSignificantBits();
+		final int[] shooterUuidInts = new int[]{(int) (msb >> 32), (int) msb, (int) (lsb >> 32), (int) lsb};
+
+		instance.explode(
+				(float) explosionPos.x(), (float) explosionPos.y(), (float) explosionPos.z(),
+				4f,
+				CompoundBinaryTag.builder()
+						.putString("requiredTag", TypeBedWarsGameLoader.PLAYER_PLACED_TAG.getKey())
+						.putIntArray("blacklist", new int[]{Block.END_STONE.id(), Block.OBSIDIAN.id(), Block.BEDROCK.id()})
+						.putIntArray("shooter", shooterUuidInts)
+						.putString("ignore", "team")
+						.build()
+		);
+		fireball.remove();
+	}
+
 	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
 	public void run(ProjectileCollideWithBlockEvent event) {
 		if (event.getEntity().getEntityType() == EntityType.FIREBALL) {
@@ -149,68 +206,11 @@ public class ActionGameCustomItems implements HypixelEventClass {
 		}).delay(TaskSchedule.seconds(4)).schedule();
 	}
 
-	private static Block getWoolBlockFromTeamColor(String teamColor) {
-		return switch (teamColor.toLowerCase()) {
-			case "red" -> Block.RED_WOOL;
-			case "blue" -> Block.BLUE_WOOL;
-			case "green" -> Block.LIME_WOOL; // Minecraft uses "lime" for bright green
-			case "yellow" -> Block.YELLOW_WOOL;
-			case "aqua" -> Block.LIGHT_BLUE_WOOL;
-			case "pink" -> Block.PINK_WOOL;
-			case "gray", "grey" -> Block.GRAY_WOOL;
-			case "white" -> Block.WHITE_WOOL;
-			case "black" -> Block.BLACK_WOOL;
-			case "purple" -> Block.PURPLE_WOOL;
-			case "orange" -> Block.ORANGE_WOOL;
-			case "cyan" -> Block.CYAN_WOOL;
-			default -> Block.WHITE_WOOL;
-		};
-	}
-
-	private static void handleFireballExplosion(FireballProjectile fireball) {
-		final Instance instance = fireball.getInstance();
-		if (instance == null) {
-			fireball.remove();
-			return;
-		}
-
-		final Player shooter = (Player) fireball.getShooter();
-		if (shooter == null) {
-			fireball.remove();
-			return;
-		}
-
-		String gameId = shooter.getTag(Tag.String("gameId"));
-		Game game = TypeBedWarsGameLoader.getGameById(gameId);
-		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
-			fireball.remove();
-			return;
-		}
-
-		final Pos explosionPos = fireball.getPosition();
-		final UUID shooterUuid = shooter.getUuid();
-		final long msb = shooterUuid.getMostSignificantBits();
-		final long lsb = shooterUuid.getLeastSignificantBits();
-		final int[] shooterUuidInts = new int[]{(int) (msb >> 32), (int) msb, (int) (lsb >> 32), (int) lsb};
-
-		instance.explode(
-				(float) explosionPos.x(), (float) explosionPos.y(), (float) explosionPos.z(),
-				4f,
-				CompoundBinaryTag.builder()
-						.putString("requiredTag", TypeBedWarsGameLoader.PLAYER_PLACED_TAG.getKey())
-						.putIntArray("blacklist", new int[]{Block.END_STONE.id(), Block.OBSIDIAN.id(), Block.BEDROCK.id()})
-						.putIntArray("shooter", shooterUuidInts)
-						.putString("ignore", "team")
-						.build()
-		);
-		fireball.remove();
-	}
-
 	private void handleFireball(Player player, PlayerHand hand) {
 		player.setItemInHand(hand, player.getItemInHand(hand).withAmount(player.getItemInHand(hand).amount() - 1));
 		new FireballProjectile(EntityType.FIREBALL, player).shoot(player.getPosition().add(0, player.getEyeHeight(), 0).asVec(), 1, 1);
 		player.playSound(Sound.sound(Key.key("minecraft:entity.ghast.shoot"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
-		player.getAttribute(Attribute.MOVEMENT_SPEED).addModifier(new AttributeModifier(Key.key("bw:fireball"), -0.3, AttributeOperation.MULTIPLY_TOTAL));
+		player.getAttribute(Attribute.MOVEMENT_SPEED).addModifier(new AttributeModifier(Key.key("bw:fireball"), -0.3, AttributeOperation.ADD_MULTIPLIED_TOTAL));
 		MinecraftServer.getSchedulerManager().buildTask(() -> player.getAttribute(Attribute.MOVEMENT_SPEED).removeModifier(Key.key("bw:fireball"))).delay(TaskSchedule.seconds(2)).schedule();
 	}
 
