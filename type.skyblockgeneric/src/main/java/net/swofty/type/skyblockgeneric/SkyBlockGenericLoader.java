@@ -329,8 +329,15 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          */
         if (mainInstance != null) {
             ServerHolograms.spawnAll(HypixelConst.getInstanceContainer());
-            String zone = typeLoader.getType().toString();
-            FairySoul.spawnEntities(HypixelConst.getInstanceContainer(), FairySoulZone.valueOf(zone.toUpperCase()));
+            String zoneName = typeLoader.getType().toString();
+            try {
+                // Normalize server type names to match FairySoulZone enum values
+                String normalized = zoneName.replace("SKYBLOCK_", "").toUpperCase();
+                FairySoulZone zone = FairySoulZone.valueOf(normalized);
+                FairySoul.spawnEntities(HypixelConst.getInstanceContainer(), zone);
+            } catch (IllegalArgumentException ignored) {
+                // This server type does not have fairy souls associated; skip spawning
+            }
         }
 
         /**
