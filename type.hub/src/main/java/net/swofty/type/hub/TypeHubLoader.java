@@ -48,12 +48,12 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
-        RuneEntityImpl firstStone = new RuneEntityImpl(new Pos(-37.2, 68.40, -129.15, 0, 0f), false);
-        RuneEntityImpl secondStone = new RuneEntityImpl(new Pos( -37.82, 68.40, -129.15, 0, 0f), false);
-        RuneEntityImpl thirdStone = new RuneEntityImpl(new Pos(-37.2, 68.40, -129.775, 0, 0f), false);
-        RuneEntityImpl fourthStone = new RuneEntityImpl(new Pos(-37.82, 68.40, -129.775, 0, 0f), false);
-        RuneEntityImpl head = new RuneEntityImpl(new Pos(-37.5, 69.20, -129.4, -70, 0f), true);
-        Pos runePos = new Pos(-37.5, 70, -129.5, 0, 0f);
+        RuneEntityImpl firstStone = new RuneEntityImpl(new Pos(-37.84375, 68.3125, -129.8125, 0, 0f), false);
+        RuneEntityImpl secondStone = new RuneEntityImpl(new Pos( -37.21875, 68.3125, -129.8125, 0, 0f), false);
+        RuneEntityImpl thirdStone = new RuneEntityImpl(new Pos(-37.21875, 68.3125, -129.1875, 0, 0f), false);
+        RuneEntityImpl fourthStone = new RuneEntityImpl(new Pos(-37.84375, 68.3125, -129.1875, 0, 0f), false);
+        RuneEntityImpl head = new RuneEntityImpl(new Pos(-37.65625, 69.09375, -129.34375, 45, 0f), true);
+        Pos runePos = new Pos(-37.84375, 68.3125, -129.8125, 0, 0f);
 
         AtomicReference<Double> i = new AtomicReference<>(0D);
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
@@ -102,8 +102,8 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
                 (type) -> switch (type) {
-                    case THE_FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
-                    case DUNGEON_HUB -> new Pos(-44, 88, 11.5, 0, 0);
+                    case SKYBLOCK_THE_FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
+                    case SKYBLOCK_DUNGEON_HUB -> new Pos(-44, 88, 11.5, 0, 0);
                     default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
                 }, // Spawn position
                 true // Announce death messages

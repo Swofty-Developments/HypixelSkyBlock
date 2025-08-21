@@ -103,7 +103,7 @@ public class CrystalDatabase {
             crystal.url = url;
             crystal.position = new Pos(x + 0.5, y, z + 0.5);
             crystal.itemType = itemTypeLinker;
-            crystal.serverType = ServerType.valueOf(doc.getString("serverType"));
+            crystal.serverType = ServerType.getSkyblockServer(doc.getString("serverType"));
 
             crystals.add(crystal);
         }

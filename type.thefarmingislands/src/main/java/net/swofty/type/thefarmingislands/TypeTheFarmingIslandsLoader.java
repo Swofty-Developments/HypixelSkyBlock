@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
     @Override
     public ServerType getType() {
-        return ServerType.THE_FARMING_ISLANDS;
+        return ServerType.SKYBLOCK_THE_FARMING_ISLANDS;
     }
 
     @Override
