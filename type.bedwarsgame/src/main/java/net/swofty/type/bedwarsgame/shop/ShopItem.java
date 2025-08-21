@@ -25,20 +25,25 @@ public abstract class ShopItem {
 		this.display = ItemStack.of(display);
 	}
 
-	public abstract void onBought(Player player);
+	/**
+	 * Called when a player purchases an item. This method should be used to give items to the player or apply effects.
+	 *
+	 * @param player the player who purchasd the item
+	 */
+	public abstract void onPurchase(Player player);
 
-	public boolean canBeBought(Player player) {
+	public boolean isAvailable(Player player) {
 		return true;
 	}
 
 	/**
-	 * Handles the purchase of this item by the player.
+	 * Handles the purchase of an item meanwhile taking the currency from the player's inventory.
 	 *
 	 * @param player the player making the purchase
 	 */
 	public void handlePurchase(Player player) {
 		BedWarsInventoryManipulator.removeItems(player, currency.getMaterial(), price);
-		onBought(player);
+		onPurchase(player);
 	}
 
 }

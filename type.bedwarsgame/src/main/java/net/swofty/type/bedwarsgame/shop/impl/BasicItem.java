@@ -12,7 +12,7 @@ public class BasicItem extends ShopItem {
 	}
 
 	@Override
-	public void onBought(Player player) {
+	public void onPurchase(Player player) {
 		player.getInventory().addItemStack(this.getDisplay().withAmount(this.getAmount()));
 	}
 

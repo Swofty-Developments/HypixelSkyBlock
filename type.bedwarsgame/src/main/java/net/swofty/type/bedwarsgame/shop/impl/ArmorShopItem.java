@@ -23,7 +23,7 @@ public class ArmorShopItem extends ShopItem {
 	}
 
 	@Override
-	public void onBought(Player player) {
+	public void onPurchase(Player player) {
 		player.setEquipment(EquipmentSlot.BOOTS, ItemStack.of(boots));
 		player.setEquipment(EquipmentSlot.LEGGINGS, ItemStack.of(leggings));
 		player.setTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG, armorLevel);
@@ -37,7 +37,7 @@ public class ArmorShopItem extends ShopItem {
 	}
 
 	@Override
-	public boolean canBeBought(Player player) {
+	public boolean isAvailable(Player player) {
 		return player.getEquipment(EquipmentSlot.BOOTS).material() != boots && player.getEquipment(EquipmentSlot.LEGGINGS).material() != leggings;
 	}
 }

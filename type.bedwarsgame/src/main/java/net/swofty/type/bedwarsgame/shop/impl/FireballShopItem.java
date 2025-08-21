@@ -12,7 +12,7 @@ public class FireballShopItem extends ShopItem {
 	}
 
 	@Override
-	public void onBought(Player player) {
+	public void onPurchase(Player player) {
 		//player.getInventory().addItemStack(Server.getInstance().getItemHandler().getItemById("fireball").getItemStack());
 	}
 

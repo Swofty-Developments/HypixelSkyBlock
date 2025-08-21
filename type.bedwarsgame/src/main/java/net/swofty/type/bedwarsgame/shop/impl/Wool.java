@@ -16,7 +16,7 @@ public class Wool extends ShopItem {
 	}
 
 	@Override
-	public void onBought(Player player) {
+	public void onPurchase(Player player) {
 		@Subst("white_wool") String woolName;
 		if (!player.hasTag(Tag.String("javaColor"))) {
 			woolName = "white_wool";

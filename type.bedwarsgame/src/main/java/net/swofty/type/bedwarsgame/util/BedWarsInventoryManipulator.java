@@ -1,29 +1,15 @@
 package net.swofty.type.bedwarsgame.util;
 
-import net.minestom.server.entity.GameMode;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.Player;
-import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.inventory.PlayerInventory;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.component.TooltipDisplay;
 
 import java.util.Arrays;
 
 public class BedWarsInventoryManipulator {
-
-	public static boolean consumeItemIfNotCreative(Player player, PlayerHand hand, int amount) {
-		if (player.getGameMode() == GameMode.CREATIVE) {
-			return true;
-		}
-
-		ItemStack item = player.getItemInHand(hand);
-		item = item.withAmount(amt -> amt - amount);
-		if (item.amount() == 0) item = ItemStack.AIR;
-		if (item.amount() < 0) return false;
-		player.setItemInHand(hand, item);
-		return true;
-	}
 
 	public static void removeItems(Player player, Material material, int amount) {
 		PlayerInventory inventory = player.getInventory();
@@ -50,9 +36,7 @@ public class BedWarsInventoryManipulator {
 	}
 
 	public static ItemStack hideTooltip(ItemStack item) {
-		return item.with(
-				ItemComponent.HIDE_ADDITIONAL_TOOLTIP
-		);
+		return item.with(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.EMPTY.withHideTooltip(true));
 	}
 
 	public static boolean canBeChested(Material m) {

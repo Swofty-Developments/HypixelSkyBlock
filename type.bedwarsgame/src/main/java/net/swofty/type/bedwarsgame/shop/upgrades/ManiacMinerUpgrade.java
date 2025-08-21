@@ -18,29 +18,29 @@ import java.util.List;
 
 public class ManiacMinerUpgrade extends TeamUpgrade {
 
-    public ManiacMinerUpgrade() {
-        super(
-                "maniac_miner",
-                "Maniac Miner",
-                "All players on your team permanently gain Haste.",
-                ItemStack.of(Material.GOLDEN_PICKAXE),
-                List.of(
-                        new TeamUpgradeTier(1, "Haste I", 2, Currency.DIAMOND),
-                        new TeamUpgradeTier(2, "Haste II", 4, Currency.DIAMOND)
-                )
-        );
-    }
+	public ManiacMinerUpgrade() {
+		super(
+				"maniac_miner",
+				"Maniac Miner",
+				"All players on your team permanently gain Haste.",
+				ItemStack.of(Material.GOLDEN_PICKAXE),
+				List.of(
+						new TeamUpgradeTier(1, "Haste I", 2, Currency.DIAMOND),
+						new TeamUpgradeTier(2, "Haste II", 4, Currency.DIAMOND)
+				)
+		);
+	}
 
-    @Override
-    public void applyEffect(Game game, String teamName, int level) {
-        game.getPlayers().stream()
-                .filter(p -> teamName.equals(p.getTag(Tag.String("team"))))
-                .forEach(player -> giveHaste(player, level));
-    }
+	public static void giveHaste(Player player, int level) {
+		player.addEffect(new Potion(PotionEffect.HASTE, (byte) (level - 1), Potion.INFINITE_DURATION));
+		player.getAttribute(Attribute.MINING_EFFICIENCY).addModifier(new AttributeModifier("bw:maniac_miner", 0.2 * level, AttributeOperation.ADD_MULTIPLIED_TOTAL));
+	}
 
-    public static void giveHaste(Player player, int level) {
-        player.addEffect(new Potion(PotionEffect.HASTE, (byte) (level - 1), Potion.INFINITE_DURATION));
-        player.getAttribute(Attribute.MINING_EFFICIENCY).addModifier(new AttributeModifier("bw:maniac_miner", 0.2 * level, AttributeOperation.MULTIPLY_TOTAL));
-    }
+	@Override
+	public void applyEffect(Game game, String teamName, int level) {
+		game.getPlayers().stream()
+				.filter(p -> teamName.equals(p.getTag(Tag.String("team"))))
+				.forEach(player -> giveHaste(player, level));
+	}
 }
 

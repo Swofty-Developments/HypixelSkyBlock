@@ -16,7 +16,7 @@ public class HardenedClay extends ShopItem {
 	}
 
 	@Override
-	public void onBought(Player player) {
+	public void onPurchase(Player player) {
 		@Subst("white_terracotta") String woolName;
 		if (!player.hasTag(Tag.String("teamColor"))) {
 			woolName = "white_terracotta";

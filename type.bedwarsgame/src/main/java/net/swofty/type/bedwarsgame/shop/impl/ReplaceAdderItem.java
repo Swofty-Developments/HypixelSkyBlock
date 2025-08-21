@@ -21,7 +21,7 @@ public class ReplaceAdderItem extends ShopItem {
 	}
 
 	@Override
-	public void onBought(net.minestom.server.entity.Player player) {
+	public void onPurchase(net.minestom.server.entity.Player player) {
 		var inventory = player.getInventory();
 		for (int i = 0; i < inventory.getSize(); i++) {
 			var item = inventory.getItemStack(i);

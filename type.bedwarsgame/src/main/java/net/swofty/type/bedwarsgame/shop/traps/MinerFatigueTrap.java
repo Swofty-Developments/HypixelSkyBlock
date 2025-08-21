@@ -13,19 +13,19 @@ import net.swofty.type.bedwarsgame.shop.Trap;
 
 public class MinerFatigueTrap extends Trap {
 
-    public MinerFatigueTrap() {
-        super(
-                "miner_fatigue_trap",
-                "Miner Fatigue Trap",
-                ItemStack.of(Material.IRON_PICKAXE),
-                "Inflicts Mining Fatigue II for 10s.",
-                Currency.DIAMOND
-        );
-    }
+	public MinerFatigueTrap() {
+		super(
+				"miner_fatigue_trap",
+				"Miner Fatigue Trap",
+				ItemStack.of(Material.IRON_PICKAXE),
+				"Inflicts Mining Fatigue II for 10s.",
+				Currency.DIAMOND
+		);
+	}
 
-    @Override
-    public void triggered(Game game, String teamName, Player triggerer) {
-        triggerer.getAttribute(Attribute.MINING_EFFICIENCY).addModifier(new AttributeModifier(Key.key("bw:miner_fatigue"), -0.6, AttributeOperation.MULTIPLY_TOTAL));
-    }
+	@Override
+	public void onTrigger(Game game, String teamName, Player triggerer) {
+		triggerer.getAttribute(Attribute.MINING_EFFICIENCY).addModifier(new AttributeModifier(Key.key("bw:miner_fatigue"), -0.6, AttributeOperation.ADD_MULTIPLIED_TOTAL));
+	}
 }
 

@@ -11,21 +11,21 @@ import net.swofty.type.bedwarsgame.shop.Trap;
 
 public class RevealTrap extends Trap {
 
-    public RevealTrap() {
-        super(
-                "reveal_trap",
-                "Reveal Trap",
-                ItemStack.of(Material.REDSTONE_TORCH),
-                "Reveals intruders by glowing for 10s.",
-                Currency.DIAMOND
-        );
-    }
+	public RevealTrap() {
+		super(
+				"reveal_trap",
+				"Reveal Trap",
+				ItemStack.of(Material.REDSTONE_TORCH),
+				"Reveals intruders by glowing for 10s.",
+				Currency.DIAMOND
+		);
+	}
 
-    @Override
-    public void triggered(Game game, String teamName, Player triggerer) {
-        triggerer.setGlowing(true);
-        MinecraftServer.getSchedulerManager().buildTask(() -> triggerer.setGlowing(false))
-                .delay(TaskSchedule.seconds(10)).schedule();
-    }
+	@Override
+	public void onTrigger(Game game, String teamName, Player triggerer) {
+		triggerer.setGlowing(true);
+		MinecraftServer.getSchedulerManager().buildTask(() -> triggerer.setGlowing(false))
+				.delay(TaskSchedule.seconds(10)).schedule();
+	}
 }
 

@@ -28,6 +28,13 @@ public abstract class Trap {
 		this.currency = currency;
 	}
 
+	/**
+	 * Triggers the trap for the specified team.
+	 *
+	 * @param game      the game instance
+	 * @param teamName  the name of the team that owns the trap
+	 * @param triggerer the player who triggered the trap
+	 */
 	public void trigger(Game game, String teamName, Player triggerer) {
 		game.removeTeamTrap(teamName, getKey());
 
@@ -37,11 +44,25 @@ public abstract class Trap {
 					.decoration(TextDecoration.BOLD, true));
 			player.playSound(Sound.sound(Key.key("minecraft:entity.enderman.death"), Sound.Source.MASTER, 1.0f, 0.6f));
 		});
-		triggered(game, teamName, triggerer);
+		onTrigger(game, teamName, triggerer);
 	}
 
-	public abstract void triggered(Game game, String teamName, Player triggerer);
+	/**
+	 * Abstract method to define the trap's behavior when triggered.
+	 *
+	 * @param game      the game instance
+	 * @param teamName  the name of the team that owns the trap
+	 * @param triggerer the player who triggered the trap
+	 */
+	public abstract void onTrigger(Game game, String teamName, Player triggerer);
 
+	/**
+	 * Gets the price of the trap for the specified team.
+	 *
+	 * @param game     the game instance
+	 * @param teamName the name of the team that owns the trap
+	 * @return the price of the trap
+	 */
 	public int getPrice(Game game, String teamName) {
 		return game.getTeamTraps(teamName).size() + 1;
 	}

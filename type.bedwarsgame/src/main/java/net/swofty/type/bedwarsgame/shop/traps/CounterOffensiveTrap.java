@@ -12,21 +12,21 @@ import net.swofty.type.bedwarsgame.shop.Trap;
 
 public class CounterOffensiveTrap extends Trap {
 
-    public CounterOffensiveTrap() {
-        super(
-                "counter_offensive_trap",
-                "Counter-Offensive Trap",
-                ItemStack.of(Material.FEATHER),
-                "Grants Speed II to your team for 10s when triggered.",
-                Currency.DIAMOND
-        );
-    }
+	public CounterOffensiveTrap() {
+		super(
+				"counter_offensive_trap",
+				"Counter-Offensive Trap",
+				ItemStack.of(Material.FEATHER),
+				"Grants Speed II to your team for 10s when onTrigger.",
+				Currency.DIAMOND
+		);
+	}
 
-    @Override
-    public void triggered(Game game, String teamName, Player triggerer) {
-        game.getPlayers().stream()
-            .filter(p -> teamName.equals(p.getTag(Tag.String("team"))))
-            .forEach(p -> p.addEffect(new Potion(PotionEffect.SPEED, (byte)1, 200)));
-    }
+	@Override
+	public void onTrigger(Game game, String teamName, Player triggerer) {
+		game.getPlayers().stream()
+				.filter(p -> teamName.equals(p.getTag(Tag.String("team"))))
+				.forEach(p -> p.addEffect(new Potion(PotionEffect.SPEED, (byte) 1, 200)));
+	}
 }
 

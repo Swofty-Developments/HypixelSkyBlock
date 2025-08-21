@@ -1,9 +1,9 @@
 package net.swofty.type.bedwarsgame.shop.upgrades;
 
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.entity.attribute.AttributeModifier;
 import net.minestom.server.entity.attribute.AttributeOperation;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.EnchantmentList;
@@ -38,17 +38,17 @@ public class CushionedBootsUpgrade extends TeamUpgrade {
 					var boots = player.getBoots();
 					if (boots == null) return;
 
-					EnchantmentList list = boots.get(ItemComponent.ENCHANTMENTS);
+					EnchantmentList list = boots.get(DataComponents.ENCHANTMENTS);
 					if (list == null) {
 						list = EnchantmentList.EMPTY;
 					}
 
 					player.setBoots(
-							boots.with(ItemComponent.ENCHANTMENTS, list.with(Enchantment.FEATHER_FALLING, level))
+							boots.with(DataComponents.ENCHANTMENTS, list.with(Enchantment.FEATHER_FALLING, level))
 					);
 
 					player.getAttribute(Attribute.FALL_DAMAGE_MULTIPLIER).addModifier(
-							new AttributeModifier("bw:cushioned_boots", -0.1 * level, AttributeOperation.MULTIPLY_TOTAL)
+							new AttributeModifier("bw:cushioned_boots", -0.1 * level, AttributeOperation.ADD_MULTIPLIED_TOTAL)
 					);
 				});
 	}

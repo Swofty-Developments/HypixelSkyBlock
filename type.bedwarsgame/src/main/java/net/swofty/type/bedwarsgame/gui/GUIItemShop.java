@@ -266,7 +266,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 						player.sendMessage(noItalic(Component.text("You don't have enough " + shopItem.getCurrency().getName() + "!").color(NamedTextColor.RED)));
 						return;
 					}
-					if (!shopItem.canBeBought(player)) {
+					if (!shopItem.isAvailable(player)) {
 						player.sendMessage(noItalic(Component.text("You cannot buy this item!").color(NamedTextColor.RED)));
 						return;
 					}
@@ -324,7 +324,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 					Component buy;
 					if (!hasEnough) {
 						buy = noItalic(Component.text("You don't have enough " + shopItem.getCurrency().getName() + "!").color(NamedTextColor.RED));
-					} else if (!shopItem.canBeBought(player)) {
+					} else if (!shopItem.isAvailable(player)) {
 						buy = noItalic(Component.text("You cannot buy this item!").color(NamedTextColor.RED));
 					} else if (hasBetterItem(player, shopItem.getDisplay().material())) {
 						buy = noItalic(Component.text("You already have a better item!").color(NamedTextColor.RED));
