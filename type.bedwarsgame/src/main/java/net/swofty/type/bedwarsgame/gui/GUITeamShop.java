@@ -14,6 +14,7 @@ import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.shop.*;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.bedwarsgame.util.ColorUtil;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -82,8 +83,9 @@ public class GUITeamShop extends HypixelInventoryGUI {
 			int index = i;
 			set(new GUIClickableItem(slot) {
 				@Override
-				public void run(InventoryPreClickEvent event, HypixelPlayer player) {
+				public void run(InventoryPreClickEvent event, HypixelPlayer p) {
 					if (index >= upgrades.size()) return;
+					BedWarsPlayer player = (BedWarsPlayer) p;
 					Game playerGame = TypeBedWarsGameLoader.getPlayerGame(player);
 					String tag = player.getTag(Tag.String("team"));
 					if (playerGame == null || tag == null) return;

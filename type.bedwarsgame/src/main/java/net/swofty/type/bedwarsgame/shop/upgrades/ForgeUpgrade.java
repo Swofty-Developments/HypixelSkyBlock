@@ -12,6 +12,7 @@ import net.swofty.type.bedwarsgame.map.MapsConfig;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
+import org.tinylog.Logger;
 
 import java.time.Duration;
 import java.util.List;
@@ -36,42 +37,44 @@ public class ForgeUpgrade extends TeamUpgrade {
 	public void applyEffect(Game game, String teamName, int level) {
 		// The resource multiplier for iron/gold is handled passively by the generator task in Game.java.
 		// This method only needs to handle the active effect of starting the emerald generator at level 3.
-		if (level == 3) {
-			MapsConfig.MapEntry.MapConfiguration.MapTeam team = game.getMapEntry().getConfiguration().getTeams().stream()
-					.filter(t -> t.getName().equals(teamName))
-					.findFirst().orElse(null);
+		if (level != 3) {
+			return;
+		}
 
-			if (team == null || team.getGenerator() == null) {
-				// Server.getLogger().warn("Cannot start emerald generator for team {}: team or generator location not found.", teamName);
-				return;
+		MapsConfig.MapEntry.MapConfiguration.MapTeam team = game.getMapEntry().getConfiguration().getTeams().stream()
+				.filter(t -> t.getName().equals(teamName))
+				.findFirst().orElse(null);
+
+		if (team == null || team.getGenerator() == null) {
+			Logger.warn("Cannot start emerald generator for team {}: team or generator location not found.", teamName);
+			return;
+		}
+
+		MapsConfig.Position genLocation = team.getGenerator();
+		Pos spawnPosition = new Pos(genLocation.x(), genLocation.y(), genLocation.z());
+
+		// Define emerald generator properties (1 emerald every 60 seconds)
+		final int emeraldDelaySeconds = 60;
+		final int emeraldBaseAmount = 1;
+
+		var emeraldTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
+			if (game.getGameStatus() != GameStatus.IN_PROGRESS) return;
+
+			int currentForgeLevel = game.getTeamUpgradeLevel(teamName, "forge");
+			double multiplier = 1.0;
+			if (currentForgeLevel >= 4) {
+				multiplier = 3.0; // +200%
 			}
 
-			MapsConfig.Position genLocation = team.getGenerator();
-			Pos spawnPosition = new Pos(genLocation.x(), genLocation.y(), genLocation.z());
+			int finalAmount = (int) Math.round(emeraldBaseAmount * multiplier);
+			if (finalAmount > 0) {
+				ItemStack itemToSpawn = ItemStack.of(Material.EMERALD, finalAmount);
+				ItemEntity itemEntity = new ItemEntity(itemToSpawn);
+				itemEntity.setPickupDelay(Duration.ofMillis(500));
+				itemEntity.setInstance(game.getInstanceContainer(), spawnPosition);
+			}
+		}).delay(TaskSchedule.seconds(emeraldDelaySeconds)).repeat(TaskSchedule.seconds(emeraldDelaySeconds)).schedule();
 
-			// Define emerald generator properties (1 emerald every 60 seconds)
-			final int emeraldDelaySeconds = 60;
-			final int emeraldBaseAmount = 1;
-
-			var emeraldTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
-				if (game.getGameStatus() != GameStatus.IN_PROGRESS) return;
-
-				int currentForgeLevel = game.getTeamUpgradeLevel(teamName, "forge");
-				double multiplier = 1.0;
-				if (currentForgeLevel >= 4) {
-					multiplier = 3.0; // +200%
-				}
-
-				int finalAmount = (int) Math.round(emeraldBaseAmount * multiplier);
-				if (finalAmount > 0) {
-					ItemStack itemToSpawn = ItemStack.of(Material.EMERALD, finalAmount);
-					ItemEntity itemEntity = new ItemEntity(itemToSpawn);
-					itemEntity.setPickupDelay(Duration.ofMillis(500));
-					itemEntity.setInstance(game.getInstanceContainer(), spawnPosition);
-				}
-			}).delay(TaskSchedule.seconds(emeraldDelaySeconds)).repeat(TaskSchedule.seconds(emeraldDelaySeconds)).schedule();
-
-			game.addTeamGeneratorTask(teamName, emeraldTask);
-		}
+		game.addTeamGeneratorTask(teamName, emeraldTask);
 	}
 }

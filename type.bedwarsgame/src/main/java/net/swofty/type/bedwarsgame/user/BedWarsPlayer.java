@@ -14,15 +14,20 @@ import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.potion.TimedPotion;
+import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.chunk.ChunkUtils;
 import net.swofty.pvp.player.CombatPlayer;
-import net.swofty.pvp.player.CombatPlayerImpl;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
-// https://github.com/TogAr2/MinestomPvP/blob/master/src/main/java/io/github/togar2/pvp/player/CombatPlayerImpl.java
+/**
+ * Represents a player in the BedWars game mode.
+ * This class extends HypixelPlayer and implements CombatPlayer for combat-related functionalities.
+ * CombatPlayer implementation based on <a href="https://github.com/TogAr2/MinestomPvP/blob/master/src/main/java/io/github/togar2/pvp/player/CombatPlayerImpl.java">CombatPlayerImpl</a>
+ */
+@SuppressWarnings("UnstableApiUsage")
 public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
 
 	private boolean velocityUpdate = false;
@@ -32,6 +37,11 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
 		super(playerConnection, gameProfile);
 		getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(1.0);
 	}
+
+	public String getTeamName() {
+		return getTag(Tag.String("team"));
+	}
+
 
 	@Override
 	public void setVelocity(@NotNull Vec velocity) {

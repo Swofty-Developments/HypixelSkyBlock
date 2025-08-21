@@ -7,9 +7,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.TitlePart;
-import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 
 @Getter
@@ -35,7 +35,7 @@ public abstract class Trap {
 	 * @param teamName  the name of the team that owns the trap
 	 * @param triggerer the player who triggered the trap
 	 */
-	public void trigger(Game game, String teamName, Player triggerer) {
+	public void trigger(Game game, String teamName, BedWarsPlayer triggerer) {
 		game.removeTeamTrap(teamName, getKey());
 
 		game.getPlayersOnTeam(teamName).forEach(player -> {
@@ -54,7 +54,7 @@ public abstract class Trap {
 	 * @param teamName  the name of the team that owns the trap
 	 * @param triggerer the player who triggered the trap
 	 */
-	public abstract void onTrigger(Game game, String teamName, Player triggerer);
+	public abstract void onTrigger(Game game, String teamName, BedWarsPlayer triggerer);
 
 	/**
 	 * Gets the price of the trap for the specified team.

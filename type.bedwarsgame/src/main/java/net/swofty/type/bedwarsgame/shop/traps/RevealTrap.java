@@ -1,13 +1,12 @@
 package net.swofty.type.bedwarsgame.shop.traps;
 
-import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.Trap;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.generic.utility.MathUtility;
 
 public class RevealTrap extends Trap {
 
@@ -22,10 +21,12 @@ public class RevealTrap extends Trap {
 	}
 
 	@Override
-	public void onTrigger(Game game, String teamName, Player triggerer) {
+	public void onTrigger(Game game, String teamName, BedWarsPlayer triggerer) {
 		triggerer.setGlowing(true);
-		MinecraftServer.getSchedulerManager().buildTask(() -> triggerer.setGlowing(false))
-				.delay(TaskSchedule.seconds(10)).schedule();
+		MathUtility.delay(
+				() -> triggerer.setGlowing(false),
+				10 * 20
+		);
 	}
 }
 

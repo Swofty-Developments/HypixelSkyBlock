@@ -12,6 +12,7 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -22,7 +23,7 @@ public class ActionGameMove implements HypixelEventClass {
 
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerMoveEvent event) {
-		Player player = event.getPlayer();
+		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		if (player.getPosition().y() <= 0) {
 			if (player.getLastDamageSource() != null && player.getLastDamageSource().getSource() instanceof Player p) {
 				player.damage(Damage.fromPlayer(p, 1.0f));

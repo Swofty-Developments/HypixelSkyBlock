@@ -29,6 +29,7 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.entity.BedWarsShopNPC;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.ColorUtil;
 import net.swofty.type.bedwarsgame.util.ComponentManipulator;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -45,7 +46,7 @@ public class Game {
 	public static final Tag<Boolean> ELIMINATED_TAG = Tag.Boolean("eliminated");
 	private final InstanceContainer instanceContainer;
 	private final GameType gameType = GameType.SOLO;
-	private final List<Player> players = new ArrayList<>();
+	private final List<BedWarsPlayer> players = new ArrayList<>();
 	private final String gameId;
 	private final char greenMark = '✔';
 	private final char redMark = '✖';
@@ -102,7 +103,7 @@ public class Game {
 		return String.valueOf(System.currentTimeMillis());
 	}
 
-	public void join(Player player) {
+	public void join(BedWarsPlayer player) {
 		Logger.info("Player {} is attempting to join game {}", player.getUsername(), gameId);
 		if (gameStatus != GameStatus.WAITING) {
 			player.sendMessage(Component.text("The game is already in progress or has ended.", NamedTextColor.RED));

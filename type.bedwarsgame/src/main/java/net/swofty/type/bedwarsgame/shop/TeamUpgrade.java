@@ -9,8 +9,9 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.util.ColorUtil;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
+import net.swofty.type.bedwarsgame.util.ColorUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,8 +52,8 @@ public abstract class TeamUpgrade {
 				.sum() >= tier.getPrice();
 	}
 
-	public void purchase(Game game, Player player) {
-		String teamName = player.getTag(Tag.String("team"));
+	public void purchase(Game game, BedWarsPlayer player) {
+		String teamName = player.getTeamName();
 		if (teamName == null) {
 			player.sendMessage("You are not on a team.");
 			return;
@@ -75,7 +76,7 @@ public abstract class TeamUpgrade {
 		applyEffect(game, teamName, nextTier.getLevel());
 
 		game.getPlayers().stream()
-				.filter(p -> teamName.equals(p.getTag(Tag.String("team"))))
+				.filter(p -> teamName.equals(p.getTeamName()))
 				.forEach(p -> {
 					String tt = p.getTag(Tag.String("teamColor"));
 					TextColor teamColor = ColorUtil.getTextColorByName(tt);
