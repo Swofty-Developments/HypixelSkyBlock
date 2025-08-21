@@ -4,6 +4,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -269,8 +270,8 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
         set(new GUIClickableItem(47) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                if (e.getClick() instanceof Click.Right) {
                     player.closeInventory();
                     player.sendTo(ServerType.SKYBLOCK_ISLAND);
                     return;

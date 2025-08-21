@@ -1,11 +1,11 @@
 package net.swofty.type.skyblockgeneric.entity;
 
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.HeadProfile;
@@ -27,7 +27,7 @@ public class EntityFairySoul extends EntityCreature {
         meta.setNotifyAboutChanges(false);
 
         setHelmet(ItemStack.builder(Material.PLAYER_HEAD)
-                .set(ItemComponent.PROFILE, new HeadProfile(new PlayerSkin(SKULL_TEXTURES, null)))
+                .set(DataComponents.PROFILE, new HeadProfile(new PlayerSkin(SKULL_TEXTURES, null)))
                 .build());
     }
 

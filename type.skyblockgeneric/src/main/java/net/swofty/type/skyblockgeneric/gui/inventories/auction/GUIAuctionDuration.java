@@ -4,6 +4,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -61,8 +62,7 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                right.set(e.getClickType().equals(ClickType.RIGHT_CLICK));
+                right.set(e.getClick() instanceof Click.Right);
             }
 
             @Override

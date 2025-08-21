@@ -2,9 +2,9 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.rewards;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -92,7 +92,7 @@ public class GUILevelFeatureRewards extends HypixelInventoryGUI {
                     }
 
                     return ItemStackCreator.updateLore(item, lore).set(
-                            ItemComponent.CUSTOM_NAME,
+                            DataComponents.CUSTOM_NAME,
                             Component.text(award.getDisplay()).decoration(TextDecoration.ITALIC, false)
                     );
                 }

@@ -19,7 +19,7 @@ dependencies {
     implementation(project(":packer"))
     implementation("org.mongodb:bson:4.11.2")
 
-    compileOnly("net.minestom:minestom-snapshots:1_21_4-7599413490") {
+    compileOnly("net.minestom:minestom:2025.08.18-1.21.8") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 }

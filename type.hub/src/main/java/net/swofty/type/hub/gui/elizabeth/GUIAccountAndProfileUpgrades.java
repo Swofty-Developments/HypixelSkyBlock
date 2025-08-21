@@ -4,11 +4,11 @@ import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -105,7 +105,7 @@ public class GUIAccountAndProfileUpgrades extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     if (slot != 2) {
                         ItemStack.Builder itemStack = shopCategorys.stack;
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                         if (Objects.equals(lore.getLast(), "§aCurrently selected!")) {
                             lore.removeLast();
                             lore.add("§eClick to view!");
@@ -115,7 +115,7 @@ public class GUIAccountAndProfileUpgrades extends HypixelInventoryGUI {
                         return ItemStackCreator.updateLore(itemStack, lore);
                     } else {
                         ItemStack.Builder itemStack = shopCategorys.stack;
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                         if (Objects.equals(lore.getLast(), "§eClick to view!")) {
                             lore.removeLast();
                             lore.add("§aCurrently selected!");

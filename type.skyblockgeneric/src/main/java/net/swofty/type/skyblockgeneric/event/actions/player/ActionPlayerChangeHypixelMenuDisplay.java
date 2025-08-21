@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.event.actions.player;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.player.PlayerChangeHeldSlotEvent;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -48,8 +48,8 @@ public class ActionPlayerChangeHypixelMenuDisplay implements HypixelEventClass {
                     SkyBlockItem item = new SkyBlockItem(player.getInventory().getItemStack(index));
                     if (item.hasComponent(ArrowComponent.class)) {
                         player.getInventory().setItemStack(index, ItemStack.builder(Material.FEATHER)
-                                .set(ItemComponent.CUSTOM_DATA, item.getItemStack().get(ItemComponent.CUSTOM_DATA))
-                                .set(ItemComponent.CUSTOM_NAME, Component.text("§cSwitch your held item for this item!"))
+                                .set(DataComponents.CUSTOM_DATA, item.getItemStack().get(DataComponents.CUSTOM_DATA))
+                                .set(DataComponents.CUSTOM_NAME, Component.text("§cSwitch your held item for this item!"))
                                 .amount(item.getAmount()).build());
                     }
                 }

@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.auction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import net.minestom.server.item.ItemComponent;
+import net.minestom.server.component.DataComponents;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
@@ -29,11 +29,11 @@ public record AuctionItemLoreHandler(AuctionItem auctionItem) {
         SkyBlockItem skyBlockItem = new SkyBlockItem(auctionItem.getItem());
 
         if (player == null) {
-            new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem().build().get(ItemComponent.LORE).forEach(loreEntry -> {
+            new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem().build().get(DataComponents.LORE).forEach(loreEntry -> {
                 toReturn.add(StringUtility.getTextFromComponent(loreEntry));
             });
         } else {
-            PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack()).build().get(ItemComponent.LORE).forEach(loreEntry -> {
+            PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack()).build().get(DataComponents.LORE).forEach(loreEntry -> {
                 toReturn.add(StringUtility.getTextFromComponent(loreEntry));
             });
         }

@@ -4,12 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -137,7 +137,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
+                if (e.getClick().equals(ClickType.RIGHT_CLICK)) {
                     AuctionsFilter nextFilter = filter.previous();
                     setFilter(nextFilter);
 
@@ -227,7 +227,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
                     SkyBlockItem skyBlockItem = new SkyBlockItem(auctionItem.getItem());
                     ItemStack builtItem = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack()).build();
 
-                    return ItemStackCreator.getStack(StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME)),
+                    return ItemStackCreator.getStack(StringUtility.getTextFromComponent(builtItem.get(DataComponents.CUSTOM_NAME)),
                             skyBlockItem.getMaterial(), skyBlockItem.getAmount(), new AuctionItemLoreHandler(auctionItem).getLore());
                 }
             });

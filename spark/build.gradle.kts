@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.minestom:minestom-snapshots:1_21_4-7599413490") {
+    implementation("net.minestom:minestom:2025.08.18-1.21.8") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation(files("dependencies/spark-1.10.1.10-minestom.jar"))

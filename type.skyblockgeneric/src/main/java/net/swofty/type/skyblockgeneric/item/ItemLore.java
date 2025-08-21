@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.minestom.server.item.ItemComponent;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -78,8 +78,8 @@ public class ItemLore {
                 }
 
                 this.stack = stack
-                        .with(ItemComponent.LORE, loreLines)
-                        .with(ItemComponent.CUSTOM_NAME, Component.text(forcedDisplayName).decoration(TextDecoration.ITALIC, false));
+                        .with(DataComponents.LORE, loreLines)
+                        .with(DataComponents.CUSTOM_NAME, Component.text(forcedDisplayName).decoration(TextDecoration.ITALIC, false));
                 return;
             }
         }
@@ -294,9 +294,9 @@ public class ItemLore {
 
         displayName = rarity.getColor() + displayName;
         addLoreLine(displayRarity);
-        this.stack = stack.with(ItemComponent.LORE, loreLines)
+        this.stack = stack.with(DataComponents.LORE, loreLines)
                 .withAmount(item.getAmount())
-                .with(ItemComponent.CUSTOM_NAME, Component.text(displayName)
+                .with(DataComponents.CUSTOM_NAME, Component.text(displayName)
                         .decoration(TextDecoration.ITALIC, false));
     }
 

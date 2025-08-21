@@ -47,7 +47,6 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
             // Save the new profiles to database
             UserDatabase userDb = new UserDatabase(playerUuid);
             userDb.saveProfiles(profiles);
-
         } else {
             // Existing player
             profileId = profiles.getCurrentlySelected();
@@ -74,6 +73,7 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
                 }
             }
         }
+
 
         // Set up the island
         SkyBlockIsland island = (SkyBlockIsland.getIsland(islandUUID) == null)

@@ -4,6 +4,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -101,7 +102,7 @@ public class GUISack extends HypixelInventoryGUI {
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                         Integer amount = player.getSackItems().getAmount(linker);
-                        if (e.getClickType() == ClickType.RIGHT_CLICK) {
+                        if (e.getClick() instanceof Click.Right) {
                             if (amount == 0) return;
                             if (amount >= 64) {
                                 player.getSackItems().decrease(linker, 64);
@@ -116,7 +117,7 @@ public class GUISack extends HypixelInventoryGUI {
                                 player.addAndUpdateItem(itemAdded);
                                 new GUISack(itemTypeLinker, closeGUIButton).open(player);
                             }
-                        } else if (e.getClickType() == ClickType.LEFT_CLICK) {
+                        } else if (e.getClick() instanceof Click.Left) {
                             int airSlots = 0;
                             for (ItemStack itemStack : player.getInventory().getItemStacks()) {
                                 if (itemStack.isAir()) airSlots++;

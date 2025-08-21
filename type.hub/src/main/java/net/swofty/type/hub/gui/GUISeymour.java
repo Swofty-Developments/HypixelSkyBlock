@@ -1,12 +1,11 @@
 package net.swofty.type.hub.gui;
 
 import net.minestom.server.color.Color;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.DyedItemColor;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -62,7 +61,7 @@ public class GUISeymour extends HypixelInventoryGUI {
                         player.getCoins() >= cheapTuxedoPrice ? "§eClick to purchase" : "§cCan't afford this!"
                 );
 
-                builder.set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(56, 56, 56)));
+                builder.set(DataComponents.DYED_COLOR, new Color(56, 56, 56));
                 return builder;
             }
         });
@@ -101,7 +100,7 @@ public class GUISeymour extends HypixelInventoryGUI {
                         player.getCoins() >= fancyTuxedoPrice ? "§eClick to purchase" : "§cCan't afford this!"
                 );
 
-                builder.set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(51, 42, 42)));
+                builder.set(DataComponents.DYED_COLOR, new Color(51, 42, 42));
 
                 return builder;
             }
@@ -141,7 +140,7 @@ public class GUISeymour extends HypixelInventoryGUI {
                         player.getCoins() >= elegantTuxedoPrice ? "§eClick to purchase" : "§cCan't afford this!"
                 );
 
-                builder.set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(25, 25, 25)));
+                builder.set(DataComponents.DYED_COLOR, new Color(25, 25, 25));
                 return builder;
             }
         });

@@ -7,6 +7,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -91,7 +92,7 @@ public class GUICreative extends HypixelPaginatedGUI<SkyBlockItem> {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
 
-                if (e.getClickType().equals(ClickType.RIGHT_CLICK) && stackable) {
+                if (e.getClick() instanceof Click.Right && stackable) {
                     skyBlockItem.setAmount(64);
                     player.addAndUpdateItem(skyBlockItem);
                     player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));

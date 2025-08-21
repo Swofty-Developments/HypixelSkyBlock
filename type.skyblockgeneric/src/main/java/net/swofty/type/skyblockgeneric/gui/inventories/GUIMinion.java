@@ -2,11 +2,11 @@ package net.swofty.type.skyblockgeneric.gui.inventories;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -163,7 +163,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                             .decorations(Collections.singleton(TextDecoration.ITALIC), false));
                 });
                 return PlayerItemUpdater.playerUpdate(player,minion.asSkyBlockItem().getItemStack())
-                        .set(ItemComponent.LORE, lore);
+                        .set(DataComponents.LORE, lore);
             }
         });
 
@@ -253,7 +253,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    if (!e.getCursorItem().isAir()) {
+                    if (!p.getInventory().getCursorItem().isAir()) {
                         player.sendMessage("§cYou can't put items in this inventory!");
 
                         e.setCancelled(true);
