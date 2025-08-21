@@ -10,7 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.util.ColorUtil;
-import net.swofty.type.bedwarsgame.util.InventoryManipulation;
+import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -69,7 +69,7 @@ public abstract class TeamUpgrade {
 			return;
 		}
 
-		InventoryManipulation.removeItems(player, nextTier.getCurrency().getMaterial(), nextTier.getPrice());
+		BedWarsInventoryManipulator.removeItems(player, nextTier.getCurrency().getMaterial(), nextTier.getPrice());
 
 		game.setTeamUpgradeLevel(teamName, key, nextTier.getLevel());
 		applyEffect(game, teamName, nextTier.getLevel());
@@ -102,7 +102,7 @@ public abstract class TeamUpgrade {
 	public abstract void applyEffect(Game game, String teamName, int level);
 
 	public ItemStack getDisplayItem() {
-		return InventoryManipulation.hideTooltip(displayItem);
+		return BedWarsInventoryManipulator.hideTooltip(displayItem);
 	}
 
 }

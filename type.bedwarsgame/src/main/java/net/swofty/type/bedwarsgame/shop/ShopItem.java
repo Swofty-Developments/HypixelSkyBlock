@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.bedwarsgame.util.InventoryManipulation;
+import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 
 @Getter
 public abstract class ShopItem {
@@ -37,7 +37,7 @@ public abstract class ShopItem {
 	 * @param player the player making the purchase
 	 */
 	public void handlePurchase(Player player) {
-		InventoryManipulation.removeItems(player, currency.getMaterial(), price);
+		BedWarsInventoryManipulator.removeItems(player, currency.getMaterial(), price);
 		onBought(player);
 	}
 

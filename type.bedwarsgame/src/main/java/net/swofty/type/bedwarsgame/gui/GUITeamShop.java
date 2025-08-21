@@ -19,7 +19,7 @@ import net.swofty.type.bedwarsgame.shop.Trap;
 import net.swofty.type.bedwarsgame.shop.TrapService;
 import net.swofty.type.bedwarsgame.shop.TeamShopService;
 import net.swofty.type.bedwarsgame.util.ColorUtil;
-import net.swofty.type.bedwarsgame.util.InventoryManipulation;
+import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -179,7 +179,7 @@ public class GUITeamShop extends HypixelInventoryGUI {
                         playClickSound(p);
                         return;
                     }
-                    InventoryManipulation.removeItems(p, trap.getCurrency().getMaterial(), price);
+                    BedWarsInventoryManipulator.removeItems(p, trap.getCurrency().getMaterial(), price);
                     g.addTeamTrap(t, trap.getKey());
                     broadcastTeamPurchase(g, t, p, trap.getName());
                     playBuySound(p);

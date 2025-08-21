@@ -23,7 +23,7 @@ import net.swofty.type.bedwarsgame.gui.GUIItemShop;
 import net.swofty.type.bedwarsgame.gui.GUITeamChest;
 import net.swofty.type.bedwarsgame.gui.GUITeamShop;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
-import net.swofty.type.bedwarsgame.util.InventoryManipulation;
+import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -217,7 +217,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			return;
 		}
 
-		if (!InventoryManipulation.canBeChested(itemInHand.material())) {
+		if (!BedWarsInventoryManipulator.canBeChested(itemInHand.material())) {
 			player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You cannot store this item in the chest!</red>"));
 			event.setCancelled(true);
 			return;

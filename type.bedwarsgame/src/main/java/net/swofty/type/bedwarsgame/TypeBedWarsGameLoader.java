@@ -151,7 +151,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 
 	@Override
 	public void afterInitialize(MinecraftServer server) {
-		loopThroughPackage("net.swofty.type.bedwarsgame.commands", HypixelCommand.class).forEach(command -> {
+		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsgame.commands", HypixelCommand.class).forEach(command -> {
 			try {
 				MinecraftServer.getCommandManager().register(command.getCommand());
 			} catch (Exception e) {
@@ -245,7 +245,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 
 	@Override
 	public @Nullable CustomWorlds getMainInstance() {
-		return CustomWorlds.PLACEHOLDER;
+		return null;
 	}
 
 	@SneakyThrows
@@ -260,22 +260,6 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 		Game game = new Game(entry, mapInstance);
 		games.add(game);
 		return game;
-	}
-
-	public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {
-		Reflections reflections = new Reflections(packageName);
-		Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(clazz);
-
-		return subTypes.stream()
-				.map(subClass -> {
-					try {
-						return clazz.cast(subClass.getDeclaredConstructor().newInstance());
-					} catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-							 InvocationTargetException e) {
-						return null;
-					}
-				})
-				.filter(Objects::nonNull);
 	}
 
 }

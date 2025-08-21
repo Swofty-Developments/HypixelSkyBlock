@@ -10,7 +10,7 @@ import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.util.InventoryManipulation;
+import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 
 @Getter
 public abstract class Trap {
@@ -47,7 +47,7 @@ public abstract class Trap {
 	}
 
 	public ItemStack getDisplayItem() {
-		return InventoryManipulation.hideTooltip(displayItem);
+		return BedWarsInventoryManipulator.hideTooltip(displayItem);
 	}
 }
 

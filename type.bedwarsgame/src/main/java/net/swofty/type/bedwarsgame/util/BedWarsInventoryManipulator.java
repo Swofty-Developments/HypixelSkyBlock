@@ -10,7 +10,7 @@ import net.minestom.server.item.Material;
 
 import java.util.Arrays;
 
-public class InventoryManipulation {
+public class BedWarsInventoryManipulator {
 
 	public static boolean consumeItemIfNotCreative(Player player, PlayerHand hand, int amount) {
 		if (player.getGameMode() == GameMode.CREATIVE) {
