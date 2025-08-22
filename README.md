@@ -50,9 +50,9 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 4. Move this file into the `configuration` folder you just made.
 5. Create a folder called `skyblock` in the existing configuration folder.
 6. Download the [world files for the SkyBlock Hub, Prototype Lobby, and Island worlds.](https://www.mediafire.com/file/xxnxgkqejlh17fn/HypixelRecreationWorlds.zip/file)
-7. Get the Hypixel SkyBlock hub from the above download and put it in the configuration/skyblock/ folder you made under the name `hypixel_skyblock_hub`, and the Prototype Lobby in configuration under `hypixel_prototype_lobby`.
-8. Get the Hypixel Island default template from the above download and put it in the configuration/skyblock/ folder you made under the name `hypixel_skyblock_island_template`.
-9. Get the item and collection folders from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and put them into your configuration/skyblock/ folder.
+7. Get the Hypixel SkyBlock hub from the above download and put it in the configuration/skyblock/islands/ folder you made under the name `hypixel_skyblock_hub`, and the Prototype Lobby in configuration under `hypixel_prototype_lobby`.
+8. Get the Hypixel Island default template from the above download and put it in the configuration/skyblock/islands/ folder you made under the name `hypixel_skyblock_island_template`.
+9. Get the item and collection folders from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock) and put them into your configuration/skyblock/ folder.
 10. There should be a `forwarding.secret` file where your Velocity JAR is, take this and put it into your `resources.json` under `velocity-secret`.
 11. Run the jar using `java -jar {Insert the JAR file} SKYBLOCK_ISLAND`, this will create an Island server that will latch onto your running proxy.
 12. To make other game servers for the other islands merely run the command above again but with different island types, you can see all the possible types [here](https://github.com/Swofty-Developments/HypixelSkyBlock/blob/7df2db59ef0f14281f332d2cf43fdbf8ab09e574/commons/src/main/java/net/swofty/commons/ServerType.java#L4).
