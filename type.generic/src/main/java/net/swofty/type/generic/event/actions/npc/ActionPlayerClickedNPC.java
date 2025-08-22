@@ -21,6 +21,8 @@ public class ActionPlayerClickedNPC implements HypixelEventClass {
             HypixelNPC npc = HypixelNPC.getFromImpl(player, npcImpl);
             if (npc == null) return;
 
+
+
             npc.onClick(new HypixelNPC.PlayerClickNPCEvent(
                     player,
                     npcImpl.getEntityId(),

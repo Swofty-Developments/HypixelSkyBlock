@@ -24,6 +24,7 @@ public class AdminMeCommand extends HypixelCommand {
     private static final List<String> ADMIN_LIST = List.of(
             "Swofty",
             "Foodzz",
+            "Kavin",
             "Hamza_dev",
             "ItzKatze"
     );

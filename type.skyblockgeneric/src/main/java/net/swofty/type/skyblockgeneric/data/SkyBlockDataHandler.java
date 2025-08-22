@@ -381,6 +381,9 @@ public class SkyBlockDataHandler extends DataHandler {
         SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false,
                 DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
 
+        EXPERIMENTATION("experimentation", false, false, false,
+                DatapointExperimentation.class, new DatapointExperimentation("experimentation")),
+
         BITS("bits", false, false, false,
                 DatapointInteger.class, new DatapointInteger("bits", 0)),
 

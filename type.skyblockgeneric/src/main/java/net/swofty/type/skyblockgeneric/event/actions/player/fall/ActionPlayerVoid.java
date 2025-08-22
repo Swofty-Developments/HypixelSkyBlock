@@ -15,7 +15,8 @@ public class ActionPlayerVoid implements HypixelEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (player.getPosition().y() < 0 && player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
-            player.damage(DamageType.OUT_OF_WORLD, Float.MAX_VALUE);
+            player.teleport(player.getRespawnPoint());
+            //player.damage(DamageType.OUT_OF_WORLD, Float.MAX_VALUE);
         }
     }
 }

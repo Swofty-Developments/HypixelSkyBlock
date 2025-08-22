@@ -5,7 +5,7 @@
   "limbo-port": "65535",
   "pterodactyl-mode": false,
   "spark": false,
-  "require-authentication": false,
+  "require-authentication": true,
   "cross-version-support": true,
   "host-name": "0.0.0.0",
   "transfer-timeout": "800",
