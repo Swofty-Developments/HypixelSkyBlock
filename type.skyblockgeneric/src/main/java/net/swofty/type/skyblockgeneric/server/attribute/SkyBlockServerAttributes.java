@@ -7,8 +7,8 @@ import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelTypeLoader;
-import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.server.attribute.attributes.AttributeLong;
 import org.bson.Document;
 
@@ -66,7 +66,7 @@ public class SkyBlockServerAttributes {
     public static void saveAttributeLoop() {
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             AttributeDatabase.saveDocument(toDocument());
-        }, TaskSchedule.seconds(3), TaskSchedule.seconds(3) , ExecutionType.TICK_END);
+        }, TaskSchedule.seconds(3), TaskSchedule.seconds(3), ExecutionType.TICK_END);
     }
 
     public enum Attributes {

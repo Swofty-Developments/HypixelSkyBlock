@@ -12,7 +12,7 @@ public enum Rank {
     GAMEMASTER("§2[GM] ", true, NamedTextColor.DARK_GREEN),
     MOD("§2[MOD] ", true, NamedTextColor.DARK_GREEN),
     HELPER("§9[HELPER] ", true, NamedTextColor.BLUE),
-    JRHELPER("§9[JR HELPER] ", true , NamedTextColor.BLUE),
+    JRHELPER("§9[JR HELPER] ", true, NamedTextColor.BLUE),
     BT("§d[BT] ", false, NamedTextColor.LIGHT_PURPLE),
     YOUTUBE("§c[§fYOUTUBE§c] ", false, NamedTextColor.RED),
     MVP_PLUS("§b[MVP§c+§b] ", false, NamedTextColor.AQUA),

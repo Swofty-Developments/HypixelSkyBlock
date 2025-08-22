@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 public class ActionPlayerClicksMuseumNPCDisplay implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true , isAsync = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
     public void run(PlayerBlockInteractEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         Pos displayPosition = new Pos(-23, 67, 80);

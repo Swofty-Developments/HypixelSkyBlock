@@ -92,7 +92,7 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
                     String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
                     int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
                     String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                            completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                            completedLoadingBar.length() - formattingCodeLength, // Adjust for added formatting codes
                             maxBarLength
                     ));
 
@@ -142,7 +142,7 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
                     String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
                     int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
                     String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                            completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                            completedLoadingBar.length() - formattingCodeLength, // Adjust for added formatting codes
                             maxBarLength
                     ));
 

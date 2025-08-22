@@ -19,7 +19,7 @@ public class VillagerLynn extends NPCVillagerDialogue {
 
             @Override
             public Pos position() {
-                return new Pos(-21.5 ,68 ,-124.5);
+                return new Pos(-21.5,68,-124.5);
             }
 
             @Override

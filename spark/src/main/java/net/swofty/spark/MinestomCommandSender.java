@@ -23,7 +23,7 @@ public class MinestomCommandSender extends AbstractCommandSender<CommandSender> 
             return player.getUsername();
         } else if (this.delegate instanceof ConsoleSender) {
             return "Console";
-        }else {
+        } else {
             return "unknown:" + this.delegate.getClass().getSimpleName();
         }
     }

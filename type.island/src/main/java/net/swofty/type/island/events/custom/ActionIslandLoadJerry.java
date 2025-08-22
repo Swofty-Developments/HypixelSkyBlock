@@ -15,7 +15,7 @@ import org.bson.Document;
 public class ActionIslandLoadJerry implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(IslandFetchedFromDatabaseEvent event) {
         Document document = event.getIsland().getDatabase().getDocument();
         JerryInformation jerryInformation = event.getIsland().getJerryInformation();

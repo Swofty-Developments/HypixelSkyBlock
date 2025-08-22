@@ -149,7 +149,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                             // Store the price data thread-safely
                             setDataMap.get(set).put(type, new PriceData(
                                     type,
-                                    stats.averageAsk(),   // Average sell price
+                                    stats.averageAsk(),  // Average sell price
                                     stats.averageBid()    // Average buy price
                             ));
                         })

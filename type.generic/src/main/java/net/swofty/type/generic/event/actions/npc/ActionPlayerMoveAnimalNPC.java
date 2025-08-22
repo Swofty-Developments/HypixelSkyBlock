@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerMoveAnimalNPC implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(PlayerMoveEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

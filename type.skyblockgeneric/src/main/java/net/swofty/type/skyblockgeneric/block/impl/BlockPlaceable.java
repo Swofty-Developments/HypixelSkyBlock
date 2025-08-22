@@ -5,5 +5,5 @@ import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
 
 public interface BlockPlaceable {
 
-    void onPlace(PlayerBlockPlaceEvent event , SkyBlockBlock block);
+    void onPlace(PlayerBlockPlaceEvent event, SkyBlockBlock block);
 }

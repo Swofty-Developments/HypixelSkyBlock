@@ -14,7 +14,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerClickedVillagerNPC implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run( PlayerEntityInteractEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

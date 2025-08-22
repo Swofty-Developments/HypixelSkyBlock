@@ -5,11 +5,11 @@ import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.entity.ArrowEntityImpl;
-import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.entity.ArrowEntityImpl;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class PlayerActionArrowDamageMob implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ALL , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
     public void run(ProjectileCollideWithEntityEvent event) {
         ArrowEntityImpl arrow;
         if (event.getEntity() instanceof ArrowEntityImpl arrowEntity)
