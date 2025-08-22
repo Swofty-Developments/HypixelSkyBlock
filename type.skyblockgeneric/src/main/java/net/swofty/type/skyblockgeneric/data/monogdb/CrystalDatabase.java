@@ -30,7 +30,7 @@ public class CrystalDatabase {
     public static List<CrystalData> getFromAround(ServerType type, Pos pos, double distance) {
         List<CrystalData> crystals = new ArrayList<>();
         for (Document doc : collection.find()) {
-            if (ServerType.valueOf(doc.getString("serverType")) != type) {
+            if (ServerType.getSkyblockServer(doc.getString("serverType")) != type) {
                 continue;
             }
             double x = doc.getDouble("x");
@@ -43,7 +43,7 @@ public class CrystalDatabase {
                 Double y1 = doc.getDouble("y");
                 Double z1 = doc.getDouble("z");
                 ItemType itemTypeLinker = ItemType.valueOf(doc.getString("itemType"));
-                ServerType serverType = ServerType.valueOf(doc.getString("serverType"));
+                ServerType serverType = ServerType.getSkyblockServer(doc.getString("serverType"));
 
                 CrystalData crystal = new CrystalData();
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class DoubleChest implements Chest {
 
-    private static final Tag<List<ItemStack>> ITEMS_TAG = Tag.ItemStack("configuration/items").list();
+    private static final Tag<List<ItemStack>> ITEMS_TAG = Tag.ItemStack("configuration/skyblock/items").list();
     private final Instance instance;
     private final Point leftPosition;
     private final Point rightPosition;

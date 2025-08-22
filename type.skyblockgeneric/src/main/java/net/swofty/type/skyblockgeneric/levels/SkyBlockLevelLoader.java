@@ -21,7 +21,7 @@ import java.util.Map;
 @Data
 public class SkyBlockLevelLoader {
     private static final String FILE_NAME = "skyblock_level_rewards";
-    private static final File LEVELS_DIR = new File("./configuration/levels");
+    private static final File LEVELS_DIR = new File("./configuration/skyblock/levels");
 
     @Data
     public static class LevelConfig {

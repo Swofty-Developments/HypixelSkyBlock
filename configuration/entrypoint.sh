@@ -16,10 +16,10 @@ sed -i "s/secret: '.*'/secret: '$secret'/" ./settings.yml
 screen -wipe
 
 # Start services in separate screen sessions
-screen -dmS SkyBlockCore_ISLAND java --enable-preview -jar SkyBlockCore.jar ISLAND
+screen -dmS SkyBlockCore_ISLAND java --enable-preview -jar SkyBlockCore.jar SKYBLOCK_ISLAND
 sleep 20
-screen -dmS SkyBlockCore_HUB java --enable-preview -jar SkyBlockCore.jar HUB
-screen -dmS SkyBlockCore_FARMING java --enable-preview -jar SkyBlockCore.jar THE_FARMING_ISLANDS
+screen -dmS SkyBlockCore_HUB java --enable-preview -jar SkyBlockCore.jar SKYBLOCK_HUB
+screen -dmS SkyBlockCore_FARMING java --enable-preview -jar SkyBlockCore.jar SKYBLOCK_THE_FARMING_ISLANDS
 screen -dmS NanoLimbo java -jar NanoLimbo-1.9.1-all.jar
 screen -dmS ServiceAPI java -jar ServiceAPI.jar
 screen -dmS ServiceAuctionHouse java -jar ServiceAuctionHouse.jar
