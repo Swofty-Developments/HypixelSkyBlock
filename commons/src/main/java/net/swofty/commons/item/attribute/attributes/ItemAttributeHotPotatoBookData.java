@@ -9,7 +9,6 @@ import net.swofty.commons.item.PotatoType;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -89,7 +88,7 @@ public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeH
         public void addAmount(ItemType itemType, int amount) {
             if (!appliedItems.containsKey(itemType)) {
                 appliedItems.put(itemType, amount);
-            }else{
+            } else {
                 appliedItems.put(itemType, appliedItems.get(itemType) + amount);
             }
         }

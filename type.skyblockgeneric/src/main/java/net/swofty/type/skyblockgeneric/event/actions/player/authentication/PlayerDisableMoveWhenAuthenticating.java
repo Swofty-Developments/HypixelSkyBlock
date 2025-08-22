@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class PlayerDisableMoveWhenAuthenticating implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerMoveEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (player.hasAuthenticated) return;

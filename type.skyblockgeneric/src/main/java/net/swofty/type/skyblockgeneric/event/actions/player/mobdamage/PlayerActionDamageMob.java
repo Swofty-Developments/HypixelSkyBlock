@@ -10,15 +10,15 @@ import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamageMobValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
-import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class PlayerActionDamageMob implements HypixelEventClass {
     private static final Random random = new Random();
     private static final Map<UUID, Long> COOLDOWN = new HashMap<>();
 
-    @HypixelEvent(node = EventNodes.ALL , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
     public void run(EntityAttackEvent event) {
         if (event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
         if (!event.getEntity().getEntityType().equals(EntityType.PLAYER)) return;

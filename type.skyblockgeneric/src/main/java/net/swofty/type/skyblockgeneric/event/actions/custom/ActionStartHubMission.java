@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.region.RegionType;
 
 public class ActionStartHubMission implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(PlayerRegionChangeEvent event) {
         if (event.getTo() == null) return;
         if (event.getTo() != RegionType.VILLAGE) return;

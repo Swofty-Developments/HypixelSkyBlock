@@ -8,7 +8,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 
 public class ActionAnimateEntityDamage implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ENTITY , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.ENTITY, requireDataLoaded = false)
     public void run(EntityDamageEvent event) {
         event.setAnimation(true);
         event.setCancelled(false);

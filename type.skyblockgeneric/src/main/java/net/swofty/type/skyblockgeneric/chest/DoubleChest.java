@@ -71,8 +71,8 @@ public class DoubleChest implements Chest {
 
     @Override
     public void update() {
-        save(leftPosition , leftItems);
-        save(rightPosition , rightItems);
+        save(leftPosition, leftItems);
+        save(rightPosition, rightItems);
     }
 
     @Override

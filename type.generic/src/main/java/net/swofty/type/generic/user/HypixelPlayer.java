@@ -80,9 +80,9 @@ public class HypixelPlayer extends Player {
     }
 
     public PlayerSkin getPlayerSkin() {
-        String texture = getDataHandler().get(HypixelDataHandler.Data.SKIN_TEXTURE , DatapointString.class).getValue();
-        String signature = getDataHandler().get(HypixelDataHandler.Data.SKIN_SIGNATURE , DatapointString.class).getValue();
-        return new PlayerSkin(texture , signature);
+        String texture = getDataHandler().get(HypixelDataHandler.Data.SKIN_TEXTURE, DatapointString.class).getValue();
+        String signature = getDataHandler().get(HypixelDataHandler.Data.SKIN_SIGNATURE, DatapointString.class).getValue();
+        return new PlayerSkin(texture, signature);
     }
 
     public void sendTo(ServerType type) {

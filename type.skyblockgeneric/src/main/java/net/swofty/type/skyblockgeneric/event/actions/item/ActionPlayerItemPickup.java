@@ -3,15 +3,15 @@ package net.swofty.type.skyblockgeneric.event.actions.item;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.network.packet.server.play.CollectItemPacket;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerItemPickup implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerMoveEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

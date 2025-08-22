@@ -22,7 +22,7 @@ import java.util.UUID;
 public class ActionPlayerTravel implements HypixelEventClass {
     public static List<UUID> delay = new ArrayList<>();
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(PlayerMoveEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

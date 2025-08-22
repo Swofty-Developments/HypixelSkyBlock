@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ActionNewZoneDisplay implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(PlayerRegionChangeEvent event) {
         SkyBlockPlayer player = event.getPlayer();
 

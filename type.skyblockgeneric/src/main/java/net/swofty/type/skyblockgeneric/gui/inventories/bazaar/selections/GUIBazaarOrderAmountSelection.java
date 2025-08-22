@@ -76,13 +76,13 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
 
     private void buildLimitUI(SkyBlockPlayer p) {
         // matches your screenshots: “Buy a stack!”, “Buy a big stack!”, “Buy a thousand!”, “Custom Amount”
-        int small  = Math.min(64,  maxAmount);
+        int small  = Math.min(64, maxAmount);
         int medium = Math.min(160, maxAmount);
         int large  = Math.min(1024,maxAmount);
 
-        addLimitButton(9,  small,  "Buy a stack!",     "Amount: " + small + "×", p);
-        addLimitButton(11, medium, "Buy a big stack!", "Amount: " + medium + "×", p);
-        addLimitButton(13, large,  "Buy a thousand!",  "Amount: " + large + "×", p);
+        addLimitButton(9, small, "Buy a stack!",      "Amount: " + small + "×", p);
+        addLimitButton(11, medium, "Buy a big stack!","Amount: " + medium + "×", p);
+        addLimitButton(13, large, "Buy a thousand!",  "Amount: " + large + "×", p);
         addCustom(15, p);
     }
 

@@ -7,12 +7,12 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointQuiver;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointQuiver;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ArrowComponent;
 import net.swofty.type.skyblockgeneric.item.components.QuiverDisplayComponent;
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ActionPlayerChangeHypixelMenuDisplay implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerChangeHeldSlotEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         runCheck(player);

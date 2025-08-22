@@ -9,7 +9,7 @@ public enum ChestType {
     SINGLE,
     DOUBLE;
 
-    public static ChestType from(Instance instance , Point position) {
+    public static ChestType from(Instance instance, Point position) {
         for (BlockFace face : BlockFace.values()) {
             Block adjacent = instance.getBlock(position.add(face.toDirection().normalX(), face.toDirection().normalY(), face.toDirection().normalZ()));
             if (adjacent.name().equals("minecraft:chest")) {

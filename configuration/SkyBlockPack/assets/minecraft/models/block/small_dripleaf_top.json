@@ -27,8 +27,8 @@
             "to": [ 8, 12, 15 ],
             "shade": false,
             "faces": {
-                "down":  { "uv": [ 8, 0, 0, 8 ], "texture": "#top" , "rotation": 270},
-                "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#top" , "rotation": 270}
+                "down":  { "uv": [ 8, 0, 0, 8 ], "texture": "#top", "rotation": 270},
+                "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#top", "rotation": 270}
             }
         },
         {   "from": [ 8, 2, 8 ],

@@ -4,18 +4,16 @@ import lombok.NonNull;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.component.DataComponents;
-import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.Click;
-import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIMinion;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionFuelComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -154,7 +152,7 @@ public class MinionFuelExtension extends MinionExtension {
                     lore.add(Component.text(""));
                     lore.add(Component.text("§cRight Click to destroy this fuel.")
                             .decorations(Collections.singleton(TextDecoration.ITALIC), false));
-                }else{
+                } else {
                     lore.add(Component.text(""));
                     lore.add(Component.text("§eClick to take fuel out.")
                             .decorations(Collections.singleton(TextDecoration.ITALIC), false));

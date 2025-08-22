@@ -24,7 +24,7 @@ public class ActionPlayerDamageBlock implements HypixelEventClass {
     public static final Map<UUID, BreakingTask> CLICKING = new HashMap<>();
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(PlayerDamageSkyBlockBlockEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(event.getBlockPosition());

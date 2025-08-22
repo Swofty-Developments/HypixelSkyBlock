@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.utility.JerryInformation;
 
 public class ActionIslandSaveJerry implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(IslandSavedIntoDatabaseEvent event) {
         JerryInformation jerryInformation = event.getIsland().getJerryInformation();
 

@@ -11,8 +11,8 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -274,7 +274,7 @@ public abstract class HypixelInventoryGUI {
             }
 
             previouslyOpen.onClose(
-                    new InventoryCloseEvent(previouslyOpen.getInventory(), player , true),
+                    new InventoryCloseEvent(previouslyOpen.getInventory(), player, true),
                     net.swofty.type.generic.gui.inventory.HypixelInventoryGUI.CloseReason.SERVER_EXITED
             );
             GUI_MAP.remove(player.getUuid());

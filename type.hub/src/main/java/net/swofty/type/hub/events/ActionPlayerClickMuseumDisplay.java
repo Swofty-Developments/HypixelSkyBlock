@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerClickMuseumDisplay implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(PlayerEntityInteractEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
