@@ -51,7 +51,7 @@ public class MinionFuelExtension extends MinionExtension {
             if (System.currentTimeMillis() - insertionTime > timeFuelLasts && timeFuelLasts > 0) {
                 // Time has surpassed the fuel time of 1 of the fuel items
                 count -= 1;
-                if(count <= 0) {
+                if (count <= 0) {
                     // All fuel items have been used
                     shouldDisplayItem = false;
                     setItemTypePassedIn(null);
@@ -120,7 +120,7 @@ public class MinionFuelExtension extends MinionExtension {
                 }
 
                 SkyBlockItem fuelItem = new SkyBlockItem(p.getInventory().getCursorItem());
-                if (!(fuelItem.hasComponent(MinionFuelComponent.class))){
+                if (!(fuelItem.hasComponent(MinionFuelComponent.class))) {
                     player.sendMessage("§cYou can only put fuel in this slot.");
                     return;
                 }
@@ -147,7 +147,7 @@ public class MinionFuelExtension extends MinionExtension {
 
                 List<Component> lore = new ArrayList<>(itemBuilder.build().get(DataComponents.LORE));
 
-                if(timeFuelLasts > 0) {
+                if (timeFuelLasts > 0) {
                     lore.add(Component.text(""));
                     lore.add(Component.text("§7Time Remaining: §b" + StringUtility.formatTimeLeft(timeFuelLasts * count - (System.currentTimeMillis() - insertionTime)))
                             .decorations(Collections.singleton(TextDecoration.ITALIC), false));
@@ -166,7 +166,7 @@ public class MinionFuelExtension extends MinionExtension {
     }
 
     // Returns the amount of fuel added
-    public int addFuel(IslandMinionData.IslandMinion minion, int slot, SkyBlockItem fuelItem){
+    public int addFuel(IslandMinionData.IslandMinion minion, int slot, SkyBlockItem fuelItem) {
         if (fuelItem.hasComponent(MinionFuelComponent.class)) {
             insertionTime = System.currentTimeMillis();
             int added = fuelItem.getAmount();
@@ -207,7 +207,7 @@ public class MinionFuelExtension extends MinionExtension {
         String[] split = string.split(":");
         setItemTypePassedIn(ItemType.valueOf(split[0]));
         insertionTime = Long.parseLong(split[1]);
-        if(split.length > 2)
+        if (split.length > 2)
             count = Integer.parseInt(split[2]);
     }
 }

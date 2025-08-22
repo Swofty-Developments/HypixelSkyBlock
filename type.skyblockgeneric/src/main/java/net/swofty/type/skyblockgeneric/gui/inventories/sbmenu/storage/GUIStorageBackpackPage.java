@@ -8,17 +8,17 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.BackpackComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -30,7 +30,7 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
     public GUIStorageBackpackPage(int page, SkyBlockItem item) {
         super(StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item).getUpdatedItem().build()
                         .get(DataComponents.CUSTOM_NAME))
-                + " (Slot #" + page + ")",
+                        + " (Slot #" + page + ")",
                 MathUtility.getFromSize(9 + item.getComponent(BackpackComponent.class).getRows() * 9));
 
         this.slots = item.getComponent(BackpackComponent.class).getRows() * 9;
@@ -84,7 +84,7 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
             set(new GUIClickableItem(5) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIStorageBackpackPage(data.getLowestBackpackSlot(), new SkyBlockItem(data.getBackpacks().get(data.getLowestBackpackSlot()))).open(player);
                 }
 
@@ -99,13 +99,13 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
                 set(new GUIClickableItem(6) {
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         new GUIStorageBackpackPage(page - 1, new SkyBlockItem(data.getBackpacks().get(page - 1))).open(player);
                     }
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStackHead("§a< Previous Page",
                                 "9c042597eda9f061794fe11dacf78926d247f9eea8ddef39dfbe6022989b8395");
                     }
@@ -122,7 +122,7 @@ public class GUIStorageBackpackPage extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (item == null || new SkyBlockItem(item).isNA())
                         return ItemStackCreator.createNamedItemStack(Material.AIR);
                     return PlayerItemUpdater.playerUpdate(player, new SkyBlockItem(item).getItemStack());

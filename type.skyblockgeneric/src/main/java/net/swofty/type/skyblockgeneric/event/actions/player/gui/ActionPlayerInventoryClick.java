@@ -71,7 +71,7 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
                 return;
             }
 
-            if (event.getInventory() instanceof PlayerInventory){
+            if (event.getInventory() instanceof PlayerInventory) {
                 gui.onBottomClick(event);
             } else {
                 int slot = event.getSlot();

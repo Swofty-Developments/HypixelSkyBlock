@@ -35,7 +35,7 @@ public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeH
         JSONObject obj = new JSONObject(string);
 
         PotatoType potatoType = null;
-        if (obj.has("potatoType")){
+        if (obj.has("potatoType")) {
             potatoType = obj.getEnum(PotatoType.class, "potatoType");
         }
 
@@ -87,22 +87,22 @@ public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeH
         private HashMap<ItemType, Integer> appliedItems = new HashMap<>();
 
         public void addAmount(ItemType itemType, int amount) {
-            if (!appliedItems.containsKey(itemType)){
+            if (!appliedItems.containsKey(itemType)) {
                 appliedItems.put(itemType, amount);
             }else{
                 appliedItems.put(itemType, appliedItems.get(itemType) + amount);
             }
         }
 
-        public int getAmount(ItemType type){
+        public int getAmount(ItemType type) {
             return appliedItems.getOrDefault(type, 0);
         }
 
-        public boolean hasAppliedItem(ItemType itemType){
+        public boolean hasAppliedItem(ItemType itemType) {
             return appliedItems.containsKey(itemType) && appliedItems.get(itemType) > 0;
         }
 
-        public boolean hasAppliedItem(){
+        public boolean hasAppliedItem() {
             return appliedItems.values().stream().mapToInt(Integer::intValue).sum() > 0;
         }
     }

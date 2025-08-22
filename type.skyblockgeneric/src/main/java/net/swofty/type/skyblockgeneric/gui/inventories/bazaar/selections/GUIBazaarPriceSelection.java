@@ -9,7 +9,6 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
@@ -54,13 +53,13 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
             set(new GUIClickableItem(14) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     future.complete(spreadPrice);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§610% of Spread",
                             Material.GOLDEN_HORSE_ARMOR, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -69,7 +68,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
                             "§7Highest price: §6" + highestPrice + " coins",
                             "§7Spread: §6" + highestPrice + " §7- §6" + lowestPrice + " §7= §6" + spread + " coins",
                             " ",
-                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
+                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" + amount + "§7x",
                             "§7Unit price: §6" + spreadPrice + " coins",
                             " ",
                             "§7Total: §6" + (spreadPrice * amount) + " coins",
@@ -83,13 +82,13 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
             set(new GUIClickableItem(12) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     future.complete(incrementedOffer);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§6Best Offer " + (isSellOrder ? "-" : "+") + "0.1",
                             Material.GOLD_NUGGET, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -97,7 +96,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
                             "§7Beat the price of the best offer so",
                             "§7yours is filled first.",
                             " ",
-                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
+                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" + amount + "§7x",
                             "§7Unit price: §6" + incrementedOffer + " coins",
                             " ",
                             "§7Total: §6" + (incrementedOffer * amount) + " coins",
@@ -110,13 +109,13 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
             set(new GUIClickableItem(10) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     future.complete(bestOffer);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§6Same as Best Offer",
                             itemTypeLinker.material, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -124,7 +123,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
                             "§7Use the same price as the lowest",
                             "§7Sell Offer for this item.",
                             " ",
-                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
+                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" + amount + "§7x",
                             "§7Unit price: §6" + bestOffer + " coins",
                             " ",
                             "§7Total: §6" + (bestOffer * amount) + " coins",
@@ -150,7 +149,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§6Custom Price",
                             Material.OAK_SIGN, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
@@ -158,7 +157,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
                             "§7Set the price per unit you're willing",
                             "§7to pay. Minimum 50% of the best order.",
                             " ",
-                            "§7Ordering: §a" +  amount + "§7x",
+                            "§7Ordering: §a" + amount + "§7x",
                             " ",
                             "§eClick to specify!");
                 }

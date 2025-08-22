@@ -79,7 +79,7 @@ public enum MinionRegistry {
         this.minionClass = minionClass;
         this.itemType = ItemType;
     }
-    public static MinionRegistry fromItemType(ItemType itemType){
+    public static MinionRegistry fromItemType(ItemType itemType) {
         return Arrays.stream(values()).filter(minionType -> minionType.itemType == itemType).findFirst().orElse(null);
     }
 

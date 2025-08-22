@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 public class BlockUtility {
 
-    public static Block applyTexture(Block block , String texture){
+    public static Block applyTexture(Block block , String texture) {
         JSONObject json = new JSONObject();
         json.put("isPublic", true);
         json.put("signatureRequired", false);
