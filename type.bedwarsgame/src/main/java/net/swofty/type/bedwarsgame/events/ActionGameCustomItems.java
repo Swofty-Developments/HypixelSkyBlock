@@ -41,25 +41,6 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ActionGameCustomItems implements HypixelEventClass {
-
-	private static Block getWoolBlockFromTeamColor(String teamColor) {
-		return switch (teamColor.toLowerCase()) {
-			case "red" -> Block.RED_WOOL;
-			case "blue" -> Block.BLUE_WOOL;
-			case "green" -> Block.LIME_WOOL; // Minecraft uses "lime" for bright green
-			case "yellow" -> Block.YELLOW_WOOL;
-			case "aqua" -> Block.LIGHT_BLUE_WOOL;
-			case "pink" -> Block.PINK_WOOL;
-			case "gray", "grey" -> Block.GRAY_WOOL;
-			case "white" -> Block.WHITE_WOOL;
-			case "black" -> Block.BLACK_WOOL;
-			case "purple" -> Block.PURPLE_WOOL;
-			case "orange" -> Block.ORANGE_WOOL;
-			case "cyan" -> Block.CYAN_WOOL;
-			default -> Block.WHITE_WOOL;
-		};
-	}
-
 	private static void handleFireballExplosion(FireballProjectile fireball) {
 		final Instance instance = fireball.getInstance();
 		if (instance == null) {
@@ -157,53 +138,7 @@ public class ActionGameCustomItems implements HypixelEventClass {
 
 	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
 	public void run(PlayerUseItemEvent event) {
-		Player player = event.getPlayer();
-		if (event.getItemStack().material() == Material.FIRE_CHARGE) {
-			handleFireball(player, event.getHand());
-			return;
-		}
-		if (event.getItemStack().material() != Material.EGG) return;
-
-		ItemStack stack = event.getItemStack();
-		String teamColor = player.getTag(Tag.String("teamColor"));
-		if (teamColor == null || teamColor.isEmpty()) {
-			teamColor = "white";
-		}
-
-		Block woolBlock = getWoolBlockFromTeamColor(teamColor);
-
-		SoundEvent soundEvent;
-		CustomEntityProjectile projectile;
-		soundEvent = SoundEvent.ENTITY_EGG_THROW;
-		projectile = new ThrownBridgeEgg(woolBlock, player);
-
-
-		((ItemHoldingProjectile) projectile).setItem(stack);
-
-		ThreadLocalRandom random = ThreadLocalRandom.current();
-		ViewUtil.viewersAndSelf(player).playSound(Sound.sound(
-				soundEvent,
-				Sound.Source.PLAYER,
-				0.5f, 0.4f / (random.nextFloat() * 0.4f + 0.8f)
-		), player);
-
-		Pos position = player.getPosition().add(0, player.getEyeHeight(), 0);
-		projectile.shootFromRotation(position.pitch(), position.yaw(), 0, 1.5, 1.0);
-		projectile.setInstance(Objects.requireNonNull(player.getInstance()), position.withView(projectile.getPosition()));
-
-		Vec playerVel = player.getVelocity();
-		projectile.setVelocity(projectile.getVelocity().add(playerVel.x(),
-				player.isOnGround() ? 0.0D : playerVel.y(), playerVel.z()).mul(1.5));
-
-		if (player.getGameMode() != GameMode.CREATIVE) {
-			player.setItemInHand(event.getHand(), stack.withAmount(stack.amount() - 1));
-		}
-
-		MinecraftServer.getSchedulerManager().buildTask(() -> {
-			if (projectile.isActive() && !projectile.isRemoved()) {
-				projectile.remove();
-			}
-		}).delay(TaskSchedule.seconds(4)).schedule();
+		
 	}
 
 	private void handleFireball(Player player, PlayerHand hand) {
@@ -211,7 +146,7 @@ public class ActionGameCustomItems implements HypixelEventClass {
 		new FireballProjectile(EntityType.FIREBALL, player).shoot(player.getPosition().add(0, player.getEyeHeight(), 0).asVec(), 1, 1);
 		player.playSound(Sound.sound(Key.key("minecraft:entity.ghast.shoot"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
 		player.getAttribute(Attribute.MOVEMENT_SPEED).addModifier(new AttributeModifier(Key.key("bw:fireball"), -0.3, AttributeOperation.ADD_MULTIPLIED_TOTAL));
-		MinecraftServer.getSchedulerManager().buildTask(() -> player.getAttribute(Attribute.MOVEMENT_SPEED).removeModifier(Key.key("bw:fireball"))).delay(TaskSchedule.seconds(2)).schedule();
+		MinecraftServer.getSchedulerManager().buildTask(() ->).delay(TaskSchedule.seconds(2)).schedule();
 	}
 
 }

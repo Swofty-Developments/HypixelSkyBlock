@@ -24,6 +24,7 @@ import net.swofty.pvp.feature.CombatFeatures;
 import net.swofty.pvp.feature.FeatureType;
 import net.swofty.pvp.utils.CombatVersion;
 import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.item.BedWarsItemHandler;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
 import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.TeamShopManager;
@@ -68,6 +69,8 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	public static final TeamShopManager teamShopManager = new TeamShopManager();
 	@Getter
 	public static final TrapManager trapManager = new TrapManager();
+	@Getter
+	public static final BedWarsItemHandler itemHandler = new BedWarsItemHandler();
 
 	public static final Tag<@NotNull Boolean> PLAYER_PLACED_TAG = Tag.Boolean("player_placed");
 	public static final Tag<@NotNull Integer> ARMOR_LEVEL_TAG = Tag.Integer("armor_level");
