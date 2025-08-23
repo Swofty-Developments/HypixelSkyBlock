@@ -5,7 +5,7 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="C:/ProgramData/chocolatey/lib/gradle/tools/gradle-8.14" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../ProgramData/chocolatey/lib/gradle/tools/gradle-8.14" />
         <option name="gradleJvm" value="ms-21" />
         <option name="modules">
           <set>
@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/service.auctionhouse" />
             <option value="$PROJECT_DIR$/service.bazaar" />
             <option value="$PROJECT_DIR$/service.datamutex" />
+            <option value="$PROJECT_DIR$/service.experimentation" />
             <option value="$PROJECT_DIR$/service.generic" />
             <option value="$PROJECT_DIR$/service.itemtracker" />
             <option value="$PROJECT_DIR$/service.party" />
