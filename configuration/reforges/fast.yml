@@ -1,9 +1,0 @@
-name: "Fast"
-prefix: "Fast"
-applicableTypes:
-  - "SWORDS"
-  - "FISHING_RODS"
-
-statistics:
-  BONUS_ATTACK_SPEED:
-    expression: "10 * (1 + {level})"
