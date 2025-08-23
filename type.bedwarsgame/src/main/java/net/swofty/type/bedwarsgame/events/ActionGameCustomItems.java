@@ -1,15 +1,10 @@
 package net.swofty.type.bedwarsgame.events;
 
-import net.kyori.adventure.key.Key;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
-import net.kyori.adventure.sound.Sound;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.*;
-import net.minestom.server.entity.attribute.Attribute;
-import net.minestom.server.entity.attribute.AttributeModifier;
-import net.minestom.server.entity.attribute.AttributeOperation;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.Player;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithBlockEvent;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
@@ -17,30 +12,19 @@ import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
-import net.minestom.server.potion.Potion;
-import net.minestom.server.potion.PotionEffect;
-import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.tag.Tag;
-import net.minestom.server.timer.TaskSchedule;
-import net.swofty.pvp.entity.projectile.CustomEntityProjectile;
-import net.swofty.pvp.entity.projectile.ItemHoldingProjectile;
 import net.swofty.pvp.projectile.entities.FireballProjectile;
-import net.swofty.pvp.utils.ViewUtil;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.entity.ThrownBridgeEgg;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
-import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class ActionGameCustomItems implements HypixelEventClass {
+
 	private static void handleFireballExplosion(FireballProjectile fireball) {
 		final Instance instance = fireball.getInstance();
 		if (instance == null) {
@@ -115,38 +99,17 @@ public class ActionGameCustomItems implements HypixelEventClass {
 
 	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
 	public void run(PlayerUseItemOnBlockEvent event) {
-		Player player = event.getPlayer();
-		// it's pretty much unnecessary to check if it's actually for something else because you can't really gather them.
-		if (event.getItemStack().material() == Material.FIRE_CHARGE) {
-			handleFireball(player, event.getHand());
-			return;
-		}
+		TypeBedWarsGameLoader.getItemHandler().onItemUseOnBlock(event);
 	}
 
 	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
 	public void run(PlayerFinishItemUseEvent event) {
-		Player player = event.getPlayer();
-		player.setHealth((float) (player.getHealth() + 4.0));
-		player.setAdditionalHearts((float) (player.getAdditionalHearts() + 2.0));
-		player.addEffect(
-				new Potion(PotionEffect.REGENERATION, 1, 20 * 20) // regen for 20 seconds - not sure if hypixel
-		);
-		player.addEffect(
-				new Potion(PotionEffect.RESISTANCE, 0, 60 * 20) // resistance for 1 minute - not sure if hypixel
-		);
+		TypeBedWarsGameLoader.getItemHandler().onItemFinishUse(event);
 	}
 
 	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
 	public void run(PlayerUseItemEvent event) {
-		
-	}
-
-	private void handleFireball(Player player, PlayerHand hand) {
-		player.setItemInHand(hand, player.getItemInHand(hand).withAmount(player.getItemInHand(hand).amount() - 1));
-		new FireballProjectile(EntityType.FIREBALL, player).shoot(player.getPosition().add(0, player.getEyeHeight(), 0).asVec(), 1, 1);
-		player.playSound(Sound.sound(Key.key("minecraft:entity.ghast.shoot"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
-		player.getAttribute(Attribute.MOVEMENT_SPEED).addModifier(new AttributeModifier(Key.key("bw:fireball"), -0.3, AttributeOperation.ADD_MULTIPLIED_TOTAL));
-		MinecraftServer.getSchedulerManager().buildTask(() ->).delay(TaskSchedule.seconds(2)).schedule();
+		TypeBedWarsGameLoader.getItemHandler().onItemUse(event);
 	}
 
 }
