@@ -347,7 +347,7 @@ def main():
         "limbo-port": "65535",
         "pterodactyl-mode": False,
         "spark": False,
-        "require-authentication": True,
+        "require-authentication": False,
         "transfer-timeout": "800",
         "sandbox-mode": True
     }

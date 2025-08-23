@@ -1,0 +1,83 @@
+items:
+  - id: LEATHER_HELMET
+    material: LEATHER_HELMET
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+            ingredients:
+              A:
+                type: LEATHER
+                amount: 1
+            result:
+              type: LEATHER_HELMET
+              amount: 1
+    default_statistics:
+      defense: 5.0
+  - id: LEATHER_CHESTPLATE
+    material: LEATHER_CHESTPLATE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A A
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: LEATHER
+                amount: 1
+            result:
+              type: LEATHER_CHESTPLATE
+              amount: 1
+    default_statistics:
+      defense: 15.0
+  - id: LEATHER_LEGGINGS
+    material: LEATHER_LEGGINGS
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+              - A A
+            ingredients:
+              A:
+                type: LEATHER
+                amount: 1
+            result:
+              type: LEATHER_LEGGINGS
+              amount: 1
+    default_statistics:
+      defense: 10.0
+  - id: LEATHER_BOOTS
+    material: LEATHER_BOOTS
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A A
+              - A A
+            ingredients:
+              A:
+                type: LEATHER
+                amount: 1
+            result:
+              type: LEATHER_BOOTS
+              amount: 1
+    default_statistics:
+      defense: 5.0

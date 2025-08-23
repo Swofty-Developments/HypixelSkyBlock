@@ -1,0 +1,40 @@
+items:
+  - id: ENCHANTED_BOOK
+    components:
+      - id: ANVIL_COMBINABLE
+        handler_id: ENCHANTED_BOOK
+      - id: LORE_UPDATE
+        is_absolute: false
+        handler_id: ENCHANTED_BOOK
+      - id: TRACKED_UNIQUE
+      - id: ENCHANTED
+  - id: HOT_POTATO_BOOK
+    rarity: EPIC
+    lore:
+      - "§7This item can be applied to an item up to"
+      - "§a10 §7times!"
+    components:
+      - id: ANVIL_COMBINABLE
+        handler_id: HOT_POTATO_BOOK
+      - id: LORE_UPDATE
+        is_absolute: false
+        handler_id: HOT_POTATO_BOOK
+      - id: SELLABLE
+        value: 38400
+      - id: TRACKED_UNIQUE
+      - id: ENCHANTED
+  - id: FUMING_POTATO_BOOK
+    rarity: EPIC
+    lore:
+      - "§7This book bypasses the §5 Hot Potato"
+      - "§5Book §7 limit of §a10§7, allowing you to"
+      - "§7upgrade an item up to §a15§7 times!"
+    components:
+      - id: ANVIL_COMBINABLE
+        handler_id: HOT_POTATO_BOOK
+      - id: LORE_UPDATE
+        is_absolute: false
+        handler_id: HOT_POTATO_BOOK
+      - id: TRACKED_UNIQUE
+      - id: ENCHANTED
+      - id: DUNGEON_ITEM

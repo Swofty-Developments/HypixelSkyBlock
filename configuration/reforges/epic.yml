@@ -1,0 +1,30 @@
+name: "Epic"
+prefix: "Epic"
+applicableTypes:
+  - "SWORDS"
+  - "FISHING_RODS"
+
+statistics:
+  STRENGTH:
+    common: 15
+    uncommon: 20
+    rare: 25
+    epic: 32
+    legendary: 40
+    mythic: 50
+
+  CRIT_DAMAGE:
+    common: 10
+    uncommon: 15
+    rare: 20
+    epic: 27
+    legendary: 35
+    mythic: 45
+
+  BONUS_ATTACK_SPEED:
+    common: 1
+    uncommon: 2
+    rare: 4
+    epic: 7
+    legendary: 10
+    mythic: 15

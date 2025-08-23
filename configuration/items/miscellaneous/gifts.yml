@@ -1,0 +1,26 @@
+items:
+  - id: DEAD_BUSHOF_LOVE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 333.0
+      - id: ENCHANTED
+  - id: GAME_ANNIHILATOR
+    rarity: COMMON
+    components:
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: true
+      - id: SKULL_HEAD
+        texture: 8da332abde333a15a6c6fcfeca83f0159ea94b68e8f274bafc04892b6dbfc
+  - id: GAME_BREAKER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 777.0
+      - id: ENCHANTED
+  - id: QUALITY_MAP
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1337.0
+      - id: ENCHANTED

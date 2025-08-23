@@ -1,0 +1,16 @@
+name: "Excellent"
+prefix: "Excellent"
+applicableTypes:
+  - "PICKAXES"
+
+statistics:
+  MINING_SPEED:
+    expression: "4 * ({level} + 1)"
+
+  SPEED:
+    common: 1
+    uncommon: 2
+    rare: 3
+    epic: 4
+    legendary: 5
+    mythic: 7

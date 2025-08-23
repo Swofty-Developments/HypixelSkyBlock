@@ -1,0 +1,62 @@
+FROM openjdk:21-jdk-slim
+
+WORKDIR /app
+
+# Install unzip for extracting files
+RUN apt-get update && apt-get install -y jq unzip screen && apt-get clean
+
+# Copy SkyBlockCore.jar
+COPY ../loader/build/libs/HypixelCore.jar SkyBlockCore.jar
+
+# Copy Services
+COPY ../service.api/build/libs/service.api-3.0.jar ./ServiceAPI.jar
+COPY ../service.auctionhouse/build/libs/service.auctionhouse-3.0.jar ./ServiceAuctionHouse.jar
+COPY ../service.bazaar/build/libs/service.bazaar-3.0.jar ./ServiceBazaar.jar
+COPY ../service.itemtracker/build/libs/service.itemtracker-3.0.jar ./ServiceItemTracker.jar
+
+# Copy configuration data
+COPY ./configuration /app/configuration_files
+
+# Create configuration folder
+RUN mkdir -p configuration
+
+RUN ls -la configuration_files/ > test.txt
+
+# Copy resources.json
+RUN cp configuration_files/resources.json ./configuration/resources.json
+
+RUN cp configuration_files/world.zip ./world.zip
+
+RUN unzip world.zip -d ./configuration && rm world.zip
+
+# Expose the required ports
+EXPOSE 25565 65535 8080 20000
+
+# Copy NanoLimbo
+RUN cp configuration_files/NanoLimbo-1.9.1-all.jar ./NanoLimbo-1.9.1-all.jar
+
+# Copy the Nano Config
+RUN cp configuration_files/settings.yml ./settings.yml
+
+# Copy Songs Folder
+RUN cp -R configuration_files/songs ./configuration/songs
+
+# Copy Collections
+RUN cp -R configuration_files/collections ./configuration/collections
+
+# Copy Items
+RUN cp -R configuration_files/items ./configuration/items
+
+# Copy SkyBlockPack
+RUN cp -R configuration_files/SkyBlockPack ./configuration/SkyBlockPack
+
+# Copy pack_textures
+RUN cp -R configuration_files/pack_textures ./configuration/pack_textures
+
+# Copy Entrypoint Script
+RUN cp configuration_files/entrypoint.sh ./entrypoint.sh
+
+RUN chmod +x entrypoint.sh
+
+
+CMD sh ./entrypoint.sh

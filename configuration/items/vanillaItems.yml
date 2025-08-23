@@ -1,0 +1,923 @@
+items:
+  - id: CHAIN
+    material: CHAIN
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+              - A
+            ingredients:
+              A:
+                type: IRON_NUGGET
+                amount: 1
+              B:
+                type: IRON_INGOT
+                amount: 1
+            result:
+              type: CHAIN
+              amount: 1
+  - id: HAY_BALE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 54.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: WHEAT
+                amount: 1
+            result:
+              type: HAY_BALE
+              amount: 1
+  - id: BAKED_POTATO
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: CACTUS_GREEN
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: ANVIL
+    material: ANVIL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - OBO
+              - BBB
+            ingredients:
+              A:
+                type: IRON_BLOCK
+                amount: 1
+              B:
+                type: IRON_INGOT
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: ANVIL
+              amount: 1
+  - id: CHEST
+    material: CHEST
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+        block_type: CHEST
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+              - AAA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: CHEST
+              amount: 1
+  - id: CRAFTING_TABLE
+    material: CRAFTING_TABLE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: CRAFTING_TABLE
+              amount: 1
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SPRUCE_PLANKS
+                amount: 1
+            result:
+              type: CRAFTING_TABLE
+              amount: 1
+  - id: LADDER
+    material: LADDER
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A A
+              - AAA
+              - A A
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+            result:
+              type: LADDER
+              amount: 1
+  - id: STICK
+    material: STICK
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 0.2
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: STICK
+              amount: 4
+  - id: FISHING_ROD
+    material: FISHING_ROD
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - AB
+              - A B
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: STRING
+                amount: 1
+            result:
+              type: FISHING_ROD
+              amount: 1
+    default_statistics:
+      damage: 10.0
+      strength: 5.0
+  - id: BREWING_STAND
+    components:
+      - id: PLACEABLE
+  - id: ENCHANTING_TABLE
+    components:
+      - id: PLACEABLE
+  - id: FURNACE
+    material: FURNACE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: FURNACE
+              amount: 1
+  - id: REDSTONE_TORCH
+    material: REDSTONE_TORCH
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: REDSTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: REDSTONE_TORCH
+              amount: 1
+  - id: REPEATER
+    material: REPEATER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - CCC
+            ingredients:
+              A:
+                type: REDSTONE_TORCH
+                amount: 1
+              B:
+                type: REDSTONE
+                amount: 1
+              C:
+                type: STONE
+                amount: 1
+            result:
+              type: REPEATER
+              amount: 1
+  - id: COMPARATOR
+    material: COMPARATOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - OAO
+              - ABA
+              - CCC
+            ingredients:
+              A:
+                type: REDSTONE_TORCH
+                amount: 1
+              B:
+                type: QUARTZ
+                amount: 1
+              C:
+                type: STONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: COMPARATOR
+              amount: 1
+  - id: LEVER
+    material: LEVER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: COBBLESTONE
+                amount: 1
+            result:
+              type: LEVER
+              amount: 1
+  - id: STONE_BUTTON
+    material: STONE_BUTTON
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: STONE
+                amount: 1
+            result:
+              type: STONE_BUTTON
+              amount: 1
+  - id: STONE_PRESSURE_PLATE
+    material: STONE_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: STONE
+                amount: 1
+            result:
+              type: STONE_PRESSURE_PLATE
+              amount: 1
+  - id: LIGHT_WEIGHTED_PRESSURE_PLATE
+    material: LIGHT_WEIGHTED_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+            result:
+              type: LIGHT_WEIGHTED_PRESSURE_PLATE
+              amount: 1
+  - id: HEAVY_WEIGHTED_PRESSURE_PLATE
+    material: HEAVY_WEIGHTED_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+            result:
+              type: HEAVY_WEIGHTED_PRESSURE_PLATE
+              amount: 1
+  - id: TRIPWIRE_HOOK
+    material: TRIPWIRE_HOOK
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+              - C
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              C:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: TRIPWIRE_HOOK
+              amount: 2
+  - id: PISTON
+    material: PISTON
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BCB
+              - BDB
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: COBBLESTONE
+                amount: 1
+              C:
+                type: IRON_INGOT
+                amount: 1
+              D:
+                type: REDSTONE
+                amount: 1
+            result:
+              type: PISTON
+              amount: 1
+  - id: STICKY_PISTON
+    material: STICKY_PISTON
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: PISTON
+                amount: 1
+              - type: SLIME_BALL
+                amount: 1
+            result:
+              type: STICKY_PISTON
+              amount: 1
+  - id: DISPENSER
+    material: DISPENSER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - ACA
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: BOW
+                amount: 1
+              C:
+                type: REDSTONE
+                amount: 1
+            result:
+              type: DISPENSER
+              amount: 1
+  - id: DROPPER
+    material: DROPPER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: REDSTONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DROPPER
+              amount: 1
+  - id: HOPPER
+    material: HOPPER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - ABA
+              - OAO
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: CHEST
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: HOPPER
+              amount: 1
+  - id: NOTE_BLOCK
+    material: NOTE_BLOCK
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: REDSTONE
+                amount: 1
+            result:
+              type: NOTE_BLOCK
+              amount: 1
+  - id: RAIL
+    material: RAIL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - ABA
+              - AOA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: RAIL
+              amount: 16
+  - id: ACTIVATOR_RAIL
+    material: ACTIVATOR_RAIL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ACA
+              - ABA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              C:
+                type: REDSTONE_TORCH
+                amount: 1
+            result:
+              type: ACTIVATOR_RAIL
+              amount: 6
+  - id: DETECTOR_RAIL
+    material: DETECTOR_RAIL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - ABA
+              - ACA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STONE_PRESSURE_PLATE
+                amount: 1
+              C:
+                type: REDSTONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DETECTOR_RAIL
+              amount: 6
+  - id: POWERED_RAIL
+    material: POWERED_RAIL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - ABA
+              - ACA
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              C:
+                type: REDSTONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: POWERED_RAIL
+              amount: 6
+  - id: MINECART
+    material: MINECART
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: MINECART
+              amount: 1
+  - id: CHEST_MINECART
+    material: CHEST_MINECART
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: CHEST
+                amount: 1
+              B:
+                type: MINECART
+                amount: 1
+            result:
+              type: CHEST_MINECART
+              amount: 1
+  - id: HOPPER_MINECART
+    material: HOPPER_MINECART
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: HOPPER
+                amount: 1
+              B:
+                type: MINECART
+                amount: 1
+            result:
+              type: HOPPER_MINECART
+              amount: 1
+  - id: TNT_MINECART
+    material: TNT_MINECART
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: TNT
+                amount: 1
+              B:
+                type: MINECART
+                amount: 1
+            result:
+              type: TNT_MINECART
+              amount: 1
+  - id: FURNACE_MINECART
+    material: FURNACE_MINECART
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: FURNACE
+                amount: 1
+              B:
+                type: MINECART
+                amount: 1
+            result:
+              type: FURNACE_MINECART
+              amount: 1
+  - id: TNT
+    material: TNT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - BAB
+              - ABA
+            ingredients:
+              A:
+                type: GUNPOWDER
+                amount: 1
+              B:
+                type: SAND
+                amount: 1
+            result:
+              type: TNT
+              amount: 1
+  - id: DAYLIGHT_DETECTOR
+    material: DAYLIGHT_DETECTOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+              - CCC
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: QUARTZ
+                amount: 1
+              C:
+                type: OAK_SLAB
+                amount: 1
+            result:
+              type: DAYLIGHT_DETECTOR
+              amount: 1
+  - id: JUKEBOX
+    material: JUKEBOX
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: DIAMOND
+                amount: 1
+            result:
+              type: JUKEBOX
+              amount: 1
+
+

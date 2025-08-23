@@ -1,0 +1,16 @@
+name: "Unyielding"
+prefix: "Unyielding"
+applicableTypes:
+  - "PICKAXES"
+
+statistics:
+  MINING_FORTUNE:
+    expression: "1 + {level}"
+
+  SPEED:
+    common: 1
+    uncommon: 2
+    rare: 3
+    epic: 5
+    legendary: 7
+    mythic: 9

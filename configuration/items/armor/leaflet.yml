@@ -1,0 +1,57 @@
+items:
+  - id: LEAFLET_BOOTS
+    rarity: COMMON
+    default_statistics:
+      health: 15.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
+      - id: LEATHER_COLOR
+        r: '77'
+        g: '204'
+        b: '77'
+      - id: SELLABLE
+        value: 2.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Leaflet Sandals
+  - id: LEAFLET_CHESTPLATE
+    rarity: COMMON
+    default_statistics:
+      health: 35.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+      - id: LEATHER_COLOR
+        r: '77'
+        g: '204'
+        b: '77'
+      - id: SELLABLE
+        value: 4.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Leaflet Tunic
+  - id: LEAFLET_HELMET
+    rarity: COMMON
+    default_statistics:
+      health: 20.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: HELMET
+      - id: SELLABLE
+        value: 2.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Leaflet Hat
+  - id: LEAFLET_LEGGINGS
+    rarity: COMMON
+    default_statistics:
+      health: 20.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: LEGGINGS
+      - id: LEATHER_COLOR
+        r: '77'
+        g: '204'
+        b: '77'
+      - id: SELLABLE
+        value: 3.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Leaflet Pants

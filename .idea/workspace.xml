@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3abc7aeb-2330-4e18-8705-4e9982d9333f" name="Changes" comment="feat: message command">
+      <change afterPath="$PROJECT_DIR$/server/proxy/configuration/resources.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.7/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.7/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.7/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/checksums/sha1-checksums.bin" afterDir="false" />
@@ -15,19 +16,50 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.7/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/configuration-cache/configuration-cache.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/configuration-cache/configuration-cache.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commons/src/main/java/net/swofty/commons/item/ItemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/commons/src/main/java/net/swofty/commons/item/ItemType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configuration/forwarding.secret" beforeDir="false" afterPath="$PROJECT_DIR$/configuration/forwarding.secret" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configuration/items/miscellaneous/miscellaneous.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configuration/items/miscellaneous/miscellaneous.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/install.py" beforeDir="false" afterPath="$PROJECT_DIR$/script/install.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/block/BlockType.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/block/BlockType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/commands/ItemCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/commands/ItemCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/commands/ItemListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/commands/ItemListCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/gui/inventories/experiments/GUIChronomatronPlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/gui/inventories/experiments/GUIChronomatronPlay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/velocity.extension/src/main/java/net/swofty/velocity/SkyBlockVelocity.java" beforeDir="false" afterPath="$PROJECT_DIR$/velocity.extension/src/main/java/net/swofty/velocity/SkyBlockVelocity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/commons/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loader/src/main/java/net/swofty/loader/Hypixel.java" beforeDir="false" afterPath="$PROJECT_DIR$/loader/src/main/java/net/swofty/loader/Hypixel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.generic/src/main/java/net/swofty/types/generic/mission/missions/shepherd/MissionShearSheep.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/sheperd/MissionShearSheep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.generic/src/main/java/net/swofty/types/generic/mission/missions/shepherd/MissionTalkToShepherd.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/sheperd/MissionTalkToShepherd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.prototypelobby/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/type.prototypelobby/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/SkyBlockGenericLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/SkyBlockGenericLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/gui/inventories/sbmenu/questlog/GUIMissionLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/gui/inventories/sbmenu/questlog/GUIMissionLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/HypixelMission.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/SkyBlockMission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/HypixelProgressMission.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/SkyBlockProgressMission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/MissionData.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/MissionData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/MissionRepeater.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/MissionRepeater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/MissionSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/MissionSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionBreakLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionBreakLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionCraftWoodenPickaxe.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionCraftWoodenPickaxe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionCraftWorkbench.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionCraftWorkbench.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionDepositCoinsInBank.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionDepositCoinsInBank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionGiveWoolToCarpenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionGiveWoolToCarpenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionKillZombies.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionKillZombies.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkJerry.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkJerry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkToAuctionMaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkToAuctionMaster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkToBanker.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkToBanker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkToBartender.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkToBartender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkToLibrarian.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkToLibrarian.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkToVillagers.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionTalkToVillagers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionUseTeleporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/MissionUseTeleporter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/barn/MissionCraftWheatMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/barn/MissionCraftWheatMinion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/barn/MissionTalkToFarmHand.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/barn/MissionTalkToFarmHand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/barn/MissionTalkToFarmhandAgain.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/barn/MissionTalkToFarmhandAgain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/blacksmith/MissionMineCoal.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/blacksmith/MissionMineCoal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/blacksmith/MissionTalkToBlacksmith.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/blacksmith/MissionTalkToBlacksmith.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/blacksmith/MissionTalkToBlacksmithAgain.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/blacksmith/MissionTalkToBlacksmithAgain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/farmer/MissionCollectWheat.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/farmer/MissionCollectWheat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/farmer/MissionTalkToFarmer.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/farmer/MissionTalkToFarmer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/farmer/MissionTalkToFarmerAgain.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/farmer/MissionTalkToFarmerAgain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/lumber/MissionBreakOaklog.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/lumber/MissionBreakOaklog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/lumber/MissionTalkToLumberjack.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/lumber/MissionTalkToLumberjack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/lumber/MissionTalkToLumberjackAgain.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/mission/missions/lumber/MissionTalkToLumberjackAgain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/user/SkyBlockScoreboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/user/SkyBlockScoreboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/user/statistics/PlayerStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.skyblockgeneric/src/main/java/net/swofty/type/skyblockgeneric/user/statistics/PlayerStatistics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/velocity.extension/src/main/java/net/swofty/velocity/gamemanager/TransferHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/velocity.extension/src/main/java/net/swofty/velocity/gamemanager/TransferHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,9 +183,6 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2hJ1xd8pyfwTrbeAwWIrjCCjZQh" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -188,21 +217,18 @@
     "JAR Application.Run Proxy.executor": "Run",
     "Multirun.Run Proxy.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "SHELLCHECK.PATH": "C:\\Users\\zbuser\\AppData\\Roaming\\JetBrains\\IntelliJIdea2025.1\\plugins\\Shell Script\\shellcheck.exe",
-    "git-widget-placeholder": "experiments",
-    "ignore.virus.scanning.warn.message": "true",
+    "git-widget-placeholder": "#518 on full__hypixel",
     "jdk.selected.JAVA_MODULE": "openjdk-21",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/zbuser/IdeaProjects/HypixelSkyBlock",
+    "last_opened_file_path": "E:/IdeaProjects/HypixelSkyBlockFixed/configuration",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/zbuser/IdeaProjects/HypixelSkyBlock/service.experimentation/src/Main.java",
+    "onboarding.tips.debug.path": "C:/Users/Swofty/IdeaProjects/HypixelSkyBlockFixed/anticheat/src/main/java/net/swofty/Main.java",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -213,18 +239,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\zbuser\IdeaProjects\HypixelSkyBlock" />
       <recent name="E:\IdeaProjects\HypixelSkyBlockFixed\configuration" />
       <recent name="E:\IdeaProjects\HypixelSkyBlockFixed\server\proxy\configuration" />
       <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockFixed\server\proxy" />
       <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockFixed\configuration" />
+      <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockFixed\velocity.extension" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\zbuser\IdeaProjects\HypixelSkyBlock\service.experimentation\src" />
-      <recent name="C:\Users\zbuser\IdeaProjects\HypixelSkyBlock\configuration\hypixel_hub" />
       <recent name="E:\IdeaProjects\HypixelSkyBlockFixed\loader" />
       <recent name="E:\IdeaProjects\HypixelSkyBlockFixed\configuration" />
       <recent name="E:\IdeaProjects\HypixelSkyBlockFixed\configuration\levels" />
+      <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockFixed\type.generic\src\main\resources\items" />
+      <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockFixed\type.generic\src\main\resources\items\pets" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="net.swofty.types.generic.item" />
@@ -234,7 +260,7 @@
       <recent name="net.swofty.commons.item" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Build Proxy">
+  <component name="RunManager" selected="Gradle.SkyBlock (Island)">
     <configuration name="BazaarService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="net.swofty.service.bazaar.BazaarService" />
       <module name="HypixelSkyBlock.service.bazaar.main" />
@@ -330,28 +356,6 @@
         <option name="taskNames">
           <list>
             <option value="runServer" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="HypixelSkyBlock [anticheat:build]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="anticheat:build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -515,32 +519,34 @@
       <item itemvalue="Application.DataMutexService" />
       <item itemvalue="Application.DungeonsTest" />
       <item itemvalue="Application.ItemTrackerService" />
+      <item itemvalue="Batch.Move Proxy" />
       <item itemvalue="Gradle.SkyBlock (Dungeon Hub)" />
       <item itemvalue="Gradle.SkyBlock (Farming Islands)" />
       <item itemvalue="Gradle.SkyBlock (Hub)" />
       <item itemvalue="Gradle.SkyBlock (Island)" />
-      <item itemvalue="Gradle.HypixelSkyBlock [anticheat:build]" />
       <item itemvalue="Gradle.Hypixel (Prototype)" />
       <item itemvalue="Gradle.TestFlow (Send To Hub)" />
       <item itemvalue="Gradle.Build Proxy" />
       <item itemvalue="JAR Application.Run Passthrough" />
       <item itemvalue="JAR Application.Run Proxy" />
+      <item itemvalue="Multirun.Run All Services" />
+      <item itemvalue="Multirun.Run Proxy" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Build Proxy" />
-        <item itemvalue="Application.ItemTrackerService" />
         <item itemvalue="Application.DungeonsTest" />
-        <item itemvalue="Application.DataMutexService" />
+        <item itemvalue="Application.ItemTrackerService" />
         <item itemvalue="Application.BazaarService" />
+        <item itemvalue="Application.DataMutexService" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
@@ -656,12 +662,6 @@
       <workItem from="1754713716124" duration="10891000" />
       <workItem from="1754832783106" duration="3000" />
       <workItem from="1754880476033" duration="2176000" />
-      <workItem from="1755579818129" duration="11642000" />
-      <workItem from="1755663573014" duration="508000" />
-      <workItem from="1755664102268" duration="10046000" />
-      <workItem from="1755678133395" duration="9841000" />
-      <workItem from="1755751695265" duration="5660000" />
-      <workItem from="1755843001665" duration="2444000" />
     </task>
     <task id="LOCAL-00002" summary="feat: migration to Gradle">
       <option name="closed" value="true" />
@@ -1061,17 +1061,6 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnknownFeatures">
-    <option featureType="dependencySupport" implementationName="java:junit:junit" />
-    <option featureType="dependencySupport" implementationName="executable:docker" />
-    <option featureType="dependencySupport" implementationName="java:com.velocitypowered:velocity-api" />
-    <option featureType="dependencySupport" implementationName="java:net.kyori:adventure-api" />
-    <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
-    <option featureType="dependencySupport" implementationName="executable:kubectl" />
-    <option featureType="com.intellij.configurationType" implementationName="Multirun" />
-    <option featureType="com.intellij.configurationType" implementationName="BatchConfigurationType" />
-    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
-  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="chore: migrated an enum to a yml" />
     <MESSAGE value="fix: tons of small bugs" />
@@ -1111,16 +1100,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service.experimentation.src.main.java.net.swofty.service.experimentation.data.GameSession.java/src/Main.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service.experimentations/src/Main.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

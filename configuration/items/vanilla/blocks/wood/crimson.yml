@@ -1,0 +1,289 @@
+items:
+  - id: CRIMSON_STEM
+    material: CRIMSON_STEM
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FORAGING
+        mining_value: 6.0
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: STRIPPED_CRIMSON_STEM
+    material: STRIPPED_CRIMSON_STEM
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: CRIMSON_HYPHAE
+    material: CRIMSON_HYPHAE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: STRIPPED_CRIMSON_HYPHAE
+    material: STRIPPED_CRIMSON_HYPHAE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: CRIMSON_PLANKS
+    material: CRIMSON_PLANKS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CRIMSON_STEM
+                amount: 1
+            result:
+              type: CRIMSON_PLANKS
+              amount: 4
+
+  - id: CRIMSON_DOOR
+    material: CRIMSON_DOOR
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: CRIMSON_PLANKS
+                amount: 1
+            result:
+              type: CRIMSON_DOOR
+              amount: 1
+
+  - id: CRIMSON_FENCE
+    material: CRIMSON_FENCE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: CRIMSON_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: CRIMSON_FENCE
+              amount: 3
+
+  - id: CRIMSON_FENCE_GATE
+    material: CRIMSON_FENCE_GATE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: CRIMSON_PLANKS
+                amount: 1
+            result:
+              type: CRIMSON_FENCE_GATE
+              amount: 1
+
+  - id: CRIMSON_PRESSURE_PLATE
+    material: CRIMSON_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: CRIMSON_PLANKS
+                amount: 1
+            result:
+              type: CRIMSON_PRESSURE_PLATE
+              amount: 1
+
+  - id: CRIMSON_SLAB
+    material: CRIMSON_SLAB
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: CRIMSON_PLANKS
+                amount: 1
+            result:
+              type: CRIMSON_SLAB
+              amount: 6
+
+  - id: CRIMSON_STAIRS
+    material: CRIMSON_STAIRS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: CRIMSON_PLANKS
+                amount: 1
+            result:
+              type: CRIMSON_STAIRS
+              amount: 4
+
+  - id: CRIMSON_TRAPDOOR
+    material: CRIMSON_TRAPDOOR
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: CRIMSON_PLANKS
+                amount: 1
+            result:
+              type: CRIMSON_TRAPDOOR
+              amount: 2
+
+  - id: CRIMSON_BUTTON
+    material: CRIMSON_BUTTON
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CRIMSON_PLANKS
+                amount: 1
+            result:
+              type: CRIMSON_BUTTON
+              amount: 1
+
+  - id: CRIMSON_SIGN
+    material: CRIMSON_SIGN
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: CRIMSON_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: CRIMSON_SIGN
+              amount: 3
+
+  - id: CRIMSON_HANGING_SIGN
+    material: CRIMSON_HANGING_SIGN
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - BBB
+              - BBB
+            ingredients:
+              A:
+                type: CHAIN
+                amount: 1
+              B:
+                type: STRIPPED_CRIMSON_STEM
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: CRIMSON_HANGING_SIGN
+              amount: 6

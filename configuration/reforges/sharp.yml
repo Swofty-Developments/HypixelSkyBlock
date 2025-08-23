@@ -1,0 +1,22 @@
+name: "Sharp"
+prefix: "Sharp"
+applicableTypes:
+  - "SWORDS"
+  - "FISHING_RODS"
+
+statistics:
+  CRIT_CHANCE:
+    common: 10
+    uncommon: 12
+    rare: 14
+    epic: 17
+    legendary: 20
+    mythic: 25
+
+  CRIT_DAMAGE:
+    common: 20
+    uncommon: 30
+    rare: 40
+    epic: 55
+    legendary: 75
+    mythic: 90

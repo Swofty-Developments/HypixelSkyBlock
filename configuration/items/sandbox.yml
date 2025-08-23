@@ -1,0 +1,8 @@
+items:
+  - id: SANDBOX_ITEM
+    components:
+      - id: CUSTOM_STATISTICS
+        handler_id: SANDBOX_ITEM
+      - id: LORE_UPDATE
+        is_absolute: true
+        handler_id: SANDBOX_ITEM

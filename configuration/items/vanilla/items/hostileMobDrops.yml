@@ -1,0 +1,152 @@
+items:
+  - id: BLAZE_ROD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 9.0
+
+  - id: BLAZE_POWDER
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: BLAZE_ROD
+                amount: 1
+            result:
+              type: BLAZE_POWDER
+              amount: 2
+      - id: SELLABLE
+        value: 4.0
+
+  - id: BONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+
+  - id: BONE_MEAL
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: BONE
+                amount: 1
+            result:
+              type: BONE_MEAL
+              amount: 3
+
+  - id: ENDER_PEARL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 7.0
+
+  - id: EYE_OF_ENDER
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: ENDER_PEARL
+                amount: 1
+              - type: BLAZE_POWDER
+                amount: 1
+            result:
+              type: EYE_OF_ENDER
+              amount: 1
+      - id: SELLABLE
+        value: 15.0
+
+  - id: FERMENTED_SPIDER_EYE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 10.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: BROWN_MUSHROOM
+                amount: 1
+              - type: SUGAR
+                amount: 1
+              - type: SPIDER_EYE
+                amount: 1
+            result:
+              type: FERMENTED_SPIDER_EYE
+              amount: 1
+
+  - id: GHAST_TEAR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 16.0
+
+  - id: GUNPOWDER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 4.0
+
+  - id: MAGMA_CREAM
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 8.0
+
+  - id: ROTTEN_FLESH
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+
+  - id: SLIME_BALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+
+  - id: SLIME_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 45.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: SLIME_BALL
+                amount: 1
+            result:
+              type: SLIME_BLOCK
+              amount: 1
+
+  - id: SPIDER_EYE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+
+  - id: STRING_ITEM
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: String

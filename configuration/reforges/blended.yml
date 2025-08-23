@@ -1,0 +1,59 @@
+name: "Blended"
+prefix: "Blended"
+applicableTypes:
+  - "EQUIPMENT"
+
+statistics:
+  HEALTH:
+    common: 1
+    uncommon: 1
+    rare: 2
+    epic: 2
+    legendary: 2
+    mythic: 3
+
+  DEFENSE:
+    common: 1
+    uncommon: 1
+    rare: 1
+    epic: 2
+    legendary: 3
+    mythic: 3
+
+  SPEED:
+    expression: "1"
+
+  CRIT_CHANCE:
+    common: 1
+    uncommon: 1
+    rare: 2
+    epic: 2
+    legendary: 3
+    mythic: 3
+
+  CRIT_DAMAGE:
+    common: 1
+    uncommon: 2
+    rare: 2
+    epic: 2
+    legendary: 2
+    mythic: 2
+
+  BONUS_ATTACK_SPEED:
+    expression: "1"
+
+  INTELLIGENCE:
+    common: 1
+    uncommon: 1
+    rare: 1
+    epic: 2
+    legendary: 2
+    mythic: 3
+
+  STRENGTH:
+    common: 0
+    uncommon: 1
+    rare: 1
+    epic: 1
+    legendary: 2
+    mythic: 2

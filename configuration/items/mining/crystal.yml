@@ -1,0 +1,158 @@
+items:
+  - id: BLUE_GOBLIN_EGG
+    rarity: COMMON
+  - id: BOBOMB
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: a76a2811d1e176a07b6d0a657b910f134896ce30850f6e80c7c83732d85381ea
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bob-omb
+      - id: NOT_FINISHED_YET
+  - id: CONCENTRATED_STONE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+      - id: SELLABLE
+        value: 200000.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_HARD_STONE
+                amount: 64
+            result:
+              type: CONCENTRATED_STONE
+              amount: 1
+      - id: SKULL_HEAD
+        texture: 8c8637bc0628f5710f85b8d0679cc2c19afe0e1089b248b6fdb67f687ae81dc2
+  - id: CONTROL_SWITCH
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 6ace5987fbcc9ffc5a36927986a57777c5a622223bb96214212b83c6375573a4
+  - id: DIVAN_ALLOY
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 8da414d29cc9ebbfc1cbdcd211eee4726d0676be262e9cb8eeffafd1fc380b14
+      - id: TRACKED_UNIQUE
+  - id: DIVAN_FRAGMENT
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 633844f03c92d82503c9cd567a51fda47404fa53f216fad473f16ac83a97314f
+  - id: ELECTRON_TRANSMITTER
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: ef4e7b91e452c3ee391a3f4b915f73d356b3ba3e3465e5ec786b495a98c83962
+  - id: ETERNAL_FLAME_RING
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: c9385651845f8bfe186c30da81bacd6971aa51be3b5001fc4ea5cf1af8f23c33
+  - id: FTX3070
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 765984f037f1231b4067068f62507d77c93d017f872890cdd53e8c1e2f099a15
+  - id: GEMSTONE_MIXTURE
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 34d42f9c461cee1997b67bf3610c6411bf852b9e5db607bbf626527cfb42912c
+  - id: GREEN_GOBLIN_EGG
+    rarity: COMMON
+  - id: HARD_STONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+  - id: HELIX
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 8177617f51c12f2ca1f561c50eb37b8ba751f2d621992ce3d3ec8f1743913de1
+  - id: JUNGLE_KEY
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+  - id: MAGMA_CORE
+    rarity: COMMON
+  - id: OIL_BARREL
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: d5d2750595477ecc13869580b12ffc3b13fc2b3ac3e5035ecfc9aafa036722a2
+      - id: EXTRA_UNDER_NAME
+        display: Machine Fuel
+  - id: PICKONIMBUS_2000
+    rarity: COMMON
+    default_statistics:
+      damage: 30.0
+      mining_speed: 1500.0
+      breaking_power: 7.0
+    components:
+      - id: PICKAXE
+      - id: SELLABLE
+        value: 12.0
+      - id: NOT_FINISHED_YET
+  - id: PREHISTORIC_EGG
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: bc8b15e85ed225c21c32367da7be244779e36afe7f7563a6a570a717cb5be1b1
+      - id: SELLABLE
+        value: 1000.0
+      - id: TRACKED_UNIQUE
+  - id: RECALL_POTION
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 1af8151deb39553292b9a69674832dda8001780ca98180a06eaf9b368930b5bb
+      - id: NOT_FINISHED_YET
+  - id: RED_GOBLIN_EGG
+    rarity: COMMON
+  - id: ROBOTRON_REFLECTOR
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 1cd87c7af039ef4b2c7a37e6b94d9eeda22d2a5d2df43804ffca9e486a4eca15
+  - id: SLUDGE_JUICE
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: e01ce68842074dde053185b218e34ee3259cb36ac471d80998f9cb01f32e51c7
+  - id: SUPERLITE_MOTOR
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 5bb48bcc819277438a986f55813b05fe910f9de226b9cd257682674a8aadc43a
+  - id: SYNTHETIC_HEART
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 6bc0f647b4769df300001b0294d99b02900dfdc9a74505017ec29a8719170113
+  - id: WISHING_COMPASS
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: b8a065588c7dbf1294595aba77791c3ad65f19bf1c9ad7a5c23da40b82860b7
+      - id: NOT_FINISHED_YET
+  - id: WORM_MEMBRANE
+    rarity: COMMON
+  - id: YELLOW_GOBLIN_EGG
+    rarity: COMMON
+  - id: CORLEONITE
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: df52e888b00dd5f3b82d6f9b89375c9e74bbba41d465860b0c09872873cb0f51

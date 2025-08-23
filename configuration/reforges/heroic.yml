@@ -1,0 +1,30 @@
+name: "Heroic"
+prefix: "Heroic"
+applicableTypes:
+  - "SWORDS"
+  - "FISHING_RODS"
+
+statistics:
+  STRENGTH:
+    common: 15
+    uncommon: 20
+    rare: 25
+    epic: 32
+    legendary: 40
+    mythic: 50
+
+  INTELLIGENCE:
+    common: 40
+    uncommon: 50
+    rare: 65
+    epic: 80
+    legendary: 100
+    mythic: 125
+
+  BONUS_ATTACK_SPEED:
+    common: 1
+    uncommon: 2
+    rare: 2
+    epic: 3
+    legendary: 5
+    mythic: 7

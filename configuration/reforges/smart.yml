@@ -1,0 +1,29 @@
+name: "Smart"
+prefix: "Smart"
+applicableTypes:
+  - "ARMOR"
+
+statistics:
+  INTELLIGENCE:
+    common: 20
+    uncommon: 40
+    rare: 60
+    epic: 80
+    legendary: 100
+    mythic: 120
+
+  HEALTH:
+    common: 4
+    uncommon: 6
+    rare: 9
+    epic: 12
+    legendary: 15
+    mythic: 20
+
+  DEFENSE:
+    common: 4
+    uncommon: 6
+    rare: 9
+    epic: 12
+    legendary: 15
+    mythic: 20

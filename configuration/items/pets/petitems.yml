@@ -1,0 +1,88 @@
+items:
+  - id: ALL_SKILLS_EXP_BOOST
+    rarity: COMMON
+    components:
+      - id: PET_ITEM
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+  - id: BIG_TEETH
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: NOT_FINISHED_YET
+  - id: BUBBLEGUM
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: c68d716a20f1718c4478a9e9d423a4860143c2773be59c9c9d6984e8431155
+      - id: PET_ITEM
+      - id: NOT_FINISHED_YET
+  - id: COMBAT_EXP_BOOST
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: NOT_FINISHED_YET
+  - id: FARMING_EXP_BOOST_COMMON
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Farming Exp Boost
+      - id: NOT_FINISHED_YET
+  - id: FARMING_EXP_BOOST_RARE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Farming Exp Boost
+      - id: NOT_FINISHED_YET
+  - id: FISHING_EXP_BOOST
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: NOT_FINISHED_YET
+  - id: FORAGING_EXP_BOOST
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: NOT_FINISHED_YET
+  - id: HARDENED_SCALES
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: NOT_FINISHED_YET
+  - id: IRON_CLAWS
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: NOT_FINISHED_YET
+  - id: MINING_EXP_BOOST_COMMON
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Mining Exp Boost
+      - id: NOT_FINISHED_YET
+  - id: MINING_EXP_BOOST_RARE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Mining Exp Boost
+      - id: NOT_FINISHED_YET
+  - id: SHARPENED_CLAWS
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: PET_ITEM
+      - id: NOT_FINISHED_YET
