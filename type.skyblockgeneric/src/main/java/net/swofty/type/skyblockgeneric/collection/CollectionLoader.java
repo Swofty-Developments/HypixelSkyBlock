@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Data
 public class CollectionLoader {
-    private static final File COLLECTIONS_DIR = new File("./configuration/collections");
+    private static final File COLLECTIONS_DIR = new File("./configuration/skyblock/collections");
 
     @Data
     public static class CollectionConfig {

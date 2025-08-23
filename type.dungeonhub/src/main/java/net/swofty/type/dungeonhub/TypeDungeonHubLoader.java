@@ -125,6 +125,6 @@ public class TypeDungeonHubLoader implements SkyBlockTypeLoader {
 
     @Override
     public @Nullable CustomWorlds getMainInstance() {
-        return CustomWorlds.DUNGEON_HUB;
+        return CustomWorlds.SKYBLOCK_DUNGEON_HUB;
     }
 }

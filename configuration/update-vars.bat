@@ -26,8 +26,8 @@ if exist "collections" rmdir /s /q "collections"
 
 :: Copy new configuration folders
 echo Copying new configuration files...
-xcopy "temp\HypixelSkyBlock-master\configuration\items" "items\" /e /i /y
-xcopy "temp\HypixelSkyBlock-master\configuration\collections" "collections\" /e /i /y
+xcopy "temp\HypixelSkyBlock-master\configuration\skyblock\items" "items\" /e /i /y
+xcopy "temp\HypixelSkyBlock-master\configuration\skyblock\collections" "collections\" /e /i /y
 
 :: Clean up temporary files
 echo Cleaning up...
