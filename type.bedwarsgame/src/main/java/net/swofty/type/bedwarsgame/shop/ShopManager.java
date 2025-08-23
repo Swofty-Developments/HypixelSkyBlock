@@ -1,6 +1,8 @@
 package net.swofty.type.bedwarsgame.shop;
 
 import net.minestom.server.item.Material;
+import net.minestom.server.item.component.EnchantmentList;
+import net.minestom.server.item.enchant.Enchantment;
 import net.minestom.server.potion.PotionType;
 import net.swofty.type.bedwarsgame.shop.impl.*;
 
@@ -29,6 +31,7 @@ public class ShopManager {
 	private final ShopItem WATER_BUCKET = new BasicItem("Water Bucket", "water...", 6, 1, Currency.GOLD, Material.WATER_BUCKET);
 	private final ShopItem BRIDGE_EGG = new BasicItem("Bridge Egg", "Good item for bridging...", 1, 1, Currency.EMERALD, Material.EGG);
 	private final ShopItem ARROW = new BasicItem("Arrows", "Charge your bows with these.", 3, 16, Currency.GOLD, Material.ARROW);
+	private final ShopItem BOW = new BowShopItem("Bow", "A simple bow", 6, Currency.IRON, EnchantmentList.EMPTY.with(Enchantment.POWER, 1));
 	private final ShopItem PICKAXE = new PickaxeShopItem();
 	private final ShopItem AXE = new AxeShopItem();
 	private final ShopItem FIREBALL = new FireballShopItem();
@@ -67,6 +70,7 @@ public class ShopManager {
 		addItemToCategories(SPEED_POTION, 0, 6);
 		addItemToCategories(JUMP_POTION, 0, 6);
 		addItemToCategories(ARROW, 0, 5);
+		addItemToCategories(BOW, 5);
 	}
 
 	private void addItemToCategory(int categoryId, ShopItem item) {

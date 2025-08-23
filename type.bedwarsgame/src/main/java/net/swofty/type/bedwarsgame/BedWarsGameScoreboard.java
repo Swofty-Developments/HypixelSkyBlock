@@ -53,7 +53,7 @@ public class BedWarsGameScoreboard {
 					addLine("§fMap: §a" + game.getMapEntry().getName(), sidebar);
 					addLine("§fPlayers: §a" + game.getPlayers() + "/" + game.getMapEntry().getConfiguration().getTeams().size(), sidebar);
 					addLine("§7 ", sidebar);
-					addLine("§fStarting in §a30s", sidebar);
+					addLine("§fStarting in §a" + game.getCountdown().getRemainingSeconds() + "s", sidebar);
 					addLine("§7 ", sidebar);
 					addLine("§fMode: §a" + game.getGameType().getDisplayName(), sidebar);
 					addLine("§fVersion: §7v1.9", sidebar);

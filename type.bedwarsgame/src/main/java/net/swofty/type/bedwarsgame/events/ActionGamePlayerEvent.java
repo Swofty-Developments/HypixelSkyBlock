@@ -59,7 +59,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerUseItemEvent event) {
-		Player player = event.getPlayer();
+		HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 		if (player.hasTag(Tag.String("gameId"))) {
 			String gameId = player.getTag(Tag.String("gameId"));
 			Game game = TypeBedWarsGameLoader.getGameById(gameId);
@@ -86,14 +86,14 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 				return;
 			}
 			String type = event.getTarget().getTag(Tag.String("type"));
-				switch (type) {
-					case "shop" -> {
-						new GUIItemShop().open((HypixelPlayer) player);
-					}
-					case "team" -> {
-						new GUITeamShop().open((HypixelPlayer) player);
-					}
+			switch (type) {
+				case "shop" -> {
+					new GUIItemShop().open((HypixelPlayer) player);
 				}
+				case "team" -> {
+					new GUITeamShop().open((HypixelPlayer) player);
+				}
+			}
 		}
 	}
 
@@ -172,7 +172,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		}
 
 		boolean sameTeam = chestTeamName.equals(teamName);
-		if (!sameTeam && game.getTeamBedStatus().getOrDefault(chestTeamName, false)) {
+		if (!sameTeam && game.getTeamManager().getTeamBedStatus().getOrDefault(chestTeamName, false)) {
 			event.setCancelled(true);
 			player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You can only access enemy team chests if their bed is destroyed!</red>"));
 			return;
@@ -180,7 +180,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 		String existingContextId = ACTIVE_TEAM_CHESTS.get(chestTeamName);
 		GUITeamChest teamChest = new GUITeamChest(chestTeamName);
-		
+
 		if (existingContextId != null) {
 			teamChest.joinSharedContext((HypixelPlayer) player, existingContextId);
 		} else {
@@ -281,7 +281,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			}
 
 			boolean sameTeam = chestTeamName.equals(playerTeamName);
-			if (!sameTeam && game.getTeamBedStatus().getOrDefault(chestTeamName, false)) {
+			if (!sameTeam && game.getTeamManager().getTeamBedStatus().getOrDefault(chestTeamName, false)) {
 				player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You can only access enemy team chests if their bed is destroyed!</red>"));
 				return;
 			}
