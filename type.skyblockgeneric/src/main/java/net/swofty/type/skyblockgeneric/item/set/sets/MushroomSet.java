@@ -21,7 +21,7 @@ public class MushroomSet implements ArmorSet, SetEvents {
                 "§7Grants the wearer permanent §aNight",
                 "§aVision §7while worn. During the night,",
                 "the stats of the armor pieces are",
-                "§atrippled§7."
+                "§atripled§7."
         ));
     }
 
