@@ -5,7 +5,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.item.PlayerFinishItemUseEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
@@ -24,19 +23,37 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BridgeEgg extends BedWarsItem {
-    public BridgeEgg() {
-        super("golden_apple");
-    }
+	public BridgeEgg() {
+		super("bridge_egg");
+	}
 
-    @Override
-    public ItemStack getBlandItem() {
-        return ItemStack.of(Material.GOLDEN_APPLE);
-    }
+	private static Block getWoolBlockFromTeamColor(String teamColor) {
+		return switch (teamColor.toLowerCase()) {
+			case "red" -> Block.RED_WOOL;
+			case "blue" -> Block.BLUE_WOOL;
+			case "green" -> Block.LIME_WOOL; // Minecraft uses "lime" for bright green
+			case "yellow" -> Block.YELLOW_WOOL;
+			case "aqua" -> Block.LIGHT_BLUE_WOOL;
+			case "pink" -> Block.PINK_WOOL;
+			case "gray", "grey" -> Block.GRAY_WOOL;
+			case "white" -> Block.WHITE_WOOL;
+			case "black" -> Block.BLACK_WOOL;
+			case "purple" -> Block.PURPLE_WOOL;
+			case "orange" -> Block.ORANGE_WOOL;
+			case "cyan" -> Block.CYAN_WOOL;
+			default -> Block.WHITE_WOOL;
+		};
+	}
 
-    @Override
-    public void onItemUse(PlayerUseItemEvent event) {
+	@Override
+	public ItemStack getBlandItem() {
+		return ItemStack.of(Material.EGG);
+	}
+
+	@Override
+	public void onItemUse(PlayerUseItemEvent event) {
 		Player player = event.getPlayer();
-        ItemStack stack = event.getItemStack();
+		ItemStack stack = event.getItemStack();
 		String teamColor = player.getTag(Tag.String("teamColor"));
 		if (teamColor == null || teamColor.isEmpty()) {
 			teamColor = "white";
@@ -70,7 +87,7 @@ public class BridgeEgg extends BedWarsItem {
 		if (player.getGameMode() != GameMode.CREATIVE) {
 			player.setItemInHand(event.getHand(), stack.withAmount(stack.amount() - 1));
 		}
-		
+
 		MathUtility.delay(
 				() -> {
 					if (projectile.isActive() && !projectile.isRemoved()) {
@@ -78,24 +95,6 @@ public class BridgeEgg extends BedWarsItem {
 					}
 				},
 				TaskSchedule.seconds(4)
-				);
-    }
-
-	private static Block getWoolBlockFromTeamColor(String teamColor) {
-		return switch (teamColor.toLowerCase()) {
-			case "red" -> Block.RED_WOOL;
-			case "blue" -> Block.BLUE_WOOL;
-			case "green" -> Block.LIME_WOOL; // Minecraft uses "lime" for bright green
-			case "yellow" -> Block.YELLOW_WOOL;
-			case "aqua" -> Block.LIGHT_BLUE_WOOL;
-			case "pink" -> Block.PINK_WOOL;
-			case "gray", "grey" -> Block.GRAY_WOOL;
-			case "white" -> Block.WHITE_WOOL;
-			case "black" -> Block.BLACK_WOOL;
-			case "purple" -> Block.PURPLE_WOOL;
-			case "orange" -> Block.ORANGE_WOOL;
-			case "cyan" -> Block.CYAN_WOOL;
-			default -> Block.WHITE_WOOL;
-		};
+		);
 	}
 }

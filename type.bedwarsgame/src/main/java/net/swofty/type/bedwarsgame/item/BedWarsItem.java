@@ -10,7 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.CustomData;
 
 /**
- * WIP: Represents a custom item in a BedWars game. Handles in-game events and properties of items.
+ * Represents a custom item in a BedWars game. Handles in-game events and properties of items.
  */
 @Getter
 public abstract class BedWarsItem {
@@ -23,20 +23,20 @@ public abstract class BedWarsItem {
 
 	public abstract ItemStack getBlandItem();
 
-    public ItemStack getItemstack() {
-        return getBlandItem().with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder().putString("item", id).build()));
-    }
+	public ItemStack getItemStack() {
+		return getBlandItem().with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder().putString("item", id).build()));
+	}
 
-    public void onItemFinishUse(PlayerFinishItemUseEvent event) {
-        // stub
-    }
+	public void onItemFinishUse(PlayerFinishItemUseEvent event) {
+		// stub
+	}
 
-    public void onItemUseOnBlock(PlayerUseItemOnBlockEvent event) {
-        // stub
-    }
+	public void onItemUseOnBlock(PlayerUseItemOnBlockEvent event) {
+		// stub
+	}
 
-    public void onItemUse(PlayerUseItemEvent event) {
-        // stub
-    }
+	public void onItemUse(PlayerUseItemEvent event) {
+		// stub
+	}
 
 }
