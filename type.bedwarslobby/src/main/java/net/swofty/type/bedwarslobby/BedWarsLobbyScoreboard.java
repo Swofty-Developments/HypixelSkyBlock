@@ -128,4 +128,5 @@ public class BedWarsLobbyScoreboard {
             return FORMAT.format(value / 1000) + "k";
         }
     }
+
 }

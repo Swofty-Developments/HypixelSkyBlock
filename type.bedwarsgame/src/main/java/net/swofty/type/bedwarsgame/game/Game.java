@@ -25,6 +25,7 @@ import net.minestom.server.scoreboard.BelowNameTag;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
+import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.entity.BedWarsShopNPC;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
@@ -68,6 +69,7 @@ public class Game {
 		this.instanceContainer = instanceContainer;
 
 		gameStatus = GameStatus.WAITING;
+		BedWarsGameScoreboard.start(this);
 	}
 
 	public int getTeamUpgradeLevel(String teamName, String upgradeKey) {
@@ -116,7 +118,7 @@ public class Game {
 
 		if (players.size() >= maxPlayers) {
 			player.sendMessage(Component.text("This game is full. Proxy shouldn't have sent you here. Sending you back to lobby", NamedTextColor.RED));
-			// TODO: Handle sending player back to lobby or another instance
+			player.sendTo(ServerType.BEDWARS_LOBBY);
 			return;
 		}
 

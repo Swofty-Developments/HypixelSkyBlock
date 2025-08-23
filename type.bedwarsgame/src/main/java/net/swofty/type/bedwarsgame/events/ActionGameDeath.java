@@ -121,9 +121,6 @@ public class ActionGameDeath implements HypixelEventClass {
 		Game game = TypeBedWarsGameLoader.getGameById(gameId);
 
 		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
-			// If game not in progress, or no game, let default death happen or handle differently
-			// For now, we only care about in-progress game deaths for custom respawn.
-			// Player might be sent to lobby or a global spawn point by Minestom's default.
 			return;
 		}
 
@@ -205,7 +202,6 @@ public class ActionGameDeath implements HypixelEventClass {
 
 			final Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
 				if (!player.isOnline()) {
-					// Task will be cancelled automatically by Minestom if player disconnects.
 					return;
 				}
 
