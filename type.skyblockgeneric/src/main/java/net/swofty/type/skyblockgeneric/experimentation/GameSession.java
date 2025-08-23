@@ -1,8 +1,8 @@
-package net.swofty.service.experimentation.data;
+package net.swofty.type.skyblockgeneric.experimentation;
 
 import java.util.*;
 
-// This class represents a player's active game session, stored in Redis.
+// This class represents a player's active game session for experimentation
 public class GameSession {
     private UUID playerUUID;
     private GameType gameType;
@@ -34,8 +34,6 @@ public class GameSession {
         ULTRA_SEQUENCER,
         SUPER_PAIRS
     }
-
-    // Getters and Setters for parent class fields...
 
     // Abstract class for game-specific states
     public static abstract class GameState {}

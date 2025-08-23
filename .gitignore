@@ -2,6 +2,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+.gradle/
+.idea/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -42,6 +44,7 @@ build/
 ### Mac OS ###
 .DS_Store
 /configuration/hypixel_island_template/
+
 /configuration/hypixel_hub/
 
 .gradle/

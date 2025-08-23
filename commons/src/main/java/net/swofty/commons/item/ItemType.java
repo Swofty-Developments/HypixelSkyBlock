@@ -22,6 +22,7 @@ public enum ItemType {
 
     ENDSTONE_ROSE(Material.POPPY, Rarity.RARE),
     BIOFUEL(Material.GREEN_DYE, Rarity.RARE),
+    EXPERIMENTATION_TABLE(Material.CAULDRON, Rarity.RARE),
 
     /**
      * Accessories

@@ -31,8 +31,6 @@ echo "Started ServiceBazaar"
 sleep 5
 screen -dmS ServiceItemTracker java -jar ServiceItemTracker.jar
 echo "Started ServiceItemTracker"
-sleep 5
-screen -dmS ServiceExperiments java -jar ServiceExperiments.jar
-echo "Started ServiceExperiments"
+
 echo "Started all services with a total of: $(screen -ls | grep -c 'Detached') screens"
 tail -f /dev/null

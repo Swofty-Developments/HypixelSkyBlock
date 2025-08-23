@@ -13,7 +13,6 @@ COPY ../service.api/build/libs/service.api-3.0.jar ./ServiceAPI.jar
 COPY ../service.auctionhouse/build/libs/service.auctionhouse-3.0.jar ./ServiceAuctionHouse.jar
 COPY ../service.bazaar/build/libs/service.bazaar-3.0.jar ./ServiceBazaar.jar
 COPY ../service.itemtracker/build/libs/service.itemtracker-3.0.jar ./ServiceItemTracker.jar
-COPY ../service.experimentation/build/libs/ServiceExperiments.jar ./ServiceExperiments.jar
 
 # Copy configuration data
 COPY ./configuration /app/configuration_files

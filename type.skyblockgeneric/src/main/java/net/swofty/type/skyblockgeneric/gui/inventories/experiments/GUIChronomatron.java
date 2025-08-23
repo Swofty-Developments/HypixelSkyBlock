@@ -10,9 +10,7 @@ import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.proxyapi.ProxyService;
-import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.experimentation.ChronomatronStartProtocolObject;
+import net.swofty.type.skyblockgeneric.experimentation.ExperimentationManager;
 
 public class GUIChronomatron extends HypixelInventoryGUI implements RefreshingGUI {
 
@@ -39,9 +37,11 @@ public class GUIChronomatron extends HypixelInventoryGUI implements RefreshingGU
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 try {
-                    ProxyService service = new ProxyService(ServiceType.EXPERIMENTATION);
-                    ChronomatronStartProtocolObject.StartMessage request = new ChronomatronStartProtocolObject.StartMessage(player.getUuid(), "HIGH");
-                    service.handleRequest(request).thenAccept(response -> new GUIChronomatronPlay("HIGH").open(player));
+                    if (ExperimentationManager.startChronomatron(player, "HIGH")) {
+                        new GUIChronomatronPlay("HIGH").open(player);
+                    } else {
+                        player.sendMessage("§cFailed to start Chronomatron");
+                    }
                 } catch (Exception ex) {
                     player.sendMessage("§cFailed to start Chronomatron: " + ex.getMessage());
                 }
@@ -71,12 +71,25 @@ public class GUIChronomatron extends HypixelInventoryGUI implements RefreshingGU
             }
         });
 
-        set(new GUIItem(21) {
+        set(new GUIClickableItem(22) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                try {
+                    if (ExperimentationManager.startChronomatron(player, "SUPREME")) {
+                        new GUIChronomatronPlay("SUPREME").open(player);
+                    } else {
+                        player.sendMessage("§cFailed to start Chronomatron");
+                    }
+                } catch (Exception ex) {
+                    player.sendMessage("§cFailed to start Chronomatron: " + ex.getMessage());
+                }
+            }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 return ItemStackCreator.getStack(
                         "§6Supreme Experiment",
-                        Material.YELLOW_DYE,
+                        Material.ORANGE_DYE,
                         1,
                         "§7Chronomatron",
                         "",
@@ -96,12 +109,25 @@ public class GUIChronomatron extends HypixelInventoryGUI implements RefreshingGU
             }
         });
 
-        set(new GUIItem(22) {
+        set(new GUIClickableItem(21) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                try {
+                    if (ExperimentationManager.startChronomatron(player, "GRAND")) {
+                        new GUIChronomatronPlay("GRAND").open(player);
+                    } else {
+                        player.sendMessage("§cFailed to start Chronomatron");
+                    }
+                } catch (Exception ex) {
+                    player.sendMessage("§cFailed to start Chronomatron: " + ex.getMessage());
+                }
+            }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 return ItemStackCreator.getStack(
                         "§eGrand Experiment",
-                        Material.ORANGE_DYE,
+                        Material.YELLOW_DYE,
                         1,
                         "§7Chronomatron",
                         "",
@@ -121,7 +147,20 @@ public class GUIChronomatron extends HypixelInventoryGUI implements RefreshingGU
             }
         });
 
-        set(new GUIItem(23) {
+        set(new GUIClickableItem(23) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                try {
+                    if (ExperimentationManager.startChronomatron(player, "TRANSCENDENT")) {
+                        new GUIChronomatronPlay("TRANSCENDENT").open(player);
+                    } else {
+                        player.sendMessage("§cFailed to start Chronomatron");
+                    }
+                } catch (Exception ex) {
+                    player.sendMessage("§cFailed to start Chronomatron: " + ex.getMessage());
+                }
+            }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 return ItemStackCreator.getStack(
@@ -146,7 +185,20 @@ public class GUIChronomatron extends HypixelInventoryGUI implements RefreshingGU
             }
         });
 
-        set(new GUIItem(24) {
+        set(new GUIClickableItem(24) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                try {
+                    if (ExperimentationManager.startChronomatron(player, "METAPHYSICAL")) {
+                        new GUIChronomatronPlay("METAPHYSICAL").open(player);
+                    } else {
+                        player.sendMessage("§cFailed to start Chronomatron");
+                    }
+                } catch (Exception ex) {
+                    player.sendMessage("§cFailed to start Chronomatron: " + ex.getMessage());
+                }
+            }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 return ItemStackCreator.getStack(
@@ -172,7 +224,6 @@ public class GUIChronomatron extends HypixelInventoryGUI implements RefreshingGU
         });
 
         set(GUIClickableItem.getGoBackItem(40,new GUIExperiments()));
-
 
         updateItemStacks(getInventory(), getPlayer());
     }
