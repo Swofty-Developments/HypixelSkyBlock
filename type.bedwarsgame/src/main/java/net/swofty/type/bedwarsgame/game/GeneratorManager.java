@@ -245,7 +245,7 @@ public final class GeneratorManager {
 		};
 	}
 
-	private void addTeamGeneratorTask(String teamName, Task task) {
+	public void addTeamGeneratorTask(String teamName, Task task) {
 		teamGeneratorTasks.computeIfAbsent(teamName, k -> new ArrayList<>()).add(task);
 	}
 

@@ -179,7 +179,7 @@ public class ActionGameDeath implements HypixelEventClass {
 		}
 		TextColor victimTeamTextColor = TextColor.color(tColor);
 
-		boolean bedExists = game.getTeamBedStatus().getOrDefault(teamName, false);
+		boolean bedExists = game.getTeamManager().getTeamBedStatus().getOrDefault(teamName, false);
 
 		Component deathMessage = calculateDeathMessage(player, victimTeamTextColor);
 
@@ -306,9 +306,9 @@ public class ActionGameDeath implements HypixelEventClass {
 							player.setGameMode(GameMode.ADVENTURE);
 						}
 					}
-					if (game != null && teamName != null) game.notifyPlayerOrBedStateChanged(teamName);
+					// if (game != null && teamName != null) game.notifyPlayerOrBedStateChanged(teamName);
 
-					// Cancel the repeating task
+					// cancel repeating task
 					Task currentTask = taskRef.get();
 					if (currentTask != null) {
 						currentTask.cancel();
@@ -321,7 +321,7 @@ public class ActionGameDeath implements HypixelEventClass {
 			player.sendTitlePart(TitlePart.TITLE, Component.text("YOU DIED!", NamedTextColor.RED, TextDecoration.BOLD));
 			player.sendTitlePart(TitlePart.SUBTITLE, Component.text("You will not respawn.", NamedTextColor.GRAY));
 			player.getInventory().clear();
-			// Ensure player is fully spectator and cannot interact
+
 			player.setGameMode(GameMode.SPECTATOR);
 			player.setInvisible(true);
 			player.setFlying(true);
@@ -329,11 +329,6 @@ public class ActionGameDeath implements HypixelEventClass {
 			if (game != null) {
 				game.playerEliminated(player); // This will also call notifyPlayerOrBedStateChanged and checkForWinCondition
 			}
-		}
-
-		// Notify sidebar update immediately on death (player becomes spectator or is eliminated)
-		if (game != null && teamName != null) {
-			game.notifyPlayerOrBedStateChanged(teamName);
 		}
 	}
 

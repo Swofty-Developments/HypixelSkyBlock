@@ -75,6 +75,6 @@ public class ForgeUpgrade extends TeamUpgrade {
 			}
 		}).delay(TaskSchedule.seconds(emeraldDelaySeconds)).repeat(TaskSchedule.seconds(emeraldDelaySeconds)).schedule();
 
-		game.addTeamGeneratorTask(teamName, emeraldTask);
+		game.getGeneratorManager().addTeamGeneratorTask(teamName, emeraldTask);
 	}
 }

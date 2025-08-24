@@ -58,7 +58,7 @@ public class ActionGameBreak implements HypixelEventClass {
 					event.setCancelled(true);
 					return;
 				}
-				if (!game.getTeamBedStatus().getOrDefault(team.getName(), false)) {
+				if (!game.getTeamManager().getTeamBedStatus().getOrDefault(team.getName(), false)) {
 					// Bed already destroyed logically, block might linger if not cleared perfectly
 					event.setCancelled(true);
 					return;
