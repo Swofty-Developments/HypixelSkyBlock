@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.user.fairysouls;
 
 public enum FairySoulZone {
-    HUB,
+    SKYBLOCK_HUB,
     DUNGEON_HUB,
     GOLD_MINE,
     DEEP_CAVERNS,
