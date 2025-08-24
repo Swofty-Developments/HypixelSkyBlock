@@ -1,4 +1,4 @@
-package net.swofty.type.bedwarsgame.game;
+package net.swofty.type.bedwarsgeneric.game;
 
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;

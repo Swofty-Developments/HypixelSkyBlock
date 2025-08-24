@@ -23,6 +23,7 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.ComponentManipulator;
+import net.swofty.type.bedwarsgeneric.game.GameType;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
