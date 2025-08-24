@@ -41,7 +41,7 @@ public class MinionComponent extends SkyBlockItemComponent {
                     boolean mithrilInfusion = item.getAttributeHandler().isMithrilInfused();
 
                     int percentageSpeed = 0;
-                    if(mithrilInfusion)
+                    if (mithrilInfusion)
                         percentageSpeed += 10;
 
                     return getLore(item, percentageSpeed);
@@ -87,7 +87,7 @@ public class MinionComponent extends SkyBlockItemComponent {
         addInheritedComponent(new CraftableComponent(toReturn.toArray(new SkyBlockRecipe[0]), isByDefaultCraftable));
     }
 
-    public static List<String> getLore(SkyBlockItem item, int percentageSpeed){
+    public static List<String> getLore(SkyBlockItem item, int percentageSpeed) {
         MinionRegistry minionRegistry = item.getComponent(MinionComponent.class).getMinionRegistry();
 
         List<String> lore = new ArrayList<>(Arrays.asList(

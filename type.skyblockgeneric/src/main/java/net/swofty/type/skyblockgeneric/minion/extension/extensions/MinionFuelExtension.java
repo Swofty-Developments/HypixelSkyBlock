@@ -4,18 +4,16 @@ import lombok.NonNull;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.component.DataComponents;
-import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.Click;
-import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIMinion;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionFuelComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -51,7 +49,7 @@ public class MinionFuelExtension extends MinionExtension {
             if (System.currentTimeMillis() - insertionTime > timeFuelLasts && timeFuelLasts > 0) {
                 // Time has surpassed the fuel time of 1 of the fuel items
                 count -= 1;
-                if(count <= 0) {
+                if (count <= 0) {
                     // All fuel items have been used
                     shouldDisplayItem = false;
                     setItemTypePassedIn(null);
@@ -120,7 +118,7 @@ public class MinionFuelExtension extends MinionExtension {
                 }
 
                 SkyBlockItem fuelItem = new SkyBlockItem(p.getInventory().getCursorItem());
-                if (!(fuelItem.hasComponent(MinionFuelComponent.class))){
+                if (!(fuelItem.hasComponent(MinionFuelComponent.class))) {
                     player.sendMessage("§cYou can only put fuel in this slot.");
                     return;
                 }
@@ -147,14 +145,14 @@ public class MinionFuelExtension extends MinionExtension {
 
                 List<Component> lore = new ArrayList<>(itemBuilder.build().get(DataComponents.LORE));
 
-                if(timeFuelLasts > 0) {
+                if (timeFuelLasts > 0) {
                     lore.add(Component.text(""));
                     lore.add(Component.text("§7Time Remaining: §b" + StringUtility.formatTimeLeft(timeFuelLasts * count - (System.currentTimeMillis() - insertionTime)))
                             .decorations(Collections.singleton(TextDecoration.ITALIC), false));
                     lore.add(Component.text(""));
                     lore.add(Component.text("§cRight Click to destroy this fuel.")
                             .decorations(Collections.singleton(TextDecoration.ITALIC), false));
-                }else{
+                } else {
                     lore.add(Component.text(""));
                     lore.add(Component.text("§eClick to take fuel out.")
                             .decorations(Collections.singleton(TextDecoration.ITALIC), false));
@@ -166,7 +164,7 @@ public class MinionFuelExtension extends MinionExtension {
     }
 
     // Returns the amount of fuel added
-    public int addFuel(IslandMinionData.IslandMinion minion, int slot, SkyBlockItem fuelItem){
+    public int addFuel(IslandMinionData.IslandMinion minion, int slot, SkyBlockItem fuelItem) {
         if (fuelItem.hasComponent(MinionFuelComponent.class)) {
             insertionTime = System.currentTimeMillis();
             int added = fuelItem.getAmount();
@@ -207,7 +205,7 @@ public class MinionFuelExtension extends MinionExtension {
         String[] split = string.split(":");
         setItemTypePassedIn(ItemType.valueOf(split[0]));
         insertionTime = Long.parseLong(split[1]);
-        if(split.length > 2)
+        if (split.length > 2)
             count = Integer.parseInt(split[2]);
     }
 }

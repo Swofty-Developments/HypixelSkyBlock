@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ActionRegionPlaySong implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false , isAsync = true)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, isAsync = true)
     public void run(PlayerRegionChangeEvent event) {
         SkyBlockPlayer player = event.getPlayer();
         SkyBlockSongsHandler songHandler = player.getSongHandler();

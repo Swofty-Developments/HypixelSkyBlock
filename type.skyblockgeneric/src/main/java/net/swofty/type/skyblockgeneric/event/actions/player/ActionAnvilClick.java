@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionAnvilClick implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(PlayerBlockInteractEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

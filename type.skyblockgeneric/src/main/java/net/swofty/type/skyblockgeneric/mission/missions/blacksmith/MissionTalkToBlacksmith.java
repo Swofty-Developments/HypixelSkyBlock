@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class MissionTalkToBlacksmith extends SkyBlockMission implements LocationAssociatedMission {
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(PlayerRegionChangeEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 

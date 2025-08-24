@@ -19,7 +19,7 @@ import java.util.Map;
 public class ActionIslandLoadMinions implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(IslandFetchedFromDatabaseEvent event) {
         Document document = event.getIsland().getDatabase().getDocument();
 

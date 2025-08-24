@@ -125,7 +125,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          */
         ItemAttribute.registerItemAttributes();
         PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
-        File configDir = new File("./configuration");
+        File configDir = new File("./configuration/skyblock");
         File itemsDir = new File(configDir, "items");
         try {
             List<File> yamlFiles = YamlFileUtils.getYamlFiles(itemsDir);

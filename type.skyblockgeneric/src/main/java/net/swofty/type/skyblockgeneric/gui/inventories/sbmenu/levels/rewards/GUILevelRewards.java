@@ -5,12 +5,12 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
 import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockEmblems;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
@@ -206,7 +206,7 @@ public class GUILevelRewards extends HypixelInventoryGUI {
         String completedLoadingBar = "§b§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
         int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
         String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                completedLoadingBar.length() - formattingCodeLength, // Adjust for added formatting codes
                 maxBarLength
         ));
 

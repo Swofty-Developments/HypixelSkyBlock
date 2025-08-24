@@ -22,8 +22,8 @@ import java.util.Map;
 
 public class GUIMinionRecipes extends HypixelInventoryGUI {
     private static final Map<Integer, int[]> SLOTS = new HashMap<>(Map.of(
-            10, new int[] { 11, 12, 13, 14, 15, 20, 21, 22, 23, 24 },
-            11, new int[] { 11, 12, 13, 14, 15, 21, 22, 23, 30, 31, 32 }
+            10, new int[]{11, 12, 13, 14, 15, 20, 21, 22, 23, 24},
+            11, new int[]{11, 12, 13, 14, 15, 21, 22, 23, 30, 31, 32}
     ));
 
     HypixelInventoryGUI previousGUI;

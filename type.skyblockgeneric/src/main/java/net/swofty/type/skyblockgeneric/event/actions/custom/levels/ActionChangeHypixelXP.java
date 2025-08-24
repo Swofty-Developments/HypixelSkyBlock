@@ -15,7 +15,7 @@ import java.util.List;
 public class ActionChangeHypixelXP implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(SkyBlockXPModificationEvent event) {
         if (event.getNewXP() <= event.getOldXP()) return;
         SkyBlockPlayer player = event.getPlayer();

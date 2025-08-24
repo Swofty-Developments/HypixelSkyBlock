@@ -3,25 +3,25 @@ package net.swofty.type.skyblockgeneric.event.actions.custom.collection;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.proxyapi.ProxyPlayerSet;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
-import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.custom.CollectionUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockActionBar;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.MathUtility;
 
 public class ActionCollectionAdd implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(CustomBlockBreakEvent event) {
         if (event.getPlayerPlaced()) return;
 

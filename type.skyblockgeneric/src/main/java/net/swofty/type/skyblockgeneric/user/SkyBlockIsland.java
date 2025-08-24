@@ -8,7 +8,6 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.SharedInstance;
-import net.minestom.server.registry.DynamicRegistry;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
@@ -41,7 +40,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Getter
 public class SkyBlockIsland {
-    private static final String ISLAND_TEMPLATE_NAME = CustomWorlds.ISLANDS_TEMPLATE.getFolderName();
+    private static final String ISLAND_TEMPLATE_NAME = CustomWorlds.SKYBLOCK_ISLAND_TEMPLATE.getFolderName();
     private static final Map<UUID, SkyBlockIsland> loadedIslands = new HashMap<>();
 
     // Internal Island Data

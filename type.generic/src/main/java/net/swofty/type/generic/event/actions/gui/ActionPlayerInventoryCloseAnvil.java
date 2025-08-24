@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerInventoryCloseAnvil implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(InventoryCloseEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

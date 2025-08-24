@@ -4,10 +4,10 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.damage.EntityDamage;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class PlayerActionDamagedAttacked implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ENTITY , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.ENTITY, requireDataLoaded = false)
     public void run(EntityAttackEvent event) {
         if (!event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
 

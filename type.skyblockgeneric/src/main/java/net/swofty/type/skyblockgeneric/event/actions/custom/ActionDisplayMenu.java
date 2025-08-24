@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.event.actions.player.ActionPlayerChangeHy
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionDisplayMenu implements HypixelEventClass {
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(HypixelInventoryGUI.InventoryGUIOpenEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.player();
         ActionPlayerChangeHypixelMenuDisplay.setMainMenu(player);

@@ -312,11 +312,11 @@ def main():
 
     # Create directories
     directories = [
-        'configuration/collections',
-        'configuration/songs',
-        'configuration/items',
-        'configuration/SkyBlockPack',
-        'configuration/pack_textures',
+        'configuration/skyblock/collections',
+        'configuration/skyblock/songs',
+        'configuration/skyblock/items',
+        'configuration/skyblock/SkyBlockPack',
+        'configuration/skyblock/pack_textures',
         'plugins'
     ]
 

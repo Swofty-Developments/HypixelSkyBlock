@@ -70,7 +70,7 @@ public class GUIJerry extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aVisits and Guestings", Material.EMERALD, 1,
+                return ItemStackCreator.getStack("§aVisits and Guesting", Material.EMERALD, 1,
                         "§7Learn all about how to §a/visit",
                         "§7players across the SkyBlock universe!",
                         " ",

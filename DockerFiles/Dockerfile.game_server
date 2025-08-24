@@ -39,19 +39,19 @@ RUN cp configuration_files/NanoLimbo-1.9.1-all.jar ./NanoLimbo-1.9.1-all.jar
 RUN cp configuration_files/settings.yml ./settings.yml
 
 # Copy Songs Folder
-RUN cp -R configuration_files/songs ./configuration/songs
+RUN cp -R configuration_files/songs ./configuration/skyblock/songs
 
 # Copy Collections
-RUN cp -R configuration_files/collections ./configuration/collections
+RUN cp -R configuration_files/collections ./configuration/skyblock/collections
 
 # Copy Items
-RUN cp -R configuration_files/items ./configuration/items
+RUN cp -R configuration_files/items ./configuration/skyblock/items
 
 # Copy SkyBlockPack
-RUN cp -R configuration_files/SkyBlockPack ./configuration/SkyBlockPack
+RUN cp -R configuration_files/SkyBlockPack ./configuration/skyblock/SkyBlockPack
 
 # Copy pack_textures
-RUN cp -R configuration_files/pack_textures ./configuration/pack_textures
+RUN cp -R configuration_files/pack_textures ./configuration/skyblock/pack_textures
 
 # Copy Entrypoint Script
 RUN cp configuration_files/entrypoint.sh ./entrypoint.sh

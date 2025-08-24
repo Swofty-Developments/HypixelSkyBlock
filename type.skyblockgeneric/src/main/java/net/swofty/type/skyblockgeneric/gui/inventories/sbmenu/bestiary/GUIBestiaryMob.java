@@ -9,12 +9,12 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.Rarity;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
-import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
+import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -27,14 +27,14 @@ import java.util.Map;
 public class GUIBestiaryMob extends HypixelInventoryGUI {
 
     private static final Map<Integer, int[]> SLOTS = new HashMap<>(Map.of(
-            0, new int[] {  },
-            1, new int[] { 22 },
-            2, new int[] { 21, 23 },
-            3, new int[] { 20, 22, 24 },
-            4, new int[] { 19, 21, 23, 25 },
-            5, new int[] { 20, 21, 22, 23, 24 },
-            6, new int[] { 21, 22, 23, 30, 31, 32 },
-            7, new int[] { 19, 20, 21, 22, 23, 24, 25}
+            0, new int[]{},
+            1, new int[]{22},
+            2, new int[]{21, 23},
+            3, new int[]{20, 22, 24},
+            4, new int[]{19, 21, 23, 25},
+            5, new int[]{20, 21, 22, 23, 24},
+            6, new int[]{21, 22, 23, 30, 31, 32},
+            7, new int[]{19, 20, 21, 22, 23, 24, 25}
     ));
 
     private static final int[] displaySlots = {

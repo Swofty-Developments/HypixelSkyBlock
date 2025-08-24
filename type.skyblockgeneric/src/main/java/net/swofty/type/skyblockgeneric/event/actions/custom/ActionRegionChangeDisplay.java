@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionRegionChangeDisplay implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(PlayerRegionChangeEvent event) {
         SkyBlockPlayer player = event.getPlayer();
 

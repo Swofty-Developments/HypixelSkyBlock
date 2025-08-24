@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
 
 public class ActionIslandSaveMinions implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM ,requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(IslandSavedIntoDatabaseEvent event) {
         IslandMinionData minionData = event.getIsland().getMinionData();
         minionData.getMinions().forEach(IslandMinionData.IslandMinion::removeMinion);

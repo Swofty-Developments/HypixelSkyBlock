@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class ActionPlayerFall implements HypixelEventClass {
     public static HashMap<SkyBlockPlayer, Integer> fallHeight = new HashMap<>();
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(PlayerMoveEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         Pos newPosition = event.getNewPosition();

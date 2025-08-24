@@ -52,7 +52,7 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     @Override
     public HypixelTypeLoader.LoaderValues getLoaderValues() {
         return new HypixelTypeLoader.LoaderValues(
-                (type) -> new Pos(0, 100 ,0), // Spawn position
+                (type) -> new Pos(0, 100, 0), // Spawn position
                 true // Announce death messages
         );
     }

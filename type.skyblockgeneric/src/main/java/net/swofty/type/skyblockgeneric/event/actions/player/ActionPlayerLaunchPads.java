@@ -9,15 +9,12 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
-import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.LaunchPads;
-import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
     private static final int SEGMENTS = 30;
 
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true , isAsync = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
     public void run(PlayerMoveEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

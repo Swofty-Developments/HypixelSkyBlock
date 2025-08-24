@@ -6,15 +6,15 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,7 +114,7 @@ public class GUICollectionCategory extends HypixelPaginatedGUI<CollectionCategor
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     player.sendMessage("§cYou haven't found this item yet!");
                 }
 

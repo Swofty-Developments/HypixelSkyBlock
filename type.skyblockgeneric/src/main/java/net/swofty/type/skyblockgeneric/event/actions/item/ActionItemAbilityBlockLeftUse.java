@@ -14,7 +14,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionItemAbilityBlockLeftUse implements HypixelEventClass {
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(PlayerBlockBreakEvent event) {
         ItemStack itemStack = event.getPlayer().getItemInMainHand();
         SkyBlockItem item = new SkyBlockItem(itemStack);

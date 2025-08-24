@@ -6,8 +6,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -24,7 +24,7 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
     private static final int[] SLOTS = new int[]{
             20, 21, 22, 23, 24
     };
-    private TravelScrollIslands island;
+    private final TravelScrollIslands island;
 
     public GUIFastTravelSubMenu(TravelScrollIslands island) {
         super(StringUtility.toNormalCase(island.getInternalName()) + " Warps", InventoryType.CHEST_5_ROW);
@@ -100,7 +100,7 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!isUnlocked) {
                         player.sendMessage("§cYou haven't unlocked this fast travel destination!");
                         return;

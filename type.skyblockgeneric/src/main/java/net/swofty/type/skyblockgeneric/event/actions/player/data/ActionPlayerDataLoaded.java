@@ -13,23 +13,21 @@ import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.user.categories.CustomGroups;
+import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
-import net.swofty.type.generic.entity.hologram.PlayerHolograms;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.CustomGroups;
-import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.warps.TravelScrollIslands;
 import org.tinylog.Logger;
 
@@ -40,7 +38,7 @@ import java.util.UUID;
 public class ActionPlayerDataLoaded implements HypixelEventClass {
 
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER_DATA , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false)
     public void run(PlayerSpawnEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (!event.isFirstSpawn()) return;

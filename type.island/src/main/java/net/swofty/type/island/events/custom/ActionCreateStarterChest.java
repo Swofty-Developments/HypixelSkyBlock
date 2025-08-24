@@ -12,18 +12,18 @@ import net.swofty.type.skyblockgeneric.event.custom.IslandFirstCreatedEvent;
 
 public class ActionCreateStarterChest implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(IslandFirstCreatedEvent event) {
         MathUtility.delay(()->{
-            new ChestBuilder(event.getIsland().getIslandInstance(), new Pos(3 , 93 , 30))
-                    .setItem(0 , ItemStack.of(Material.DIRT , 5))
-                    .setItem(1 , ItemStack.of(Material.GRASS_BLOCK , 7))
-                    .setItem(2 , ItemStack.of(Material.COBBLESTONE , 8))
-                    .setItem(3 , ItemStack.of(Material.WATER_BUCKET))
-                    .setItem(4 , ItemStack.of(Material.LAVA_BUCKET))
-                    .setItem(5 , ItemStack.of(Material.BONE_MEAL , 3))
+            new ChestBuilder(event.getIsland().getIslandInstance(), new Pos(3, 93, 30))
+                    .setItem(0, ItemStack.of(Material.DIRT, 5))
+                    .setItem(1, ItemStack.of(Material.GRASS_BLOCK, 7))
+                    .setItem(2, ItemStack.of(Material.COBBLESTONE, 8))
+                    .setItem(3, ItemStack.of(Material.WATER_BUCKET))
+                    .setItem(4, ItemStack.of(Material.LAVA_BUCKET))
+                    .setItem(5, ItemStack.of(Material.BONE_MEAL, 3))
                     .build();
-        } , 60);
+        }, 60);
 
     }
 }

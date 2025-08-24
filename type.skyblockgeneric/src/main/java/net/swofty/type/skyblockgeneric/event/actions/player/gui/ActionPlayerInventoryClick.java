@@ -6,7 +6,6 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.inventory.click.Click;
-import net.minestom.server.inventory.click.ClickType;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -22,7 +21,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerInventoryClick implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(InventoryPreClickEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockItem clickedItem = new SkyBlockItem(event.getClickedItem());
@@ -71,7 +70,7 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
                 return;
             }
 
-            if (event.getInventory() instanceof PlayerInventory){
+            if (event.getInventory() instanceof PlayerInventory) {
                 gui.onBottomClick(event);
             } else {
                 int slot = event.getSlot();

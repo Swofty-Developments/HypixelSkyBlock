@@ -9,12 +9,12 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.bazaar.BazaarCategories;
-import net.swofty.type.skyblockgeneric.bazaar.BazaarItemSet;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.bazaar.BazaarCategories;
+import net.swofty.type.skyblockgeneric.bazaar.BazaarItemSet;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
@@ -83,13 +83,13 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                         set(new GUIClickableItem(slot) {
                             @Override
                             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                                SkyBlockPlayer player = (SkyBlockPlayer) p;
                                 new GUIBazaarItem(itemType).open(player);
                             }
 
                             @Override
                             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                                SkyBlockPlayer player = (SkyBlockPlayer) p;
                                 List<String> lore = new ArrayList<>();
                                 lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
                                 lore.add(" ");
@@ -134,13 +134,13 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                         set(new GUIClickableItem(slot) {
                             @Override
                             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                                SkyBlockPlayer player = (SkyBlockPlayer) p;
                                 new GUIBazaarItem(itemType).open(player);
                             }
 
                             @Override
                             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                                SkyBlockPlayer player = (SkyBlockPlayer) p;
                                 List<String> lore = new ArrayList<>();
                                 lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
                                 lore.add(" ");

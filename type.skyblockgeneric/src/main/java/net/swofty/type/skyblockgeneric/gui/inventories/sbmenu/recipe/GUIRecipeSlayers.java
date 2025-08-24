@@ -62,13 +62,13 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIRecipeCategory(type, new GUIRecipeSlayers()).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     ArrayList<String> lore = new ArrayList<>(Arrays.asList(
                             "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
                             "§7that you have unlocked!", " "));
@@ -92,7 +92,7 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
                     String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
                     int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
                     String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                            completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                            completedLoadingBar.length() - formattingCodeLength, // Adjust for added formatting codes
                             maxBarLength
                     ));
 
@@ -107,7 +107,7 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
             set(new GUIItem(4) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
 
                     SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.SLAYER;
 
@@ -142,7 +142,7 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
                     String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
                     int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
                     String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                            completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                            completedLoadingBar.length() - formattingCodeLength, // Adjust for added formatting codes
                             maxBarLength
                     ));
 

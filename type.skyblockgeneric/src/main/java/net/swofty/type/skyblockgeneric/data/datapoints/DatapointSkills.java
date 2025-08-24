@@ -7,8 +7,8 @@ import net.kyori.adventure.sound.Sound;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.skill.SkillCategory;
@@ -246,7 +246,7 @@ public class DatapointSkills extends SkyBlockDatapoint<DatapointSkills.PlayerSki
             String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
             int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
             String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                    completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                    completedLoadingBar.length() - formattingCodeLength, // Adjust for added formatting codes
                     maxBarLength
             ));
 

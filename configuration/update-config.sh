@@ -60,8 +60,8 @@ rm -rf ./collections
 
 # Copy new configuration folders
 echo "Copying new configuration files..."
-cp -r "$TEMP_DIR/HypixelSkyBlock-master/configuration/items" .
-cp -r "$TEMP_DIR/HypixelSkyBlock-master/configuration/collections" .
+cp -r "$TEMP_DIR/HypixelSkyBlock-master/configuration/skyblock/items" .
+cp -r "$TEMP_DIR/HypixelSkyBlock-master/configuration/skyblock/collections" .
 
 # Fix permissions to make files accessible to the original user
 SUDO_USER=$(logname)

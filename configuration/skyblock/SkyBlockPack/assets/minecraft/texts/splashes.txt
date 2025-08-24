@@ -416,7 +416,7 @@ Stand up for equality in your community!
 [this splash text is now available]
 Contains simulated goats!
 Home-made!
-There's <<a cat on ,my keyboard!~
+There's <<a cat on, my keyboard!~
 The cutest predator you'll ever meet!
 Now you are thinking with pistons!
 Get to the coppah!

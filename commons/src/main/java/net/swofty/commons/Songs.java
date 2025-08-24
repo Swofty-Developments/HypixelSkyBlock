@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 @Getter
 public enum Songs {
-    WILDERNESS(Path.of("./configuration/songs/wilderness.nbs")),
+    WILDERNESS(Path.of("./configuration/skyblock/songs/wilderness.nbs")),
     ;
 
     private final Path path;

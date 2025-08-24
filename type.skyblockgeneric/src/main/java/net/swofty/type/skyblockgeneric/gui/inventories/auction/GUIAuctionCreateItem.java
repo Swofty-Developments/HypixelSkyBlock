@@ -14,15 +14,15 @@ import net.swofty.commons.auctions.AuctionCategories;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionEscrow;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionEscrow;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AuctionCategoryComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -34,7 +34,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class GUIAuctionCreateItem extends HypixelInventoryGUI implements RefreshingGUI {
-    private HypixelInventoryGUI previousGUI;
+    private final HypixelInventoryGUI previousGUI;
 
     public GUIAuctionCreateItem(HypixelInventoryGUI previousGUI) {
         super("Create Auction", InventoryType.CHEST_6_ROW);

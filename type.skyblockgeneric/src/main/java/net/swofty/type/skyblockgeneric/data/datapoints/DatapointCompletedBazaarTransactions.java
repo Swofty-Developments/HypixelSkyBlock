@@ -267,9 +267,9 @@ public class DatapointCompletedBazaarTransactions extends SkyBlockDatapoint<Data
                     itemName,
                     quantity,
                     pricePerUnit,
-                    taxTaken,           // Tax stored in secondaryAmount
-                    0,                  // No original bid for sell orders
-                    orderId,            // Related order ID needed for sells
+                    taxTaken,          // Tax stored in secondaryAmount
+                    0,                 // No original bid for sell orders
+                    orderId,           // Related order ID needed for sells
                     Instant.now(),
                     false
             );
@@ -284,10 +284,10 @@ public class DatapointCompletedBazaarTransactions extends SkyBlockDatapoint<Data
                     TransactionType.BUY_ORDER_EXPIRED,
                     itemName,
                     quantity,
-                    originalPricePerUnit,  // Store original price per unit for display
-                    totalRefund,           // Total refund amount in secondaryAmount
-                    originalPricePerUnit,  // Store original bid price
-                    orderId,               // Link to the expired order
+                    originalPricePerUnit, // Store original price per unit for display
+                    totalRefund,          // Total refund amount in secondaryAmount
+                    originalPricePerUnit, // Store original bid price
+                    orderId,              // Link to the expired order
                     Instant.now(),
                     false
             );
@@ -301,10 +301,10 @@ public class DatapointCompletedBazaarTransactions extends SkyBlockDatapoint<Data
                     TransactionType.SELL_ORDER_EXPIRED,
                     itemName,
                     quantity,
-                    0.0,                   // No price for returned items
-                    0.0,                   // No secondary amount
-                    0.0,                   // No original bid
-                    orderId,               // Link to the expired order
+                    0.0,                  // No price for returned items
+                    0.0,                  // No secondary amount
+                    0.0,                  // No original bid
+                    orderId,              // Link to the expired order
                     Instant.now(),
                     false
             );
@@ -357,9 +357,9 @@ public class DatapointCompletedBazaarTransactions extends SkyBlockDatapoint<Data
     }
 
     public enum TransactionType {
-        BUY_COMPLETED,      // Player bought items (receive items)
-        SELL_COMPLETED,     // Player sold items (receive coins)
-        BUY_ORDER_EXPIRED,  // Buy order expired (receive coin refund)
+        BUY_COMPLETED,     // Player bought items (receive items)
+        SELL_COMPLETED,    // Player sold items (receive coins)
+        BUY_ORDER_EXPIRED, // Buy order expired (receive coin refund)
         SELL_ORDER_EXPIRED, // Sell order expired (receive items back)
         REFUND              // For price improvement refunds
     }

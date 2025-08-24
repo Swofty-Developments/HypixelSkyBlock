@@ -8,15 +8,14 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.generic.data.datapoints.DatapointLong;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.generic.data.datapoints.DatapointString;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -25,9 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GUIViewPlayerProfile extends HypixelInventoryGUI {
-    private SkyBlockPlayer viewedPlayer;
+    private final SkyBlockPlayer viewedPlayer;
+
     public GUIViewPlayerProfile(SkyBlockPlayer viewedPlayer) {
-        super(viewedPlayer.getUsername() + "'s Profile" , InventoryType.CHEST_6_ROW);
+        super(viewedPlayer.getUsername() + "'s Profile", InventoryType.CHEST_6_ROW);
         this.viewedPlayer = viewedPlayer;
     }
 
@@ -128,6 +128,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage("§cThis feature is not added yet.");
             }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -155,6 +156,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage("§cThis feature is not added yet.");
             }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -167,6 +169,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage("§cThis feature is not added yet.");
             }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -179,6 +182,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage("§cThis feature is not added yet.");
             }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -191,6 +195,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage("§cThis feature is not added yet.");
             }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -203,6 +208,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage("§cThis feature is not added yet.");
             }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -215,6 +221,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage("§cThis feature is not added yet.");
             }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -232,16 +239,19 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
         });
         updateItemStacks(getInventory(), getPlayer());
     }
+
     @Override
     public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {}
+    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {}
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
+    }
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {

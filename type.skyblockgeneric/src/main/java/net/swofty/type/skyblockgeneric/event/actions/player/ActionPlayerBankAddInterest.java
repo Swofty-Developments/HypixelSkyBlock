@@ -3,18 +3,18 @@ package net.swofty.type.skyblockgeneric.event.actions.player;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.commons.StringUtility;
 import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
+import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerBankAddInterest implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(PlayerSpawnEvent event) {
         if (event.isFirstSpawn()) return;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();

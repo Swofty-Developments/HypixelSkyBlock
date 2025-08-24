@@ -15,7 +15,7 @@ import java.util.function.BiFunction;
 
 @Data
 public class ReforgeLoader {
-    private static final File REFORGES_DIR = new File("./configuration/reforges");
+    private static final File REFORGES_DIR = new File("./configuration/skyblock/reforges");
     private static final Map<String, Reforge> LOADED_REFORGES = new HashMap<>();
 
     @Data

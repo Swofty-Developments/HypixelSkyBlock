@@ -97,7 +97,7 @@ public class SkyBlockVelocity {
     public void onProxyInitialization(ProxyInitializeEvent event) {
         server = proxy;
         shouldAuthenticate = Configuration.getOrDefault("require-authentication", false);
-        supportCrossVersion = Configuration.getOrDefault("cross-version-support" , false);
+        supportCrossVersion = Configuration.getOrDefault("cross-version-support", false);
 
         /**
          * initialize cross version support
@@ -140,7 +140,7 @@ public class SkyBlockVelocity {
                 .plugin(this)
                 .build();
 
-        commandManager.register(statusCommandMeta , new ServerStatusCommand());
+        commandManager.register(statusCommandMeta, new ServerStatusCommand());
 
 
         /**

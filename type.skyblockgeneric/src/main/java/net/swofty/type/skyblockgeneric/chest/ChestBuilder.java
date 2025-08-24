@@ -3,9 +3,9 @@ package net.swofty.type.skyblockgeneric.chest;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.ItemStack;
+import net.swofty.type.generic.utility.ChestUtility;
 import net.swofty.type.skyblockgeneric.block.BlockType;
 import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
-import net.swofty.type.generic.utility.ChestUtility;
 
 public class ChestBuilder {
 
@@ -26,7 +26,7 @@ public class ChestBuilder {
 
     public Chest build() {
         if (!instance.getBlock(position).name().equals("minecraft:chest") || !SkyBlockBlock.isSkyBlockBlock(instance.getBlock(position)))
-            instance.setBlock(position , new SkyBlockBlock(BlockType.CHEST).toBlock());
+            instance.setBlock(position, new SkyBlockBlock(BlockType.CHEST).toBlock());
         if (chestType == ChestType.SINGLE) {
             return new SingleChest(instance, position);
         } else if (chestType == ChestType.DOUBLE) {

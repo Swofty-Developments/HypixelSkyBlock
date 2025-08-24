@@ -350,7 +350,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(14, 15000,
                         new XPReward() {
                             @Override
@@ -374,7 +374,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(15, 20000,
                         new XPReward() {
                             @Override
@@ -398,7 +398,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(16, 30000,
                         new XPReward() {
                             @Override
@@ -422,7 +422,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(17, 50000,
                         new XPReward() {
                             @Override
@@ -446,7 +446,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(18, 75000,
                         new XPReward() {
                             @Override
@@ -470,7 +470,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(19, 100000,
                         new XPReward() {
                             @Override
@@ -494,7 +494,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(20, 200000,
                         new XPReward() {
                             @Override
@@ -518,7 +518,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(21, 300000,
                         new XPReward() {
                             @Override
@@ -542,7 +542,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(22, 400000,
                         new XPReward() {
                             @Override
@@ -566,7 +566,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(23, 500000,
                         new XPReward() {
                             @Override
@@ -590,7 +590,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(24, 600000,
                         new XPReward() {
                             @Override
@@ -614,7 +614,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(25, 700000,
                         new XPReward() {
                             @Override
@@ -638,7 +638,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(26, 800000,
                         new XPReward() {
                             @Override
@@ -662,7 +662,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(27, 900000,
                         new XPReward() {
                             @Override
@@ -686,7 +686,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(28, 1000000,
                         new XPReward() {
                             @Override
@@ -710,7 +710,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(29, 1100000,
                         new XPReward() {
                             @Override
@@ -734,7 +734,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(30, 1200000,
                         new XPReward() {
                             @Override
@@ -758,7 +758,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(31, 1300000,
                         new XPReward() {
                             @Override
@@ -782,7 +782,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(32, 1400000,
                         new XPReward() {
                             @Override
@@ -806,7 +806,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(33, 1500000,
                         new XPReward() {
                             @Override
@@ -830,7 +830,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(34, 1600000,
                         new XPReward() {
                             @Override
@@ -854,7 +854,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(35, 1700000,
                         new XPReward() {
                             @Override
@@ -878,7 +878,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(36, 1800000,
                         new XPReward() {
                             @Override
@@ -902,7 +902,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(37, 1900000,
                         new XPReward() {
                             @Override
@@ -926,7 +926,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(38, 2000000,
                         new XPReward() {
                             @Override
@@ -950,7 +950,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(39, 2100000,
                         new XPReward() {
                             @Override
@@ -974,7 +974,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(40, 2200000,
                         new XPReward() {
                             @Override
@@ -998,7 +998,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(41, 2300000,
                         new XPReward() {
                             @Override
@@ -1022,7 +1022,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(42, 2400000,
                         new XPReward() {
                             @Override
@@ -1046,7 +1046,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(43, 2500000,
                         new XPReward() {
                             @Override
@@ -1070,7 +1070,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(44, 2600000,
                         new XPReward() {
                             @Override
@@ -1094,7 +1094,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(45, 2750000,
                         new XPReward() {
                             @Override
@@ -1118,7 +1118,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(46, 2900000,
                         new XPReward() {
                             @Override
@@ -1142,7 +1142,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(47, 3100000,
                         new XPReward() {
                             @Override
@@ -1166,7 +1166,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(48, 3400000,
                         new XPReward() {
                             @Override
@@ -1190,7 +1190,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(49, 3700000,
                         new XPReward() {
                             @Override
@@ -1214,7 +1214,7 @@ public class CarpentrySkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
-                        }                ),
+                        }),
                 new SkillReward(50, 4000000,
                         new XPReward() {
                             @Override

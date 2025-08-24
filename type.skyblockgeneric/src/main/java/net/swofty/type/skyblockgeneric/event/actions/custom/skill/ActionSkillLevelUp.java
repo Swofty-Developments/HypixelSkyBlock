@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class ActionSkillLevelUp implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(SkillUpdateEvent event) {
         if (event.getNewValueRaw() <= event.getOldValueRaw()) return;
 
