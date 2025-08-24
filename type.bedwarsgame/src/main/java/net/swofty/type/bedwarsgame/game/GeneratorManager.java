@@ -14,7 +14,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
-import net.swofty.type.bedwarsgame.map.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.MapsConfig;
 import org.intellij.lang.annotations.Subst;
 import org.tinylog.Logger;
 

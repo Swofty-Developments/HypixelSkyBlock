@@ -8,10 +8,10 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
-import net.swofty.type.bedwarsgame.map.MapsConfig;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
+import net.swofty.type.bedwarsgeneric.game.MapsConfig;
 import org.tinylog.Logger;
 
 import java.time.Duration;

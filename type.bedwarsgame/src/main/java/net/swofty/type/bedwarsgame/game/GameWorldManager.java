@@ -6,7 +6,7 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.type.bedwarsgame.entity.BedWarsShopNPC;
-import net.swofty.type.bedwarsgame.map.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.MapsConfig;
 import org.intellij.lang.annotations.Subst;
 import org.tinylog.Logger;
 

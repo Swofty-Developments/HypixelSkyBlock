@@ -1,4 +1,4 @@
-package net.swofty.type.bedwarsgame.map;
+package net.swofty.type.bedwarsgeneric.game;
 
 import lombok.Getter;
 

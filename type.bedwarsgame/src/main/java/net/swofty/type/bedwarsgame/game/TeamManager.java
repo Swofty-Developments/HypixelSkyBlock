@@ -12,8 +12,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.scoreboard.BelowNameTag;
 import net.minestom.server.tag.Tag;
-import net.swofty.type.bedwarsgame.map.MapsConfig;
 import net.swofty.type.bedwarsgame.util.ColorUtil;
+import net.swofty.type.bedwarsgeneric.game.MapsConfig;
 import org.tinylog.Logger;
 
 import java.util.*;
