@@ -17,6 +17,8 @@ import net.minestom.server.potion.TimedPotion;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.chunk.ChunkUtils;
 import net.swofty.pvp.player.CombatPlayer;
+import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,8 +40,19 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
 		getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(1.0);
 	}
 
+	public BedWarsDataHandler getBedWarsDataHandler() {
+		return BedWarsDataHandler.getUser(this.getUuid());
+	}
+
 	public String getTeamName() {
 		return getTag(Tag.String("team"));
+	}
+
+	public void xp(ExperienceCause cause) {
+		sendMini("<aqua>+" + cause.getExperience() + " Bed Wars XP (" + cause.getFormattedName() + ")</aqua>");
+		getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class).setValue(
+				getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue() + cause.getExperience()
+		);
 	}
 
 
