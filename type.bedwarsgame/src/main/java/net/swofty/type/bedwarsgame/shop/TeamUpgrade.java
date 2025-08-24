@@ -4,7 +4,6 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
@@ -55,18 +54,18 @@ public abstract class TeamUpgrade {
 	public void purchase(Game game, BedWarsPlayer player) {
 		String teamName = player.getTeamName();
 		if (teamName == null) {
-			player.sendMessage("You are not on a team.");
+			player.sendMini("<red>You are not on a team. Report this to the administration.</red>");
 			return;
 		}
 
 		TeamUpgradeTier nextTier = getNextTier(game, teamName);
 		if (nextTier == null) {
-			player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Your team has already maxed out this upgrade.</red>"));
+			player.sendMini("<red>Your team has already maxed out this upgrade.</red>");
 			return;
 		}
 
 		if (!hasEnoughCurrency(player, nextTier)) {
-			player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You do not have enough " + nextTier.getCurrency().getName() + " to purchase this.</red>"));
+			player.sendMini("<red>You do not have enough " + nextTier.getCurrency().getName() + " to purchase this.</red>");
 			return;
 		}
 

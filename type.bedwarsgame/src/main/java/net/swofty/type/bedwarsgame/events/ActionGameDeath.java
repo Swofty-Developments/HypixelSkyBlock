@@ -28,6 +28,7 @@ import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
 import net.swofty.type.bedwarsgame.shop.impl.AxeShopItem;
 import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.ColorUtil;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -151,22 +152,22 @@ public class ActionGameDeath implements HypixelEventClass {
 				emeralds = item.amount();
 			}
 		}
-		if (player.getLastDamageSource() != null && player.getLastDamageSource().getSource() instanceof Player k) {
+		if (player.getLastDamageSource() != null && player.getLastDamageSource().getSource() instanceof BedWarsPlayer k) {
 			if (iron > 0) {
 				k.getInventory().addItemStack(ItemStack.of(Material.IRON_INGOT, iron));
-				k.sendMessage(MiniMessage.miniMessage().deserialize("<white>+ " + iron + " iron</white>"));
+				k.sendMini("<white>+ " + iron + " iron</white>");
 			}
 			if (gold > 0) {
 				k.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, gold));
-				k.sendMessage(MiniMessage.miniMessage().deserialize("<yellow>+ " + gold + " gold</yellow>"));
+				k.sendMini("<yellow>+ " + gold + " gold</yellow>");
 			}
 			if (diamonds > 0) {
 				k.getInventory().addItemStack(ItemStack.of(Material.DIAMOND, diamonds));
-				k.sendMessage(MiniMessage.miniMessage().deserialize("<blue>+ " + diamonds + " diamond</blue>"));
+				k.sendMini("<blue>+ " + diamonds + " diamond</blue>");
 			}
 			if (emeralds > 0) {
 				k.getInventory().addItemStack(ItemStack.of(Material.EMERALD, emeralds));
-				k.sendMessage(MiniMessage.miniMessage().deserialize("<green>+ " + emeralds + " emerald</green>"));
+				k.sendMini("<green>+ " + emeralds + " emerald</green>");
 			}
 		}
 
@@ -185,8 +186,9 @@ public class ActionGameDeath implements HypixelEventClass {
 
 		if (!bedExists) {
 			// Append FINAL KILL! to the death message
-			deathMessage = deathMessage.append(Component.text(" ", NamedTextColor.GRAY)) // Add a space
-					.append(Component.text("FINAL KILL!", NamedTextColor.AQUA, TextDecoration.BOLD));
+			deathMessage = deathMessage.append(
+					MiniMessage.miniMessage().deserialize("<gray> </gray><aqua><bold>FINAL KILL!</bold></aqua>")
+			);
 		}
 		event.setChatMessage(deathMessage);
 

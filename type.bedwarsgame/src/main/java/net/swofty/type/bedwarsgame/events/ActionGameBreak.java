@@ -1,11 +1,8 @@
 package net.swofty.type.bedwarsgame.events;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.ItemEntity;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
@@ -14,6 +11,7 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -24,7 +22,7 @@ public class ActionGameBreak implements HypixelEventClass {
 
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
 	public void run(PlayerBlockBreakEvent event) {
-		Player player = event.getPlayer();
+		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		Block blockBeingBroken = event.getBlock();
 
 		if (!player.hasTag(Tag.String("gameId"))) {
@@ -54,7 +52,7 @@ public class ActionGameBreak implements HypixelEventClass {
 				isTeamBedPart = true;
 				// This is team X's bed
 				if (team.getName().equalsIgnoreCase(playerTeamName)) {
-					player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You cannot break your own team's bed!</red>"));
+					player.sendMini("<red>You cannot break your own team's bed!</red>");
 					event.setCancelled(true);
 					return;
 				}
@@ -69,13 +67,9 @@ public class ActionGameBreak implements HypixelEventClass {
 
 				String breakerTeamColor = player.getTag(Tag.String("teamColor"));
 				if (breakerTeamColor == null) breakerTeamColor = "gray";
-
-				Component message = MiniMessage.miniMessage().deserialize(
-						String.format("<b><red>BED DESTRUCTION ></b> Team %s's bed was destroyed by <%s>%s</%s>!",
-								team.getName(), breakerTeamColor, player.getUsername(), breakerTeamColor)
-				);
-				for (Player p : game.getPlayers()) {
-					p.sendMessage(message);
+				for (BedWarsPlayer p : game.getPlayers()) {
+					p.sendMini(String.format("<b><red>BED DESTRUCTION ></b> Team %s's bed was destroyed by <%s>%s</%s>!",
+							team.getName(), breakerTeamColor, player.getUsername(), breakerTeamColor));
 				}
 				event.setCancelled(true); // handled the bed destruction and block removal
 				return;
@@ -89,7 +83,7 @@ public class ActionGameBreak implements HypixelEventClass {
 				event.setCancelled(false);
 			} else {
 				// Not a team bed and not a player-placed block
-				player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You can only break blocks placed by players!</red>"));
+				player.sendMini("<red>You can only break blocks placed by players!</red>");
 				event.setCancelled(true);
 			}
 		}

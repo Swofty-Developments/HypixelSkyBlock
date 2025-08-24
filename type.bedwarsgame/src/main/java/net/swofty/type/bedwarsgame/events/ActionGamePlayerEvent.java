@@ -23,6 +23,7 @@ import net.swofty.type.bedwarsgame.gui.GUIItemShop;
 import net.swofty.type.bedwarsgame.gui.GUITeamChest;
 import net.swofty.type.bedwarsgame.gui.GUITeamShop;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -123,7 +124,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
 	public void run(PlayerBlockInteractEvent event) {
 		Block block = event.getBlock();
-		Player player = event.getPlayer();
+		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		if (!player.hasTag(Tag.String("gameId"))) {
 			event.setCancelled(true);
 			return;
@@ -174,7 +175,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		boolean sameTeam = chestTeamName.equals(teamName);
 		if (!sameTeam && game.getTeamManager().getTeamBedStatus().getOrDefault(chestTeamName, false)) {
 			event.setCancelled(true);
-			player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You can only access enemy team chests if their bed is destroyed!</red>"));
+			player.sendMini("<red>You can only access enemy team chests if their bed is destroyed!</red>");
 			return;
 		}
 
@@ -182,9 +183,9 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		GUITeamChest teamChest = new GUITeamChest(chestTeamName);
 
 		if (existingContextId != null) {
-			teamChest.joinSharedContext((HypixelPlayer) player, existingContextId);
+			teamChest.joinSharedContext(player, existingContextId);
 		} else {
-			String contextId = teamChest.createSharedContext((HypixelPlayer) player);
+			String contextId = teamChest.createSharedContext(player);
 			ACTIVE_TEAM_CHESTS.put(chestTeamName, contextId);
 		}
 	}
