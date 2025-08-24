@@ -1,10 +1,8 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.kyori.adventure.sound.Sound;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
@@ -15,6 +13,7 @@ import net.swofty.type.bedwarsgame.entity.TntEntity;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.map.MapsConfig;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -24,14 +23,14 @@ public class ActionGamePlace implements HypixelEventClass {
 
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerBlockPlaceEvent event) {
-		Player player = event.getPlayer();
+		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		if (!player.hasTag(Tag.String("gameId"))) {
 			event.setCancelled(true); // Prevent placing if not in a game
 			return;
 		}
 
 		if (event.getBlockPosition().y() >= 105) {
-			player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You cannot place blocks this high!</red>"));
+			player.sendMini("<red>You cannot place blocks this high!</red>");
 			event.setCancelled(true);
 			return;
 		}
@@ -50,7 +49,7 @@ public class ActionGamePlace implements HypixelEventClass {
 			if (spawnPos != null) {
 				Point spawnPoint = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z());
 				if (blockPosition.distance(spawnPoint) <= 6) {
-					player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You cannot build here.</red>"));
+					player.sendMini("<red>You cannot build here.</red>");
 					event.setCancelled(true);
 					return;
 				}
