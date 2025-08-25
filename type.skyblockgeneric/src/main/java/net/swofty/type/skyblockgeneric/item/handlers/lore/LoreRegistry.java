@@ -69,6 +69,20 @@ public class LoreRegistry {
                 "§e ",
                 "§eClick to open!"
         ), (item, player) -> "§aSkyBlock Menu §7(Click)"));
+        register("EXPERIMENTATION_TABLE_LORE", new LoreConfig((item, player) -> Arrays.asList(
+                "§7A mystical table that allows you to",
+                "§7perform enchanting experiments to",
+                "§7earn §bEnchanting Experience§7!",
+                "§e ",
+                "§7Available Experiments:",
+                "§d• SuperPairs §7- Memory matching game",
+                "§d• Chronomatron §7- Color sequence memory",
+                "§d• Ultrasequencer §7- Number pattern memory",
+                "§e ",
+                "§7Place this block to start experimenting!",
+                "§e ",
+                "§eClick to place!"
+        ), (item, player) -> "§dExperimentation Table §7(Click to Place)"));
         register("HOT_POTATO_BOOK", new LoreConfig((item, player) -> {
             return PotatoType.allLores();
         }, null));

@@ -1,12 +1,18 @@
 package net.swofty.type.skyblockgeneric.block.blocks;
 
 import lombok.NonNull;
-import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.LivingEntity;
+import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.tag.Tag;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
+import net.minestom.server.entity.EquipmentSlot;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
 import net.swofty.type.skyblockgeneric.block.impl.BlockBreakable;
@@ -14,19 +20,19 @@ import net.swofty.type.skyblockgeneric.block.impl.BlockInteractable;
 import net.swofty.type.skyblockgeneric.block.impl.BlockPlaceable;
 import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
 import net.swofty.type.skyblockgeneric.gui.inventories.experiments.GUIExperiments;
-import net.swofty.type.skyblockgeneric.structure.SkyBlockStructure;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockExperimentationTable implements CustomSkyBlockBlock, BlockPlaceable, BlockInteractable, BlockBreakable {
 
-    private static final Tag<Integer> ORIGIN_X = Tag.Integer("exp_origin_x");
-    private static final Tag<Integer> ORIGIN_Y = Tag.Integer("exp_origin_y");
-    private static final Tag<Integer> ORIGIN_Z = Tag.Integer("exp_origin_z");
-    private static final Tag<Integer> ROTATION = Tag.Integer("exp_rotation");
+    // Store visual structure data for cleanup
+    private static final List<ExperimentationTableStructure> activeStructures = new ArrayList<>();
 
     @Override
     public @NonNull Block getDisplayMaterial() {
-        return Block.CAULDRON; // base placeholder; structure will build full visuals
+        return Block.ENCHANTING_TABLE; // matches Hypixel's experimentation table
     }
 
     @Override
@@ -47,29 +53,17 @@ public class BlockExperimentationTable implements CustomSkyBlockBlock, BlockPlac
             return;
         }
 
+        // Allow normal placement
+        event.setCancelled(false);
+        
+        // Create the visual structure after placement
+        Pos blockPos = new Pos(event.getBlockPosition().x(), event.getBlockPosition().y(), event.getBlockPosition().z());
         Instance instance = event.getInstance();
-        Point pos = event.getBlockPosition();
-
-        // Cancel vanilla placement; we will place tagged base and build structure
-        event.setCancelled(true);
-
-        int rotation = yawToRotation(player.getPosition().yaw());
-
-        // Place tagged base block at origin
-        Block base = block.toBlock()
-                .withTag(ORIGIN_X, (int) pos.x())
-                .withTag(ORIGIN_Y, (int) pos.y())
-                .withTag(ORIGIN_Z, (int) pos.z())
-                .withTag(ROTATION, rotation);
-        instance.setBlock(pos, base);
-
-        // Build the multi-block structure
-        new StructureExperimentationTable(rotation, (int) pos.x(), (int) pos.y(), (int) pos.z())
-                .setBlocks(instance);
-
-        // Consume one item
-        SkyBlockPlayer sbp = (SkyBlockPlayer) event.getPlayer();
-        sbp.setItemInMainHand(sbp.getItemInMainHand().withAmount(Math.max(0, sbp.getItemInMainHand().amount() - 1)));
+        
+        // Spawn the visual structure
+        ExperimentationTableStructure structure = new ExperimentationTableStructure(instance, blockPos);
+        structure.spawn();
+        activeStructures.add(structure);
     }
 
     @Override
@@ -82,110 +76,135 @@ public class BlockExperimentationTable implements CustomSkyBlockBlock, BlockPlac
 
     @Override
     public void onBreak(PlayerBlockBreakEvent event, SkyBlockBlock block) {
+        // Clean up the visual structure
+        Pos blockPos = new Pos(event.getBlockPosition().x(), event.getBlockPosition().y(), event.getBlockPosition().z());
         Instance instance = event.getInstance();
-        Integer ox = event.getBlock().getTag(ORIGIN_X);
-        Integer oy = event.getBlock().getTag(ORIGIN_Y);
-        Integer oz = event.getBlock().getTag(ORIGIN_Z);
-        Integer rot = event.getBlock().getTag(ROTATION);
-
-        // Remove structure if tags exist
-        if (ox != null && oy != null && oz != null && rot != null) {
-            new StructureExperimentationTable(rot, ox, oy, oz).clear(instance);
-        }
-
-        event.setResultBlock(Block.AIR);
-        // Drop logic could be added by giving back the item to the player if desired
+        
+        // Find and remove the structure
+        activeStructures.removeIf(structure -> {
+            if (structure.instance.equals(instance) && structure.basePos.equals(blockPos)) {
+                structure.remove();
+                return true;
+            }
+            return false;
+        });
+        
+        event.setCancelled(false);
     }
 
-    private int yawToRotation(float yaw) {
-        float normalized = (yaw % 360 + 360) % 360;
-        if (normalized >= 315 || normalized < 45) return 0; // north
-        if (normalized < 135) return 1; // east
-        if (normalized < 225) return 2; // south
-        return 3; // west
-    }
-
-    public static class StructureExperimentationTable extends SkyBlockStructure {
-        public StructureExperimentationTable(int rotation, int x, int y, int z) {
-            super(rotation, x, y, z);
+    /**
+     * Represents the visual structure of an Experimentation Table
+     */
+    private static class ExperimentationTableStructure {
+        private final Instance instance;
+        private final Pos basePos;
+        private final List<LivingEntity> visualEntities;
+        private final List<Pos> blockPositions;
+        
+        public ExperimentationTableStructure(Instance instance, Pos basePos) {
+            this.instance = instance;
+            this.basePos = basePos;
+            this.visualEntities = new ArrayList<>();
+            this.blockPositions = new ArrayList<>();
         }
-
-        @Override
-        public void setBlocks(Instance instance) {
-            // Center basin ring + core
-            set(instance, 0, 1, 0, Block.END_PORTAL);
-            set(instance, 1, 1, 0, Block.STONE_BRICK_STAIRS
-                    .withProperty("facing", "west")
-                    .withProperty("half", "bottom")
-                    .withProperty("shape", "straight"));
-            set(instance, -1, 1, 0, Block.STONE_BRICK_STAIRS
-                    .withProperty("facing", "east")
-                    .withProperty("half", "bottom")
-                    .withProperty("shape", "straight"));
-            set(instance, 0, 1, 1, Block.STONE_BRICK_STAIRS
-                    .withProperty("facing", "north")
-                    .withProperty("half", "bottom")
-                    .withProperty("shape", "straight"));
-            set(instance, 0, 1, -1, Block.STONE_BRICK_STAIRS
-                    .withProperty("facing", "south")
-                    .withProperty("half", "bottom")
-                    .withProperty("shape", "straight"));
-            set(instance, 1, 1, 1, Block.STONE_BRICK_SLAB);
-            set(instance, 1, 1, -1, Block.STONE_BRICK_SLAB);
-            set(instance, -1, 1, 1, Block.STONE_BRICK_SLAB);
-            set(instance, -1, 1, -1, Block.STONE_BRICK_SLAB);
-
-            // Crystal pylons
-            set(instance, 0, 2, -1, Block.STONE_BRICK_WALL);
-            set(instance, 0, 3, -1, Block.END_ROD);
-            set(instance, 0, 4, -1, Block.AMETHYST_CLUSTER);
-            set(instance, 0, 2, 1, Block.STONE_BRICK_WALL);
-            set(instance, 0, 3, 1, Block.END_ROD);
-            set(instance, 0, 4, 1, Block.AMETHYST_CLUSTER);
-
-            // Benches left and right (slabs)
-            fill(instance, -4, 1, -1, -2, 1, 1, Block.OAK_SLAB.withProperty("type", "top"));
-            fill(instance, 2, 1, -1, 4, 1, 1, Block.OAK_SLAB.withProperty("type", "top"));
-            // Cloth
-            fill(instance, -4, 2, -1, -2, 2, 1, Block.RED_CARPET);
-            fill(instance, 2, 2, -1, 4, 2, 1, Block.RED_CARPET);
-            // Diamond feet
-            set(instance, -5, 1, -1, Block.DIAMOND_BLOCK);
-            set(instance, -5, 1, 1, Block.DIAMOND_BLOCK);
-            set(instance, 5, 1, -1, Block.DIAMOND_BLOCK);
-            set(instance, 5, 1, 1, Block.DIAMOND_BLOCK);
-            // Red legs
-            set(instance, -4, 1, -2, Block.CRIMSON_FENCE);
-            set(instance, -4, 1, 2, Block.CRIMSON_FENCE);
-            set(instance, 4, 1, -2, Block.CRIMSON_FENCE);
-            set(instance, 4, 1, 2, Block.CRIMSON_FENCE);
-
-            // Front fascia and under accent
-            set(instance, 0, 0, -1, Block.ENCHANTING_TABLE);
-            Block frontTrap = Block.DARK_OAK_TRAPDOOR
-                    .withProperty("facing", "south")
-                    .withProperty("half", "top")
-                    .withProperty("open", "false");
-            set(instance, -2, 2, -2, frontTrap);
-            set(instance, -1, 2, -2, frontTrap);
-            set(instance, 0, 2, -2, frontTrap);
-            set(instance, 1, 2, -2, frontTrap);
-            set(instance, 2, 2, -2, frontTrap);
-
-            // Props
-            set(instance, -3, 2, 0, Block.PURPLE_STAINED_GLASS);
-            set(instance, 3, 2, 0, Block.LECTERN);
-            set(instance, 3, 2, 1, Block.WHITE_CARPET);
+        
+        public void spawn() {
+            // 1. Base skull support (underneath the table)
+            Pos skullPos = basePos.sub(0, 1, 0);
+            instance.setBlock(skullPos, Block.SKELETON_SKULL);
+            blockPositions.add(skullPos);
+            
+            // 2. Floating book above the table
+            Pos bookPos = basePos.add(0, 1.5, 0);
+            LivingEntity bookStand = createArmorStand(bookPos, Material.BOOK);
+            bookStand.setInstance(instance, bookPos);
+            visualEntities.add(bookStand);
+            
+            // 3. Left pylon with purple orb
+            Pos leftPylonPos = basePos.add(-1.5, 0, 0);
+            createPylon(leftPylonPos, -1);
+            
+            // 4. Right pylon with purple orb
+            Pos rightPylonPos = basePos.add(1.5, 0, 0);
+            createPylon(rightPylonPos, 1);
+            
+            // 5. Left book
+            Pos leftBookPos = basePos.add(-1, 0.5, 0);
+            LivingEntity leftBookStand = createArmorStand(leftBookPos, Material.BOOK);
+            leftBookStand.setInstance(instance, leftBookPos);
+            visualEntities.add(leftBookStand);
+            
+            // 6. Right book
+            Pos rightBookPos = basePos.add(1, 0.5, 0);
+            LivingEntity rightBookStand = createArmorStand(rightBookPos, Material.BOOK);
+            rightBookStand.setInstance(instance, rightBookPos);
+            visualEntities.add(rightBookStand);
+            
+            // 7. Left chest (standard brown)
+            Pos leftChestPos = basePos.add(-1, 0, -1);
+            instance.setBlock(leftChestPos, Block.CHEST);
+            blockPositions.add(leftChestPos);
+            
+            // 8. Right chest (ornate - using trapped chest for different appearance)
+            Pos rightChestPos = basePos.add(1, 0, -1);
+            instance.setBlock(rightChestPos, Block.TRAPPED_CHEST);
+            blockPositions.add(rightChestPos);
+            
+            // 9. Foundation platform (light colored blocks)
+            createFoundation();
         }
-
-        public void clear(Instance instance) {
-            // Clear the known footprint (conservative bounding box)
-            fill(instance, -5, 0, -3, 5, 4, 3, Block.AIR);
+        
+        private void createPylon(Pos pylonPos, int direction) {
+            // Pylon base (stone)
+            instance.setBlock(pylonPos, Block.STONE);
+            blockPositions.add(pylonPos);
+            
+            // Pylon middle
+            Pos middlePos = pylonPos.add(0, 1, 0);
+            instance.setBlock(middlePos, Block.STONE);
+            blockPositions.add(middlePos);
+            
+            // Pylon top with purple orb
+            Pos topPos = pylonPos.add(0, 2, 0);
+            instance.setBlock(topPos, Block.AMETHYST_CLUSTER);
+            blockPositions.add(topPos);
         }
-
-        @Override
-        public java.util.List<SkyBlockStructure.StructureHologram> getHolograms() {
-            return java.util.Collections.emptyList();
+        
+        private void createFoundation() {
+            // Create a 5x5 light colored foundation around the table
+            for (int x = -2; x <= 2; x++) {
+                for (int z = -2; z <= 2; z++) {
+                    Pos foundationPos = basePos.add(x, -1, z);
+                    if (!blockPositions.contains(foundationPos)) {
+                        instance.setBlock(foundationPos, Block.SMOOTH_STONE);
+                        blockPositions.add(foundationPos);
+                    }
+                }
+            }
+        }
+        
+        private LivingEntity createArmorStand(Pos pos, Material itemMaterial) {
+            LivingEntity armorStand = new LivingEntity(EntityType.ARMOR_STAND);
+            
+            ArmorStandMeta meta = (ArmorStandMeta) armorStand.getEntityMeta();
+            meta.setInvisible(true);
+            meta.setHasNoGravity(true);
+            meta.setSmall(true);
+            armorStand.setEquipment(EquipmentSlot.MAIN_HAND, ItemStack.of(itemMaterial));
+            
+            return armorStand;
+        }
+        
+        public void remove() {
+            // Remove all visual entities
+            for (LivingEntity entity : visualEntities) {
+                entity.remove();
+            }
+            
+            // Remove all placed blocks
+            for (Pos pos : blockPositions) {
+                instance.setBlock(pos, Block.AIR);
+            }
         }
     }
 }

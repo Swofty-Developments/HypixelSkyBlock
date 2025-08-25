@@ -374,23 +374,17 @@ public class ExperimentationManager {
     }
     
     private static int getInitialSequenceLength(String tier) {
-        String t = tier.toLowerCase();
-        if (t.contains("high")) return 3;
-        if (t.contains("grand")) return 4;
-        if (t.contains("supreme")) return 5;
-        if (t.contains("transcendent")) return 6;
-        if (t.contains("metaphysical")) return 7;
-        return 3; // default
+        return 3;
     }
     
         private static int getColorCountForTier(String tier) {
         String t = tier.toLowerCase();
-        if (t.contains("metaphysical")) return 10;  // 10 distinct colors
-        if (t.contains("transcendent")) return 8;   // 8 distinct colors
+        if (t.contains("metaphysical")) return 10;  
+        if (t.contains("transcendent")) return 8;  
         if (t.contains("supreme")) return 7;
         if (t.contains("grand")) return 5;
         if (t.contains("high")) return 3;
-        return 3; // default
+        return 3; 
     }
     
     // Result classes

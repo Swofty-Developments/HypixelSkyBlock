@@ -16,6 +16,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
     private final int gridColumns;
     private final int gridRows;
 
-    // Full color palette supporting up to 9 colors for Transcendent tier
+    // Full color palette supporting up to 20 colors for Metaphysical tier
     private final Material[] fullColorPalette = new Material[] {
             Material.RED_STAINED_GLASS,      // 0 (col 0 - red)
             Material.BLUE_STAINED_GLASS,     // 1 (col 1 - blue) 
@@ -38,7 +39,19 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
             Material.PURPLE_STAINED_GLASS,   // 5 (col 5 - purple)
             Material.ORANGE_STAINED_GLASS,   // 6 (col 6 - orange)
             Material.PINK_STAINED_GLASS,     // 7 (col 7 - pink)
-            Material.LIGHT_BLUE_STAINED_GLASS // 8 (col 8 - light blue)
+            Material.LIGHT_BLUE_STAINED_GLASS, // 8 (col 8 - light blue)
+            Material.CYAN_STAINED_GLASS,     // 9 (col 9 - cyan)
+            Material.LIGHT_GRAY_STAINED_GLASS, // 10 (col 10 - light gray)
+            Material.GRAY_STAINED_GLASS,     // 11 (col 11 - gray)
+            Material.BROWN_STAINED_GLASS,    // 12 (col 12 - brown)
+            Material.MAGENTA_STAINED_GLASS,  // 13 (col 13 - magenta)
+            Material.LIME_STAINED_GLASS,     // 14 (col 14 - lime)
+            Material.BLUE_STAINED_GLASS,     // 15 (col 15 - blue)
+            Material.YELLOW_STAINED_GLASS,   // 16 (col 16 - yellow)
+            Material.WHITE_STAINED_GLASS,    // 17 (col 17 - white)
+            Material.PURPLE_STAINED_GLASS,   // 18 (col 18 - purple)
+            Material.ORANGE_STAINED_GLASS,   // 19 (col 19 - orange)
+            Material.PINK_STAINED_GLASS      // 20 (col 20 - pink)
     };
     
     // Tier-specific color palette
@@ -48,7 +61,7 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
     private volatile boolean revealing = true;
     private volatile int revealIndex = 0;
     private volatile int tickCounter = 0;
-    private final int ticksPerReveal = 10; // half second-ish
+    private final int ticksPerReveal = 3; // much faster reveals
     private volatile int lastHighlight = -1;
     private volatile int uiHighlightIndex = -1; // drives rendering in getItem
     private volatile boolean acceptingInput = false;
@@ -62,46 +75,63 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
     private int timerCycleCounter = 0; // counts refresh cycles; 10 cycles ~= 1 second at refreshRate()=2
 
     public GUIChronomatronPlay(String tier) {
-        super("Chronomatron (" + tier + ")", InventoryType.CHEST_6_ROW);
+        super("Chronomatron (" + toTitleCase(tier) + ")", InventoryType.CHEST_6_ROW);
         this.tier = tier;
         
         // Initialize grid based on tier
         this.gridColumns = getColumnsForTier(tier);
         this.gridRows = getRowsForTier(tier);
-        this.gridSlots = generateGridSlots(gridColumns);
+        this.gridSlots = generateGridSlots(gridColumns).stream().mapToInt(i -> i).toArray();
         this.colorPalette = new Material[gridColumns];
         System.arraycopy(fullColorPalette, 0, colorPalette, 0, gridColumns);
     }
     
     private int getColumnsForTier(String tier) {
         String t = tier == null ? "" : tier.toLowerCase();
-        if (t.contains("metaphysical")) return 10;  // 10 distinct colors
-        if (t.contains("transcendent")) return 8;   // 8 distinct colors
+        if (t.contains("metaphysical")) return 20;  // 20 total slots for new layout
+        if (t.contains("transcendent")) return 16;  // 16 total slots for new layout
         if (t.contains("supreme")) return 7;
         if (t.contains("grand")) return 5;
         if (t.contains("high")) return 3;
         return 3; // default
     }
     
-    private int[] generateGridSlots(int columns) {
+    private List<Integer> generateGridSlots(int columns) {
         String t = tier == null ? "" : tier.toLowerCase();
         
         if (t.contains("transcendent")) {
-            // Transcendent: 2 rows of 4 slots (11-14, 20-23) - vertical pairs
-            return new int[]{11, 12, 13, 14, 20, 21, 22, 23};
+            // New layout: 16 slots with 8 distinct colors (each color appears twice)
+            // Top row: slots 11, 12, 13, 14
+            // Bottom row: slots 20, 21, 22, 23
+            // Additional rows: slots 30, 31, 32, 33 and 39, 40, 41, 42
+            return Arrays.asList(11, 12, 13, 14, 20, 21, 22, 23, 30, 31, 32, 33, 39, 40, 41, 42);
         } else if (t.contains("metaphysical")) {
-            // Metaphysical: 2 rows of 5 slots (11-15, 20-24) - vertical pairs
-            return new int[]{11, 12, 13, 14, 15, 20, 21, 22, 23, 24};
+            // Metaphysical: 10 color pairs (20 total slots)
+            // Pairs: 11/20, 12/21, 13/22, 14/23, 15/24, 30/39, 31/40, 32/41, 33/42, 34/43
+            return Arrays.asList(11, 12, 13, 14, 15, 20, 21, 22, 23, 24, 29, 30, 31, 32, 33, 38, 39, 40, 41, 42);
         } else {
-            // Standard tiers: 3 rows with specified columns
-            int rows = getRowsForTier(tier);
-            int[] slots = new int[rows * columns];
-            int startCol = (9 - columns) / 2; // Center the grid horizontally
+            // Standard tiers: dynamic grid generation with tier-specific offsets
+            List<Integer> slots = new ArrayList<>();
+            int startSlot;
             
-            for (int row = 0; row < rows; row++) {
+            // Apply tier-specific horizontal offsets
+            if (t.contains("high")) {
+                startSlot = 12; // One slot to the left
+            } else if (t.contains("supreme")) {
+                startSlot = 10; // One slot to the right
+            } else {
+                startSlot = 11; // Default (Grand and others)
+            }
+            
+            int currentSlot = startSlot;
+            
+            for (int row = 0; row < gridRows; row++) {
                 for (int col = 0; col < columns; col++) {
-                    slots[row * columns + col] = (row + 1) * 9 + startCol + col + 9; // +9 to shift down one row
+                    slots.add(currentSlot);
+                    currentSlot++;
                 }
+                // Move to next row (skip to next row's starting position)
+                currentSlot = startSlot + (row + 1) * 9;
             }
             return slots;
         }
@@ -153,8 +183,8 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
                     float clickPitch = 0.9f + (index * 0.03f);
                     player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, clickPitch));
 
-                    // Brief highlight feedback on click
-                    uiHighlightIndex = index;
+                    // No highlight feedback on click - remove highlighting
+                    uiHighlightIndex = -1;
 
                     // Check if we have collected the complete sequence
                     if (currentInput.size() >= sequence.size()) {
@@ -179,31 +209,54 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
                         }
                         
                         if (result.correct) {
-                            // Next round
-                            currentInput.clear();
-                            acceptingInput = false;
-                            revealing = true;
-                            revealIndex = 0;
-                            lastHighlight = -1;
-                            uiHighlightIndex = -1;
-                            highlightClearDelay = 0;
-                            // Flag to pull new state and start next reveal on refresh
-                            needsState = true;
-                            // Reset tiles for next reveal
-                            for (int j = 0; j < gridSlots.length; j++) set(gridSlots[j], ItemStackCreator.getStack(" ", baseColorForIndex(j), 1));
-                            // Reset timer for next round
-                            acceptingInput = false;
-                            timerSecondsRemaining = secondsForTier();
-                            timerCycleCounter = 0;
-                            set(timerSlot, ItemStackCreator.getStack("§eTime Left", Material.BOOKSHELF, Math.max(1, timerSecondsRemaining)));
+                            // Next round - update sequence with the new length from result
+                            // Get the updated sequence from the backend
+                            GameSession.ChronomatronState state = ExperimentationManager.getChronomatronState(player);
+                            if (state != null && state.correctSequence != null) {
+                                // Update the sequence field through a synchronized method
+                                updateSequence(state.correctSequence);
+                                player.sendMessage("§7Sequence updated: §e" + state.correctSequence.size() + " §7colors");
+                                
+                                // Reset for next reveal
+                                currentInput.clear();
+                                acceptingInput = false;
+                                revealing = true;
+                                revealIndex = 0;
+                                
+                                // Ensure all highlighting is completely cleared for next reveal
+                                lastHighlight = -1;
+                                uiHighlightIndex = -1;
+                                highlightClearDelay = 0;
+                                
+                                needsState = false; // Don't need to fetch state again
+                                
+                                // Reset tiles for next reveal
+                                for (int j = 0; j < gridSlots.length; j++) {
+                                    set(gridSlots[j], ItemStackCreator.getStack(" ", baseColorForIndex(j), 1));
+                                }
+                                
+                                // Reset timer for next round
+                                timerSecondsRemaining = secondsForTier();
+                                timerCycleCounter = 0;
+                                set(timerSlot, ItemStackCreator.getStack("§eTime Left", Material.BOOKSHELF, Math.max(1, timerSecondsRemaining)));
+                                
+                                // Play success sound
+                                player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 1.5f));
+                                player.sendMessage("§aCorrect! §7Next round starting...");
+                            } else {
+                                // Fallback if state is null - try to continue with current sequence
+                                player.sendMessage("§cWarning: Could not update sequence, continuing with current...");
+                                currentInput.clear();
+                                acceptingInput = true;
+                            }
                         }
                     }
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer player) {
-                    // Check if this tile should be highlighted (same color as the currently revealed color)
-                    if (uiHighlightIndex != -1 && shouldHighlightSlot(index, uiHighlightIndex)) {
+                    // Only show highlighting during reveal phase, never during input phase
+                    if (revealing && uiHighlightIndex != -1 && shouldHighlightSlot(index, uiHighlightIndex)) {
                         return ItemStackCreator.enchant(ItemStackCreator.getStack(" ", getDualColorItem(index), 1));
                     }
                     return ItemStackCreator.getStack(" ", getDualColorItem(index), 1);
@@ -224,8 +277,8 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
     public void refreshItems(HypixelPlayer player) {
         if (needsState) {
             GameSession.ChronomatronState state = ExperimentationManager.getChronomatronState(player);
-            if (state != null) {
-                this.sequence = state.correctSequence;
+            if (state != null && state.correctSequence != null && !state.correctSequence.isEmpty()) {
+                updateSequence(state.correctSequence);
                 // Prepare for reveal once we have data
                 revealIndex = 0;
                 tickCounter = 0;
@@ -233,6 +286,7 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
                 acceptingInput = false;
                 revealing = true;
                 needsState = false;
+                player.sendMessage("§7Game started with §e" + state.correctSequence.size() + " §7colors");
             }
         }
 
@@ -255,14 +309,42 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
                     return;
                 }
                 
+                // Safety check: ensure revealIndex is within bounds
+                if (revealIndex >= sequence.size()) {
+                    // This shouldn't happen, but if it does, reset to input mode
+                    revealing = false;
+                    acceptingInput = true;
+                    timerSecondsRemaining = secondsForTier();
+                    timerCycleCounter = 0;
+                    return;
+                }
+                
+                // Debug: log sequence info
+                if (revealIndex == 0) {
+                    player.sendMessage("§7Starting reveal of §e" + sequence.size() + " §7colors");
+                }
+                
                 if (revealIndex < sequence.size()) {
                     int index = sequence.get(revealIndex);
                     
                     // If same color as previous, add clear delay
-                    if (lastHighlight != -1 && baseColorForIndex(index) == baseColorForIndex(lastHighlight)) {
-                        if (uiHighlightIndex != -1) {
+                    if (lastHighlight != -1) {
+                        boolean sameColor = false;
+                        String t = tier == null ? "" : tier.toLowerCase();
+                        
+                        if (t.contains("transcendent") || t.contains("metaphysical")) {
+                            // For dual-color tiers, check if both indices belong to the same color group
+                            int currentColorIndex = index / 2;
+                            int lastColorIndex = lastHighlight / 2;
+                            sameColor = (currentColorIndex == lastColorIndex);
+                        } else {
+                            // Standard tiers use the old logic
+                            sameColor = (baseColorForIndex(index) == baseColorForIndex(lastHighlight));
+                        }
+                        
+                        if (sameColor && uiHighlightIndex != -1) {
                             // Start clear delay
-                            highlightClearDelay = 3; // 3 ticks delay
+                            highlightClearDelay = 1; // 1 tick delay for faster transitions
                             return;
                         }
                     }
@@ -275,13 +357,17 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
                     revealIndex++;
                 } else {
                     // End of reveal, clear highlight and accept input
-                    if (lastHighlight != -1) {
-                        lastHighlight = -1;
-                        uiHighlightIndex = -1;
-                        highlightClearDelay = 0;
-                    }
+                    // Ensure all highlighting is completely cleared
+                    lastHighlight = -1;
+                    uiHighlightIndex = -1;
+                    highlightClearDelay = 0;
+                    
                     revealing = false;
                     acceptingInput = true;
+                    
+                    // Force a visual refresh to clear any remaining highlights
+                    player.sendMessage("§7Your turn! §eRepeat the sequence!");
+                    
                     // Start round timer
                     timerSecondsRemaining = secondsForTier();
                     timerCycleCounter = 0;
@@ -314,13 +400,26 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
         }
 
         // Always update timer display
-        String timerText = acceptingInput ? "§eTime Left: §f" + timerSecondsRemaining + "s" : "§7Waiting...";
+        String timerText;
+        if (acceptingInput) {
+            timerText = "§eTime Left: §f" + timerSecondsRemaining + "s";
+        } else if (revealing) {
+            timerText = "§7Revealing...";
+        } else {
+            timerText = "§7Waiting...";
+        }
         set(timerSlot, ItemStackCreator.getStack(timerText, Material.BOOKSHELF, Math.max(1, timerSecondsRemaining)));
     }
 
     @Override
     public int refreshRate() {
         return 2; // fast updates
+    }
+    
+    // Helper method to update sequence safely
+    private synchronized void updateSequence(List<Integer> newSequence) {
+        this.sequence.clear();
+        this.sequence.addAll(newSequence);
     }
 
     private Material baseColorForIndex(int index) {
@@ -330,52 +429,90 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
     }
     
     private Material getDualColorItem(int index) {
-        // For Transcendent and Metaphysical, each slot has 2 colors
-        // We'll use the primary color for the item display
         String t = tier == null ? "" : tier.toLowerCase();
-        
         if (t.contains("transcendent")) {
-            // Transcendent: 8 distinct colors, 2 rows of 4 slots each
-            switch (index) {
-                case 0: return Material.RED_STAINED_GLASS;      // Slot 11: Red
-                case 1: return Material.LIME_STAINED_GLASS;     // Slot 12: Green
-                case 2: return Material.BLUE_STAINED_GLASS;     // Slot 13: Blue
-                case 3: return Material.YELLOW_STAINED_GLASS;   // Slot 14: Yellow
-                case 4: return Material.WHITE_STAINED_GLASS;    // Slot 20: White
-                case 5: return Material.PURPLE_STAINED_GLASS;   // Slot 21: Purple
-                case 6: return Material.ORANGE_STAINED_GLASS;   // Slot 22: Orange
-                case 7: return Material.PINK_STAINED_GLASS;     // Slot 23: Pink
-                default: return Material.GRAY_STAINED_GLASS;
-            }
+            // New layout: 8 distinct colors
+            // Red: slots 11, 20
+            // Blue: slots 12, 21
+            // Green: slots 13, 22
+            // Yellow: slots 14, 23
+            // Cyan: slots 30, 39
+            // Purple: slots 31, 40
+            // Orange: slots 32, 41
+            // Pink: slots 33, 42
+            
+            // Map slot indices to colors (8 unique colors, each appearing in 2 slots)
+            if (index == 0 || index == 4) return Material.RED_STAINED_GLASS;      // Slots 11, 20: Red
+            if (index == 1 || index == 5) return Material.BLUE_STAINED_GLASS;     // Slots 12, 21: Blue
+            if (index == 2 || index == 6) return Material.LIME_STAINED_GLASS;     // Slots 13, 22: Green
+            if (index == 3 || index == 7) return Material.YELLOW_STAINED_GLASS;   // Slots 14, 23: Yellow
+            if (index == 8 || index == 12) return Material.CYAN_STAINED_GLASS;    // Slots 30, 39: Cyan
+            if (index == 9 || index == 13) return Material.PURPLE_STAINED_GLASS;  // Slots 31, 40: Purple
+            if (index == 10 || index == 14) return Material.ORANGE_STAINED_GLASS; // Slots 32, 41: Orange
+            if (index == 11 || index == 15) return Material.PINK_STAINED_GLASS;   // Slots 33, 42: Pink
+            
+            return Material.GRAY_STAINED_GLASS;
         } else if (t.contains("metaphysical")) {
-            // Metaphysical: 10 distinct colors, 2 rows of 5 slots each
-            switch (index) {
-                case 0: return Material.RED_STAINED_GLASS;      // Slot 11: Red
-                case 1: return Material.LIME_STAINED_GLASS;     // Slot 12: Green
-                case 2: return Material.BLUE_STAINED_GLASS;     // Slot 13: Blue
-                case 3: return Material.YELLOW_STAINED_GLASS;   // Slot 14: Yellow
-                case 4: return Material.WHITE_STAINED_GLASS;    // Slot 15: White
-                case 5: return Material.PURPLE_STAINED_GLASS;   // Slot 20: Purple
-                case 6: return Material.ORANGE_STAINED_GLASS;   // Slot 21: Orange
-                case 7: return Material.PINK_STAINED_GLASS;     // Slot 22: Pink
-                case 8: return Material.LIGHT_BLUE_STAINED_GLASS; // Slot 23: Light Blue
-                case 9: return Material.GRAY_STAINED_GLASS;     // Slot 24: Gray
-                default: return Material.GRAY_STAINED_GLASS;
-            }
+            // Metaphysical: 10 color pairs (20 total slots)
+            // Pairs: 11/20, 12/21, 13/22, 14/23, 15/24, 30/39, 31/40, 32/41, 33/42, 34/43
+            // Map slot indices to colors (each color appears in 2 slots)
+            if (index == 0 || index == 5) return Material.RED_STAINED_GLASS;       // Slots 11, 20: Red
+            if (index == 1 || index == 6) return Material.LIME_STAINED_GLASS;      // Slots 12, 21: Green
+            if (index == 2 || index == 7) return Material.BLUE_STAINED_GLASS;      // Slots 13, 22: Blue
+            if (index == 3 || index == 8) return Material.YELLOW_STAINED_GLASS;    // Slots 14, 23: Yellow
+            if (index == 4 || index == 9) return Material.WHITE_STAINED_GLASS;     // Slots 15, 24: White
+            if (index == 10 || index == 15) return Material.PURPLE_STAINED_GLASS;  // Slots 30, 39: Purple
+            if (index == 11 || index == 16) return Material.ORANGE_STAINED_GLASS;  // Slots 31, 40: Orange
+            if (index == 12 || index == 17) return Material.PINK_STAINED_GLASS;    // Slots 32, 41: Pink
+            if (index == 13 || index == 18) return Material.LIGHT_BLUE_STAINED_GLASS; // Slots 33, 42: Light Blue
+            if (index == 14 || index == 19) return Material.LIGHT_GRAY_STAINED_GLASS; // Slots 34, 43: Light Gray
+            
+            return Material.GRAY_STAINED_GLASS;
         } else {
-            // Standard tiers use single colors
             return baseColorForIndex(index);
         }
     }
-    
+
     private boolean shouldHighlightSlot(int slotIndex, int highlightedIndex) {
         String t = tier == null ? "" : tier.toLowerCase();
         
-        if (t.contains("transcendent") || t.contains("metaphysical")) {
-            // For dual-color tiers, check if both slots contain the same primary color
-            Material slotColor = getDualColorItem(slotIndex);
-            Material highlightedColor = getDualColorItem(highlightedIndex);
-            return slotColor == highlightedColor;
+        if (t.contains("transcendent")) {
+            // New layout: check if both slots belong to the same color group
+            // Red: indices 0, 4 (slots 11, 20)
+            // Blue: indices 1, 5 (slots 12, 21)
+            // Green: indices 2, 6 (slots 13, 22)
+            // Yellow: indices 3, 7 (slots 14, 23)
+            // Cyan: indices 8, 12 (slots 30, 39)
+            // Purple: indices 9, 13 (slots 31, 40)
+            // Orange: indices 10, 14 (slots 32, 41)
+            // Pink: indices 11, 15 (slots 33, 42)
+            
+            // Check if both slots belong to the same color group
+            if ((slotIndex == 0 || slotIndex == 4) && (highlightedIndex == 0 || highlightedIndex == 4)) return true;      // Red
+            if ((slotIndex == 1 || slotIndex == 5) && (highlightedIndex == 1 || highlightedIndex == 5)) return true;      // Blue
+            if ((slotIndex == 2 || slotIndex == 6) && (highlightedIndex == 2 || highlightedIndex == 6)) return true;      // Green
+            if ((slotIndex == 3 || slotIndex == 7) && (highlightedIndex == 3 || highlightedIndex == 7)) return true;      // Yellow
+            if ((slotIndex == 8 || slotIndex == 12) && (highlightedIndex == 8 || highlightedIndex == 12)) return true;    // Cyan
+            if ((slotIndex == 9 || slotIndex == 13) && (highlightedIndex == 9 || highlightedIndex == 13)) return true;    // Purple
+            if ((slotIndex == 10 || slotIndex == 14) && (highlightedIndex == 10 || highlightedIndex == 14)) return true;  // Orange
+            if ((slotIndex == 11 || slotIndex == 15) && (highlightedIndex == 11 || highlightedIndex == 15)) return true;  // Pink
+            
+            return false;
+        } else if (t.contains("metaphysical")) {
+            // Metaphysical: check if both slots belong to the same color group
+            // Pairs: 11/20, 12/21, 13/22, 14/23, 15/24, 30/39, 31/40, 32/41, 33/42, 34/43
+            if ((slotIndex == 0 || slotIndex == 5) && (highlightedIndex == 0 || highlightedIndex == 5)) return true;      // Red
+            if ((slotIndex == 1 || slotIndex == 6) && (highlightedIndex == 1 || highlightedIndex == 6)) return true;      // Green
+            if ((slotIndex == 2 || slotIndex == 7) && (highlightedIndex == 2 || highlightedIndex == 7)) return true;      // Blue
+            if ((slotIndex == 3 || slotIndex == 8) && (highlightedIndex == 3 || highlightedIndex == 8)) return true;      // Yellow
+            if ((slotIndex == 4 || slotIndex == 9) && (highlightedIndex == 4 || highlightedIndex == 9)) return true;      // White
+            if ((slotIndex == 10 || slotIndex == 15) && (highlightedIndex == 10 || highlightedIndex == 15)) return true;  // Purple
+            if ((slotIndex == 11 || slotIndex == 16) && (highlightedIndex == 11 || highlightedIndex == 16)) return true;  // Orange
+            if ((slotIndex == 12 || slotIndex == 17) && (highlightedIndex == 12 || highlightedIndex == 17)) return true;  // Pink
+            if ((slotIndex == 13 || slotIndex == 18) && (highlightedIndex == 13 || highlightedIndex == 18)) return true;  // Light Blue
+            if ((slotIndex == 14 || slotIndex == 19) && (highlightedIndex == 14 || highlightedIndex == 19)) return true;  // Light Gray
+            
+            return false;
         } else {
             // Standard tiers use the old logic
             return baseColorForIndex(slotIndex) == baseColorForIndex(highlightedIndex);
@@ -387,6 +524,28 @@ public class GUIChronomatronPlay extends HypixelInventoryGUI implements Refreshi
         if (t.contains("high")) return 45;
         if (t.contains("medium") || t.contains("med")) return 35;
         return 30; // low/default
+    }
+
+    public static String toTitleCase(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        StringBuilder titleCaseBuilder = new StringBuilder();
+        boolean capitalizeNext = true;
+
+        for (char c : input.toCharArray()) {
+            if (Character.isWhitespace(c)) {
+                titleCaseBuilder.append(c);
+                capitalizeNext = true;
+            } else if (capitalizeNext) {
+                titleCaseBuilder.append(Character.toUpperCase(c));
+                capitalizeNext = false;
+            } else {
+                titleCaseBuilder.append(Character.toLowerCase(c));
+            }
+        }
+        return titleCaseBuilder.toString();
     }
 }
 
