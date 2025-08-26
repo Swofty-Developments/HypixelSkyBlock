@@ -13,6 +13,9 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats.GUICombatStats;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats.GUIGatheringStats;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats.GUIWisdomStats;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.StandardItemComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -192,10 +195,11 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem(15) {
+        set(new GUIClickableItem(15) { //Combat Stats
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                new GUICombatStats().open(player);
             }
 
             @Override
@@ -208,7 +212,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                         ItemStatistic.FEROCITY, ItemStatistic.HEALTH_REGEN, ItemStatistic.VITALITY, ItemStatistic.MENDING, ItemStatistic.SWING_RANGE));
 
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) && stats.contains(statistic)) {
+                    if (stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
@@ -223,10 +227,11 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem(16) {
+        set(new GUIClickableItem(16) {  //Gathering Stats
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                new GUIGatheringStats().open(player);
             }
 
             @Override
@@ -238,7 +243,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                         ItemStatistic.PRISTINE, ItemStatistic.FORAGING_FORTUNE, ItemStatistic.FARMING_FORTUNE));
 
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) && stats.contains(statistic)) {
+                    if (stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
@@ -252,10 +257,11 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem(24) {
+        set(new GUIClickableItem(24) { //Wisdom Stats
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                new GUIWisdomStats().open(player);
             }
 
             @Override
@@ -265,7 +271,7 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 List<String> lore = new ArrayList<>(List.of("§7Increases the §3XP §7you gain on your", "§7skills "));
                 List<ItemStatistic> stats = new ArrayList<>(List.of()); // WISDOM STATS
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) && stats.contains(statistic)) {
+                    if (stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
