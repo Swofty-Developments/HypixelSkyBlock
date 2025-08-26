@@ -16,6 +16,7 @@ import net.swofty.type.bedwarsgame.shop.ShopItem;
 import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.UpgradeableItemTier;
 import net.swofty.type.bedwarsgame.shop.UpgradeableShopItem;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -89,7 +90,9 @@ public class GUIItemShop extends HypixelInventoryGUI {
 		e.setCancelled(true);
 	}
 
-	private void updateGUI(HypixelPlayer player) {
+	private void updateGUI(HypixelPlayer p) {
+		BedWarsPlayer player = (BedWarsPlayer) p;
+		
 		fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 9, 17);
 		set(currentPage + 9, ItemStackCreator.createNamedItemStack(Material.GREEN_STAINED_GLASS_PANE));
 		set(new GUIClickableItem(0) {
@@ -222,7 +225,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 		updateItemStacks(getInventory(), getPlayer());
 	}
 
-	private void populateShopItems(HypixelPlayer player) {
+	private void populateShopItems(BedWarsPlayer player) {
 		int[] shopSlots = {
 				19, 20, 21, 22, 23, 24, 25,
 				28, 29, 30, 31, 32, 33, 34,
@@ -235,8 +238,15 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 			set(new GUIClickableItem(slot) {
 				@Override
-				public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-					ShopItem shopItem = shopService.getShopItem(currentPage, index);
+				public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+					BedWarsPlayer player = (BedWarsPlayer) p;
+					ShopItem shopItem;
+					if (currentPage == 0) {
+						shopItem = shopService.getQuickShopItem(player, index);
+					} else {
+						shopItem = shopService.getShopItem(currentPage, index);
+					}
+
 					if (shopItem == null) return;
 
 					if (shopItem instanceof UpgradeableShopItem upgradeableShopItem) {
@@ -280,8 +290,15 @@ public class GUIItemShop extends HypixelInventoryGUI {
 				}
 
 				@Override
-				public ItemStack.Builder getItem(HypixelPlayer player) {
-					ShopItem shopItem = shopService.getShopItem(currentPage, index);
+				public ItemStack.Builder getItem(HypixelPlayer p) {
+					BedWarsPlayer player = (BedWarsPlayer) p;
+					ShopItem shopItem;
+					if (currentPage == 0) {
+						shopItem = shopService.getQuickShopItem(player, index);
+					} else {
+						shopItem = shopService.getShopItem(currentPage, index);
+					}
+
 					if (shopItem == null) {
 						return ItemStack.builder(Material.AIR);
 					}

@@ -34,6 +34,9 @@ public class BedWarsGameScoreboard {
 			}
 
 			for (HypixelPlayer player : game.getPlayers()) {
+				if (player.joined - System.currentTimeMillis() > 5000) { // for now let's not show scoreboard too early
+					continue;
+				}
 				HypixelDataHandler dataHandler = player.getDataHandler();
 				BedWarsDataHandler bwDataHandler = BedWarsDataHandler.getUser(player);
 
@@ -51,7 +54,7 @@ public class BedWarsGameScoreboard {
 				addLine("§7 ", sidebar);
 				if (game.getGameStatus() == GameStatus.WAITING) {
 					addLine("§fMap: §a" + game.getMapEntry().getName(), sidebar);
-					addLine("§fPlayers: §a" + game.getPlayers() + "/" + game.getMapEntry().getConfiguration().getTeams().size(), sidebar);
+					addLine("§fPlayers: §a" + game.getPlayers().size() + "/" + game.getMapEntry().getConfiguration().getTeams().size(), sidebar);
 					addLine("§7 ", sidebar);
 					addLine("§fStarting in §a" + game.getCountdown().getRemainingSeconds() + "s", sidebar);
 					addLine("§7 ", sidebar);

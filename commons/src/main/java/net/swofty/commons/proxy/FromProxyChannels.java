@@ -15,6 +15,7 @@ public enum FromProxyChannels {
     RUN_EVENT_ON_SERVER("run-event", new RunEventRequirements()),
     PING_SERVER("ping-server", new PingServerRequirements()),
     GIVE_PLAYERS_ORIGIN_TYPE("give-players-origin-type", new GivePlayersOriginTypeRequirements()),
+    BEDWARS_JOIN_PREFERENCE("bedwars-join-preference", new BedWarsJoinPreferenceRequirements()),
     ;
 
     private final String channelName;

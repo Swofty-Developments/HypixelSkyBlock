@@ -1,16 +1,19 @@
 package net.swofty.type.bedwarsgame.game;
 
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.component.CustomData;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
@@ -26,11 +29,13 @@ import java.util.Map;
 
 public final class GeneratorManager {
 	private final Game game;
+	private final GameEventPosition currentEvent;
 	private final Map<String, List<Task>> teamGeneratorTasks = new HashMap<>();
 	private final Map<String, List<GeneratorDisplay>> generatorDisplays = new HashMap<>();
 
 	public GeneratorManager(Game game) {
 		this.game = game;
+		this.currentEvent = GameEventPosition.BEGIN;
 	}
 
 	public void startTeamGenerators(List<MapsConfig.MapEntry.MapConfiguration.MapTeam> activeTeams) {
@@ -146,18 +151,20 @@ public final class GeneratorManager {
 			Component spawnText = MiniMessage.miniMessage()
 					.deserialize("<yellow>Spawns in <red>" + delaySeconds + "</red> seconds!</yellow>");
 
-			// Create display entities
+			double locY = location.y() + 4.0;
 			TextDisplayEntity tierDisplay = new TextDisplayEntity(tierText);
 			tierDisplay.setInstance(game.getInstanceContainer(),
-					new Pos(location.x(), location.y() + 4.0, location.z()));
+					new Pos(location.x(), locY, location.z()));
 
+			locY -= 0.3;
 			TextDisplayEntity generatorDisplay = new TextDisplayEntity(generatorTitle);
 			generatorDisplay.setInstance(game.getInstanceContainer(),
-					new Pos(location.x(), location.y() + 3.7, location.z()));
+					new Pos(location.x(), locY, location.z()));
 
+			locY -= 0.3;
 			TextDisplayEntity spawnDisplay = new TextDisplayEntity(spawnText);
 			spawnDisplay.setInstance(game.getInstanceContainer(),
-					new Pos(location.x(), location.y() + 3.4, location.z()));
+					new Pos(location.x(), locY, location.z()));
 
 			GeneratorDisplay display = new GeneratorDisplay(spawnDisplay, delaySeconds);
 			generatorDisplays.computeIfAbsent(generatorType, k -> new ArrayList<>()).add(display);
@@ -212,7 +219,7 @@ public final class GeneratorManager {
 	}
 
 	private void spawnItem(Material material, int amount, Pos position, Duration pickupDelay) {
-		ItemStack itemToSpawn = ItemStack.of(material, amount);
+		ItemStack itemToSpawn = ItemStack.of(material, amount).with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder().putBoolean("generator", true).build()));
 		ItemEntity itemEntity = new ItemEntity(itemToSpawn);
 		itemEntity.setPickupDelay(pickupDelay);
 		itemEntity.setInstance(game.getInstanceContainer(), position);

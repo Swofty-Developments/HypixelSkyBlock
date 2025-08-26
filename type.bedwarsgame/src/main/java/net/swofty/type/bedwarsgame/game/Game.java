@@ -73,7 +73,7 @@ public final class Game {
 	}
 
 	public void join(BedWarsPlayer player) {
-		Logger.info("Player {} is attempting to join game {}", player.getUsername(), gameId);
+		Logger.info("Player {} is attempting to join game {} with map {}", player.getUsername(), gameId, mapEntry.getName());
 
 		if (gameStatus != GameStatus.WAITING) {
 			player.sendMessage(Component.text("The game is already in progress or has ended.", NamedTextColor.RED));

@@ -20,6 +20,7 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
 		BedWarsDataHandler handler = BedWarsDataHandler.getUser(player.getUuid());
 		handler.runOnLoad(player);
 
+		// Registers the bow module, which creates event nodes for the player for bow behavior
 		new BowModule(player.eventNode(), (p, i) -> new ArrowProjectile(EntityType.ARROW, p));
 	}
 }

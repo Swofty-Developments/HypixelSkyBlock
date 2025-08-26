@@ -1,13 +1,16 @@
 package net.swofty.type.bedwarsgame.events;
 
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.item.PickupItemEvent;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.component.CustomData;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import org.jetbrains.annotations.Nullable;
 
 public class ActionGamePickup implements HypixelEventClass {
 
@@ -20,11 +23,15 @@ public class ActionGamePickup implements HypixelEventClass {
 			// handle bedwars xp for diamonds and emeralds
 			for (Currency currency : Currency.values()) {
 				if (itemStack.material().equals(currency.getMaterial())) {
+					@Nullable CustomData data = itemStack.get(DataComponents.CUSTOM_DATA);
+					if (data != null && !data.nbt().getBoolean("generator")) continue;
 					switch (currency) {
 						case DIAMOND:
 							player.xp(ExperienceCause.DIAMONDS);
+							break;
 						case EMERALD:
 							player.xp(ExperienceCause.EMERALDS);
+							break;
 					}
 					break;
 				}

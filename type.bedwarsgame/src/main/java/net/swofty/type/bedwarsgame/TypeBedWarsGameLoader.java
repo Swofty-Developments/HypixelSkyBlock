@@ -12,10 +12,13 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.tag.Tag;
+import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObject;
+import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.pvp.MinestomPvP;
@@ -30,6 +33,7 @@ import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -90,6 +94,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	private static MapsConfig mapsConfig;
 	private static InstanceManager instanceManager;
 	private static RegistryKey<@NotNull DimensionType> fullbrightDimension;
+	private static int nextMapIndex = 0;
 	private Gson gson;
 
 	public static Game getGameById(@NotNull String gameId) {
@@ -117,6 +122,12 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 		Game game = new Game(entry, mapInstance);
 		games.add(game);
 		return game;
+	}
+
+	private static synchronized MapsConfig.MapEntry nextMapEntry() {
+		if (mapsConfig == null || mapsConfig.getMaps() == null || mapsConfig.getMaps().isEmpty()) return null;
+		if (nextMapIndex >= mapsConfig.getMaps().size()) nextMapIndex = 0;
+		return mapsConfig.getMaps().get(nextMapIndex++);
 	}
 
 	@Override
@@ -173,11 +184,47 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 			}
 		});
 		MinestomPvP.init();
+
+		// create games automatically
+		MinecraftServer.getSchedulerManager().buildTask(() -> {
+			if (mapsConfig == null || mapsConfig.getMaps() == null || mapsConfig.getMaps().isEmpty()) return;
+			while (games.size() < MAX_GAMES) {
+				MapsConfig.MapEntry entry = nextMapEntry();
+				if (entry == null) break;
+				try {
+					createGame(entry);
+				} catch (Exception ignored) {
+				}
+			}
+		}).repeat(TaskSchedule.seconds(5)).schedule();
+
+		// heartbeat to orchestrator with supported maps and current load
+		MinecraftServer.getSchedulerManager().buildTask(() -> {
+			UUID uuid = HypixelConst.getServerUUID();
+			String shortName = HypixelConst.getShortenedServerName();
+			int maxPlayers = HypixelConst.getMaxPlayers();
+			int onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers().size();
+
+			List<String> mapIds = new ArrayList<>();
+			if (mapsConfig != null && mapsConfig.getMaps() != null) {
+				for (MapsConfig.MapEntry e : mapsConfig.getMaps()) mapIds.add(e.getId());
+			}
+
+			var heartbeat = new GameHeartbeatProtocolObject.HeartbeatMessage(
+					uuid,
+					shortName,
+					getType(),
+					mapIds,
+					maxPlayers,
+					onlinePlayers
+			);
+			new ProxyService(ServiceType.ORCHESTRATOR).handleRequest(heartbeat);
+		}).repeat(TaskSchedule.seconds(5)).schedule();
 	}
 
 	@Override
 	public List<ServiceType> getRequiredServices() {
-		return List.of();
+		return List.of(ServiceType.ORCHESTRATOR);
 	}
 
 	@Override
@@ -253,7 +300,10 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 
 	@Override
 	public List<ProxyToClient> getProxyRedisListeners() {
-		return List.of();
+		return HypixelGenericLoader.loopThroughPackage(
+				"net.swofty.type.bedwarsgame.redis",
+				ProxyToClient.class
+		).toList();
 	}
 
 	@Override

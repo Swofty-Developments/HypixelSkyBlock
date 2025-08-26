@@ -5,6 +5,7 @@ import net.minestom.server.item.component.EnchantmentList;
 import net.minestom.server.item.enchant.Enchantment;
 import net.minestom.server.potion.PotionType;
 import net.swofty.type.bedwarsgame.shop.impl.*;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,34 +43,36 @@ public class ShopManager {
 	private final ShopItem CHAINMAIL_ARMOR = new ArmorShopItem("Chainmail Armor", "Permanent chainmail armor", 24, Currency.IRON, Material.CHAINMAIL_BOOTS, Material.CHAINMAIL_LEGGINGS, 1);
 	private final ShopItem IRON_ARMOR = new ArmorShopItem("Iron Armor", "Permanent iron armor", 12, Currency.GOLD, Material.IRON_BOOTS, Material.IRON_LEGGINGS, 2);
 	private final ShopItem DIAMOND_ARMOR = new ArmorShopItem("Diamond Armor", "Permanent diamond armor", 6, Currency.EMERALD, Material.DIAMOND_BOOTS, Material.DIAMOND_LEGGINGS, 3);
+	private final ShopItem SHEARS = new BasicItem("Shears", "For quickly breaking wool", 20, 1, Currency.IRON, Material.SHEARS);
 
 
 	public ShopManager() {
-		addItemToCategories(WOOL, 0, 1);
-		addItemToCategories(HARDENED_CLAY, 0, 1);
-		addItemToCategories(GLASS, 0, 1);
+		addItemToCategories(WOOL, 1);
+		addItemToCategories(HARDENED_CLAY, 1);
+		addItemToCategories(GLASS, 1);
 		addItemToCategories(OBSIDIAN, 1);
-		addItemToCategories(ENDSTONE, 0, 1);
-		addItemToCategories(LADDER, 0, 1);
-		addItemToCategories(PLANKS, 0, 1);
-		addItemToCategories(STONE_SWORD, 0, 2);
-		addItemToCategories(IRON_SWORD, 0, 2);
-		addItemToCategories(DIAMOND_SWORD, 0, 2);
-		addItemToCategories(PICKAXE, 0, 4);
-		addItemToCategories(AXE, 0, 4);
-		addItemToCategories(FIREBALL, 0, 7);
-		addItemToCategories(CHAINMAIL_ARMOR, 0, 3);
-		addItemToCategories(IRON_ARMOR, 0, 3);
-		addItemToCategories(DIAMOND_ARMOR, 0, 3);
-		addItemToCategories(ENDER_PEARL, 0, 7);
-		addItemToCategories(TNT, 0, 7);
-		addItemToCategories(WATER_BUCKET, 0, 7);
-		addItemToCategories(GOLDEN_APPLE, 0, 7);
-		addItemToCategories(BRIDGE_EGG, 0, 7);
-		addItemToCategories(INVISIBILITY_POTION, 0, 6);
-		addItemToCategories(SPEED_POTION, 0, 6);
-		addItemToCategories(JUMP_POTION, 0, 6);
-		addItemToCategories(ARROW, 0, 5);
+		addItemToCategories(ENDSTONE, 1);
+		addItemToCategories(LADDER, 1);
+		addItemToCategories(PLANKS, 1);
+		addItemToCategories(STONE_SWORD, 2);
+		addItemToCategories(IRON_SWORD, 2);
+		addItemToCategories(DIAMOND_SWORD, 2);
+		addItemToCategories(SHEARS, 4);
+		addItemToCategories(PICKAXE, 4);
+		addItemToCategories(AXE, 4);
+		addItemToCategories(FIREBALL, 7);
+		addItemToCategories(CHAINMAIL_ARMOR, 3);
+		addItemToCategories(IRON_ARMOR, 3);
+		addItemToCategories(DIAMOND_ARMOR, 3);
+		addItemToCategories(ENDER_PEARL, 7);
+		addItemToCategories(TNT, 7);
+		addItemToCategories(WATER_BUCKET, 7);
+		addItemToCategories(GOLDEN_APPLE, 7);
+		addItemToCategories(BRIDGE_EGG, 7);
+		addItemToCategories(INVISIBILITY_POTION, 6);
+		addItemToCategories(SPEED_POTION, 6);
+		addItemToCategories(JUMP_POTION, 6);
+		addItemToCategories(ARROW, 5);
 		addItemToCategories(BOW, 5);
 	}
 
@@ -89,6 +92,38 @@ public class ShopManager {
 			return itemsInCategory.get(itemIndex);
 		}
 		return null;
+	}
+
+	// TODO: actual fetching
+	public Map<Integer, ShopItem> getQuickBuy(BedWarsPlayer player) {
+		Map<Integer, ShopItem> quickBuy = new HashMap<>();
+		quickBuy.put(0, WOOL);
+		quickBuy.put(1, STONE_SWORD);
+		quickBuy.put(2, CHAINMAIL_ARMOR);
+		quickBuy.put(3, PICKAXE);
+		quickBuy.put(4, BOW);
+		quickBuy.put(5, INVISIBILITY_POTION);
+		quickBuy.put(6, TNT);
+		quickBuy.put(7, PLANKS);
+		quickBuy.put(8, IRON_SWORD);
+		quickBuy.put(9, IRON_ARMOR);
+		quickBuy.put(10, SHEARS);
+		quickBuy.put(11, ARROW);
+		quickBuy.put(12, SPEED_POTION);
+		quickBuy.put(13, WATER_BUCKET);
+		quickBuy.put(14, GOLDEN_APPLE);
+		quickBuy.put(15, JUMP_POTION);
+		quickBuy.put(16, GLASS);
+		quickBuy.put(17, ENDSTONE);
+		quickBuy.put(18, AXE);
+		quickBuy.put(19, WOOL);
+		quickBuy.put(20, WOOL);
+		return quickBuy;
+	}
+
+	public ShopItem getQuickShopItem(BedWarsPlayer player, int itemIndex) {
+		Map<Integer, ShopItem> quickBuy = getQuickBuy(player);
+		return quickBuy.get(itemIndex);
 	}
 
 }
