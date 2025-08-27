@@ -16,7 +16,7 @@ import net.swofty.pvp.entity.projectile.CustomEntityProjectile;
 import net.swofty.pvp.entity.projectile.ItemHoldingProjectile;
 import net.swofty.pvp.utils.ViewUtil;
 import net.swofty.type.bedwarsgame.entity.ThrownBridgeEgg;
-import net.swofty.type.bedwarsgame.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
 import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.Objects;

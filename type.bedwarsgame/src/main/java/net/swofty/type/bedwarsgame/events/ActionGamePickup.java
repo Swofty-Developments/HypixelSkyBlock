@@ -25,12 +25,13 @@ public class ActionGamePickup implements HypixelEventClass {
 				if (itemStack.material().equals(currency.getMaterial())) {
 					@Nullable CustomData data = itemStack.get(DataComponents.CUSTOM_DATA);
 					if (data != null && !data.nbt().getBoolean("generator")) continue;
+					int amount = itemStack.amount();
 					switch (currency) {
 						case DIAMOND:
-							player.xp(ExperienceCause.DIAMONDS);
+							player.xp(ExperienceCause.DIAMONDS, amount);
 							break;
 						case EMERALD:
-							player.xp(ExperienceCause.EMERALDS);
+							player.xp(ExperienceCause.EMERALDS, amount);
 							break;
 					}
 					break;

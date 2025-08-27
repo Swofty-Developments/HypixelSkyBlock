@@ -50,9 +50,15 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
 
 	public void xp(ExperienceCause cause) {
 		sendMini("<aqua>+" + cause.getExperience() + " Bed Wars XP (" + cause.getFormattedName() + ")</aqua>");
-		getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class).setValue(
-				getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue() + cause.getExperience()
-		);
+		DatapointLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class);
+		dp.setValue(dp.getValue() + cause.getExperience());
+	}
+
+	public void xp(ExperienceCause cause, long units) {
+		long amount = cause.calculateXp(units);
+		sendMini("<aqua>+" + amount + " Bed Wars XP (" + cause.getFormattedName() + ")</aqua>");
+		DatapointLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class);
+		dp.setValue(dp.getValue() + amount);
 	}
 
 

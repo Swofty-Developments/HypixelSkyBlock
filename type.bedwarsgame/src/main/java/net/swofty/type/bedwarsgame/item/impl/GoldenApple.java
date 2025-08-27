@@ -6,34 +6,34 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
-import net.swofty.type.bedwarsgame.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
 
 public class GoldenApple extends BedWarsItem {
 
-    public GoldenApple() {
-        super("golden_apple");
-    }
+	public GoldenApple() {
+		super("golden_apple");
+	}
 
-    @Override
-    public ItemStack getBlandItem() {
-        return ItemStack.of(Material.GOLDEN_APPLE);
-    }
+	@Override
+	public ItemStack getBlandItem() {
+		return ItemStack.of(Material.GOLDEN_APPLE);
+	}
 
-    @Override
-    public void onItemFinishUse(PlayerFinishItemUseEvent event) {
-        Player player = event.getPlayer();
-        player.setHealth((float) (player.getHealth() + 4.0));
-        player.setAdditionalHearts((float) (player.getAdditionalHearts() + 2.0));
-        player.addEffect(new Potion(
-                PotionEffect.REGENERATION,
-                1,
-                20*20
-        ));
-        player.addEffect(new Potion(
-                PotionEffect.RESISTANCE,
-                1,
-                5*60*20
-        ));
-    }
+	@Override
+	public void onItemFinishUse(PlayerFinishItemUseEvent event) {
+		Player player = event.getPlayer();
+		player.setHealth((float) (player.getHealth() + 4.0));
+		player.setAdditionalHearts((float) (player.getAdditionalHearts() + 2.0));
+		player.addEffect(new Potion(
+				PotionEffect.REGENERATION,
+				1,
+				20 * 20
+		));
+		player.addEffect(new Potion(
+				PotionEffect.RESISTANCE,
+				1,
+				5 * 60 * 20
+		));
+	}
 
 }

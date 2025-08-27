@@ -27,12 +27,13 @@ import net.swofty.pvp.feature.CombatFeatures;
 import net.swofty.pvp.feature.FeatureType;
 import net.swofty.pvp.utils.CombatVersion;
 import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.item.BedWarsItemHandler;
 import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.BedWarsItemHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
@@ -183,6 +184,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 				Logger.error(e, "Failed to register command " + command.getCommand().getName() + " in class " + command.getClass().getSimpleName());
 			}
 		});
+		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsgame.item.impl", BedWarsItem.class).forEach(itemHandler::add);
 		MinestomPvP.init();
 
 		// create games automatically

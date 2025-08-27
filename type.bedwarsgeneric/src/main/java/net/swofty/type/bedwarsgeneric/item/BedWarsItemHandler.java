@@ -1,4 +1,4 @@
-package net.swofty.type.bedwarsgame.item;
+package net.swofty.type.bedwarsgeneric.item;
 
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
@@ -6,8 +6,6 @@ import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
-import net.swofty.type.bedwarsgame.item.impl.Fireball;
-import net.swofty.type.bedwarsgame.item.impl.GoldenApple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +13,7 @@ import java.util.List;
 public class BedWarsItemHandler {
 	private final List<BedWarsItem> items = new ArrayList<>();
 
-	public BedWarsItemHandler() {
-		add(new Fireball());
-		add(new GoldenApple());
-	}
-
-	private void add(BedWarsItem item) {
+	public void add(BedWarsItem item) {
 		items.add(item);
 	}
 

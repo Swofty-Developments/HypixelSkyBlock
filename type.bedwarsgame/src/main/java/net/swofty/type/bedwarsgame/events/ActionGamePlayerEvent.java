@@ -9,7 +9,6 @@ import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.event.player.PlayerStartDiggingEvent;
-import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
@@ -58,27 +57,6 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		}
 	}
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
-	public void run(PlayerUseItemEvent event) {
-		HypixelPlayer player = (HypixelPlayer) event.getPlayer();
-		if (player.hasTag(Tag.String("gameId"))) {
-			String gameId = player.getTag(Tag.String("gameId"));
-			Game game = TypeBedWarsGameLoader.getGameById(gameId);
-			if (event.getItemStack().hasTag(Tag.String("action"))) {
-				String action = event.getItemStack().getTag(Tag.String("action"));
-				if (action.equals("leave")) {
-					game.leave(player);
-					event.setCancelled(true);
-				}
-			}
-			if (game.getGameStatus() == GameStatus.WAITING) {
-				event.setCancelled(true);
-			}
-		} else {
-			event.setCancelled(true);
-		}
-	}
-
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
 	public void run(PlayerEntityInteractEvent event) {
 		if (event.getTarget().getEntityType() == EntityType.VILLAGER) {
@@ -88,12 +66,8 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			}
 			String type = event.getTarget().getTag(Tag.String("type"));
 			switch (type) {
-				case "shop" -> {
-					new GUIItemShop().open((HypixelPlayer) player);
-				}
-				case "team" -> {
-					new GUITeamShop().open((HypixelPlayer) player);
-				}
+				case "shop" -> new GUIItemShop().open((HypixelPlayer) player);
+				case "team" -> new GUITeamShop().open((HypixelPlayer) player);
 			}
 		}
 	}

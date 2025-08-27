@@ -14,14 +14,14 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
+import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgame.util.ComponentManipulator;
+import net.swofty.type.bedwarsgame.user.ExperienceCause;
 import net.swofty.type.bedwarsgeneric.game.GameType;
 import net.swofty.type.bedwarsgeneric.game.MapsConfig;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -54,6 +54,8 @@ public final class Game {
 
 	private final Map<String, Map<Integer, ItemStack>> chests = new HashMap<>();
 	private final Map<Player, Map<Integer, ItemStack>> enderchests = new HashMap<>();
+
+	private Task timePlayedTask;
 
 	@Setter
 	private GameStatus gameStatus;
@@ -89,7 +91,7 @@ public final class Game {
 		players.add(player);
 		updatePlayerCount();
 
-		// Check if we can start countdown
+		// Check if we can start the countdown
 		if (hasMinimumPlayersForStart() && !countdown.isActive()) {
 			countdown.startCountdown();
 		}
@@ -124,6 +126,17 @@ public final class Game {
 		worldManager.spawnShopNPCs(activeTeams);
 		generatorManager.startTeamGenerators(activeTeams);
 		generatorManager.startGlobalGenerators();
+		timePlayedTask = MinecraftServer.getSchedulerManager().buildTask(
+				() -> {
+					if (gameStatus != GameStatus.IN_PROGRESS) {
+						timePlayedTask.cancel();
+						return;
+					}
+					for (BedWarsPlayer player : players) {
+						player.xp(ExperienceCause.TIME_PLAYED);
+					}
+				}
+		).repeat(TaskSchedule.minutes(1)).schedule();
 		Logger.info("Game {} started with {} active teams", gameId, activeTeams.size());
 	}
 
@@ -205,10 +218,7 @@ public final class Game {
 		player.setFlying(false);
 		player.setGameMode(GameMode.ADVENTURE);
 		player.getInventory().setItemStack(8,
-				ItemStack.of(Material.RED_BED)
-						.withCustomName(ComponentManipulator.noItalic(
-								Component.text("Leave").color(NamedTextColor.RED)))
-						.withTag(Tag.String("action"), "leave"));
+				TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack());
 
 		player.setTag(Tag.String("gameId"), gameId);
 		player.sendMessage("You have joined the game on map: " + mapEntry.getId());

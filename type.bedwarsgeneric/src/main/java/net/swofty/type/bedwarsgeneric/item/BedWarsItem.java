@@ -1,4 +1,4 @@
-package net.swofty.type.bedwarsgame.item;
+package net.swofty.type.bedwarsgeneric.item;
 
 import lombok.Getter;
 import net.kyori.adventure.nbt.CompoundBinaryTag;

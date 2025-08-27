@@ -22,7 +22,7 @@ public enum ExperienceCause {
 	TIME_PLAYED(15, false); // every 1 minute of playtime
 
 	private final long experience;
-	private final boolean boostable;
+	private final boolean boostable; // means if xp boosts (like 5% from tournament) can apply to this cause
 
 	ExperienceCause(long experience) {
 		this.experience = experience;
@@ -32,6 +32,11 @@ public enum ExperienceCause {
 	ExperienceCause(long experience, boolean boostable) {
 		this.experience = experience;
 		this.boostable = boostable;
+	}
+
+	public long calculateXp(long units) {
+		if (units <= 1) return experience;
+		return experience * units;
 	}
 
 
