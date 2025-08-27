@@ -29,7 +29,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 6. Follow the 'Game Server Setup Guide' below. (Note, if you want to run a cracked server, you must set "require-authentication" to true in your config)
 7. Follow the 'Service Setup Guide' below.
 8. Follow the 'Resource Pack Setup Guide' below.
-9. To give yourself ADMIN, log in and out of the server, go into your MongoDB compass, click on Minestom -> data, find your profile and set your rank to "ADMIN". Log back in and you'll have it.
+9. To give yourself ADMIN, log in and out of the server, go into your MongoDB compass, click on Minestom -> profiles and set your rank to "ADMIN". If there is not a rank field, create one just like `rank: ""ADMIN""`, log back in and you'll have it.
 
 ### Proxy Setup Guide
 1. Download 'SkyBlockProxy.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
@@ -44,14 +44,14 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 10. Start the proxy again using `java -jar velocity-3.4.0-SNAPSHOT-528.jar`. This will need to be on for your game servers to work.
 
 ### Game Server Setup Guide
-1. Download 'SkyBlockCore.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
+1. Download 'HypixelCore.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
 2. Make a folder called `configuration` in the same directory as the JAR file. (Note this should be placed differently to where your Proxy is)
 3. Download `resources.json` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
 4. Move this file into the `configuration` folder you just made.
 5. Create a folder called `skyblock` in the existing configuration folder.
 6. Download the [world files for the SkyBlock Hub, Prototype Lobby, and Island worlds.](https://www.mediafire.com/file/xxnxgkqejlh17fn/HypixelRecreationWorlds.zip/file)
-7. Get the Hypixel SkyBlock hub from the above download and put it in the configuration/skyblock/islands/ folder you made under the name `hypixel_skyblock_hub`, and the Prototype Lobby in configuration under `hypixel_prototype_lobby`.
-8. Get the Hypixel Island default template from the above download and put it in the configuration/skyblock/islands/ folder you made under the name `hypixel_skyblock_island_template`.
+7. Get the Hypixel SkyBlock hub from the above download and put it in the configuration/skyblock/islands/ folder you made under the name `hypixel_skyblock_hub`, and the Island Template under `hypixel_skyblock_island_template`.
+8. Get the Prototype lobby from the above download and put it in the configuration folder under the name `hypixel_prototype_lobby`..
 9. Get the item and collection folders from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock) and put them into your configuration/skyblock/ folder.
 10. There should be a `forwarding.secret` file where your Velocity JAR is, take this and put it into your `resources.json` under `velocity-secret`.
 11. Run the jar using `java -jar {Insert the JAR file} SKYBLOCK_ISLAND`, this will create an Island server that will latch onto your running proxy.
@@ -119,7 +119,7 @@ To add new servers like the Hub, Islands or Farming Island follow these steps:
 2. Add the following line to the end of the file, replacing `ServerType` with the type of server you want to add (e.g., `SKYBLOCK_HUB`, `SKYBLOCK_ISLAND`, etc.):
 
 ```bash
-screen -dmS SkyBlockCore_HUB java --enable-preview -jar SkyBlockCore.jar ServerType
+screen -dmS HypixelCore_HUB java --enable-preview -jar HypixelCore.jar ServerType
 ```
 
 3. Save the file and run `docker-compose up --build` again to apply the changes.
@@ -142,7 +142,7 @@ and then run the service command inside there. It will create its own screen ses
     => Your Memurai isn't running. If this can not be fixed, try out [this](https://github.com/tporadowski/redis/releases) instead.
 2. `Preview features are not enabled for... Try running with '--enable-preview'`
 
-    => try `java --enable-preview -jar SkyBlockCore.jar {ServerType}`
+    => try `java --enable-preview -jar HypixelCore.jar {ServerType}`
 3. Having issues connecting to the server?
 
     => Check if your velocity secret is the same everywhere including the limbo config.
