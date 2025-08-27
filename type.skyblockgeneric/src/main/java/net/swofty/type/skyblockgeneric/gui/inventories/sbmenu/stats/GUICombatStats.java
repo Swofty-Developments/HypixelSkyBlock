@@ -37,7 +37,7 @@ public class GUICombatStats extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 PlayerStatistics statistics = player.getStatistics();
-                List<String> lore = new ArrayList<>(List.of("§7Gives you a better chance at", "§7fighting strong monsters. "));
+                List<String> lore = new ArrayList<>(List.of("§7Gives you a better chance at", "§7fighting strong monsters. ", " "));
                 List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.HEALTH, ItemStatistic.DEFENSE, ItemStatistic.STRENGTH, ItemStatistic.INTELLIGENCE,
                         ItemStatistic.CRIT_CHANCE, ItemStatistic.CRIT_DAMAGE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.TRUE_DEFENSE,
                         ItemStatistic.FEROCITY, ItemStatistic.HEALTH_REGEN, ItemStatistic.VITALITY, ItemStatistic.MENDING, ItemStatistic.SWING_RANGE));
@@ -165,10 +165,10 @@ public class GUICombatStats extends HypixelInventoryGUI {
 
                 if (value == 0D) lore.add("§8You have none of this stat!");
                 lore.add("§eClick to view!");
-                return ItemStackCreator.enchant(ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
+                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
                                 StringUtility.decimalify(value, 1),
-                        Material.BOOK, 1, lore
-                ));
+                        Material.ENCHANTED_BOOK, 1, lore
+                );
             }
 
             @Override
