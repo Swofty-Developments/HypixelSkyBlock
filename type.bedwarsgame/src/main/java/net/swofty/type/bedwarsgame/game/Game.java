@@ -136,7 +136,7 @@ public final class Game {
 						player.xp(ExperienceCause.TIME_PLAYED);
 					}
 				}
-		).repeat(TaskSchedule.minutes(1)).schedule();
+		).delay(TaskSchedule.minutes(1)).repeat(TaskSchedule.minutes(1)).schedule();
 		Logger.info("Game {} started with {} active teams", gameId, activeTeams.size());
 	}
 
