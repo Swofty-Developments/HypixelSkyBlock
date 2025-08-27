@@ -35,6 +35,10 @@ public enum ItemStatistic {
     FORAGING_FORTUNE("Foraging Fortune", "§a", "§6", false, "☘"),
     BREAKING_POWER("Breaking Power", "§a", "§2", false, "Ⓟ"),
     PRISTINE("Pristine", "§a", "§5", false, "✧"),
+    MINING_SPREAD("Mining Spread", "§a", "§e", false, "▚"),
+    GEMSTONE_SPREAD("Gemstone Spread", "§a", "§e", false, "▚"),
+    HUNTER_FORTUNE("Hunter Fortune", "§a", "§d", false, "☘"),
+    SWEEP("Sweep", "§a", "§2", false, "∮"),
 
     // Sub-Gathering Stats
     ORE_FORTUNE("Ore Fortune", "§a", "§6", false, "☘"),
@@ -52,6 +56,23 @@ public enum ItemStatistic {
     COCOA_BEANS_FORTUNE("Cocoa Beans Fortune", "§a", "§6", false, "☘"),
     MUSHROOM_FORTUNE("Mushroom Fortune", "§a", "§6", false, "☘"),
     SUGAR_CANE_FORTUNE("Sugar Cane Fortune", "§a", "§6", false, "☘"),
+
+    FIG_FORTUNE("Fig Fortune", "§a", "§6", false, "☘"),
+    MANGROVE_FORTUNE("Mangrove Fortune", "§a", "§6", false, "☘"),
+
+    // Wisdom Stats
+    ALCHEMY_WISDOM("Alchemy Wisdom", "§a", "§3", false, "☯"),
+    CARPENTRY_WISDOM("Carpentry Wisdom", "§a", "§3", false, "☯"),
+    COMBAT_WISDOM("Combat Wisdom", "§a", "§3", false, "☯"),
+    ENCHANTING_WISDOM("Enchanting Wisdom", "§a", "§3", false, "☯"),
+    FARMING_WISDOM("Farming Wisdom", "§a", "§3", false, "☯"),
+    FISHING_WISDOM("Fishing Wisdom", "§a", "§3", false, "☯"),
+    FORAGING_WISDOM("Foraging Wisdom", "§a", "§3", false, "☯"),
+    MINING_WISDOM("Mining Wisdom", "§a", "§3", false, "☯"),
+    RUNE_CRAFTING_WISDOM("Runecrafting Wisdom", "§a", "§3", false, "☯"),
+    SOCIAL_WISDOM("Social Wisdom", "§a", "§3", false, "☯"),
+    TAMING_WISDOM("Taming Wisdom", "§a", "§3", false, "☯"),
+    HUNTING_WISDOM("Hunting Wisdom", "§a", "§3", false, "☯"),
 
     // Misc Stats
     SPEED("Speed", "§a", "§f", false, "✦", 100D, 1D),
