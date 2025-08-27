@@ -80,8 +80,13 @@ public enum ItemStatistic {
     PET_LUCK("Pet Luck", "§a", "§d", false, "♣"),
     SEA_CREATURE_CHANCE("Sea Creature Chance", "§c", "§9", true, "α", 2D, 1D),
     FISHING_SPEED("Fishing Speed", "§a", "§b", false, "☂"),
-    COLD_RESISTANCE("Cold Resistance", "§a", "§b", false, "❄"),
     BONUS_PEST_CHANCE("Bonus Pest Chance", "§a", "§2", true, "ൠ"),
+    HEAT_RESISTANCE("Heat Resistance","§a","§c",false,"♨"),
+    COLD_RESISTANCE("Cold Resistance", "§a", "§b", false, "❄"),
+    FEAR("Fear","§a","§5",false,"☠"),
+    PULL("Pull","§a","§b",false,"ᛷ"),
+    RESPIRATION("Respiration","§a","§3",false,"⚶"),
+    PRESSURE_RESISTANCE("Pressure Resistance","§a","§9",false,"❍"),
 
     // Other Stats
     DAMAGE("Damage", "§c", "§c", false, "❁",

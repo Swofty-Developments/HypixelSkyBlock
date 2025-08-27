@@ -15,6 +15,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats.GUICombatStats;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats.GUIGatheringStats;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats.GUIMiscStats;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats.GUIWisdomStats;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.StandardItemComponent;
@@ -294,10 +295,11 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem(25) {
+        set(new GUIClickableItem(25) { //Misc Stats
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                new GUIMiscStats().open(player);
             }
 
             @Override
@@ -306,10 +308,12 @@ public class GUISkyBlockProfile extends HypixelInventoryGUI {
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7Augments various aspects of your", "§7gameplay! ", " "));
                 List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.SPEED, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK,
-                        ItemStatistic.SEA_CREATURE_CHANCE, ItemStatistic.FISHING_SPEED, ItemStatistic.COLD_RESISTANCE, ItemStatistic.BONUS_PEST_CHANCE));
+                        ItemStatistic.COLD_RESISTANCE, ItemStatistic.BONUS_PEST_CHANCE, ItemStatistic.HEAT_RESISTANCE, ItemStatistic.FEAR,
+                        ItemStatistic.PULL, ItemStatistic.RESPIRATION, ItemStatistic.PRESSURE_RESISTANCE
+                ));
 
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) && stats.contains(statistic)) {
+                    if (stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
