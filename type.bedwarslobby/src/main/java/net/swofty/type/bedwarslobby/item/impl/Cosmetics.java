@@ -5,15 +5,15 @@ import net.minestom.server.item.Material;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
-public class PlayCompass extends BedWarsItem {
+public class Cosmetics extends BedWarsItem {
 
-	public PlayCompass() {
-		super("play_compass");
+	public Cosmetics() {
+		super("cosmetics");
 	}
 
 	@Override
 	public ItemStack getBlandItem() {
-		return ItemStackCreator.createNamedItemStack(Material.NETHER_STAR, "§aGame Selector").build();
+		return ItemStackCreator.createNamedItemStack(Material.CHEST, "§aCosmetics").build();
 	}
 
 }

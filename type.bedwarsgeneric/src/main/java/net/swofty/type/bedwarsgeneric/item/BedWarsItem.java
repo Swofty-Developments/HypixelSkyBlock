@@ -8,6 +8,7 @@ import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.CustomData;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 /**
  * Represents a custom item in a BedWars game. Handles in-game events and properties of items.
@@ -23,7 +24,7 @@ public abstract class BedWarsItem {
 
 	public abstract ItemStack getBlandItem();
 
-	public ItemStack getItemStack() {
+	public ItemStack getItemStack(HypixelPlayer... player) {
 		return getBlandItem().with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder().putString("item", id).build()));
 	}
 
