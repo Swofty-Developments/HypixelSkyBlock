@@ -39,8 +39,21 @@ public class GameSession {
     public static abstract class GameState {}
 
     public static class ChronomatronState extends GameState {
+        // Core game state management
+        public enum GameStateEnum {
+            READY,      // Waiting to start a new round
+            WATCHING,   // Displaying sequence to player (input disabled)
+            PLAYING,    // Waiting for player input (input enabled)
+            GAME_OVER   // Game ended (input disabled)
+        }
+        
+        public GameStateEnum gameState = GameStateEnum.READY;
         public List<Integer> correctSequence = new ArrayList<>();
-        public int playerInputPosition = 0;
+        public int playerInputIndex = 0;  // How far into sequence player has correctly guessed
+        public int score = 0;  // Length of last successfully completed sequence
+        public long lastClickTime = 0;  // For debounce system (200ms cooldown)
+        public int availableColors = 3;  // Number of colors for current tier
+        public boolean isSequencePlaying = false;  // Prevents input during sequence display
     }
 
     public static class UltraSequencerState extends GameState {

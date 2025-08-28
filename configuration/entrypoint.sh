@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 cp configuration_files/forwarding.secret ./forwarding.secret
 secret=$(cat ./forwarding.secret)
 jq --arg secret "$secret" '.["velocity-secret"] = $secret' ./configuration/resources.json > ./configuration/resources.json.tmp
@@ -31,6 +31,8 @@ echo "Started ServiceBazaar"
 sleep 5
 screen -dmS ServiceItemTracker java -jar ServiceItemTracker.jar
 echo "Started ServiceItemTracker"
-
+sleep 5
+screen -dmS ServiceExperiments java -jar ServiceExperiments.jar
+echo "Started ServiceExperiments"
 echo "Started all services with a total of: $(screen -ls | grep -c 'Detached') screens"
 tail -f /dev/null

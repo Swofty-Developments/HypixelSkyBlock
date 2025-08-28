@@ -13,11 +13,11 @@ items:
         handler_id: SKYBLOCK_MENU_LORE
         is_absolute: true
   - id: EXPERIMENTATION_TABLE
-    material: CAULDRON
+    material: ENCHANTING_TABLE
     rarity: RARE
     components:
       - id: PLACEABLE
         block_type: EXPERIMENT_TABLE
       - id: LORE_UPDATE
-        handler_id: SKYBLOCK_MENU_LORE
-        is_absolute: false
+        handler_id: EXPERIMENTATION_TABLE_LORE
+        is_absolute: true

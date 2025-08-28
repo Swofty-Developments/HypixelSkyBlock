@@ -217,6 +217,7 @@
     "JAR Application.Run Proxy.executor": "Run",
     "Multirun.Run Proxy.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "#518 on full__hypixel",
@@ -519,18 +520,15 @@
       <item itemvalue="Application.DataMutexService" />
       <item itemvalue="Application.DungeonsTest" />
       <item itemvalue="Application.ItemTrackerService" />
-      <item itemvalue="Batch.Move Proxy" />
+      <item itemvalue="Gradle.Build Proxy" />
+      <item itemvalue="Gradle.Hypixel (Prototype)" />
       <item itemvalue="Gradle.SkyBlock (Dungeon Hub)" />
       <item itemvalue="Gradle.SkyBlock (Farming Islands)" />
       <item itemvalue="Gradle.SkyBlock (Hub)" />
       <item itemvalue="Gradle.SkyBlock (Island)" />
-      <item itemvalue="Gradle.Hypixel (Prototype)" />
       <item itemvalue="Gradle.TestFlow (Send To Hub)" />
-      <item itemvalue="Gradle.Build Proxy" />
       <item itemvalue="JAR Application.Run Passthrough" />
       <item itemvalue="JAR Application.Run Proxy" />
-      <item itemvalue="Multirun.Run All Services" />
-      <item itemvalue="Multirun.Run Proxy" />
     </list>
     <recent_temporary>
       <list>
@@ -545,8 +543,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
       </set>
     </attachedChunks>
   </component>
@@ -662,6 +659,7 @@
       <workItem from="1754713716124" duration="10891000" />
       <workItem from="1754832783106" duration="3000" />
       <workItem from="1754880476033" duration="2176000" />
+      <workItem from="1756144221641" duration="716000" />
     </task>
     <task id="LOCAL-00002" summary="feat: migration to Gradle">
       <option name="closed" value="true" />

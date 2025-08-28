@@ -59,4 +59,4 @@ RUN cp configuration_files/entrypoint.sh ./entrypoint.sh
 RUN chmod +x entrypoint.sh
 
 
-CMD sh ./entrypoint.sh
+CMD ./entrypoint.sh

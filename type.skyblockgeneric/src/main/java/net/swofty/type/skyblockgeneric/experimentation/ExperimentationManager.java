@@ -12,6 +12,28 @@ public class ExperimentationManager {
     
     private static final Map<UUID, GameSession> sessions = new ConcurrentHashMap<>();
     
+    // Proper tier system based on Experimentations.md
+    public static class GameTier {
+        public final int colors;
+        public final int xpPerNote;
+        public final Map<Integer, Integer> clickMilestones;
+        
+        public GameTier(int colors, int xpPerNote, Map<Integer, Integer> clickMilestones) {
+            this.colors = colors;
+            this.xpPerNote = xpPerNote;
+            this.clickMilestones = clickMilestones;
+        }
+    }
+    
+    public static final Map<String, GameTier> TIERS = new HashMap<>();
+    static {
+        TIERS.put("HIGH", new GameTier(3, 1500, Map.of(5, 1, 9, 2)));
+        TIERS.put("GRAND", new GameTier(5, 2500, Map.of(5, 1, 9, 2)));
+        TIERS.put("SUPREME", new GameTier(7, 3500, Map.of(5, 1, 9, 2)));
+        TIERS.put("TRANSCENDENT", new GameTier(8, 4500, Map.of(5, 1, 9, 2)));
+        TIERS.put("METAPHYSICAL", new GameTier(10, 6000, Map.of(5, 1, 9, 2, 12, 3)));
+    }
+    
     // SuperPairs methods
     public static boolean startSuperPairs(HypixelPlayer player, String tier) {
         UUID playerUUID = player.getUuid();
@@ -227,7 +249,7 @@ public class ExperimentationManager {
         return new UltrasequencerFinishResult(true, null, bestSeriesLength, xpAward, bonusClicksEarned);
     }
     
-    // Chronomatron methods (keeping existing functionality)
+    // Improved Chronomatron methods based on Experimentations.md
     public static boolean startChronomatron(HypixelPlayer player, String tier) {
         UUID playerUUID = player.getUuid();
         
@@ -238,15 +260,26 @@ public class ExperimentationManager {
         session.setStartTime(System.currentTimeMillis());
 
         GameSession.ChronomatronState state = new GameSession.ChronomatronState();
-        // Generate initial sequence based on tier
-        Random r = new Random();
-        int initialLength = getInitialSequenceLength(tier);
-        int colorCount = getColorCountForTier(tier);
-        for (int i = 0; i < initialLength; i++) state.correctSequence.add(r.nextInt(colorCount));
+        
+        // Initialize with proper tier settings
+        GameTier gameTier = TIERS.get(tier.toUpperCase());
+        if (gameTier == null) {
+            gameTier = TIERS.get("HIGH"); // Default fallback
+        }
+        
+        state.availableColors = gameTier.colors;
+        state.gameState = GameSession.ChronomatronState.GameStateEnum.READY;
+        state.correctSequence = new ArrayList<>();
+        state.playerInputIndex = 0;
+        state.score = 0;
+        state.lastClickTime = 0;
+        state.isSequencePlaying = false;
+        
         session.setChronomatronBestChain(0);
         session.setGameState(state);
-
         sessions.put(playerUUID, session);
+        
+        // Do NOT start the first round here. The GUI triggers the first round when appropriate.
         
         return true;
     }
@@ -259,41 +292,103 @@ public class ExperimentationManager {
         return (GameSession.ChronomatronState) session.getGameState();
     }
     
-    public static ChronomatronInputResult inputChronomatron(HypixelPlayer player, List<Integer> inputs) {
+    /**
+     * Starts a new round in Chronomatron
+     */
+    public static void startNewChronomatronRound(HypixelPlayer player) {
         GameSession session = sessions.get(player.getUuid());
         if (session == null || !(session.getGameState() instanceof GameSession.ChronomatronState state)) {
-            return new ChronomatronInputResult(false, "no-active-session", false, 0);
+            return;
         }
         
-        // Check if the input matches the sequence
-        if (inputs.size() != state.correctSequence.size()) {
-            return new ChronomatronInputResult(false, "wrong-sequence-length", false, state.correctSequence.size());
-        }
+        // Set game state to WATCHING (input disabled)
+        state.gameState = GameSession.ChronomatronState.GameStateEnum.WATCHING;
+        state.isSequencePlaying = true;
+        state.playerInputIndex = 0;
         
-        boolean correct = true;
-        for (int i = 0; i < inputs.size(); i++) {
-            if (!inputs.get(i).equals(state.correctSequence.get(i))) {
-                correct = false;
-                break;
+        // Ensure the first round starts with 3 colors, then add 1 per subsequent round
+        Random random = new Random();
+        if (state.correctSequence.isEmpty()) {
+            for (int i = 0; i < 3; i++) {
+                state.correctSequence.add(random.nextInt(state.availableColors));
             }
+        } else {
+            state.correctSequence.add(random.nextInt(state.availableColors));
         }
+        
+        // The sequence will be played by the GUI, then set to PLAYING state
+        // This is handled by the GUI after the sequence animation completes
+    }
+    
+    /**
+     * Called by GUI when sequence display is complete
+     */
+    public static void onChronomatronSequenceComplete(HypixelPlayer player) {
+        GameSession session = sessions.get(player.getUuid());
+        if (session == null || !(session.getGameState() instanceof GameSession.ChronomatronState state)) {
+            return;
+        }
+        
+        // Enable player input
+        state.gameState = GameSession.ChronomatronState.GameStateEnum.PLAYING;
+        state.isSequencePlaying = false;
+    }
+    
+    /**
+     * Handles a single color input from the player
+     */
+    public static ChronomatronInputResult inputChronomatron(HypixelPlayer player, int color) {
+        GameSession session = sessions.get(player.getUuid());
+        if (session == null || !(session.getGameState() instanceof GameSession.ChronomatronState state)) {
+            return new ChronomatronInputResult(false, "no-active-session", false, false, 0);
+        }
+        
+        // Input Guard: Check if we're in PLAYING state
+        if (state.gameState != GameSession.ChronomatronState.GameStateEnum.PLAYING) {
+            return new ChronomatronInputResult(false, "input-disabled", false, false, state.correctSequence.size());
+        }
+        
+        // Debounce Clicks: 200ms cooldown
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - state.lastClickTime < 200) {
+            return new ChronomatronInputResult(false, "click-too-fast", false, false, state.correctSequence.size());
+        }
+        state.lastClickTime = currentTime;
+        
+        // Check for correctness
+        if (state.playerInputIndex >= state.correctSequence.size()) {
+            return new ChronomatronInputResult(false, "invalid-input-index", false, false, state.correctSequence.size());
+        }
+        
+        int expectedColor = state.correctSequence.get(state.playerInputIndex);
+        boolean correct = expectedColor == color;
         
         if (correct) {
-            // Correct input, generate next round
-            Random random = new Random();
-            int colorCount = getColorCountForTier(session.getTier());
-            state.correctSequence.add(random.nextInt(colorCount));
-            state.playerInputPosition = 0;
+            // Correct input
+            state.playerInputIndex++;
             
-            // Update best chain if needed
-            if (state.correctSequence.size() > session.getChronomatronBestChain()) {
-                session.setChronomatronBestChain(state.correctSequence.size());
+            // Check if round is complete
+            if (state.playerInputIndex >= state.correctSequence.size()) {
+                // Round complete - player successfully repeated the whole sequence
+                state.score = state.correctSequence.size();
+                
+                // Update best chain if needed
+                if (state.score > session.getChronomatronBestChain()) {
+                    session.setChronomatronBestChain(state.score);
+                }
+                
+                // Set to READY for next round
+                state.gameState = GameSession.ChronomatronState.GameStateEnum.READY;
+                
+                return new ChronomatronInputResult(true, null, true, true, state.correctSequence.size());
+            } else {
+                // Still inputting sequence
+                return new ChronomatronInputResult(true, null, true, false, state.correctSequence.size());
             }
-            
-            return new ChronomatronInputResult(true, null, true, state.correctSequence.size());
         } else {
-            // Wrong input, game over
-            return new ChronomatronInputResult(true, null, false, state.correctSequence.size());
+            // Wrong input - game over
+            state.gameState = GameSession.ChronomatronState.GameStateEnum.GAME_OVER;
+            return new ChronomatronInputResult(true, null, false, false, state.correctSequence.size());
         }
     }
     
@@ -347,17 +442,20 @@ public class ExperimentationManager {
         return baseXp;
     }
     
+    /**
+     * Improved reward calculation based on Experimentations.md
+     * XP is capped at score 15, clicks based on milestones
+     */
     private static int calculateChronomatronXpAward(int chainLength, String tier) {
-        int baseXp = chainLength * 1500;
-        String t = tier.toLowerCase();
+        // Get tier data
+        GameTier gameTier = TIERS.get(tier.toUpperCase());
+        if (gameTier == null) {
+            gameTier = TIERS.get("HIGH"); // Default fallback
+        }
         
-        if (t.contains("high")) return baseXp;
-        if (t.contains("grand")) return (int)(baseXp * 1.5);
-        if (t.contains("supreme")) return baseXp * 2;
-        if (t.contains("transcendent")) return (int)(baseXp * 2.5);
-        if (t.contains("metaphysical")) return baseXp * 3;
-        
-        return baseXp;
+        // XP is capped at score 15
+        int xpScore = Math.min(chainLength, 15);
+        return xpScore * gameTier.xpPerNote;
     }
     
     private static int calculateBonusClicks(int pairsFound) {
@@ -367,24 +465,34 @@ public class ExperimentationManager {
         return 0;
     }
     
+    /**
+     * Improved bonus clicks calculation based on milestones
+     */
     private static int calculateChronomatronBonusClicks(int chainLength) {
-        if (chainLength >= 9) return 2;
-        if (chainLength >= 5) return 1;
-        return 0;
+        // Use the highest tier's milestones for calculation
+        GameTier gameTier = TIERS.get("METAPHYSICAL"); // Use highest tier for max rewards
+        
+        int totalClicks = 0;
+        // Iterate through milestones to find the highest one reached
+        for (Map.Entry<Integer, Integer> milestone : gameTier.clickMilestones.entrySet()) {
+            if (chainLength >= milestone.getKey()) {
+                totalClicks = milestone.getValue();
+            }
+        }
+        
+        return totalClicks;
     }
     
     private static int getInitialSequenceLength(String tier) {
         return 3;
     }
     
-        private static int getColorCountForTier(String tier) {
-        String t = tier.toLowerCase();
-        if (t.contains("metaphysical")) return 10;  
-        if (t.contains("transcendent")) return 8;  
-        if (t.contains("supreme")) return 7;
-        if (t.contains("grand")) return 5;
-        if (t.contains("high")) return 3;
-        return 3; 
+    private static int getColorCountForTier(String tier) {
+        GameTier gameTier = TIERS.get(tier.toUpperCase());
+        if (gameTier == null) {
+            return 3; // Default fallback
+        }
+        return gameTier.colors;
     }
     
     // Result classes
@@ -461,12 +569,14 @@ public class ExperimentationManager {
         public final boolean success;
         public final String errorMessage;
         public final boolean correct;
+        public final boolean complete;
         public final int sequenceLength;
         
-        public ChronomatronInputResult(boolean success, String errorMessage, boolean correct, int sequenceLength) {
+        public ChronomatronInputResult(boolean success, String errorMessage, boolean correct, boolean complete, int sequenceLength) {
             this.success = success;
             this.errorMessage = errorMessage;
             this.correct = correct;
+            this.complete = complete;
             this.sequenceLength = sequenceLength;
         }
     }
