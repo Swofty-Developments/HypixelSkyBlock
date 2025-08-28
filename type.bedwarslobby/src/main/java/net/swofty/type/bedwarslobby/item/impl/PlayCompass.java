@@ -13,7 +13,7 @@ public class PlayCompass extends BedWarsItem {
 
 	@Override
 	public ItemStack getBlandItem() {
-		return ItemStackCreator.createNamedItemStack(Material.NETHER_STAR, "§aGame Selector").build();
+		return ItemStackCreator.createNamedItemStack(Material.COMPASS, "§aGame Selector").build();
 	}
 
 }
