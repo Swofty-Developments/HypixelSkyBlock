@@ -27,253 +27,250 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class GeneratorManager {
-	private final Game game;
-	private final GameEventPosition currentEvent;
-	private final Map<String, List<Task>> teamGeneratorTasks = new HashMap<>();
-	private final Map<String, List<GeneratorDisplay>> generatorDisplays = new HashMap<>();
+public final class GeneratorManager implements GameEventManager.Listener {
+    private final Game game;
+    private final Map<String, List<Task>> teamGeneratorTasks = new HashMap<>();
+    private final Map<String, List<GeneratorDisplay>> generatorDisplays = new HashMap<>();
+    private final Map<String, GeneratorLimits> generatorLimits = new HashMap<>();
+    private Task globalTicker;
+    private long lastDiamondDelay = -1;
+    private long lastEmeraldDelay = -1;
 
-	public GeneratorManager(Game game) {
-		this.game = game;
-		this.currentEvent = GameEventPosition.BEGIN;
-	}
+    public GeneratorManager(Game game) {
+        this.game = game;
+        if (game.getEventManager() != null) game.getEventManager().addListener(this);
+    }
 
-	public void startTeamGenerators(List<MapsConfig.MapEntry.MapConfiguration.MapTeam> activeTeams) {
-		MapsConfig.MapEntry.MapConfiguration mapConfig = game.getMapEntry().getConfiguration();
+    public void startTeamGenerators(List<MapsConfig.MapEntry.MapConfiguration.MapTeam> activeTeams) {
+        MapsConfig.MapEntry.MapConfiguration mapConfig = game.getMapEntry().getConfiguration();
+        if (mapConfig.getGenerator() == null || mapConfig.getGenerator().isEmpty()) return;
 
-		if (mapConfig.getGenerator() == null || mapConfig.getGenerator().isEmpty()) {
-			return;
-		}
+        for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : activeTeams) {
+            MapsConfig.Position genLocation = team.getGenerator();
+            if (genLocation == null) continue;
+            Pos spawnPosition = new Pos(genLocation.x(), genLocation.y(), genLocation.z());
 
-		for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : activeTeams) {
-			MapsConfig.Position genLocation = team.getGenerator();
-			if (genLocation == null) continue;
+            for (Map.Entry<String, MapsConfig.MapEntry.MapConfiguration.TeamGeneratorConfig> genEntry : mapConfig.getGenerator().entrySet()) {
+                startTeamGenerator(team, genEntry.getKey(), genEntry.getValue(), spawnPosition);
+            }
+        }
+    }
 
-			Pos spawnPosition = new Pos(genLocation.x(), genLocation.y(), genLocation.z());
+    private void startTeamGenerator(MapsConfig.MapEntry.MapConfiguration.MapTeam team, String materialType,
+                                    MapsConfig.MapEntry.MapConfiguration.TeamGeneratorConfig config, Pos spawnPosition) {
+        Material itemMaterial = getMaterialFromType(materialType);
+        if (itemMaterial == null) {
+            Logger.warn("Invalid material type: {} for team {}", materialType, team.getName());
+            return;
+        }
 
-			for (Map.Entry<String, MapsConfig.MapEntry.MapConfiguration.TeamGeneratorConfig> genEntry :
-					mapConfig.getGenerator().entrySet()) {
+        final int baseAmount = config.getAmount();
+        final int baseDelay = config.getDelay();
 
-				startTeamGenerator(team, genEntry.getKey(), genEntry.getValue(), spawnPosition);
-			}
-		}
-	}
+        Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
+            if (game.getGameStatus() != GameStatus.IN_PROGRESS) return;
 
-	private void startTeamGenerator(MapsConfig.MapEntry.MapConfiguration.MapTeam team,
-									String materialType,
-									MapsConfig.MapEntry.MapConfiguration.TeamGeneratorConfig config,
-									Pos spawnPosition) {
-		Material itemMaterial = getMaterialFromType(materialType);
-		if (itemMaterial == null) {
-			Logger.warn("Invalid material type: {} for team {}", materialType, team.getName());
-			return;
-		}
+            int forgeLevel = game.getTeamManager().getTeamUpgradeLevel(team.getName(), "forge");
+            double multiplier = calculateForgeMultiplier(itemMaterial, forgeLevel);
 
-		final int baseAmount = config.getAmount();
-		final int baseDelay = config.getDelay();
+            int finalAmount = (int) Math.round(baseAmount * multiplier);
+            if (finalAmount == 0 && baseAmount > 0 && multiplier > 1.0) finalAmount = 1;
 
-		Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
-					if (game.getGameStatus() != GameStatus.IN_PROGRESS) return;
+            if (finalAmount > 0) spawnItem(itemMaterial, finalAmount, spawnPosition, Duration.ofMillis(500));
+        }).delay(TaskSchedule.seconds(baseDelay)).repeat(TaskSchedule.seconds(baseDelay)).schedule();
 
-					int forgeLevel = game.getTeamManager().getTeamUpgradeLevel(team.getName(), "forge");
-					double multiplier = calculateForgeMultiplier(itemMaterial, forgeLevel);
+        addTeamGeneratorTask(team.getName(), task);
+    }
 
-					int finalAmount = (int) Math.round(baseAmount * multiplier);
-					if (finalAmount == 0 && baseAmount > 0 && multiplier > 1.0) {
-						finalAmount = 1;
-					}
+    public void startGlobalGenerators() {
+        MapsConfig.MapEntry.MapConfiguration mapConfig = game.getMapEntry().getConfiguration();
+        if (mapConfig.getGlobal_generator() == null) return;
 
-					if (finalAmount > 0) {
-						spawnItem(itemMaterial, finalAmount, spawnPosition, Duration.ofMillis(500));
-					}
-				})
-				.delay(TaskSchedule.seconds(baseDelay))
-				.repeat(TaskSchedule.seconds(baseDelay))
-				.schedule();
+        for (Map.Entry<String, MapsConfig.MapEntry.MapConfiguration.GlobalGenerator> entry : mapConfig.getGlobal_generator().entrySet()) {
+            setupGlobalGenerator(entry.getKey(), entry.getValue());
+        }
 
-		addTeamGeneratorTask(team.getName(), task);
-	}
+        if (globalTicker != null) globalTicker.cancel();
+        globalTicker = MinecraftServer.getSchedulerManager().buildTask(() -> {
+            if (game.getGameStatus() != GameStatus.IN_PROGRESS) return;
+            updateGeneratorDisplays();
+            tickGlobalGenerators();
+        }).delay(TaskSchedule.seconds(1)).repeat(TaskSchedule.seconds(1)).schedule();
+    }
 
-	public void startGlobalGenerators() {
-		MapsConfig.MapEntry.MapConfiguration mapConfig = game.getMapEntry().getConfiguration();
+    private void setupGlobalGenerator(String generatorType, MapsConfig.MapEntry.MapConfiguration.GlobalGenerator config) {
+        Material itemMaterial = Material.fromKey(Key.key(Key.MINECRAFT_NAMESPACE, generatorType));
+        if (itemMaterial == null) {
+            Logger.warn("Invalid material for global generator: {}", generatorType);
+            return;
+        }
 
-		if (mapConfig.getGlobal_generator() == null) {
-			return;
-		}
+        List<MapsConfig.Position> locations = config.getLocations();
+        if (locations == null || locations.isEmpty()) return;
 
-		for (Map.Entry<String, MapsConfig.MapEntry.MapConfiguration.GlobalGenerator> entry :
-				mapConfig.getGlobal_generator().entrySet()) {
+        int amount = config.getAmount();
+        int maxAmount = config.getMax();
 
-			startGlobalGenerator(entry.getKey(), entry.getValue());
-		}
-	}
+        if (generatorType.equals("diamond") || generatorType.equals("emerald")) {
+            long delaySeconds = generatorType.equals("diamond")
+                    ? game.getEventManager().getDiamondDelaySeconds()
+                    : game.getEventManager().getEmeraldDelaySeconds();
 
-	private void startGlobalGenerator(String generatorType,
-									  MapsConfig.MapEntry.MapConfiguration.GlobalGenerator config) {
-		Material itemMaterial = Material.fromKey(Key.key(Key.MINECRAFT_NAMESPACE, generatorType));
-		if (itemMaterial == null) {
-			Logger.warn("Invalid material for global generator: {}", generatorType);
-			return;
-		}
+            setupGlobalGeneratorDisplays(generatorType, locations, (int) delaySeconds);
+            generatorLimits.put(generatorType, new GeneratorLimits(itemMaterial, amount, maxAmount, locations));
+        }
+    }
 
-		List<MapsConfig.Position> locations = config.getLocations();
-		if (locations == null || locations.isEmpty()) {
-			return;
-		}
+    private void setupGlobalGeneratorDisplays(String generatorType, List<MapsConfig.Position> locations, int delaySeconds) {
+        NamedTextColor color = generatorType.equals("diamond") ? NamedTextColor.AQUA : NamedTextColor.GREEN;
+        String capitalizedType = Character.toUpperCase(generatorType.charAt(0)) + generatorType.substring(1);
 
-		int delaySeconds = config.getDelay();
-		int amount = config.getAmount();
-		int maxAmount = config.getMax();
+        for (MapsConfig.Position location : locations) {
+            Component generatorTitle = Component.text(capitalizedType).color(color).decorate(TextDecoration.BOLD);
+            Component tierText = Component.text("Tier I").color(NamedTextColor.YELLOW);
+            Component spawnText = MiniMessage.miniMessage().deserialize("<yellow>Spawns in <red>" + delaySeconds + "</red> seconds!</yellow>");
 
-		if (generatorType.equals("diamond") || generatorType.equals("emerald")) {
-			setupGlobalGeneratorDisplays(generatorType, locations, delaySeconds);
+            double locY = location.y() + 4.0;
+            TextDisplayEntity tierDisplay = new TextDisplayEntity(tierText);
+            tierDisplay.setInstance(game.getInstanceContainer(), new Pos(location.x(), locY, location.z()));
 
-			for (MapsConfig.Position location : locations) {
-				startGlobalGeneratorAtLocation(location, itemMaterial, amount, maxAmount, delaySeconds);
-			}
-		}
-	}
+            locY -= 0.3;
+            TextDisplayEntity titleDisplay = new TextDisplayEntity(generatorTitle);
+            titleDisplay.setInstance(game.getInstanceContainer(), new Pos(location.x(), locY, location.z()));
 
-	private void setupGlobalGeneratorDisplays(String generatorType,
-											  List<MapsConfig.Position> locations,
-											  int delaySeconds) {
-		NamedTextColor color = generatorType.equals("diamond") ? NamedTextColor.AQUA : NamedTextColor.GREEN;
-		String capitalizedType = Character.toUpperCase(generatorType.charAt(0)) + generatorType.substring(1);
+            locY -= 0.3;
+            TextDisplayEntity spawnDisplay = new TextDisplayEntity(spawnText);
+            spawnDisplay.setInstance(game.getInstanceContainer(), new Pos(location.x(), locY, location.z()));
 
-		for (MapsConfig.Position location : locations) {
-			Component generatorTitle = Component.text(capitalizedType)
-					.color(color)
-					.decorate(TextDecoration.BOLD);
+            GeneratorDisplay display = new GeneratorDisplay(tierDisplay, spawnDisplay, delaySeconds);
+            generatorDisplays.computeIfAbsent(generatorType, k -> new ArrayList<>()).add(display);
+        }
+    }
 
-			Component tierText = Component.text("Tier I")
-					.color(NamedTextColor.YELLOW);
+    private void tickGlobalGenerators() {
+        long diamondDelay = game.getEventManager().getDiamondDelaySeconds();
+        long emeraldDelay = game.getEventManager().getEmeraldDelaySeconds();
+        resetDisplaysIfEventChanged((int) diamondDelay, (int) emeraldDelay);
 
-			Component spawnText = MiniMessage.miniMessage()
-					.deserialize("<yellow>Spawns in <red>" + delaySeconds + "</red> seconds!</yellow>");
+        for (Map.Entry<String, GeneratorLimits> entry : generatorLimits.entrySet()) {
+            String type = entry.getKey();
+            GeneratorLimits limits = entry.getValue();
+            long delay = type.equals("diamond") ? diamondDelay : emeraldDelay;
 
-			double locY = location.y() + 4.0;
-			TextDisplayEntity tierDisplay = new TextDisplayEntity(tierText);
-			tierDisplay.setInstance(game.getInstanceContainer(),
-					new Pos(location.x(), locY, location.z()));
+            long now = System.currentTimeMillis() / 1000L;
+            if (delay <= 0 || (now % delay) != 0) continue;
 
-			locY -= 0.3;
-			TextDisplayEntity generatorDisplay = new TextDisplayEntity(generatorTitle);
-			generatorDisplay.setInstance(game.getInstanceContainer(),
-					new Pos(location.x(), locY, location.z()));
+            for (MapsConfig.Position location : limits.locations) {
+                Pos spawnPos = new Pos(location.x(), location.y(), location.z());
+                long currentItemCount = game.getInstanceContainer().getNearbyEntities(spawnPos, 1.5)
+                        .stream()
+                        .filter(ItemEntity.class::isInstance)
+                        .map(ItemEntity.class::cast)
+                        .filter(entity -> entity.getItemStack().material() == limits.material)
+                        .mapToLong(entity -> entity.getItemStack().amount())
+                        .sum();
+                if (currentItemCount < limits.maxAmount) {
+                    spawnItem(limits.material, limits.amount, spawnPos, Duration.ofSeconds(1));
+                }
+            }
+        }
+    }
 
-			locY -= 0.3;
-			TextDisplayEntity spawnDisplay = new TextDisplayEntity(spawnText);
-			spawnDisplay.setInstance(game.getInstanceContainer(),
-					new Pos(location.x(), locY, location.z()));
+    private void resetDisplaysIfEventChanged(int diamondDelay, int emeraldDelay) {
+        if (lastDiamondDelay != diamondDelay || lastEmeraldDelay != emeraldDelay) {
+            for (Map.Entry<String, List<GeneratorDisplay>> e : generatorDisplays.entrySet()) {
+                int max = e.getKey().equals("diamond") ? diamondDelay : emeraldDelay;
+                for (GeneratorDisplay d : e.getValue()) {
+                    d.maxCountdown = max;
+                    d.countdown = max;
+                    d.tierDisplay.setText(Component.text(getTierLabelFor(e.getKey())).color(NamedTextColor.YELLOW));
+                }
+            }
+            lastDiamondDelay = diamondDelay;
+            lastEmeraldDelay = emeraldDelay;
+        }
+    }
 
-			GeneratorDisplay display = new GeneratorDisplay(spawnDisplay, delaySeconds);
-			generatorDisplays.computeIfAbsent(generatorType, k -> new ArrayList<>()).add(display);
-		}
-	}
+    private void updateGeneratorDisplays() {
+        for (List<GeneratorDisplay> displays : generatorDisplays.values()) {
+            for (GeneratorDisplay display : displays) {
+                display.countdown--;
+                if (display.countdown <= 0) display.countdown = display.maxCountdown;
+                Component updatedText = MiniMessage.miniMessage().deserialize("<yellow>Spawns in <red>" + display.countdown + "</red> seconds!</yellow>");
+                display.spawnDisplay.setText(updatedText);
+            }
+        }
+    }
 
-	private void startGlobalGeneratorAtLocation(MapsConfig.Position location,
-												Material material,
-												int amount,
-												int maxAmount,
-												int delay) {
-		Pos spawnPos = new Pos(location.x(), location.y(), location.z());
+    private String getTierLabelFor(String type) {
+        GameEventPosition e = game.getEventManager().getCurrentEvent();
+        int tier = 1;
+        if ("diamond".equals(type)) {
+            if (e == GameEventPosition.DIAMOND_2 || e == GameEventPosition.EMERALD_2) tier = 2;
+            if (e == GameEventPosition.DIAMOND_3 || e == GameEventPosition.EMERALD_3) tier = 3;
+        } else if ("emerald".equals(type)) {
+            if (e == GameEventPosition.EMERALD_2) tier = 2;
+            if (e == GameEventPosition.EMERALD_3) tier = 3;
+        }
+        return switch (tier) { case 2 -> "Tier II"; case 3 -> "Tier III"; default -> "Tier I"; };
+    }
 
-		MinecraftServer.getSchedulerManager().buildTask(() -> {
-					if (game.getGameStatus() != GameStatus.IN_PROGRESS) return;
+    private void spawnItem(Material material, int amount, Pos position, Duration pickupDelay) {
+        ItemStack itemToSpawn = ItemStack.of(material, amount).with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder().putBoolean("generator", true).build()));
+        ItemEntity itemEntity = new ItemEntity(itemToSpawn);
+        itemEntity.setPickupDelay(pickupDelay);
+        itemEntity.setInstance(game.getInstanceContainer(), position);
+        if (pickupDelay.equals(Duration.ofSeconds(1))) itemEntity.setVelocity(new Vec(0, 0.1, 0));
+    }
 
-					// Update display countdown
-					updateGeneratorDisplays();
+    private Material getMaterialFromType(String materialType) {
+        @Subst("iron") String type = materialType.toLowerCase();
+        return switch (type) {
+            case "iron" -> Material.IRON_INGOT;
+            case "gold" -> Material.GOLD_INGOT;
+            default -> Material.fromKey(Key.key(Key.MINECRAFT_NAMESPACE, type));
+        };
+    }
 
-					// Check item count and spawn if needed
-					long currentItemCount = game.getInstanceContainer()
-							.getNearbyEntities(spawnPos, 1.5)
-							.stream()
-							.filter(ItemEntity.class::isInstance)
-							.map(ItemEntity.class::cast)
-							.filter(entity -> entity.getItemStack().material() == material)
-							.mapToLong(entity -> entity.getItemStack().amount())
-							.sum();
+    private double calculateForgeMultiplier(Material material, int forgeLevel) {
+        if (material != Material.IRON_INGOT && material != Material.GOLD_INGOT) return 1.0;
+        return switch (forgeLevel) {
+            case 1 -> 1.5;
+            case 2 -> 2.0;
+            case 3, 4 -> 3.0;
+            default -> 1.0;
+        };
+    }
 
-					if (currentItemCount < maxAmount) {
-						spawnItem(material, amount, spawnPos, Duration.ofSeconds(1));
-					}
-				})
-				.delay(TaskSchedule.seconds(1))
-				.repeat(TaskSchedule.seconds(1))
-				.schedule();
-	}
+    public void addTeamGeneratorTask(String teamName, Task task) {
+        teamGeneratorTasks.computeIfAbsent(teamName, k -> new ArrayList<>()).add(task);
+    }
 
-	private void updateGeneratorDisplays() {
-		for (List<GeneratorDisplay> displays : generatorDisplays.values()) {
-			for (GeneratorDisplay display : displays) {
-				display.countdown--;
-				if (display.countdown <= 0) {
-					display.countdown = display.maxCountdown;
-				}
+    public void stopAllGenerators() {
+        teamGeneratorTasks.values().stream().flatMap(List::stream).forEach(Task::cancel);
+        teamGeneratorTasks.clear();
+        generatorDisplays.clear();
+        generatorLimits.clear();
+        if (globalTicker != null) { globalTicker.cancel(); globalTicker = null; }
+    }
 
-				Component updatedText = MiniMessage.miniMessage()
-						.deserialize("<yellow>Spawns in <red>" + display.countdown + "</red> seconds!</yellow>");
-				display.spawnDisplay.setText(updatedText);
-			}
-		}
-	}
+    @Override
+    public void onEventChange(GameEventPosition previous, GameEventPosition current) {
+        resetDisplaysIfEventChanged((int) game.getEventManager().getDiamondDelaySeconds(), (int) game.getEventManager().getEmeraldDelaySeconds());
+    }
 
-	private void spawnItem(Material material, int amount, Pos position, Duration pickupDelay) {
-		ItemStack itemToSpawn = ItemStack.of(material, amount).with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder().putBoolean("generator", true).build()));
-		ItemEntity itemEntity = new ItemEntity(itemToSpawn);
-		itemEntity.setPickupDelay(pickupDelay);
-		itemEntity.setInstance(game.getInstanceContainer(), position);
+    private static class GeneratorDisplay {
+        private final TextDisplayEntity tierDisplay;
+        private final TextDisplayEntity spawnDisplay;
+        private int maxCountdown;
+        private int countdown;
+        public GeneratorDisplay(TextDisplayEntity tierDisplay, TextDisplayEntity spawnDisplay, int delay) {
+            this.tierDisplay = tierDisplay;
+            this.spawnDisplay = spawnDisplay;
+            this.maxCountdown = delay;
+            this.countdown = delay;
+        }
+    }
 
-		// Add slight upward velocity for visual effect
-		if (pickupDelay.equals(Duration.ofSeconds(1))) {
-			itemEntity.setVelocity(new Vec(0, 0.1, 0));
-		}
-	}
-
-	private Material getMaterialFromType(String materialType) {
-		@Subst("iron") String type = materialType.toLowerCase();
-		return switch (type) {
-			case "iron" -> Material.IRON_INGOT;
-			case "gold" -> Material.GOLD_INGOT;
-			default -> Material.fromKey(Key.key(Key.MINECRAFT_NAMESPACE, type));
-		};
-	}
-
-	private double calculateForgeMultiplier(Material material, int forgeLevel) {
-		if (material != Material.IRON_INGOT && material != Material.GOLD_INGOT) {
-			return 1.0;
-		}
-
-		return switch (forgeLevel) {
-			case 1 -> 1.5;  // +50%
-			case 2 -> 2.0;  // +100%
-			case 3, 4 -> 3.0;  // +200%
-			default -> 1.0;
-		};
-	}
-
-	public void addTeamGeneratorTask(String teamName, Task task) {
-		teamGeneratorTasks.computeIfAbsent(teamName, k -> new ArrayList<>()).add(task);
-	}
-
-	public void stopAllGenerators() {
-		teamGeneratorTasks.values()
-				.stream()
-				.flatMap(List::stream)
-				.forEach(Task::cancel);
-		teamGeneratorTasks.clear();
-		generatorDisplays.clear();
-	}
-
-	private static class GeneratorDisplay {
-		private final TextDisplayEntity spawnDisplay;
-		private final int maxCountdown;
-		private int countdown;
-
-		public GeneratorDisplay(TextDisplayEntity spawnDisplay, int delay) {
-			this.spawnDisplay = spawnDisplay;
-			this.maxCountdown = delay;
-			this.countdown = delay;
-		}
-	}
+    private record GeneratorLimits(Material material, int amount, int maxAmount, List<MapsConfig.Position> locations) {}
 }

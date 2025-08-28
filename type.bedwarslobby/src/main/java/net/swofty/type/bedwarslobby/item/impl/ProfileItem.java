@@ -12,20 +12,20 @@ import java.util.Arrays;
 
 public class ProfileItem extends BedWarsItem {
 
-    public ProfileItem() {
-        super("profile");
-    }
+	public ProfileItem() {
+		super("profile");
+	}
 
-    @Override
-    public ItemStack getBlandItem() {
-        return null;
-    }
+	@Override
+	public ItemStack getBlandItem() {
+		return null;
+	}
 
-    @Override
-    public ItemStack getItemStack(HypixelPlayer... p) {
-        HypixelPlayer player = Arrays.stream(p).findFirst().orElseThrow();
-        return ItemStackCreator.createNamedItemStack(Material.PLAYER_HEAD, "§aProfile")
-            .set(DataComponents.PROFILE, new HeadProfile(player.getPlayerSkin())).build();
-    }
+	@Override
+	public ItemStack getItemStack(HypixelPlayer... p) {
+		HypixelPlayer player = Arrays.stream(p).findFirst().orElseThrow();
+		return ItemStackCreator.createNamedItemStack(Material.PLAYER_HEAD, "§aMy Profile §7(Right Click)")
+				.set(DataComponents.PROFILE, new HeadProfile(player.getPlayerSkin())).build();
+	}
 
 }

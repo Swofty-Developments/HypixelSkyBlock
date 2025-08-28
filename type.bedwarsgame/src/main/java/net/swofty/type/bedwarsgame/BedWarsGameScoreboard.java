@@ -1,6 +1,7 @@
 package net.swofty.type.bedwarsgame;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
@@ -9,6 +10,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
+import net.swofty.type.bedwarsgeneric.game.MapsConfig;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -61,7 +63,24 @@ public class BedWarsGameScoreboard {
 					addLine("§fMode: §a" + game.getGameType().getDisplayName(), sidebar);
 					addLine("§fVersion: §7v1.9", sidebar);
 				} else {
-					addLine("§fMap: §a" + game.getMapEntry().getName(), sidebar);
+					String eventName = game.getEventManager().getNextEvent() != null
+						? game.getEventManager().getNextEvent().getDisplayName()
+						: game.getEventManager().getCurrentEvent().getDisplayName();
+					long seconds = game.getEventManager().getSecondsUntilNextEvent();
+					long minutesPart = seconds / 60;
+					long secondsPart = seconds % 60;
+					String timeLeft = String.format("%d:%02d", minutesPart, secondsPart);
+					addLine("§f" + eventName + " in §a" + timeLeft, sidebar);
+					addLine("§7 ", sidebar);
+					for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : game.getMapEntry().getConfiguration().getTeams()) {
+						String teamName = team.getName();
+						String teamColor = team.getColor().toLowerCase();
+						String teamInitial = teamName.substring(0, 1).toUpperCase();
+						String capitalizedTeamName = teamName.substring(0, 1).toUpperCase() + teamName.substring(1).toLowerCase();
+
+						String bedStatus = game.getTeamManager().getTeamBedStatus().getOrDefault(team.getName(), false) ? "<green>✔</green>" : "<red>✖</red>";
+						addLine(MiniMessage.miniMessage().deserialize(String.format("<%s><b>%s</b> <white>%s:</white> %s", teamColor, teamInitial, capitalizedTeamName, bedStatus)), sidebar);
+					}
 				}
 				addLine("§7 ", sidebar);
 				addLine("§ewww.hypixel.net", sidebar);
@@ -84,6 +103,14 @@ public class BedWarsGameScoreboard {
 		}
 
 		sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
+	}
+
+	private static void addLine(Component text, Sidebar sidebar) {
+		for (Sidebar.ScoreboardLine existingLine : sidebar.getLines()) {
+			sidebar.updateLineScore(existingLine.getId(), existingLine.getLine() + 1);
+		}
+
+		sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), text, 0));
 	}
 
 	private static String getSidebarName(int counter) {

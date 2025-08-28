@@ -37,8 +37,13 @@ public class ActionPlayerJoin implements HypixelEventClass {
 		);
 
 		player.getInventory().setItemStack(
+				2,
+				TypeBedWarsLobbyLoader.getItemHandler().getItem("bedwars_menu").getItemStack()
+		);
+
+		player.getInventory().setItemStack(
 				4,
-				TypeBedWarsLobbyLoader.getItemHandler().getItem("cosmetics").getItemStack()
+				TypeBedWarsLobbyLoader.getItemHandler().getItem("collectibles").getItemStack()
 		);
 
 		player.getInventory().setItemStack(

@@ -38,9 +38,6 @@ public final class Game {
 
 	public static final Tag<Boolean> ELIMINATED_TAG = Tag.Boolean("eliminated");
 
-	private static final char GREEN_MARK = '✔';
-	private static final char RED_MARK = '✖';
-
 	private final InstanceContainer instanceContainer;
 	private final GameType gameType = GameType.SOLO;
 	private final List<BedWarsPlayer> players = new ArrayList<>();
@@ -51,6 +48,7 @@ public final class Game {
 	private final GeneratorManager generatorManager;
 	private final GameWorldManager worldManager;
 	private final GameCountdown countdown;
+	private final GameEventManager eventManager;
 
 	private final Map<String, Map<Integer, ItemStack>> chests = new HashMap<>();
 	private final Map<Player, Map<Integer, ItemStack>> enderchests = new HashMap<>();
@@ -69,6 +67,7 @@ public final class Game {
 		this.generatorManager = new GeneratorManager(this);
 		this.worldManager = new GameWorldManager(this);
 		this.countdown = new GameCountdown(this);
+		this.eventManager = new GameEventManager(this);
 
 		this.gameStatus = GameStatus.WAITING;
 		BedWarsGameScoreboard.start(this);
@@ -126,6 +125,7 @@ public final class Game {
 		worldManager.spawnShopNPCs(activeTeams);
 		generatorManager.startTeamGenerators(activeTeams);
 		generatorManager.startGlobalGenerators();
+		eventManager.start();
 		timePlayedTask = MinecraftServer.getSchedulerManager().buildTask(
 				() -> {
 					if (gameStatus != GameStatus.IN_PROGRESS) {
@@ -251,23 +251,6 @@ public final class Game {
 		return bedAlive || aliveMembers > 0;
 	}
 
-	private Component createTeamSidebarText(String teamColor, String teamInitial,
-											String capitalizedTeamName, boolean bedExists, int alivePlayers) {
-		if (bedExists) {
-			return MiniMessage.miniMessage().deserialize(String.format(
-					"<%s><b>%s</b> <white>%s:</white> <green>%s</%s>",
-					teamColor, teamInitial, capitalizedTeamName, GREEN_MARK, teamColor));
-		} else if (alivePlayers > 0) {
-			return MiniMessage.miniMessage().deserialize(String.format(
-					"<%s><b>%s</b> <white>%s:</white> <green>%d</%s>",
-					teamColor, teamInitial, capitalizedTeamName, alivePlayers, teamColor));
-		} else {
-			return MiniMessage.miniMessage().deserialize(String.format(
-					"<%s><b>%s</b> <white>%s:</white> <red>%s</%s>",
-					teamColor, teamInitial, capitalizedTeamName, RED_MARK, teamColor));
-		}
-	}
-
 	private void endGame(MapsConfig.MapEntry.MapConfiguration.MapTeam winningTeam) {
 		if (gameStatus == GameStatus.ENDING) return;
 
@@ -275,6 +258,7 @@ public final class Game {
 		Logger.info("Game {} has ended. Winner: {}", gameId,
 				winningTeam != null ? winningTeam.getName() : "None (Draw)");
 		generatorManager.stopAllGenerators();
+		eventManager.stop();
 
 		Component titleMessage;
 		Component subtitleMessage;

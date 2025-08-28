@@ -5,15 +5,15 @@ import net.minestom.server.item.Material;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
-public class LobbySelector extends BedWarsItem {
+public class BedWarsMenu extends BedWarsItem {
 
-	public LobbySelector() {
-		super("lobby_selector");
+	public BedWarsMenu() {
+		super("bedwars_menu");
 	}
 
 	@Override
 	public ItemStack getBlandItem() {
-		return ItemStackCreator.createNamedItemStack(Material.NETHER_STAR, "§aLobby Selector §7(Right Click)").build();
+		return ItemStackCreator.createNamedItemStack(Material.EMERALD, "§aBed Wars Menu & Shop §7(Right Click)").build();
 	}
 
 }
