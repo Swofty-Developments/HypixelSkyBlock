@@ -10,11 +10,13 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary.GUIBestiaryMob;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
 import net.swofty.type.skyblockgeneric.region.RegionType;
@@ -120,13 +122,8 @@ public class MobGraveyardZombie extends BestiaryMob implements RegionPopulator {
     }
 
     @Override
-    public Material getDisplayItem() {
-        return Material.ZOMBIE_HEAD;
-    }
-
-    @Override
-    public String getTexture() {
-        return "";
+    public GUIMaterial getGuiMaterial() {
+        return new GUIMaterial(Material.ZOMBIE_HEAD);
     }
 
     @Override

@@ -11,6 +11,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
@@ -124,17 +125,18 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
                     public ItemStack.Builder getItem(HypixelPlayer p) {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
                         ArrayList<String> lore = new ArrayList<>();
+                        GUIMaterial guiMaterial = bestiaryEntry.getGuiMaterial();
 
                         player.getBestiaryData().getMobDisplay(lore, kills, mob, bestiaryEntry);
 
                         lore.add("§eClick to view!");
 
-                        if (bestiaryEntry.getMaterial() == Material.PLAYER_HEAD) {
+                        if (guiMaterial.hasTexture()) {
                             return ItemStackCreator.getStackHead("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                                    bestiaryEntry.getTexture(), 1, lore);
+                                    guiMaterial.texture(), 1, lore);
                         } else {
                             return ItemStackCreator.getStack("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                                    bestiaryEntry.getMaterial(), 1, lore);
+                                    guiMaterial.material(), 1, lore);
                         }
                     }
                 });

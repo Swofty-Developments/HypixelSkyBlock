@@ -12,6 +12,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
@@ -66,17 +67,18 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ArrayList<String> lore = new ArrayList<>();
                 BestiaryMob mob = bestiaryEntry.getMobs().getFirst();
+                GUIMaterial guiMaterial = bestiaryEntry.getGuiMaterial();
                 int kills = ((SkyBlockPlayer) getPlayer()).getBestiaryData().getAmount(bestiaryEntry.getMobs());
                 int tier = bestiaryData.getCurrentBestiaryTier(mob, kills);
 
                 player.getBestiaryData().getMobDisplay(lore, kills, mob, bestiaryEntry);
 
-                if (bestiaryEntry.getMaterial() == Material.PLAYER_HEAD) {
+                if (guiMaterial.hasTexture()) {
                     return ItemStackCreator.getStackHead("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                            bestiaryEntry.getTexture(), 1, lore);
+                            guiMaterial.texture(), 1, lore);
                 } else {
                     return ItemStackCreator.getStack("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                            bestiaryEntry.getMaterial(), 1, lore);
+                            guiMaterial.material(), 1, lore);
                 }
             }
         });
@@ -88,6 +90,7 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
 
         for (int i = 0; i < bestiaryMobs.size() && i < chosenSlots.length; i++) {
             BestiaryMob mob = bestiaryMobs.get(i);
+            GUIMaterial guiMaterial = mob.getGuiMaterial();
             int slot = chosenSlots[i];
 
             set(new GUIItem(slot) {
@@ -161,10 +164,10 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
 
                     lore.removeLast();
 
-                    if (mob.getDisplayItem() == Material.PLAYER_HEAD) {
-                        return ItemStackCreator.getStackHead("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), mob.getTexture(), 1, lore);
+                    if (guiMaterial.hasTexture()) {
+                        return ItemStackCreator.getStackHead("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), guiMaterial.texture(), 1, lore);
                     } else {
-                        return ItemStackCreator.getStack("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), bestiaryEntry.getMaterial(), 1, lore);
+                        return ItemStackCreator.getStack("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), guiMaterial.material(), 1, lore);
                     }
                 }
             });
