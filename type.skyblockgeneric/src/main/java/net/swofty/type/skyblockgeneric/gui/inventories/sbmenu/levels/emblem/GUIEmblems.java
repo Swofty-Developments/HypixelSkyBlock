@@ -7,6 +7,7 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockEmblems;
@@ -42,7 +43,7 @@ public class GUIEmblems extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     String displayName = emblem.toString();
-                    Material material = emblem.getDisplayMaterial();
+                    GUIMaterial guiMaterial = emblem.getGuiMaterial();
                     ArrayList<String> description = new ArrayList<>(emblem.getDescription());
 
                     ArrayList<String> lore = new ArrayList<>(Arrays.asList(
@@ -53,7 +54,11 @@ public class GUIEmblems extends HypixelInventoryGUI {
                     lore.add(" ");
                     lore.add("§eClick to view!");
 
-                    return ItemStackCreator.getStack("§a" + displayName, material, 1, lore);
+                    if (guiMaterial.hasTexture()) {
+                        return ItemStackCreator.getStackHead("§a" + displayName, guiMaterial.texture(), 1, lore);
+                    } else {
+                        return ItemStackCreator.getStack("§a" + displayName, guiMaterial.material(), 1, lore);
+                    }
                 }
             });
         });

@@ -10,6 +10,7 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
@@ -122,13 +123,8 @@ public class MobGraveyardZombieVillager extends BestiaryMob implements RegionPop
     }
 
     @Override
-    public Material getDisplayItem() {
-        return Material.PLAYER_HEAD;
-    }
-
-    @Override
-    public String getTexture() {
-        return "69198f410a10f99314aa0fbe9a3db10697bbc1c011f019507d96673c64217f5a";
+    public GUIMaterial getGuiMaterial() {
+        return new GUIMaterial("69198f410a10f99314aa0fbe9a3db10697bbc1c011f019507d96673c64217f5a");
     }
 
     @Override

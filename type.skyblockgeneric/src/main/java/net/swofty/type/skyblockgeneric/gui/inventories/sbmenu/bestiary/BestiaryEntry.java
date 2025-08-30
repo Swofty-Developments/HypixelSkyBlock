@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary;
 
 import net.minestom.server.item.Material;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 
 import java.util.List;
@@ -8,8 +9,7 @@ import java.util.List;
 public interface BestiaryEntry {
     String getName();
     String getDescription();
-    Material getMaterial();
-    String getTexture();
+    GUIMaterial getGuiMaterial();
     List<BestiaryMob> getMobs();
 }
 

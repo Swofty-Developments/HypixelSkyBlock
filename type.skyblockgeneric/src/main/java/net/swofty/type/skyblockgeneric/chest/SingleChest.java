@@ -5,13 +5,14 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class SingleChest implements Chest {
 
-    private static final Tag<List<ItemStack>> ITEMS_TAG = Tag.ItemStack("configuration/skyblock/items").list();
+    private static final Tag<@NotNull List<ItemStack>> ITEMS_TAG = Tag.ItemStack("configuration/skyblock/items").list();
 
     private final Instance instance;
     private final Point position;
