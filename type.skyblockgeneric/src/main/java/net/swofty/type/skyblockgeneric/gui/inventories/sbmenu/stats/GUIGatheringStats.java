@@ -103,30 +103,21 @@ public class GUIGatheringStats extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStatistic statistic = ItemStatistic.MINING_SPREAD;
                 double value = player.getStatistics().allStatistics().getOverall(statistic);
-                List<String> lore = new ArrayList<>(
-                        value == 0D ?
-                                List.of(
-                                        "§7§cDisabled by: §fPrivate Island",
-                                        " ",
-                                        "§7Mining Spread is the chance to",
-                                        "§7automatically mine adjacent blocks",
-                                        "§7Blocks, Ores, and",
-                                        "§7Dwarven Metals.",
-                                        " "
-                                ) :
-                                List.of(
-                                        "§7§cDisabled by: §fPrivate Island",
-                                        " ",
-                                        "§7Mining Spread is the chance to",
-                                        "§7automatically mine adjacent blocks",
-                                        "§7Blocks, Ores, and",
-                                        "§7Dwarven Metals.",
-                                        " ",
-                                        "§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.commaify(value) + statistic.getSymbol(),
-                                        "§7Stat Cap: " + statistic.getDisplayColor() + StringUtility.commaify(10000) + statistic.getSymbol(),
-                                        " "
-                                )
-                );
+                List<String> lore = new ArrayList<>();
+
+                lore.add("§7§cDisabled by: §fPrivate Island");
+                lore.add(" ");
+                lore.add("§7Mining Spread is the chance to");
+                lore.add("§7automatically mine adjacent blocks");
+                lore.add("§7Blocks, Ores, and");
+                lore.add("§7Dwarven Metals.");
+                lore.add(" ");
+
+                if (value != 0D) {
+                    lore.add("§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.commaify(value) + statistic.getSymbol());
+                    lore.add("§7Stat Cap: " + statistic.getDisplayColor() + StringUtility.commaify(10000) + statistic.getSymbol());
+                    lore.add(" ");
+                }
 
                 addFormateNumberLore(value, "block", statistic, lore);
 
@@ -196,10 +187,7 @@ public class GUIGatheringStats extends HypixelInventoryGUI {
                 lore.add("§eClick to view!");
                 return ItemStackCreator.getStackHead(StringUtility.getFormatedStatistic(statistic) + " §f" +
                                 StringUtility.decimalify(value, 1),
-                        new PlayerSkin(
-                                "ewogICJ0aW1lc3RhbXAiIDogMTYyNDk3OTI3NDk3OSwKICAicHJvZmlsZUlkIiA6ICJiNjM2OWQ0MzMwNTU0NGIzOWE5OTBhODYyNWY5MmEwNSIsCiAgInByb2ZpbGVOYW1lIiA6ICJCb2JpbmhvXyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9kODg2ZTBmNDExODViMThhM2FmZDg5NDg4ZDJlZTRjYWEwNzM1MDA5MjQ3Y2NjZjAzOWNlZDZhZWQ3NTJmZjFhIgogICAgfQogIH0KfQ==",
-                                "kIeN2GgeBNMP+/2aHijXKT2nGSxi5L5fD79GQzL/Gn7fBI8HexuVG4ttz74xfuow0Aq/4C5A+f66QGHrvqNTreLn6I1NqI9cnvx0cgpBKJGum7i6u60jSyDBAoc9rjwBY40mlSjwAyC41n7/Y5/QolS2u+Ofo35vtidSIwqHha+9jCL8FlwVjKnD3nP+cXLDFXVbfCjjdIZGsWl9viup23cQGnGVNh5eWsl3r6DA+cMoU4NKebICwB6bSsOlu2wj2WzfFAhsbL9DFpVaMvH7U8Rrb9lavG97yel01h1w/uBSWF+qaMPRZtjq56IjSRprG2WVEO3SqLs2b5LJ04qbsRW4UJ9vEfwTjlh1CINFhQZ7BwqlLuNv0RgUaCq5gqr5kk0Pit8R5cbEyvAa6w6L2V0XbPi8kjTVvdiep2U7FVwNLCaxFVxEq1nSGE3mkfUbxYhp9CCEBtA9im+hlLnPFzV7e7MfW6GzBbo+o1ELwpfFHWZfwRflSmi8B56O8fsNHEm8kXmwwt5WAouSLVhmB3+qGOYDqxJf19VRHK+KRJ+0XBCt+3PCJ1Mk7vh0EqMWsWQUZlHAl08cpOUR/IIphWuuqHilL2Dy86pNnSKCKkZBE6U3EASZegdpRJjsdxyk6glw575RPnts+4qkVE9o4TbwttnK6BDzTXyeV5KIPro="
-                        ), 1, lore
+                        "d886e0f41185b18a3afd89488d2ee4caa0735009247cccf039ced6aed752ff1a", 1, lore
                 );
 
             }
@@ -233,10 +221,7 @@ public class GUIGatheringStats extends HypixelInventoryGUI {
                 lore.add("§eClick to view!");
                 return ItemStackCreator.getStackHead(StringUtility.getFormatedStatistic(statistic) + " §f" +
                                 StringUtility.decimalify(value, 1),
-                        new PlayerSkin(
-                                "ewogICJ0aW1lc3RhbXAiIDogMTcwNjczNTY3MTQ2OSwKICAicHJvZmlsZUlkIiA6ICI2NTk0YzdiMTExOWE0Njc3ODc0Y2ZmOWNlMzM3NzYxOSIsCiAgInByb2ZpbGVOYW1lIiA6ICJNYXJzaG1lbGxvMjIiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjczNTc5NTc1Y2E4OGIzYThhZmUxZWQxODkwN2IzMTI1ZmUwOTg3YjAyYTg4ZWYwZThhMDEwODdjM2QwMjRjNCIKICAgIH0KICB9Cn0=",
-                                "t/ckqd8i3jF6GLH6i7MxxNvCArtdJeTcVB+KNhGkK1saTDLXPWpRzMYD3yzsT5n2696Z3kki1V/89Acx/mP02EZvspjUj5ShDf5yKZA/rnKqkM9T6j06SVb2VOqWAV0AiOY/BiIY5iMXXP3KNO8cymZlRVMl4gN2bSt0KZ+1bjGIr6Sjd1ulTqMtCJIj9Zd3XJtWULu/XEC/oM2FJmJRFE1Uridei6VxjUhwy3KN+Sm4EqeEPX4afJk1X0cUhI/OrDuTj0vQQgFbHW8Rqr/S/Cg+AJTu6poStEnnzbQ0Vf+SpOoossIr2QJRc03K88xZBpUUDnyTqVCs5RHCAcmftGqKfq/KaCph4QHbgnbJf/iYJ2WzmIadgW/nxqnaanmhIdHhlEQV256vUl4MiFwpYSqlHJ7HgiaJ94fcnNaHa8U9K6sN5LHb10bZL4skf2Js/yobfX5xzxg9LIjDgt3digu61ouQJQIFLz9WkwRSwOALlWDar8MyPJJOSyX36AH3FpLAx88Ut4IlN6W4WQOdqQnTPtQHtO7/jRRmvYBz5VGGjdFB32zWNMaK1nLnC8Eflt3PzX9BY9QLaZp+qzYV6Mq4B2bovI5QNooitUAqSacFfhQWIs0aaE46V9g30lU4pKmMbuUEFh6D4wmPXIFDsqIzCT6A8b8A+EiCaOGXz3Q="
-                        ), 1, lore
+                        "b73579575ca88b3a8afe1ed18907b3125fe0987b02a88ef0e8a01087c3d024c4", 1, lore
                 );
             }
         });
@@ -270,10 +255,7 @@ public class GUIGatheringStats extends HypixelInventoryGUI {
                 lore.add("§eClick to view!");
                 return ItemStackCreator.getStackHead(StringUtility.getFormatedStatistic(statistic) + " §f" +
                                 StringUtility.decimalify(value, 1),
-                        new PlayerSkin(
-                                "ewogICJ0aW1lc3RhbXAiIDogMTcwNjczNTY3MTQ2OSwKICAicHJvZmlsZUlkIiA6ICI2NTk0YzdiMTExOWE0Njc3ODc0Y2ZmOWNlMzM3NzYxOSIsCiAgInByb2ZpbGVOYW1lIiA6ICJNYXJzaG1lbGxvMjIiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjczNTc5NTc1Y2E4OGIzYThhZmUxZWQxODkwN2IzMTI1ZmUwOTg3YjAyYTg4ZWYwZThhMDEwODdjM2QwMjRjNCIKICAgIH0KICB9Cn0=",
-                                "t/ckqd8i3jF6GLH6i7MxxNvCArtdJeTcVB+KNhGkK1saTDLXPWpRzMYD3yzsT5n2696Z3kki1V/89Acx/mP02EZvspjUj5ShDf5yKZA/rnKqkM9T6j06SVb2VOqWAV0AiOY/BiIY5iMXXP3KNO8cymZlRVMl4gN2bSt0KZ+1bjGIr6Sjd1ulTqMtCJIj9Zd3XJtWULu/XEC/oM2FJmJRFE1Uridei6VxjUhwy3KN+Sm4EqeEPX4afJk1X0cUhI/OrDuTj0vQQgFbHW8Rqr/S/Cg+AJTu6poStEnnzbQ0Vf+SpOoossIr2QJRc03K88xZBpUUDnyTqVCs5RHCAcmftGqKfq/KaCph4QHbgnbJf/iYJ2WzmIadgW/nxqnaanmhIdHhlEQV256vUl4MiFwpYSqlHJ7HgiaJ94fcnNaHa8U9K6sN5LHb10bZL4skf2Js/yobfX5xzxg9LIjDgt3digu61ouQJQIFLz9WkwRSwOALlWDar8MyPJJOSyX36AH3FpLAx88Ut4IlN6W4WQOdqQnTPtQHtO7/jRRmvYBz5VGGjdFB32zWNMaK1nLnC8Eflt3PzX9BY9QLaZp+qzYV6Mq4B2bovI5QNooitUAqSacFfhQWIs0aaE46V9g30lU4pKmMbuUEFh6D4wmPXIFDsqIzCT6A8b8A+EiCaOGXz3Q="
-                        ), 1, lore
+                        "b73579575ca88b3a8afe1ed18907b3125fe0987b02a88ef0e8a01087c3d024c4", 1, lore
                 );
             }
         });
@@ -381,10 +363,7 @@ public class GUIGatheringStats extends HypixelInventoryGUI {
                 lore.add("§eClick to view!");
                 return ItemStackCreator.getStackHead(StringUtility.getFormatedStatistic(statistic) + " §f" +
                                 StringUtility.decimalify(value, 1),
-                        new PlayerSkin(
-                                "ewogICJ0aW1lc3RhbXAiIDogMTcwNjczNTY3MTQ2OSwKICAicHJvZmlsZUlkIiA6ICI2NTk0YzdiMTExOWE0Njc3ODc0Y2ZmOWNlMzM3NzYxOSIsCiAgInByb2ZpbGVOYW1lIiA6ICJNYXJzaG1lbGxvMjIiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjczNTc5NTc1Y2E4OGIzYThhZmUxZWQxODkwN2IzMTI1ZmUwOTg3YjAyYTg4ZWYwZThhMDEwODdjM2QwMjRjNCIKICAgIH0KICB9Cn0=",
-                                "t/ckqd8i3jF6GLH6i7MxxNvCArtdJeTcVB+KNhGkK1saTDLXPWpRzMYD3yzsT5n2696Z3kki1V/89Acx/mP02EZvspjUj5ShDf5yKZA/rnKqkM9T6j06SVb2VOqWAV0AiOY/BiIY5iMXXP3KNO8cymZlRVMl4gN2bSt0KZ+1bjGIr6Sjd1ulTqMtCJIj9Zd3XJtWULu/XEC/oM2FJmJRFE1Uridei6VxjUhwy3KN+Sm4EqeEPX4afJk1X0cUhI/OrDuTj0vQQgFbHW8Rqr/S/Cg+AJTu6poStEnnzbQ0Vf+SpOoossIr2QJRc03K88xZBpUUDnyTqVCs5RHCAcmftGqKfq/KaCph4QHbgnbJf/iYJ2WzmIadgW/nxqnaanmhIdHhlEQV256vUl4MiFwpYSqlHJ7HgiaJ94fcnNaHa8U9K6sN5LHb10bZL4skf2Js/yobfX5xzxg9LIjDgt3digu61ouQJQIFLz9WkwRSwOALlWDar8MyPJJOSyX36AH3FpLAx88Ut4IlN6W4WQOdqQnTPtQHtO7/jRRmvYBz5VGGjdFB32zWNMaK1nLnC8Eflt3PzX9BY9QLaZp+qzYV6Mq4B2bovI5QNooitUAqSacFfhQWIs0aaE46V9g30lU4pKmMbuUEFh6D4wmPXIFDsqIzCT6A8b8A+EiCaOGXz3Q="
-                        ), 1, lore
+                        "b73579575ca88b3a8afe1ed18907b3125fe0987b02a88ef0e8a01087c3d024c4", 1, lore
                 );
             }
         });
@@ -416,10 +395,7 @@ public class GUIGatheringStats extends HypixelInventoryGUI {
                 lore.add("§eClick to view!");
                 return ItemStackCreator.getStackHead(StringUtility.getFormatedStatistic(statistic) + " §f" +
                                 StringUtility.decimalify(value, 1),
-                        new PlayerSkin(
-                                "ewogICJ0aW1lc3RhbXAiIDogMTcyMDAyMjQwNDU0MiwKICAicHJvZmlsZUlkIiA6ICIxOWY1YzkwMWEzMjQ0YzVmYTM4NThjZGVhNDk5ZWMwYSIsCiAgInByb2ZpbGVOYW1lIiA6ICJzb2RpdW16aXAiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGU0NGUyYThkZmY5MGY1YjAwNWU3NmU2ZjVkYjdjMTJhZTU5Y2JiYzU2ZDhiYzgwNTBmM2UzZGJmMGMzYjczNCIsCiAgICAgICJtZXRhZGF0YSIgOiB7CiAgICAgICAgIm1vZGVsIiA6ICJzbGltIgogICAgICB9CiAgICB9CiAgfQp9",
-                                "gFg1kS04ic8Xf7iSlyW+5ekjBvUXzNPPEX9oHNQHe4WHqGobbYGdyOtl2KIzoKgnWzxJEnNYK4uLMjfVgdQwVCvm+qGtJeyJA9cNGqnyEeeKWstsnHBpQzUNtIxbMbXlgVjKTXY0NtpML6YZt9uc4JR5t4YidjB+KgC9k0Uh8Ew+oRbNcdZAKj2EOmeKBGhPtFz9tzl/xXgzKGy2SJ6LBm7rZXRLig0D/4fCs210deKxL4ztE6SpqhmmRex6U4WC+fq9U50cF5EyiYceQRGx6Dpj0W7yHh72yMoZcVNRZimUzcm/qcv/4h1Ar8mjZgJ+OWpE3JvhvDXTyFXOJLhDTmgQZRbjyG0HyuircfmVT+9TIT5iximWrr6SgldASFkJWnjGasywJ0eCHofeRJXRTD0eTkYvLWmETkxAyYu1z5EcSc3aAgJFaEo4pVBmC+q295WZ3cckCLmJcwuFNMq3pa9tUJWT/mOJuDIVRjMwItYSFHZQeAyaTG3OMXwkifhXMXs+LxbPWgtpdBO8T1SAKakpfelIAOZn/tV6Z3VnKFkaVRljuLE1TgziZ9SrA6Ru30nC3wka49aeEnA2C9jg4Fxx6xPz9WyyrdXPwuRxqESKgdM4OLwLmvfzQsosnL2rpshWzoxYqsc0ZRSy9DkxI+hmhVDcszU0+LJVk1sb++U="
-                        ), 1, lore
+                        "4e44e2a8dff90f5b005e76e6f5db7c12ae59cbbc56d8bc8050f3e3dbf0c3b734", 1, lore
                 );
             }
         });
@@ -451,10 +427,7 @@ public class GUIGatheringStats extends HypixelInventoryGUI {
                 lore.add("§eClick to view!");
                 return ItemStackCreator.getStackHead(StringUtility.getFormatedStatistic(statistic) + " §f" +
                                 StringUtility.decimalify(value, 1),
-                        new PlayerSkin(
-                                "ewogICJ0aW1lc3RhbXAiIDogMTY2NjUzNzY0NzA3MiwKICAicHJvZmlsZUlkIiA6ICIxZjEyNTNhYTVkYTQ0ZjU5YWU1YWI1NmFhZjRlNTYxNyIsCiAgInByb2ZpbGVOYW1lIiA6ICJOb3RNaUt5IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzIyMGVlNzc0MWZmMWI5NThkYmI5ZmE3Y2RkYWQ5YzNjY2U5MzM3M2Y0NzBmOWI4MzRkYTAyZGE2N2M4MjAyYTQiCiAgICB9CiAgfQp9",
-                                "iMl8/xdyf13hH5HwEDmGK9Hmc9ZcDzA5ZjwpQy6/6N6hFMaAdqigfQo+umG5DVYM3tfElNsaElGG7ufb0BZRR692K5A7vDAJ7tv9P/+98d/thubdpOrR2V//5BWtmGbEQGmPpcdml05Z0jAElQ1WoC14+yybO0qGIS5k8Qvbly1KsBRbuyp3S6etuD15JTOjzAzi+/NP+7ao+4lKh4lefksNFbVGs03wwZIJAR5pPM46xFIBAEUa78MZCBb/8DSxIK0UBYYLb0PQp+gHwOu2mGM1NLNXaVdfTWI1a9AmgdGNB1ahbVIxP0J4JoGVAtPhRKvUfx2VBQliQnQMlmSNkqYstFNxyqO+efrR8LZQeiDWQVSs7pytjzGHaz1VKuRmEb5w5vVsHBpDwHZS1OrK1si3u5SWuV2WnjhOOV6YAfuJK02+0ID0S+r01hPuLs31RyuTExda7qdXZLgMUaj6URZpGFW+oum4+x/1fDq4typw3LXv2MIeA7lxM2MyHmNS6XCuVBcNdtBkLt9H2795TT4DWi5sMHLK8x39e4KIrK2wyaHAx+svQv5IwCh9puKenMZKtjqmziJtIhXtKp/zse6ZOiqMagokedBH2wv33RvfFrBpAEJVQfuounrU9Uvv2HFtX1o4h3d/1/iLae7l/wotkX7zeO1UQe4P6RvjeTY="
-                        ), 1, lore
+                        "220ee7741ff1b958dbb9fa7cddad9c3cce93373f470f9b834da02da67c8202a4", 1, lore
                 );
             }
         });

@@ -98,22 +98,17 @@ public class GUIMiscStats extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStatistic statistic = ItemStatistic.MAGIC_FIND;
                 double value = player.getStatistics().allStatistics().getOverall(statistic);
-                List<String> lore = new ArrayList<>(
-                        value == 0D ?
-                                List.of(
-                                        "§7Magic Find increases how many rare",
-                                        "§7items you find.",
-                                        " "
-                                ) :
-                                List.of(
-                                        "§7Magic Find increases how many rare",
-                                        "§7items you find.",
-                                        " ",
-                                        "§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.commaify(value) + statistic.getSymbol(),
-                                        "§7Stat Cap: " + statistic.getDisplayColor() + 900 + statistic.getSymbol() + " " + statistic.getDisplayName(),
-                                        " "
-                                )
-                );
+                List<String> lore = new ArrayList<>();
+
+                lore.add("§7Magic Find increases how many rare");
+                lore.add("§7items you find.");
+                lore.add(" ");
+
+                if (value != 0D) {
+                    lore.add("§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.commaify(value) + statistic.getSymbol());
+                    lore.add("§7Stat Cap: " + statistic.getDisplayColor() + 900 + statistic.getSymbol() + " " + statistic.getDisplayName());
+                    lore.add(" ");
+                }
 
                 if (value == 0D) lore.add("§8You have none of this stat!");
                 lore.add("§eClick to view!");
@@ -147,10 +142,7 @@ public class GUIMiscStats extends HypixelInventoryGUI {
                 lore.add("§eClick to view!");
                 return ItemStackCreator.getStackHead(StringUtility.getFormatedStatistic(statistic) + " §f" +
                                 StringUtility.decimalify(value, 1),
-                        new PlayerSkin(
-                                "ewogICJ0aW1lc3RhbXAiIDogMTcyMDAyMjMyOTU2MSwKICAicHJvZmlsZUlkIiA6ICJjYmYxNGIxMGJhNWU0NzgwYjIyNmFiNmQzOTUxODk4YiIsCiAgInByb2ZpbGVOYW1lIiA6ICJFZ2d5QnV0dG9uMjQxMSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9iYzc4MzE0MjU1ZDg4NjRhNzUzZmU5NTYyMjU2NDA0NmYwZGVlMmE4MmM2ZTRlMmU3ZjQ1MmZjYjk1YWYzMThjIgogICAgfQogIH0KfQ==",
-                                "H9MjwLvSOb7JcSEZB78wegmQU1m9Fl6IOTXBC9Anm6Nbb7o8/8u/xkRWviUlI+pJyUzCEFL6bZG7qFNBXvO7SVvJMweu4stwg26FOKcDxcUkwNsPztxPmE/xeXuFZzER+mUmXK2QJCMk3oVVWvMGF68/MpLuHjTB2iu6HB5CACBya1+0QKf6oSdfncezgwsfE29U76W9gx0Nb3OCZfS4+XobfPg6Gv/u2FUIaxj3ETa2kRJ6oncqr1M7vvdRHOS84Iw1RI6TODYxcIgiWyQ6CUKWv5w9jh87hAnn3psLcyWBazAJFsdp1wekqrXaG56xCrwTNKpdLcaCNQ3gt92bo0F26UeJZt1f6h2cR5GHz5r+h8Ji8IMAL80C49JYitQZH+nfr9sMX2KxsIneYBfpNYY5Im+7bymtquu02irqrL2Bjgunat7dBYvHo0tWEWGPpspMtOpiDma1s5PfCaAsu0C55jtpKtoKVww/NV3HtHCMqcIPMI3I1VkdsO3ktWJdeOsKjmjgTuRpaD301UjvDSL33TlTz7XOtMWKkc0+UJqYA42PTd1aOyK4R/ZV6IcCGAPzXyg3zaMpXNOfJyyt0ADWRyWzKFPIkB8Rekqlv2egOYk90PryzsdTUzkAb0GHNhOYthj3kFwkFGDWGC51UNfd7iKTbpoReXW5ya5lWaE="
-                        ), 1, lore
+                        "bc78314255d8864a753fe95622564046f0dee2a82c6e4e2e7f452fcb95af318c", 1, lore
                 );
             }
         });

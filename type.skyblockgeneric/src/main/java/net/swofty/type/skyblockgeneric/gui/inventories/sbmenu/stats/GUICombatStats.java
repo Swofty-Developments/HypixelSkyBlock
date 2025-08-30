@@ -247,26 +247,22 @@ public class GUICombatStats extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStatistic statistic = ItemStatistic.BONUS_ATTACK_SPEED;
                 double value = player.getStatistics().allStatistics().getOverall(statistic);
-                List<String> lore = new ArrayList<>(
-                        value == 0D ?
-                                List.of(
-                                        "§7Attack Speed decreases the time",
-                                        "§7between hits on your opponent.",
-                                        " ",
-                                        "§7You attack at a normal rate.",
-                                        " "
-                                ) :
-                                List.of(
-                                        "§7Attack Speed decreases the time",
-                                        "§7between hits on your opponent.",
-                                        " ",
-                                        "§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.commaify(value) + statistic.getSymbol(),
-                                        "§7Stat Cap:" + statistic.getDisplayColor() + "100" + statistic.getSymbol() + " " + statistic.getDisplayName(),
-                                        " ",
-                                        "§7You now attack §a" + StringUtility.commaify(value) + "§7faster!",
-                                        " "
-                                )
-                );
+                List<String> lore = new ArrayList<>();
+
+                lore.add("§7Attack Speed decreases the time");
+                lore.add("§7between hits on your opponent.");
+                lore.add(" ");
+
+                if (value == 0D) {
+                    lore.add("§7You attack at a normal rate.");
+                    lore.add(" ");
+                } else {
+                    lore.add("§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.commaify(value) + statistic.getSymbol());
+                    lore.add("§7Stat Cap:" + statistic.getDisplayColor() + "100" + statistic.getSymbol() + " " + statistic.getDisplayName());
+                    lore.add(" ");
+                    lore.add("§7You now attack §a" + StringUtility.commaify(value) + "§7 faster!");
+                    lore.add(" ");
+                }
 
                 if (value == 0D) lore.add("§8You have none of this stat!");
                 lore.add("§eClick to view!");
@@ -349,32 +345,23 @@ public class GUICombatStats extends HypixelInventoryGUI {
                 double value = player.getStatistics().allStatistics().getOverall(statistic);
                 int extraStrikes = (int) (value / 100);
                 double chanceForOneMore = value % 100;
-                List<String> lore = new ArrayList<>(
-                        value == 0D ?
-                                List.of(
-                                        "§7Ferocity grants percent chance to",
-                                        "§7double-strike enemies.Increments of",
-                                        "§7100 increases the base number of",
-                                        "§7strikes.",
-                                        " ",
-                                        "§7Base extra strikes: " + statistic.getDisplayColor() + StringUtility.commaify(extraStrikes),
-                                        "§7Chance for 1 more: " + statistic.getDisplayColor() + StringUtility.commaify(chanceForOneMore) + "%",
-                                        " "
-                                ) :
-                                List.of(
-                                        "§7Ferocity grants percent chance to",
-                                        "§7double-strike enemies.Increments of",
-                                        "§7100 increases the base number of",
-                                        "§7strikes.",
-                                        " ",
-                                        "§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.commaify(value) + statistic.getSymbol(),
-                                        "§7Stat Cap:" + statistic.getDisplayColor() + "500" + statistic.getSymbol() + statistic.getDisplayName(),
-                                        " ",
-                                        "§7Base extra strikes: " + statistic.getDisplayColor() + StringUtility.commaify(extraStrikes),
-                                        "§7Chance for 1 more: " + statistic.getDisplayColor() + StringUtility.commaify(chanceForOneMore) + "%",
-                                        " "
-                                )
-                );
+                List<String> lore = new ArrayList<>();
+
+                lore.add("§7Ferocity grants percent chance to");
+                lore.add("§7double-strike enemies. Increments of");
+                lore.add("§7100 increases the base number of");
+                lore.add("§7strikes.");
+                lore.add(" ");
+
+                if (value != 0D) {
+                    lore.add("§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.commaify(value) + statistic.getSymbol());
+                    lore.add("§7Stat Cap:" + statistic.getDisplayColor() + "500" + statistic.getSymbol() + statistic.getDisplayName());
+                    lore.add(" ");
+                }
+
+                lore.add("§7Base extra strikes: " + statistic.getDisplayColor() + StringUtility.commaify(extraStrikes));
+                lore.add("§7Chance for 1 more: " + statistic.getDisplayColor() + StringUtility.commaify(chanceForOneMore) + "%");
+                lore.add(" ");
 
                 if (value == 0D) lore.add("§8You have none of this stat!");
                 lore.add("§eClick to view!");
@@ -437,24 +424,21 @@ public class GUICombatStats extends HypixelInventoryGUI {
                 ItemStatistic statistic = ItemStatistic.VITALITY;
                 double value = player.getStatistics().allStatistics().getOverall(statistic);
                 double bonus = value / 100D;
-                List<String> lore = new ArrayList<>(
-                        value == statistic.getBaseAdditiveValue() ?
-                                List.of(
-                                        "§7Vitality increases your incoming",
-                                        "§7healing, including health regen.",
-                                        " ",
-                                        "§8Heals you receive aren't modified.",
-                                        " "
-                                ) :
-                                List.of(
-                                        "§7Vitality increases your incoming",
-                                        "§7healing, including health regen.",
-                                        " ",
-                                        "§7All heals applied to you are multiplied by " + statistic.getDisplayColor() + StringUtility.decimalify(bonus, 2) + "x§7.",
-                                        " "
-                                )
+                List<String> lore = new ArrayList<>();
 
-                );
+                lore.add("§7Vitality increases your incoming");
+                lore.add("§7healing, including health regen.");
+                lore.add(" ");
+
+                if (value == statistic.getBaseAdditiveValue()) {
+                    lore.add("§8Heals you receive aren't modified.");
+                } else {
+                    lore.add("§7All heals applied to you are multiplied by "
+                            + statistic.getDisplayColor()
+                            + StringUtility.decimalify(bonus, 2) + "x§7.");
+                }
+
+                lore.add(" ");
 
                 if (value == 0D) lore.add("§8You have none of this stat!");
                 lore.add("§eClick to view!");
@@ -478,23 +462,20 @@ public class GUICombatStats extends HypixelInventoryGUI {
                 ItemStatistic statistic = ItemStatistic.MENDING;
                 double value = player.getStatistics().allStatistics().getOverall(statistic);
                 double bonus = value / 100D;
-                List<String> lore = new ArrayList<>(
-                        value == statistic.getBaseAdditiveValue() ?
-                                List.of(
-                                        "§7Mending increases your outgoing",
-                                        "§7healing.",
-                                        " ",
-                                        "§8Your heals aren't modified.",
-                                        " "
-                                ) :
-                                List.of(
-                                        "§7Mending increases your outgoing",
-                                        "§7healing.",
-                                        " ",
-                                        "§7All heals applied to you are multiplied by " + statistic.getDisplayColor() + StringUtility.decimalify(bonus, 2) + "x§7."
-                                )
+                List<String> lore = new ArrayList<>();
 
-                );
+                lore.add("§7Mending increases your outgoing");
+                lore.add("§7healing.");
+                lore.add(" ");
+
+                if (value == statistic.getBaseAdditiveValue()) {
+                    lore.add("§8Your heals aren't modified.");
+                    lore.add(" ");
+                } else {
+                    lore.add("§7All heals applied to you are multiplied by "
+                            + statistic.getDisplayColor()
+                            + StringUtility.decimalify(bonus, 2) + "x§7.");
+                }
 
                 if (value == 0D) lore.add("§8You have none of this stat!");
                 lore.add("§eClick to view!");
@@ -517,28 +498,22 @@ public class GUICombatStats extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStatistic statistic = ItemStatistic.SWING_RANGE;
                 double value = player.getStatistics().allStatistics().getOverall(statistic);
-                List<String> lore = new ArrayList<>(
-                        value == statistic.getBaseAdditiveValue() ?
-                                List.of(
-                                        "§7Increases your melee hit range.",
-                                        " ",
-                                        "§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.decimalify(value, 2) + statistic.getSymbol(),
-                                        "§7Stat Cap: " + statistic.getDisplayColor() + "15" + statistic.getSymbol() + " " + statistic.getDisplayName(),
-                                        " ",
-                                        "§8Your swing range isn't modified.",
-                                        " "
-                                ) :
-                                List.of(
-                                        "§7Increases your melee hit range.",
-                                        " ",
-                                        "§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.decimalify(value, 2) + statistic.getSymbol(),
-                                        "§7Stat Cap: " + statistic.getDisplayColor() + "15" + statistic.getSymbol() + " " + statistic.getDisplayName(),
-                                        " ",
-                                        "§7Your swing range is increased to " + StringUtility.decimalify(value, 2) + " §7blocks.",
-                                        " "
-                                )
+                List<String> lore = new ArrayList<>();
 
-                );
+                lore.add("§7Increases your melee hit range.");
+                lore.add(" ");
+                lore.add("§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.decimalify(value, 2) + statistic.getSymbol());
+                lore.add("§7Stat Cap: " + statistic.getDisplayColor() + "15" + statistic.getSymbol() + " " + statistic.getDisplayName());
+                lore.add(" ");
+
+                if (value == statistic.getBaseAdditiveValue()) {
+                    lore.add("§8Your swing range isn't modified.");
+                } else {
+                    lore.add("§7Your swing range is increased to "
+                            + StringUtility.decimalify(value, 2) + " §7blocks.");
+                }
+
+                lore.add(" ");
 
                 if (value == 0D) lore.add("§8You have none of this stat!");
                 lore.add("§eClick to view!");

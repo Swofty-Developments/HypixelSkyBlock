@@ -78,23 +78,20 @@ public class GUIWisdomStats extends HypixelInventoryGUI {
                     ItemStatistic statistic = entry.getValue();
                     double value = player.getStatistics().allStatistics().getOverall(statistic);
                     double multiplier = 1D + value / 100D;
-                    List<String> lore = new ArrayList<>(
-                            value == 0D ?
-                                    List.of(
-                                            "§7" + statistic.getDisplayName() + "increases how much",
-                                            "§7" + statistic.getDisplayName().split(" ")[0] + "Skill XP that you gain.",
-                                            " ",
-                                            "§8You aren't learning any faster, yet!",
-                                            " "
-                                    ) :
-                                    List.of(
-                                            "§7" + statistic.getDisplayName() + "increases how much",
-                                            "§7" + statistic.getDisplayName().split(" ")[0] + "Skill XP that you gain.",
-                                            " ",
-                                            "§7XP Multiplier: " + statistic.getDisplayColor() + StringUtility.decimalify(multiplier, 2) + "x",
-                                            " "
-                                    )
-                    );
+                    List<String> lore = new ArrayList<>();
+
+                    lore.add("§7" + statistic.getDisplayName() + " increases how much");
+                    lore.add("§7" + statistic.getDisplayName().split(" ")[0] + " Skill XP that you gain.");
+                    lore.add(" ");
+
+                    if (value == 0D) {
+                        lore.add("§8You aren't learning any faster, yet!");
+                    } else {
+                        lore.add("§7XP Multiplier: " + statistic.getDisplayColor()
+                                + StringUtility.decimalify(multiplier, 2) + "x");
+                    }
+
+                    lore.add(" ");
 
                     if (value == 0D) lore.add("§8You have none of this stat!");
                     lore.add("§eClick to view!");
