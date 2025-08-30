@@ -1,11 +1,9 @@
 package net.swofty.type.bedwarsgame.util;
 
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.Player;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.TooltipDisplay;
 
 import java.util.Arrays;
 
@@ -33,10 +31,6 @@ public class BedWarsInventoryManipulator {
 				.filter(stack -> stack.material() == material)
 				.mapToInt(ItemStack::amount)
 				.sum() >= amount;
-	}
-
-	public static ItemStack hideTooltip(ItemStack item) {
-		return item.with(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.EMPTY.withHideTooltip(true));
 	}
 
 	public static boolean canBeChested(Material m) {

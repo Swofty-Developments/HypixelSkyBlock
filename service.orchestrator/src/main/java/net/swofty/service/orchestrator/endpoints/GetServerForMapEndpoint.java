@@ -18,7 +18,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 
 	@Override
 	public GetServerForMapProtocolObject.GetServerForMapResponse onMessage(ServiceProxyRequest message, GetServerForMapProtocolObject.GetServerForMapMessage body) {
-		OrchestratorCache.GameServerState chosen = OrchestratorCache.pickServerForMap(body.type(), body.map(), body.neededSlots());
+	OrchestratorCache.GameServerState chosen = OrchestratorCache.pickServerForMap(body.type(), body.map(), body.mode(), body.neededSlots());
 		if (chosen == null) return new GetServerForMapProtocolObject.GetServerForMapResponse(null);
 		UnderstandableProxyServer proxy = new UnderstandableProxyServer(
 				chosen.shortName(),

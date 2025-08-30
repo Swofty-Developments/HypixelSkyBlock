@@ -22,6 +22,7 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
                 json.put("shortName", value.shortName);
                 json.put("type", value.type.name());
                 json.put("maps", new JSONArray(value.maps));
+                if (value.mode != null) json.put("mode", value.mode);
                 json.put("maxPlayers", value.maxPlayers);
                 json.put("onlinePlayers", value.onlinePlayers);
                 return json.toString();
@@ -36,14 +37,15 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
                 List<String> maps = new ArrayList<>();
                 JSONArray arr = obj.getJSONArray("maps");
                 for (int i = 0; i < arr.length(); i++) maps.add(arr.getString(i));
+                String mode = obj.has("mode") ? obj.getString("mode") : null;
                 int max = obj.getInt("maxPlayers");
                 int online = obj.getInt("onlinePlayers");
-                return new HeartbeatMessage(uuid, shortName, type, maps, max, online);
+                return new HeartbeatMessage(uuid, shortName, type, maps, mode, max, online);
             }
 
             @Override
             public HeartbeatMessage clone(HeartbeatMessage value) {
-                return new HeartbeatMessage(value.uuid, value.shortName, value.type, new ArrayList<>(value.maps), value.maxPlayers, value.onlinePlayers);
+                return new HeartbeatMessage(value.uuid, value.shortName, value.type, new ArrayList<>(value.maps), value.mode, value.maxPlayers, value.onlinePlayers);
             }
         };
     }
@@ -71,7 +73,7 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
         };
     }
 
-    public record HeartbeatMessage(UUID uuid, String shortName, ServerType type, List<String> maps, int maxPlayers, int onlinePlayers) { }
+    public record HeartbeatMessage(UUID uuid, String shortName, ServerType type, List<String> maps, String mode, int maxPlayers, int onlinePlayers) { }
 
     public record HeartbeatResponse(boolean ok) { }
 }

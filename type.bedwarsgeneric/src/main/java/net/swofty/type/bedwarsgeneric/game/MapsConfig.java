@@ -18,7 +18,7 @@ public class MapsConfig {
 
 		@Getter
 		public static class MapConfiguration {
-			private List<String> types;
+			private List<GameType> types;
 			private Map<String, TeamGeneratorConfig> generator;
 			private MapBounds bounds;
 			private List<MapTeam> teams;
@@ -60,7 +60,6 @@ public class MapsConfig {
 
 			@Getter
 			public static class GlobalGenerator {
-				private int delay;
 				private int amount;
 				private int max;
 				private List<Position> locations;

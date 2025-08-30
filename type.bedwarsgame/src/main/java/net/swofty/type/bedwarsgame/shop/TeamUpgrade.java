@@ -4,8 +4,10 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.component.TooltipDisplay;
 import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -14,6 +16,7 @@ import net.swofty.type.bedwarsgame.util.ColorUtil;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 public abstract class TeamUpgrade {
@@ -102,7 +105,7 @@ public abstract class TeamUpgrade {
 	public abstract void applyEffect(Game game, String teamName, int level);
 
 	public ItemStack getDisplayItem() {
-		return BedWarsInventoryManipulator.hideTooltip(displayItem);
+		return displayItem.with(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(false, Set.of()));
 	}
 
 }

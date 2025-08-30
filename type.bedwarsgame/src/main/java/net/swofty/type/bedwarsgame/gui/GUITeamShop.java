@@ -97,7 +97,7 @@ public class GUITeamShop extends HypixelInventoryGUI {
 						return;
 					}
 					if (!upgrade.hasEnoughCurrency(player, nextTier)) {
-						player.sendMini("<red>You don't have enough " + nextTier.getCurrency().getName() + "!</red");
+						player.sendMini("<red>You don't have enough " + nextTier.getCurrency().getName() + "!</red>");
 						playClickSound(player);
 						return;
 					}

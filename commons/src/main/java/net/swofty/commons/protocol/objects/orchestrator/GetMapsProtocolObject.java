@@ -19,18 +19,19 @@ public class GetMapsProtocolObject extends ProtocolObject
             public String serialize(GetMapsMessage value) {
                 JSONObject json = new JSONObject();
                 json.put("type", value.type.name());
+                if (value.mode != null) json.put("mode", value.mode);
                 return json.toString();
             }
 
             @Override
             public GetMapsMessage deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
-                return new GetMapsMessage(ServerType.valueOf(obj.getString("type")));
+                return new GetMapsMessage(ServerType.valueOf(obj.getString("type")), obj.has("mode") ? obj.getString("mode") : null);
             }
 
             @Override
             public GetMapsMessage clone(GetMapsMessage value) {
-                return new GetMapsMessage(value.type);
+                return new GetMapsMessage(value.type, value.mode);
             }
         };
     }
@@ -61,7 +62,7 @@ public class GetMapsProtocolObject extends ProtocolObject
         };
     }
 
-    public record GetMapsMessage(ServerType type) { }
+    public record GetMapsMessage(ServerType type, String mode) { }
 
     public record GetMapsResponse(List<String> maps) { }
 }

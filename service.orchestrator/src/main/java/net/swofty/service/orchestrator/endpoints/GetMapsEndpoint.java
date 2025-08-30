@@ -17,6 +17,7 @@ public class GetMapsEndpoint implements ServiceEndpoint
 
     @Override
     public GetMapsProtocolObject.GetMapsResponse onMessage(ServiceProxyRequest message, GetMapsProtocolObject.GetMapsMessage body) {
-        return new GetMapsProtocolObject.GetMapsResponse(OrchestratorCache.getMaps(body.type()).stream().sorted().toList());
+    var maps = OrchestratorCache.getMaps(body.type(), body.mode());
+        return new GetMapsProtocolObject.GetMapsResponse(maps.stream().sorted().toList());
     }
 }

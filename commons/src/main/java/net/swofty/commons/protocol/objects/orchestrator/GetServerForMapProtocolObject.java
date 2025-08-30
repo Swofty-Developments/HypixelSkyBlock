@@ -18,6 +18,7 @@ public class GetServerForMapProtocolObject extends ProtocolObject
 				JSONObject json = new JSONObject();
 				json.put("type", value.type.name());
 				json.put("map", value.map);
+				if (value.mode != null) json.put("mode", value.mode);
 				json.put("neededSlots", value.neededSlots);
 				return json.toString();
 			}
@@ -28,13 +29,14 @@ public class GetServerForMapProtocolObject extends ProtocolObject
 				return new GetServerForMapMessage(
 						ServerType.valueOf(obj.getString("type")),
 						obj.getString("map"),
+						obj.has("mode") ? obj.getString("mode") : null,
 						obj.getInt("neededSlots")
 				);
 			}
 
 			@Override
 			public GetServerForMapMessage clone(GetServerForMapMessage value) {
-				return new GetServerForMapMessage(value.type, value.map, value.neededSlots);
+				return new GetServerForMapMessage(value.type, value.map, value.mode, value.neededSlots);
 			}
 		};
 	}
@@ -62,7 +64,7 @@ public class GetServerForMapProtocolObject extends ProtocolObject
 		};
 	}
 
-	public record GetServerForMapMessage(ServerType type, String map, int neededSlots) {
+	public record GetServerForMapMessage(ServerType type, String map, String mode, int neededSlots) {
 	}
 
 	public record GetServerForMapResponse(UnderstandableProxyServer server) {

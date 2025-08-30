@@ -54,7 +54,7 @@ public class GUIMapSelection extends HypixelPaginatedGUI<String> {
 	protected PaginationList<String> fillPaged(HypixelPlayer player, PaginationList<String> paged) {
 		// fetch maps for this server type from orchestrator (blocking)
 		GetMapsProtocolObject.GetMapsResponse resp = (GetMapsProtocolObject.GetMapsResponse) new ProxyService(ServiceType.ORCHESTRATOR)
-				.handleRequest(new GetMapsProtocolObject.GetMapsMessage(ServerType.BEDWARS_GAME))
+				.handleRequest(new GetMapsProtocolObject.GetMapsMessage(ServerType.BEDWARS_GAME, type.name()))
 				.join();
 
 		paged.addAll(resp.maps());
@@ -82,7 +82,7 @@ public class GUIMapSelection extends HypixelPaginatedGUI<String> {
 				// ask orchestrator which server hosts this map, then transfer directly
 				var resp = (GetServerForMapProtocolObject.GetServerForMapResponse) new ProxyService(ServiceType.ORCHESTRATOR)
 						.handleRequest(new GetServerForMapProtocolObject.GetServerForMapMessage(
-								ServerType.BEDWARS_GAME, mapId, 1
+								ServerType.BEDWARS_GAME, mapId, type.name(), 1
 						))
 						.join();
 				if (resp != null && resp.server() != null) {

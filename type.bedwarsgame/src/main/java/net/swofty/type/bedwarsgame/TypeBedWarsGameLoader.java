@@ -31,6 +31,7 @@ import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.bedwarsgeneric.game.GameType;
 import net.swofty.type.bedwarsgeneric.game.MapsConfig;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItemHandler;
@@ -96,6 +97,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	private static InstanceManager instanceManager;
 	private static RegistryKey<@NotNull DimensionType> fullbrightDimension;
 	private static int nextMapIndex = 0;
+	private static List<MapsConfig.MapEntry> filteredMaps = new ArrayList<>();
 	private Gson gson;
 
 	public static Game getGameById(@NotNull String gameId) {
@@ -126,9 +128,9 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	}
 
 	private static synchronized MapsConfig.MapEntry nextMapEntry() {
-		if (mapsConfig == null || mapsConfig.getMaps() == null || mapsConfig.getMaps().isEmpty()) return null;
-		if (nextMapIndex >= mapsConfig.getMaps().size()) nextMapIndex = 0;
-		return mapsConfig.getMaps().get(nextMapIndex++);
+		if (filteredMaps == null || filteredMaps.isEmpty()) return null;
+		if (nextMapIndex >= filteredMaps.size()) nextMapIndex = 0;
+		return filteredMaps.get(nextMapIndex++);
 	}
 
 	@Override
@@ -152,7 +154,20 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 			byte[] bytes = in.readAllBytes();
 			String json = new String(bytes, StandardCharsets.UTF_8);
 			mapsConfig = gson.fromJson(json, MapsConfig.class);
-			//logger.info("Loaded {} maps from maps.json", mapsConfig.getMaps() != null ? mapsConfig.getMaps().size() : 0);
+			filteredMaps = new ArrayList<>();
+			if (mapsConfig != null && mapsConfig.getMaps() != null) {
+				for (MapsConfig.MapEntry e : mapsConfig.getMaps()) {
+					var cfg = e.getConfiguration();
+					List<GameType> types = (cfg != null) ? cfg.getTypes() : null;
+					boolean allowed;
+					if (types == null || types.isEmpty()) {
+						allowed = true;
+					} else {
+						allowed = types.contains(GameType.SOLO);
+					}
+					if (allowed) filteredMaps.add(e);
+				}
+			}
 		} catch (Exception e) {
 			//logger.error("Failed to load maps.json", e);
 			return;
@@ -204,19 +219,18 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 		MinecraftServer.getSchedulerManager().buildTask(() -> {
 			UUID uuid = HypixelConst.getServerUUID();
 			String shortName = HypixelConst.getShortenedServerName();
-			int maxPlayers = HypixelConst.getMaxPlayers();
+			int maxPlayers = GameType.SOLO.getTeamSize() * GameType.SOLO.getTeams();
 			int onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers().size();
 
 			List<String> mapIds = new ArrayList<>();
-			if (mapsConfig != null && mapsConfig.getMaps() != null) {
-				for (MapsConfig.MapEntry e : mapsConfig.getMaps()) mapIds.add(e.getId());
-			}
+			for (MapsConfig.MapEntry e : filteredMaps) mapIds.add(e.getId());
 
 			var heartbeat = new GameHeartbeatProtocolObject.HeartbeatMessage(
 					uuid,
 					shortName,
 					getType(),
 					mapIds,
+					GameType.SOLO.name(),
 					maxPlayers,
 					onlinePlayers
 			);

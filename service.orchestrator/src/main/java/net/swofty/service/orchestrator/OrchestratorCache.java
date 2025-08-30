@@ -16,6 +16,7 @@ public class OrchestratorCache {
 									   String shortName,
 									   ServerType type,
 									   Collection<String> maps,
+									   String mode,
 									   int maxPlayers,
 									   int onlinePlayers) {
 		GameServerState state = new GameServerState(
@@ -23,6 +24,7 @@ public class OrchestratorCache {
 				shortName,
 				type,
 				new HashSet<>(maps),
+				mode,
 				maxPlayers,
 				onlinePlayers,
 				Instant.now().toEpochMilli()
@@ -31,19 +33,29 @@ public class OrchestratorCache {
 	}
 
 	public static Set<String> getMaps(ServerType type) {
+		return getMaps(type, null);
+	}
+
+	public static Set<String> getMaps(ServerType type, String mode) {
 		cleanup();
 		Set<String> maps = new HashSet<>();
 		for (GameServerState s : serversByShortName.values()) {
-			if (s.type == type) maps.addAll(s.maps);
+			if (s.type == type && (mode == null || (s.mode != null && s.mode.equalsIgnoreCase(mode)))) {
+				maps.addAll(s.maps);
+			}
 		}
 		return maps;
 	}
 
 	public static GameServerState pickServerForMap(ServerType type, String map, int neededSlots) {
+		return pickServerForMap(type, map, null, neededSlots);
+	}
+
+	public static GameServerState pickServerForMap(ServerType type, String map, String mode, int neededSlots) {
 		cleanup();
 		List<GameServerState> candidates = new ArrayList<>();
 		for (GameServerState s : serversByShortName.values()) {
-			if (s.type == type && s.maps.contains(map)) {
+			if (s.type == type && s.maps.contains(map) && (mode == null || (s.mode != null && s.mode.equalsIgnoreCase(mode)))) {
 				if (neededSlots <= 0 || s.availableSlots() >= neededSlots) {
 					candidates.add(s);
 				}
@@ -71,6 +83,7 @@ public class OrchestratorCache {
 								  String shortName,
 								  ServerType type,
 								  Set<String> maps,
+								  String mode,
 								  int maxPlayers,
 								  int onlinePlayers,
 								  long lastHeartbeat) {
