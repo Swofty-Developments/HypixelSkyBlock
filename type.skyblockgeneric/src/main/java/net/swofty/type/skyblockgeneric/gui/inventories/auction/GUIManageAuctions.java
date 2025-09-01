@@ -1,10 +1,10 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.auction;
 
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -13,16 +13,16 @@ import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.PaginationList;
+import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +97,7 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
                 set(new GUIItem(slot) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStack.builder(Material.AIR);
                     }
                 });
@@ -108,16 +108,16 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIAuctionViewItem(item.getUuid(), GUIManageAuctions.this).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item.getItem()).getUpdatedItem().build()
-                                    .get(ItemComponent.CUSTOM_NAME)),
+                                    .get(DataComponents.CUSTOM_NAME)),
                             item.getItem().material(), item.getItem().amount(), new AuctionItemLoreHandler(item).getLore(player));
                 }
             });

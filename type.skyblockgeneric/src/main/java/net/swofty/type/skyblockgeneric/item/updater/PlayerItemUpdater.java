@@ -1,11 +1,10 @@
 package net.swofty.type.skyblockgeneric.item.updater;
 
 import net.minestom.server.color.Color;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.PlayerSkin;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.DyedItemColor;
 import net.minestom.server.item.component.HeadProfile;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
@@ -54,7 +53,7 @@ public class PlayerItemUpdater {
             stack = lore.getStack();
 
             return Map.entry(item, itemAsBuilder
-                            .set(ItemComponent.LORE, stack.get(ItemComponent.LORE))
+                            .set(DataComponents.LORE, stack.get(DataComponents.LORE))
                             .amount(stack.amount()));
         }
 
@@ -88,14 +87,13 @@ public class PlayerItemUpdater {
         stack = lore.getStack();
 
         if (handler.shouldBeEnchanted()) {
-            toReturn.set(ItemComponent.ENCHANTMENT_GLINT_OVERRIDE, true);
-            toReturn.set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+            toReturn.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+            toReturn = ItemStackCreator.clearAttributes(toReturn);
         }
 
         Color leatherColour = handler.getLeatherColour();
         if (leatherColour != null) {
-            toReturn.set(ItemComponent.DYED_COLOR, new DyedItemColor(
-                    new Color(leatherColour.red(), leatherColour.green(), leatherColour.blue()), false));
+            toReturn.set(DataComponents.DYED_COLOR, new Color(leatherColour.red(), leatherColour.green(), leatherColour.blue()));
         }
 
         if (item.hasComponent(TrackedUniqueComponent.class) && handler.getUniqueTrackedID() == null && isOwnedByPlayer) {
@@ -119,7 +117,7 @@ public class PlayerItemUpdater {
 
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
-            toReturn.set(ItemComponent.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
+            toReturn.set(DataComponents.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
         }
 
         if (item.hasComponent(GemstoneComponent.class)) {
@@ -151,8 +149,8 @@ public class PlayerItemUpdater {
         ItemStackCreator.clearAttributes(toReturn);
         return Map.entry(item,
                 toReturn.amount(stack.amount())
-                        .set(ItemComponent.CUSTOM_NAME, stack.get(ItemComponent.CUSTOM_NAME))
-                        .set(ItemComponent.LORE, stack.get(ItemComponent.LORE)));
+                        .set(DataComponents.CUSTOM_NAME, stack.get(DataComponents.CUSTOM_NAME))
+                        .set(DataComponents.LORE, stack.get(DataComponents.LORE)));
     }
 
     public static void updateLoop(Scheduler scheduler) {

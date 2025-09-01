@@ -2,10 +2,10 @@ package net.swofty.type.skyblockgeneric.gui.inventories.museum;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -14,19 +14,18 @@ import net.swofty.commons.TrackedItem;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.PaginationList;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.ItemPriceCalculator;
-import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +147,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
                 lore.add("§eClick to donate item!");
 
                 player.getInventory().setItemStack(i, ItemStackCreator.updateLore(toReturn, lore)
-                        .set(ItemComponent.CUSTOM_NAME, Component.text(item.getDisplayName()).decoration(
+                        .set(DataComponents.CUSTOM_NAME, Component.text(item.getDisplayName()).decoration(
                                 TextDecoration.ITALIC, false
                         ))
                         .build());

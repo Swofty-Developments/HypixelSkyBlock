@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.structure.structures.IslandPortal;
 public class ActionIslandCreatePortals implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(IslandFetchedFromDatabaseEvent event) {
         IslandPortal portal = new IslandPortal(0, -1, 100, 35);
         portal.setType(IslandPortal.PortalType.HUB);

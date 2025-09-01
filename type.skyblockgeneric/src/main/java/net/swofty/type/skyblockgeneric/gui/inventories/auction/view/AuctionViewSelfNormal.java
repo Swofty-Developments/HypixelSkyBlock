@@ -6,12 +6,12 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionViewItem;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
+import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionViewItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class AuctionViewSelfNormal implements AuctionView {
                     gui.set(new GUIClickableItem(29) {
                         @Override
                         public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                            SkyBlockPlayer player = (SkyBlockPlayer) p;
                             ownedActive.remove(item.getUuid());
                             player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
                             ownedInactive.add(item.getUuid());
@@ -68,7 +68,7 @@ public class AuctionViewSelfNormal implements AuctionView {
 
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                            SkyBlockPlayer player = (SkyBlockPlayer) p;
                             return ItemStackCreator.getStack("§6Collect Auction", Material.GOLD_BLOCK, 1,
                                     " ",
                                     "§7This auction has ended!",
@@ -82,7 +82,7 @@ public class AuctionViewSelfNormal implements AuctionView {
                     gui.set(new GUIClickableItem(29) {
                         @Override
                         public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                            SkyBlockPlayer player = (SkyBlockPlayer) p;
                             double coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
                             long highestBid = item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L);
                             player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + highestBid);
@@ -98,7 +98,7 @@ public class AuctionViewSelfNormal implements AuctionView {
 
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                            SkyBlockPlayer player = (SkyBlockPlayer) p;
                             return ItemStackCreator.getStack("§6Collect Auction", Material.GOLD_BLOCK, 1,
                                     " ",
                                     "§7This auction has ended!",
@@ -114,7 +114,7 @@ public class AuctionViewSelfNormal implements AuctionView {
                 gui.set(new GUIItem(29) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§6Auction Ended", Material.BARRIER, 1,
                                 " ",
                                 "§7This auction has ended!",

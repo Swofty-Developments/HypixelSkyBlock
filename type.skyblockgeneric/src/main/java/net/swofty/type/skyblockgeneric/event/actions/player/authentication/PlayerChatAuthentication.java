@@ -15,7 +15,7 @@ import java.util.UUID;
 public class PlayerChatAuthentication implements HypixelEventClass {
     private static Map<UUID, Long> cooldowns = new HashMap<>();
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerChatEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (player.hasAuthenticated) return;

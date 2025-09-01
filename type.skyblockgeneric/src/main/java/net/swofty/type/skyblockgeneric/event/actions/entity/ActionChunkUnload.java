@@ -9,7 +9,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 
 public class ActionChunkUnload implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ENTITY , requireDataLoaded = false , isAsync = true)
+    @HypixelEvent(node = EventNodes.ENTITY, requireDataLoaded = false, isAsync = true)
     public void run(InstanceChunkUnloadEvent event) {
         Instance instance = event.getInstance();
         int chunkX = event.getChunkX();

@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.levels;
 
 import lombok.Data;
+import net.kyori.adventure.key.InvalidKeyException;
 import net.minestom.server.item.Material;
 import net.swofty.commons.YamlFileUtils;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -20,7 +21,7 @@ import java.util.Map;
 @Data
 public class SkyBlockLevelLoader {
     private static final String FILE_NAME = "skyblock_level_rewards";
-    private static final File LEVELS_DIR = new File("./configuration/levels");
+    private static final File LEVELS_DIR = new File("./configuration/skyblock/levels");
 
     @Data
     public static class LevelConfig {
@@ -106,7 +107,7 @@ public class SkyBlockLevelLoader {
         if (entry.prefixItem != null) {
             try {
                 prefixItem = Material.fromKey(entry.prefixItem.toUpperCase());
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | InvalidKeyException e) {
                 // Try to find by key value
                 prefixItem = Material.values().stream()
                         .filter(material -> material.key().value().equalsIgnoreCase(entry.prefixItem))

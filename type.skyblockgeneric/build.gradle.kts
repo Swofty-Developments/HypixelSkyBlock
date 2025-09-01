@@ -28,7 +28,7 @@ dependencies {
     implementation("org.mongodb:mongodb-driver-sync:4.11.2")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("net.minestom:minestom-snapshots:1_21_4-7599413490") {
+    implementation("net.minestom:minestom:2025.08.18-1.21.8") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation("dev.hollowcube:polar:1.14.0")

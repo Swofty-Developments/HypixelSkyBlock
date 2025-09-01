@@ -4,7 +4,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -99,9 +99,9 @@ public class GUISack extends HypixelInventoryGUI {
                 set(new GUIClickableItem(slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         Integer amount = player.getSackItems().getAmount(linker);
-                        if (e.getClickType() == ClickType.RIGHT_CLICK) {
+                        if (e.getClick() instanceof Click.Right) {
                             if (amount == 0) return;
                             if (amount >= 64) {
                                 player.getSackItems().decrease(linker, 64);
@@ -116,7 +116,7 @@ public class GUISack extends HypixelInventoryGUI {
                                 player.addAndUpdateItem(itemAdded);
                                 new GUISack(itemTypeLinker, closeGUIButton).open(player);
                             }
-                        } else if (e.getClickType() == ClickType.LEFT_CLICK) {
+                        } else if (e.getClick() instanceof Click.Left) {
                             int airSlots = 0;
                             for (ItemStack itemStack : player.getInventory().getItemStacks()) {
                                 if (itemStack.isAir()) airSlots++;
@@ -142,7 +142,7 @@ public class GUISack extends HypixelInventoryGUI {
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack());
                         ArrayList<String> lore = new ArrayList<>();
                         Integer amount = player.getSackItems().getAmount(linker);
@@ -154,7 +154,7 @@ public class GUISack extends HypixelInventoryGUI {
                         if (amount != 0) {
                             lore.add("§bRight-Click for stack!");
                             lore.add("§eClick to pickup!");
-                        } else  {
+                        } else {
                             lore.add("§8Empty sack!");
                         }
                         return ItemStackCreator.updateLore(builder, lore);

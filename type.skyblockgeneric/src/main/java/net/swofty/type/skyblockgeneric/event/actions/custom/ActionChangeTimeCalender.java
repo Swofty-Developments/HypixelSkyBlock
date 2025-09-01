@@ -1,13 +1,13 @@
 package net.swofty.type.skyblockgeneric.event.actions.custom;
 
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.event.custom.CalenderHourlyUpdateEvent;
 
 public class ActionChangeTimeCalender implements HypixelEventClass {
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(CalenderHourlyUpdateEvent event) {
 
         long time = (event.getHour() * 1000L);

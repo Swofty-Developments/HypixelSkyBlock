@@ -8,7 +8,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 
 public class ActionOffhandHandClick implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerHandAnimationEvent event) {
         if (event.getHand().equals(PlayerHand.OFF)) {
             event.getPlayer().sendMessage("§cYou cannot use your offhand!");

@@ -2,28 +2,28 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.PaginationList;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -96,7 +96,7 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
     protected boolean shouldFilterFromSearch(String query, SkyBlockRecipe item) {
         return !StringUtility.getTextFromComponent(new NonPlayerItemUpdater(
                 item.getResult()
-        ).getUpdatedItem().build().get(ItemComponent.CUSTOM_NAME)).toLowerCase().contains(query.toLowerCase());
+        ).getUpdatedItem().build().get(DataComponents.CUSTOM_NAME)).toLowerCase().contains(query.toLowerCase());
     }
 
     @Override
@@ -145,7 +145,7 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
                 String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
                 int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
                 String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                        completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                        completedLoadingBar.length() - formattingCodeLength, // Adjust for added formatting codes
                         maxBarLength
                 ));
 
@@ -189,13 +189,13 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     ArrayList<String> lore = new ArrayList<>(
-                            itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList()
+                            itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList()
                     );
 
                     lore.add("§e ");
                     lore.add("§eClick to view recipe!");
 
-                    return itemStack.set(ItemComponent.LORE,
+                    return itemStack.set(DataComponents.LORE,
                             lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                                     .collect(Collectors.toList()));
                 }

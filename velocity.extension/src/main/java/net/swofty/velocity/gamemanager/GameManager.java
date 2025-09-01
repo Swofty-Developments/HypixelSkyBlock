@@ -82,7 +82,7 @@ public class GameManager {
         return servers.containsKey(type) && !servers.get(type).isEmpty();
     }
 
-    public static List<GameServer> getFromType(ServerType type){
+    public static List<GameServer> getFromType(ServerType type) {
         return servers.get(type);
     }
 

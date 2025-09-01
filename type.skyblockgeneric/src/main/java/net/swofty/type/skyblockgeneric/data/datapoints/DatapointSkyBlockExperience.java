@@ -5,8 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.event.custom.SkyBlockXPModificationEvent;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockEmblems;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
@@ -163,7 +163,7 @@ public class DatapointSkyBlockExperience extends SkyBlockDatapoint<DatapointSkyB
             String completedLoadingBar = "§3§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
             int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
             String uncompletedLoadingBar = "§f§m" + baseLoadingBar.substring(Math.min(
-                    completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                    completedLoadingBar.length() - formattingCodeLength, // Adjust for added formatting codes
                     maxBarLength
             ));
 

@@ -2,9 +2,9 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe;
 
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
@@ -160,10 +160,10 @@ public class GUIRecipe extends HypixelInventoryGUI {
                             ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, ingredient.getItemStack());
 
                             if (ingredient.hasComponent(CraftableComponent.class)) {
-                                ArrayList<Component> lore = new ArrayList<>(builder.build().get(ItemComponent.LORE));
+                                ArrayList<Component> lore = new ArrayList<>(builder.build().get(DataComponents.LORE));
                                 lore.add(Component.text(" "));
                                 lore.add(Component.text("§eClick to view recipe!"));
-                                builder.set(ItemComponent.LORE, lore);
+                                builder.set(DataComponents.LORE, lore);
                             }
 
                             if (ingredient.getAttributeHandler().shouldBeEnchanted())

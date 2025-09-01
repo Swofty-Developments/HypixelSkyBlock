@@ -9,13 +9,13 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
@@ -23,8 +23,8 @@ import java.util.List;
 
 public class GUICollectionItem extends HypixelInventoryGUI {
     private final ItemType item;
-    private CollectionCategory category;
-    private CollectionCategory.ItemCollection collection;
+    private final CollectionCategory category;
+    private final CollectionCategory.ItemCollection collection;
 
     public GUICollectionItem(ItemType item) {
         super(item.getDisplayName() + " Collection", InventoryType.CHEST_6_ROW);
@@ -61,13 +61,13 @@ public class GUICollectionItem extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUICollectionReward(item, reward).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     DatapointCollection.PlayerCollection playerCollection = player.getCollection();
 
                     List<String> lore = new ArrayList<>();

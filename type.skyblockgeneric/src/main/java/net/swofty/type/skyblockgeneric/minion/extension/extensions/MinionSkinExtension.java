@@ -2,9 +2,9 @@ package net.swofty.type.skyblockgeneric.minion.extension.extensions;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
@@ -36,22 +36,17 @@ public class MinionSkinExtension extends MinionExtension {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    SkyBlockItem skinItem = new SkyBlockItem(e.getCursorItem());
+                    SkyBlockItem skinItem = new SkyBlockItem(p.getInventory().getCursorItem());
+                    e.setCancelled(true);
 
                     if (skinItem.hasComponent(MinionSkinComponent.class)) {
-                        e.setClickedItem(ItemStack.AIR);
+                        p.getInventory().setCursorItem(ItemStack.AIR);
                         setItemTypePassedIn(skinItem.getAttributeHandler().getPotentialType());
                         minion.getExtensionData().setData(slot, MinionSkinExtension.this);
                         minion.getMinionEntity().updateMinionDisplay(minion);
                     } else {
                         player.sendMessage("§cThis item is not a valid Minion Skin.");
-                        e.setCancelled(true);
                     }
-                }
-
-                @Override
-                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIMinion(minion).open(player);
                 }
 
@@ -74,7 +69,7 @@ public class MinionSkinExtension extends MinionExtension {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    if (!e.getCursorItem().isAir()) {
+                    if (!p.getInventory().getCursorItem().isAir()) {
                         player.sendMessage("§cYour cursor must be empty to pick this item up!");
                         e.setCancelled(true);
                         return;
@@ -82,26 +77,17 @@ public class MinionSkinExtension extends MinionExtension {
 
                     player.addAndUpdateItem(getItemTypePassedIn());
                     setItemTypePassedIn(null);
-                    e.setClickedItem(ItemStack.AIR);
+                    p.getInventory().setCursorItem(ItemStack.AIR);
+                    e.setCancelled(true);
                     minion.getExtensionData().setData(slot, MinionSkinExtension.this);
                     minion.getMinionEntity().updateMinionDisplay(minion);
-                }
-
-                @Override
-                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIMinion(minion).open(player);
-                }
-
-                @Override
-                public boolean canPickup() {
-                    return true;
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn())).getUpdatedItem();
-                    item.set(ItemComponent.CUSTOM_NAME, Component.text("§aMinion Skin Slot").decoration(TextDecoration.ITALIC, false));
+                    item.set(DataComponents.CUSTOM_NAME, Component.text("§aMinion Skin Slot").decoration(TextDecoration.ITALIC, false));
                     item = ItemStackCreator.updateLore(item, Stream.of(
                             "§7You can insert a Minion Skin",
                             "§7here to change the appearance of",

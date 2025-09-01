@@ -3,16 +3,16 @@ package net.swofty.type.generic.gui.inventory;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -168,7 +168,7 @@ public abstract class HypixelInventoryGUI {
      * @param material the {@link Material} of your choice
      */
     public void fill(Material material, String name) {
-        fill(ItemStack.builder(material).set(ItemComponent.CUSTOM_NAME, Component.text(name)));
+        fill(ItemStack.builder(material).set(DataComponents.CUSTOM_NAME, Component.text(name)));
     }
 
     /**
@@ -274,7 +274,7 @@ public abstract class HypixelInventoryGUI {
             }
 
             previouslyOpen.onClose(
-                    new InventoryCloseEvent(previouslyOpen.getInventory(), player , true),
+                    new InventoryCloseEvent(previouslyOpen.getInventory(), player, true),
                     net.swofty.type.generic.gui.inventory.HypixelInventoryGUI.CloseReason.SERVER_EXITED
             );
             GUI_MAP.remove(player.getUuid());

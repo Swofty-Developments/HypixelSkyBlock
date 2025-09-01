@@ -3,19 +3,19 @@ package net.swofty.type.skyblockgeneric.gui.inventories.shop;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.shop.ShopPrice;
@@ -57,7 +57,7 @@ public final class GUIGenericTradingOptions extends HypixelInventoryGUI {
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
 
         List<String> lore = new ArrayList<>(itemStack.build()
-                .get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                .get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
 
         lore.add("");
         lore.add("§7Cost");
@@ -72,7 +72,7 @@ public final class GUIGenericTradingOptions extends HypixelInventoryGUI {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!player.getShoppingData().canPurchase(item.getItem().toUnderstandable(), amount)) {
                     player.sendMessage("§cYou have reached the maximum amount of items you can buy!");
                     return;
@@ -95,8 +95,7 @@ public final class GUIGenericTradingOptions extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                String displayName = StringUtility.getTextFromComponent(itemStack.build().get(ItemComponent.CUSTOM_NAME)
+                String displayName = StringUtility.getTextFromComponent(itemStack.build().get(DataComponents.CUSTOM_NAME)
                         .append(Component.text(" §8x" + amount)));
                 return ItemStackCreator.getStack(displayName, itemStack.build().material(), amount, lore);
             }

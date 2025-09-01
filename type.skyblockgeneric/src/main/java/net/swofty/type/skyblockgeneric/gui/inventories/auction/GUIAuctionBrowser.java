@@ -4,12 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -21,16 +21,16 @@ import net.swofty.commons.auctions.AuctionsSorting;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.PaginationList;
+import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.PaginationList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,17 +70,17 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
 
         new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message)
                 .thenAccept(responseRaw -> {
-            AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse response = (AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse) responseRaw;
-            List<AuctionItem> auctionItems = response.items();
+                    AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse response = (AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse) responseRaw;
+                    List<AuctionItem> auctionItems = response.items();
 
-            // Items are already sorted, so just paginate them
-            PaginationList<AuctionItem> paginationList = new PaginationList<>(auctionItems, 24);
-            paginationList.addAll(auctionItems);
+                    // Items are already sorted, so just paginate them
+                    PaginationList<AuctionItem> paginationList = new PaginationList<>(auctionItems, 24);
+                    paginationList.addAll(auctionItems);
 
-            // Set the items in the GUI
-            List<AuctionItem> paginatedItems = paginationList.getPage(page);
-            setItemCache(paginatedItems);
-        });
+                    // Set the items in the GUI
+                    List<AuctionItem> paginatedItems = paginationList.getPage(page);
+                    setItemCache(paginatedItems);
+                });
     }
 
     @SneakyThrows
@@ -137,7 +137,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
+                if (e.getClick().equals(ClickType.RIGHT_CLICK)) {
                     AuctionsFilter nextFilter = filter.previous();
                     setFilter(nextFilter);
 
@@ -176,7 +176,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             set(new GUIClickableItem(i * 9) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (category.equals(getCategory())) {
                         return;
                     }
@@ -187,7 +187,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     List<String> lore = new ArrayList<>(List.of("§8Category", " ", "§7Examples:"));
                     category.getExamples().forEach(example -> lore.add("§8◼ §7" + example));
                     lore.add(" ");
@@ -217,17 +217,17 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIAuctionViewItem(auctionItem.getUuid(), GUIAuctionBrowser.this).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     SkyBlockItem skyBlockItem = new SkyBlockItem(auctionItem.getItem());
                     ItemStack builtItem = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack()).build();
 
-                    return ItemStackCreator.getStack(StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME)),
+                    return ItemStackCreator.getStack(StringUtility.getTextFromComponent(builtItem.get(DataComponents.CUSTOM_NAME)),
                             skyBlockItem.getMaterial(), skyBlockItem.getAmount(), new AuctionItemLoreHandler(auctionItem).getLore());
                 }
             });
@@ -243,7 +243,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(" ", Material.AIR, 1);
                 }
             });

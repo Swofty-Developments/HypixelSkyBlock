@@ -28,6 +28,6 @@ public class DecorationEntityImpl extends EntityCreature {
     }
 
     public void spawn(Instance instance, Point pos) {
-       this.setInstance(instance , pos.sub(0, 1.46875, 0));
+       this.setInstance(instance, pos.sub(0, 1.46875, 0));
     }
 }

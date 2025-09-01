@@ -6,13 +6,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarConnector;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCompletedBazaarTransactions;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -57,13 +57,13 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
                 lore.add("§8" + (isSell ? "Sell" : "Buy") + " Order");
                 lore.add(" ");
-                lore.add("§7Original Amount: §e" + (int)originalQuantity + "§8x");
-                lore.add("§7Remaining Amount: §a" + (int)order.amount() + "§8x");
+                lore.add("§7Original Amount: §e" + (int) originalQuantity + "§8x");
+                lore.add("§7Remaining Amount: §a" + (int) order.amount() + "§8x");
                 lore.add("§7Price per unit: §6" + FORMATTER.format(order.price()) + " coins");
                 lore.add(" ");
 
                 if (filledQuantity > 0) {
-                    lore.add("§a§l✓ " + (int)filledQuantity + " items filled");
+                    lore.add("§a§l✓ " + (int) filledQuantity + " items filled");
                     lore.add("§7Progress: §a" + String.format("%.1f%%", (filledQuantity / originalQuantity) * 100));
                 } else {
                     lore.add("§7§l○ No fills yet");
@@ -76,7 +76,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                 return ItemStackCreator.getStack(
                         (isSell ? "§6" : "§a") + itemType.getDisplayName() + " Order",
                         itemType.material,
-                        Math.max(1, (int)order.amount()),
+                        Math.max(1, (int) order.amount()),
                         lore
                 );
             }
@@ -114,13 +114,13 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
                         String timeStr = TIME_FORMATTER.format(tx.getTimestamp());
                         if (tx.getType() == DatapointCompletedBazaarTransactions.TransactionType.BUY_COMPLETED) {
-                            lore.add("§a▲ " + (int)tx.getQuantity() + "x at §6" +
+                            lore.add("§a▲ " + (int) tx.getQuantity() + "x at §6" +
                                     FORMATTER.format(tx.getPricePerUnit()) + " §8(" + timeStr + ")");
                             if (tx.getSecondaryAmount() > 0) {
                                 lore.add("  §7Saved: §a" + FORMATTER.format(tx.getSecondaryAmount()) + " coins");
                             }
                         } else if (tx.getType() == DatapointCompletedBazaarTransactions.TransactionType.SELL_COMPLETED) {
-                            lore.add("§6▼ " + (int)tx.getQuantity() + "x at §6" +
+                            lore.add("§6▼ " + (int) tx.getQuantity() + "x at §6" +
                                     FORMATTER.format(tx.getPricePerUnit()) + " §8(" + timeStr + ")");
                             lore.add("  §7Tax: §c-" + FORMATTER.format(tx.getSecondaryAmount()) + " coins");
                         }
@@ -214,7 +214,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                                     SkyBlockItem item = new SkyBlockItem(order.getItemType());
                                     item.setAmount((int) order.amount());
                                     player.addAndUpdateItem(item);
-                                    p.sendMessage("§6[Bazaar] §7Returned §a" + (int)order.amount() +
+                                    p.sendMessage("§6[Bazaar] §7Returned §a" + (int) order.amount() +
                                             "x " + itemType.getDisplayName() + " §7to your inventory.");
                                 } else {
                                     double refund = order.price() * order.amount();
@@ -239,7 +239,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                 lore.add(" ");
 
                 if (isSell) {
-                    lore.add("§a▶ " + (int)order.amount() + "x " + itemType.getDisplayName());
+                    lore.add("§a▶ " + (int) order.amount() + "x " + itemType.getDisplayName());
                 } else {
                     lore.add("§6▶ " + FORMATTER.format(order.amount() * order.price()) + " coins");
                 }

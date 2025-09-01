@@ -9,14 +9,14 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIMinionRecipes;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipe;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -25,16 +25,16 @@ import java.util.*;
 
 public class GUICollectionReward extends HypixelInventoryGUI {
     private static final Map<Integer, int[]> SLOTS = new HashMap<>(Map.of(
-            0, new int[] {  },
-            1, new int[] { 22 },
-            2, new int[] { 20, 24 },
-            3, new int[] { 20, 22, 24 },
-            4, new int[] { 19, 21, 23, 25 },
-            5, new int[] { 20, 21, 22, 23, 24 },
-            6, new int[] { 20, 21, 22, 23, 24, 31},
-            7, new int[] { 19, 20, 21, 22, 23, 24, 25},
-            8, new int[] { 19, 21, 23, 25, 28, 29, 30, 31 },
-            9, new int[] { 18, 19, 20, 21, 22, 23, 24, 25, 26 }
+            0, new int[]{},
+            1, new int[]{22},
+            2, new int[]{20, 24},
+            3, new int[]{20, 22, 24},
+            4, new int[]{19, 21, 23, 25},
+            5, new int[]{20, 21, 22, 23, 24},
+            6, new int[]{20, 21, 22, 23, 24, 31},
+            7, new int[]{19, 20, 21, 22, 23, 24, 25},
+            8, new int[]{19, 21, 23, 25, 28, 29, 30, 31},
+            9, new int[]{18, 19, 20, 21, 22, 23, 24, 25, 26}
     ));
 
     private final ItemType item;
@@ -45,7 +45,7 @@ public class GUICollectionReward extends HypixelInventoryGUI {
     public GUICollectionReward(ItemType type, CollectionCategory.ItemCollectionReward reward) {
         super(type.getDisplayName() + " "
                 + StringUtility.getAsRomanNumeral(
-                        CollectionCategories.getCategory(type).getCollection(type).getPlacementOf(reward) + 1)
+                CollectionCategories.getCategory(type).getCollection(type).getPlacementOf(reward) + 1)
                 + " Rewards", InventoryType.CHEST_6_ROW);
 
         this.item = type;
@@ -63,7 +63,7 @@ public class GUICollectionReward extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>(Arrays.asList(
                         "§7View your " + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(placement) + " Collection rewards!",
                         " "
@@ -85,7 +85,7 @@ public class GUICollectionReward extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (unlock instanceof CollectionCategory.UnlockRecipe) {
                         try {
                             SkyBlockItem skyBlockItem = ((CollectionCategory.UnlockRecipe) unlock).getRecipes().getFirst().getResult();
@@ -102,7 +102,7 @@ public class GUICollectionReward extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return unlock.getDisplay(player);
                 }
             });

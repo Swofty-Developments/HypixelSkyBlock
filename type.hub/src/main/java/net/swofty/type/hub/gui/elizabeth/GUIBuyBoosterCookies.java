@@ -4,11 +4,11 @@ import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -62,9 +62,8 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
                 }
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack.Builder itemStack = shopCategorys.stack;
-                    ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                    ArrayList<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (slot != 3) {
                         if (Objects.equals(lore.getLast(), "§aCurrently selected!")) {
                             lore.removeLast();
@@ -142,7 +141,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
                         "§7You have: §a" + StringUtility.commaify(player.getGems()) + " Gems",
                         ""
                         ));
-                ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                ArrayList<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                 if (player.getGems() >= cookieCost) {
                     if (Objects.equals(lore.getLast(), "§eClick here to get gems!")) {
                         lore.removeLast();
@@ -207,7 +206,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
                         "§7You have: §a" + StringUtility.commaify(player.getGems()) + " Gems",
                         ""
                 ));
-                ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                ArrayList<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                 if (player.getGems() >= totalCookiePrice) {
                     if (Objects.equals(lore.getLast(), "§eClick here to get gems!")) {
                         lore.removeLast();
@@ -272,7 +271,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
                         "§7You have: §a" + StringUtility.commaify(player.getGems()) + " Gems",
                         ""
                 ));
-                ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                ArrayList<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                 if (player.getGems() >= totalCookiePrice) {
                     if (Objects.equals(lore.getLast(), "§eClick here to get gems!")) {
                         lore.removeLast();

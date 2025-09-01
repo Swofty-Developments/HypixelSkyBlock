@@ -1,18 +1,19 @@
 package net.swofty.type.hub.gui.kat;
 
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
@@ -20,7 +21,6 @@ import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
-import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIKat extends HypixelInventoryGUI {
 
@@ -44,10 +44,9 @@ public class GUIKat extends HypixelInventoryGUI {
             set(new GUIClickableItem(13) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    ItemStack stack = e.getCursorItem();
+                    ItemStack stack = p.getInventory().getCursorItem();
 
-                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
+                    if (stack.get(DataComponents.CUSTOM_NAME) == null) {
                         updateFromItem(null);
                         return;
                     }
@@ -95,7 +94,7 @@ public class GUIKat extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
+                return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
             }
 
             @Override

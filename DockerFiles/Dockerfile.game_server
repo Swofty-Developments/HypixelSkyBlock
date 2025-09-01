@@ -5,14 +5,22 @@ WORKDIR /app
 # Install unzip for extracting files
 RUN apt-get update && apt-get install -y jq unzip screen && apt-get clean
 
-# Copy SkyBlockCore.jar
-COPY ../loader/build/libs/HypixelCore.jar SkyBlockCore.jar
+# Download SkyBlockCore.jar (for production)
+ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/HypixelCore.jar HypixelCore.jar
 
-# Copy Services
-COPY ../service.api/build/libs/service.api-3.0.jar ./ServiceAPI.jar
-COPY ../service.auctionhouse/build/libs/service.auctionhouse-3.0.jar ./ServiceAuctionHouse.jar
-COPY ../service.bazaar/build/libs/service.bazaar-3.0.jar ./ServiceBazaar.jar
-COPY ../service.itemtracker/build/libs/service.itemtracker-3.0.jar ./ServiceItemTracker.jar
+# Download Services (for production)
+ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAPI.jar ./ServiceAPI.jar
+ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAuctionHouse.jar ./ServiceAuctionHouse.jar
+ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceBazaar.jar ./ServiceBazaar.jar
+ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceItemTracker.jar ./ServiceItemTracker.jar
+ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDataMutex.jar ./ServiceDataMutex.jar
+
+# For development, uncomment these lines and comment out the ADD lines above:
+# COPY ../loader/build/libs/HypixelCore.jar SkyBlockCore.jar
+# COPY ../service.api/build/libs/service.api-3.0.jar ./ServiceAPI.jar
+# COPY ../service.auctionhouse/build/libs/service.auctionhouse-3.0.jar ./ServiceAuctionHouse.jar
+# COPY ../service.bazaar/build/libs/service.bazaar-3.0.jar ./ServiceBazaar.jar
+# COPY ../service.itemtracker/build/libs/service.itemtracker-3.0.jar ./ServiceItemTracker.jar
 
 # Copy configuration data
 COPY ./configuration /app/configuration_files
@@ -39,24 +47,24 @@ RUN cp configuration_files/NanoLimbo-1.9.1-all.jar ./NanoLimbo-1.9.1-all.jar
 RUN cp configuration_files/settings.yml ./settings.yml
 
 # Copy Songs Folder
-RUN cp -R configuration_files/songs ./configuration/songs
+RUN cp -R configuration_files/songs ./configuration/skyblock/songs
 
 # Copy Collections
-RUN cp -R configuration_files/collections ./configuration/collections
+RUN cp -R configuration_files/collections ./configuration/skyblock/collections
 
 # Copy Items
-RUN cp -R configuration_files/items ./configuration/items
+RUN cp -R configuration_files/items ./configuration/skyblock/items
 
 # Copy SkyBlockPack
-RUN cp -R configuration_files/SkyBlockPack ./configuration/SkyBlockPack
+RUN cp -R configuration_files/SkyBlockPack ./configuration/skyblock/SkyBlockPack
 
 # Copy pack_textures
-RUN cp -R configuration_files/pack_textures ./configuration/pack_textures
+RUN cp -R configuration_files/pack_textures ./configuration/skyblock/pack_textures
 
 # Copy Entrypoint Script
 RUN cp configuration_files/entrypoint.sh ./entrypoint.sh
 
 RUN chmod +x entrypoint.sh
 
-
-CMD ./entrypoint.sh
+# Run all services in the background and keep HypixelCore in the foreground
+CMD ["sh", "entrypoint.sh"]

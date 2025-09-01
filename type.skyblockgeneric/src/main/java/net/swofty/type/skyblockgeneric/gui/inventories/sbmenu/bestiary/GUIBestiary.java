@@ -9,10 +9,10 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.skills.GUISkillCategory;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.skills.GUISkillCategory;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -25,13 +25,13 @@ public class GUIBestiary extends HypixelInventoryGUI {
     private static final int[] displaySlots = {
             10, 11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 25,
-                29, 30,     32, 33
+            29, 30, 32, 33
 
     };
 
     @Getter
     private enum BestiaryRegions {
-        YOUR_ISLAND("§aYour Island", Material.PLAYER_HEAD, "c9c8881e42915a9d29bb61a16fb26d059913204d265df5b439b3d792acd56", new GUIBestiaryIsland(BestiaryCategories.YOUR_ISLAND),"§7View all of the mobs that you've", "§7found and killed on §aYour Island§7."),
+        YOUR_ISLAND("§aYour Island", Material.PLAYER_HEAD, "c9c8881e42915a9d29bb61a16fb26d059913204d265df5b439b3d792acd56", new GUIBestiaryIsland(BestiaryCategories.YOUR_ISLAND), "§7View all of the mobs that you've", "§7found and killed on §aYour Island§7."),
         HUB("§aHub", Material.PLAYER_HEAD, "d7cc6687423d0570d556ac53e0676cb563bbdd9717cd8269bdebed6f6d4e7bf8", new GUIBestiaryIsland(BestiaryCategories.HUB), "§7View all of the mobs that you've", "§7found and killed in the §aHub§7."),
         THE_FARMING_ISLANDS("§aThe Farming Islands", Material.PLAYER_HEAD, "4d3a6bd98ac1833c664c4909ff8d2dc62ce887bdcf3cc5b3848651ae5af6b", null, "§7View all of the mobs that you've", "§7found and killed in §aThe Farming", "§aIslands§7."),
         GARDEN("§bGarden", Material.PLAYER_HEAD, "f4880d2c1e7b86e87522e20882656f45bafd42f94932b2c5e0d6ecaa490cb4c", null, "§7View all of the §6Pests §7that you've", "§7killed on the §bGarden§7."),
@@ -77,7 +77,7 @@ public class GUIBestiary extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 player.getBestiaryData().getTotalDisplay(lore);
 
@@ -91,13 +91,13 @@ public class GUIBestiary extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (bestiaryRegion.gui == null) return;
                     bestiaryRegion.gui.open(player);
                 }
 
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (bestiaryRegion.material == Material.PLAYER_HEAD) {
                         return ItemStackCreator.getStackHead(bestiaryRegion.regionName, bestiaryRegion.texture, 1, bestiaryRegion.lore);
                     } else {

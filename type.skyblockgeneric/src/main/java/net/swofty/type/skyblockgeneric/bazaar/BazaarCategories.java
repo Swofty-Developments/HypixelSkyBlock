@@ -34,7 +34,7 @@ public enum BazaarCategories {
                     ItemType.LEATHER, ItemType.ENCHANTED_LEATHER, ItemType.BEEF, ItemType.ENCHANTED_RAW_BEEF),
             new BazaarItemSet(ItemType.PORKCHOP, "Pork",
                     ItemType.PORKCHOP, ItemType.ENCHANTED_PORK, ItemType.ENCHANTED_GRILLED_PORK),
-            new BazaarItemSet(ItemType.CHICKEN, "Chicker & Feather",
+            new BazaarItemSet(ItemType.CHICKEN, "Chicken & Feather",
                     ItemType.CHICKEN, ItemType.ENCHANTED_RAW_CHICKEN, ItemType.FEATHER, ItemType.ENCHANTED_FEATHER, ItemType.ENCHANTED_EGG, ItemType.SUPER_ENCHANTED_EGG, ItemType.OMEGA_ENCHANTED_EGG),
             new BazaarItemSet(ItemType.MUTTON, "Mutton",
                     ItemType.MUTTON, ItemType.ENCHANTED_MUTTON, ItemType.ENCHANTED_COOKED_MUTTON),

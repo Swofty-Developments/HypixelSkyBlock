@@ -2,6 +2,7 @@ package net.swofty.type.hub.gui;
 
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -56,8 +57,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
         set(new GUIClickableItem(50) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                ClickType clickType = e.getClickType();
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
 
                 if (sending) {
                     player.sendMessage("§cWe are currently trying to queue you into another server!");
@@ -76,7 +76,7 @@ public class GUIHubSelector extends HypixelPaginatedGUI<UnderstandableProxyServe
 
                 sending = true;
 
-                if (clickType == ClickType.RIGHT_CLICK) {
+                if (e.getClick() instanceof Click.Right) {
                     UnderstandableProxyServer smallestServer = serversToUse.stream()
                             .min(Comparator.comparingInt((UnderstandableProxyServer server) -> server.players().size()))
                            .orElseThrow();

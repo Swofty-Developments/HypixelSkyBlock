@@ -12,7 +12,7 @@ import org.tinylog.Logger;
 public class ActionPlayerJoin implements HypixelEventClass {
 
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(AsyncPlayerConfigurationEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

@@ -2,23 +2,23 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.inventory.click.ClickType;
-import net.minestom.server.item.ItemComponent;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
@@ -110,12 +110,12 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
+                SkyBlockItem cursorItem = new SkyBlockItem(p.getInventory().getCursorItem());
                 ItemType cursorItemType = cursorItem.getAttributeHandler().getPotentialType();
                 ItemType resultItemType = finalRecipe.getResult().getAttributeHandler().getPotentialType();
-                boolean isShift = e.getClickType().equals(ClickType.START_SHIFT_CLICK);
+                boolean isShift = e.getClick() instanceof Click.LeftShift || e.getClick() instanceof Click.RightShift;
 
-                if (!e.getCursorItem().isAir() &&
+                if (!p.getInventory().getCursorItem().isAir() &&
                         (cursorItemType == null || !cursorItemType.equals(resultItemType))) {
                     e.setCancelled(true);
                     e.getPlayer().sendMessage("§cYou must empty your cursor first!");
@@ -125,7 +125,9 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
                 ItemStack craftedItem = PlayerItemUpdater.playerUpdate(
                         player,
                         finalRecipe.getResult().getItemStack()).amount(amount).build();
-                e.setClickedItem(craftedItem);
+
+                e.setCancelled(true);
+                p.getInventory().setCursorItem(craftedItem);
                 HypixelEventHandler.callCustomEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), finalRecipe));
 
                 SkyBlockItem[] toReplace = finalRecipe.consume(getCurrentRecipeAsItems(inventory));
@@ -138,7 +140,7 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
                                 toReplace[i].getItemStack()).build());
                     }
                 }
-                if (isShift){
+                if (isShift) {
                     // if is a shift click add updated item to player inventory
                     e.setCancelled(true);
                     player.addAndUpdateItem(e.getClickedItem());
@@ -164,10 +166,10 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
                 ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, finalRecipe.getResult().getItemStack()).amount(amount);
 
                 ArrayList<String> lore = new ArrayList<>();
-                builder.build().get(ItemComponent.LORE).stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);
+                builder.build().get(DataComponents.LORE).stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);
                 lore.add("§8§m------------------");
                 lore.add("§7This is the item you are crafting.");
-                builder.set(ItemComponent.LORE, lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+                builder.set(DataComponents.LORE, lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()));
 
                 return builder;

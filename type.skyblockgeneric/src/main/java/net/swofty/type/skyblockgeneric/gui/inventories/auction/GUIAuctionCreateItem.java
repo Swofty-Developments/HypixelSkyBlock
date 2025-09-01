@@ -1,11 +1,11 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.auction;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -14,15 +14,15 @@ import net.swofty.commons.auctions.AuctionCategories;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionEscrow;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionEscrow;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AuctionCategoryComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -34,7 +34,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class GUIAuctionCreateItem extends HypixelInventoryGUI implements RefreshingGUI {
-    private HypixelInventoryGUI previousGUI;
+    private final HypixelInventoryGUI previousGUI;
 
     public GUIAuctionCreateItem(HypixelInventoryGUI previousGUI) {
         super("Create Auction", InventoryType.CHEST_6_ROW);
@@ -64,8 +64,8 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                 List<String> lore = new ArrayList<>();
 
                 lore.add(" ");
-                lore.add(StringUtility.getTextFromComponent(itemStack.get(ItemComponent.CUSTOM_NAME)));
-                itemStack.get(ItemComponent.LORE).forEach(loreEntry -> {
+                lore.add(StringUtility.getTextFromComponent(itemStack.get(DataComponents.CUSTOM_NAME)));
+                itemStack.get(DataComponents.LORE).forEach(loreEntry -> {
                     lore.add(StringUtility.getTextFromComponent(loreEntry));
                 });
                 lore.add(" ");
@@ -172,7 +172,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                     ItemStack builtItem = new NonPlayerItemUpdater(escrow.getItem()).getUpdatedItem().build();
                     AuctionItem item = new AuctionItem(escrow.getItem().toUnderstandable(), player.getUuid(), escrow.getDuration() + System.currentTimeMillis(),
                             escrow.isBin(), escrow.getPrice());
-                    String itemName = StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME));
+                    String itemName = StringUtility.getTextFromComponent(builtItem.get(DataComponents.CUSTOM_NAME));
 
                     AuctionCategories category = AuctionCategories.TOOLS;
                     if (escrow.getItem().hasComponent(AuctionCategoryComponent.class))
@@ -211,7 +211,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                             "§7house for other players to",
                             "§7purchase.",
                             " ",
-                            "§7Item: " + StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME)),
+                            "§7Item: " + StringUtility.getTextFromComponent(builtItem.get(DataComponents.CUSTOM_NAME)),
                             "§7Auction Duration: §e" + StringUtility.getAuctionSetupFormattedTime(escrow.getDuration()),
                             "§7" + (escrow.isBin() ? "Item Price" : "Starting bid") + ": §e" + StringUtility.commaify(escrow.getPrice()) + " coins",
                             " ",

@@ -3,8 +3,8 @@ package net.swofty.loader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.extras.velocity.VelocityProxy;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -83,7 +83,9 @@ public class Hypixel {
         /**
          * Initialize the server
          */
-        MinecraftServer minecraftServer = MinecraftServer.init();
+        MinecraftServer minecraftServer = MinecraftServer.init(
+                new Auth.Velocity(Configuration.get("velocity-secret"))
+        );
         serverUUID = UUID.randomUUID();
 
         /**
@@ -145,8 +147,6 @@ public class Hypixel {
                 "net.swofty.commons.protocol.objects", ProtocolObject.class).toList();
         protocolObjects.forEach(ServerOutboundMessage::registerFromProtocolObject);
         proxyAPI.start();
-
-        VelocityProxy.enable(Configuration.get("velocity-secret"));
 
         /**
          * Start spark if enabled

@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class RuneItemEvent implements HypixelEventClass {
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true , isAsync = true)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true, isAsync = true)
     public void run(PlayerKilledSkyBlockMobEvent event) {
         SkyBlockPlayer player = event.getPlayer();
 

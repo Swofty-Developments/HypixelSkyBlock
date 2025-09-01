@@ -79,10 +79,10 @@ public class HypixelPlayer extends Player {
         return new AntiCheatHandler(this);
     }
 
-    public PlayerSkin getPlayerSkin(){
-        String texture = getDataHandler().get(HypixelDataHandler.Data.SKIN_TEXTURE , DatapointString.class).getValue();
-        String signature = getDataHandler().get(HypixelDataHandler.Data.SKIN_SIGNATURE , DatapointString.class).getValue();
-        return new PlayerSkin(texture , signature);
+    public PlayerSkin getPlayerSkin() {
+        String texture = getDataHandler().get(HypixelDataHandler.Data.SKIN_TEXTURE, DatapointString.class).getValue();
+        String signature = getDataHandler().get(HypixelDataHandler.Data.SKIN_SIGNATURE, DatapointString.class).getValue();
+        return new PlayerSkin(texture, signature);
     }
 
     public void sendTo(ServerType type) {

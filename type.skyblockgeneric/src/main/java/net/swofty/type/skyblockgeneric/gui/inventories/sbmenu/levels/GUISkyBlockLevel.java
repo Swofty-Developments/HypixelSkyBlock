@@ -50,7 +50,7 @@ public class GUISkyBlockLevel extends HypixelInventoryGUI {
             set(new GUIItem(slots.get(i)) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return unlock.getItemDisplay(player, levelRequirement.asInt());
                 }
             });

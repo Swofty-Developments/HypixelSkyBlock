@@ -291,7 +291,7 @@ public class ItemAttributeHandler {
         return ((ItemAttributeRecombobulated) item.getAttribute("recombobulated")).getValue();
     }
 
-    public boolean isMithrilInfused(){
+    public boolean isMithrilInfused() {
         if (item.hasComponent(MinionComponent.class)) {
             return ((ItemAttributeMithrilInfusion) item.getAttribute("mithril_infusion")).getValue();
         } else {
@@ -299,7 +299,7 @@ public class ItemAttributeHandler {
         }
     }
 
-    public void setMithrilInfused(boolean value){
+    public void setMithrilInfused(boolean value) {
         if (item.hasComponent(MinionComponent.class)) {
             ((ItemAttributeMithrilInfusion) item.getAttribute("mithril_infusion")).setValue(value);
         } else {

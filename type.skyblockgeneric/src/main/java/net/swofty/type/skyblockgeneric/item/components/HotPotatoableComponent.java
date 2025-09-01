@@ -19,16 +19,16 @@ public class HotPotatoableComponent extends SkyBlockItemComponent {
         applicableItems = Map.of(ItemType.HOT_POTATO_BOOK, 10, ItemType.FUMING_POTATO_BOOK, 5);// new ApplicableItem[]{new ApplicableItem(ItemType.HOT_POTATO_BOOK, 10), new ApplicableItem(ItemType.FUMING_POTATO_BOOK, 5)};
     }
 
-    public HotPotatoableComponent(PotatoType type, Map<ItemType, Integer> applicableItems){
+    public HotPotatoableComponent(PotatoType type, Map<ItemType, Integer> applicableItems) {
         this.potatoType = type;
         this.applicableItems = applicableItems;
     }
 
-    public boolean canApply(ItemType type){
+    public boolean canApply(ItemType type) {
         return applicableItems.containsKey(type);
     }
 
-    public int getMax(ItemType type){
+    public int getMax(ItemType type) {
         return applicableItems.getOrDefault(type, 0);
     }
 }

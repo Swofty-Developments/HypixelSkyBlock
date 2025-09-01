@@ -1,9 +1,9 @@
 package net.swofty.type.generic.gui;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.WindowPropertyPacket;
@@ -24,10 +24,10 @@ public class HypixelAnvilGUI {
     public CompletableFuture<String> open(String text) {
         Inventory inventory = new Inventory(InventoryType.ANVIL, Component.text("Insert Data: " + text));
         inventory.setItemStack(0, ItemStack.builder(Material.PAPER)
-                .set(ItemComponent.CUSTOM_NAME, Component.text("")).build());
+                .set(DataComponents.CUSTOM_NAME, Component.text("")).build());
         inventory.setItemStack(1, ItemStack.of(Material.AIR));
         inventory.setItemStack(2, ItemStack.builder(Material.PAPER)
-                .set(ItemComponent.CUSTOM_NAME, Component.text("")).build());
+                .set(DataComponents.CUSTOM_NAME, Component.text("")).build());
 
         player.openInventory(inventory);
 

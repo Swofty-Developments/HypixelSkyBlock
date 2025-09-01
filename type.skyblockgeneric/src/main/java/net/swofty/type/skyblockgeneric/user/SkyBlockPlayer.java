@@ -7,7 +7,6 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.PlayerHand;
-import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
@@ -18,20 +17,17 @@ import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
 import net.swofty.commons.PlayerShopData;
-import net.swofty.commons.ServerType;
+import net.swofty.commons.SkyBlockPlayerProfiles;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.type.generic.data.*;
+import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.user.AntiCheatHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.HypixelConst;
-import net.swofty.commons.SkyBlockPlayerProfiles;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarConnector;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
@@ -824,7 +820,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
             if (gui == null) return;
             if (tempInv == null) return;
-            gui.onClose(new InventoryCloseEvent(tempInv, this , true), net.swofty.type.generic.gui.inventory.HypixelInventoryGUI.CloseReason.SERVER_EXITED);
+            gui.onClose(new InventoryCloseEvent(tempInv, this, true), net.swofty.type.generic.gui.inventory.HypixelInventoryGUI.CloseReason.SERVER_EXITED);
             net.swofty.type.generic.gui.inventory.HypixelInventoryGUI.GUI_MAP.remove(this.getUuid());
         }
     }

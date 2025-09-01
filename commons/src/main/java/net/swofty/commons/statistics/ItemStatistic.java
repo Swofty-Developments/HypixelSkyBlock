@@ -35,6 +35,10 @@ public enum ItemStatistic {
     FORAGING_FORTUNE("Foraging Fortune", "§a", "§6", false, "☘"),
     BREAKING_POWER("Breaking Power", "§a", "§2", false, "Ⓟ"),
     PRISTINE("Pristine", "§a", "§5", false, "✧"),
+    MINING_SPREAD("Mining Spread", "§a", "§e", false, "▚"),
+    GEMSTONE_SPREAD("Gemstone Spread", "§a", "§e", false, "▚"),
+    HUNTER_FORTUNE("Hunter Fortune", "§a", "§d", false, "☘"),
+    SWEEP("Sweep", "§a", "§2", false, "∮"),
 
     // Sub-Gathering Stats
     ORE_FORTUNE("Ore Fortune", "§a", "§6", false, "☘"),
@@ -53,14 +57,36 @@ public enum ItemStatistic {
     MUSHROOM_FORTUNE("Mushroom Fortune", "§a", "§6", false, "☘"),
     SUGAR_CANE_FORTUNE("Sugar Cane Fortune", "§a", "§6", false, "☘"),
 
+    FIG_FORTUNE("Fig Fortune", "§a", "§6", false, "☘"),
+    MANGROVE_FORTUNE("Mangrove Fortune", "§a", "§6", false, "☘"),
+
+    // Wisdom Stats
+    ALCHEMY_WISDOM("Alchemy Wisdom", "§a", "§3", false, "☯"),
+    CARPENTRY_WISDOM("Carpentry Wisdom", "§a", "§3", false, "☯"),
+    COMBAT_WISDOM("Combat Wisdom", "§a", "§3", false, "☯"),
+    ENCHANTING_WISDOM("Enchanting Wisdom", "§a", "§3", false, "☯"),
+    FARMING_WISDOM("Farming Wisdom", "§a", "§3", false, "☯"),
+    FISHING_WISDOM("Fishing Wisdom", "§a", "§3", false, "☯"),
+    FORAGING_WISDOM("Foraging Wisdom", "§a", "§3", false, "☯"),
+    MINING_WISDOM("Mining Wisdom", "§a", "§3", false, "☯"),
+    RUNE_CRAFTING_WISDOM("Runecrafting Wisdom", "§a", "§3", false, "☯"),
+    SOCIAL_WISDOM("Social Wisdom", "§a", "§3", false, "☯"),
+    TAMING_WISDOM("Taming Wisdom", "§a", "§3", false, "☯"),
+    HUNTING_WISDOM("Hunting Wisdom", "§a", "§3", false, "☯"),
+
     // Misc Stats
     SPEED("Speed", "§a", "§f", false, "✦", 100D, 1D),
     MAGIC_FIND("Magic Find", "§a", "§b", false, "✯"),
     PET_LUCK("Pet Luck", "§a", "§d", false, "♣"),
     SEA_CREATURE_CHANCE("Sea Creature Chance", "§c", "§9", true, "α", 2D, 1D),
     FISHING_SPEED("Fishing Speed", "§a", "§b", false, "☂"),
-    COLD_RESISTANCE("Cold Resistance", "§a", "§b", false, "❄"),
     BONUS_PEST_CHANCE("Bonus Pest Chance", "§a", "§2", true, "ൠ"),
+    HEAT_RESISTANCE("Heat Resistance","§a","§c",false,"♨"),
+    COLD_RESISTANCE("Cold Resistance", "§a", "§b", false, "❄"),
+    FEAR("Fear","§a","§5",false,"☠"),
+    PULL("Pull","§a","§b",false,"ᛷ"),
+    RESPIRATION("Respiration","§a","§3",false,"⚶"),
+    PRESSURE_RESISTANCE("Pressure Resistance","§a","§9",false,"❍"),
 
     // Other Stats
     DAMAGE("Damage", "§c", "§c", false, "❁",

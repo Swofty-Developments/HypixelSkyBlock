@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.collection;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.item.ItemComponent;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -97,7 +97,7 @@ public abstract class CollectionCategory {
         public ItemStack.Builder getDisplay(SkyBlockPlayer player) {
             SkyBlockItem skyBlockItem = getRecipes().getFirst().getResult();
             ItemStack.Builder updatedItem = new NonPlayerItemUpdater(getRecipes().getFirst().getResult()).getUpdatedItem();
-            ArrayList<String> lore = new ArrayList<>(updatedItem.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+            ArrayList<String> lore = new ArrayList<>(updatedItem.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
             if (skyBlockItem.hasComponent(MinionComponent.class)) {
                 String material = StringUtility.toNormalCase(skyBlockItem.getAttributeHandler().getMinionType().toString());
                 updatedItem.customName(Component.text("§r§9" + material + " Minion Recipes"));

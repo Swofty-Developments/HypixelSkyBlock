@@ -10,6 +10,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.utility.ChestUtility;
 import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
 import net.swofty.type.skyblockgeneric.block.impl.BlockBreakable;
 import net.swofty.type.skyblockgeneric.block.impl.BlockInteractable;
@@ -17,7 +18,6 @@ import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
 import net.swofty.type.skyblockgeneric.chest.*;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIChest;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.ChestUtility;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class BlockChest implements CustomSkyBlockBlock, BlockInteractable, Block
             chest = new SingleChest(instance, position);
         }
 
-        ChestAnimationType.OPEN.play(chest.getInstance() , chest.getPosition());
+        ChestAnimationType.OPEN.play(chest.getInstance(), chest.getPosition());
         player.playSound(Sound.sound(SoundEvent.BLOCK_CHEST_OPEN, Sound.Source.RECORD, 1f, 1f));
 
         new GUIChest(chest).open(player);

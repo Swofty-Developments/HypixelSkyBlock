@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.utility.JerryInformation;
 public class ActionIslandInitJerry implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(IslandFirstCreatedEvent event) {
         event.getIsland().setJerryInformation(
                 new JerryInformation(null, new Pos(2.5, 100, 24.5, 145, 0), null)

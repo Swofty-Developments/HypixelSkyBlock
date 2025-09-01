@@ -1,14 +1,14 @@
 package net.swofty.type.skyblockgeneric.event.actions.custom.collection;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.item.ItemComponent;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
-import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
+import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.event.custom.CollectionUpdateEvent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class ActionCollectionDisplay implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(CollectionUpdateEvent event) {
 
         if (event.getOldValue() == 0 && CollectionCategories.getCategory(event.getItemType()) != null) {
@@ -74,7 +74,7 @@ public class ActionCollectionDisplay implements HypixelEventClass {
                             ItemStack.Builder item = ((CollectionCategory.UnlockRecipe) unlock).getRecipe().getResult().getItemStackBuilder();
                             item = new NonPlayerItemUpdater(item).getUpdatedItem();
 
-                            player.sendMessage("    §7" + StringUtility.getTextFromComponent(item.build().get(ItemComponent.CUSTOM_NAME)) + " §7Recipes");
+                            player.sendMessage("    §7" + StringUtility.getTextFromComponent(item.build().get(DataComponents.CUSTOM_NAME)) + " §7Recipes");
                         }
                         case XP -> {
                             player.sendMessage("    §8+§b" + ((CollectionCategory.UnlockXP) unlock).xp() + " SkyBlock XP");

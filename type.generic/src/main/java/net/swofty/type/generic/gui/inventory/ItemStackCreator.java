@@ -2,21 +2,19 @@ package net.swofty.type.generic.gui.inventory;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.PlayerSkin;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.AttributeList;
 import net.minestom.server.item.component.HeadProfile;
+import net.minestom.server.item.component.TooltipDisplay;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.Unit;
 import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,6 +22,12 @@ import java.util.stream.Collectors;
  * including item materials, names, lore, and player skins.
  */
 public class ItemStackCreator {
+    private static final TooltipDisplay DEFAULT_TOOLTIP_DISPLAY = new TooltipDisplay(false, Set.of(
+            DataComponents.CONSUMABLE,
+            DataComponents.DAMAGE,
+            DataComponents.BASE_COLOR,
+            DataComponents.UNBREAKABLE
+    ));
 
     /**
      * Creates an {@link ItemStack.Builder} with a specified material and custom name.
@@ -34,8 +38,8 @@ public class ItemStackCreator {
      */
     public static ItemStack.Builder createNamedItemStack(Material material, String name) {
         return clearAttributes(ItemStack.builder(material)
-                .set(ItemComponent.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
-                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE));
+                .set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
+                .set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
     }
 
     /**
@@ -45,7 +49,8 @@ public class ItemStackCreator {
      * @return the modified {@link ItemStack.Builder}
      */
     public static ItemStack.Builder clearAttributes(ItemStack.Builder builder) {
-        builder.set(ItemComponent.ATTRIBUTE_MODIFIERS, new AttributeList(List.of(), false));
+        builder.set(DataComponents.ATTRIBUTE_MODIFIERS, new AttributeList(List.of()));
+        builder.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY);
         return builder;
     }
 
@@ -104,10 +109,10 @@ public class ItemStackCreator {
             copiedLore.add(color(s));
         }
 
-        return clearAttributes(builder.set(ItemComponent.LORE, copiedLore.stream()
+        return clearAttributes(builder.set(DataComponents.LORE, copiedLore.stream()
                         .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()))
-                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE));
+                .set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
     }
 
     /**
@@ -127,8 +132,8 @@ public class ItemStackCreator {
      * @return the modified {@link ItemStack.Builder}
      */
     public static ItemStack.Builder enchant(ItemStack.Builder builder) {
-        return clearAttributes(builder.set(ItemComponent.ENCHANTMENT_GLINT_OVERRIDE, true)
-                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE));
+        return clearAttributes(builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                .set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
     }
 
     /**
@@ -140,9 +145,9 @@ public class ItemStackCreator {
     public static ItemStack.Builder getFromStack(ItemStack stack) {
         return clearAttributes(ItemStack.builder(stack.material())
                 .amount(stack.amount())
-                .set(ItemComponent.LORE, stack.get(ItemComponent.LORE))
-                .set(ItemComponent.CUSTOM_NAME, stack.get(ItemComponent.CUSTOM_NAME))
-                .set(ItemComponent.CUSTOM_DATA, stack.get(ItemComponent.CUSTOM_DATA)));
+                .set(DataComponents.LORE, stack.get(DataComponents.LORE))
+                .set(DataComponents.CUSTOM_NAME, stack.get(DataComponents.CUSTOM_NAME))
+                .set(DataComponents.CUSTOM_DATA, stack.get(DataComponents.CUSTOM_DATA)));
     }
 
     /**
@@ -160,11 +165,11 @@ public class ItemStackCreator {
             copiedLore.add(color(s));
         }
 
-        return clearAttributes(ItemStack.builder(material).amount(amount).set(ItemComponent.LORE, copiedLore.stream()
+        return clearAttributes(ItemStack.builder(material).amount(amount).set(DataComponents.LORE, copiedLore.stream()
                         .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()))
-                .set(ItemComponent.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
-                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE));
+                .set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
+                .set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
     }
 
     /**
@@ -238,12 +243,12 @@ public class ItemStackCreator {
         String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
         return ItemStack.builder(Material.PLAYER_HEAD)
-                .set(ItemComponent.LORE, copiedLore.stream()
+                .set(DataComponents.LORE, copiedLore.stream()
                         .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()))
-                .set(ItemComponent.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
-                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE)
-                .set(ItemComponent.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)))
+                .set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
+                .set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY)
+                .set(DataComponents.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)))
                 .amount(amount);
     }
 
@@ -263,12 +268,17 @@ public class ItemStackCreator {
         }
 
         return clearAttributes(ItemStack.builder(Material.PLAYER_HEAD)
-                .set(ItemComponent.LORE, copiedLore.stream()
+                .set(DataComponents.LORE, copiedLore.stream()
                         .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()))
-                .set(ItemComponent.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
-                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE)
-                .set(ItemComponent.PROFILE, new HeadProfile(skin))
+                .set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
+                .set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of(
+                        DataComponents.CONSUMABLE,
+                        DataComponents.DAMAGE,
+                        DataComponents.BASE_COLOR,
+                        DataComponents.UNBREAKABLE
+                )))
+                .set(DataComponents.PROFILE, new HeadProfile(skin))
                 .amount(amount));
     }
 

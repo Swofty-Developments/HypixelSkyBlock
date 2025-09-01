@@ -5,19 +5,19 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStorage;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.BackpackComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
@@ -74,10 +74,10 @@ public class GUIStorage extends HypixelInventoryGUI {
             set(new GUIClickableItem(ender_slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!storage.hasPage(page)) return;
 
-                    if (e.getClickType() == ClickType.RIGHT_CLICK) {
+                    if (e.getClick() instanceof Click.Right) {
                         new GUIStorageIconSelection(page, GUIStorage.this).open(player);
                     } else {
                         new GUIStoragePage(page).open(player);
@@ -86,7 +86,7 @@ public class GUIStorage extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!storage.hasPage(page))
                         return ItemStackCreator.getStack("§cLocked Page", Material.RED_STAINED_GLASS_PANE, 1,
                                 "§7Unlock more Ender Chest pages in",
@@ -115,7 +115,7 @@ public class GUIStorage extends HypixelInventoryGUI {
                 set(new GUIItem(backpack_slot) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§cLocked Backpack Slot " + slot,
                                 Material.GRAY_DYE, 1,
                                 "§7Talk to Tia the Fairy to unlock more",
@@ -130,12 +130,11 @@ public class GUIStorage extends HypixelInventoryGUI {
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
+                        SkyBlockItem item = new SkyBlockItem(p.getInventory().getCursorItem());
 
                         if (item.isNA()) return;
                         if (!(item.hasComponent(BackpackComponent.class))) return;
 
-                        e.setClickedItem(ItemStack.AIR);
                         e.setCancelled(false);
                     }
 
@@ -154,13 +153,13 @@ public class GUIStorage extends HypixelInventoryGUI {
 
                         player.sendMessage("§ePlacing backpack in slot " + slot + "...");
                         player.sendMessage("§aSuccess!");
+                        p.getInventory().setCursorItem(ItemStack.AIR);
 
                         onOpen(e);
                     }
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§eEmpty Backpack Slot " + slot,
                                 Material.BROWN_STAINED_GLASS_PANE, slot,
                                 " ",
@@ -177,20 +176,21 @@ public class GUIStorage extends HypixelInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e2, HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    if (e2.getClickType() == ClickType.RIGHT_CLICK) {
+                    if (e2.getClick() instanceof Click.Right) {
                         if (!item.getAttributeHandler().getBackpackData().items().isEmpty()
                                 && !item.getAttributeHandler().getBackpackData().items()
-                                    .stream()
-                                    .map(SkyBlockItem::new).allMatch(SkyBlockItem::isNA)) {
+                                .stream()
+                                .map(SkyBlockItem::new).allMatch(SkyBlockItem::isNA)) {
                             player.sendMessage("§cThe backpack in slot " + slot + " is not empty! Please empty it before removing it.");
                             return;
                         }
 
                         player.sendMessage("§aRemoved backpack from slot " + slot + "!");
-                        e2.setClickedItem(PlayerItemUpdater.playerUpdate(player, item.getItemStack()).build());
-                        e2.setCancelled(false);
+                        p.getInventory().setCursorItem(PlayerItemUpdater.playerUpdate(player, item.getItemStack()).build());
+                        e2.setCancelled(true);
 
                         backpackItems.remove(slot);
+                        onOpen(e);
                         return;
                     }
 
@@ -198,13 +198,7 @@ public class GUIStorage extends HypixelInventoryGUI {
                 }
 
                 @Override
-                public void runPost(InventoryClickEvent e2, HypixelPlayer player) {
-                    onOpen(e);
-                }
-
-                @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStackHead("§6Backpack Slot " + slot,
                             item.getComponent(SkullHeadComponent.class).getSkullTexture(item), slot,
                             item.getAttributeHandler().getRarity().getColor() +
@@ -237,11 +231,18 @@ public class GUIStorage extends HypixelInventoryGUI {
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
-        ItemStack stack = e.getClickedItem();
-        SkyBlockItem item = new SkyBlockItem(stack);
+        ItemStack cursorItem = e.getPlayer().getInventory().getCursorItem();
+        SkyBlockItem cursorItemAsItem = new SkyBlockItem(cursorItem);
 
-        if (item.isNA()) return;
-        if (!(item.hasComponent(BackpackComponent.class)))
-            e.setCancelled(true);
+        if (cursorItemAsItem.isNA()) return;
+        if (cursorItemAsItem.hasComponent(BackpackComponent.class)) return;
+
+        ItemStack clickedItem = e.getClickedItem();
+        SkyBlockItem clickedItemAsItem = new SkyBlockItem(clickedItem);
+
+        if (clickedItemAsItem.isNA()) return;
+        if (clickedItemAsItem.hasComponent(BackpackComponent.class)) return;
+
+        e.setCancelled(true);
     }
 }

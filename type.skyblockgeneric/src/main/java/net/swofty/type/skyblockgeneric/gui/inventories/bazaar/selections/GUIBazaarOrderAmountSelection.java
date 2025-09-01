@@ -41,9 +41,9 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                         : (isBuy ? "How many do you want?" : "How many to sell?"),
                 InventoryType.CHEST_4_ROW);
 
-        this.isBuy     = isBuy;
+        this.isBuy = isBuy;
         this.isInstant = isInstant;
-        this.itemType  = itemType;
+        this.itemType = itemType;
         this.maxAmount = maxAmount;
         this.unitPrice = unitPrice;
 
@@ -67,7 +67,7 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
 
     private void buildInstantUI(SkyBlockPlayer p) {
         // exactly the 4 buttons you already liked (One, Stack, All, Custom)
-        addButton(9,  1, "One",    "Buy one unit", 1, p);
+        addButton(9, 1, "One", "Buy one unit", 1, p);
         addButton(11, Math.min(64, maxAmount), "Stack",
                 "Buy a stack!", Math.min(64, maxAmount), p);
         addButton(13, maxAmount, "All", "Fill my inventory!", maxAmount, p);
@@ -76,24 +76,27 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
 
     private void buildLimitUI(SkyBlockPlayer p) {
         // matches your screenshots: “Buy a stack!”, “Buy a big stack!”, “Buy a thousand!”, “Custom Amount”
-        int small  = Math.min(64,  maxAmount);
+        int small  = Math.min(64, maxAmount);
         int medium = Math.min(160, maxAmount);
         int large  = Math.min(1024,maxAmount);
 
-        addLimitButton(9,  small,  "Buy a stack!",     "Amount: " + small + "×", p);
-        addLimitButton(11, medium, "Buy a big stack!", "Amount: " + medium + "×", p);
-        addLimitButton(13, large,  "Buy a thousand!",  "Amount: " + large + "×", p);
+        addLimitButton(9, small, "Buy a stack!",      "Amount: " + small + "×", p);
+        addLimitButton(11, medium, "Buy a big stack!","Amount: " + medium + "×", p);
+        addLimitButton(13, large, "Buy a thousand!",  "Amount: " + large + "×", p);
         addCustom(15, p);
     }
 
     private void addButton(int slot, int qty, String title, String subtitle, int amount, SkyBlockPlayer p) {
         set(new GUIClickableItem(slot) {
-            @Override public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 future.complete(amount);
                 player.closeInventory();
             }
-            @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add("§7" + subtitle);
@@ -113,12 +116,15 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
 
     private void addLimitButton(int slot, int qty, String title, String amountLine, SkyBlockPlayer p) {
         set(new GUIClickableItem(slot) {
-            @Override public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 future.complete(qty);
                 // *don’t* close—so your price‐selection GUI will open next
             }
-            @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Buy Order Setup");
@@ -137,7 +143,8 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
 
     private void addCustom(int slot, SkyBlockPlayer p) {
         set(new GUIQueryItem(slot) {
-            @Override public HypixelInventoryGUI onQueryFinish(String q, HypixelPlayer pl) {
+            @Override
+            public HypixelInventoryGUI onQueryFinish(String q, HypixelPlayer pl) {
                 try {
                     int v = Integer.parseInt(q);
                     if (v < 1 || v > maxAmount) {
@@ -150,7 +157,9 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                 }
                 return null;
             }
-            @Override public ItemStack.Builder getItem(HypixelPlayer p) {
+
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add(isInstant
@@ -167,7 +176,10 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
         });
     }
 
-    @Override public boolean allowHotkeying() { return false; }
+    @Override
+    public boolean allowHotkeying() {
+        return false;
+    }
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {

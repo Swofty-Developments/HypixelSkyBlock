@@ -1,10 +1,10 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -12,17 +12,16 @@ import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.reforge.Reforge;
 import net.swofty.commons.item.reforge.ReforgeLoader;
 import net.swofty.commons.item.reforge.ReforgeType;
-import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ReforgableComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,10 +61,10 @@ public class GUIReforge extends HypixelInventoryGUI {
             set(new GUIClickableItem(13) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    ItemStack stack = e.getCursorItem();
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    ItemStack stack = p.getInventory().getCursorItem();
 
-                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
+                    if (stack.get(DataComponents.CUSTOM_NAME) == null) {
                         updateFromItem(null);
                         return;
                     }
@@ -81,20 +80,20 @@ public class GUIReforge extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
             set(new GUIClickableItem(22) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     player.sendMessage("§cPlace an item in the empty slot above to reforge it!");
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             "§eReforge Item", Material.ANVIL, 1,
                             "§7Place an item above to reforge it!",
@@ -112,7 +111,7 @@ public class GUIReforge extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
+                return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
             }
 
             @Override
@@ -127,12 +126,11 @@ public class GUIReforge extends HypixelInventoryGUI {
             }
         });
 
-        if (item.getAmount() > 1 ||
-                !(item.hasComponent(ReforgableComponent.class))) {
+        if (item.getAmount() > 1 || !(item.hasComponent(ReforgableComponent.class))) {
             set(new GUIItem(22) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             "§cError!", Material.BARRIER, 1,
                             "§7You cannot reforge this item!"
@@ -151,7 +149,7 @@ public class GUIReforge extends HypixelInventoryGUI {
             set(new GUIItem(22) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
                             "§cError!", Material.BARRIER, 1,
                             "§7No reforges available for this item type!"
@@ -167,15 +165,14 @@ public class GUIReforge extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                DatapointDouble coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                 int cost = COST_MAP.get(item.getAttributeHandler().getRarity());
 
-                if (coins.getValue() - cost < 0) {
+                if (player.getCoins() - cost < 0) {
                     player.sendMessage("§cYou don't have enough Coins!");
                     return;
                 }
 
-                coins.setValue(coins.getValue() - cost);
+                player.removeCoins(cost);
 
                 ReforgeType itemReforgeType = item.getComponent(ReforgableComponent.class).getReforgeType();
                 List<Reforge> availableReforges = ReforgeLoader.getReforgesForType(itemReforgeType);

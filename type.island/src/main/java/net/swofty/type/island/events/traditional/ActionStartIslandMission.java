@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionStartIslandMission implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(AsyncPlayerConfigurationEvent event) {
         MissionData data = ((SkyBlockPlayer) event.getPlayer()).getMissionData();
 

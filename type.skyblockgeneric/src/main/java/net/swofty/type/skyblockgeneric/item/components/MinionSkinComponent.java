@@ -2,10 +2,9 @@ package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
 import net.minestom.server.color.Color;
-import net.minestom.server.item.ItemComponent;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.DyedItemColor;
 import net.minestom.server.utils.Unit;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
@@ -75,8 +74,8 @@ public class MinionSkinComponent extends SkyBlockItemComponent {
             }
 
             if (leatherColor != null && material.name().startsWith("LEATHER_")) {
-                builder.set(ItemComponent.DYED_COLOR, new DyedItemColor(leatherColor, false));
-                builder.set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+                builder.set(DataComponents.DYED_COLOR, leatherColor);
+                builder = ItemStackCreator.clearAttributes(builder);
             }
 
             return builder.build();

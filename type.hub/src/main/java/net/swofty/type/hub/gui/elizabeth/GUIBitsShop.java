@@ -5,9 +5,9 @@ import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -189,7 +189,7 @@ public class GUIBitsShop extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack.Builder itemStack = shopCategorys.stack;
-                    ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                    ArrayList<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (slot != 4) {
                         if (Objects.equals(lore.getLast(), "§aCurrently selected!")) {
                             lore.removeLast();
@@ -254,7 +254,7 @@ public class GUIBitsShop extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
                         SkyBlockItem item = new SkyBlockItem(bitItems.item);
                         ItemStack.Builder itemStack = new NonPlayerItemUpdater(item).getUpdatedItem();
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                         lore.add(" ");
                         lore.add("§7Cost");
                         lore.add("§b" + StringUtility.commaify(bitItems.price) + " Bits");
@@ -273,15 +273,14 @@ public class GUIBitsShop extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     new GUIBitsSubCategorys(subCategorys.getShopItems(), subCategorys.getGuiName(), subCategorys.getPreviousGUI()).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
                     ItemStack.Builder itemstack = subCategorys.item;
-                    ArrayList<String> lore = new ArrayList<>(itemstack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                    ArrayList<String> lore = new ArrayList<>(itemstack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (!Objects.equals(lore.getLast(), "§eClick to browse!")) {
                         lore.add(" ");
                         lore.add("§eClick to browse!");

@@ -20,7 +20,7 @@ public class VillagerLiam extends NPCVillagerDialogue {
 
             @Override
             public Pos position() {
-                return new Pos(10.5 ,70 ,-41.5);
+                return new Pos(10.5,70,-41.5);
             }
 
             @Override
