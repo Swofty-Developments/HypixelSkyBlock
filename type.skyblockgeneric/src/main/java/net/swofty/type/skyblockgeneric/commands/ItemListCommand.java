@@ -7,10 +7,10 @@ import net.swofty.type.skyblockgeneric.gui.inventories.GUICreative;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "e",
+@CommandParameters(aliases = "e items giveitems",
         description = "Open the E menu",
-        usage = "/e",
-        permission = Rank.ADMIN,
+        usage = "/e | /items | /giveitems",
+        permission = Rank.DEFAULT,
         allowsConsole = false)
 public class ItemListCommand extends HypixelCommand {
     @Override

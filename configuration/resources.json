@@ -1,13 +1,14 @@
 {
-  "mongodb": "mongodb://localhost",
-  "redis-uri": "redis://localhost:6379",
+  "mongodb": "mongodb://mongodb",
+  "redis-uri": "redis://redis:6379",
   "velocity-secret": "ixmSUgWOgvs7",
   "limbo-port": "65535",
   "pterodactyl-mode": false,
   "spark": false,
-  "require-authentication": false,
+  "require-authentication": true,
   "cross-version-support": true,
-  "host-name": "0.0.0.0",
+  "host-name": "game_server",
+  "limbo-host-name": "game_server",
   "transfer-timeout": "800",
   "sandbox-mode": true,
   "anticheat": true

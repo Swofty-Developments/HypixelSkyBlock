@@ -7,6 +7,7 @@ import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
 public enum BlockType {
     CHEST(BlockChest.class),
     DECORATION(BlockDecoration.class),
+    EXPERIMENT_TABLE(net.swofty.type.skyblockgeneric.block.blocks.BlockExperimentationTable.class),
     ;
 
     public final Class<? extends CustomSkyBlockBlock> clazz;

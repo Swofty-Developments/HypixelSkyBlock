@@ -50,12 +50,16 @@ services:
       - ./configuration:/app/configuration_files
     networks:
       - hypixel_network
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "25565"]
+      test: [ "CMD", "nc", "-z", "localhost", "25565" ]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 10s
+
 
   game_server:
     build:
