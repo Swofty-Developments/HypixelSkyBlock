@@ -21,7 +21,6 @@ import java.util.Map;
 public class GUIUltrasequencerPlay extends HypixelInventoryGUI implements RefreshingGUI {
 
     private final String tier;
-    private final int[] borderSlots = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44, 45, 46, 47, 48, 50, 51, 52, 53};
     // 3x3 grid centered in a 6-row GUI
     private final int[] gridSlots = {12, 13, 14, 21, 22, 23, 30, 31, 32};
 
@@ -36,11 +35,6 @@ public class GUIUltrasequencerPlay extends HypixelInventoryGUI implements Refres
     private volatile boolean acceptingInput = false;
     private volatile boolean gameComplete = false;
 
-    // Timer display
-    private final int timerSlot = 4;
-    private volatile int timerSecondsRemaining = 0;
-    private int timerCycleCounter = 0;
-
     public GUIUltrasequencerPlay(String tier) {
         super("Ultrasequencer (" + tier + ")", InventoryType.CHEST_6_ROW);
         this.tier = tier;
@@ -51,23 +45,10 @@ public class GUIUltrasequencerPlay extends HypixelInventoryGUI implements Refres
         try {
             fill(Material.BLACK_STAINED_GLASS_PANE, " ");
 
-            for (int i : borderSlots) {
-                set(new GUIItem(i) {
-                    @Override
-                    public ItemStack.Builder getItem(HypixelPlayer player) {
-                        return ItemStackCreator.getStack(" ", Material.PURPLE_STAINED_GLASS_PANE, 1);
-                    }
-                });
-            }
-
             // Initialize 3x3 grid with numbers 1-9
             for (int i = 0; i < gridSlots.length; i++) {
                 set(gridSlots[i], ItemStackCreator.getStack("§f" + (i + 1), Material.WHITE_STAINED_GLASS_PANE, i + 1));
             }
-
-            // Initialize timer display
-            timerSecondsRemaining = secondsForTier();
-            set(timerSlot, ItemStackCreator.getStack("§eTime Left", Material.BOOKSHELF, Math.max(1, timerSecondsRemaining)));
 
         } catch (Exception ex) {
             e.player().sendMessage("§cFailed to open Ultrasequencer: " + ex.getMessage());
@@ -94,17 +75,9 @@ public class GUIUltrasequencerPlay extends HypixelInventoryGUI implements Refres
                         player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 1.0f));
                     } else {
                         player.playSound(Sound.sound(Key.key("block.note_block.bass"), Sound.Source.PLAYER, 1.0f, 0.5f));
-                        player.sendMessage("§cIncorrect! Game over.");
-                        
-                        // Finish the game
-                        ExperimentationManager.UltrasequencerFinishResult finishResult = ExperimentationManager.finishUltrasequencer(player);
-                        if (finishResult.success) {
-                            player.sendMessage("§aUltrasequencer Complete! §7Best Series: §e" + finishResult.bestSeriesLength + " §7| §b+" + finishResult.xpAward + " Enchanting XP");
-                            if (finishResult.bonusClicksEarned > 0) {
-                                player.sendMessage("§aBonus Clicks Earned: §e+" + finishResult.bonusClicksEarned);
-                            }
-                        }
-                        new GUIUltrasequencer().open(player);
+                        // Finish and show results
+                        var finishResult = ExperimentationManager.finishUltrasequencer(player);
+                        if (finishResult.success) new GUIExperimentOver("Ultrasequencer", tier, false, "Game Over", finishResult.bestSeriesLength, finishResult.xpAward, finishResult.bonusClicksEarned).open(player);
                         return;
                     }
 
@@ -117,10 +90,6 @@ public class GUIUltrasequencerPlay extends HypixelInventoryGUI implements Refres
                         
                         // Flag to pull new state and start next reveal on refresh
                         needsState = true;
-                        
-                        // Reset timer for next round
-                        timerSecondsRemaining = secondsForTier();
-                        timerCycleCounter = 0;
                     }
                 }
 
@@ -184,24 +153,9 @@ public class GUIUltrasequencerPlay extends HypixelInventoryGUI implements Refres
                     // End of reveal, accept input
                     revealing = false;
                     acceptingInput = true;
-                    // Start round timer
-                    timerSecondsRemaining = secondsForTier();
-                    timerCycleCounter = 0;
                 }
             }
         }
-
-        // Timer update while accepting input
-        if (acceptingInput) {
-            timerCycleCounter++;
-            if (timerCycleCounter >= 10) {
-                timerCycleCounter = 0;
-                if (timerSecondsRemaining > 0) timerSecondsRemaining--;
-            }
-        }
-
-        // Always update timer display
-        set(timerSlot, ItemStackCreator.getStack("§eTime Left", Material.BOOKSHELF, Math.max(1, timerSecondsRemaining)));
     }
 
     @Override
@@ -209,13 +163,5 @@ public class GUIUltrasequencerPlay extends HypixelInventoryGUI implements Refres
         return 2; // fast updates
     }
 
-    private int secondsForTier() {
-        String t = tier == null ? "" : tier.toLowerCase();
-        if (t.contains("high")) return 30;
-        if (t.contains("grand")) return 25;
-        if (t.contains("supreme")) return 20;
-        if (t.contains("transcendent")) return 15;
-        if (t.contains("metaphysical")) return 10;
-        return 30; // default
-    }
 }
+

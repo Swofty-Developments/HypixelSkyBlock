@@ -31,7 +31,9 @@ public class ExperimentationManager {
         TIERS.put("GRAND", new GameTier(5, 2500, Map.of(5, 1, 9, 2)));
         TIERS.put("SUPREME", new GameTier(7, 3500, Map.of(5, 1, 9, 2)));
         TIERS.put("TRANSCENDENT", new GameTier(8, 4500, Map.of(5, 1, 9, 2)));
-        TIERS.put("METAPHYSICAL", new GameTier(10, 6000, Map.of(5, 1, 9, 2, 12, 3)));
+        // For Ultrasequencer: click milestones per spec (5:+1, 7:+2, 9:+3)
+        // Chronomatron also uses highest tier milestones; aligning here for consistency
+        TIERS.put("METAPHYSICAL", new GameTier(10, 6000, Map.of(5, 1, 7, 2, 9, 3)));
     }
     
     // SuperPairs methods
@@ -230,8 +232,8 @@ public class ExperimentationManager {
         }
         
         int bestSeriesLength = state.currentSeriesLength;
-        int xpAward = calculateXpAward(bestSeriesLength, session.getTier());
-        int bonusClicksEarned = calculateBonusClicks(bestSeriesLength);
+        int xpAward = calculateUltrasequencerXpAward(bestSeriesLength, session.getTier());
+        int bonusClicksEarned = calculateUltrasequencerBonusClicks(bestSeriesLength, session.getTier());
         
         // Persist bonus clicks into player's experimentation datapoint
         try {
@@ -469,8 +471,8 @@ public class ExperimentationManager {
      * Improved bonus clicks calculation based on milestones
      */
     private static int calculateChronomatronBonusClicks(int chainLength) {
-        // Use the highest tier's milestones for calculation
-        GameTier gameTier = TIERS.get("METAPHYSICAL"); // Use highest tier for max rewards
+        // Use the highest tier's milestones for calculation (now aligned to 5/7/9)
+        GameTier gameTier = TIERS.get("METAPHYSICAL");
         
         int totalClicks = 0;
         // Iterate through milestones to find the highest one reached
@@ -480,6 +482,29 @@ public class ExperimentationManager {
             }
         }
         
+        return totalClicks;
+    }
+
+    /**
+     * Ultrasequencer XP award per spec: xpPerNote from tier, capped at length 20
+     */
+    private static int calculateUltrasequencerXpAward(int bestSeriesLength, String tier) {
+        GameTier gameTier = TIERS.get(tier.toUpperCase());
+        if (gameTier == null) gameTier = TIERS.get("SUPREME");
+        int xpScore = Math.min(bestSeriesLength, 20);
+        return xpScore * gameTier.xpPerNote;
+    }
+
+    /**
+     * Ultrasequencer bonus clicks based on tier milestones
+     */
+    private static int calculateUltrasequencerBonusClicks(int bestSeriesLength, String tier) {
+        GameTier gameTier = TIERS.get(tier.toUpperCase());
+        if (gameTier == null) gameTier = TIERS.get("SUPREME");
+        int totalClicks = 0;
+        for (Map.Entry<Integer, Integer> milestone : gameTier.clickMilestones.entrySet()) {
+            if (bestSeriesLength >= milestone.getKey()) totalClicks = Math.max(totalClicks, milestone.getValue());
+        }
         return totalClicks;
     }
     
