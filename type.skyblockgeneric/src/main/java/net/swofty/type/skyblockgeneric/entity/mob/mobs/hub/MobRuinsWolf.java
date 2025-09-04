@@ -10,6 +10,7 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
@@ -129,12 +130,7 @@ public class MobRuinsWolf extends BestiaryMob implements RegionPopulator {
     }
 
     @Override
-    public Material getDisplayItem() {
-        return Material.PLAYER_HEAD;
-    }
-
-    @Override
-    public String getTexture() {
-        return "f4cb7a6bf6c32c49f2589147e6f0f888e9e35875dd1ea2a8af379ca710589e6b";
+    public GUIMaterial getGuiMaterial() {
+        return new GUIMaterial("f4cb7a6bf6c32c49f2589147e6f0f888e9e35875dd1ea2a8af379ca710589e6b");
     }
 }

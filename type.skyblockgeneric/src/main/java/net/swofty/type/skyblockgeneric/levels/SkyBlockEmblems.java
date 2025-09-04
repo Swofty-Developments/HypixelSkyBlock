@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.levels;
 import lombok.Getter;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.type.skyblockgeneric.levels.causes.LevelCause;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Getter
 public enum SkyBlockEmblems {
-    SKILLS(Material.DIAMOND_SWORD, List.of("§7These symbols are related to", "§7levelling up your Skills!"), List.of(
+    SKILLS(new GUIMaterial(Material.DIAMOND_SWORD), List.of("§7These symbols are related to", "§7levelling up your Skills!"), List.of(
             new SkyBlockEmblem("Mining Pickaxe", Material.STONE_PICKAXE, "§7⸕",
                     SkyBlockLevelCause.getSkillCause(SkillCategories.MINING, 50)),
             new SkyBlockEmblem("Mining Master", Material.GOLDEN_PICKAXE, "§6⸕",
@@ -34,11 +35,11 @@ public enum SkyBlockEmblems {
             new SkyBlockEmblem("Enchanting Pencil", Material.ENCHANTING_TABLE, "§7✎",
                     SkyBlockLevelCause.getSkillCause(SkillCategories.ENCHANTING, 50)),
             new SkyBlockEmblem("Enchanting Master", Material.ENCHANTING_TABLE, "§6✎",
-                    SkyBlockLevelCause.getSkillCause(SkillCategories.ENCHANTING, 60))
+                    SkyBlockLevelCause.getSkillCause(SkillCategories.ENCHANTING, 60)),
             //new SkyBlockEmblem("Alchemy Brew", Material.BREWING_STAND, "§7☕",
             //        SkyBlockLevelCause.getSkillCause(SkillCategories.ALCHEMY, 50)),
-            //new SkyBlockEmblem("Carpentry House", Material.CRAFTING_TABLE, "§7☖",
-            //        SkyBlockLevelCause.getSkillCause(SkillCategories.CARPENTRY, 50)),
+            new SkyBlockEmblem("Carpentry House", Material.CRAFTING_TABLE, "§7☖",
+                    SkyBlockLevelCause.getSkillCause(SkillCategories.CARPENTRY, 50))
             //new SkyBlockEmblem("Taming Clover", Material.WOLF_SPAWN_EGG, "§7♣",
             //        SkyBlockLevelCause.getSkillCause(SkillCategories.TAMING, 50)),
             //new SkyBlockEmblem("Taming Master", Material.WOLF_SPAWN_EGG, "§6♣",
@@ -48,7 +49,7 @@ public enum SkyBlockEmblems {
             //new SkyBlockEmblem("Social Master", Material.EMERALD, "§6℻",
             //        SkyBlockLevelCause.getSkillCause(SkillCategories.SOCIAL, 25)) //Skills not there rn, would throw an error
     )),
-    LEVELING(Material.SKELETON_SKULL, List.of("§7These symbols are unlocked by", "§7leveling up your SkyBlock Level."), List.of(
+    LEVELING(new GUIMaterial("3255327dd8e90afad681a19231665bea2bd06065a09d77ac1408837f9e0b242"), List.of("§7These symbols are unlocked by", "§7leveling up your SkyBlock Level."), List.of(
             new SkyBlockEmblem("Diamond", Material.NAME_TAG, "§7◆",
                     SkyBlockLevelCause.getLevelCause(10)),
             new SkyBlockEmblem("Spade", Material.NAME_TAG, "§7♠",
@@ -94,12 +95,12 @@ public enum SkyBlockEmblems {
     )),
     ;
 
-    private final Material displayMaterial;
+    private final GUIMaterial guiMaterial;
     private final List<String> description;
     private final List<SkyBlockEmblem> emblems;
 
-    SkyBlockEmblems(Material displayMaterial, List<String> description, List<SkyBlockEmblem> emblems) {
-        this.displayMaterial = displayMaterial;
+    SkyBlockEmblems(GUIMaterial guiMaterial, List<String> description, List<SkyBlockEmblem> emblems) {
+        this.guiMaterial = guiMaterial;
         this.description = description;
         this.emblems = emblems;
     }

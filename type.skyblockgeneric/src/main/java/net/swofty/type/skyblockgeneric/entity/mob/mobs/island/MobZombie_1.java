@@ -10,6 +10,7 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
@@ -114,13 +115,8 @@ public class MobZombie_1 extends BestiaryMob implements RegionPopulator {
     }
 
     @Override
-    public Material getDisplayItem() {
-        return Material.ZOMBIE_HEAD;
-    }
-
-    @Override
-    public String getTexture() {
-        return "";
+    public GUIMaterial getGuiMaterial() {
+        return new GUIMaterial(Material.ZOMBIE_HEAD);
     }
 
     @Override
