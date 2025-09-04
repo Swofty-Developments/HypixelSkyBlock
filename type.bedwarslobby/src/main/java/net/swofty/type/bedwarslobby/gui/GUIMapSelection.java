@@ -2,6 +2,7 @@ package net.swofty.type.bedwarslobby.gui;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -13,16 +14,20 @@ import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolO
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.bedwarsgeneric.game.GameType;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
+import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
+import net.swofty.type.generic.data.datapoints.DatapointStringList;
+import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
 
 public class GUIMapSelection extends HypixelPaginatedGUI<String> {
 
 	private final GameType type;
 
 	public GUIMapSelection(GameType type) {
-		super(InventoryType.CHEST_5_ROW);
+		super(InventoryType.CHEST_6_ROW);
 		this.type = type;
 	}
 
@@ -71,12 +76,51 @@ public class GUIMapSelection extends HypixelPaginatedGUI<String> {
 		return new GUIClickableItem(slot) {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStack.builder(Material.MAP)
-						.customName(Component.text(mapId, NamedTextColor.GREEN));
+				BedWarsDataHandler data = BedWarsDataHandler.getUser(player);
+				boolean isFav = false;
+				long joins = 0L;
+				if (data != null) {
+					var favs = data.get(BedWarsDataHandler.Data.FAVORITE_MAPS, DatapointStringList.class).getValue();
+					isFav = favs != null && favs.contains(mapId);
+					var counts = data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).getValue();
+					if (counts != null && counts.containsKey(mapId)) joins = counts.get(mapId);
+				}
+
+				return ItemStackCreator.getStack(
+						(isFav ? "§b✯ " : "") + "§a" + mapId,
+						Material.MAP,
+						1,
+						"§7" + type.getDisplayName(),
+						"",
+						"§7Available Servers: §aUnknown",
+						"§7Times Joined: §a" + joins,
+						"§7Map Selections: §aUnlimited",
+						"",
+						"§eClick to Play",
+						"§7Right click to toggle favorite!"
+				);
 			}
 
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+				if (e.getClick() instanceof Click.Right) {
+					BedWarsDataHandler data = BedWarsDataHandler.getUser(p);
+					if (data != null) {
+						var favs = data.get(BedWarsDataHandler.Data.FAVORITE_MAPS, DatapointStringList.class).getValue();
+						if (favs.contains(mapId)) favs.remove(mapId); else favs.add(mapId);
+						data.get(BedWarsDataHandler.Data.FAVORITE_MAPS, DatapointStringList.class).setValue(favs);
+					}
+					GUIMapSelection.this.open(p);
+					return;
+				}
+
+				BedWarsDataHandler data = BedWarsDataHandler.getUser(p);
+				if (data != null) {
+					var counts = data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).getValue();
+					counts.put(mapId, counts.getOrDefault(mapId, 0L) + 1);
+					data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).setValue(counts);
+				}
+
 				// set preference with both mode and map id then transfer
 				p.asProxyPlayer().setBedWarsJoinPreference(type.name(), mapId);
 				// ask orchestrator which server hosts this map, then transfer directly

@@ -5,6 +5,8 @@ import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.datapoints.DatapointLong;
+import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
+import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
@@ -130,7 +132,9 @@ public class BedWarsDataHandler extends DataHandler {
 	public enum Data {
 		EXPERIENCE("bedwars_experience", DatapointLong.class, new DatapointLong("bedwars_experience", 0L)),
 		TOKENS("bedwars_tokens", DatapointLong.class, new DatapointLong("bedwars_tokens", 0L)),
-		SLUMBER_TICKETS("bedwars_slumber_tickets", DatapointLong.class, new DatapointLong("bedwars_slumber_tickets", 0L));
+		SLUMBER_TICKETS("bedwars_slumber_tickets", DatapointLong.class, new DatapointLong("bedwars_slumber_tickets", 0L)),
+		FAVORITE_MAPS("bedwars_favorite_maps", DatapointStringList.class, new DatapointStringList("bedwars_favorite_maps")),
+		MAP_JOIN_COUNTS("bedwars_map_join_counts", DatapointMapStringLong.class, new DatapointMapStringLong("bedwars_map_join_counts"));
 
 		@Getter
 		private final String key;
