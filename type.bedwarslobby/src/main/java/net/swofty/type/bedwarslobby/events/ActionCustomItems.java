@@ -1,5 +1,6 @@
 package net.swofty.type.bedwarslobby.events;
 
+import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
@@ -23,6 +24,11 @@ public class ActionCustomItems implements HypixelEventClass {
 	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
 	public void run(PlayerUseItemEvent event) {
 		TypeBedWarsLobbyLoader.getItemHandler().onItemUse(event);
+	}
+
+	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
+	public void run(ItemDropEvent event) {
+		TypeBedWarsLobbyLoader.getItemHandler().onItemDrop(event);
 	}
 
 }

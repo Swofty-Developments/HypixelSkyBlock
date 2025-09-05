@@ -36,6 +36,7 @@ public class ShopManager {
 	private final ShopItem PICKAXE = new PickaxeShopItem();
 	private final ShopItem AXE = new AxeShopItem();
 	private final ShopItem FIREBALL = new FireballShopItem();
+	private final ShopItem POPUP_TOWER = new PopupTowerItem();
 	private final ShopItem GOLDEN_APPLE = new GappleShopItem();
 	private final ShopItem INVISIBILITY_POTION = new PotionShopItem("Invisibility Potion", "Makes you invisible for 30 seconds", 2, 1, Currency.EMERALD, PotionType.INVISIBILITY);
 	private final ShopItem SPEED_POTION = new PotionShopItem("Speed Potion", "Makes you fast for 30 seconds", 2, 1, Currency.EMERALD, PotionType.SWIFTNESS);
@@ -66,6 +67,7 @@ public class ShopManager {
 		addItemToCategories(DIAMOND_ARMOR, 3);
 		addItemToCategories(ENDER_PEARL, 7);
 		addItemToCategories(TNT, 7);
+		addItemToCategories(POPUP_TOWER, 7);
 		addItemToCategories(WATER_BUCKET, 7);
 		addItemToCategories(GOLDEN_APPLE, 7);
 		addItemToCategories(BRIDGE_EGG, 7);

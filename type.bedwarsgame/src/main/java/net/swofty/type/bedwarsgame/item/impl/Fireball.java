@@ -11,6 +11,7 @@ import net.minestom.server.entity.attribute.AttributeOperation;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.pvp.projectile.entities.FireballProjectile;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
@@ -25,7 +26,7 @@ public class Fireball extends BedWarsItem {
 
 	@Override
 	public ItemStack getBlandItem() {
-		return null;
+		return ItemStack.of(Material.FIRE_CHARGE);
 	}
 
 	@Override
