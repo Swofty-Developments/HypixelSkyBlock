@@ -178,14 +178,14 @@ public class SkyBlockVelocity {
     public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
         Player player = event.getPlayer();
 
-        if (!GameManager.hasType(ServerType.PROTOTYPE_LOBBY) || !GameManager.isAnyEmpty(ServerType.PROTOTYPE_LOBBY)) {
+        if (!GameManager.hasType(ServerType.BEDWARS_LOBBY) || !GameManager.isAnyEmpty(ServerType.BEDWARS_LOBBY)) {
             player.disconnect(
-                    Component.text("§cThere are no Prototype Lobby servers available at the moment.")
+                    Component.text("§cThere are no BEDWARS_LOBBY servers available at the moment.")
             );
             return;
         }
 
-        List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.PROTOTYPE_LOBBY);
+        List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.BEDWARS_LOBBY);
         if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
             TestFlowManager.ProxyTestFlowInstance instance = TestFlowManager.getTestFlowForPlayer(player.getUsername());
             player.sendPlainMessage("§7You are currently in test flow " + instance.getName() + ".");
@@ -212,12 +212,12 @@ public class SkyBlockVelocity {
 
         if (gameServers.isEmpty()) {
             player.disconnect(
-                    Component.text("§cThere are no servers (type=PROTOTYPE_LOBBY) servers available at the moment.")
+                    Component.text("§cThere are no servers (type=BEDWARS_LOBBY) servers available at the moment.")
             );
             return;
         }
 
-        List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.PROTOTYPE_LOBBY);
+        List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.BEDWARS_LOBBY);
         GameManager.GameServer toSendTo = gameServers.getFirst();
 
         for (BalanceConfiguration configuration : configurations) {
@@ -276,7 +276,7 @@ public class SkyBlockVelocity {
             try {
                 ServerType serverTypeToTry = serverType;
                 if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
-                    serverTypeToTry = ServerType.PROTOTYPE_LOBBY;
+                    serverTypeToTry = ServerType.BEDWARS_LOBBY;
                 }
 
                 GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverTypeToTry);
@@ -306,7 +306,7 @@ public class SkyBlockVelocity {
         event.setPing(new ServerPing(
                 event.getPing().getVersion(),
                 null,
-                Component.text("                §aHypixel Recreation §c[1.8-1.20]"),
+                Component.text("                §aHypixel Recreation §c[1.8-1.21]"),
                 event.getPing().getFavicon().orElse(null)
         ));
     }

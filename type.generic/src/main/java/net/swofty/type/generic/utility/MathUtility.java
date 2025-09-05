@@ -55,6 +55,10 @@ public class MathUtility {
         MinecraftServer.getSchedulerManager().scheduleTask(runnable, TaskSchedule.tick(ticks), TaskSchedule.stop());
     }
 
+    public static void delay(Runnable runnable, TaskSchedule schedule) {
+        MinecraftServer.getSchedulerManager().scheduleTask(runnable, schedule, TaskSchedule.stop());
+    }
+
     public static long ticksToMilliseconds(long ticks) {
         return ticks * 50;
     }
