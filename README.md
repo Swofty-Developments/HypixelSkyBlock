@@ -79,7 +79,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 
 
 ## 🐋 Running with Docker
-- Install the git repository using `git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git
+- Install the git repository using `git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git`
 
 Most parts about downloading and setting up files will be automated for you, but you will need to add the following files to the `configuration` folder:
 
