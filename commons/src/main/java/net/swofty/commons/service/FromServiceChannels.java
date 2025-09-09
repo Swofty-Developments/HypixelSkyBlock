@@ -11,7 +11,8 @@ public enum FromServiceChannels {
     KICK_FROM_GUI("kick-from-gui"),
     PROPAGATE_BAZAAR_TRANSACTION("propagate-bazaar-transaction"),
     SEND_MESSAGE("send-message"),
-    PROPAGATE_PARTY_EVENT("propagate_party_event");
+    PROPAGATE_PARTY_EVENT("propagate_party_event"),
+    INSTANTIATE_GAME("instantiate-game");
     ;
 
     private final String channelName;

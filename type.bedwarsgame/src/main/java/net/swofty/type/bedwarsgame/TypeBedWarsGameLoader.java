@@ -209,12 +209,31 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 			int maxPlayers = HypixelConst.getMaxPlayers();
 			int onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers().size();
 
+			// Convert internal Game objects to commons Game objects
+			List<net.swofty.commons.game.Game> commonsGames = new ArrayList<>();
+			for (Game internalGame : TypeBedWarsGameLoader.getGames()) {
+				net.swofty.commons.game.Game commonsGame = new net.swofty.commons.game.Game();
+				commonsGame.setGameId(UUID.fromString(internalGame.getGameId()));
+				commonsGame.setType(ServerType.BEDWARS_GAME);
+				commonsGame.setMap(internalGame.getMapEntry().getName());
+
+				// Get involved players from the internal game
+				List<UUID> playerUuids = new ArrayList<>();
+				for (Player player : internalGame.getPlayers()) {
+					playerUuids.add(player.getUuid());
+				}
+				commonsGame.setInvolvedPlayers(playerUuids);
+
+				commonsGames.add(commonsGame);
+			}
+
 			var heartbeat = new GameHeartbeatProtocolObject.HeartbeatMessage(
 					uuid,
 					shortName,
 					getType(),
 					maxPlayers,
-					onlinePlayers
+					onlinePlayers,
+					commonsGames
 			);
 			new ProxyService(ServiceType.ORCHESTRATOR).handleRequest(heartbeat);
 		}).repeat(TaskSchedule.seconds(1)).schedule();

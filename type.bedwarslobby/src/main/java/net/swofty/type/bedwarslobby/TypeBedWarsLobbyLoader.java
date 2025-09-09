@@ -48,7 +48,9 @@ public class TypeBedWarsLobbyLoader implements HypixelTypeLoader {
 
 	@Override
 	public List<ServiceType> getRequiredServices() {
-		return List.of();
+		return List.of(
+				ServiceType.ORCHESTRATOR
+		);
 	}
 
 	@Override

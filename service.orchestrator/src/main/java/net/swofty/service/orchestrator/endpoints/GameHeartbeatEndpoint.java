@@ -16,13 +16,15 @@ public class GameHeartbeatEndpoint implements ServiceEndpoint
     }
 
     @Override
-    public GameHeartbeatProtocolObject.HeartbeatResponse onMessage(ServiceProxyRequest message, GameHeartbeatProtocolObject.HeartbeatMessage body) {
+    public GameHeartbeatProtocolObject.HeartbeatResponse onMessage(ServiceProxyRequest message,
+                                                                   GameHeartbeatProtocolObject.HeartbeatMessage body) {
         OrchestratorCache.handleHeartbeat(
                 body.uuid(),
                 body.shortName(),
                 body.type(),
                 body.maxPlayers(),
-                body.onlinePlayers()
+                body.onlinePlayers(),
+                body.games()
         );
         return new GameHeartbeatProtocolObject.HeartbeatResponse(true);
     }

@@ -1,36 +1,156 @@
 package net.swofty.type.bedwarslobby.gui;
 
-import net.minestom.server.inventory.click.Click;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.objects.orchestrator.GetMapsProtocolObject;
-import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.commons.BedwarsGameType;
-import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
+import net.swofty.type.bedwarslobby.OrchestratorConnector;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.PaginationList;
-import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
-import net.swofty.type.generic.data.datapoints.DatapointStringList;
-import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
 
-public class GUIMapSelection extends HypixelPaginatedGUI<String> {
+import java.util.ArrayList;
+import java.util.List;
 
-	private final BedwarsGameType type;
+public class GUIMapSelection extends HypixelInventoryGUI {
 
-	public GUIMapSelection(BedwarsGameType type) {
-		super(InventoryType.CHEST_6_ROW);
-		this.type = type;
+	private final BedwarsGameType gameType;
+	private List<String> maps = new ArrayList<>();
+	private boolean mapsLoaded = false;
+
+	public GUIMapSelection(BedwarsGameType gameType) {
+		super("Map Selection - " + gameType.getDisplayName(), InventoryType.CHEST_4_ROW);
+		this.gameType = gameType;
 	}
 
 	@Override
 	public void onOpen(InventoryGUIOpenEvent e) {
+		HypixelPlayer player = e.player();
+
+		if (!mapsLoaded) {
+			// Show loading message
+			set(new GUIClickableItem(13) {
+				@Override
+				public ItemStack.Builder getItem(HypixelPlayer player) {
+					return ItemStackCreator.getStack("§eLoading maps...",
+							Material.CLOCK, 1,
+							"§7Please wait while we fetch",
+							"§7available maps for " + gameType.getDisplayName());
+				}
+
+				@Override
+				public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+					// No action while loading
+				}
+			});
+
+			loadMaps(player);
+		} else {
+			populateMaps(player);
+		}
+
+		updateItemStacks(getInventory(), getPlayer());
+	}
+
+	private void loadMaps(HypixelPlayer player) {
+		ProxyService orchestratorService = new ProxyService(ServiceType.ORCHESTRATOR);
+
+		GetMapsProtocolObject.GetMapsMessage message =
+				new GetMapsProtocolObject.GetMapsMessage(ServerType.BEDWARS_GAME, gameType.toString());
+
+		orchestratorService.handleRequest(message)
+				.thenAccept(response -> {
+					if (response instanceof GetMapsProtocolObject.GetMapsResponse mapsResponse) {
+						maps = mapsResponse.maps();
+						mapsLoaded = true;
+
+						// Refresh the GUI with the loaded maps
+						populateMaps(player);
+						updateItemStacks(getInventory(), player);
+					}
+				})
+				.exceptionally(throwable -> {
+					player.sendMessage("§cFailed to load maps: " + throwable.getMessage());
+					player.closeInventory();
+					return null;
+				});
+	}
+
+	private void populateMaps(HypixelPlayer player) {
+		if (maps.isEmpty()) {
+			set(new GUIClickableItem(13) {
+				@Override
+				public ItemStack.Builder getItem(HypixelPlayer player) {
+					return ItemStackCreator.getStack("§cNo maps available",
+							Material.BARRIER, 1,
+							"§7No maps are currently available",
+							"§7for " + gameType.getDisplayName(),
+							"",
+							"§eClick to go back");
+				}
+
+				@Override
+				public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+					new GUIPlay(gameType).open(player);
+				}
+			});
+			return;
+		}
+
+		// Add back button
+		set(new GUIClickableItem(31) {
+			@Override
+			public ItemStack.Builder getItem(HypixelPlayer player) {
+				return ItemStackCreator.getStack("§cBack",
+						Material.ARROW, 1,
+						"§7Go back to game selection");
+			}
+
+			@Override
+			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+				new GUIPlay(gameType).open(player);
+			}
+		});
+
+		// Add map options
+		int slot = 10;
+		for (String map : maps) {
+			if (slot > 16) slot = 19; // Move to next row
+			if (slot > 25) break; // Max capacity reached
+
+			final String mapName = map;
+			set(new GUIClickableItem(slot) {
+				@Override
+				public ItemStack.Builder getItem(HypixelPlayer player) {
+					return ItemStackCreator.getStack("§a" + mapName,
+							Material.FILLED_MAP, 1,
+							"§7Play " + gameType.getDisplayName(),
+							"§7on §e" + mapName,
+							"",
+							"§eClick to play!");
+				}
+
+				@Override
+				public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+					player.closeInventory();
+
+					if (OrchestratorConnector.isSearching(player.getUuid())) {
+						player.sendMessage("§cYou are already searching for a game!");
+						return;
+					}
+
+					OrchestratorConnector connector = new OrchestratorConnector(player);
+					connector.sendToGame(gameType, mapName);
+				}
+			});
+			slot++;
+		}
 	}
 
 	@Override
@@ -40,106 +160,6 @@ public class GUIMapSelection extends HypixelPaginatedGUI<String> {
 
 	@Override
 	public void onBottomClick(InventoryPreClickEvent e) {
-
+		// No-op
 	}
-
-	@Override
-	protected int[] getPaginatedSlots() {
-		return new int[]{10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34};
-	}
-
-	@Override
-	protected boolean shouldFilterFromSearch(String query, String item) {
-		return false;
-	}
-
-	@Override
-	protected PaginationList<String> fillPaged(HypixelPlayer player, PaginationList<String> paged) {
-		// fetch maps for this server type from orchestrator (blocking)
-		GetMapsProtocolObject.GetMapsResponse resp = (GetMapsProtocolObject.GetMapsResponse) new ProxyService(ServiceType.ORCHESTRATOR)
-				.handleRequest(new GetMapsProtocolObject.GetMapsMessage(ServerType.BEDWARS_GAME, type.name()))
-				.join();
-
-		paged.addAll(resp.maps());
-		return paged;
-	}
-
-	@Override
-	protected void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
-
-	}
-
-	@Override
-	protected GUIClickableItem createItemFor(String mapId, int slot, HypixelPlayer player) {
-		return new GUIClickableItem(slot) {
-			@Override
-			public ItemStack.Builder getItem(HypixelPlayer player) {
-				BedWarsDataHandler data = BedWarsDataHandler.getUser(player);
-				boolean isFav = false;
-				long joins = 0L;
-				if (data != null) {
-					var favs = data.get(BedWarsDataHandler.Data.FAVORITE_MAPS, DatapointStringList.class).getValue();
-					isFav = favs != null && favs.contains(mapId);
-					var counts = data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).getValue();
-					if (counts != null && counts.containsKey(mapId)) joins = counts.get(mapId);
-				}
-
-				return ItemStackCreator.getStack(
-						(isFav ? "§b✯ " : "") + "§a" + mapId,
-						Material.MAP,
-						1,
-						"§7" + type.getDisplayName(),
-						"",
-						"§7Available Servers: §aUnknown",
-						"§7Times Joined: §a" + joins,
-						"§7Map Selections: §aUnlimited",
-						"",
-						"§eClick to Play",
-						"§7Right click to toggle favorite!"
-				);
-			}
-
-			@Override
-			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-				if (e.getClick() instanceof Click.Right) {
-					BedWarsDataHandler data = BedWarsDataHandler.getUser(p);
-					if (data != null) {
-						var favs = data.get(BedWarsDataHandler.Data.FAVORITE_MAPS, DatapointStringList.class).getValue();
-						if (favs.contains(mapId)) favs.remove(mapId); else favs.add(mapId);
-						data.get(BedWarsDataHandler.Data.FAVORITE_MAPS, DatapointStringList.class).setValue(favs);
-					}
-					GUIMapSelection.this.open(p);
-					return;
-				}
-
-				BedWarsDataHandler data = BedWarsDataHandler.getUser(p);
-				if (data != null) {
-					var counts = data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).getValue();
-					counts.put(mapId, counts.getOrDefault(mapId, 0L) + 1);
-					data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).setValue(counts);
-				}
-
-				// set preference with both mode and map id then transfer
-				p.asProxyPlayer().setBedWarsJoinPreference(type.name(), mapId);
-				// ask orchestrator which server hosts this map, then transfer directly
-				var resp = (GetServerForMapProtocolObject.GetServerForMapResponse) new ProxyService(ServiceType.ORCHESTRATOR)
-						.handleRequest(new GetServerForMapProtocolObject.GetServerForMapMessage(
-								ServerType.BEDWARS_GAME, mapId, type.name(), 1
-						))
-						.join();
-				if (resp != null && resp.server() != null) {
-					p.asProxyPlayer().transferToWithIndication(resp.server().uuid());
-				} else {
-					// just send it to a game (should probably error)
-					p.sendTo(ServerType.BEDWARS_GAME);
-				}
-			}
-		};
-	}
-
-	@Override
-	protected String getTitle(HypixelPlayer player, String query, int page, PaginationList<String> paged) {
-		return "Bed Wars " + type.getDisplayName();
-	}
-
 }

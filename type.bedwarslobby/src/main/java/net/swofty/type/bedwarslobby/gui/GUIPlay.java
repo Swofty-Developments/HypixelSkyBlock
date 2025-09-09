@@ -6,6 +6,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.BedwarsGameType;
+import net.swofty.type.bedwarslobby.OrchestratorConnector;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -22,8 +23,6 @@ public class GUIPlay extends HypixelInventoryGUI {
 
 	@Override
 	public void onOpen(InventoryGUIOpenEvent e) {
-		HypixelPlayer player = e.player();
-
 		int playSlot = type == BedwarsGameType.FOUR_FOUR ? 13 : 12;
 		set(new GUIClickableItem(playSlot) {
 			@Override
@@ -37,7 +36,15 @@ public class GUIPlay extends HypixelInventoryGUI {
 
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-				player.sendTo(ServerType.BEDWARS_GAME);
+				player.closeInventory();
+
+				if (OrchestratorConnector.isSearching(player.getUuid())) {
+					player.sendMessage("§cYou are already searching for a game!");
+					return;
+				}
+
+				OrchestratorConnector connector = new OrchestratorConnector(player);
+				connector.sendToGame(type);
 			}
 		});
 
