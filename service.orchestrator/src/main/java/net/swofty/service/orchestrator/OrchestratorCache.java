@@ -51,7 +51,7 @@ public class OrchestratorCache {
 		return pickServerForMap(type, map, null, neededSlots);
 	}
 
-	public static GameServerState pickServerForMap(ServerType type, String map, String mode, int neededSlots) {
+	public static GameServerState pickServerForMap(ServerType type, String map, Bed, int neededSlots) {
 		cleanup();
 		List<GameServerState> candidates = new ArrayList<>();
 		for (GameServerState s : serversByShortName.values()) {

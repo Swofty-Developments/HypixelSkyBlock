@@ -47,7 +47,7 @@ public final class TeamManager {
 		List<MapsConfig.MapEntry.MapConfiguration.MapTeam> availableTeams = new ArrayList<>(configuredTeams);
 		Collections.shuffle(availableTeams);
 
-		int teamSize = game.getGameType().getTeamSize();
+		int teamSize = game.getBedwarsGameType().getTeamSize();
 		if (teamSize <= 0) teamSize = 1;
 
 		int playerIndex = 0;

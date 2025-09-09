@@ -22,7 +22,7 @@ import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
-import net.swofty.type.bedwarsgeneric.game.GameType;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.type.bedwarsgeneric.game.MapsConfig;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
@@ -39,7 +39,7 @@ public final class Game {
 	public static final Tag<Boolean> ELIMINATED_TAG = Tag.Boolean("eliminated");
 
 	private final InstanceContainer instanceContainer;
-	private final GameType gameType = GameType.SOLO;
+	private final BedwarsGameType bedwarsGameType = BedwarsGameType.SOLO;
 	private final List<BedWarsPlayer> players = new ArrayList<>();
 	private final String gameId;
 	private final MapsConfig.MapEntry mapEntry;
@@ -186,14 +186,14 @@ public final class Game {
 	}
 
 	private boolean hasCapacityForPlayer() {
-		int teamSize = gameType.getTeamSize();
+		int teamSize = bedwarsGameType.getTeamSize();
 		if (teamSize <= 0) teamSize = 1;
 		int maxPlayers = mapEntry.getConfiguration().getTeams().size() * teamSize;
 		return players.size() < maxPlayers;
 	}
 
 	private boolean hasMinimumPlayersForStart() {
-		int teamSize = gameType.getTeamSize();
+		int teamSize = bedwarsGameType.getTeamSize();
 		if (teamSize <= 0) teamSize = 1;
 
 		int minPlayersRequired = teamSize * Math.min(2, mapEntry.getConfiguration().getTeams().size());
@@ -232,7 +232,7 @@ public final class Game {
 	}
 
 	private void updatePlayerCount() {
-		int teamSize = gameType.getTeamSize();
+		int teamSize = bedwarsGameType.getTeamSize();
 		if (teamSize <= 0) teamSize = 1;
 		int maxPlayers = mapEntry.getConfiguration().getTeams().size() * teamSize;
 		Logger.debug("Game {} player count: {}/{}", gameId, players.size(), maxPlayers);

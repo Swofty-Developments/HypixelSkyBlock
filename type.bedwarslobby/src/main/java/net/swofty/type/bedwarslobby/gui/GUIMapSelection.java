@@ -1,7 +1,5 @@
 package net.swofty.type.bedwarslobby.gui;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
@@ -12,7 +10,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.objects.orchestrator.GetMapsProtocolObject;
 import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.bedwarsgeneric.game.GameType;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -24,9 +22,9 @@ import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
 
 public class GUIMapSelection extends HypixelPaginatedGUI<String> {
 
-	private final GameType type;
+	private final BedwarsGameType type;
 
-	public GUIMapSelection(GameType type) {
+	public GUIMapSelection(BedwarsGameType type) {
 		super(InventoryType.CHEST_6_ROW);
 		this.type = type;
 	}

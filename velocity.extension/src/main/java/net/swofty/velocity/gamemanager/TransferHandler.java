@@ -132,17 +132,6 @@ public record TransferHandler(Player player) {
 			}
 
 			player.sendMessage(Component.text("§7Sending to server " + server.displayName() + "..."));
-			// forward any stored BedWars preference before transfer, if present
-			org.json.JSONObject pref = net.swofty.velocity.bedwars.BedWarsPreferenceStore.take(player.getUniqueId());
-			if (pref != null) {
-				net.swofty.velocity.redis.RedisMessage.sendMessageToServer(sendingToServerUUID,
-						net.swofty.commons.proxy.FromProxyChannels.BEDWARS_JOIN_PREFERENCE,
-						new org.json.JSONObject()
-								.put("uuid", player.getUniqueId().toString())
-								.put("mode", pref.optString("mode", ""))
-								.put("map", pref.optString("map", ""))
-				).join();
-			}
 			player.createConnectionRequest(server.registeredServer()).connectWithIndication();
 
 			RedisMessage.sendMessageToServer(originServerUUID,

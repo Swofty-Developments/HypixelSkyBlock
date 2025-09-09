@@ -64,9 +64,6 @@ public class ListenerPlayerHandler extends RedisListener {
 						serverInfo.shortDisplayName()
 				).toJSON());
 			}
-			case BEDWARS_SET_PREFERENCE -> {
-				net.swofty.velocity.bedwars.BedWarsPreferenceStore.put(uuid, message);
-			}
 			case TRANSFER_WITH_UUID -> {
 				UUID server = UUID.fromString(message.getString("server_uuid"));
 				System.out.println("Transfer with UUID: " + server);
@@ -102,18 +99,6 @@ public class ListenerPlayerHandler extends RedisListener {
 				}
 
 				TransferHandler.playersGoalServerType.remove(player);
-				// forward any stored Be dWars preference to the target server before final transfer
-				org.json.JSONObject pref = net.swofty.velocity.bedwars.BedWarsPreferenceStore.take(uuid);
-				if (pref != null) {
-					RedisMessage.sendMessageToServer(server,
-							FromProxyChannels.BEDWARS_JOIN_PREFERENCE,
-							new JSONObject()
-									.put("uuid", uuid.toString())
-									.put("mode", pref.optString("mode", ""))
-									.put("map", pref.optString("map", ""))
-					).join();
-				}
-
 				transferHandler.noLimboTransferTo(serverInfo.registeredServer());
 				transferHandler.removeFromDisregard();
 			}

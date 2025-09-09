@@ -1,10 +1,10 @@
-package net.swofty.type.bedwarsgeneric.game;
+package net.swofty.commons;
 
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
-public enum GameType {
+public enum BedwarsGameType {
 	SOLO(0, "Solo", 1, 8),
 	DOUBLES(1, "Doubles", 2, 8),
 	THREE_THREE_THREE_THREE(2, "3v3v3v3", 3, 4),
@@ -18,7 +18,7 @@ public enum GameType {
 	private final int teamSize;
 	private final int teams;
 
-	GameType(int id, String displayName, int teamSize, int teams) {
+	BedwarsGameType(int id, String displayName, int teamSize, int teams) {
 		this.id = id;
 		this.displayName = displayName;
 		this.teamSize = teamSize;
@@ -26,8 +26,8 @@ public enum GameType {
 	}
 
 	@Nullable
-	public static GameType from(String field) {
-		for (GameType type : values()) {
+	public static BedwarsGameType from(String field) {
+		for (BedwarsGameType type : values()) {
 			if (type.name().equalsIgnoreCase(field)) {
 				return type;
 			}
@@ -36,8 +36,8 @@ public enum GameType {
 	}
 
 	@Nullable
-	public static GameType fromDisplayName(String displayName) {
-		for (GameType type : values()) {
+	public static BedwarsGameType fromDisplayName(String displayName) {
+		for (BedwarsGameType type : values()) {
 			if (type.displayName.equalsIgnoreCase(displayName)) {
 				return type;
 			}
@@ -46,8 +46,8 @@ public enum GameType {
 	}
 
 	@Nullable
-	public static GameType fromId(int id) {
-		for (GameType type : values()) {
+	public static BedwarsGameType fromId(int id) {
+		for (BedwarsGameType type : values()) {
 			if (type.id == id) {
 				return type;
 			}

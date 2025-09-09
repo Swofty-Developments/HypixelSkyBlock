@@ -186,20 +186,6 @@ public class ProxyPlayer {
         return future;
     }
 
-    public void setBedWarsJoinPreference(String mode, String map) {
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-        json.put("mode", mode == null ? "" : mode);
-        json.put("map", map == null ? "" : map);
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.BEDWARS_SET_PREFERENCE;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {});
-    }
-
     public void refreshCoopData(String datapoint) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());

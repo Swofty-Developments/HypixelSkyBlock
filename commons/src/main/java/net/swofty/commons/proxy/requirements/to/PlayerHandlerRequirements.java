@@ -28,7 +28,6 @@ public class PlayerHandlerRequirements extends ProxyChannelRequirements {
 		REFRESH_COOP_DATA,
 		MESSAGE,
 		TRANSFER_WITH_UUID,
-		GET_SERVER,
-		BEDWARS_SET_PREFERENCE;
+		GET_SERVER
 	}
 }

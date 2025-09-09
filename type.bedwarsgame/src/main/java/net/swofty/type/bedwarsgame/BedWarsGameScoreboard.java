@@ -60,7 +60,7 @@ public class BedWarsGameScoreboard {
 					addLine("§7 ", sidebar);
 					addLine("§fStarting in §a" + game.getCountdown().getRemainingSeconds() + "s", sidebar);
 					addLine("§7 ", sidebar);
-					addLine("§fMode: §a" + game.getGameType().getDisplayName(), sidebar);
+					addLine("§fMode: §a" + game.getBedwarsGameType().getDisplayName(), sidebar);
 					addLine("§fVersion: §7v1.9", sidebar);
 				} else {
 					String eventName = game.getEventManager().getNextEvent() != null

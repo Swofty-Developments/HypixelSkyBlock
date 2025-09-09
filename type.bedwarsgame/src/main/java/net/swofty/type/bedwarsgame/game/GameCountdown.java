@@ -151,7 +151,7 @@ public final class GameCountdown {
 	}
 
 	private boolean hasMinimumPlayers() {
-		int teamSize = game.getGameType().getTeamSize();
+		int teamSize = game.getBedwarsGameType().getTeamSize();
 		if (teamSize <= 0) teamSize = 1;
 
 		int minPlayersRequired = teamSize * Math.min(2, game.getMapEntry().getConfiguration().getTeams().size());

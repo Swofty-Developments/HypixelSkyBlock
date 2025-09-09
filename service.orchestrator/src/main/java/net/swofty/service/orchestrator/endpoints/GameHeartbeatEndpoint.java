@@ -21,8 +21,6 @@ public class GameHeartbeatEndpoint implements ServiceEndpoint
                 body.uuid(),
                 body.shortName(),
                 body.type(),
-                body.maps(),
-                body.mode(),
                 body.maxPlayers(),
                 body.onlinePlayers()
         );

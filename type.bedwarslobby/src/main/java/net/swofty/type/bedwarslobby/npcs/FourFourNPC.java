@@ -5,7 +5,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.proxyapi.ProxyInformation;
-import net.swofty.type.bedwarsgeneric.game.GameType;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.type.bedwarslobby.gui.GUIPlay;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCParameters;
@@ -68,6 +68,6 @@ public class FourFourNPC extends HypixelNPC {
 
 	@Override
 	public void onClick(PlayerClickNPCEvent e) {
-		new GUIPlay(GameType.FOUR_FOUR).open(e.player());
+		new GUIPlay(BedwarsGameType.FOUR_FOUR).open(e.player());
 	}
 }

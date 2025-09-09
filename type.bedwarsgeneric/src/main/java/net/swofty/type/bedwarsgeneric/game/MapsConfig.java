@@ -1,6 +1,7 @@
 package net.swofty.type.bedwarsgeneric.game;
 
 import lombok.Getter;
+import net.swofty.commons.BedwarsGameType;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class MapsConfig {
 
 		@Getter
 		public static class MapConfiguration {
-			private List<GameType> types;
+			private List<BedwarsGameType> types;
 			private Map<String, TeamGeneratorConfig> generator;
 			private MapBounds bounds;
 			private List<MapTeam> teams;

@@ -31,7 +31,7 @@ import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgeneric.game.GameType;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.type.bedwarsgeneric.game.MapsConfig;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItemHandler;
@@ -158,12 +158,12 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 			if (mapsConfig != null && mapsConfig.getMaps() != null) {
 				for (MapsConfig.MapEntry e : mapsConfig.getMaps()) {
 					var cfg = e.getConfiguration();
-					List<GameType> types = (cfg != null) ? cfg.getTypes() : null;
+					List<BedwarsGameType> types = (cfg != null) ? cfg.getTypes() : null;
 					boolean allowed;
 					if (types == null || types.isEmpty()) {
 						allowed = true;
 					} else {
-						allowed = types.contains(GameType.SOLO);
+						allowed = types.contains(BedwarsGameType.SOLO);
 					}
 					if (allowed) filteredMaps.add(e);
 				}
@@ -202,40 +202,22 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsgame.item.impl", BedWarsItem.class).forEach(itemHandler::add);
 		MinestomPvP.init();
 
-		// create games automatically
-		MinecraftServer.getSchedulerManager().buildTask(() -> {
-			if (mapsConfig == null || mapsConfig.getMaps() == null || mapsConfig.getMaps().isEmpty()) return;
-			while (games.size() < MAX_GAMES) {
-				MapsConfig.MapEntry entry = nextMapEntry();
-				if (entry == null) break;
-				try {
-					createGame(entry);
-				} catch (Exception ignored) {
-				}
-			}
-		}).repeat(TaskSchedule.seconds(5)).schedule();
-
 		// heartbeat to orchestrator with supported maps and current load
 		MinecraftServer.getSchedulerManager().buildTask(() -> {
 			UUID uuid = HypixelConst.getServerUUID();
 			String shortName = HypixelConst.getShortenedServerName();
-			int maxPlayers = GameType.SOLO.getTeamSize() * GameType.SOLO.getTeams();
+			int maxPlayers = HypixelConst.getMaxPlayers();
 			int onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers().size();
-
-			List<String> mapIds = new ArrayList<>();
-			for (MapsConfig.MapEntry e : filteredMaps) mapIds.add(e.getId());
 
 			var heartbeat = new GameHeartbeatProtocolObject.HeartbeatMessage(
 					uuid,
 					shortName,
 					getType(),
-					mapIds,
-					GameType.SOLO.name(),
 					maxPlayers,
 					onlinePlayers
 			);
 			new ProxyService(ServiceType.ORCHESTRATOR).handleRequest(heartbeat);
-		}).repeat(TaskSchedule.seconds(5)).schedule();
+		}).repeat(TaskSchedule.seconds(1)).schedule();
 	}
 
 	@Override

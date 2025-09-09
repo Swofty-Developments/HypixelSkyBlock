@@ -5,7 +5,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
-import net.swofty.type.bedwarsgeneric.game.GameType;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -13,9 +13,9 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIPlay extends HypixelInventoryGUI {
 
-	private final GameType type;
+	private final BedwarsGameType type;
 
-	public GUIPlay(GameType type) {
+	public GUIPlay(BedwarsGameType type) {
 		super("Play Bed Wars", InventoryType.CHEST_4_ROW);
 		this.type = type;
 	}
@@ -24,7 +24,7 @@ public class GUIPlay extends HypixelInventoryGUI {
 	public void onOpen(InventoryGUIOpenEvent e) {
 		HypixelPlayer player = e.player();
 
-		int playSlot = type == GameType.FOUR_FOUR ? 13 : 12;
+		int playSlot = type == BedwarsGameType.FOUR_FOUR ? 13 : 12;
 		set(new GUIClickableItem(playSlot) {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
@@ -37,13 +37,12 @@ public class GUIPlay extends HypixelInventoryGUI {
 
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-				player.asProxyPlayer().setBedWarsJoinPreference(type.name(), "");
 				player.sendTo(ServerType.BEDWARS_GAME);
 			}
 		});
 
 
-		if (type != GameType.FOUR_FOUR) {
+		if (type != BedwarsGameType.FOUR_FOUR) {
 			set(new GUIClickableItem(14) {
 
 				@Override
