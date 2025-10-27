@@ -38,8 +38,6 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-import java.net.InetAddress;
-
 
 public class Hypixel {
     @Getter
@@ -245,8 +243,7 @@ public class Hypixel {
 
         JSONObject registerMessage = new JSONObject()
                 .put("type", serverType.name())
-                .put("max_players", maxPlayers)
-                .put("host", InetAddress.getLocalHost().getHostName());
+                .put("max_players", maxPlayers);
 
         // Add test flow information if this is a test flow server
         if (isTestFlow) {
