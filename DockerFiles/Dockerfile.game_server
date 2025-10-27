@@ -53,14 +53,6 @@ RUN cp configuration_files/entrypoint.sh ./entrypoint.sh
 
 RUN chmod +x entrypoint.sh
 
-# Copy the Forwarding Secret
-RUN cp configuration_files/forwarding.secret ./forwarding.secret
-
-# Update resources.json with the forwarding secret
-RUN secret=$(cat ./forwarding.secret) && \
-    jq --arg secret "$secret" '.["velocity-secret"] = $secret' ./configuration/resources.json > ./configuration/resources.json.tmp && \
-    mv ./configuration/resources.json.tmp ./configuration/resources.json
-
 # Set the settings.yml bind: ip: 'localhost' to bind: ip: '0.0.0.0'
 RUN sed -i "s/ip: 'localhost'/ip: '0.0.0.0'/" ./settings.yml
 
