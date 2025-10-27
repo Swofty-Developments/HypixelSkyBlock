@@ -57,27 +57,208 @@ services:
       retries: 5
       start_period: 10s
 
-  game_server:
+  game_server_builder:
     build:
       context: .
       dockerfile: "./DockerFiles/Dockerfile.game_server"
-    container_name: hypixel_game_server
-    depends_on:
-      proxy:
-        condition: service_healthy
-    ports:
-      - "25566:25566"
-      - "65535:65535"
-      - "20000:20000"
+    image: game_server_prepared
+    container_name: game_server_builder
     volumes:
       - ./configuration:/app/configuration_files
     networks:
       - hypixel_network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:25566"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+
+  hypixelcore_island:
+    image: game_server_prepared
+    container_name: hypixelcore_island
+    restart: "unless-stopped"
+    environment:
+      SERVICE_CMD: java --enable-preview -jar HypixelCore.jar SKYBLOCK_ISLAND
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+
+  hypixelcore_hub:
+    image: game_server_prepared
+    container_name: hypixelcore_hub
+    restart: "unless-stopped"
+    environment:
+      SERVICE_CMD: java --enable-preview -jar HypixelCore.jar SKYBLOCK_HUB
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+
+  hypixelcore_farming:
+    image: game_server_prepared
+    container_name: hypixelcore_farming
+    restart: "unless-stopped"
+    environment:
+      SERVICE_CMD: java --enable-preview -jar HypixelCore.jar SKYBLOCK_THE_FARMING_ISLANDS
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+
+  prototype_lobby:
+    image: game_server_prepared
+    container_name: prototype_lobby
+    restart: "unless-stopped"
+    environment:
+      SERVICE_CMD: java --enable-preview -jar HypixelCore.jar PROTOTYPE_LOBBY
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+
+  # bedwars_lobby:
+  #   image: game_server_prepared
+  #   container_name: bedwars_lobby
+  #   restart: "unless-stopped"
+  #   environment:
+  #     SERVICE_CMD: java --enable-preview -jar HypixelCore.jar BEDWARS_LOBBY
+  #   depends_on:
+  #     proxy:
+  #       condition: service_healthy
+  #     game_server_builder:
+  #       condition: service_started
+  #   volumes:
+  #     - ./configuration:/app/configuration_files
+  #   networks:
+  #     - hypixel_network
+  
+  # bedwars_game:
+  #   image: game_server_prepared
+  #   container_name: bedwars_game
+  #   restart: "unless-stopped"
+  #   environment:
+  #     SERVICE_CMD: java --enable-preview -jar HypixelCore.jar BEDWARS_GAME
+  #   depends_on:
+  #     proxy:
+  #       condition: service_healthy
+  #     game_server_builder:
+  #       condition: service_started
+  #   volumes:
+  #     - ./configuration:/app/configuration_files
+  #   networks:
+  #     - hypixel_network
+
+  nanolimbo:
+    image: game_server_prepared
+    container_name: nanolimbo
+    restart: "unless-stopped"
+    environment:
+      SERVICE_CMD: java -jar NanoLimbo-1.9.8.jar
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+
+  service_api:
+    image: game_server_prepared
+    container_name: service_api
+    restart: "unless-stopped"
+    environment:
+      SERVICE_CMD: java -jar ServiceAPI.jar
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started   
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+
+  service_auctionhouse:
+    image: game_server_prepared
+    container_name: service_auctionhouse
+    restart: "unless-stopped"
+    environment:
+      SERVICE_CMD: java -jar ServiceAuctionHouse.jar
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+
+  service_bazaar:
+    image: game_server_prepared
+    container_name: service_bazaar
+    restart: "unless-stopped"
+    environment:
+      SERVICE_CMD: java -jar ServiceBazaar.jar
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+
+  service_itemtracker:
+    image: game_server_prepared
+    container_name: service_itemtracker
+    restart: "unless-stopped"
+    environment:
+      SERVICE_CMD: java -jar ServiceItemTracker.jar
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+
+  service_party:
+    image: game_server_prepared
+    container_name: service_party
+    restart: "unless-stopped"
+    environment:
+      SERVICE_CMD: java -jar ServiceParty.jar
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
 
 volumes:
   mongodb-data:

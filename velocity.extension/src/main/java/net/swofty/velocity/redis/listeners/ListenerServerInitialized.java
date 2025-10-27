@@ -2,6 +2,7 @@ package net.swofty.velocity.redis.listeners;
 
 import net.swofty.commons.ServerType;
 import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.Configuration;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
@@ -18,10 +19,16 @@ public class ListenerServerInitialized extends RedisListener {
         if (message.has("port")) {
             port = message.getInt("port");
         }
+
+        String host = message.has("host")
+                ? message.getString("host")
+                : Configuration.get("host-name"); // fallback to config if not present
+
         int maxPlayers = message.getInt("max_players");
 
-        GameManager.GameServer server = GameManager.addServer(type, serverUUID, port, maxPlayers);
-
-        return new JSONObject().put("port", server.registeredServer().getServerInfo().getAddress().getPort());
+        GameManager.GameServer server = GameManager.addServer(type, serverUUID, host, port, maxPlayers);
+        return new JSONObject()
+                .put("host", server.registeredServer().getServerInfo().getAddress().getHostString())
+                .put("port", server.registeredServer().getServerInfo().getAddress().getPort());
     }
 }

@@ -23,10 +23,11 @@ public class GameManager {
     @Getter
     private static Map<ServerType, ArrayList<GameServer>> servers = new HashMap<>();
 
-    public static GameServer addServer(ServerType type, UUID serverID, int port, int maxPlayers) {
+    public static GameServer addServer(ServerType type, UUID serverID, String host, int port, int maxPlayers) {
         port = port == -1 ? getNextAvailablePort() : port;    // if port is -1 then get next available port
+        host = (host == null || host.isEmpty()) ? Configuration.get("host-name") : host; // if host is null then get from config
         RegisteredServer registeredServer = SkyBlockVelocity.getServer().registerServer(
-                new ServerInfo(serverID.toString(), new InetSocketAddress(Configuration.get("host-name"), port))
+                new ServerInfo(serverID.toString(), new InetSocketAddress(host, port))
         );
 
         String rootName = maxPlayers <= 20 ? "mini" : "mega";
