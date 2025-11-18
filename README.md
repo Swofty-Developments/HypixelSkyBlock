@@ -79,11 +79,11 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 
 
 ## 🐋 Running with Docker
-- Install the git repository using `git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git
+- Install the git repository using `git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git`
 
 Most parts about downloading and setting up files will be automated for you, but you will need to add the following files to the `configuration` folder:
 
-- Download the [world files for the Hub and Island worlds](https://www.mediafire.com/file/5oko5y8h7uj6i9z/world.zip/file). Make sure they are named as **world.zip**
+- Download the [world files for the Hub and Island worlds](https://www.mediafire.com/file/xxnxgkqejlh17fn/HypixelRecreationWorlds.zip/file). Make sure they are named as **world.zip**
 
 - In your configuration file Remove the default `resources.json` and rename `resources.json.docker` to `resources.json`
 

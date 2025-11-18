@@ -89,7 +89,7 @@ public class SkyBlockVelocity {
         plugin = this;
         server = tempServer;
 
-        limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("host-name"),
+        limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("limbo-host-name"),
                 Integer.parseInt(Configuration.get("limbo-port")))));
     }
 

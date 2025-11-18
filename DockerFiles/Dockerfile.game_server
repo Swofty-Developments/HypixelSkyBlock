@@ -1,4 +1,4 @@
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
@@ -14,6 +14,7 @@ ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/lat
 ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceBazaar.jar ./ServiceBazaar.jar
 ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceItemTracker.jar ./ServiceItemTracker.jar
 ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDataMutex.jar ./ServiceDataMutex.jar
+ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceParty.jar ./ServiceParty.jar
 
 # Copy configuration data
 COPY ./configuration /app/configuration_files
@@ -21,43 +22,38 @@ COPY ./configuration /app/configuration_files
 # Create configuration folder
 RUN mkdir -p configuration
 
-RUN ls -la configuration_files/ > test.txt
-
 # Copy resources.json
 RUN cp configuration_files/resources.json ./configuration/resources.json
+
+# Make required folders
+RUN mkdir -p ./configuration/skyblock/islands
 
 RUN cp configuration_files/world.zip ./world.zip
 
 RUN unzip world.zip -d ./configuration && rm world.zip
 
+# Move to islands folder
+RUN mv ./configuration/hypixel_hub ./configuration/skyblock/islands/hypixel_skyblock_hub
+RUN mv ./configuration/hypixel_island_template ./configuration/skyblock/islands/hypixel_skyblock_island_template
+
 # Expose the required ports
 EXPOSE 25565 65535 8080 20000
 
 # Copy NanoLimbo
-RUN cp configuration_files/NanoLimbo-1.9.1-all.jar ./NanoLimbo-1.9.1-all.jar
+RUN cp configuration_files/NanoLimbo-1.9.8.jar ./NanoLimbo-1.9.8.jar
 
 # Copy the Nano Config
 RUN cp configuration_files/settings.yml ./settings.yml
 
-# Copy Songs Folder
-RUN cp -R configuration_files/songs ./configuration/skyblock/songs
-
-# Copy Collections
-RUN cp -R configuration_files/collections ./configuration/skyblock/collections
-
-# Copy Items
-RUN cp -R configuration_files/items ./configuration/skyblock/items
-
-# Copy SkyBlockPack
-RUN cp -R configuration_files/SkyBlockPack ./configuration/skyblock/SkyBlockPack
-
-# Copy pack_textures
-RUN cp -R configuration_files/pack_textures ./configuration/skyblock/pack_textures
+# Copy Skyblock files
+RUN cp -a configuration_files/skyblock/. configuration/skyblock/
 
 # Copy Entrypoint Script
 RUN cp configuration_files/entrypoint.sh ./entrypoint.sh
 
 RUN chmod +x entrypoint.sh
 
-# Run all services in the background and keep HypixelCore in the foreground
+# Set the settings.yml bind: ip: 'localhost' to bind: ip: '0.0.0.0'
+RUN sed -i "s/ip: 'localhost'/ip: '0.0.0.0'/" ./settings.yml
+
 CMD ["sh", "entrypoint.sh"]
