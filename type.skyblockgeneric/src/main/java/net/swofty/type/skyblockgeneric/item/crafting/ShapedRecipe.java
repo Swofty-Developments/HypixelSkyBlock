@@ -234,8 +234,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                                     return true;
                                 }
                             } catch (Exception e) {
-                                Logger.error("Error in recipe " + recipe.getResult().toString() + " at row " + row + " col " + col);
-                                e.printStackTrace();
+                                Logger.error(e, "Error in recipe {} at row {} col {}", recipe.getResult().toString(), row, col);
                             }
                         }
                     }
@@ -270,16 +269,25 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
     private static boolean matchesPattern(ShapedRecipe recipe, ItemStack[][] grid, int startRow, int startCol) {
         List<String> pattern = recipe.getPattern();
+        Map<Character, ItemQuantifiable> ingredientMap = recipe.getIngredientMap();
 
         for (int row = 0; row < pattern.size(); row++) {
-            for (int col = 0; col < pattern.get(row).length(); col++) {
-                char patternChar = pattern.get(row).charAt(col);
-                ItemQuantifiable patternMaterial = recipe.getIngredientMap().get(patternChar);
+            String patternRow = pattern.get(row);
+            for (int col = 0; col < patternRow.length(); col++) {
+                char patternChar = patternRow.charAt(col);
+                ItemQuantifiable patternMaterial = ingredientMap.get(patternChar);
                 ItemQuantifiable gridMaterial = ItemQuantifiable.of(grid[startRow + row][startCol + col]);
 
-                if (!gridMaterial.matchesType(patternMaterial.getItem()) ||
-                        gridMaterial.getAmount() < patternMaterial.getAmount()) {
-                    if (!ExchangeableType.isExchangeable(gridMaterial.getItem().getAttributeHandler().getPotentialType(),
+                // Early exit: check amount first (cheaper than type matching)
+                if (gridMaterial.getAmount() < patternMaterial.getAmount()) {
+                    return false;
+                }
+
+                // Check if types match
+                if (!gridMaterial.matchesType(patternMaterial.getItem())) {
+                    // Check exchangeable types as fallback
+                    if (!ExchangeableType.isExchangeable(
+                            gridMaterial.getItem().getAttributeHandler().getPotentialType(),
                             patternMaterial.getItem().getAttributeHandler().getPotentialType())) {
                         return false;
                     }

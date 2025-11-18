@@ -1,33 +1,60 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.auction;
 
 import net.minestom.server.component.DataComponents;
+import org.tinylog.Logger;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
+import org.tinylog.Logger;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import org.tinylog.Logger;
 import net.minestom.server.inventory.Inventory;
+import org.tinylog.Logger;
 import net.minestom.server.inventory.InventoryType;
+import org.tinylog.Logger;
 import net.minestom.server.item.ItemStack;
+import org.tinylog.Logger;
 import net.minestom.server.item.Material;
+import org.tinylog.Logger;
 import net.swofty.commons.ServiceType;
+import org.tinylog.Logger;
 import net.swofty.commons.StringUtility;
+import org.tinylog.Logger;
 import net.swofty.commons.auctions.AuctionItem;
+import org.tinylog.Logger;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
+import org.tinylog.Logger;
 import net.swofty.proxyapi.ProxyService;
+import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
+import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import org.tinylog.Logger;
 import net.swofty.type.generic.user.HypixelPlayer;
+import org.tinylog.Logger;
 import net.swofty.type.generic.utility.PaginationList;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
+import org.tinylog.Logger;
 import java.util.List;
+import org.tinylog.Logger;
 import java.util.UUID;
+import org.tinylog.Logger;
 import java.util.concurrent.CompletableFuture;
+import org.tinylog.Logger;
 
 public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIViewBids() {
@@ -59,7 +86,7 @@ public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
                     auctionItems.add(item);
                 }
             }).exceptionally(ex -> {
-                ex.printStackTrace();
+                Logger.error(ex, "Failed to process auction bid");
                 return null;
             });
             futures.add(future);

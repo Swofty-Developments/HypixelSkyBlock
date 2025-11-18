@@ -5,6 +5,7 @@ import net.swofty.commons.YamlFileUtils;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -62,13 +63,11 @@ public class ReforgeLoader {
                         LOADED_REFORGES.put(reforge.getName().toLowerCase(), reforge);
                     }
                 } catch (Exception e) {
-                    System.err.println("Failed to load reforge from file: " + file.getName());
-                    e.printStackTrace();
+                    Logger.error(e, "Failed to load reforge from file: {}", file.getName());
                 }
             }
         } catch (Exception e) {
-            System.err.println("Failed to load reforges");
-            e.printStackTrace();
+            Logger.error(e, "Failed to load reforges from directory: {}", REFORGES_DIR.getPath());
         }
     }
 
@@ -84,8 +83,7 @@ public class ReforgeLoader {
 
             return parseReforge(config);
         } catch (Exception e) {
-            System.err.println("Error loading reforge from file: " + file.getName());
-            e.printStackTrace();
+            Logger.error(e, "Error loading reforge from file: {}", file.getName());
             return null;
         }
     }
@@ -203,8 +201,7 @@ public class ReforgeLoader {
 
             return ReforgeExpressionEvaluator.evaluate(expression, context);
         } catch (Exception e) {
-            System.err.println("Failed to evaluate expression: " + expression + " for level " + level);
-            e.printStackTrace();
+            Logger.error(e, "Failed to evaluate reforge expression '{}' for level {}", expression, level);
             return 0.0;
         }
     }

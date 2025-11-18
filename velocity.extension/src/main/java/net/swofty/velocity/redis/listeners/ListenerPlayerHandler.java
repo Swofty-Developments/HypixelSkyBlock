@@ -21,6 +21,8 @@ import org.json.JSONObject;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 @ChannelListener(channel = ToProxyChannels.PLAYER_HANDLER)
 public class ListenerPlayerHandler extends RedisListener {
@@ -90,15 +92,12 @@ public class ListenerPlayerHandler extends RedisListener {
                 // Trick the packet blocker into thinking player is in normal transfer process
                 TransferHandler.playersGoalServerType.put(player, ServerType.SKYBLOCK_HUB);
 
-                try {
-                    Thread.sleep(Long.parseLong(Configuration.get("transfer-timeout")));
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                TransferHandler.playersGoalServerType.remove(player);
-                transferHandler.noLimboTransferTo(serverInfo.registeredServer());
-                transferHandler.removeFromDisregard();
+                CompletableFuture.delayedExecutor(Long.parseLong(Configuration.get("transfer-timeout")), TimeUnit.MILLISECONDS)
+                        .execute(() -> {
+                            TransferHandler.playersGoalServerType.remove(player);
+                            transferHandler.noLimboTransferTo(serverInfo.registeredServer());
+                            transferHandler.removeFromDisregard();
+                        });
             }
             case TRANSFER -> {
                 ServerType type = ServerType.valueOf(message.getString("type"));

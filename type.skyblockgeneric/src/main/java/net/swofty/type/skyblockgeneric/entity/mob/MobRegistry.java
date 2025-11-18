@@ -1,13 +1,20 @@
 package net.swofty.type.skyblockgeneric.entity.mob;
 
 import lombok.Getter;
+import org.tinylog.Logger;
 import net.minestom.server.entity.EntityType;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
+import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
+import org.tinylog.Logger;
 import java.util.ArrayList;
+import org.tinylog.Logger;
 import java.util.Arrays;
+import org.tinylog.Logger;
 import java.util.List;
+import org.tinylog.Logger;
 
 @Getter
 public class MobRegistry {
@@ -27,7 +34,7 @@ public class MobRegistry {
         try {
             return clazz.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to register mob in MobRegistry");
         } catch (InvocationTargetException e) {
             throw new RuntimeException(e);
         }

@@ -29,11 +29,15 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("MMM dd, HH:mm")
             .withZone(ZoneId.systemDefault());
 
+    // Cached calculation results
+    private final TransactionSummary summary;
+
     public GUIBazaarOrderCompletedOptions(List<DatapointCompletedBazaarTransactions.CompletedBazaarTransaction> completions,
                                           BazaarConnector.BazaarOrder activeOrder) {
         super("Completed Order", InventoryType.CHEST_4_ROW);
         this.completions = completions;
         this.activeOrder = activeOrder;
+        this.summary = calculateSummary(completions);
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(27, new GUIBazaarOrders()));
@@ -41,6 +45,43 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
 
         setupItems();
     }
+
+    /**
+     * Calculate all transaction statistics in a single pass for better performance
+     */
+    private static TransactionSummary calculateSummary(List<DatapointCompletedBazaarTransactions.CompletedBazaarTransaction> completions) {
+        if (completions == null || completions.isEmpty()) {
+            return new TransactionSummary(0, 0, 0, 0, 0);
+        }
+
+        double totalQuantity = 0;
+        double totalValue = 0;
+        double totalSpent = 0;
+        double totalSecondaryAmount = 0;
+
+        for (var tx : completions) {
+            totalQuantity += tx.getQuantity();
+            totalValue += tx.getTotalValue();
+            totalSpent += tx.getPricePerUnit() * tx.getQuantity();
+            totalSecondaryAmount += tx.getSecondaryAmount();
+        }
+
+        return new TransactionSummary(
+                totalQuantity,
+                totalValue,
+                totalSpent,
+                totalSecondaryAmount,
+                completions.size()
+        );
+    }
+
+    private record TransactionSummary(
+            double totalQuantity,
+            double totalValue,
+            double totalSpent,
+            double totalSecondaryAmount, // Tax for sells, savings/refund for buys
+            int transactionCount
+    ) {}
 
     private void setupItems() {
         if (completions == null || completions.isEmpty()) return;
@@ -64,49 +105,28 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
 
-                double totalQuantity = completions.stream()
-                        .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getQuantity)
-                        .sum();
-                double totalValue = completions.stream()
-                        .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getTotalValue)
-                        .sum();
-
                 lore.add("§a§l✓ ORDER COMPLETED");
                 lore.add(" ");
-                lore.add("§7Completed: §a" + (int) totalQuantity + "§8x " + finalItemType.getDisplayName());
-                lore.add("§7Transactions: §e" + completions.size());
+                lore.add("§7Completed: §a" + (int) summary.totalQuantity + "§8x " + finalItemType.getDisplayName());
+                lore.add("§7Transactions: §e" + summary.transactionCount);
                 lore.add(" ");
 
                 if (isSell) {
-                    double totalEarned = completions.stream()
-                            .mapToDouble(tx -> tx.getPricePerUnit() * tx.getQuantity())
-                            .sum();
-                    double totalTax = completions.stream()
-                            .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getSecondaryAmount)
-                            .sum();
-
-                    lore.add("§7Gross earnings: §6+" + FORMATTER.format(totalEarned) + " coins");
-                    lore.add("§7Tax paid: §c-" + FORMATTER.format(totalTax) + " coins");
-                    lore.add("§7Net earnings: §6+" + FORMATTER.format(Math.abs(totalValue)) + " coins");
+                    lore.add("§7Gross earnings: §6+" + FORMATTER.format(summary.totalSpent) + " coins");
+                    lore.add("§7Tax paid: §c-" + FORMATTER.format(summary.totalSecondaryAmount) + " coins");
+                    lore.add("§7Net earnings: §6+" + FORMATTER.format(Math.abs(summary.totalValue)) + " coins");
                 } else {
-                    double totalSpent = completions.stream()
-                            .mapToDouble(tx -> tx.getPricePerUnit() * tx.getQuantity())
-                            .sum();
-                    double totalSaved = completions.stream()
-                            .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getSecondaryAmount)
-                            .sum();
-
-                    lore.add("§7Total spent: §c-" + FORMATTER.format(totalSpent) + " coins");
-                    if (totalSaved > 0) {
-                        lore.add("§7Total saved: §a+" + FORMATTER.format(totalSaved) + " coins");
-                        lore.add("§7Refund ready: §6+" + FORMATTER.format(totalSaved) + " coins");
+                    lore.add("§7Total spent: §c-" + FORMATTER.format(summary.totalSpent) + " coins");
+                    if (summary.totalSecondaryAmount > 0) {
+                        lore.add("§7Total saved: §a+" + FORMATTER.format(summary.totalSecondaryAmount) + " coins");
+                        lore.add("§7Refund ready: §6+" + FORMATTER.format(summary.totalSecondaryAmount) + " coins");
                     }
                 }
 
                 return ItemStackCreator.getStack(
                         "§a" + finalItemType.getDisplayName() + " Order",
                         finalItemType.material,
-                        Math.max(1, (int) totalQuantity),
+                        Math.max(1, (int) summary.totalQuantity),
                         lore
                 );
             }
@@ -174,21 +194,11 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
 
                 boolean isSell = isSellOrder();
                 if (isSell) {
-                    double totalValue = completions.stream()
-                            .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getTotalValue)
-                            .sum();
-                    lore.add("§6▶ +" + FORMATTER.format(Math.abs(totalValue)) + " coins");
+                    lore.add("§6▶ +" + FORMATTER.format(Math.abs(summary.totalValue)) + " coins");
                 } else {
-                    double totalQuantity = completions.stream()
-                            .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getQuantity)
-                            .sum();
-                    double totalRefund = completions.stream()
-                            .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getSecondaryAmount)
-                            .sum();
-
-                    lore.add("§a▶ +" + (int) totalQuantity + "x " + getItemType().getDisplayName());
-                    if (totalRefund > 0) {
-                        lore.add("§6▶ +" + FORMATTER.format(totalRefund) + " coins refund");
+                    lore.add("§a▶ +" + (int) summary.totalQuantity + "x " + getItemType().getDisplayName());
+                    if (summary.totalSecondaryAmount > 0) {
+                        lore.add("§6▶ +" + FORMATTER.format(summary.totalSecondaryAmount) + " coins refund");
                     }
                 }
 
@@ -236,28 +246,17 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
 
         try {
             if (isSell) {
-                double totalCoins = completions.stream()
-                        .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getTotalValue)
-                        .sum();
-
-                player.addCoins(Math.abs(totalCoins));
-                player.sendMessage("§6[Bazaar] §aReceived §6" + FORMATTER.format(Math.abs(totalCoins)) + " coins§a!");
+                player.addCoins(Math.abs(summary.totalValue));
+                player.sendMessage("§6[Bazaar] §aReceived §6" + FORMATTER.format(Math.abs(summary.totalValue)) + " coins§a!");
             } else {
-                double totalQuantity = completions.stream()
-                        .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getQuantity)
-                        .sum();
-                double totalRefund = completions.stream()
-                        .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getSecondaryAmount)
-                        .sum();
-
                 SkyBlockItem item = new SkyBlockItem(itemType);
-                item.setAmount((int) totalQuantity);
+                item.setAmount((int) summary.totalQuantity);
                 player.addAndUpdateItem(item);
-                player.sendMessage("§6[Bazaar] §aReceived §e" + (int) totalQuantity + "x " + itemType.getDisplayName() + "§a!");
+                player.sendMessage("§6[Bazaar] §aReceived §e" + (int) summary.totalQuantity + "x " + itemType.getDisplayName() + "§a!");
 
-                if (totalRefund > 0) {
-                    player.addCoins(totalRefund);
-                    player.sendMessage("§6[Bazaar] §aReceived §6" + FORMATTER.format(totalRefund) + " coins §arefund!");
+                if (summary.totalSecondaryAmount > 0) {
+                    player.addCoins(summary.totalSecondaryAmount);
+                    player.sendMessage("§6[Bazaar] §aReceived §6" + FORMATTER.format(summary.totalSecondaryAmount) + " coins §arefund!");
                 }
             }
 

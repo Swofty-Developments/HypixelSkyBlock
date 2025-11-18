@@ -8,6 +8,7 @@ import lombok.Getter;
 import net.swofty.service.api.APIKeyDatabase;
 import net.swofty.service.api.APIKeyDatabaseObject;
 import org.bson.Document;
+import org.tinylog.Logger;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -118,8 +119,7 @@ public class ApiRateLimiterHandler {
                 requestCache.put(apiKey, new RequestTracker(count, today));
             }
         } catch (Exception e) {
-            System.err.println("Failed to load API request counts: " + e.getMessage());
-            e.printStackTrace();
+            Logger.error(e, "Failed to load API request counts from database");
         }
     }
 
@@ -176,8 +176,7 @@ public class ApiRateLimiterHandler {
                     new ReplaceOptions().upsert(true)
             );
         } catch (Exception e) {
-            System.err.println("Failed to update API request count: " + e.getMessage());
-            e.printStackTrace();
+            Logger.error(e, "Failed to update API request count for key: {}", apiKey);
         }
     }
 

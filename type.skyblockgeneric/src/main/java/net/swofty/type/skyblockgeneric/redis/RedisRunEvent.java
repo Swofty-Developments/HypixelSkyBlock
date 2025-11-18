@@ -7,6 +7,7 @@ import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
@@ -34,7 +35,7 @@ public class RedisRunEvent implements ProxyToClient {
         try {
             eventClass = Class.forName(eventClassName);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to find event class: {}", eventClassName);
         }
 
         Event event = null;
@@ -42,7 +43,7 @@ public class RedisRunEvent implements ProxyToClient {
             event = (Event) eventClass.getMethod("fromProxyUnderstandable", SkyBlockPlayer.class, String.class)
                     .invoke(null, player, eventArgs);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to invoke fromProxyUnderstandable method on event class: {}", eventClassName);
         }
 
         HypixelEventHandler.callCustomEvent(event);

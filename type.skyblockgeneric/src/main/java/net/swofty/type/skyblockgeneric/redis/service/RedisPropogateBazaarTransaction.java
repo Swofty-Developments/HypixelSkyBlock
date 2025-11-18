@@ -47,8 +47,7 @@ public class RedisPropogateBazaarTransaction implements ServiceToClient {
             };
 
         } catch (Exception e) {
-            Logger.error("Failed to propagate bazaar transaction: " + e.getMessage());
-            e.printStackTrace();
+            Logger.error(e, "Failed to propagate bazaar transaction");
             return createFailureResponse("Exception occurred: " + e.getMessage());
         }
     }

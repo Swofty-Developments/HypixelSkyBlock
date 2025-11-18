@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.skill;
 
 import net.swofty.commons.StringUtility;
 import net.swofty.type.skyblockgeneric.skill.skills.*;
+import org.tinylog.Logger;
 
 public enum SkillCategories {
     COMBAT(CombatSkill.class),
@@ -29,7 +30,7 @@ public enum SkillCategories {
         try {
             return clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to instantiate SkillCategory: {}", clazz.getSimpleName());
         }
 
         throw new RuntimeException("Failed to instantiate SkillCategory");

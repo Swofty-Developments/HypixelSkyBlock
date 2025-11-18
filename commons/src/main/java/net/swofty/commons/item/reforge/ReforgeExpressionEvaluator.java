@@ -1,5 +1,7 @@
 package net.swofty.commons.item.reforge;
 
+import org.tinylog.Logger;
+
 import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -17,8 +19,7 @@ public class ReforgeExpressionEvaluator {
             // Evaluate the mathematical expression
             return evaluateMathExpression(processedExpression);
         } catch (Exception e) {
-            System.err.println("Error evaluating expression: " + expression);
-            e.printStackTrace();
+            Logger.error(e, "Error evaluating reforge expression: {}", expression);
             return 0.0;
         }
     }

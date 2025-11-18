@@ -239,9 +239,15 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             List<String> lore = new ArrayList<>();
             boolean isSell = isSellOrder();
 
-            double totalQuantity = completions.stream().mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getQuantity).sum();
-            double totalValue = completions.stream().mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getTotalValue).sum();
-            double totalRefund = completions.stream().mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getSecondaryAmount).sum();
+            // Single-pass calculation for better performance
+            double totalQuantity = 0;
+            double totalValue = 0;
+            double totalRefund = 0;
+            for (var completion : completions) {
+                totalQuantity += completion.getQuantity();
+                totalValue += completion.getTotalValue();
+                totalRefund += completion.getSecondaryAmount();
+            }
 
             lore.add("§a§l✓ COMPLETED");
             lore.add("§8Ready to claim!");
