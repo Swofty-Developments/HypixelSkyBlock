@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.block;
 
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.tag.Tag;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttributeHandler;
 import net.swofty.type.skyblockgeneric.block.attribute.attributes.BlockAttributeType;
@@ -26,7 +27,7 @@ public class SkyBlockBlock {
         try {
             instance = clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to instantiate CustomSkyBlockBlock of type: {}", clazz.getSimpleName());
         }
 
         BlockAttributeType typeAttribute = (BlockAttributeType) getAttribute("block_type");
@@ -44,7 +45,7 @@ public class SkyBlockBlock {
         try {
             instance = clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to instantiate CustomSkyBlockBlock from block: {}", clazz.getSimpleName());
         }
     }
 

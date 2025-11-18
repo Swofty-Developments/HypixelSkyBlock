@@ -140,8 +140,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                             try {
                                 ItemConfigParser.parseItem(itemConfig);
                             } catch (Exception e) {
-                                Logger.error("Failed to parse item " + itemConfig.get("id"));
-                                e.printStackTrace();
+                                Logger.error(e, "Failed to parse item configuration: {}", itemConfig.get("id"));
                             }
                         }
                     } else {
@@ -162,8 +161,8 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
             try {
                 MinecraftServer.getCommandManager().register(command.getCommand());
             } catch (Exception e) {
-                Logger.error("Failed to register command " + command.getCommand().getName() + " in class " + command.getClass().getSimpleName());
-                e.printStackTrace();
+                Logger.error(e, "Failed to register command {} in class {}",
+                        command.getCommand().getName(), command.getClass().getSimpleName());
             }
         });
 
@@ -439,8 +438,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                 try {
                     craftableComponent.getRecipes().forEach(SkyBlockRecipe::init);
                 } catch (Exception e) {
-                    Logger.error("Failed to initialize recipe for " + type.name());
-                    e.printStackTrace();
+                    Logger.error(e, "Failed to initialize recipe for item type: {}", type.name());
                 }
             }
         });
@@ -466,8 +464,8 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                                     recipes.add(recipeInstance);
                                 });
                             } catch (Exception e) {
-                                e.printStackTrace();
-                                Logger.error("Failed to parse recipe " + collection.type() + " : " + reward.requirement());
+                                Logger.error(e, "Failed to parse collection recipe for {} with requirement {}",
+                                        collection.type(), reward.requirement());
                             }
                         }
                     });

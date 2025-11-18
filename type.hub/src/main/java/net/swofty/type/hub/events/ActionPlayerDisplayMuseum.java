@@ -1,6 +1,5 @@
 package net.swofty.type.hub.events;
 
-import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -8,17 +7,20 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+
 public class ActionPlayerDisplayMuseum implements HypixelEventClass {
 
-    @SneakyThrows
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
     public void run(PlayerSpawnEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (!event.isFirstSpawn()) return;
 
-        Thread.sleep(1000);
-        if (!player.isOnline()) return;
-
-        MuseumDisplays.updateDisplay(player);
+        CompletableFuture.delayedExecutor(1000, TimeUnit.MILLISECONDS)
+                .execute(() -> {
+                    if (!player.isOnline()) return;
+                    MuseumDisplays.updateDisplay(player);
+                });
     }
 }

@@ -1,6 +1,7 @@
 package net.swofty.commons;
 
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -20,7 +21,7 @@ public class Configuration {
             JSONObject object = new JSONObject(s);
             return object.get(key).toString();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Logger.error(ex, "Failed to read configuration key: {}", key);
         }
 
         return "null";
@@ -52,7 +53,7 @@ public class Configuration {
             JSONObject object = new JSONObject(s);
             return (JSONObject) object.get(key);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Logger.error(ex, "Failed to read configuration object for key: {}", key);
         }
 
         return null;

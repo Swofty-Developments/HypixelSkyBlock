@@ -1,23 +1,40 @@
 package net.swofty.type.skyblockgeneric.collection;
 
 import lombok.Data;
+import org.tinylog.Logger;
 import net.minestom.server.item.Material;
+import org.tinylog.Logger;
 import net.swofty.commons.YamlFileUtils;
+import org.tinylog.Logger;
 import net.swofty.commons.item.ItemType;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.utility.RecipeParser;
+import org.tinylog.Logger;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
+import org.tinylog.Logger;
 
 import java.io.File;
+import org.tinylog.Logger;
 import java.io.FileReader;
+import org.tinylog.Logger;
 import java.io.IOException;
+import org.tinylog.Logger;
 import java.util.ArrayList;
+import org.tinylog.Logger;
 import java.util.HashMap;
+import org.tinylog.Logger;
 import java.util.List;
+import org.tinylog.Logger;
 import java.util.Map;
+import org.tinylog.Logger;
 
 @Data
 public class CollectionLoader {
@@ -116,7 +133,7 @@ public class CollectionLoader {
                 }
             };
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to load collection from file");
             return null;
         }
     }

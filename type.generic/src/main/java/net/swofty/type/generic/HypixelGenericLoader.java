@@ -83,8 +83,8 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
             try {
                 MinecraftServer.getCommandManager().register(command.getCommand());
             } catch (Exception e) {
-                Logger.error("Failed to register command " + command.getCommand().getName() + " in class " + command.getClass().getSimpleName());
-                e.printStackTrace();
+                Logger.error(e, "Failed to register command {} in class {}",
+                        command.getCommand().getName(), command.getClass().getSimpleName());
             }
         });
 

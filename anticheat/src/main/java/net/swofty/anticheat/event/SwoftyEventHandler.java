@@ -1,5 +1,7 @@
 package net.swofty.anticheat.event;
 
+import org.tinylog.Logger;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +32,8 @@ public class SwoftyEventHandler {
             try {
                 entry.method.invoke(entry.instance, event);
             } catch (Exception e) {
-                e.printStackTrace();
+                Logger.error(e, "Failed to invoke event listener method {} for event {}",
+                        entry.method.getName(), event.getClass().getSimpleName());
             }
         }
     }

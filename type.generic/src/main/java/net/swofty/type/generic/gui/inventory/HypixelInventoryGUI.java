@@ -3,6 +3,7 @@ package net.swofty.type.generic.gui.inventory;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import org.tinylog.Logger;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -303,7 +304,7 @@ public abstract class HypixelInventoryGUI {
             } catch (Exception e) {
                 player.sendMessage("§cAn error occurred while opening the GUI");
                 player.closeInventory();
-                e.printStackTrace();
+                Logger.error(e, "Failed to open GUI '{}' for player {}", getTitle(), player.getUsername());
                 return;
             }
             hasFinishedLoading = true;

@@ -4,8 +4,10 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.PingProtocolObject;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
+import org.tinylog.Logger;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public record ProxyService(ServiceType type) {
@@ -19,17 +21,12 @@ public record ProxyService(ServiceType type) {
             hasReceivedResponse.set(true);
         });
 
-        Thread.startVirtualThread(() -> {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            if (!hasReceivedResponse.get()) {
-                future.complete(false);
-            }
-        });
+        CompletableFuture.delayedExecutor(50, TimeUnit.MILLISECONDS)
+                .execute(() -> {
+                    if (!hasReceivedResponse.get()) {
+                        future.complete(false);
+                    }
+                });
 
         return future;
     }

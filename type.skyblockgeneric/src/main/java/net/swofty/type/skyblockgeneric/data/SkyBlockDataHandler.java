@@ -91,8 +91,7 @@ public class SkyBlockDataHandler extends DataHandler {
                 datapoints.put(key, dp.setUser(this).setData(data));
             } catch (Exception e) {
                 datapoints.put(key, data.getDefaultDatapoint().setUser(this).setData(data));
-                Logger.info("Issue with SB datapoint " + key + " for user " + this.uuid + " - defaulted");
-                e.printStackTrace();
+                Logger.error(e, "Issue with SkyBlock datapoint {} for user {} - defaulting to default value", key, this.uuid);
             }
         }
     }
@@ -105,8 +104,7 @@ public class SkyBlockDataHandler extends DataHandler {
                         data.getDefaultDatapoint().deepClone().setUser(this).setData(data)
                 );
             } catch (Exception e) {
-                Logger.error("Issue with SB datapoint " + data.getKey() + " for user " + uuid + " - fix required");
-                e.printStackTrace();
+                Logger.error(e, "Issue with SkyBlock datapoint {} for user {} - requires fixing", data.getKey(), uuid);
             }
         }
     }
@@ -120,7 +118,7 @@ public class SkyBlockDataHandler extends DataHandler {
             try {
                 document.put(data.getKey(), getDatapoint(data.getKey()).getSerializedValue());
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                Logger.error(e, "Failed to serialize SkyBlock datapoint {} for user {}", data.getKey(), this.uuid);
             }
         }
         return document;

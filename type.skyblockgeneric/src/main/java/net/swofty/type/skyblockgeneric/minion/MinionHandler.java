@@ -7,6 +7,7 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.commands.MinionGenerationCommand;
 import net.swofty.type.skyblockgeneric.entity.MinionEntityImpl;
 import net.swofty.type.generic.entity.hologram.ServerHolograms;
@@ -28,7 +29,7 @@ public record MinionHandler(Scheduler scheduler) {
             try {
                 minionLoop();
             } catch (ConcurrentModificationException exception) {
-                exception.printStackTrace();
+                Logger.error(exception, "ConcurrentModificationException occurred during minion loop execution");
             }
             return TaskSchedule.tick(3);
         }, ExecutionType.TICK_END);

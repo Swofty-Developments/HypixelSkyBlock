@@ -25,6 +25,11 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIRunicPedestal extends HypixelInventoryGUI {
@@ -33,6 +38,7 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
     private static final int[] LEFT_RUNIC_SLOTS = {10, 11, 12};
     private static final int[] RIGHT_RUNIC_SLOTS = {14, 15, 16};
     private static final int[] CONNECTOR_RUNIC_SLOTS = {22};
+    private static final ScheduledExecutorService animationScheduler = Executors.newScheduledThreadPool(1);
 
     private SkyBlockItem itemOnLeft = null;
     private SkyBlockItem itemOnRight = null;
@@ -435,52 +441,57 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
 
     public CompletableFuture<Boolean> startFusingAnimation() {
         fusingAnimation = new CompletableFuture<>();
-        Thread.startVirtualThread(() -> {
-            // Incrementally change the colors of the slots from purple to pink and back multiple times over the duration
-            int duration = 1500; // Duration in milliseconds
-            int interval = 30; // Interval between each color update in milliseconds
-            int cycles = 5; // Number of times to transition from purple to pink and back
 
-            int totalSteps = duration / interval;
-            int stepsPerCycle = totalSteps / cycles;
+        // Incrementally change the colors of the slots from purple to pink and back multiple times over the duration
+        int duration = 1500; // Duration in milliseconds
+        int interval = 30; // Interval between each color update in milliseconds
+        int cycles = 5; // Number of times to transition from purple to pink and back
 
-            Material[] colors = {
-                    Material.PURPLE_STAINED_GLASS_PANE,
-                    Material.MAGENTA_STAINED_GLASS_PANE,
-                    Material.PINK_STAINED_GLASS_PANE
-            };
+        int totalSteps = duration / interval;
+        int stepsPerCycle = totalSteps / cycles;
 
-            for (int currentStep = 0; currentStep < totalSteps; currentStep++) {
-                int cycleIndex = currentStep / stepsPerCycle;
-                double progress = (double) (currentStep % stepsPerCycle) / (stepsPerCycle - 1);
+        Material[] colors = {
+                Material.PURPLE_STAINED_GLASS_PANE,
+                Material.MAGENTA_STAINED_GLASS_PANE,
+                Material.PINK_STAINED_GLASS_PANE
+        };
 
-                if (cycleIndex % 2 == 0) {
-                    // Purple to pink
-                    int colorIndex = (int) Math.floor(progress * (colors.length - 1));
-                    setGlassPanes(BOTTOM_SLOTS, colors[colorIndex]);
-                    setGlassPanes(CONNECTOR_RUNIC_SLOTS, colors[colorIndex]);
-                    setGlassPanes(LEFT_RUNIC_SLOTS, colors[colorIndex]);
-                    setGlassPanes(RIGHT_RUNIC_SLOTS, colors[colorIndex]);
-                } else {
-                    // Pink to purple
-                    int colorIndex = (int) Math.floor((1 - progress) * (colors.length - 1));
-                    setGlassPanes(BOTTOM_SLOTS, colors[colorIndex]);
-                    setGlassPanes(CONNECTOR_RUNIC_SLOTS, colors[colorIndex]);
-                    setGlassPanes(LEFT_RUNIC_SLOTS, colors[colorIndex]);
-                    setGlassPanes(RIGHT_RUNIC_SLOTS, colors[colorIndex]);
+        AtomicInteger currentStep = new AtomicInteger(0);
+        ScheduledFuture<?>[] taskHolder = new ScheduledFuture<?>[1];
+
+        taskHolder[0] = animationScheduler.scheduleAtFixedRate(() -> {
+            int step = currentStep.getAndIncrement();
+
+            if (step >= totalSteps) {
+                // Cancel the task
+                if (taskHolder[0] != null) {
+                    taskHolder[0].cancel(false);
                 }
-
-                try {
-                    Thread.sleep(interval);
-                } catch (InterruptedException e) {
-                    fusingAnimation.complete(true);
-                    return;
-                }
+                // Animation completed successfully
+                fusingAnimation.complete(false);
+                return;
             }
 
-            // Animation completed successfully
-            fusingAnimation.complete(false);
-        });
+            int cycleIndex = step / stepsPerCycle;
+            double progress = (double) (step % stepsPerCycle) / (stepsPerCycle - 1);
+
+            if (cycleIndex % 2 == 0) {
+                // Purple to pink
+                int colorIndex = (int) Math.floor(progress * (colors.length - 1));
+                setGlassPanes(BOTTOM_SLOTS, colors[colorIndex]);
+                setGlassPanes(CONNECTOR_RUNIC_SLOTS, colors[colorIndex]);
+                setGlassPanes(LEFT_RUNIC_SLOTS, colors[colorIndex]);
+                setGlassPanes(RIGHT_RUNIC_SLOTS, colors[colorIndex]);
+            } else {
+                // Pink to purple
+                int colorIndex = (int) Math.floor((1 - progress) * (colors.length - 1));
+                setGlassPanes(BOTTOM_SLOTS, colors[colorIndex]);
+                setGlassPanes(CONNECTOR_RUNIC_SLOTS, colors[colorIndex]);
+                setGlassPanes(LEFT_RUNIC_SLOTS, colors[colorIndex]);
+                setGlassPanes(RIGHT_RUNIC_SLOTS, colors[colorIndex]);
+            }
+        }, 0, interval, TimeUnit.MILLISECONDS);
+
         return fusingAnimation;
     }
 

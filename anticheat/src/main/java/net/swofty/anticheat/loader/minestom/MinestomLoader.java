@@ -90,8 +90,8 @@ public class MinestomLoader extends Loader {
         try {
             player.sendPacket((SendablePacket) getPacketHandler(packet).buildLoaderPacket(uuid, packet));
         } catch (Exception e) {
-            Logger.error("Error when attempting to send packet " + packet.getClass().getSimpleName() + " to " + uuid);
-            e.printStackTrace();
+            Logger.error(e, "Error when attempting to send packet {} to player {}",
+                    packet.getClass().getSimpleName(), uuid);
         }
     }
 

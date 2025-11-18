@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public class RedisTransferredFromThisServer implements ProxyToClient {
     @Override
@@ -21,17 +22,14 @@ public class RedisTransferredFromThisServer implements ProxyToClient {
             return new JSONObject();
         }
 
-        Thread.startVirtualThread(() -> {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            CompletableFuture<Void> future = ProxyPlayer.waitingForTransferComplete.get(uuid);
-            future.complete(null);
-
-            ProxyPlayer.waitingForTransferComplete.remove(uuid);
-        });
+        CompletableFuture.delayedExecutor(500, TimeUnit.MILLISECONDS)
+                .execute(() -> {
+                    CompletableFuture<Void> future = ProxyPlayer.waitingForTransferComplete.get(uuid);
+                    if (future != null) {
+                        future.complete(null);
+                    }
+                    ProxyPlayer.waitingForTransferComplete.remove(uuid);
+                });
 
         return new JSONObject();
     }

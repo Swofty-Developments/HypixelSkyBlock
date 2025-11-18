@@ -68,8 +68,7 @@ public class HypixelEventHandler {
                     }
                 });
             } catch (Exception e) {
-                Logger.error("Error occurred while registering custom event " + skyBlockEvent.getClass().getSimpleName());
-                e.printStackTrace();
+                Logger.error(e, "Error occurred while registering custom event: {}", skyBlockEvent.getClass().getSimpleName());
             }
         });
 
@@ -107,10 +106,9 @@ public class HypixelEventHandler {
                         try {
                             runEvent(eventMethod.hypixelEvent(), eventMethod.method, eventMethod.instance, concreteEvent);
                         } catch (Exception ex) {
-                            Logger.info("Exception occurred while running event " +
-                                    eventMethod.method.getClass().getSimpleName() + " with event type " +
+                            Logger.error(ex, "Exception occurred while running event {} with event type {}",
+                                    eventMethod.method.getClass().getSimpleName(),
                                     concreteEvent.getClass().getSimpleName());
-                            ex.printStackTrace();
                         }
                     }
                 });

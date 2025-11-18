@@ -1,22 +1,38 @@
 package net.swofty.type.skyblockgeneric.server.attribute;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.tinylog.Logger;
 import lombok.Getter;
+import org.tinylog.Logger;
 import net.minestom.server.MinecraftServer;
+import org.tinylog.Logger;
 import net.minestom.server.timer.ExecutionType;
+import org.tinylog.Logger;
 import net.minestom.server.timer.TaskSchedule;
+import org.tinylog.Logger;
 import net.swofty.type.generic.HypixelConst;
+import org.tinylog.Logger;
 import net.swofty.type.generic.HypixelTypeLoader;
+import org.tinylog.Logger;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.server.attribute.attributes.AttributeLong;
+import org.tinylog.Logger;
 import org.bson.Document;
+import org.tinylog.Logger;
 
 import java.util.Arrays;
+import org.tinylog.Logger;
 import java.util.HashMap;
+import org.tinylog.Logger;
 import java.util.Map;
+import org.tinylog.Logger;
 import java.util.function.Consumer;
+import org.tinylog.Logger;
 import java.util.function.Function;
+import org.tinylog.Logger;
 
 public class SkyBlockServerAttributes {
     private static final Map<Attributes, ServerAttribute> serverAttributes = new HashMap<>();
@@ -36,7 +52,7 @@ public class SkyBlockServerAttributes {
                 serverAttributes.put(data, attribute);
                 data.onLoad.accept(attribute);
             } catch (Exception e) {
-                e.printStackTrace();
+                Logger.error(e, "Failed to load or save server attributes");
             }
         });
     }
@@ -50,7 +66,7 @@ public class SkyBlockServerAttributes {
             try {
                 document.append(key.getKey(), attribute.getSerializedValue());
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                Logger.error(e, "Failed to load or save server attributes");
             }
         });
         return document;
