@@ -46,3 +46,4 @@ build/
 /configuration/skyblock/islands/hypixel_skyblock_island_template/
 /configuration/skyblock/islands/hypixel_skyblock_hub/
 /configuration/hypixel_prototype_lobby/
+.gradle/
