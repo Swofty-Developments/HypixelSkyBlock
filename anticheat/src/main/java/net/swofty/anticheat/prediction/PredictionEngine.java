@@ -1,6 +1,7 @@
 package net.swofty.anticheat.prediction;
 
 import lombok.Data;
+import net.swofty.anticheat.api.AnticheatAPI;
 import net.swofty.anticheat.math.Pos;
 import net.swofty.anticheat.math.Vel;
 import net.swofty.anticheat.prediction.modifier.FrictionModifier;
@@ -75,8 +76,12 @@ public class PredictionEngine {
         // Calculate base movement from input
         Vel movementVel = calculateInputMovement(context, input);
 
-        // Apply all velocity modifiers in priority order
-        for (VelocityModifier modifier : velocityModifiers) {
+        // Apply all velocity modifiers in priority order (including custom modifiers from API)
+        List<VelocityModifier> allVelocityModifiers = new ArrayList<>(velocityModifiers);
+        allVelocityModifiers.addAll(AnticheatAPI.getModifierRegistry().getCustomVelocityModifiers());
+        allVelocityModifiers.sort((a, b) -> Integer.compare(b.getPriority(), a.getPriority()));
+
+        for (VelocityModifier modifier : allVelocityModifiers) {
             if (modifier.shouldApply(context)) {
                 movementVel = modifier.apply(movementVel, context);
             }
@@ -146,10 +151,14 @@ public class PredictionEngine {
     }
 
     /**
-     * Get friction from modifiers
+     * Get friction from modifiers (including custom modifiers from API)
      */
     private float getFriction(PlayerContext context) {
-        for (FrictionModifier modifier : frictionModifiers) {
+        List<FrictionModifier> allFrictionModifiers = new ArrayList<>(frictionModifiers);
+        allFrictionModifiers.addAll(AnticheatAPI.getModifierRegistry().getCustomFrictionModifiers());
+        allFrictionModifiers.sort((a, b) -> Integer.compare(b.getPriority(), a.getPriority()));
+
+        for (FrictionModifier modifier : allFrictionModifiers) {
             if (modifier.shouldApply(context)) {
                 return modifier.getFriction(context);
             }
