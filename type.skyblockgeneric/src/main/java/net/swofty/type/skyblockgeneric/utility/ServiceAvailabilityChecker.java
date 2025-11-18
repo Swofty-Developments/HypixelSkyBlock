@@ -137,7 +137,6 @@ public class ServiceAvailabilityChecker {
         return switch (serviceType) {
             case AUCTION_HOUSE -> "Auction House";
             case BAZAAR -> "Bazaar";
-            case MUSEUM -> "Museum";
             default -> serviceType.name().replace("_", " ");
         };
     }

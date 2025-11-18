@@ -246,11 +246,17 @@ public class BazaarConnector {
                 return CompletableFuture.completedFuture(new TransactionProcessResult(0, 0, List.of(), List.of()));
             }
 
-            return getPendingTransactions();
-        }).thenCompose(transactions -> {
-            if (transactions == null || transactions.isEmpty()) {
-                return CompletableFuture.completedFuture(new TransactionProcessResult(0, 0, List.of(), List.of()));
-            }
+            return getPendingTransactions().thenCompose(transactions -> {
+                if (transactions == null || transactions.isEmpty()) {
+                    return CompletableFuture.completedFuture(new TransactionProcessResult(0, 0, List.of(), List.of()));
+                }
+
+                return processTransactions(transactions);
+            });
+        });
+    }
+
+    private CompletableFuture<TransactionProcessResult> processTransactions(List<PendingTransaction> transactions) {
 
             player.sendMessage("§6[Bazaar] §7Processing " + transactions.size() + " pending transaction" +
                     (transactions.size() == 1 ? "" : "s") + "...");
@@ -305,7 +311,6 @@ public class BazaarConnector {
                 }
                 return finalResult;
             });
-        });
     }
 
     private OrderStatistics calculateBuyStatistics(List<MarketOrder> buyOrders) {
