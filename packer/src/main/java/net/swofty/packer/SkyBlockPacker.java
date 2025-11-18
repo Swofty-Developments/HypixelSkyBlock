@@ -1,7 +1,6 @@
 package net.swofty.packer;
 
 import org.json.JSONObject;
-import org.tinylog.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,8 +39,9 @@ public class SkyBlockPacker {
                 FileUtils.deleteDirectory(values.outputDirectory());
                 FileUtils.copyDirectory(values.vanillaPack(), values.outputDirectory());
             } catch (IOException e) {
-                System.out.println("Failed to copy vanilla pack to output directory");
-                Logger.error(e, "Failed to copy vanilla pack from {} to {}", values.vanillaPack(), values.outputDirectory());
+                System.err.println("Failed to copy vanilla pack to output directory");
+                System.err.println("From: " + values.vanillaPack() + " To: " + values.outputDirectory());
+                e.printStackTrace();
                 return;
             }
         }
@@ -51,8 +51,9 @@ public class SkyBlockPacker {
         try {
             LangModifier.modifyLangFile(values.outputDirectory());
         } catch (IOException e) {
-            System.out.println("Failed to modify lang file");
-            Logger.error(e, "Failed to modify lang file in directory: {}", values.outputDirectory());
+            System.err.println("Failed to modify lang file");
+            System.err.println("Directory: " + values.outputDirectory());
+            e.printStackTrace();
             return;
         }
 
@@ -61,9 +62,9 @@ public class SkyBlockPacker {
         try {
             FileUtils.copyDirectory(values.textureCategory(), values.outputDirectory() + "/assets/skyblock/textures/");
         } catch (IOException e) {
-            System.out.println("Failed to move textures into custom");
-            Logger.error(e, "Failed to copy textures from {} to {}/assets/skyblock/textures/",
-                    values.textureCategory(), values.outputDirectory());
+            System.err.println("Failed to move textures into custom");
+            System.err.println("From: " + values.textureCategory() + " To: " + values.outputDirectory() + "/assets/skyblock/textures/");
+            e.printStackTrace();
             return;
         }
 
@@ -79,8 +80,9 @@ public class SkyBlockPacker {
 
             Files.write(new File(values.outputDirectory() + "/assets/minecraft/font/default.json").toPath(), defaultJson.getBytes());
         } catch (IOException e) {
-            System.out.println("Failed to override default.json with our textures");
-            Logger.error(e, "Failed to override default.json in directory: {}", values.outputDirectory());
+            System.err.println("Failed to override default.json with our textures");
+            System.err.println("Directory: " + values.outputDirectory());
+            e.printStackTrace();
             return;
         }
     }
