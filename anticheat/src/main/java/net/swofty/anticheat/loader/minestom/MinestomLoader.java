@@ -1,14 +1,10 @@
 package net.swofty.anticheat.loader.minestom;
 
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerPacketEvent;
-import net.minestom.server.event.player.PlayerPacketOutEvent;
 import net.minestom.server.network.packet.client.ClientPacket;
-import net.minestom.server.network.packet.client.common.ClientPongPacket;
 import net.minestom.server.network.packet.server.SendablePacket;
-import net.minestom.server.network.packet.server.ServerPacket;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.event.events.AnticheatPacketEvent;
 import net.swofty.anticheat.event.packet.*;
@@ -68,26 +64,7 @@ public class MinestomLoader extends Loader {
         registerPacketHandler(SteerVehiclePacket.class,
                 new MinestomHandlerSteerVehiclePacket());
 
-        globalEventHandler.addListener(PlayerPacketOutEvent.class, (event) -> {
-            ServerPacket packet = event.getPacket();
-            LoaderPacketHandler handler = getPacketHandler(packet.getClass());
-            if (handler == null) return;
-
-            SwoftyPacket swoftyPacket = handler.buildSwoftyPacket(event.getPlayer().getUuid(), packet);
-            if (swoftyPacket == null) return;
-
-            SwoftyEventHandler.callEvent(new AnticheatPacketEvent(swoftyPacket));
-        });
-
-        MinecraftServer.getPacketListenerManager().setPlayListener(
-                ClientPongPacket.class, (packet, player) -> {
-                    LoaderPacketHandler handler = getPacketHandler(ClientPongPacket.class);
-                    SwoftyPacket swoftyPacket = handler.buildSwoftyPacket(player.getUuid(), packet);
-                    if (swoftyPacket == null) return;
-
-                    SwoftyEventHandler.callEvent(new AnticheatPacketEvent(swoftyPacket));
-                });
-
+        // Handle incoming client packets
         globalEventHandler.addListener(PlayerPacketEvent.class, (event) -> {
             ClientPacket packet = event.getPacket();
             LoaderPacketHandler handler = getPacketHandler(packet.getClass());

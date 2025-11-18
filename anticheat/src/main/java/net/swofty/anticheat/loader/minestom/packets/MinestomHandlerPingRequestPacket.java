@@ -13,16 +13,14 @@ public class MinestomHandlerPingRequestPacket
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, PingPacket packet) {
-        return new RequestPingPacket(
-                SwoftyPlayer.players.get(uuid),
-                packet.id()
-        );
+        // This method is not used for outgoing server packets
+        return null;
     }
 
     @Override
     public PingPacket buildLoaderPacket(UUID uuid, SwoftyPacket packet) {
         return new PingPacket(
-                ((RequestPingPacket) packet).getRequestId()
+                (int) ((RequestPingPacket) packet).getRequestId()
         );
     }
 

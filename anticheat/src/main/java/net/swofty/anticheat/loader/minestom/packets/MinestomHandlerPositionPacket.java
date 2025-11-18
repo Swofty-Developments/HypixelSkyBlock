@@ -25,12 +25,13 @@ public class MinestomHandlerPositionPacket
     @Override
     public ClientPlayerPositionPacket buildLoaderPacket(UUID uuid, SwoftyPacket packet) {
         return new ClientPlayerPositionPacket(
-                new net.minestom.server.coordinate.Pos(
+                new net.minestom.server.coordinate.Point(
                         ((PositionPacket) packet).getX(),
                         ((PositionPacket) packet).getY(),
                         ((PositionPacket) packet).getZ()
                 ),
-                (byte) (((PositionPacket) packet).isOnGround() ? 1 : 0)
+                ((PositionPacket) packet).isOnGround(),
+                false  // horizontalCollision
         );
     }
 

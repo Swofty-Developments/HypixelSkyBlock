@@ -26,7 +26,8 @@ public class MinestomHandlerRotationPacket
         return new ClientPlayerRotationPacket(
                 ((RotationPacket) packet).getYaw(),
                 ((RotationPacket) packet).getPitch(),
-                (byte) (((RotationPacket) packet).isOnGround() ? 1 : 0)
+                ((RotationPacket) packet).isOnGround(),
+                false  // horizontalCollision
         );
     }
 
