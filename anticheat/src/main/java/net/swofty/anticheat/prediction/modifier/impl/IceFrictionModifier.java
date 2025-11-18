@@ -5,15 +5,18 @@ import net.swofty.anticheat.prediction.modifier.FrictionModifier;
 
 /**
  * Ice block friction modifier
- * Ice has extremely low friction (0.98) compared to normal blocks (0.6)
+ * Regular ice and packed ice have slipperiness of 0.98
+ * (Blue ice is 0.989 but can be added as separate modifier if needed)
+ * Normal blocks are 0.6, making ice very slippery
  */
 public class IceFrictionModifier extends FrictionModifier {
 
-    private static final float ICE_FRICTION = 0.98f;
+    // Ice and packed ice slipperiness value
+    private static final float ICE_SLIPPERINESS = 0.98f;
 
     @Override
     public float getFriction(PlayerContext context) {
-        return ICE_FRICTION;
+        return ICE_SLIPPERINESS;
     }
 
     @Override

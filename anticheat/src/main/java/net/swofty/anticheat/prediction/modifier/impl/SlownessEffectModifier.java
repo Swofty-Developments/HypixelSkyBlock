@@ -7,15 +7,19 @@ import net.swofty.anticheat.prediction.modifier.VelocityModifier;
 /**
  * Slowness potion effect modifier
  * Each level decreases speed by 15%
+ * Slowness I = 15% reduction, Slowness II = 30% reduction, etc.
+ * Formula: 1 - 0.15x where x is level
  */
 public class SlownessEffectModifier extends VelocityModifier {
 
-    private static final double SLOWNESS_PER_LEVEL = 0.15;
+    // Each level reduces speed by 15% (0.15)
+    private static final double SLOWNESS_REDUCTION_PER_LEVEL = 0.15;
 
     @Override
     public Vel apply(Vel currentVel, PlayerContext context) {
-        double multiplier = 1.0 - (context.getSlownessLevel() * SLOWNESS_PER_LEVEL);
-        multiplier = Math.max(0, multiplier); // Can't go negative
+        // Formula: speed * (1.0 - level * 0.15)
+        double multiplier = 1.0 - (context.getSlownessLevel() * SLOWNESS_REDUCTION_PER_LEVEL);
+        multiplier = Math.max(0, multiplier); // Can't go negative (levels 7+ freeze player)
 
         return new Vel(
             currentVel.x() * multiplier,
