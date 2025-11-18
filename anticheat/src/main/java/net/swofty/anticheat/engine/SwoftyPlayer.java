@@ -1,6 +1,7 @@
 package net.swofty.anticheat.engine;
 
 import lombok.Getter;
+import net.swofty.anticheat.api.AnticheatAPI;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.event.events.PlayerPositionUpdateEvent;
 import net.swofty.anticheat.event.packet.RequestPingPacket;
@@ -121,6 +122,12 @@ public class SwoftyPlayer {
 
     public void flag(FlagType flagType, double certainty) {
         if (lastTicks.size() == 1) return; // We need at least 2 ticks to flag
+
+        // Check if player has bypass for this flag type
+        if (AnticheatAPI.hasBypass(uuid, flagType)) {
+            return;
+        }
+
         flagManager.addFlag(flagType, certainty);
     }
 

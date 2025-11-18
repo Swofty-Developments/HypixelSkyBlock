@@ -1,5 +1,6 @@
 package net.swofty.anticheat.engine;
 
+import net.swofty.anticheat.api.AnticheatAPI;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.flag.FlagType;
 import net.swofty.anticheat.loader.Loader;
@@ -23,6 +24,9 @@ public class SwoftyEngine {
                     if (!onlinePlayers.contains(uuid)) {
                         player.getWorld().shutdown();
                         SwoftyPlayer.players.remove(uuid);
+                        // Clean up player data when they disconnect
+                        AnticheatAPI.clearPlayerData(uuid);
+                        AnticheatAPI.clearBypasses(uuid);
                     }
                 });
             }
@@ -43,6 +47,11 @@ public class SwoftyEngine {
                 }
             }));
         }, 1, 1);
+
+        // Cleanup expired bypasses every 5 seconds (100 ticks)
+        scheduler.scheduleRepeatingTask(() -> {
+            AnticheatAPI.getBypassManager().cleanupExpired();
+        }, 100, 100);
     }
 
     public static void registerEvents() {
