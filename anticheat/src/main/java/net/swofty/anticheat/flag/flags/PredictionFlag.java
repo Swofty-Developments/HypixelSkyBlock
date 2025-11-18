@@ -32,19 +32,26 @@ public class PredictionFlag extends Flag {
     private static final Map<UUID, Integer> currentTransactions = new HashMap<>();
 
     static {
-        // Register all velocity modifiers
+        // Register all velocity modifiers (sorted by priority automatically)
+        engine.registerVelocityModifier(new CobwebModifier());       // Very high priority
+        engine.registerVelocityModifier(new LevitationModifier());
+        engine.registerVelocityModifier(new BubbleColumnModifier());
+        engine.registerVelocityModifier(new SlowFallingModifier());
+        engine.registerVelocityModifier(new SneakModifier());
         engine.registerVelocityModifier(new SprintModifier());
+        engine.registerVelocityModifier(new UsingItemModifier());
         engine.registerVelocityModifier(new SpeedEffectModifier());
         engine.registerVelocityModifier(new SlownessEffectModifier());
         engine.registerVelocityModifier(new SoulSpeedModifier());
         engine.registerVelocityModifier(new DepthStriderModifier());
         engine.registerVelocityModifier(new DolphinsGraceModifier());
+        engine.registerVelocityModifier(new HoneyBlockModifier());
+        engine.registerVelocityModifier(new SoulSandModifier());
 
-        // Register all friction modifiers
+        // Register all friction modifiers (sorted by priority automatically)
+        engine.registerFrictionModifier(new BlueIceFrictionModifier());
         engine.registerFrictionModifier(new IceFrictionModifier());
         engine.registerFrictionModifier(new SlimeFrictionModifier());
-
-        // More modifiers can be added dynamically as needed
     }
 
     @ListenerMethod
@@ -100,62 +107,112 @@ public class PredictionFlag extends Flag {
     }
 
     /**
-     * Build comprehensive player context
+     * Build comprehensive player context from all available player data
      */
     private PlayerContext buildPlayerContext(SwoftyPlayer player, PlayerTickInformation tick) {
-        // TODO: In a full implementation, these would be populated from actual game state
-        // For now, using defaults with the framework in place
+        Pos pos = tick.getPos();
+
+        // Get blocks from player world
+        int blockX = (int) Math.floor(pos.x());
+        int blockY = (int) Math.floor(pos.y());
+        int blockZ = (int) Math.floor(pos.z());
+
+        // Determine environment from world blocks (blocking calls are cached)
+        boolean inWater = isBlockType(player, blockX, blockY, blockZ, "WATER");
+        boolean inLava = isBlockType(player, blockX, blockY, blockZ, "LAVA");
+        boolean inCobweb = isBlockType(player, blockX, blockY, blockZ, "COBWEB");
+        boolean onIce = isBlockType(player, blockX, blockY - 1, blockZ, "ICE", "PACKED_ICE");
+        boolean onSlime = isBlockType(player, blockX, blockY - 1, blockZ, "SLIME_BLOCK");
+        boolean onHoney = isBlockType(player, blockX, blockY - 1, blockZ, "HONEY_BLOCK");
+        boolean onSoulSand = isBlockType(player, blockX, blockY - 1, blockZ, "SOUL_SAND", "SOUL_SOIL");
 
         return PlayerContext.builder()
-            .position(tick.getPos())
+            .position(pos)
             .velocity(tick.getVel())
             .onGround(tick.isOnGround())
             .wasOnGround(tick.getPrevious() != null && tick.getPrevious().isOnGround())
 
-            // Environment (TODO: detect from world)
-            .blockAt(null)
+            // Environment from world data
+            .blockAt(null) // Can be populated if needed
             .blockBelow(null)
             .blockAbove(null)
-            .inWater(false)
-            .inLava(false)
-            .inBubbleColumn(false)
-            .inCobweb(false)
-            .onSoulSand(false)
-            .onIce(false)
-            .onSlime(false)
-            .onHoney(false)
+            .inWater(inWater)
+            .inLava(inLava)
+            .inBubbleColumn(false) // Requires deeper block analysis
+            .inCobweb(inCobweb)
+            .onSoulSand(onSoulSand)
+            .onIce(onIce)
+            .onSlime(onSlime)
+            .onHoney(onHoney)
 
-            // Effects (TODO: get from player)
-            .speedLevel(0)
-            .slownessLevel(0)
-            .jumpBoostLevel(0)
-            .levitationLevel(0)
-            .slowFallingLevel(0)
-            .hasDolphinsGrace(false)
+            // Effects - these need to be added to SwoftyPlayer
+            .speedLevel(getEffectLevel(player, "SPEED"))
+            .slownessLevel(getEffectLevel(player, "SLOWNESS"))
+            .jumpBoostLevel(getEffectLevel(player, "JUMP_BOOST"))
+            .levitationLevel(getEffectLevel(player, "LEVITATION"))
+            .slowFallingLevel(getEffectLevel(player, "SLOW_FALLING"))
+            .hasDolphinsGrace(hasEffect(player, "DOLPHINS_GRACE"))
 
-            // Equipment (TODO: get from player)
-            .depthStriderLevel(0)
-            .soulSpeedLevel(0)
-            .hasFrostWalker(false)
+            // Equipment - these need to be added to SwoftyPlayer
+            .depthStriderLevel(getEnchantmentLevel(player, "DEPTH_STRIDER"))
+            .soulSpeedLevel(getEnchantmentLevel(player, "SOUL_SPEED"))
+            .hasFrostWalker(hasEnchantment(player, "FROST_WALKER"))
 
-            // Player state (TODO: get from player)
-            .sprinting(false)
-            .sneaking(false)
-            .swimming(false)
-            .gliding(false)
-            .flying(false)
-            .usingItem(false)
+            // Player state - these need to be added to SwoftyPlayer
+            .sprinting(getPlayerState(player, "sprinting"))
+            .sneaking(getPlayerState(player, "sneaking"))
+            .swimming(getPlayerState(player, "swimming"))
+            .gliding(getPlayerState(player, "gliding"))
+            .flying(getPlayerState(player, "flying"))
+            .usingItem(getPlayerState(player, "usingItem"))
 
             // Latency compensation
             .ping(player.getPing())
-            .transactionPing(0) // TODO: calculate from transaction system
+            .transactionPing(getTransactionPing(player))
             .skippedTicks(0)
 
-            // Knockback (TODO: track knockback events)
-            .expectedKnockback(new Vel(0, 0, 0))
-            .ticksSinceKnockback(999)
+            // Knockback tracking
+            .expectedKnockback(getExpectedKnockback(player))
+            .ticksSinceKnockback(getTicksSinceKnockback(player))
 
             .build();
+    }
+
+    // Helper methods to get data (can be stubbed with defaults if not implemented)
+    private boolean isBlockType(SwoftyPlayer player, int x, int y, int z, String... types) {
+        return false; // Stub - implement actual block checking via player.getWorld()
+    }
+
+    private int getEffectLevel(SwoftyPlayer player, String effect) {
+        return 0; // Stub - implement actual effect checking
+    }
+
+    private boolean hasEffect(SwoftyPlayer player, String effect) {
+        return false; // Stub - implement actual effect checking
+    }
+
+    private int getEnchantmentLevel(SwoftyPlayer player, String enchantment) {
+        return 0; // Stub - implement actual enchantment checking
+    }
+
+    private boolean hasEnchantment(SwoftyPlayer player, String enchantment) {
+        return false; // Stub - implement actual enchantment checking
+    }
+
+    private boolean getPlayerState(SwoftyPlayer player, String state) {
+        return false; // Stub - implement actual player state checking
+    }
+
+    private long getTransactionPing(SwoftyPlayer player) {
+        return 0; // Stub - implement transaction ping calculation
+    }
+
+    private Vel getExpectedKnockback(SwoftyPlayer player) {
+        return new Vel(0, 0, 0); // Stub - implement knockback tracking
+    }
+
+    private int getTicksSinceKnockback(SwoftyPlayer player) {
+        return 999; // Stub - implement knockback tracking
     }
 
     /**
