@@ -116,7 +116,7 @@ Or click the stop button in Docker Desktop.
 ### How to add new servers using Docker?
 To add new servers like the Hub, Islands or Farming Island follow these steps:
 1. Open the `docker-compose.yml` file.
-2. Add and modify the following template and add it to the docker-compsose. (Make sure to use proper indentation):
+2. Modify the following template and add it to the `docker-compose.yml`. (Make sure to use proper indentation):
 
 ```yaml
 <server_name>:
