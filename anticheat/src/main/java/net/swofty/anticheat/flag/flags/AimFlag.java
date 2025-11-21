@@ -23,8 +23,8 @@ public class AimFlag extends Flag {
             pitchChanges.add(Math.abs(pitchChange));
 
             if (yawChanges.size() > MAX_SAMPLES) {
-                yawChanges.remove(0);
-                pitchChanges.remove(0);
+                yawChanges.removeFirst();
+                pitchChanges.removeFirst();
             }
         }
     }

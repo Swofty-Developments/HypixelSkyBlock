@@ -1,6 +1,5 @@
 package net.swofty.anticheat.loader.spigot.packets;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
@@ -20,8 +19,7 @@ public class SpigotHandlerUseEntityPacket extends LoaderPacketHandler {
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, Object loaderPacket) {
-        if (!(loaderPacket instanceof PacketContainer)) return null;
-        PacketContainer packet = (PacketContainer) loaderPacket;
+        if (!(loaderPacket instanceof PacketContainer packet)) return null;
 
         int entityId = packet.getIntegers().read(0);
         EnumWrappers.EntityUseAction action = packet.getEntityUseActions().read(0);
