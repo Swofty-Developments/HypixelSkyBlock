@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.item.crafting;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -74,8 +75,8 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
             ItemQuantifiable toConsume = materialsToConsume.stream()
                     .filter(material -> material.matchesType(currentStackMaterial.getItem())
                             || ExchangeableType.isExchangeable(
-                                    material.getItem().getAttributeHandler().getPotentialType(),
-                                    currentStackMaterial.getItem().getAttributeHandler().getPotentialType()
+                            material.getItem().getAttributeHandler().getPotentialType(),
+                            currentStackMaterial.getItem().getAttributeHandler().getPotentialType()
                     ))
                     .findFirst()
                     .orElse(null);
@@ -137,65 +138,56 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
     }
 
     public static ShapelessRecipe parseShapelessRecipe(ItemStack[] stacks) {
-        List<ItemQuantifiable> materialsPassedThrough = Arrays.stream(stacks)
+        // Extract valid, non-AIR items from the crafting grid
+        List<ItemQuantifiable> nonAirInput = Arrays.stream(stacks)
                 .map(ItemQuantifiable::of)
+                .filter(iq -> iq.getItem().getMaterial() != Material.AIR)
                 .map(ItemQuantifiable::clone)
                 .toList();
 
-        List<ItemType> uniqueMaterials = new ArrayList<>(materialsPassedThrough.stream()
-                .map(iq -> iq.getItem().getAttributeHandler().getPotentialType())
-                .distinct()
-                .toList());
-
-        uniqueMaterials.removeIf(material -> material == null || material == ItemType.AIR);
-
         return CACHED_RECIPES.stream()
+                .filter(recipe -> recipe.getIngredientList().size() == nonAirInput.size())
                 .filter(recipe -> {
-                    List<ItemType> recipeMaterials = recipe.getIngredientList().stream()
+                    List<ItemType> recipeTypes = recipe.getIngredientList().stream()
                             .map(iq -> iq.getItem().getAttributeHandler().getPotentialType())
-                            .distinct()
                             .toList();
 
-                    boolean materialsMatch = recipeMaterials.size() == uniqueMaterials.size();
-
-                    for (ItemType recipeMaterial : recipeMaterials) {
-                        materialsMatch &= uniqueMaterials.stream()
-                                .anyMatch(material -> material == recipeMaterial
-                                        || ExchangeableType.isExchangeable(material, recipeMaterial));
-                    }
-
-                    return materialsMatch;
+                    return nonAirInput.stream().allMatch(input -> {
+                        ItemType inputType = input.getItem().getAttributeHandler().getPotentialType();
+                        return recipeTypes.stream().anyMatch(recipeType ->
+                                inputType == recipeType || ExchangeableType.isExchangeable(inputType, recipeType));
+                    });
                 })
                 .filter(recipe -> {
                     List<ItemQuantifiable> materialsNeeded = recipe.getIngredientList().stream()
-                            .map(ItemQuantifiable::new)
                             .map(ItemQuantifiable::clone)
                             .collect(Collectors.toList());
 
-                    materialsPassedThrough.forEach(material -> {
-                        ItemQuantifiable found = materialsNeeded.stream()
-                                .filter(needed -> needed.matchesType(material.getItem())
+                    for (ItemQuantifiable input : nonAirInput) {
+                        ItemQuantifiable match = materialsNeeded.stream()
+                                .filter(needed -> needed.matchesType(input.getItem())
                                         || ExchangeableType.isExchangeable(
-                                                needed.getItem().getAttributeHandler().getPotentialType(),
-                                                material.getItem().getAttributeHandler().getPotentialType()
-                                        ))
+                                        needed.getItem().getAttributeHandler().getPotentialType(),
+                                        input.getItem().getAttributeHandler().getPotentialType()))
                                 .findFirst()
                                 .orElse(null);
 
-                        if (found != null) {
-                            int difference = found.getAmount() - material.getAmount();
-                            if (difference > 0) {
-                                found.setAmount(difference);
+                        if (match != null) {
+                            int remaining = match.getAmount() - input.getAmount();
+                            if (remaining > 0) {
+                                match.setAmount(remaining);
                             } else {
-                                materialsNeeded.remove(found);
+                                materialsNeeded.remove(match);
                             }
                         }
-                    });
+                    }
+
                     return materialsNeeded.isEmpty();
                 })
                 .findFirst()
                 .orElse(null);
     }
+
 
     @Override
     public String toString() {
