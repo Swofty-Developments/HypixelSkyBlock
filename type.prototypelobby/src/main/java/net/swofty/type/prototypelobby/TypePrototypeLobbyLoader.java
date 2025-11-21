@@ -9,13 +9,11 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
-import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.EmptyTabModule;
-import net.swofty.type.generic.tab.StandardTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import org.jetbrains.annotations.Nullable;
@@ -30,7 +28,6 @@ public class TypePrototypeLobbyLoader implements HypixelTypeLoader {
 
     @Override
     public void onInitialize(MinecraftServer server) {
-
     }
 
     @Override

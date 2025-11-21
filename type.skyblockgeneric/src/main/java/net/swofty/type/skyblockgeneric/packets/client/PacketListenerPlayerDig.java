@@ -7,7 +7,6 @@ import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEvent;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class PacketListenerPlayerDig extends HypixelPacketClientListener {
     @Override
