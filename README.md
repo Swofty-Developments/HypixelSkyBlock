@@ -115,26 +115,50 @@ Or click the stop button in Docker Desktop.
 
 ### How to add new servers using Docker?
 To add new servers like the Hub, Islands or Farming Island follow these steps:
-1. Open the `entrypoint.sh` file in the `configuration` folder.
-2. Add the following line to the end of the file, replacing `ServerType` with the type of server you want to add (e.g., `SKYBLOCK_HUB`, `SKYBLOCK_ISLAND`, etc.):
+1. Open the `docker-compose.yml` file.
+2. Modify the following template and add it to the `docker-compose.yml`. (Make sure to use proper indentation):
 
-```bash
-screen -dmS HypixelCore_HUB java --enable-preview -jar HypixelCore.jar ServerType
+```yaml
+<server_name>:
+  image: game_server_prepared
+  container_name: <server_name>
+  restart: "unless-stopped"
+  environment:
+    SERVICE_CMD: java --enable-preview -jar HypixelCore.jar <ServerType>
+  depends_on:
+    proxy:
+      condition: service_healthy
+    game_server_builder:
+      condition: service_started
+  volumes:
+    - ./configuration:/app/configuration_files
+  networks:
+    - hypixel_network
 ```
 
-3. Save the file and run `docker-compose up --build` again to apply the changes.
+3. Replace `<server_name>` with a unique name for your server (e.g., `hub`, `island_1`, etc.).
 
+4. Replace `<ServerType>` with the appropriate server type (e.g., `SKYBLOCK_HUB`, `SKYBLOCK_ISLAND`, etc.)
 
-If you want to run services directly in the container you can attach to the container using:
+Example:
 
-```bash
-docker-compose exec game_server /bin/bash
+```yaml
+hypixelcore_hub2:
+  image: game_server_prepared
+  container_name: hypixelcore_hub2
+  restart: "unless-stopped"
+  environment:
+    SERVICE_CMD: java --enable-preview -jar HypixelCore.jar SKYBLOCK_HUB
+  depends_on:
+    proxy:
+      condition: service_healthy
+    game_server_builder:
+      condition: service_started
+  volumes:
+    - ./configuration:/app/configuration_files
+  networks:
+    - hypixel_network
 ```
-
-or go to the `exec` tab in Docker Desktop.
-
-and then run the service command inside there. It will create its own screen session for you to run the service in.
-
 
 ## Common Issues
 1. `redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.`
