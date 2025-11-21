@@ -1,6 +1,7 @@
 package net.swofty.anticheat.loader.minestom.packets;
 
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.network.packet.client.play.ClientAnimationPacket;
 import net.swofty.anticheat.event.packet.AnimationPacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
@@ -13,7 +14,7 @@ public class MinestomHandlerAnimationPacket
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, ClientAnimationPacket packet) {
-        AnimationPacket.Hand hand = packet.hand() == Player.Hand.MAIN ?
+        AnimationPacket.Hand hand = packet.hand() == PlayerHand.MAIN ?
                 AnimationPacket.Hand.MAIN_HAND : AnimationPacket.Hand.OFF_HAND;
 
         return new AnimationPacket(uuid, hand);

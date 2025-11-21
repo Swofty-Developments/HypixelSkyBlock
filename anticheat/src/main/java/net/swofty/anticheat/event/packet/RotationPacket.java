@@ -1,11 +1,13 @@
 package net.swofty.anticheat.event.packet;
 
+import lombok.Getter;
 import net.swofty.anticheat.engine.SwoftyPlayer;
 
+@Getter
 public class RotationPacket extends SwoftyPacket {
-    private float yaw;
-    private float pitch;
-    private boolean onGround;
+    private final float yaw;
+    private final float pitch;
+    private final boolean onGround;
 
     public RotationPacket(SwoftyPlayer player, float yaw, float pitch, boolean onGround) {
         super(player);
@@ -14,15 +16,4 @@ public class RotationPacket extends SwoftyPacket {
         this.onGround = onGround;
     }
 
-    public float getYaw() {
-        return yaw;
-    }
-
-    public float getPitch() {
-        return pitch;
-    }
-
-    public boolean isOnGround() {
-        return onGround;
-    }
 }

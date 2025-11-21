@@ -1,6 +1,6 @@
 package net.swofty.anticheat.loader.minestom.packets;
 
-import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.network.packet.client.play.ClientInteractEntityPacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
 import net.swofty.anticheat.event.packet.UseEntityPacket;
@@ -14,16 +14,44 @@ public class MinestomHandlerUseEntityPacket
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, ClientInteractEntityPacket packet) {
-        UseEntityPacket.Type type = mapType(packet.type());
-        UseEntityPacket.Hand hand = packet.hand() == Player.Hand.MAIN ?
-                UseEntityPacket.Hand.MAIN_HAND : UseEntityPacket.Hand.OFF_HAND;
+        ClientInteractEntityPacket.Type type = packet.type();
 
+        UseEntityPacket.Type swoftyType;
+        UseEntityPacket.Hand hand = null;
         Pos targetPos = null;
-        if (packet.type() == ClientInteractEntityPacket.Type.INTERACT_AT && packet.targetPosition() != null) {
-            targetPos = new Pos(packet.targetPosition().x(), packet.targetPosition().y(), packet.targetPosition().z());
+
+        switch (type) {
+            case ClientInteractEntityPacket.Interact(PlayerHand playerHand) -> {
+                swoftyType = UseEntityPacket.Type.INTERACT;
+                hand = playerHand == PlayerHand.MAIN
+                        ? UseEntityPacket.Hand.MAIN_HAND
+                        : UseEntityPacket.Hand.OFF_HAND;
+            }
+            case ClientInteractEntityPacket.Attack attack -> swoftyType = UseEntityPacket.Type.ATTACK;
+            case ClientInteractEntityPacket.InteractAt interactAt -> {
+                swoftyType = UseEntityPacket.Type.INTERACT_AT;
+
+                targetPos = new Pos(
+                        interactAt.targetX(),
+                        interactAt.targetY(),
+                        interactAt.targetZ()
+                );
+
+                hand = interactAt.hand() == PlayerHand.MAIN
+                        ? UseEntityPacket.Hand.MAIN_HAND
+                        : UseEntityPacket.Hand.OFF_HAND;
+            }
+            default -> throw new IllegalStateException("Unknown interact type: " + type.getClass());
         }
 
-        return new UseEntityPacket(uuid, packet.targetId(), type, targetPos, hand, packet.playerSneaking());
+        return new UseEntityPacket(
+                uuid,
+                packet.targetId(),
+                swoftyType,
+                targetPos,
+                hand,
+                packet.sneaking()
+        );
     }
 
     @Override
@@ -34,13 +62,5 @@ public class MinestomHandlerUseEntityPacket
     @Override
     public Class<ClientInteractEntityPacket> getHandledPacketClass() {
         return ClientInteractEntityPacket.class;
-    }
-
-    private UseEntityPacket.Type mapType(ClientInteractEntityPacket.Type type) {
-        return switch (type) {
-            case INTERACT -> UseEntityPacket.Type.INTERACT;
-            case ATTACK -> UseEntityPacket.Type.ATTACK;
-            case INTERACT_AT -> UseEntityPacket.Type.INTERACT_AT;
-        };
     }
 }

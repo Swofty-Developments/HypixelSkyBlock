@@ -1,9 +1,10 @@
 package net.swofty.anticheat.api;
 
+import lombok.Getter;
 import net.swofty.anticheat.api.modifier.CustomModifierRegistry;
 import net.swofty.anticheat.api.player.BypassManager;
 import net.swofty.anticheat.api.player.PlayerDataRegistry;
-import net.swofty.anticheat.detection.FlagType;
+import net.swofty.anticheat.flag.FlagType;
 import net.swofty.anticheat.prediction.modifier.FrictionModifier;
 import net.swofty.anticheat.prediction.modifier.VelocityModifier;
 
@@ -19,8 +20,14 @@ import java.util.UUID;
  * - Hook into detection events
  */
 public class AnticheatAPI {
+
+    @Getter
     private static final CustomModifierRegistry modifierRegistry = new CustomModifierRegistry();
+
+    @Getter
     private static final PlayerDataRegistry playerDataRegistry = new PlayerDataRegistry();
+
+    @Getter
     private static final BypassManager bypassManager = new BypassManager();
 
     /**
@@ -151,32 +158,5 @@ public class AnticheatAPI {
      */
     public static void clearBypasses(UUID uuid) {
         bypassManager.clearBypasses(uuid);
-    }
-
-    /**
-     * Get the custom modifier registry.
-     *
-     * @return The modifier registry
-     */
-    public static CustomModifierRegistry getModifierRegistry() {
-        return modifierRegistry;
-    }
-
-    /**
-     * Get the player data registry.
-     *
-     * @return The player data registry
-     */
-    public static PlayerDataRegistry getPlayerDataRegistry() {
-        return playerDataRegistry;
-    }
-
-    /**
-     * Get the bypass manager.
-     *
-     * @return The bypass manager
-     */
-    public static BypassManager getBypassManager() {
-        return bypassManager;
     }
 }

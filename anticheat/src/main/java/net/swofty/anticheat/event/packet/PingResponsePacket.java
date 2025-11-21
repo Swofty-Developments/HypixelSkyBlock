@@ -5,7 +5,7 @@ import net.swofty.anticheat.engine.SwoftyPlayer;
 
 @Getter
 public class PingResponsePacket extends SwoftyPacket {
-    private long requestId;
+    private final long requestId;
 
     public PingResponsePacket(SwoftyPlayer player, long requestId) {
         super(player);

@@ -147,7 +147,7 @@ public class PredictionEngine {
         // Calculate new position
         Pos newPos = currentPos.add(newVel.x(), newVel.y(), newVel.z());
 
-        return new PredictedMovement(newPos, newVel, input, 1.0);
+        return new PredictedMovement(newPos, newVel, input);
     }
 
     /**
@@ -163,7 +163,7 @@ public class PredictionEngine {
                 return modifier.getFriction(context);
             }
         }
-        return DEFAULT_FRICTION;
+        return (float) DEFAULT_FRICTION;
     }
 
     /**

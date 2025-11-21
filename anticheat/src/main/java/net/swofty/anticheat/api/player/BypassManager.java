@@ -1,8 +1,7 @@
 package net.swofty.anticheat.api.player;
 
-import net.swofty.anticheat.detection.FlagType;
+import net.swofty.anticheat.flag.FlagType;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;

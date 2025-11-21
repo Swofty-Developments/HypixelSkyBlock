@@ -12,7 +12,7 @@ public class MinestomHandlerWindowClickPacket
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, ClientClickWindowPacket packet) {
-        WindowClickPacket.ClickType clickType = mapClickType(packet.clickType());
+        WindowClickPacket.ClickType clickType = mapClickType(packet.clickType().ordinal());
 
         return new WindowClickPacket(
                 uuid,

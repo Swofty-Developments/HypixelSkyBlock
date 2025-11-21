@@ -17,6 +17,14 @@ repositories {
             password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
         }
     }
+
+    maven {
+        url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    }
+
+    maven {
+        url = uri("https://repo.dmulloy2.net/repository/public/")
+    }
 }
 
 dependencies {
@@ -25,12 +33,15 @@ dependencies {
     }
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
+
+    compileOnly("org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT")
+
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
 }
 
 tasks.test {
     useJUnitPlatform()
 }
-
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17

@@ -1,6 +1,5 @@
 package net.swofty.anticheat.loader.spigot.packets;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import net.swofty.anticheat.event.packet.SteerVehiclePacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
@@ -17,8 +16,7 @@ public class SpigotHandlerSteerVehiclePacket extends LoaderPacketHandler {
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, Object loaderPacket) {
-        if (!(loaderPacket instanceof PacketContainer)) return null;
-        PacketContainer packet = (PacketContainer) loaderPacket;
+        if (!(loaderPacket instanceof PacketContainer packet)) return null;
 
         float sideways = packet.getFloat().read(0);
         float forward = packet.getFloat().read(1);

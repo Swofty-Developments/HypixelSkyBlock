@@ -1,6 +1,5 @@
 package net.swofty.anticheat.loader.spigot.packets;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
 import net.swofty.anticheat.event.packet.WindowClickPacket;
@@ -17,8 +16,7 @@ public class SpigotHandlerWindowClickPacket extends LoaderPacketHandler {
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, Object loaderPacket) {
-        if (!(loaderPacket instanceof PacketContainer)) return null;
-        PacketContainer packet = (PacketContainer) loaderPacket;
+        if (!(loaderPacket instanceof PacketContainer packet)) return null;
 
         int windowId = packet.getIntegers().read(0);
         int stateId = packet.getIntegers().size() > 1 ? packet.getIntegers().read(1) : 0;

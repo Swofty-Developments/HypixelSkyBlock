@@ -5,7 +5,6 @@ import com.comphenix.protocol.events.PacketContainer;
 import net.swofty.anticheat.event.packet.RequestPingPacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
 import net.swofty.anticheat.loader.LoaderPacketHandler;
-import org.bukkit.Bukkit;
 
 import java.util.UUID;
 
@@ -24,11 +23,10 @@ public class SpigotHandlerPingRequestPacket extends LoaderPacketHandler {
 
     @Override
     public Object buildLoaderPacket(UUID uuid, SwoftyPacket swoftyPacket) {
-        if (!(swoftyPacket instanceof RequestPingPacket)) return null;
-        RequestPingPacket pingPacket = (RequestPingPacket) swoftyPacket;
+        if (!(swoftyPacket instanceof RequestPingPacket pingPacket)) return null;
 
         PacketContainer packet = new PacketContainer(PacketType.Play.Server.PING);
-        packet.getIntegers().write(0, pingPacket.getPingId());
+        packet.getIntegers().write(0, pingPacket.getRequestId());
 
         return packet;
     }

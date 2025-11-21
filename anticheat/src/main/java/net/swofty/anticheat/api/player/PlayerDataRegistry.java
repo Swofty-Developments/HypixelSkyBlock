@@ -19,7 +19,7 @@ public class PlayerDataRegistry {
 
     public <T> T getData(UUID uuid, String key, Class<T> type) {
         Object data = getData(uuid, key);
-        if (data != null && type.isInstance(data)) {
+        if (type.isInstance(data)) {
             return type.cast(data);
         }
         return null;

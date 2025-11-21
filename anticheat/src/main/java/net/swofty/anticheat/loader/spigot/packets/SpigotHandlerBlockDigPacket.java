@@ -1,6 +1,5 @@
 package net.swofty.anticheat.loader.spigot.packets;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.EnumWrappers;
@@ -20,8 +19,7 @@ public class SpigotHandlerBlockDigPacket extends LoaderPacketHandler {
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, Object loaderPacket) {
-        if (!(loaderPacket instanceof PacketContainer)) return null;
-        PacketContainer packet = (PacketContainer) loaderPacket;
+        if (!(loaderPacket instanceof PacketContainer packet)) return null;
 
         EnumWrappers.PlayerDigType digType = packet.getPlayerDigTypes().read(0);
         BlockPosition blockPos = packet.getBlockPositionModifier().read(0);
@@ -48,7 +46,7 @@ public class SpigotHandlerBlockDigPacket extends LoaderPacketHandler {
             case DROP_ALL_ITEMS -> BlockDigPacket.Status.DROP_ITEM_STACK;
             case DROP_ITEM -> BlockDigPacket.Status.DROP_ITEM;
             case RELEASE_USE_ITEM -> BlockDigPacket.Status.UPDATE_HELD_ITEM;
-            case SWAP_ITEM_WITH_OFFHAND -> BlockDigPacket.Status.SWAP_ITEM_IN_HAND;
+            case SWAP_HELD_ITEMS -> BlockDigPacket.Status.SWAP_ITEM_IN_HAND;
         };
     }
 

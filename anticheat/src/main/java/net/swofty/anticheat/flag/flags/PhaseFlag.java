@@ -37,8 +37,8 @@ public class PhaseFlag extends Flag {
                 Block feet = feetBlock.get();
                 Block head = headBlock.get();
 
-                boolean feetSolid = feet != null && isSolid(feet);
-                boolean headSolid = head != null && isSolid(head);
+                boolean feetSolid = isSolid(feet);
+                boolean headSolid = isSolid(head);
 
                 if (feetSolid || headSolid) {
                     // Player is inside a solid block
@@ -90,7 +90,7 @@ public class PhaseFlag extends Flag {
             (int) Math.floor(midY),
             (int) Math.floor(midZ)
         ).thenAccept(block -> {
-            if (block != null && isSolid(block)) {
+            if (isSolid(block)) {
                 // Moved through a solid block
                 event.getPlayer().flag(net.swofty.anticheat.flag.FlagType.PHASE, 0.8);
             }

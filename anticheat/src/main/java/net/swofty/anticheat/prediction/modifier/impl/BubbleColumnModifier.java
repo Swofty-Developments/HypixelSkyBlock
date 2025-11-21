@@ -15,7 +15,7 @@ public class BubbleColumnModifier extends VelocityModifier {
 
     @Override
     public Vel apply(Vel currentVel, PlayerContext context) {
-        boolean isUpward = (boolean) context.getCustomData("bubbleColumnUpward");
+        boolean isUpward = context.getCustomData("bubbleColumnUpward");
 
         double verticalModifier = isUpward ? UPWARD_PUSH : DOWNWARD_PULL;
 

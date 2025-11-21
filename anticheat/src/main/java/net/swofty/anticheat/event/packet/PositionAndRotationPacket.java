@@ -1,11 +1,13 @@
 package net.swofty.anticheat.event.packet;
 
+import lombok.Getter;
 import net.swofty.anticheat.engine.SwoftyPlayer;
 import net.swofty.anticheat.math.Pos;
 
+@Getter
 public class PositionAndRotationPacket extends SwoftyPacket {
-    private Pos pos;
-    private boolean onGround;
+    private final Pos pos;
+    private final boolean onGround;
 
     public PositionAndRotationPacket(SwoftyPlayer player, Pos pos, boolean onGround) {
         super(player);
@@ -13,11 +15,4 @@ public class PositionAndRotationPacket extends SwoftyPacket {
         this.onGround = onGround;
     }
 
-    public Pos getPos() {
-        return pos;
-    }
-
-    public boolean isOnGround() {
-        return onGround;
-    }
 }

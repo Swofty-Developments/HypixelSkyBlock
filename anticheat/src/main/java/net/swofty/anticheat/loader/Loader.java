@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public abstract class Loader {
-    private Map<String, LoaderPacketHandler> packetHandlerMap = new HashMap<>();
+    private final Map<String, LoaderPacketHandler> packetHandlerMap = new HashMap<>();
 
     public abstract SwoftySchedulerManager getSchedulerManager();
     public abstract List<UUID> getOnlinePlayers();

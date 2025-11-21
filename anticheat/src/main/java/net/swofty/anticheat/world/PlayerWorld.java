@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class PlayerWorld {
     private static final int CHUNK_SIZE = 16;
-    private Map<ChunkCoordinate, Chunk> chunks;
+    private final Map<ChunkCoordinate, Chunk> chunks;
 
     private final ExecutorService executorService;
     private final ReentrantLock lock;

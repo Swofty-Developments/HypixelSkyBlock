@@ -18,7 +18,7 @@ public class KillAuraFlag extends Flag {
         void addAttack(UUID targetId, Pos attackerPos, Pos targetPos, long timestamp) {
             attacks.add(new AttackInfo(targetId, attackerPos, targetPos, timestamp));
             if (attacks.size() > MAX_ATTACKS) {
-                attacks.remove(0);
+                attacks.removeFirst();
             }
         }
     }
