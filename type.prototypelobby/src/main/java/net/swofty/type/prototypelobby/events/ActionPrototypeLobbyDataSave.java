@@ -2,18 +2,12 @@ package net.swofty.type.prototypelobby.events;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
-import net.swofty.commons.proxy.ToProxyChannels;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
-import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.prototypelobby.PrototypeLobbyDataHandler;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.UUID;
