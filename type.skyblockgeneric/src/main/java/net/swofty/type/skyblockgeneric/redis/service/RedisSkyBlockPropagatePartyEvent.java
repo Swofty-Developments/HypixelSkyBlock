@@ -62,7 +62,7 @@ public class RedisSkyBlockPropagatePartyEvent implements ServiceToClient {
             PartyEvent templateEvent = PartyEvent.findFromType(eventType);
             return (PartyEvent) templateEvent.getSerializer().deserialize(eventData);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to parse party event of type: {}", eventType);
             return null;
         }
     }

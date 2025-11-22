@@ -58,6 +58,8 @@ import java.net.InetSocketAddress;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -89,7 +91,7 @@ public class SkyBlockVelocity {
         plugin = this;
         server = tempServer;
 
-        limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("host-name"),
+        limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("limbo-host-name"),
                 Integer.parseInt(Configuration.get("limbo-port")))));
     }
 
@@ -180,7 +182,7 @@ public class SkyBlockVelocity {
 
         if (!GameManager.hasType(ServerType.BEDWARS_LOBBY) || !GameManager.isAnyEmpty(ServerType.BEDWARS_LOBBY)) {
             player.disconnect(
-                    Component.text("§cThere are no BEDWARS_LOBBY servers available at the moment.")
+                    Component.text("§cThere are no BedWars Lobby servers available at the moment.")
             );
             return;
         }
@@ -255,50 +257,46 @@ public class SkyBlockVelocity {
         TransferHandler transferHandler = new TransferHandler(event.getPlayer());
         transferHandler.standardTransferTo(originalServer, serverType);
 
-        Thread.startVirtualThread(() -> {
-            // Determine if the registeredServer disconnect was due to a crash
-            // if it was, then we send the player back to another registeredServer
-            // of that type, otherwise we disconnect them for the same
-            // reason as the original
-            try {
-                Thread.sleep(GameManager.SLEEP_TIME + 300);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
+                .execute(() -> {
+                    // Determine if the registeredServer disconnect was due to a crash
+                    // if it was, then we send the player back to another registeredServer
+                    // of that type, otherwise we disconnect them for the same
+                    // reason as the original
 
-            /*boolean isOnline = GameManager.getFromRegisteredServer(originalServer) != null;
-            if (isOnline) {
-                transferHandler.forceRemoveFromLimbo();
-                event.getPlayer().disconnect(reason);
-                return;
-            }*/
+                    /*boolean isOnline = GameManager.getFromRegisteredServer(originalServer) != null;
+                    if (isOnline) {
+                        transferHandler.forceRemoveFromLimbo();
+                        event.getPlayer().disconnect(reason);
+                        return;
+                    }*/
 
-            try {
-                ServerType serverTypeToTry = serverType;
-                if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
-                    serverTypeToTry = ServerType.BEDWARS_LOBBY;
-                }
+                    try {
+                        ServerType serverTypeToTry = serverType;
+                        if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
+                            serverTypeToTry = ServerType.PROTOTYPE_LOBBY;
+                        }
 
-                GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverTypeToTry);
-                if (server == null) {
-                    transferHandler.forceRemoveFromLimbo();
-                    event.getPlayer().disconnect(reason);
-                    return;
-                }
-                transferHandler.noLimboTransferTo(server.registeredServer());
+                        GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverTypeToTry);
+                        if (server == null) {
+                            transferHandler.forceRemoveFromLimbo();
+                            event.getPlayer().disconnect(reason);
+                            return;
+                        }
+                        transferHandler.noLimboTransferTo(server.registeredServer());
 
-                if (!serverTypeToTry.isSkyBlock()) {
-                    event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into the Prototype Lobby.");
-                } else {
-                    event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into another SkyBlock server.");
-                }
-                event.getPlayer().sendPlainMessage("§7Sending to server " + server.displayName() + "...");
-            } catch (Exception e) {
-                Logger.getAnonymousLogger().log(Level.SEVERE, "An exception occurred while trying to transfer " + event.getPlayer().getUsername() + " to " + serverType, e);
-                transferHandler.forceRemoveFromLimbo();
-                event.getPlayer().disconnect(reason);
-            }
-        });
+                        if (!serverTypeToTry.isSkyBlock()) {
+                            event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into the Prototype Lobby.");
+                        } else {
+                            event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into another SkyBlock server.");
+                        }
+                        event.getPlayer().sendPlainMessage("§7Sending to server " + server.displayName() + "...");
+                    } catch (Exception e) {
+                        Logger.getAnonymousLogger().log(Level.SEVERE, "An exception occurred while trying to transfer " + event.getPlayer().getUsername() + " to " + serverType, e);
+                        transferHandler.forceRemoveFromLimbo();
+                        event.getPlayer().disconnect(reason);
+                    }
+                });
     }
 
     @Subscribe

@@ -21,6 +21,8 @@ import org.json.JSONObject;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 @ChannelListener(channel = ToProxyChannels.PLAYER_HANDLER)
 public class ListenerPlayerHandler extends RedisListener {
@@ -33,75 +35,72 @@ public class ListenerPlayerHandler extends RedisListener {
 				PlayerHandlerRequirements.PlayerHandlerActions.valueOf(
 						message.getString("action"));
 
-		Optional<Player> potentialPlayer = SkyBlockVelocity.getServer().getPlayer(uuid);
-		if (potentialPlayer.isEmpty()) {
-			if (action == PlayerHandlerRequirements.PlayerHandlerActions.IS_ONLINE) {
-				return new JSONObject().put("isOnline", false);
-			}
-			return new JSONObject();
-		}
-		if (action == PlayerHandlerRequirements.PlayerHandlerActions.IS_ONLINE) {
-			return new JSONObject().put("isOnline", true);
-		}
-		Player player = potentialPlayer.get();
-		Optional<ServerConnection> potentialServer = player.getCurrentServer();
+        Optional<Player> potentialPlayer = SkyBlockVelocity.getServer().getPlayer(uuid);
+        if (potentialPlayer.isEmpty()) {
+            if (action == PlayerHandlerRequirements.PlayerHandlerActions.IS_ONLINE) {
+                return new JSONObject().put("isOnline", false);
+            }
+            return new JSONObject();
+        }
+        if (action == PlayerHandlerRequirements.PlayerHandlerActions.IS_ONLINE) {
+            return new JSONObject().put("isOnline", true);
+        }
+        Player player = potentialPlayer.get();
+        Optional<ServerConnection> potentialServer = player.getCurrentServer();
 
-		switch (action) {
-			case GET_SERVER -> {
-				UUID playersServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-				GameManager.GameServer serverInfo = GameManager.getFromUUID(playersServer);
-				if (serverInfo == null) {
-					return new JSONObject();
-				}
+        switch (action) {
+            case GET_SERVER -> {
+                UUID playersServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
+                GameManager.GameServer serverInfo = GameManager.getFromUUID(playersServer);
+                if (serverInfo == null) {
+                    return new JSONObject();
+                }
 
-				return new JSONObject().put("server", new UnderstandableProxyServer(
-						serverInfo.displayName(),
-						serverInfo.internalID(),
-						GameManager.getTypeFromRegisteredServer(serverInfo.registeredServer()),
-						serverInfo.registeredServer().getServerInfo().getAddress().getPort(),
-						serverInfo.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList(),
-						serverInfo.maxPlayers(),
-						serverInfo.shortDisplayName()
-				).toJSON());
-			}
-			case TRANSFER_WITH_UUID -> {
-				UUID server = UUID.fromString(message.getString("server_uuid"));
-				System.out.println("Transfer with UUID: " + server);
-				GameManager.GameServer serverInfo = GameManager.getFromUUID(server);
-				TransferHandler transferHandler = new TransferHandler(player);
+                return new JSONObject().put("server", new UnderstandableProxyServer(
+                        serverInfo.displayName(),
+                        serverInfo.internalID(),
+                        GameManager.getTypeFromRegisteredServer(serverInfo.registeredServer()),
+                        serverInfo.registeredServer().getServerInfo().getAddress().getPort(),
+                        serverInfo.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList(),
+                        serverInfo.maxPlayers(),
+                        serverInfo.shortDisplayName()
+                ).toJSON());
+            }
+            case TRANSFER_WITH_UUID -> {
+                UUID server = UUID.fromString(message.getString("server_uuid"));
+                System.out.println("Transfer with UUID: " + server);
+                GameManager.GameServer serverInfo = GameManager.getFromUUID(server);
+                TransferHandler transferHandler = new TransferHandler(player);
 
-				if (serverInfo == null) {
-					player.sendMessage(Component.text(
-							"§cWe encountered an issue while attempting to locate the server on the network. Please try again later."
-					));
-					return new JSONObject();
-				}
+                if (serverInfo == null) {
+                    player.sendMessage(Component.text(
+                            "§cWe encountered an issue while attempting to locate the server on the network. Please try again later."
+                    ));
+                    return new JSONObject();
+                }
 
-				player.sendMessage(Component.text("§7Sending to server " + serverInfo.displayName() + "..."));
+                player.sendMessage(Component.text("§7Sending to server " + serverInfo.displayName() + "..."));
 
-				if (!serverInfo.hasEmptySlots()) {
-					player.sendMessage(Component.text(
-							"§cAttempted to connect to " + serverInfo.displayName() + ", but there are no empty slots available. Please try again later."
-					));
-					return new JSONObject();
-				}
+                if (!serverInfo.hasEmptySlots()) {
+                    player.sendMessage(Component.text(
+                            "§cAttempted to connect to " + serverInfo.displayName() + ", but there are no empty slots available. Please try again later."
+                    ));
+                    return new JSONObject();
+                }
 
-				transferHandler.addToDisregard();
-				transferHandler.sendToLimbo().join();
+                transferHandler.addToDisregard();
+                transferHandler.sendToLimbo().join();
 
-				// Trick the packet blocker into thinking player is in normal transfer process
-				TransferHandler.playersGoalServerType.put(player, ServerType.SKYBLOCK_HUB);
+                // Trick the packet blocker into thinking player is in normal transfer process
+                TransferHandler.playersGoalServerType.put(player, ServerType.SKYBLOCK_HUB);
 
-				try {
-					Thread.sleep(Long.parseLong(Configuration.get("transfer-timeout")));
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
-
-				TransferHandler.playersGoalServerType.remove(player);
-				transferHandler.noLimboTransferTo(serverInfo.registeredServer());
-				transferHandler.removeFromDisregard();
-			}
+				CompletableFuture.delayedExecutor(Long.parseLong(Configuration.get("transfer-timeout")), TimeUnit.MILLISECONDS)
+						.execute(() -> {
+							TransferHandler.playersGoalServerType.remove(player);
+							transferHandler.noLimboTransferTo(serverInfo.registeredServer());
+							transferHandler.removeFromDisregard();
+						});
+            }
 			case TRANSFER -> {
 				ServerType type = ServerType.valueOf(message.getString("type"));
 				if (!GameManager.hasType(type)
@@ -151,7 +150,6 @@ public class ListenerPlayerHandler extends RedisListener {
 				player.sendMessage(JSONComponentSerializer.json().deserialize(messageToSend));
 			}
 		}
-		;
-		return new JSONObject();
-	}
+        return new JSONObject();
+    }
 }

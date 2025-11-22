@@ -57,8 +57,7 @@ public class HypixelDataHandler extends DataHandler {
                 this.datapoints.put(key, dp.setUser(this).setData(data));
             } catch (Exception e) {
                 this.datapoints.put(key, data.getDefaultDatapoint().setUser(this).setData(data));
-                Logger.info("Issue with datapoint " + key + " for user " + this.uuid + " - defaulting");
-                e.printStackTrace();
+                Logger.error(e, "Issue with datapoint {} for user {} - defaulting to default value", key, this.uuid);
             }
         }
         return this;
@@ -77,7 +76,7 @@ public class HypixelDataHandler extends DataHandler {
             try {
                 document.put(data.getKey(), getDatapoint(data.getKey()).getSerializedValue());
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                Logger.error(e, "Failed to serialize datapoint {} for user {}", data.getKey(), this.uuid);
             }
         }
         return document;
@@ -126,8 +125,7 @@ public class HypixelDataHandler extends DataHandler {
                         data.getDefaultDatapoint().deepClone().setUser(h).setData(data)
                 );
             } catch (Exception e) {
-                Logger.error("Issue with datapoint " + data.getKey() + " for user " + uuid + " - fix");
-                e.printStackTrace();
+                Logger.error(e, "Issue with datapoint {} for user {} - requires fixing", data.getKey(), uuid);
             }
         }
         return h;

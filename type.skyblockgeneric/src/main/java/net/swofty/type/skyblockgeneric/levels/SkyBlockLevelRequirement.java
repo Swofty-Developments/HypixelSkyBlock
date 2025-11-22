@@ -53,8 +53,7 @@ public class SkyBlockLevelRequirement {
 
             Logger.info("Loaded " + levels.length + " SkyBlock levels from YAML");
         } catch (Exception e) {
-            System.err.println("Failed to load SkyBlock levels from YAML: " + e.getMessage());
-            e.printStackTrace();
+            Logger.error(e, "Failed to load SkyBlock levels from YAML configuration");
         }
     }
 

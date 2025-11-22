@@ -1,6 +1,8 @@
 // Replace your UpdateSynchronizedDataEndpoint with this debug version
 package net.swofty.service.datamutex.endpoints;
 
+import org.tinylog.Logger;
+
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.datamutex.UpdateSynchronizedDataProtocolObject;
 import net.swofty.commons.service.FromServiceChannels;
@@ -97,7 +99,7 @@ public class UpdateSynchronizedDataEndpoint implements ServiceEndpoint<
 
         } catch (Exception e) {
             System.out.println("Exception in update endpoint: " + e.getMessage());
-            e.printStackTrace();
+            Logger.error(e, "Error occurred in data mutex endpoint");
 
             return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
                     false, "Error during data update: " + e.getMessage());

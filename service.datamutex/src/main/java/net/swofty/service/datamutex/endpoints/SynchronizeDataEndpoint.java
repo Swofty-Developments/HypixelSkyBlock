@@ -1,5 +1,7 @@
 package net.swofty.service.datamutex.endpoints;
 
+import org.tinylog.Logger;
+
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.datamutex.SynchronizeDataProtocolObject;
 import net.swofty.service.datamutex.DataLockManager;
@@ -124,7 +126,7 @@ public class SynchronizeDataEndpoint implements ServiceEndpoint<
 
         } catch (Exception e) {
             System.out.println("Exception in sync endpoint: " + e.getMessage());
-            e.printStackTrace();
+            Logger.error(e, "Error occurred in data mutex endpoint");
 
             // Always unlock on error
             DataLockManager.releaseLock(lockKey, requesterId);

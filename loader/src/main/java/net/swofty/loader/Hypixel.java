@@ -36,8 +36,11 @@ import org.tinylog.Logger;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
+import java.net.InetAddress;
+
 
 public class Hypixel {
     @Getter
@@ -229,21 +232,17 @@ public class Hypixel {
             }
         });
 
-        new Thread(() -> {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (startServer.isDone()) return;
-            Logger.error("Couldn't connect to proxy. Shutting down...");
-            System.exit(0);
-        }).start();
+        CompletableFuture.delayedExecutor(100, TimeUnit.MILLISECONDS)
+                .execute(() -> {
+                    if (startServer.isDone()) return;
+                    Logger.error("Couldn't connect to proxy. Shutting down...");
+                    System.exit(0);
+                });
 
         JSONObject registerMessage = new JSONObject()
                 .put("type", serverType.name())
-                .put("max_players", maxPlayers);
+                .put("max_players", maxPlayers)
+                .put("host", InetAddress.getLocalHost().getHostName());
 
         // Add test flow information if this is a test flow server
         if (isTestFlow) {
@@ -345,12 +344,9 @@ public class Hypixel {
                         });
             } catch (Exception e) {
                 MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(player -> player.kick("§cServer has lost connection to the proxy, please rejoin"));
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
-                System.exit(0);
+                CompletableFuture.delayedExecutor(500, TimeUnit.MILLISECONDS)
+                        .execute(() -> System.exit(0));
+                return TaskSchedule.stop();
             }
 
             scheduler.scheduleTask(() -> {

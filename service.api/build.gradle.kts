@@ -31,6 +31,8 @@ dependencies {
     implementation("com.sparkjava:spark-core:2.9.4")
     implementation("org.mongodb:bson:4.11.2")
     implementation("org.mongodb:mongodb-driver-sync:4.11.2")
+    implementation("org.tinylog:tinylog-api:2.7.0")
+    implementation("org.tinylog:tinylog-impl:2.7.0")
     compileOnly("org.jetbrains:annotations:24.1.0")
 }
 

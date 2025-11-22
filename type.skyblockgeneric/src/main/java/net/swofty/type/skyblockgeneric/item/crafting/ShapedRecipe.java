@@ -7,7 +7,6 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.function.Function;
@@ -18,32 +17,62 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
     private final Map<Character, ItemQuantifiable> ingredientMap;
     private final Map<Character, Function<SkyBlockItem, Boolean>> extraRequirements = new HashMap<>();
+
     private final List<String> pattern;
+    private final char[][] patternArray;
+    private final int height;
+    private final int width;
 
     public ShapedRecipe(RecipeType type,
-                        SkyBlockItem result, Map<Character, ItemQuantifiable> ingredientMap,
-                        List<String> pattern, Function<SkyBlockPlayer, CraftingResult> canCraft) {
+                        SkyBlockItem result,
+                        Map<Character, ItemQuantifiable> ingredientMap,
+                        List<String> pattern,
+                        Function<SkyBlockPlayer, CraftingResult> canCraft) {
         super(result, type, canCraft);
-        this.ingredientMap = ingredientMap;
-        this.pattern = normalizedPattern(pattern);
-        if (pattern.isEmpty()) {
+        this.ingredientMap = new HashMap<>(ingredientMap);
+
+        if (pattern == null || pattern.isEmpty()) {
             throw new IllegalArgumentException("Pattern must have at least one element");
         }
 
-        // By default, all ' ' are treated as air
-        ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 0));
+        this.pattern = normalizedPatternList(pattern);
+        this.height = this.pattern.size();
+        this.width = this.pattern.stream().mapToInt(String::length).max().orElse(0);
+        this.patternArray = toCharArray(this.pattern, height, width);
+
+        this.ingredientMap.putIfAbsent(' ', new ItemQuantifiable(ItemType.AIR, 0));
+        this.ingredientMap.putIfAbsent('O', new ItemQuantifiable(ItemType.AIR, 0));
     }
 
     public ShapedRecipe(RecipeType type,
-                        SkyBlockItem result, Map<Character, ItemQuantifiable> ingredientMap,
+                        SkyBlockItem result,
+                        Map<Character, ItemQuantifiable> ingredientMap,
                         List<String> pattern) {
         this(type, result, ingredientMap, pattern, (_) -> new CraftingResult(true, new String[]{}));
     }
 
-    private List<String> normalizedPattern(List<String> pattern) {
-        return pattern.stream()
-                .map(row -> String.format("%-3s", row))
-                .toList();
+    private List<String> normalizedPatternList(List<String> pattern) {
+        int maxLength = pattern.stream().mapToInt(String::length).max().orElse(0);
+        List<String> out = new ArrayList<>(pattern.size());
+        for (String row : pattern) {
+            if (row.length() < maxLength) {
+                out.add(String.format("%-" + maxLength + "s", row));
+            } else {
+                out.add(row);
+            }
+        }
+        return out;
+    }
+
+    private char[][] toCharArray(List<String> paddedPattern, int h, int w) {
+        char[][] arr = new char[h][w];
+        for (int i = 0; i < h; i++) {
+            String row = paddedPattern.get(i);
+            for (int j = 0; j < w; j++) {
+                arr[i][j] = row.charAt(j);
+            }
+        }
+        return arr;
     }
 
     public void addExtraRequirement(char patternChar, Function<SkyBlockItem, Boolean> requirement) {
@@ -61,73 +90,69 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
         CACHED_RECIPES.add(this);
     }
 
+    private boolean matchesAtPosition(ItemStack[] stacks, int startRow, int startCol) {
+        for (int row = 0; row < 3; row++) {
+            int patternRow = row - startRow;
+            for (int col = 0; col < 3; col++) {
+                int index = row * 3 + col;
+                char symbol = 'O';
+
+                int patternCol = col - startCol;
+                if (patternRow >= 0 && patternRow < height && patternCol >= 0 && patternCol < width) {
+                    symbol = patternArray[patternRow][patternCol];
+                }
+
+                ItemQuantifiable expected = ingredientMap.get(symbol);
+                ItemQuantifiable actual = ItemQuantifiable.of(stacks[index]);
+
+                if (symbol == 'O' || expected == null || expected.getItem().getMaterial() == Material.AIR) {
+                    if (actual.getItem().getMaterial() != Material.AIR) return false;
+                    continue;
+                }
+
+                if (actual.getAmount() < expected.getAmount()) return false;
+
+                if (actual.getItem().getMaterial() == Material.AIR) return false;
+                if (!actual.matchesType(expected.getItem())) {
+                    if (!ExchangeableType.isExchangeable(
+                            actual.getItem().getAttributeHandler().getPotentialType(),
+                            expected.getItem().getAttributeHandler().getPotentialType())) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     @Override
     public SkyBlockItem[] consume(SkyBlockItem[] stacks) {
-        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>(this.ingredientMap);
-        ingredientMap.remove(' ');
-        ingredientMap.remove('O');
+        ItemStack[] rawStacks = new ItemStack[stacks.length];
+        for (int i = 0; i < stacks.length; i++) rawStacks[i] = (stacks[i] != null) ? stacks[i].getItemStack() : null;
 
-        Map<Character, ItemQuantifiable> materialsToConsume = new HashMap<>(ingredientMap);
-        SkyBlockItem[] modifiedStacks = Arrays.copyOf(stacks, stacks.length);
+        for (int startRow = 0; startRow <= 3 - height; startRow++) {
+            for (int startCol = 0; startCol <= 3 - width; startCol++) {
+                if (matchesAtPosition(rawStacks, startRow, startCol)) {
+                    SkyBlockItem[] resultStacks = Arrays.copyOf(stacks, stacks.length);
 
-        int patternRows = pattern.size();
-        int patternCols = pattern.getFirst().length();
+                    for (int r = 0; r < height; r++) {
+                        for (int c = 0; c < width; c++) {
+                            char symbol = patternArray[r][c];
+                            ItemQuantifiable required = ingredientMap.get(symbol);
+                            if (required == null || required.getItem().getMaterial() == Material.AIR) continue;
 
-        for (int startRow = 0; startRow <= 3 - patternRows; startRow++) {
-            for (int startCol = 0; startCol <= 3 - patternCols; startCol++) {
-                Map<Character, ItemQuantifiable> tempMaterialsToConsume = new HashMap<>(materialsToConsume);
-                SkyBlockItem[] tempModifiedStacks = Arrays.copyOf(modifiedStacks, modifiedStacks.length);
-                boolean patternMatched = true;
+                            int index = (startRow + r) * 3 + (startCol + c);
+                            SkyBlockItem slot = resultStacks[index];
 
-                for (int row = 0; row < patternRows; row++) {
-                    for (int col = 0; col < patternCols; col++) {
-                        int gridRow = startRow + row;
-                        int gridCol = startCol + col;
-                        int index = gridRow * 3 + gridCol;
-
-                        char patternChar = pattern.get(row).charAt(col);
-                        ItemQuantifiable patternMaterial = ingredientMap.get(patternChar);
-
-                        if (patternMaterial != null && !patternMaterial.getItem().getMaterial().equals(Material.AIR)) {
-                            ItemQuantifiable stackMaterial = ItemQuantifiable.of(tempModifiedStacks[index].getItemStack());
-
-                            if (stackMaterial.getItem().getMaterial() == null || stackMaterial.getItem().getMaterial().equals(Material.AIR)) {
-                                patternMatched = false;
-                                break;
-                            }
-
-                            if (stackMaterial.matchesType(patternMaterial.getItem())
-                                    || ExchangeableType.isExchangeable(
-                                            stackMaterial.getItem().getAttributeHandler().getPotentialType(),
-                                            patternMaterial.getItem().getAttributeHandler().getPotentialType()
-                            )) {
-                                int stackAmount = stackMaterial.getAmount();
-                                int consumeAmount = patternMaterial.getAmount();
-
-                                if (stackAmount >= consumeAmount) {
-                                    stackMaterial.setAmount(stackAmount - consumeAmount);
-                                    tempMaterialsToConsume.remove(patternChar);
-
-                                    tempModifiedStacks[index] = stackMaterial.getAmount() > 0 ? stackMaterial.toSkyBlockItem() : null;
-                                } else {
-                                    patternMatched = false;
-                                    break;
-                                }
-                            } else {
-                                patternMatched = false;
-                                break;
+                            if (slot != null && slot.getMaterial() != Material.AIR) {
+                                int newAmount = slot.getAmount() - required.getAmount();
+                                resultStacks[index] = (newAmount > 0) ?
+                                        new SkyBlockItem(slot.getItemStack().withAmount(newAmount))
+                                        : null;
                             }
                         }
                     }
-
-                    if (!patternMatched) {
-                        break;
-                    }
-                }
-
-                if (tempMaterialsToConsume.isEmpty() && patternMatched) {
-                    modifiedStacks = tempModifiedStacks;
-                    return modifiedStacks;
+                    return resultStacks;
                 }
             }
         }
@@ -137,67 +162,90 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
     @Override
     public SkyBlockItem[] getRecipeDisplay() {
-        SkyBlockItem[] recipeDisplay = new SkyBlockItem[9];
-        int patternRows = pattern.size();
-        int patternCols = pattern.getFirst().length();
+        SkyBlockItem[] display = new SkyBlockItem[9];
 
-        for (int row = 0; row < patternRows; row++) {
-            for (int col = 0; col < patternCols; col++) {
-                char patternChar = pattern.get(row).charAt(col);
-                ItemQuantifiable patternMaterial = ingredientMap.get(patternChar);
+        for (int r = 0; r < height; r++) {
+            for (int c = 0; c < width; c++) {
+                char symbol = patternArray[r][c];
+                ItemQuantifiable itemQ = ingredientMap.get(symbol);
 
-                if (patternMaterial != null) {
-                    recipeDisplay[row * 3 + col] = patternMaterial.getItem();
+                if (itemQ != null && itemQ.getItem() != null && itemQ.getItem().getMaterial() != Material.AIR) {
+                    display[r * 3 + c] = itemQ.getItem().clone();
                 }
             }
         }
 
-        return recipeDisplay;
+        return display;
     }
 
     @Override
     public SkyBlockRecipe<?> clone() {
-        return new ShapedRecipe(recipeType, result, ingredientMap, pattern, canCraft);
+        List<String> patternCopy = new ArrayList<>(this.pattern);
+        return new ShapedRecipe(recipeType, result.clone(), new HashMap<>(ingredientMap), patternCopy, canCraft);
+    }
+
+    public static ShapedRecipe parseShapedRecipe(ItemStack[] stacks) {
+        ShapedRecipe best = null;
+        int bestSize = -1;
+
+        for (ShapedRecipe recipe : CACHED_RECIPES) {
+            int size = recipe.height * recipe.width;
+
+            outerRow:
+            for (int row = 0; row <= 3 - recipe.height; row++) {
+                for (int col = 0; col <= 3 - recipe.width; col++) {
+                    if (!recipe.matchesAtPosition(stacks, row, col)) continue;
+
+                    Map<Character, List<Integer>> positions = new HashMap<>();
+                    for (int r = 0; r < recipe.height; r++) {
+                        for (int c = 0; c < recipe.width; c++) {
+                            char symbol = recipe.patternArray[r][c];
+                            ItemQuantifiable expected = recipe.ingredientMap.get(symbol);
+                            if (expected != null && expected.getItem().getMaterial() != Material.AIR) {
+                                int index = (row + r) * 3 + (col + c);
+                                positions.computeIfAbsent(symbol, k -> new ArrayList<>()).add(index);
+                            }
+                        }
+                    }
+
+                    for (Map.Entry<Character, List<Integer>> entry : positions.entrySet()) {
+                        Function<SkyBlockItem, Boolean> req = recipe.extraRequirements.get(entry.getKey());
+                        if (req == null) continue;
+
+                        for (int idx : entry.getValue()) {
+                            SkyBlockItem sbi = (stacks[idx] != null) ? new SkyBlockItem(stacks[idx]) : null;
+                            if (sbi == null || !req.apply(sbi)) {
+                                continue outerRow; // this offset fails -> try next offset
+                            }
+                        }
+                    }
+
+                    // this recipe+offset passed all checks -> consider as candidate
+                    if (size > bestSize) {
+                        best = recipe;
+                        bestSize = size;
+                    }
+                }
+            }
+        }
+
+        return best;
     }
 
     public Map<Character, List<Integer>> getPositionsOfItems(ItemStack[] stacks) {
         Map<Character, List<Integer>> positions = new HashMap<>();
 
-        int patternRows = pattern.size();
-        int patternCols = pattern.getFirst().length();
+        for (int startRow = 0; startRow <= 3 - height; startRow++) {
+            for (int startCol = 0; startCol <= 3 - width; startCol++) {
+                if (matchesAtPosition(stacks, startRow, startCol)) {
+                    for (int r = 0; r < height; r++) {
+                        for (int c = 0; c < width; c++) {
+                            int index = (startRow + r) * 3 + (startCol + c);
+                            char symbol = patternArray[r][c];
+                            ItemQuantifiable expected = ingredientMap.get(symbol);
 
-        for (int startRow = 0; startRow <= 3 - patternRows; startRow++) {
-            for (int startCol = 0; startCol <= 3 - patternCols; startCol++) {
-
-                for (int i = 0; i < stacks.length; i++) {
-                    int gridRow = i / 3;
-                    int gridCol = i % 3;
-
-                    if (gridRow >= startRow && gridRow < startRow + patternRows &&
-                            gridCol >= startCol && gridCol < startCol + patternCols) {
-
-                        char patternChar = pattern.get(gridRow - startRow).charAt(gridCol - startCol);
-                        ItemQuantifiable patternMaterial = ingredientMap.get(patternChar);
-
-                        if (patternMaterial != null && !patternMaterial.getItem().getMaterial().equals(Material.AIR)) {
-                            ItemQuantifiable stackMaterial = ItemQuantifiable.of(stacks[i]);
-
-                            if (stackMaterial.getItem().getMaterial().equals(Material.AIR)) {
-                                continue;
-                            }
-
-                            if (stackMaterial.matchesType(patternMaterial.getItem())
-                                    || ExchangeableType.isExchangeable(
-                                            stackMaterial.getItem().getAttributeHandler().getPotentialType(),
-                                            patternMaterial.getItem().getAttributeHandler().getPotentialType()
-                            )) {
-                                int stackAmount = stackMaterial.getAmount();
-                                int consumeAmount = patternMaterial.getAmount();
-
-                                if (stackAmount >= consumeAmount) {
-                                    stackMaterial.setAmount(stackAmount - consumeAmount);
-                                    positions.computeIfAbsent(patternChar, k -> new ArrayList<>()).add(i);
-                                }
+                            if (expected != null && expected.getItem().getMaterial() != Material.AIR) {
+                                positions.computeIfAbsent(symbol, k -> new ArrayList<>()).add(index);
                             }
                         }
                     }
@@ -205,89 +253,8 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
             }
         }
 
-        positions.forEach((character, positionsList) -> {
-            Set<Integer> positionsSet = new HashSet<>(positionsList);
-            positionsList.clear();
-            positionsList.addAll(positionsSet);
-        });
-
+        positions.replaceAll((k, v) -> new ArrayList<>(new LinkedHashSet<>(v)));
         return positions;
-    }
-
-    public static ShapedRecipe parseShapedRecipe(ItemStack[] stacks) {
-        ItemStack[][] grid = {
-                {stacks[0], stacks[1], stacks[2]},
-                {stacks[3], stacks[4], stacks[5]},
-                {stacks[6], stacks[7], stacks[8]}
-        };
-
-        return CACHED_RECIPES.stream()
-                .filter(recipe -> {
-                    List<String> recipePattern = recipe.getPattern();
-                    int patternRows = recipePattern.size();
-                    int patternCols = recipePattern.getFirst().length();
-
-                    for (int row = 0; row <= 3 - patternRows; row++) {
-                        for (int col = 0; col <= 3 - patternCols; col++) {
-                            try {
-                                if (matchesPattern(recipe, grid, row, col)) {
-                                    return true;
-                                }
-                            } catch (Exception e) {
-                                Logger.error("Error in recipe " + recipe.getResult().toString() + " at row " + row + " col " + col);
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    return false;
-                })
-                .filter(recipe -> {
-                    for (Map.Entry<Character, List<Integer>> entry : recipe.getPositionsOfItems(stacks).entrySet()) {
-                        Character character = entry.getKey();
-
-                        Function<SkyBlockItem, Boolean> extraRequirements = recipe.getExtraRequirements().get(character);
-                        if (extraRequirements == null) {
-                            continue;
-                        }
-
-                        for (int position : entry.getValue()) {
-                            SkyBlockItem item = new SkyBlockItem(stacks[position]);
-                            if (!extraRequirements.apply(item)) {
-                                return false;
-                            }
-                        }
-                    }
-                    return true;
-                })
-                .max(Comparator.comparing(recipe -> {
-                    int patternRows = recipe.getPattern().size();
-                    int patternCols = recipe.getPattern().getFirst().length();
-
-                    return patternRows * patternCols;
-                }))
-                .orElse(null);
-    }
-
-    private static boolean matchesPattern(ShapedRecipe recipe, ItemStack[][] grid, int startRow, int startCol) {
-        List<String> pattern = recipe.getPattern();
-
-        for (int row = 0; row < pattern.size(); row++) {
-            for (int col = 0; col < pattern.get(row).length(); col++) {
-                char patternChar = pattern.get(row).charAt(col);
-                ItemQuantifiable patternMaterial = recipe.getIngredientMap().get(patternChar);
-                ItemQuantifiable gridMaterial = ItemQuantifiable.of(grid[startRow + row][startCol + col]);
-
-                if (!gridMaterial.matchesType(patternMaterial.getItem()) ||
-                        gridMaterial.getAmount() < patternMaterial.getAmount()) {
-                    if (!ExchangeableType.isExchangeable(gridMaterial.getItem().getAttributeHandler().getPotentialType(),
-                            patternMaterial.getItem().getAttributeHandler().getPotentialType())) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
     }
 
     @Override

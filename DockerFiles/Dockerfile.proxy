@@ -1,4 +1,4 @@
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y jq expect netcat-traditional && apt-get
 
 
 # Download Velocity proxy JAR
-ADD https://api.papermc.io/v2/projects/velocity/versions/3.4.0-SNAPSHOT/builds/463/downloads/velocity-3.4.0-SNAPSHOT-463.jar velocity.jar
+ADD https://fill-data.papermc.io/v1/objects/303f9c60d5d75c52585c9e95efbc46d43ae8683efe7dee8763a16d6506681ee1/velocity-3.4.0-SNAPSHOT-528.jar velocity.jar
 
 # Download SkyBlockProxy.jar
 ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/SkyBlockProxy.jar plugins/SkyBlockProxy.jar

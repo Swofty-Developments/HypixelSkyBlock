@@ -49,6 +49,24 @@ public class MinestomLoader extends Loader {
                 new MinestomHandlerPingRequestPacket());
         registerPacketHandler(PingResponsePacket.class,
                 new MinestomHandlerPingResponsePacket());
+        registerPacketHandler(EntityActionPacket.class,
+                new MinestomHandlerEntityActionPacket());
+        registerPacketHandler(AbilitiesPacket.class,
+                new MinestomHandlerAbilitiesPacket());
+        registerPacketHandler(HeldItemChangePacket.class,
+                new MinestomHandlerHeldItemChangePacket());
+        registerPacketHandler(BlockDigPacket.class,
+                new MinestomHandlerBlockDigPacket());
+        registerPacketHandler(BlockPlacePacket.class,
+                new MinestomHandlerBlockPlacePacket());
+        registerPacketHandler(UseEntityPacket.class,
+                new MinestomHandlerUseEntityPacket());
+        registerPacketHandler(WindowClickPacket.class,
+                new MinestomHandlerWindowClickPacket());
+        registerPacketHandler(AnimationPacket.class,
+                new MinestomHandlerAnimationPacket());
+        registerPacketHandler(SteerVehiclePacket.class,
+                new MinestomHandlerSteerVehiclePacket());
 
         globalEventHandler.addListener(PlayerPacketOutEvent.class, (event) -> {
             ServerPacket packet = event.getPacket();
@@ -90,8 +108,8 @@ public class MinestomLoader extends Loader {
         try {
             player.sendPacket((SendablePacket) getPacketHandler(packet).buildLoaderPacket(uuid, packet));
         } catch (Exception e) {
-            Logger.error("Error when attempting to send packet " + packet.getClass().getSimpleName() + " to " + uuid);
-            e.printStackTrace();
+            Logger.error(e, "Error when attempting to send packet {} to player {}",
+                    packet.getClass().getSimpleName(), uuid);
         }
     }
 

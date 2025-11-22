@@ -9,6 +9,7 @@ import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.levels.unlocks.CustomLevelUnlock;
 import net.swofty.type.skyblockgeneric.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -85,7 +86,7 @@ public class SkyBlockLevelLoader {
 
             return requirements.toArray(new SkyBlockLevelRequirement[0]);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to load SkyBlock level requirements from file: {}", FILE_NAME);
             return new SkyBlockLevelRequirement[0];
         }
     }

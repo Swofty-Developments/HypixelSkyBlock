@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public class PartyCache {
     private static final Map<UUID, FullParty> activeParties = new ConcurrentHashMap<>();
@@ -262,14 +264,8 @@ public class PartyCache {
             return;
         }
         partyWarpCooldown.add(warperUUID);
-        Thread.startVirtualThread(() -> {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            partyWarpCooldown.remove(warperUUID);
-        });
+        CompletableFuture.delayedExecutor(5000, TimeUnit.MILLISECONDS)
+                .execute(() -> partyWarpCooldown.remove(warperUUID));
 
         PartyWarpResponseEvent responseEvent = new PartyWarpResponseEvent(party, warperUUID);
         JSONObject message = new JSONObject();
@@ -388,22 +384,18 @@ public class PartyCache {
     }
 
     private static void scheduleInviteExpiration(UUID inviter, UUID invitee, long delayMs) {
-        Thread.startVirtualThread(() -> {
-            try {
-                Thread.sleep(delayMs);
-                pendingInvites.remove(invitee);
+        CompletableFuture.delayedExecutor(delayMs, TimeUnit.MILLISECONDS)
+                .execute(() -> {
+                    pendingInvites.remove(invitee);
 
-                // Check if the player joined the party
-                FullParty party = getPlayerParty(invitee);
-                if (party != null) {
-                    FullParty.Member inviteeMember = getMember(party, invitee);
-                    if (inviteeMember == null) {
-                        sendEvent(new PartyInviteExpiredResponseEvent(party, inviter, invitee));
+                    // Check if the player joined the party
+                    FullParty party = getPlayerParty(invitee);
+                    if (party != null) {
+                        FullParty.Member inviteeMember = getMember(party, invitee);
+                        if (inviteeMember == null) {
+                            sendEvent(new PartyInviteExpiredResponseEvent(party, inviter, invitee));
+                        }
                     }
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        });
+                });
     }
 }

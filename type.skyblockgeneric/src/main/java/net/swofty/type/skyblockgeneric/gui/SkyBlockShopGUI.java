@@ -1,37 +1,68 @@
 package net.swofty.type.skyblockgeneric.gui;
 
 import lombok.AllArgsConstructor;
+import org.tinylog.Logger;
 import lombok.Getter;
+import org.tinylog.Logger;
 import lombok.RequiredArgsConstructor;
+import org.tinylog.Logger;
 import lombok.Setter;
+import org.tinylog.Logger;
 import net.kyori.adventure.key.Key;
+import org.tinylog.Logger;
 import net.kyori.adventure.sound.Sound;
+import org.tinylog.Logger;
 import net.kyori.adventure.text.Component;
+import org.tinylog.Logger;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.tinylog.Logger;
 import net.minestom.server.component.DataComponents;
+import org.tinylog.Logger;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
+import org.tinylog.Logger;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import org.tinylog.Logger;
 import net.minestom.server.inventory.InventoryType;
+import org.tinylog.Logger;
 import net.minestom.server.inventory.click.Click;
+import org.tinylog.Logger;
 import net.minestom.server.item.ItemStack;
+import org.tinylog.Logger;
 import net.minestom.server.item.Material;
+import org.tinylog.Logger;
 import net.swofty.commons.StringUtility;
+import org.tinylog.Logger;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
+import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import org.tinylog.Logger;
 import net.swofty.type.generic.user.HypixelPlayer;
+import org.tinylog.Logger;
 import net.swofty.type.generic.utility.PaginationList;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.gui.inventories.shop.GUIGenericTradingOptions;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.item.components.SellableComponent;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.shop.ShopPrice;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
+import org.tinylog.Logger;
 import java.util.List;
+import org.tinylog.Logger;
 
 public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
 
@@ -324,7 +355,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                         return ItemStackCreator.updateLore(itemStack, lore);
                     } catch (Exception e) {
                         getPlayer().sendMessage("§cThere was an error processing item " + item.getItem().getDisplayName() + "!");
-                        e.printStackTrace();
+                        Logger.error(e, "Error loading shop GUI");
                         return ItemStackCreator.getStack("§cError", Material.BARRIER, 1);
                     }
                 }

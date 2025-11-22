@@ -45,7 +45,7 @@ public class PartyEventToServiceEndpoint implements ServiceEndpoint<
             return new SendPartyEventToServiceProtocolObject.SendPartyEventToServiceResponse(true);
         } catch (Exception e) {
             System.out.println("Failed to process party event: " + e.getMessage());
-            e.printStackTrace();
+            Logger.error(e, "Failed to process party event in service endpoint");
             return new SendPartyEventToServiceProtocolObject.SendPartyEventToServiceResponse(false);
         }
     }
