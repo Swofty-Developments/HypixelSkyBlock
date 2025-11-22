@@ -54,3 +54,4 @@ jobs:
             service.api/build/libs/*.jar
             service.datamutex/build/libs/*.jar
             service.party/build/libs/*.jar
+            service.orchestrator/build/libs/*.jar

@@ -25,8 +25,8 @@ dependencies {
     compileOnly("net.minestom:minestom:2025.08.18-1.21.8") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("net.kyori:adventure-api:4.17.0")
-    implementation("net.kyori:adventure-text-serializer-gson:4.17.0")
+    implementation("net.kyori:adventure-api:4.24.0")
+    implementation("net.kyori:adventure-text-serializer-gson:4.24.0")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
 }

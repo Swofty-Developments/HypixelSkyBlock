@@ -26,12 +26,14 @@ import java.util.concurrent.TimeUnit;
 
 @ChannelListener(channel = ToProxyChannels.PLAYER_HANDLER)
 public class ListenerPlayerHandler extends RedisListener {
-    @Override
-    public JSONObject receivedMessage(JSONObject message, UUID serverUUID) {
-        UUID uuid = UUID.fromString(message.getString("uuid"));
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.valueOf(
-                        message.getString("action"));
+	private static final java.util.Map<java.util.UUID, org.json.JSONObject> bedwarsPreferences = new java.util.concurrent.ConcurrentHashMap<>();
+
+	@Override
+	public JSONObject receivedMessage(JSONObject message, UUID serverUUID) {
+		UUID uuid = UUID.fromString(message.getString("uuid"));
+		PlayerHandlerRequirements.PlayerHandlerActions action =
+				PlayerHandlerRequirements.PlayerHandlerActions.valueOf(
+						message.getString("action"));
 
         Optional<Player> potentialPlayer = SkyBlockVelocity.getServer().getPlayer(uuid);
         if (potentialPlayer.isEmpty()) {
@@ -92,62 +94,62 @@ public class ListenerPlayerHandler extends RedisListener {
                 // Trick the packet blocker into thinking player is in normal transfer process
                 TransferHandler.playersGoalServerType.put(player, ServerType.SKYBLOCK_HUB);
 
-                CompletableFuture.delayedExecutor(Long.parseLong(Configuration.get("transfer-timeout")), TimeUnit.MILLISECONDS)
-                        .execute(() -> {
-                            TransferHandler.playersGoalServerType.remove(player);
-                            transferHandler.noLimboTransferTo(serverInfo.registeredServer());
-                            transferHandler.removeFromDisregard();
-                        });
+				CompletableFuture.delayedExecutor(Long.parseLong(Configuration.get("transfer-timeout")), TimeUnit.MILLISECONDS)
+						.execute(() -> {
+							TransferHandler.playersGoalServerType.remove(player);
+							transferHandler.noLimboTransferTo(serverInfo.registeredServer());
+							transferHandler.removeFromDisregard();
+						});
             }
-            case TRANSFER -> {
-                ServerType type = ServerType.valueOf(message.getString("type"));
-                if (!GameManager.hasType(type)
-                        || new TransferHandler(player).isInLimbo()
-                        || !GameManager.isAnyEmpty(type)) {
-                    player.sendMessage(Component.text(
-                            "§cAttempted to transfer to a " + StringUtility.toNormalCase(type.name()) + " server, but there are no empty slots available. Please try again later."
-                    ));
-                    return new JSONObject();
-                }
-                new TransferHandler(player).standardTransferTo(
-                        player.getCurrentServer().get().getServer(),
-                        type
-                );
-            }
-            case TELEPORT -> {
-                if (potentialServer.isEmpty()) {
-                    return new JSONObject();
-                }
-                UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-                return RedisMessage.sendMessageToServer(server,
-                        FromProxyChannels.TELEPORT,
-                        message).join();
-            }
-            case EVENT -> {
-                if (potentialServer.isEmpty()) {
-                    return new JSONObject();
-                }
-                UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-                RedisMessage.sendMessageToServer(server,
-                        FromProxyChannels.RUN_EVENT_ON_SERVER,
-                        message
-                ).join();
-            }
-            case REFRESH_COOP_DATA -> {
-                if (potentialServer.isEmpty()) {
-                    return new JSONObject();
-                }
-                UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-                RedisMessage.sendMessageToServer(server,
-                        FromProxyChannels.REFRESH_COOP_DATA_ON_SERVER,
-                        message
-                ).join();
-            }
-            case MESSAGE -> {
-                String messageToSend = message.getString("message");
-                player.sendMessage(JSONComponentSerializer.json().deserialize(messageToSend));
-            }
-        };
+			case TRANSFER -> {
+				ServerType type = ServerType.valueOf(message.getString("type"));
+				if (!GameManager.hasType(type)
+						|| new TransferHandler(player).isInLimbo()
+						|| !GameManager.isAnyEmpty(type)) {
+					player.sendMessage(Component.text(
+							"§cAttempted to transfer to a " + StringUtility.toNormalCase(type.name()) + " server, but there are no empty slots available. Please try again later."
+					));
+					return new JSONObject();
+				}
+				new TransferHandler(player).standardTransferTo(
+						player.getCurrentServer().get().getServer(),
+						type
+				);
+			}
+			case TELEPORT -> {
+				if (potentialServer.isEmpty()) {
+					return new JSONObject();
+				}
+				UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
+				return RedisMessage.sendMessageToServer(server,
+						FromProxyChannels.TELEPORT,
+						message).join();
+			}
+			case EVENT -> {
+				if (potentialServer.isEmpty()) {
+					return new JSONObject();
+				}
+				UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
+				RedisMessage.sendMessageToServer(server,
+						FromProxyChannels.RUN_EVENT_ON_SERVER,
+						message
+				).join();
+			}
+			case REFRESH_COOP_DATA -> {
+				if (potentialServer.isEmpty()) {
+					return new JSONObject();
+				}
+				UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
+				RedisMessage.sendMessageToServer(server,
+						FromProxyChannels.REFRESH_COOP_DATA_ON_SERVER,
+						message
+				).join();
+			}
+			case MESSAGE -> {
+				String messageToSend = message.getString("message");
+				player.sendMessage(JSONComponentSerializer.json().deserialize(messageToSend));
+			}
+		}
         return new JSONObject();
     }
 }
