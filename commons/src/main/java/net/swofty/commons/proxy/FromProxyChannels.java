@@ -14,7 +14,7 @@ public enum FromProxyChannels {
     REFRESH_COOP_DATA_ON_SERVER("refresh-coop-data", new RefreshCoopDataOnServerRequirements()),
     RUN_EVENT_ON_SERVER("run-event", new RunEventRequirements()),
     PING_SERVER("ping-server", new PingServerRequirements()),
-    GIVE_PLAYERS_ORIGIN_TYPE("give-players-origin-type", new GivePlayersOriginTypeRequirements()),
+    GIVE_PLAYERS_ORIGIN_TYPE("give-players-origin-type", new GivePlayersOriginTypeRequirements())
     ;
 
     private final String channelName;

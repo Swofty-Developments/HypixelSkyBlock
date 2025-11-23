@@ -47,3 +47,8 @@ build/
 /configuration/skyblock/islands/hypixel_skyblock_hub/
 /configuration/hypixel_prototype_lobby/
 .gradle/
+/configuration/bedwars/*.polar
+/server/proxy/logs/
+/server/proxy/lang/
+/server/forwarding.secret
+/configuration/logs/

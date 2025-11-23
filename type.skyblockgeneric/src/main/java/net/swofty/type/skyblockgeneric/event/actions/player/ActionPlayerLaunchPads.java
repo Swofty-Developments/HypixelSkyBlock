@@ -117,4 +117,5 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
             armorStand.setVelocity(direction.mul(50, 5, 50));
         }, 0, timeToSleep, TimeUnit.MILLISECONDS);
     }
+
 }
