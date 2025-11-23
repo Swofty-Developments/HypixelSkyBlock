@@ -10,20 +10,20 @@ repositories {
     mavenCentral()
 
     maven {
+        url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    }
+
+    maven {
+        url = uri("https://repo.papermc.io/repository/maven-public/")
+    }
+
+    maven {
         name = "GitHubPackages"
         url = uri("https://maven.pkg.github.com/Swofty-Developments/HypixelSkyBlock")
         credentials {
             username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_USERNAME")
             password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
         }
-    }
-
-    maven {
-        url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    }
-
-    maven {
-        url = uri("https://repo.dmulloy2.net/repository/public/")
     }
 }
 
