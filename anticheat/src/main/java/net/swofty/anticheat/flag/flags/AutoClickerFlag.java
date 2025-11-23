@@ -17,7 +17,7 @@ public class AutoClickerFlag extends Flag {
         void addClick(long timestamp) {
             clickTimes.add(timestamp);
             if (clickTimes.size() > MAX_SAMPLES) {
-                clickTimes.remove(0);
+                clickTimes.removeFirst();
             }
         }
 

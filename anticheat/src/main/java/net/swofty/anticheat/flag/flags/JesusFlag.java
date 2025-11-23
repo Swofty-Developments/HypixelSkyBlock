@@ -34,7 +34,7 @@ public class JesusFlag extends Flag {
         int blockZ = (int) Math.floor(pos.z());
 
         world.getBlock(blockX, blockY, blockZ).thenAccept(block -> {
-            if (block != null && isLiquid(block)) {
+            if (isLiquid(block)) {
                 // Player is "on ground" but ground is liquid = Jesus/WaterWalk
 
                 // Check if they're actually moving on it
@@ -60,7 +60,7 @@ public class JesusFlag extends Flag {
         int blockZ = (int) Math.floor(pos.z());
 
         world.getBlock(blockX, blockY, blockZ).thenAccept(block -> {
-            if (block != null && isLiquid(block)) {
+            if (isLiquid(block)) {
                 // Player is inside liquid block
                 // Check if they're floating (not sinking)
 

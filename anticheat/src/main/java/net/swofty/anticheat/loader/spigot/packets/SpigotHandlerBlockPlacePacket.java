@@ -1,6 +1,5 @@
 package net.swofty.anticheat.loader.spigot.packets;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.EnumWrappers;
@@ -20,8 +19,7 @@ public class SpigotHandlerBlockPlacePacket extends LoaderPacketHandler {
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, Object loaderPacket) {
-        if (!(loaderPacket instanceof PacketContainer)) return null;
-        PacketContainer packet = (PacketContainer) loaderPacket;
+        if (!(loaderPacket instanceof PacketContainer packet)) return null;
 
         EnumWrappers.Hand hand = packet.getHands().read(0);
         BlockPosition blockPos = packet.getBlockPositionModifier().read(0);

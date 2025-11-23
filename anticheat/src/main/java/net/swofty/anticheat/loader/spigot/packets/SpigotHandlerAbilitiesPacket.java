@@ -1,6 +1,5 @@
 package net.swofty.anticheat.loader.spigot.packets;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import net.swofty.anticheat.event.packet.AbilitiesPacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
@@ -17,8 +16,7 @@ public class SpigotHandlerAbilitiesPacket extends LoaderPacketHandler {
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, Object loaderPacket) {
-        if (!(loaderPacket instanceof PacketContainer)) return null;
-        PacketContainer packet = (PacketContainer) loaderPacket;
+        if (!(loaderPacket instanceof PacketContainer packet)) return null;
 
         byte flags = packet.getBytes().read(0);
         boolean invulnerable = (flags & 0x01) != 0;

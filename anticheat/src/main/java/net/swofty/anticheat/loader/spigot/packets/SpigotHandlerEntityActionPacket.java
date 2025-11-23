@@ -1,6 +1,5 @@
 package net.swofty.anticheat.loader.spigot.packets;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import net.swofty.anticheat.event.packet.EntityActionPacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
@@ -17,8 +16,7 @@ public class SpigotHandlerEntityActionPacket extends LoaderPacketHandler {
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, Object loaderPacket) {
-        if (!(loaderPacket instanceof PacketContainer)) return null;
-        PacketContainer packet = (PacketContainer) loaderPacket;
+        if (!(loaderPacket instanceof PacketContainer packet)) return null;
 
         int actionId = packet.getIntegers().read(1);
         int jumpBoost = packet.getIntegers().read(2);

@@ -5,25 +5,47 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SpigotSchedulerManager extends SwoftySchedulerManager {
     private final Plugin plugin;
+    private final Map<Integer, BukkitTask> tasks = new HashMap<>();
+    private int nextId = 0;
 
     public SpigotSchedulerManager(Plugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public void scheduleRepeating(Runnable runnable, long delay, long period) {
-        Bukkit.getScheduler().runTaskTimer(plugin, runnable, delay, period);
+    public int scheduleDelayedTask(Runnable runnable, int delay) {
+        int id = nextId++;
+
+        BukkitTask task = Bukkit.getScheduler().runTaskLater(plugin, runnable, delay);
+        tasks.put(id, task);
+
+        return id;
     }
 
     @Override
-    public void scheduleOnce(Runnable runnable, long delay) {
-        Bukkit.getScheduler().runTaskLater(plugin, runnable, delay);
+    public int scheduleRepeatingTask(Runnable runnable, int delay, int period) {
+        int id = nextId++;
+
+        BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin, runnable, delay, period);
+        tasks.put(id, task);
+
+        return id;
     }
 
     @Override
-    public void scheduleAsync(Runnable runnable) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
+    public void cancelTask(int taskId) {
+        BukkitTask task = tasks.remove(taskId);
+        if (task != null) task.cancel();
+    }
+
+    @Override
+    public void cancelAllTasks() {
+        tasks.values().forEach(BukkitTask::cancel);
+        tasks.clear();
     }
 }

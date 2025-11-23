@@ -1,6 +1,7 @@
 package net.swofty.anticheat.loader.minestom.packets;
 
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.network.packet.client.play.ClientPlayerBlockPlacementPacket;
 import net.swofty.anticheat.event.packet.BlockPlacePacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
@@ -14,7 +15,7 @@ public class MinestomHandlerBlockPlacePacket
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, ClientPlayerBlockPlacementPacket packet) {
-        BlockPlacePacket.Hand hand = packet.hand() == Player.Hand.MAIN ?
+        BlockPlacePacket.Hand hand = packet.hand() == PlayerHand.MAIN ?
                 BlockPlacePacket.Hand.MAIN_HAND : BlockPlacePacket.Hand.OFF_HAND;
         BlockPlacePacket.Direction direction = mapDirection(packet.blockFace());
         Pos position = new Pos(

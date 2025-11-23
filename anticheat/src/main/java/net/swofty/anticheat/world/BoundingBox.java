@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public class BoundingBox {
-    private float minX, minY, minZ;
-    private float maxX, maxY, maxZ;
+    private final float minX, minY, minZ;
+    private final float maxX, maxY, maxZ;
 
     public BoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ) {
         this.minX = minX;
