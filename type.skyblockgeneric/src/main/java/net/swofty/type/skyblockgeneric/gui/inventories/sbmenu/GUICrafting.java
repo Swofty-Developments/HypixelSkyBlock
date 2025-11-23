@@ -127,7 +127,12 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
                         finalRecipe.getResult().getItemStack()).amount(amount).build();
 
                 e.setCancelled(true);
-                p.getInventory().setCursorItem(craftedItem);
+                if (isShift) {
+                    player.addAndUpdateItem(craftedItem);
+                }
+                else {
+                    p.getInventory().setCursorItem(craftedItem);
+                }
                 HypixelEventHandler.callCustomEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), finalRecipe));
 
                 SkyBlockItem[] toReplace = finalRecipe.consume(getCurrentRecipeAsItems(inventory));
@@ -139,11 +144,6 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
                                 player,
                                 toReplace[i].getItemStack()).build());
                     }
-                }
-                if (isShift) {
-                    // if is a shift click add updated item to player inventory
-                    e.setCancelled(true);
-                    player.addAndUpdateItem(e.getClickedItem());
                 }
 
                 if (cursorItemType != null && cursorItemType.equals(resultItemType) && !isShift) {
