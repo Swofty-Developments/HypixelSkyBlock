@@ -36,7 +36,7 @@ dependencies {
 
     compileOnly("org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT")
 
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
+    compileOnly("net.dmulloy2:ProtocolLib:5.4.0")
 }
 
 tasks.test {
