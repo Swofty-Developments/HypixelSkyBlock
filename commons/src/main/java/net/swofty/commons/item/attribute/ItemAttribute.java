@@ -1,5 +1,7 @@
 package net.swofty.commons.item.attribute;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
@@ -11,6 +13,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+@Setter
+@Getter
 public abstract class ItemAttribute<T> {
     private static final ArrayList<ItemAttribute> attributes = new ArrayList<>();
 
@@ -27,14 +31,6 @@ public abstract class ItemAttribute<T> {
     public abstract T loadFromString(String string);
 
     public abstract String saveIntoString();
-
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
-    }
 
     public static void registerItemAttributes() {
         loopThroughPackage(

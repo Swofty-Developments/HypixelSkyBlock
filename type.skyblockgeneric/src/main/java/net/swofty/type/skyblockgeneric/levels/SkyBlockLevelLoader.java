@@ -105,13 +105,14 @@ public class SkyBlockLevelLoader {
 
         // Parse prefix item if provided
         Material prefixItem = null;
-        if (entry.prefixItem != null) {
+        String entryPrefixItem = entry.prefixItem;
+        if (entryPrefixItem != null) {
             try {
-                prefixItem = Material.fromKey(entry.prefixItem.toUpperCase());
+                prefixItem = Material.fromKey(entryPrefixItem.toUpperCase());
             } catch (IllegalArgumentException | InvalidKeyException e) {
                 // Try to find by key value
                 prefixItem = Material.values().stream()
-                        .filter(material -> material.key().value().equalsIgnoreCase(entry.prefixItem))
+                        .filter(material -> material.key().value().equalsIgnoreCase(entryPrefixItem))
                         .findFirst()
                         .orElse(null);
             }

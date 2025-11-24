@@ -72,10 +72,10 @@ public enum LevelsGuide {
         }
 
         public static class Builder {
-            private Map<SkyBlockLevelCauseAbstr, String> causes = new HashMap<>();
-            private ItemStack.Builder material;
-            private HypixelInventoryGUI guiToOpen;
-            private Function<SkyBlockPlayer, List<String>> display;
+            private final Map<SkyBlockLevelCauseAbstr, String> causes = new HashMap<>();
+            private final ItemStack.Builder material;
+            private final HypixelInventoryGUI guiToOpen;
+            private final Function<SkyBlockPlayer, List<String>> display;
 
             public Builder(ItemStack.Builder material, HypixelInventoryGUI guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
                 this.material = material;

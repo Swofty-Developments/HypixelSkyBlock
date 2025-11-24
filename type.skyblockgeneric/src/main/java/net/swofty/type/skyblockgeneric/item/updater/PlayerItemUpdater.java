@@ -42,7 +42,7 @@ public class PlayerItemUpdater {
             return Map.entry(new SkyBlockItem(stack), ItemStackCreator.getFromStack(stack));
 
         if (!SkyBlockItem.isSkyBlockItem(stack) || stack.material().equals(Material.AIR)) {
-            /**
+            /*
              * Item is not SkyBlock item, so we just instance it here
              */
             SkyBlockItem item = new SkyBlockItem(stack.material());
@@ -57,13 +57,13 @@ public class PlayerItemUpdater {
                             .amount(stack.amount()));
         }
 
-        /**
+        /*
          * Check for value updates
          */
         SkyBlockItem item = new SkyBlockItem(stack);
         ItemStack.Builder toReturn = item.getItemStackBuilder().amount(stack.amount());
 
-        /**
+        /*
          * Update SkyBlock Item Instance
          */
         ItemAttributeHandler handler = item.getAttributeHandler();
@@ -79,7 +79,7 @@ public class PlayerItemUpdater {
             handler.setRarity(handler.getRarity().upgrade());
         }
 
-        /**
+        /*
          * Update Lore
          */
         ItemLore lore = new ItemLore(stack);
