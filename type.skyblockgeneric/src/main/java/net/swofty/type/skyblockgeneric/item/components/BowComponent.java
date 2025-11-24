@@ -30,7 +30,7 @@ public class BowComponent extends SkyBlockItemComponent {
     }
 
     public BowComponent(String handlerId, boolean shouldBeArrow) {
-        this(BowRegistry.getHandler(handlerId).getShootHandler(), shouldBeArrow);
+        this(BowRegistry.getHandler(handlerId).shootHandler(), shouldBeArrow);
     }
 
     public void onBowShoot(SkyBlockPlayer player, SkyBlockItem item) {

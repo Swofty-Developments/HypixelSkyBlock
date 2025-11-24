@@ -102,7 +102,7 @@ public class NonPlayerItemUpdater {
             stack = ItemStackCreator.clearAttributes(stack);
         }
 
-        for(ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
+        for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
             stack = stack.set(Tag.String(attribute.getKey()),
                     item.getAttribute(attribute.getKey()).saveIntoString());
         }

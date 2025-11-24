@@ -20,7 +20,7 @@ public class ParticleEngine
       private Particle particle;
       private Pos position;
       private Vec offsets;
-      private int particleCount;
+      private final int particleCount;
       private ParticleShape shape;
 
       private Duration displayTime;

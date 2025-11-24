@@ -8,16 +8,16 @@ import java.nio.ByteBuffer;
 
 public class Note {
 
-    private byte instrument;
-    private byte key;
-    private byte volume;
+    private final byte instrument;
+    private final byte key;
+    private final byte volume;
     private Note(byte instrument, byte key, byte volume) {
         this.instrument = instrument;
         this.key = key;
         this.volume = volume;
     }
 
-    private static SoundEvent[] SOUNDS = new SoundEvent[] {
+    private static final SoundEvent[] SOUNDS = new SoundEvent[] {
             SoundEvent.BLOCK_NOTE_BLOCK_HARP,
             SoundEvent.BLOCK_NOTE_BLOCK_BASS,
             SoundEvent.BLOCK_NOTE_BLOCK_BASEDRUM,

@@ -12,15 +12,299 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockProfile;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 public class GUICombatStats extends HypixelInventoryGUI {
+
+    private enum CombatStat {
+        HEALTH(10, ItemStatistic.HEALTH, new GUIMaterial(Material.GOLDEN_APPLE),
+                player -> List.of(
+                        "§7Your Health stat increases your",
+                        "§7maximum health.",
+                        " "
+                )
+        ),
+
+        DEFENSE(11, ItemStatistic.DEFENSE, new GUIMaterial(Material.IRON_CHESTPLATE),
+                player -> {
+                    double defense = player.getStatistics().allStatistics().getOverall(ItemStatistic.DEFENSE);
+                    double maxHealth = player.getStatistics().allStatistics().getOverall(ItemStatistic.HEALTH);
+                    double damageReduction = defense / (defense + 100D);
+                    double effectiveHealth = maxHealth * (1D + defense / 100D);
+                    return List.of(
+                            "§7Your Defense stat reduces the",
+                            "§7damage that you take from enemies.",
+                            " ",
+                            "§7Damage Reduction: " + ItemStatistic.DEFENSE.getDisplayColor() + StringUtility.decimalify(damageReduction, 1) + "%",
+                            "§7Effective Health: " + ItemStatistic.HEALTH.getDisplayColor() + StringUtility.commaify(effectiveHealth) + ItemStatistic.HEALTH.getSymbol(),
+                            " "
+                    );
+                }
+        ),
+
+        STRENGTH(12, ItemStatistic.STRENGTH, new GUIMaterial(Material.BLAZE_POWDER),
+                player -> {
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.STRENGTH);
+                    double damageMultiplier = 1D + value / 100D;
+                    return List.of(
+                            "§7Strength increases the damage you",
+                            "§7deal.",
+                            " ",
+                            "§7Damage Multiplier: " + ItemStatistic.STRENGTH.getDisplayColor() + StringUtility.decimalify(damageMultiplier, 1) + "x",
+                            " "
+                    );
+                }
+        ),
+
+        INTELLIGENCE(13, ItemStatistic.INTELLIGENCE, new GUIMaterial(Material.ENCHANTED_BOOK),
+                player -> {
+                    double magicDamage = player.getStatistics().allStatistics().getOverall(ItemStatistic.INTELLIGENCE);
+                    double manaPool = magicDamage + 100D;
+                    return List.of(
+                            "§7Intelligence increases the damage of",
+                            "§7your magical items and your mana",
+                            "§7pool.",
+                            " ",
+                            "§7Magic Damage: " + ItemStatistic.INTELLIGENCE.getDisplayColor() + "+" + StringUtility.decimalify(magicDamage, 2) + "%",
+                            "§7Mana Pool: " + ItemStatistic.INTELLIGENCE.getDisplayColor() + StringUtility.decimalify(manaPool, 2),
+                            " "
+                    );
+                }
+        ),
+
+        CRIT_CHANCE(14, ItemStatistic.CRIT_CHANCE, new GUIMaterial("3e4f49535a276aacc4dc84133bfe81be5f2a4799a4c04d9a4ddb72d819ec2b2b"),
+                player -> List.of(
+                        "§7Critical Chance is the percent",
+                        "§7chance that you land a Critical Hit",
+                        "§7when damaging an enemy.",
+                        " "
+                )
+        ),
+
+        CRIT_DAMAGE(15, ItemStatistic.CRIT_DAMAGE, new GUIMaterial("ddafb23efc57f251878e5328d11cb0eef87b79c87b254a7ec72296f9363ef7c"),
+                player -> {
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.CRIT_DAMAGE);
+                    double damageMultiplier = 1D + value / 100D;
+                    double critChance = player.getStatistics().allStatistics().getOverall(ItemStatistic.CRIT_CHANCE);
+                    return List.of(
+                            "§7Critical Damage multiplies the damage ",
+                            "§7that you deal when you land a ",
+                            "§7Critical Hit.",
+                            " ",
+                            "§7Damage Multiplier: " + ItemStatistic.CRIT_DAMAGE.getDisplayColor() + StringUtility.decimalify(damageMultiplier, 1) + "x",
+                            "§7Critical Chance: " + ItemStatistic.CRIT_DAMAGE.getDisplayColor() + StringUtility.decimalify(critChance, 1) + "%",
+                            " "
+                    );
+                }
+        ),
+
+        BONUS_ATTACK_SPEED(16, ItemStatistic.BONUS_ATTACK_SPEED, new GUIMaterial(Material.GOLDEN_AXE),
+                player -> {
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.BONUS_ATTACK_SPEED);
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§7Attack Speed decreases the time");
+                    lore.add("§7between hits on your opponent.");
+                    lore.add(" ");
+
+                    if (value == 0D) {
+                        lore.add("§7You attack at a normal rate.");
+                        lore.add(" ");
+                    } else {
+                        lore.add("§7Flat: " + ItemStatistic.BONUS_ATTACK_SPEED.getDisplayColor() + "+" + StringUtility.commaify(value) + ItemStatistic.BONUS_ATTACK_SPEED.getSymbol());
+                        lore.add("§7Stat Cap:" + ItemStatistic.BONUS_ATTACK_SPEED.getDisplayColor() + "100" + ItemStatistic.BONUS_ATTACK_SPEED.getSymbol() + " " + ItemStatistic.BONUS_ATTACK_SPEED.getDisplayName());
+                        lore.add(" ");
+                        lore.add("§7You now attack §a" + StringUtility.commaify(value) + "§7 faster!");
+                        lore.add(" ");
+                    }
+                    return lore;
+                }
+        ),
+
+        ABILITY_DAMAGE(19, ItemStatistic.ABILITY_DAMAGE, new GUIMaterial(Material.BEACON),
+                player -> {
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.ABILITY_DAMAGE);
+                    double damageMultiplier = 1D + value / 100D;
+                    return List.of(
+                            "§7Ability Damage increases the damage",
+                            "§7applied by certain spells and item",
+                            "§7abilities.",
+                            " ",
+                            "§7Damage Multiplier: " + ItemStatistic.ABILITY_DAMAGE.getDisplayColor() + StringUtility.decimalify(damageMultiplier, 1) + "x",
+                            " "
+                    );
+                }
+        ),
+
+        TRUE_DEFENSE(20, ItemStatistic.TRUE_DEFENSE, new GUIMaterial(Material.BONE_MEAL),
+                player -> List.of(
+                        "§7True Defense is defense which",
+                        "§7works against true damage.",
+                        " "
+                )
+        ),
+
+        FEROCITY(21, ItemStatistic.FEROCITY, new GUIMaterial(Material.RED_DYE),
+                player -> {
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.FEROCITY);
+                    int extraStrikes = (int) (value / 100);
+                    double chanceForOneMore = value % 100;
+                    List<String> lore = new ArrayList<>();
+
+                    lore.add("§7Ferocity grants percent chance to");
+                    lore.add("§7double-strike enemies. Increments of");
+                    lore.add("§7100 increases the base number of");
+                    lore.add("§7strikes.");
+                    lore.add(" ");
+
+                    if (value != 0D) {
+                        lore.add("§7Flat: " + ItemStatistic.FEROCITY.getDisplayColor() + "+" + StringUtility.commaify(value) + ItemStatistic.FEROCITY.getSymbol());
+                        lore.add("§7Stat Cap:" + ItemStatistic.FEROCITY.getDisplayColor() + "500" + ItemStatistic.FEROCITY.getSymbol() + ItemStatistic.FEROCITY.getDisplayName());
+                        lore.add(" ");
+                    }
+
+                    lore.add("§7Base extra strikes: " + ItemStatistic.FEROCITY.getDisplayColor() + StringUtility.commaify(extraStrikes));
+                    lore.add("§7Chance for 1 more: " + ItemStatistic.FEROCITY.getDisplayColor() + StringUtility.commaify(chanceForOneMore) + "%");
+                    lore.add(" ");
+                    return lore;
+                }
+        ),
+
+        HEALTH_REGEN(22, ItemStatistic.HEALTH_REGEN, new GUIMaterial(Material.POTION),
+                player -> {
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.HEALTH_REGEN);
+                    double maxHealth = player.getStatistics().allStatistics().getOverall(ItemStatistic.HEALTH);
+                    double healthRegen = value / 100D;
+                    double avgHpPerSecond = (1.5D + maxHealth / 100D) * (value / 100D) / 2D;
+                    return List.of(
+                            "§7Health Regen increases the amount",
+                            "§7of health that you naturally",
+                            "§7regenerate over time.",
+                            " ",
+                            "§7Base regen ticks: §c1% §7of Max §c❤ §7+ §c1.5❤",
+                            "§7Regen interval: §aEvery 2 seconds",
+                            "§7Health Regen: " + "§4" + StringUtility.decimalify(healthRegen, 1) + "x",
+                            " ",
+                            "§7Max Health: " + ItemStatistic.HEALTH.getDisplayColor() + StringUtility.decimalify(maxHealth, 1) + ItemStatistic.HEALTH.getSymbol(),
+                            "§7Avg HP/s: " + "§a" + StringUtility.decimalify(avgHpPerSecond, 1) + "❤",
+                            " "
+                    );
+                }
+        ),
+
+        VITALITY(23, ItemStatistic.VITALITY, new GUIMaterial(Material.GLISTERING_MELON_SLICE),
+                player -> {
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.VITALITY);
+                    double bonus = value / 100D;
+                    List<String> lore = new ArrayList<>();
+
+                    lore.add("§7Vitality increases your incoming");
+                    lore.add("§7healing, including health regen.");
+                    lore.add(" ");
+
+                    if (value == ItemStatistic.VITALITY.getBaseAdditiveValue()) {
+                        lore.add("§8Heals you receive aren't modified.");
+                    } else {
+                        lore.add("§7All heals applied to you are multiplied by "
+                                + ItemStatistic.VITALITY.getDisplayColor()
+                                + StringUtility.decimalify(bonus, 2) + "x§7.");
+                    }
+
+                    lore.add(" ");
+                    return lore;
+                }
+        ),
+
+        MENDING(24, ItemStatistic.MENDING, new GUIMaterial(Material.GHAST_TEAR),
+                player -> {
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.MENDING);
+                    double bonus = value / 100D;
+                    List<String> lore = new ArrayList<>();
+
+                    lore.add("§7Mending increases your outgoing");
+                    lore.add("§7healing.");
+                    lore.add(" ");
+
+                    if (value == ItemStatistic.MENDING.getBaseAdditiveValue()) {
+                        lore.add("§8Your heals aren't modified.");
+                        lore.add(" ");
+                    } else {
+                        lore.add("§7All heals applied to you are multiplied by "
+                                + ItemStatistic.MENDING.getDisplayColor()
+                                + StringUtility.decimalify(bonus, 2) + "x§7.");
+                    }
+                    return lore;
+                }
+        ),
+
+        SWING_RANGE(25, ItemStatistic.SWING_RANGE, new GUIMaterial(Material.STONE_SWORD),
+                player -> {
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.SWING_RANGE);
+                    List<String> lore = new ArrayList<>();
+
+                    lore.add("§7Increases your melee hit range.");
+                    lore.add(" ");
+                    lore.add("§7Flat: " + ItemStatistic.SWING_RANGE.getDisplayColor() + "+" + StringUtility.decimalify(value, 2) + ItemStatistic.SWING_RANGE.getSymbol());
+                    lore.add("§7Stat Cap: " + ItemStatistic.SWING_RANGE.getDisplayColor() + "15" + ItemStatistic.SWING_RANGE.getSymbol() + " " + ItemStatistic.SWING_RANGE.getDisplayName());
+                    lore.add(" ");
+
+                    if (value == ItemStatistic.SWING_RANGE.getBaseAdditiveValue()) {
+                        lore.add("§8Your swing range isn't modified.");
+                    } else {
+                        lore.add("§7Your swing range is increased to "
+                                + StringUtility.decimalify(value, 2) + " §7blocks.");
+                    }
+
+                    lore.add(" ");
+                    return lore;
+                }
+        );
+
+        private final int slot;
+        private final ItemStatistic statistic;
+        private final GUIMaterial guiMaterial;
+        private final Function<SkyBlockPlayer, List<String>> baseLoreProvider;
+
+        CombatStat(int slot, ItemStatistic statistic, GUIMaterial guiMaterial,
+                   Function<SkyBlockPlayer, List<String>> baseLoreProvider) {
+            this.slot = slot;
+            this.statistic = statistic;
+            this.guiMaterial = guiMaterial;
+            this.baseLoreProvider = baseLoreProvider;
+        }
+
+        public List<String> buildLore(SkyBlockPlayer player) {
+            List<String> lore = new ArrayList<>(baseLoreProvider.apply(player));
+
+            double value = player.getStatistics().allStatistics().getOverall(statistic);
+            if (value == 0D) {
+                lore.add("§8You have none of this stat!");
+            }
+            lore.add("§eClick to view!");
+
+            return lore;
+        }
+
+        public ItemStack.Builder buildItemStack(SkyBlockPlayer player) {
+            double value = player.getStatistics().allStatistics().getOverall(statistic);
+            String title = StringUtility.getFormatedStatistic(statistic) + " §f" +
+                    StringUtility.decimalify(value, 1);
+            List<String> lore = buildLore(player);
+
+            if (guiMaterial.hasTexture()) {
+                return ItemStackCreator.getStackHead(title, guiMaterial.texture(), 1, lore);
+            }
+            return ItemStackCreator.getStack(title, guiMaterial.material(), 1, lore);
+        }
+    }
 
     public GUICombatStats() {
         super("Your Stats Breakdown", InventoryType.CHEST_6_ROW);
@@ -49,486 +333,25 @@ public class GUICombatStats extends HypixelInventoryGUI {
                     }
                 });
 
-                return ItemStackCreator.getStack("§cCombat Stats", Material.DIAMOND_SWORD, 1,
-                        lore
-                );
+                return ItemStackCreator.getStack("§cCombat Stats", Material.DIAMOND_SWORD, 1, lore);
             }
         });
 
-        set(new GUIClickableItem(10) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.HEALTH;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7Your Health stat increases your",
-                        "§7maximum health.",
-                        " "
-                ));
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.decimalify(value, 1),
-                        Material.GOLDEN_APPLE, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(11) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.DEFENSE;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                double maxHealth = player.getStatistics().allStatistics().getOverall(ItemStatistic.HEALTH);
-                double damageReduction = value / (value + 100D);
-                double effectiveHealth = maxHealth * (1D + value / 100D);
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7Your Defense stat reduces the",
-                        "§7damage that you take from enemies.",
-                        " ",
-                        "§7Damage Reduction: " + statistic.getDisplayColor() + StringUtility.decimalify(damageReduction, 1) + "%",
-                        "§7Effective Health: " + ItemStatistic.HEALTH.getDisplayColor() + StringUtility.commaify(effectiveHealth) + ItemStatistic.HEALTH.getSymbol(),
-                        " "
-                ));
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.commaify(value),
-                        Material.IRON_CHESTPLATE, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(12) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.STRENGTH;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                double damageMultiplier = 1D + value / 100D;
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7Strength increases the damage you",
-                        "§7deal.",
-                        " ",
-                        "§7Damage Multiplier: " + statistic.getDisplayColor() + StringUtility.decimalify(damageMultiplier, 1) + "x",
-                        " "
-                ));
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.commaify(value),
-                        Material.BLAZE_POWDER, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(13) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.INTELLIGENCE;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                double magicDamage = value;
-                double manaPool = value + 100D;
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7Intelligence increases the damage of",
-                        "§7your magical items and your mana",
-                        "§7pool.",
-                        " ",
-                        "§7Magic Damage: " + statistic.getDisplayColor() + "+" + StringUtility.decimalify(magicDamage, 2) + "%",
-                        "§7Mana Pool: " + statistic.getDisplayColor() + StringUtility.decimalify(manaPool, 2),
-                        " "
-                ));
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.decimalify(value, 1),
-                        Material.ENCHANTED_BOOK, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(14) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.CRIT_CHANCE;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7Critical Chance is the percent",
-                        "§7chance that you land a Critical Hit",
-                        "§7when damaging an enemy.",
-                        " "
-                ));
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStackHead(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.decimalify(value, 1),
-                        "3e4f49535a276aacc4dc84133bfe81be5f2a4799a4c04d9a4ddb72d819ec2b2b", 1,
-                        lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(15) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.CRIT_DAMAGE;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                double damageMultiplier = 1D + value / 100D;
-                double critChance = player.getStatistics().allStatistics().getOverall(ItemStatistic.CRIT_CHANCE);
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7Critical Damage multiplies the damage ",
-                        "§7that you deal when you land a ",
-                        "§7Critical Hit.",
-                        " ",
-                        "§7Damage Multiplier: " + statistic.getDisplayColor() + StringUtility.decimalify(damageMultiplier, 1) + "x",
-                        "§7Critical Chance: " + statistic.getDisplayColor() + StringUtility.decimalify(critChance, 1) + "%",
-                        " "
-                ));
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStackHead(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.decimalify(value, 1),
-                        "ddafb23efc57f251878e5328d11cb0eef87b79c87b254a7ec72296f9363ef7c", 1,
-                        lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(16) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.BONUS_ATTACK_SPEED;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                List<String> lore = new ArrayList<>();
-
-                lore.add("§7Attack Speed decreases the time");
-                lore.add("§7between hits on your opponent.");
-                lore.add(" ");
-
-                if (value == 0D) {
-                    lore.add("§7You attack at a normal rate.");
-                    lore.add(" ");
-                } else {
-                    lore.add("§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.commaify(value) + statistic.getSymbol());
-                    lore.add("§7Stat Cap:" + statistic.getDisplayColor() + "100" + statistic.getSymbol() + " " + statistic.getDisplayName());
-                    lore.add(" ");
-                    lore.add("§7You now attack §a" + StringUtility.commaify(value) + "§7 faster!");
-                    lore.add(" ");
+        for (CombatStat stat : CombatStat.values()) {
+            set(new GUIClickableItem(stat.slot) {
+                @Override
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    player.sendMessage("§aUnder construction!");
                 }
 
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.decimalify(value, 1),
-                        Material.GOLDEN_AXE, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(19) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.ABILITY_DAMAGE;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                double damageMultiplier = 1D + value / 100D;
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7Ability Damage increases the damage",
-                        "§7applied by certain spells and item",
-                        "§7abilities.",
-                        " ",
-                        "§7Damage Multiplier: " + statistic.getDisplayColor() + StringUtility.decimalify(damageMultiplier, 1) + "x",
-                        " "
-                ));
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.decimalify(value, 1),
-                        Material.BEACON, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(20) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.TRUE_DEFENSE;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7True Defense is defense which",
-                        "§7works against true damage.",
-                        " "
-                ));
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.decimalify(value, 1),
-                        Material.BONE_MEAL, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(21) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.FEROCITY;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                int extraStrikes = (int) (value / 100);
-                double chanceForOneMore = value % 100;
-                List<String> lore = new ArrayList<>();
-
-                lore.add("§7Ferocity grants percent chance to");
-                lore.add("§7double-strike enemies. Increments of");
-                lore.add("§7100 increases the base number of");
-                lore.add("§7strikes.");
-                lore.add(" ");
-
-                if (value != 0D) {
-                    lore.add("§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.commaify(value) + statistic.getSymbol());
-                    lore.add("§7Stat Cap:" + statistic.getDisplayColor() + "500" + statistic.getSymbol() + statistic.getDisplayName());
-                    lore.add(" ");
+                @Override
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                    return stat.buildItemStack((SkyBlockPlayer) p);
                 }
+            });
+        }
 
-                lore.add("§7Base extra strikes: " + statistic.getDisplayColor() + StringUtility.commaify(extraStrikes));
-                lore.add("§7Chance for 1 more: " + statistic.getDisplayColor() + StringUtility.commaify(chanceForOneMore) + "%");
-                lore.add(" ");
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.commaify(value),
-                        Material.RED_DYE, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(22) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.HEALTH_REGEN;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                double maxHealth = player.getStatistics().allStatistics().getOverall(ItemStatistic.HEALTH);
-                double healthRegen = value / 100D;
-                double avgHpPerSecond = (1.5D + maxHealth / 100D) * (value / 100D) / 2D;
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7Health Regen increases the amount",
-                        "§7of health that you naturally",
-                        "§7regenerate over time.",
-                        " ",
-                        "§7Base regen ticks: §c1% §7of Max §c❤ §7+ §c1.5❤",
-                        "§7Regen interval: §aEvery 2 seconds",
-                        "§7Health Regen: " + "§4" + StringUtility.decimalify(healthRegen, 1) + "x",
-                        " ",
-                        "§7Max Health: " + ItemStatistic.HEALTH.getDisplayColor() + StringUtility.decimalify(maxHealth, 1) + ItemStatistic.HEALTH.getSymbol(),
-                        "§7Avg HP/s: " + "§a" + StringUtility.decimalify(avgHpPerSecond, 1) + "❤",
-                        " "
-
-                ));
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.commaify(value),
-                        Material.POTION, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(23) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.VITALITY;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                double bonus = value / 100D;
-                List<String> lore = new ArrayList<>();
-
-                lore.add("§7Vitality increases your incoming");
-                lore.add("§7healing, including health regen.");
-                lore.add(" ");
-
-                if (value == statistic.getBaseAdditiveValue()) {
-                    lore.add("§8Heals you receive aren't modified.");
-                } else {
-                    lore.add("§7All heals applied to you are multiplied by "
-                            + statistic.getDisplayColor()
-                            + StringUtility.decimalify(bonus, 2) + "x§7.");
-                }
-
-                lore.add(" ");
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.commaify(value),
-                        Material.GLISTERING_MELON_SLICE, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(24) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.MENDING;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                double bonus = value / 100D;
-                List<String> lore = new ArrayList<>();
-
-                lore.add("§7Mending increases your outgoing");
-                lore.add("§7healing.");
-                lore.add(" ");
-
-                if (value == statistic.getBaseAdditiveValue()) {
-                    lore.add("§8Your heals aren't modified.");
-                    lore.add(" ");
-                } else {
-                    lore.add("§7All heals applied to you are multiplied by "
-                            + statistic.getDisplayColor()
-                            + StringUtility.decimalify(bonus, 2) + "x§7.");
-                }
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.commaify(value),
-                        Material.GHAST_TEAR, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
-
-        set(new GUIClickableItem(25) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStatistic statistic = ItemStatistic.SWING_RANGE;
-                double value = player.getStatistics().allStatistics().getOverall(statistic);
-                List<String> lore = new ArrayList<>();
-
-                lore.add("§7Increases your melee hit range.");
-                lore.add(" ");
-                lore.add("§7Flat: " + statistic.getDisplayColor() + "+" + StringUtility.decimalify(value, 2) + statistic.getSymbol());
-                lore.add("§7Stat Cap: " + statistic.getDisplayColor() + "15" + statistic.getSymbol() + " " + statistic.getDisplayName());
-                lore.add(" ");
-
-                if (value == statistic.getBaseAdditiveValue()) {
-                    lore.add("§8Your swing range isn't modified.");
-                } else {
-                    lore.add("§7Your swing range is increased to "
-                            + StringUtility.decimalify(value, 2) + " §7blocks.");
-                }
-
-                lore.add(" ");
-
-                if (value == 0D) lore.add("§8You have none of this stat!");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
-                                StringUtility.decimalify(value, 1),
-                        Material.STONE_SWORD, 1, lore
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aUnder construction!");
-            }
-        });
         updateItemStacks(getInventory(), getPlayer());
     }
 
