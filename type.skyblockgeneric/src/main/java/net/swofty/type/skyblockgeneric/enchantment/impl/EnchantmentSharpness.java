@@ -33,7 +33,6 @@ public class EnchantmentSharpness implements Ench, EnchFromTable {
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.SHARPNESS_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
@@ -62,7 +61,6 @@ public class EnchantmentSharpness implements Ench, EnchFromTable {
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.SHARPNESS_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 

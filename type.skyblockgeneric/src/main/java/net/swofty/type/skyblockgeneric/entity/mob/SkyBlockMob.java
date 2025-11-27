@@ -67,7 +67,9 @@ public abstract class SkyBlockMob extends EntityCreature {
         this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
         this.setCustomName(Component.text(
-                "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
+                "§8[§7Lv" + getLevel() + "§8] §c"
+                        + getMobTypes().getFirst().getColor() + getMobTypes().getFirst().getSymbol() + "§c "
+                        + getDisplayName()
                         + " §a" + Math.round(getHealth())
                         + "§f/§a"
                         + Math.round(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue())
@@ -93,6 +95,7 @@ public abstract class SkyBlockMob extends EntityCreature {
     public abstract SkillCategories getSkillCategory();
     public abstract long damageCooldown();
     public abstract OtherLoot getOtherLoot();
+    public abstract List<MobType> getMobTypes();
 
     public ItemStatistics getStatistics() {
         ItemStatistics statistics = getBaseStatistics().clone();

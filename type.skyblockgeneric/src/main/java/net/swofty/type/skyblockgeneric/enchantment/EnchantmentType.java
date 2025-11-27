@@ -26,6 +26,11 @@ public enum EnchantmentType {
     SMITE(EnchantmentSmite.class),
     SILK_TOUCH(EnchantmentSilkTouch.class),
     SMELTING_TOUCH(EnchantmentSmeltingTouch.class),
+    GIANT_KILLER(EnchantmentGiantKiller.class),
+    EXECUTE(EnchantmentExecute.class),
+    IMPALING(EnchantmentImpaling.class),
+    BANE_OF_ARTHROPODS(EnchantmentBaneOfArthropods.class),
+    CUBISM(EnchantmentCubism.class),
     ;
 
     private final Class<? extends Ench> clazz;
