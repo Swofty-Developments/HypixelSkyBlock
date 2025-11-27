@@ -34,7 +34,6 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.EFFICIENCY_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
@@ -57,7 +56,6 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.EFFICIENCY_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 

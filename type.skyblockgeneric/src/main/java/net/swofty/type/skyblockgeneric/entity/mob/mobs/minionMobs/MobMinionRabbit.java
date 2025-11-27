@@ -6,6 +6,7 @@ import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.goal.RandomStrollGoal;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
@@ -69,6 +70,11 @@ public class MobMinionRabbit extends SkyBlockMob {
     @Override
     public OtherLoot getOtherLoot() {
         return new OtherLoot(0, 0, 5);
+    }
+
+    @Override
+    public List<MobType> getMobTypes() {
+        return List.of(MobType.ANIMAL);
     }
 }
 

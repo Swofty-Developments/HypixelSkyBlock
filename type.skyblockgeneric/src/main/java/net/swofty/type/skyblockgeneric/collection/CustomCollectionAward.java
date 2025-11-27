@@ -21,6 +21,11 @@ public enum CustomCollectionAward {
     SHARPNESS_DISCOUNT("§9Sharpness §7Exp Discount §a(-25%)"),
     SMITE_DISCOUNT("§9Smite §7Exp Discount §a(-25%)"),
     ENDER_SLAYER_DISCOUNT("§9Ender Slayer §7Exp Discount §a(-25%)"),
+    GIANT_KILLER_DISCOUNT("§9Giant Killer §7Exp Discount §a(-25%)"),
+    EXECUTE_DISCOUNT("§9Execute §7Exp Discount §a(-25%)"),
+    IMPALING_DISCOUNT("§9Impaling §7Exp Discount §a(-25%)"),
+    BANE_OF_ARTHROPODS_DISCOUNT("§9Bane of Arthropods §7Exp Discount §a(-25%)"),
+    CUBISM_DISCOUNT("§9Cubism §7Exp Discount §a(-25%)"),
 
     // BAGS
     QUIVER("§aQuiver"),

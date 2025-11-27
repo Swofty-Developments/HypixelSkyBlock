@@ -31,7 +31,6 @@ public class EnchantmentGrowth implements Ench, EnchFromTable {
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.GROWTH_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
@@ -60,7 +59,6 @@ public class EnchantmentGrowth implements Ench, EnchFromTable {
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.GROWTH_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 

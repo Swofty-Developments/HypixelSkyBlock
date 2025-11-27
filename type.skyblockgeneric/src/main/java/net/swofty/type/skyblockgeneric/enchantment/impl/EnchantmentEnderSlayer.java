@@ -8,6 +8,7 @@ import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.EventBasedEnchant;
+import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
@@ -23,7 +24,7 @@ public class EnchantmentEnderSlayer implements Ench, EnchFromTable, EventBasedEn
 
     @Override
     public String getDescription(int level) {
-        return "Increases damage dealt to Endermite, Enderman and Ender Dragons by §a" + MULTIPLIERS[level - 1] + "%§7.";
+        return "Increases damage dealt to " + MobType.ENDER.getFullDisplayName() + "§7 mobs by §a" + MULTIPLIERS[level - 1] + "%§7.";
     }
 
     @Override
@@ -36,7 +37,6 @@ public class EnchantmentEnderSlayer implements Ench, EnchFromTable, EventBasedEn
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.ENDER_SLAYER_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
@@ -50,11 +50,10 @@ public class EnchantmentEnderSlayer implements Ench, EnchFromTable, EventBasedEn
 
     @Override
     public ItemStatistics getStatisticsOnDamage(SkyBlockPlayer causer, LivingEntity receiver, int level) {
-        if (receiver instanceof SkyBlockMob skyBlockMob) {
-            if (skyBlockMob.getEntityType() == EntityType.ENDERMITE || skyBlockMob.getEntityType() == EntityType.ENDERMAN || skyBlockMob.getEntityType() == EntityType.ENDER_DRAGON) {
-                return ItemStatistics.builder().withBase(ItemStatistic.DAMAGE, MULTIPLIERS[level - 1]).build();
-            }
+        if (receiver instanceof SkyBlockMob skyBlockMob && skyBlockMob.getMobTypes().contains(MobType.ENDER)) {
+            return ItemStatistics.builder().withBase(ItemStatistic.DAMAGE, MULTIPLIERS[level - 1]).build();
         }
+
         return ItemStatistics.empty();
     };
 
@@ -69,7 +68,6 @@ public class EnchantmentEnderSlayer implements Ench, EnchFromTable, EventBasedEn
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.ENDER_SLAYER_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 

@@ -12,6 +12,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
+import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
@@ -111,6 +112,11 @@ public class MobRuinsOldWolf extends BestiaryMob implements RegionPopulator {
     @Override
     public OtherLoot getOtherLoot() {
         return new OtherLoot(40, 40, 30);
+    }
+
+    @Override
+    public List<MobType> getMobTypes() {
+        return List.of(MobType.ANIMAL);
     }
 
     @Override
