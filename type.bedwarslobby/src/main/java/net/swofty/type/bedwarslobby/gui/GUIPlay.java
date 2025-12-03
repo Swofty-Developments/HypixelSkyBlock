@@ -68,6 +68,8 @@ public class GUIPlay extends HypixelInventoryGUI {
 				}
 			});
 		}
+
+		set(GUIClickableItem.getCloseItem(40));
 		updateItemStacks(getInventory(), getPlayer());
 	}
 
