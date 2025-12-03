@@ -3,8 +3,10 @@ package net.swofty.type.bedwarslobby.events;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
+import net.swofty.type.bedwarsgeneric.util.LevelUtil;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -29,5 +31,10 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
 
         BedWarsDataHandler handler = BedWarsDataHandler.getUser(player.getUuid());
         handler.runOnLoad(player);
+
+		// display the player level progression in the experience bar
+		DatapointLong dp = handler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class);
+		player.setLevel(LevelUtil.calculateLevel(dp.getValue()));
+		player.setExp((float) LevelUtil.calculateExperienceSinceLastLevel(dp.getValue()) / LevelUtil.calculateMaxExperienceFromExperience(dp.getValue()));
     }
 }
