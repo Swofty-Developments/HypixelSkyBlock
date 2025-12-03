@@ -1,5 +1,7 @@
 package net.swofty.type.bedwarslobby.npcs;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
@@ -65,7 +67,9 @@ public class DreamNPC extends HypixelNPC {
 	}
 
 	@Override
-	public void onClick(PlayerClickNPCEvent e) {
-		e.player().sendMessage("§7You can dream about this :)");
+	public void onClick(PlayerClickNPCEvent event) {
+		event.player().sendMessage("§7You can dream about this :)");
+		event.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
+				.clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
 	}
 }

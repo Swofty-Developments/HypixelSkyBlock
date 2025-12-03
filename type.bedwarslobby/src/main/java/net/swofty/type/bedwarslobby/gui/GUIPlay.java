@@ -4,7 +4,6 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.ServerType;
 import net.swofty.commons.BedwarsGameType;
 import net.swofty.type.bedwarslobby.OrchestratorConnector;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -69,7 +68,7 @@ public class GUIPlay extends HypixelInventoryGUI {
 			});
 		}
 
-		set(GUIClickableItem.getCloseItem(40));
+		set(GUIClickableItem.getCloseItem(31));
 		updateItemStacks(getInventory(), getPlayer());
 	}
 
