@@ -13,9 +13,7 @@ public class ServerOrbRegistry {
     private static final Map<String, ServerOrbHandler> HANDLERS = new HashMap<>();
 
     static {
-        registerHandler("WHEAT_CRYSTAL_ORB_HANDLER", new ServerOrbHandler(crystalImpl -> {
-            return Block.WHEAT;
-        }));
+        registerHandler("WHEAT_CRYSTAL_ORB_HANDLER", new ServerOrbHandler(crystalImpl -> Block.WHEAT));
         registerHandler("FLOWER_CRYSTAL_ORB_HANDLER", new ServerOrbHandler(crystalImpl -> {
             List<Material> flowers = Groups.FLOWERS;
             Material randomMaterial = flowers.get(new Random().nextInt(flowers.size()));
@@ -25,12 +23,8 @@ public class ServerOrbRegistry {
             boolean isPumpkin = new Random().nextBoolean();
             return isPumpkin ? Block.PUMPKIN : Block.MELON;
         }));
-        registerHandler("POTATO_CRYSTAL_ORB_HANDLER", new ServerOrbHandler(crystalImpl -> {
-            return Block.POTATOES;
-        }));
-        registerHandler("CARROT_CRYSTAL_ORB_HANDLER", new ServerOrbHandler(crystalImpl -> {
-            return Block.CARROTS;
-        }));
+        registerHandler("POTATO_CRYSTAL_ORB_HANDLER", new ServerOrbHandler(crystalImpl -> Block.POTATOES));
+        registerHandler("CARROT_CRYSTAL_ORB_HANDLER", new ServerOrbHandler(crystalImpl -> Block.CARROTS));
     }
 
     public static void registerHandler(String id, ServerOrbHandler handler) {

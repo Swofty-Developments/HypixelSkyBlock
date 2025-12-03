@@ -36,8 +36,8 @@ public class BuildersWandAbility extends RegisteredAbility {
         List<Pos> blocksForUndo = new ArrayList<>(); // NOTE: To be used later
         blocks.add(origin);
         Instance w = player.getInstance();
-        Vec[] check = null;
-        Vec translate = null;
+        Vec[] check;
+        Vec translate;
         int blocksPlaced = 0;
 
         check = switch (face) {

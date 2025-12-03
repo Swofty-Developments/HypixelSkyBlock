@@ -33,7 +33,6 @@ public class EnchantmentCritical implements Ench, EnchFromTable {
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.CRITICAL_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
@@ -63,7 +62,6 @@ public class EnchantmentCritical implements Ench, EnchFromTable {
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.CRITICAL_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 

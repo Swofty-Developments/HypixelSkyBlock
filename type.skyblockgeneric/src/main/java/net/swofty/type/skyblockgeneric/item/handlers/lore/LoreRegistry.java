@@ -69,9 +69,7 @@ public class LoreRegistry {
                 "§e ",
                 "§eClick to open!"
         ), (item, player) -> "§aSkyBlock Menu §7(Click)"));
-        register("HOT_POTATO_BOOK", new LoreConfig((item, player) -> {
-            return PotatoType.allLores();
-        }, null));
+        register("HOT_POTATO_BOOK", new LoreConfig((item, player) -> PotatoType.allLores(), null));
     }
 
     public static void register(String id, LoreConfig handler) {

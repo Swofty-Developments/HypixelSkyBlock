@@ -1,9 +1,12 @@
 package net.swofty.anticheat.world;
 
+import lombok.Getter;
+
+@Getter
 public class Block {
-    private boolean isWater;
-    private boolean isLava;
-    private BoundingBox boundingBox;
+    private final boolean isWater;
+    private final boolean isLava;
+    private final BoundingBox boundingBox;
 
     public Block(boolean isWater, boolean isLava, BoundingBox boundingBox) {
         this.isWater = isWater;
@@ -11,15 +14,4 @@ public class Block {
         this.boundingBox = boundingBox;
     }
 
-    public boolean isWater() {
-        return isWater;
-    }
-
-    public boolean isLava() {
-        return isLava;
-    }
-
-    public BoundingBox getBoundingBox() {
-        return boundingBox;
-    }
 }

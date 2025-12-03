@@ -30,7 +30,6 @@ public class EnchantmentLooting implements Ench, EnchFromTable {
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.LOOTING_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
@@ -56,7 +55,6 @@ public class EnchantmentLooting implements Ench, EnchFromTable {
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.LOOTING_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 

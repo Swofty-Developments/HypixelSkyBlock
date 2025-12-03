@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.enchantment.impl;
 
-import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
@@ -8,6 +7,7 @@ import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.EventBasedEnchant;
+import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
@@ -23,7 +23,8 @@ public class EnchantmentSmite implements Ench, EnchFromTable, EventBasedEnchant 
 
     @Override
     public String getDescription(int level) {
-        return "Increases damage dealt to Skeletons, Zombie Pigmen, Withers and Zombies by §a" + MULTIPLIERS[level - 1] + "%§7.";
+        return "Increases damage dealt to " + MobType.WITHER.getFullDisplayName() + ", " + MobType.SKELETAL.getFullDisplayName() +
+                " and " + MobType.UNDEAD.getFullDisplayName() + "§7 mobs by " + MULTIPLIERS[level - 1] + "%§7.";
     }
 
     @Override
@@ -39,7 +40,6 @@ public class EnchantmentSmite implements Ench, EnchFromTable, EventBasedEnchant 
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.SMITE_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
@@ -54,13 +54,13 @@ public class EnchantmentSmite implements Ench, EnchFromTable, EventBasedEnchant 
     @Override
     public ItemStatistics getStatisticsOnDamage(SkyBlockPlayer causer, LivingEntity receiver, int level) {
         if (receiver instanceof SkyBlockMob skyBlockMob) {
-            if (skyBlockMob.getEntityType() == EntityType.SKELETON || skyBlockMob.getEntityType() == EntityType.ZOMBIFIED_PIGLIN ||
-                    skyBlockMob.getEntityType() == EntityType.WITHER || skyBlockMob.getEntityType() == EntityType.ZOMBIE ||
-                    skyBlockMob.getEntityType() == EntityType.ZOMBIE_VILLAGER) {
-
+            if (skyBlockMob.getMobTypes().contains(MobType.WITHER) ||
+                    skyBlockMob.getMobTypes().contains(MobType.SKELETAL) ||
+                    skyBlockMob.getMobTypes().contains(MobType.UNDEAD)) {
                 return ItemStatistics.builder().withBase(ItemStatistic.DAMAGE, MULTIPLIERS[level - 1]).build();
             }
         }
+
         return ItemStatistics.empty();
     };
 
@@ -75,7 +75,6 @@ public class EnchantmentSmite implements Ench, EnchFromTable, EventBasedEnchant 
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.SMITE_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 

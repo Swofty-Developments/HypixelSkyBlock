@@ -33,7 +33,6 @@ public class EnchantmentProtection implements Ench, EnchFromTable {
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.PROTECTION_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
@@ -56,7 +55,6 @@ public class EnchantmentProtection implements Ench, EnchFromTable {
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.PROTECTION_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 

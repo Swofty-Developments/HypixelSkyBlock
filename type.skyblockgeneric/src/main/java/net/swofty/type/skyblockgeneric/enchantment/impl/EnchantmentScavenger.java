@@ -59,7 +59,6 @@ public class EnchantmentScavenger implements Ench, EnchFromTable, HypixelEventCl
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.SCAVENGER_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
