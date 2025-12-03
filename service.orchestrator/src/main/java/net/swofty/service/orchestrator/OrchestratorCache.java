@@ -61,7 +61,7 @@ public class OrchestratorCache {
 
 		// Prefer games with more players (closer to starting)
 		candidates.sort(Comparator.comparingInt((GameWithServer g) -> g.game().getInvolvedPlayers().size()).reversed());
-		return candidates.get(0);
+		return candidates.getFirst();
 	}
 
 	/**

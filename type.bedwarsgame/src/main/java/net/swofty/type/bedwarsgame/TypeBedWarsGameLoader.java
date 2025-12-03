@@ -44,6 +44,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.redis.RedisOriginServer;
+import net.swofty.type.generic.redis.service.RedisGameMessage;
 import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
@@ -166,6 +167,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 						allowed = types.contains(BedwarsGameType.SOLO);
 					}
 					if (allowed) filteredMaps.add(e);
+					createGame(e);
 				}
 			}
 		} catch (Exception e) {
@@ -236,7 +238,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 					commonsGames
 			);
 			new ProxyService(ServiceType.ORCHESTRATOR).handleRequest(heartbeat);
-		}).repeat(TaskSchedule.seconds(1)).schedule();
+		}).delay(TaskSchedule.seconds(5)).repeat(TaskSchedule.seconds(1)).schedule();
 	}
 
 	@Override

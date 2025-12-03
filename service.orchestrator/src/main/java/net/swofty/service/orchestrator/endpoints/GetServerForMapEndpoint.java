@@ -31,7 +31,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 		try {
 			BedwarsGameType gameType = parseBedwarsGameType(body.mode());
 			if (gameType == null) {
-				return new GetServerForMapProtocolObject.GetServerForMapResponse(null);
+				return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
 			}
 
 			// First, try to find an existing joinable game
@@ -48,7 +48,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 							hostingServer.maxPlayers(),
 							hostingServer.shortName()
 					);
-					return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy);
+					return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, existingGameWithServer.game().getGameId().toString());
 				}
 			}
 
@@ -80,17 +80,16 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 								availableServer.maxPlayers(),
 								availableServer.shortName()
 						);
-						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy);
+						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.getString("gameId"));
 					}
 				} catch (Exception e) {
 					System.err.println("Failed to instantiate game: " + e.getMessage());
 				}
 			}
 
-			return new GetServerForMapProtocolObject.GetServerForMapResponse(null);
-
+			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
 		} catch (Exception e) {
-			return new GetServerForMapProtocolObject.GetServerForMapResponse(null);
+			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
 		}
 	}
 

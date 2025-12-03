@@ -23,14 +23,14 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
 import net.swofty.commons.BedwarsGameType;
+import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
 import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.MathUtility;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -93,6 +93,13 @@ public final class Game {
 		// Check if we can start the countdown
 		if (hasMinimumPlayersForStart() && !countdown.isActive()) {
 			countdown.startCountdown();
+		}
+
+		BedWarsDataHandler data = BedWarsDataHandler.getUser(player);
+		if (data != null) {
+			var counts = data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).getValue();
+			counts.put(mapEntry.getId(), counts.getOrDefault(mapEntry.getId(), 0L) + 1);
+			data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).setValue(counts);
 		}
 	}
 
@@ -182,7 +189,7 @@ public final class Game {
 	}
 
 	private String createGameId() {
-		return String.valueOf(System.currentTimeMillis());
+		return UUID.randomUUID().toString();
 	}
 
 	private boolean hasCapacityForPlayer() {
