@@ -25,6 +25,10 @@ public enum BedwarsGameType {
 		this.teams = teams;
 	}
 
+	public int maxPlayers() {
+		return teamSize * teams;
+	}
+
 	@Nullable
 	public static BedwarsGameType from(String field) {
 		for (BedwarsGameType type : values()) {

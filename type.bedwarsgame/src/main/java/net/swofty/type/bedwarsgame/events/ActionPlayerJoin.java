@@ -21,7 +21,7 @@ public class ActionPlayerJoin implements HypixelEventClass {
 		final BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		Logger.info("Player " + player.getUsername() + " joined the server from origin server " + player.getOriginServer());
 		event.setSpawningInstance(HypixelConst.getEmptyInstance());
-		player.setRespawnPoint(new Pos(10, 10, 10));
+		player.setRespawnPoint(new Pos(10, 10, 10));/*
 
 		// honor lobby preference first. Also currently has a double delay, look into it.
 		MathUtility.delay(
@@ -73,7 +73,7 @@ public class ActionPlayerJoin implements HypixelEventClass {
 								15
 						);
 					}
-				}, 15);
+				}, 15);*/
 	}
 }
 

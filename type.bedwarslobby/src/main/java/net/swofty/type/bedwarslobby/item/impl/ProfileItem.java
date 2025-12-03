@@ -1,5 +1,6 @@
 package net.swofty.type.bedwarslobby.item.impl;
 
+import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.component.DataComponents;
@@ -8,6 +9,7 @@ import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.component.CustomData;
 import net.minestom.server.item.component.HeadProfile;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -30,7 +32,8 @@ public class ProfileItem extends BedWarsItem {
 	public ItemStack getItemStack(HypixelPlayer... p) {
 		HypixelPlayer player = Arrays.stream(p).findFirst().orElseThrow();
 		return ItemStackCreator.createNamedItemStack(Material.PLAYER_HEAD, "§aMy Profile §7(Right Click)")
-				.set(DataComponents.PROFILE, new HeadProfile(player.getPlayerSkin())).build();
+				.set(DataComponents.PROFILE, new HeadProfile(player.getPlayerSkin()))
+				.set(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder().putString("item", this.getId()).build())).build();
 	}
 
 	@Override

@@ -66,203 +66,203 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Plugin(
-        id = "skyblock",
-        name = "SkyBlock",
-        version = "1.0",
-        description = "SkyBlock plugin for Velocity",
-        authors = {"Swofty"}
+		id = "skyblock",
+		name = "SkyBlock",
+		version = "1.0",
+		description = "SkyBlock plugin for Velocity",
+		authors = {"Swofty"}
 )
 public class SkyBlockVelocity {
-    @Getter
-    private static ProxyServer server = null;
-    @Getter
-    private static SkyBlockVelocity plugin;
-    @Getter
-    private static RegisteredServer limboServer;
-    @Getter
-    private static boolean shouldAuthenticate = false;
-    @Getter
-    private static boolean supportCrossVersion = false;
-    @Inject
-    private ProxyServer proxy;
+	@Getter
+	private static ProxyServer server = null;
+	@Getter
+	private static SkyBlockVelocity plugin;
+	@Getter
+	private static RegisteredServer limboServer;
+	@Getter
+	private static boolean shouldAuthenticate = false;
+	@Getter
+	private static boolean supportCrossVersion = false;
+	@Inject
+	private ProxyServer proxy;
 
-    @Inject
-    public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
-        plugin = this;
-        server = tempServer;
+	@Inject
+	public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
+		plugin = this;
+		server = tempServer;
 
-        limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("limbo-host-name"),
-                Integer.parseInt(Configuration.get("limbo-port")))));
-    }
+		limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("limbo-host-name"),
+				Integer.parseInt(Configuration.get("limbo-port")))));
+	}
 
-    @Subscribe
-    public void onProxyInitialization(ProxyInitializeEvent event) {
-        server = proxy;
-        shouldAuthenticate = Configuration.getOrDefault("require-authentication", false);
-        supportCrossVersion = Configuration.getOrDefault("cross-version-support", false);
+	@Subscribe
+	public void onProxyInitialization(ProxyInitializeEvent event) {
+		server = proxy;
+		shouldAuthenticate = Configuration.getOrDefault("require-authentication", false);
+		supportCrossVersion = Configuration.getOrDefault("cross-version-support", false);
 
-        /**
-         * initialize cross version support
-         */
-        if (supportCrossVersion) {
-            ViaLoader.init(null, new SkyBlockVLLoader(), new SkyBlockViaInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new);
-        }
-        /**
-         * Register packets
-         */
-        server.getEventManager().register(this, PostLoginEvent.class,
-                (AwaitingEventExecutor<PostLoginEvent>) postLoginEvent -> EventTask.withContinuation(continuation -> {
-                    injectPlayer(postLoginEvent.getPlayer());
-                    TestFlowManager.handlePlayerJoin(postLoginEvent.getPlayer().getUsername());
-                    continuation.resume();
-                }));
-        server.getEventManager().register(this, PermissionsSetupEvent.class,
-                (AwaitingEventExecutor<PermissionsSetupEvent>) permissionsEvent -> EventTask.withContinuation(continuation -> {
-                    permissionsEvent.setProvider(permissionSubject -> PermissionFunction.ALWAYS_FALSE);
-                    continuation.resume();
-                }));
-        server.getEventManager().register(this, DisconnectEvent.class, PostOrder.LAST,
-                (AwaitingEventExecutor<DisconnectEvent>) disconnectEvent ->
-                        disconnectEvent.getLoginStatus() == DisconnectEvent.LoginStatus.CONFLICTING_LOGIN
-                                ? null
-                                : EventTask.async(() -> {
-                                    // Handle test flow player leave
-                                    TestFlowManager.handlePlayerLeave(disconnectEvent.getPlayer().getUsername());
-                                    removePlayer(disconnectEvent.getPlayer());
-                                })
-        );
+		/**
+		 * initialize cross version support
+		 */
+		if (supportCrossVersion) {
+			ViaLoader.init(null, new SkyBlockVLLoader(), new SkyBlockViaInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new);
+		}
+		/**
+		 * Register packets
+		 */
+		server.getEventManager().register(this, PostLoginEvent.class,
+				(AwaitingEventExecutor<PostLoginEvent>) postLoginEvent -> EventTask.withContinuation(continuation -> {
+					injectPlayer(postLoginEvent.getPlayer());
+					TestFlowManager.handlePlayerJoin(postLoginEvent.getPlayer().getUsername());
+					continuation.resume();
+				}));
+		server.getEventManager().register(this, PermissionsSetupEvent.class,
+				(AwaitingEventExecutor<PermissionsSetupEvent>) permissionsEvent -> EventTask.withContinuation(continuation -> {
+					permissionsEvent.setProvider(permissionSubject -> PermissionFunction.ALWAYS_FALSE);
+					continuation.resume();
+				}));
+		server.getEventManager().register(this, DisconnectEvent.class, PostOrder.LAST,
+				(AwaitingEventExecutor<DisconnectEvent>) disconnectEvent ->
+						disconnectEvent.getLoginStatus() == DisconnectEvent.LoginStatus.CONFLICTING_LOGIN
+								? null
+								: EventTask.async(() -> {
+							// Handle test flow player leave
+							TestFlowManager.handlePlayerLeave(disconnectEvent.getPlayer().getUsername());
+							removePlayer(disconnectEvent.getPlayer());
+						})
+		);
 
-        /**
-         * Register commands
-         */
+		/**
+		 * Register commands
+		 */
 
-        CommandManager commandManager = proxy.getCommandManager();
-        CommandMeta statusCommandMeta = commandManager.metaBuilder("serverstatus")
-                .aliases("status")
-                .plugin(this)
-                .build();
+		CommandManager commandManager = proxy.getCommandManager();
+		CommandMeta statusCommandMeta = commandManager.metaBuilder("serverstatus")
+				.aliases("status")
+				.plugin(this)
+				.build();
 
-        commandManager.register(statusCommandMeta, new ServerStatusCommand());
+		commandManager.register(statusCommandMeta, new ServerStatusCommand());
 
 
-        /**
-         * Handle database
-         */
-        new ProfilesDatabase("_placeHolder").connect(Configuration.get("mongodb"));
-        UserDatabase.connect(Configuration.get("mongodb"));
-        CoopDatabase.connect(Configuration.get("mongodb"));
+		/**
+		 * Handle database
+		 */
+		new ProfilesDatabase("_placeHolder").connect(Configuration.get("mongodb"));
+		UserDatabase.connect(Configuration.get("mongodb"));
+		CoopDatabase.connect(Configuration.get("mongodb"));
 
-        /**
-         * Setup Redis
-         */
-        RedisAPI.generateInstance(Configuration.get("redis-uri"));
-        RedisAPI.getInstance().setFilterID("proxy");
-        loopThroughPackage("net.swofty.velocity.redis.listeners", RedisListener.class)
-                .forEach(listener ->  {
-                    RedisAPI.getInstance().registerChannel(
-                        listener.getClass().getAnnotation(ChannelListener.class).channel().getChannelName(),
-                            (event2) -> {
-                                listener.onMessage(event2.channel, event2.message);
-                            });
-                });
-        for (FromProxyChannels channel : FromProxyChannels.values()) {
-            RedisMessage.registerProxyToServer(channel);
-        }
-        RedisAPI.getInstance().startListeners();
+		/**
+		 * Setup Redis
+		 */
+		RedisAPI.generateInstance(Configuration.get("redis-uri"));
+		RedisAPI.getInstance().setFilterID("proxy");
+		loopThroughPackage("net.swofty.velocity.redis.listeners", RedisListener.class)
+				.forEach(listener ->  {
+					RedisAPI.getInstance().registerChannel(
+							listener.getClass().getAnnotation(ChannelListener.class).channel().getChannelName(),
+							(event2) -> {
+								listener.onMessage(event2.channel, event2.message);
+							});
+				});
+		for (FromProxyChannels channel : FromProxyChannels.values()) {
+			RedisMessage.registerProxyToServer(channel);
+		}
+		RedisAPI.getInstance().startListeners();
 
-        /**
-         * Setup GameManager
-         */
-        GameManager.loopServers(server);
-    }
+		/**
+		 * Setup GameManager
+		 */
+		GameManager.loopServers(server);
+	}
 
-    @Subscribe
-    public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
-        Player player = event.getPlayer();
+	@Subscribe
+	public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
+		Player player = event.getPlayer();
 
-        if (!GameManager.hasType(ServerType.BEDWARS_LOBBY) || !GameManager.isAnyEmpty(ServerType.BEDWARS_LOBBY)) {
-            player.disconnect(
-                    Component.text("§cThere are no BedWars Lobby servers available at the moment.")
-            );
-            return;
-        }
+		if (!GameManager.hasType(ServerType.BEDWARS_LOBBY) || !GameManager.isAnyEmpty(ServerType.BEDWARS_LOBBY)) {
+			player.disconnect(
+					Component.text("§cThere are no BedWars Lobby servers available at the moment.")
+			);
+			return;
+		}
 
-        List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.BEDWARS_LOBBY);
-        if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
-            TestFlowManager.ProxyTestFlowInstance instance = TestFlowManager.getTestFlowForPlayer(player.getUsername());
-            player.sendPlainMessage("§7You are currently in test flow " + instance.getName() + ".");
-            player.sendPlainMessage("§7Servers involved include " + instance.getGameServers().stream().map(GameManager.GameServer::displayName).collect(Collectors.joining(", ")));
-            player.sendPlainMessage("§7We are expecting " + instance.getTotalExpectedServers() + " servers to instantiate.");
-            player.sendPlainMessage("§7Test flow has been running for " + instance.getUptime() / 1000 + " seconds.");
+		List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.BEDWARS_LOBBY);
+		if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
+			TestFlowManager.ProxyTestFlowInstance instance = TestFlowManager.getTestFlowForPlayer(player.getUsername());
+			player.sendPlainMessage("§7You are currently in test flow " + instance.getName() + ".");
+			player.sendPlainMessage("§7Servers involved include " + instance.getGameServers().stream().map(GameManager.GameServer::displayName).collect(Collectors.joining(", ")));
+			player.sendPlainMessage("§7We are expecting " + instance.getTotalExpectedServers() + " servers to instantiate.");
+			player.sendPlainMessage("§7Test flow has been running for " + instance.getUptime() / 1000 + " seconds.");
 
-            gameServers.removeIf(server -> {
-                TestFlowManager.ProxyTestFlowInstance testFlowInstance = TestFlowManager.getFromServerUUID(
-                        server.internalID()
-                );
+			gameServers.removeIf(server -> {
+				TestFlowManager.ProxyTestFlowInstance testFlowInstance = TestFlowManager.getFromServerUUID(
+						server.internalID()
+				);
 
-                return testFlowInstance == null || !instance.hasServer(server.internalID());
-            });
-        } else {
-            gameServers.removeIf(server -> {
-                TestFlowManager.ProxyTestFlowInstance testFlowInstance = TestFlowManager.getFromServerUUID(
-                        server.internalID()
-                );
+				return testFlowInstance == null || !instance.hasServer(server.internalID());
+			});
+		} else {
+			gameServers.removeIf(server -> {
+				TestFlowManager.ProxyTestFlowInstance testFlowInstance = TestFlowManager.getFromServerUUID(
+						server.internalID()
+				);
 
-                return testFlowInstance != null;
-            });
-        }
+				return testFlowInstance != null;
+			});
+		}
 
-        if (gameServers.isEmpty()) {
-            player.disconnect(
-                    Component.text("§cThere are no servers (type=BEDWARS_LOBBY) servers available at the moment.")
-            );
-            return;
-        }
+		if (gameServers.isEmpty()) {
+			player.disconnect(
+					Component.text("§cThere are no servers (type=BEDWARS_LOBBY) servers available at the moment.")
+			);
+			return;
+		}
 
-        List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.BEDWARS_LOBBY);
-        GameManager.GameServer toSendTo = gameServers.getFirst();
+		List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.BEDWARS_LOBBY);
+		GameManager.GameServer toSendTo = gameServers.getFirst();
 
-        for (BalanceConfiguration configuration : configurations) {
-            GameManager.GameServer server = configuration.getServer(player, gameServers);
-            if (server != null) {
-                toSendTo = server;
-                break;
-            }
-        }
+		for (BalanceConfiguration configuration : configurations) {
+			GameManager.GameServer server = configuration.getServer(player, gameServers);
+			if (server != null) {
+				toSendTo = server;
+				break;
+			}
+		}
 
-        // TODO: Force Resource Pack
-        event.setInitialServer(toSendTo.registeredServer());
+		// TODO: Force Resource Pack
+		event.setInitialServer(toSendTo.registeredServer());
 
-        if (shouldAuthenticate) {
-            RedisMessage.sendMessageToServer(toSendTo.internalID(),
-                    FromProxyChannels.PROMPT_PLAYER_FOR_AUTHENTICATION,
-                    new JSONObject().put("uuid", player.getUniqueId().toString()));
-        }
-    }
+		if (shouldAuthenticate) {
+			RedisMessage.sendMessageToServer(toSendTo.internalID(),
+					FromProxyChannels.PROMPT_PLAYER_FOR_AUTHENTICATION,
+					new JSONObject().put("uuid", player.getUniqueId().toString()));
+		}
+	}
 
-    @Subscribe
-    public void onServerCrash(KickedFromServerEvent event) {
-        // Send the player to the limbo
-        RegisteredServer originalServer = event.getServer();
-        Component reason = event.getServerKickReason().orElse(Component.text(
-                "§cYour connection to the server was lost. Please try again later."
-        ));
-        ServerType serverType = GameManager.getTypeFromRegisteredServer(originalServer);
+	@Subscribe
+	public void onServerCrash(KickedFromServerEvent event) {
+		// Send the player to the limbo
+		RegisteredServer originalServer = event.getServer();
+		Component reason = event.getServerKickReason().orElse(Component.text(
+				"§cYour connection to the server was lost. Please try again later."
+		));
+		ServerType serverType = GameManager.getTypeFromRegisteredServer(originalServer);
 
-        event.setResult(KickedFromServerEvent.RedirectPlayer.create(
-                limboServer,
-                null
-        ));
+		event.setResult(KickedFromServerEvent.RedirectPlayer.create(
+				limboServer,
+				null
+		));
 
-        TransferHandler transferHandler = new TransferHandler(event.getPlayer());
-        transferHandler.standardTransferTo(originalServer, serverType);
+		TransferHandler transferHandler = new TransferHandler(event.getPlayer());
+		transferHandler.standardTransferTo(originalServer, serverType);
 
-        CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
-                .execute(() -> {
-                    // Determine if the registeredServer disconnect was due to a crash
-                    // if it was, then we send the player back to another registeredServer
-                    // of that type, otherwise we disconnect them for the same
-                    // reason as the original
+		CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
+				.execute(() -> {
+					// Determine if the registeredServer disconnect was due to a crash
+					// if it was, then we send the player back to another registeredServer
+					// of that type, otherwise we disconnect them for the same
+					// reason as the original
 
                     /*boolean isOnline = GameManager.getFromRegisteredServer(originalServer) != null;
                     if (isOnline) {
@@ -271,73 +271,73 @@ public class SkyBlockVelocity {
                         return;
                     }*/
 
-                    try {
-                        ServerType serverTypeToTry = serverType;
-                        if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
-                            serverTypeToTry = ServerType.PROTOTYPE_LOBBY;
-                        }
+					try {
+						ServerType serverTypeToTry = serverType;
+						if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
+							serverTypeToTry = ServerType.PROTOTYPE_LOBBY;
+						}
 
-                        GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverTypeToTry);
-                        if (server == null) {
-                            transferHandler.forceRemoveFromLimbo();
-                            event.getPlayer().disconnect(reason);
-                            return;
-                        }
-                        transferHandler.noLimboTransferTo(server.registeredServer());
+						GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverTypeToTry);
+						if (server == null) {
+							transferHandler.forceRemoveFromLimbo();
+							event.getPlayer().disconnect(reason);
+							return;
+						}
+						transferHandler.noLimboTransferTo(server.registeredServer());
 
-                        if (!serverTypeToTry.isSkyBlock()) {
-                            event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into the Prototype Lobby.");
-                        } else {
-                            event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into another SkyBlock server.");
-                        }
-                        event.getPlayer().sendPlainMessage("§7Sending to server " + server.displayName() + "...");
-                    } catch (Exception e) {
-                        Logger.getAnonymousLogger().log(Level.SEVERE, "An exception occurred while trying to transfer " + event.getPlayer().getUsername() + " to " + serverType, e);
-                        transferHandler.forceRemoveFromLimbo();
-                        event.getPlayer().disconnect(reason);
-                    }
-                });
-    }
+						if (!serverTypeToTry.isSkyBlock()) {
+							event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into the Prototype Lobby.");
+						} else {
+							event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into another SkyBlock server.");
+						}
+						event.getPlayer().sendPlainMessage("§7Sending to server " + server.displayName() + "...");
+					} catch (Exception e) {
+						Logger.getAnonymousLogger().log(Level.SEVERE, "An exception occurred while trying to transfer " + event.getPlayer().getUsername() + " to " + serverType, e);
+						transferHandler.forceRemoveFromLimbo();
+						event.getPlayer().disconnect(reason);
+					}
+				});
+	}
 
-    @Subscribe
-    public void onPing(ProxyPingEvent event) {
-        event.setPing(new ServerPing(
-                event.getPing().getVersion(),
-                null,
-                Component.text("                §aHypixel Recreation §c[1.8-1.21]"),
-                event.getPing().getFavicon().orElse(null)
-        ));
-    }
+	@Subscribe
+	public void onPing(ProxyPingEvent event) {
+		event.setPing(new ServerPing(
+				event.getPing().getVersion(),
+				null,
+				Component.text("                §aHypixel Recreation §c[1.8-1.21]"),
+				event.getPing().getFavicon().orElse(null)
+		));
+	}
 
-    public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {
-        Reflections reflections = new Reflections(packageName);
-        Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(clazz);
+	public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {
+		Reflections reflections = new Reflections(packageName);
+		Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(clazz);
 
-        return subTypes.stream()
-                .map(subClass -> {
-                    try {
-                        return clazz.cast(subClass.getDeclaredConstructor().newInstance());
-                    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-                             InvocationTargetException e) {
-                        return null;
-                    }
-                })
-                .filter(java.util.Objects::nonNull);
-    }
+		return subTypes.stream()
+				.map(subClass -> {
+					try {
+						return clazz.cast(subClass.getDeclaredConstructor().newInstance());
+					} catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+							 InvocationTargetException e) {
+						return null;
+					}
+				})
+				.filter(java.util.Objects::nonNull);
+	}
 
-    private void injectPlayer(Player player) {
-        final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
-        Channel channel = connectedPlayer.getConnection().getChannel();
-        ChannelPipeline pipeline = channel.pipeline();
-        pipeline.addBefore(Connections.HANDLER, "PACKET", new PlayerChannelHandler(player));
-    }
+	private void injectPlayer(Player player) {
+		final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
+		Channel channel = connectedPlayer.getConnection().getChannel();
+		ChannelPipeline pipeline = channel.pipeline();
+		pipeline.addBefore(Connections.HANDLER, "PACKET", new PlayerChannelHandler(player));
+	}
 
-    private void removePlayer(final Player player) {
-        final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
-        final Channel channel = connectedPlayer.getConnection().getChannel();
+	private void removePlayer(final Player player) {
+		final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
+		final Channel channel = connectedPlayer.getConnection().getChannel();
 
-        channel.eventLoop().submit(() -> {
-            channel.pipeline().remove("PACKET");
-        });
-    }
+		channel.eventLoop().submit(() -> {
+			channel.pipeline().remove("PACKET");
+		});
+	}
 }

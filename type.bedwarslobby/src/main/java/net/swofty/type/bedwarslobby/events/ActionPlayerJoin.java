@@ -1,9 +1,13 @@
 package net.swofty.type.bedwarslobby.events;
 
 import lombok.SneakyThrows;
+import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.type.bedwarslobby.TypeBedWarsLobbyLoader;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.hologram.HologramEntity;
+import net.swofty.type.generic.entity.npc.NPCEntityImpl;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -47,9 +51,20 @@ public class ActionPlayerJoin implements HypixelEventClass {
 		);
 
 		player.getInventory().setItemStack(
+				7,
+				TypeBedWarsLobbyLoader.getItemHandler().getItem("hide_players").getItemStack(player)
+		);
+
+		player.getInventory().setItemStack(
 				8,
 				TypeBedWarsLobbyLoader.getItemHandler().getItem("lobby_selector").getItemStack()
 		);
+
+		player.updateViewerRule((entity) -> {
+			if (entity instanceof NPCEntityImpl) return true;
+			if (entity instanceof HologramEntity) return true;
+			return (entity instanceof Player) != player.getToggles().get(DatapointToggles.Toggles.ToggleType.LOBBY_SHOW_PLAYERS);
+		});
 	}
 }
 

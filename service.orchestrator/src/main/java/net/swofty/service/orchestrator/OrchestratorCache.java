@@ -113,7 +113,7 @@ public class OrchestratorCache {
 	}
 
 	private static boolean isGameJoinable(Game game, BedwarsGameType gameType) {
-		int maxPlayersForType = gameType.getMaxPlayers();
+		int maxPlayersForType = gameType.maxPlayers();
 		int currentPlayers = game.getInvolvedPlayers().size();
 		return currentPlayers < maxPlayersForType;
 	}
@@ -147,7 +147,7 @@ public class OrchestratorCache {
 		}
 
 		public boolean canHostNewGame(BedwarsGameType gameType) {
-			return availableSlots() >= gameType.getMaxPlayers();
+			return availableSlots() >= gameType.maxPlayers();
 		}
 	}
 
