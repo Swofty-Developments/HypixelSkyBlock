@@ -27,9 +27,11 @@ public class BedWarsGameScoreboard {
 
 	public static void start(Game game) {
 		Scheduler scheduler = MinecraftServer.getSchedulerManager();
-
-		// Scoreboard Updater
 		scheduler.submitTask(() -> {
+			if (game == null) {
+				return TaskSchedule.stop();
+			}
+
 			prototypeName++;
 			if (prototypeName > 50) {
 				prototypeName = 0;

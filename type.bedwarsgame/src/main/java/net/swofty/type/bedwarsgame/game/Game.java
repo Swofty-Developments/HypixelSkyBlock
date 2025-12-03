@@ -2,6 +2,7 @@ package net.swofty.type.bedwarsgame.game;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -319,6 +320,10 @@ public final class Game {
 
 	public List<Player> getPlayersOnTeam(String teamName) {
 		return teamManager.getPlayersOnTeam(teamName);
+	}
+
+	public Audience getPlayerAsAudience() {
+		return Audience.audience(players);
 	}
 
 }

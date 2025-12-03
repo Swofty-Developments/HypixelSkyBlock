@@ -19,6 +19,7 @@ import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
+import net.swofty.commons.ServerType;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
@@ -117,7 +118,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
          * Start generic tablist
          * SkyBlock has its own format so let SkyBlockGenericLoader handle it
          */
-        if (!loader.getType().isSkyBlock()) {
+        if (!loader.getType().isSkyBlock() && !(loader.getType() == ServerType.BEDWARS_GAME)) {
             MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
                     LAST_TICK.set(event.getTickMonitor()));
             BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
