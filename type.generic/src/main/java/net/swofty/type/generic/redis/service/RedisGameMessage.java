@@ -19,9 +19,9 @@ public class RedisGameMessage implements ServiceToClient {
 	@Override
 	public JSONObject onMessage(JSONObject message) {
 		UUID uuid = UUID.fromString(message.getString("uuid"));
-		String originType = message.getString("game-id");
+		String gameId = message.getString("game-id");
 
-		game.put(uuid, originType);
+		game.put(uuid, gameId);
 		return new JSONObject();
 	}
 }

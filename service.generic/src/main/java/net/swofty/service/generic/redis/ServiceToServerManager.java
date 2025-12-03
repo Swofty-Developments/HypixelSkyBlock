@@ -206,7 +206,7 @@ public class ServiceToServerManager {
 
     public static CompletableFuture<Map<UUID, JSONObject>> gameInformation(UUID serverUUID, UUID playerUUID, String gameId) {
         JSONObject message = new JSONObject()
-                .put("playerUUID", playerUUID)
+                .put("uuid", playerUUID)
                 .put("game-id", gameId);
 
         return sendToServers(List.of(serverUUID), FromServiceChannels.GAME_INFORMATION, message);

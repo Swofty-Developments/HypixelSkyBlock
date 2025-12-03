@@ -27,7 +27,7 @@ public class ChooseGameProtocolObject extends ProtocolObject
             public ChooseGameMessage deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
                 return new ChooseGameMessage(
-                        UUID.fromString(obj.getString("player")),
+                        UUID.fromString(obj.getString("uuid")),
                         UnderstandableProxyServer.singleFromJSON(obj.getJSONObject("server")),
                         obj.getString("gameId")
                 );

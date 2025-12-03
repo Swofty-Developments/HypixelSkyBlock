@@ -5,7 +5,6 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocolObject;
-import net.swofty.commons.protocol.objects.orchestrator.GetMapsProtocolObject;
 import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -64,7 +63,7 @@ public record OrchestratorConnector(HypixelPlayer player) {
         findGameServer(gameType, map).thenAccept(pair -> {
             if (pair.first != null) {
                 ChooseGameProtocolObject.ChooseGameMessage message =
-                        new ChooseGameProtocolObject.ChooseGameMessage(player.getUuid(), pair.first, gameType.toString());
+                        new ChooseGameProtocolObject.ChooseGameMessage(player.getUuid(), pair.first, pair.second);
 
                 PROXY_SERVICE.handleRequest(message)
                         .exceptionally(throwable -> {
