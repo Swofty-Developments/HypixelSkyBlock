@@ -4,7 +4,11 @@
       "id": "airshow",
       "name": "Airshow",
       "configuration": {
-        "types": ["SOLO", "DOUBLES", "ULTIMATE_DOUBLES"],
+        "types": [
+          "SOLO",
+          "DOUBLES",
+          "ULTIMATE_DOUBLES"
+        ],
         "generator": {
           "iron": {
             "delay": 3,
@@ -413,9 +417,13 @@
     },
     {
       "id": "speedway",
-      "name": "speedway",
+      "name": "Speedway",
       "configuration": {
-        "types": ["SOLO", "DOUBLES", "ULTIMATE_DOUBLES"],
+        "types": [
+          "SOLO",
+          "DOUBLES",
+          "ULTIMATE_DOUBLES"
+        ],
         "generator": {
           "gold": {
             "delay": 8,
@@ -870,9 +878,13 @@
     },
     {
       "id": "rooftop",
-      "name": "rooftop",
+      "name": "Rooftop",
       "configuration": {
-        "types": ["SOLO", "DOUBLES", "ULTIMATE_DOUBLES"],
+        "types": [
+          "SOLO",
+          "DOUBLES",
+          "ULTIMATE_DOUBLES"
+        ],
         "generator": {
           "gold": {
             "delay": 8,
@@ -1329,9 +1341,13 @@
     },
     {
       "id": "lighthouse",
-      "name": "lighthouse",
+      "name": "Lighthouse",
       "configuration": {
-        "types": ["SOLO", "DOUBLES", "ULTIMATE_DOUBLES"],
+        "types": [
+          "SOLO",
+          "DOUBLES",
+          "ULTIMATE_DOUBLES"
+        ],
         "generator": {
           "gold": {
             "delay": 8,
