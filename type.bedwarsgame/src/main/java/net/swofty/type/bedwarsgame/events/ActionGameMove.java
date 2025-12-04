@@ -66,7 +66,7 @@ public class ActionGameMove implements HypixelEventClass {
 
 			Point bedLocation = new Pos(bedPos.feet().x(), bedPos.feet().y(), bedPos.feet().z());
 			if (playerPos.distance(bedLocation) <= 10) {
-				List<String> teamTraps = game.getTeamTraps(team.getName());
+				List<String> teamTraps = game.getTeamManager().getTeamTraps(team.getName());
 				if (teamTraps.isEmpty()) {
 					continue;
 				}

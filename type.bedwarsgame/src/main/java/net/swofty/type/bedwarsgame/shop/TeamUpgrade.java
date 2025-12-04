@@ -36,7 +36,7 @@ public abstract class TeamUpgrade {
 	}
 
 	public int getCurrentLevel(Game game, String teamName) {
-		return game.getTeamUpgradeLevel(teamName, key);
+		return game.getTeamManager().getTeamUpgradeLevel(teamName, key);
 	}
 
 	public TeamUpgradeTier getNextTier(Game game, String teamName) {
@@ -74,7 +74,7 @@ public abstract class TeamUpgrade {
 
 		BedWarsInventoryManipulator.removeItems(player, nextTier.getCurrency().getMaterial(), nextTier.getPrice());
 
-		game.setTeamUpgradeLevel(teamName, key, nextTier.getLevel());
+		game.getTeamManager().setTeamUpgradeLevel(teamName, key, nextTier.getLevel());
 		applyEffect(game, teamName, nextTier.getLevel());
 
 		game.getPlayers().stream()

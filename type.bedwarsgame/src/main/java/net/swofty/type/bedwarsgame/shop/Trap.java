@@ -39,9 +39,9 @@ public abstract class Trap {
 	 * @param triggerer the player who triggered the trap
 	 */
 	public void trigger(Game game, String teamName, BedWarsPlayer triggerer) {
-		game.removeTeamTrap(teamName, getKey());
+		game.getTeamManager().removeTeamTrap(teamName, getKey());
 
-		game.getPlayersOnTeam(teamName).forEach(player -> {
+		game.getTeamManager().getPlayersOnTeam(teamName).forEach(player -> {
 			player.sendTitlePart(TitlePart.TITLE, Component.text("TRAP TRIGGERED")
 					.color(NamedTextColor.RED)
 					.decoration(TextDecoration.BOLD, true));
@@ -67,7 +67,7 @@ public abstract class Trap {
 	 * @return the price of the trap
 	 */
 	public int getPrice(Game game, String teamName) {
-		return game.getTeamTraps(teamName).size() + 1;
+		return game.getTeamManager().getTeamTraps(teamName).size() + 1;
 	}
 
 	public ItemStack getDisplayItem() {

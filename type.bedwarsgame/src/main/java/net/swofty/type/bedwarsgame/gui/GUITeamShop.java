@@ -172,7 +172,7 @@ public class GUITeamShop extends HypixelInventoryGUI {
 						return;
 					}
 					BedWarsInventoryManipulator.removeItems(player, trap.getCurrency().getMaterial(), price);
-					playerGame.addTeamTrap(tag, trap.getKey());
+					playerGame.getTeamManager().addTeamTrap(tag, trap.getKey());
 					broadcastTeamPurchase(playerGame, tag, player, trap.getName());
 					playBuySound(player);
 					updateGUI(player);
@@ -224,7 +224,7 @@ public class GUITeamShop extends HypixelInventoryGUI {
 					String t = player.getTag(Tag.String("team"));
 					if (g == null || t == null) return ItemStack.builder(Material.BARRIER)
 							.customName(noItalic(Component.text("No Game").color(NamedTextColor.RED)));
-					List<String> queued = g.getTeamTraps(t);
+					List<String> queued = g.getTeamManager().getTeamTraps(t);
 					if (index < queued.size()) {
 						Trap trap = traps.stream().filter(tr -> tr.getKey().equals(queued.get(index))).findFirst().orElse(null);
 						if (trap != null) {

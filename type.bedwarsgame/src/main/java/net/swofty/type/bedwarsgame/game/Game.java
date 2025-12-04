@@ -76,11 +76,15 @@ public final class Game {
 
 		if (gameStatus != GameStatus.WAITING) {
 			player.sendMessage(Component.text("The game is already in progress or has ended.", NamedTextColor.RED));
+			player.sendTo(ServerType.BEDWARS_LOBBY);
 			return;
 		}
 
 		if (!hasCapacityForPlayer()) {
-			handleFullGame(player);
+			player.sendMessage(Component.text(
+					"This game is full. You shouldn't have been sent here. You'll be sent back to a lobby.",
+					NamedTextColor.RED));
+			player.sendTo(ServerType.BEDWARS_LOBBY);
 			return;
 		}
 
@@ -206,13 +210,6 @@ public final class Game {
 				mapEntry.getConfiguration().getTeams().size() >= 2;
 	}
 
-	private void handleFullGame(BedWarsPlayer player) {
-		player.sendMessage(Component.text(
-				"This game is full. Proxy shouldn't have sent you here. Sending you back to lobby",
-				NamedTextColor.RED));
-		player.sendTo(ServerType.BEDWARS_LOBBY);
-	}
-
 	private void setupPlayerForWaiting(BedWarsPlayer player) {
 		MapsConfig.Position waiting = mapEntry.getConfiguration().getLocations().getWaiting();
 
@@ -278,7 +275,7 @@ public final class Game {
 			subtitleMessage = Component.text("It's a draw!");
 		}
 
-		// Show end game to all players
+		// Show the end game message to all players
 		players.forEach(player -> {
 			player.sendTitlePart(TitlePart.TITLE, titleMessage);
 			player.sendTitlePart(TitlePart.SUBTITLE, subtitleMessage);
@@ -298,31 +295,7 @@ public final class Game {
 		}).delay(TaskSchedule.seconds(10)).schedule();
 	}
 
-	public int getTeamUpgradeLevel(String teamName, String upgradeKey) {
-		return teamManager.getTeamUpgradeLevel(teamName, upgradeKey);
-	}
-
-	public void setTeamUpgradeLevel(String teamName, String upgradeKey, int level) {
-		teamManager.setTeamUpgradeLevel(teamName, upgradeKey, level);
-	}
-
-	public List<String> getTeamTraps(String teamName) {
-		return teamManager.getTeamTraps(teamName);
-	}
-
-	public void addTeamTrap(String teamName, String trapKey) {
-		teamManager.addTeamTrap(teamName, trapKey);
-	}
-
-	public void removeTeamTrap(String teamName, String trapKey) {
-		teamManager.removeTeamTrap(teamName, trapKey);
-	}
-
-	public List<Player> getPlayersOnTeam(String teamName) {
-		return teamManager.getPlayersOnTeam(teamName);
-	}
-
-	public Audience getPlayerAsAudience() {
+	public Audience getPlayersAsAudience() {
 		return Audience.audience(players);
 	}
 

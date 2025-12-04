@@ -1,7 +1,6 @@
 package net.swofty.type.bedwarslobby.item.impl;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.trait.CancellableEvent;
@@ -9,7 +8,9 @@ import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
+import net.swofty.type.bedwarslobby.gui.GUIGameMenu;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class PlayCompass extends BedWarsItem {
 
@@ -32,8 +33,7 @@ public class PlayCompass extends BedWarsItem {
 	@Override
 	public void onItemInteract(PlayerInstanceEvent event) {
 		((CancellableEvent) event).setCancelled(true);
-		event.getPlayer().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-				.clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
+		new GUIGameMenu().open((HypixelPlayer) event.getPlayer());
 	}
 
 }
