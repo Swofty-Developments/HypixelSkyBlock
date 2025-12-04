@@ -87,7 +87,7 @@ public class BedWarsLobbyScoreboard {
 
 				sidebarCache.put(player.getUuid(), sidebar);
 			}
-			return TaskSchedule.tick(2);
+			return TaskSchedule.tick(5);
 		});
 	}
 

@@ -66,8 +66,8 @@ public class BedWarsGameScoreboard {
 					addLine("§fVersion: §7v1.9", sidebar);
 				} else {
 					String eventName = game.getEventManager().getNextEvent() != null
-						? game.getEventManager().getNextEvent().getDisplayName()
-						: game.getEventManager().getCurrentEvent().getDisplayName();
+							? game.getEventManager().getNextEvent().getDisplayName()
+							: game.getEventManager().getCurrentEvent().getDisplayName();
 					long seconds = game.getEventManager().getSecondsUntilNextEvent();
 					long minutesPart = seconds / 60;
 					long secondsPart = seconds % 60;
@@ -91,7 +91,7 @@ public class BedWarsGameScoreboard {
 
 				sidebarCache.put(player.getUuid(), sidebar);
 			}
-			return TaskSchedule.tick(2);
+			return TaskSchedule.tick(5);
 		});
 	}
 

@@ -92,7 +92,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 	private void updateGUI(HypixelPlayer p) {
 		BedWarsPlayer player = (BedWarsPlayer) p;
-		
+
 		fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 9, 17);
 		set(currentPage + 9, ItemStackCreator.createNamedItemStack(Material.GREEN_STAINED_GLASS_PANE));
 		set(new GUIClickableItem(0) {
@@ -105,7 +105,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return QUICK_BUY.builder();
+				return convertToClickToView(QUICK_BUY, currentPage, 0);
 			}
 		});
 
@@ -119,7 +119,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return BLOCKS.builder();
+				return convertToClickToView(BLOCKS, currentPage, 1);
 			}
 		});
 
@@ -133,7 +133,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return WEAPONS.builder();
+				return convertToClickToView(WEAPONS, currentPage, 2);
 			}
 		});
 
@@ -147,7 +147,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ARMOR.builder();
+				return convertToClickToView(ARMOR, currentPage, 3);
 			}
 		});
 
@@ -161,7 +161,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return TOOLS.builder();
+				return convertToClickToView(TOOLS, currentPage, 4);
 			}
 		});
 
@@ -175,7 +175,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return BOWS.builder();
+				return convertToClickToView(BOWS, currentPage, 5);
 			}
 		});
 
@@ -189,7 +189,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return POTIONS.builder();
+				return convertToClickToView(POTIONS, currentPage, 6);
 			}
 		});
 
@@ -203,7 +203,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return UTILITY.builder();
+				return convertToClickToView(UTILITY, currentPage, 7);
 			}
 		});
 
@@ -217,12 +217,22 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ROTATING_ITEMS.builder();
+				return convertToClickToView(ROTATING_ITEMS, currentPage, 8);
 			}
 		});
 
 		populateShopItems(player);
 		updateItemStacks(getInventory(), getPlayer());
+	}
+
+	private ItemStack.Builder convertToClickToView(ItemStack itemStack, int currentPage, int index) {
+		ItemStack.Builder builder = itemStack.builder();
+
+		if (currentPage != index) {
+			return builder.lore(noItalic(Component.text("Click to view!").color(NamedTextColor.YELLOW)));
+		}
+
+		return builder;
 	}
 
 	private void populateShopItems(BedWarsPlayer player) {

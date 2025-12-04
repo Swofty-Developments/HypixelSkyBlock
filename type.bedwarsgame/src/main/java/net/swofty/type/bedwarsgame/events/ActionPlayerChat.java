@@ -1,7 +1,6 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.event.player.PlayerChatEvent;
-import net.swofty.commons.StringUtility;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -64,9 +63,9 @@ public class ActionPlayerChat implements HypixelEventClass {
 
 		receivers.forEach(onlinePlayer -> {
 			if (rank.equals(Rank.DEFAULT))
-				onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§7: " + finalMessage);
+				onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + player.getUsername() + "§7: " + finalMessage);
 			else
-				onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§f: " + finalMessage);
+				onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + player.getUsername() + "§f: " + finalMessage);
 		});
 	}
 }

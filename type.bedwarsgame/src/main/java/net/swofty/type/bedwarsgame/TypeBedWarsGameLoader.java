@@ -17,6 +17,7 @@ import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
@@ -34,7 +35,6 @@ import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.commons.BedwarsGameType;
 import net.swofty.type.bedwarsgeneric.game.MapsConfig;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
 import net.swofty.type.bedwarsgeneric.item.BedWarsItemHandler;
@@ -47,7 +47,6 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.redis.RedisOriginServer;
-import net.swofty.type.generic.redis.service.RedisGameMessage;
 import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
@@ -61,7 +60,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -139,6 +137,19 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 		if (filteredMaps == null || filteredMaps.isEmpty()) return null;
 		if (nextMapIndex >= filteredMaps.size()) nextMapIndex = 0;
 		return filteredMaps.get(nextMapIndex++);
+	}
+
+	private static Component header() {
+		return MiniMessage.miniMessage().deserialize("<aqua>You are playing on <bold><yellow>MC.HYPIXEL.NET</yellow></bold>");
+	}
+
+	private static Component footer(HypixelPlayer player) {
+		Component start = Component.empty();
+		if (TypeBedWarsGameLoader.getPlayerGame(player) != null) {
+			start = start.append(MiniMessage.miniMessage().deserialize("<aqua>Kills: <yellow>0 <aqua>Final Kills: <yellow>0 <aqua>Beds Broken: <yellow>0")).appendNewline();
+		}
+		return start
+				.append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
 	}
 
 	@Override
@@ -345,18 +356,5 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	public @Nullable CustomWorlds getMainInstance() {
 		return null;
 	}
-
-		private static Component header() {
-			return MiniMessage.miniMessage().deserialize("<aqua>You are playing on <bold><yellow>MC.HYPIXEL.NET</yellow></bold>");
-		}
-
-		private static Component footer(HypixelPlayer player) {
-			Component start = Component.empty();
-			if (TypeBedWarsGameLoader.getPlayerGame(player) != null) {
-				start = start.append(MiniMessage.miniMessage().deserialize("<aqua>Kills: <yellow>0 <aqua>Final Kills: <yellow>0 <aqua>Beds Broken: <yellow>0"));
-			}
-			return start
-					.append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
-		}
 
 }
