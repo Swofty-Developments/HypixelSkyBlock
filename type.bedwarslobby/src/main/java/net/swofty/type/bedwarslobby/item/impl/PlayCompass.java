@@ -1,7 +1,5 @@
 package net.swofty.type.bedwarslobby.item.impl;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
@@ -20,8 +18,12 @@ public class PlayCompass extends BedWarsItem {
 
 	@Override
 	public ItemStack getBlandItem() {
-		return ItemStackCreator.createNamedItemStack(Material.COMPASS, "§aGame Menu §7(Right Click)").lore(
-				Component.text("Right Click to bring up the Game Menu!", NamedTextColor.GRAY)
+		return ItemStackCreator.getSingleLoreStackLineSplit(
+				"§aGame Menu §7(Right Click)",
+				"§7",
+				Material.COMPASS,
+				1,
+				"Right Click to bring up the Game Menu!"
 		).build();
 	}
 
