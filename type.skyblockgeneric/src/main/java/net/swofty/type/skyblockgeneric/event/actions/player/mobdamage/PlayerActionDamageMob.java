@@ -15,8 +15,12 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.DamageEventEnchant;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamageMobValueUpdateEvent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
 
@@ -79,6 +83,16 @@ public class PlayerActionDamageMob implements HypixelEventClass {
         // Extra attacks that have a chance to occur based on the remaining ferocity
         if (random.nextDouble() < extraAttackChance) {
             targetLivingEntity.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) valueEvent.getValue()));
+        }
+
+        // Handle damage event enchantments
+        SkyBlockItem mainHandItem = PlayerItemOrigin.getFromCache(player.getUuid()).get(PlayerItemOrigin.MAIN_HAND);
+        double damageValue = ((Number) valueEvent.getValue()).doubleValue();
+
+        for (SkyBlockEnchantment enchantment : mainHandItem.getAttributeHandler().getEnchantments().toList()) {
+            if (enchantment.type().getEnch() instanceof DamageEventEnchant damageEventEnchant) {
+                damageEventEnchant.onDamageDealt(player, targetLivingEntity, damageValue, enchantment.level());
+            }
         }
     }
 }

@@ -27,6 +27,17 @@ public enum CustomCollectionAward {
     BANE_OF_ARTHROPODS_DISCOUNT("§9Bane of Arthropods §7Exp Discount §a(-25%)"),
     CUBISM_DISCOUNT("§9Cubism §7Exp Discount §a(-25%)"),
     FORTUNE_DISCOUNT("§9Fortune §7Exp Discount §a(-25%)"),
+    CLEAVE_DISCOUNT("§9Cleave §7Exp Discount §a(-25%)"),
+    LIFE_STEAL_DISCOUNT("§9Life Steal §7Exp Discount §a(-25%)"),
+    PROSECUTE_DISCOUNT("§9Prosecute §7Exp Discount §a(-25%)"),
+    THUNDERBOLT_DISCOUNT("§9Thunderbolt §7Exp Discount §a(-25%)"),
+    EXPERIENCE_DISCOUNT("§9Experience §7Exp Discount §a(-25%)"),
+    FIRE_ASPECT_DISCOUNT("§9Fire Aspect §7Exp Discount §a(-25%)"),
+    KNOCKBACK_DISCOUNT("§9Knockback §7Exp Discount §a(-25%)"),
+    LETHALITY_DISCOUNT("§9Lethality §7Exp Discount §a(-25%)"),
+    THUNDERLORD_DISCOUNT("§9Thunderlord §7Exp Discount §a(-25%)"),
+    VAMPIRISM_DISCOUNT("§9Vampirism §7Exp Discount §a(-25%)"),
+    VENOMOUS_DISCOUNT("§9Venomous §7Exp Discount §a(-25%)"),
 
     // BAGS
     QUIVER("§aQuiver"),
