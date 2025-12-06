@@ -31,17 +31,15 @@ public enum EnchantmentType {
     IMPALING(EnchantmentImpaling.class),
     BANE_OF_ARTHROPODS(EnchantmentBaneOfArthropods.class),
     CUBISM(EnchantmentCubism.class),
+    FORTUNE(EnchantmentFortune.class),
     ;
 
     private final Class<? extends Ench> clazz;
-    private final List<EnchantmentType> conflicts;
-
     private final Ench ench;
 
     @SneakyThrows
-    EnchantmentType(Class<? extends Ench> ench, EnchantmentType... conflicts) {
+    EnchantmentType(Class<? extends Ench> ench) {
         this.clazz = ench;
-        this.conflicts = List.of(conflicts);
 
         this.ench = ench.getConstructor().newInstance();
     }

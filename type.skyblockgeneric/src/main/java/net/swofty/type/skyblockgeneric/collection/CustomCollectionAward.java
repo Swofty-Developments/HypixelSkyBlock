@@ -26,6 +26,7 @@ public enum CustomCollectionAward {
     IMPALING_DISCOUNT("§9Impaling §7Exp Discount §a(-25%)"),
     BANE_OF_ARTHROPODS_DISCOUNT("§9Bane of Arthropods §7Exp Discount §a(-25%)"),
     CUBISM_DISCOUNT("§9Cubism §7Exp Discount §a(-25%)"),
+    FORTUNE_DISCOUNT("§9Fortune §7Exp Discount §a(-25%)"),
 
     // BAGS
     QUIVER("§aQuiver"),
