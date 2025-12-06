@@ -21,6 +21,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentSource;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.ConflictingEnch;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
 import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.EnchantableComponent;
@@ -129,11 +131,13 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    ItemStack stack = p.getInventory().getCursorItem();
+                    ItemStack stack = player.getInventory().getCursorItem();
 
                     if (stack.get(DataComponents.CUSTOM_NAME) == null) return;
 
+                    e.setCancelled(true);
                     SkyBlockItem item = new SkyBlockItem(stack);
+                    player.getInventory().setCursorItem(ItemStack.AIR);
                     updateFromItem(item, null);
                 }
 
@@ -156,15 +160,13 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStack stack = p.getInventory().getCursorItem();
+                ItemStack stack = player.getInventory().getCursorItem();
 
-                if (stack.get(DataComponents.CUSTOM_NAME) == null) {
+                if (stack == ItemStack.AIR) {
+                    e.setCancelled(true);
+                    player.getInventory().setCursorItem(PlayerItemUpdater.playerUpdate(player, item.getItemStack()).build());
                     updateFromItem(null, null);
-                    return;
                 }
-
-                SkyBlockItem item = new SkyBlockItem(stack);
-                updateFromItem(item, null);
             }
 
             @Override
@@ -303,6 +305,15 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
 
                     lore.add("§a ");
 
+                    if (selected.getEnch() instanceof ConflictingEnch conflictingEnch) {
+                        for (EnchantmentType ench : conflictingEnch.getConflictingEnchantments()) {
+                            if (item.getAttributeHandler().hasEnchantment(ench)) {
+                                lore.add("§c§lWARNING: This will remove " + StringUtility.toNormalCase(ench.name()) + ".");
+                                break;
+                            }
+                        }
+                    }
+
                     if (finalHasLevel == finalLevel) {
                         lore.add("§cThis enchantment is already present");
                         lore.add("§cand can be removed.");
@@ -367,6 +378,13 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                         item.getAttributeHandler().addEnchantment(
                                 new SkyBlockEnchantment(selected, finalLevel)
                         );
+
+                        if (selected.getEnch() instanceof ConflictingEnch conflictingEnch) {
+                            for (EnchantmentType enchant : conflictingEnch.getConflictingEnchantments()) {
+                                System.out.printf("conflicting enchant: " + enchant.name());
+                                if (item.getAttributeHandler().hasEnchantment(enchant)) item.getAttributeHandler().removeEnchantment(enchant);
+                            }
+                        }
 
                         player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel));
                         player.sendMessage("§aYou enchanted your " + itemName + " §awith " +
