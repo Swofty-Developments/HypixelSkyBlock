@@ -350,6 +350,14 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: FORTUNE_DISCOUNT
+  - amount: 500000
+    rewards:
+      - type: XP
+        data:
+          xp: 4
 - itemType: LAPIS_LAZULI
   rewards:
   - amount: 250
@@ -497,6 +505,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: EXECUTE_DISCOUNT
   - amount: 250
     rewards:
     - type: XP
