@@ -26,7 +26,9 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperien
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.EventBasedEnchant;
+import net.swofty.type.skyblockgeneric.enchantment.debuff.LethalityDebuff;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
@@ -360,10 +362,14 @@ public class PlayerStatistics {
 
     public Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics enemyStatistics, SkyBlockPlayer causer, LivingEntity enemy) {
         ItemStatistics all = allStatistics(causer, enemy);
-        return runPrimaryDamageFormula(all, enemyStatistics);
+        return runPrimaryDamageFormula(all, enemyStatistics, enemy);
     }
 
     public static Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics originStatistics, ItemStatistics enemyStatistics) {
+        return runPrimaryDamageFormula(originStatistics, enemyStatistics, null);
+    }
+
+    private static Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics originStatistics, ItemStatistics enemyStatistics, LivingEntity enemy) {
         boolean isCrit = false;
         double critChance = originStatistics.getBase(ItemStatistic.CRIT_CHANCE);
         if (Math.random() <= (critChance / 100))
@@ -377,8 +383,16 @@ public class PlayerStatistics {
         double criticalDamage = isCrit ? 1 + (critDamage / 100) : 1;
 
         double damage = baseDamage * strengthDamage * criticalDamage;
-        if (enemyStatistics.getOverall(ItemStatistic.DEFENSE) > 0)
-            damage = damage * (1 - (enemyStatistics.getOverall(ItemStatistic.DEFENSE) / (enemyStatistics.getOverall(ItemStatistic.DEFENSE) + 100)));
+
+        double enemyDefense = enemyStatistics.getOverall(ItemStatistic.DEFENSE);
+
+        if (enemy instanceof SkyBlockMob) {
+            double lethalityReduction = LethalityDebuff.getTotalDefenseReduction(enemy.getUuid());
+            enemyDefense *= (1 - lethalityReduction);
+        }
+
+        if (enemyDefense > 0)
+            damage = damage * (1 - (enemyDefense / (enemyDefense + 100)));
         return new AbstractMap.SimpleEntry<>(damage, isCrit);
     }
 

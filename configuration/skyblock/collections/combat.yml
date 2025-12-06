@@ -17,6 +17,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: FIRE_ASPECT_DISCOUNT
   - amount: 1000
     rewards:
     - type: XP
@@ -345,6 +348,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: VAMPIRISM_DISCOUNT
   - amount: 5000
     rewards:
     - type: XP
@@ -413,6 +419,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: THUNDERLORD_DISCOUNT
   - amount: 5000
     rewards:
     - type: XP
@@ -593,6 +602,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: KNOCKBACK_DISCOUNT
   - amount: 1000
     rewards:
     - type: XP
@@ -680,6 +692,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: VENOMOUS_DISCOUNT
   - amount: 10000
     rewards:
     - type: XP

@@ -379,6 +379,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: EXPERIENCE_DISCOUNT
   - amount: 2000
     rewards:
     - type: XP
@@ -1301,6 +1304,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: LETHALITY_DISCOUNT
   - amount: 250
     rewards:
     - type: XP
