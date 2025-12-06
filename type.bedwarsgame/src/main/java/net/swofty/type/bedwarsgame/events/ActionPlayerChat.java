@@ -1,6 +1,7 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.event.player.PlayerChatEvent;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -37,7 +38,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 		String message = event.getRawMessage();
 		Rank rank = player.getRank();
 
-		// Sanitize message to remove any special Unicode characters
+		// Sanitize a message to remove any special Unicode characters
 		if (!rank.isStaff())
 			message = message.replaceAll("[^\\x00-\\x7F]", "");
 
@@ -55,17 +56,20 @@ public class ActionPlayerChat implements HypixelEventClass {
 			return;
 		}
 
-		List<BedWarsPlayer> receivers = game.getPlayers();
+		List<BedWarsPlayer> receivers;
+		if (game.getBedwarsGameType() == BedwarsGameType.SOLO) {
+			receivers = game.getPlayers();
+		} else {
+			receivers = game.getTeamManager().getPlayersOnTeam(game.getTeamManager().getPlayerTeamName(player)).stream().map(p -> (BedWarsPlayer) p).toList();
+		}
 
 		String levelPrefix = LevelColor.constructLevelBrackets(
 				LevelUtil.calculateLevel(bedWarsDataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue())
 		) + " ";
+		String textColor = rank.equals(Rank.DEFAULT) ? "§7" : "§f";
 
 		receivers.forEach(onlinePlayer -> {
-			if (rank.equals(Rank.DEFAULT))
-				onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + player.getUsername() + "§7: " + finalMessage);
-			else
-				onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + player.getUsername() + "§f: " + finalMessage);
+			onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + player.getUsername() + textColor + ": " + finalMessage);
 		});
 	}
 }

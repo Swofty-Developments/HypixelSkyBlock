@@ -29,6 +29,10 @@ public final class TeamManager {
 		this.game = game;
 	}
 
+	public String getPlayerTeamName(Player player) {
+		return player.getTag(Tag.String("team"));
+	}
+
 	public List<MapsConfig.MapEntry.MapConfiguration.MapTeam> assignPlayersToTeams() {
 		List<MapsConfig.MapEntry.MapConfiguration.MapTeam> configuredTeams =
 				game.getMapEntry().getConfiguration().getTeams();
