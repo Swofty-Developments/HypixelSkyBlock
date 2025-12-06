@@ -25,7 +25,7 @@ import java.util.function.Function;
 @Getter
 public enum LaunchPads {
     VILLAGE_TO_FARMING(getSlimeBlocksNear(new Pos(79, 71, -185)), ServerType.SKYBLOCK_HUB,
-            new Pos(116.5, 74, -210.5), (player) -> {
+            ServerType.SKYBLOCK_THE_FARMING_ISLANDS, new Pos(116.5, 74, -210.5), (player) -> {
                 player.sendTo(ServerType.SKYBLOCK_THE_FARMING_ISLANDS);
             }, (player) -> player.getSkills().getCurrentLevel(SkillCategories.FARMING) >= 5,
             "§cYou must be at least Farming Level V to join this island!",
@@ -46,7 +46,7 @@ public enum LaunchPads {
                 }
     }),
     FARMING_TO_VILLAGE(getSlimeBlocksNear(new Pos(111, 71, -202)), ServerType.SKYBLOCK_THE_FARMING_ISLANDS,
-            new Pos(74, 72, -180), (player) -> {
+            ServerType.SKYBLOCK_HUB, new Pos(74, 72, -180), (player) -> {
                 player.sendTo(ServerType.SKYBLOCK_HUB);
             }, (player) -> true,
             "",
@@ -63,17 +63,19 @@ public enum LaunchPads {
 
     private final List<Pos> slimeBlocks;
     private final ServerType serverType;
+    private final ServerType targetServerType;
     private final Pos destination;
     private final Consumer<SkyBlockPlayer> afterFinished;
     private final Function<SkyBlockPlayer, Boolean> shouldAllow;
     private final String rejectionMessage;
     private final Function<SkyBlockPlayer, PlayerHolograms.ExternalPlayerHologram> hologramDisplay;
 
-    LaunchPads(List<Pos> slimeBlocks, ServerType serverType, Pos destination,
+    LaunchPads(List<Pos> slimeBlocks, ServerType serverType, ServerType targetServerType, Pos destination,
                Consumer<@NonNull SkyBlockPlayer> afterFinished, Function<SkyBlockPlayer, Boolean> shouldAllow, String rejectionMessage,
                Function<@NonNull SkyBlockPlayer, PlayerHolograms.ExternalPlayerHologram> hologramDisplay) {
         this.slimeBlocks = slimeBlocks;
         this.serverType = serverType;
+        this.targetServerType = targetServerType;
         this.destination = destination;
         this.afterFinished = afterFinished;
         this.shouldAllow = shouldAllow;
