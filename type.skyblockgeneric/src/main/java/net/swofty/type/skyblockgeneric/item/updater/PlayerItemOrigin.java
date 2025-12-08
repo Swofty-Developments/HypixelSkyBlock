@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.item.updater;
 import lombok.NonNull;
 import lombok.Setter;
 import net.minestom.server.item.ItemStack;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -13,13 +14,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public enum PlayerItemOrigin {
-    MAIN_HAND((entry) -> {
-        SkyBlockPlayer player = entry.getKey();
-        // We don't want to update the item of a player who is in a ShopGUI
-        if (player.getOpenInventory() == null)
-            return entry.getKey().getItemInMainHand();
-        return null;
-    }, (player, entry) -> player.setItemInMainHand(entry.getKey()), true),
+    MAIN_HAND((entry) -> entry.getKey().getItemInMainHand(), (player, entry) -> player.setItemInMainHand(entry.getKey()), true),
     HELMET((entry) -> entry.getKey().getHelmet(), (player, entry) -> player.setHelmet(entry.getKey()), true),
     CHESTPLATE((entry) -> entry.getKey().getChestplate(), (player, entry) -> player.setChestplate(entry.getKey()), true),
     LEGGINGS((entry) -> entry.getKey().getLeggings(), (player, entry) -> player.setLeggings(entry.getKey()), true),
