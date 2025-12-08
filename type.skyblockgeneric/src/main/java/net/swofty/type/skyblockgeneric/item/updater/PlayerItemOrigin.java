@@ -3,7 +3,6 @@ package net.swofty.type.skyblockgeneric.item.updater;
 import lombok.NonNull;
 import lombok.Setter;
 import net.minestom.server.item.ItemStack;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
