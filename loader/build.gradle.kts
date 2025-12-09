@@ -27,6 +27,7 @@ dependencies {
     implementation(project(":type.island"))
     implementation(project(":type.hub"))
     implementation(project(":type.thefarmingislands"))
+    implementation(project(":type.goldmine"))
     implementation(project(":type.dungeonhub"))
     implementation(project(":type.skyblockgeneric"))
     implementation(project(":type.prototypelobby"))

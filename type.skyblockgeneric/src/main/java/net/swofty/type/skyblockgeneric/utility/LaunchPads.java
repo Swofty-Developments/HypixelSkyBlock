@@ -56,7 +56,40 @@ public enum LaunchPads {
                         .player(player)
                         .text(new String[]{"§bTravel To:", "§aThe Village"})
                         .build();
-            });
+            }),
+    VILLAGE_TO_GOLD_MINE(getSlimeBlocksNear(new Pos(-10, 63, -231)), ServerType.SKYBLOCK_HUB, // TODO: UPDATE TO PROPER POSITIONS AND INFO
+            new Pos(116.5, 74, -210.5), (player) -> {
+        player.sendTo(ServerType.SKYBLOCK_GOLD_MINE);
+    }, (player) -> player.getSkills().getCurrentLevel(SkillCategories.MINING) >= 1,
+            "§cYou must be at least Mining Level I to join this island!",
+            (player) -> {
+                boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.FARMING) >= 5;
+                if (!hasRequirement) {
+                    return PlayerHolograms.ExternalPlayerHologram.builder()
+                            .pos(new Pos(-10, 63.3, -231.5))
+                            .player(player)
+                            .text(new String[]{"§bTravel To:", "§aGold Mine", "§cRequires Mining Level 1"})
+                            .build();
+                } else {
+                    return PlayerHolograms.ExternalPlayerHologram.builder()
+                            .pos(new Pos(-10, 63.3, -231.5))
+                            .player(player)
+                            .text(new String[]{"§bTravel To:", "§aGold Mine"})
+                            .build();
+                }
+            }),
+    GOLD_MINE_TO_VILLAGE(getSlimeBlocksNear(new Pos(111, 71, -202)), ServerType.SKYBLOCK_GOLD_MINE,
+            new Pos(74, 72, -180), (player) -> {
+        player.sendTo(ServerType.SKYBLOCK_HUB);
+    }, (player) -> true,
+            "",
+            (player) -> {
+                return PlayerHolograms.ExternalPlayerHologram.builder()
+                        .pos(new Pos(111.5, 71.7, -202.5))
+                        .player(player)
+                        .text(new String[]{"§bTravel To:", "§aThe Village"})
+                        .build();
+            }),
     ;
 
     private static final List<LaunchPads> launchPads = new ArrayList<>();
