@@ -14,6 +14,7 @@ include(":loader")
 
 include(":type.prototypelobby")
 include(":type.thefarmingislands")
+include(":type.goldmine")
 include(":type.island")
 include(":type.hub")
 include(":type.dungeonhub")

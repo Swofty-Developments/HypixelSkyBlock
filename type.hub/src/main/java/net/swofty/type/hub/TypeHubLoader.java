@@ -103,6 +103,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
         return new LoaderValues(
                 (type) -> switch (type) {
                     case SKYBLOCK_THE_FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
+                    case SKYBLOCK_GOLD_MINE -> new Pos(-9.5, 64, -228, 0, 0); // TODO: UPDATE TO PROPER POSITION
                     case SKYBLOCK_DUNGEON_HUB -> new Pos(-44, 88, 11.5, 0, 0);
                     default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
                 }, // Spawn position
