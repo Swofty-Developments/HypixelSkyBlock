@@ -62,7 +62,7 @@ public enum RegionType {
     VOID_SEPULTURE("Void Sepulture", "§d"),
     DRAGONS_NEST("Dragon's Nest", "§5"),
 
-    GOLD_MINE("Gold Mine", "§6"),
+    GOLD_MINE("Gold Mine", "§6", GoldMineConfiguration.class),
     DEEP_CAVERN("Deep Caverns", "§b"),
     GUNPOWDER_MINES("Gunpowder Mines"),
     LAPIS_QUARRY("Lapis Quarry"),
