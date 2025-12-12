@@ -57,35 +57,35 @@ public enum LaunchPads {
                         .text(new String[]{"§bTravel To:", "§aThe Village"})
                         .build();
             }),
-    VILLAGE_TO_GOLD_MINE(getSlimeBlocksNear(new Pos(-10, 63, -231)), ServerType.SKYBLOCK_HUB, // TODO: UPDATE TO PROPER POSITIONS AND INFO
-            new Pos(116.5, 74, -210.5), (player) -> {
+    VILLAGE_TO_GOLD_MINE(getSlimeBlocksNear(new Pos(-9, 63, -231)), ServerType.SKYBLOCK_HUB, // TODO: UPDATE TO PROPER POSITIONS AND INFO
+            new Pos(-5, 74, -268), (player) -> {
         player.sendTo(ServerType.SKYBLOCK_GOLD_MINE);
     }, (player) -> player.getSkills().getCurrentLevel(SkillCategories.MINING) >= 1,
             "§cYou must be at least Mining Level I to join this island!",
             (player) -> {
-                boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.FARMING) >= 5;
+                boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.MINING) >= 1;
                 if (!hasRequirement) {
                     return PlayerHolograms.ExternalPlayerHologram.builder()
-                            .pos(new Pos(-10, 63.3, -231.5))
+                            .pos(new Pos(-9, 63.3, -232))
                             .player(player)
                             .text(new String[]{"§bTravel To:", "§aGold Mine", "§cRequires Mining Level 1"})
                             .build();
                 } else {
                     return PlayerHolograms.ExternalPlayerHologram.builder()
-                            .pos(new Pos(-10, 63.3, -231.5))
+                            .pos(new Pos(-9, 63.3, -232))
                             .player(player)
                             .text(new String[]{"§bTravel To:", "§aGold Mine"})
                             .build();
                 }
             }),
-    GOLD_MINE_TO_VILLAGE(getSlimeBlocksNear(new Pos(111, 71, -202)), ServerType.SKYBLOCK_GOLD_MINE,
-            new Pos(74, 72, -180), (player) -> {
+    GOLD_MINE_TO_VILLAGE(getSlimeBlocksNear(new Pos(-4, 74, -272)), ServerType.SKYBLOCK_GOLD_MINE,
+            new Pos(-8, 70, -238), (player) -> {
         player.sendTo(ServerType.SKYBLOCK_HUB);
     }, (player) -> true,
             "",
             (player) -> {
                 return PlayerHolograms.ExternalPlayerHologram.builder()
-                        .pos(new Pos(111.5, 71.7, -202.5))
+                        .pos(new Pos(-5, 73.3, -269))
                         .player(player)
                         .text(new String[]{"§bTravel To:", "§aThe Village"})
                         .build();
