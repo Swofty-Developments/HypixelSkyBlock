@@ -45,7 +45,7 @@ public class TypeGoldMineLoader implements SkyBlockTypeLoader {
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
                 (type) -> switch (type) {
-                    default -> new Pos(-4, 74, -271, -180, 0); // TODO: UPDATE THIS POSITION TO PROPER LOCATION
+                    default -> new Pos(-5, 73, -273, -180, 0); // TODO: UPDATE THIS POSITION TO PROPER LOCATION
                 }, // Spawn position
                 true // Announce death messages
         );
