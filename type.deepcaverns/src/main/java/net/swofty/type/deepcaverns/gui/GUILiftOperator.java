@@ -1,13 +1,20 @@
 package net.swofty.type.deepcaverns.gui;
 
+import net.kyori.adventure.text.Component;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.ServerType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.function.Consumer;
 
 public class GUILiftOperator extends HypixelInventoryGUI {
 	public GUILiftOperator() {
@@ -23,96 +30,69 @@ public class GUILiftOperator extends HypixelInventoryGUI {
 	public void onOpen(InventoryGUIOpenEvent event) {
 		fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
 
+		for (LiftLocation location : LiftLocation.values()) {
+			set(new GUIClickableItem(location.slot) {
+				@Override
+				public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+					SkyBlockPlayer player = (SkyBlockPlayer) p;
+					SkyBlockRegion region = player.getRegion();
+					if (region != null) {
+						if (region.getType().name().equals(location.name())) {
+							p.sendMessage(Component.text("§cYou are already in the " + location.prettyName() + "!"));
+							return;
+						}
+					}
+					location.consumer.accept(p);
+					p.closeInventory();
+				}
 
-		set(new GUIClickableItem(10) {
-			@Override
-			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStackCreator.createNamedItemStack(Material.GOLD_INGOT);
-			}
-
-			@Override
-			public void run(InventoryPreClickEvent event, HypixelPlayer player) {
-
-			}
-		});
-
-		set(new GUIClickableItem(12) {
-			@Override
-			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStackCreator.createNamedItemStack(Material.LAPIS_LAZULI);
-			}
-
-			@Override
-			public void run(InventoryPreClickEvent event, HypixelPlayer player) {
-
-			}
-		});
-
-		set(new GUIClickableItem(14) {
-			@Override
-			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStackCreator.createNamedItemStack(Material.REDSTONE);
-			}
-
-			@Override
-			public void run(InventoryPreClickEvent event, HypixelPlayer player) {
-
-			}
-		});
-
-		set(new GUIClickableItem(16) {
-			@Override
-			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStackCreator.createNamedItemStack(Material.EMERALD);
-			}
-
-			@Override
-			public void run(InventoryPreClickEvent event, HypixelPlayer player) {
-
-			}
-		});
-
-		set(new GUIClickableItem(29) {
-			@Override
-			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStackCreator.createNamedItemStack(Material.DIAMOND);
-			}
-
-			@Override
-			public void run(InventoryPreClickEvent event, HypixelPlayer player) {
-
-			}
-		});
-
-		set(new GUIClickableItem(31) {
-			@Override
-			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStackCreator.createNamedItemStack(Material.OBSIDIAN);
-			}
-
-			@Override
-			public void run(InventoryPreClickEvent event, HypixelPlayer player) {
-
-			}
-		});
-
-		set(new GUIClickableItem(33) {
-			@Override
-			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStackCreator.createNamedItemStack(Material.PRISMARINE);
-			}
-
-			@Override
-			public void run(InventoryPreClickEvent event, HypixelPlayer player) {
-
-			}
-		});
+				@Override
+				public ItemStack.Builder getItem(HypixelPlayer p) {
+					return ItemStackCreator.getSingleLoreStack("§a" + location.prettyName(), "§e", location.material, 1, "§7Click to teleport to the §b" + location.prettyName() + "§7!\n\n§eClick to travel!");
+				}
+			});
+		}
 
 		updateItemStacks(getInventory(), getPlayer());
 	}
 
 	@Override
 	public void onBottomClick(InventoryPreClickEvent e) {
+	}
 
+	enum LiftLocation {
+		GUNPOWDER_MINES(Material.GOLD_INGOT, 10, (player) -> teleportLocation(player, new Pos(52.5, 150, 15.5, 90f, 0))),
+		LAPIS_QUARRY(Material.LAPIS_LAZULI, 12, (player) -> teleportLocation(player, new Pos(52.5, 121, 15.5, 90f, 0))),
+		PIGMENS_DEN(Material.REDSTONE, 14, (player) -> teleportLocation(player, new Pos(52.5, 101, 15.5, 90f, 0))),
+		SLIMEHILL(Material.EMERALD, 16, (player) -> teleportLocation(player, new Pos(52.5, 66, 15.5, 90f, 0))),
+		DIAMOND_RESERVE(Material.DIAMOND, 29, (player) -> teleportLocation(player, new Pos(52.5, 38, 15.5, 90f, 0))),
+		OBSIDIAN_SANCTUARY(Material.OBSIDIAN, 31, (player) -> teleportLocation(player, new Pos(52.5, 13, 15.5, 90f, 0))),
+		DWARVEN_MINES(Material.PRISMARINE, 33, (player) -> {
+			player.sendTo(ServerType.SKYBLOCK_DWARVEN_MINES);
+		});
+
+		private final Material material;
+		private final int slot;
+		private final Consumer<HypixelPlayer> consumer;
+
+		LiftLocation(Material material, int slot, Consumer<HypixelPlayer> consumer) {
+			this.material = material;
+			this.slot = slot;
+			this.consumer = consumer;
+		}
+
+		private static void teleportLocation(HypixelPlayer player, Pos pos) {
+			player.teleport(pos);
+		}
+
+		public String prettyName() {
+			String lower = this.name().toLowerCase();
+			String[] parts = lower.split("_");
+			StringBuilder capitalized = new StringBuilder();
+			for (String part : parts) {
+				capitalized.append(Character.toUpperCase(part.charAt(0))).append(part.substring(1)).append(" ");
+			}
+			return capitalized.toString().trim();
+		}
 	}
 }

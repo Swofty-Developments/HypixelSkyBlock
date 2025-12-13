@@ -5,6 +5,7 @@ public enum CustomWorlds {
 	SKYBLOCK_HUB("hypixel_skyblock_hub"),
 	SKYBLOCK_GOLD_MINE("hypixel_skyblock_gold_mine"),
 	SKYBLOCK_DEEP_CAVERNS("hypixel_skyblock_deep_caverns"),
+	SKYBLOCK_DWARVEN_MINES("hypixel_skyblock_dwarven_mines"),
 	SKYBLOCK_DUNGEON_HUB("hypixel_skyblock_dungeon_hub"),
 	PROTOTYPE_LOBBY("hypixel_prototype_lobby"),
 	BEDWARS_LOBBY("hypixel_bedwars_lobby"),
