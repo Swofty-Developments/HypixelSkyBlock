@@ -1,6 +1,7 @@
 package net.swofty.type.deepcaverns.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.deepcaverns.gui.GUILiftOperator;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -27,8 +28,35 @@ public class NPCLiftOperator extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(45.500, 150.000, 15.500, 90f, 0f);
+				final Pos[] positions = new Pos[]{
+						new Pos(45.500, 150.000, 15.500, 90f, 0f),
+						new Pos(45.500, 121.000, 15.500, 90f, 0f),
+						new Pos(45.500, 101.000, 17.500, 90f, 0f),
+						new Pos(45.500, 66.000, 15.500, 90f, 0f),
+						new Pos(45.500, 38.000, 15.500, 90f, 0f),
+						new Pos(45.500, 13.0, 15.500, 90f, 0f),
+				};
+
+				final Pos playerPos = player.getPosition();
+				double bestDistSq = Double.POSITIVE_INFINITY;
+				int closestIndex = 0;
+
+				for (int i = 0; i < positions.length; i++) {
+					Pos pos = positions[i];
+					double dx = playerPos.x() - pos.x();
+					double dy = playerPos.y() - pos.y();
+					double dz = playerPos.z() - pos.z();
+					double distSq = dx * dx + dy * dy + dz * dz;
+
+					if (distSq < bestDistSq) {
+						bestDistSq = distSq;
+						closestIndex = i;
+					}
+				}
+
+				return positions[closestIndex];
 			}
+
 
 			@Override
 			public boolean looking() {
@@ -40,7 +68,6 @@ public class NPCLiftOperator extends HypixelNPC {
 	@Override
 	public void onClick(PlayerClickNPCEvent event) {
 		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
-
-
+		new GUILiftOperator().open(player);
 	}
 }
