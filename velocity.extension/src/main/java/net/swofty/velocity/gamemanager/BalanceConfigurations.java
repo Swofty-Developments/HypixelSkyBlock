@@ -31,6 +31,9 @@ public class BalanceConfigurations {
 			ServerType.SKYBLOCK_DEEP_CAVERNS, List.of(
 					new LowestPlayerCount()
 			),
+			ServerType.SKYBLOCK_DWARVEN_MINES, List.of(
+					new LowestPlayerCount()
+			),
 			ServerType.SKYBLOCK_ISLAND, List.of(
 					new IslandCheck(),
 					new LowestPlayerCount()

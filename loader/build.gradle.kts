@@ -29,6 +29,7 @@ dependencies {
     implementation(project(":type.thefarmingislands"))
     implementation(project(":type.goldmine"))
     implementation(project(":type.deepcaverns"))
+    implementation(project(":type.dwarvenmines"))
     implementation(project(":type.dungeonhub"))
     implementation(project(":type.skyblockgeneric"))
     implementation(project(":type.prototypelobby"))
