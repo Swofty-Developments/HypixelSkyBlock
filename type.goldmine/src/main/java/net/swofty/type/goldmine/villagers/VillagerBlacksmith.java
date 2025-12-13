@@ -65,7 +65,7 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
 	}
 
 	@Override
-	public NPCVillagerDialogue.DialogueSet[] getDialogueSets() {
+	public DialogueSet[] getDialogueSets() {
 		return List.of(
 				DialogueSet.builder()
 						.key("initial-hello").lines(new String[]{
@@ -80,6 +80,6 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
 								"§e[NPC] Blacksmith§f: To reforge an item, place an item in my inventory. Reforging costs Coins - the more prestigious items cost more to reforge!",
 								"§e[NPC] Blacksmith§f: However, this time I will reforge any item for the low price of Coal §8x10!"
 						}).build()
-		).stream().toArray(NPCVillagerDialogue.DialogueSet[]::new);
+		).stream().toArray(DialogueSet[]::new);
 	}
 }
