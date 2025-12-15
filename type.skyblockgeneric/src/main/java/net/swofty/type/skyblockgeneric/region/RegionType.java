@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.commons.Songs;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.*;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,12 +65,12 @@ public enum RegionType {
 
 	GOLD_MINE("Gold Mine", "§6", GoldMineConfiguration.class),
 	DEEP_CAVERNS("Deep Caverns", "§b"),
-	GUNPOWDER_MINES("Gunpowder Mines"),
-	LAPIS_QUARRY("Lapis Quarry"),
-	PIGMENS_DEN("Pigmen's Den"),
-	SLIMEHILL("Slimehill"),
-	DIAMOND_RESERVE("Diamond Reserve"),
-	OBSIDIAN_SANCTUARY("Obsidian Sanctuary"),
+	GUNPOWDER_MINES("Gunpowder Mines", GunpowderMinesConfiguration.class),
+	LAPIS_QUARRY("Lapis Quarry", LapisQuarryConfiguration.class),
+	PIGMENS_DEN("Pigmen's Den", PigmensDenConfiguration.class),
+	SLIMEHILL("Slimehill", SlimehillConfiguration.class),
+	DIAMOND_RESERVE("Diamond Reserve", DiamondReserveConfiguration.class),
+	OBSIDIAN_SANCTUARY("Obsidian Sanctuary", ObsidianSanctuaryConfiguration.class),
 
 	DWARVEN_VILLAGE("Dwarven Village"),
 	DWARVEN_MINES("Dwarven Mines", "§2"),
