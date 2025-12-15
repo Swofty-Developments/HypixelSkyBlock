@@ -1044,6 +1044,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: CUBISM_DISCOUNT
   - amount: 2500
     rewards:
     - type: XP

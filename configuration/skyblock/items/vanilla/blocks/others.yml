@@ -1,0 +1,39 @@
+items:
+  - id: BOOKSHELF
+    material: BOOKSHELF
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: BOOKSHELF
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: BOOK
+                chance: 1.0
+                amount: 3
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 20
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+              - AAA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: BOOK
+                amount: 1
+            result:
+              type: BOOKSHELF
+              amount: 1

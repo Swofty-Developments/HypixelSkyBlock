@@ -314,6 +314,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: IMPALING_DISCOUNT
   - amount: 25
     rewards:
     - type: XP
@@ -383,6 +386,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: CLEAVE_DISCOUNT
   - amount: 150
     rewards:
     - type: XP

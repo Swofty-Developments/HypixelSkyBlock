@@ -62,14 +62,13 @@ public class GUIReforge extends HypixelInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    ItemStack stack = p.getInventory().getCursorItem();
+                    ItemStack stack = player.getInventory().getCursorItem();
 
-                    if (stack.get(DataComponents.CUSTOM_NAME) == null) {
-                        updateFromItem(null);
-                        return;
-                    }
+                    if (stack.get(DataComponents.CUSTOM_NAME) == null) return;
 
+                    e.setCancelled(true);
                     SkyBlockItem item = new SkyBlockItem(stack);
+                    player.getInventory().setCursorItem(ItemStack.AIR);
                     updateFromItem(item);
                 }
 
@@ -109,20 +108,26 @@ public class GUIReforge extends HypixelInventoryGUI {
 
         set(new GUIClickableItem(13) {
             @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
+                ItemStack stack = player.getInventory().getCursorItem();
+
+                if (stack == ItemStack.AIR) {
+                    e.setCancelled(true);
+                    player.getInventory().setCursorItem(PlayerItemUpdater.playerUpdate(player, item.getItemStack()).build());
+                    updateFromItem(null);
+                }
             }
 
             @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+            public boolean canPickup() {
+                return true;
+            }
+
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStack stack = e.getClickedItem();
-                if (stack.isAir()) return;
-
-                updateFromItem(null);
-
-                player.addAndUpdateItem(stack);
+                return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
             }
         });
 

@@ -1,6 +1,8 @@
 package net.swofty.type.skyblockgeneric.enchantment.impl;
 
 import lombok.NonNull;
+import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
+import net.swofty.type.skyblockgeneric.enchantment.abstr.ConflictingEnch;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.EnchFromTable;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -10,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EnchantmentSmeltingTouch implements Ench, EnchFromTable {
+public class EnchantmentSmeltingTouch implements Ench, EnchFromTable, ConflictingEnch {
 
     @Override
     public String getDescription(int level) {
@@ -44,5 +46,10 @@ public class EnchantmentSmeltingTouch implements Ench, EnchFromTable {
     @Override
     public int getRequiredBookshelfPower() {
         return 0;
+    }
+
+    @Override
+    public List<EnchantmentType> getConflictingEnchantments() {
+        return List.of(EnchantmentType.SILK_TOUCH);
     }
 }
