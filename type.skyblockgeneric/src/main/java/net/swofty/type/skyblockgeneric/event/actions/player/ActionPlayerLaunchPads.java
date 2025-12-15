@@ -51,7 +51,7 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
             notifiedPlayers.remove(player.getUuid());
             return;
         }
-        
+
         if (player.isInLaunchpad()) return;
         player.setInLaunchpad(true);
 
@@ -123,11 +123,11 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
 
                     player.setInLaunchpad(false);
                     notifiedPlayers.remove(player.getUuid());
-                    
+
                     // Execute the after finished callback
                     player.sendMessage("Done");
                     pad.getAfterFinished().accept(player);
-                    
+
                     // Check after a delay if player is still on this server (transfer failed)
                     scheduler.schedule(() -> {
                         // If player is still on the same server and instance, teleport them back
@@ -140,7 +140,7 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
                         } catch (Exception e) {
                         }
                     }, 2, TimeUnit.SECONDS);
-                    
+
                     return;
                 }
 
