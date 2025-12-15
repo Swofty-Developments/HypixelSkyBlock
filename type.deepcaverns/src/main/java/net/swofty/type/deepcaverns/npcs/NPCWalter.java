@@ -5,9 +5,10 @@ import net.swofty.type.deepcaverns.gui.GUIShopWalter;
 import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 public class NPCWalter extends NPCDialogue {
 
@@ -46,34 +47,35 @@ public class NPCWalter extends NPCDialogue {
 		if (isInDialogue(player)) return;
 
 		setDialogue(player, "none").thenRun(() -> {
-			new GUIShopWalter().open(player);
+			MathUtility.delay(() -> new GUIShopWalter().open(player), 20);
+
 		});
 
 	}
 
 	@Override
 	public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
-		return List.of(
-				NPCDialogue.DialogueSet.builder()
+		return Stream.of(
+				DialogueSet.builder()
 						.key("none").lines(new String[]{
 								"With the right tools, you can get through anything!",
 						}).build(),
-				NPCDialogue.DialogueSet.builder()
+				DialogueSet.builder()
 						.key("abiphone").lines(new String[]{ // when clicking with an Abiphone
-								"✆ My abiphone is for Platinum-level donors of the Walter cause only.",
-								"✆ You know these superbooms don't craft themselves right?",
+								"My abiphone is for Platinum-level donors of the Walter cause only.",
+								"You know these superbooms don't craft themselves right?",
 								"You just need Sulphur Collection 7 and to then donate an Enchanted Sulphur Cube!", // then show "donate cube" option
-						}).build(),
-				NPCDialogue.DialogueSet.builder()
+						}).abiPhone(true).build(),
+				DialogueSet.builder()
 						.key("donate_cube").lines(new String[]{ // when donating the cube with requirements met
-								"✆ Welcome to the Platinum club, high roller!",
-								"✆ Call me anytime!",
-								"✆ And before you ask... yes, I do try to commercialize all of my friendships.",
-						}).build(),
-				NPCDialogue.DialogueSet.builder()
+								"Welcome to the Platinum club, high roller!",
+								"Call me anytime!",
+								"And before you ask... yes, I do try to commercialize all of my friendships.",
+						}).abiPhone(true).build(),
+				DialogueSet.builder()
 						.key("donate_cube_no_requirements").lines(new String[]{ // when donating the cube without requirements met
-								"✆ Mmh... you're missing something to become a Platinum-level donor...",
-						}).build()
-		).stream().toArray(NPCDialogue.DialogueSet[]::new);
+								"Mmh... you're missing something to become a Platinum-level donor...",
+						}).abiPhone(true).build()
+		).toArray(NPCDialogue.DialogueSet[]::new);
 	}
 }
