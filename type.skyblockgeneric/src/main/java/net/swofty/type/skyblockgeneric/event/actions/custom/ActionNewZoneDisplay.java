@@ -55,9 +55,20 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
                     "Store your coins to keep them safe.",
                     "Earn interest on your coins.");
 
+            case DEEP_CAVERNS -> onNewZone(player, RegionType.DEEP_CAVERNS,
+                    "Talk to the Lift Operator",
+                    "Mine valuable ores.",
+                    "Watch out for mobs!");
+
+            case DWARVEN_MINES -> onNewZone(player, RegionType.DWARVEN_MINES,
+                    "Mine rare ores.");
+
             case GOLD_MINE -> onNewZone(player, RegionType.GOLD_MINE,
                     "Talk to the Lazy Miner.",
-                    "Find the hidden gold mine.");
+                    "Mine for gold, iron, and coal.",
+                    "Visit the Iron and Gold Forgers.",
+                    "Visit the Blacksmith.",
+                    "Talk to Rusty.");
 
             case COAL_MINE -> onNewZone(player, RegionType.COAL_MINE,
                     "Mine coal.",
