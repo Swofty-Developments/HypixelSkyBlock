@@ -1,13 +1,19 @@
 package net.swofty.type.deepcaverns.npcs;
 
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.item.ItemStack;
+import net.swofty.commons.item.ItemType;
 import net.swofty.type.deepcaverns.gui.GUIShopWalter;
 import net.swofty.type.generic.entity.npc.NPCDialogue;
+import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.util.Collections;
 import java.util.stream.Stream;
 
 public class NPCWalter extends NPCDialogue {
@@ -46,11 +52,27 @@ public class NPCWalter extends NPCDialogue {
 		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
 		if (isInDialogue(player)) return;
 
+		ItemStack itemStack = player.getItemInMainHand();
+		SkyBlockItem item = new SkyBlockItem(itemStack);
+		ItemType itemType = item.getItemType();
+
+		if (itemType == ItemType.ABIPHONE_BASIC) {
+			setDialogue(player, "abiphone").thenRun(() -> {
+				NPCOption.sendOption(player, "walter", Collections.singletonList(new NPCOption.Option(
+						"pay", // actual id from Hypixel
+						NamedTextColor.GREEN,
+						"DONATE CUBE",
+						(p) -> {
+							setDialogue(player, "donate_cube_no_requirements");
+						}
+				)));
+			});
+			return;
+		}
+
 		setDialogue(player, "none").thenRun(() -> {
 			MathUtility.delay(() -> new GUIShopWalter().open(player), 20);
-
 		});
-
 	}
 
 	@Override
@@ -64,7 +86,7 @@ public class NPCWalter extends NPCDialogue {
 						.key("abiphone").lines(new String[]{ // when clicking with an Abiphone
 								"My abiphone is for Platinum-level donors of the Walter cause only.",
 								"You know these superbooms don't craft themselves right?",
-								"You just need Sulphur Collection 7 and to then donate an Enchanted Sulphur Cube!", // then show "donate cube" option
+								"You just need §3Sulphur Collection 7 §fand to then donate an Enchanted Sulphur Cube!", // then show "donate cube" option
 						}).abiPhone(true).build(),
 				DialogueSet.builder()
 						.key("donate_cube").lines(new String[]{ // when donating the cube with requirements met

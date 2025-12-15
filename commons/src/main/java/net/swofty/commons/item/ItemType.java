@@ -23,6 +23,9 @@ public enum ItemType {
 	ENDSTONE_ROSE(Material.POPPY, Rarity.RARE),
 	BIOFUEL(Material.GREEN_DYE, Rarity.RARE),
 
+	ABIPHONE_BASIC(Material.PLAYER_HEAD, Rarity.COMMON),
+	ABIPHONE_X_RED(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
 	/**
 	 * Accessories
 	 */

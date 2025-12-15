@@ -68,7 +68,7 @@ public abstract class NPCDialogue extends HypixelNPC {
 
 		Scheduler scheduler = MinecraftServer.getSchedulerManager();
 		scheduler.buildTask(() -> {
-			handleLineSendingLoop(player, DialogueSet.builder().key(dialogueSet.key()).lines(newLines).build());
+			handleLineSendingLoop(player, DialogueSet.builder().key(dialogueSet.key()).lines(newLines).abiPhone(dialogueSet.abiPhone).build());
 		}).delay(TaskSchedule.seconds(2)).schedule();
 	}
 
