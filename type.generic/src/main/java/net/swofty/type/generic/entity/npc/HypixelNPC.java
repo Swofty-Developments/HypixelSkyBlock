@@ -151,7 +151,7 @@ public abstract class HypixelNPC {
 	}
 
 	public void sendNPCAbiphoneMessage(HypixelPlayer player, String message) {
-		player.sendMessage("§e[NPC] " + getName() + "§f:§b✆ §f" + message);
+		player.sendMessage("§e[NPC] " + getName() + "§f: §b✆ §f" + message);
 	}
 
 	public record PlayerClickNPCEvent(HypixelPlayer player, int entityId, HypixelNPC npc) {

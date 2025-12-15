@@ -1,0 +1,23 @@
+items:
+  - id: ABIPHONE_BASIC
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7A device that can be used to contact"
+      - "§7people! Click NPCs to add them to your contacts!"
+    components:
+      - id: SELLABLE
+        value: 100000.0
+      - id: SKULL_HEAD
+        texture: e471c673a875425428d4b5ecf78a24d86ea65ae6599633e6514bbaafd7fa561f
+  - id: ABIPHONE_X_RED
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7A device that can be used to contact"
+      - "§7people! Click NPCs to add them to your contacts!"
+    components:
+      - id: SELLABLE
+        value: 1000000.0
+      - id: SKULL_HEAD
+        texture: d256584eea6825150a415fc18daa532b9139cca454f969f2210355de10a15a4
