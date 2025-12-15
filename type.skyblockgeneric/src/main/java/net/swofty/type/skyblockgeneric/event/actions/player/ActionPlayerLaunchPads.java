@@ -1,37 +1,29 @@
 package net.swofty.type.skyblockgeneric.event.actions.player;
 
 import net.kyori.adventure.key.Key;
+import net.swofty.commons.StringUtility;
 import org.tinylog.Logger;
 import net.kyori.adventure.sound.Sound;
-import org.tinylog.Logger;
 import net.minestom.server.coordinate.Pos;
-import org.tinylog.Logger;
 import net.minestom.server.coordinate.Vec;
-import org.tinylog.Logger;
 import net.minestom.server.entity.EntityType;
-import org.tinylog.Logger;
 import net.minestom.server.entity.LivingEntity;
-import org.tinylog.Logger;
 import net.minestom.server.event.player.PlayerMoveEvent;
-import org.tinylog.Logger;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
-import org.tinylog.Logger;
 import net.minestom.server.particle.Particle;
-import org.tinylog.Logger;
+import net.swofty.commons.ServerType;
+import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.type.generic.event.EventNodes;
-import org.tinylog.Logger;
 import net.swofty.type.generic.event.HypixelEvent;
-import org.tinylog.Logger;
 import net.swofty.type.generic.event.HypixelEventClass;
-import org.tinylog.Logger;
 import net.swofty.type.generic.utility.MathUtility;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.utility.LaunchPads;
-import org.tinylog.Logger;
 
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -41,6 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ActionPlayerLaunchPads implements HypixelEventClass {
     private static final int SEGMENTS = 30;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private static final Set<UUID> notifiedPlayers = ConcurrentHashMap.newKeySet();
 
 
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
@@ -53,7 +46,12 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
         } catch (ExceptionInInitializerError err) {
             return;
         }
-        if (pad == null) return;
+
+        if (pad == null) {
+            notifiedPlayers.remove(player.getUuid());
+            return;
+        }
+
         if (player.isInLaunchpad()) return;
         player.setInLaunchpad(true);
 
@@ -84,37 +82,78 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
             player.setInLaunchpad(false);
             return;
         }
-        player.playSound(Sound.sound(Key.key("entity.firework_rocket.launch"), Sound.Source.PLAYER, 1, 1));
 
-        LivingEntity armorStand = new LivingEntity(EntityType.ARMOR_STAND);
-        armorStand.getEntityMeta().setInvisible(true);
-        armorStand.getEntityMeta().setHasNoGravity(true);
-        armorStand.setInstance(player.getInstance(), player.getPosition());
-        armorStand.addPassenger(player);
-
-        List<Pos> curve = MathUtility.bezierCurve(player.getPosition(), pad.getDestination(), SEGMENTS);
-        long timeToSleep = 3000 / SEGMENTS;
-
-        // Use ScheduledExecutorService to run the launch trajectory with delays
-        AtomicInteger index = new AtomicInteger(0);
-        ScheduledFuture<?>[] taskHolder = new ScheduledFuture<?>[1];
-        taskHolder[0] = scheduler.scheduleAtFixedRate(() -> {
-            int currentIndex = index.getAndIncrement();
-            if (currentIndex >= curve.size()) {
-                // Cancel the task
-                if (taskHolder[0] != null) {
-                    taskHolder[0].cancel(false);
+        // Check server availability before starting animation
+        ServerType targetServerType = pad.getTargetServerType();
+        ProxyInformation proxyInfo = new ProxyInformation();
+        proxyInfo.getServerInformation(targetServerType).thenAccept(servers -> {
+            if (servers == null || servers.isEmpty()) {
+                player.setInLaunchpad(false);
+                if (!notifiedPlayers.contains(player.getUuid())) {
+                    notifiedPlayers.add(player.getUuid());
+                    player.sendMessage("§cThere are no " + StringUtility.toNormalCase(targetServerType.name()) + " servers available at the moment. Please try again later.");
                 }
-                // Execute the after finished callback
-                player.sendMessage("Done");
-                pad.getAfterFinished().accept(player);
                 return;
             }
 
-            Pos pos = curve.get(currentIndex);
-            Vec toGoTo = pos.asVec();
-            Vec direction = toGoTo.sub(player.getPosition().asVec()).normalize();
-            armorStand.setVelocity(direction.mul(50, 5, 50));
-        }, 0, timeToSleep, TimeUnit.MILLISECONDS);
+            notifiedPlayers.remove(player.getUuid());
+
+            Pos originalPosition = player.getPosition();
+            player.playSound(Sound.sound(Key.key("entity.firework_rocket.launch"), Sound.Source.PLAYER, 1, 1));
+
+            LivingEntity armorStand = new LivingEntity(EntityType.ARMOR_STAND);
+            armorStand.getEntityMeta().setInvisible(true);
+            armorStand.getEntityMeta().setHasNoGravity(true);
+            armorStand.setInstance(player.getInstance(), player.getPosition());
+            armorStand.addPassenger(player);
+
+            List<Pos> curve = MathUtility.bezierCurve(player.getPosition(), pad.getDestination(), SEGMENTS);
+            long timeToSleep = 3000 / SEGMENTS;
+
+            // Use ScheduledExecutorService to run the launch trajectory with delays
+            AtomicInteger index = new AtomicInteger(0);
+            ScheduledFuture<?>[] taskHolder = new ScheduledFuture<?>[1];
+            taskHolder[0] = scheduler.scheduleAtFixedRate(() -> {
+                int currentIndex = index.getAndIncrement();
+                if (currentIndex >= curve.size()) {
+                    // Cancel the task
+                    if (taskHolder[0] != null) {
+                        taskHolder[0].cancel(false);
+                    }
+
+                    player.setInLaunchpad(false);
+                    notifiedPlayers.remove(player.getUuid());
+
+                    // Execute the after finished callback
+                    player.sendMessage("Done");
+                    pad.getAfterFinished().accept(player);
+
+                    // Check after a delay if player is still on this server (transfer failed)
+                    scheduler.schedule(() -> {
+                        // If player is still on the same server and instance, teleport them back
+                        if (player.getInstance() != null && player.getInstance().equals(armorStand.getInstance())) {
+                            player.teleport(originalPosition);
+                            player.sendMessage("§cFailed to connect to the server. You have been teleported back.");
+                        }
+                        try {
+                            armorStand.remove();
+                        } catch (Exception e) {
+                        }
+                    }, 2, TimeUnit.SECONDS);
+
+                    return;
+                }
+
+                Pos pos = curve.get(currentIndex);
+                Vec toGoTo = pos.asVec();
+                Vec direction = toGoTo.sub(player.getPosition().asVec()).normalize();
+                armorStand.setVelocity(direction.mul(50, 5, 50));
+            }, 0, timeToSleep, TimeUnit.MILLISECONDS);
+        }).exceptionally(ex -> {
+            Logger.error(ex, "Error checking server availability for launch pad");
+            player.setInLaunchpad(false);
+            player.sendMessage("§cAn error occurred while checking server availability. Please try again later.");
+            return null;
+        });
     }
 }
