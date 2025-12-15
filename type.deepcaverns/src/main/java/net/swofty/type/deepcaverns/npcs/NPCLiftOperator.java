@@ -1,60 +1,17 @@
 package net.swofty.type.deepcaverns.npcs;
 
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.timer.Scheduler;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.deepcaverns.gui.GUILiftOperator;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToLiftOperator;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
-public class NPCLiftOperator extends HypixelNPC { // TODO: Honestly rewrite this entire class it sucks
-
-	private final Map<HypixelPlayer, Map.Entry<DialogueSet, CompletableFuture<String>>> dialogueSets = new HashMap<>();
-
-	private boolean isInDialogue(HypixelPlayer player) {
-		return dialogueSets.containsKey(player);
-	}
-
-	private CompletableFuture<String> setDialogue(HypixelPlayer player, DialogueSet set) {
-		CompletableFuture<String> future = new CompletableFuture<>();
-		dialogueSets.put(player, Map.entry(set, future));
-		handleLineSendingLoop(player, set);
-		return future;
-	}
-
-	private void handleLineSendingLoop(HypixelPlayer player, DialogueSet dialogueSet) {
-		player.sendMessage(dialogueSet.lines[0]);
-
-		if (dialogueSet.lines.length == 1) {
-			Map.Entry<DialogueSet, CompletableFuture<String>> entry = dialogueSets.remove(player);
-			if (entry != null) {
-				entry.getValue().complete(dialogueSet.key);
-			}
-			return;
-		}
-
-		String[] remaining = new String[dialogueSet.lines.length - 1];
-		System.arraycopy(dialogueSet.lines, 1, remaining, 0, remaining.length);
-
-		Scheduler scheduler = MinecraftServer.getSchedulerManager();
-		scheduler.buildTask(() -> {
-			handleLineSendingLoop(
-					player,
-					new DialogueSet(dialogueSet.key, remaining)
-			);
-		}).delay(TaskSchedule.seconds(2)).schedule();
-	}
-
-	private record DialogueSet(String key, String[] lines) {}
+public class NPCLiftOperator extends NPCDialogue {
 
 	public NPCLiftOperator() {
 		super(new NPCParameters() {
@@ -115,29 +72,32 @@ public class NPCLiftOperator extends HypixelNPC { // TODO: Honestly rewrite this
 	@Override
 	public void onClick(PlayerClickNPCEvent event) {
 		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
-		MissionData data = player.getMissionData();
-
 		if (isInDialogue(player)) return;
 
+		MissionData data = player.getMissionData();
 		if (!data.hasCompleted(MissionTalkToLiftOperator.class)) {
 			if (!data.isCurrentlyActive(MissionTalkToLiftOperator.class)) {
 				data.startMission(MissionTalkToLiftOperator.class);
 			}
 
-			setDialogue(player, new DialogueSet(
-					"intro",
-					new String[]{
-							"§e[NPC] Lift Operator§f: Hey Feller!",
-							"§e[NPC] Lift Operator§f: I control this lift here behind me.",
-							"§e[NPC] Lift Operator§f: Once you've explored an area I can give you a safe ride back there.",
-							"§e[NPC] Lift Operator§f: Be careful not to fall down the shaft though, it's a long fall!",
-							"§e[NPC] Lift Operator§f: Good luck on your adventures."
-					}
-			)).thenRun(() -> data.endMission(MissionTalkToLiftOperator.class));
-
+			setDialogue(player, "intro").thenRun(() -> data.endMission(MissionTalkToLiftOperator.class));
 			return;
 		}
-
+		
 		new GUILiftOperator().open(player);
+	}
+
+	@Override
+	public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+		return Stream.of(
+				DialogueSet.builder()
+						.key("intro").lines(new String[]{
+								"Hey Feller!",
+								"I control this lift here behind me.",
+								"Once you've explored an area I can give you a safe ride back there.",
+								"Be careful not to fall down the shaft though, it's a long fall!",
+								"Good luck on your adventures."
+						}).build()
+		).toArray(NPCDialogue.DialogueSet[]::new);
 	}
 }
