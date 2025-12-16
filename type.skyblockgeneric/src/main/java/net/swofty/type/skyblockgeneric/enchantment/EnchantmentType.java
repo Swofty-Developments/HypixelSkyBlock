@@ -9,8 +9,6 @@ import net.swofty.type.skyblockgeneric.enchantment.impl.*;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 @Getter
 public enum EnchantmentType {
     SHARPNESS(EnchantmentSharpness.class),
@@ -31,17 +29,29 @@ public enum EnchantmentType {
     IMPALING(EnchantmentImpaling.class),
     BANE_OF_ARTHROPODS(EnchantmentBaneOfArthropods.class),
     CUBISM(EnchantmentCubism.class),
+    FORTUNE(EnchantmentFortune.class),
+    CLEAVE(EnchantmentCleave.class),
+    EXPERIENCE(EnchantmentExperience.class),
+    FIRE_ASPECT(EnchantmentFireAspect.class),
+    KNOCKBACK(EnchantmentKnockback.class),
+    LETHALITY(EnchantmentLethality.class),
+    LIFE_STEAL(EnchantmentLifeSteal.class),
+    DRAIN(EnchantmentDrain.class),
+    MANA_STEAL(EnchantmentManaSteal.class),
+    PROSECUTE(EnchantmentProsecute.class),
+    THUNDERBOLT(EnchantmentThunderbolt.class),
+    THUNDERLORD(EnchantmentThunderlord.class),
+    VAMPIRISM(EnchantmentVampirism.class),
+    VENOMOUS(EnchantmentVenomous.class),
+    VICIOUS(EnchantmentVicious.class),
     ;
 
     private final Class<? extends Ench> clazz;
-    private final List<EnchantmentType> conflicts;
-
     private final Ench ench;
 
     @SneakyThrows
-    EnchantmentType(Class<? extends Ench> ench, EnchantmentType... conflicts) {
+    EnchantmentType(Class<? extends Ench> ench) {
         this.clazz = ench;
-        this.conflicts = List.of(conflicts);
 
         this.ench = ench.getConstructor().newInstance();
     }

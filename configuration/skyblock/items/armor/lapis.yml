@@ -1,0 +1,81 @@
+items:
+  - id: LAPIS_HELMET
+    rarity: COMMON
+    default_statistics:
+      defense: 25
+      mining_speed: 20
+      mining_fortune: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lapis Armor Helmet
+      - id: STANDARD_ITEM
+        standard_item_type: HELMET
+      - id: LEATHER_COLOR
+        r: '122'
+        g: '121'
+        b: '100'
+      - id: SELLABLE
+        value: 1000.0
+      - id: TRACKED_UNIQUE
+      - id: MUSEUM
+        museum_category: ARMOR_SETS
+  - id: LAPIS_CHESTPLATE
+    rarity: COMMON
+    default_statistics:
+      defense: 40
+      mining_speed: 20
+      mining_fortune: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lapis Armor Chestplate
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+      - id: LEATHER_COLOR
+        r: '122'
+        g: '121'
+        b: '100'
+      - id: SELLABLE
+        value: 2000.0
+      - id: TRACKED_UNIQUE
+      - id: MUSEUM
+        museum_category: ARMOR_SETS
+  - id: LAPIS_LEGGINGS
+    rarity: COMMON
+    default_statistics:
+      defense: 35
+      mining_speed: 20
+      mining_fortune: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lapis Armor Leggings
+      - id: STANDARD_ITEM
+        standard_item_type: LEGGINGS
+      - id: LEATHER_COLOR
+        r: '122'
+        g: '121'
+        b: '100'
+      - id: SELLABLE
+        value: 1750.0
+      - id: TRACKED_UNIQUE
+      - id: MUSEUM
+        museum_category: ARMOR_SETS
+  - id: LAPIS_BOOTS
+    rarity: COMMON
+    default_statistics:
+      defense: 20
+      mining_speed: 20
+      mining_fortune: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lapis Armor Boots
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
+      - id: LEATHER_COLOR
+        r: '122'
+        g: '121'
+        b: '100'
+      - id: SELLABLE
+        value: 1000.0
+      - id: TRACKED_UNIQUE
+      - id: MUSEUM
+        museum_category: ARMOR_SETS

@@ -11,65 +11,70 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class NPCDialogue extends HypixelNPC {
-    HashMap<HypixelPlayer, Map.Entry<DialogueSet, CompletableFuture<String>>> dialogueSets = new HashMap<>();
+	HashMap<HypixelPlayer, Map.Entry<DialogueSet, CompletableFuture<String>>> dialogueSets = new HashMap<>();
 
-    protected NPCDialogue(NPCParameters parameters) {
-        super(parameters);
-    }
+	protected NPCDialogue(NPCParameters parameters) {
+		super(parameters);
+	}
 
-    public abstract DialogueSet[] getDialogueSets(HypixelPlayer player);
+	public static void remove(HypixelPlayer player) {
+		for (HypixelNPC npc : getNpcs()) {
+			if (npc instanceof NPCDialogue dialogue) {
+				if (dialogue.isInDialogue(player)) {
+					dialogue.dialogueSets.get(player).getValue().complete(null);
+					dialogue.dialogueSets.remove(player);
+				}
+			}
+		}
+	}
 
-    public Boolean isInDialogue(HypixelPlayer player) {
-        Map.Entry<DialogueSet, CompletableFuture<String>> dialogueSet = dialogueSets.get(player);
-        return dialogueSet != null;
-    }
+	public abstract DialogueSet[] getDialogueSets(HypixelPlayer player);
 
-    public CompletableFuture<String> setDialogue(HypixelPlayer player, String key) {
-        CompletableFuture<String> future = new CompletableFuture<>();
+	public Boolean isInDialogue(HypixelPlayer player) {
+		Map.Entry<DialogueSet, CompletableFuture<String>> dialogueSet = dialogueSets.get(player);
+		return dialogueSet != null;
+	}
 
-        for (DialogueSet dialogueSet : getDialogueSets(player)) {
-            if (dialogueSet.key().equals(key)) {
-                dialogueSets.put(player, Map.entry(dialogueSet, future));
-                handleLineSendingLoop(player, dialogueSet);
-                return future;
-            }
-        }
+	public CompletableFuture<String> setDialogue(HypixelPlayer player, String key) {
+		CompletableFuture<String> future = new CompletableFuture<>();
 
-        future.completeExceptionally(new NullPointerException("Dialogue set with key '" + key + "' not found."));
-        return future;
-    }
+		for (DialogueSet dialogueSet : getDialogueSets(player)) {
+			if (dialogueSet.key().equals(key)) {
+				dialogueSets.put(player, Map.entry(dialogueSet, future));
+				handleLineSendingLoop(player, dialogueSet);
+				return future;
+			}
+		}
 
-    private void handleLineSendingLoop(HypixelPlayer player, DialogueSet dialogueSet) {
-        sendNPCMessage(player, dialogueSet.lines()[0]);
+		future.completeExceptionally(new NullPointerException("Dialogue set with key '" + key + "' not found."));
+		return future;
+	}
 
-        String[] newLines = new String[dialogueSet.lines().length - 1];
-        System.arraycopy(dialogueSet.lines(), 1, newLines, 0, dialogueSet.lines().length - 1);
+	private void handleLineSendingLoop(HypixelPlayer player, DialogueSet dialogueSet) {
+		if (dialogueSet.abiPhone) {
+			sendNPCAbiphoneMessage(player, dialogueSet.lines()[0]);
+		} else {
+			sendNPCMessage(player, dialogueSet.lines()[0]);
+		}
 
-        if (newLines.length == 0) {
-            dialogueSets.get(player).getValue().complete(dialogueSet.key());
-            dialogueSets.remove(player);
-            return;
-        }
+		String[] newLines = new String[dialogueSet.lines().length - 1];
+		System.arraycopy(dialogueSet.lines(), 1, newLines, 0, dialogueSet.lines().length - 1);
 
-        Scheduler scheduler = MinecraftServer.getSchedulerManager();
-        scheduler.buildTask(() -> {
-            handleLineSendingLoop(player, DialogueSet.builder().key(dialogueSet.key()).lines(newLines).build());
-        }).delay(TaskSchedule.seconds(2)).schedule();
-    }
+		if (newLines.length == 0) {
+			dialogueSets.get(player).getValue().complete(dialogueSet.key());
+			dialogueSets.remove(player);
+			return;
+		}
 
-    public static void remove(HypixelPlayer player) {
-        for (HypixelNPC npc : getNpcs()) {
-            if (npc instanceof NPCDialogue dialogue) {
-                if (dialogue.isInDialogue(player)) {
-                    dialogue.dialogueSets.get(player).getValue().complete(null);
-                    dialogue.dialogueSets.remove(player);
-                }
-            }
-        }
-    }
+		Scheduler scheduler = MinecraftServer.getSchedulerManager();
+		scheduler.buildTask(() -> {
+			handleLineSendingLoop(player, DialogueSet.builder().key(dialogueSet.key()).lines(newLines).abiPhone(dialogueSet.abiPhone).build());
+		}).delay(TaskSchedule.seconds(2)).schedule();
+	}
 
-    @Builder
-    public record DialogueSet(String key, String[] lines) {
-    }
+	@Builder
+	public record DialogueSet(String key, String[] lines, boolean abiPhone) {
+	}
+
 
 }
