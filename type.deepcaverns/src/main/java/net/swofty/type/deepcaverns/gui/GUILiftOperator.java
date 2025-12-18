@@ -7,13 +7,16 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
+import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class GUILiftOperator extends HypixelInventoryGUI {
@@ -42,12 +45,31 @@ public class GUILiftOperator extends HypixelInventoryGUI {
 							return;
 						}
 					}
+					DatapointStringList discoveredZones = player.getSkyblockDataHandler().get(
+							SkyBlockDataHandler.Data.VISITED_REGIONS,
+							DatapointStringList.class
+					);
+					List<String> discoveredZonesList = discoveredZones.getValue();
+
+					if (!discoveredZonesList.contains(location.name())) {
+						player.sendMessage("§cYou have not discovered the " + location.prettyName() + " yet!");
+						return;
+					}
 					location.consumer.accept(p);
 					p.closeInventory();
 				}
 
 				@Override
 				public ItemStack.Builder getItem(HypixelPlayer p) {
+					SkyBlockPlayer player = (SkyBlockPlayer) p;
+					DatapointStringList discoveredZones = player.getSkyblockDataHandler().get(
+							SkyBlockDataHandler.Data.VISITED_REGIONS,
+							DatapointStringList.class
+					);
+					List<String> discoveredZonesList = discoveredZones.getValue();
+					if (!discoveredZonesList.contains(location.name())) {
+						return ItemStackCreator.getSingleLoreStack("§a" + location.prettyName(), "§e", location.material, 1, "§7Click to teleport to the §b" + location.prettyName() + "§7!\n\n§cNot discovered yet!");
+					}
 					return ItemStackCreator.getSingleLoreStack("§a" + location.prettyName(), "§e", location.material, 1, "§7Click to teleport to the §b" + location.prettyName() + "§7!\n\n§eClick to travel!");
 				}
 			});
