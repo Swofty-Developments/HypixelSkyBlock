@@ -52,7 +52,7 @@ secureProfile: false
 # For 1.13+ clients
 brandName:
   enable: true
-  content: 'NanoLimbo'
+  content: 'Hypixel'
 
 # Message sends when player joins to the server
 joinMessage:
