@@ -78,4 +78,13 @@ public enum ArmorSetRegistry {
     public String getDisplayName() {
         return StringUtility.toNormalCase(name().replace("_", " "));
     }
+
+    public int getWornPieceCount(ItemType boots, ItemType leggings, ItemType chestplate, ItemType helmet) {
+        int count = 0;
+        if (this.boots != null && this.boots == boots) count++;
+        if (this.leggings != null && this.leggings == leggings) count++;
+        if (this.chestplate != null && this.chestplate == chestplate) count++;
+        if (this.helmet != null && this.helmet == helmet) count++;
+        return count;
+    }
 }
