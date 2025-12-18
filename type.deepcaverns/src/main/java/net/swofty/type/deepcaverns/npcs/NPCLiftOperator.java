@@ -2,6 +2,7 @@ package net.swofty.type.deepcaverns.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.deepcaverns.gui.GUILiftOperator;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -70,20 +71,18 @@ public class NPCLiftOperator extends NPCDialogue {
 	}
 
 	@Override
-	public void onClick(PlayerClickNPCEvent event) {
-		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
+	public void onClick(PlayerClickNPCEvent e) {
+		SkyBlockPlayer player = (SkyBlockPlayer) e.player();
 		if (isInDialogue(player)) return;
+		boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_LIFT_OPERATOR);
 
-		MissionData data = player.getMissionData();
-		if (!data.hasCompleted(MissionTalkToLiftOperator.class)) {
-			if (!data.isCurrentlyActive(MissionTalkToLiftOperator.class)) {
-				data.startMission(MissionTalkToLiftOperator.class);
-			}
-
-			setDialogue(player, "intro").thenRun(() -> data.endMission(MissionTalkToLiftOperator.class));
+		if (!hasSpokenBefore) {
+			setDialogue(player, "hello").thenRun(() -> {
+				player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_LIFT_OPERATOR, true);
+			});
 			return;
 		}
-		
+
 		new GUILiftOperator().open(player);
 	}
 
@@ -91,7 +90,7 @@ public class NPCLiftOperator extends NPCDialogue {
 	public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
 		return Stream.of(
 				DialogueSet.builder()
-						.key("intro").lines(new String[]{
+						.key("hello").lines(new String[]{
 								"Hey Feller!",
 								"I control this lift here behind me.",
 								"Once you've explored an area I can give you a safe ride back there.",

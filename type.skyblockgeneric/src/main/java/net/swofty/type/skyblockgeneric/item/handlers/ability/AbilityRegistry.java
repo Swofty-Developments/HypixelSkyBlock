@@ -34,6 +34,13 @@ public class AbilityRegistry {
 				}
 		));
 
+//		register(new RegisteredAbility( // TODO: Figure out how to implement passive abiltiies
+//				"BEJEWELED_BLADE",
+//				"Bejeweled Blade",
+//				"§7Deals §a+150% §7damage to mobs on §bMining Islands.",
+//				RegisteredAbility.AbilityActivation.
+//		))
+
 		register(new BuildersWandAbility());
 	}
 
