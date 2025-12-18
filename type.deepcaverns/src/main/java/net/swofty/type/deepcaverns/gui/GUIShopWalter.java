@@ -7,7 +7,7 @@ import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
 public class GUIShopWalter extends SkyBlockShopGUI {
 	public GUIShopWalter() {
-		super("Walter", 1, DEFAULT);
+		super("Walter", 1, SINGLE_SLOT);
 	}
 
 	@Override
