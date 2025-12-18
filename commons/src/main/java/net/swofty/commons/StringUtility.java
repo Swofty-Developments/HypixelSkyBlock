@@ -151,7 +151,6 @@ public class StringUtility {
 		return formatTimeWentBy(System.currentTimeMillis() - tbf);
 	}
 
-
 	public static String getAsRomanNumeral(int num) {
 		if (num == 0) return "";
 		int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
@@ -293,20 +292,4 @@ public class StringUtility {
 		return statistic.getDisplayColor() + statistic.getSymbol() + " " + statistic.getDisplayName();
 	}
 
-	public static List<String> centerLines(List<String> lines) {
-		int maxLength = lines.stream()
-				.map(StringUtility::stripColor)
-				.mapToInt(String::length)
-				.max()
-				.orElse(0);
-
-		List<String> centered = new ArrayList<>();
-		for (String line : lines) {
-			String stripped = stripColor(line);
-			int padding = Math.max(0, (maxLength - stripped.length()) / 2);
-			centered.add(" ".repeat(padding) + line);
-		}
-
-		return centered;
-	}
 }
