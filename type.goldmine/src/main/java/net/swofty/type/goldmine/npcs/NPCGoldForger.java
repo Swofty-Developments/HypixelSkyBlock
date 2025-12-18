@@ -3,12 +3,15 @@ package net.swofty.type.goldmine.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.goldmine.gui.GUIShopGoldForger;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCGoldForger extends HypixelNPC {
+public class NPCGoldForger extends NPCDialogue {
 
 	public NPCGoldForger() {
 		super(new NPCParameters() {
@@ -40,10 +43,29 @@ public class NPCGoldForger extends HypixelNPC {
 	}
 
 	@Override
-	public void onClick(PlayerClickNPCEvent event) {
-		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
-		player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+	public void onClick(PlayerClickNPCEvent e) {
+		SkyBlockPlayer player = (SkyBlockPlayer) e.player();
+		if (isInDialogue(player)) return;
+		boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_GOLD_FORGER);
 
+		if (!hasSpokenBefore) {
+			setDialogue(player, "hello").thenRun(() -> {
+				player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_GOLD_FORGER, true);
+			});
+			return;
+		}
+
+		new GUIShopGoldForger().open(player);
+	}
+
+	@Override
+	public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+		return new NPCDialogue.DialogueSet[] {
+				NPCDialogue.DialogueSet.builder()
+						.key("hello").lines(new String[]{
+						"I love goooold!",
+						"Click me again to open the Gold Forger Shop!"
+						}).build(),
+		};
 	}
 }
