@@ -140,7 +140,16 @@ public abstract class HypixelNPC {
 		});
 	}
 
-	public abstract void onClick(PlayerClickNPCEvent e);
+	public abstract void onClick(PlayerClickNPCEvent event);
+
+	/**
+	 * Called when a NPC is called (with an Abiphone) by a player.
+	 *
+	 * @param player The player who called the NPC.
+	 */
+	public void onCalled(HypixelPlayer player) {
+
+	}
 
 	public void register() {
 		npcs.add(this);
