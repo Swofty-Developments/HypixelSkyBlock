@@ -5,7 +5,6 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
-import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -40,7 +39,7 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public Integer getLevel() {
-		return 1;
+		return 7;
 	}
 
 	@Override
@@ -60,7 +59,7 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 		return List.of(
 				new LastEntityDamagerTarget(this, 16), // First target the last entity which attacked you
 				new ClosestEntityRegionTarget(this,
-						16,
+						6,
 						entity -> entity instanceof SkyBlockPlayer,
 						RegionType.LAPIS_QUARRY) // If there is none, target the nearest player
 		);
@@ -71,8 +70,13 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 		return ItemStatistics.builder()
 				.withBase(ItemStatistic.HEALTH, 200D)
 				.withBase(ItemStatistic.DAMAGE, 50D)
-				.withBase(ItemStatistic.SPEED, 100D)
+				.withBase(ItemStatistic.SPEED, 56D)
 				.build();
+	}
+
+	@Override
+	public float getBaseSpeed() {
+		return 0.23f;
 	}
 
 	@Override
@@ -108,7 +112,7 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public OtherLoot getOtherLoot() {
-		return new OtherLoot(6, 1, 1);
+		return new OtherLoot(12, 5, 10);
 	}
 
 	@Override
@@ -133,7 +137,7 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public GUIMaterial getGuiMaterial() {
-		return new GUIMaterial(Material.SEA_LANTERN);
+		return new GUIMaterial("e9f7979b25001087969d58c06e14d00b8dab57dab060b4c8b483c1b7f869940");
 	}
 
 	@Override
