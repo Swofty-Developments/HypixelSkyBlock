@@ -72,19 +72,19 @@ public enum RegionType {
 	DIAMOND_RESERVE("Diamond Reserve", DiamondReserveConfiguration.class),
 	OBSIDIAN_SANCTUARY("Obsidian Sanctuary", ObsidianSanctuaryConfiguration.class),
 
-	DWARVEN_VILLAGE("Dwarven Village"),
-	DWARVEN_MINES("Dwarven Mines", "§2"),
-	GOBLIN_BURROWS("Goblin Burrows"),
-	THE_MIST("The Mist", "§8"),
-	GREAT_ICE_WALL("Great Ice Wall"),
-	GATES_TO_THE_MINES("Gates to the Mines"),
-	RAMPARTS_QUARRY("Rampart's Quarry"),
-	FORGE_BASIN("Forge Basin"),
-	THE_FORGE("The Forge"),
-	CLIFFSIDE_VEINS("Cliffside Veins"),
-	ROYAL_MINES("Royal Mines"),
-	DIVANS_GATEWAY("Divan's Gateway"),
-	FAR_RESERVE("Far Reserve");
+	DWARVEN_VILLAGE("Dwarven Village", DwarvenMinesConfiguration.class),
+	DWARVEN_MINES("Dwarven Mines", "§2", DwarvenMinesConfiguration.class),
+	GOBLIN_BURROWS("Goblin Burrows", DwarvenMinesConfiguration.class),
+	THE_MIST("The Mist", "§8", DwarvenMinesConfiguration.class),
+	GREAT_ICE_WALL("Great Ice Wall", DwarvenMinesConfiguration.class),
+	GATES_TO_THE_MINES("Gates to the Mines", DwarvenMinesConfiguration.class),
+	RAMPARTS_QUARRY("Rampart's Quarry", DwarvenMinesConfiguration.class),
+	FORGE_BASIN("Forge Basin", DwarvenMinesConfiguration.class),
+	THE_FORGE("The Forge", DwarvenMinesConfiguration.class),
+	CLIFFSIDE_VEINS("Cliffside Veins", DwarvenMinesConfiguration.class),
+	ROYAL_MINES("Royal Mines", DwarvenMinesConfiguration.class),
+	DIVANS_GATEWAY("Divan's Gateway", DwarvenMinesConfiguration.class),
+	FAR_RESERVE("Far Reserve", DwarvenMinesConfiguration.class);
 
 	private final String name;
 	private final String color;

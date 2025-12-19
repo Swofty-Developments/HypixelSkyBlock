@@ -1,4 +1,4 @@
-package net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines;
+package net.swofty.type.skyblockgeneric.region.mining.configurations;
 
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
@@ -9,34 +9,27 @@ import net.swofty.type.skyblockgeneric.region.SkyBlockMiningConfiguration;
 
 import java.util.List;
 
-public class LapisQuarryConfiguration extends SkyBlockMiningConfiguration {
+public class DwarvenMinesConfiguration extends SkyBlockMiningConfiguration {
 
     @Override
     public MiningTask handleStageOne(MiningTask task, Pos brokenBlock) {
-        task.setIntermediaryBlock(Block.COBBLESTONE);
-
+        task.setIntermediaryBlock(Block.BEDROCK);
         Block regenerationBlock;
-
         regenerationBlock = getRandomBlock(
-                new RegenerationConfig(30, Block.LAPIS_ORE),
-                new RegenerationConfig(70, Block.STONE));
-
+                new RegenerationConfig(3, Block.POLISHED_DIORITE), // TODO: use chance from task.getPlayerWhoInitiated's HOTM
+                new RegenerationConfig(97, task.getInitialMinedBlock()));
         task.setReviveBlock(regenerationBlock);
-
         return task;
     }
 
     @Override
     public MiningTask handleStageTwo(MiningTask task, Pos brokenBlock) {
-        task.setIntermediaryBlock(Block.BEDROCK);
-        task.setReviveBlock(Block.COBBLESTONE);
-
         return task;
     }
 
     @Override
     public List<Material> getMineableBlocks(Instance instance, Point point) {
-        return List.of(Material.LAPIS_ORE, Material.COBBLESTONE, Material.STONE);
+        return List.of(Material.CYAN_TERRACOTTA, Material.GRAY_WOOL, Material.LIGHT_BLUE_WOOL, Material.PRISMARINE, Material.DARK_PRISMARINE, Material.PRISMARINE_BRICKS, Material.POLISHED_DIORITE);
     }
 
     @Override
