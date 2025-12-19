@@ -71,13 +71,8 @@ public class MobGraveyardZombieVillager extends BestiaryMob implements RegionPop
 		return ItemStatistics.builder()
 				.withBase(ItemStatistic.HEALTH, 120D)
 				.withBase(ItemStatistic.DAMAGE, 24D)
-				.withBase(ItemStatistic.SPEED, 56D)
+				.withBase(ItemStatistic.SPEED, 100D)
 				.build();
-	}
-
-	@Override
-	public float getBaseSpeed() {
-		return 0.23f;
 	}
 
 	@Override
