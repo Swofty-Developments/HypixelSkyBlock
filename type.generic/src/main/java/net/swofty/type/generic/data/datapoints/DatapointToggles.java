@@ -73,6 +73,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_BEA(false),
             HAS_SPOKEN_TO_TIA(false),
             HAS_SPOKEN_TO_LIFT_OPERATOR(false),
+            HAS_SPOKEN_TO_LAZY_MINER(false),
             HAS_SPOKEN_TO_CURATOR(false),
             HAS_SPOKEN_TO_MADAME_ELEANOR(false),
             HAS_DONE_COAL_TRADE_WITH_BLACKSMITH(false),
@@ -89,6 +90,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_WOOL_WEAVER(false),
             HAS_SPOKEN_TO_MAD_REDSTONE_ENGINEER(false),
             HAS_SPOKEN_TO_ZOG(false),
+            HAS_FOUND_LAZY_MINER_PICKAXE(false),
             PAPER_ICONS(false),
             ;
 
