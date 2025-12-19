@@ -56,7 +56,10 @@ public class ItemLore {
 		if (recombobulated) rarity = rarity.upgrade();
 
 		String displayName;
-		if (handler.getPotentialType() != null) {
+		if (item.hasComponent(CustomDisplayNameComponent.class)) {
+			CustomDisplayNameComponent customDisplayName = item.getComponent(CustomDisplayNameComponent.class);
+			displayName = customDisplayName.getDisplayName(item);
+		} else if (handler.getPotentialType() != null) {
 			displayName = handler.getPotentialType().getDisplayName();
 		} else {
 			Material material = stack.material();
