@@ -51,7 +51,7 @@ public class GUILiftOperator extends HypixelInventoryGUI {
 					);
 					List<String> discoveredZonesList = discoveredZones.getValue();
 
-					if (!discoveredZonesList.contains(location.name())) {
+					if (!discoveredZonesList.contains(location.name()) && location != LiftLocation.DWARVEN_MINES) {
 						player.sendMessage("§cYou have not discovered the " + location.prettyName() + " yet!");
 						return;
 					}
@@ -67,7 +67,7 @@ public class GUILiftOperator extends HypixelInventoryGUI {
 							DatapointStringList.class
 					);
 					List<String> discoveredZonesList = discoveredZones.getValue();
-					if (!discoveredZonesList.contains(location.name())) {
+					if (!discoveredZonesList.contains(location.name()) && location != LiftLocation.DWARVEN_MINES) {
 						return ItemStackCreator.getSingleLoreStack("§a" + location.prettyName(), "§e", location.material, 1, "§7Click to teleport to the §b" + location.prettyName() + "§7!\n\n§cNot discovered yet!");
 					}
 					return ItemStackCreator.getSingleLoreStack("§a" + location.prettyName(), "§e", location.material, 1, "§7Click to teleport to the §b" + location.prettyName() + "§7!\n\n§eClick to travel!");
