@@ -6,7 +6,6 @@ import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
@@ -21,11 +20,10 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
+import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ArmorComponent;
@@ -36,6 +34,7 @@ import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,229 +45,210 @@ import java.util.Map;
 
 @Setter
 public abstract class SkyBlockMob extends EntityCreature {
-	@Getter
-	private static List<SkyBlockMob> mobs = new ArrayList<>();
-	@Getter
-	private long lastAttack = System.currentTimeMillis();
-	@Getter
-	private boolean hasBeenDamaged = false;
+    @Getter
+    private static List<SkyBlockMob> mobs = new ArrayList<>();
+    @Getter
+    private long lastAttack = System.currentTimeMillis();
+    @Getter
+    private boolean hasBeenDamaged = false;
 
-	public SkyBlockMob(EntityType entityType) {
-		super(entityType);
-		init();
-	}
+    public SkyBlockMob(EntityType entityType) {
+        super(entityType);
+        init();
+    }
 
-	public static void runRegionPopulators(Scheduler scheduler) {
-		scheduler.submitTask(() -> {
-			if (SkyBlockGenericLoader.getLoadedPlayers().isEmpty()) return TaskSchedule.seconds(10);
+    private void init() {
+        this.setCustomNameVisible(true);
 
-			MobRegistry.getMobsToRegionPopulate().forEach(mobRegistry -> {
-				RegionPopulator regionPopulator = (RegionPopulator) mobRegistry.getMobCache();
+        this.getAttribute(Attribute.MAX_HEALTH)
+                .setBaseValue(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
+        this.getAttribute(Attribute.MOVEMENT_SPEED)
+                .setBaseValue((float) ((getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
+        this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
-				regionPopulator.getPopulators().forEach(populator -> {
-					RegionType regionType = populator.regionType();
-					int minimumAmountToPopulate = populator.minimumAmountToPopulate();
+        this.setCustomName(Component.text(
+                "§8[§7Lv" + getLevel() + "§8] §c"
+                        + getMobTypes().getFirst().getColor() + getMobTypes().getFirst().getSymbol() + "§c "
+                        + getDisplayName()
+                        + " §a" + Math.round(getHealth())
+                        + "§f/§a"
+                        + Math.round(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue())
+        ));
 
-					int amountInRegion = 0;
+        setAutoViewable(true);
+        setAutoViewEntities(true);
+        this.addAIGroup(getGoalSelectors(), getTargetSelectors());
+    }
 
-					for (SkyBlockMob mob : SkyBlockRegion.getMobsInRegion(regionType)) {
-						if (!MobRegistry.getFromMob(mob).equals(mobRegistry)) {
-							continue;
-						}
+    @Override
+    public void spawn() {
+        super.spawn();
+        mobs.add(this);
+    }
 
-						amountInRegion++;
-					}
+    public abstract String getDisplayName();
+    public abstract Integer getLevel();
+    public abstract List<GoalSelector> getGoalSelectors();
+    public abstract List<TargetSelector> getTargetSelectors();
+    public abstract ItemStatistics getBaseStatistics();
+    public abstract @Nullable SkyBlockLootTable getLootTable();
+    public abstract SkillCategories getSkillCategory();
+    public abstract long damageCooldown();
+    public abstract OtherLoot getOtherLoot();
+    public abstract List<MobType> getMobTypes();
 
-					if (amountInRegion < minimumAmountToPopulate) {
-						for (int i = 0; i < minimumAmountToPopulate - amountInRegion; i++)
-							RegionPopulator.populateRegion(mobRegistry, populator);
-					}
-				});
-			});
+    public ItemStatistics getStatistics() {
+        ItemStatistics statistics = getBaseStatistics().clone();
+        ItemStatistics toSubtract = ItemStatistics.builder()
+            .withBase(ItemStatistic.HEALTH, (double) getHealth())
+            .build();
 
-			return TaskSchedule.seconds(5);
-		});
-	}
+        return statistics.sub(toSubtract);
+    }
 
-	public static @NonNull List<SkyBlockMob> getMobFromFuzzyPosition(Pos position) {
-		List<SkyBlockMob> mobs = new ArrayList<>();
-		for (SkyBlockMob mob : getMobs()) {
-			if (MathUtility.isWithinSameBlock(mob.getPosition(), position)) {
-				mobs.add(mob);
-			}
-		}
-		return mobs;
-	}
+    @Override
+    public boolean damage(@NotNull Damage damage) {
+        boolean toReturn = super.damage(damage);
 
-	private void init() {
-		this.setCustomNameVisible(true);
+        setHasBeenDamaged(true);
 
-		this.getAttribute(Attribute.MAX_HEALTH)
-				.setBaseValue(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
-		this.getAttribute(Attribute.MOVEMENT_SPEED)
-				.setBaseValue(getBaseSpeed() * (getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 100));
-		this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
+        Entity sourcePoint = damage.getSource();
+        if (sourcePoint != null) {
+            takeKnockback(0.4f,
+                    Math.sin(sourcePoint.getPosition().yaw() * Math.PI / 180),
+                    -Math.cos(sourcePoint.getPosition().yaw() * Math.PI / 180));
+        }
 
-		this.set(DataComponents.CUSTOM_NAME, Component.text(
-				"§8[§7Lv" + getLevel() + "§8] §c"
-						+ getMobTypes().getFirst().getColor() + getMobTypes().getFirst().getSymbol() + "§c "
-						+ getDisplayName()
-						+ " §a" + Math.round(getHealth())
-						+ "§f/§a"
-						+ Math.round(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue())
-		));
+        this.setCustomName(Component.text(
+                "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
+                        + " §a" + Math.round(getHealth())
+                        + "§f/§a"
+                        + Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
+        ));
 
-		setAutoViewable(true);
-		setAutoViewEntities(true);
-		this.addAIGroup(getGoalSelectors(), getTargetSelectors());
-	}
+        return toReturn;
+    }
 
-	@Override
-	public void spawn() {
-		super.spawn();
-		mobs.add(this);
-	}
+    @Override
+    public void kill() {
+        super.kill();
+        mobs.remove(this);
 
-	public abstract String getDisplayName();
+        if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer player)) return;
 
-	public abstract Integer getLevel();
+        HypixelEventHandler.callCustomEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
-	public abstract List<GoalSelector> getGoalSelectors();
+        player.getSkills().increase(player, getSkillCategory(), (double) getOtherLoot().getSkillXPAmount());
+        player.playSound(Sound.sound(Key.key("entity." + getEntityType().name().toLowerCase().replace("minecraft:", "") + ".death"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
 
-	public abstract List<TargetSelector> getTargetSelectors();
+        if (getLootTable() == null) return;
+        if (getLastDamageSource() == null) return;
+        if (getLastDamageSource().getAttacker() == null) return;
 
-	public abstract ItemStatistics getBaseStatistics();
+        Map<ItemType, SkyBlockLootTable.LootRecord> drops = new HashMap<>();
 
-	public abstract @Nullable SkyBlockLootTable getLootTable();
+        for (SkyBlockLootTable.LootRecord record : getLootTable().getLootTable()) {
+            ItemType itemType = record.getItemType();
 
-	public abstract SkillCategories getSkillCategory();
+            SkyBlockItem item = new SkyBlockItem(itemType);
+            List<LootAffector> affectors = new ArrayList<>();
 
-	public abstract long damageCooldown();
+            affectors.add(LootAffector.MAGIC_FIND);
+            if (item.hasComponent(ArmorComponent.class)) {
+                affectors.add(LootAffector.ENCHANTMENT_LUCK);
+            } else {
+                affectors.add(LootAffector.ENCHANTMENT_LOOTING);
+            }
 
-	public abstract OtherLoot getOtherLoot();
+            double adjustedChance = record.getChancePercent();
 
-	public abstract List<MobType> getMobTypes();
+            for (LootAffector affector : affectors) {
+                adjustedChance = affector.getAffector().apply(player, adjustedChance, this);
+            }
 
-	public ItemStatistics getStatistics() {
-		ItemStatistics statistics = getBaseStatistics().clone();
-		ItemStatistics toSubtract = ItemStatistics.builder()
-				.withBase(ItemStatistic.HEALTH, (double) getHealth())
-				.build();
+            if (Math.random() * 100 < adjustedChance && record.getShouldCalculate().apply(player)) {
+                drops.put(itemType, record);
+            }
+        }
 
-		return statistics.sub(toSubtract);
-	}
+        for (ItemType itemType : drops.keySet()) {
+            SkyBlockLootTable.LootRecord record = drops.get(itemType);
 
-	@Override
-	public boolean damage(@NotNull Damage damage) {
-		boolean toReturn = super.damage(damage);
+            if (SkyBlockLootTable.LootRecord.isNone(record)) continue;
 
-		setHasBeenDamaged(true);
+            SkyBlockItem item = new SkyBlockItem(itemType, record.getAmount());
+            ItemType droppedItemLinker = item.getAttributeHandler().getPotentialType();
 
-		Entity sourcePoint = damage.getSource();
-		if (sourcePoint != null) {
-			takeKnockback(0.4f,
-					Math.sin(sourcePoint.getPosition().yaw() * Math.PI / 180),
-					-Math.cos(sourcePoint.getPosition().yaw() * Math.PI / 180));
-		}
+            if (player.canInsertItemIntoSacks(droppedItemLinker, record.getAmount())) {
+                player.getSackItems().increase(droppedItemLinker, record.getAmount());
+            } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
+                player.addAndUpdateItem(item);
+            } else {
+                DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
+                droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
+            }
+        }
+    }
 
-		this.set(DataComponents.CUSTOM_NAME, Component.text(
-				"§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
-						+ " §a" + Math.round(getHealth())
-						+ "§f/§a"
-						+ Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
-		));
+    public static void runRegionPopulators(Scheduler scheduler) {
+        scheduler.submitTask(() -> {
+            if (SkyBlockGenericLoader.getLoadedPlayers().isEmpty()) return TaskSchedule.seconds(10);
 
-		return toReturn;
-	}
+            MobRegistry.getMobsToRegionPopulate().forEach(mobRegistry -> {
+                RegionPopulator regionPopulator = (RegionPopulator) mobRegistry.getMobCache();
 
-	/**
-	 * Get the base speed of the mob. This must be set manually and *should* reflect the vanilla speed of the mob.
-	 * This is required until the following pull request is merged this Minestom: <a href="https://github.com/Minestom/Minestom/pull/2944/changes">#2944</a>
-	 *
-	 * @return base speed of the mob.
-	 */
-	public float getBaseSpeed() {
-		return 0.6f; // not exactly 1.0f, due to most mobs being slower than that, and currently not all NPCs have this overridden.
-	}
+                regionPopulator.getPopulators().forEach(populator -> {
+                    RegionType regionType = populator.regionType();
+                    int minimumAmountToPopulate = populator.minimumAmountToPopulate();
 
-	@Override
-	public void kill() {
-		super.kill();
-		mobs.remove(this);
+                    int amountInRegion = 0;
 
-		if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer player)) return;
+                    for (SkyBlockMob mob : SkyBlockRegion.getMobsInRegion(regionType)) {
+                        if (!MobRegistry.getFromMob(mob).equals(mobRegistry)) {
+                            continue;
+                        }
 
-		HypixelEventHandler.callCustomEvent(new PlayerKilledSkyBlockMobEvent(player, this));
+                        amountInRegion++;
+                    }
 
-		player.getSkills().increase(player, getSkillCategory(), (double) getOtherLoot().getSkillXPAmount());
-		player.playSound(Sound.sound(Key.key("entity." + getEntityType().name().toLowerCase().replace("minecraft:", "") + ".death"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
+                    if (amountInRegion < minimumAmountToPopulate) {
+                        for (int i = 0; i < minimumAmountToPopulate - amountInRegion; i++)
+                            RegionPopulator.populateRegion(mobRegistry, populator);
+                    }
+                });
+            });
 
-		if (getLootTable() == null) return;
-		if (getLastDamageSource() == null) return;
-		if (getLastDamageSource().getAttacker() == null) return;
+            return TaskSchedule.seconds(5);
+        });
+    }
 
-		Map<ItemType, SkyBlockLootTable.LootRecord> drops = new HashMap<>();
+    @Override
+    public void tick(long time) {
+        Instance instance = getInstance();
+        Pos position = getPosition();
 
-		for (SkyBlockLootTable.LootRecord record : getLootTable().getLootTable()) {
-			ItemType itemType = record.getItemType();
+        if (instance == null) {
+            return;
+        }
 
-			SkyBlockItem item = new SkyBlockItem(itemType);
-			List<LootAffector> affectors = new ArrayList<>();
+        if (!instance.isChunkLoaded(position)) {
+            instance.loadChunk(position).join();
+        }
 
-			affectors.add(LootAffector.MAGIC_FIND);
-			if (item.hasComponent(ArmorComponent.class)) {
-				affectors.add(LootAffector.ENCHANTMENT_LUCK);
-			} else {
-				affectors.add(LootAffector.ENCHANTMENT_LOOTING);
-			}
+        try {
+            super.tick(time);
+        } catch (Exception e) {
+            // Suppress odd warnings
+        }
+    }
 
-			double adjustedChance = record.getChancePercent();
-
-			for (LootAffector affector : affectors) {
-				adjustedChance = affector.getAffector().apply(player, adjustedChance, this);
-			}
-
-			if (Math.random() * 100 < adjustedChance && record.getShouldCalculate().apply(player)) {
-				drops.put(itemType, record);
-			}
-		}
-
-		for (ItemType itemType : drops.keySet()) {
-			SkyBlockLootTable.LootRecord record = drops.get(itemType);
-
-			if (SkyBlockLootTable.LootRecord.isNone(record)) continue;
-
-			SkyBlockItem item = new SkyBlockItem(itemType, record.getAmount());
-			ItemType droppedItemLinker = item.getAttributeHandler().getPotentialType();
-
-			if (player.canInsertItemIntoSacks(droppedItemLinker, record.getAmount())) {
-				player.getSackItems().increase(droppedItemLinker, record.getAmount());
-			} else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
-				player.addAndUpdateItem(item);
-			} else {
-				DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
-				droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
-			}
-		}
-	}
-
-	@Override
-	public void tick(long time) {
-		Instance instance = getInstance();
-		Pos position = getPosition();
-
-		if (instance == null) {
-			return;
-		}
-
-		if (!instance.isChunkLoaded(position)) {
-			instance.loadChunk(position).join();
-		}
-
-		try {
-			super.tick(time);
-		} catch (Exception e) {
-			// Suppress odd warnings
-		}
-	}
+    public static @NonNull List<SkyBlockMob> getMobFromFuzzyPosition(Pos position) {
+        List<SkyBlockMob> mobs = new ArrayList<>();
+        for (SkyBlockMob mob : getMobs()) {
+            if (MathUtility.isWithinSameBlock(mob.getPosition(), position)) {
+                mobs.add(mob);
+            }
+        }
+        return mobs;
+    }
 }
