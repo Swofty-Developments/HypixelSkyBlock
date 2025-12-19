@@ -70,13 +70,8 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 		return ItemStatistics.builder()
 				.withBase(ItemStatistic.HEALTH, 200D)
 				.withBase(ItemStatistic.DAMAGE, 50D)
-				.withBase(ItemStatistic.SPEED, 56D)
+				.withBase(ItemStatistic.SPEED, 100D)
 				.build();
-	}
-
-	@Override
-	public float getBaseSpeed() {
-		return 0.23f;
 	}
 
 	@Override
