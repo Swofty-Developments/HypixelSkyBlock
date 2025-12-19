@@ -36,7 +36,7 @@ public class LapisQuarryConfiguration extends SkyBlockMiningConfiguration {
 
     @Override
     public List<Material> getMineableBlocks(Instance instance, Point point) {
-        return List.of(Material.LAPIS_LAZULI, Material.COBBLESTONE, Material.STONE);
+        return List.of(Material.LAPIS_ORE, Material.COBBLESTONE, Material.STONE);
     }
 
     @Override
