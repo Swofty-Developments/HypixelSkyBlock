@@ -21,14 +21,11 @@ public class ActionUseShortBow implements HypixelEventClass {
             BowComponent bow = item.getComponent(BowComponent.class);
 
             if (!bow.isShouldBeArrow()) {
-                // Bow is a "shortbow", call event now
-                bow.onBowShoot(player, item);
+                // Bow is a "shortbow", fires instantly at full power
+                bow.onBowShoot(player, item, 1.0);
                 event.setCancelled(true);
             } else {
-                // If there's no arrow, also cancel the event
-                if (player.getArrow() == null) {
-                    event.setCancelled(true);
-                }
+                // If there's no arrow, then we just do nothing
             }
         }
     }

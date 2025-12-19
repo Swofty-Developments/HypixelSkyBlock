@@ -40,6 +40,7 @@ import net.swofty.type.skyblockgeneric.event.value.ValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.MaxHealthValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.MiningValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
 import net.swofty.type.skyblockgeneric.item.components.ArrowComponent;
 import net.swofty.type.skyblockgeneric.item.components.SackComponent;
@@ -140,6 +141,9 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getFullDisplayName(displayEmblem, experience.getLevel().getColor());
     }
 
+    public DatapointArcheryPractice.ArcheryPracticeData getArcheryPracticeData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.ARCHERY_PRACTICE, DatapointArcheryPractice.class).getValue();
+    }
 
     public String getFullDisplayName(SkyBlockEmblems.SkyBlockEmblem displayEmblem, String levelColor) {
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
@@ -272,6 +276,22 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return Stream.of(getInventory().getItemStacks())
                 .map(SkyBlockItem::new)
                 .toArray(SkyBlockItem[]::new);
+    }
+
+    public Map<Integer, SkyBlockItem> getAllOfComponentInInventory(Class<? extends SkyBlockItemComponent> component) {
+        Map<Integer, SkyBlockItem> map = new HashMap<>();
+
+        for (int i = 0; i < 36; i++) {
+            ItemStack stack = getInventory().getItemStack(i);
+            SkyBlockItem item = new SkyBlockItem(stack);
+            if (item.getAttributeHandler().getPotentialType() == null) continue;
+
+            if (item.hasComponent(component)) {
+                map.put(i, item);
+            }
+        }
+
+        return map;
     }
 
     public Map<Integer, Integer> getAllOfTypeInInventory(ItemType type) {

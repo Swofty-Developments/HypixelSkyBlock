@@ -376,6 +376,9 @@ public class SkyBlockDataHandler extends DataHandler {
         DEATHS("deaths", false, false, false,
                 DatapointDeaths.class, new DatapointDeaths("deaths")),
 
+        ARCHERY_PRACTICE("archery_practice", false, false, false,
+                DatapointArcheryPractice.class, new DatapointArcheryPractice("archery_practice")),
+
         SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false,
                 DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
 

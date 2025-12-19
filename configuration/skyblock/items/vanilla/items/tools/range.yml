@@ -3,6 +3,8 @@ items:
     material: BOW
     rarity: COMMON
     components:
+      - id: BOW
+        handler_id: STANDARD_BOW_HANDLER
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
