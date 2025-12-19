@@ -75,9 +75,9 @@ bossBar:
 title:
   enable: false
   # Set title text value empty, if you need only subtitle
-  title: ''
+  title: '{"text": ""}'
   # Set subtitle text value empty, if you need only title
-  subtitle: ''
+  subtitle: '{"text": ""}'
   # Fade in time in ticks (1 sec = 20 ticks)
   fadeIn: 10
   # Stay time in ticks
