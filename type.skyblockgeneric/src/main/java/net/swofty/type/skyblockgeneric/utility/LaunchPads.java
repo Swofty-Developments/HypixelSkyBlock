@@ -112,7 +112,7 @@ public enum LaunchPads {
 			ServerType.SKYBLOCK_DEEP_CAVERNS,
 			new Pos(-4, 119, -491.5),
 			(player) -> player.sendTo(ServerType.SKYBLOCK_DEEP_CAVERNS),
-			(player) -> true,
+			(player) -> player.getSkills().getCurrentLevel(SkillCategories.MINING) >= 5,
 			"",
 			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
 					.pos(new Pos(-7, 69, -396))
