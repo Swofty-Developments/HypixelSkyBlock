@@ -1,14 +1,19 @@
 package net.swofty.type.goldmine.villagers;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+import net.minestom.server.item.ItemStack;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.type.goldmine.gui.GUIRusty;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.AbiphoneComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class VillagerRusty extends HypixelVillagerNPC {
+import java.util.stream.Stream;
+
+public class VillagerRusty extends NPCVillagerDialogue {
 	public VillagerRusty() {
 		super(new NPCVillagerParameters() {
 			@Override
@@ -36,7 +41,73 @@ public class VillagerRusty extends HypixelVillagerNPC {
 	@Override
 	public void onClick(PlayerClickVillagerNPCEvent event) {
 		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
-		player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+		if (isInDialogue(player)) return;
+
+		boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY);
+		boolean isAboveSkyBlockLevel6 = player.getSkyBlockExperience().getLevel().getLevel() >= 6;
+
+		if (!hasSpokenBefore) {
+			if (isAboveSkyBlockLevel6) {
+				setDialogue(player, "first-interaction-over-sb-6").thenRun(() -> {
+					player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY, true);
+				});
+			} else {
+				setDialogue(player, "first-interaction-below-sb-6").thenRun(() -> {
+					player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY, true);
+				});
+			}
+			return;
+		}
+
+		ItemStack itemStack = player.getItemInMainHand();
+		SkyBlockItem item = new SkyBlockItem(itemStack);
+		if (item.hasComponent(AbiphoneComponent.class)) {
+			setDialogue(player, "abiphone").thenRun(() -> {
+				// add to the Abiphone
+			});
+		}
+
+		new GUIRusty().open(player);
+	}
+
+	@Override
+	public DialogueSet[] getDialogueSets() {
+		return Stream.of(
+				NPCVillagerDialogue.DialogueSet.builder()
+						.key("found-pickaxe").lines(new String[]{
+								"§e[NPC] Rusty§f: You found the Lazy Miner's pickaxe!",
+								"§e[NPC] Rusty§f: I'll have to put it in my stores.",
+								"§e[NPC] Rusty§f: Click me again!"
+						}).build(),
+				NPCVillagerDialogue.DialogueSet.builder()
+						.key("first-interaction-over-sb-6").lines(new String[]{
+								"§e[NPC] Rusty§f: Hi, I’m the janitor of this mine.",
+								"§e[NPC] Rusty§f: You would not believe how many people leave ingots and stones behind them!",
+								"§e[NPC] Rusty§f: It drives me insane, but at least you unlocked §aAuto-pickup§f.",
+								"§e[NPC] Rusty§f: It makes my job a lot easier, but despite that, I still find so many items on the ground.",
+								"§e[NPC] Rusty§f: Maybe some of those items are yours? In which case I'll let you buy them back."
+						}).build(),
+				NPCVillagerDialogue.DialogueSet.builder()
+						.key("first-interaction-below-sb-6").lines(new String[]{
+								"§e[NPC] Rusty§f: Hi, I’m the janitor of this mine.",
+								"§e[NPC] Rusty§f: You would not believe how many people leave ingots and stones behind them!",
+								"§e[NPC] Rusty§f: It drives me insane, but at least you'll unlock §aAuto-pickup §fat §3SkyBlock Level 6.",
+								"§e[NPC] Rusty§f: It makes my job a lot easier, but despite that, I still find so many items on the ground.",
+								"§e[NPC] Rusty§f: Maybe some of those items are yours? In which case I'll let you buy them back."
+						}).build(),
+				NPCVillagerDialogue.DialogueSet.builder()
+						.key("abiphone").lines(new String[]{ // when clicking with an Abiphone
+								"§e[NPC] Rusty§f: §b✆ Did I find an Abiphone?",
+								"§e[NPC] Rusty§f: §b✆ Yes, sometimes I do find one lying around.",
+								"§e[NPC] Rusty§f: §b✆ What?",
+								"§e[NPC] Rusty§f: §b✆ You?",
+								"§e[NPC] Rusty§f: §b✆ You want my contact?",
+								"§e[NPC] Rusty§f: §b✆ Me?",
+								"§e[NPC] Rusty§f: §b✆ The janitor?",
+								"§e[NPC] Rusty§f: §b✆ I...",
+								"§e[NPC] Rusty§f: §b✆ I don't... don't know what to say...",
+								"§e[NPC] Rusty§f: §b✆ Yes of course you can have it!",
+						}).build()
+		).toArray(NPCVillagerDialogue.DialogueSet[]::new);
 	}
 }
