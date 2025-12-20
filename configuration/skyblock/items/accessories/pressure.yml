@@ -1,0 +1,34 @@
+items:
+  - id: PRESSURE_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    default_statistics:
+      pressure_resistance: 10.0
+    components:
+      - id: SKULL_HEAD
+        texture: 4c84e82d57afdc4bfd26a3aedbd4bca7fddf0d9b9a06ed317ce0ff15afe1053c
+      - id: TIERED_TALISMAN
+        base_tier: PRESSURE_TALISMAN
+        tier: 1
+  - id: PRESSURE_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      pressure_resistance: 20.0
+    components:
+      - id: SKULL_HEAD
+        texture: ed387797e8699db520d0cfcf2ac69270542f6fbba408d259b6d8a0e435efd3af
+      - id: TIERED_TALISMAN
+        base_tier: PRESSURE_TALISMAN
+        tier: 2
+  - id: PRESSURE_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      pressure_resistance: 30.0
+    components:
+      - id: SKULL_HEAD
+        texture: e76edf328d2f8e8b6532399c82461a4e4880753b6e9f926604884aecf0dd5d33
+      - id: TIERED_TALISMAN
+        base_tier: PRESSURE_RING
+        tier: 3

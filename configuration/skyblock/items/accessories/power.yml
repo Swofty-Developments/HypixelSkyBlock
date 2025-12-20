@@ -1,0 +1,59 @@
+items:
+  - id: TALISMAN_OF_POWER
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Allows you to harness the power of"
+      - "§a2§7 Gemstones, although only half of"
+      - "§7the normal power can be harnessed!"
+    components:
+      - id: SKULL_HEAD
+        texture: c6736fd95d3a6a4aaac46709a07aec7f1c38f0a3aae573e6f483388819412b65
+      - id: TIERED_TALISMAN
+        base_tier: TALISMAN_OF_POWER
+        tier: 1
+      - id: GEMSTONE
+        gemstones:
+          - "RUBY:50000"
+          - "AMBER:50000"
+  - id: RING_OF_POWER
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Allows you to harness the power of"
+      - "§a4§7 Gemstones, although only half of"
+      - "§7the normal power can be harnessed!"
+    components:
+      - id: SKULL_HEAD
+        texture: 4528fe5dbe02e1d8d12186e2af98be1334ca7d596b7021ef7f978c7088b235fc
+      - id: TIERED_TALISMAN
+        base_tier: TALISMAN_OF_POWER
+        tier: 2
+      - id: GEMSTONE
+        gemstones:
+          - "RUBY:50000"
+          - "AMETHYST:50000"
+          - "JADE:50000"
+          - "AMBER:50000"
+  - id: ARTIFACT_OF_POWER
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§7Allows you to harness the power of"
+      - "§a7§7 Gemstones, although only half of"
+      - "§7the normal power can be harnessed!"
+    components:
+      - id: SKULL_HEAD
+        texture: 2b15c8645bbabc42352350b1c9d84af71966c4c56a86d03acd079ed57f3ead3f
+      - id: TIERED_TALISMAN
+        base_tier: RING_OF_POWER
+        tier: 3
+      - id: GEMSTONE
+        gemstones:
+          - "JADE:50000"
+          - "AMBER:50000"
+          - "TOPAZ:50000"
+          - "SAPPHIRE:50000"
+          - "AMETHYST:50000"
+          - "JASPER:50000"
+          - "RUBY:50000"

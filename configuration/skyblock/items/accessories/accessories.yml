@@ -1,86 +1,463 @@
 items:
-  - id: BAT_TALISMAN
-    material: PLAYER_HEAD
-    rarity: COMMON
-    default_statistics:
-      health: 1.0
-      speed: 1.0
-      intelligence: 1.0
-    components:
-      - id: SKULL_HEAD
-        texture: 9e99deef919db66ac2bd28d6302756ccd57c7f8b12b9dca8f41c3e0a04ac1cc
-      - id: ACCESSORY
-  - id: BITS_TALISMAN
-    material: PLAYER_HEAD
-    rarity: COMMON
-    components:
-      - id: SKULL_HEAD
-        texture: 2ebadb1725aa85bb2810d0b73bf7cd74db3d9d8fc61c4cf9e543dbcc199187cc
-      - id: TALISMAN
+  # know issue:
+  # 1.pressure_resistance, respiration, pull and some other statistics cannot display in the lore
+  # 2.the default_statistics for sea_creature_chance less than 1.0 will display as 0 in the lore
+  # 3.currently there are 142 accessories, maybe including some rift accessories
+  #
+  # https://hypixel-skyblock.fandom.com/wiki/Accessories
+  # as of SkyBlock 0.23.5, 129 Accessories in the game (excluding their own upgrades) and another 138 from Dungeon Accessories
+  #
+  # ✅ - registered in ItemType.java
+  # ⭕ - implemented and registered some tiers
+  # ❌ - not registered and not implemented
+  # ====================================================================================================================
+  # ✅Farming Talisman
+  # ✅Farmer Orb
+  # ✅Night Vision Charm
+  # ✅Experience Artifact
+  # ✅Magnetic Talisman
+  # ✅Night Crystal
+  # ✅Day Crystal
+  # ✅Gravity Talisman
+  # ✅Fire Talisman
+  # ✅Lava Talisman
+  # ✅Wood Affinity Talisman
+  # ✅Skeleton Talisman
+  # ✅Village Affinity Talisman
+  # ✅Mine Affinity Talisman
+  # ✅Bits Talisman
+  # ✅Dante Talisman
+  # ✅Dante Ring
+  # ✅Jungle Amulet
+  # Trapper Crest
+  # ✅New Year Cake Bag
+  # Jacobus Register
+  # ✅Chumming Talisman
+  # General's Medallion
+  # ✅Potato Talisman
+  # Fish Affinity Talisman
+  # Pig's Foot
+  # Devour Ring
+  # Survivor Cube
+  # Melody's Hair
+  # Wolf Paw
+  # Beastmaster Crest
+  # Hegemony Artifact
+  # Catacombs Expert Ring
+  # Auto Recombobulator
+  # King Talisman
+  # Reaper Orb
+  # Handy Blood Chalice
+  # Pocket Espresso Machine
+  # Nether Artifact
+  # Blaze Talisman
+  # Pulse Ring
+  # Netherrack-Looking Sunshade
+  # Artifact of Control
+  # Pandora's Box
+  # Shen's Regalia
+  # Archaeologist's Compass
+  # Bingo Combat Talisman
+  # Jake's Plushie
+  # Sloth Hat of Celebration
+  # Future Calories Talisman
+  # Big Brain Talisman
+  # Miniaturized Tubulator
+  # Test Bucket Please Ignore
+  # Tiny Dancer
+  # Harmonious Surgery Toolkit
+  # Rift Prism
+  # Defective Monitor
+  # Punchcard Artifact
+  # Warding Trinket
+  # Vampire Dentist Relic
+  # Ring of Broken Love
+  # Book of Progression
+  # Atmospheric Filter
+  # Bucket of Dye
+  # Combo Mania
+  # Ring Of Eternal Love
+  # Satelite
+  # Runebook
+
+  # Agarimoo Talisman | Agarimoo Ring | Agarimoo Artifact
+  # Anita‘s Talisman | Anita‘s Ring | Anita‘s Artifact
+  # Bat Person Talisman | Bat Person Ring | Bat Person Artifact
+  # Bingo Talisman | Bingo Ring | Bingo Artifact | Bingo Relic
+  # Blood Donor Talisman | Blood Donor Ring | Blood Donor Artifact
+  # ✅Candy Talisman | Candy Ring | Candy Artifact | Candy Relic
+  # ✅Feather Talisman | Feather Ring | Feather Artifact
+  # Glacial Talisman | Glacial Ring | Glacial Artifact
+  # ✅Great Spook Talisman | Great Spook Ring | Great Spook Artifact
+  # ✅Intimidation Talisman | Intimidation Ring | Intimidation Artifact | Intimidation Relic
+  # ✅Potion Affinity Talisman | Potion Affinity Ring | Potion Affinity Artifact
+  # ⭕Talisman of Power | Ring of Power | Artifact of Power | Relic of Power
+  # ✅Pressure Talisman | Pressure Ring | Pressure Artifact
+  # ⭕Scavenger Talisman | Scavenger Ring | Scavenger Artifact
+  # ✅Sea Creature Talisman | Sea Creature Ring | Sea Creature Artifact
+  # ✅Speed Talisman | Speed Ring | Speed Artifact
+  # ⭕Talisman of Coins | Ring of Coins | Artifact of Coins | Relic of Coins
+  # ⭕Vaccine Talisman | Vaccine Ring | Vaccine Artifact
+  # ✅Zombie Talisman | Zombie Ring | Zombie Artifact
+  # Talisman of the Century | Ring of the Century
+  # ⭕Emerald Ring | Emerald Artifact
+  # Hunter Talisman | Hunter Ring
+  # Lush Talisman | Lush Ring | Lush Artifact
+  # Red Claw Talisman | Red Claw Ring | Red Claw Artifact
+  # Spider Talisman | Spider Ring | Spider Artifact
+  # Anguish Talisman | Anguish Ring | Anguish Artifact
+  # ✅Bat Talisman | Bat Ring | Bat Artifact
+  # Treasure Talisman | Treasure Ring | Treasure Artifact
+  # ✅Pesthunter Badge | Pesthunter Ring | Pesthunter Artifact | Pesthunter Relic
+  # Wolf Talisman | Wolf Ring
+  # Ender Artifact | Ender Relic
+  # ⭕Wither Artifact | Wither Relic
+  # Cat Talisman | Lynx Talisman | Cheetah Talisman
+  # ✅Nibble Chocolate Stick | Smooth Chocolate Bar | Rich Chocolate Chunk | Ganache Chocolate Slab | Prestige Chocolate Realm
+  # ✅White Gift Talisman | Green Gift Talisman | Blue Gift Talisman | Purple Gift Talisman | Gold Gift Talisman
+  # ✅Healing Talisman | Healing Ring
+  # ✅Personal Compactor 4000 | Personal Compactor 5000 | Personal Compactor 6000 | Personal Compactor 7000
+  # ✅Personal Deletor 4000 | Personal Deletor 5000 | Personal Deletor 6000 | Personal Deletor 7000
+  # ✅Piggy Bank | Cracked Piggy Bank | Broken Piggy Bank
+  # ✅Haste Ring | Haste Artifact
+  # ⭕Sumsung© G3 Abicase | Sumsung© GG Abicase | Rezar® Abicase | Blue™ but Red Abicase | Actually Blue™ Abicase | Blue™ but Green Abicase | Blue™ but Yellow Abicase | Lighter Blue™ Abicase
+  # Tarantula Talisman | Tarantula Ring
+  # Campfire Initiate Badge | Campfire Adept Badge | Campfire Cultist Badge | Campfire Scion Badge | Campfire God Badge
+  # Shiny Yellow Rock | Yellow Rock of Love | Mediocre Ring of Love | Rubbish Ring of Love | Modest Ring of Love | Refined Ring of Love | Classy Ring of Love | Exquisite Ring of Love | Invaluable Ring of Love | Legendary Ring of Love
+  # Crab Hat of Celebration (9 colors)
+  # Scarf's Studies | Scarf's Thesis | Scarf's Grimoire
+  # Raggedy Shark Tooth Necklace | Dull Shark Tooth Necklace | Honed Shark Tooth Necklace | Sharp Shark Tooth Necklace | Razor-sharp Shark Tooth Necklace
+  # Lucky Hoof | Eternal Hoof
+  # Green Jerry Talisman | Blue Jerry Talisman | Purple Jerry Talisman | Golden Jerry Artifact
+  # Titanium Talisman | Titanium Ring | Titanium Artifact | Titanium Relic
+  # Master Skulls - Tiers 1-7.
+  # Soulflow Pile | Soulflow Battery | Soulflow Supercell
+  # Burststopper Talisman | Burststopper Artifact
+  # Burning Kuudra Core | Fiery Kuudra Core | Infernal Kuudra Core
+  # Odger's Bronze Tooth | Odger's Silver Tooth | Odger's Gold Tooth | Odger's Diamond Tooth
+  # Crab Hat of Celebration - 2022 Edition
+  # Draconic Talisman | Draconic Ring | Draconic Artifact
+  # Kuudra Follower Artifact | Kuudra Follower Relic
+  # Crux Talisman | Crux Ring | Crux Artifact | Crux Relic | Crux Heirloom | Crux Chronomicon | Celestial Starstone
+  # Mineral Talisman | Glossy Mineral Talisman
+  # IQ Point | 2 IQ Points
+  # Seal Talisman |  Seal Ring
+  # Bluetooth Ring | Bluertooth Ring
+  # Frozen Chicken | Fried Frozen Chicken
+  # Junk Talisman | Junk Ring | Junk Artifact
+  # 6th Anniversary Balloon Hat
+  # Emperor's Talisman | Emperor's Ring | Emperor's Artifact
+  # Soul Campfire Initiate Badge | Soul Campfire Adept Badge | Soul Campfire Cultist Badge | Soul Campfire Scion Badge | Soul Campfire God Badge
+  # Moonglade Talisman | Moonglade Ring | Moonglade Artifact
+  # Respiration Talisman | Respiration Ring | Respiration Artifact
+  # Runeblade Talisman | Runeblade Ring | Runeblade Artifact
+  # Shady Ring | Crooked Artifact | Seal of the Family
+  # Cropie Talisman | Squash Ring | Fermento Artifact
+  # ⭕Bait Ring | Spiked Atrocity
+  # ⭕Blood God Crest | Blood God Sigil
   - id: FARMING_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
     default_statistics:
       speed: 10.0
+    lore:
+      - "§7Increases your §f✦ Speed §7by §a+10§7"
+      - "§7while held in the §bFarm§7, §bThe Barn§7,"
+      - "§7§eMushroom Desert§7, and §bGarden§7."
     components:
       - id: SKULL_HEAD
         texture: 9af328c87b068509aca9834eface197705fe5d4f0871731b7b21cd99b9fddc
       - id: TALISMAN
+  - id: VACCINE_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Reduces the effect of §2poison §7by §a10%§7."
+    components:
+      - id: SKULL_HEAD
+        texture: 71408ede8b4f444015c59abd5cd32b8769de51881edabcc15abb6519f5b49
+      - id: ACCESSORY
+  - id: FARMER_ORB
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Increases the regrowth rate of"
+      - "§7nearby crops on the public islands,"
+      - "§7regrowing an extra crop every §a3"
+      - "§7seconds."
+    components:
+      - id: SKULL_HEAD
+        texture: 557b354ce9bf8db0a7ed2afc79e27f28c3ccaaaf2c460a51993cac2b0564ef60
+      - id: ACCESSORY
+  - id: NIGHT_VISION_CHARM
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Grants Night Vision while this item is"
+      - "§7in your inventory."
+    components:
+      - id: SKULL_HEAD
+        texture: 7c3289afd2a5e97dc29ddc01baab9ee3489348cebb9f15d4df48c3d46861fd75
+      - id: ACCESSORY
+  - id: EXPERIENCE_ARTIFACT
+    material: ENCHANTED_BOOK
+    rarity: EPIC
+    lore:
+      - "§7Increase the experience orbs you"
+      - "§7gain by §a25% §7while this item is in your"
+      - "§7inventory or accessory bag."
+    components:
+      - id: ACCESSORY
+  - id: TALISMAN_OF_COINS
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Coins start appearing around you"
+      - "§7occasionally on public islands. Lucky!"
+    components:
+      - id: SKULL_HEAD
+        texture: 35a12dc77e8969fb775b9159c9d7e1999ea31a6a6e39a729b5ef8c876fc63c6a
+      - id: ACCESSORY
+  - id: MAGNETIC_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Increase the item pick up range by"
+      - "§a3x§7."
+    components:
+      - id: SKULL_HEAD
+        texture: 6b76ea41b3dcf8a48202cec8ab8fb42c671b35ce648d8613859a013a4ca12480
+      - id: ACCESSORY
+  - id: EMERALD_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Get §6+5 coins §7every minute!"
+    components:
+      - id: SKULL_HEAD
+        texture: a8e50d027da90dbea8a66088aba6f978eac8a7beb6561020f0289fcd43d89c68
+      - id: ACCESSORY
+  - id: DAY_CRYSTAL
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§7Increases your §c❁ Strength §7and §a❈"
+      - "§aDefense§7 by §a+5§7 during the Day."
+    components:
+      - id: SKULL_HEAD
+        texture: a51e52b1de97b534358b53cd2c9c45526086d2a6f0e0ae65e4ba2ff5c6290ec
+      - id: ACCESSORY
+  - id: NIGHT_CRYSTAL
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§7Increases your §c❁ Strength §7and §a❈"
+      - "§aDefense§7 by §a+5§7 during the Night."
+    components:
+      - id: SKULL_HEAD
+        texture: 8c46578ad58e976fa05478510889a58735a67c4dd022d398c04d56676f0dc171
+      - id: ACCESSORY
+  - id: GRAVITY_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Gives between §a+1§7 and §a+10§c❁"
+      - "§cStrength §7and §a❈ Defense §7the closer"
+      - "§7you are to the spawn of an Island!"
+    components:
+      - id: SKULL_HEAD
+        texture: 616f4ac8a0698ab07bb0a5ef69dc08daedd8f5972e7a1237c8c56361e3f204ca
+      - id: ACCESSORY
   - id: FIRE_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
+    lore:
+      - "§7Provides immunity against damage"
+      - "§7from §cFire§7."
+      - " "
+      - "§7While in the §cCrimson Isle§7, grants a §a20%"
+      - "§7damage reduction instead."
     components:
       - id: SKULL_HEAD
         texture: 9af328c87b068509aca9834eface197705fe5d4f0871731b7b21cd99b9fddc
-      - id: TALISMAN
-  - id: HASTE_RING
-    material: PLAYER_HEAD
-    rarity: COMMON
-    components:
-      - id: SKULL_HEAD
-        texture: 3c26a1ec929d4b144266c56af11d9abaf93f6b274872c96d3e34cb7c7965
       - id: TALISMAN
   - id: LAVA_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
+    default_statistics:
+      mining_speed: 10.0
+    lore:
+      - "§7Grants permanent §eHaste II§7."
     components:
       - id: SKULL_HEAD
         texture: c078f3f24b1760f9d4abb0851eb8f6c7dfff8855708e6049d15dc02042ba8436
       - id: TALISMAN
+  - id: WOOD_AFFINITY_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Increases your §f✦ Speed §7by §a+10"
+      - "§7while held in the §bForest§7, §cGraveyard§7,"
+      - "§2Wilderness§7, §aThe Park§7, and §2Galatea§7."
+    components:
+      - id: SKULL_HEAD
+        texture: 907a913471a5bbbb4c0a7f233d78c27628cf0e516a2fb46360cd0e370c508345
+      - id: ACCESSORY
+  - id: BAIT_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§a5%§7 chance not to consume bait."
+    components:
+      - id: SKULL_HEAD
+        texture: 5ceec5342acd3f21b2c1c8d5913277e46caec6c83b869a20ca91bfd2c867575a
+      - id: ACCESSORY
+  - id: SKELETON_TALISMAN
+    material: SKELETON_SKULL
+    rarity: COMMON
+    lore:
+      - "§7Reduces the damage taken from §f🦴"
+      - "§fSkeletal §7mobs by §a5%§7."
+    components:
+      - id: ACCESSORY
+  - id: VILLAGE_AFFINITY_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Increases your §f✦ Speed §7by §a+10"
+      - "§7while held in the §bVillage§7."
+    components:
+      - id: SKULL_HEAD
+        texture: 78149d7587d8de73761261bd2d4cd3f9e97979e599888e6faa4bc6f9cdf10142
+      - id: ACCESSORY
   - id: MINE_AFFINITY_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
-    default_statistics:
-      speed: 10.0
+    lore:
+      - "§7Grants §f+25✦ Speed §7while on §bMining"
+      - "§bIslands§7."
     components:
       - id: SKULL_HEAD
-        texture: d9563fdc4acab6db324b21bc43b238fe465e530a6327e7eef11d2d0c4ea
+        texture: bf0533ab22276e2778be41196ec10bd910a34b30c662c2cd7d76e4964e82a159
+      - id: ACCESSORY
+  - id: SCAVENGER_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Grants §6+0.5 coins §7per level of the"
+      - "§7killed enemy."
+    components:
+      - id: SKULL_HEAD
+        texture: 211ab3a1132c9d1ef835ea81d972ed9b5cd8ddff0a07c55a749bcfcf8df5
+      - id: ACCESSORY
+  - id: BITS_TALISMAN
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§7Whenever you gain bits, grants a §b10%"
+      - "§7chance to gain double!"
+    components:
+      - id: SKULL_HEAD
+        texture: 2ebadb1725aa85bb2810d0b73bf7cd74db3d9d8fc61c4cf9e543dbcc199187cc
       - id: TALISMAN
+  - id: DANTE_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Official medal proving your eternal"
+      - "§7support for Dante."
+      - " "
+      - "§7Can be shown to goons in place of a"
+      - "§7Happy Mask for entry into official"
+      - "§7buildings."
+    components:
+      - id: SKULL_HEAD
+        texture: cf92982f1a302310643a20ce51623f8199b7545e70dc6b93ed6bd61dc42ff213
+      - id: ACCESSORY
+  - id: DANTE_RING
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Found in a hidden warehouse. Not"
+      - "§7very useful but still pretty nice to"
+      - "§7wear."
+    components:
+      - id: SKULL_HEAD
+        texture: a375dfabb5a764c31810e160ce3dceafe5bd6e99c10f9cb77db01fbd3e2c0e28
+      - id: ACCESSORY
+  - id: BLOOD_GOD_CREST
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Strength: §c+5"
+      - " "
+      - "§7Tracks a counter for each mob"
+      - "§7killed while worn."
+      - " "
+      - "§7Gain §c+1❁ Strength §7for each digit"
+      - "§7on the counter. §8(Max 7)"
+      - " "
+      - "§7Counter: §c32,194"
+      - "§7Bonus: §c+5❁ Strength"
+      - "§aThis lore show be updated dynamically"
+    components:
+      - id: SKULL_HEAD
+        texture: 5b8b51eaefe0e3a10ad7fa1627801d2ce4412b4e432685906192f83283708233
+      - id: ACCESSORY
+  - id: JUNGLE_AMULET
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      gemstone_fortune: 10.0
+    components:
+      - id: SKULL_HEAD
+        texture: 1bff65479fb7029decfe6779382762a08fc7c8eceff5448de263d9d375066f7a
+      - id: ACCESSORY
+  - id: NEW_YEAR_CAKE_BAG
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Holds §cNew Year Cakes§7. Each unique"
+      - "§cNew Year Cake §7within this bag grants"
+      - "§c+1❤ Health§7."
+      - " "
+      - "§7Current Bonus: §c+0❤ Health"
+      - " "
+      - "§eRight-click to open!"
+      - "§aThis lore show be updated dynamically"
+    components:
+      - id: SKULL_HEAD
+        texture: cde7cdeb9713a6f9cfedaaddcffb355721911f49f2fa1cf1189b949e2f0d5b28
+      - id: ACCESSORY
+  - id: CHUMMING_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      fishing_speed: 1.0
+      fishing_wisdom: 1.0
+    lore:
+      - "§7Listen, it's for real chums of Moby,"
+      - "§7ok?"
+    components:
+      - id: SKULL_HEAD
+        texture: 9b688545e326e4f1fd1c405873d9c5b8bbe69dd26889ce3dea10b4d9e3d7b4db
+      - id: ACCESSORY
   - id: POTATO_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
     default_statistics:
       speed: 1.0
+    lore:
+      - "§7Your potato minions farm §a5% §7faster"
+      - "§7while wearing on your island."
+      - " "
+      - "§8Forged by the Potato King after"
+      - "§8winning the Great Potato War."
     components:
       - id: SKULL_HEAD
         texture: 318476e3cf0d5fc8ab1761065cf0e372b11004ed4c97156396e17c869b4aa389
       - id: TALISMAN
-  - id: TALISMAN_OF_POWER
-    material: PLAYER_HEAD
-    rarity: COMMON
-    components:
-      - id: SKULL_HEAD
-        texture: c6736fd95d3a6a4aaac46709a07aec7f1c38f0a3aae573e6f483388819412b65
-      - id: TALISMAN
-  - id: VILLAGE_AFFINITY_TALISMAN
-    material: PLAYER_HEAD
-    rarity: COMMON
-    default_statistics:
-      speed: 10.0
-    components:
-      - id: SKULL_HEAD
-        texture: 9c11d6c79b8a1f18902d783cdda4bdfb9d47337b73791028a126a6e6cf101def
-      - id: TALISMAN
+  # ====================================
   - id: WITHER_RELIC
     material: PLAYER_HEAD
     rarity: COMMON

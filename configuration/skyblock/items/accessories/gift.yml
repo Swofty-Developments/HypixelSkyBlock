@@ -1,0 +1,49 @@
+items:
+  - id: WHITE_GIFT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Gain §a+5% §7more §6Coins §7and §3Skill XP §7from"
+      - "§7gifts."
+    components:
+      - id: SKULL_HEAD
+        texture: e47b37e67a89159bf4acc4a44d4328f4efc0181605142288e5eed1ab8aed913c
+      - id: TIERED_TALISMAN
+        base_tier: WHITE_GIFT_TALISMAN
+        tier: 1
+  - id: BLUE_GIFT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§7Gain §a+15% §7more §6Coins §7and §3Skill XP"
+      - "§7from gifts."
+    components:
+      - id: SKULL_HEAD
+        texture: 5b85e29f29ec9a90e482ea5b8391bcb4560bbae0dcd15d7ce1d86016b4356e98
+      - id: TIERED_TALISMAN
+        base_tier: WHITE_GIFT_TALISMAN
+        tier: 2
+  - id: PURPLE_GIFT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: EPIC
+    lore:
+      - "§7Gain §a+20% §7more §6Coins §7and §3Skill XP"
+      - "§7from gifts."
+    components:
+      - id: SKULL_HEAD
+        texture: e9e39d91c04c30cc1f530fee798eed279dde60f95c2e1d155c0fdd361d0962ed
+      - id: TIERED_TALISMAN
+        base_tier: BLUE_GIFT_TALISMAN
+        tier: 3
+  - id: GOLD_GIFT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    lore:
+      - "§7Gain §a+25% §7more §6Coins §7and §3Skill XP"
+      - "§7from gifts."
+    components:
+      - id: SKULL_HEAD
+        texture: abd98792dd92d9719894341ac9012a584c4428558fd2c712f78e5f0d4da85470
+      - id: TIERED_TALISMAN
+        base_tier: PURPLE_GIFT_TALISMAN
+        tier: 4

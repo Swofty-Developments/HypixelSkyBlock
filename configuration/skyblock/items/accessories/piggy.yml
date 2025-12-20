@@ -1,0 +1,38 @@
+items:
+  - id: PIGGY_BANK
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Saves your coins from death."
+      - "§7Only when in inventory or Accessory Bag."
+      - "§cFragile!"
+      - " "
+      - "§8Triggers when losing 20k+ coins."
+    components:
+      - id: SKULL_HEAD
+        texture: 3298cd257027d67a1bb20f7a5bc328a3debb78a9dfbf1e1e92af2f23aa640d89
+      - id: ACCESSORY
+  - id: CRACKED_PIGGY_BANK
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Saves §c75% §7of your coins on death."
+      - "§7Only when in inventory or Accessory Bag."
+      - "§cVery fragile!"
+      - " "
+      - "§8Triggers when losing 20k+ coins."
+    components:
+      - id: SKULL_HEAD
+        texture: 14a7aac08593a1a0bc6666fe0aeedfb195d413fc9cf87c73f4a8c04da6418857
+      - id: ACCESSORY
+  - id: BROKEN_PIGGY_BANK
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7It broke!"
+      - " "
+      - "§eRight-click to view recipe!"
+    components:
+      - id: SKULL_HEAD
+        texture: b590207aeea2d8fc80194f2a109f5b1999c91ebd377dff01b9e7ebe091a3a419
+      - id: ACCESSORY

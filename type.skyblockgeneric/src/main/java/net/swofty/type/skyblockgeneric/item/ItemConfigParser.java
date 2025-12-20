@@ -21,10 +21,7 @@ import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ItemConfigParser {
     public static ConfigurableSkyBlockItem parseItem(Map<String, Object> config) {

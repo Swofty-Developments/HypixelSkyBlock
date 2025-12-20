@@ -1,0 +1,40 @@
+items:
+  - id: CANDY_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Increases the drop chance of"
+      - "§7candies from mobs by §a5% §7during the"
+      - "§6Spooky Festival§7."
+    components:
+      - id: SKULL_HEAD
+        texture: e6ae8c4c983ac24d93c48417a95beeb1ca055b9b49764143cc98c1392548eed3
+      - id: TIERED_TALISMAN
+        base_tier: CANDY_TALISMAN
+        tier: 1
+  - id: CANDY_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§7Increases the drop chance of"
+      - "§7candies from mobs by §a10% §7during the"
+      - "§6Spooky Festival§7."
+    components:
+      - id: SKULL_HEAD
+        texture: 18c0d7034a7dac30e2b52c00eeec0eca55fe688d25faf4efd9c0a07dce9eaf30
+      - id: TIERED_TALISMAN
+        base_tier: CANDY_TALISMAN
+        tier: 2
+  - id: CANDY_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    lore:
+      - "§7Increases the drop chance of"
+      - "§7candies from mobs by §a15% §7during the"
+      - "§6Spooky Festival§7."
+    components:
+      - id: SKULL_HEAD
+        texture: b797add1b3ae64d510bcc6ac16c2fa1dd69369edf59821239c955f7f11e1177b
+      - id: TIERED_TALISMAN
+        base_tier: CANDY_RING
+        tier: 3

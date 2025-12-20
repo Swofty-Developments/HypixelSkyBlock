@@ -1,0 +1,49 @@
+items:
+  - id: INTIMIDATION_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Level §a1 §7monsters will no longer"
+      - "§7target you."
+    components:
+      - id: SKULL_HEAD
+        texture: 41fbc5010e8047ebc0bfd5b7635ab54772d8fd5a28099aeebc8ae2407f026b08
+      - id: TIERED_TALISMAN
+        base_tier: INTIMIDATION_TALISMAN
+        tier: 1
+  - id: INTIMIDATION_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Monsters at or below Level §a5 §7will no"
+      - "§7longer target you."
+    components:
+      - id: SKULL_HEAD
+        texture: 41fbc5010e8047ebc0bfd5b7635ab54772d8fd5a28099aeebc8ae2407f026b08
+      - id: TIERED_TALISMAN
+        base_tier: INTIMIDATION_TALISMAN
+        tier: 2
+  - id: INTIMIDATION_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§7Monsters at or below Level §a25 §7will no"
+      - "§7longer target you."
+    components:
+      - id: SKULL_HEAD
+        texture: 96e977ae2f796dce6c80cb6bed9294e9ed4b11b88f9fde6c31f435dfd0382529
+      - id: TIERED_TALISMAN
+        base_tier: INTIMIDATION_RING
+        tier: 3
+  - id: INTIMIDATION_RELIC
+    material: PLAYER_HEAD
+    rarity: EPIC
+    lore:
+      - "§7Monsters at or below Level §a30 §7will no"
+      - "§7longer target you."
+    components:
+      - id: SKULL_HEAD
+        texture: c066fd07683989e66bf752398c4861c71ae6fe228a493f2fdf427381650a1280
+      - id: TIERED_TALISMAN
+        base_tier: INTIMIDATION_ARTIFACT
+        tier: 4
