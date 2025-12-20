@@ -97,16 +97,16 @@ public class VillagerRusty extends NPCVillagerDialogue {
 						}).build(),
 				NPCVillagerDialogue.DialogueSet.builder()
 						.key("abiphone").lines(new String[]{ // when clicking with an Abiphone
-								"§e[NPC] Rusty§f: §b✆ Did I find an Abiphone?",
-								"§e[NPC] Rusty§f: §b✆ Yes, sometimes I do find one lying around.",
-								"§e[NPC] Rusty§f: §b✆ What?",
-								"§e[NPC] Rusty§f: §b✆ You?",
-								"§e[NPC] Rusty§f: §b✆ You want my contact?",
-								"§e[NPC] Rusty§f: §b✆ Me?",
-								"§e[NPC] Rusty§f: §b✆ The janitor?",
-								"§e[NPC] Rusty§f: §b✆ I...",
-								"§e[NPC] Rusty§f: §b✆ I don't... don't know what to say...",
-								"§e[NPC] Rusty§f: §b✆ Yes of course you can have it!",
+								"§e[NPC] Rusty§f: §b✆ §fDid I find an Abiphone?",
+								"§e[NPC] Rusty§f: §b✆ §fYes, sometimes I do find one lying around.",
+								"§e[NPC] Rusty§f: §b✆ §fWhat?",
+								"§e[NPC] Rusty§f: §b✆ §fYou?",
+								"§e[NPC] Rusty§f: §b✆ §fYou want my contact?",
+								"§e[NPC] Rusty§f: §b✆ §fMe?",
+								"§e[NPC] Rusty§f: §b✆ §fThe janitor?",
+								"§e[NPC] Rusty§f: §b✆ §fI...",
+								"§e[NPC] Rusty§f: §b✆ §fI don't... don't know what to say...",
+								"§e[NPC] Rusty§f: §b✆ §fYes of course you can have it!",
 						}).build()
 		).toArray(NPCVillagerDialogue.DialogueSet[]::new);
 	}
