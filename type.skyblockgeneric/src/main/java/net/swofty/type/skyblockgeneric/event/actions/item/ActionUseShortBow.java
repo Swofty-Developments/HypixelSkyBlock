@@ -6,6 +6,7 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.ArrowComponent;
 import net.swofty.type.skyblockgeneric.item.components.BowComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -25,7 +26,10 @@ public class ActionUseShortBow implements HypixelEventClass {
                 bow.onBowShoot(player, item, 1.0);
                 event.setCancelled(true);
             } else {
-                // If there's no arrow, then we just do nothing
+                // If there is an arrow, lets make sure they have one
+                if (player.getAllOfComponentInInventory(ArrowComponent.class).isEmpty()) {
+                    event.setCancelled(true);
+                }
             }
         }
     }
