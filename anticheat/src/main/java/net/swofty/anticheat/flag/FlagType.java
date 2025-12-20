@@ -14,7 +14,6 @@ public enum FlagType {
     SPEED(SpeedFlag::new),
     FLIGHT(FlightFlag::new),
     TIMER(TimerFlag::new),
-    STRAFE(StrafeFlag::new),
     PHASE(PhaseFlag::new),
     JESUS(JesusFlag::new),
 

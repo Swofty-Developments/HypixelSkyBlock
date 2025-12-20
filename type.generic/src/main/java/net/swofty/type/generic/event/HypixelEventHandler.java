@@ -42,10 +42,10 @@ public class HypixelEventHandler {
 
                 if (paramNode == EventNodes.CUSTOM) {
                     if (cachedCustomEvents.contains(new EventMethodEntry(method, instance, hypixelEvent))) {
-                        return;
+                        continue;
                     }
                     cachedCustomEvents.add(new EventMethodEntry(method, instance, hypixelEvent));
-                    return;
+                    continue;
                 }
 
                 if (!cachedEvents.containsKey(method.getParameterTypes()[0])) {

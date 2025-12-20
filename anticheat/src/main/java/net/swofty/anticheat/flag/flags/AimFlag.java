@@ -31,75 +31,12 @@ public class AimFlag extends Flag {
 
     @ListenerMethod
     public void onPlayerPositionUpdate(PlayerPositionUpdateEvent event) {
-        if (event.getPreviousTick() == null) return;
-
-        Pos currentPos = event.getCurrentTick().getPos();
-        Pos previousPos = event.getPreviousTick().getPos();
-
-        float yawChange = Math.abs(currentPos.yaw() - previousPos.yaw());
-        float pitchChange = Math.abs(currentPos.pitch() - previousPos.pitch());
-
-        // Normalize yaw change (handle wrapping)
-        if (yawChange > 180) {
-            yawChange = 360 - yawChange;
-        }
-
-        UUID uuid = event.getPlayer().getUuid();
-        RotationData data = rotationData.computeIfAbsent(uuid, k -> new RotationData());
-        data.addRotation(yawChange, pitchChange);
-
-        if (data.yawChanges.size() < 10) return;
-
-        // Pattern 1: Impossible rotation speed (>180 degrees per tick is suspicious)
-        if (yawChange > 180 || pitchChange > 90) {
-            double certainty = Math.min(0.9, 0.6 + Math.max(yawChange, pitchChange) / 360.0);
-            event.getPlayer().flag(net.swofty.anticheat.flag.FlagType.AIM, certainty);
-        }
-
-        // Pattern 2: Perfect lock-on (no micro-adjustments)
-        // Human aim has small variations, aimbots lock perfectly
-        if (isStaticAim(data.yawChanges) && isStaticAim(data.pitchChanges)) {
-            event.getPlayer().flag(net.swofty.anticheat.flag.FlagType.AIM, 0.75);
-        }
-
-        // Pattern 3: Robotic patterns (same rotation amount repeatedly)
-        if (hasRoboticPattern(data.yawChanges) || hasRoboticPattern(data.pitchChanges)) {
-            event.getPlayer().flag(net.swofty.anticheat.flag.FlagType.AIM, 0.8);
-        }
+        // Disabled: heuristic-based detection has too many false positives
     }
 
     @ListenerMethod
     public void onPlayerAttack(PlayerAttackEvent event) {
-        // Check if player snapped to target
-        Pos attackerPos = event.getAttacker().getCurrentTick().getPos();
-        Pos targetPos = event.getTargetPosition();
-
-        // Calculate required look angle to hit target
-        Pos requiredLook = attackerPos.withLookAt(targetPos);
-
-        // Check how close the player's actual look is to perfect
-        float yawDiff = Math.abs(attackerPos.yaw() - requiredLook.yaw());
-        float pitchDiff = Math.abs(attackerPos.pitch() - requiredLook.pitch());
-
-        // Normalize yaw difference
-        if (yawDiff > 180) yawDiff = 360 - yawDiff;
-
-        // Perfect aim (within 0.5 degrees) every time is suspicious
-        if (yawDiff < 0.5 && pitchDiff < 0.5) {
-            UUID uuid = event.getAttacker().getUuid();
-            RotationData data = rotationData.get(uuid);
-
-            if (data != null && data.yawChanges.size() >= 5) {
-                // Check if last few rotations were also perfect
-                long perfectCount = data.yawChanges.stream()
-                    .filter(change -> change < 1.0)
-                    .count();
-
-                if (perfectCount >= 3) {
-                    event.getAttacker().flag(net.swofty.anticheat.flag.FlagType.AIM, 0.85);
-                }
-            }
-        }
+        // Disabled: heuristic-based detection has too many false positives
     }
 
     private boolean isStaticAim(List<Float> changes) {

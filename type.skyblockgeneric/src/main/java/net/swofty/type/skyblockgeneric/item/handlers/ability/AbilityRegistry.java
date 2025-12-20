@@ -5,8 +5,7 @@ import net.swofty.type.skyblockgeneric.item.handlers.ability.abilities.BuildersW
 import java.util.HashMap;
 import java.util.Map;
 
-public class
-AbilityRegistry {
+public class AbilityRegistry {
     private static final Map<String, RegisteredAbility> REGISTERED_ABILITIES = new HashMap<>();
 
     static {

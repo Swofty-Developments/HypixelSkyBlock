@@ -32,6 +32,11 @@ public class SwoftyPlayer {
     private long lastPingResponse;
     private final FlagManager flagManager;
 
+    // Player ability state (from AbilitiesPacket)
+    private boolean flying = false;
+    private boolean allowFlight = false;
+    private boolean creativeMode = false;
+
     public SwoftyPlayer(UUID uuid) {
         this.uuid = uuid;
         this.flagManager = new FlagManager(uuid, new HashMap<>());
@@ -141,5 +146,15 @@ public class SwoftyPlayer {
 
     public void sendPacket(SwoftyPacket packet) {
         SwoftyAnticheat.getLoader().sendPacket(uuid, packet);
+    }
+
+    public void updateAbilities(boolean flying, boolean allowFlight, boolean creativeMode) {
+        this.flying = flying;
+        this.allowFlight = allowFlight;
+        this.creativeMode = creativeMode;
+    }
+
+    public boolean shouldBypassMovementChecks() {
+        return flying || creativeMode || allowFlight;
     }
 }

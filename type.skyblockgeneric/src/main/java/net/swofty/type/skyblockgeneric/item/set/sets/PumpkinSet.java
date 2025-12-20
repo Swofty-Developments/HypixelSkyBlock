@@ -34,6 +34,7 @@ public class PumpkinSet extends SkyBlockValueEvent implements ArmorSet {
         float value = (float) event.getValue();
 
         if (!isWearingSet(event.getPlayer())) return;
+        int pieceCount = getWornPieceCount(event.getPlayer());
 
         event.setValue(value * 0.9);
     }

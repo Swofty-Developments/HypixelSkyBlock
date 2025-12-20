@@ -97,6 +97,14 @@ public abstract class SkyBlockMob extends EntityCreature {
     public abstract OtherLoot getOtherLoot();
     public abstract List<MobType> getMobTypes();
 
+    /**
+     * Whether this mob should collide with other mobs.
+     * Override and return false to disable collision for specific mob types.
+     */
+    public boolean hasCollision() {
+        return true;
+    }
+
     public ItemStatistics getStatistics() {
         ItemStatistics statistics = getBaseStatistics().clone();
         ItemStatistics toSubtract = ItemStatistics.builder()
@@ -235,10 +243,53 @@ public abstract class SkyBlockMob extends EntityCreature {
             instance.loadChunk(position).join();
         }
 
+        // Entity collision handling
+        if (hasCollision()) {
+            applyEntityCollision();
+        }
+
         try {
             super.tick(time);
         } catch (Exception e) {
             // Suppress odd warnings
+        }
+    }
+
+    private void applyEntityCollision() {
+        for (SkyBlockMob other : mobs) {
+            if (other == this || !other.hasCollision()) continue;
+            if (other.getInstance() != getInstance()) continue;
+
+            double dx = getPosition().x() - other.getPosition().x();
+            double dz = getPosition().z() - other.getPosition().z();
+            double distanceSquared = dx * dx + dz * dz;
+
+            // Check if within collision range - using larger hitbox multiplier
+            double combinedWidth = (getBoundingBox().width() + other.getBoundingBox().width()) / 2;
+            double minDistance = combinedWidth * 1.5;
+
+            if (distanceSquared < minDistance * minDistance && distanceSquared > 0.0001) {
+                double distance = Math.sqrt(distanceSquared);
+                double overlap = minDistance - distance;
+
+                // Normalize direction
+                double nx = dx / distance;
+                double nz = dz / distance;
+
+                // Aggressive push to prevent overlap while in motion
+                double baseStrength = overlap * 1.2;
+
+                // Extra push if either entity is moving (prevents clipping during movement)
+                double thisSpeed = getVelocity().length();
+                double otherSpeed = other.getVelocity().length();
+                double motionMultiplier = 1.0 + Math.max(thisSpeed, otherSpeed) * 2.0;
+
+                double pushStrength = Math.min(baseStrength * motionMultiplier, 0.8);
+
+                // Apply velocity to both entities (equal and opposite)
+                setVelocity(getVelocity().add(nx * pushStrength, 0, nz * pushStrength));
+                other.setVelocity(other.getVelocity().add(-nx * pushStrength, 0, -nz * pushStrength));
+            }
         }
     }
 

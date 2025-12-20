@@ -99,6 +99,9 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
                     "Explore the End Shop.",
                     "Kill Endermen.",
                     "Fight Dragons!");
+
+            case ARCHERY_RANGE -> onNewZone(player, RegionType.ARCHERY_RANGE,
+                    "Talk to Jax to forge special arrows!");
         }
     }
 

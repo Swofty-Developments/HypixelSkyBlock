@@ -12,6 +12,8 @@ import net.minestom.server.entity.metadata.projectile.ArrowMeta;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.skyblockgeneric.event.custom.ArrowHitBlockEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +26,7 @@ public class ArrowEntityImpl extends LivingEntity {
     private final Entity shooter;
     @Getter
     private final SkyBlockItem arrowItem;
+    private boolean hasHit = false;
 
     public ArrowEntityImpl(Entity player, SkyBlockItem arrowItem) {
         super(EntityType.ARROW);
@@ -98,14 +101,22 @@ public class ArrowEntityImpl extends LivingEntity {
         }
 
         if (result.hasCollision()) {
-            Block hitBlock = null;
-            for (Shape shape : result.collisionShapes()) {
-                if (shape instanceof ShapeImpl block) {
-                    hitBlock = getInstance().getBlock(block.relativeEnd());
+            if (hasHit) return;
+
+            // Use the collision shape positions directly from physics result
+            var shapePositions = result.collisionShapePositions();
+
+            if (shapePositions.length > 0 && shapePositions[0] != null) {
+                var hitPosition = shapePositions[0];
+                Block hitBlock = getInstance().getBlock(hitPosition);
+
+                if (!hitBlock.isAir()) {
+                    // Fire arrow hit block event
+                    ArrowHitBlockEvent arrowHitBlockEvent = new ArrowHitBlockEvent(shooter, arrowItem, hitBlock, Pos.fromPoint(hitPosition));
+                    HypixelEventHandler.callCustomEvent(arrowHitBlockEvent);
+                    hasHit = true;
                 }
             }
-
-            if (hitBlock == null) return;
 
             // We've hit a block
             MathUtility.delay(() -> {

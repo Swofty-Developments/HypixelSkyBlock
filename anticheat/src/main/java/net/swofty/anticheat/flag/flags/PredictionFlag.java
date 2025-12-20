@@ -56,54 +56,8 @@ public class PredictionFlag extends Flag {
 
     @ListenerMethod
     public void onPlayerPositionUpdate(PlayerPositionUpdateEvent event) {
-        SwoftyPlayer player = event.getPlayer();
-        PlayerTickInformation currentTick = event.getCurrentTick();
-        PlayerTickInformation previousTick = event.getPreviousTick();
-
-        if (previousTick == null) return;
-
-        UUID playerId = player.getUuid();
-        long ping = player.getPing();
-
-        // Check if we should skip due to lag
-        if (lagCompensator.shouldSkipDueToLag(playerId, ping)) {
-            return; // Too laggy, can't predict accurately
-        }
-
-        // Build player context with all available information
-        PlayerContext context = buildPlayerContext(player, previousTick);
-
-        // Record snapshot for lag compensation
-        int transactionId = currentTransactions.getOrDefault(playerId, 0) + 1;
-        currentTransactions.put(playerId, transactionId);
-        lagCompensator.recordSnapshot(
-            playerId,
-            transactionId,
-            previousTick.getPos(),
-            previousTick.getVel(),
-            System.currentTimeMillis()
-        );
-
-        // Predict all possible movements
-        List<PredictedMovement> predictions = engine.predictMovements(context);
-
-        // Find closest prediction to actual movement
-        Pos actualPos = currentTick.getPos();
-        Vel actualVel = currentTick.getVel();
-
-        PredictionResult result = findClosestPrediction(predictions, actualPos, actualVel);
-
-        // Apply lag compensation
-        double compensationOffset = lagCompensator.getCompensationOffset(ping, context.getVelocity());
-        double effectiveOffset = Math.max(0, result.offset - compensationOffset);
-
-        // Calculate certainty based on effective offset
-        double certainty = calculateCertainty(effectiveOffset);
-
-        // Flag if suspicious
-        if (certainty > 0.4) { // Threshold for flagging
-            player.flag(net.swofty.anticheat.flag.FlagType.PREDICTION, certainty);
-        }
+        // Disabled: prediction-based detection has too many false positives
+        // Needs proper implementation of block checking, effects, enchantments, etc.
     }
 
     /**
