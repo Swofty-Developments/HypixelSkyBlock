@@ -3,18 +3,23 @@ package net.swofty.type.hub.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.entity.npc.NPCParameters;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIJax;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointArcheryPractice;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCJax extends HypixelNPC{
+import java.util.stream.Stream;
+
+public class NPCJax extends NPCDialogue {
 
     public NPCJax() {
         super(new NPCParameters() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Jax", "§e§lCLICK"};
+                return new String[]{"Jax", "§e§lCLICK"};
             }
 
             @Override
@@ -41,8 +46,42 @@ public class NPCJax extends HypixelNPC{
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_JAX);
+        DatapointArcheryPractice.ArcheryPracticeData archeryData = player.getArcheryPracticeData();
+
+        if (!hasSpokenBefore || archeryData.getTargetPracticeLevel() == DatapointArcheryPractice.TargetPracticeLevels.FIRST_LEVEL) {
+            setDialogue(player, "introduction").thenRun(() -> {
+                player.getArcheryPracticeData().incrementLevel(player);
+            });
+            return;
+        }
+
+        boolean hasHadDialogue = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_REALLY_SPOKEN_TO_JAX);
+        if (!hasHadDialogue) {
+            setDialogue(player, "completed_level_one");
+            return;
+        }
+
+        new GUIJax().open(player);
     }
 
+    @Override
+    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("introduction").lines(new String[]{
+                                "Hello " + player.getFullDisplayName() + "§f! What brings you to my workshop? I forge the newest and most powerful arrows in all of SkyBlock!",
+                                "If you can prove to me you're a real archer I'll forge you arrows whenever you need them.",
+                            "Ready to test your skills? Step on the pressure plate and all the targets will light up, if you can shoot them all in 25 seconds, I'll know you're the real deal."
+                        }).build(),
+                NPCDialogue.DialogueSet.builder()
+                        .key("completed_level_one").lines(new String[]{
+                                "Wow, you can really shoot a bow!",
+                                "Well, a deal's a deal! Come to me any time and I'll forge you whatever arrows you need for adventures.",
+                                "I only have one condition... These are powerful arrows, they can't fall into the wrong hands so keep them in your quiver and don't share them with anyone."
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }

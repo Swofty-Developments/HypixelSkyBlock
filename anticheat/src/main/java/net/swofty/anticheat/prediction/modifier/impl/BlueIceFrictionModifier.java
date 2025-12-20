@@ -18,8 +18,7 @@ public class BlueIceFrictionModifier extends FrictionModifier {
 
     @Override
     public boolean shouldApply(PlayerContext context) {
-        // Assuming we add a isOnBlueIce() method to PlayerContext
-        return (boolean) context.getCustomData("onBlueIce");
+        return Boolean.TRUE.equals(context.getCustomData("onBlueIce"));
     }
 
     @Override

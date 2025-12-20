@@ -40,6 +40,7 @@ import net.swofty.type.skyblockgeneric.event.value.ValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.MaxHealthValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.MiningValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
 import net.swofty.type.skyblockgeneric.item.components.ArrowComponent;
 import net.swofty.type.skyblockgeneric.item.components.SackComponent;
@@ -140,6 +141,9 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getFullDisplayName(displayEmblem, experience.getLevel().getColor());
     }
 
+    public DatapointArcheryPractice.ArcheryPracticeData getArcheryPracticeData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.ARCHERY_PRACTICE, DatapointArcheryPractice.class).getValue();
+    }
 
     public String getFullDisplayName(SkyBlockEmblems.SkyBlockEmblem displayEmblem, String levelColor) {
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
@@ -274,6 +278,22 @@ public class SkyBlockPlayer extends HypixelPlayer {
                 .toArray(SkyBlockItem[]::new);
     }
 
+    public Map<Integer, SkyBlockItem> getAllOfComponentInInventory(Class<? extends SkyBlockItemComponent> component) {
+        Map<Integer, SkyBlockItem> map = new HashMap<>();
+
+        for (int i = 0; i < 36; i++) {
+            ItemStack stack = getInventory().getItemStack(i);
+            SkyBlockItem item = new SkyBlockItem(stack);
+            if (item.getAttributeHandler().getPotentialType() == null) continue;
+
+            if (item.hasComponent(component)) {
+                map.put(i, item);
+            }
+        }
+
+        return map;
+    }
+
     public Map<Integer, Integer> getAllOfTypeInInventory(ItemType type) {
         Map<Integer, Integer> map = new HashMap<>();
 
@@ -377,9 +397,14 @@ public class SkyBlockPlayer extends HypixelPlayer {
                 this,
                 item.getItemStack(),
                 true).build();
-        this.getInventory().addItemStack(toAdd);
 
-        // TODO: add overflow into the players queue
+        // Check if inventory can fit the item
+        if (canFitItem(toAdd)) {
+            this.getInventory().addItemStack(toAdd);
+        } else {
+            // Add to stash since inventory is full
+            addToStash(item);
+        }
     }
 
     public void addAndUpdateItem(UnderstandableSkyBlockItem item) {
@@ -457,6 +482,90 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
     public DatapointItemsInSacks.PlayerItemsInSacks getSackItems() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.ITEMS_IN_SACKS, DatapointItemsInSacks.class).getValue();
+    }
+
+    public DatapointStash.PlayerStash getStash() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.STASH, DatapointStash.class).getValue();
+    }
+
+    /**
+     * Check if the inventory can fit the given item.
+     * Takes into account both empty slots and existing stackable stacks.
+     */
+    public boolean canFitItem(ItemStack item) {
+        if (item == null || item.isAir()) return true;
+
+        int amount = item.amount();
+        int maxStackSize = item.material().maxStackSize();
+
+        // For non-stackable items, just check for empty slots
+        if (maxStackSize == 1) {
+            return hasEmptySlots(1);
+        }
+
+        // For stackable items, check existing stacks first
+        for (int i = 0; i < 36; i++) {
+            ItemStack stack = getInventory().getItemStack(i);
+            if (stack.isAir()) {
+                // Empty slot can hold up to maxStackSize
+                amount -= maxStackSize;
+            } else if (stack.isSimilar(item) && stack.amount() < maxStackSize) {
+                // Existing stack can hold more
+                amount -= (maxStackSize - stack.amount());
+            }
+            if (amount <= 0) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Add an item to the player's stash when inventory is full.
+     * Routes to item stash (non-stackable) or material stash (stackable).
+     */
+    public void addToStash(SkyBlockItem item) {
+        DatapointStash.PlayerStash stash = getStash();
+        ItemType type = item.getAttributeHandler().getPotentialType();
+        int maxStackSize = item.getMaterial().maxStackSize();
+
+        boolean isStackable = maxStackSize > 1;
+        String stashType;
+
+        if (isStackable) {
+            // Add to material stash (unlimited)
+            stash.addToMaterialStash(type, item.getAmount());
+            stashType = "material";
+        } else {
+            // Add to item stash (720 limit)
+            boolean added = stash.addToItemStash(item);
+            stashType = "item";
+
+            if (!added) {
+                // Stash is full - item is lost
+                int overflowCount = 1;
+                sendMessage("§cUh oh! §e" + overflowCount + " §citem" + (overflowCount > 1 ? "s" : "") +
+                        " couldn't be stashed because you hit the item stash limit!");
+                return;
+            }
+
+            // Check for near-full warning
+            if (stash.isItemStashNearFull()) {
+                sendMessage("§cYOUR STASH IS ALMOST AT MAX CAPACITY!");
+            }
+        }
+
+        // Send stash notification with clickable message
+        sendStashNotification(stashType);
+    }
+
+    /**
+     * Send a clickable notification that an item was added to the stash.
+     */
+    private void sendStashNotification(String stashType) {
+        Component message = Component.text("§eOne or more items didn't fit in your inventory and were added to your " +
+                stashType + " stash! ")
+                .append(Component.text("§6Click here §eto pick them up!")
+                        .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/pickupstash " + stashType)));
+        sendMessage(message);
     }
 
     public BazaarConnector getBazaarConnector() {

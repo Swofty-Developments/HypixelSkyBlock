@@ -76,8 +76,7 @@ items:
     default_statistics:
       damage: 1
     components:
-      - id: EXTRA_RARITY
-        display: ARROW
+      - id: ARROW
 
   - id: HUNTER_KNIFE
     material: IRON_SWORD

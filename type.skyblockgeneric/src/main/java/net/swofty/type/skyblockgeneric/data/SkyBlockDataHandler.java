@@ -376,6 +376,9 @@ public class SkyBlockDataHandler extends DataHandler {
         DEATHS("deaths", false, false, false,
                 DatapointDeaths.class, new DatapointDeaths("deaths")),
 
+        ARCHERY_PRACTICE("archery_practice", false, false, false,
+                DatapointArcheryPractice.class, new DatapointArcheryPractice("archery_practice")),
+
         SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false,
                 DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
 
@@ -422,7 +425,10 @@ public class SkyBlockDataHandler extends DataHandler {
                 DatapointLong.class, new DatapointLong("booster_cookie_expiration_date", 1L)),
 
         KAT("kat", false, false, false,
-                DatapointKat.class, new DatapointKat("kat"));
+                DatapointKat.class, new DatapointKat("kat")),
+
+        STASH("stash", false, false, false,
+                DatapointStash.class, new DatapointStash("stash"));
 
         @Getter private final String key;
         @Getter private final Boolean isProfilePersistent;

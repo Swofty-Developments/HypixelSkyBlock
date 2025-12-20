@@ -13,7 +13,7 @@ public class NPCMineMerchant extends NPCDialogue {
         super(new NPCParameters() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Mine Merchant", "§e§lCLICK"};
+                return new String[]{"Mine Merchant", "§e§lCLICK"};
             }
 
             @Override
