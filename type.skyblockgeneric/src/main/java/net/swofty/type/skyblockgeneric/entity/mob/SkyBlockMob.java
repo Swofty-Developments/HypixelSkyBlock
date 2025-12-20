@@ -6,6 +6,7 @@ import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
@@ -20,10 +21,11 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
-import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ArmorComponent;
@@ -34,7 +36,6 @@ import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,7 +67,7 @@ public abstract class SkyBlockMob extends EntityCreature {
                 .setBaseValue((float) ((getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
         this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
-        this.setCustomName(Component.text(
+        this.set(DataComponents.CUSTOM_NAME, Component.text(
                 "§8[§7Lv" + getLevel() + "§8] §c"
                         + getMobTypes().getFirst().getColor() + getMobTypes().getFirst().getSymbol() + "§c "
                         + getDisplayName()
@@ -78,12 +79,22 @@ public abstract class SkyBlockMob extends EntityCreature {
         setAutoViewable(true);
         setAutoViewEntities(true);
         this.addAIGroup(getGoalSelectors(), getTargetSelectors());
+        onInit();
     }
 
     @Override
     public void spawn() {
         super.spawn();
         mobs.add(this);
+        onSpawn();
+    }
+
+    public void onInit() {
+        // override this
+    }
+
+    public void onSpawn() {
+        // override this
     }
 
     public abstract String getDisplayName();
