@@ -1,4 +1,4 @@
-package net.swofty.type.skyblockgeneric.entity.mob.mobs.hub;
+package net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns;
 
 import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
@@ -16,6 +16,7 @@ import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
 import net.swofty.type.skyblockgeneric.region.RegionType;
@@ -43,14 +44,22 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 	}
 
 	@Override
+	public void onInit() {
+		setBoots(new SkyBlockItem(ItemType.LAPIS_ARMOR_BOOTS).getItemStack());
+		setLeggings(new SkyBlockItem(ItemType.LAPIS_ARMOR_LEGGINGS).getItemStack());
+		setChestplate(new SkyBlockItem(ItemType.LAPIS_ARMOR_CHESTPLATE).getItemStack());
+		setHelmet(new SkyBlockItem(ItemType.LAPIS_ARMOR_HELMET).getItemStack());
+	}
+
+	@Override
 	public List<GoalSelector> getGoalSelectors() {
 		return List.of(
 				new MeleeAttackWithinRegionGoal(this,
 						1.6,
 						20,
 						TimeUnit.SERVER_TICK,
-						RegionType.LAPIS_QUARRY), // Attack the target
-				new RandomRegionStrollGoal(this, 15, RegionType.LAPIS_QUARRY)  // Walk around
+						RegionType.SLIMEHILL), // Attack the target
+				new RandomRegionStrollGoal(this, 15, RegionType.SLIMEHILL)  // Walk around
 		);
 	}
 
@@ -61,7 +70,7 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 				new ClosestEntityRegionTarget(this,
 						6,
 						entity -> entity instanceof SkyBlockPlayer,
-						RegionType.LAPIS_QUARRY) // If there is none, target the nearest player
+						RegionType.SLIMEHILL) // If there is none, target the nearest player
 		);
 	}
 
@@ -85,6 +94,8 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 						new LootRecord(ItemType.LAPIS_ARMOR_LEGGINGS, 1, 1),
 						new LootRecord(ItemType.LAPIS_ARMOR_CHESTPLATE, 1, 1),
 						new LootRecord(ItemType.LAPIS_ARMOR_HELMET, 1, 1)
+						//new LootRecord(ItemType.EXP_SHARE_CORE, 1, 0.01),
+						//new LootRecord(ItemType.LAPIS_CRYSTAL, 1, 1)
 				);
 			}
 
@@ -137,6 +148,6 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public List<Populator> getPopulators() {
-		return List.of(new Populator(RegionType.LAPIS_QUARRY, 20));
+		return List.of(new Populator(RegionType.SLIMEHILL, 20));
 	}
 }
