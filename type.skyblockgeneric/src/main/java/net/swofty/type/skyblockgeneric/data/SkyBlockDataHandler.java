@@ -425,7 +425,10 @@ public class SkyBlockDataHandler extends DataHandler {
                 DatapointLong.class, new DatapointLong("booster_cookie_expiration_date", 1L)),
 
         KAT("kat", false, false, false,
-                DatapointKat.class, new DatapointKat("kat"));
+                DatapointKat.class, new DatapointKat("kat")),
+
+        STASH("stash", false, false, false,
+                DatapointStash.class, new DatapointStash("stash"));
 
         @Getter private final String key;
         @Getter private final Boolean isProfilePersistent;
