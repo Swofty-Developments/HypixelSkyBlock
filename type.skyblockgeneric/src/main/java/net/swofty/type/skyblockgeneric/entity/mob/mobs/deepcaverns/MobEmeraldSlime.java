@@ -40,7 +40,7 @@ public class MobEmeraldSlime extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public Integer getLevel() {
-		return 3;
+		return 5;
 	}
 
 	@Override
