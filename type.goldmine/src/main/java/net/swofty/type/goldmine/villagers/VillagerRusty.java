@@ -59,6 +59,15 @@ public class VillagerRusty extends NPCVillagerDialogue {
 			return;
 		}
 
+		boolean hasSpokenAboutPickaxe = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY_ABOUT_PICKAXE);
+		boolean hasFoundPickaxe = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_FOUND_LAZY_MINER_PICKAXE);
+		if (!hasSpokenAboutPickaxe && hasFoundPickaxe) {
+			setDialogue(player, "found-pickaxe").thenRun(() -> {
+				player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY_ABOUT_PICKAXE, true);
+			});
+			return;
+		}
+
 		ItemStack itemStack = player.getItemInMainHand();
 		SkyBlockItem item = new SkyBlockItem(itemStack);
 		if (item.hasComponent(AbiphoneComponent.class)) {
