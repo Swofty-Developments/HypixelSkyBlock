@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.StringUtility;
+import net.swofty.commons.ChatUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStash;
 
@@ -53,7 +53,7 @@ public class StashReminder {
                 "§7You have §a" + count + " " + itemWord + " §7stashed away!",
                 "§6>>> CLICK HERE §eto pick " + itWord + " up! §6<<<"
         );
-        lines = StringUtility.centerLines(lines);
+        lines = ChatUtility.FontInfo.centerLines(lines);
         for (String line : lines) {
             player.sendMessage(Component.text(line)
                     .clickEvent(ClickEvent.runCommand("/pickupstash item")));
@@ -75,7 +75,7 @@ public class StashReminder {
                 "§8(This totals " + types + " " + typeWord + " of materials stashed!)",
                 "§2>>> CLICK HERE §bto pick " + itWord + " up! §2<<<"
         );
-        lines = StringUtility.centerLines(lines);
+        lines = ChatUtility.FontInfo.centerLines(lines);
         for (String line : lines) {
             player.sendMessage(Component.text(line)
                     .clickEvent(ClickEvent.runCommand("/pickupstash material")));
