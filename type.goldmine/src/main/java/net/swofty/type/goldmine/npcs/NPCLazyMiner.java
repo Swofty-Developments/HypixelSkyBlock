@@ -101,7 +101,7 @@ public class NPCLazyMiner extends NPCDialogue {
                         }).build(),
                 DialogueSet.builder()
                         .key("idle").lines(new String[]{
-                                SkyBlockCalendar.getDay() + " is my resting day!", // TODO: figure out how this is written in the original
+                                SkyBlockCalendar.getMonthName() + " " + SkyBlockCalendar.getDay() + " is my resting day!",
                                 "I'd go mining but I'm too lazy.",
                                 "Maybe some day I'll go back down there."
                         }).build()
