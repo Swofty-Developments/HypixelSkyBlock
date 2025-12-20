@@ -3,7 +3,6 @@ package net.swofty.type.generic.gui.inventory;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
-import org.tinylog.Logger;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -11,9 +10,11 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.component.TooltipDisplay;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 public abstract class HypixelInventoryGUI {
     public static final Map<UUID, HypixelInventoryGUI> GUI_MAP = new ConcurrentHashMap<>();
+    public static final ItemStack.Builder FILLER_ITEM = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE)
+            .set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.EMPTY);
 
     protected String title;
     protected InventoryType size;

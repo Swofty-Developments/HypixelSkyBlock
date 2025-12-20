@@ -13,7 +13,10 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags.GUIYourBags;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.calendar.GUICalendar;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.collection.GUICollections;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.fasttravel.GUIFastTravel;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
@@ -26,6 +29,7 @@ import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,15 +202,71 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aQuest Log", Material.WRITABLE_BOOK, 1,
-                        "§7View your active quests, progress",
-                        "§7and rewards.",
+                return ItemStackCreator.getStack("§aQuests & Chapters", Material.WRITABLE_BOOK, 1,
+                        "§7Each island has its own series of",
+                        "§bChapters §7for you to complete!",
+                        " ",
+                        "§7Complete tasks within a Chapter to",
+                        "§7earn small §6rewards§7, or complete",
+                        "§7entire Chapters to earn big ones!",
+                        " ",
+                        "§7Some islands also have §aQuests §7for",
+                        "§7you to complete! Some items can only",
+                        "§7be obtained through Quests.",
                         " ",
                         "§eClick to view!"
                 );
             }
         });
+
+        set(new GUIClickableItem(24) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                new GUICalendar().open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                return ItemStackCreator.getStack("§aCalendar and Events", Material.CLOCK, 1, getLore());
+            }
+
+            private @NonNull List<String> getLore() {
+                List<CalendarEvent> currentEvents = SkyBlockCalendar.getCurrentEvents();
+                boolean multipleEvents = currentEvents.size() > 1;
+
+                List<String> lore = new ArrayList<>(List.of("§7View the SkyBlock Calendar, upcoming",
+                        "§7events, and event rewards!",
+                        " ",
+                        "§7Date: §a" + StringUtility.ntify(SkyBlockCalendar.getDay()) + " " + SkyBlockCalendar.getMonthName() + " " + SkyBlockCalendar.getYear(),
+                        ""));
+                if(multipleEvents) {
+                    lore.add("§7Current events: ");
+                    for (CalendarEvent event : currentEvents) {
+                        lore.add(event.getDisplayName(SkyBlockCalendar.getYear()));
+                    }
+                    lore.add(" ");
+                } else if (currentEvents.size() == 1) {
+                    lore.add("§7Current event: " + currentEvents.getFirst().getDisplayName(1));
+                    lore.add("§7Ends in: §e");
+                } else {
+                    lore.add("§7No current events.");
+                    lore.add(" ");
+                }
+                lore.addAll(
+                        List.of(
+                                "§7Next Event: ",
+                                "§7Starting in: §e",
+                                " ",
+                                "§8Also accessible via /calendar",
+                                " ",
+                                "§eClick to view!"
+                        )
+                );
+                return lore;
+            }
+        });
+
 
         set(new GUIClickableItem(19) {
             @Override
@@ -217,7 +277,6 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aYour Skills", Material.DIAMOND_SWORD, 1,
                         "§7View your Skill progression and",
                         "§7rewards.",
