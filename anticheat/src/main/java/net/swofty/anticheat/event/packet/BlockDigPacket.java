@@ -27,7 +27,8 @@ public class BlockDigPacket extends SwoftyPacket {
         DROP_ITEM_STACK,
         DROP_ITEM,
         UPDATE_HELD_ITEM,
-        SWAP_ITEM_IN_HAND
+        SWAP_ITEM_IN_HAND,
+        STAB
     }
 
     public enum Direction {

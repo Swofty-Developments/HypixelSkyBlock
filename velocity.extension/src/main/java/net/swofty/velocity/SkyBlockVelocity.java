@@ -66,34 +66,34 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Plugin(
-		id = "skyblock",
-		name = "SkyBlock",
-		version = "1.0",
-		description = "SkyBlock plugin for Velocity",
-		authors = {"Swofty"}
+        id = "skyblock",
+        name = "SkyBlock",
+        version = "1.0",
+        description = "SkyBlock plugin for Velocity",
+        authors = {"Swofty"}
 )
 public class SkyBlockVelocity {
-	@Getter
-	private static ProxyServer server = null;
-	@Getter
-	private static SkyBlockVelocity plugin;
-	@Getter
-	private static RegisteredServer limboServer;
-	@Getter
-	private static boolean shouldAuthenticate = false;
-	@Getter
-	private static boolean supportCrossVersion = false;
-	@Inject
-	private ProxyServer proxy;
+    @Getter
+    private static ProxyServer server = null;
+    @Getter
+    private static SkyBlockVelocity plugin;
+    @Getter
+    private static RegisteredServer limboServer;
+    @Getter
+    private static boolean shouldAuthenticate = false;
+    @Getter
+    private static boolean supportCrossVersion = false;
+    @Inject
+    private ProxyServer proxy;
 
-	@Inject
-	public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
-		plugin = this;
-		server = tempServer;
+    @Inject
+    public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
+        plugin = this;
+        server = tempServer;
 
-		limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("limbo-host-name"),
-				Integer.parseInt(Configuration.get("limbo-port")))));
-	}
+        limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("limbo-host-name"),
+                Integer.parseInt(Configuration.get("limbo-port")))));
+    }
 
 	public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {
 		Reflections reflections = new Reflections(packageName);
@@ -196,12 +196,12 @@ public class SkyBlockVelocity {
 	public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
 		Player player = event.getPlayer();
 
-		if (!GameManager.hasType(ServerType.SKYBLOCK_HUB) || !GameManager.isAnyEmpty(ServerType.SKYBLOCK_HUB)) {
-			player.disconnect(
-					Component.text("§cThere are no Prototype Lobby servers available at the moment.")
-			);
-			return;
-		}
+        if (!GameManager.hasType(ServerType.PROTOTYPE_LOBBY) || !GameManager.isAnyEmpty(ServerType.PROTOTYPE_LOBBY)) {
+            player.disconnect(
+                    Component.text("§cThere are no Prototype Lobby servers available at the moment.")
+            );
+            return;
+        }
 
 		List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.SKYBLOCK_HUB);
 		if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
@@ -315,15 +315,15 @@ public class SkyBlockVelocity {
 				});
 	}
 
-	@Subscribe
-	public void onPing(ProxyPingEvent event) {
-		event.setPing(new ServerPing(
-				event.getPing().getVersion(),
-				null,
-				Component.text("                §aHypixel Recreation §c[1.8-1.20]"),
-				event.getPing().getFavicon().orElse(null)
-		));
-	}
+    @Subscribe
+    public void onPing(ProxyPingEvent event) {
+        event.setPing(new ServerPing(
+                event.getPing().getVersion(),
+                null,
+                Component.text("                §aHypixel Recreation §c[1.8-1.21]"),
+                event.getPing().getFavicon().orElse(null)
+        ));
+    }
 
 	private void injectPlayer(Player player) {
 		final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;

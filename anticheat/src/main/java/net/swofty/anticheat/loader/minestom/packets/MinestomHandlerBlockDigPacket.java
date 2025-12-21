@@ -1,6 +1,6 @@
 package net.swofty.anticheat.loader.minestom.packets;
 
-import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
+import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;
 import net.swofty.anticheat.event.packet.BlockDigPacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
 import net.swofty.anticheat.loader.LoaderPacketHandler;
@@ -9,10 +9,10 @@ import net.swofty.anticheat.math.Pos;
 import java.util.UUID;
 
 public class MinestomHandlerBlockDigPacket
-        extends LoaderPacketHandler<ClientPlayerDiggingPacket> {
+        extends LoaderPacketHandler<ClientPlayerActionPacket> {
 
     @Override
-    public SwoftyPacket buildSwoftyPacket(UUID uuid, ClientPlayerDiggingPacket packet) {
+    public SwoftyPacket buildSwoftyPacket(UUID uuid, ClientPlayerActionPacket packet) {
         BlockDigPacket.Status status = mapStatus(packet.status());
         BlockDigPacket.Direction direction = mapDirection(packet.blockFace());
         Pos position = new Pos(
@@ -25,16 +25,16 @@ public class MinestomHandlerBlockDigPacket
     }
 
     @Override
-    public ClientPlayerDiggingPacket buildLoaderPacket(UUID uuid, SwoftyPacket packet) {
+    public ClientPlayerActionPacket buildLoaderPacket(UUID uuid, SwoftyPacket packet) {
         return null;
     }
 
     @Override
-    public Class<ClientPlayerDiggingPacket> getHandledPacketClass() {
-        return ClientPlayerDiggingPacket.class;
+    public Class<ClientPlayerActionPacket> getHandledPacketClass() {
+        return ClientPlayerActionPacket.class;
     }
 
-    private BlockDigPacket.Status mapStatus(ClientPlayerDiggingPacket.Status status) {
+    private BlockDigPacket.Status mapStatus(ClientPlayerActionPacket.Status status) {
         return switch (status) {
             case STARTED_DIGGING -> BlockDigPacket.Status.STARTED_DIGGING;
             case CANCELLED_DIGGING -> BlockDigPacket.Status.CANCELLED_DIGGING;
@@ -43,6 +43,7 @@ public class MinestomHandlerBlockDigPacket
             case DROP_ITEM -> BlockDigPacket.Status.DROP_ITEM;
             case UPDATE_ITEM_STATE -> BlockDigPacket.Status.UPDATE_HELD_ITEM;
             case SWAP_ITEM_HAND -> BlockDigPacket.Status.SWAP_ITEM_IN_HAND;
+            case STAB -> BlockDigPacket.Status.STAB;
         };
     }
 

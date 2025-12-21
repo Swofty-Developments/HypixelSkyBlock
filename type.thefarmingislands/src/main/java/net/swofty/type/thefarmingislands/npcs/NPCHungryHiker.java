@@ -40,6 +40,6 @@ public class NPCHungryHiker extends HypixelNPC {
     @Override
     public void onClick(HypixelNPC.PlayerClickNPCEvent e) {
         e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
+                .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
     }
 }

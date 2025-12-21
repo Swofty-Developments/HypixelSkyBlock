@@ -35,6 +35,6 @@ public class VillagerApprentice extends HypixelVillagerNPC {
     @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
         e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
+                        .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
     }
 }

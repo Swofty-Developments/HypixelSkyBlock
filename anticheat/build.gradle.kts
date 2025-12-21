@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("net.minestom:minestom:2025.08.18-1.21.8") {
+    compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation("org.tinylog:tinylog-api:2.7.0")
@@ -44,10 +44,10 @@ tasks.test {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 

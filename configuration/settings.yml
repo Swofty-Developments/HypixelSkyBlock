@@ -111,12 +111,16 @@ debugLevel: 2
 
 # Warning! Do not touch params of this block if you are not completely sure what is this!
 netty:
-  # Use a Linux native transport type, if it possible
-  useEpoll: true
+  # Available transport type:
+  # - epoll
+  # - io_uring
+  # - kqueue
+  # - nio
+  transportType: epoll
   # EventLoopGroup threads count
   threads:
     bossGroup: 1
-    workerGroup: 4
+    workerGroup:
 
 # Options to check incoming traffic and kick potentially malicious connections.
 # Take into account that player can send many small packets, for example, just moving mouse.

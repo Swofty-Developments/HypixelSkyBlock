@@ -5,11 +5,10 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.HeadProfile;
+import net.minestom.server.network.player.ResolvableProfile;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.minestom.server.utils.Unit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.attribute.ItemAttribute;
@@ -117,7 +116,7 @@ public class PlayerItemUpdater {
 
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
-            toReturn.set(DataComponents.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
+            toReturn.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)));
         }
 
         if (item.hasComponent(GemstoneComponent.class)) {

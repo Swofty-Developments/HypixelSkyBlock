@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.packets.client;
 
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.network.packet.client.ClientPacket;
-import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
+import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -11,12 +11,12 @@ import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEve
 public class PacketListenerPlayerDig extends HypixelPacketClientListener {
     @Override
     public Class<? extends ClientPacket> getPacket() {
-        return ClientPlayerDiggingPacket.class;
+        return ClientPlayerActionPacket.class;
     }
 
     @Override
     public void run(PlayerPacketEvent event, ClientPacket packet, HypixelPlayer player) {
-        ClientPlayerDiggingPacket digPacket = (ClientPlayerDiggingPacket) packet;
+        ClientPlayerActionPacket digPacket = (ClientPlayerActionPacket) packet;
         HypixelEventHandler.callCustomEvent(new PlayerDamageSkyBlockBlockEvent(
                 player,
                 digPacket.blockPosition(),

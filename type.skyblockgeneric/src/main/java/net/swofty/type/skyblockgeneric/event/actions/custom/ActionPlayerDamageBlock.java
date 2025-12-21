@@ -4,7 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.item.Material;
-import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
+import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;
 import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.EventNodes;
@@ -29,7 +29,7 @@ public class ActionPlayerDamageBlock implements HypixelEventClass {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(event.getBlockPosition());
 
-        if (event.getStatus() != ClientPlayerDiggingPacket.Status.STARTED_DIGGING
+        if (event.getStatus() != ClientPlayerActionPacket.Status.STARTED_DIGGING
                 || region == null
                 || region.getType().getMiningHandler() == null
                 || Material.fromKey(player.getInstance().getBlock(event.getBlockPosition()).key()) == null

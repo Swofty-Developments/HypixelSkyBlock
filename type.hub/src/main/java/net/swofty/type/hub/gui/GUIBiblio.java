@@ -28,7 +28,7 @@ public class GUIBiblio extends HypixelInventoryGUI {
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
 				player.sendMessage(Component.text("§7Click §e§lHERE §7to visit the §6Official SkyBlock Wiki§7!§r")
-						.clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://wiki.hypixel.net")));
+						.clickEvent(ClickEvent.openUrl("https://wiki.hypixel.net")));
 			}
 
 			@Override
