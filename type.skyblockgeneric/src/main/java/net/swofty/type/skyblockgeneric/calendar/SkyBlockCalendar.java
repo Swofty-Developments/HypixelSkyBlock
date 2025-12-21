@@ -94,6 +94,12 @@ public final class SkyBlockCalendar {
         return CalendarEvent.getCurrentEvents(getElapsed() % YEAR);
     }
 
+    /**
+     * A record to hold information about upcoming events.
+     * @param timeUntilBegin <b>ticks</b> until the event begins
+     * @param duration <b>ticks</b> duration of the event
+     * @param year the year the event will occur
+     */
     public record EventInfo(long timeUntilBegin, long duration, int year) {}
 
     public static Map<EventInfo, CalendarEvent> getEventsWithDurationUntil(int amount) {

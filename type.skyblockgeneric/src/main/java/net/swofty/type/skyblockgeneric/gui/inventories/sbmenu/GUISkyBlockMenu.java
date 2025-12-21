@@ -33,6 +33,7 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GUISkyBlockMenu extends HypixelInventoryGUI {
     public GUISkyBlockMenu() {
@@ -245,18 +246,31 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
                     for (CalendarEvent event : currentEvents) {
                         lore.add(event.getDisplayName(SkyBlockCalendar.getYear()));
                     }
-                    lore.add(" ");
                 } else if (currentEvents.size() == 1) {
-                    lore.add("§7Current event: " + currentEvents.getFirst().getDisplayName(1));
-                    lore.add("§7Ends in: §e");
+                    CalendarEvent currentEvent = currentEvents.getFirst();
+                    lore.add("§7Current event: " + currentEvent.getDisplayName(SkyBlockCalendar.getYear()));
+                    long ticksRemaining = getTicksRemaining(currentEvent);
+                    lore.add("§7Ends in: §e" + StringUtility.formatTimeLeft(ticksRemaining * 50L));
                 } else {
                     lore.add("§7No current events.");
-                    lore.add(" ");
                 }
+
+                lore.add(" ");
+
+                Map<SkyBlockCalendar.EventInfo, CalendarEvent> upcomingEvents = SkyBlockCalendar.getEventsWithDurationUntil(1);
+                if (!upcomingEvents.isEmpty()) {
+                    Map.Entry<SkyBlockCalendar.EventInfo, CalendarEvent> entry = upcomingEvents.entrySet().iterator().next();
+                    SkyBlockCalendar.EventInfo info = entry.getKey();
+                    CalendarEvent event = entry.getValue();
+
+                    lore.add("§7Next event: " + event.getDisplayName(info.year()));
+                    lore.add("§7Starting in: §e" + StringUtility.formatTimeLeft(info.timeUntilBegin() * 50L));
+                } else {
+                    lore.add("§7No upcoming events.");
+                }
+
                 lore.addAll(
                         List.of(
-                                "§7Next Event: ",
-                                "§7Starting in: §e",
                                 " ",
                                 "§8Also accessible via /calendar",
                                 " ",
@@ -264,6 +278,18 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
                         )
                 );
                 return lore;
+            }
+
+            private static long getTicksRemaining(CalendarEvent currentEvent) {
+                long currentElapsedInYear = SkyBlockCalendar.getElapsed() % SkyBlockCalendar.YEAR;
+                long eventEndTime = 0;
+                for (Long eventStartTime : currentEvent.times()) {
+                    if (currentElapsedInYear >= eventStartTime && currentElapsedInYear < eventStartTime + currentEvent.duration()) {
+                        eventEndTime = eventStartTime + currentEvent.duration();
+                        break;
+                    }
+                }
+                return eventEndTime - currentElapsedInYear;
             }
         });
 
