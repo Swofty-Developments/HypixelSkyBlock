@@ -59,7 +59,7 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
 
             // Queue block for mining if in valid region
             if (mining != null && material != null) {
-                mining.addToQueue(player, Pos.fromPoint(event.getBlockPosition()), (SharedInstance) player.getInstance());
+                mining.addToQueue(player, event.getBlockPosition().asPos(), (SharedInstance) player.getInstance());
                 shouldItemDrop = true;
             }
         }
@@ -79,6 +79,7 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
                     player,
                     new SkyBlockItem(player.getItemInMainHand()),
                     region,
+                    HypixelConst.getTypeLoader().getType(),
                     HypixelConst.isIslandServer()
             );
 
@@ -118,7 +119,7 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
                     player.addAndUpdateItem(dropItem);
                 } else {
                     // Determine nearest air block between ore and player
-                    Pos orePos = Pos.fromPoint(event.getBlockPosition());
+                    Pos orePos = event.getBlockPosition().asPos();
                     Pos playerPos = player.getPosition();
 
                     Pos[] offsets = {

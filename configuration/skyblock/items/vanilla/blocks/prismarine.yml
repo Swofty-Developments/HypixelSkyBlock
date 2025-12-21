@@ -1,0 +1,37 @@
+items:
+  - id: PRISMARINE
+    material: PRISMARINE
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              serverType: "SKYBLOCK_DWARVEN_MINES"
+            drops:
+              - item: MITHRIL
+                chance: 1
+                amount: 1
+  - id: DARK_PRISMARINE
+    material: DARK_PRISMARINE
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              serverType: "SKYBLOCK_DWARVEN_MINES"
+            drops:
+              - item: MITHRIL
+                chance: 1
+                amount: 1
+  - id: PRISMARINE_BRICKS
+    material: PRISMARINE_BRICKS
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              serverType: "SKYBLOCK_DWARVEN_MINES"
+            drops:
+              - item: MITHRIL
+                chance: 1
+                amount: 1

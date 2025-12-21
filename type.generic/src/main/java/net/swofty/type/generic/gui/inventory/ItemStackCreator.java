@@ -69,12 +69,11 @@ public class ItemStackCreator {
      * @param name     the name of the item stack
      * @param color    the color to apply to the lore
      * @param material the material of the item stack
-     * @param data     additional data for the item
      * @param amount   the amount of items in the stack
      * @param lore     the lore to display
      * @return an {@link ItemStack.Builder} with the specified properties
      */
-    public static ItemStack.Builder getSingleLoreStack(String name, String color, Material material, short data, int amount, String lore) {
+    public static ItemStack.Builder getSingleLoreStack(String name, String color, Material material, int amount, String lore) {
         List<String> l = new ArrayList<>();
         for (String line : StringUtility.splitByWordAndLength(lore, 30)) {
             l.add(color + line);
