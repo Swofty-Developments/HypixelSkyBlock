@@ -34,7 +34,7 @@ public record CalendarEvent(
             year -> "§d" + StringUtility.ntify(year) + " New Year Celebration",
             List.of(
                     "§7To celebrate the SkyBlock New Year,",
-                    "§7the Baker is giving out fre Cake!"
+                    "§7the Baker is giving out free Cake!"
             ),
             List.of(10L),
             20 * 60 * 60L, // 1 hour
