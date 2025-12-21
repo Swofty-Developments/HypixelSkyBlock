@@ -70,6 +70,22 @@ public class ConfigurableSkyBlockItem {
         }
     }
 
+    /**
+     * Removes a component from the item configuration. It also tries to remove any inherited components. Using this method
+     * is very likely to break items, so it should not be used normally.
+     * @param componentClass The class of the component to remove.
+     */
+    @Deprecated(forRemoval = false)
+    public void removeComponent(Class<? extends SkyBlockItemComponent> componentClass) {
+        SkyBlockItemComponent component = getComponent(componentClass);
+        List<SkyBlockItemComponent> toRemove = new ArrayList<>(component.getInheritedComponents());
+        toRemove.add(component);
+        for (SkyBlockItemComponent comp : toRemove) {
+            components.remove(comp.getClass());
+            explicitComponents.remove(comp.getClass());
+        }
+    }
+
     private void processComponent(SkyBlockItemComponent component, ComponentSource source) {
         Class<? extends SkyBlockItemComponent> componentClass = component.getClass();
 

@@ -8,7 +8,7 @@ import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.HeadProfile;
+import net.minestom.server.network.player.ResolvableProfile;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
 
 public class EntityFairySoul extends EntityCreature {
@@ -27,7 +27,7 @@ public class EntityFairySoul extends EntityCreature {
         meta.setNotifyAboutChanges(false);
 
         setHelmet(ItemStack.builder(Material.PLAYER_HEAD)
-                .set(DataComponents.PROFILE, new HeadProfile(new PlayerSkin(SKULL_TEXTURES, null)))
+                .set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(SKULL_TEXTURES, null)))
                 .build());
     }
 

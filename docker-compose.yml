@@ -73,7 +73,7 @@ services:
     container_name: hypixelcore_island
     restart: "unless-stopped"
     environment:
-      SERVICE_CMD: java --enable-preview -jar HypixelCore.jar SKYBLOCK_ISLAND
+      SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_ISLAND
     depends_on:
       proxy:
         condition: service_healthy
@@ -89,7 +89,7 @@ services:
     container_name: hypixelcore_hub
     restart: "unless-stopped"
     environment:
-      SERVICE_CMD: java --enable-preview -jar HypixelCore.jar SKYBLOCK_HUB
+      SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_HUB
     depends_on:
       proxy:
         condition: service_healthy
@@ -105,7 +105,7 @@ services:
     container_name: hypixelcore_farming
     restart: "unless-stopped"
     environment:
-      SERVICE_CMD: java --enable-preview -jar HypixelCore.jar SKYBLOCK_THE_FARMING_ISLANDS
+      SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_THE_FARMING_ISLANDS
     depends_on:
       proxy:
         condition: service_healthy
@@ -121,7 +121,7 @@ services:
     container_name: prototype_lobby
     restart: "unless-stopped"
     environment:
-      SERVICE_CMD: java --enable-preview -jar HypixelCore.jar PROTOTYPE_LOBBY
+      SERVICE_CMD: java -jar HypixelCore.jar PROTOTYPE_LOBBY
     depends_on:
       proxy:
         condition: service_healthy
@@ -137,7 +137,7 @@ services:
   #   container_name: bedwars_lobby
   #   restart: "unless-stopped"
   #   environment:
-  #     SERVICE_CMD: java --enable-preview -jar HypixelCore.jar BEDWARS_LOBBY
+  #     SERVICE_CMD: java -jar HypixelCore.jar BEDWARS_LOBBY
   #   depends_on:
   #     proxy:
   #       condition: service_healthy
@@ -153,7 +153,7 @@ services:
   #   container_name: bedwars_game
   #   restart: "unless-stopped"
   #   environment:
-  #     SERVICE_CMD: java --enable-preview -jar HypixelCore.jar BEDWARS_GAME
+  #     SERVICE_CMD: java -jar HypixelCore.jar BEDWARS_GAME
   #   depends_on:
   #     proxy:
   #       condition: service_healthy
@@ -169,7 +169,7 @@ services:
     container_name: nanolimbo
     restart: "unless-stopped"
     environment:
-      SERVICE_CMD: java -jar NanoLimbo-1.9.8.jar
+      SERVICE_CMD: java -jar NanoLimbo-1.10.2.jar
     depends_on:
       proxy:
         condition: service_healthy

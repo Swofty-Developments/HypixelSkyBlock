@@ -6,7 +6,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockFace;
-import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
+import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;
 import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.HypixelEventHandler;
@@ -59,11 +59,11 @@ public class BreakingTask {
                 HypixelEventHandler.callCustomEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,
                         block.pos(),
-                        ClientPlayerDiggingPacket.Status.CANCELLED_DIGGING));
+                        ClientPlayerActionPacket.Status.CANCELLED_DIGGING));
                 HypixelEventHandler.callCustomEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,
                         block.pos(),
-                        ClientPlayerDiggingPacket.Status.STARTED_DIGGING));
+                        ClientPlayerActionPacket.Status.STARTED_DIGGING));
             });
             return TaskSchedule.stop();
         }

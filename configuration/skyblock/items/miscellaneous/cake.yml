@@ -1,0 +1,23 @@
+items:
+  - id: NEW_YEAR_CAKE
+    material: PLAYER_HEAD
+    rarity: SPECIAL
+    components:
+      - id: ENCHANTED
+      - id: NEW_YEAR_CAKE
+      - id: SELLABLE
+        value: 100
+  - id: NEW_YEAR_CAKE_BAG
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Holds §dNew Year Cake§7. Each"
+      - "§7unique New Year Cake within this"
+      - "§7bag grants §a+1 §c❤ Health§7."
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: New Year Cake Bag
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: "cde7cdeb9713a6f9cfedaaddcffb355721911f49f2fa1cf1189b949e2f0d5b28"
+      - id: NOT_FINISHED_YET

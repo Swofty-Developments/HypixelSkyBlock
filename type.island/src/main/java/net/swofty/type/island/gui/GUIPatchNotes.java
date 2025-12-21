@@ -42,7 +42,7 @@ public class GUIPatchNotes extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/channels/830345347867476000/849739331278733332/1225968992909525056")));
+                        .clickEvent(ClickEvent.openUrl("https://discord.com/channels/830345347867476000/849739331278733332/1225968992909525056")));
             }
 
             @Override
@@ -59,7 +59,7 @@ public class GUIPatchNotes extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/channels/830345347867476000/849739331278733332/1226864370122887229")));
+                        .clickEvent(ClickEvent.openUrl("https://discord.com/channels/830345347867476000/849739331278733332/1226864370122887229")));
             }
 
             @Override
@@ -76,7 +76,7 @@ public class GUIPatchNotes extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/channels/830345347867476000/849739331278733332/1227143736669114459")));
+                        .clickEvent(ClickEvent.openUrl("https://discord.com/channels/830345347867476000/849739331278733332/1227143736669114459")));
             }
 
             @Override
@@ -93,7 +93,7 @@ public class GUIPatchNotes extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/channels/830345347867476000/849739331278733332/1227909009336569906")));
+                        .clickEvent(ClickEvent.openUrl("https://discord.com/channels/830345347867476000/849739331278733332/1227909009336569906")));
             }
 
             @Override
@@ -110,7 +110,7 @@ public class GUIPatchNotes extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/channels/830345347867476000/849739331278733332/1229007700302495765")));
+                        .clickEvent(ClickEvent.openUrl("https://discord.com/channels/830345347867476000/849739331278733332/1229007700302495765")));
             }
 
             @Override
@@ -127,7 +127,7 @@ public class GUIPatchNotes extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/channels/830345347867476000/849739331278733332/1230477957764612146")));
+                        .clickEvent(ClickEvent.openUrl("https://discord.com/channels/830345347867476000/849739331278733332/1230477957764612146")));
             }
 
             @Override
@@ -144,7 +144,7 @@ public class GUIPatchNotes extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/channels/830345347867476000/849739331278733332/1231214757114282065")));
+                        .clickEvent(ClickEvent.openUrl("https://discord.com/channels/830345347867476000/849739331278733332/1231214757114282065")));
             }
 
             @Override

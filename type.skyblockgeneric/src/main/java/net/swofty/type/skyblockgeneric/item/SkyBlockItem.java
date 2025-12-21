@@ -36,6 +36,7 @@ public class SkyBlockItem {
 	@Getter
 	@Setter
 	private int amount = 1;
+	@Getter
 	private ConfigurableSkyBlockItem config = null;
 
 	public SkyBlockItem(UnderstandableSkyBlockItem item) {

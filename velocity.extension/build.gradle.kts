@@ -4,15 +4,15 @@ plugins {
     java
     application
     `maven-publish`
-    id("io.github.goooler.shadow") version "8.1.7"
-    id("org.jetbrains.gradle.plugin.idea-ext") version "1.0.1"
+    id("com.gradleup.shadow") version "9.3.0"
+    id("org.jetbrains.gradle.plugin.idea-ext") version "1.3"
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 
