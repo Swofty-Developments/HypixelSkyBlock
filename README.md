@@ -23,7 +23,7 @@ This project is not meant to be a small server, and as such, it requires a decen
 A video of me going through the guide [can be found here](https://www.youtube.com/watch?v=pxzJbjjQL-M)
 1. Ensure that you meet the recommended device specifications above.
 2. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/try/download/community?tck=docs_server).
-3. Ensure you have the `Java 21` SDK installed.
+3. Ensure you have the `Java 25` SDK installed.
 4. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
 5. Follow the 'Proxy Setup Guide' below. (Note, if you want to run a cracked server, you must set "require-authentication" to true in your config)
 6. Follow the 'Game Server Setup Guide' below. (Note, if you want to run a cracked server, you must set "require-authentication" to true in your config)
