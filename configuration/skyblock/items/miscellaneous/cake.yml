@@ -4,6 +4,7 @@ items:
     rarity: SPECIAL
     components:
       - id: ENCHANTED
+      - id: NEW_YEAR_CAKE
       - id: SELLABLE
         value: 100
   - id: NEW_YEAR_CAKE_BAG
