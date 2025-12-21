@@ -1,6 +1,6 @@
 plugins {
     base
-    id("io.freefair.lombok") version "8.6"
+    id("io.freefair.lombok") version "9.1.0"
 }
 
 buildscript {
@@ -44,12 +44,12 @@ subprojects {
             "implementation"("com.fasterxml.jackson.core:jackson-annotations:2.17.0")
             "implementation"("com.fasterxml.jackson.core:jackson-core:2.17.0")
             "implementation"("org.json:json:20240303")
-            "compileOnly"("org.projectlombok:lombok:1.18.32")
+            "compileOnly"("org.projectlombok:lombok:1.18.42")
         }
 
         tasks.withType<JavaCompile> {
-            sourceCompatibility = JavaVersion.VERSION_21.toString()
-            targetCompatibility = JavaVersion.VERSION_21.toString()
+            sourceCompatibility = JavaVersion.VERSION_25.toString()
+            targetCompatibility = JavaVersion.VERSION_25.toString()
             options.encoding = "UTF-8"
         }
 

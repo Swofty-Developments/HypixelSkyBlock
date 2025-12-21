@@ -46,7 +46,7 @@ public class NPCSecuritySloth extends NPCDialogue {
 
         setDialogue(e.player(), "hello").thenAccept(key -> {
             e.player().sendMessage(Component.text("§eGeneral Security Support Article §b§lCLICK HERE")
-                    .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://support.hypixel.net/hc/en-us/articles/360019538060-How-to-Keep-Your-Account-Secure-on-Hypixel")));
+                    .clickEvent(ClickEvent.openUrl("https://support.hypixel.net/hc/en-us/articles/360019538060-How-to-Keep-Your-Account-Secure-on-Hypixel")));
         });
     }
 

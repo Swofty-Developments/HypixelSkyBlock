@@ -304,7 +304,7 @@ public class SkyBlockVelocity {
         event.setPing(new ServerPing(
                 event.getPing().getVersion(),
                 null,
-                Component.text("                §aHypixel Recreation §c[1.8-1.20]"),
+                Component.text("                §aHypixel Recreation §c[1.8-1.21]"),
                 event.getPing().getFavicon().orElse(null)
         ));
     }

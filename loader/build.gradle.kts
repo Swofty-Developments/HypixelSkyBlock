@@ -4,17 +4,17 @@ import java.util.*
 plugins {
     java
     application
-    id("io.github.goooler.shadow") version "8.1.7"
+    id("com.gradleup.shadow") version "9.3.0"
 }
 
 group = "net.swofty"
 version = "3.0"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 
@@ -38,16 +38,16 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.13")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("net.minestom:minestom:2025.08.18-1.21.8") {
+    implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("dev.hollowcube:polar:1.14.0")
+    implementation("dev.hollowcube:polar:1.15.0")
     implementation("org.yaml:snakeyaml:2.0")
 }
 
 application {
     mainClass.set("net.swofty.loader.Hypixel")
-    applicationDefaultJvmArgs = listOf("--enable-preview", "-Duser.dir=${rootProject.projectDir}")
+    applicationDefaultJvmArgs = listOf("-Duser.dir=${rootProject.projectDir}")
 }
 
 tasks {
@@ -58,9 +58,9 @@ tasks {
     }
 }
 
-val serverType: String by project
 val testFlow: String by project
 val players: String by project
+val serverType: String? = project.findProperty("serverType") as String?
 
 tasks.register<JavaExec>("runServer") {
     group = "application"
@@ -69,23 +69,20 @@ tasks.register<JavaExec>("runServer") {
     dependsOn("build")
 
     javaLauncher.set(javaToolchains.launcherFor {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     })
 
-    doFirst {
-        if (!project.hasProperty("serverType")) {
-            throw GradleException("Please provide a server type using -PserverType=<type>")
-        }
-    }
-    workingDir = rootProject.projectDir
+    val resolvedServerType = serverType ?: throw GradleException("Please provide a server type using -PserverType=<type>")
+    val projectDir = rootProject.projectDir
+
+    workingDir = projectDir
 
     mainClass.set("net.swofty.loader.Hypixel")
     classpath = sourceSets["main"].runtimeClasspath
-    jvmArgs("--enable-preview")
-    args(serverType)
+    args(resolvedServerType)
 
     doLast {
-        println("Application started with server type: $serverType")
+        println("Application started with server type: $resolvedServerType")
     }
 }
 
@@ -162,7 +159,6 @@ tasks.register("runWithTestFlow") {
                 val processBuilder = ProcessBuilder()
                 processBuilder.command(
                     "java",
-                    "--enable-preview",
                     "-Duser.dir=${rootProject.projectDir}",
                     "-cp", sourceSets["main"].runtimeClasspath.asPath,
                     "net.swofty.loader.Hypixel",
@@ -276,14 +272,8 @@ tasks.register("runWithTestFlow") {
 
 tasks.named("runServer").configure {
     mustRunAfter("build")
-    onlyIf {
-        project.gradle.startParameter.taskNames.contains("runServer")
-    }
 }
 
 tasks.named("runWithTestFlow").configure {
     mustRunAfter("build")
-    onlyIf {
-        project.gradle.startParameter.taskNames.contains("runWithTestFlow")
-    }
 }
