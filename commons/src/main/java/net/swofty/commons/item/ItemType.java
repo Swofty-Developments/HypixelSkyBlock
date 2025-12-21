@@ -1140,7 +1140,7 @@ public enum ItemType {
     CRIMSON_SIGN(Material.CRIMSON_SIGN, Rarity.COMMON),
     CRIMSON_HANGING_SIGN(Material.CRIMSON_HANGING_SIGN, Rarity.COMMON),
 
-    CHAIN(Material.CHAIN, Rarity.COMMON),
+    CHAIN(Material.IRON_CHAIN, Rarity.COMMON),
     LADDER(Material.LADDER, Rarity.COMMON),
     STONE(Material.STONE, Rarity.COMMON),
     STONE_SLAB(Material.STONE_SLAB, Rarity.COMMON),

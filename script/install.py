@@ -229,7 +229,7 @@ def create_server_scripts(install_path, server_type):
 title {server_type} Server Manager
 set /p INSTANCES="How many {server_type} instances would you like to start? "
 for /l %%i in (1,1,!INSTANCES!) do (
-    start "{server_type} Server %%i" java --enable-preview -jar SkyBlockCore.jar {server_type}
+    start "{server_type} Server %%i" java -jar SkyBlockCore.jar {server_type}
     timeout /t 2
 )
 '''
@@ -368,7 +368,7 @@ def main():
             ("Minestom.regions.csv", "configuration/collections/regions.csv"),
             ("Minestom.fairysouls.csv", "configuration/collections/fairysouls.csv"),
             ("Minestom.crystals.csv", "configuration/collections/crystals.csv"),
-            ("NanoLimbo-1.9.1-all.jar", "NanoLimbo.jar"),
+            ("NanoLimbo-1.10.2-all.jar", "NanoLimbo.jar"),
             ("velocity.toml", "velocity.toml")
         ]
 

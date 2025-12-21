@@ -5,9 +5,8 @@ import net.minestom.server.color.Color;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.component.HeadProfile;
+import net.minestom.server.network.player.ResolvableProfile;
 import net.minestom.server.tag.Tag;
-import net.minestom.server.utils.Unit;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
@@ -72,7 +71,7 @@ public class NonPlayerItemUpdater {
 
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
-            stack.set(DataComponents.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
+            stack.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)));
         }
 
         if (item.hasComponent(GemstoneComponent.class)) {

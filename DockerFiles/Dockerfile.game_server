@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jdk
+FROM eclipse-temurin:25-jdk
 
 WORKDIR /app
 
@@ -40,7 +40,7 @@ RUN mv ./configuration/hypixel_island_template ./configuration/skyblock/islands/
 EXPOSE 25565 65535 8080 20000
 
 # Copy NanoLimbo
-RUN cp configuration_files/NanoLimbo-1.9.8.jar ./NanoLimbo-1.9.8.jar
+RUN cp configuration_files/NanoLimbo-1.10.2.jar ./NanoLimbo-1.10.2.jar
 
 # Copy the Nano Config
 RUN cp configuration_files/settings.yml ./settings.yml
