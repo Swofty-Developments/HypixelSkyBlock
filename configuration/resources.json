@@ -2,7 +2,7 @@
   "mongodb": "mongodb://localhost",
   "redis-uri": "redis://localhost:6379",
   "velocity-secret": "ixmSUgWOgvs7",
-  "limbo-host-name": "127.0.0.1",
+  "limbo-host-name": "0.0.0.0",
   "limbo-port": "65535",
   "pterodactyl-mode": false,
   "spark": false,
@@ -11,5 +11,5 @@
   "host-name": "0.0.0.0",
   "transfer-timeout": "800",
   "sandbox-mode": true,
-  "anticheat": false
+  "anticheat": true
 }
