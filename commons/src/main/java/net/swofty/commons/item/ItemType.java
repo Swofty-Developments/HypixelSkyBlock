@@ -31,6 +31,9 @@ public enum ItemType {
 	ABIPHONE_XII_AMBER(Material.PLAYER_HEAD, Rarity.RARE),
 	ABIPHONE_XII_AMETHYST(Material.PLAYER_HEAD, Rarity.RARE),
 
+	NEW_YEAR_CAKE(Material.CAKE, Rarity.SPECIAL),
+	NEW_YEAR_CAKE_BAG(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
 	/**
 	 * Accessories
 	 */

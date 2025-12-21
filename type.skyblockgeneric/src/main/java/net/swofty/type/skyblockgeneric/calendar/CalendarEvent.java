@@ -18,6 +18,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public record CalendarEvent(
+        String id,
         ItemStack representation,
         Function<Integer, String> displayName,
         List<String> description,
@@ -30,6 +31,7 @@ public record CalendarEvent(
     private static final List<CalendarEvent> allEvents = new ArrayList<>();
 
     public static CalendarEvent NEW_YEAR = new CalendarEvent(
+            "new_year",
             ItemStack.of(Material.CAKE).with(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true),
             year -> "§d" + StringUtility.ntify(year) + " New Year Celebration",
             List.of(
@@ -90,7 +92,16 @@ public record CalendarEvent(
     }
 
     public static List<CalendarEvent> getCurrentEvents(long time) {
-        return eventCache.getOrDefault(time, new ArrayList<>());
+        List<CalendarEvent> activeEvents = new ArrayList<>();
+        for (CalendarEvent event : allEvents) {
+            for (Long eventStartTime : event.times()) {
+                if (time >= eventStartTime && time < eventStartTime + event.duration()) {
+                    activeEvents.add(event);
+                    break;
+                }
+            }
+        }
+        return activeEvents;
     }
 
     public static List<CalendarEvent> getAllEvents() {
@@ -99,5 +110,14 @@ public record CalendarEvent(
 
     public static Map<Long, List<CalendarEvent>> getEventCache() {
         return new HashMap<>(eventCache);
+    }
+
+    public static CalendarEvent fromId(String id) {
+        for (CalendarEvent event : allEvents) {
+            if (event.id().equalsIgnoreCase(id)) {
+                return event;
+            }
+        }
+        return null;
     }
 }

@@ -15,10 +15,10 @@ public final class SkyBlockCalendar {
     private static final String DAY_SYMBOL = "☀";
     private static final String NIGHT_SYMBOL = "☽";
 
-    private static final int YEAR = 8928000;
-    private static final int MONTH = 744000;
-    private static final int DAY = 24000;
-    private static final int HOUR = 1000;
+    public static final int YEAR = 8928000;
+    public static final int MONTH = 744000;
+    public static final int DAY = 24000;
+    public static final int HOUR = 1000;
 
     public static final int INTEREST_INTERVAL = 31;
     public static final double INTEREST_RATE = 0.02;
