@@ -99,7 +99,6 @@ public final class SkyBlockCalendar {
     public static Map<EventInfo, CalendarEvent> getEventsWithDurationUntil(int amount) {
         Map<EventInfo, CalendarEvent> result = new LinkedHashMap<>();
         long currentElapsed = getElapsed();
-        long currentTimeInYear = currentElapsed % YEAR;
         int currentYear = getYear();
 
         int foundEvents = 0;

@@ -40,8 +40,8 @@ public class GUICalendar extends HypixelInventoryGUI {
 					@Override
 					public ItemStack.Builder getItem(HypixelPlayer player) {
 						List<Component> loreHeader = List.of(
-								Component.text("§7Starts in: §e" + StringUtility.formatTimeLeft(info.timeUntilBegin())),
-								Component.text("§7Event lasts for §e" +  StringUtility.formatTimeLeft(info.duration()) + "§7!"),
+								Component.text("§7Starts in: §e" + StringUtility.formatTimeLeft(info.timeUntilBegin() * 50L)),
+								Component.text("§7Event lasts for §e" +  StringUtility.formatTimeLeft(info.duration() * 50L) + "§7!"),
 								Component.text(" ")
 						);
 						List<Component> loreFooter = event.description().stream()
