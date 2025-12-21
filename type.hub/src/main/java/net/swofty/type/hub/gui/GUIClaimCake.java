@@ -47,7 +47,7 @@ public class GUIClaimCake extends HypixelInventoryGUI {
                 dataHandler.get(SkyBlockDataHandler.Data.LATEST_NEW_YEAR_CAKE_YEAR, DatapointInteger.class).setValue(SkyBlockCalendar.getYear());
 
                 SkyBlockItem item = new SkyBlockItem(ItemType.NEW_YEAR_CAKE);
-                item.getConfig().addComponent(new NewYearCakeComponent(SkyBlockCalendar.getYear()), false);
+                item.getAttributeHandler().setNewYearCakeYear(SkyBlockCalendar.getYear());
                 player.addAndUpdateItem(item);
                 p.closeInventory();
                 player.sendMessage("§aYou claimed §cNew Year Cake§a!");

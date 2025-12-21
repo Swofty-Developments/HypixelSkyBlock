@@ -337,6 +337,14 @@ public class ItemAttributeHandler {
         ((ItemAttributeBreakingPower) item.getAttribute("breaking-power")).setValue(breakingPower);
     }
 
+    public int getNewYearCakeYear() {
+        return ((ItemAttributeNewYearCakeYear) item.getAttribute("new-year-cake-year")).getValue();
+    }
+
+    public void setNewYearCakeYear(int year) {
+        ((ItemAttributeNewYearCakeYear) item.getAttribute("new-year-cake-year")).setValue(year);
+    }
+
     public boolean isMiningTool() {
         return getBreakingPower() != 0;
     }

@@ -263,7 +263,7 @@ public class ItemConfigParser {
 				yield new MuseumComponent(category);
 			}
 			case "NOT_FINISHED_YET" -> new NotFinishedYetComponent();
-			case "NEW_YEAR_CAKE" -> new NewYearCakeComponent(-1);
+			case "NEW_YEAR_CAKE" -> new NewYearCakeComponent();
 			case "LORE_UPDATE" -> {
 				boolean isAbsolute = (boolean) config.getOrDefault("is_absolute", false);
 				yield new LoreUpdateComponent(config.get("handler_id").toString(), isAbsolute);
