@@ -1,0 +1,27 @@
+items:
+  - id: HASTE_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      mining_speed: 10.0
+    lore:
+      - "§7Grants permanent §eHaste II§7."
+    components:
+      - id: SKULL_HEAD
+        texture: 174b0c35491b660fc9138868bbcb5f02b539cb56b7ab63d6c53a9af2f63d061a
+      - id: TIERED_TALISMAN
+        base_tier: HASTE_RING
+        tier: 1
+  - id: HASTE_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      mining_speed: 25.0
+    lore:
+      - "§7Grants permanent §eHaste III§7."
+    components:
+      - id: SKULL_HEAD
+        texture: 2fe7a882ffe0d0dd245d91bd8e6dcc1ed450ae13880b12276fbaf66d4a4164c9
+      - id: TIERED_TALISMAN
+        base_tier: HASTE_RING
+        tier: 2

@@ -1,0 +1,37 @@
+items:
+  - id: SMALL_FISH_BOWL
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Increase the odds of fishing a rare"
+      - "§7Shard by §a30%§7."
+    components:
+      - id: SKULL_HEAD
+        texture: 777447c9c815f02e7ce9414b749a326ab83beb4f14b9c84418f0b11b7b013735
+      - id: TIERED_TALISMAN
+        base_tier: SMALL_FISH_BOWL
+        tier: 1
+  - id: MEDIUM_FISH_BOWL
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Increase the odds of fishing a rare"
+      - "§7Shard by §a60%§7."
+    components:
+      - id: SKULL_HEAD
+        texture: 2b8d3b3328b46ea7b7dc67c43bdff6dbaebcdc0b582e6c7fb1574b38ac0c9ad3
+      - id: TIERED_TALISMAN
+        base_tier: SMALL_FISH_BOWL
+        tier: 2
+  - id: LARGE_FISH_BOWL
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§aDoubles §7the odds of fishing a rare"
+      - "§7Shard."
+    components:
+      - id: SKULL_HEAD
+        texture: a8b631b344b6c9e1b1c1e779d71c59df54b3e2ec20e63ca4c293d6d59905f044
+      - id: TIERED_TALISMAN
+        base_tier: MEDIUM_FISH_BOWL
+        tier: 3

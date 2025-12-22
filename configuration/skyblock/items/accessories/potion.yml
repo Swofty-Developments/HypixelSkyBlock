@@ -1,0 +1,37 @@
+items:
+  - id: POTION_AFFINITY_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Increases the duration of any"
+      - "§7consumed Potion by §a10%§7."
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: POTION_AFFINITY_TALISMAN
+        tier: 1
+      - id: SKULL_HEAD
+        texture: d6a59f4abcf5516e50b5a9b1cf2f7eca78eaf0c07ffb254cd45131b169068a5a
+  - id: POTION_AFFINITY_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Increases the duration of any"
+      - "§7consumed Potion by §a25%§7."
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: POTION_AFFINITY_TALISMAN
+        tier: 2
+      - id: SKULL_HEAD
+        texture: 46b5cfdd804d76249e7c6946b1d9afa22e9bdc72149f682e71654aee885dffbb
+  - id: POTION_AFFINITY_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§7Increases the duration of any"
+      - "§7consumed Potion by §a50%§7."
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: POTION_AFFINITY_RING
+        tier: 3
+      - id: SKULL_HEAD
+        texture: 56f9119a1d1fb01bb97db89aeba56ff5ee112079e432a2b50fa3a80a8954db38

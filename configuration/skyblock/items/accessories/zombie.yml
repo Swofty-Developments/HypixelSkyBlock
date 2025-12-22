@@ -2,6 +2,9 @@ items:
   - id: ZOMBIE_TALISMAN
     material: ZOMBIE_HEAD
     rarity: COMMON
+    lore:
+      - "§7Reduces the damage taken from §2༕"
+      - "§2Undead §7mobs by §a5%§7."
     components:
       - id: TIERED_TALISMAN
         base_tier: ZOMBIE_TALISMAN
@@ -9,6 +12,9 @@ items:
   - id: ZOMBIE_RING
     material: PLAYER_HEAD
     rarity: COMMON
+    lore:
+      - "§7Reduces the damage taken from §2༕"
+      - "§2Undead §7mobs by §a10%§7."
     components:
       - id: TIERED_TALISMAN
         base_tier: ZOMBIE_TALISMAN
@@ -18,6 +24,9 @@ items:
   - id: ZOMBIE_ARTIFACT
     material: PLAYER_HEAD
     rarity: COMMON
+    lore:
+      - "§7Reduces the damage taken from §2༕"
+      - "§2Undead §7mobs by §a15%§7."
     components:
       - id: TIERED_TALISMAN
         base_tier: ZOMBIE_TALISMAN

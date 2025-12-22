@@ -1,0 +1,29 @@
+items:
+  - id: HEALING_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    default_statistics:
+      vitality: 5.0
+    lore:
+      - "§7Grants §4+5♨ Vitality§7, which increases"
+      - "§7incoming healing."
+    components:
+      - id: SKULL_HEAD
+        texture: 651eb16f22dd7505be5dae06671803633a5abf8b2beeb5c60548670df0e59214
+      - id: TIERED_TALISMAN
+        base_tier: HEALING_TALISMAN
+        tier: 1
+  - id: HEALING_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      vitality: 10.0
+    lore:
+      - "§7Grants §4+10♨ Vitality§7, which"
+      - "§7increases incoming healing."
+    components:
+      - id: SKULL_HEAD
+        texture: 50247bc4a01d2a2391cd8d8543c9fc673cda74b06bfc127a72ec06ad3ed580e1
+      - id: TIERED_TALISMAN
+        base_tier: HEALING_TALISMAN
+        tier: 2

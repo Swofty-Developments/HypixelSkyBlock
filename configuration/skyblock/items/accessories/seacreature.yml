@@ -1,0 +1,43 @@
+items:
+  - id: SEA_CREATURE_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    default_statistics:
+      sea_creature_chance: 0.1
+    lore:
+      - "§7Take §a5%§7 less damage from Sea"
+      - "§7Creatures."
+    components:
+      - id: SKULL_HEAD
+        texture: eb7ae4dd0384543b31623ef19c1b3f886629424efae004b6ea75194ee9b9aa32
+      - id: TIERED_TALISMAN
+        base_tier: SEA_CREATURE_TALISMAN
+        tier: 1
+  - id: SEA_CREATURE_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      sea_creature_chance: 0.2
+    lore:
+      - "§7Take §a10%§7 less damage from Sea"
+      - "§7Creatures."
+    components:
+      - id: SKULL_HEAD
+        texture: 7ac01f28133c16b73567a77444e29a1475202d974ace29624cb688d2491b0b58
+      - id: TIERED_TALISMAN
+        base_tier: SEA_CREATURE_TALISMAN
+        tier: 2
+  - id: SEA_CREATURE_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      sea_creature_chance: 0.3
+    lore:
+      - "§7Take §a15%§7 less damage from Sea"
+      - "§7Creatures."
+    components:
+      - id: SKULL_HEAD
+        texture: a4270c3655178afe44597b6394708828c292455365bddef971a381f41e47d5d0
+      - id: TIERED_TALISMAN
+        base_tier: SEA_CREATURE_RING
+        tier: 3

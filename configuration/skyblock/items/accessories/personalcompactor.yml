@@ -1,0 +1,61 @@
+items:
+  - id: PERSONAL_COMPACTOR_4000
+    material: DROPPER
+    rarity: UNCOMMON
+    lore:
+      - "§7Automatically turns certain materials"
+      - "§7in your inventory into their"
+      - "§7enchanted form."
+      - " "
+      - "§eRight-click to configure!"
+      - " "
+      - "§8Does not grant Carpentry XP!"
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: PERSONAL_COMPACTOR_4000
+        tier: 1
+  - id: PERSONAL_COMPACTOR_5000
+    material: DROPPER
+    rarity: RARE
+    lore:
+      - "§7Automatically turns certain materials"
+      - "§7in your inventory into their"
+      - "§7enchanted form."
+      - " "
+      - "§eRight-click to configure!"
+      - " "
+      - "§8Does not grant Carpentry XP!"
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: PERSONAL_COMPACTOR_4000
+        tier: 2
+  - id: PERSONAL_COMPACTOR_6000
+    material: DROPPER
+    rarity: EPIC
+    lore:
+      - "§7Automatically turns certain materials"
+      - "§7in your inventory into their"
+      - "§7enchanted form."
+      - " "
+      - "§eRight-click to configure!"
+      - " "
+      - "§8Does not grant Carpentry XP!"
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: PERSONAL_COMPACTOR_5000
+        tier: 3
+  - id: PERSONAL_COMPACTOR_7000
+    material: DROPPER
+    rarity: LEGENDARY
+    lore:
+      - "§7Automatically turns certain materials"
+      - "§7in your inventory into their"
+      - "§7enchanted form."
+      - " "
+      - "§eRight-click to configure!"
+      - " "
+      - "§8Does not grant Carpentry XP!"
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: PERSONAL_COMPACTOR_6000
+        tier: 4

@@ -1,0 +1,42 @@
+items:
+  - id: FEATHER_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Increases how high you can fall"
+      - "§7before taking fall damage by §a5"
+      - "§7blocks."
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: FEATHER_TALISMAN
+        tier: 1
+      - id: SKULL_HEAD
+        texture: 5120a863869320af4cfa7d1d58d0b2dd8182eb0be834b8caaeb5639421cd893b
+  - id: FEATHER_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Increases how high you can fall"
+      - "§7before taking fall damage by §a7"
+      - "§7blocks. Fall damage is also reduced"
+      - "§7by §a5%§7."
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: FEATHER_TALISMAN
+        tier: 2
+      - id: SKULL_HEAD
+        texture: cb6851f4e9a87707ad72f5b5cd17efeca36c2c18cc99aaad7121fe72cf79b9b1
+  - id: FEATHER_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§7Increases how high you can fall"
+      - "§7before taking fall damage by §a10"
+      - "§7blocks. Fall damage is also reduced"
+      - "§7by §a15%§7."
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: FEATHER_RING
+        tier: 3
+      - id: SKULL_HEAD
+        texture: da239e8b52ed91fe518d7c690b03de9dc69846a8d5c208ac1c102edd68d9ca18

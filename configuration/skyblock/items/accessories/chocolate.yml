@@ -1,0 +1,91 @@
+items:
+  - id: NIBBLE_CHOCOLATE_STICK
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - "§7Grants §a+2% §7chance to find a"
+      - "§aChocolate Rabbit §7that you haven't"
+      - "§7found yet and grants §6+10 Chocolate"
+      - "§7per second."
+      - " "
+      - "§8§oA delightful treat from the Factory."
+      - "§8§oIts crisp taste sparks joy with"
+      - "§8§oevery bite."
+    components:
+      - id: SKULL_HEAD
+        texture: 888188d62908af6e114f73a109e15ac7f1faded39abd6a2054034ec5cc70c727
+      - id: TIERED_TALISMAN
+        base_tier: NIBBLE_CHOCOLATE_STICK
+        tier: 1
+  - id: SMOOTH_CHOCOLATE_BAR
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - "§7Grants §a+4% §7chance to find a"
+      - "§aChocolate Rabbit §7that you haven't"
+      - "§7found yet and grants §6+20 Chocolate"
+      - "§7per second."
+      - " "
+      - "§8§oCrafted in the Factory, its"
+      - "§8§osmoothness melts hearts and tastes"
+      - "§8§olike a sweet escape."
+    components:
+      - id: SKULL_HEAD
+        texture: a9372efd2ca1a6c6dfc066f1ec83f9456575c3850a0e7d01109c4f1af300ba8
+      - id: TIERED_TALISMAN
+        base_tier: NIBBLE_CHOCOLATE_STICK
+        tier: 2
+  - id: RICH_CHOCOLATE_CHUNK
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - "§7Grants §a+6% §7chance to find a"
+      - "§aChocolate Rabbit §7that you haven't"
+      - "§7found yet and grants §6+30 Chocolate"
+      - "§7per second."
+      - " "
+      - "§8§oFrom the Factory's secret"
+      - "§8§oreserves, its rich flavor is a deep"
+      - "§8§odive into indulgence."
+    components:
+      - id: SKULL_HEAD
+        texture: 6f942717364c0fecf7ad11bac8cd98dd7ad4dbd72e3d3ce2b57eb48713824ff
+      - id: TIERED_TALISMAN
+        base_tier: SMOOTH_CHOCOLATE_BAR
+        tier: 3
+  - id: GANACHE_CHOCOLATE_SLAB
+    material: PLAYER_HEAD
+    rarity: EPIC
+    lore:
+      - "§7Grants §a+8% §7chance to find a"
+      - "§aChocolate Rabbit §7that you haven't"
+      - "§7found yet and grants §6+40 Chocolate"
+      - "§7per second."
+      - " "
+      - "§8§oA Factory masterpiece - its divine"
+      - "§8§otaste transcends reality, offering a"
+      - "§8§oheavenly escape."
+    components:
+      - id: SKULL_HEAD
+        texture: f89512331edfdc27cb7d4e80f3e0db460d05caf66c7c1c42e0e712130a9b690
+      - id: TIERED_TALISMAN
+        base_tier: RICH_CHOCOLATE_CHUNK
+        tier: 4
+  - id: PRESTIGE_CHOCOLATE_REALM
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    lore:
+      - "§7Grants §a+10% §7chance to find a"
+      - "§aChocolate Rabbit §7that you haven't"
+      - "§7found yet and grants §6+50 Chocolate"
+      - "§7per second."
+      - " "
+      - "§8§oThe Factory's pinnacle creation - its"
+      - "§8§oepic taste shatters expectations,"
+      - "§8§ooffering a taste of utopia."
+    components:
+      - id: SKULL_HEAD
+        texture: af19ceeabf2ecb020610b8aabc9299264fa670048c010c9699ce687fc9bf351e
+      - id: TIERED_TALISMAN
+        base_tier: GANACHE_CHOCOLATE_SLAB
+        tier: 5

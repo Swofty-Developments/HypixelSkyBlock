@@ -1,0 +1,49 @@
+items:
+  - id: PERSONAL_DELETOR_4000
+    material: DISPENSER
+    rarity: UNCOMMON
+    lore:
+      - "§7Automatically delete specific items on"
+      - "§7pickup."
+      - " "
+      - "§eRight-click to configure!"
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: PERSONAL_DELETOR_4000
+        tier: 1
+  - id: PERSONAL_DELETOR_5000
+    material: DISPENSER
+    rarity: RARE
+    lore:
+      - "§7Automatically delete specific items on"
+      - "§7pickup."
+      - " "
+      - "§eRight-click to configure!"
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: PERSONAL_DELETOR_4000
+        tier: 2
+  - id: PERSONAL_DELETOR_6000
+    material: DISPENSER
+    rarity: EPIC
+    lore:
+      - "§7Automatically delete specific items on"
+      - "§7pickup."
+      - " "
+      - "§eRight-click to configure!"
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: PERSONAL_DELETOR_5000
+        tier: 3
+  - id: PERSONAL_DELETOR_7000
+    material: DISPENSER
+    rarity: LEGENDARY
+    lore:
+      - "§7Automatically delete specific items on"
+      - "§7pickup."
+      - " "
+      - "§eRight-click to configure!"
+    components:
+      - id: TIERED_TALISMAN
+        base_tier: PERSONAL_DELETOR_6000
+        tier: 4
