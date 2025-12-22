@@ -8,6 +8,7 @@ import net.swofty.type.skyblockgeneric.item.components.EnchantableComponent;
 import net.swofty.type.skyblockgeneric.item.components.HotPotatoableComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
+import net.minestom.server.item.Material;
 
 import java.util.HashMap;
 import java.util.List;
@@ -75,6 +76,44 @@ public class AnvilCombineRegistry {
                     return enchantments.stream()
                             .mapToInt(enchant -> enchant.type().getApplyCost(enchant.level(), player))
                             .sum();
+                }
+        ));
+        register("DARK_PURPLE_DYE", new AnvilCombineHandler(
+                (upgradeItem, sacrificeItem) -> {
+                    // Apply the dark purple dye color to the armor
+                    upgradeItem.getAttributeHandler().setDyeColor("#301934");
+                },
+                (player, upgradeItem, sacrificeItem) -> {
+                    // Check if target is vanilla leather armor
+                    Material material = upgradeItem.getMaterial();
+                    boolean isLeatherArmor = material == Material.LEATHER_HELMET ||
+                            material == Material.LEATHER_CHESTPLATE ||
+                            material == Material.LEATHER_LEGGINGS ||
+                            material == Material.LEATHER_BOOTS;
+
+                    if (!isLeatherArmor) {
+                        return false;
+                    }
+
+                    // Check if armor already has this exact dye applied
+                    String currentDye = upgradeItem.getAttributeHandler().getDyeColor();
+                    if ("#301934".equals(currentDye)) {
+                        return false;
+                    }
+
+                    // Note: Bits check is done in onCraft, not here (so preview still shows)
+                    return true;
+                },
+                (SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem, SkyBlockPlayer player) -> 0,
+                // onCraft: Check and deduct Bits when player confirms the craft
+                (player, upgradeItem, sacrificeItem) -> {
+                    if (player.getBits() < 100) {
+                        player.sendMessage("§cYou need at least §b100 Bits §cto apply this dye!");
+                        return false; // Cancel the craft
+                    }
+                    player.removeBits(100);
+                    player.sendMessage("§aApplied Dark Purple Dye! §7(§b-100 Bits§7)");
+                    return true; // Proceed with craft
                 }
         ));
     }

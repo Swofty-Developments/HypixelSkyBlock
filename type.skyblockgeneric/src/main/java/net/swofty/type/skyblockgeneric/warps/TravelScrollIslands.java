@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.warps;
 
 import lombok.Getter;
+import lombok.NonNull;
 import net.swofty.commons.ServerType;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -28,12 +29,12 @@ public enum TravelScrollIslands {
 			(unused) -> "An island that gets progressively deeper and contains 6 layers of dangerous mobs and new resources.", ServerType.SKYBLOCK_DWARVEN_MINES, SkillCategories.MINING, 2)
 	;
 
-	private final String internalName;
-	private final String descriptiveName;
-	private final String texture;
-	private final Function<Boolean, String> description;
-	private final ServerType serverType;
-	private final List<TravelScrollType> associatedScrolls = new ArrayList<>();
+    private final String internalName;
+    private final String descriptiveName;
+    private final String texture;
+    private final Function<Boolean, String> description;
+    private final @NonNull ServerType serverType;
+    private final List<TravelScrollType> associatedScrolls = new ArrayList<>();
 
 	private final SkillCategories associatedSkill;
 	private final Integer islandTier;

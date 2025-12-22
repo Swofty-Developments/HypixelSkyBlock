@@ -19,63 +19,63 @@ public enum ArmorSetRegistry {
     MINER(MinerArmorSet.class, ItemType.MINER_ARMOR_BOOTS, ItemType.MINER_ARMOR_LEGGINGS, ItemType.MINER_ARMOR_CHESTPLATE, ItemType.MINER_ARMOR_HELMET),
 	PUMPKIN(PumpkinSet.class, ItemType.PUMPKIN_BOOTS, ItemType.PUMPKIN_LEGGINGS, ItemType.PUMPKIN_CHESTPLATE, ItemType.PUMPKIN_HELMET);
 
-    private final Class<? extends ArmorSet> clazz;
-    private final ItemType boots;
-    private final ItemType leggings;
-    private final ItemType chestplate;
-    private final ItemType helmet;
+	private final Class<? extends ArmorSet> clazz;
+	private final ItemType boots;
+	private final ItemType leggings;
+	private final ItemType chestplate;
+	private final ItemType helmet;
 
-    ArmorSetRegistry(Class<? extends ArmorSet> clazz, ItemType boots, ItemType legging,
-                     ItemType chestplate, ItemType helmet) {
-        this.clazz = clazz;
-        this.boots = boots;
-        this.leggings = legging;
-        this.chestplate = chestplate;
-        this.helmet = helmet;
-    }
+	ArmorSetRegistry(Class<? extends ArmorSet> clazz, ItemType boots, ItemType legging,
+					 ItemType chestplate, ItemType helmet) {
+		this.clazz = clazz;
+		this.boots = boots;
+		this.leggings = legging;
+		this.chestplate = chestplate;
+		this.helmet = helmet;
+	}
 
-    public static ArmorSetRegistry getArmorSet(Class<? extends ArmorSet> clazz) {
-        for (ArmorSetRegistry armorSetRegistry : values()) {
-            if (armorSetRegistry.getClazz() == clazz) {
-                return armorSetRegistry;
-            }
-        }
-        return null;
-    }
+	public static ArmorSetRegistry getArmorSet(Class<? extends ArmorSet> clazz) {
+		for (ArmorSetRegistry armorSetRegistry : values()) {
+			if (armorSetRegistry.getClazz() == clazz) {
+				return armorSetRegistry;
+			}
+		}
+		return null;
+	}
 
-    public static @Nullable ArmorSetRegistry getArmorSet(@Nullable ItemType item) {
-        if (item == null) return null;
-        for (ArmorSetRegistry armorSetRegistry : values()) {
-            if (armorSetRegistry.getBoots() == item
-                    || armorSetRegistry.getLeggings() == item
-                    || armorSetRegistry.getChestplate() == item
-                    || armorSetRegistry.getHelmet() == item) {
-                return armorSetRegistry;
-            }
-        }
-        return null;
-    }
+	public static @Nullable ArmorSetRegistry getArmorSet(@Nullable ItemType item) {
+		if (item == null) return null;
+		for (ArmorSetRegistry armorSetRegistry : values()) {
+			if (armorSetRegistry.getBoots() == item
+					|| armorSetRegistry.getLeggings() == item
+					|| armorSetRegistry.getChestplate() == item
+					|| armorSetRegistry.getHelmet() == item) {
+				return armorSetRegistry;
+			}
+		}
+		return null;
+	}
 
-    public static int getPieceCount(ArmorSetRegistry armorSetRegistry) {
-        int count = 0;
-        if (armorSetRegistry.getBoots() != null) count++;
-        if (armorSetRegistry.getLeggings() != null) count++;
-        if (armorSetRegistry.getChestplate() != null) count++;
-        if (armorSetRegistry.getHelmet() != null) count++;
-        return count;
-    }
+	public static int getPieceCount(ArmorSetRegistry armorSetRegistry) {
+		int count = 0;
+		if (armorSetRegistry.getBoots() != null) count++;
+		if (armorSetRegistry.getLeggings() != null) count++;
+		if (armorSetRegistry.getChestplate() != null) count++;
+		if (armorSetRegistry.getHelmet() != null) count++;
+		return count;
+	}
 
-    public static ArmorSetRegistry getArmorSet(ItemType boots, ItemType leggings, ItemType chestplate, ItemType helmet) {
-        for (ArmorSetRegistry armorSetRegistry : values()) {
-            if ((armorSetRegistry.getBoots() == null || armorSetRegistry.getBoots() == boots)
-                    && (armorSetRegistry.getLeggings() == null || armorSetRegistry.getLeggings() == leggings)
-                    && (armorSetRegistry.getChestplate() == null || armorSetRegistry.getChestplate() == chestplate)
-                    && (armorSetRegistry.getHelmet() == null || armorSetRegistry.getHelmet() == helmet)) {
-                return armorSetRegistry;
-            }
-        }
-        return null;
-    }
+	public static ArmorSetRegistry getArmorSet(ItemType boots, ItemType leggings, ItemType chestplate, ItemType helmet) {
+		for (ArmorSetRegistry armorSetRegistry : values()) {
+			if ((armorSetRegistry.getBoots() == null || armorSetRegistry.getBoots() == boots)
+					&& (armorSetRegistry.getLeggings() == null || armorSetRegistry.getLeggings() == leggings)
+					&& (armorSetRegistry.getChestplate() == null || armorSetRegistry.getChestplate() == chestplate)
+					&& (armorSetRegistry.getHelmet() == null || armorSetRegistry.getHelmet() == helmet)) {
+				return armorSetRegistry;
+			}
+		}
+		return null;
+	}
 
     public String getDisplayName() {
         return StringUtility.toNormalCase(name().replace("_", " "));

@@ -23,14 +23,17 @@ import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.hub.darkauction.DarkAuctionDisplay;
 import net.swofty.type.hub.runes.RuneEntityImpl;
 import net.swofty.type.hub.tab.HubServerModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.entity.GlassDisplay;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -111,6 +114,17 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 						.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
 			});
 		}
+
+		// Create Dark Auction display
+		DarkAuctionDisplay darkAuctionDisplay = new DarkAuctionDisplay(HypixelConst.getInstanceContainer());
+
+		// Register callback to refresh Sirius NPC and Dark Auction display when state changes
+		DarkAuctionHandler.setOnStateChangeCallback(() -> {
+			for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
+				HypixelNPC.updateForPlayer(player);
+			}
+			darkAuctionDisplay.update();
+		});
 	}
 
     @Override

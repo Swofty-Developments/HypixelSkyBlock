@@ -29,7 +29,6 @@ public class ActionPlayerTravel implements HypixelEventClass {
         if (delay.contains(player.getUuid())) return;
 
         Key block = player.getInstance().getBlock(player.getPosition()).key();
-
         if (block == Block.NETHER_PORTAL.key()) {
             MissionData data = player.getMissionData();
 

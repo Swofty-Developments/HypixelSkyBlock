@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
-import net.minestom.server.component.DataComponents;
+import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -22,21 +22,17 @@ import java.util.List;
 
 public class GUIAnvil extends HypixelInventoryGUI {
 
-    private final int[] borderSlots = {
-            45, 46, 47, 48, 50, 51, 52, 53
-    };
+    private static final int[] BORDER_SLOTS = {45, 46, 47, 48, 50, 51, 52, 53};
+    private static final int[] UPGRADE_INDICATOR_SLOTS = {11, 12, 20};
+    private static final int[] SACRIFICE_INDICATOR_SLOTS = {14, 15, 24};
 
-    private final int upgradeItemSlot = 29;
-    private final int[] upgradeItemSlots = {
-            11, 12, 20
-    };
+    private static final int UPGRADE_ITEM_SLOT = 29;
+    private static final int SACRIFICE_ITEM_SLOT = 33;
+    private static final int RESULT_SLOT = 13;
+    private static final int COMBINE_BUTTON_SLOT = 22;
 
-    private final int sacrificeItemSlot = 33;
-    private final int[] sacrificeItemSlots = {
-            14, 15, 24
-    };
-
-    private final int resultSlot = 13;
+    private SkyBlockItem upgradeItem = null;
+    private SkyBlockItem sacrificeItem = null;
 
     public GUIAnvil() {
         super("Anvil", InventoryType.CHEST_6_ROW);
@@ -45,49 +41,66 @@ public class GUIAnvil extends HypixelInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
-
         fill(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE, ""), 45, 53);
 
         set(GUIClickableItem.getCloseItem(49));
-        set(new GUIItem(resultSlot) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
-            }
-        });
 
-        set(new GUIItem(22) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, "§7Combine the items in the slots to the", "§7left and right below.");
-            }
-        });
+        setupCombineButton();
+        setupResultSlot();
+        setupUpgradeSlot();
+        setupSacrificeSlot();
 
-        updateItemToUpgrade(null);
-        updateItemToSacrifice(null);
-
-        updateItemToCraft();
+        updateIndicators();
+        updateItemStacks(getInventory(), getPlayer());
     }
 
-    public void updateItemToUpgrade(SkyBlockItem item) {
-        if (item == null) {
-            set(new GUIClickableItem(upgradeItemSlot) {
+    private void setupCombineButton() {
+        set(new GUIItem(COMBINE_BUTTON_SLOT) {
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1,
+                        "§7Combine the items in the slots to the",
+                        "§7left and right below.");
+            }
+        });
+    }
+
+    private void setupResultSlot() {
+        set(new GUIItem(RESULT_SLOT) {
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1,
+                        "§7Place a target item in the left slot",
+                        "§7and a sacrifice item in the right slot",
+                        "§7to combine them!");
+            }
+        });
+    }
+
+    private void setupUpgradeSlot() {
+        if (upgradeItem == null) {
+            set(new GUIClickableItem(UPGRADE_ITEM_SLOT) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    ItemStack stack = p.getInventory().getCursorItem();
+                    SkyBlockItem cursorItem = new SkyBlockItem(p.getInventory().getCursorItem());
+                    if (cursorItem.isNA() || cursorItem.isAir()) return;
 
-                    if (stack.get(DataComponents.CUSTOM_NAME) == null) {
-                        updateItemToUpgrade(null);
-                        return;
+                    e.setCancelled(false);
+                }
+
+                @Override
+                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+
+                    ItemStack slotItem = e.getInventory().getItemStack(UPGRADE_ITEM_SLOT);
+                    if (slotItem.isAir()) {
+                        upgradeItem = null;
+                    } else {
+                        upgradeItem = new SkyBlockItem(slotItem);
                     }
 
-                    giveResult((Inventory) e.getInventory(), player);
-
-                    SkyBlockItem item = new SkyBlockItem(stack);
-                    updateItemToUpgrade(item);
+                    giveResultIfPresent(player);
+                    updateCraftingState();
                 }
 
                 @Override
@@ -97,180 +110,248 @@ public class GUIAnvil extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
-            updateItemStacks(getInventory(), getPlayer());
-
-            updateItemToCraft();
-            return;
-        }
-
-        set(new GUIClickableItem(upgradeItemSlot) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStack stack = e.getClickedItem();
-
-                if (stack.isAir()) return;
-
-                updateItemToUpgrade(null);
-                player.addAndUpdateItem(stack);
-            }
-        });
-        updateItemStacks(getInventory(), getPlayer());
-
-        updateItemToCraft();
-    }
-
-    public void updateItemToUpgradeValid(Material material) {
-        ItemStack.Builder stack = ItemStackCreator.getStack("§6Item to Upgrade", material, 1, "§7The item you want to upgrade should", "§7be placed in the slot on this side.");
-        for (int i : upgradeItemSlots) {
-            set(i, stack);
-        }
-    }
-
-    public void updateItemToSacrifice(SkyBlockItem item) {
-        if (item == null) {
-            set(new GUIClickableItem(sacrificeItemSlot) {
-                @Override
-                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    ItemStack stack = p.getInventory().getCursorItem();
-
-                    if (stack.get(DataComponents.CUSTOM_NAME) == null) {
-                        updateItemToSacrifice(null);
-                        return;
-                    }
-
-                    giveResult((Inventory) e.getInventory(), player);
-
-                    SkyBlockItem item = new SkyBlockItem(stack);
-                    updateItemToSacrifice(item);
-                }
-
-                @Override
-                public boolean canPickup() {
-                    return true;
-                }
-
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStack.builder(Material.AIR);
-                }
-            });
-
-            updateItemStacks(getInventory(), getPlayer());
-
-            updateItemToCraft();
-            return;
-        }
-
-        set(new GUIClickableItem(sacrificeItemSlot) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStack stack = e.getClickedItem();
-
-                if (stack.isAir()) return;
-
-                updateItemToSacrifice(null);
-                player.addAndUpdateItem(stack);
-            }
-        });
-
-        updateItemStacks(getInventory(), getPlayer());
-
-        updateItemToCraft();
-    }
-
-    public void updateItemToSacrificeValid(Material material) {
-        ItemStack.Builder stack = ItemStackCreator.getStack("§6Item to Sacrifice", material, 1, "§7The item you are sacrificing in order", "§7to upgrade the item on the left", "§7should be placed in the slot on this", "§7side.");
-        for (int i : sacrificeItemSlots) {
-            set(i, stack);
-        }
-    }
-
-    public void updateItemToCraft() {
-        SkyBlockItem upgradeItem = new SkyBlockItem(getInventory().getItemStack(upgradeItemSlot));
-        SkyBlockItem sacrificeItem = new SkyBlockItem(getInventory().getItemStack(sacrificeItemSlot));
-
-        boolean isUpgradeItemValid = !(upgradeItem.isAir() || upgradeItem.isNA());
-        boolean isSacrificeItemValid = !(sacrificeItem.isAir() || sacrificeItem.isNA());
-
-        boolean canCraft = isUpgradeItemValid && isSacrificeItemValid && (sacrificeItem.hasComponent(AnvilCombinableComponent.class)) &&
-                sacrificeItem.getComponent(AnvilCombinableComponent.class).canApply((SkyBlockPlayer) getPlayer(), upgradeItem, sacrificeItem);
-
-        updateItemToSacrificeValid(canCraft || (isSacrificeItemValid && !isUpgradeItemValid) ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
-        updateItemToUpgradeValid(canCraft || (!isSacrificeItemValid && isUpgradeItemValid) ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
-
-        if (canCraft) {
-            border(ItemStackCreator.createNamedItemStack(Material.LIME_STAINED_GLASS_PANE));
         } else {
-            border(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE));
-        }
+            set(new GUIClickableItem(UPGRADE_ITEM_SLOT) {
+                @Override
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    return PlayerItemUpdater.playerUpdate(player, upgradeItem.getItemStack());
+                }
 
+                @Override
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    ItemStack cursorItem = p.getInventory().getCursorItem();
+
+                    if (cursorItem.isAir()) {
+                        e.setCancelled(false);
+                    } else {
+                        SkyBlockItem newItem = new SkyBlockItem(cursorItem);
+                        if (!newItem.isNA() && !newItem.isAir()) {
+                            e.setCancelled(false);
+                        }
+                    }
+                }
+
+                @Override
+                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+
+                    ItemStack slotItem = e.getInventory().getItemStack(UPGRADE_ITEM_SLOT);
+                    if (slotItem.isAir()) {
+                        upgradeItem = null;
+                    } else {
+                        upgradeItem = new SkyBlockItem(slotItem);
+                    }
+
+                    giveResultIfPresent(player);
+                    updateCraftingState();
+                }
+
+                @Override
+                public boolean canPickup() {
+                    return true;
+                }
+            });
+        }
+    }
+
+    private void setupSacrificeSlot() {
+        if (sacrificeItem == null) {
+            set(new GUIClickableItem(SACRIFICE_ITEM_SLOT) {
+                @Override
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                    SkyBlockItem cursorItem = new SkyBlockItem(p.getInventory().getCursorItem());
+                    if (cursorItem.isNA() || cursorItem.isAir()) return;
+
+                    e.setCancelled(false);
+                }
+
+                @Override
+                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+
+                    ItemStack slotItem = e.getInventory().getItemStack(SACRIFICE_ITEM_SLOT);
+                    if (slotItem.isAir()) {
+                        sacrificeItem = null;
+                    } else {
+                        sacrificeItem = new SkyBlockItem(slotItem);
+                    }
+
+                    giveResultIfPresent(player);
+                    updateCraftingState();
+                }
+
+                @Override
+                public boolean canPickup() {
+                    return true;
+                }
+
+                @Override
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                    return ItemStack.builder(Material.AIR);
+                }
+            });
+        } else {
+            set(new GUIClickableItem(SACRIFICE_ITEM_SLOT) {
+                @Override
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    return PlayerItemUpdater.playerUpdate(player, sacrificeItem.getItemStack());
+                }
+
+                @Override
+                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    ItemStack cursorItem = p.getInventory().getCursorItem();
+
+                    if (cursorItem.isAir()) {
+                        e.setCancelled(false);
+                    } else {
+                        SkyBlockItem newItem = new SkyBlockItem(cursorItem);
+                        if (!newItem.isNA() && !newItem.isAir()) {
+                            e.setCancelled(false);
+                        }
+                    }
+                }
+
+                @Override
+                public void runPost(InventoryClickEvent e, HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+
+                    ItemStack slotItem = e.getInventory().getItemStack(SACRIFICE_ITEM_SLOT);
+                    if (slotItem.isAir()) {
+                        sacrificeItem = null;
+                    } else {
+                        sacrificeItem = new SkyBlockItem(slotItem);
+                    }
+
+                    giveResultIfPresent(player);
+                    updateCraftingState();
+                }
+
+                @Override
+                public boolean canPickup() {
+                    return true;
+                }
+            });
+        }
+    }
+
+    private void updateCraftingState() {
+        boolean isUpgradeValid = upgradeItem != null && !upgradeItem.isAir() && !upgradeItem.isNA();
+        boolean isSacrificeValid = sacrificeItem != null && !sacrificeItem.isAir() && !sacrificeItem.isNA();
+
+        boolean canCraft = isUpgradeValid && isSacrificeValid
+                && sacrificeItem.hasComponent(AnvilCombinableComponent.class)
+                && sacrificeItem.getComponent(AnvilCombinableComponent.class)
+                .canApply((SkyBlockPlayer) getPlayer(), upgradeItem, sacrificeItem);
+
+        updateIndicators(isUpgradeValid, isSacrificeValid, canCraft);
+        updateBorder(canCraft);
+        updateResultPreview(isUpgradeValid, isSacrificeValid, canCraft);
+        updateCombineButton(canCraft);
+
+        setupUpgradeSlot();
+        setupSacrificeSlot();
+
+        updateItemStacks(getInventory(), getPlayer());
+    }
+
+    private void updateIndicators() {
+        updateIndicators(false, false, false);
+    }
+
+    private void updateIndicators(boolean isUpgradeValid, boolean isSacrificeValid, boolean canCraft) {
+        Material upgradeMaterial = (canCraft || (isUpgradeValid && !isSacrificeValid))
+                ? Material.LIME_STAINED_GLASS_PANE
+                : Material.RED_STAINED_GLASS_PANE;
+
+        Material sacrificeMaterial = (canCraft || (isSacrificeValid && !isUpgradeValid))
+                ? Material.LIME_STAINED_GLASS_PANE
+                : Material.RED_STAINED_GLASS_PANE;
+
+        ItemStack.Builder upgradeIndicator = ItemStackCreator.getStack("§6Item to Upgrade", upgradeMaterial, 1,
+                "§7The item you want to upgrade should",
+                "§7be placed in the slot on this side.");
+
+        ItemStack.Builder sacrificeIndicator = ItemStackCreator.getStack("§6Item to Sacrifice", sacrificeMaterial, 1,
+                "§7The item you are sacrificing in order",
+                "§7to upgrade the item on the left",
+                "§7should be placed in the slot on this",
+                "§7side.");
+
+        for (int slot : UPGRADE_INDICATOR_SLOTS) {
+            set(slot, upgradeIndicator);
+        }
+        for (int slot : SACRIFICE_INDICATOR_SLOTS) {
+            set(slot, sacrificeIndicator);
+        }
+    }
+
+    private void updateBorder(boolean canCraft) {
+        Material borderMaterial = canCraft ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE;
+        ItemStack.Builder borderItem = ItemStackCreator.createNamedItemStack(borderMaterial);
+
+        for (int slot : BORDER_SLOTS) {
+            set(slot, borderItem);
+        }
+    }
+
+    private void updateResultPreview(boolean isUpgradeValid, boolean isSacrificeValid, boolean canCraft) {
         if (!canCraft) {
-            if (isUpgradeItemValid && isSacrificeItemValid) {
-                set(new GUIItem(13) {
+            if (isUpgradeValid && isSacrificeValid) {
+                set(new GUIItem(RESULT_SLOT) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                        SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        return ItemStackCreator.getStack("§cError!", Material.BARRIER, 1, "§7You can not combine those Items");
+                        return ItemStackCreator.getStack("§cError!", Material.BARRIER, 1,
+                                "§7You can not combine those Items");
                     }
                 });
             } else {
-                set(new GUIItem(13) {
+                set(new GUIItem(RESULT_SLOT) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                        SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
+                        return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1,
+                                "§7Place a target item in the left slot",
+                                "§7and a sacrifice item in the right slot",
+                                "§7to combine them!");
                     }
                 });
             }
-
-            set(new GUIItem(22) {
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, "§7Combine the items in the slots to the", "§7left and right below.");
-                }
-            });
-
-            updateItemStacks(getInventory(), getPlayer());
             return;
         }
 
-        SkyBlockItem result = new SkyBlockItem(getInventory().getItemStack(upgradeItemSlot));
+        SkyBlockItem resultPreview = new SkyBlockItem(upgradeItem.getItemStack());
+        sacrificeItem.getComponent(AnvilCombinableComponent.class).apply(resultPreview, sacrificeItem);
 
-        sacrificeItem.getComponent(AnvilCombinableComponent.class).apply(result, sacrificeItem);
-
-        set(new GUIItem(13) {
+        set(new GUIItem(RESULT_SLOT) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return PlayerItemUpdater.playerUpdate(player, result.getItemStack());
+                return PlayerItemUpdater.playerUpdate(player, resultPreview.getItemStack());
             }
         });
+    }
 
-        int levelCost = sacrificeItem.getComponent(AnvilCombinableComponent.class).applyCostLevels(
-                upgradeItem,
-                sacrificeItem,
-                (SkyBlockPlayer) getPlayer());
+    private void updateCombineButton(boolean canCraft) {
+        if (!canCraft) {
+            set(new GUIItem(COMBINE_BUTTON_SLOT) {
+                @Override
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                    return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1,
+                            "§7Combine the items in the slots to the",
+                            "§7left and right below.");
+                }
+            });
+            return;
+        }
+
+        int levelCost = sacrificeItem.getComponent(AnvilCombinableComponent.class)
+                .applyCostLevels(upgradeItem, sacrificeItem, (SkyBlockPlayer) getPlayer());
 
         List<String> lore = new ArrayList<>();
         lore.add("§7Combine the items in the slots to the");
@@ -284,57 +365,77 @@ public class GUIAnvil extends HypixelInventoryGUI {
 
         lore.add("");
         lore.add("§eClick to combine!");
-        ItemStack.Builder applyItemStack = ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, lore);
 
-        set(new GUIClickableItem(22) {
+        set(new GUIClickableItem(COMBINE_BUTTON_SLOT) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                craftResult(player);
+                performCraft(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return applyItemStack;
+                return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, lore);
             }
         });
-
-        updateItemStacks(getInventory(), getPlayer());
     }
 
-    public void craftResult(SkyBlockPlayer player) {
-        SkyBlockItem sacrificeItem = new SkyBlockItem(getInventory().getItemStack(sacrificeItemSlot));
-        int requiredLevels = sacrificeItem.getComponent(AnvilCombinableComponent.class).applyCostLevels(
-                new SkyBlockItem(getInventory().getItemStack(upgradeItemSlot)),
-                sacrificeItem,
-                player
-        );
+    private void performCraft(SkyBlockPlayer player) {
+        if (upgradeItem == null || sacrificeItem == null) return;
+        if (!sacrificeItem.hasComponent(AnvilCombinableComponent.class)) return;
+
+        AnvilCombinableComponent component = sacrificeItem.getComponent(AnvilCombinableComponent.class);
+
+        if (!component.canApply(player, upgradeItem, sacrificeItem)) return;
+
+        int requiredLevels = component.applyCostLevels(upgradeItem, sacrificeItem, player);
 
         if (player.getLevel() < requiredLevels) {
             player.sendMessage("§cYou don't have enough Experience Levels!");
             return;
         }
 
+        // Check onCraft (e.g., Bits cost) before deducting anything
+        if (!component.onCraft(player, upgradeItem, sacrificeItem)) {
+            return; // onCraft returned false, cancel the craft
+        }
+
         player.setLevel(player.getLevel() - requiredLevels);
-        SkyBlockItem result = new SkyBlockItem(getInventory().getItemStack(resultSlot));
 
-        updateItemToUpgrade(null);
-        updateItemToSacrifice(null);
+        SkyBlockItem result = new SkyBlockItem(upgradeItem.getItemStack());
+        component.apply(result, sacrificeItem);
 
-        set(new GUIItem(22) {
+        upgradeItem = null;
+        sacrificeItem = null;
+
+        getInventory().setItemStack(UPGRADE_ITEM_SLOT, ItemStack.AIR);
+        getInventory().setItemStack(SACRIFICE_ITEM_SLOT, ItemStack.AIR);
+
+        setupResultClaimable(result);
+        setupUpgradeSlot();
+        setupSacrificeSlot();
+
+        set(new GUIItem(COMBINE_BUTTON_SLOT) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aAnvil", Material.OAK_SIGN, 1, "§7Claim the result item above!");
+                return ItemStackCreator.getStack("§aAnvil", Material.OAK_SIGN, 1,
+                        "§7Claim the result item above!");
             }
         });
 
-        set(new GUIClickableItem(resultSlot) {
+        updateIndicators();
+        updateBorder(false);
+        updateItemStacks(getInventory(), getPlayer());
+    }
+
+    private void setupResultClaimable(SkyBlockItem result) {
+        set(new GUIClickableItem(RESULT_SLOT) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                giveResult((Inventory) e.getInventory(), player);
+                player.addAndUpdateItem(result);
+                // Clear result slot before opening new GUI to prevent duplicate on close
+                getInventory().setItemStack(RESULT_SLOT, ItemStack.AIR);
                 new GUIAnvil().open(player);
             }
 
@@ -344,39 +445,47 @@ public class GUIAnvil extends HypixelInventoryGUI {
                 return PlayerItemUpdater.playerUpdate(player, result.getItemStack());
             }
         });
-
-        updateItemStacks(getInventory(), getPlayer());
     }
 
-    public void giveResult(Inventory inventory, SkyBlockPlayer player) {
-        if (get(resultSlot) instanceof GUIClickableItem) {
-            player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(resultSlot)));
-
-            set(new GUIItem(resultSlot) {
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
-                }
-            });
+    private void giveResultIfPresent(SkyBlockPlayer player) {
+        if (get(RESULT_SLOT) instanceof GUIClickableItem) {
+            ItemStack resultStack = getInventory().getItemStack(RESULT_SLOT);
+            if (!resultStack.isAir()) {
+                player.addAndUpdateItem(new SkyBlockItem(resultStack));
+                setupResultSlot();
+            }
         }
     }
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(sacrificeItemSlot)));
-        ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(upgradeItemSlot)));
-
-        giveResult((Inventory) e.getInventory(), (SkyBlockPlayer) e.getPlayer());
+        SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
+        returnItemsToPlayer(player, (Inventory) e.getInventory());
     }
 
     @Override
     public void suddenlyQuit(Inventory inventory, HypixelPlayer p) {
         SkyBlockPlayer player = (SkyBlockPlayer) p;
-        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(sacrificeItemSlot)));
-        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(upgradeItemSlot)));
+        returnItemsToPlayer(player, inventory);
+    }
 
-        giveResult(inventory, player);
+    private void returnItemsToPlayer(SkyBlockPlayer player, Inventory inventory) {
+        ItemStack upgradeStack = inventory.getItemStack(UPGRADE_ITEM_SLOT);
+        if (!upgradeStack.isAir()) {
+            player.addAndUpdateItem(new SkyBlockItem(upgradeStack));
+        }
+
+        ItemStack sacrificeStack = inventory.getItemStack(SACRIFICE_ITEM_SLOT);
+        if (!sacrificeStack.isAir()) {
+            player.addAndUpdateItem(new SkyBlockItem(sacrificeStack));
+        }
+
+        if (get(RESULT_SLOT) instanceof GUIClickableItem) {
+            ItemStack resultStack = inventory.getItemStack(RESULT_SLOT);
+            if (!resultStack.isAir()) {
+                player.addAndUpdateItem(new SkyBlockItem(resultStack));
+            }
+        }
     }
 
     @Override
@@ -386,14 +495,5 @@ public class GUIAnvil extends HypixelInventoryGUI {
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
-
-    }
-
-    @Override
-    public void border(ItemStack.Builder stack) {
-        for (int i : borderSlots) {
-            set(i, stack);
-        }
-        updateItemStacks(getInventory(), getPlayer());
     }
 }

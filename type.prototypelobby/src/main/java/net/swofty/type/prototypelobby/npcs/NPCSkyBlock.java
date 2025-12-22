@@ -65,6 +65,6 @@ public class NPCSkyBlock extends HypixelNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendTo(ServerType.SKYBLOCK_HUB);
+        e.player().sendTo(ServerType.SKYBLOCK_ISLAND);
     }
 }
