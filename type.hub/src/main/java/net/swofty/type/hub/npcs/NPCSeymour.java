@@ -1,9 +1,11 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.hub.gui.GUISeymour;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUISeymour;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCSeymour extends HypixelNPC {
@@ -54,7 +56,7 @@ public class NPCSeymour extends HypixelNPC {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{

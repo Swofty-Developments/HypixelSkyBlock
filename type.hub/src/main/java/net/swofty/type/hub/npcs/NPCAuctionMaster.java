@@ -51,7 +51,7 @@ public class NPCAuctionMaster extends HypixelNPC {
                                 "You may also want to check back here to see what items other players are selling to see if you can get a good deal.",
                                 "Talk to me or one of the §6Auction Agents §fif you would like to start your first auction or if you want to see the items currently being sold."
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 
     @Override

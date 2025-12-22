@@ -9,6 +9,8 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.custom.VillagerSpokenToEvent;
@@ -54,15 +56,15 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
 
         Map<String, Object> customData = mission.getCustomData();
 
-        if (customData.values().stream().anyMatch(value -> value.toString().contains(event.getVillager().getID())))
+        if (customData.values().stream().anyMatch(value -> value.toString().contains(event.getVillager().getClass().getSimpleName())))
             return;
 
         // Check if villager is a part of the mission
         if (villagers.stream().noneMatch(villager ->
-                event.getVillager().getID().contains(villager)
+                event.getVillager().getClass().getSimpleName().contains(villager)
         )) return;
 
-        customData.put("villager_" + mission.getMissionProgress(), event.getVillager().getID());
+        customData.put("villager_" + mission.getMissionProgress(), event.getVillager().getClass().getSimpleName());
         customData.put("last_updated", System.currentTimeMillis());
 
         mission.setMissionProgress(mission.getMissionProgress() + 1);
@@ -118,11 +120,12 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
                                     return s.contains(villager);
                                 }));
 
-                HypixelVillagerNPC.getVillagers().forEach((npc, entity) -> {
-                    if (entity.getInstance() != HypixelConst.getInstanceContainer()) return;
-                    if (villagersNotSpokenTo.stream().noneMatch(villager -> npc.getID().contains(villager))) return;
+                HypixelNPC.getRegisteredNPCs().forEach((npc) -> {
+                    if(!(npc.getParameters() instanceof VillagerConfiguration)) return;
+                    // if (entity.getInstance() != HypixelConst.getInstanceContainer()) return;
+                    if (villagersNotSpokenTo.stream().noneMatch(villager -> npc.getClass().getSimpleName().contains(villager))) return;
 
-                    Pos villagerPosition = npc.getParameters().position();
+                    Pos villagerPosition = npc.getParameters().position(player);
 
                     player.sendPacket(new ParticlePacket(
                             Particle.HAPPY_VILLAGER,

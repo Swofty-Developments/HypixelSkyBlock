@@ -52,6 +52,6 @@ public class NPCSalesman extends HypixelNPC {
                                 "Thank you for supporting the server and allowing us maintain SkyBlock!",
                                 "If you want to support us, head over to the Hypixel Store§b store.hypixel.net"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

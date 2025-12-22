@@ -1,9 +1,11 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.hub.gui.GUIShopBea;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIShopBea;
 
 import java.util.stream.Stream;
 
@@ -53,7 +55,7 @@ public class NPCBea extends HypixelNPC {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
@@ -61,6 +63,6 @@ public class NPCBea extends HypixelNPC {
                                 "Pets are little companions for your adventures in SkyBlock!",
                                 "Personally, I prefer the §ebee §fpet!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

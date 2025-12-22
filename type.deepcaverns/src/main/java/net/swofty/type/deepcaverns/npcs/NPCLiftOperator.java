@@ -3,6 +3,8 @@ package net.swofty.type.deepcaverns.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.deepcaverns.gui.GUILiftOperator;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -93,6 +95,6 @@ public class NPCLiftOperator extends HypixelNPC {
 								"Be careful not to fall down the shaft though, it's a long fall!",
 								"Good luck on your adventures."
 						}).build()
-		).toArray(NPCDialogue.DialogueSet[]::new);
+		).toArray(DialogueSet[]::new);
 	}
 }

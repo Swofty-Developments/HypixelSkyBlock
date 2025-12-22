@@ -1,24 +1,25 @@
-package net.swofty.type.hub.villagers;
+package net.swofty.type.hub.npcs.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class VillagerFelix extends NPCVillagerDialogue {
+public class VillagerFelix extends HypixelNPC {
     public VillagerFelix() {
-        super(new NPCVillagerParameters() {
+        super(new VillagerConfiguration(){
             @Override
-            public String[] holograms() {
-                return new String[]{"&fFelix", "&e&lCLICK"};
+            public String[] holograms(HypixelPlayer player) {
+                return new String[]{"&fFelix", "§e§lCLICK"};
             }
 
             @Override
-            public Pos position() {
+            public Pos position(HypixelPlayer player) {
                 return new Pos(-25.5, 68, -103.5, -135f, 0f);
             }
 
@@ -35,7 +36,7 @@ public class VillagerFelix extends NPCVillagerDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickVillagerNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
 
@@ -44,7 +45,7 @@ public class VillagerFelix extends NPCVillagerDialogue {
             if (data.getMission("speak_to_villagers").getKey().getCustomData()
                     .values()
                     .stream()
-                    .anyMatch(value -> value.toString().contains(getID()))) {
+                    .anyMatch(value -> value.toString().contains(getClass().getSimpleName()))) {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
                     setDialogue(player, "hello");
@@ -57,13 +58,13 @@ public class VillagerFelix extends NPCVillagerDialogue {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets() {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "&e[NPC] Felix&f: You can access your §aEnder Chest §fin your §aSkyBlock Menu§f.",
-                                "&e[NPC] Felix&f: Store items in this chest and access them at any time!"
+                                "You can access your §aEnder Chest §fin your §aSkyBlock Menu§f.",
+                                "Store items in this chest and access them at any time!"
                         }).build()
-        ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

@@ -55,7 +55,7 @@ public class NPCAdventurer extends HypixelNPC {
 
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
-        return new NPCDialogue.DialogueSet[] {
+        return new DialogueSet[] {
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "I've seen it all - every island from here to the edge of the world!",

@@ -2,6 +2,8 @@ package net.swofty.type.goldmine.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
@@ -92,7 +94,7 @@ public class NPCLazyMiner extends HypixelNPC {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("first-interaction").lines(new String[]{
@@ -127,6 +129,6 @@ public class NPCLazyMiner extends HypixelNPC {
                                 "I'd go mining but I'm too lazy.",
                                 "Maybe some day I'll go back down there."
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

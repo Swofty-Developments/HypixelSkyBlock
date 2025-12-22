@@ -52,6 +52,6 @@ public class NPCJimBob extends HypixelNPC {
                                 "I can hear that cow mooing all the way over here.",
                                 "I should have thought about that before buying this house!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

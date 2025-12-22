@@ -3,6 +3,8 @@ package net.swofty.type.hub.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.hub.gui.GUILonelyPhilosopher;
@@ -66,6 +68,6 @@ public class NPCLonelyPhilosopher extends HypixelNPC {
                         .key("open_shop").lines(new String[]{
                                 "§fTo fast travel or not to fast travel?"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

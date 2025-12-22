@@ -51,6 +51,6 @@ public class NPCBillyJoe extends HypixelNPC {
                                 "You can hold as many §aAccessories §fas you want in your inventory. They will always work.",
                                 "If you have more then one of the same type of the Accessory in your inventory, §conly one §fwill work."
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

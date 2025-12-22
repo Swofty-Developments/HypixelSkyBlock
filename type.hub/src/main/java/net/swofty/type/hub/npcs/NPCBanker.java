@@ -56,7 +56,7 @@ public class NPCBanker extends HypixelNPC {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
@@ -64,6 +64,6 @@ public class NPCBanker extends HypixelNPC {
                                 "You may want to store your §6Coins §fin a safe place while you are off adventuring.",
                                 "Storing them in your §6Bank §fkeeps them safe and allows you to earn interest at the start of every season!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

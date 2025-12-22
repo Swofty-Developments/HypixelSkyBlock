@@ -52,6 +52,6 @@ public class NPCSwofty extends HypixelNPC {
                                 "Make sure to check out our discord server at discord.gg/paper!",
                                 "Feel free to create a pull request to help us :)"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

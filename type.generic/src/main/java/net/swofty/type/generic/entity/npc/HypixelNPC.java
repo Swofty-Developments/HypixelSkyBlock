@@ -10,8 +10,8 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.entity.npc.configuration.NPCConfiguration;
+import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.entity.npc.impl.NPCAnimalEntityImpl;
 import net.swofty.type.generic.entity.npc.impl.NPCEntityImpl;
 import net.swofty.type.generic.entity.npc.impl.NPCVillagerEntityImpl;
@@ -23,7 +23,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class HypixelNPC {
-    private static final int SPAWN_DISTANCE = 16;
+    private static final int SPAWN_DISTANCE = 48;
     private static final int LOOK_DISTANCE = 5;
 
     @Getter
@@ -39,7 +39,7 @@ public abstract class HypixelNPC {
 
     public HypixelNPC(NPCConfiguration configuration) {
         this.parameters = configuration;
-        String className = getClass().getSimpleName().replace("NPC", "");
+        String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
         this.name = className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
         this.dialogueController = new DialogueController(this);
     }
@@ -86,24 +86,29 @@ public abstract class HypixelNPC {
                     Pos position = config.position(player);
 
                     Entity entity;
-                    if (config instanceof HumanConfiguration humanConfig) {
-                        entity = new NPCEntityImpl(
+                    float yOffset = 0.0f;
+                    switch (config) {
+                        case HumanConfiguration humanConfig -> entity = new NPCEntityImpl(
                                 holograms[holograms.length - 1],
                                 humanConfig.texture(player),
                                 humanConfig.signature(player),
                                 holograms);
-                    } else if (config instanceof VillagerConfiguration villagerConfig) {
-                        entity = new NPCVillagerEntityImpl(villagerConfig.profession());
-                    } else if (config instanceof AnimalConfiguration animalConfig) {
-                        entity = new NPCAnimalEntityImpl(
-                                holograms[holograms.length - 1],
-                                animalConfig.entityType());
-                    } else {
-                        throw new IllegalStateException("Unknown NPCConfiguration type: " + config.getClass().getName());
+                        case VillagerConfiguration villagerConfig -> {
+                            entity = new NPCVillagerEntityImpl(holograms[holograms.length - 1], villagerConfig.profession());
+                            yOffset = 0.2f;
+                        }
+                        case AnimalConfiguration animalConfig -> {
+                            entity = new NPCAnimalEntityImpl(
+                                    holograms[holograms.length - 1],
+                                    animalConfig.entityType());
+                            yOffset = animalConfig.hologramYOffset();
+                        }
+                        default ->
+                                throw new IllegalStateException("Unknown NPCConfiguration type: " + config.getClass().getName());
                     }
 
                     PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
-                            .pos(position.add(0, 1.1, 0))
+                            .pos(position.add(0, 1.1 + yOffset, 0))
                             .text(Arrays.copyOfRange(holograms, 0, holograms.length - 1))
                             .player(player)
                             .build();

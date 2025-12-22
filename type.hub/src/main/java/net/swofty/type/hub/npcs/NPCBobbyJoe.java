@@ -53,7 +53,7 @@ public class NPCBobbyJoe extends HypixelNPC {
                                 "Have you been to the §2Wilderness §f? I hear there is a creepy bar there.",
                                 "Darn it, where did I leave my belongings? Those §dFairies §fmust be up to no good."
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 
 }

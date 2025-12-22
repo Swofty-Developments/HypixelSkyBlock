@@ -2,6 +2,8 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIYourMuseum;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -70,6 +72,6 @@ public class NPCCurator extends HypixelNPC {
                                 "However - once you donate an item, it will be §dCo-op Soulbound §fto you, meaning that you won't be able to trade, auction or sell the item anymore.",
                                 "Choose carefully!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

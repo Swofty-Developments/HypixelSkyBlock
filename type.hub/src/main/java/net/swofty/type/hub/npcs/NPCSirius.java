@@ -3,6 +3,8 @@ package net.swofty.type.hub.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.auctions.DarkAuctionPhase;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIDarkAuction;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
@@ -95,7 +97,7 @@ public class NPCSirius extends HypixelNPC {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("closed").lines(new String[]{
@@ -114,6 +116,6 @@ public class NPCSirius extends HypixelNPC {
                                 "You signed up for the Auction!",
                                 "You'll be warped once it starts..."
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

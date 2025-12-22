@@ -1,9 +1,11 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.hub.gui.GUIShopMineMerchant;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIShopMineMerchant;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCMineMerchant extends HypixelNPC {
@@ -54,7 +56,7 @@ public class NPCMineMerchant extends HypixelNPC {
 
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
-        return new NPCDialogue.DialogueSet[] {
+        return new DialogueSet[] {
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "My specialities are ores, stone, and mining equipment.",

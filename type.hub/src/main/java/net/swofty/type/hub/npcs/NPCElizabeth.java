@@ -1,8 +1,10 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -60,6 +62,6 @@ public class NPCElizabeth extends HypixelNPC {
                                 "§fI have powerful items to offer, but only to experienced adventurers!",
                                 "§fUntil then, I suggest leveling up to SkyBlock Level 3!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

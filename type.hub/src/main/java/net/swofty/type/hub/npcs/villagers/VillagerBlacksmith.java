@@ -1,9 +1,10 @@
-package net.swofty.type.hub.villagers;
+package net.swofty.type.hub.npcs.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIReforge;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionMineCoal;
@@ -13,16 +14,16 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
-public class VillagerBlacksmith extends NPCVillagerDialogue {
+public class VillagerBlacksmith extends HypixelNPC {
     public VillagerBlacksmith() {
-        super(new NPCVillagerParameters() {
+        super(new VillagerConfiguration(){
             @Override
-            public String[] holograms() {
+            public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Blacksmith", "§e§lCLICK"};
             }
 
             @Override
-            public Pos position() {
+            public Pos position(HypixelPlayer player) {
                 return new Pos(-27.5, 69, -125.5, -35f, 0f);
             }
 
@@ -39,7 +40,7 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickVillagerNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         MissionData data = player.getMissionData();
@@ -51,7 +52,7 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
             return;
         }
         if (!data.hasCompleted(MissionMineCoal.class)) {
-            player.sendMessage("§e[NPC] Blacksmith§f: Retrieve 10 coal from the Coal Mines!");
+            player.sendMessage("Retrieve 10 coal from the Coal Mines!");
             return;
         }
         if (!data.hasCompleted(MissionTalkToBlacksmithAgain.class)) {
@@ -65,21 +66,21 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
     }
 
     @Override
-    public NPCVillagerDialogue.DialogueSet[] getDialogueSets() {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return List.of(
                 DialogueSet.builder()
                         .key("initial-hello").lines(new String[]{
-                                "§e[NPC] Blacksmith§f: I'm the town Blacksmith! I can §areforge §fitems for you, for a price.",
-                                "§e[NPC] Blacksmith§f: Reforging usually costs Coins, but since I'm feeling friendly I can reforge your first item for Coal §8x10.",
-                                "§e[NPC] Blacksmith§f: Go into the Mine to collect Coal, then come back to learn how to reforge items!"
+                                "I'm the town Blacksmith! I can §areforge §fitems for you, for a price.",
+                                "Reforging usually costs Coins, but since I'm feeling friendly I can reforge your first item for Coal §8x10.",
+                                "Go into the Mine to collect Coal, then come back to learn how to reforge items!"
                         }).build(),
                 DialogueSet.builder()
                         .key("spoke-again").lines(new String[]{
-                                "§e[NPC] Blacksmith§f: Ahh, excellent!",
-                                "§e[NPC] Blacksmith§f: Reforging items allows you to get the most out of your weapons, armor, and other items by applying stat modifiers to them!",
-                                "§e[NPC] Blacksmith§f: To reforge an item, place an item in my inventory. Reforging costs Coins - the more prestigious items cost more to reforge!",
-                                "§e[NPC] Blacksmith§f: However, this time I will reforge any item for the low price of Coal §8x10!"
+                                "Ahh, excellent!",
+                                "Reforging items allows you to get the most out of your weapons, armor, and other items by applying stat modifiers to them!",
+                                "To reforge an item, place an item in my inventory. Reforging costs Coins - the more prestigious items cost more to reforge!",
+                                "However, this time I will reforge any item for the low price of Coal §8x10!"
                         }).build()
-        ).stream().toArray(NPCVillagerDialogue.DialogueSet[]::new);
+        ).stream().toArray(DialogueSet[]::new);
     }
 }

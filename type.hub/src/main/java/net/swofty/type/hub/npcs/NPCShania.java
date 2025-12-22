@@ -2,20 +2,21 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-import net.swofty.type.generic.entity.animalnpc.NPCAnimalParameters;
-
-public class NPCShania extends HypixelAnimalNPC {
+public class NPCShania extends HypixelNPC {
     public NPCShania() {
-        super(new NPCAnimalParameters() {
+        super(new AnimalConfiguration() {
             @Override
-            public String[] holograms() {
+            public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Shania", "§e§lCLICK"};
             }
 
             @Override
-            public int hologramYOffset() {
-                return 75;
+            public float hologramYOffset() {
+                return -0.4f;
             }
 
             @Override
@@ -24,7 +25,7 @@ public class NPCShania extends HypixelAnimalNPC {
             }
 
             @Override
-            public Pos position() {
+            public Pos position(HypixelPlayer player) {
                 return new Pos(48, 72, -159);
             }
 
@@ -36,7 +37,7 @@ public class NPCShania extends HypixelAnimalNPC {
     }
 
     @Override
-    public void onClick(PlayerClickAnimalNPCEvent e) {
-        e.player().sendMessage("§e[NPC] Shania§f: Moooooo!");
+    public void onClick(NPCInteractEvent e) {
+        e.player().sendMessage("Moooooo!");
     }
 }

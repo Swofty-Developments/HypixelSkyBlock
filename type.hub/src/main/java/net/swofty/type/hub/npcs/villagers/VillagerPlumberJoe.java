@@ -1,23 +1,25 @@
-package net.swofty.type.hub.villagers;
+package net.swofty.type.hub.npcs.villagers;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
 
-public class VillagerSmithmonger extends HypixelVillagerNPC {
-    public VillagerSmithmonger() {
-        super(new NPCVillagerParameters() {
+public class VillagerPlumberJoe extends HypixelNPC {
+    public VillagerPlumberJoe() {
+        super(new VillagerConfiguration() {
             @Override
-            public String[] holograms() {
-                return new String[]{"§fSmithmonger", "&e&lCLICK"};
+            public String[] holograms(HypixelPlayer player) {
+                return new String[]{"§fPlumber Joe", "§e§lCLICK"};
             }
 
             @Override
-            public Pos position() {
-                return new Pos(-32, 69, -135, 180, 0);
+            public Pos position(HypixelPlayer player) {
+                return new Pos(56, 70, -78, 180, 0);
             }
 
             @Override
@@ -27,13 +29,13 @@ public class VillagerSmithmonger extends HypixelVillagerNPC {
 
             @Override
             public VillagerProfession profession() {
-                return VillagerProfession.WEAPONSMITH;
+                return VillagerProfession.TOOLSMITH;
             }
         });
     }
 
     @Override
-    public void onClick(PlayerClickVillagerNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
                         .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
     }

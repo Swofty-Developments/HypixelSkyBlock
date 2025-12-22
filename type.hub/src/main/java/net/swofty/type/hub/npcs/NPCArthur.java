@@ -46,7 +46,7 @@ public class NPCArthur extends HypixelNPC {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("dialogue-1").lines(new String[]{
@@ -79,6 +79,6 @@ public class NPCArthur extends HypixelNPC {
                         .key("dialogue-7").lines(new String[]{
                                 "Minions always have 4 Upgrade Slots where you can place Fuel or else"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

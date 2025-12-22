@@ -1,9 +1,11 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarCategories;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.bazaar.GUIBazaar;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -60,6 +62,6 @@ public class NPCBazaarAgent extends HypixelNPC {
                         .key("hello").lines(new String[]{
                                 "§cYou need SkyBlock Level 7 to access this feature!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

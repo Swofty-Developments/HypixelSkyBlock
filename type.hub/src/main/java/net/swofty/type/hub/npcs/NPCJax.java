@@ -2,6 +2,8 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIJax;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointArcheryPractice;
@@ -64,7 +66,7 @@ public class NPCJax extends HypixelNPC {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("introduction").lines(new String[]{
@@ -78,6 +80,6 @@ public class NPCJax extends HypixelNPC {
                                 "Well, a deal's a deal! Come to me any time and I'll forge you whatever arrows you need for adventures.",
                                 "I only have one condition... These are powerful arrows, they can't fall into the wrong hands so keep them in your quiver and don't share them with anyone."
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

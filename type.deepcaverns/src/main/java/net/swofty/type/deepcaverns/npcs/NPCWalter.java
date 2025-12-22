@@ -4,7 +4,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.deepcaverns.gui.GUIShopWalter;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCOption;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -95,6 +97,6 @@ public class NPCWalter extends HypixelNPC {
 						.key("donate_cube_no_requirements").lines(new String[]{ // when donating the cube without requirements met
 								"Mmh... you're missing something to become a Platinum-level donor...",
 						}).abiPhone(true).build()
-		).toArray(NPCDialogue.DialogueSet[]::new);
+		).toArray(DialogueSet[]::new);
 	}
 }

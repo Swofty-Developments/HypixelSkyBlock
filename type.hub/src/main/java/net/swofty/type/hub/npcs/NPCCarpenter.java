@@ -9,7 +9,6 @@ import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionGiveWoolToCarpenter;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 public class NPCCarpenter extends HypixelNPC {
@@ -62,7 +61,7 @@ public class NPCCarpenter extends HypixelNPC {
                     data.endMission(MissionGiveWoolToCarpenter.class);
                 });
             } else {
-                player.sendMessage("§e[NPC] Carpenter§f: Come back with a stack of White Wool!");
+                player.sendMessage("Come back with a stack of White Wool!");
             }
             return;
         }

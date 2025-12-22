@@ -52,6 +52,6 @@ public class NPCDusk extends HypixelNPC {
                                 "You can apply §drunes §fto weapons and armor with the §dRune Pedestal §fbehind me.",
                                 "You can also combine two runes for a chance to create a higher level rune with a better effect!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

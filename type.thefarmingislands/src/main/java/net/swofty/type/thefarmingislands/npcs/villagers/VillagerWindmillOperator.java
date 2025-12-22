@@ -1,22 +1,24 @@
-package net.swofty.type.thefarmingislands.villagers;
+package net.swofty.type.thefarmingislands.npcs.villagers;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class VillagerWindmillOperator extends NPCVillagerDialogue {
+
+public class VillagerWindmillOperator extends HypixelNPC {
     public VillagerWindmillOperator() {
-        super(new NPCVillagerParameters() {
+        super(new VillagerConfiguration(){
             @Override
-            public String[] holograms() {
+            public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Windmill Operator", "§e§lCLICK"};
             }
 
             @Override
-            public Pos position() {
+            public Pos position(HypixelPlayer player) {
                 return new Pos(98.5, 89, -282.5, 90, 0);
             }
 
@@ -33,13 +35,9 @@ public class VillagerWindmillOperator extends NPCVillagerDialogue {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets() {
-        return new DialogueSet[0];
-    }
-
-    @Override
-    public void onClick(PlayerClickVillagerNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
                 .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
     }
+
 }

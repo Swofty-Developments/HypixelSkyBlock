@@ -1,24 +1,25 @@
-package net.swofty.type.hub.villagers;
+package net.swofty.type.hub.npcs.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class VillagerStella extends NPCVillagerDialogue {
+public class VillagerStella extends HypixelNPC {
     public VillagerStella() {
-        super(new NPCVillagerParameters() {
+        super(new VillagerConfiguration(){
             @Override
-            public String[] holograms() {
-                return new String[]{"&fStella", "&e&lCLICK"};
+            public String[] holograms(HypixelPlayer player) {
+                return new String[]{"&fStella", "§e§lCLICK"};
             }
 
             @Override
-            public Pos position() {
+            public Pos position(HypixelPlayer player) {
                 return new Pos(17.5,70, -99.5);
             }
 
@@ -35,7 +36,7 @@ public class VillagerStella extends NPCVillagerDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickVillagerNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
 
@@ -44,7 +45,7 @@ public class VillagerStella extends NPCVillagerDialogue {
             if (data.getMission("speak_to_villagers").getKey().getCustomData()
                     .values()
                     .stream()
-                    .anyMatch(value -> value.toString().contains(getID()))) {
+                    .anyMatch(value -> value.toString().contains(getClass().getSimpleName()))) {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
                     setDialogue(player, "quest-hello");
@@ -53,16 +54,16 @@ public class VillagerStella extends NPCVillagerDialogue {
         }
     }
     @Override
-    public DialogueSet[] getDialogueSets() {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
-                                "§e[NPC] Stella§f: At any time you can create a Co-op with your friends!",
-                                "§e[NPC] Stella§f: Simply go in your §aSkyBlock Menu §fwhere you can find the §aProfile Menu§f.",
-                                "§e[NPC] Stella§f: This is where you can create, delete or switch SkyBlock Profiles.",
-                                "§e[NPC] Stella§f: Enter §b/coop §ffollowed by the name of all the friends you want to invite",
-                                "§e[NPC] Stella§f: All your friends have to be online to accept!"
+                                "At any time you can create a Co-op with your friends!",
+                                "Simply go in your §aSkyBlock Menu §fwhere you can find the §aProfile Menu§f.",
+                                "This is where you can create, delete or switch SkyBlock Profiles.",
+                                "Enter §b/coop §ffollowed by the name of all the friends you want to invite",
+                                "All your friends have to be online to accept!"
                         }).build()
-        ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

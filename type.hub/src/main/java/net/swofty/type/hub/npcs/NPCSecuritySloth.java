@@ -50,13 +50,13 @@ public class NPCSecuritySloth extends HypixelNPC {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "Downloading suspicious mods or visiting untrusted discord servers can put your account at risk. It is upto you to keep your account secure!",
                                 "Here are some helpful support articles that will help you keep your account more secure and avoid losing valuable progress or items."
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

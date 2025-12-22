@@ -2,6 +2,8 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.item.ItemType;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
@@ -51,7 +53,7 @@ public class NPCNicole extends HypixelNPC {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{

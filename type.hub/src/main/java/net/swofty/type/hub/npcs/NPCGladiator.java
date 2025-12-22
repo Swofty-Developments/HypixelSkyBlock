@@ -54,6 +54,6 @@ public class NPCGladiator extends HypixelNPC {
                                 "Oh...wait. Nevermind.",
                                 "Here you can join me in drinking away your sorrows."
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

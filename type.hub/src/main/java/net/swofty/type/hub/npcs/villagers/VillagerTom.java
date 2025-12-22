@@ -1,26 +1,28 @@
-package net.swofty.type.hub.villagers;
+package net.swofty.type.hub.npcs.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.hub.gui.GUIJamie;
-import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.commons.item.ItemType;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class VillagerJamie extends NPCVillagerDialogue {
-    public VillagerJamie() {
-        super(new NPCVillagerParameters() {
+public class VillagerTom extends HypixelNPC {
+    public VillagerTom() {
+        super(new VillagerConfiguration(){
             @Override
-            public String[] holograms() {
-                return new String[]{"&fJamie", "&e&lCLICK"};
+            public String[] holograms(HypixelPlayer player) {
+                return new String[]{"&fTom", "§e§lCLICK"};
             }
 
             @Override
-            public Pos position() {
-                return new Pos(-36, 68, -38);
+            public Pos position(HypixelPlayer player) {
+                return new Pos(28, 69, -57);
             }
 
             @Override
@@ -36,7 +38,7 @@ public class VillagerJamie extends NPCVillagerDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickVillagerNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
 
@@ -45,34 +47,30 @@ public class VillagerJamie extends NPCVillagerDialogue {
             if (data.getMission("speak_to_villagers").getKey().getCustomData()
                     .values()
                     .stream()
-                    .anyMatch(value -> value.toString().contains(getID()))) {
+                    .anyMatch(value -> value.toString().contains(getClass().getSimpleName()))) {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
                     setDialogue(player, "quest-hello").thenRun(() -> {
-                        new GUIJamie().open(player);
+                        new GUIRecipe(ItemType.PROMISING_AXE, null).open(player);
                     });
-                    return;
                 }
             }
         }
-        setDialogue(player, "hello");
+
+        setDialogue(player,"hello");
     }
 
     @Override
-    public DialogueSet[] getDialogueSets() {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
-                                "§e[NPC] Jamie§f: You might have noticed that you have a Mana bar!",
-                                "§e[NPC] Jamie§f: Some items have mysterious properties, called Abilities.",
-                                "§e[NPC] Jamie§f: Abilities use your Mana as a resource. Here, take this Rogue Sword. I don't need it!"
+                                "I will teach you the Promising Axe Recipe to get you started!",
                         }).build(),
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "§e[NPC] Jamie§f: You might have noticed that you have a Mana bar!",
-                                "§e[NPC] Jamie§f: Some items have mysterious properties, called Abilities.",
-                                "§e[NPC] Jamie§f: Abilities use your Mana as a resource."
+                                "All SkyBlock recipes can be found by opening the §aRecipe Book §fin your §aSkyBlock Menu",
                         }).build()
-        ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

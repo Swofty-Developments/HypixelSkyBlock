@@ -1,9 +1,11 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.hub.gui.GUIShopWoolWeaverVibrant;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIShopWoolWeaverVibrant;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCWoolWeaver extends HypixelNPC {
@@ -55,7 +57,7 @@ public class NPCWoolWeaver extends HypixelNPC {
 
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
-        return new NPCDialogue.DialogueSet[] {
+        return new DialogueSet[] {
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "If wool shrinks when you wash it...",

@@ -65,7 +65,7 @@ public class NPCBartender extends HypixelNPC {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
@@ -84,6 +84,6 @@ public class NPCBartender extends HypixelNPC {
                                 "If you're up for the challenge, both the §cGraveyard§f and the §cSpider's Den §fbeyond it are great training grounds for improving your §aCombat Skill§f.",
                                 "For now, here's a reward for helping me out!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

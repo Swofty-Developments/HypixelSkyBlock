@@ -53,6 +53,6 @@ public class NPCClerkSeraphine extends HypixelNPC {
                                 "Contribute to community projects, upgrade your account, and more by talking to §dElizabeth§f!",
                                 "You can also vote in the §bmayor elections §fby heading through the warp upstairs!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }
