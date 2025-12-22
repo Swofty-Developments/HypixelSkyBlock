@@ -25,6 +25,7 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.data.mongodb.*;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
@@ -41,10 +42,7 @@ import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.hologram.ServerHolograms;
 import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
@@ -167,23 +165,13 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
             }
         });
 
-        /**
-         * Register SkyBlock NPCs
-         */
+        // Register SkyBlock NPCs
         if (mainInstance != null) {
             loopThroughPackage("net.swofty.type.skyblockgeneric.entity.npc.npcs", HypixelNPC.class)
                     .forEach(HypixelNPC::register);
-            loopThroughPackage("net.swofty.type.skyblockgeneric.entity.npc.npcs", NPCDialogue.class)
-                    .forEach(HypixelNPC::register);
-            loopThroughPackage("net.swofty.type.skyblockgeneric.entity.villager.villagers", HypixelVillagerNPC.class)
-                    .forEach(HypixelVillagerNPC::register);
-            loopThroughPackage("net.swofty.type.skyblockgeneric.entity.villager.villagers", NPCVillagerDialogue.class)
-                    .forEach(HypixelVillagerNPC::register);
         }
 
-        /**
-         * Register entities
-         */
+        // Register entities
         loopThroughPackage("net.swofty.type.skyblockgeneric.entity.mob.mobs", SkyBlockMob.class)
                 .forEach(mob -> MobRegistry.registerExtraMob(mob.getClass()));
 

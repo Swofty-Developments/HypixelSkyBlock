@@ -2,10 +2,9 @@ package net.swofty.type.generic.event.actions.data;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
+
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -22,14 +21,9 @@ public class ActionPlayerClearCache implements HypixelEventClass {
     public void run(PlayerDisconnectEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
-        /*
-        Remove from caches
-         */
+        // Remove from caches
         CustomGroups.staffMembers.remove(player);
         HypixelNPC.getPerPlayerNPCs().remove(player.getUuid());
-        HypixelAnimalNPC.getAnimalNPCs().forEach((npc, entity) -> {
-            entity.clearCache(player);
-        });
         if (HypixelSignGUI.signGUIs.containsKey(player)) {
             HypixelSignGUI.signGUIs.get(player).future().complete(null);
             HypixelSignGUI.signGUIs.remove(player);
@@ -44,7 +38,7 @@ public class ActionPlayerClearCache implements HypixelEventClass {
                     player);
             HypixelInventoryGUI.GUI_MAP.remove(player.getUuid());
         }
-        NPCDialogue.remove(player);
+        HypixelNPC.removeDialogueCache(player);
         PlayerHolograms.remove(player);
 
         // Remove external player holograms associated with the player

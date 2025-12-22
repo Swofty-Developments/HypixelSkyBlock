@@ -1,17 +1,16 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
 import java.util.stream.Stream;
 
-public class NPCSwofty extends NPCDialogue {
+public class NPCSwofty extends HypixelNPC {
 
     public NPCSwofty() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§cSwofty", "§e§lCLICK"};
@@ -40,19 +39,19 @@ public class NPCSwofty extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
         setDialogue(e.player(), "hello");
     }
 
     @Override
-    public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "Make sure to check out our discord server at discord.gg/paper!",
                                 "Feel free to create a pull request to help us :)"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

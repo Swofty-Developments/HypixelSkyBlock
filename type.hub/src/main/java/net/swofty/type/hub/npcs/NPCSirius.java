@@ -4,8 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.auctions.DarkAuctionPhase;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIDarkAuction;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
@@ -13,11 +12,11 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCSirius extends NPCDialogue {
+public class NPCSirius extends HypixelNPC {
     private static final long MINIMUM_COINS = 400_000;
 
     public NPCSirius() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{
@@ -60,7 +59,7 @@ public class NPCSirius extends NPCDialogue {
     }
 
     @Override
-    public void onClick(HypixelNPC.PlayerClickNPCEvent e) {
+    public void onClick(HypixelNPC.NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
 
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
@@ -98,25 +97,25 @@ public class NPCSirius extends NPCDialogue {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("closed").lines(new String[]{
                                 "You shouldn't have of had been able to click me!"
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("adding_to_auction").lines(new String[]{
                                 "Are you here for the Auction? Only the richest players can enter."
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("minimum_coins").lines(new String[]{
                                 "You need at least §6" + StringUtility.commaify(MINIMUM_COINS) + " coins §fto enter the Dark Auction!"
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("added_to_auction").lines(new String[]{
                                 "You signed up for the Auction!",
                                 "You'll be warped once it starts..."
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

@@ -25,9 +25,9 @@ import net.swofty.type.generic.data.mongodb.AttributeDatabase;
 import net.swofty.type.generic.data.mongodb.AuthenticationDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
+
+
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
@@ -88,9 +88,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
             }
         });
 
-        /**
-         * Register events
-         */
+        // Register events
         loader.getTraditionalEvents().forEach(HypixelEventHandler::registerEventMethods);
         loader.getCustomEvents().forEach(HypixelEventHandler::registerEventMethods);
         loopThroughPackage("net.swofty.type.generic.event.actions", HypixelEventClass.class).forEach(HypixelEventHandler::registerEventMethods);
@@ -168,23 +166,15 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         AttributeDatabase.connect(mongoClient);
         UserDatabase.connect(mongoClient);
 
-        /**
-         * Register Hypixel NPCs
-         */
+        // Register NPCs
         if (mainInstance != null) {
             loader.getNPCs().forEach(HypixelNPC::register);
-            loader.getVillagerNPCs().forEach(HypixelVillagerNPC::register);
-            loader.getAnimalNPCs().forEach(HypixelAnimalNPC::register);
         }
 
-        /**
-         * Register player provider given we aren't a SkyBlock server
-         * If we are a SkyBlock server, we will handle the player provider in the SkyBlockGenericLoader
-         */
+        // Register player provider given we aren't a SkyBlock server
+        // If we are a SkyBlock server, we will handle the player provider in the SkyBlockGenericLoader
         if (!loader.getType().isSkyBlock()) {
-            /**
-             * Handle ConnectionManager
-             */
+            // Handle ConnectionManager
             MinecraftServer.getConnectionManager().setPlayerProvider((playerConnection, gameProfile) -> {
                 HypixelPlayer player = new HypixelPlayer(playerConnection, gameProfile);
 

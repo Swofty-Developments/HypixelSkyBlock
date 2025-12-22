@@ -2,14 +2,14 @@ package net.swofty.type.dwarvenmines.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.banker.GUIBanker;
 
 public class NPCBankerBroadjaw extends HypixelNPC {
 
 	public NPCBankerBroadjaw() {
-		super(new NPCParameters() {
+		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
 				return new String[]{"§6Banker Broadjaw", "§e§lCLICK"};
@@ -38,7 +38,7 @@ public class NPCBankerBroadjaw extends HypixelNPC {
 	}
 
 	@Override
-	public void onClick(PlayerClickNPCEvent event) {
+	public void onClick(NPCInteractEvent event) {
 		new GUIBanker().open(event.player());
 	}
 }
