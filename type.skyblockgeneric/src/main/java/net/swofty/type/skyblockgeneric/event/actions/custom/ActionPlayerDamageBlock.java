@@ -25,7 +25,6 @@ import java.util.UUID;
 public class ActionPlayerDamageBlock implements HypixelEventClass {
     public static final Map<UUID, BreakingTask> CLICKING = new HashMap<>();
 
-
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(PlayerDamageSkyBlockBlockEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
@@ -55,10 +54,8 @@ public class ActionPlayerDamageBlock implements HypixelEventClass {
         }
 
         if (CLICKING.containsKey(player.getUuid())) {
-            System.out.println("Already clicking");
             return;
         }
-
 
         // Ensure that the player isn't just using their hand
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
@@ -69,7 +66,8 @@ public class ActionPlayerDamageBlock implements HypixelEventClass {
                 new BreakingTask.PositionedBlock(
                         player.getInstance().getBlock(event.getBlockPosition()),
                         event.getBlockPosition().asPos()),
-                item);
+                item,
+                event.getSequence());
         MinecraftServer.getSchedulerManager().submitTask(task::run);
         CLICKING.put(player.getUuid(), task);
     }

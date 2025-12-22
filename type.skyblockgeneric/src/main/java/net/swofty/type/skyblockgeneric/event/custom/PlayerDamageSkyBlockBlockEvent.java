@@ -13,11 +13,16 @@ public class PlayerDamageSkyBlockBlockEvent implements PlayerInstanceEvent {
     private final Point blockPosition;
     @Getter
     private final ClientPlayerActionPacket.Status status;
+    @Getter
+    private final int sequence;
 
-    public PlayerDamageSkyBlockBlockEvent(Player player, Point blockPosition, ClientPlayerActionPacket.Status status) {
+    public PlayerDamageSkyBlockBlockEvent(Player player, Point blockPosition,
+                                          ClientPlayerActionPacket.Status status,
+                                          int sequence) {
         this.player = player;
         this.blockPosition = blockPosition;
         this.status = status;
+        this.sequence = sequence;
     }
 
     @Override

@@ -130,7 +130,7 @@ public enum LaunchPads {
 			(player) -> true,
 			"",
 			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
-					.pos(new Pos(3, 159, 85))
+					.pos(new Pos(4, 158.5, 89))
 					.player(player)
 					.text(new String[]{"§bTravel To:", "§aGold Mine"})
 					.build()

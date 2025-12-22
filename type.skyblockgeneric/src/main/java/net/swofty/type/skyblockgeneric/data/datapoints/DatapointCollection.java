@@ -78,6 +78,10 @@ public class DatapointCollection extends SkyBlockDatapoint<DatapointCollection.P
             items.put(type, get(type) + 1);
         }
 
+        public void increase(ItemType type, int amount) {
+            items.put(type, get(type) + amount);
+        }
+
         public void set(ItemType type, int amount) {
             items.put(type, amount);
         }

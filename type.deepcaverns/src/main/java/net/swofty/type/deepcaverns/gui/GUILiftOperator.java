@@ -50,8 +50,7 @@ public class GUILiftOperator extends HypixelInventoryGUI {
 							DatapointStringList.class
 					);
 					List<String> discoveredZonesList = discoveredZones.getValue();
-
-					if (!discoveredZonesList.contains(location.name()) && location != LiftLocation.DWARVEN_MINES) {
+					if (!discoveredZonesList.contains(location.prettyName()) && location != LiftLocation.DWARVEN_MINES) {
 						player.sendMessage("§cYou have not discovered the " + location.prettyName() + " yet!");
 						return;
 					}

@@ -7,6 +7,7 @@ import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;
+import net.minestom.server.network.packet.server.play.AcknowledgeBlockChangePacket;
 import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.HypixelEventHandler;
@@ -20,14 +21,21 @@ public class BreakingTask {
     private final PositionedBlock block;
     private final double breakTime;
     private TaskSchedule nextSchedule;
+    private final int sequence;
 
-    public BreakingTask(SkyBlockPlayer player, PositionedBlock block, SkyBlockItem item) {
+    public BreakingTask(SkyBlockPlayer player, PositionedBlock block, SkyBlockItem item, int sequence) {
         this.player = player;
         this.block = block;
+        this.sequence = sequence;
 
         double miningTime = player.getTimeToMine(item, block.block());
-        if (miningTime < 1 && miningTime != -1) {
-            miningTime = 1;
+
+        if (miningTime == -1) {
+            // Player can't mine this block - keep running to stall progress
+            sendBlockBreak(0);
+            this.breakTime = -1;
+            this.nextSchedule = TaskSchedule.tick(1);
+            return;
         }
 
         this.breakTime = miningTime;
@@ -35,8 +43,15 @@ public class BreakingTask {
     }
 
     public TaskSchedule run() {
-        if (nextSchedule == TaskSchedule.stop()) {
+        if (nextSchedule.equals(TaskSchedule.stop())) {
+            sendBlockBreak(-1);
             return TaskSchedule.stop();
+        }
+
+        // If player can't mine this block, continuously send progress 0 to stall
+        if (breakTime == -1) {
+            sendBlockBreak(0);
+            return TaskSchedule.tick(1);
         }
 
         int dmg = (int) ((counter / (float) breakTime) * 10);
@@ -59,11 +74,13 @@ public class BreakingTask {
                 HypixelEventHandler.callCustomEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,
                         block.pos(),
-                        ClientPlayerActionPacket.Status.CANCELLED_DIGGING));
+                        ClientPlayerActionPacket.Status.CANCELLED_DIGGING,
+                        sequence));
                 HypixelEventHandler.callCustomEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,
                         block.pos(),
-                        ClientPlayerActionPacket.Status.STARTED_DIGGING));
+                        ClientPlayerActionPacket.Status.STARTED_DIGGING,
+                        sequence));
             });
             return TaskSchedule.stop();
         }
@@ -77,7 +94,9 @@ public class BreakingTask {
     }
 
     private void sendBlockBreak(int damage) {
-        BlockBreakAnimationPacket breakAnim = new BlockBreakAnimationPacket(player.getEntityId() + 1, block.pos(), (byte) damage);
+        AcknowledgeBlockChangePacket ackPacket = new AcknowledgeBlockChangePacket(sequence);
+        player.getPlayerConnection().sendPackets(ackPacket);
+        BlockBreakAnimationPacket breakAnim = new BlockBreakAnimationPacket(player.getEntityId(), block.pos(), (byte) damage);
         player.getPlayerConnection().sendPackets(breakAnim);
     }
 
