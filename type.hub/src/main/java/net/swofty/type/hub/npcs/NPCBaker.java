@@ -1,13 +1,10 @@
 package net.swofty.type.hub.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIBakerShop;
 import net.swofty.type.hub.gui.GUIClaimCake;
@@ -19,10 +16,10 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class NPCBaker extends NPCDialogue {
+public class NPCBaker extends HypixelNPC {
 
     public NPCBaker() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 List<CalendarEvent> events = SkyBlockCalendar.getCurrentEvents();
@@ -59,7 +56,7 @@ public class NPCBaker extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent event) {
+    public void onClick(NPCInteractEvent event) {
         List<CalendarEvent> events = SkyBlockCalendar.getCurrentEvents();
         if (!events.contains(CalendarEvent.NEW_YEAR)) return;
 
@@ -82,7 +79,7 @@ public class NPCBaker extends NPCDialogue {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    protected DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
                         .key("idle").lines(new String[]{
@@ -90,6 +87,6 @@ public class NPCBaker extends NPCDialogue {
                                 "I made one especially for you, here you go.",
                                 "I've recently added a §dNew Year Cake Bag §fto my inventory. Sadly, it's not free! Click me again to open my shop!",
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

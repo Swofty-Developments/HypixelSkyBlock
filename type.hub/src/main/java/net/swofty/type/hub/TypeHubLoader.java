@@ -17,19 +17,20 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
+
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.hub.darkauction.DarkAuctionDisplay;
 import net.swofty.type.hub.runes.RuneEntityImpl;
 import net.swofty.type.hub.tab.HubServerModule;
+import net.swofty.type.hub.util.HubMapUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
 import net.swofty.type.skyblockgeneric.entity.GlassDisplay;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
@@ -125,6 +126,9 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 			}
 			darkAuctionDisplay.update();
 		});
+
+		// Place maps in the hub
+		HubMapUtility.setMaps(HypixelConst.getInstanceContainer());
 	}
 
     @Override
@@ -169,14 +173,10 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
 	@Override
 	public List<HypixelNPC> getNPCs() {
-		List<HypixelNPC> npcs = new ArrayList<>();
-
-		npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
-				"net.swofty.type.hub.npcs",
-				HypixelNPC.class
-		).toList());
-
-		return npcs;
+        return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.type.hub.npcs",
+                HypixelNPC.class
+        ).toList());
 	}
 
 	@Override
@@ -192,22 +192,6 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 	@Override
 	public List<ServiceType> getRequiredServices() {
 		return List.of(ServiceType.AUCTION_HOUSE, ServiceType.BAZAAR, ServiceType.ITEM_TRACKER, ServiceType.DATA_MUTEX);
-	}
-
-	@Override
-	public List<HypixelVillagerNPC> getVillagerNPCs() {
-		return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
-				"net.swofty.type.hub.villagers",
-				HypixelVillagerNPC.class
-		).toList());
-	}
-
-	@Override
-	public List<HypixelAnimalNPC> getAnimalNPCs() {
-		return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
-				"net.swofty.type.hub.animalnpcs",
-				HypixelAnimalNPC.class
-		).toList());
 	}
 
 	@Override

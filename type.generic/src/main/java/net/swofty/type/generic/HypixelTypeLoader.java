@@ -9,9 +9,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import org.jetbrains.annotations.Nullable;
@@ -36,17 +34,13 @@ public interface HypixelTypeLoader {
 
     List<HypixelEventClass> getCustomEvents();
 
-    List<HypixelVillagerNPC> getVillagerNPCs();
-
-    List<HypixelAnimalNPC> getAnimalNPCs();
-
     List<HypixelNPC> getNPCs();
 
     List<ServiceToClient> getServiceRedisListeners();
 
     List<ProxyToClient> getProxyRedisListeners();
 
-    record LoaderValues(Function<ServerType, Pos> spawnPosition, boolean announceDeathMessages) { }
+    record LoaderValues(Function<ServerType, Pos> spawnPosition, boolean announceDeathMessages) {}
 
     @Nullable CustomWorlds getMainInstance();
 

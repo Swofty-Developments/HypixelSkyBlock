@@ -4,9 +4,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.deepcaverns.gui.GUIShopWalter;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCOption;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -16,10 +16,10 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Collections;
 import java.util.stream.Stream;
 
-public class NPCWalter extends NPCDialogue {
+public class NPCWalter extends HypixelNPC {
 
 	public NPCWalter() {
-		super(new NPCParameters() {
+		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
 				return new String[]{"Walter", "§e§lCLICK"};
@@ -48,7 +48,7 @@ public class NPCWalter extends NPCDialogue {
 	}
 
 	@Override
-	public void onClick(PlayerClickNPCEvent event) {
+	public void onClick(NPCInteractEvent event) {
 		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
 		if (isInDialogue(player)) return;
 
@@ -75,7 +75,7 @@ public class NPCWalter extends NPCDialogue {
 	}
 
 	@Override
-	public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+	public DialogueSet[] dialogues(HypixelPlayer player) {
 		return Stream.of(
 				DialogueSet.builder()
 						.key("none").lines(new String[]{
@@ -97,6 +97,6 @@ public class NPCWalter extends NPCDialogue {
 						.key("donate_cube_no_requirements").lines(new String[]{ // when donating the cube without requirements met
 								"Mmh... you're missing something to become a Platinum-level donor...",
 						}).abiPhone(true).build()
-		).toArray(NPCDialogue.DialogueSet[]::new);
+		).toArray(DialogueSet[]::new);
 	}
 }
