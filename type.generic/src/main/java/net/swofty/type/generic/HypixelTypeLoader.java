@@ -2,6 +2,8 @@ package net.swofty.type.generic;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.registry.RegistryKey;
+import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
@@ -47,4 +49,13 @@ public interface HypixelTypeLoader {
     record LoaderValues(Function<ServerType, Pos> spawnPosition, boolean announceDeathMessages) { }
 
     @Nullable CustomWorlds getMainInstance();
+
+    /**
+     * Gets the dimension type for this server type, or null if the default should be used. You should also register
+     * the DimensionType to the registry in the same method.
+     * @return The dimension type for this server type, or null if the default should be used.
+     */
+    @Nullable default RegistryKey<DimensionType> getDimensionType() {
+        return null;
+    }
 }

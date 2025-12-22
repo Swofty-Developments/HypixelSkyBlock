@@ -1,7 +1,10 @@
 package net.swofty.type.dwarvenmines;
 
+import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.registry.RegistryKey;
+import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
@@ -44,10 +47,8 @@ public class TypeDwarvenMinesLoader implements SkyBlockTypeLoader {
 	@Override
 	public LoaderValues getLoaderValues() {
 		return new LoaderValues(
-				(type) -> switch (type) {
-					default -> new Pos(-85, 200, -123, -90, 0);
-				}, // Spawn position
-				true // Announce death messages
+				(_) -> new Pos(-85, 200, -123, -90, 0),
+				true
 		);
 	}
 
@@ -80,14 +81,10 @@ public class TypeDwarvenMinesLoader implements SkyBlockTypeLoader {
 
 	@Override
 	public List<HypixelNPC> getNPCs() {
-		List<HypixelNPC> npcs = new ArrayList<>();
-
-		npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
-				"net.swofty.type.dwarvenmines.npcs",
-				HypixelNPC.class
-		).toList());
-
-		return npcs;
+        return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.type.dwarvenmines.npcs",
+                HypixelNPC.class
+        ).toList());
 	}
 
 	@Override
@@ -121,5 +118,14 @@ public class TypeDwarvenMinesLoader implements SkyBlockTypeLoader {
 	@Override
 	public @Nullable CustomWorlds getMainInstance() {
 		return CustomWorlds.SKYBLOCK_DWARVEN_MINES;
+	}
+
+	@Override
+	public @Nullable RegistryKey<DimensionType> getDimensionType() {
+		return MinecraftServer.getDimensionTypeRegistry().register(
+				Key.key("skyblock:dwarven_mines"),
+				DimensionType.builder()
+						.ambientLight(0.4f)
+						.build());
 	}
 }

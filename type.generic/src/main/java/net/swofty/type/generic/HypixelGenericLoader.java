@@ -56,12 +56,16 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         HypixelConst.setTypeLoader(loader);
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
 
-        /**
-         * Handle instances
-         */
+        // Handle instances
         CustomWorlds mainInstance = loader.getMainInstance();
         if (mainInstance != null) {
-            InstanceContainer temporaryInstance = instanceManager.createInstanceContainer();
+            InstanceContainer temporaryInstance;
+            // If a custom DimensionType is provided, use that
+            if (loader.getDimensionType() != null) {
+                temporaryInstance = instanceManager.createInstanceContainer(loader.getDimensionType());
+            } else {
+                temporaryInstance = instanceManager.createInstanceContainer();
+            }
             temporaryInstance.setChunkLoader(new AnvilLoader(loader.getMainInstance().getFolderName()));
 
             HypixelConst.setInstanceContainer(instanceManager.createSharedInstance(temporaryInstance));
@@ -70,9 +74,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         HypixelConst.getEmptyInstance().setBlock(0, 99, 0, Block.BEDROCK);
         HypixelConst.setEventHandler(MinecraftServer.getGlobalEventHandler());
 
-        /**
-         * Register commands
-         */
+        // Register commands
         MinecraftServer.getCommandManager().setUnknownCommandCallback((sender, command) -> {
             // Large amount of Clients (such as Lunar) send a `/tip all` when joining
             // due to the scoreboard containing `hypixel.net`
@@ -88,9 +90,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
             }
         });
 
-        /**
-         * Register events
-         */
+        // Register events
         loader.getTraditionalEvents().forEach(HypixelEventHandler::registerEventMethods);
         loader.getCustomEvents().forEach(HypixelEventHandler::registerEventMethods);
         loopThroughPackage("net.swofty.type.generic.event.actions", HypixelEventClass.class).forEach(HypixelEventHandler::registerEventMethods);

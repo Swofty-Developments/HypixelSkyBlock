@@ -8,21 +8,21 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.auctions.DarkAuctionPhase;
+import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.data.datapoints.DatapointDouble;
+import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.generic.utility.BlockUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
-import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.generic.data.datapoints.DatapointInteger;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.commons.item.ItemType;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
-import net.swofty.type.generic.utility.BlockUtility;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -53,12 +53,20 @@ public class SkyBlockScoreboard {
                     continue;
                 }
 
+                Sidebar sidebar;
+                boolean isNewSidebar = false;
                 if (sidebarCache.containsKey(player.getUuid())) {
-                    sidebarCache.get(player.getUuid()).removeViewer(player);
+                    sidebar = sidebarCache.get(player.getUuid());
+                    for (Sidebar.ScoreboardLine line : sidebar.getLines().stream().toList()) {
+                        sidebar.removeLine(line.getId());
+                    }
+                    sidebar.setTitle(Component.text("  " + getSidebarName(skyblockName, false)
+                            + (player.isCoop() ? " §b§lCO-OP  " : "  ")));
+                } else {
+                    sidebar = new Sidebar(Component.text("  " + getSidebarName(skyblockName, false)
+                            + (player.isCoop() ? " §b§lCO-OP  " : "  ")));
+                    isNewSidebar = true;
                 }
-
-                Sidebar sidebar = new Sidebar(Component.text("  " + getSidebarName(skyblockName, false)
-                        + (player.isCoop() ? " §b§lCO-OP  " : "  ")));
 
                 addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
                 addLine("§7 ", sidebar);
@@ -124,9 +132,10 @@ public class SkyBlockScoreboard {
                 addLine("§7 ", sidebar);
                 addLine("§ewww.hypixel.net", sidebar);
 
-                sidebar.addViewer(player);
-
-                sidebarCache.put(player.getUuid(), sidebar);
+                if (isNewSidebar) {
+                    sidebar.addViewer(player);
+                    sidebarCache.put(player.getUuid(), sidebar);
+                }
             }
             return TaskSchedule.tick(2);
         });
@@ -137,11 +146,10 @@ public class SkyBlockScoreboard {
     }
 
     private static void addLine(String text, Sidebar sidebar) {
+        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
         for (Sidebar.ScoreboardLine existingLine : sidebar.getLines()) {
             sidebar.updateLineScore(existingLine.getId(), existingLine.getLine() + 1);
         }
-
-        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
     }
 
     private static String getSidebarName(int counter, boolean isGuest) {
