@@ -3,17 +3,14 @@ package net.swofty.type.hub.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.hub.gui.GUIShopBea;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCBea extends NPCDialogue {
+public class NPCBea extends HypixelNPC {
 
     public NPCBea() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Bea", "§e§lCLICK"};
@@ -42,7 +39,7 @@ public class NPCBea extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
         DatapointToggles.Toggles toggle = e.player().getToggles();
 
@@ -58,7 +55,7 @@ public class NPCBea extends NPCDialogue {
     @Override
     public DialogueSet[] getDialogueSets(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "Hello! Do you have a pet?",
                                 "Pets are little companions for your adventures in SkyBlock!",

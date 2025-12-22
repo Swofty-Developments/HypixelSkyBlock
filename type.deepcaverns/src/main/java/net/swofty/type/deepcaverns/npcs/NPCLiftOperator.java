@@ -3,19 +3,15 @@ package net.swofty.type.deepcaverns.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.deepcaverns.gui.GUILiftOperator;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToLiftOperator;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCLiftOperator extends NPCDialogue {
+public class NPCLiftOperator extends HypixelNPC {
 
 	public NPCLiftOperator() {
-		super(new NPCParameters() {
+		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
 				return new String[]{"Lift Operator", "§e§lCLICK"};
@@ -71,7 +67,7 @@ public class NPCLiftOperator extends NPCDialogue {
 	}
 
 	@Override
-	public void onClick(PlayerClickNPCEvent e) {
+	public void onClick(NPCInteractEvent e) {
 		SkyBlockPlayer player = (SkyBlockPlayer) e.player();
 		if (isInDialogue(player)) return;
 		boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_LIFT_OPERATOR);
@@ -87,7 +83,7 @@ public class NPCLiftOperator extends NPCDialogue {
 	}
 
 	@Override
-	public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+	public DialogueSet[] dialogues(HypixelPlayer player) {
 		return Stream.of(
 				DialogueSet.builder()
 						.key("hello").lines(new String[]{

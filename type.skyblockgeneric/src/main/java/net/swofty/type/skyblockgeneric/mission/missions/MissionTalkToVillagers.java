@@ -8,7 +8,7 @@ import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.custom.VillagerSpokenToEvent;

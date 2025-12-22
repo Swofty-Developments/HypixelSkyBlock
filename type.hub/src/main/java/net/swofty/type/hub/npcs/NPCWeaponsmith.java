@@ -3,14 +3,12 @@ package net.swofty.type.hub.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.hub.gui.GUIShopWeaponsmith;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCWeaponsmith extends NPCDialogue {
+public class NPCWeaponsmith extends HypixelNPC {
     public NPCWeaponsmith() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Weaponsmith", "§e§lCLICK"};
@@ -39,7 +37,7 @@ public class NPCWeaponsmith extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_WEAPONSMITH);
@@ -55,9 +53,9 @@ public class NPCWeaponsmith extends NPCDialogue {
     }
 
     @Override
-    public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return new NPCDialogue.DialogueSet[] {
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "You'll need some strong weapons to survive out in the wild! Lucky for you, I've got some!",
                                 "Click me again to open the Weaponsmith Shop!"

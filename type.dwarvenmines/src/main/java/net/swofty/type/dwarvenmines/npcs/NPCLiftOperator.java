@@ -4,14 +4,14 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCLiftOperator extends HypixelNPC {
 
 	public NPCLiftOperator() {
-		super(new NPCParameters() {
+		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
 				return new String[]{"Lift Operator", "§e§lCLICK"};
@@ -40,7 +40,7 @@ public class NPCLiftOperator extends HypixelNPC {
 	}
 
 	@Override
-	public void onClick(PlayerClickNPCEvent event) {
+	public void onClick(NPCInteractEvent event) {
 		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
 		player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
 				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));

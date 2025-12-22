@@ -1,20 +1,20 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.hub.gui.GUIShopBartender;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionKillZombies;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToBartender;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCBartender extends NPCDialogue {
+public class NPCBartender extends HypixelNPC {
 
     public NPCBartender() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§9Bartender", "§e§lCLICK"};
@@ -43,7 +43,7 @@ public class NPCBartender extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (!player.getMissionData().hasCompleted(MissionKillZombies.class)) {
             if (isInDialogue(player)) return;

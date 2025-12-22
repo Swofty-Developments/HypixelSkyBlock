@@ -1,12 +1,9 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionHouse;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToAuctionMaster;
@@ -14,9 +11,9 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCAuctionMaster extends NPCDialogue {
+public class NPCAuctionMaster extends HypixelNPC {
     public NPCAuctionMaster() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§6Auction Master", "§e§lCLICK"};
@@ -45,9 +42,9 @@ public class NPCAuctionMaster extends NPCDialogue {
     }
 
     @Override
-    public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
                                 "Hey there, I'm the Auction Master.",
                                 "In the §6Auction House§f, you can put your valuable items up for auction!",
@@ -58,7 +55,7 @@ public class NPCAuctionMaster extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
         MissionData missionData = ((SkyBlockPlayer) e.player()).getMissionData();
 

@@ -9,9 +9,9 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.deepcaverns.tab.DeepCavernsServerModule;
 import net.swofty.type.generic.SkyBlockTypeLoader;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
+
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
@@ -80,14 +80,10 @@ public class TypeDeepCavernsLoader implements SkyBlockTypeLoader {
 
 	@Override
 	public List<HypixelNPC> getNPCs() {
-		List<HypixelNPC> npcs = new ArrayList<>();
-
-		npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
-				"net.swofty.type.deepcaverns.npcs",
-				HypixelNPC.class
-		).toList());
-
-		return npcs;
+        return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.type.deepcaverns.npcs",
+                HypixelNPC.class
+        ).toList());
 	}
 
 	@Override
@@ -98,19 +94,6 @@ public class TypeDeepCavernsLoader implements SkyBlockTypeLoader {
 	@Override
 	public List<ProxyToClient> getProxyRedisListeners() {
 		return List.of();
-	}
-
-	@Override
-	public List<HypixelVillagerNPC> getVillagerNPCs() {
-		return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
-				"net.swofty.type.deepcaverns.villagers",
-				HypixelVillagerNPC.class
-		).toList());
-	}
-
-	@Override
-	public List<HypixelAnimalNPC> getAnimalNPCs() {
-		return new ArrayList<>();
 	}
 
 	@Override

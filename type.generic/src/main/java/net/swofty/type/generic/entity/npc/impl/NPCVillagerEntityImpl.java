@@ -1,5 +1,6 @@
-package net.swofty.type.generic.entity.villager;
+package net.swofty.type.generic.entity.npc.impl;
 
+import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
@@ -7,15 +8,31 @@ import net.minestom.server.entity.VillagerProfession;
 import net.minestom.server.entity.VillagerType;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.minestom.server.instance.Instance;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class VillagerEntityImpl extends EntityCreature {
-    public VillagerEntityImpl(VillagerProfession profession) {
+import java.util.ArrayList;
+
+@Getter
+public class NPCVillagerEntityImpl extends EntityCreature {
+    private final ArrayList<HypixelPlayer> inRangeOf = new ArrayList<>();
+
+    public NPCVillagerEntityImpl(VillagerProfession profession) {
         super(EntityType.VILLAGER);
 
         VillagerMeta meta = (VillagerMeta) this.entityMeta;
         meta.setVillagerData(new VillagerMeta.VillagerData(
                 VillagerType.PLAINS, profession, VillagerMeta.Level.EXPERT)
         );
+
+        setNoGravity(true);
+    }
+
+    /**
+     * Clears the cache for a player, is only run on quit
+     * @param player The player to clear the cache for
+     */
+    public void clearCache(HypixelPlayer player) {
+        inRangeOf.remove(player);
     }
 
     @Override

@@ -6,7 +6,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class NPCSkyBlock extends HypixelNPC {
     private static long lastCacheTime = 0;
 
     public NPCSkyBlock() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 if (System.currentTimeMillis() - lastCacheTime > 5000) {
@@ -64,7 +64,7 @@ public class NPCSkyBlock extends HypixelNPC {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         e.player().sendTo(ServerType.SKYBLOCK_ISLAND);
     }
 }

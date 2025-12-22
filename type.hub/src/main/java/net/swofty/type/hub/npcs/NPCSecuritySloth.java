@@ -3,17 +3,16 @@ package net.swofty.type.hub.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
 import java.util.stream.Stream;
 
-public class NPCSecuritySloth extends NPCDialogue {
+public class NPCSecuritySloth extends HypixelNPC {
 
     public NPCSecuritySloth() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§a§lSTAY SAFE!", "§cSecurity Sloth", "§e§lCLICK"};
@@ -41,7 +40,7 @@ public class NPCSecuritySloth extends NPCDialogue {
         });
     }
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
 
         setDialogue(e.player(), "hello").thenAccept(key -> {
@@ -53,7 +52,7 @@ public class NPCSecuritySloth extends NPCDialogue {
     @Override
     public DialogueSet[] getDialogueSets(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "Downloading suspicious mods or visiting untrusted discord servers can put your account at risk. It is upto you to keep your account secure!",
                                 "Here are some helpful support articles that will help you keep your account more secure and avoid losing valuable progress or items."

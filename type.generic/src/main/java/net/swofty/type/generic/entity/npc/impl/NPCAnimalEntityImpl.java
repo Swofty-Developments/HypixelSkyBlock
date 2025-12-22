@@ -1,7 +1,8 @@
-package net.swofty.type.generic.entity.animalnpc;
+package net.swofty.type.generic.entity.npc.impl;
 
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -17,8 +18,7 @@ public class NPCAnimalEntityImpl extends LivingEntity {
         super(entityType);
 
         this.setCustomNameVisible(true);
-        this.setCustomName(Component.text(bottomDisplay));
-
+        this.set(DataComponents.CUSTOM_NAME, Component.text(bottomDisplay));
         setNoGravity(true);
     }
 

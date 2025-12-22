@@ -2,7 +2,7 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
+
 import net.swofty.type.generic.entity.animalnpc.NPCAnimalParameters;
 
 public class NPCShania extends HypixelAnimalNPC {

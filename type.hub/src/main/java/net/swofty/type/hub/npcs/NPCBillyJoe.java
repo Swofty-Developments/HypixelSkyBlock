@@ -1,17 +1,16 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
 import java.util.stream.Stream;
 
-public class NPCBillyJoe extends NPCDialogue {
+public class NPCBillyJoe extends HypixelNPC {
 
     public NPCBillyJoe() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Billy Joe", "§e§lCLICK"};
@@ -40,14 +39,14 @@ public class NPCBillyJoe extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
         setDialogue(e.player(), "hello");
     }
     @Override
-    public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "You can hold as many §aAccessories §fas you want in your inventory. They will always work.",
                                 "If you have more then one of the same type of the Accessory in your inventory, §conly one §fwill work."

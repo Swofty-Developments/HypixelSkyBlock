@@ -3,14 +3,12 @@ package net.swofty.type.hub.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.hub.gui.GUIShopMineMerchant;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCMineMerchant extends NPCDialogue {
+public class NPCMineMerchant extends HypixelNPC {
     public NPCMineMerchant() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Mine Merchant", "§e§lCLICK"};
@@ -39,7 +37,7 @@ public class NPCMineMerchant extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_MINE_MERCHANT);
@@ -55,9 +53,9 @@ public class NPCMineMerchant extends NPCDialogue {
     }
 
     @Override
-    public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return new NPCDialogue.DialogueSet[] {
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "My specialities are ores, stone, and mining equipment.",
                                 "Click me again to open the Miner Shop!"

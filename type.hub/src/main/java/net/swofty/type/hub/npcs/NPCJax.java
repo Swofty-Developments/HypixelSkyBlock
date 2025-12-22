@@ -1,11 +1,7 @@
 package net.swofty.type.hub.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIJax;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointArcheryPractice;
@@ -13,10 +9,10 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCJax extends NPCDialogue {
+public class NPCJax extends HypixelNPC {
 
     public NPCJax() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Jax", "§e§lCLICK"};
@@ -45,7 +41,7 @@ public class NPCJax extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_JAX);
@@ -70,13 +66,13 @@ public class NPCJax extends NPCDialogue {
     @Override
     public DialogueSet[] getDialogueSets(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("introduction").lines(new String[]{
                                 "Hello " + player.getFullDisplayName() + "§f! What brings you to my workshop? I forge the newest and most powerful arrows in all of SkyBlock!",
                                 "If you can prove to me you're a real archer I'll forge you arrows whenever you need them.",
                             "Ready to test your skills? Step on the pressure plate and all the targets will light up, if you can shoot them all in 25 seconds, I'll know you're the real deal."
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("completed_level_one").lines(new String[]{
                                 "Wow, you can really shoot a bow!",
                                 "Well, a deal's a deal! Come to me any time and I'll forge you whatever arrows you need for adventures.",

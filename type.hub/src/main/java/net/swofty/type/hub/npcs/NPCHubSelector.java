@@ -2,15 +2,14 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.hub.gui.GUIHubSelector;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.hub.gui.GUIHubSelector;
 
 public class NPCHubSelector extends HypixelNPC {
 
     public NPCHubSelector() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Hub Selector", "§e§lCLICK"};
@@ -39,7 +38,7 @@ public class NPCHubSelector extends HypixelNPC {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         new GUIHubSelector().open(e.player());
     }
 }

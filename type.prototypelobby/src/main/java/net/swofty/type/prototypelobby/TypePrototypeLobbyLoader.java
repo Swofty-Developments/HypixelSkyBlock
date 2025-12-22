@@ -9,9 +9,9 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
+
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
@@ -79,22 +79,6 @@ public class TypePrototypeLobbyLoader implements HypixelTypeLoader {
         return HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.prototypelobby.events.custom",
                 HypixelEventClass.class
-        ).toList();
-    }
-
-    @Override
-    public List<HypixelVillagerNPC> getVillagerNPCs() {
-        return HypixelGenericLoader.loopThroughPackage(
-                "net.swofty.type.prototypelobby.villagers",
-                HypixelVillagerNPC.class
-        ).toList();
-    }
-
-    @Override
-    public List<HypixelAnimalNPC> getAnimalNPCs() {
-        return HypixelGenericLoader.loopThroughPackage(
-                "net.swofty.type.prototypelobby.animalnpcs",
-                HypixelAnimalNPC.class
         ).toList();
     }
 

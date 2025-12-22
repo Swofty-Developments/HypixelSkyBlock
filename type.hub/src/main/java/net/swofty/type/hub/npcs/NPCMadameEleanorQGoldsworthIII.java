@@ -2,18 +2,16 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIMuseumAppraisal;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCMadameEleanorQGoldsworthIII extends NPCDialogue {
+public class NPCMadameEleanorQGoldsworthIII extends HypixelNPC {
 
     public NPCMadameEleanorQGoldsworthIII() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Madame Eleanor Q. Goldsworth III", "§e§lCLICK"};
@@ -42,7 +40,7 @@ public class NPCMadameEleanorQGoldsworthIII extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
 
@@ -63,12 +61,12 @@ public class NPCMadameEleanorQGoldsworthIII extends NPCDialogue {
     @Override
     public DialogueSet[] getDialogueSets(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("pre-curator").lines(new String[]{
                                 "The §bCurator §fhas advised me to direct you back to him.",
                                 "Please hear what he has to say before coming to me"
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("post-curator").lines(new String[]{
                                 "Don't trust what the §bCurator §ftold you, I am in no way his assistant.",
                                 "I serve someone much more important.",

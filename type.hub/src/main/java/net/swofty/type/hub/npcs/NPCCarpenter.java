@@ -2,19 +2,20 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.item.ItemType;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionGiveWoolToCarpenter;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
+import java.util.stream.Stream;
 
-public class NPCCarpenter extends NPCDialogue {
+public class NPCCarpenter extends HypixelNPC {
 
     public NPCCarpenter() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§fCarpenter", "§e§lCLICK"};
@@ -43,7 +44,7 @@ public class NPCCarpenter extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         MissionData data = player.getMissionData();
@@ -71,9 +72,9 @@ public class NPCCarpenter extends NPCDialogue {
     }
 
     @Override
-    public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
-        return List.of(
-                NPCDialogue.DialogueSet.builder()
+    public DialogueSet[] dialogues(HypixelPlayer player) {
+        return Stream.of(
+                DialogueSet.builder()
                         .key("initial-hello").lines(new String[]{
                                 "Hi, " + player.getUsername() + "! Welcome to the §aFurniture Shop§f.",
                                 "Sales are too good right now, I can't keep up with the demand!",
@@ -81,7 +82,7 @@ public class NPCCarpenter extends NPCDialogue {
                                 "Sheep over in The Barn drop wool, but you can also purchase it from the §dWool Weaver§f.",
                                 "She lives in a house not far from here - it's over by the water fountain."
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("completed-quest").lines(new String[]{
                                 "Wow, thanks so much for the help!",
                                 "Carpentry is my passion, I always love to teach others.",
@@ -89,11 +90,11 @@ public class NPCCarpenter extends NPCDialogue {
                                 "You can now gain Carpentry XP by crafting items. Leveling your §aCarpentry Skill§f unlocks new furniture recipes!",
                                 "Some furniture is available exclusively in the Furniture Shop downstairs. Check it out!"
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("spoke-again").lines(new String[]{
                                 "Check out the Furniture Shop downstairs!",
                                 "The Furniture Shop is downstairs. Purchase cool furniture down there!"
                         }).build()
-        ).stream().toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

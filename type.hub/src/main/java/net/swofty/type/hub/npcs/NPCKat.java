@@ -5,8 +5,6 @@ import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.kat.GUIKat;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointKat;
-import net.swofty.type.generic.entity.npc.NPCParameters;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.KatComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -14,7 +12,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 public class NPCKat extends HypixelNPC {
 
     public NPCKat() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§bKat", "§e§lCLICK"};
@@ -43,7 +41,7 @@ public class NPCKat extends HypixelNPC {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         DatapointKat.PlayerKat katData = player.getKatData();
         SkyBlockItem heldItem = new SkyBlockItem(player.getItemInMainHand());

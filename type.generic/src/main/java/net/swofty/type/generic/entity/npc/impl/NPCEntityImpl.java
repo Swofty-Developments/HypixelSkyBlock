@@ -1,4 +1,4 @@
-package net.swofty.type.generic.entity.npc;
+package net.swofty.type.generic.entity.npc.impl;
 
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
@@ -10,7 +10,6 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.server.play.*;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

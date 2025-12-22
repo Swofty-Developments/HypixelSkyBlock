@@ -2,8 +2,6 @@ package net.swofty.type.goldmine.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
@@ -14,10 +12,10 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCLazyMiner extends NPCDialogue {
+public class NPCLazyMiner extends HypixelNPC {
 
     public NPCLazyMiner() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Lazy Miner", "§e§lCLICK"};
@@ -46,7 +44,7 @@ public class NPCLazyMiner extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent event) {
+    public void onClick(NPCInteractEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.player();
         if (isInDialogue(player)) return;
         MissionData data = player.getMissionData();
