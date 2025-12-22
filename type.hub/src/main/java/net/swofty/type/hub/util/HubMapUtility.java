@@ -15,9 +15,17 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.GZIPInputStream;
 
 public class HubMapUtility {
+    private static final ConcurrentHashMap<Integer, byte[]> MAP_COLOR_CACHE = new ConcurrentHashMap<>(64, 0.75f, 1);
+    private static MapDataPacket[] mapPacketCache;
+    private static volatile boolean initialized = false;
+
+    static {
+        initializeMapPackets();
+    }
 
     public static void setMaps(Instance instance) {
         int i = 1;
@@ -35,7 +43,38 @@ public class HubMapUtility {
     }
 
     public static void sendMapData(HypixelPlayer player) {
-        player.sendPackets(
+        if (!initialized) {
+            synchronized (HubMapUtility.class) {
+                if (!initialized) {
+                    initializeMapPackets();
+                }
+            }
+        }
+        player.sendPackets(mapPacketCache);
+    }
+
+    public static byte[] decodeMapColors(String compressedData) {
+        int cacheKey = compressedData.hashCode();
+        byte[] cached = MAP_COLOR_CACHE.get(cacheKey);
+        if (cached != null) {
+            return cached;
+        }
+
+        try {
+            byte[] decompressed = Base64.getDecoder().decode(compressedData);
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(decompressed);
+                 GZIPInputStream gis = new GZIPInputStream(bais)) {
+                byte[] result = gis.readAllBytes();
+                MAP_COLOR_CACHE.put(cacheKey, result);
+                return result;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to decode map colors", e);
+        }
+    }
+
+    private static void initializeMapPackets() {
+        mapPacketCache = new MapDataPacket[]{
                 new MapDataPacket(
                         1,
                         (byte) 0,
@@ -721,18 +760,8 @@ public class HubMapUtility {
                                 decodeMapColors("H4sIAAAAAAAA/+1aS3KFMAy7gXewzyZ36AHg/kcqvEB5kJ/s2H2djrXsuJHsCMdJu65FTFP5578ECiGCoROpS53CDkJCl7hFzrr0FAIsgHCpKMKFXugUGFIhvOp5ob21xJAKgsIdrcTusVGBfQoZqgJmOBJGzOmrlX0WSkFAYcmqCfBIFIXan8i+73KhRgQsteRLlW3ESltRk/4hAI9E0aj9ibOyS+b7J9STvyUGxHJNgLAfAoBCbZgXA/oNec9pSEVR/ZZGwBBgws8wgRE/3Ams+NE9MOMHBdjxgyaAuo8QERLwZScA2oP4aQGT5R6AJrCrQYQEfHoP4pedAkyApQkQAX/AhW6C/2wC7EC0a0XgSEI2JiCCRyILAYTzW5iAOPzqQwkRk1+3FSV63kOh3lCScmdlv2NSKkHKPQpeBjYB4xKO0oteRhQqkJKXvsuMmiBtvZh+M8GQgJR8FLOv6zLQCY6Pvp18fzCRHgcp917tgVNJdkMEjReAY1lggmPn+8YLiADBh7iXHvF9iu6bgF+BjvFu/P07En8mwKYtOFrgQqQADLl8EwBnzlu0gYB+Uiy5BgJ40YLzqNv/WAIEk2lk8CMmYAtoJpVFA61IsxMw5e4QmIDD3xWwCM6jyOBHWhFbQG3NcnRfgFYnEPJLjgOcHzm6IrsExVVLcYQ+VPAQIf7X5ATx8wRUrr9FevTPV4yhZB8H1fnh46B+/S+xF4XWBCAVaCybh80M+hUyQev5IVfJvSz2KkDNW+BA7U+0j4PO28stbMZm9kxAYw+Odau/O1b7E7U9oG5R3+MG/n2lLAB4flBI/oXScYCs+xMm2/o3PAW0fX/xjz+SFAWARdWofUkAuq5W8i9ckymclSb91QnwokKPJAykPcA7qaThQgLArLTpkwnUs+JgM8En6Teo/j+uw+FwOBwOh8PhcDgcDofDIcbyDb/Is7gAQAAA")
                         )
                 )
-        );
-
+        };
+        initialized = true;
     }
 
-    private static byte[] decodeMapColors(String compressedBase64) {
-        try {
-            byte[] compressed = Base64.getDecoder().decode(compressedBase64);
-            ByteArrayInputStream bais = new ByteArrayInputStream(compressed);
-            GZIPInputStream gzipInputStream = new GZIPInputStream(bais);
-            return gzipInputStream.readAllBytes();
-        } catch (IOException exception) {
-            throw new RuntimeException("Failed to decode map colors", exception);
-        }
-    }
 }
