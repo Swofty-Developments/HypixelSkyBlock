@@ -4,11 +4,13 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.*;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.server.play.*;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,17 +62,19 @@ public class NPCEntityImpl extends Entity {
                                 GameMode.CREATIVE,
                                 Component.text("§8[NPC] " + getUuid().toString().substring(0, 8)),
                                 null,
-                                1)),
-                new SpawnEntityPacket(this.getEntityId(), this.getUuid(), EntityType.PLAYER.id(),
+                                1, true)),
+                new SpawnEntityPacket(this.getEntityId(), this.getUuid(), EntityType.PLAYER,
                         getPosition(),
                         (float) 0,
                         0,
-                        (short) 0,
-                        (short) 0,
-                        (short) 0),
+                        Vec.ZERO),
                 new EntityHeadLookPacket(getEntityId(), getPosition().yaw()),
-                new EntityMetaDataPacket(getEntityId(), Map.of(17, Metadata.Byte((byte) 127)))
+                new EntityMetaDataPacket(getEntityId(), Map.of(
+                        MetadataDef.Avatar.DISPLAYED_MODEL_PARTS_FLAGS.index(),
+                        Metadata.Byte((byte) 127) // 127 is all parts
+                ))
         );
+
 
         packetsSent.add(player);
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {

@@ -102,7 +102,6 @@ public class GUIFastTravel extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     List<String> lore = new ArrayList<>();
 
                     lore.add("§8/warp " + island.getInternalName());

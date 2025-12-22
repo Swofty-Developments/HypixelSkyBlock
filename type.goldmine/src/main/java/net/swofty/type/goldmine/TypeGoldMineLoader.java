@@ -2,11 +2,15 @@ package net.swofty.type.goldmine;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.network.packet.server.play.ParticlePacket;
+import net.minestom.server.particle.Particle;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -14,10 +18,11 @@ import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.goldmine.entity.EntityLostPickaxe;
 import net.swofty.type.goldmine.tab.GoldMineServerModule;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -38,14 +43,28 @@ public class TypeGoldMineLoader implements SkyBlockTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
+        EntityLostPickaxe lostPickaxe = new EntityLostPickaxe();
+        lostPickaxe.setInstance(HypixelConst.getInstanceContainer(), new Pos(-18.9, 24.5, -305.1));
 
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            if (lostPickaxe.isRemoved()) return;
+            lostPickaxe.getInstance().sendGroupedPacket(
+                    new ParticlePacket(
+                            Particle.CRIT,
+                            lostPickaxe.getPosition().add(0, 0, -0.3),
+                            new Pos(0.3, 0.2, 0.3),
+                            0.06f, 3
+                    )
+            );
+        }).repeat(TaskSchedule.tick(20)).schedule();
     }
 
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
                 (type) -> switch (type) {
-                    default -> new Pos(-5, 73, -273, -180, 0); // TODO: UPDATE THIS POSITION TO PROPER LOCATION
+                    case SKYBLOCK_DEEP_CAVERNS -> new Pos(-8, 68, -393, 41, 0);
+                    default -> new Pos(-4.5, 74, -278.5, -180, 0);
                 }, // Spawn position
                 true // Announce death messages
         );

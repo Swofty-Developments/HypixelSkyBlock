@@ -23,4 +23,5 @@ dependencies {
     }
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
+    implementation("org.joml:joml:1.10.8")
 }
