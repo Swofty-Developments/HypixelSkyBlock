@@ -5,6 +5,11 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 
+import net.minestom.server.component.DataComponents;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
+
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.objects.darkauction.TriggerDarkAuctionProtocol;
 import net.swofty.proxyapi.ProxyService;
@@ -15,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public record CalendarEvent(
@@ -48,7 +54,6 @@ public record CalendarEvent(
 
     // Dark Auction occurs every 3 SkyBlock days at midnight
     public static CalendarEvent DARK_AUCTION = new CalendarEvent(calculateDarkAuctionTimes(), time -> {
-        Logger.info("Dark Auction calendar event triggered at time: {}", time);
         ProxyService darkAuctionService = new ProxyService(ServiceType.DARK_AUCTION);
         darkAuctionService.handleRequest(new TriggerDarkAuctionProtocol.TriggerMessage(time))
                 .thenAccept(response -> {
@@ -78,6 +83,10 @@ public record CalendarEvent(
     static {
         registerEvent(NEW_YEAR);
         registerEvent(DARK_AUCTION);
+    }
+
+    public String getDisplayName(int year) {
+        return displayName.apply(year);
     }
 
     public String getDisplayName(int year) {
