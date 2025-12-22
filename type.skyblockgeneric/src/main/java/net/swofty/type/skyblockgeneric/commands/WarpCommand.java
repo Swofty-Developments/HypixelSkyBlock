@@ -2,6 +2,8 @@ package net.swofty.type.skyblockgeneric.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
+import net.swofty.commons.ServerType;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
@@ -50,7 +52,15 @@ public class WarpCommand extends HypixelCommand {
                         .getValue();
                 TravelScrollIslands islandFromScroll = TravelScrollIslands.getFromTravelScroll(scroll);
                 if (unlockedWarps.contains(warp)) {
-                    player.asProxyPlayer().transferToWithIndication(islandFromScroll.getServerType()).thenRun(() -> {
+                    ServerType serverType = islandFromScroll.getServerType();
+
+                    if (HypixelConst.getTypeLoader().getType() == serverType) {
+                        player.asProxyPlayer().sendMessage("§7You have been warped to " + scroll.getDisplayName() + "§7!");
+                        player.teleport(scroll.getLocation());
+                        return;
+                    }
+
+                    player.asProxyPlayer().transferToWithIndication(serverType).thenRun(() -> {
                         player.asProxyPlayer().sendMessage("§7You have been warped to " + scroll.getDisplayName() + "§7!");
                         player.asProxyPlayer().teleport(scroll.getLocation());
                     });

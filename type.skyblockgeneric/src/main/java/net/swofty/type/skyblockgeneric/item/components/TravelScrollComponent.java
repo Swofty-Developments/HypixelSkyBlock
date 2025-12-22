@@ -49,7 +49,7 @@ public class TravelScrollComponent extends SkyBlockItemComponent {
 
         scrolls.add(getTravelScrollType().getInternalName());
         player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.USED_SCROLLS, DatapointStringList.class).setValue(scrolls);
-        player.sendMessage("§aYou have unlocked the " + getTravelScrollType().getInternalName() + " §atravel scroll!");
+        player.sendMessage("§aYou have unlocked the " + getTravelScrollType().getDisplayName() + " §atravel scroll!");
 
     }
 }

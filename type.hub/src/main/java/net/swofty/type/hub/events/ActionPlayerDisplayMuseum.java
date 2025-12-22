@@ -17,7 +17,7 @@ public class ActionPlayerDisplayMuseum implements HypixelEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (!event.isFirstSpawn()) return;
 
-        CompletableFuture.delayedExecutor(1000, TimeUnit.MILLISECONDS)
+        CompletableFuture.delayedExecutor(2000, TimeUnit.MILLISECONDS)
                 .execute(() -> {
                     if (!player.isOnline()) return;
                     MuseumDisplays.updateDisplay(player);

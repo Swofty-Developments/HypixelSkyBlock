@@ -7,5 +7,6 @@ public enum ServiceType {
     API,
     DATA_MUTEX,
     PARTY,
+    DARK_AUCTION,
     ;
 }

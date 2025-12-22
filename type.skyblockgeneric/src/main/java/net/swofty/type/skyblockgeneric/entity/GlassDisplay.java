@@ -24,6 +24,11 @@ public class GlassDisplay extends LivingEntity {
 	private final BiConsumer<HypixelPlayer, PlayerEntityInteractEvent> onClick;
 	private final SkyBlockItem item;
 
+	// Child entities that need to be removed when this display is removed
+	private LivingEntity itemEntity;
+	private TextDisplayEntity nameDisplay;
+	private InteractionEntity interactionEntity;
+
 	public GlassDisplay(SkyBlockItem item, BiConsumer<HypixelPlayer, PlayerEntityInteractEvent> onClick) {
 		super(EntityType.BLOCK_DISPLAY);
 		this.item = item;
@@ -46,21 +51,35 @@ public class GlassDisplay extends LivingEntity {
 	@Override
 	public void spawn() {
 		super.spawn();
-		LivingEntity entity = new LivingEntity(EntityType.ITEM);
-		entity.editEntityMeta(ItemEntityMeta.class, meta -> {
+		itemEntity = new LivingEntity(EntityType.ITEM);
+		itemEntity.editEntityMeta(ItemEntityMeta.class, meta -> {
 			meta.setItem(item.getItemStack());
 		});
-		entity.setCanPickupItem(false);
-		entity.setNoGravity(true);
-		entity.setInstance(getInstance(), getPosition().add(0.5, -0.1, 0.5));
+		itemEntity.setCanPickupItem(false);
+		itemEntity.setNoGravity(true);
+		itemEntity.setInstance(getInstance(), getPosition().add(0.5, -0.1, 0.5));
 
-		TextDisplayEntity nameDisplay = new TextDisplayEntity(Component.text(item.getDisplayName()), textDisplayMeta -> {
+		nameDisplay = new TextDisplayEntity(Component.text(item.getDisplayName()), textDisplayMeta -> {
 			textDisplayMeta.setTranslation(new Vec(0, 0.8, 0));
 		});
 		nameDisplay.setInstance(getInstance(), getPosition().add(0.5, 0, 0.5));
 
-		InteractionEntity interactionEntity = new InteractionEntity(scale, scale, onClick);
+		interactionEntity = new InteractionEntity(scale, scale, onClick);
 		interactionEntity.setInstance(getInstance(), getPosition().add(offset + (scale / 2), 0, offset + (scale / 2)));
+	}
+
+	@Override
+	public void remove() {
+		super.remove();
+		if (itemEntity != null) {
+			itemEntity.remove();
+		}
+		if (nameDisplay != null) {
+			nameDisplay.remove();
+		}
+		if (interactionEntity != null) {
+			interactionEntity.remove();
+		}
 	}
 
 }

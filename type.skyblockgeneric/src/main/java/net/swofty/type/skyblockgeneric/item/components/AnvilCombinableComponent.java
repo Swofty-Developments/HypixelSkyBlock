@@ -30,4 +30,12 @@ public class AnvilCombinableComponent extends SkyBlockItemComponent {
         AnvilCombineHandler handler = AnvilCombineRegistry.getHandler(handlerId);
         return handler != null ? handler.costFunction().getCost(upgradeItem, sacrificeItem, player) : 0;
     }
+
+    public boolean onCraft(SkyBlockPlayer player, SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem) {
+        AnvilCombineHandler handler = AnvilCombineRegistry.getHandler(handlerId);
+        if (handler != null && handler.onCraftFunction() != null) {
+            return handler.onCraftFunction().onCraft(player, upgradeItem, sacrificeItem);
+        }
+        return true; // No onCraft function = always proceed
+    }
 }

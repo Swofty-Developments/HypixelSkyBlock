@@ -122,7 +122,7 @@ public class GUIFastTravelSubMenu extends HypixelInventoryGUI {
                     lore.add("§8/warp " + scroll.getInternalName());
                     lore.add(" ");
 
-                    StringUtility.splitByWordAndLength(scroll.getDescription(), 30).forEach(line -> {
+                    StringUtility.splitByWordAndLength(scroll.getDescription(), 50).forEach(line -> {
                         lore.add("§7" + line);
                     });
                     lore.add(" ");
