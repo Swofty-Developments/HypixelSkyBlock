@@ -92,7 +92,15 @@ public class SkyBlockItem {
 	}
 
 	private void loadAsItemType(ItemType type) {
+        String id = type.name();
+        config = ConfigurableSkyBlockItem.getFromID(id);
 		for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
+            if (config != null) {
+                ItemStatistics statistics = config.getDefaultStatistics();
+                attribute.setValue(attribute.getDefaultValue(statistics));
+                attributes.add(attribute);
+                continue;
+            }
 			attribute.setValue(attribute.getDefaultValue(null));
 			attributes.add(attribute);
 		}
@@ -108,8 +116,6 @@ public class SkyBlockItem {
 			rarityAttribute.setValue(Rarity.COMMON);
 		}
 
-		String id = type.name();
-		config = ConfigurableSkyBlockItem.getFromID(id);
 		if (config == null) {
 			config = new ConfigurableSkyBlockItem(id,
 					getMaterial(), List.of(), new HashMap<>());

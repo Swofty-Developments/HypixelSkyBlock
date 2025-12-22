@@ -1,12 +1,14 @@
 package net.swofty.type.goldmine.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.missions.lazyminer.MissionFindLazyMinerPickaxe;
+import net.swofty.type.skyblockgeneric.mission.missions.lazyminer.MissionTalkToLazyMiner;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -47,30 +49,48 @@ public class NPCLazyMiner extends NPCDialogue {
     public void onClick(PlayerClickNPCEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.player();
         if (isInDialogue(player)) return;
-        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_LAZY_MINER);
+        MissionData data = player.getMissionData();
 
-        if (!hasSpokenBefore) {
-            setDialogue(player, "intro").thenRun(() -> {
-                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_LAZY_MINER, true);
+        // Check if mission is completed - show idle dialogue
+        if (data.hasCompleted(MissionTalkToLazyMiner.class)) {
+            if (player.getSkills().getCurrentLevel(SkillCategories.MINING) < 5) {
+                setDialogue(player, "not-reached-deep-caverns");
+                return;
+            }
+            setDialogue(player, "idle");
+            return;
+        }
+
+        // Check if player needs to return the pickaxe (MissionTalkToLazyMiner is active)
+        if (data.isCurrentlyActive(MissionTalkToLazyMiner.class)) {
+            setDialogue(player, "quest-complete").thenRun(() -> {
+                data.endMission(MissionTalkToLazyMiner.class);
             });
             return;
         }
 
-        boolean hasFoundPickaxe = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_FOUND_LAZY_MINER_PICKAXE);
-        if (!hasFoundPickaxe) {
+        // Check if player is looking for the pickaxe (MissionFindLazyMinerPickaxe is active)
+        if (data.isCurrentlyActive(MissionFindLazyMinerPickaxe.class)) {
             setDialogue(player, "no-pickaxe-found");
             return;
-        } else if (!player.getCollection().unlocked(ItemType.GOLD_INGOT) || !player.getCollection().unlocked(ItemType.IRON_INGOT)) {
-            setDialogue(player, "found-pick-no-collection");
+        }
+
+        // First interaction - check special case where player already found pickaxe
+        boolean hasFoundPickaxe = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_FOUND_LAZY_MINER_PICKAXE);
+        if (hasFoundPickaxe) {
+            // Player found the pickaxe before talking to Lazy Miner - skip to talk mission
+            setDialogue(player, "found-pick-intro").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_LAZY_MINER, true);
+                data.startMission(MissionTalkToLazyMiner.class);
+            });
             return;
         }
 
-        if (player.getSkills().getCurrentLevel(SkillCategories.MINING) < 5) {
-            setDialogue(player, "not-reached-deep-caverns");
-            return;
-        }
-
-        setDialogue(player, "idle");
+        // Normal first interaction - start the quest
+        setDialogue(player, "first-interaction").thenRun(() -> {
+            player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_LAZY_MINER, true);
+            data.startMission(MissionFindLazyMinerPickaxe.class);
+        });
     }
 
     @Override
@@ -86,12 +106,16 @@ public class NPCLazyMiner extends NPCDialogue {
                                 "Find my pickaxe in the Gold Mines! I'm not going back down there..."
                         }).build(),
                 DialogueSet.builder()
-                        .key("found-pick-no-collection").lines(new String[]{
-                                "Collect iron and gold ingots with that pickaxe you found!",
-                                "..Or do it the long way and smelt the ore yourself.",
-                                "Smelting Touch is a really useful enchantment. It automatically smelts ores into ingots!"
-                        })
-                        .build(),
+                        .key("found-pick-intro").lines(new String[]{
+                                "Oh! You already found my pickaxe! That's amazing!",
+                                "Keep it, it has a special enchantment. Come talk to me when you're ready!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("quest-complete").lines(new String[]{
+                                "You found it! Thank you so much!",
+                                "Keep it as a reward. That pickaxe has Smelting Touch - it automatically smelts ores into ingots!",
+                                "It'll be very useful for collecting iron and gold."
+                        }).build(),
                 DialogueSet.builder()
                         .key("not-reached-deep-caverns").lines(new String[]{
                                 "The Deep Caverns are full of strange creatures and expensive treasures.",
