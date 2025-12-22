@@ -424,6 +424,9 @@ public class SkyBlockDataHandler extends DataHandler {
         BOOSTER_COOKIE_EXPIRATION_DATE("booster_cookie_expiration_date", false, false, false,
                 DatapointLong.class, new DatapointLong("booster_cookie_expiration_date", 1L)),
 
+        LATEST_NEW_YEAR_CAKE_YEAR("latest_new_year_cake_year", false, false, false,
+                DatapointInteger.class, new DatapointInteger("latest_new_year_cake_year", 0)),
+
         KAT("kat", false, false, false,
                 DatapointKat.class, new DatapointKat("kat")),
 

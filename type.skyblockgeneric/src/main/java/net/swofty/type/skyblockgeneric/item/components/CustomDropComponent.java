@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
+import net.swofty.commons.ServerType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -34,7 +35,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
      */
     public static List<SkyBlockItem> simulateDrop(SkyBlockItem brokenItem, SkyBlockPlayer player,
                                                   SkyBlockItem brokenWith, SkyBlockRegion region,
-                                                  boolean isOnIsland) {
+                                                  ServerType serverType, boolean isOnIsland) {
         List<SkyBlockItem> drops = new ArrayList<>();
 
         if (!brokenItem.hasComponent(CustomDropComponent.class)) {
@@ -49,7 +50,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
 
         // Find the first matching rule
         for (DropRule rule : component.getRules()) {
-            if (rule.matches(brokenWith, region, isOnIsland)) {
+            if (rule.matches(brokenWith, region, serverType, isOnIsland)) {
 
                 if (rule.drops().isEmpty()) {
                     return drops;
@@ -92,8 +93,8 @@ public class CustomDropComponent extends SkyBlockItemComponent {
             DropConditions conditions,
             List<Drop> drops
     ) {
-        public boolean matches(SkyBlockItem brokenWith, SkyBlockRegion region, boolean isOnIsland) {
-            return conditions.matches(brokenWith, region, isOnIsland);
+        public boolean matches(SkyBlockItem brokenWith, SkyBlockRegion region, ServerType serverType, boolean isOnIsland) {
+            return conditions.matches(brokenWith, region, serverType, isOnIsland);
         }
     }
 
@@ -104,9 +105,10 @@ public class CustomDropComponent extends SkyBlockItemComponent {
             String brokenWithNot, // For negation like "!SHEARS"
             LocationType locationType,
             String region,
-            String regionNot // For negation like "!DWARVEN_MINES"
+            String regionNot, // For negation like "!DWARVEN_MINES"
+            ServerType serverType
     ) {
-        public boolean matches(SkyBlockItem tool, SkyBlockRegion currentRegion, boolean isOnIsland) {
+        public boolean matches(SkyBlockItem tool, SkyBlockRegion currentRegion, ServerType currentServerType, boolean isOnIsland) {
             // Check silk touch condition
             if (silkTouch != null) {
                 boolean hasSilkTouch = tool != null && hasSilkTouch(tool);
@@ -162,7 +164,16 @@ public class CustomDropComponent extends SkyBlockItemComponent {
             if (regionNot != null && currentRegion != null) {
                 String negatedRegion = regionNot.startsWith("!") ?
                         regionNot.substring(1) : regionNot;
-                return !currentRegion.getName().equals(negatedRegion);
+                if (currentRegion.getName().equals(negatedRegion)) {
+                    return false;
+                }
+            }
+
+            // Check server type condition
+            if (serverType != null) {
+                if (currentServerType == null || currentServerType != serverType) {
+                    return false;
+                }
             }
 
             return true;
@@ -201,7 +212,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
         }
 
         public Builder addSimpleRule(ItemType dropItem, double chance, String amount) {
-            DropConditions conditions = new DropConditions(null, null, null, null, null, null, null);
+            DropConditions conditions = new DropConditions(null, null, null, null, null, null, null, null);
             List<Drop> drops = List.of(new Drop(dropItem, chance, amount));
             return addRule(conditions, drops);
         }
@@ -212,35 +223,39 @@ public class CustomDropComponent extends SkyBlockItemComponent {
     }
 
     public static DropConditions conditions() {
-        return new DropConditions(null, null, null, null, null, null, null);
+        return new DropConditions(null, null, null, null, null, null, null, null);
     }
 
     public static DropConditions silkTouch(boolean silkTouch) {
-        return new DropConditions(silkTouch, null, null, null, null, null, null);
+        return new DropConditions(silkTouch, null, null, null, null, null, null, null);
     }
 
     public static DropConditions smeltingTouch(boolean smeltingTouch) {
-        return new DropConditions(null, smeltingTouch, null, null, null, null, null);
+        return new DropConditions(null, smeltingTouch, null, null, null, null, null, null);
     }
 
     public static DropConditions brokenWith(ItemType tool) {
-        return new DropConditions(null, null, tool, null, null, null, null);
+        return new DropConditions(null, null, tool, null, null, null, null, null);
     }
 
     public static DropConditions notBrokenWith(String tool) {
-        return new DropConditions(null, null, null, "!" + tool, null, null, null);
+        return new DropConditions(null, null, null, "!" + tool, null, null, null, null);
     }
 
     public static DropConditions location(LocationType locationType) {
-        return new DropConditions(null, null, null, null, locationType, null, null);
+        return new DropConditions(null, null, null, null, locationType, null, null, null);
     }
 
     public static DropConditions region(String region) {
-        return new DropConditions(null, null, null, null, null, region, null);
+        return new DropConditions(null, null, null, null, null, region, null, null);
     }
 
     public static DropConditions notRegion(String region) {
-        return new DropConditions(null, null, null, null, null, null, "!" + region);
+        return new DropConditions(null, null, null, null, null, null, "!" + region, null);
+    }
+
+    public static DropConditions serverType(ServerType serverType) {
+        return new DropConditions(null, null, null, null, null, null, null, serverType);
     }
 
     public static Drop drop(ItemType item, double chance, String amount) {
@@ -253,7 +268,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
 
     public static CustomDropComponent.DropConditions parseDropConditions(Map<String, Object> conditionsConfig) {
         if (conditionsConfig == null) {
-            return new CustomDropComponent.DropConditions(null, null, null, null, null, null, null);
+            return new CustomDropComponent.DropConditions(null, null, null, null, null, null, null, null);
         }
 
         Boolean silkTouch = null;
@@ -297,8 +312,18 @@ public class CustomDropComponent extends SkyBlockItemComponent {
             regionNot = (String) conditionsConfig.get("region_not");
         }
 
+        ServerType serverType = null;
+        if (conditionsConfig.containsKey("serverType")) {
+            String serverTypeStr = (String) conditionsConfig.get("serverType");
+            try {
+                serverType = ServerType.valueOf(serverTypeStr);
+            } catch (IllegalArgumentException e) {
+                Logger.error("Invalid ServerType for serverType: " + serverTypeStr);
+            }
+        }
+
         return new CustomDropComponent.DropConditions(
-                silkTouch, smeltingTouch, brokenWith, brokenWithNot, locationType, region, regionNot
+                silkTouch, smeltingTouch, brokenWith, brokenWithNot, locationType, region, regionNot, serverType
         );
     }
 }

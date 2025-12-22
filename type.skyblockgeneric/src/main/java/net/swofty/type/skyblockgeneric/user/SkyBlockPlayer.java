@@ -700,14 +700,13 @@ public class SkyBlockPlayer extends HypixelPlayer {
         if (block.getStrength() > 0) {
             double time = Math.round(block.getStrength() * 30) / (Math.max(getMiningSpeed(), 1));
             ValueUpdateEvent event = new MiningValueUpdateEvent(this, time, item);
-
             SkyBlockValueEvent.callValueUpdateEvent(event);
             time = (double) event.getValue();
 
             return time;
         }
 
-        return 0;
+        return -1;
     }
 
     public @NonNull Double getDefense() {

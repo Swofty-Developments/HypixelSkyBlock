@@ -52,7 +52,6 @@ public class GUIMissionLog extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aQuest Log " + (completed ? "(Completed)" : ""), Material.WRITABLE_BOOK, 1, "§7View your active quests,", "§7progress, and rewards.");
             }
         });

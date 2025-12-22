@@ -12,6 +12,8 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.DrillComponent;
+import net.swofty.type.skyblockgeneric.item.components.PickaxeComponent;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.region.mining.BreakingTask;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -22,7 +24,6 @@ import java.util.UUID;
 
 public class ActionPlayerDamageBlock implements HypixelEventClass {
     public static final Map<UUID, BreakingTask> CLICKING = new HashMap<>();
-
 
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(PlayerDamageSkyBlockBlockEvent event) {
@@ -53,20 +54,20 @@ public class ActionPlayerDamageBlock implements HypixelEventClass {
         }
 
         if (CLICKING.containsKey(player.getUuid())) {
-            System.out.println("Already clicking");
             return;
         }
 
         // Ensure that the player isn't just using their hand
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
-        if (!item.getAttributeHandler().isMiningTool()) return;
+        if (!item.hasComponent(PickaxeComponent.class) && !item.hasComponent(DrillComponent.class)) return;
 
         BreakingTask task = new BreakingTask(
                 player,
                 new BreakingTask.PositionedBlock(
                         player.getInstance().getBlock(event.getBlockPosition()),
-                        Pos.fromPoint(event.getBlockPosition())),
-                item);
+                        event.getBlockPosition().asPos()),
+                item,
+                event.getSequence());
         MinecraftServer.getSchedulerManager().submitTask(task::run);
         CLICKING.put(player.getUuid(), task);
     }

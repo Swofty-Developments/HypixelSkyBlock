@@ -83,6 +83,14 @@ items:
     material: GRAY_WOOL
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              serverType: "SKYBLOCK_DWARVEN_MINES"
+            drops:
+              - item: MITHRIL
+                chance: 1
+                amount: 1
       - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
@@ -123,6 +131,14 @@ items:
     material: LIGHT_BLUE_WOOL
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              serverType: "SKYBLOCK_DWARVEN_MINES"
+            drops:
+              - item: MITHRIL
+                chance: 1
+                amount: 1
       - id: PLACEABLE
       - id: SELLABLE
         value: 2.0

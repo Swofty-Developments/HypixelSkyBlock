@@ -12,6 +12,8 @@ import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionTalkTo
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionCollectWheat;
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarmer;
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarmerAgain;
+import net.swofty.type.skyblockgeneric.mission.missions.lazyminer.MissionFindLazyMinerPickaxe;
+import net.swofty.type.skyblockgeneric.mission.missions.lazyminer.MissionTalkToLazyMiner;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionBreakOaklog;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjackAgain;
@@ -30,6 +32,7 @@ public enum MissionSet {
     FIRST_HARVEST(MissionTalkToFarmer.class, MissionCollectWheat.class, MissionTalkToFarmerAgain.class),
     BACK_AT_THE_BARNYARD(MissionTalkToFarmHand.class, MissionCraftWheatMinion.class, MissionTalkToFarmhandAgain.class),
     CARPENTRY(MissionGiveWoolToCarpenter.class),
+    LOST_AND_FOUND(MissionFindLazyMinerPickaxe.class, MissionTalkToLazyMiner.class),
     ;
 
     private final Class<? extends SkyBlockMission>[] missions;

@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.packets.client;
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;
+import net.minestom.server.network.packet.server.play.AcknowledgeBlockChangePacket;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -20,11 +21,13 @@ public class PacketListenerPlayerDig extends HypixelPacketClientListener {
         HypixelEventHandler.callCustomEvent(new PlayerDamageSkyBlockBlockEvent(
                 player,
                 digPacket.blockPosition(),
-                digPacket.status()));
+                digPacket.status(),
+                digPacket.sequence()));
+        player.getPlayerConnection().sendPacket(new AcknowledgeBlockChangePacket(digPacket.sequence()));
     }
 
     @Override
     public boolean overrideMinestomProcessing() {
-        return false;
+        return true;
     }
 }

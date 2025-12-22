@@ -27,6 +27,9 @@ dependencies {
     implementation(project(":type.island"))
     implementation(project(":type.hub"))
     implementation(project(":type.thefarmingislands"))
+    implementation(project(":type.goldmine"))
+    implementation(project(":type.deepcaverns"))
+    implementation(project(":type.dwarvenmines"))
     implementation(project(":type.dungeonhub"))
     implementation(project(":type.skyblockgeneric"))
     implementation(project(":type.prototypelobby"))
@@ -123,9 +126,11 @@ tasks.register("runWithTestFlow") {
                     handler = trimmed.substringAfter("handler:").trim()
                     inStartServers = false
                 }
+
                 inStartServers && trimmed.startsWith("- ") -> {
                     startServers.add(trimmed.substring(2).trim())
                 }
+
                 !trimmed.startsWith("#") && trimmed.isNotEmpty() && !trimmed.contains(":") -> {
                     if (inStartServers) inStartServers = false
                 }
