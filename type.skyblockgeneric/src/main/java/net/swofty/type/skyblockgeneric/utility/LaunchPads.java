@@ -77,13 +77,13 @@ public enum LaunchPads {
 				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.MINING) >= 1;
 				if (!hasRequirement) {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-9, 63.3, -232))
+							.pos(new Pos(-9.5, 64.7, -230.5))
 							.player(player)
 							.text(new String[]{"§bTravel To:", "§aGold Mine", "§cRequires Mining Level 1"})
 							.build();
 				} else {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-9, 63.3, -232))
+							.pos(new Pos(-9.5, 64.7, -230.5))
 							.player(player)
 							.text(new String[]{"§bTravel To:", "§aGold Mine"})
 							.build();

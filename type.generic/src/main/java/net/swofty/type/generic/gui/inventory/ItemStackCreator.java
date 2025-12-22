@@ -246,7 +246,7 @@ public class ItemStackCreator {
 						.collect(Collectors.toList()))
 				.set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
 				.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY)
-				.set(DataComponents.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)))
+				.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)))
 				.amount(amount);
 	}
 
@@ -276,7 +276,7 @@ public class ItemStackCreator {
 						DataComponents.BASE_COLOR,
 						DataComponents.UNBREAKABLE
 				)))
-				.set(DataComponents.PROFILE, new HeadProfile(skin))
+				.set(DataComponents.PROFILE, new ResolvableProfile(skin))
 				.amount(amount));
 	}
 

@@ -3,14 +3,8 @@ package net.swofty.type.skyblockgeneric.calendar;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.StringUtility;
-
-import net.minestom.server.component.DataComponents;
-import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
-import net.swofty.commons.StringUtility;
-
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.objects.darkauction.TriggerDarkAuctionProtocol;
 import net.swofty.proxyapi.ProxyService;
 import org.tinylog.Logger;
@@ -20,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public record CalendarEvent(
@@ -33,6 +26,8 @@ public record CalendarEvent(
         boolean tracksYear,
         BiConsumer<Long, Integer> action
 ) {
+    private static final long THREE_DAYS = 20 * 60 * 3; // 3 SkyBlock days in ticks
+    private static final long YEAR = 20 * 60 * 24 * 31 * 12; // Full SkyBlock year in ticks
     private static final Map<Long, List<CalendarEvent>> eventCache = new HashMap<>();
     private static final List<CalendarEvent> allEvents = new ArrayList<>();
 
@@ -53,23 +48,36 @@ public record CalendarEvent(
     );
 
     // Dark Auction occurs every 3 SkyBlock days at midnight
-    public static CalendarEvent DARK_AUCTION = new CalendarEvent(calculateDarkAuctionTimes(), time -> {
-        ProxyService darkAuctionService = new ProxyService(ServiceType.DARK_AUCTION);
-        darkAuctionService.handleRequest(new TriggerDarkAuctionProtocol.TriggerMessage(time))
-                .thenAccept(response -> {
-                    if (response instanceof TriggerDarkAuctionProtocol.TriggerResponse triggerResponse) {
-                        if (triggerResponse.success()) {
-                            Logger.info("Dark Auction started successfully");
-                        } else {
-                            Logger.debug("Dark Auction trigger: {}", triggerResponse.message());
-                        }
-                    }
-                })
-                .exceptionally(throwable -> {
-                    Logger.error(throwable, "Failed to trigger Dark Auction");
-                    return null;
-                });
-    });
+    public static CalendarEvent DARK_AUCTION = new CalendarEvent(
+            "dark_auction",
+            ItemStack.of(Material.NETHER_STAR).with(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true),
+            year -> "§5Dark Auction",
+            List.of(
+                    "§7The Dark Auction is a secret",
+                    "§7underground auction where",
+                    "§7special items are sold."
+            ),
+            calculateDarkAuctionTimes(),
+            5 * 60L, // 5 minutes duration
+            false,
+            (time, year) -> {
+                ProxyService darkAuctionService = new ProxyService(ServiceType.DARK_AUCTION);
+                darkAuctionService.handleRequest(new TriggerDarkAuctionProtocol.TriggerMessage(time))
+                        .thenAccept(response -> {
+                            if (response instanceof TriggerDarkAuctionProtocol.TriggerResponse triggerResponse) {
+                                if (triggerResponse.success()) {
+                                    Logger.info("Dark Auction started successfully");
+                                } else {
+                                    Logger.debug("Dark Auction trigger: {}", triggerResponse.message());
+                                }
+                            }
+                        })
+                        .exceptionally(throwable -> {
+                            Logger.error(throwable, "Failed to trigger Dark Auction");
+                            return null;
+                        });
+            }
+    );
 
     private static List<Long> calculateDarkAuctionTimes() {
         List<Long> times = new ArrayList<>();
@@ -83,10 +91,6 @@ public record CalendarEvent(
     static {
         registerEvent(NEW_YEAR);
         registerEvent(DARK_AUCTION);
-    }
-
-    public String getDisplayName(int year) {
-        return displayName.apply(year);
     }
 
     public String getDisplayName(int year) {

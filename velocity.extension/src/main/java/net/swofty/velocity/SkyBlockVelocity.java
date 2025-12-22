@@ -180,14 +180,14 @@ public class SkyBlockVelocity {
 	public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
 		Player player = event.getPlayer();
 
-		if (!GameManager.hasType(ServerType.SKYBLOCK_HUB) || !GameManager.isAnyEmpty(ServerType.SKYBLOCK_HUB)) {
+		if (!GameManager.hasType(ServerType.PROTOTYPE_LOBBY)) {
 			player.disconnect(
 					Component.text("§cThere are no Prototype Lobby servers available at the moment.")
 			);
 			return;
 		}
 
-		List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.SKYBLOCK_HUB);
+		List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.PROTOTYPE_LOBBY);
 		if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
 			TestFlowManager.ProxyTestFlowInstance instance = TestFlowManager.getTestFlowForPlayer(player.getUsername());
 			player.sendPlainMessage("§7You are currently in test flow " + instance.getName() + ".");
