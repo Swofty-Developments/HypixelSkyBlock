@@ -57,6 +57,17 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
                 return;
             }
 
+            // Check if player has sufficient breaking power
+            MineableBlock mineableBlock = MineableBlock.get(block);
+            if (mineableBlock != null) {
+                SkyBlockItem heldItem = new SkyBlockItem(player.getItemInMainHand());
+                int playerBreakingPower = heldItem.getAttributeHandler().getBreakingPower();
+                if (playerBreakingPower < mineableBlock.getMiningPowerRequirement()) {
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+
             // Queue block for mining if in valid region
             if (mining != null && material != null) {
                 mining.addToQueue(player, event.getBlockPosition().asPos(), (SharedInstance) player.getInstance());

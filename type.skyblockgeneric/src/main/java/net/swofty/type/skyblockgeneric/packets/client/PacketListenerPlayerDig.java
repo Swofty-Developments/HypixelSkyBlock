@@ -20,7 +20,8 @@ public class PacketListenerPlayerDig extends HypixelPacketClientListener {
         HypixelEventHandler.callCustomEvent(new PlayerDamageSkyBlockBlockEvent(
                 player,
                 digPacket.blockPosition(),
-                digPacket.status()));
+                digPacket.status(),
+                digPacket.sequence()));
     }
 
     @Override

@@ -48,8 +48,10 @@ public enum MineableBlock {
     MITHRIL_WEAK(Material.GRAY_WOOL, 500, 4, MiningBlockClassification.dwarvenMetalBlock()),
     MITHRIL_WEAK2(Material.CYAN_TERRACOTTA, 500, 4, MiningBlockClassification.dwarvenMetalBlock()),
     MITHRIL_MEDIUM(Material.PRISMARINE, 800, 4, MiningBlockClassification.dwarvenMetalBlock()),
+    MITHRIL_MEDIUM2(Material.DARK_PRISMARINE, 800, 4, MiningBlockClassification.dwarvenMetalBlock()),
+    MITHRIL_MEDIUM3(Material.PRISMARINE_BRICKS, 800, 4, MiningBlockClassification.dwarvenMetalBlock()),
     MITHRIL_STRONG(Material.LIGHT_BLUE_WOOL, 1500, 4, MiningBlockClassification.dwarvenMetalBlock()),
-    TITANIUM(Material.DIORITE, 2500, 5, MiningBlockClassification.dwarvenMetalBlock()),
+    TITANIUM(Material.POLISHED_DIORITE, 2500, 5, MiningBlockClassification.dwarvenMetalBlock()),
     DWARVEN_GOLD(Material.GOLD_BLOCK, 600, 3, MiningBlockClassification.oreBlock()),
     ;
 
