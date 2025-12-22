@@ -7,8 +7,9 @@ import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;
-import net.minestom.server.network.packet.server.play.AcknowledgeBlockChangePacket;
-import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
+import net.minestom.server.network.packet.server.play.*;
+import net.minestom.server.potion.Potion;
+import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEvent;
@@ -94,10 +95,12 @@ public class BreakingTask {
     }
 
     private void sendBlockBreak(int damage) {
-        AcknowledgeBlockChangePacket ackPacket = new AcknowledgeBlockChangePacket(sequence);
-        player.getPlayerConnection().sendPackets(ackPacket);
-        BlockBreakAnimationPacket breakAnim = new BlockBreakAnimationPacket(player.getEntityId(), block.pos(), (byte) damage);
-        player.getPlayerConnection().sendPackets(breakAnim);
+        int blockId = block.pos().hashCode();
+        player.getPlayerConnection().sendPacket(new BlockBreakAnimationPacket(
+                blockId,
+                new BlockVec(block.pos()),
+                (byte) damage
+        ));
     }
 
     public record PositionedBlock(Block block, Pos pos) {
