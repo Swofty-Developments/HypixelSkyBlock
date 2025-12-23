@@ -10,7 +10,7 @@ import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.CustomData;
-import net.minestom.server.item.component.HeadProfile;
+import net.minestom.server.network.player.ResolvableProfile;
 import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -32,7 +32,7 @@ public class ProfileItem extends SimpleInteractableItem {
 	public ItemStack getItemStack(HypixelPlayer... p) {
 		HypixelPlayer player = Arrays.stream(p).findFirst().orElseThrow();
 		return ItemStackCreator.createNamedItemStack(Material.PLAYER_HEAD, "§aMy Profile §7(Right Click)")
-				.set(DataComponents.PROFILE, new HeadProfile(player.getPlayerSkin()))
+				.set(DataComponents.PROFILE, new ResolvableProfile(player.getPlayerSkin()))
 				.set(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder().putString("item", this.getId()).build())).build();
 	}
 

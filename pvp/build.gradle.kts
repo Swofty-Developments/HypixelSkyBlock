@@ -10,9 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation("net.minestom:minestom:2025.08.18-1.21.8") {
+    implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
+    compileOnly("it.unimi.dsi:fastutil:8.5.18")
 }
 
 tasks.test {

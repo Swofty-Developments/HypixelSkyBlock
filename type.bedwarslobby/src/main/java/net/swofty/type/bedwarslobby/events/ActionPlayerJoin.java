@@ -7,7 +7,7 @@ import net.swofty.type.bedwarslobby.TypeBedWarsLobbyLoader;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.hologram.HologramEntity;
-import net.swofty.type.generic.entity.npc.NPCEntityImpl;
+import net.swofty.type.generic.entity.npc.impl.NPCEntityImpl;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
