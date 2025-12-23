@@ -1,0 +1,706 @@
+name: "Fishing"
+displayIcon: "fishing_rod"
+description:
+  - "§7Visit your local pond to fish and"
+  - "§7earn Fishing XP!"
+
+rewards:
+  - level: 1
+    requirement: 50
+    unlocks:
+      - type: XP
+        data:
+          amount: 5
+      - type: COINS
+        data:
+          amount: 100
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 2
+    requirement: 125
+    unlocks:
+      - type: XP
+        data:
+          amount: 5
+      - type: COINS
+        data:
+          amount: 250
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 3
+    requirement: 200
+    unlocks:
+      - type: XP
+        data:
+          amount: 5
+      - type: COINS
+        data:
+          amount: 500
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 4
+    requirement: 300
+    unlocks:
+      - type: XP
+        data:
+          amount: 5
+      - type: COINS
+        data:
+          amount: 750
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 5
+    requirement: 500
+    unlocks:
+      - type: XP
+        data:
+          amount: 5
+      - type: COINS
+        data:
+          amount: 1000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 6
+    requirement: 750
+    unlocks:
+      - type: XP
+        data:
+          amount: 5
+      - type: COINS
+        data:
+          amount: 2000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 7
+    requirement: 1000
+    unlocks:
+      - type: XP
+        data:
+          amount: 5
+      - type: COINS
+        data:
+          amount: 3000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 8
+    requirement: 1500
+    unlocks:
+      - type: XP
+        data:
+          amount: 5
+      - type: COINS
+        data:
+          amount: 4000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 9
+    requirement: 2000
+    unlocks:
+      - type: XP
+        data:
+          amount: 5
+      - type: COINS
+        data:
+          amount: 5000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 10
+    requirement: 3500
+    unlocks:
+      - type: XP
+        data:
+          amount: 5
+      - type: COINS
+        data:
+          amount: 7500
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 11
+    requirement: 5000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 10000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 12
+    requirement: 7500
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 15000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 13
+    requirement: 10000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 20000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 14
+    requirement: 15000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 25000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 2
+
+  - level: 15
+    requirement: 20000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 30000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 3
+
+  - level: 16
+    requirement: 30000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 40000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 3
+
+  - level: 17
+    requirement: 50000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 50000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 3
+
+  - level: 18
+    requirement: 75000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 65000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 3
+
+  - level: 19
+    requirement: 100000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 80000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 3
+
+  - level: 20
+    requirement: 200000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 100000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 4
+
+  - level: 21
+    requirement: 300000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 125000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 4
+
+  - level: 22
+    requirement: 400000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 150000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 4
+
+  - level: 23
+    requirement: 500000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 175000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 4
+
+  - level: 24
+    requirement: 600000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 200000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 4
+
+  - level: 25
+    requirement: 700000
+    unlocks:
+      - type: XP
+        data:
+          amount: 10
+      - type: COINS
+        data:
+          amount: 225000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 4
+
+  - level: 26
+    requirement: 800000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 250000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 27
+    requirement: 900000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 275000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 28
+    requirement: 1000000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 300000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 29
+    requirement: 1100000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 325000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 30
+    requirement: 1200000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 350000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 31
+    requirement: 1300000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 375000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 32
+    requirement: 1400000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 400000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 33
+    requirement: 1500000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 425000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 34
+    requirement: 1600000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 450000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 35
+    requirement: 1700000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 475000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 36
+    requirement: 1800000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 500000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 37
+    requirement: 1900000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 550000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 38
+    requirement: 2000000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 600000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 39
+    requirement: 2100000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 650000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 40
+    requirement: 2200000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 700000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 41
+    requirement: 2300000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 750000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 42
+    requirement: 2400000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 800000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 43
+    requirement: 2500000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 850000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 44
+    requirement: 2600000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 900000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 45
+    requirement: 2750000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 1000000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 46
+    requirement: 2900000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 1000000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 47
+    requirement: 3100000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 1000000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 48
+    requirement: 3400000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 1000000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 49
+    requirement: 3700000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 1000000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5
+
+  - level: 50
+    requirement: 4000000
+    unlocks:
+      - type: XP
+        data:
+          amount: 20
+      - type: COINS
+        data:
+          amount: 1000000
+      - type: STATS_BASE
+        data:
+          statistic: HEALTH
+          amount: 5

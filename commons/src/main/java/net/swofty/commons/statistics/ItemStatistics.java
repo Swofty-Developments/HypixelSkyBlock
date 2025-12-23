@@ -43,19 +43,25 @@ public class ItemStatistics {
             double additiveValue = statisticsAdditive.getOrDefault(stat, 0D);
             double multiplicativeValue = statisticsMultiplicative.getOrDefault(stat, 0D);
 
-            if (baseValue != 0 || additiveValue != 0 || multiplicativeValue != 0) {
+            // For multiplicative, 1.0 is the neutral element (like 0 for addition)
+            // Use epsilon comparison to handle floating point drift
+            boolean hasBase = Math.abs(baseValue) > 1e-9;
+            boolean hasAdditive = Math.abs(additiveValue) > 1e-9;
+            boolean hasMultiplicative = Math.abs(multiplicativeValue - 1.0) > 1e-9 && Math.abs(multiplicativeValue) > 1e-9;
+
+            if (hasBase || hasAdditive || hasMultiplicative) {
                 builder.append(stat.name()).append(":");
                 boolean needsComma = false;
-                if (baseValue != 0) {
+                if (hasBase) {
                     builder.append("B").append(baseValue);
                     needsComma = true;
                 }
-                if (additiveValue != 0) {
+                if (hasAdditive) {
                     if (needsComma) builder.append(",");
                     builder.append("A").append(additiveValue);
                     needsComma = true;
                 }
-                if (multiplicativeValue != 0) {
+                if (hasMultiplicative) {
                     if (needsComma) builder.append(",");
                     builder.append("M").append(multiplicativeValue);
                 }

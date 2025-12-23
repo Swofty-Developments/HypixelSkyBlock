@@ -77,7 +77,7 @@ public class ServerOutboundMessage {
         UUID toCallback = null;
         try {
             toCallback = UUID.fromString(RedisAPI.getInstance().getFilterId());
-        } catch (Error e) {
+        } catch (Exception e) {
             return;
         }
         redisMessageListeners.put(requestId, response);
