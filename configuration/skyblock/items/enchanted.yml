@@ -48,6 +48,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 1440
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: STRENGTH
+        effect_duration: 180
+        effect_amplifier: 1
+        alchemy_xp: 500
 
   - id: ENCHANTED_BLAZE_ROD
     material: blaze_rod
@@ -57,6 +63,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 230400
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: STRENGTH
+        effect_duration: 480
+        effect_amplifier: 2
+        alchemy_xp: 23000
 
   - id: ENCHANTED_BONE
     material: bone
@@ -127,6 +139,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 76800
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: CACTUS_BREW
+        effect_duration: 0
+        effect_amplifier: 1
+        alchemy_xp: 500
 
   - id: ENCHANTED_CACTUS_GREEN
     material: cactus_green
@@ -136,6 +154,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 480
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: CACTUS_GREEN_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 250
 
   - id: ENCHANTED_CARROT
     material: carrot
@@ -145,6 +169,21 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 480
+
+  - id: ENCHANTED_CAKE
+    material: cake
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+      - id: SELLABLE
+        value: 10000
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: CAKE_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 400
 
   - id: ENCHANTED_CHARCOAL
     material: charcoal
@@ -208,6 +247,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 480
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: COCOA_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 300
 
   - id: ENCHANTED_COOKED_FISH
     material: cooked_fish
@@ -226,6 +271,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 128000
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MUTTON_BREW
+        effect_duration: 0
+        effect_amplifier: 1
+        alchemy_xp: 15000
 
   - id: ENCHANTED_COOKED_SALMON
     material: cooked_salmon
@@ -244,6 +295,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 61500
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: COOKIE_BREW
+        effect_duration: 0
+        effect_amplifier: 1
+        alchemy_xp: 12000
 
   - id: ENCHANTED_DANDELION
     material: dandelion
@@ -352,6 +409,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 31000
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: WEAKNESS
+        effect_duration: 240
+        effect_amplifier: 1
+        alchemy_xp: 15000
 
   - id: ENCHANTED_FIREWORK_ROCKET
     material: firework_rocket
@@ -381,6 +444,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 80
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: REGENERATION
+        effect_duration: 45
+        effect_amplifier: 1
+        alchemy_xp: 100
 
   - id: ENCHANTED_GLISTERING_MELON
     material: glistering_melon
@@ -390,6 +459,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 1000
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: INSTANT_HEALTH
+        effect_duration: 0
+        effect_amplifier: 1
+        alchemy_xp: 500
 
   - id: ENCHANTED_GLOWSTONE
     material: glowstone
@@ -399,6 +474,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 51200
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 20
 
   - id: ENCHANTED_GLOWSTONE_DUST
     material: glowstone_dust
@@ -408,6 +489,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 320
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 10
 
   - id: ENCHANTED_GOLD_INGOT
     material: gold
@@ -417,6 +504,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 640
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: GOLD_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 300
 
   - id: ENCHANTED_GOLD_BLOCK
     material: gold_block
@@ -426,6 +519,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 102000
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: GOLD_BLOCK_BREW
+        effect_duration: 0
+        effect_amplifier: 1
+        alchemy_xp: 15000
 
   - id: ENCHANTED_GOLDEN_CARROT
     material: golden_carrot
@@ -453,6 +552,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 640
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 10
 
   - id: ENCHANTED_HARD_STONE
     material: hard_stone
@@ -569,6 +674,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 320
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MELON_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 250
 
   - id: ENCHANTED_MELON_BLOCK
     material: melon_block
@@ -596,6 +707,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 800
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MUTTON_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 300
 
   - id: ENCHANTED_MYCELIUM
     material: mycelium
@@ -724,6 +841,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 2400
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: WATER_BREATHING
+        effect_duration: 480
+        effect_amplifier: 0
+        alchemy_xp: 600
 
   - id: ENCHANTED_PUMPKIN
     material: pumpkin
@@ -760,6 +883,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 800
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: LEAPING
+        effect_duration: 480
+        effect_amplifier: 1
+        alchemy_xp: 600
 
   - id: ENCHANTED_RABBIT_HIDE
     material: rabbit_hide
@@ -850,6 +979,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 160
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 10
 
   - id: ENCHANTED_REDSTONE_BLOCK
     material: redstone_block
@@ -859,6 +994,27 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 25600
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 20
+
+  - id: ENCHANTED_REDSTONE_LAMP
+    material: redstone_lamp
+    rarity: RARE
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+      - id: SELLABLE
+        value: 204800
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 30
 
   - id: ENCHANTED_ROTTEN_FLESH
     material: rotten_flesh
@@ -935,6 +1091,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 480
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: POISON
+        effect_duration: 45
+        effect_amplifier: 1
+        alchemy_xp: 500
 
   - id: ENCHANTED_SPONGE
     material: sponge
@@ -971,6 +1133,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 640
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: SPEED
+        effect_duration: 180
+        effect_amplifier: 1
+        alchemy_xp: 300
 
   - id: ENCHANTED_SUGAR_CANE
     material: sugar_cane
@@ -980,6 +1148,12 @@ items:
       - id: ENCHANTED
       - id: SELLABLE
         value: 102400
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: SPEED
+        effect_duration: 480
+        effect_amplifier: 2
+        alchemy_xp: 15000
 
   - id: ENCHANTED_SULPHUR
     material: sulphur

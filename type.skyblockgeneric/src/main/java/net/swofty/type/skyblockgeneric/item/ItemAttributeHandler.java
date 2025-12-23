@@ -382,4 +382,12 @@ public class ItemAttributeHandler {
     public SkyBlockItem asSkyBlockItem() {
         return item;
     }
+
+    public @Nullable ItemAttributePotionData.PotionData getPotionData() {
+        return ((ItemAttributePotionData) item.getAttribute("potion_data")).getValue();
+    }
+
+    public void setPotionData(ItemAttributePotionData.PotionData data) {
+        ((ItemAttributePotionData) item.getAttribute("potion_data")).setValue(data);
+    }
 }

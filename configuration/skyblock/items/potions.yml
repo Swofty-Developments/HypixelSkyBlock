@@ -1,0 +1,253 @@
+items:
+  # Base Potions (created from water bottle + nether wart)
+  - id: AWKWARD_POTION
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: AWKWARD
+        level: 1
+        base_duration: 0
+        splash: false
+
+  # Speed Potions
+  - id: SPEED_POTION_1
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: SPEED
+        level: 1
+        base_duration: 180
+        splash: false
+
+  - id: SPEED_POTION_5
+    rarity: RARE
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: SPEED
+        level: 5
+        base_duration: 180
+        splash: false
+
+  # Strength Potions
+  - id: STRENGTH_POTION_1
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: STRENGTH
+        level: 1
+        base_duration: 180
+        splash: false
+
+  - id: STRENGTH_POTION_5
+    rarity: RARE
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: STRENGTH
+        level: 5
+        base_duration: 180
+        splash: false
+
+  # Critical Potions
+  - id: CRITICAL_POTION_1
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: CRITICAL
+        level: 1
+        base_duration: 180
+        splash: false
+
+  - id: CRITICAL_POTION_4
+    rarity: EPIC
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: CRITICAL
+        level: 4
+        base_duration: 180
+        splash: false
+
+  # Healing Potions (Instant)
+  - id: HEALING_POTION_1
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: HEALING
+        level: 1
+        base_duration: 0
+        splash: false
+
+  - id: HEALING_POTION_8
+    rarity: EPIC
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: HEALING
+        level: 8
+        base_duration: 0
+        splash: false
+
+  # Regeneration Potions
+  - id: REGENERATION_POTION_1
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: REGENERATION
+        level: 1
+        base_duration: 180
+        splash: false
+
+  # Resistance Potions
+  - id: RESISTANCE_POTION_1
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: RESISTANCE
+        level: 1
+        base_duration: 180
+        splash: false
+
+  # Haste Potions
+  - id: HASTE_POTION_1
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: HASTE
+        level: 1
+        base_duration: 180
+        splash: false
+
+  - id: HASTE_POTION_3
+    rarity: RARE
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: HASTE
+        level: 3
+        base_duration: 180
+        splash: false
+
+  # Magic Find Potions
+  - id: MAGIC_FIND_POTION_1
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: MAGIC_FIND
+        level: 1
+        base_duration: 180
+        splash: false
+
+  # Pet Luck Potions
+  - id: PET_LUCK_POTION_1
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: PET_LUCK
+        level: 1
+        base_duration: 180
+        splash: false
+
+  # Spelunker Potions
+  - id: SPELUNKER_POTION_1
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: SPELUNKER
+        level: 1
+        base_duration: 180
+        splash: false
+
+  # Utility Potions
+  - id: NIGHT_VISION_POTION
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: NIGHT_VISION
+        level: 1
+        base_duration: 180
+        splash: false
+
+  - id: FIRE_RESISTANCE_POTION
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: FIRE_RESISTANCE
+        level: 1
+        base_duration: 180
+        splash: false
+
+  - id: WATER_BREATHING_POTION
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: WATER_BREATHING
+        level: 1
+        base_duration: 180
+        splash: false
+
+  - id: INVISIBILITY_POTION
+    rarity: COMMON
+    material: potion
+    components:
+      - id: POTION_DATA
+        effect: INVISIBILITY
+        level: 1
+        base_duration: 180
+        splash: false
+
+  # Debuff Potions (for splash use)
+  - id: POISON_SPLASH_POTION
+    rarity: COMMON
+    material: splash_potion
+    components:
+      - id: POTION_DATA
+        effect: POISON
+        level: 1
+        base_duration: 45
+        splash: true
+
+  - id: WEAKNESS_SPLASH_POTION
+    rarity: COMMON
+    material: splash_potion
+    components:
+      - id: POTION_DATA
+        effect: WEAKNESS
+        level: 1
+        base_duration: 90
+        splash: true
+
+  - id: SLOWNESS_SPLASH_POTION
+    rarity: COMMON
+    material: splash_potion
+    components:
+      - id: POTION_DATA
+        effect: SLOWNESS
+        level: 1
+        base_duration: 90
+        splash: true
+
+  - id: DAMAGE_SPLASH_POTION
+    rarity: COMMON
+    material: splash_potion
+    components:
+      - id: POTION_DATA
+        effect: DAMAGE
+        level: 1
+        base_duration: 0
+        splash: true

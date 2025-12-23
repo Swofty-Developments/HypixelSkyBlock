@@ -21,8 +21,8 @@ import java.util.ArrayList;
 
 public class GUISkills extends HypixelInventoryGUI {
     private final int[] displaySlots = {
-            20, 21, 22, 23, 24,
-                30, 31, 32
+            19, 20, 21, 22, 23, 24, 25,
+            28, 29, 30,     32, 33, 34
     };
 
     public GUISkills() {

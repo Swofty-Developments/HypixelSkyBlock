@@ -87,6 +87,7 @@ public enum ItemStatistic {
     PULL("Pull","§a","§b",false,"ᛷ"),
     RESPIRATION("Respiration","§a","§3",false,"⚶"),
     PRESSURE_RESISTANCE("Pressure Resistance","§a","§9",false,"❍"),
+    BREWER("Brewer", "§a", "§d", true, "☕"),
 
     // Other Stats
     DAMAGE("Damage", "§c", "§c", false, "❁",

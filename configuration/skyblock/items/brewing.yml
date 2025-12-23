@@ -1,4 +1,189 @@
 items:
+  # Brewing Ingredients (sold by Alchemist)
+  - id: NETHER_WART
+    rarity: COMMON
+    material: nether_wart
+    components:
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: AWKWARD
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+            drops:
+              - item: NETHER_WART
+                chance: 1.0
+                amount: 2-4
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 4
+
+  - id: SUGAR
+    rarity: COMMON
+    material: sugar
+    components:
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: SPEED
+        effect_duration: 180
+        effect_amplifier: 0
+        alchemy_xp: 5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: SUGAR_CANE
+                amount: 1
+            result:
+              type: SUGAR
+              amount: 1
+      - id: SELLABLE
+        value: 2
+
+  - id: RABBIT_FOOT
+    rarity: COMMON
+    material: rabbit_foot
+    components:
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: JUMP
+        effect_duration: 180
+        effect_amplifier: 0
+        alchemy_xp: 12
+      - id: SELLABLE
+        value: 3
+
+  - id: GLISTERING_MELON
+    rarity: COMMON
+    material: glistering_melon_slice
+    components:
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: INSTANT_HEALTH
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 10
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GOLD_NUGGET
+                amount: 1
+              B:
+                type: MELON_SLICE
+                amount: 1
+            result:
+              type: GLISTERING_MELON
+              amount: 1
+      - id: SELLABLE
+        value: 3.5
+
+  - id: SPIDER_EYE
+    rarity: COMMON
+    material: spider_eye
+    components:
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: POISON
+        effect_duration: 45
+        effect_amplifier: 0
+        alchemy_xp: 10
+      - id: SELLABLE
+        value: 4
+
+  - id: BLAZE_POWDER
+    rarity: COMMON
+    material: blaze_powder
+    components:
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: STRENGTH
+        effect_duration: 180
+        effect_amplifier: 0
+        alchemy_xp: 10
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: BLAZE_ROD
+                amount: 1
+            result:
+              type: BLAZE_POWDER
+              amount: 2
+      - id: SELLABLE
+        value: 4
+
+  - id: GHAST_TEAR
+    rarity: UNCOMMON
+    material: ghast_tear
+    components:
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: REGENERATION
+        effect_duration: 45
+        effect_amplifier: 0
+        alchemy_xp: 30
+      - id: SELLABLE
+        value: 66
+
+  - id: MAGMA_CREAM
+    rarity: COMMON
+    material: magma_cream
+    components:
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: FIRE_RESISTANCE
+        effect_duration: 180
+        effect_amplifier: 0
+        alchemy_xp: 10
+      - id: SELLABLE
+        value: 6
+
+  - id: GOLDEN_CARROT
+    rarity: COMMON
+    material: golden_carrot
+    components:
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: NIGHT_VISION
+        effect_duration: 180
+        effect_amplifier: 0
+        alchemy_xp: 10
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GOLD_NUGGET
+                amount: 1
+              B:
+                type: CARROT
+                amount: 1
+            result:
+              type: GOLDEN_CARROT
+              amount: 1
+      - id: SELLABLE
+        value: 4
+
+  # Custom Brewing Items
   - id: BITTER_ICE_TEA
     rarity: COMMON
     components:

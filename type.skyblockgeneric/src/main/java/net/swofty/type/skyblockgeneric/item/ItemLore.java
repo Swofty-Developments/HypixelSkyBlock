@@ -17,6 +17,7 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.commons.item.reforge.Reforge;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.gems.GemRarity;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
@@ -24,6 +25,7 @@ import net.swofty.type.skyblockgeneric.item.components.*;
 import net.swofty.type.skyblockgeneric.item.handlers.lore.LoreConfig;
 import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
 import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
+import net.swofty.type.skyblockgeneric.potion.PotionEffectType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -59,11 +61,33 @@ public class ItemLore {
 		if (item.hasComponent(CustomDisplayNameComponent.class)) {
 			CustomDisplayNameComponent customDisplayName = item.getComponent(CustomDisplayNameComponent.class);
 			displayName = customDisplayName.getDisplayName(item);
-		} else if (handler.getPotentialType() != null) {
-			displayName = handler.getPotentialType().getDisplayName();
 		} else {
-			Material material = stack.material();
-			displayName = StringUtility.toNormalCase(material.key().value());
+			// Check for potion data FIRST to generate proper potion display name
+			// This must be checked before getPotentialType() since POTION is a valid ItemType
+			// but we want potions with effect data to show "Speed Potion I" instead of "Water Bottle"
+			ItemAttributePotionData.PotionData potionDataForName = handler.getPotionData();
+			if (potionDataForName != null && potionDataForName.getEffectType() != null
+					&& !potionDataForName.getEffectType().equals("WATER")) {
+				PotionEffectType effectForName = PotionEffectType.fromName(potionDataForName.getEffectType());
+				if (effectForName != null) {
+					String effectDisplay = effectForName.getLevelDisplay(potionDataForName.getLevel());
+					if (potionDataForName.isSplash()) {
+						displayName = effectDisplay + " Splash Potion";
+					} else {
+						displayName = effectDisplay + " Potion";
+					}
+				} else if (handler.getPotentialType() != null) {
+					displayName = handler.getPotentialType().getDisplayName();
+				} else {
+					Material material = stack.material();
+					displayName = StringUtility.toNormalCase(material.key().value());
+				}
+			} else if (handler.getPotentialType() != null) {
+				displayName = handler.getPotentialType().getDisplayName();
+			} else {
+				Material material = stack.material();
+				displayName = StringUtility.toNormalCase(material.key().value());
+			}
 		}
 		String displayRarity = rarity.getDisplay();
 
@@ -176,6 +200,35 @@ public class ItemLore {
 		}
 
 		if (addNextLine) addLoreLine(null);
+
+		// Handle Potion lore
+		ItemAttributePotionData.PotionData potionData = handler.getPotionData();
+		if (potionData != null) {
+			PotionEffectType effectType = PotionEffectType.fromName(potionData.getEffectType());
+			if (effectType != null && effectType.getCategory() != null) {
+				// Format duration string
+				String durationStr = "";
+				if (potionData.getBaseDurationSeconds() > 0) {
+					int totalSeconds = potionData.getBaseDurationSeconds();
+					int minutes = totalSeconds / 60;
+					int seconds = totalSeconds % 60;
+					durationStr = " (" + minutes + ":" + String.format("%02d", seconds) + ")";
+				}
+
+				// Display effect name with level and duration: "Speed I (3:00)"
+				String effectColor = effectType.getColor();
+				String effectDisplay = effectType.getLevelDisplay(potionData.getLevel());
+				addLoreLine(effectColor + effectDisplay + durationStr);
+
+				// Display level-specific description: "Increases Strength by 20."
+				String description = effectType.getDescription(potionData.getLevel());
+				if (description != null && !description.isEmpty()) {
+					addLoreLine("§7" + description);
+				}
+
+				addLoreLine(null);
+			}
+		}
 
 		// Handle Item Enchantments
 		if (item.hasComponent(EnchantableComponent.class)) {

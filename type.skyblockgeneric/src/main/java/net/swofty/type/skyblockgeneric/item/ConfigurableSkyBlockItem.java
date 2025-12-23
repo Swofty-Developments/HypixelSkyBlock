@@ -7,6 +7,8 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
+import net.swofty.type.skyblockgeneric.item.components.ExtraUnderNameComponent;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -108,6 +110,19 @@ public class ConfigurableSkyBlockItem {
         ComponentEntry existing = components.get(componentClass);
 
         if (existing != null) {
+            // Special handling: merge ExtraUnderNameComponent displays instead of replacing
+            if (componentClass == ExtraUnderNameComponent.class) {
+                ExtraUnderNameComponent existingUndername = (ExtraUnderNameComponent) existing.component;
+                ExtraUnderNameComponent newUndername = (ExtraUnderNameComponent) component;
+                List<String> mergedDisplays = new ArrayList<>(existingUndername.getDisplays());
+                mergedDisplays.addAll(newUndername.getDisplays());
+                ExtraUnderNameComponent merged = new ExtraUnderNameComponent(mergedDisplays);
+                ComponentSource mergedSource = (existing.source == ComponentSource.EXPLICIT || source == ComponentSource.EXPLICIT)
+                        ? ComponentSource.EXPLICIT : ComponentSource.INHERITED;
+                components.put(componentClass, new ComponentEntry(merged, mergedSource));
+                return;
+            }
+
             // Only throw conflict error if the components are of the same actual type
             // (not just sharing a parent class)
             if (existing.source == source && componentClass == component.getClass()) {

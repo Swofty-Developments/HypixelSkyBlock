@@ -95,6 +95,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_ZOG(false),
             HAS_SPOKEN_TO_JAX(false),
             HAS_REALLY_SPOKEN_TO_JAX(false),
+            HAS_SPOKEN_TO_ALCHEMIST(false),
             HAS_FOUND_LAZY_MINER_PICKAXE(false),
             PAPER_ICONS(false),
             ;

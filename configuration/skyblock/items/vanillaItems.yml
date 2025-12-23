@@ -207,6 +207,7 @@ items:
   - id: BREWING_STAND
     components:
       - id: PLACEABLE
+        block_type: BREWING_STAND
   - id: ENCHANTING_TABLE
     components:
       - id: PLACEABLE
