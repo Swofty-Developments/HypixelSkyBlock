@@ -9,6 +9,7 @@ import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.event.custom.BestiaryUpdateEvent;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary.BestiaryCategories;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary.BestiaryEntry;
@@ -118,6 +119,23 @@ public class DatapointBestiary extends SkyBlockDatapoint<DatapointBestiary.Playe
             String baseLoadingBar = "─────────────────";
             int maxBarLength = baseLoadingBar.length();
             int formattingCodeLength = 4;
+
+            List<MobType> mobtypes = mob.getMobTypes();
+
+            if (mobtypes.size() == 1) {
+                lore.add("§7Mob Type: " + mobtypes.getFirst().getFullDisplayName());
+                lore.add("");
+            } else if (mobtypes.size() > 1) {
+                StringBuilder sb = new StringBuilder();
+                for (MobType mobType : mobtypes) {
+                    sb.append(mobType.getFullDisplayName());
+                    sb.append("§7, ");
+                }
+                sb.delete(sb.chars().sum() - 3, sb.chars().sum());
+
+                lore.add("§7Mob Types: " + sb);
+                lore.add("");
+            }
 
             lore.add("§7" + bestiaryEntry.getDescription());
             lore.add("");

@@ -9,7 +9,8 @@ import java.util.List;
 @Getter
 public enum BestiaryCategories {
     YOUR_ISLAND("§aYour island", BestiaryCategory.PRIVATE_ISLAND.values()),
-    HUB("§aHub", BestiaryCategory.HUB.values())
+    HUB("§aHub", BestiaryCategory.HUB.values()),
+    DEEP_CAVERNS("§bDeep Caverns", BestiaryCategory.DEEP_CAVERNS.values()),
     ;
 
     private final String displayName;

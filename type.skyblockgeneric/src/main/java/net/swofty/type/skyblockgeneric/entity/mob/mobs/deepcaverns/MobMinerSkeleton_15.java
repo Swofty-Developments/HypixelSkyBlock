@@ -6,7 +6,6 @@ import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.item.Material;
-import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
@@ -14,9 +13,9 @@ import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
-import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
 import net.swofty.type.skyblockgeneric.region.RegionType;
@@ -27,31 +26,34 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MobEmeraldSlime extends BestiaryMob implements RegionPopulator {
+public class MobMinerSkeleton_15 extends BestiaryMob implements RegionPopulator {
 
-	public MobEmeraldSlime() {
-		super(EntityType.SLIME);
+	public MobMinerSkeleton_15() {
+		super(EntityType.SKELETON);
 	}
 
 	@Override
 	public String getDisplayName() {
-		return "Emerald Slime";
+		return "Miner Skeleton";
 	}
 
 	@Override
 	public Integer getLevel() {
-		return 5;
+		return 15;
+	}
+
+	@Override
+	public void onInit() {
+		setBoots(new SkyBlockItem(ItemType.MINER_ARMOR_BOOTS).getItemStack());
+		setLeggings(new SkyBlockItem(ItemType.MINER_ARMOR_LEGGINGS).getItemStack());
+		setChestplate(new SkyBlockItem(ItemType.MINER_ARMOR_CHESTPLATE).getItemStack());
+		setHelmet(new SkyBlockItem(ItemType.MINER_ARMOR_HELMET).getItemStack());
 	}
 
 	@Override
 	public List<GoalSelector> getGoalSelectors() {
 		return List.of(
-				new MeleeAttackWithinRegionGoal(this,
-						1.6,
-						20,
-						TimeUnit.SERVER_TICK,
-						RegionType.SLIMEHILL),
-				new RandomRegionStrollGoal(this, 15, RegionType.SLIMEHILL)  // Walk around
+				new RandomRegionStrollGoal(this, 15, RegionType.DIAMOND_RESERVE)
 		);
 	}
 
@@ -62,15 +64,15 @@ public class MobEmeraldSlime extends BestiaryMob implements RegionPopulator {
 				new ClosestEntityRegionTarget(this,
 						6,
 						entity -> entity instanceof SkyBlockPlayer,
-						RegionType.SLIMEHILL) // If there is none, target the nearest player
+						RegionType.DIAMOND_RESERVE) // If there is none, target the nearest player
 		);
 	}
 
 	@Override
 	public ItemStatistics getBaseStatistics() {
 		return ItemStatistics.builder()
-				.withBase(ItemStatistic.HEALTH, 80D)
-				.withBase(ItemStatistic.DAMAGE, 70D)
+				.withBase(ItemStatistic.HEALTH, 250D)
+				.withBase(ItemStatistic.DAMAGE, 200D)
 				.withBase(ItemStatistic.SPEED, 100D)
 				.build();
 	}
@@ -81,8 +83,14 @@ public class MobEmeraldSlime extends BestiaryMob implements RegionPopulator {
 			@Override
 			public @NonNull List<LootRecord> getLootTable() {
 				return List.of(
-						new LootRecord(ItemType.SLIME_BALL, 1, 100)
+						new LootRecord(ItemType.BONE, 1, 300), // hypixel, why is it 300% and what does that mean?
+						new LootRecord(ItemType.MINER_ARMOR_BOOTS, 1, 1),
+						new LootRecord(ItemType.MINER_ARMOR_LEGGINGS, 1, 1),
+						new LootRecord(ItemType.MINER_ARMOR_CHESTPLATE, 1, 1),
+						new LootRecord(ItemType.MINER_ARMOR_HELMET, 1, 1)
+
 						//new LootRecord(ItemType.EXP_SHARE_CORE, 1, 0.01)
+						// bone dye
 				);
 			}
 
@@ -105,12 +113,12 @@ public class MobEmeraldSlime extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public OtherLoot getOtherLoot() {
-		return new OtherLoot(12, 5, 20);
+		return new OtherLoot(20, 12, 30);
 	}
 
 	@Override
 	public List<MobType> getMobTypes() {
-		return List.of(MobType.UNDEAD);
+		return List.of(MobType.SKELETAL);
 	}
 
 	@Override
@@ -125,16 +133,18 @@ public class MobEmeraldSlime extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public String getMobID() {
-		return "EMERALD_SLIME";
+		return "DIAMOND_SKELETON_15";
 	}
 
 	@Override
 	public GUIMaterial getGuiMaterial() {
-		return new GUIMaterial(Material.SLIME_BLOCK); // todo: find real material
+		return new GUIMaterial("8de8bbd7f6d77a1614865ef6a1d31f53f797550d14ee21d107a8415c14b48ca6");
 	}
 
 	@Override
 	public List<Populator> getPopulators() {
-		return List.of(new Populator(RegionType.SLIMEHILL, 20));
+		return List.of(
+				new Populator(RegionType.DIAMOND_RESERVE, 20)
+		);
 	}
 }

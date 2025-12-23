@@ -31,7 +31,7 @@ public class NPCElizabeth extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(0, 71, -101, -90, 0);
+                return new Pos(-3.5, 72, -101.5, -90, 0);
             }
 
             @Override

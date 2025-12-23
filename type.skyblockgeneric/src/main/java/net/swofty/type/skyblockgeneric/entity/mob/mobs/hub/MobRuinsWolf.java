@@ -132,7 +132,7 @@ public class MobRuinsWolf extends BestiaryMob implements RegionPopulator {
 
     @Override
     public String getMobID() {
-        return "15_ruins_wolf";
+        return "RUIN_WOLF";
     }
 
     @Override
