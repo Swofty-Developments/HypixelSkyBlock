@@ -73,7 +73,7 @@ public class ActionCollectionDisplay implements HypixelEventClass {
                     switch (unlock.type()) {
                         case RECIPE -> {
                             CollectionCategory.UnlockRecipe recipeUnlock = (CollectionCategory.UnlockRecipe) unlock;
-                            if (recipeUnlock.getRecipe() != null) {
+                            if (recipeUnlock.getRecipe() == null) {
                                 Logger.error("We have a null recipe in collection unlocks for " + event.getItemType().name() + " in " + event.getPlayer().getCollection().get(event.getItemType()));
                                 return;
                             }

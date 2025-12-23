@@ -130,6 +130,10 @@ public enum ItemStatistic {
         return isPercentage ? "" : "+";
     }
 
+    public String getFullDisplayName() {
+        return displayColor + symbol + " " + displayName;
+    }
+
     public static ItemStatistics getOfAllBaseValues() {
         ItemStatistics.Builder builder = ItemStatistics.builder();
         for (ItemStatistic stat : ItemStatistic.values()) {

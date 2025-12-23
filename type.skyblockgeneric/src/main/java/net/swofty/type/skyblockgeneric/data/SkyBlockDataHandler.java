@@ -207,6 +207,8 @@ public class SkyBlockDataHandler extends DataHandler {
 
     // Same Data enum as before - unchanged
     public enum Data {
+        EXPERIENCED_STATISTICS("experienced_statistics", false, false, false,
+                DatapointStringList.class, new DatapointStringList("experienced_statistics")),
         PROFILE_NAME("profile_name", false, true, false,
                 DatapointString.class, new DatapointString("profile_name", "null"),
                 (player, datapoint) -> {},

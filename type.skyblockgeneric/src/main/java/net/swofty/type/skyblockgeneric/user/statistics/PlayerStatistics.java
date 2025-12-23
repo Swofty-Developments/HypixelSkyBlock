@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
@@ -13,14 +14,17 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.PotatoType;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
@@ -426,7 +430,49 @@ public class PlayerStatistics {
         manaLoop();
         missionLoop();
         statisticsLoop();
+        experiencedStatisticsLoop();
         speedLoop();
+    }
+
+    public static void experiencedStatisticsLoop() {
+        Scheduler scheduler = MinecraftServer.getSchedulerManager();
+        scheduler.submitTask(() -> {
+            SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+                Thread.startVirtualThread(() -> {
+                    List<String> experiencedStatistics = player.getSkyblockDataHandler().get(
+                            SkyBlockDataHandler.Data.EXPERIENCED_STATISTICS, DatapointStringList.class
+                    ).getValue();
+
+                    ItemStatistics statistics = player.getStatistics().allStatistics();
+                    for (ItemStatistic statistic : ItemStatistic.values()) {
+                        if (experiencedStatistics.contains(statistic.name())) continue;
+
+                        @Nullable StatisticDescription description = StatisticDescription.fromStatistic(statistic);
+                        if (description == null) continue;
+
+                        double experiencedValue = statistics.getOverall(statistic);
+                        if (experiencedValue <= 0) continue;
+
+                        experiencedStatistics.add(statistic.name());
+                        player.getSkyblockDataHandler().get(
+                                SkyBlockDataHandler.Data.EXPERIENCED_STATISTICS, DatapointStringList.class
+                        ).setValue(experiencedStatistics);
+
+                        player.sendMessage("§a§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                        player.sendMessage("§6§lNEW STAT DISCOVERED! §r" + statistic.getFullDisplayName());
+                        player.sendMessage(" ");
+                        player.sendMessage(description.getDescription());
+                        player.sendMessage(" ");
+                        player.sendMessage(Component.text("§e§lCLICK HERE §r§eto learn more on the Official SkyBlock Wiki!")
+                                .hoverEvent(Component.text("§eClick to view the " + statistic.getDisplayName() + " §eWiki page!"))
+                                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://wiki.hypixel.net/" + description.getWikiName()))
+                        );
+                        player.sendMessage("§a§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                    }
+                });
+            });
+            return TaskSchedule.seconds(10);
+        });
     }
 
     public static void barLoop() {
