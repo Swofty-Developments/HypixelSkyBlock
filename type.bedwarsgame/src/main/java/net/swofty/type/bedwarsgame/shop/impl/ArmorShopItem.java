@@ -37,7 +37,7 @@ public class ArmorShopItem extends ShopItem {
 	}
 
 	@Override
-	public boolean isAvailable(Player player) {
+	public boolean isOwned(Player player) {
 		return player.getEquipment(EquipmentSlot.BOOTS).material() != boots && player.getEquipment(EquipmentSlot.LEGGINGS).material() != leggings;
 	}
 }

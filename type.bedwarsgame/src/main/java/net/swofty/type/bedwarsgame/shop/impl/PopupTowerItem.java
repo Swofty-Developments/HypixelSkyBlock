@@ -9,7 +9,7 @@ import net.swofty.type.bedwarsgame.shop.ShopItem;
 public class PopupTowerItem extends ShopItem {
 
 	public PopupTowerItem() {
-		super("Pop-Up Tower", "An utility item", 24, 1, Currency.IRON, Material.CHEST);
+		super("Pop-Up Tower", "Place a pop-up defence!", 24, 1, Currency.IRON, Material.CHEST);
 	}
 
 	@Override

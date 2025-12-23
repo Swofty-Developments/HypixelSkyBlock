@@ -7,7 +7,6 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
@@ -18,18 +17,19 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
-import net.swofty.commons.BedwarsGameType;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Getter
 public final class Game {
@@ -39,8 +39,8 @@ public final class Game {
 	private final InstanceContainer instanceContainer;
 	private final BedwarsGameType bedwarsGameType = BedwarsGameType.SOLO;
 	private final List<BedWarsPlayer> players = new ArrayList<>();
-	private final String gameId;
-	private final MapsConfig.MapEntry mapEntry;
+	private final String gameId = UUID.randomUUID().toString();
+	private final BedWarsMapsConfig.MapEntry mapEntry;
 
 	private final TeamManager teamManager;
 	private final GeneratorManager generatorManager;
@@ -56,9 +56,8 @@ public final class Game {
 	@Setter
 	private GameStatus gameStatus;
 
-	public Game(MapsConfig.MapEntry mapEntry, InstanceContainer instanceContainer) {
+	public Game(BedWarsMapsConfig.MapEntry mapEntry, InstanceContainer instanceContainer) {
 		this.mapEntry = mapEntry;
-		this.gameId = createGameId();
 		this.instanceContainer = instanceContainer;
 
 		this.teamManager = new TeamManager(this);
@@ -72,7 +71,7 @@ public final class Game {
 	}
 
 	public void join(BedWarsPlayer player) {
-		Logger.info("Player {} is attempting to join game {} with map {}", player.getUsername(), gameId, mapEntry.getName());
+		Logger.info("Player {} joining game {} on map {}", player.getUsername(), gameId, mapEntry.getName());
 
 		if (gameStatus != GameStatus.WAITING) {
 			player.sendMessage(Component.text("The game is already in progress or has ended.", NamedTextColor.RED));
@@ -90,33 +89,26 @@ public final class Game {
 
 		setupPlayerForWaiting(player);
 		players.add(player);
-		updatePlayerCount();
 
-		// Check if we can start the countdown
+		int maxPlayers = getMaxPlayers();
+		String randomLetters = UUID.randomUUID().toString().replaceAll("-", "")
+				.substring(0, new Random().nextInt(10) + 4);
+		for (BedWarsPlayer p : players) {
+			p.sendMessage("§k" + randomLetters + " §ehas joined (§b" + players.size() + "§e/§b" + maxPlayers + "§e)");
+		}
+
 		if (hasMinimumPlayersForStart() && !countdown.isActive()) {
 			countdown.startCountdown();
 		}
-
-		/*BedWarsDataHandler data = BedWarsDataHandler.getUser(player);
-		if (data != null) {
-			var counts = data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).getValue();
-			counts.put(mapEntry.getId(), counts.getOrDefault(mapEntry.getId(), 0L) + 1);
-			data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).setValue(counts);
-		}*/
 	}
 
-	/**
-	 * Handles a player leaving at any point in the game.
-	 *
-	 * @param player the player leaving
-	 */
 	public void leave(HypixelPlayer player) {
 		String teamName = player.getTag(Tag.String("team"));
 		players.remove(player);
 
-		cleanupPlayerTags(player);
+		player.removeTag(Tag.String("gameId"));
+		player.removeTag(Tag.String("team"));
 		player.sendTo(ServerType.BEDWARS_LOBBY);
-		updatePlayerCount();
 
 		countdown.checkCountdownConditions();
 
@@ -128,90 +120,82 @@ public final class Game {
 	public void startGame() {
 		Logger.info("Starting game {}", gameId);
 		gameStatus = GameStatus.IN_PROGRESS;
+
 		worldManager.clearExistingBeds();
-		List<MapsConfig.MapEntry.MapConfiguration.MapTeam> activeTeams = teamManager.assignPlayersToTeams();
+		Map<TeamKey, MapTeam> activeTeams = teamManager.assignPlayersToTeams();
 		worldManager.placeBeds(activeTeams);
 		worldManager.spawnShopNPCs(activeTeams);
 		generatorManager.startTeamGenerators(activeTeams);
 		generatorManager.startGlobalGenerators();
 		eventManager.start();
-		timePlayedTask = MinecraftServer.getSchedulerManager().buildTask(
-				() -> {
-					if (gameStatus != GameStatus.IN_PROGRESS) {
-						timePlayedTask.cancel();
-						return;
-					}
-					for (BedWarsPlayer player : players) {
-						player.xp(ExperienceCause.TIME_PLAYED);
-					}
-				}
-		).delay(TaskSchedule.minutes(1)).repeat(TaskSchedule.minutes(1)).schedule();
+
+		timePlayedTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
+			if (gameStatus != GameStatus.IN_PROGRESS) {
+				timePlayedTask.cancel();
+				return;
+			}
+			for (BedWarsPlayer player : players) {
+				player.xp(ExperienceCause.TIME_PLAYED);
+			}
+		}).delay(TaskSchedule.minutes(1)).repeat(TaskSchedule.minutes(1)).schedule();
+
 		Logger.info("Game {} started with {} active teams", gameId, activeTeams.size());
 	}
 
-	public void recordBedDestroyed(String teamName) {
-		teamManager.recordBedDestroyed(teamName);
-
-		// Notify all players
-		Component message = MiniMessage.miniMessage()
-				.deserialize("<red>Team " + teamName + "'s bed has been destroyed!</red>");
-
+	public void recordBedDestroyed(TeamKey teamKey) {
+		teamManager.recordBedDestroyed(teamKey);
 		players.forEach(player -> {
-			player.sendMessage(message);
+			player.sendMessage(teamKey.chatColor() + "Team " + teamKey.getName() + "'s §cbed has been destroyed!");
 			player.playSound(Sound.sound(Key.key("minecraft:entity.wither.death"),
 					Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
 		});
-
 		checkForWinCondition();
 	}
 
 	public void playerEliminated(Player player) {
 		player.setTag(ELIMINATED_TAG, true);
 		String teamName = player.getTag(Tag.String("team"));
-
-		Logger.info("Player {} from team {} has been eliminated",
-				player.getUsername(), teamName != null ? teamName : "N/A");
-
+		Logger.info("Player {} from team {} eliminated", player.getUsername(), teamName != null ? teamName : "N/A");
 		checkForWinCondition();
 	}
 
 	public void checkForWinCondition() {
 		if (gameStatus != GameStatus.IN_PROGRESS) return;
 
-		List<MapsConfig.MapEntry.MapConfiguration.MapTeam> activeGameTeams = getActiveGameTeams();
-		List<MapsConfig.MapEntry.MapConfiguration.MapTeam> viableTeams = activeGameTeams.stream()
-				.filter(this::isTeamViable)
+		List<TeamKey> viableTeams = mapEntry.getConfiguration().getTeams().keySet().stream()
+				.filter(teamKey -> hasPlayersOnTeam(teamKey) && isTeamViable(teamKey))
 				.toList();
 
 		if (viableTeams.size() <= 1) {
-			MapsConfig.MapEntry.MapConfiguration.MapTeam winningTeam =
-					viableTeams.isEmpty() ? null : viableTeams.getFirst();
+			TeamKey winningTeam = viableTeams.isEmpty() ? null : viableTeams.getFirst();
 			endGame(winningTeam);
 		}
 	}
 
-	private String createGameId() {
-		return UUID.randomUUID().toString();
+	private boolean hasPlayersOnTeam(TeamKey teamKey) {
+		return players.stream().anyMatch(p -> teamKey.getName().equals(p.getTag(Tag.String("team"))));
+	}
+
+	private boolean isTeamViable(TeamKey teamKey) {
+		return teamManager.isBedAlive(teamKey) || teamManager.countActivePlayersOnTeam(teamKey) > 0;
 	}
 
 	private boolean hasCapacityForPlayer() {
-		int teamSize = bedwarsGameType.getTeamSize();
-		if (teamSize <= 0) teamSize = 1;
-		int maxPlayers = mapEntry.getConfiguration().getTeams().size() * teamSize;
-		return players.size() < maxPlayers;
+		return players.size() < getMaxPlayers();
 	}
 
 	private boolean hasMinimumPlayersForStart() {
-		int teamSize = bedwarsGameType.getTeamSize();
-		if (teamSize <= 0) teamSize = 1;
+		int teamSize = Math.max(1, bedwarsGameType.getTeamSize());
+		int teamCount = mapEntry.getConfiguration().getTeams().size();
+		return players.size() >= teamSize * Math.min(2, teamCount) && teamCount >= 2;
+	}
 
-		int minPlayersRequired = teamSize * Math.min(2, mapEntry.getConfiguration().getTeams().size());
-		return players.size() >= minPlayersRequired &&
-				mapEntry.getConfiguration().getTeams().size() >= 2;
+	private int getMaxPlayers() {
+		return mapEntry.getConfiguration().getTeams().size() * Math.max(1, bedwarsGameType.getTeamSize());
 	}
 
 	private void setupPlayerForWaiting(BedWarsPlayer player) {
-		MapsConfig.Position waiting = mapEntry.getConfiguration().getLocations().getWaiting();
+		BedWarsMapsConfig.Position waiting = mapEntry.getConfiguration().getLocations().getWaiting();
 
 		if (player.getInstance() == null || player.getInstance().getUuid() != instanceContainer.getUuid()) {
 			player.setInstance(instanceContainer, new Pos(waiting.x(), waiting.y(), waiting.z()));
@@ -221,64 +205,33 @@ public final class Game {
 		player.setGameMode(GameMode.ADVENTURE);
 		player.getInventory().setItemStack(8,
 				TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack());
-
 		player.setTag(Tag.String("gameId"), gameId);
-		player.sendMessage("You have joined the game on map: " + mapEntry.getId());
+		player.sendMessage("§8Joined the game on map " + mapEntry.getId() + ".");
 	}
 
-	private void cleanupPlayerTags(Player player) {
-		player.removeTag(Tag.String("gameId"));
-		player.removeTag(Tag.String("team"));
-		player.removeTag(Tag.String("teamColor"));
-		player.removeTag(Tag.String("javaColor"));
-	}
-
-	private void updatePlayerCount() {
-		int teamSize = bedwarsGameType.getTeamSize();
-		if (teamSize <= 0) teamSize = 1;
-		int maxPlayers = mapEntry.getConfiguration().getTeams().size() * teamSize;
-		Logger.debug("Game {} player count: {}/{}", gameId, players.size(), maxPlayers);
-	}
-
-	private List<MapsConfig.MapEntry.MapConfiguration.MapTeam> getActiveGameTeams() {
-		return mapEntry.getConfiguration().getTeams().stream()
-				.filter(team -> players.stream()
-						.anyMatch(p -> team.getName().equals(p.getTag(Tag.String("team")))))
-				.collect(Collectors.toList());
-	}
-
-	private boolean isTeamViable(MapsConfig.MapEntry.MapConfiguration.MapTeam team) {
-		boolean bedAlive = teamManager.isBedAlive(team.getName());
-		int aliveMembers = teamManager.countActivePlayersOnTeam(team);
-		return bedAlive || aliveMembers > 0;
-	}
-
-	private void endGame(MapsConfig.MapEntry.MapConfiguration.MapTeam winningTeam) {
+	private void endGame(TeamKey winningTeam) {
 		if (gameStatus == GameStatus.ENDING) return;
 
 		gameStatus = GameStatus.ENDING;
-		Logger.info("Game {} has ended. Winner: {}", gameId,
-				winningTeam != null ? winningTeam.getName() : "None (Draw)");
+		Logger.info("Game {} ended. Winner: {}", gameId, winningTeam != null ? winningTeam.getName() : "None (Draw)");
+
 		generatorManager.stopAllGenerators();
 		eventManager.stop();
 
-		Component titleMessage;
-		Component subtitleMessage;
+		String titleMessage;
+		String subtitleMessage;
 
 		if (winningTeam != null) {
-			titleMessage = MiniMessage.miniMessage().deserialize(String.format(
-					"<%s>Team %s has won!</%s>",
-					winningTeam.getColor().toLowerCase(), winningTeam.getName(), winningTeam.getColor().toLowerCase()));
-			subtitleMessage = Component.text("Congratulations!");
+			titleMessage = winningTeam.chatColor() + "Team " + winningTeam.getName() + "has won!";
+			subtitleMessage = "Congratulations!";
 		} else {
-			titleMessage = Component.text("Game Over!", NamedTextColor.RED);
-			subtitleMessage = Component.text("It's a draw!");
+			titleMessage = "§cGame Over!";
+			subtitleMessage = "It's a draw!";
 		}
 
-		// Show the end game message to all players
 		players.forEach(player -> {
-			player.sendTitlePart(TitlePart.TITLE, titleMessage);
-			player.sendTitlePart(TitlePart.SUBTITLE, subtitleMessage);
+			player.sendTitlePart(TitlePart.TITLE, Component.text(titleMessage));
+			player.sendTitlePart(TitlePart.SUBTITLE, Component.text(subtitleMessage));
 			player.playSound(Sound.sound(Key.key("minecraft:ui.toast.challenge_complete"),
 					Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
 

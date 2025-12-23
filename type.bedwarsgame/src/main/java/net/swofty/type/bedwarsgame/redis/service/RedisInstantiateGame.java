@@ -5,7 +5,7 @@ import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
 import org.json.JSONObject;
 
 public class RedisInstantiateGame implements ServiceToClient {
@@ -23,9 +23,9 @@ public class RedisInstantiateGame implements ServiceToClient {
             BedwarsGameType gameType = BedwarsGameType.valueOf(gameTypeStr.toUpperCase());
 
             // Find the map entry
-            MapsConfig.MapEntry mapEntry = null;
+            BedWarsMapsConfig.MapEntry mapEntry = null;
             if (TypeBedWarsGameLoader.getMapsConfig() != null) {
-                for (MapsConfig.MapEntry entry : TypeBedWarsGameLoader.getMapsConfig().getMaps()) {
+                for (BedWarsMapsConfig.MapEntry entry : TypeBedWarsGameLoader.getMapsConfig().getMaps()) {
                     if (entry.getId().equals(mapName) || entry.getName().equals(mapName)) {
                         // Check if this map supports the requested game type
                         if (entry.getConfiguration() != null &&

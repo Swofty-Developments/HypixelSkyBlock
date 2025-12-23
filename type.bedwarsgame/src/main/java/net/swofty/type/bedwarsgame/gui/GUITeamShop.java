@@ -16,7 +16,6 @@ import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.shop.*;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
-import net.swofty.type.bedwarsgame.util.ColorUtil;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -156,8 +155,10 @@ public class GUITeamShop extends HypixelInventoryGUI {
 			int index = i;
 			set(new GUIClickableItem(slot) {
 				@Override
-				public void run(InventoryPreClickEvent event, HypixelPlayer player) {
+				public void run(InventoryPreClickEvent event, HypixelPlayer p) {
 					if (index >= traps.size()) return;
+					BedWarsPlayer player = (BedWarsPlayer) p;
+
 					Game playerGame = TypeBedWarsGameLoader.getPlayerGame(player);
 					String tag = player.getTag(Tag.String("team"));
 					if (playerGame == null || tag == null) return;
@@ -257,17 +258,10 @@ public class GUITeamShop extends HypixelInventoryGUI {
 		updateItemStacks(getInventory(), getPlayer());
 	}
 
-	private void broadcastTeamPurchase(Game game, String teamName, HypixelPlayer buyer, String name) {
-		String teamColorName = buyer.getTag(Tag.String("teamColor"));
-		TextColor teamColor = ColorUtil.getTextColorByName(teamColorName);
-		if (teamColor == null) teamColor = NamedTextColor.WHITE;
-		for (var pl : game.getPlayers()) {
+	private void broadcastTeamPurchase(Game game, String teamName, BedWarsPlayer buyer, String name) {
+		for (BedWarsPlayer pl : game.getPlayers()) {
 			if (teamName.equals(pl.getTag(Tag.String("team")))) {
-				pl.sendMessage(
-						Component.text(buyer.getUsername()).color(teamColor)
-								.append(Component.text(" purchased ").color(NamedTextColor.GREEN))
-								.append(Component.text(name).color(NamedTextColor.GOLD))
-				);
+				pl.sendMessage(buyer.getTeamKey().chatColor() + " §apurchased §6" + name + "!");
 			}
 		}
 	}

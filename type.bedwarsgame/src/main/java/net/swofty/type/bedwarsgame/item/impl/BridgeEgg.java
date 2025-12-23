@@ -4,18 +4,18 @@ import net.kyori.adventure.sound.Sound;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.GameMode;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.sound.SoundEvent;
-import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.pvp.entity.projectile.CustomEntityProjectile;
 import net.swofty.pvp.entity.projectile.ItemHoldingProjectile;
 import net.swofty.pvp.utils.ViewUtil;
 import net.swofty.type.bedwarsgame.entity.ThrownBridgeEgg;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.generic.utility.MathUtility;
 
@@ -27,21 +27,16 @@ public class BridgeEgg extends SimpleInteractableItem {
 		super("bridge_egg");
 	}
 
-	private static Block getWoolBlockFromTeamColor(String teamColor) {
-		return switch (teamColor.toLowerCase()) {
-			case "red" -> Block.RED_WOOL;
-			case "blue" -> Block.BLUE_WOOL;
-			case "green" -> Block.LIME_WOOL; // Minecraft uses "lime" for bright green
-			case "yellow" -> Block.YELLOW_WOOL;
-			case "aqua" -> Block.LIGHT_BLUE_WOOL;
-			case "pink" -> Block.PINK_WOOL;
-			case "gray", "grey" -> Block.GRAY_WOOL;
-			case "white" -> Block.WHITE_WOOL;
-			case "black" -> Block.BLACK_WOOL;
-			case "purple" -> Block.PURPLE_WOOL;
-			case "orange" -> Block.ORANGE_WOOL;
-			case "cyan" -> Block.CYAN_WOOL;
-			default -> Block.WHITE_WOOL;
+	private static Block mapTeamToBlock(BedWarsMapsConfig.TeamKey teamKey) {
+		return switch (teamKey) {
+			case RED -> Block.RED_WOOL;
+			case BLUE -> Block.BLUE_WOOL;
+			case GREEN -> Block.GREEN_WOOL;
+			case YELLOW -> Block.YELLOW_WOOL;
+			case AQUA -> Block.LIGHT_BLUE_WOOL;
+			case PINK -> Block.PINK_WOOL;
+			case WHITE -> Block.WHITE_WOOL;
+			case GRAY -> Block.GRAY_WOOL;
 		};
 	}
 
@@ -52,14 +47,9 @@ public class BridgeEgg extends SimpleInteractableItem {
 
 	@Override
 	public void onItemUse(PlayerUseItemEvent event) {
-		Player player = event.getPlayer();
+		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		ItemStack stack = event.getItemStack();
-		String teamColor = player.getTag(Tag.String("teamColor"));
-		if (teamColor == null || teamColor.isEmpty()) {
-			teamColor = "white";
-		}
-
-		Block woolBlock = getWoolBlockFromTeamColor(teamColor);
+		Block woolBlock = mapTeamToBlock(player.getTeamKey());
 
 		SoundEvent soundEvent;
 		CustomEntityProjectile projectile;

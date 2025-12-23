@@ -141,14 +141,17 @@ public class GUIMapSelection extends HypixelInventoryGUI {
 					List<String> favouriteMaps = data.get(BedWarsDataHandler.Data.FAVORITE_MAPS, DatapointStringList.class).getValue();
 					boolean isFav = favouriteMaps != null && favouriteMaps.contains(mapId);
 					Map<String, Long> counts = data.get(BedWarsDataHandler.Data.MAP_JOIN_COUNTS, DatapointMapStringLong.class).getValue();
-
+					Long joins = counts.get(mapId);
+					if (joins == null) {
+						joins = 0L;
+					}
 
 					return ItemStackCreator.getStack((isFav ? "§b✯ " : "") + "§a" + mapName,
 							Material.FIREWORK_STAR, 1,
 							"§7" + gameType.getDisplayName(),
 							"",
 							"§7Available Games: §aUnknown",
-							"§7Times Joined: §a" + counts.get(mapId),
+							"§7Times Joined: §a" + joins,
 							"§7Map Selections: §aUnlimited",
 							"",
 							" §aClick to Play",

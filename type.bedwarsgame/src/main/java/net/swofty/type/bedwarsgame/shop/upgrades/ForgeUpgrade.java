@@ -11,7 +11,9 @@ import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -41,16 +43,17 @@ public class ForgeUpgrade extends TeamUpgrade {
 			return;
 		}
 
-		MapsConfig.MapEntry.MapConfiguration.MapTeam team = game.getMapEntry().getConfiguration().getTeams().stream()
-				.filter(t -> t.getName().equals(teamName))
-				.findFirst().orElse(null);
+		TeamKey teamKey = game.getTeamManager().getTeamKeyByName(teamName);
+		MapTeam team = teamKey != null
+				? game.getMapEntry().getConfiguration().getTeams().get(teamKey)
+				: null;
 
 		if (team == null || team.getGenerator() == null) {
 			Logger.warn("Cannot start emerald generator for team {}: team or generator location not found.", teamName);
 			return;
 		}
 
-		MapsConfig.Position genLocation = team.getGenerator();
+		BedWarsMapsConfig.Position genLocation = team.getGenerator();
 		Pos spawnPosition = new Pos(genLocation.x(), genLocation.y(), genLocation.z());
 
 		// Define emerald generator properties (1 emerald every 60 seconds)

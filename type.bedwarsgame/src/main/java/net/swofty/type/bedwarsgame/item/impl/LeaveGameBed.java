@@ -17,7 +17,7 @@ public class LeaveGameBed extends SimpleInteractableItem {
 
 	@Override
 	public ItemStack getBlandItem() {
-		return ItemStackCreator.createNamedItemStack(Material.RED_BED, "§cLeave").build();
+		return ItemStackCreator.getStack("§c§lReturn to Lobby §7(Right Click)", Material.RED_BED, 1, "§7Right-click to leave to the lobby!").build();
 	}
 
 	@Override

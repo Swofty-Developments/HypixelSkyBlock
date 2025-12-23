@@ -17,7 +17,10 @@ import net.minestom.server.potion.TimedPotion;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.chunk.ChunkUtils;
 import net.swofty.pvp.player.CombatPlayer;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
 import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +49,15 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
 
 	public String getTeamName() {
 		return getTag(Tag.String("team"));
+	}
+
+	public BedWarsMapsConfig.TeamKey getTeamKey() {
+		return BedWarsMapsConfig.TeamKey.valueOf(getTeamName());
+	}
+
+	public Game getGame() {
+		String gameId = getTag(Tag.String("gameId"));
+		return TypeBedWarsGameLoader.getGameById(gameId);
 	}
 
 	public void xp(ExperienceCause cause) {

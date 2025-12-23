@@ -2,13 +2,21 @@ package net.swofty.type.bedwarsgame.shop.impl;
 
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
 
+import java.util.function.Function;
+
 public class ReplaceAdderItem extends ShopItem {
 
 	private final Material replacementMaterial;
+
+	public ReplaceAdderItem(String name, String description, Function<BedwarsGameType, Integer> cost, Currency currency, Material material) {
+		super(name, description, cost, 1, currency, material);
+		this.replacementMaterial = Material.WOODEN_SWORD;
+	}
 
 	public ReplaceAdderItem(String name, String description, int cost, Currency currency, Material material) {
 		super(name, description, cost, 1, currency, material);

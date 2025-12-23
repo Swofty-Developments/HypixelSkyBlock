@@ -11,12 +11,15 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
 import java.util.List;
+import java.util.Map;
 
 public class ActionGameMove implements HypixelEventClass {
 
@@ -53,30 +56,32 @@ public class ActionGameMove implements HypixelEventClass {
 		Point playerPos = player.getPosition();
 
 		// check what team this is
-		for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : game.getMapEntry().getConfiguration().getTeams()) {
+		for (Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
+			TeamKey teamKey = entry.getKey();
+			MapTeam team = entry.getValue();
+
 			// Don't trigger own team's traps
-			if (team.getName().equals(playerTeamName)) {
+			if (teamKey.getName().equals(playerTeamName)) {
 				continue;
 			}
 
-			MapsConfig.TwoBlockPosition bedPos = team.getBed();
+			BedWarsMapsConfig.TwoBlockPosition bedPos = team.getBed();
 			if (bedPos == null || bedPos.feet() == null) {
 				continue;
 			}
 
 			Point bedLocation = new Pos(bedPos.feet().x(), bedPos.feet().y(), bedPos.feet().z());
 			if (playerPos.distance(bedLocation) <= 10) {
-				List<String> teamTraps = game.getTeamManager().getTeamTraps(team.getName());
+				List<String> teamTraps = game.getTeamManager().getTeamTraps(teamKey);
 				if (teamTraps.isEmpty()) {
 					continue;
 				}
 
 				var trap = TypeBedWarsGameLoader.getTrapManager().getTrap(teamTraps.getFirst());
 				if (trap != null) {
-					trap.trigger(game, team.getName(), player);
+					trap.trigger(game, teamKey.getName(), player);
 				}
 			}
 		}
 	}
-
 }

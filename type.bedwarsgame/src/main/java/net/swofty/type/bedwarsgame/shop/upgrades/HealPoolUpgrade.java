@@ -13,7 +13,9 @@ import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
 
 import java.util.List;
 
@@ -33,16 +35,16 @@ public class HealPoolUpgrade extends TeamUpgrade {
 
 	@Override
 	public void applyEffect(Game game, String teamName, int level) {
-		MapsConfig.MapEntry.MapConfiguration.MapTeam team = game.getMapEntry().getConfiguration().getTeams().stream()
-				.filter(t -> t.getName().equalsIgnoreCase(teamName))
-				.findFirst()
-				.orElse(null);
+		TeamKey teamKey = game.getTeamManager().getTeamKeyByName(teamName);
+		MapTeam team = teamKey != null
+				? game.getMapEntry().getConfiguration().getTeams().get(teamKey)
+				: null;
 
 		if (team == null) {
 			return;
 		}
 
-		MapsConfig.PitchYawPosition spawnPos = team.getSpawn();
+		BedWarsMapsConfig.PitchYawPosition spawnPos = team.getSpawn();
 		Pos teamSpawn = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw());
 
 		MinecraftServer.getSchedulerManager().buildTask(() -> {

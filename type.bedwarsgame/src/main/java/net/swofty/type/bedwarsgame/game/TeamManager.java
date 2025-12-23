@@ -2,7 +2,6 @@ package net.swofty.type.bedwarsgame.game;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EquipmentSlot;
@@ -12,8 +11,10 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.scoreboard.BelowNameTag;
 import net.minestom.server.tag.Tag;
-import net.swofty.type.bedwarsgame.util.ColorUtil;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
 import org.tinylog.Logger;
 
 import java.util.*;
@@ -21,56 +22,49 @@ import java.util.stream.Collectors;
 
 public final class TeamManager {
 	private final Game game;
-	private final Map<String, Boolean> teamBedStatus = new HashMap<>();
-	private final Map<String, Map<String, Integer>> teamUpgrades = new HashMap<>();
-	private final Map<String, List<String>> teamTraps = new HashMap<>();
+	private final Map<TeamKey, Boolean> teamBedStatus = new EnumMap<>(TeamKey.class);
+	private final Map<TeamKey, Map<String, Integer>> teamUpgrades = new EnumMap<>(TeamKey.class);
+	private final Map<TeamKey, List<String>> teamTraps = new EnumMap<>(TeamKey.class);
 
 	public TeamManager(Game game) {
 		this.game = game;
 	}
 
-	public String getPlayerTeamName(Player player) {
-		return player.getTag(Tag.String("team"));
-	}
-
-	public List<MapsConfig.MapEntry.MapConfiguration.MapTeam> assignPlayersToTeams() {
-		List<MapsConfig.MapEntry.MapConfiguration.MapTeam> configuredTeams =
-				game.getMapEntry().getConfiguration().getTeams();
-		List<MapsConfig.MapEntry.MapConfiguration.MapTeam> activeGameTeams = new ArrayList<>();
+	public Map<TeamKey, MapTeam> assignPlayersToTeams() {
+		Map<TeamKey, MapTeam> configuredTeams = game.getMapEntry().getConfiguration().getTeams();
+		Map<TeamKey, MapTeam> activeGameTeams = new EnumMap<>(TeamKey.class);
 
 		teamBedStatus.clear();
-		for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : configuredTeams) {
-			teamBedStatus.put(team.getName(), false);
-		}
+		configuredTeams.keySet().forEach(teamKey -> teamBedStatus.put(teamKey, false));
 
-		// Remove elimination tags
 		game.getPlayers().forEach(player -> player.removeTag(Game.ELIMINATED_TAG));
+
 		List<Player> playersToAssign = new ArrayList<>(game.getPlayers());
 		Collections.shuffle(playersToAssign);
 
-		List<MapsConfig.MapEntry.MapConfiguration.MapTeam> availableTeams = new ArrayList<>(configuredTeams);
+		List<Map.Entry<TeamKey, MapTeam>> availableTeams = new ArrayList<>(configuredTeams.entrySet());
 		Collections.shuffle(availableTeams);
 
-		int teamSize = game.getBedwarsGameType().getTeamSize();
-		if (teamSize <= 0) teamSize = 1;
-
+		int teamSize = Math.max(1, game.getBedwarsGameType().getTeamSize());
 		int playerIndex = 0;
-		MapsConfig.Position spectatorPos = game.getMapEntry().getConfiguration().getLocations().getSpectator();
+		BedWarsMapsConfig.Position spectatorPos = game.getMapEntry().getConfiguration().getLocations().getSpectator();
 
-		// Assign players to teams
-		for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : availableTeams) {
+		for (Map.Entry<TeamKey, MapTeam> entry : availableTeams) {
 			if (playerIndex >= playersToAssign.size()) break;
 
+			TeamKey teamKey = entry.getKey();
+			MapTeam team = entry.getValue();
 			boolean teamHasPlayers = false;
+
 			for (int memberCount = 0; memberCount < teamSize && playerIndex < playersToAssign.size(); memberCount++) {
 				Player player = playersToAssign.get(playerIndex);
-				assignPlayerToTeam(player, team, spectatorPos);
+				assignPlayerToTeam(player, teamKey, team, spectatorPos);
 				playerIndex++;
 				teamHasPlayers = true;
 			}
 
 			if (teamHasPlayers) {
-				activeGameTeams.add(team);
+				activeGameTeams.put(teamKey, team);
 			}
 		}
 
@@ -78,14 +72,11 @@ public final class TeamManager {
 		return activeGameTeams;
 	}
 
-	private void assignPlayerToTeam(Player player, MapsConfig.MapEntry.MapConfiguration.MapTeam team,
-									MapsConfig.Position spectatorPos) {
-		player.setTag(Tag.String("team"), team.getName());
-		player.setTag(Tag.String("teamColor"), team.getColor());
-		player.setTag(Tag.String("javaColor"), team.getJavacolor());
+	private void assignPlayerToTeam(Player player, TeamKey teamKey, MapTeam team,
+	                                BedWarsMapsConfig.Position spectatorPos) {
+		player.setTag(Tag.String("team"), teamKey.name());
 
-		// teleport to team spawn
-		MapsConfig.PitchYawPosition spawnPos = team.getSpawn();
+		BedWarsMapsConfig.PitchYawPosition spawnPos = team.getSpawn();
 		player.teleport(new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.yaw(), spawnPos.pitch()));
 		player.setRespawnPoint(new Pos(spectatorPos.x(), spectatorPos.y(), spectatorPos.z()));
 
@@ -94,113 +85,169 @@ public final class TeamManager {
 		player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
 		player.setEnableRespawnScreen(false);
 
-		// display name and health indicator
-		player.setDisplayName(MiniMessage.miniMessage().deserialize(
-				"<" + team.getColor().toLowerCase() + "><b>" +
-						team.getName().toUpperCase().charAt(0) + "</b> " + player.getUsername()));
-		player.setBelowNameTag(new BelowNameTag("health",
-				MiniMessage.miniMessage().deserialize("<red>20❤</red>"))); // this should be updated on damage
+		player.setDisplayName(Component.text(teamKey.chatColor() + "§l" + teamKey.getName() + " §r" + teamKey.chatColor() + player.getUsername()));
+		player.setBelowNameTag(new BelowNameTag("health", Component.text("20❤", NamedTextColor.RED)));
 
-		// armor
-		equipTeamArmor(player, team);
-		Logger.debug("Assigned player {} to team {}", player.getUsername(), team.getName());
+		equipTeamArmor(player, teamKey);
+		Logger.info("Assigned player {} to team {}", player.getUsername(), teamKey.getName());
 	}
 
-	private void equipTeamArmor(Player player, MapsConfig.MapEntry.MapConfiguration.MapTeam team) {
-		java.awt.Color awtColor = ColorUtil.getColorByName(team.getJavacolor());
-		if (awtColor != null) {
-			net.minestom.server.color.Color minestomColor =
-					new net.minestom.server.color.Color(awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue());
+	public void equipTeamArmor(Player player, TeamKey teamKey) {
+		Integer armorLevel = player.getTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG);
+		if (armorLevel == null) armorLevel = 0;
 
-			player.setEquipment(EquipmentSlot.BOOTS,
-					ItemStack.of(Material.LEATHER_BOOTS).with(DataComponents.DYED_COLOR, minestomColor));
-			player.setEquipment(EquipmentSlot.LEGGINGS,
-					ItemStack.of(Material.LEATHER_LEGGINGS).with(DataComponents.DYED_COLOR, minestomColor));
-			player.setEquipment(EquipmentSlot.CHESTPLATE,
-					ItemStack.of(Material.LEATHER_CHESTPLATE).with(DataComponents.DYED_COLOR, minestomColor));
-			player.setEquipment(EquipmentSlot.HELMET,
-					ItemStack.of(Material.LEATHER_HELMET).with(DataComponents.DYED_COLOR, minestomColor));
+		Material boots = null;
+		Material leggings = switch (armorLevel) {
+			case 1 -> {
+				boots = Material.CHAINMAIL_BOOTS;
+				yield Material.CHAINMAIL_LEGGINGS;
+			}
+			case 2 -> {
+				boots = Material.IRON_BOOTS;
+				yield Material.IRON_LEGGINGS;
+			}
+			case 3 -> {
+				boots = Material.DIAMOND_BOOTS;
+				yield Material.DIAMOND_LEGGINGS;
+			}
+			default -> null;
+		};
+
+		net.minestom.server.color.Color minestomColor = new net.minestom.server.color.Color(teamKey.rgb());
+
+		if (boots != null && leggings != null) {
+			player.setEquipment(EquipmentSlot.BOOTS, ItemStack.of(boots));
+			player.setEquipment(EquipmentSlot.LEGGINGS, ItemStack.of(leggings));
 		} else {
-			Logger.warn("Invalid color '{}' for team '{}'. Player '{}' will not have colored armor.",
-					team.getColor(), team.getName(), player.getUsername());
+			player.setEquipment(EquipmentSlot.BOOTS, ItemStack.of(Material.LEATHER_BOOTS).with(DataComponents.DYED_COLOR, minestomColor));
+			player.setEquipment(EquipmentSlot.LEGGINGS, ItemStack.of(Material.LEATHER_LEGGINGS).with(DataComponents.DYED_COLOR, minestomColor));
 		}
+
+		player.setEquipment(EquipmentSlot.CHESTPLATE,
+				ItemStack.of(Material.LEATHER_CHESTPLATE).with(DataComponents.DYED_COLOR, minestomColor));
+		player.setEquipment(EquipmentSlot.HELMET,
+				ItemStack.of(Material.LEATHER_HELMET).with(DataComponents.DYED_COLOR, minestomColor));
 	}
 
 	private void handleUnassignedPlayers(List<Player> playersToAssign, int startIndex,
-										 MapsConfig.Position spectatorPos) {
-		if (startIndex < playersToAssign.size()) {
-			int unassignedCount = playersToAssign.size() - startIndex;
-			Logger.warn("{} players were not assigned to teams as all slots were filled.", unassignedCount);
+	                                     BedWarsMapsConfig.Position spectatorPos) {
+		if (startIndex >= playersToAssign.size()) return;
 
-			for (int i = startIndex; i < playersToAssign.size(); i++) {
-				Player unassignedPlayer = playersToAssign.get(i);
-				unassignedPlayer.sendMessage(Component.text(
-						"All team slots were full. You have been moved to spectator.", NamedTextColor.YELLOW));
-				unassignedPlayer.setGameMode(GameMode.SPECTATOR);
-				unassignedPlayer.teleport(new Pos(spectatorPos.x(), spectatorPos.y(), spectatorPos.z()));
-			}
+		int unassignedCount = playersToAssign.size() - startIndex;
+		Logger.warn("{} players were not assigned to teams as all slots were filled.", unassignedCount);
+
+		for (int i = startIndex; i < playersToAssign.size(); i++) {
+			Player unassignedPlayer = playersToAssign.get(i);
+			unassignedPlayer.sendMessage(Component.text(
+					"All team slots were full. You have been moved to spectator.", NamedTextColor.YELLOW));
+			unassignedPlayer.setGameMode(GameMode.SPECTATOR);
+			unassignedPlayer.teleport(new Pos(spectatorPos.x(), spectatorPos.y(), spectatorPos.z()));
 		}
 	}
 
-	public int getTeamUpgradeLevel(String teamName, String upgradeKey) {
-		return teamUpgrades.computeIfAbsent(teamName, k -> new HashMap<>()).getOrDefault(upgradeKey, 0);
+	public int getTeamUpgradeLevel(TeamKey teamKey, String upgradeKey) {
+		return teamUpgrades.computeIfAbsent(teamKey, k -> new HashMap<>()).getOrDefault(upgradeKey, 0);
 	}
 
-	public void setTeamUpgradeLevel(String teamName, String upgradeKey, int level) {
-		teamUpgrades.computeIfAbsent(teamName, k -> new HashMap<>()).put(upgradeKey, level);
+	public void setTeamUpgradeLevel(TeamKey teamKey, String upgradeKey, int level) {
+		teamUpgrades.computeIfAbsent(teamKey, k -> new HashMap<>()).put(upgradeKey, level);
 	}
 
-	public List<String> getTeamTraps(String teamName) {
-		return teamTraps.computeIfAbsent(teamName, k -> new ArrayList<>());
+	public List<String> getTeamTraps(TeamKey teamKey) {
+		return teamTraps.computeIfAbsent(teamKey, k -> new ArrayList<>());
 	}
 
-	public void addTeamTrap(String teamName, String trapKey) {
-		List<String> traps = teamTraps.computeIfAbsent(teamName, k -> new ArrayList<>());
+	public void addTeamTrap(TeamKey teamKey, String trapKey) {
+		List<String> traps = teamTraps.computeIfAbsent(teamKey, k -> new ArrayList<>());
 		if (!traps.contains(trapKey)) {
 			traps.add(trapKey);
 		}
 	}
 
-	public void removeTeamTrap(String teamName, String trapKey) {
-		List<String> traps = teamTraps.get(teamName);
+	public void removeTeamTrap(TeamKey teamKey, String trapKey) {
+		List<String> traps = teamTraps.get(teamKey);
 		if (traps != null) {
 			traps.remove(trapKey);
 			if (traps.isEmpty()) {
-				teamTraps.remove(teamName);
+				teamTraps.remove(teamKey);
 			}
 		}
 	}
 
-	public List<Player> getPlayersOnTeam(String teamName) {
+	public List<Player> getPlayersOnTeam(TeamKey teamKey) {
 		return game.getPlayers().stream()
-				.filter(player -> teamName.equals(player.getTag(Tag.String("team")))
+				.filter(player -> teamKey.getName().equals(player.getTag(Tag.String("team")))
 						&& player.isOnline()
 						&& !Boolean.TRUE.equals(player.getTag(Game.ELIMINATED_TAG)))
 				.collect(Collectors.toList());
 	}
 
-	public int countActivePlayersOnTeam(MapsConfig.MapEntry.MapConfiguration.MapTeam team) {
+	public int countActivePlayersOnTeam(TeamKey teamKey) {
 		return (int) game.getPlayers().stream()
-				.filter(player -> team.getName().equals(player.getTag(Tag.String("team")))
+				.filter(player -> teamKey.getName().equals(player.getTag(Tag.String("team")))
 						&& player.isOnline()
 						&& !Boolean.TRUE.equals(player.getTag(Game.ELIMINATED_TAG)))
 				.count();
 	}
 
-	public void recordBedDestroyed(String teamName) {
-		teamBedStatus.put(teamName, false);
-		Logger.info("Bed destroyed for team: {}", teamName);
+	@Deprecated(forRemoval = true)
+	public TeamKey getTeamKeyByName(String teamName) {
+		return Arrays.stream(TeamKey.values())
+				.filter(k -> k.getName().equalsIgnoreCase(teamName))
+				.findFirst()
+				.orElse(null);
 	}
 
-	public boolean isBedAlive(String teamName) {
-		return teamBedStatus.getOrDefault(teamName, false);
+	@Deprecated(forRemoval = true)
+	public int getTeamUpgradeLevel(String teamName, String upgradeKey) {
+		TeamKey teamKey = getTeamKeyByName(teamName);
+		return teamKey != null ? getTeamUpgradeLevel(teamKey, upgradeKey) : 0;
 	}
 
-	public void setBedStatus(String teamName, boolean alive) {
-		teamBedStatus.put(teamName, alive);
+	@Deprecated(forRemoval = true)
+	public void setTeamUpgradeLevel(String teamName, String upgradeKey, int level) {
+		TeamKey teamKey = getTeamKeyByName(teamName);
+		if (teamKey != null) setTeamUpgradeLevel(teamKey, upgradeKey, level);
 	}
 
-	public Map<String, Boolean> getTeamBedStatus() {
-		return new HashMap<>(teamBedStatus);
+	@Deprecated(forRemoval = true)
+	public List<String> getTeamTraps(String teamName) {
+		TeamKey teamKey = getTeamKeyByName(teamName);
+		return teamKey != null ? getTeamTraps(teamKey) : new ArrayList<>();
+	}
+
+	@Deprecated(forRemoval = true)
+	public void addTeamTrap(String teamName, String trapKey) {
+		TeamKey teamKey = getTeamKeyByName(teamName);
+		if (teamKey != null) addTeamTrap(teamKey, trapKey);
+	}
+
+	@Deprecated(forRemoval = true)
+	public void removeTeamTrap(String teamName, String trapKey) {
+		TeamKey teamKey = getTeamKeyByName(teamName);
+		if (teamKey != null) removeTeamTrap(teamKey, trapKey);
+	}
+
+	@Deprecated(forRemoval = true)
+	public List<Player> getPlayersOnTeam(String teamName) {
+		TeamKey teamKey = getTeamKeyByName(teamName);
+		return teamKey != null ? getPlayersOnTeam(teamKey) : new ArrayList<>();
+	}
+
+	public void recordBedDestroyed(TeamKey teamKey) {
+		teamBedStatus.put(teamKey, false);
+		Logger.info("Bed destroyed for team: {}", teamKey.getName());
+	}
+
+	public boolean isBedAlive(TeamKey teamKey) {
+		return teamBedStatus.getOrDefault(teamKey, false);
+	}
+
+	public void setBedStatus(TeamKey teamKey, boolean alive) {
+		teamBedStatus.put(teamKey, alive);
+	}
+
+	public Map<TeamKey, Boolean> getTeamBedStatus() {
+		return new EnumMap<>(teamBedStatus);
 	}
 }

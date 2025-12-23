@@ -6,7 +6,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
 import net.minestom.server.network.packet.server.play.EntityRotationPacket;
-import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
@@ -121,10 +120,11 @@ public abstract class HypixelNPC {
                             .pos(position.add(0, 1.1 + yOffset, 0))
                             .text(Arrays.copyOfRange(holograms, 0, holograms.length - (overflowing ? 0 : 1)))
                             .player(player)
+                            .instance(config.instance())
                             .build();
 
                     PlayerHolograms.addExternalPlayerHologram(holo);
-                    entity.setInstance(HypixelConst.getInstanceContainer(), position);
+                    entity.setInstance(config.instance(), position);
                     entity.addViewer(player);
 
                     HypixelNPC.PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
@@ -225,6 +225,10 @@ public abstract class HypixelNPC {
 
     public void register() {
         registeredNPCs.add(this);
+    }
+
+    public void unregister() {
+        registeredNPCs.remove(this);
     }
 
     public void sendNPCMessage(HypixelPlayer player, String message) {

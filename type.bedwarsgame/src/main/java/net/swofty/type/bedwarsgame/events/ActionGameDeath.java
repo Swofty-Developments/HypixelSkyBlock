@@ -8,8 +8,6 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.color.Color;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
@@ -28,8 +26,9 @@ import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.shop.impl.AxeShopItem;
 import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgame.util.ColorUtil;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -41,6 +40,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ActionGameDeath implements HypixelEventClass {
 
+	// TODO: this is horrible
 	private static Component calculateDeathMessage(Player player, TextColor victimTeamColor) {
 		Damage lastDamage = player.getLastDamageSource();
 
@@ -60,8 +60,8 @@ public class ActionGameDeath implements HypixelEventClass {
 		DamageType damageType = lastDamage.getType().asValue();
 
 		// Case 1: Killed by another player
-		if (attacker instanceof Player killer) {
-			String killerTeamColorName = killer.getTag(Tag.String("teamColor"));
+		if (attacker instanceof BedWarsPlayer killer) {
+			String killerTeamColorName = killer.getTeamKey().chatColor();
 			TextColor killerActualColor = NamedTextColor.GRAY;
 
 			if (killerTeamColorName != null && !killerTeamColorName.isEmpty()) {
@@ -172,13 +172,7 @@ public class ActionGameDeath implements HypixelEventClass {
 		}
 
 		String teamName = player.getTag(Tag.String("team"));
-		String teamColorName = player.getTag(Tag.String("teamColor"));
-		String javaColorName = player.getTag(Tag.String("javaColor"));
-		TextColor tColor = ColorUtil.getTextColorByName(teamColorName != null ? teamColorName : "gray");
-		if (tColor == null) {
-			tColor = NamedTextColor.GRAY;
-		}
-		TextColor victimTeamTextColor = TextColor.color(tColor);
+		TextColor victimTeamTextColor = NamedTextColor.GRAY;
 
 		boolean bedExists = game.getTeamManager().getTeamBedStatus().getOrDefault(teamName, false);
 
@@ -218,19 +212,19 @@ public class ActionGameDeath implements HypixelEventClass {
 					// Time to respawn
 					player.clearTitle();
 
-					if (teamName == null || teamColorName == null) {
+					if (teamName == null) {
 						Logger.warn("Player {} died in game {} but had no team tag. Sending to waiting spawn.", player.getUsername(), gameId);
-						MapsConfig.Position waitingPos = game.getMapEntry().getConfiguration().getLocations().getWaiting();
+						BedWarsMapsConfig.Position waitingPos = game.getMapEntry().getConfiguration().getLocations().getWaiting();
 						player.teleport(new Pos(waitingPos.x(), waitingPos.y(), waitingPos.z()));
 						player.setGameMode(GameMode.ADVENTURE);
 					} else {
-						MapsConfig.MapEntry.MapConfiguration.MapTeam playerTeam = game.getMapEntry().getConfiguration().getTeams().stream()
-								.filter(t -> t.getName().equalsIgnoreCase(teamName))
-								.findFirst()
-								.orElse(null);
+						TeamKey playerTeamKey = game.getTeamManager().getTeamKeyByName(teamName);
+						MapTeam playerTeam = playerTeamKey != null
+								? game.getMapEntry().getConfiguration().getTeams().get(playerTeamKey)
+								: null;
 
-						if (playerTeam != null) {
-							MapsConfig.PitchYawPosition spawnPos = playerTeam.getSpawn();
+						if (playerTeam != null && playerTeamKey != null) {
+							BedWarsMapsConfig.PitchYawPosition spawnPos = playerTeam.getSpawn();
 							player.teleport(new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw()));
 							player.setGameMode(GameMode.SURVIVAL);
 							player.setInvisible(false);
@@ -241,49 +235,17 @@ public class ActionGameDeath implements HypixelEventClass {
 							AxeShopItem axeShopItem = new AxeShopItem();
 							Integer currentAxeLevel = player.getTag(AxeShopItem.AXE_UPGRADE_TAG);
 							if (currentAxeLevel != null && currentAxeLevel > 0) {
-								player.getInventory().addItemStack(ItemStack.of(axeShopItem.getTier(currentAxeLevel - 1).getMaterial()));
+								player.getInventory().addItemStack(ItemStack.of(axeShopItem.getTier(currentAxeLevel - 1).material()));
 							}
 
 							PickaxeShopItem pickaxeShopItem = new PickaxeShopItem();
 							Integer currentPickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
 							if (currentPickaxeLevel != null && currentPickaxeLevel > 0) {
-								player.getInventory().addItemStack(ItemStack.of(pickaxeShopItem.getTier(currentPickaxeLevel - 1).getMaterial()));
+								player.getInventory().addItemStack(ItemStack.of(pickaxeShopItem.getTier(currentPickaxeLevel - 1).material()));
 							}
 
-							Integer armorLevel = player.getTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG);
-							if (armorLevel == null) armorLevel = 0;
-
-							Material boots = null, leggings = null;
-							switch (armorLevel) {
-								case 1:
-									boots = Material.CHAINMAIL_BOOTS;
-									leggings = Material.CHAINMAIL_LEGGINGS;
-									break;
-								case 2:
-									boots = Material.IRON_BOOTS;
-									leggings = Material.IRON_LEGGINGS;
-									break;
-								case 3:
-									boots = Material.DIAMOND_BOOTS;
-									leggings = Material.DIAMOND_LEGGINGS;
-									break;
-							}
-
-							java.awt.Color awtColor = ColorUtil.getColorByName(javaColorName);
-							if (awtColor != null) {
-								Color minestomColor = new Color(awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue());
-								if (boots != null && leggings != null) {
-									player.setEquipment(net.minestom.server.entity.EquipmentSlot.BOOTS, ItemStack.of(boots));
-									player.setEquipment(net.minestom.server.entity.EquipmentSlot.LEGGINGS, ItemStack.of(leggings));
-								} else {
-									player.setEquipment(net.minestom.server.entity.EquipmentSlot.BOOTS, ItemStack.of(Material.LEATHER_BOOTS).with(DataComponents.DYED_COLOR, minestomColor));
-									player.setEquipment(net.minestom.server.entity.EquipmentSlot.LEGGINGS, ItemStack.of(Material.LEATHER_LEGGINGS).with(DataComponents.DYED_COLOR, minestomColor));
-								}
-								player.setEquipment(net.minestom.server.entity.EquipmentSlot.CHESTPLATE, ItemStack.of(Material.LEATHER_CHESTPLATE).with(DataComponents.DYED_COLOR, minestomColor));
-								player.setEquipment(net.minestom.server.entity.EquipmentSlot.HELMET, ItemStack.of(Material.LEATHER_HELMET).with(DataComponents.DYED_COLOR, minestomColor));
-							} else {
-								Logger.warn("Could not parse color: " + javaColorName + " for player " + player.getUsername() + "'s armor.");
-							}
+							// equip the player with team armor
+							game.getTeamManager().equipTeamArmor(player, playerTeamKey);
 
 							Integer protectionLevel = player.getTag(Tag.Integer("upgrade_reinforced_armor"));
 							if (protectionLevel != null) {
@@ -303,7 +265,7 @@ public class ActionGameDeath implements HypixelEventClass {
 
 						} else {
 							Logger.warn("Player {} had team tag '{}' but team was not found. Sending to waiting spawn.", player.getUsername(), teamName);
-							MapsConfig.Position waitingPos = game.getMapEntry().getConfiguration().getLocations().getWaiting();
+							BedWarsMapsConfig.Position waitingPos = game.getMapEntry().getConfiguration().getLocations().getWaiting();
 							player.teleport(new Pos(waitingPos.x(), waitingPos.y(), waitingPos.z()));
 							player.setGameMode(GameMode.ADVENTURE);
 						}

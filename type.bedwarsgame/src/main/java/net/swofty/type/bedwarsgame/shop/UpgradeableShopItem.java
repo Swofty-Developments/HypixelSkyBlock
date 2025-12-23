@@ -5,8 +5,11 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
+import net.swofty.commons.BedwarsGameType;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
 import java.util.List;
+import java.util.function.Function;
 
 public abstract class UpgradeableShopItem extends ShopItem {
 
@@ -16,7 +19,7 @@ public abstract class UpgradeableShopItem extends ShopItem {
 
 	public UpgradeableShopItem(String name, String description, List<UpgradeableItemTier> tiers, Tag<Integer> upgradeTag) {
 		// The initial price and other details are taken from the first tier.
-		super(name, description, tiers.get(0).getPrice(), 1, tiers.get(0).getCurrency(), tiers.get(0).getMaterial());
+		super(name, description, tiers.getFirst().price(), 1, tiers.getFirst().currency(), tiers.getFirst().material());
 		this.tiers = tiers;
 		this.upgradeTag = upgradeTag;
 	}
@@ -25,7 +28,7 @@ public abstract class UpgradeableShopItem extends ShopItem {
 		if (level >= 0 && level < tiers.size()) {
 			return tiers.get(level);
 		}
-		return tiers.get(tiers.size() - 1); // Return max tier if level is out of bounds
+		return tiers.getLast(); // Return max tier if level is out of bounds
 	}
 
 	public int getNextLevel(Player player) {
@@ -37,9 +40,9 @@ public abstract class UpgradeableShopItem extends ShopItem {
 	}
 
 	@Override
-	public int getPrice() {
+	public Function<BedwarsGameType, Integer> getPrice() {
 		// This is not really used for upgradeable items as price is dynamic.
-		return 0;
+		return _ -> 0;
 	}
 
 	@Override
@@ -55,12 +58,12 @@ public abstract class UpgradeableShopItem extends ShopItem {
 			}
 		}
 
-		player.getInventory().addItemStack(ItemStack.of(tier.getMaterial()));
+		player.getInventory().addItemStack(ItemStack.of(tier.material()));
 		player.setTag(upgradeTag, levelToGive + 1);
 	}
 
 	@Override
-	public void handlePurchase(Player player) {
+	public void handlePurchase(BedWarsPlayer player, BedwarsGameType gameType) {
 		int nextLevel = getNextLevel(player);
 		if (nextLevel >= tiers.size()) {
 			return; // Already maxed out
@@ -70,8 +73,8 @@ public abstract class UpgradeableShopItem extends ShopItem {
 		// Deduct currency
 		var inventory = player.getInventory();
 		var slots = inventory.getItemStacks();
-		var material = tier.getCurrency().getMaterial();
-		int remaining = tier.getPrice();
+		var material = tier.currency().getMaterial();
+		int remaining = tier.price().apply(gameType);
 
 		for (int i = 0; i < slots.length && remaining > 0; i++) {
 			var stack = slots[i];

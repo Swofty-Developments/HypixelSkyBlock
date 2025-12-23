@@ -3,6 +3,7 @@ package net.swofty.type.generic.entity.hologram;
 import lombok.Builder;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
@@ -78,7 +79,7 @@ public enum PlayerHolograms {
                             HologramEntity existingEntity = perTypeCurrentEntities.get(i);
                             existingEntity.setText(lines[i]);
                             // Update existing hologram position
-                            existingEntity.setInstance(HypixelConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
+                            existingEntity.setInstance(existingEntity.getInstance(), hologram.pos.add(0, startY - (i * 0.3), 0));
                         } else {
                             // Add new hologram
                             HologramEntity entity = new HologramEntity(lines[i]);
@@ -108,7 +109,7 @@ public enum PlayerHolograms {
         double startY = hologram.text.length * 0.3 - 0.3;
         for (int i = 0; i < hologram.text.length; i++) {
             HologramEntity entity = new HologramEntity(hologram.text[i]);
-            entity.setInstance(HypixelConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
+            entity.setInstance(hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
             entity.addViewer(hologram.player);
             entities.add(entity);
         }
@@ -144,5 +145,6 @@ public enum PlayerHolograms {
         private final HypixelPlayer player;
         private final Pos pos;
         private final String[] text;
+        private final Instance instance;
     }
 }

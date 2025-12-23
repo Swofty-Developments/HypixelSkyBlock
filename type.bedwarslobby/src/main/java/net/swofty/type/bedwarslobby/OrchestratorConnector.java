@@ -58,8 +58,7 @@ public record OrchestratorConnector(HypixelPlayer player) {
             return;
         }
 
-        player.sendMessage("§7Searching for " + gameType.getDisplayName() + " game" + (map != null ? " on " + map : "") + "...");
-
+        //player.sendMessage("§7Searching for " + gameType.getDisplayName() + " game" + (map != null ? " on " + map : "") + "...");
         findGameServer(gameType, map).thenAccept(pair -> {
             if (pair.first != null) {
                 ChooseGameProtocolObject.ChooseGameMessage message =
@@ -71,7 +70,7 @@ public record OrchestratorConnector(HypixelPlayer player) {
                             return null;
                         });
 
-                player.sendMessage("§7Found game! Sending you to " + pair.first.shortName() + "...");
+                player.sendMessage("§aSending you to " + pair.first.shortName() + "!");
                 player.asProxyPlayer().transferToWithIndication(pair.first.uuid());
             } else {
                 player.sendMessage("§cNo available servers found! Please try again later.");

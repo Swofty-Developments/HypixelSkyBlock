@@ -9,7 +9,7 @@ import net.swofty.type.bedwarsgame.shop.ShopItem;
 public class FireballShopItem extends ShopItem {
 
 	public FireballShopItem() {
-		super("Fireball", "A powerful explosive that can be thrown to cause destruction.", 40, 1, Currency.IRON, Material.FIRE_CHARGE);
+		super("Fireball", "Right-click to launch! Great to knock\nback enemies walking on thin bridges.", 40, 1, Currency.IRON, Material.FIRE_CHARGE);
 	}
 
 	@Override

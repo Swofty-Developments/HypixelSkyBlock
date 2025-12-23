@@ -13,7 +13,8 @@ import net.swofty.type.bedwarsgame.entity.TntEntity;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -44,8 +45,8 @@ public class ActionGamePlace implements HypixelEventClass {
 		}
 
 		Point blockPosition = event.getBlockPosition();
-		for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : game.getMapEntry().getConfiguration().getTeams()) {
-			MapsConfig.PitchYawPosition spawnPos = team.getSpawn();
+		for (MapTeam team : game.getMapEntry().getConfiguration().getTeams().values()) {
+			BedWarsMapsConfig.PitchYawPosition spawnPos = team.getSpawn();
 			if (spawnPos != null) {
 				Point spawnPoint = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z());
 				if (blockPosition.distance(spawnPoint) <= 6) {

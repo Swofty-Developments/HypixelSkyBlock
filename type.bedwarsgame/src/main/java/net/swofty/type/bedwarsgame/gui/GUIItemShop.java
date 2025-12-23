@@ -5,13 +5,16 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
 import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.UpgradeableItemTier;
@@ -20,8 +23,10 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -70,9 +75,11 @@ public class GUIItemShop extends HypixelInventoryGUI {
 	);
 	private final ShopManager shopService = TypeBedWarsGameLoader.shopManager;
 	private int currentPage = 0;
+	private final Game game;
 
-	public GUIItemShop() {
+	public GUIItemShop(Game game) {
 		super("Item Shop", InventoryType.CHEST_6_ROW);
+		this.game = game;
 	}
 
 	@Override
@@ -221,7 +228,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 			}
 		});
 
-		populateShopItems(player);
+		populateShopItems();
 		updateItemStacks(getInventory(), getPlayer());
 	}
 
@@ -235,7 +242,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 		return builder;
 	}
 
-	private void populateShopItems(BedWarsPlayer player) {
+	private void populateShopItems() {
 		int[] shopSlots = {
 				19, 20, 21, 22, 23, 24, 25,
 				28, 29, 30, 31, 32, 33, 34,
@@ -245,6 +252,22 @@ public class GUIItemShop extends HypixelInventoryGUI {
 		for (int i = 0; i < shopSlots.length; i++) {
 			int slot = shopSlots[i];
 			int index = i;
+
+			if (currentPage == 8) {
+				set(new GUIItem(49) {
+
+					@Override
+					public ItemStack.Builder getItem(HypixelPlayer player) {
+						return ItemStackCreator.getStack("§aWhat are Rotating Items?", Material.PAPER, 1, List.of(
+								"§7Rotating Items are items that are",
+								"§7only available for a limited amount of",
+								"§7time. They may disappear and be",
+								"§7replaced with another temporary",
+								"§7item at any time."
+						));
+					}
+				});
+			}
 
 			set(new GUIClickableItem(slot) {
 				@Override
@@ -268,15 +291,15 @@ public class GUIItemShop extends HypixelInventoryGUI {
 						UpgradeableItemTier nextTier = upgradeableShopItem.getNextTier(player);
 						if (!hasPlayerEnoughCurrencyForTier(player, nextTier)) {
 							int owned = Arrays.stream(player.getInventory().getItemStacks())
-									.filter(s -> s.material() == nextTier.getCurrency().getMaterial())
+									.filter(s -> s.material() == nextTier.currency().getMaterial())
 									.mapToInt(ItemStack::amount)
 									.sum();
-							int needed = nextTier.getPrice() - owned;
-							player.sendMessage(noItalic(Component.text("You don't have enough " + nextTier.getCurrency().getName() + "! Need " + needed + " more!").color(NamedTextColor.RED)));
+							int needed = nextTier.price().apply(game.getBedwarsGameType()) - owned;
+							player.sendMessage(noItalic(Component.text("You don't have enough " + nextTier.currency().getName() + "! Need " + needed + " more!").color(NamedTextColor.RED)));
 							return;
 						}
-						upgradeableShopItem.handlePurchase(player);
-						player.sendMessage(noItalic(Component.text("You purchased " + nextTier.getName() + "!").color(NamedTextColor.GREEN)));
+						upgradeableShopItem.handlePurchase(player, game.getBedwarsGameType());
+						player.sendMessage(noItalic(Component.text("You purchased " + nextTier.name() + "!").color(NamedTextColor.GREEN)));
 						playBuySound(player);
 						updateGUI(player);
 						return;
@@ -286,7 +309,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 						player.sendMessage(noItalic(Component.text("You don't have enough " + shopItem.getCurrency().getName() + "!").color(NamedTextColor.RED)));
 						return;
 					}
-					if (!shopItem.isAvailable(player)) {
+					if (!shopItem.isOwned(player)) {
 						player.sendMessage(noItalic(Component.text("You cannot buy this item!").color(NamedTextColor.RED)));
 						return;
 					}
@@ -294,7 +317,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 						player.sendMessage(noItalic(Component.text("You already have a better item!").color(NamedTextColor.RED)));
 						return;
 					}
-					shopItem.handlePurchase(player);
+					shopItem.handlePurchase(player, game.getBedwarsGameType());
 					playBuySound(player);
 					updateGUI(player);
 				}
@@ -315,70 +338,65 @@ public class GUIItemShop extends HypixelInventoryGUI {
 
 					if (shopItem instanceof UpgradeableShopItem upgradeableShopItem) {
 						int nextLevel = upgradeableShopItem.getNextLevel(player);
-						if (nextLevel >= upgradeableShopItem.getTiers().size()) {
-							UpgradeableItemTier lastTier = upgradeableShopItem.getTiers().getLast();
-							return ItemStack.builder(lastTier.getMaterial())
-									.customName(noItalic(Component.text(upgradeableShopItem.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE)))
-									.lore(List.of(
-											noItalic(Component.text("You own the highest level available!").color(NamedTextColor.GREEN)),
-											Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
-											noItalic(Component.text(upgradeableShopItem.getDescription()).color(NamedTextColor.GRAY))
-									));
-						}
 						UpgradeableItemTier nextTier = upgradeableShopItem.getNextTier(player);
 						boolean hasEnough = hasPlayerEnoughCurrencyForTier(player, nextTier);
-						Component buy = hasEnough
-								? noItalic(Component.text("Click to buy!").color(NamedTextColor.YELLOW))
-								: noItalic(Component.text("You don't have enough " + nextTier.getCurrency().getName() + "!").color(NamedTextColor.RED));
-						return ItemStack.builder(nextTier.getMaterial())
-								.amount(1)
-								.customName(
-										hasEnough
-												? noItalic(Component.text(nextTier.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE))
-												: noItalic(Component.text(nextTier.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE).color(NamedTextColor.RED)
-										))
-								.lore(List.of(
-										noItalic(Component.text("Cost: ").color(NamedTextColor.GRAY)
-												.append(Component.text(nextTier.getPrice() + " " + nextTier.getCurrency().getName()).color(nextTier.getCurrency().getColor()))),
-										Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
-										noItalic(Component.text(upgradeableShopItem.getDescription()).color(NamedTextColor.GRAY)),
-										Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
-										buy
-								));
+
+						List<String> lore = new ArrayList<>();
+						lore.add(
+								"§7Cost: " + nextTier.currency().getColor() + nextTier.price().apply(game.getBedwarsGameType()) + " " + nextTier.currency().getName()
+						);
+						lore.add(" ");
+						if (upgradeableShopItem.getDescription() != null && !upgradeableShopItem.getDescription().isEmpty()) {
+							lore.addAll(StringUtility.splitByNewLine(upgradeableShopItem.getDescription(), "§7"));
+							lore.add(" ");
+						}
+						if (nextLevel >= upgradeableShopItem.getTiers().size()) {
+							lore.add("§cYou have already purchased the maximum tier of this item!");
+						} else if (hasEnough) {
+							lore.add("§eClick to buy!");
+						} else {
+							lore.add("§cYou don't have enough " + nextTier.currency().getName() + "!");
+						}
+						return ItemStackCreator.getStack(
+								hasEnough ? "§a" + nextTier.name() : "§c" + nextTier.name(),
+								nextTier.material(),
+								1,
+								lore
+						);
 					}
 
 					boolean hasEnough = hasPlayerEnoughCurrency(player, shopItem);
-					Component buy;
-					if (!hasEnough) {
-						buy = noItalic(Component.text("You don't have enough " + shopItem.getCurrency().getName() + "!").color(NamedTextColor.RED));
-					} else if (!shopItem.isAvailable(player)) {
-						buy = noItalic(Component.text("You cannot buy this item!").color(NamedTextColor.RED));
-					} else if (hasBetterItem(player, shopItem.getDisplay().material())) {
-						buy = noItalic(Component.text("You already have a better item!").color(NamedTextColor.RED));
-					} else {
-						buy = noItalic(Component.text("Click to buy!").color(NamedTextColor.YELLOW));
+					List<String> lore = new ArrayList<>();
+					lore.add(
+							"§7Cost: " + shopItem.getCurrency().getColor() + shopItem.getPrice().apply(game.getBedwarsGameType()) + " " + shopItem.getCurrency().getName()
+					);
+					lore.add(" ");
+					if (shopItem.getDescription() != null && !shopItem.getDescription().isEmpty()) {
+						lore.addAll(StringUtility.splitByNewLine(shopItem.getDescription(), "§7"));
+						lore.add(" ");
 					}
-					return shopItem.getDisplay().builder()
-							.amount(shopItem.getAmount())
-							.customName(hasEnough
-									? noItalic(Component.text(shopItem.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE))
-									: noItalic(Component.text(shopItem.getName()).decorationIfAbsent(ITALIC, TextDecoration.State.FALSE).color(NamedTextColor.RED)
-							))
-							.lore(List.of(
-									noItalic(Component.text("Cost: ").color(NamedTextColor.GRAY)
-											.append(Component.text(shopItem.getPrice() + " " + shopItem.getCurrency().getName()).color(shopItem.getCurrency().getColor()))),
-									Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
-									noItalic(Component.text(shopItem.getDescription()).color(NamedTextColor.GRAY)),
-									Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
-									buy
-							));
+
+					if (!hasEnough) {
+						lore.add("§cYou don't have enough " + shopItem.getCurrency().getName() + "!");
+					} else if (!shopItem.isOwned(player)) {
+						lore.add("§aUNLOCKED");
+					} else if (hasBetterItem(player, shopItem.getDisplay().material())) {
+						lore.add("§cYou already have a better item!");
+					} else {
+						lore.add("§eClick to buy!");
+					}
+
+					return ItemStackCreator.updateLore(
+							shopItem.getDisplay().builder().set(DataComponents.CUSTOM_NAME, Component.text((hasEnough && shopItem.isOwned(player)) ? "§a" + shopItem.getName() : "§c" + shopItem.getName())),
+							lore
+					);
 				}
 			});
 		}
 	}
 
 	private boolean hasPlayerEnoughCurrency(HypixelPlayer player, ShopItem shopItem) {
-		int requiredAmount = shopItem.getPrice();
+		int requiredAmount = shopItem.getPrice().apply(game.getBedwarsGameType());
 		Material currencyMaterial = shopItem.getCurrency().getMaterial();
 
 		int playerAmount = 0;
@@ -392,8 +410,8 @@ public class GUIItemShop extends HypixelInventoryGUI {
 	}
 
 	private boolean hasPlayerEnoughCurrencyForTier(HypixelPlayer player, UpgradeableItemTier tier) {
-		int required = tier.getPrice();
-		Material cur = tier.getCurrency().getMaterial();
+		int required = tier.price().apply(game.getBedwarsGameType());
+		Material cur = tier.currency().getMaterial();
 		int have = 0;
 		for (ItemStack it : player.getInventory().getItemStacks()) {
 			if (it.material() == cur) have += it.amount();

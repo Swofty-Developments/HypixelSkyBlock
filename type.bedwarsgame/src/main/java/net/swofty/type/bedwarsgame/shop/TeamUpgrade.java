@@ -1,9 +1,6 @@
 package net.swofty.type.bedwarsgame.shop;
 
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
@@ -12,7 +9,7 @@ import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
-import net.swofty.type.bedwarsgame.util.ColorUtil;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
 
 import java.util.Arrays;
 import java.util.List;
@@ -80,16 +77,8 @@ public abstract class TeamUpgrade {
 		game.getPlayers().stream()
 				.filter(p -> teamName.equals(p.getTeamName()))
 				.forEach(p -> {
-					String tt = p.getTag(Tag.String("teamColor"));
-					TextColor teamColor = ColorUtil.getTextColorByName(tt);
-					if (teamColor == null) {
-						teamColor = NamedTextColor.WHITE;
-					}
-					p.sendMessage(
-							Component.text(player.getUsername()).color(teamColor)
-									.append(Component.text(" purchased ").color(NamedTextColor.GREEN))
-									.append(Component.text(name + " " + nextTier.getLevel()).color(NamedTextColor.GOLD))
-					);
+					BedWarsMapsConfig.TeamKey teamKey = player.getTeamKey();
+					p.sendMessage(teamKey.chatColor() + " §apurchased §6" + name + " " + nextTier.getLevel() + "!");
 					p.setTag(Tag.Integer("upgrade_" + key), nextTier.getLevel());
 				});
 	}

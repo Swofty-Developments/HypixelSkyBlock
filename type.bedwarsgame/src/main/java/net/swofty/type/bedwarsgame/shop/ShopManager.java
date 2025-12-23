@@ -19,32 +19,32 @@ public class ShopManager {
 
 	private final ShopItem WOOL = new Wool();
 	private final ShopItem HARDENED_CLAY = new HardenedClay();
-	private final ShopItem GLASS = new BasicItem("Glass", "Great for bridging across islands.", 12, 4, Currency.IRON, Material.GLASS);
-	private final ShopItem ENDSTONE = new BasicItem("Endstone", "Great for bridging across islands.", 24, 12, Currency.IRON, Material.END_STONE);
+	private final ShopItem GLASS = new BasicItem("Blast-Proof Glass", "Immune to explosions.", 12, 4, Currency.IRON, Material.GLASS);
+	private final ShopItem ENDSTONE = new BasicItem("Endstone", "Solid block to defend your bed. w", 24, 12, Currency.IRON, Material.END_STONE);
 	private final ShopItem OBSIDIAN = new BasicItem("Obsidian", "Great for defending.", 4, 4, Currency.EMERALD, Material.OBSIDIAN);
-	private final ShopItem LADDER = new BasicItem("Ladder", "A simple ladder", 8, 8, Currency.IRON, Material.LADDER);
-	private final ShopItem PLANKS = new BasicItem("Planks", "Planks", 4, 16, Currency.GOLD, Material.OAK_PLANKS);
-	private final ShopItem STONE_SWORD = new ReplaceAdderItem("Stone Sword", "Weapon", 10, Currency.IRON, Material.STONE_SWORD);
-	private final ShopItem IRON_SWORD = new ReplaceAdderItem("Iron Sword", "Weapon", 7, Currency.GOLD, Material.IRON_SWORD);
-	private final ShopItem DIAMOND_SWORD = new ReplaceAdderItem("Diamond Sword", "Weapon", 4, Currency.EMERALD, Material.DIAMOND_SWORD);
-	private final ShopItem ENDER_PEARL = new ReplaceAdderItem("Ender Pearl", "Pearl is for pearling", 2, Currency.EMERALD, Material.ENDER_PEARL);
-	private final ShopItem TNT = new BasicItem("TNT", "Explosions are fun", 4, 1, Currency.GOLD, Material.TNT);
-	private final ShopItem WATER_BUCKET = new BasicItem("Water Bucket", "water...", 6, 1, Currency.GOLD, Material.WATER_BUCKET);
-	private final ShopItem BRIDGE_EGG = new BasicItem("Bridge Egg", "Good item for bridging...", 1, 1, Currency.EMERALD, Material.EGG);
-	private final ShopItem ARROW = new BasicItem("Arrows", "Charge your bows with these.", 3, 16, Currency.GOLD, Material.ARROW);
-	private final ShopItem BOW = new BowShopItem("Bow", "A simple bow", 6, Currency.IRON, EnchantmentList.EMPTY.with(Enchantment.POWER, 1));
+	private final ShopItem LADDER = new BasicItem("Ladder", "Useful to save cats stuck in trees.", 8, 8, Currency.IRON, Material.LADDER);
+	private final ShopItem PLANKS = new BasicItem("Wood", "Good block to defend your bed.\nStrong against pickaxes.", 4, 16, Currency.GOLD, Material.OAK_PLANKS);
+	private final ShopItem STONE_SWORD = new ReplaceAdderItem("Stone Sword", "", 10, Currency.IRON, Material.STONE_SWORD);
+	private final ShopItem IRON_SWORD = new ReplaceAdderItem("Iron Sword", "", 7, Currency.GOLD, Material.IRON_SWORD);
+	private final ShopItem DIAMOND_SWORD = new ReplaceAdderItem("Diamond Sword", "", (t) -> t.isDoublesSolo() ? 3 : 4, Currency.EMERALD, Material.DIAMOND_SWORD);
+	private final ShopItem ENDER_PEARL = new ReplaceAdderItem("Ender Pearl", "The quickest way to invade enemy\nbases.", 2, Currency.EMERALD, Material.ENDER_PEARL);
+	private final ShopItem TNT = new BasicItem("TNT", "Instantly ignites, appropriate to\nexpode things!", 4, 1, Currency.GOLD, Material.TNT);
+	private final ShopItem WATER_BUCKET = new BasicItem("Water Bucket", "Great to slow down approaching\nenemies. Can also protect against\nTNT.", 6, 1, Currency.GOLD, Material.WATER_BUCKET);
+	private final ShopItem BRIDGE_EGG = new BridgeEggShopItem();
+	private final ShopItem ARROW = new BasicItem("Arrows", "", 3, 16, Currency.GOLD, Material.ARROW);
+	private final ShopItem BOW = new BowShopItem("Bow", "", 6, Currency.IRON, EnchantmentList.EMPTY.with(Enchantment.POWER, 1));
 	private final ShopItem PICKAXE = new PickaxeShopItem();
 	private final ShopItem AXE = new AxeShopItem();
 	private final ShopItem FIREBALL = new FireballShopItem();
 	private final ShopItem POPUP_TOWER = new PopupTowerItem();
 	private final ShopItem GOLDEN_APPLE = new GappleShopItem();
-	private final ShopItem INVISIBILITY_POTION = new PotionShopItem("Invisibility Potion", "Makes you invisible for 30 seconds", 2, 1, Currency.EMERALD, PotionType.INVISIBILITY);
-	private final ShopItem SPEED_POTION = new PotionShopItem("Speed Potion", "Makes you fast for 30 seconds", 2, 1, Currency.EMERALD, PotionType.SWIFTNESS);
-	private final ShopItem JUMP_POTION = new PotionShopItem("Jump Potion", "Makes you jump higher for 45 seconds", 2, 1, Currency.EMERALD, PotionType.LEAPING);
-	private final ShopItem CHAINMAIL_ARMOR = new ArmorShopItem("Chainmail Armor", "Permanent chainmail armor", 24, Currency.IRON, Material.CHAINMAIL_BOOTS, Material.CHAINMAIL_LEGGINGS, 1);
-	private final ShopItem IRON_ARMOR = new ArmorShopItem("Iron Armor", "Permanent iron armor", 12, Currency.GOLD, Material.IRON_BOOTS, Material.IRON_LEGGINGS, 2);
-	private final ShopItem DIAMOND_ARMOR = new ArmorShopItem("Diamond Armor", "Permanent diamond armor", 6, Currency.EMERALD, Material.DIAMOND_BOOTS, Material.DIAMOND_LEGGINGS, 3);
-	private final ShopItem SHEARS = new BasicItem("Shears", "For quickly breaking wool", 20, 1, Currency.IRON, Material.SHEARS);
+	private final ShopItem INVISIBILITY_POTION = new PotionShopItem("Invisibility Potion (30 seconds)", "§9Complete invisibility (0:30).", 2, 1, Currency.EMERALD, PotionType.INVISIBILITY);
+	private final ShopItem SPEED_POTION = new PotionShopItem("Speed II Potion (45 seconds)", "§9Speed II (0:45).", 2, 1, Currency.EMERALD, PotionType.SWIFTNESS);
+	private final ShopItem JUMP_POTION = new PotionShopItem("Jump V Potion (45 seconds)", "§9Jump Boost V (0:45).", 2, 1, Currency.EMERALD, PotionType.LEAPING);
+	private final ShopItem CHAINMAIL_ARMOR = new ArmorShopItem("Permanent Chainmail Armor", "", 24, Currency.IRON, Material.CHAINMAIL_BOOTS, Material.CHAINMAIL_LEGGINGS, 1);
+	private final ShopItem IRON_ARMOR = new ArmorShopItem("Permanent Iron Armor", "", 12, Currency.GOLD, Material.IRON_BOOTS, Material.IRON_LEGGINGS, 2);
+	private final ShopItem DIAMOND_ARMOR = new ArmorShopItem("Permanent Diamond Armor", "", 6, Currency.EMERALD, Material.DIAMOND_BOOTS, Material.DIAMOND_LEGGINGS, 3);
+	private final ShopItem SHEARS = new BasicItem("Shears", "Great to get rid of wool. You will\nalways spawn with these shears.", 20, 1, Currency.IRON, Material.SHEARS);
 
 
 	public ShopManager() {

@@ -58,4 +58,8 @@ public enum BedwarsGameType {
 		}
 		return null;
 	}
+
+	public boolean isDoublesSolo() {
+		return this == SOLO || this == DOUBLES || this == ULTIMATE_DOUBLES;
+	}
 }

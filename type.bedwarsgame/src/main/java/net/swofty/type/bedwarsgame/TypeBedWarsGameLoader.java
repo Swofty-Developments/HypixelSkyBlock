@@ -35,7 +35,7 @@ import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItemHandler;
 import net.swofty.type.generic.HypixelConst;
@@ -97,11 +97,11 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	)).build();
 
 	@Getter
-	private static MapsConfig mapsConfig;
+	private static BedWarsMapsConfig mapsConfig;
 	private static InstanceManager instanceManager;
 	private static RegistryKey<@NotNull DimensionType> fullbrightDimension;
 	private static int nextMapIndex = 0;
-	private static List<MapsConfig.MapEntry> filteredMaps = new ArrayList<>();
+	private static List<BedWarsMapsConfig.MapEntry> filteredMaps = new ArrayList<>();
 	private Gson gson;
 
 	public static Game getGameById(@NotNull String gameId) {
@@ -118,7 +118,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	}
 
 	@SneakyThrows
-	public static Game createGame(MapsConfig.MapEntry entry) {
+	public static Game createGame(BedWarsMapsConfig.MapEntry entry) {
 		if (games.size() >= MAX_GAMES) {
 			return null;
 		}
@@ -131,7 +131,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 		return game;
 	}
 
-	private static synchronized MapsConfig.MapEntry nextMapEntry() {
+	private static synchronized BedWarsMapsConfig.MapEntry nextMapEntry() {
 		if (filteredMaps == null || filteredMaps.isEmpty()) return null;
 		if (nextMapIndex >= filteredMaps.size()) nextMapIndex = 0;
 		return filteredMaps.get(nextMapIndex++);
@@ -159,21 +159,21 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	public void onInitialize(MinecraftServer server) {
 		gson = new GsonBuilder().create();
 		instanceManager = MinecraftServer.getInstanceManager();
-		fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register("fullbright", DimensionType.builder().ambientLight(4f).build());
+		fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register("fullbright", DimensionType.builder().ambientLight(0.9f).build());
 		MinecraftServer.getGlobalEventHandler().addChild(combatFeatures.createNode());
 
 		Path mapsPath = Path.of("./configuration/bedwars/maps.json");
 		if (!Files.exists(mapsPath)) {
-			//logger.error("maps.json not found at {}", mapsPath.toAbsolutePath());
+			Logger.error("maps.json not found at {}", mapsPath.toAbsolutePath());
 			return;
 		}
 		try (InputStream in = Files.newInputStream(mapsPath)) {
 			byte[] bytes = in.readAllBytes();
 			String json = new String(bytes, StandardCharsets.UTF_8);
-			mapsConfig = gson.fromJson(json, MapsConfig.class);
+			mapsConfig = gson.fromJson(json, BedWarsMapsConfig.class);
 			filteredMaps = new ArrayList<>();
 			if (mapsConfig != null && mapsConfig.getMaps() != null) {
-				for (MapsConfig.MapEntry e : mapsConfig.getMaps()) {
+				for (BedWarsMapsConfig.MapEntry e : mapsConfig.getMaps()) {
 					var cfg = e.getConfiguration();
 					List<BedwarsGameType> types = (cfg != null) ? cfg.getTypes() : null;
 					boolean allowed;
@@ -187,7 +187,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 				}
 			}
 		} catch (Exception e) {
-			//logger.error("Failed to load maps.json", e);
+			Logger.error("Failed to load maps.json", e);
 			return;
 		}
 
@@ -289,7 +289,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	@Override
 	public LoaderValues getLoaderValues() {
 		return new LoaderValues(
-				(type) -> new Pos(-39.5, 72, 0, -90, 0), // Spawn position
+				(_) -> new Pos(-39.5, 72, 0, -90, 0), // Spawn position
 				false // Announce death messages
 		);
 	}

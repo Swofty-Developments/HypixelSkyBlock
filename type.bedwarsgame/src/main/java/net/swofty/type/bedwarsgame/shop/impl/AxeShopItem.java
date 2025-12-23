@@ -13,12 +13,12 @@ public class AxeShopItem extends UpgradeableShopItem {
     public static final Tag<Integer> AXE_UPGRADE_TAG = Tag.Integer("axe_upgrade");
 
     public AxeShopItem() {
-        super("Upgradeable Axe", "Permanently upgrade your axe.",
+        super("Upgradeable Axe", "This is an upgradable item.\nIt will lose 1 tier upn death!\n\nYou will permanently respawn with at\nleast the lowest tier.",
                 List.of(
-                        new UpgradeableItemTier("Wooden Axe", 10, Currency.IRON, Material.WOODEN_AXE),
-                        new UpgradeableItemTier("Stone Axe", 10, Currency.IRON, Material.STONE_AXE),
-                        new UpgradeableItemTier("Golden Axe", 3, Currency.GOLD, Material.GOLDEN_AXE),
-                        new UpgradeableItemTier("Diamond Axe", 6, Currency.GOLD, Material.DIAMOND_AXE)
+                        new UpgradeableItemTier("Wooden Axe (Efficiency I)", _ -> 10, Currency.IRON, Material.WOODEN_AXE),
+                        new UpgradeableItemTier("Stone Axe (Efficiency I)", _ ->10, Currency.IRON, Material.STONE_AXE),
+                        new UpgradeableItemTier("Golden Axe (Efficiency II)", _ ->3, Currency.GOLD, Material.GOLDEN_AXE),
+                        new UpgradeableItemTier("Diamond Axe (Efficiency III)", _ -> 6, Currency.GOLD, Material.DIAMOND_AXE)
                 ),
                 AXE_UPGRADE_TAG
         );

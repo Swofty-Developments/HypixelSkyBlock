@@ -1,13 +1,14 @@
 package net.swofty.type.bedwarsgame.events;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.minestom.server.entity.EntityType;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
-import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.event.player.PlayerStartDiggingEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.PlayerInventory;
@@ -18,16 +19,15 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.gui.GUIEnderChest;
-import net.swofty.type.bedwarsgame.gui.GUIItemShop;
 import net.swofty.type.bedwarsgame.gui.GUITeamChest;
-import net.swofty.type.bedwarsgame.gui.GUITeamShop;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -57,37 +57,24 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		}
 	}
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
-	public void run(PlayerEntityInteractEvent event) {
-		if (event.getTarget().getEntityType() == EntityType.VILLAGER) {
-			Player player = event.getPlayer();
-			if (!event.getTarget().hasTag(Tag.String("type"))) {
-				return;
-			}
-			String type = event.getTarget().getTag(Tag.String("type"));
-			switch (type) {
-				case "shop" -> new GUIItemShop().open((HypixelPlayer) player);
-				case "team" -> new GUITeamShop().open((HypixelPlayer) player);
-			}
-		}
-	}
-
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(ItemDropEvent event) {
 		ItemEntity itemEntity = new ItemEntity(event.getItemStack());
 		itemEntity.setInstance(event.getPlayer().getInstance(), event.getPlayer().getPosition().add(0, event.getPlayer().getEyeHeight(), 0));
-		itemEntity.setVelocity(event.getPlayer().getPosition().add(0, 1, 0).direction().mul(6));
+		itemEntity.setVelocity(event.getPlayer().getPosition().add(0, 0.3, 0).direction().mul(6));
 		itemEntity.setPickupDelay(Duration.ofMillis(500));
 		if (event.getPlayer().hasTag(Tag.String("gameId"))) {
 			switch (event.getItemStack().material().name()) {
-				case "stone_pickaxe":
+				case "wooden_sword":
+				case "wooden_pickaxe":
+				case "wooden_axe":
 				case "stone_axe":
 				case "iron_pickaxe":
 				case "iron_axe":
 				case "diamond_pickaxe":
 				case "diamond_axe":
 					event.setCancelled(true);
-					event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize("<red>You cannot drop your tools!</red>"));
+					event.getPlayer().sendMessage("§cYou cannot drop your tools!");
 					break;
 				default:
 					break;
@@ -104,7 +91,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			return;
 		}
 		if (block.registry().material() == Material.ENDER_CHEST) {
-			new GUIEnderChest().open((HypixelPlayer) player);
+			new GUIEnderChest().open(player);
 			return;
 		}
 
@@ -126,8 +113,10 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		String chestTeamName = null;
 		double closestDistance = Double.MAX_VALUE;
 
-		for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : game.getMapEntry().getConfiguration().getTeams()) {
-			MapsConfig.PitchYawPosition teamSpawn = team.getSpawn();
+		for (java.util.Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
+			TeamKey teamKey = entry.getKey();
+			MapTeam team = entry.getValue();
+			BedWarsMapsConfig.PitchYawPosition teamSpawn = team.getSpawn();
 			if (teamSpawn == null) continue;
 
 			double distance = Math.sqrt(
@@ -138,7 +127,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 			if (distance < 10.0 && distance < closestDistance) {
 				closestDistance = distance;
-				chestTeamName = team.getName();
+				chestTeamName = teamKey.getName();
 			}
 		}
 
@@ -193,7 +182,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		}
 
 		if (!BedWarsInventoryManipulator.canBeChested(itemInHand.material())) {
-			player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You cannot store this item in the chest!</red>"));
+			player.sendMessage("§cYou cannot store this item in the chest!");
 			event.setCancelled(true);
 			return;
 		}
@@ -213,13 +202,14 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 				}
 
 				if (itemAdded) {
+					player.sendMessage(Component.text("You deposited x" + itemInHand.amount(), NamedTextColor.GRAY).append(itemInHand.get(DataComponents.CUSTOM_NAME)).append(Component.text("into your ender chest.", NamedTextColor.GRAY)));
 					player.setItemInMainHand(ItemStack.AIR);
 				} else {
-					player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Your ender chest is full!</red>"));
+					player.sendMessage("§cYour ender chest is full!");
 				}
 			} catch (Exception e) {
 				Logger.error("Failed to add item to ender chest for player {}: {}", player.getUsername(), e.getMessage());
-				player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Failed to add item to ender chest!</red>"));
+				player.sendMessage("§cFailed to add item to ender chest!");
 			}
 			return;
 		}
@@ -234,8 +224,10 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			String chestTeamName = null;
 			double closestDistance = Double.MAX_VALUE;
 
-			for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : game.getMapEntry().getConfiguration().getTeams()) {
-				MapsConfig.PitchYawPosition teamSpawn = team.getSpawn();
+			for (java.util.Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
+				TeamKey teamKey = entry.getKey();
+				MapTeam team = entry.getValue();
+				BedWarsMapsConfig.PitchYawPosition teamSpawn = team.getSpawn();
 				if (teamSpawn == null) continue;
 
 				double distance = Math.sqrt(
@@ -246,7 +238,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 				if (distance < 10.0 && distance < closestDistance) {
 					closestDistance = distance;
-					chestTeamName = team.getName();
+					chestTeamName = teamKey.getName();
 				}
 			}
 
@@ -257,7 +249,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 			boolean sameTeam = chestTeamName.equals(playerTeamName);
 			if (!sameTeam && game.getTeamManager().getTeamBedStatus().getOrDefault(chestTeamName, false)) {
-				player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You can only access enemy team chests if their bed is destroyed!</red>"));
+				player.sendMessage(MiniMessage.miniMessage().deserialize("§cYou can only access enemy team chests if their bed is destroyed!"));
 				return;
 			}
 
@@ -275,11 +267,11 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 				if (itemAdded) {
 					player.setItemInMainHand(ItemStack.AIR);
 				} else {
-					player.sendMessage(MiniMessage.miniMessage().deserialize("<red>The team chest is full!</red>"));
+					player.sendMessage("§cThe team chest is full!");
 				}
 			} catch (Exception e) {
 				Logger.error("Failed to add item to team chest for team {}: {}", chestTeamName, e.getMessage());
-				player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Failed to add item to chest!</red>"));
+				player.sendMessage("§cFailed to add item to chest!");
 			}
 		}
 	}

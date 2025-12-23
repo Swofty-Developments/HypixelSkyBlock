@@ -14,7 +14,6 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.party.PartyManager;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerChatEvent event) {
-		final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+		final BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		event.setCancelled(true);
 
 		Game game = TypeBedWarsGameLoader.getPlayerGame(player);
@@ -60,7 +59,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 		if (game.getBedwarsGameType() == BedwarsGameType.SOLO) {
 			receivers = game.getPlayers();
 		} else {
-			receivers = game.getTeamManager().getPlayersOnTeam(game.getTeamManager().getPlayerTeamName(player)).stream().map(p -> (BedWarsPlayer) p).toList();
+			receivers = game.getTeamManager().getPlayersOnTeam(player.getTeamKey()).stream().map(p -> (BedWarsPlayer) p).toList();
 		}
 
 		String levelPrefix = LevelColor.constructLevelBrackets(

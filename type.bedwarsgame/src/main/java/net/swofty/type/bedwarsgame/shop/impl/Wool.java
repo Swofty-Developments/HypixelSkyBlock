@@ -1,33 +1,37 @@
 package net.swofty.type.bedwarsgame.shop.impl;
 
-import net.kyori.adventure.key.Key;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
-import org.intellij.lang.annotations.Subst;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
 
 public class Wool extends ShopItem {
 
 	public Wool() {
-		super("Wool", "Great for bridging across islands. Turns into your team's color.", 4, 16, Currency.IRON, Material.WHITE_WOOL);
+		super("Wool", "Great for bridging across islands.\nTurns into your team's color.", 4, 16, Currency.IRON, Material.WHITE_WOOL);
+	}
+
+	private Material mapTeamToWool(BedWarsMapsConfig.TeamKey teamKey) {
+		return switch (teamKey) {
+			case RED -> Material.RED_WOOL;
+			case BLUE -> Material.BLUE_WOOL;
+			case GREEN -> Material.GREEN_WOOL;
+			case YELLOW -> Material.YELLOW_WOOL;
+			case AQUA -> Material.LIGHT_BLUE_WOOL;
+			case PINK -> Material.PINK_WOOL;
+			case WHITE -> Material.WHITE_WOOL;
+			case GRAY -> Material.GRAY_WOOL;
+		};
 	}
 
 	@Override
 	public void onPurchase(Player player) {
-		@Subst("white_wool") String woolName;
-		if (!player.hasTag(Tag.String("javaColor"))) {
-			woolName = "white_wool";
-		} else {
-			woolName = player.getTag(Tag.String("javaColor")) + "_wool";
-		}
-		Material whiteWool = Material.fromKey(Key.key(Key.MINECRAFT_NAMESPACE, woolName));
-		if (whiteWool == null) {
-			whiteWool = Material.WHITE_WOOL;
-		}
-		player.getInventory().addItemStack(ItemStack.builder(whiteWool)
+		BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
+		Material woolMaterial = mapTeamToWool(bwPlayer.getTeamKey());
+		player.getInventory().addItemStack(ItemStack.builder(woolMaterial)
 				.amount(16)
 				.build());
 	}

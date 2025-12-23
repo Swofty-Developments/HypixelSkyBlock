@@ -33,11 +33,8 @@
             "max": 100
           }
         },
-        "teams": [
-          {
-            "name": "red",
-            "color": "red",
-            "javacolor": "red",
+        "teams": {
+          "RED": {
             "shop": {
               "item": {
                 "x": -34.5,
@@ -46,7 +43,7 @@
               },
               "team": {
                 "x": -44.5,
-                "y": 63.00,
+                "y": 63.0,
                 "z": -87
               }
             },
@@ -73,10 +70,7 @@
               "z": -89.5
             }
           },
-          {
-            "name": "blue",
-            "color": "blue",
-            "javacolor": "blue",
+          "BLUE": {
             "shop": {
               "item": {
                 "x": 45.5,
@@ -85,7 +79,7 @@
               },
               "team": {
                 "x": 35.5,
-                "y": 67.00,
+                "y": 67.0,
                 "z": -87
               }
             },
@@ -112,10 +106,7 @@
               "z": -89.5
             }
           },
-          {
-            "name": "green",
-            "color": "green",
-            "javacolor": "green",
+          "GREEN": {
             "shop": {
               "item": {
                 "x": 88,
@@ -124,7 +115,7 @@
               },
               "team": {
                 "x": 88,
-                "y": 67.00,
+                "y": 67.0,
                 "z": -44.5
               }
             },
@@ -151,10 +142,7 @@
               "z": -39.5
             }
           },
-          {
-            "name": "yellow",
-            "color": "yellow",
-            "javacolor": "yellow",
+          "YELLOW": {
             "shop": {
               "item": {
                 "x": 88,
@@ -190,10 +178,7 @@
               "z": 40
             }
           },
-          {
-            "name": "aqua",
-            "color": "aqua",
-            "javacolor": "cyan",
+          "AQUA": {
             "shop": {
               "item": {
                 "x": 35.5,
@@ -229,10 +214,7 @@
               "z": 90.40293169875406
             }
           },
-          {
-            "name": "white",
-            "color": "white",
-            "javacolor": "white",
+          "WHITE": {
             "shop": {
               "item": {
                 "x": -44.5,
@@ -268,10 +250,7 @@
               "z": 90.53311018391065
             }
           },
-          {
-            "name": "pink",
-            "color": "light_purple",
-            "javacolor": "pink",
+          "PINK": {
             "shop": {
               "item": {
                 "x": -87,
@@ -307,10 +286,7 @@
               "z": 40.45822771042927
             }
           },
-          {
-            "name": "gray",
-            "color": "gray",
-            "javacolor": "gray",
+          "GRAY": {
             "shop": {
               "item": {
                 "x": -87,
@@ -346,7 +322,7 @@
               "z": -39.5
             }
           }
-        ],
+        },
         "locations": {
           "spectator": {
             "x": 0,
@@ -448,11 +424,8 @@
             "max": 100.0
           }
         },
-        "teams": [
-          {
-            "name": "pink",
-            "color": "light_purple",
-            "javacolor": "pink",
+        "teams": {
+          "PINK": {
             "shop": {
               "item": {
                 "x": -82.02040193311008,
@@ -492,10 +465,7 @@
               "z": 31.5
             }
           },
-          {
-            "name": "white",
-            "color": "white",
-            "javacolor": "white",
+          "WHITE": {
             "shop": {
               "item": {
                 "x": -37.57120528835294,
@@ -537,10 +507,7 @@
               "z": 85.5
             }
           },
-          {
-            "name": "blue",
-            "color": "blue",
-            "javacolor": "blue",
+          "BLUE": {
             "shop": {
               "item": {
                 "x": 38.651112821199156,
@@ -582,10 +549,7 @@
               "z": -86.5
             }
           },
-          {
-            "name": "green",
-            "color": "green",
-            "javacolor": "green",
+          "GREEN": {
             "shop": {
               "item": {
                 "x": 83.02754376288796,
@@ -627,17 +591,14 @@
               "z": -31.54334025712658
             }
           },
-          {
-            "name": "gray",
-            "color": "gray",
-            "javacolor": "gray",
+          "GRAY": {
             "shop": {
               "item": {
                 "x": -81.97052279318929,
                 "y": 66.0,
                 "z": -37.314472093522035,
                 "pitch": -1.4999375,
-                "yaw": -1.2207031E-4
+                "yaw": -0.00012207031
               },
               "team": {
                 "x": -81.90479994981206,
@@ -672,10 +633,7 @@
               "z": -32.5
             }
           },
-          {
-            "name": "red",
-            "color": "red",
-            "javacolor": "red",
+          "RED": {
             "shop": {
               "item": {
                 "x": -25.54262467705194,
@@ -717,10 +675,7 @@
               "z": -86.5
             }
           },
-          {
-            "name": "aqua",
-            "color": "aqua",
-            "javacolor": "cyan",
+          "AQUA": {
             "shop": {
               "item": {
                 "x": 26.505141024953048,
@@ -762,10 +717,7 @@
               "z": 85.5
             }
           },
-          {
-            "name": "yellow",
-            "color": "yellow",
-            "javacolor": "yellow",
+          "YELLOW": {
             "shop": {
               "item": {
                 "x": 82.98866742168755,
@@ -807,7 +759,7 @@
               "z": 31.5
             }
           }
-        ],
+        },
         "locations": {
           "waiting": {
             "x": 0.0,
@@ -909,11 +861,8 @@
             "max": 100.0
           }
         },
-        "teams": [
-          {
-            "name": "gray",
-            "color": "gray",
-            "javacolor": "gray",
+        "teams": {
+          "GRAY": {
             "shop": {
               "item": {
                 "x": -90.01983756947546,
@@ -955,10 +904,7 @@
               "z": -33.47895599279666
             }
           },
-          {
-            "name": "pink",
-            "color": "light_purple",
-            "javacolor": "pink",
+          "PINK": {
             "shop": {
               "item": {
                 "x": -89.98054541737716,
@@ -1000,10 +946,7 @@
               "z": 34.472998109442024
             }
           },
-          {
-            "name": "red",
-            "color": "red",
-            "javacolor": "red",
+          "RED": {
             "shop": {
               "item": {
                 "x": -27.561475984770826,
@@ -1045,10 +988,7 @@
               "z": -95.5
             }
           },
-          {
-            "name": "white",
-            "color": "white",
-            "javacolor": "white",
+          "WHITE": {
             "shop": {
               "item": {
                 "x": -39.619789596622844,
@@ -1090,10 +1030,7 @@
               "z": 94.5
             }
           },
-          {
-            "name": "blue",
-            "color": "blue",
-            "javacolor": "blue",
+          "BLUE": {
             "shop": {
               "item": {
                 "x": 40.398926387768824,
@@ -1135,10 +1072,7 @@
               "z": -95.5
             }
           },
-          {
-            "name": "aqua",
-            "color": "aqua",
-            "javacolor": "cyan",
+          "AQUA": {
             "shop": {
               "item": {
                 "x": 28.41990219468591,
@@ -1180,10 +1114,7 @@
               "z": 95.53276513823602
             }
           },
-          {
-            "name": "green",
-            "color": "green",
-            "javacolor": "green",
+          "GREEN": {
             "shop": {
               "item": {
                 "x": 90.97755565005453,
@@ -1225,10 +1156,7 @@
               "z": -33.41313094325075
             }
           },
-          {
-            "name": "yellow",
-            "color": "yellow",
-            "javacolor": "yellow",
+          "YELLOW": {
             "shop": {
               "item": {
                 "x": 90.99918379500014,
@@ -1270,7 +1198,7 @@
               "z": 34.71001348863422
             }
           }
-        ],
+        },
         "locations": {
           "waiting": {
             "x": 0.0,
@@ -1372,11 +1300,8 @@
             "max": 100.0
           }
         },
-        "teams": [
-          {
-            "name": "gray",
-            "color": "gray",
-            "javacolor": "gray",
+        "teams": {
+          "GRAY": {
             "shop": {
               "item": {
                 "x": -85.0108875529608,
@@ -1418,10 +1343,7 @@
               "z": -25.483414467520394
             }
           },
-          {
-            "name": "pink",
-            "color": "light_purple",
-            "javacolor": "pink",
+          "PINK": {
             "shop": {
               "item": {
                 "x": -85.04315008957276,
@@ -1463,10 +1385,7 @@
               "z": 26.52547932011008
             }
           },
-          {
-            "name": "green",
-            "color": "green",
-            "javacolor": "green",
+          "GREEN": {
             "shop": {
               "item": {
                 "x": 92.04099251477956,
@@ -1508,10 +1427,7 @@
               "z": -25.561788917213132
             }
           },
-          {
-            "name": "yellow",
-            "color": "yellow",
-            "javacolor": "yellow",
+          "YELLOW": {
             "shop": {
               "item": {
                 "x": 92.00019708368568,
@@ -1553,10 +1469,7 @@
               "z": 26.495665102706702
             }
           },
-          {
-            "name": "red",
-            "color": "red",
-            "javacolor": "red",
+          "RED": {
             "shop": {
               "item": {
                 "x": -16.42898002455651,
@@ -1598,10 +1511,7 @@
               "z": -90.57548230296806
             }
           },
-          {
-            "name": "white",
-            "color": "white",
-            "javacolor": "white",
+          "WHITE": {
             "shop": {
               "item": {
                 "x": -28.574379786349034,
@@ -1643,10 +1553,7 @@
               "z": 91.23618220055619
             }
           },
-          {
-            "name": "blue",
-            "color": "blue",
-            "javacolor": "blue",
+          "BLUE": {
             "shop": {
               "item": {
                 "x": 35.485826946930615,
@@ -1688,10 +1595,7 @@
               "z": -90.49292341421382
             }
           },
-          {
-            "name": "aqua",
-            "color": "aqua",
-            "javacolor": "cyan",
+          "AQUA": {
             "shop": {
               "item": {
                 "x": 23.46475353590089,
@@ -1733,7 +1637,7 @@
               "z": 91.54059238014068
             }
           }
-        ],
+        },
         "locations": {
           "waiting": {
             "x": 0.0,

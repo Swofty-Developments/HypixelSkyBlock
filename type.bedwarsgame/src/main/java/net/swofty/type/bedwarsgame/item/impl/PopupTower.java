@@ -8,6 +8,8 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
@@ -19,26 +21,16 @@ public class PopupTower extends SimpleInteractableItem {
 		super("popup_tower");
 	}
 
-	private static Block mapColorToWool(String color) {
-		if (color == null) return Block.WHITE_WOOL;
-		return switch (color.toLowerCase()) {
-			case "white" -> Block.WHITE_WOOL;
-			case "orange" -> Block.ORANGE_WOOL;
-			case "magenta" -> Block.MAGENTA_WOOL;
-			case "light_blue", "lightblue" -> Block.LIGHT_BLUE_WOOL;
-			case "yellow" -> Block.YELLOW_WOOL;
-			case "lime" -> Block.LIME_WOOL;
-			case "pink" -> Block.PINK_WOOL;
-			case "gray" -> Block.GRAY_WOOL;
-			case "light_gray", "lightgray" -> Block.LIGHT_GRAY_WOOL;
-			case "cyan" -> Block.CYAN_WOOL;
-			case "purple" -> Block.PURPLE_WOOL;
-			case "blue" -> Block.BLUE_WOOL;
-			case "brown" -> Block.BROWN_WOOL;
-			case "green" -> Block.GREEN_WOOL;
-			case "red" -> Block.RED_WOOL;
-			case "black" -> Block.BLACK_WOOL;
-			default -> Block.WHITE_WOOL;
+	private static Block mapTeamToBlock(BedWarsMapsConfig.TeamKey teamKey) {
+		return switch (teamKey) {
+			case RED -> Block.RED_WOOL;
+			case BLUE -> Block.BLUE_WOOL;
+			case GREEN -> Block.GREEN_WOOL;
+			case YELLOW -> Block.YELLOW_WOOL;
+			case AQUA -> Block.LIGHT_BLUE_WOOL;
+			case PINK -> Block.PINK_WOOL;
+			case WHITE -> Block.WHITE_WOOL;
+			case GRAY -> Block.GRAY_WOOL;
 		};
 	}
 
@@ -76,12 +68,9 @@ public class PopupTower extends SimpleInteractableItem {
 				{0, 1, 1, 1, 0}
 		};
 
-		String teamColor = event.getPlayer().getTag(net.minestom.server.tag.Tag.String("teamColor"));
-		Block wool = mapColorToWool(teamColor);
-
 		AtomicInteger layerCounter = new AtomicInteger(0);
 
-		var player = event.getPlayer();
+		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		Pos playerPos = player.getPosition();
 		double dx = playerPos.x() - basePos.x();
 		double dz = playerPos.z() - basePos.z();
@@ -142,7 +131,7 @@ public class PopupTower extends SimpleInteractableItem {
 					try {
 						if (val == 1) {
 							if (instance.getBlock(target).isAir()) {
-								instance.setBlock(target, wool);
+								instance.setBlock(target, mapTeamToBlock(player.getTeamKey()));
 							}
 						} else if (val == 5) {
 							try {

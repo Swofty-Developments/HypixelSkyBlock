@@ -11,11 +11,14 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgeneric.game.MapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
+import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class ActionGameBreak implements HypixelEventClass {
@@ -41,35 +44,34 @@ public class ActionGameBreak implements HypixelEventClass {
 		Point brokenBlockPosition = event.getBlockPosition();
 
 		// Check if it's a part of any team's bed first
-		for (MapsConfig.MapEntry.MapConfiguration.MapTeam team : game.getMapEntry().getConfiguration().getTeams()) {
-			MapsConfig.TwoBlockPosition bedPos = team.getBed();
+		for (Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
+			TeamKey teamKey = entry.getKey();
+			MapTeam team = entry.getValue();
+			BedWarsMapsConfig.TwoBlockPosition bedPos = team.getBed();
 			if (bedPos == null || bedPos.feet() == null || bedPos.head() == null) continue;
 
 			Point feetPoint = new Pos(bedPos.feet().x(), bedPos.feet().y(), bedPos.feet().z());
 			Point headPoint = new Pos(bedPos.head().x(), bedPos.head().y(), bedPos.head().z());
 
 			if (brokenBlockPosition.sameBlock(feetPoint) || brokenBlockPosition.sameBlock(headPoint)) {
-				isTeamBedPart = true;
 				// This is team X's bed
-				if (team.getName().equalsIgnoreCase(playerTeamName)) {
+				if (teamKey.getName().equalsIgnoreCase(playerTeamName)) {
 					player.sendMessage("§cYou cannot break your own team's bed!");
 					event.setCancelled(true);
 					return;
 				}
-				if (!game.getTeamManager().getTeamBedStatus().getOrDefault(team.getName(), false)) {
+				if (!game.getTeamManager().isBedAlive(teamKey)) {
 					// Bed already destroyed logically, block might linger if not cleared perfectly
 					event.setCancelled(true);
 					return;
 				}
-				game.recordBedDestroyed(team.getName());
+				game.recordBedDestroyed(teamKey);
 				player.getInstance().setBlock(feetPoint, Block.AIR);
 				player.getInstance().setBlock(headPoint, Block.AIR);
 
-				String breakerTeamColor = player.getTag(Tag.String("teamColor"));
-				if (breakerTeamColor == null) breakerTeamColor = "gray";
 				for (BedWarsPlayer p : game.getPlayers()) {
-					p.sendMessage(String.format("§c§lBED DESTRUCTION §r§cTeam %s's bed was destroyed by <%s>%s</%s>!",
-							team.getName(), breakerTeamColor, player.getUsername(), breakerTeamColor));
+					p.sendMessage(String.format("§c§lBED DESTRUCTION §r§cTeam %s's bed was destroyed by %s%s!",
+							teamKey.getName(), teamKey.chatColor(), player.getUsername()));
 				}
 				event.setCancelled(true); // handled the bed destruction and block removal
 				return;
@@ -88,5 +90,4 @@ public class ActionGameBreak implements HypixelEventClass {
 			}
 		}
 	}
-
 }
