@@ -70,6 +70,11 @@ public class ProxyAPI {
                 // Handle message
                 JSONObject response = handler.onMessage(json);
 
+                if (response == null) {
+                    // Don't send a response if null
+                    return;
+                }
+
                 // Send response back to service with this server's UUID
                 RedisAPI.getInstance().publishMessage(
                         serviceId,

@@ -17,6 +17,7 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.commons.item.reforge.Reforge;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.gems.GemRarity;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
@@ -24,6 +25,7 @@ import net.swofty.type.skyblockgeneric.item.components.*;
 import net.swofty.type.skyblockgeneric.item.handlers.lore.LoreConfig;
 import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
 import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
+import net.swofty.type.skyblockgeneric.potion.PotionEffectType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,318 +36,392 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ItemLore {
-    private final ArrayList<Component> loreLines = new ArrayList<>();
+	private final ArrayList<Component> loreLines = new ArrayList<>();
 
-    @Getter
-    private ItemStack stack;
+	@Getter
+	private ItemStack stack;
 
-    public ItemLore(ItemStack stack) {
-        this.stack = stack;
-    }
+	public ItemLore(ItemStack stack) {
+		this.stack = stack;
+	}
 
-    @SneakyThrows
-    public void updateLore(@Nullable SkyBlockPlayer player) {
-        SkyBlockItem item = new SkyBlockItem(stack);
-        @Nullable ItemType type = item.getAttributeHandler().getPotentialType();
-        ItemAttributeHandler handler = item.getAttributeHandler();
+	@SneakyThrows
+	public void updateLore(@Nullable SkyBlockPlayer player) {
+		SkyBlockItem item = new SkyBlockItem(stack);
+		@Nullable ItemType type = item.getAttributeHandler().getPotentialType();
+		ItemAttributeHandler handler = item.getAttributeHandler();
 
-        Rarity rarity = handler.getRarity();
-        boolean recombobulated = handler.isRecombobulated();
-        ItemStatistics statistics = handler.getStatistics();
+		Rarity rarity = handler.getRarity();
+		boolean recombobulated = handler.isRecombobulated();
+		ItemStatistics statistics = handler.getStatistics();
 
-        if (recombobulated) rarity = rarity.upgrade();
+		if (recombobulated) rarity = rarity.upgrade();
 
-        String displayName;
-        if (handler.getPotentialType() != null) {
-            displayName = handler.getPotentialType().getDisplayName();
-        } else {
-            Material material = stack.material();
-            displayName = StringUtility.toNormalCase(material.key().value());
-        }
-        String displayRarity = rarity.getDisplay();
+		String displayName;
+		if (item.hasComponent(CustomDisplayNameComponent.class)) {
+			CustomDisplayNameComponent customDisplayName = item.getComponent(CustomDisplayNameComponent.class);
+			displayName = customDisplayName.getDisplayName(item);
+		} else {
+			// Check for potion data FIRST to generate proper potion display name
+			// This must be checked before getPotentialType() since POTION is a valid ItemType
+			// but we want potions with effect data to show "Speed Potion I" instead of "Water Bottle"
+			ItemAttributePotionData.PotionData potionDataForName = handler.getPotionData();
+			if (potionDataForName != null && potionDataForName.getEffectType() != null
+					&& !potionDataForName.getEffectType().equals("WATER")) {
+				PotionEffectType effectForName = PotionEffectType.fromName(potionDataForName.getEffectType());
+				if (effectForName != null) {
+					String effectDisplay = effectForName.getLevelDisplay(potionDataForName.getLevel());
+					if (potionDataForName.isSplash()) {
+						displayName = effectDisplay + " Splash Potion";
+					} else {
+						displayName = effectDisplay + " Potion";
+					}
+				} else if (handler.getPotentialType() != null) {
+					displayName = handler.getPotentialType().getDisplayName();
+				} else {
+					Material material = stack.material();
+					displayName = StringUtility.toNormalCase(material.key().value());
+				}
+			} else if (handler.getPotentialType() != null) {
+				displayName = handler.getPotentialType().getDisplayName();
+			} else {
+				Material material = stack.material();
+				displayName = StringUtility.toNormalCase(material.key().value());
+			}
+		}
+		String displayRarity = rarity.getDisplay();
 
-        if (item.hasComponent(LoreUpdateComponent.class)) {
-            LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);
-            if (loreUpdateComponent.isAbsolute()) {
-                LoreConfig loreConfig = loreUpdateComponent.getHandler();
-                String forcedDisplayName = StringUtility.toNormalCase(item.getAttributeHandler().getTypeAsString());
+		if (item.hasComponent(LoreUpdateComponent.class)) {
+			LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);
+			if (loreUpdateComponent.isAbsolute()) {
+				LoreConfig loreConfig = loreUpdateComponent.getHandler();
+				String forcedDisplayName;
+				if (item.hasComponent(CustomDisplayNameComponent.class)) {
+					CustomDisplayNameComponent customDisplayName = item.getComponent(CustomDisplayNameComponent.class);
+					forcedDisplayName = customDisplayName.getDisplayName(item);
+				} else {
+					forcedDisplayName = StringUtility.toNormalCase(item.getAttributeHandler().getTypeAsString());
+				}
 
-                if (loreConfig.displayNameGenerator() != null) {
-                    forcedDisplayName = loreConfig.displayNameGenerator().apply(item, player);
-                }
-                if (loreConfig.loreGenerator() != null) {
-                    loreConfig.loreGenerator().apply(item, player).forEach(line -> addLoreLine("§7" + line));
-                }
+				if (loreConfig.displayNameGenerator() != null) {
+					forcedDisplayName = loreConfig.displayNameGenerator().apply(item, player);
+				}
+				if (loreConfig.loreGenerator() != null) {
+					loreConfig.loreGenerator().apply(item, player).forEach(line -> addLoreLine("§7" + line));
+				}
 
-                this.stack = stack
-                        .with(DataComponents.LORE, loreLines)
-                        .with(DataComponents.CUSTOM_NAME, Component.text(forcedDisplayName).decoration(TextDecoration.ITALIC, false));
-                return;
-            }
-        }
+				this.stack = stack
+						.with(DataComponents.LORE, loreLines)
+						.with(DataComponents.CUSTOM_NAME, Component.text(forcedDisplayName).decoration(TextDecoration.ITALIC, false));
+				return;
+			}
+		}
 
-        if (item.hasComponent(ExtraUnderNameComponent.class)) {
-            ExtraUnderNameComponent underNameDisplay = item.getComponent(ExtraUnderNameComponent.class);
-            underNameDisplay.getDisplays().forEach(line -> addLoreLine("§8" + line));
+		if (item.hasComponent(ExtraUnderNameComponent.class)) {
+			ExtraUnderNameComponent underNameDisplay = item.getComponent(ExtraUnderNameComponent.class);
+			underNameDisplay.getDisplays().forEach(line -> addLoreLine("§8" + line));
 
-            if (type != null && CollectionCategories.getCategory(type) != null) {
-                addLoreLine("§8Collection Item");
-            }
+			if (type != null && CollectionCategories.getCategory(type) != null) {
+				addLoreLine("§8Collection Item");
+			}
 
-            addLoreLine(null);
-        } else {
-            if (type != null && CollectionCategories.getCategory(type) != null) {
-                addLoreLine("§8Collection Item");
-                addLoreLine(null);
-            }
-        }
+			addLoreLine(null);
+		} else {
+			if (type != null && CollectionCategories.getCategory(type) != null) {
+				addLoreLine("§8Collection Item");
+				addLoreLine(null);
+			}
+		}
 
-        // Handle Item Statistics
-        if (handler.isMiningTool()) {
-            addLoreLine("§8Breaking Power " + handler.getBreakingPower());
-            addLoreLine(null);
-        }
+		// Handle Item Statistics
+		if (handler.isMiningTool()) {
+			addLoreLine("§8Breaking Power " + handler.getBreakingPower());
+			addLoreLine(null);
+		}
 
-        List<ItemStatistic> itemStatistics = new ArrayList<>(List.of(ItemStatistic.DAMAGE, ItemStatistic.STRENGTH, ItemStatistic.CRIT_CHANCE, ItemStatistic.CRIT_DAMAGE,
-                ItemStatistic.SEA_CREATURE_CHANCE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.HEALTH, ItemStatistic.DEFENSE,
-                ItemStatistic.SPEED, ItemStatistic.INTELLIGENCE, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK, ItemStatistic.TRUE_DEFENSE, ItemStatistic.HEALTH_REGEN,
-                ItemStatistic.MENDING, ItemStatistic.VITALITY, ItemStatistic.FEROCITY, ItemStatistic.MINING_SPEED, ItemStatistic.MINING_FORTUNE,
-                ItemStatistic.FARMING_FORTUNE, ItemStatistic.FORAGING_FORTUNE, ItemStatistic.BONUS_PEST_CHANCE, ItemStatistic.COLD_RESISTANCE,ItemStatistic.PRISTINE,
-                ItemStatistic.SWING_RANGE));
+		List<ItemStatistic> itemStatistics = new ArrayList<>(List.of(ItemStatistic.DAMAGE, ItemStatistic.STRENGTH, ItemStatistic.CRIT_CHANCE, ItemStatistic.CRIT_DAMAGE,
+				ItemStatistic.SEA_CREATURE_CHANCE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.HEALTH, ItemStatistic.DEFENSE,
+				ItemStatistic.SPEED, ItemStatistic.INTELLIGENCE, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK, ItemStatistic.TRUE_DEFENSE, ItemStatistic.HEALTH_REGEN,
+				ItemStatistic.MENDING, ItemStatistic.VITALITY, ItemStatistic.FEROCITY, ItemStatistic.MINING_SPEED, ItemStatistic.MINING_FORTUNE,
+				ItemStatistic.FARMING_FORTUNE, ItemStatistic.FORAGING_FORTUNE, ItemStatistic.BONUS_PEST_CHANCE, ItemStatistic.COLD_RESISTANCE, ItemStatistic.PRISTINE,
+				ItemStatistic.SWING_RANGE));
 
-        boolean addNextLine = false;
-        for (ItemStatistic itemStatistic : itemStatistics) {
-            boolean x = addPossiblePropertyInt(itemStatistic, statistics.getOverall(itemStatistic), handler.getReforge(), rarity);
-            if (x) {
-                addNextLine = true;
-            }
-        }
+		boolean addNextLine = false;
+		for (ItemStatistic itemStatistic : itemStatistics) {
+			boolean x = addPossiblePropertyInt(itemStatistic, statistics.getOverall(itemStatistic), handler.getReforge(), rarity);
+			if (x) {
+				addNextLine = true;
+			}
+		}
 
-        if (item.hasComponent(ShortBowComponent.class)) {
-            ShortBowComponent shortBowComponent = item.getComponent(ShortBowComponent.class);
-            addLoreLine("§7Shot Cooldown: §a" + shortBowComponent.getCooldown() + "s");
-            addNextLine = true;
-        }
+		if (item.hasComponent(ShortBowComponent.class)) {
+			ShortBowComponent shortBowComponent = item.getComponent(ShortBowComponent.class);
+			addLoreLine("§7Shot Cooldown: §a" + shortBowComponent.getCooldown() + "s");
+			addNextLine = true;
+		}
 
-        // Handle Gemstone lore
-        if (item.hasComponent(GemstoneComponent.class)) {
-            GemstoneComponent gemstoneComponent = item.getComponent(GemstoneComponent.class);
-            ItemAttributeGemData.GemData gemData = handler.getGemData();
-            StringBuilder gemstoneLore = new StringBuilder(" ");
+		// Handle Gemstone lore
+		if (item.hasComponent(GemstoneComponent.class)) {
+			GemstoneComponent gemstoneComponent = item.getComponent(GemstoneComponent.class);
+			ItemAttributeGemData.GemData gemData = handler.getGemData();
+			StringBuilder gemstoneLore = new StringBuilder(" ");
 
-            int index = -1;
-            for (GemstoneComponent.GemstoneSlot entry : gemstoneComponent.getSlots()) {
-                index++;
-                Gemstone.Slots gemstone = entry.slot();
+			int index = -1;
+			for (GemstoneComponent.GemstoneSlot entry : gemstoneComponent.getSlots()) {
+				index++;
+				Gemstone.Slots gemstone = entry.slot();
 
-                if (!gemData.hasGem(index)) {
-                    gemstoneLore.append("§8[").append(gemstone.symbol).append("] ");
-                    continue;
-                }
+				if (!gemData.hasGem(index)) {
+					gemstoneLore.append("§8[").append(gemstone.symbol).append("] ");
+					continue;
+				}
 
-                ItemAttributeGemData.GemData.GemSlots gemSlot = gemData.getGem(index);
-                ItemType filledWith = gemSlot.filledWith;
+				ItemAttributeGemData.GemData.GemSlots gemSlot = gemData.getGem(index);
+				ItemType filledWith = gemSlot.filledWith;
 
-                if (filledWith == null) {
-                    gemstoneLore.append("§7[").append(gemstone.symbol).append("] ");
-                    continue;
-                }
+				if (filledWith == null) {
+					gemstoneLore.append("§7[").append(gemstone.symbol).append("] ");
+					continue;
+				}
 
-                SkyBlockItem gemstoneImpl = new SkyBlockItem(filledWith);
-                GemstoneImplComponent gemstoneImplComponent = gemstoneImpl.getComponent(GemstoneImplComponent.class);
-                GemRarity gemRarity = gemstoneImplComponent.getGemRarity();
-                Gemstone gemstoneEnum = gemstoneImplComponent.getGemstone();
-                Gemstone.Slots gemstoneSlot = Gemstone.Slots.getFromGemstone(gemstoneEnum);
+				SkyBlockItem gemstoneImpl = new SkyBlockItem(filledWith);
+				GemstoneImplComponent gemstoneImplComponent = gemstoneImpl.getComponent(GemstoneImplComponent.class);
+				GemRarity gemRarity = gemstoneImplComponent.getGemRarity();
+				Gemstone gemstoneEnum = gemstoneImplComponent.getGemstone();
+				Gemstone.Slots gemstoneSlot = Gemstone.Slots.getFromGemstone(gemstoneEnum);
 
-                gemstoneLore.append(gemRarity.bracketColor).append("[").append(gemstoneSlot.symbol).append(gemRarity.bracketColor).append("] ");
-            }
+				gemstoneLore.append(gemRarity.bracketColor).append("[").append(gemstoneSlot.symbol).append(gemRarity.bracketColor).append("] ");
+			}
 
-            if (!gemstoneLore.toString().trim().isEmpty()) {
-                addLoreLine(gemstoneLore.toString());
-                addNextLine = true;
-            }
-        }
+			if (!gemstoneLore.toString().trim().isEmpty()) {
+				addLoreLine(gemstoneLore.toString());
+				addNextLine = true;
+			}
+		}
 
-        if (addNextLine) addLoreLine(null);
+		if (addNextLine) addLoreLine(null);
 
-        // Handle Item Enchantments
-        if (item.hasComponent(EnchantableComponent.class)) {
-            EnchantableComponent enchantable = item.getComponent(EnchantableComponent.class);
-            if (enchantable.showEnchantLores()) {
-                long enchantmentCount = handler.getEnchantments().toList().size();
-                if (enchantmentCount < 4) {
-                    handler.getEnchantments().forEach((enchantment) -> {
-                        addLoreLine("§9" + enchantment.type().getName() +
-                                " " + StringUtility.getAsRomanNumeral(enchantment.level()));
-                        if (player != null)
-                            StringUtility.splitByWordAndLength(
-                                    enchantment.type().getDescription(enchantment.level(), player),
-                                    34
-                            ).forEach(string -> addLoreLine("§7" + string));
-                    });
+		// Handle Potion lore
+		ItemAttributePotionData.PotionData potionData = handler.getPotionData();
+		if (potionData != null) {
+			PotionEffectType effectType = PotionEffectType.fromName(potionData.getEffectType());
+			if (effectType != null && effectType.getCategory() != null) {
+				// Format duration string
+				String durationStr = "";
+				if (potionData.getBaseDurationSeconds() > 0) {
+					int totalSeconds = potionData.getBaseDurationSeconds();
+					int minutes = totalSeconds / 60;
+					int seconds = totalSeconds % 60;
+					durationStr = " (" + minutes + ":" + String.format("%02d", seconds) + ")";
+				}
 
-                } else {
-                    String enchantmentNames = handler.getEnchantments().toList().stream().map(enchantment1 ->
-                                    "§9" + enchantment1.type().getName() + " " + StringUtility
-                                            .getAsRomanNumeral(enchantment1.level()))
-                            .collect(Collectors.joining(", "));
-                    StringUtility.splitByWordAndLength(enchantmentNames, 34).forEach(this::addLoreLine);
-                }
+				// Display effect name with level and duration: "Speed I (3:00)"
+				String effectColor = effectType.getColor();
+				String effectDisplay = effectType.getLevelDisplay(potionData.getLevel());
+				addLoreLine(effectColor + effectDisplay + durationStr);
 
-                if (enchantmentCount != 0) addLoreLine(null);
-            }
-        }
+				// Display level-specific description: "Increases Strength by 20."
+				String description = effectType.getDescription(potionData.getLevel());
+				if (description != null && !description.isEmpty()) {
+					addLoreLine("§7" + description);
+				}
 
-        ItemAttributeRuneInfusedWith.RuneData runeData = handler.getRuneData();
-        if (runeData != null && runeData.hasRune()) {
-            SkyBlockItem runeItem = new SkyBlockItem(runeData.getRuneType());
-            RuneComponent runeComponent = runeItem.getComponent(RuneComponent.class);
+				addLoreLine(null);
+			}
+		}
 
-            addLoreLine(runeComponent.getDisplayName(runeData.getRuneType(), runeData.getLevel()));
-            addLoreLine(null);
-        }
+		// Handle Item Enchantments
+		if (item.hasComponent(EnchantableComponent.class)) {
+			EnchantableComponent enchantable = item.getComponent(EnchantableComponent.class);
+			if (enchantable.showEnchantLores()) {
+				long enchantmentCount = handler.getEnchantments().toList().size();
+				if (enchantmentCount < 4) {
+					handler.getEnchantments().forEach((enchantment) -> {
+						addLoreLine("§9" + enchantment.type().getName() +
+								" " + StringUtility.getAsRomanNumeral(enchantment.level()));
+						if (player != null)
+							StringUtility.splitByWordAndLength(
+									enchantment.type().getDescription(enchantment.level(), player),
+									34
+							).forEach(string -> addLoreLine("§7" + string));
+					});
 
-        // Handle Custom Item Lore
-        if (item.hasComponent(LoreUpdateComponent.class)) {
-            LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);
-            if (loreUpdateComponent.getHandler() == null)
-                throw new RuntimeException("Lore update handler is null for " + item.getAttributeHandler().getTypeAsString());
+				} else {
+					String enchantmentNames = handler.getEnchantments().toList().stream().map(enchantment1 ->
+									"§9" + enchantment1.type().getName() + " " + StringUtility
+											.getAsRomanNumeral(enchantment1.level()))
+							.collect(Collectors.joining(", "));
+					StringUtility.splitByWordAndLength(enchantmentNames, 34).forEach(this::addLoreLine);
+				}
 
-            if (loreUpdateComponent.getHandler().loreGenerator() != null) {
-                loreUpdateComponent.getHandler().loreGenerator().apply(item, player).forEach(line -> addLoreLine("§7" + line));
-                addLoreLine(null);
-            }
-        }
+				if (enchantmentCount != 0) addLoreLine(null);
+			}
+		}
 
-        if (item.getConfigLore() != null && !item.getConfigLore().isEmpty()) {
-            item.getConfigLore().forEach(line -> addLoreLine("§7" + line));
-            addLoreLine(null);
-        }
+		ItemAttributeRuneInfusedWith.RuneData runeData = handler.getRuneData();
+		if (runeData != null && runeData.hasRune()) {
+			SkyBlockItem runeItem = new SkyBlockItem(runeData.getRuneType());
+			RuneComponent runeComponent = runeItem.getComponent(RuneComponent.class);
 
-        // Handle Custom Item Ability
-        if (item.hasComponent(AbilityComponent.class)) {
-            AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
+			addLoreLine(runeComponent.getDisplayName(runeData.getRuneType(), runeData.getLevel()));
+			addLoreLine(null);
+		}
 
-            abilityComponent.getAbilities().forEach(ability -> {
-                addLoreLine("§6Ability: " + ability.getName() + "  §e§l" +
-                        ability.getActivation().getDisplay());
-                for (String line : StringUtility.splitByWordAndLength(ability.getDescription(), 34)) addLoreLine("§7" + line);
+		// Handle Custom Item Lore (BEFORE_ABILITY location)
+		if (item.hasComponent(LoreUpdateComponent.class)) {
+			LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);
+			if (loreUpdateComponent.getHandler() == null)
+				throw new RuntimeException("Lore update handler is null for " + item.getAttributeHandler().getTypeAsString());
 
-                String costDisplay = ability.getCost().getLoreDisplay();
-                if (costDisplay != null) addLoreLine(costDisplay);
+			LoreConfig loreConfig = loreUpdateComponent.getHandler();
+			if (loreConfig.loreGenerator() != null && loreConfig.location() == LoreConfig.LoreConfigLocation.BEFORE_ABILITY) {
+				loreConfig.loreGenerator().apply(item, player).forEach(line -> addLoreLine("§7" + line));
+				addLoreLine(null);
+			}
+		}
 
-                if (ability.getCooldownTicks() > 20) {
-                    addLoreLine("§8Cooldown: §a" + StringUtility.decimalify((double) ability.getCooldownTicks() / 20, 1) + "s");
-                }
+		if (item.getConfigLore() != null && !item.getConfigLore().isEmpty()) {
+			item.getConfigLore().forEach(line -> addLoreLine("§7" + line));
+			addLoreLine(null);
+		}
 
-                addLoreLine(null);
-            });
-        }
+		// Handle Custom Item Ability
+		if (item.hasComponent(AbilityComponent.class)) {
+			AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
 
-        // Handle full set abilities
-        if (ArmorSetRegistry.getArmorSet(handler.getPotentialType()) != null) {
-            ArmorSet armorSet = ArmorSetRegistry.getArmorSet(handler.getPotentialType()).getClazz().getDeclaredConstructor().newInstance();
+			abilityComponent.getAbilities().forEach(ability -> {
+				addLoreLine("§6Ability: " + ability.getName() + "  §e§l" +
+						ability.getActivation().getDisplay());
+				for (String line : StringUtility.splitByWordAndLength(ability.getDescription(), 34))
+					addLoreLine("§7" + line);
 
-            int wearingAmount = 0;
-            if (player != null && player.isWearingItem(item)) {
-                for (SkyBlockItem armorItem : player.getArmor()) {
-                    if (armorItem == null) continue;
-                    ArmorSetRegistry armorSetRegistry = ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getPotentialType());
-                    if (armorSetRegistry == null) continue;
-                    if (armorSetRegistry.getClazz() == armorSet.getClass()) {
-                        wearingAmount++;
-                    }
-                }
-            }
-            int totalPieces = ArmorSetRegistry.getPieceCount(ArmorSetRegistry.getArmorSet(armorSet.getClass()));
-            addLoreLine("§6Full Set Bonus: " + armorSet.getName() + " (" + wearingAmount + "/" + totalPieces + ")");
-            armorSet.getDescription().forEach(line -> addLoreLine("§7" + line));
-            addLoreLine(null);
-        }
+				String costDisplay = ability.getCost().getLoreDisplay();
+				if (costDisplay != null) addLoreLine(costDisplay);
 
-        if (item.hasComponent(RightClickRecipeComponent.class)) {
-            addLoreLine("§eRight-click to view recipes!");
-            addLoreLine(null);
-        }
+				if (ability.getCooldownTicks() > 20) {
+					addLoreLine("§8Cooldown: §a" + StringUtility.decimalify((double) ability.getCooldownTicks() / 20, 1) + "s");
+				}
 
-        if (item.hasComponent(ExtraRarityComponent.class)) {
-            ExtraRarityComponent extraRarityComponent = item.getComponent(ExtraRarityComponent.class);
-            displayRarity = displayRarity + " " + extraRarityComponent.getExtraRarityDisplay();
-        }
+				addLoreLine(null);
+			});
+		}
 
-        if (item.hasComponent(ReforgableComponent.class)) {
-            addLoreLine("§8This item can be reforged!");
-            if (handler.getReforge() != null) displayName = handler.getReforge().getPrefix() + " " + displayName;
-        }
+		// Handle Custom Item Lore (AFTER_ABILITY location)
+		if (item.hasComponent(LoreUpdateComponent.class)) {
+			LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);
+			LoreConfig loreConfig = loreUpdateComponent.getHandler();
+			if (loreConfig != null && loreConfig.loreGenerator() != null && loreConfig.location() == LoreConfig.LoreConfigLocation.AFTER_ABILITY) {
+				loreConfig.loreGenerator().apply(item, player).forEach(line -> addLoreLine("§7" + line));
+				addLoreLine(null);
+			}
+		}
 
-        ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();
-        if (bound != null) addLoreLine("§8* " + (bound.isCoopAllowed() ? "Co-op " : "") + "Soulbound *");
+		// Handle full set abilities
+		if (ArmorSetRegistry.getArmorSet(handler.getPotentialType()) != null) {
+			ArmorSet armorSet = ArmorSetRegistry.getArmorSet(handler.getPotentialType()).getClazz().getDeclaredConstructor().newInstance();
 
-        if (item.hasComponent(ArrowComponent.class)) {
-            addLoreLine("§8Stats added when shot!");
-        }
+			int wearingAmount = 0;
+			if (player != null && player.isWearingItem(item)) {
+				for (SkyBlockItem armorItem : player.getArmor()) {
+					if (armorItem == null) continue;
+					ArmorSetRegistry armorSetRegistry = ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getPotentialType());
+					if (armorSetRegistry == null) continue;
+					if (armorSetRegistry.getClazz() == armorSet.getClass()) {
+						wearingAmount++;
+					}
+				}
+			}
+			int totalPieces = ArmorSetRegistry.getPieceCount(ArmorSetRegistry.getArmorSet(armorSet.getClass()));
+			addLoreLine("§6Full Set Bonus: " + armorSet.getName() + " (" + wearingAmount + "/" + totalPieces + ")");
+			armorSet.getDescription().forEach(line -> addLoreLine("§7" + line));
+			addLoreLine(null);
+		}
 
-        if (item.hasComponent(NotFinishedYetComponent.class)) {
-            addLoreLine("§c§lITEM IS NOT FINISHED!");
-            addLoreLine(null);
-        }
+		if (item.hasComponent(RightClickRecipeComponent.class)) {
+			addLoreLine("§eRight-click to view recipes!");
+			addLoreLine(null);
+		}
 
-        if (recombobulated) displayRarity = rarity.getColor() + "&kL " + displayRarity + " &kL";
+		if (item.hasComponent(ExtraRarityComponent.class)) {
+			ExtraRarityComponent extraRarityComponent = item.getComponent(ExtraRarityComponent.class);
+			displayRarity = displayRarity + " " + extraRarityComponent.getExtraRarityDisplay();
+		}
 
-        displayName = rarity.getColor() + displayName;
-        addLoreLine(displayRarity);
-        this.stack = stack.with(DataComponents.LORE, loreLines)
-                .withAmount(item.getAmount())
-                .with(DataComponents.CUSTOM_NAME, Component.text(displayName)
-                        .decoration(TextDecoration.ITALIC, false));
-    }
+		if (item.hasComponent(ReforgableComponent.class)) {
+			addLoreLine("§8This item can be reforged!");
+			if (handler.getReforge() != null) displayName = handler.getReforge().getPrefix() + " " + displayName;
+		}
 
-    private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,
-                                           Reforge reforge, Rarity rarity) {
-        SkyBlockItem item = new SkyBlockItem(stack);
-        double reforgeValue = 0;
-        double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, item);
-        if (reforge != null) {
-            reforgeValue = reforge.getAfterCalculation(ItemStatistics.empty(), rarity.ordinal() + 1).getOverall(statistic);
-            overallValue += reforgeValue;
-        }
-        overallValue += gemstoneValue;
+		ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();
+		if (bound != null) addLoreLine("§8* " + (bound.isCoopAllowed() ? "Co-op " : "") + "Soulbound *");
 
-        double hpbValue = 0;
-        ItemAttributeHotPotatoBookData.HotPotatoBookData hotPotatoBookData = item.getAttributeHandler().getHotPotatoBookData();
-        if (hotPotatoBookData.hasAppliedItem()) {
-            for (Map.Entry<ItemStatistic, Double> entry : hotPotatoBookData.getPotatoType().stats.entrySet()) {
-                ItemStatistic stat = entry.getKey();
-                Double value = entry.getValue();
-                if (stat == statistic) hpbValue += value;
-            }
-        }
-        overallValue += hpbValue;
+		if (item.hasComponent(ArrowComponent.class)) {
+			addLoreLine("§8Stats added when shot!");
+		}
 
-        if (overallValue == 0) return false;
+		if (item.hasComponent(NotFinishedYetComponent.class)) {
+			addLoreLine("§c§lITEM IS NOT FINISHED!");
+			addLoreLine(null);
+		}
 
-        String color = statistic.getLoreColor();
-        String prefix = statistic.getIsPercentage() ? "" : "+";
-        String suffix = statistic.getIsPercentage() ? "%" : "";
-        String line = "§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
-                color + prefix + Math.round(overallValue) + suffix;
+		if (recombobulated) displayRarity = rarity.getColor() + "&kL " + displayRarity + " &kL";
 
-        if (hpbValue != 0) line += " §e(" + (Math.round(hpbValue) >= 1 ? "+" : "") + Math.round(hpbValue) + ")";
-        if (reforgeValue != 0) line += " §9(" + (Math.round(reforgeValue) > 0 ? "+" : "") + Math.round(reforgeValue) + ")";
-        if (gemstoneValue != 0) line += " §d(" + (Math.round(gemstoneValue) >= 1 ? "+" : "") + Math.round(gemstoneValue) + ")";
+		displayName = rarity.getColor() + displayName;
+		addLoreLine(displayRarity);
+		this.stack = stack.with(DataComponents.LORE, loreLines)
+				.withAmount(item.getAmount())
+				.with(DataComponents.CUSTOM_NAME, Component.text(displayName)
+						.decoration(TextDecoration.ITALIC, false));
+	}
 
-        addLoreLine(line);
-        return true;
-    }
+	private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,
+										   Reforge reforge, Rarity rarity) {
+		SkyBlockItem item = new SkyBlockItem(stack);
+		double reforgeValue = 0;
+		double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, item);
+		if (reforge != null) {
+			reforgeValue = reforge.getAfterCalculation(ItemStatistics.empty(), rarity.ordinal() + 1).getOverall(statistic);
+			overallValue += reforgeValue;
+		}
+		overallValue += gemstoneValue;
 
-    private void addLoreLine(String line) {
-        if (line == null) {
-            loreLines.add(Component.empty());
-            return;
-        }
+		double hpbValue = 0;
+		ItemAttributeHotPotatoBookData.HotPotatoBookData hotPotatoBookData = item.getAttributeHandler().getHotPotatoBookData();
+		if (hotPotatoBookData.hasAppliedItem()) {
+			for (Map.Entry<ItemStatistic, Double> entry : hotPotatoBookData.getPotatoType().stats.entrySet()) {
+				ItemStatistic stat = entry.getKey();
+				Double value = entry.getValue();
+				if (stat == statistic) hpbValue += value;
+			}
+		}
+		overallValue += hpbValue;
 
-        loreLines.add(Component.text("§r" + line.replace("&", "§"))
-                .decorations(Collections.singleton(TextDecoration.ITALIC), false));
-    }
+		if (overallValue == 0) return false;
+
+		String color = statistic.getLoreColor();
+		String prefix = statistic.getIsPercentage() ? "" : "+";
+		String suffix = statistic.getIsPercentage() ? "%" : "";
+		String line = "§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
+				color + prefix + Math.round(overallValue) + suffix;
+
+		if (hpbValue != 0) line += " §e(" + (Math.round(hpbValue) >= 1 ? "+" : "") + Math.round(hpbValue) + ")";
+		if (reforgeValue != 0)
+			line += " §9(" + (Math.round(reforgeValue) > 0 ? "+" : "") + Math.round(reforgeValue) + ")";
+		if (gemstoneValue != 0)
+			line += " §d(" + (Math.round(gemstoneValue) >= 1 ? "+" : "") + Math.round(gemstoneValue) + ")";
+
+		addLoreLine(line);
+		return true;
+	}
+
+	private void addLoreLine(String line) {
+		if (line == null) {
+			loreLines.add(Component.empty());
+			return;
+		}
+
+		loreLines.add(Component.text("§r" + line.replace("&", "§"))
+				.decorations(Collections.singleton(TextDecoration.ITALIC), false));
+	}
 }
 

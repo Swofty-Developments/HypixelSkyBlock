@@ -5,12 +5,15 @@ import net.minestom.server.color.Color;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.component.HeadProfile;
+import net.minestom.server.item.Material;
+import net.minestom.server.item.component.PotionContents;
+import net.minestom.server.network.player.ResolvableProfile;
+import net.minestom.server.potion.PotionType;
 import net.minestom.server.tag.Tag;
-import net.minestom.server.utils.Unit;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.item.ItemLore;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -18,9 +21,11 @@ import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
 import net.swofty.type.skyblockgeneric.item.components.GemstoneComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.item.components.TrackedUniqueComponent;
+import net.swofty.type.skyblockgeneric.potion.PotionEffectType;
 import org.json.JSONObject;
 
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -52,7 +57,21 @@ public class NonPlayerItemUpdater {
             return stack;
         }
 
-        ItemStack.Builder builder = item.getItemStackBuilder();
+        // Check for potion material override (splash/lingering)
+        Material baseMaterial = item.getMaterial();
+        ItemAttributePotionData.PotionData potionData = item.getAttributeHandler().getPotionData();
+        if (potionData != null && isPotionMaterial(baseMaterial)) {
+            baseMaterial = getPotionMaterial(potionData, baseMaterial);
+        }
+
+        ItemStack.Builder builder = ItemStack.builder(baseMaterial).amount(item.getAmount());
+        // Copy tags from original builder
+        for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
+            builder = builder.set(Tag.String(attribute.getKey()),
+                    item.getAttribute(attribute.getKey()).saveIntoString());
+        }
+        builder = ItemStackCreator.clearAttributes(builder);
+
         ItemStack.Builder stack = updateItemLore(builder);
 
         if (item.hasComponent(EnchantedComponent.class))
@@ -72,7 +91,7 @@ public class NonPlayerItemUpdater {
 
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
-            stack.set(DataComponents.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
+            stack.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)));
         }
 
         if (item.hasComponent(GemstoneComponent.class)) {
@@ -102,6 +121,11 @@ public class NonPlayerItemUpdater {
             stack = ItemStackCreator.clearAttributes(stack);
         }
 
+        // Apply potion contents for proper color display
+        if (potionData != null && isPotionMaterial(baseMaterial)) {
+            stack.set(DataComponents.POTION_CONTENTS, createPotionContents(potionData));
+        }
+
         for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
             stack = stack.set(Tag.String(attribute.getKey()),
                     item.getAttribute(attribute.getKey()).saveIntoString());
@@ -109,6 +133,47 @@ public class NonPlayerItemUpdater {
 
         ItemStackCreator.clearAttributes(stack);
         return stack;
+    }
+
+    /**
+     * Check if a material is a potion type
+     */
+    private static boolean isPotionMaterial(Material material) {
+        return material == Material.POTION ||
+               material == Material.SPLASH_POTION ||
+               material == Material.LINGERING_POTION;
+    }
+
+    /**
+     * Get the correct potion material based on potion data
+     */
+    private static Material getPotionMaterial(ItemAttributePotionData.PotionData potionData, Material baseMaterial) {
+        if (potionData.isSplash()) {
+            return Material.SPLASH_POTION;
+        }
+        // Could add LINGERING support here in the future
+        return baseMaterial;
+    }
+
+    /**
+     * Create PotionContents component from potion data
+     */
+    private static PotionContents createPotionContents(ItemAttributePotionData.PotionData potionData) {
+        PotionEffectType effectType = PotionEffectType.fromName(potionData.getEffectType());
+        if (effectType == null) {
+            // Default to water if unknown
+            return new PotionContents(PotionType.WATER);
+        }
+
+        // Try to get vanilla potion type first
+        PotionType vanillaType = effectType.getVanillaPotionType(potionData.getLevel(), potionData.isExtended());
+        if (vanillaType != null) {
+            // Use vanilla type - it has built-in colors
+            return new PotionContents(vanillaType);
+        }
+
+        // SkyBlock-only effect - use custom color
+        return new PotionContents(null, effectType.getPotionColor(), List.of(), null);
     }
 
     private static ItemStack.Builder updateItemLore(ItemStack.Builder stack) {

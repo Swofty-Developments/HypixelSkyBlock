@@ -55,9 +55,53 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
                     "Store your coins to keep them safe.",
                     "Earn interest on your coins.");
 
+            case DEEP_CAVERNS -> onNewZone(player, RegionType.DEEP_CAVERNS,
+                    "Talk to the Lift Operator",
+                    "Mine valuable ores.",
+                    "Watch out for mobs!");
+
+            case DWARVEN_MINES -> onNewZone(player, RegionType.DWARVEN_MINES,
+                    "Mine rare ores.");
+
+            case GUNPOWDER_MINES -> onNewZone(player, RegionType.GUNPOWDER_MINES,
+                    "Talk to the Lift Operator.",
+                    "Explore the caverns.",
+                    "Mine Coal, Iron ore, and Gold ore.");
+
+            case LAPIS_QUARRY -> onNewZone(player, RegionType.LAPIS_QUARRY,
+                    "The Lift Operator will now let you travel to the §bLapis Quarry.",
+                    "Access to Lapis Lazuli ore.",
+                    "Talk to the Lapis Miner.",
+                    "Watch out for the zombies!");
+
+            case PIGMENS_DEN -> onNewZone(player, RegionType.PIGMENS_DEN,
+                    "The Lift Operator will now let you travel to the §bLapis Quarry.",
+                    "Access to Lapis Lazuli ore.",
+                    "Talk to the Lapis Miner.",
+                    "Watch out for the zombies!");
+
+            case SLIMEHILL -> onNewZone(player, RegionType.SLIMEHILL,
+                    "The Lift Operator will now let you travel to the §bSlimehill.",
+                    "Mine Emerald ore.",
+                    "This area is covered with slimes!");
+
+            case DIAMOND_RESERVE -> onNewZone(player, RegionType.DIAMOND_RESERVE,
+                    "The Lift Operator will now let you travel to the §bDiamond Reserve.",
+                    "Mine Diamond ore.",
+                    "Beware of deadly monsters!");
+
+            case OBSIDIAN_SANCTUARY -> onNewZone(player, RegionType.OBSIDIAN_SANCTUARY,
+                    "The Lift Operator will now let you travel to the §bObsidian Sanctuary.",
+                    "Mine Obsidian and Diamond.",
+                    "Beware of deadly monsters!",
+                    "Talk to §dRhys.");
+
             case GOLD_MINE -> onNewZone(player, RegionType.GOLD_MINE,
                     "Talk to the Lazy Miner.",
-                    "Find the hidden gold mine.");
+                    "Mine for gold, iron, and coal.",
+                    "Visit the Iron and Gold Forgers.",
+                    "Visit the Blacksmith.",
+                    "Talk to Rusty.");
 
             case COAL_MINE -> onNewZone(player, RegionType.COAL_MINE,
                     "Mine coal.",
@@ -99,6 +143,9 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
                     "Explore the End Shop.",
                     "Kill Endermen.",
                     "Fight Dragons!");
+
+            case ARCHERY_RANGE -> onNewZone(player, RegionType.ARCHERY_RANGE,
+                    "Talk to Jax to forge special arrows!");
         }
     }
 

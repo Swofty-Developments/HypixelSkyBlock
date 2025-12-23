@@ -13,6 +13,9 @@ items:
     components:
       - id: SELLABLE
         value: 8.0
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 6.0
   - id: PLASMA
     rarity: COMMON
     components:

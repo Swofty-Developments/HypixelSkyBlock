@@ -1,0 +1,94 @@
+items:
+  - id: ABIPHONE_BASIC
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: ABIPHONE
+        max_contacts: 6
+        max_discs: 0
+        features:
+          - CONTACTS_DIRECTORY
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Abiphone Basic
+      - id: SKULL_HEAD
+        texture: e471c673a875425428d4b5ecf78a24d86ea65ae6599633e6514bbaafd7fa561f
+  - id: ABIPHONE_X_RED
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: ABIPHONE
+        max_contacts: 7
+        max_discs: 0
+        features:
+          - CONTACTS_DIRECTORY
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Abiphone X Red
+      - id: SKULL_HEAD
+        texture: d256584eea6825150a415fc18daa532b9139cca454f969f2210355de10a15a4
+  - id: ABIPHONE_X_BLUE
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: ABIPHONE
+        max_contacts: 7
+        max_discs: 0
+        features:
+          - CONTACTS_DIRECTORY
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Abiphone X Blue
+      - id: SKULL_HEAD
+        texture: 76116a4cb5d1c9c2e9c3912f118206b2a8b0c48e6daa4a1f489821eb58264224
+  - id: ABIPHONE_XI_YELLOW
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: ABIPHONE
+        max_contacts: 8
+        max_discs: 5
+        features:
+          - CONTACTS_DIRECTORY
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Abiphone XI Yellow
+      - id: SKULL_HEAD
+        texture: 5e065a2b61a89e96e302737a7c928e24bfd3b7ae498210324ccd0e84332046f6
+  - id: ABIPHONE_XI_GREEN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: ABIPHONE
+        max_contacts: 8
+        max_discs: 5
+        features:
+          - CONTACTS_DIRECTORY
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Abiphone XI Green
+      - id: SKULL_HEAD
+        texture: 5e065a2b61a89e96e302737a7c928e24bfd3b7ae498210324ccd0e84332046f6
+  - id: ABIPHONE_XII_AMBER
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: ABIPHONE
+        max_contacts: 9
+        max_discs: 10
+        features:
+          - CONTACTS_DIRECTORY
+          - DO_NOT_DISTURB_MODE
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Abiphone XII Amber
+      - id: SKULL_HEAD
+        texture: c386262dba9acafb004a2525e02789e6f9448ce89541441c7fbce401fd66588a
+  - id: ABIPHONE_XII_AMETHYST
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: ABIPHONE
+        max_contacts: 9
+        max_discs: 10
+        features:
+          - CONTACTS_DIRECTORY
+          - DO_NOT_DISTURB_MODE
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Abiphone XII Amethyst
+      - id: SKULL_HEAD
+        texture: df4de5e522a34a534039c29eee368dfcc1ad0d43a2d8264c1751a8b596cbea7b

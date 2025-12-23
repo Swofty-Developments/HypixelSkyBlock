@@ -1,0 +1,69 @@
+package net.swofty.type.hub.npcs.villagers;
+
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.VillagerProfession;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.stream.Stream;
+
+public class VillagerStella extends HypixelNPC {
+    public VillagerStella() {
+        super(new VillagerConfiguration(){
+            @Override
+            public String[] holograms(HypixelPlayer player) {
+                return new String[]{"&fStella", "§e§lCLICK"};
+            }
+
+            @Override
+            public Pos position(HypixelPlayer player) {
+                return new Pos(17.5,70, -99.5);
+            }
+
+            @Override
+            public boolean looking() {
+                return true;
+            }
+
+            @Override
+            public VillagerProfession profession() {
+                return VillagerProfession.NONE;
+            }
+        });
+    }
+
+    @Override
+    public void onClick(NPCInteractEvent e) {
+        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
+        if (isInDialogue(player)) return;
+
+        MissionData data = player.getMissionData();
+        if (data.isCurrentlyActive("speak_to_villagers")) {
+            if (data.getMission("speak_to_villagers").getKey().getCustomData()
+                    .values()
+                    .stream()
+                    .anyMatch(value -> value.toString().contains(getClass().getSimpleName()))) {
+                if (System.currentTimeMillis() -
+                        (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
+                    setDialogue(player, "quest-hello");
+                }
+            }
+        }
+    }
+    @Override
+    public DialogueSet[] dialogues(HypixelPlayer player) {
+        return Stream.of(
+                DialogueSet.builder()
+                        .key("quest-hello").lines(new String[]{
+                                "At any time you can create a Co-op with your friends!",
+                                "Simply go in your §aSkyBlock Menu §fwhere you can find the §aProfile Menu§f.",
+                                "This is where you can create, delete or switch SkyBlock Profiles.",
+                                "Enter §b/coop §ffollowed by the name of all the friends you want to invite",
+                                "All your friends have to be online to accept!"
+                        }).build()
+        ).toArray(DialogueSet[]::new);
+    }
+}

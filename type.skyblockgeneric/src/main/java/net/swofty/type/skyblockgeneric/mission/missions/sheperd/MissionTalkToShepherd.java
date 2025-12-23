@@ -18,7 +18,7 @@ public class MissionTalkToShepherd extends SkyBlockMission {
         MissionData data = ((SkyBlockPlayer) event.getPlayer()).getMissionData();
 
         // Check if this is the Shepherd NPC
-        if (!event.getVillager().getID().contains("Shepherd")) {
+        if (!event.getVillager().getClass().getSimpleName().contains("Shepherd")) {
             return;
         }
 

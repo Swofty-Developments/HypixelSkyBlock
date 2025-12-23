@@ -1,6 +1,8 @@
 package net.swofty.type.skyblockgeneric.commands;
 
+import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ServerType;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.mission.MissionSet;
@@ -24,6 +26,12 @@ public class HubCommand extends HypixelCommand {
                 player.sendMessage("§cYou must complete your starting missions!");
                 return;
             }
+
+            if (HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_HUB) {
+                player.teleport(new Pos(-2.5, 72.5, -69.5, 180, 0));
+                return;
+            }
+
             player.sendTo(ServerType.SKYBLOCK_HUB);
         });
     }

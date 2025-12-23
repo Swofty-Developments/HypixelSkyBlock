@@ -13,7 +13,9 @@ public enum FromServiceChannels {
     SEND_MESSAGE("send-message"),
     PROPAGATE_PARTY_EVENT("propagate_party_event"),
 	GAME_INFORMATION("game-information"),
-    INSTANTIATE_GAME("instantiate-game");
+    INSTANTIATE_GAME("instantiate-game"),
+    DARK_AUCTION_EVENT("dark-auction-event"),
+    TRIGGER_DARK_AUCTION("trigger-dark-auction"),
     ;
 
     private final String channelName;

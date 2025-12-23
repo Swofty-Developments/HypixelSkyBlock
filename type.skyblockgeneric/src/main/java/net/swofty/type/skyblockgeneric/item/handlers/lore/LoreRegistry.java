@@ -70,6 +70,42 @@ public class LoreRegistry {
                 "§eClick to open!"
         ), (item, player) -> "§aSkyBlock Menu §7(Click)"));
         register("HOT_POTATO_BOOK", new LoreConfig((item, player) -> PotatoType.allLores(), null));
+        register("MIDAS_SWORD", new LoreConfig((item, player) -> {
+            List<String> lore = new ArrayList<>();
+            long pricePaid = item.getAttributeHandler().getDarkAuctionPrice();
+            int greedBonus = calculateGreedBonus(pricePaid);
+
+            lore.add("§7Price paid: §6" + StringUtility.commaify(pricePaid) + " Coins");
+            lore.add("§c❁ Strength §7bonus: §c+" + greedBonus);
+            lore.add("§c❁ Damage §7bonus: §c+" + greedBonus);
+
+            return lore;
+        }, null, LoreConfig.LoreConfigLocation.AFTER_ABILITY));
+    }
+
+    /**
+     * Calculates the Greed bonus for Midas' Sword based on the price paid.
+     * Tiered formula from the wiki.
+     */
+    private static int calculateGreedBonus(long price) {
+        if (price >= 50_000_000L) return 120;
+        if (price >= 25_000_000L) {
+            int bonus = 95 + (int)((price - 25_000_000L) / 1_000_000L);
+            return Math.min(120, bonus);
+        }
+        if (price >= 7_500_000L) {
+            int bonus = 60 + (int)((price - 7_500_000L) / 500_000L);
+            return Math.min(95, bonus);
+        }
+        if (price >= 2_500_000L) {
+            int bonus = 35 + (int)((price - 2_500_000L) / 200_000L);
+            return Math.min(60, bonus);
+        }
+        if (price >= 1_000_000L) {
+            int bonus = 20 + (int)((price - 1_000_000L) / 100_000L);
+            return Math.min(35, bonus);
+        }
+        return (int) Math.min(20, price / 50_000L);
     }
 
     public static void register(String id, LoreConfig handler) {

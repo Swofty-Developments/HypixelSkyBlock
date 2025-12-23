@@ -1,19 +1,18 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.skyblockgeneric.gui.inventories.banker.GUIBanker;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCBanker extends NPCDialogue {
+public class NPCBanker extends HypixelNPC {
     public NPCBanker() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Banker", "§e§lCLICK"};
@@ -42,7 +41,7 @@ public class NPCBanker extends NPCDialogue {
     }
 
     @Override
-    public void onClick(HypixelNPC.PlayerClickNPCEvent e) {
+    public void onClick(HypixelNPC.NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
 
         MissionData missionData = ((SkyBlockPlayer) e.player()).getMissionData();
@@ -57,14 +56,14 @@ public class NPCBanker extends NPCDialogue {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
                                 "Hello there!",
                                 "You may want to store your §6Coins §fin a safe place while you are off adventuring.",
                                 "Storing them in your §6Bank §fkeeps them safe and allows you to earn interest at the start of every season!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

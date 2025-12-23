@@ -1,18 +1,17 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.hub.gui.GUITiaTheFairy;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.hub.gui.GUITiaTheFairy;
 
 import java.util.stream.Stream;
 
-public class NPCTiaTheFairy extends NPCDialogue {
+public class NPCTiaTheFairy extends HypixelNPC {
     public NPCTiaTheFairy() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Tia The Fairy", "§e§lCLICK"};
@@ -41,7 +40,7 @@ public class NPCTiaTheFairy extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player()))
             return;
         DatapointToggles.Toggles toggle = e.player().getToggles();
@@ -56,15 +55,15 @@ public class NPCTiaTheFairy extends NPCDialogue {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "Welcome to the Fairy Pond! I am Tia.",
                                 "You may have noticed some strange orbs laying around the island.",
                                 "They are the souls of my fallen sisters.",
                                 "If you find any more during your travels, please bring them back to me!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

@@ -25,6 +25,7 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.data.mongodb.*;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
@@ -41,10 +42,7 @@ import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.hologram.ServerHolograms;
 import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.villager.NPCVillagerDialogue;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
@@ -67,17 +65,19 @@ import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.redis.RedisAuthenticate;
 import net.swofty.type.generic.redis.RedisOriginServer;
-import net.swofty.type.skyblockgeneric.region.SkyBlockMiningConfiguration;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
 import net.swofty.type.skyblockgeneric.server.eventcaller.CustomEventCaller;
 import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockScoreboard;
+import net.swofty.type.skyblockgeneric.user.StashReminder;
 import net.swofty.type.generic.user.categories.CustomGroups;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
+import net.swofty.type.skyblockgeneric.user.statistics.TemporaryStatistic;
 import net.swofty.type.skyblockgeneric.utility.LaunchPads;
 import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.Nullable;
@@ -166,23 +166,13 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
             }
         });
 
-        /**
-         * Register SkyBlock NPCs
-         */
+        // Register SkyBlock NPCs
         if (mainInstance != null) {
             loopThroughPackage("net.swofty.type.skyblockgeneric.entity.npc.npcs", HypixelNPC.class)
                     .forEach(HypixelNPC::register);
-            loopThroughPackage("net.swofty.type.skyblockgeneric.entity.npc.npcs", NPCDialogue.class)
-                    .forEach(HypixelNPC::register);
-            loopThroughPackage("net.swofty.type.skyblockgeneric.entity.villager.villagers", HypixelVillagerNPC.class)
-                    .forEach(HypixelVillagerNPC::register);
-            loopThroughPackage("net.swofty.type.skyblockgeneric.entity.villager.villagers", NPCVillagerDialogue.class)
-                    .forEach(HypixelVillagerNPC::register);
         }
 
-        /**
-         * Register entities
-         */
+        // Register entities
         loopThroughPackage("net.swofty.type.skyblockgeneric.entity.mob.mobs", SkyBlockMob.class)
                 .forEach(mob -> MobRegistry.registerExtraMob(mob.getClass()));
 
@@ -218,23 +208,40 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                     .append(Component.newline())
                     .append(Component.text("§7TPS: §8" + TPS))
                     .append(Component.newline());
-            final Component footer = Component.newline()
-                    .append(Component.text("§a§lActive Effects"))
-                    .append(Component.newline())
-                    .append(Component.text("§7No effects active. Drink potions or splash them on the"))
-                    .append(Component.newline())
-                    .append(Component.text("§7ground to buff yourself!"))
-                    .append(Component.newline())
-                    .append(Component.newline())
-                    .append(Component.text("§d§lCookie Buff"))
-                    .append(Component.newline())
-                    .append(Component.text("§7Not active! Obtain booster cookies from the community"))
-                    .append(Component.newline())
-                    .append(Component.text("§7shop in the hub."))
-                    .append(Component.newline())
-                    .append(Component.newline())
-                    .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
-            Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
+
+            // Send per-player footer with their active effects
+            for (SkyBlockPlayer player : players) {
+                Component footer = Component.newline()
+                        .append(Component.text("§a§lActive Effects"))
+                        .append(Component.newline());
+
+                List<TemporaryStatistic> activeEffects = player.getStatistics().getDisplayableActiveEffects();
+                if (activeEffects.isEmpty()) {
+                    footer = footer.append(Component.text("§7No effects active. Drink potions or splash them on the"))
+                            .append(Component.newline())
+                            .append(Component.text("§7ground to buff yourself!"));
+                } else {
+                    for (TemporaryStatistic effect : activeEffects) {
+                        String color = effect.getDisplayColor() != null ? effect.getDisplayColor() : "§7";
+                        String name = effect.getDisplayName();
+                        String duration = formatEffectDuration(effect.getRemainingMs());
+                        footer = footer.append(Component.text(color + name + " §f" + duration))
+                                .append(Component.newline());
+                    }
+                }
+
+                footer = footer.append(Component.newline())
+                        .append(Component.text("§d§lCookie Buff"))
+                        .append(Component.newline())
+                        .append(Component.text("§7Not active! Obtain booster cookies from the community"))
+                        .append(Component.newline())
+                        .append(Component.text("§7shop in the hub."))
+                        .append(Component.newline())
+                        .append(Component.newline())
+                        .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
+
+                player.sendPlayerListHeaderAndFooter(header, footer);
+            }
         }).repeat(10, TimeUnit.SERVER_TICK).schedule();
 
 
@@ -281,7 +288,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          * Load regions
          */
         SkyBlockRegion.cacheRegions();
-        SkyBlockMiningConfiguration.startRepeater(MinecraftServer.getSchedulerManager());
+        SkyBlockRegenConfiguration.startRepeater(MinecraftServer.getSchedulerManager());
         MinecraftServer.getDimensionTypeRegistry().register(
                 Key.key("skyblock:island"),
                 DimensionType.builder()
@@ -305,10 +312,9 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         CustomGroups.registerAudiences();
         PlayerStatistics.run();
 
-        /**
-         * Start repeaters
-         */
+        // Start repeaters
         SkyBlockScoreboard.start();
+        StashReminder.start(MinecraftServer.getSchedulerManager());
         PlayerHolograms.updateAll(MinecraftServer.getSchedulerManager());
 
         /**
@@ -554,5 +560,17 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                     }
                 })
                 .filter(java.util.Objects::nonNull);
+    }
+
+    private static String formatEffectDuration(long durationMs) {
+        long totalSeconds = durationMs / 1000;
+        long minutes = totalSeconds / 60;
+        long seconds = totalSeconds % 60;
+
+        if (minutes > 0) {
+            return String.format("%d:%02d", minutes, seconds);
+        } else {
+            return seconds + "s";
+        }
     }
 }

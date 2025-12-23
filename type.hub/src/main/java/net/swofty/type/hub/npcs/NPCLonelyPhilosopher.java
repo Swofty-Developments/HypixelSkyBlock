@@ -4,18 +4,17 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.hub.gui.GUILonelyPhilosopher;
 
 import java.util.stream.Stream;
 
-public class NPCLonelyPhilosopher extends NPCDialogue {
+public class NPCLonelyPhilosopher extends HypixelNPC {
 
     public NPCLonelyPhilosopher() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§9Lonely Philosopher", "§e§lCLICK"};
@@ -44,7 +43,7 @@ public class NPCLonelyPhilosopher extends NPCDialogue {
     }
 
     @Override
-    public void onClick(HypixelNPC.PlayerClickNPCEvent e) {
+    public void onClick(HypixelNPC.NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
 
         Rank rank = e.player().getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
@@ -59,16 +58,16 @@ public class NPCLonelyPhilosopher extends NPCDialogue {
     }
 
     @Override
-    public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "§fI'm sorry, I have nothing for you."
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("open_shop").lines(new String[]{
                                 "§fTo fast travel or not to fast travel?"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

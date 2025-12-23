@@ -1,0 +1,13 @@
+name: "Runecrafting"
+displayIcon: "magma_cream"
+description:
+  - "§7Slay bosses and runic mobs, and"
+  - "§7fuse runes to earn Runecrafting XP!"
+
+rewards:
+  - level: 1
+    requirement: 50
+    unlocks:
+      - type: RUNE
+        data:
+          runeLevel: 1

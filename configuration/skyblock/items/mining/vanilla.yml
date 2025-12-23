@@ -7,8 +7,12 @@ items:
       - id: MINION_FUEL
         fuel_percentage: 5.0
         last_time_ms: 1800000
-      - id: EXTRA_UNDER_NAME
-        display: Brewing Ingredient
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: COAL_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
   - id: COAL_ORE
     rarity: COMMON
     components:
@@ -165,6 +169,12 @@ items:
     components:
       - id: SELLABLE
         value: 4.0
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: FLINT_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 10
   - id: GLOWSTONE
     rarity: COMMON
     components:
@@ -206,6 +216,12 @@ items:
         mining_value: 5.0
       - id: SELLABLE
         value: 2.0
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
   - id: GOLD_BLOCK
     rarity: COMMON
     components:
@@ -235,8 +251,12 @@ items:
         mining_value: 5.0
       - id: SELLABLE
         value: 4.0
-      - id: EXTRA_UNDER_NAME
-        display: Brewing Ingredient
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: GOLD_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
   - id: GOLD_NUGGET
     rarity: COMMON
     components:
@@ -357,6 +377,12 @@ items:
     components:
       - id: SELLABLE
         value: 1.0
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: LAPIS_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
   - id: LAPIS_LAZULI_ORE
     rarity: COMMON
     components:
@@ -418,6 +444,12 @@ items:
       - id: SELLABLE
         value: 1.0
       - id: PLACEABLE
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: NETHERRACK_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
   - id: OBSIDIAN
     rarity: COMMON
     components:
@@ -427,6 +459,12 @@ items:
       - id: SELLABLE
         value: 7.0
       - id: PLACEABLE
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: OBSIDIAN_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 15
   - id: PACKED_ICE
     rarity: COMMON
     components:
@@ -490,6 +528,12 @@ items:
       - id: SELLABLE
         value: 1.0
       - id: PLACEABLE
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
   - id: REDSTONE_ORE
     rarity: COMMON
     components:
@@ -542,6 +586,12 @@ items:
         mining_value: 3.0
       - id: SELLABLE
         value: 2.0
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: SAND_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
   - id: SNOW
     rarity: COMMON
     components:

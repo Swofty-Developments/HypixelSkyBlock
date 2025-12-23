@@ -6,6 +6,7 @@ import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
@@ -20,10 +21,11 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
-import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ArmorComponent;
@@ -34,7 +36,6 @@ import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,7 +67,7 @@ public abstract class SkyBlockMob extends EntityCreature {
                 .setBaseValue((float) ((getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
         this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
-        this.setCustomName(Component.text(
+        this.set(DataComponents.CUSTOM_NAME, Component.text(
                 "§8[§7Lv" + getLevel() + "§8] §c"
                         + getMobTypes().getFirst().getColor() + getMobTypes().getFirst().getSymbol() + "§c "
                         + getDisplayName()
@@ -78,12 +79,22 @@ public abstract class SkyBlockMob extends EntityCreature {
         setAutoViewable(true);
         setAutoViewEntities(true);
         this.addAIGroup(getGoalSelectors(), getTargetSelectors());
+        onInit();
     }
 
     @Override
     public void spawn() {
         super.spawn();
         mobs.add(this);
+        onSpawn();
+    }
+
+    public void onInit() {
+        // override this
+    }
+
+    public void onSpawn() {
+        // override this
     }
 
     public abstract String getDisplayName();
@@ -96,6 +107,14 @@ public abstract class SkyBlockMob extends EntityCreature {
     public abstract long damageCooldown();
     public abstract OtherLoot getOtherLoot();
     public abstract List<MobType> getMobTypes();
+
+    /**
+     * Whether this mob should collide with other mobs.
+     * Override and return false to disable collision for specific mob types.
+     */
+    public boolean hasCollision() {
+        return true;
+    }
 
     public ItemStatistics getStatistics() {
         ItemStatistics statistics = getBaseStatistics().clone();
@@ -235,10 +254,53 @@ public abstract class SkyBlockMob extends EntityCreature {
             instance.loadChunk(position).join();
         }
 
+        // Entity collision handling
+        if (hasCollision()) {
+            applyEntityCollision();
+        }
+
         try {
             super.tick(time);
         } catch (Exception e) {
             // Suppress odd warnings
+        }
+    }
+
+    private void applyEntityCollision() {
+        for (SkyBlockMob other : mobs) {
+            if (other == this || !other.hasCollision()) continue;
+            if (other.getInstance() != getInstance()) continue;
+
+            double dx = getPosition().x() - other.getPosition().x();
+            double dz = getPosition().z() - other.getPosition().z();
+            double distanceSquared = dx * dx + dz * dz;
+
+            // Check if within collision range - using larger hitbox multiplier
+            double combinedWidth = (getBoundingBox().width() + other.getBoundingBox().width()) / 2;
+            double minDistance = combinedWidth * 1.5;
+
+            if (distanceSquared < minDistance * minDistance && distanceSquared > 0.0001) {
+                double distance = Math.sqrt(distanceSquared);
+                double overlap = minDistance - distance;
+
+                // Normalize direction
+                double nx = dx / distance;
+                double nz = dz / distance;
+
+                // Aggressive push to prevent overlap while in motion
+                double baseStrength = overlap * 1.2;
+
+                // Extra push if either entity is moving (prevents clipping during movement)
+                double thisSpeed = getVelocity().length();
+                double otherSpeed = other.getVelocity().length();
+                double motionMultiplier = 1.0 + Math.max(thisSpeed, otherSpeed) * 2.0;
+
+                double pushStrength = Math.min(baseStrength * motionMultiplier, 0.8);
+
+                // Apply velocity to both entities (equal and opposite)
+                setVelocity(getVelocity().add(nx * pushStrength, 0, nz * pushStrength));
+                other.setVelocity(other.getVelocity().add(-nx * pushStrength, 0, -nz * pushStrength));
+            }
         }
     }
 

@@ -2,6 +2,8 @@ items:
   - id: ASPECT_OF_THE_END
     material: DIAMOND_SWORD
     rarity: RARE
+    abilities:
+      - INSTANT_TRANSMISSION
     default_statistics:
       damage: 100
       strength: 100
@@ -74,8 +76,7 @@ items:
     default_statistics:
       damage: 1
     components:
-      - id: EXTRA_RARITY
-        display: ARROW
+      - id: ARROW
 
   - id: HUNTER_KNIFE
     material: IRON_SWORD

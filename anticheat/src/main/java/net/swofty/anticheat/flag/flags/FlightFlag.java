@@ -1,9 +1,13 @@
 package net.swofty.anticheat.flag.flags;
 
 import net.swofty.anticheat.engine.PlayerTickInformation;
+import net.swofty.anticheat.engine.SwoftyPlayer;
 import net.swofty.anticheat.event.ListenerMethod;
+import net.swofty.anticheat.event.events.AnticheatPacketEvent;
 import net.swofty.anticheat.event.events.PlayerPositionUpdateEvent;
+import net.swofty.anticheat.event.packet.AbilitiesPacket;
 import net.swofty.anticheat.flag.Flag;
+import net.swofty.anticheat.flag.FlagType;
 import net.swofty.anticheat.math.Vel;
 
 public class FlightFlag extends Flag {
@@ -13,53 +17,49 @@ public class FlightFlag extends Flag {
     private static final double DRAG = 0.98; // Air resistance
 
     @ListenerMethod
+    public void onPacket(AnticheatPacketEvent event) {
+        if (event.getPacket() instanceof AbilitiesPacket abilities) {
+            SwoftyPlayer player = SwoftyPlayer.players.get(abilities.getPlayer().getUuid());
+            if (player != null) {
+                player.updateAbilities(abilities.isFlying(), abilities.isAllowFlight(), abilities.isCreativeMode());
+            }
+        }
+    }
+
+    @ListenerMethod
     public void onPlayerPositionUpdate(PlayerPositionUpdateEvent event) {
-        PlayerTickInformation currentTick = event.getCurrentTick();
-        PlayerTickInformation previousTick = event.getPreviousTick();
+        SwoftyPlayer player = event.getPlayer();
 
-        if (previousTick == null) return;
-
-        boolean onGround = currentTick.isOnGround();
-        boolean wasOnGround = previousTick.isOnGround();
-
-        Vel currentVel = currentTick.getVel();
-        Vel previousVel = previousTick.getVel();
-
-        double currentY = currentVel.y();
-        double previousY = previousVel.y();
-
-        // Pattern 1: Hovering (staying at same Y without being on ground)
-        if (!onGround && Math.abs(currentY) < 0.01 && Math.abs(previousY) < 0.01) {
-            event.getPlayer().flag(net.swofty.anticheat.flag.FlagType.FLIGHT, 0.85);
+        // Skip checks for players with flight abilities
+        if (player.shouldBypassMovementChecks()) {
             return;
         }
 
-        // Pattern 2: Ascending without jump (not on ground, moving up without initial jump velocity)
-        if (!onGround && !wasOnGround && currentY > 0 && currentY > previousY * DRAG) {
-            // Velocity should be decreasing due to gravity, not increasing
-            double certainty = Math.min(0.9, 0.6 + Math.abs(currentY - previousY * DRAG) * 5);
-            event.getPlayer().flag(net.swofty.anticheat.flag.FlagType.FLIGHT, certainty);
-            return;
-        }
+        Vel currentVel = event.getCurrentTick().getVel();
+        boolean onGround = event.getCurrentTick().isOnGround();
 
-        // Pattern 3: Ignoring gravity (velocity not decreasing as expected)
-        if (!onGround && !wasOnGround) {
-            // Expected Y velocity with gravity
-            double expectedY = (previousY + GRAVITY) * DRAG;
-            double difference = Math.abs(currentY - expectedY);
-
-            // Allow some tolerance for server/client lag
-            if (difference > 0.1) {
-                double certainty = Math.min(0.95, 0.5 + difference * 3);
-                event.getPlayer().flag(net.swofty.anticheat.flag.FlagType.FLIGHT, certainty);
+        // Check for impossible upward velocity when not on ground
+        // Normal jump velocity is ~0.42, anything significantly higher is suspicious
+        if (!onGround && currentVel.y() > MAX_VERTICAL_SPEED * 1.5) {
+            int airTicks = countAirTicks(player.getLastTicks());
+            // After a few ticks in the air, upward velocity should be impossible without flying
+            if (airTicks > 5) {
+                player.flag(FlagType.FLIGHT, 0.9);
             }
         }
 
-        // Pattern 4: Multiple ticks in air with no Y velocity change
-        int airTicks = countAirTicks(event.getPlayer().getLastTicks());
-        if (airTicks > 5 && Math.abs(currentY) < 0.05) {
-            double certainty = Math.min(0.95, 0.4 + (airTicks * 0.05));
-            event.getPlayer().flag(net.swofty.anticheat.flag.FlagType.FLIGHT, certainty);
+        // Check for sustained horizontal flight (no gravity effect)
+        if (!onGround) {
+            int airTicks = countAirTicks(player.getLastTicks());
+            // If in the air for many ticks without falling, likely flying
+            if (airTicks >= 15) {
+                // Check if Y velocity is suspiciously stable (not affected by gravity)
+                double avgYVel = calculateAverageYVelocity(player.getLastTicks(), 10);
+                if (avgYVel > -0.01 && avgYVel < 0.01) {
+                    // Hovering in place - very suspicious
+                    player.flag(FlagType.FLIGHT, 0.85);
+                }
+            }
         }
     }
 
@@ -73,5 +73,16 @@ public class FlightFlag extends Flag {
             }
         }
         return count;
+    }
+
+    private double calculateAverageYVelocity(java.util.List<PlayerTickInformation> ticks, int count) {
+        if (ticks.isEmpty()) return 0;
+        double sum = 0;
+        int actualCount = 0;
+        for (int i = ticks.size() - 1; i >= 0 && actualCount < count; i--) {
+            sum += ticks.get(i).getVel().y();
+            actualCount++;
+        }
+        return actualCount > 0 ? sum / actualCount : 0;
     }
 }

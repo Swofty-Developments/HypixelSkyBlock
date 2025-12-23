@@ -15,6 +15,12 @@ items:
         mining_value: 2.0
       - id: SELLABLE
         value: 3.0
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: CACTUS_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 10
 
   - id: CARROT
     rarity: COMMON
@@ -47,22 +53,12 @@ items:
         mining_value: 4.0
       - id: SELLABLE
         value: 3.0
-
-  - id: NETHER_WART
-    rarity: COMMON
-    components:
-      - id: CUSTOM_DROP
-        rules:
-          - conditions:
-            drops:
-              - item: NETHER_WART
-                chance: 1.0
-                amount: 2-4
-      - id: SKILLABLE_MINE
-        category: FARMING
-        mining_value: 4.0
-      - id: SELLABLE
-        value: 4.0
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: COCOA_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
 
   - id: POTATO
     rarity: COMMON
@@ -79,6 +75,18 @@ items:
         mining_value: 4.0
       - id: SELLABLE
         value: 3.0
+
+  - id: POISONOUS_POTATO
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 10.0
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: POISON
+        effect_duration: 45
+        effect_amplifier: 0
+        alchemy_xp: 20
 
   - id: MELON_BLOCK
     rarity: COMMON

@@ -32,7 +32,8 @@ public class SwoftyEventHandler {
             try {
                 entry.method.invoke(entry.instance, event);
             } catch (Exception e) {
-                Logger.error(e, "Failed to invoke event listener method {} for event {}",
+                Throwable cause = e.getCause() != null ? e.getCause() : e;
+                Logger.error(cause, "Failed to invoke event listener method {} for event {}",
                         entry.method.getName(), event.getClass().getSimpleName());
             }
         }

@@ -7,8 +7,8 @@ import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.AttributeList;
-import net.minestom.server.item.component.HeadProfile;
 import net.minestom.server.item.component.TooltipDisplay;
+import net.minestom.server.network.player.ResolvableProfile;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
@@ -22,9 +22,6 @@ import java.util.stream.Collectors;
  */
 public class ItemStackCreator {
 	private static final TooltipDisplay DEFAULT_TOOLTIP_DISPLAY = new TooltipDisplay(false, Set.of(
-			DataComponents.CONSUMABLE,
-			DataComponents.DAMAGE,
-			DataComponents.BASE_COLOR,
 			DataComponents.UNBREAKABLE
 	));
 
@@ -81,23 +78,23 @@ public class ItemStackCreator {
 		return getStack(name, material, amount, l.toArray(new String[]{}));
 	}
 
-	/**
-	 * Creates an {@link ItemStack.Builder} with a single lore line. Will split the lore into multiple lines on every \n.
-	 *
-	 * @param name     the name of the item stack
-	 * @param color    the color to apply to the lore
-	 * @param material the material of the item stack
-	 * @param amount   the number of items in the stack
-	 * @param lore     the lore to display
-	 * @return an {@link ItemStack.Builder} with the specified properties
-	 */
-	public static ItemStack.Builder getSingleLoreStackLineSplit(String name, String color, Material material, int amount, String lore) {
-		List<String> l = new ArrayList<>();
-		for (String line : lore.split("\n")) {
-			l.add(color + line);
-		}
-		return getStack(name, material, amount, l.toArray(new String[]{}));
-	}
+    /**
+     * Creates an {@link ItemStack.Builder} with a single lore line. Will split the lore into multiple lines on every \n.
+     *
+     * @param name     the name of the item stack
+     * @param color    the color to apply to the lore
+     * @param material the material of the item stack
+     * @param amount   the number of items in the stack
+     * @param lore     the lore to display
+     * @return an {@link ItemStack.Builder} with the specified properties
+     */
+    public static ItemStack.Builder getSingleLoreStackLineSplit(String name, String color, Material material, int amount, String lore) {
+        List<String> l = new ArrayList<>();
+        for (String line : lore.split("\n")) {
+            l.add(color + line);
+        }
+        return getStack(name, material, amount, l.toArray(new String[]{}));
+    }
 
 	/**
 	 * Creates an {@link ItemStack.Builder} with specified name, material, amount, and lore.
@@ -264,7 +261,7 @@ public class ItemStackCreator {
 						.collect(Collectors.toList()))
 				.set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
 				.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY)
-				.set(DataComponents.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)))
+				.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)))
 				.amount(amount);
 	}
 
@@ -294,7 +291,7 @@ public class ItemStackCreator {
 						DataComponents.BASE_COLOR,
 						DataComponents.UNBREAKABLE
 				)))
-				.set(DataComponents.PROFILE, new HeadProfile(skin))
+				.set(DataComponents.PROFILE, new ResolvableProfile(skin))
 				.amount(amount));
 	}
 

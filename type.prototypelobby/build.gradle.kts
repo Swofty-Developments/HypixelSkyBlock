@@ -19,11 +19,7 @@ dependencies {
     implementation("org.mongodb:mongodb-driver-sync:4.11.2")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("net.minestom:minestom:2025.08.18-1.21.8") {
+    implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-}
-
-tasks.withType<JavaCompile> {
-    options.compilerArgs.add("--enable-preview")
 }

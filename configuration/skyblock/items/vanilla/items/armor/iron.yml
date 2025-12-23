@@ -3,6 +3,8 @@ items:
     material: IRON_HELMET
     rarity: COMMON
     components:
+      - id: STANDARD_ITEM
+        standard_item_type: HELMET
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -24,6 +26,8 @@ items:
     material: IRON_CHESTPLATE
     rarity: COMMON
     components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -46,6 +50,8 @@ items:
     material: IRON_LEGGINGS
     rarity: COMMON
     components:
+      - id: STANDARD_ITEM
+        standard_item_type: LEGGINGS
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -68,6 +74,8 @@ items:
     material: IRON_BOOTS
     rarity: COMMON
     components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED

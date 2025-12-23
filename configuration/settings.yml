@@ -4,7 +4,7 @@
 
 # Server's host address and port. Set ip empty to use public address
 bind:
-  ip: 'localhost'
+  ip: '0.0.0.0'
   port: 65535
 
 # Max number of players can join to server
@@ -52,7 +52,7 @@ secureProfile: false
 # For 1.13+ clients
 brandName:
   enable: true
-  content: 'NanoLimbo'
+  content: 'Hypixel'
 
 # Message sends when player joins to the server
 joinMessage:
@@ -73,11 +73,11 @@ bossBar:
 # Display title and subtitle
 # For 1.8+ clients
 title:
-  enable: true
+  enable: false
   # Set title text value empty, if you need only subtitle
-  title: '{"text": "&9&lWelcome!"}'
+  title: '{"text": ""}'
   # Set subtitle text value empty, if you need only title
-  subtitle: '{"text": "&6NanoLimbo"}'
+  subtitle: '{"text": ""}'
   # Fade in time in ticks (1 sec = 20 ticks)
   fadeIn: 10
   # Stay time in ticks
@@ -111,12 +111,16 @@ debugLevel: 2
 
 # Warning! Do not touch params of this block if you are not completely sure what is this!
 netty:
-  # Use a Linux native transport type, if it possible
-  useEpoll: true
+  # Available transport type:
+  # - epoll
+  # - io_uring
+  # - kqueue
+  # - nio
+  transportType: epoll
   # EventLoopGroup threads count
   threads:
     bossGroup: 1
-    workerGroup: 4
+    workerGroup:
 
 # Options to check incoming traffic and kick potentially malicious connections.
 # Take into account that player can send many small packets, for example, just moving mouse.

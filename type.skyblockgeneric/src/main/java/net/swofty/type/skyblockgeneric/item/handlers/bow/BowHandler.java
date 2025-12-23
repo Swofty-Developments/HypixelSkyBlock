@@ -4,8 +4,7 @@ import lombok.Builder;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.function.BiConsumer;
-
-@Builder
-public record BowHandler(BiConsumer<SkyBlockPlayer, SkyBlockItem> shootHandler) {
+@FunctionalInterface
+public interface BowHandler {
+    void onShoot(SkyBlockPlayer player, SkyBlockItem item, double power);
 }

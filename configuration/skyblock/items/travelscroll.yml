@@ -29,6 +29,12 @@ items:
             result:
               type: HUB_CRYPTS_TRAVEL_SCROLL
               amount: 1
+  - id: HUB_DARK_AUCTION_TRAVEL_SCROLL
+    material: PAPER
+    rarity: UNCOMMON
+    components:
+      - id: TRAVEL_SCROLL
+        scroll_type: HUB_DARK_AUCTION
   - id: HUB_CRYPTS_TRAVEL_SCROLL
     material: PAPER
     rarity: UNCOMMON

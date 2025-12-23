@@ -38,7 +38,7 @@ public class MissionTalkJerry extends SkyBlockMission {
         data.getMission(this.getClass()).getKey().getCustomData().put("talking", true);
 
         SchedulerManager scheduler = MinecraftServer.getSchedulerManager();
-        player.sendMessage("§e[NPC] Jerry§f: Your SkyBlock island is part of a much larger universe.");
+        player.sendMessage("Your SkyBlock island is part of a much larger universe.");
         scheduler.scheduleTask(() -> {
             player.sendMessage("§e[NPC] Jerry§f: The SkyBlock universe is full of islands to explore and resources to discover!");
         }, TaskSchedule.tick(20), TaskSchedule.stop());

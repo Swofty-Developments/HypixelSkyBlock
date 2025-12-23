@@ -1,24 +1,25 @@
 package net.swofty.type.skyblockgeneric.skill;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.type.skyblockgeneric.skill.skills.*;
-import org.tinylog.Logger;
 
 public enum SkillCategories {
-    COMBAT(CombatSkill.class),
-    FARMING(FarmingSkill.class),
-    FISHING(FishingSkill.class),
-    MINING(MiningSkill.class),
-    FORAGING(ForagingSkill.class),
-    ENCHANTING(EnchantingSkill.class),
-    RUNECRAFTING(RunecraftingSkill.class),
-    CARPENTRY(CarpentrySkill.class),
+    COMBAT("combat"),
+    FARMING("farming"),
+    FISHING("fishing"),
+    MINING("mining"),
+    FORAGING("foraging"),
+    ENCHANTING("enchanting"),
+    RUNECRAFTING("runecrafting"),
+    CARPENTRY("carpentry"),
+    ALCHEMY("alchemy"),
+    TAMING("taming"),
     ;
 
-    private final Class<? extends SkillCategory> clazz;
+    private final String file;
+    private SkillCategory category;
 
-    SkillCategories(Class<? extends SkillCategory> clazz) {
-        this.clazz = clazz;
+    SkillCategories(String file) {
+        this.file = file;
     }
 
     @Override
@@ -27,12 +28,9 @@ public enum SkillCategories {
     }
 
     public SkillCategory asCategory() {
-        try {
-            return clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            Logger.error(e, "Failed to instantiate SkillCategory: {}", clazz.getSimpleName());
+        if (category == null) {
+            category = SkillLoader.loadFromFile(file);
         }
-
-        throw new RuntimeException("Failed to instantiate SkillCategory");
+        return category;
     }
 }

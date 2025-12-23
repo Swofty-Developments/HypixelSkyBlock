@@ -158,7 +158,7 @@ public class SkyBlockVelocity {
 		RedisAPI.generateInstance(Configuration.get("redis-uri"));
 		RedisAPI.getInstance().setFilterID("proxy");
 		loopThroughPackage("net.swofty.velocity.redis.listeners", RedisListener.class)
-				.forEach(listener ->  {
+				.forEach(listener -> {
 					RedisAPI.getInstance().registerChannel(
 							listener.getClass().getAnnotation(ChannelListener.class).channel().getChannelName(),
 							(event2) -> {
@@ -187,7 +187,7 @@ public class SkyBlockVelocity {
 			return;
 		}
 
-		List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.BEDWARS_LOBBY);
+		List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.PROTOTYPE_LOBBY);
 		if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
 			TestFlowManager.ProxyTestFlowInstance instance = TestFlowManager.getTestFlowForPlayer(player.getUsername());
 			player.sendPlainMessage("§7You are currently in test flow " + instance.getName() + ".");
@@ -214,12 +214,12 @@ public class SkyBlockVelocity {
 
 		if (gameServers.isEmpty()) {
 			player.disconnect(
-					Component.text("§cThere are no servers (type=BEDWARS_LOBBY) servers available at the moment.")
+					Component.text("§cThere are no servers (type=PROTOTYPE_LOBBY) servers available at the moment.")
 			);
 			return;
 		}
 
-		List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.BEDWARS_LOBBY);
+		List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.PROTOTYPE_LOBBY);
 		GameManager.GameServer toSendTo = gameServers.getFirst();
 
 		for (BalanceConfiguration configuration : configurations) {
@@ -299,15 +299,15 @@ public class SkyBlockVelocity {
 				});
 	}
 
-	@Subscribe
-	public void onPing(ProxyPingEvent event) {
-		event.setPing(new ServerPing(
-				event.getPing().getVersion(),
-				null,
-				Component.text("                §aHypixel Recreation §c[1.8-1.21]"),
-				event.getPing().getFavicon().orElse(null)
-		));
-	}
+    @Subscribe
+    public void onPing(ProxyPingEvent event) {
+        event.setPing(new ServerPing(
+                event.getPing().getVersion(),
+                null,
+                Component.text("                §aHypixel Recreation §c[1.8-1.21]"),
+                event.getPing().getFavicon().orElse(null)
+        ));
+    }
 
 	public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {
 		Reflections reflections = new Reflections(packageName);
