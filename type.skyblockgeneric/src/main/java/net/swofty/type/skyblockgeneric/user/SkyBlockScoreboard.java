@@ -53,20 +53,12 @@ public class SkyBlockScoreboard {
                     continue;
                 }
 
-                Sidebar sidebar;
-                boolean isNewSidebar = false;
                 if (sidebarCache.containsKey(player.getUuid())) {
-                    sidebar = sidebarCache.get(player.getUuid());
-                    for (Sidebar.ScoreboardLine line : sidebar.getLines().stream().toList()) {
-                        sidebar.removeLine(line.getId());
-                    }
-                    sidebar.setTitle(Component.text("  " + getSidebarName(skyblockName, false)
-                            + (player.isCoop() ? " §b§lCO-OP  " : "  ")));
-                } else {
-                    sidebar = new Sidebar(Component.text("  " + getSidebarName(skyblockName, false)
-                            + (player.isCoop() ? " §b§lCO-OP  " : "  ")));
-                    isNewSidebar = true;
+                    sidebarCache.get(player.getUuid()).removeViewer(player);
                 }
+
+                Sidebar sidebar = new Sidebar(Component.text("  " + getSidebarName(skyblockName, false)
+                        + (player.isCoop() ? " §b§lCO-OP  " : "  ")));
 
                 addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
                 addLine("§7 ", sidebar);
@@ -132,10 +124,9 @@ public class SkyBlockScoreboard {
                 addLine("§7 ", sidebar);
                 addLine("§ewww.hypixel.net", sidebar);
 
-                if (isNewSidebar) {
-                    sidebar.addViewer(player);
-                    sidebarCache.put(player.getUuid(), sidebar);
-                }
+                sidebar.addViewer(player);
+
+                sidebarCache.put(player.getUuid(), sidebar);
             }
             return TaskSchedule.tick(2);
         });
@@ -146,10 +137,11 @@ public class SkyBlockScoreboard {
     }
 
     private static void addLine(String text, Sidebar sidebar) {
-        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
         for (Sidebar.ScoreboardLine existingLine : sidebar.getLines()) {
             sidebar.updateLineScore(existingLine.getId(), existingLine.getLine() + 1);
         }
+
+        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
     }
 
     private static String getSidebarName(int counter, boolean isGuest) {
