@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class HypixelInventoryGUI {
     public static final Map<UUID, HypixelInventoryGUI> GUI_MAP = new ConcurrentHashMap<>();
     public static final ItemStack.Builder FILLER_ITEM = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE)
+            .set(DataComponents.CUSTOM_NAME, Component.space())
             .set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.EMPTY);
 
     protected String title;

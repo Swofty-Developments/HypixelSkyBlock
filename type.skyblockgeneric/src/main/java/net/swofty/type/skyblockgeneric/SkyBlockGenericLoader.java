@@ -294,9 +294,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         CustomGroups.registerAudiences();
         PlayerStatistics.run();
 
-        /**
-         * Start repeaters
-         */
+        // Start repeaters
         SkyBlockScoreboard.start();
         StashReminder.start(MinecraftServer.getSchedulerManager());
         PlayerHolograms.updateAll(MinecraftServer.getSchedulerManager());

@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import net.swofty.commons.ServerType;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public enum TravelScrollIslands {
 	private final SkillCategories associatedSkill;
 	private final Integer islandTier;
 
-	TravelScrollIslands(String internalName, String descriptiveName, String texture, Function<Boolean, String> description, ServerType serverType, SkillCategories associatedSkill, Integer islandTier) {
+	TravelScrollIslands(String internalName, String descriptiveName, String texture, Function<Boolean, String> description, @NonNull ServerType serverType, SkillCategories associatedSkill, Integer islandTier) {
 		this.internalName = internalName;
 		this.descriptiveName = descriptiveName;
 		this.texture = texture;
@@ -49,7 +48,7 @@ public enum TravelScrollIslands {
 		this.islandTier = islandTier;
 	}
 
-	TravelScrollIslands(String internalName, String descriptiveName, String texture, Function<Boolean, String> description, ServerType serverType) {
+	TravelScrollIslands(String internalName, String descriptiveName, String texture, Function<Boolean, String> description, @NonNull ServerType serverType) {
 		this.internalName = internalName;
 		this.descriptiveName = descriptiveName;
 		this.texture = texture;
@@ -59,7 +58,7 @@ public enum TravelScrollIslands {
 		this.islandTier = null;
 	}
 
-	TravelScrollIslands(String internalName, String descriptiveName, String texture, Function<Boolean, String> description, ServerType serverType, List<TravelScrollType> associatedScrolls) {
+	TravelScrollIslands(String internalName, String descriptiveName, String texture, Function<Boolean, String> description, @NonNull ServerType serverType, List<TravelScrollType> associatedScrolls) {
 		this.internalName = internalName;
 		this.description = description;
 		this.serverType = serverType;
@@ -97,7 +96,4 @@ public enum TravelScrollIslands {
 		return null;
 	}
 
-	public void sendPlayer(SkyBlockPlayer player) {
-
-	}
 }
