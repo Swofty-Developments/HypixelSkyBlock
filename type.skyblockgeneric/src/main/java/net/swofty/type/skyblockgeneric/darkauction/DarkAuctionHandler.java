@@ -10,6 +10,8 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.auctions.DarkAuctionPhase;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.darkauction.PlayerLeftAuctionProtocol;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -318,7 +320,22 @@ public class DarkAuctionHandler {
             if (winner != null && playersInAuction.contains(winnerId)) {
                 try {
                     ItemType itemType = ItemType.valueOf(itemTypeName);
-                    winner.addAndUpdateItem(new SkyBlockItem(itemType));
+                    SkyBlockItem skyBlockItem = new SkyBlockItem(itemType);
+
+                    // Set dark auction price on ALL items won at auction
+                    skyBlockItem.getAttributeHandler().setDarkAuctionPrice(bid);
+
+                    // Apply Greed bonus for Midas' Sword using extra dynamic statistics
+                    if (itemType == ItemType.MIDAS_SWORD) {
+                        int greedBonus = calculateGreedBonus(bid);
+                        ItemStatistics greedStats = ItemStatistics.builder()
+                                .withBase(ItemStatistic.DAMAGE, (double) greedBonus)
+                                .withBase(ItemStatistic.STRENGTH, (double) greedBonus)
+                                .build();
+                        skyBlockItem.getAttributeHandler().setExtraDynamicStatistics(greedStats);
+                    }
+
+                    winner.addAndUpdateItem(skyBlockItem);
                 } catch (Exception e) {
                     Logger.error(e, "Error giving item to winner");
                 }
@@ -467,6 +484,37 @@ public class DarkAuctionHandler {
                             player.getUsername());
                     return null;
                 });
+    }
+
+    /**
+     * Calculates the Greed bonus for Midas' Sword based on the price paid.
+     * Tiered formula:
+     * - <1M: price / 50,000 (max 20)
+     * - 1M-2.5M: 20 + (price - 1M) / 100,000 (max 35 cumulative)
+     * - 2.5M-7.5M: 35 + (price - 2.5M) / 200,000 (max 60 cumulative)
+     * - 7.5M-25M: 60 + (price - 7.5M) / 500,000 (max 95 cumulative)
+     * - 25M-50M: 95 + (price - 25M) / 1,000,000 (max 120 cumulative)
+     * - >=50M: 120
+     */
+    private static int calculateGreedBonus(long price) {
+        if (price >= 50_000_000L) return 120;
+        if (price >= 25_000_000L) {
+            int bonus = 95 + (int) ((price - 25_000_000L) / 1_000_000L);
+            return Math.min(120, bonus);
+        }
+        if (price >= 7_500_000L) {
+            int bonus = 60 + (int) ((price - 7_500_000L) / 500_000L);
+            return Math.min(95, bonus);
+        }
+        if (price >= 2_500_000L) {
+            int bonus = 35 + (int) ((price - 2_500_000L) / 200_000L);
+            return Math.min(60, bonus);
+        }
+        if (price >= 1_000_000L) {
+            int bonus = 20 + (int) ((price - 1_000_000L) / 100_000L);
+            return Math.min(35, bonus);
+        }
+        return (int) Math.min(20, price / 50_000L);
     }
 
     /**

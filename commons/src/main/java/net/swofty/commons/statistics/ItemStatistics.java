@@ -39,18 +39,24 @@ public class ItemStatistics {
         StringBuilder builder = new StringBuilder();
 
         for (ItemStatistic stat : ItemStatistic.values()) {
+            double baseValue = statisticsBase.getOrDefault(stat, 0D);
             double additiveValue = statisticsAdditive.getOrDefault(stat, 0D);
             double multiplicativeValue = statisticsMultiplicative.getOrDefault(stat, 0D);
 
-            if (additiveValue != 0 || multiplicativeValue != 0) {
+            if (baseValue != 0 || additiveValue != 0 || multiplicativeValue != 0) {
                 builder.append(stat.name()).append(":");
+                boolean needsComma = false;
+                if (baseValue != 0) {
+                    builder.append("B").append(baseValue);
+                    needsComma = true;
+                }
                 if (additiveValue != 0) {
+                    if (needsComma) builder.append(",");
                     builder.append("A").append(additiveValue);
+                    needsComma = true;
                 }
                 if (multiplicativeValue != 0) {
-                    if (additiveValue != 0) {
-                        builder.append(",");
-                    }
+                    if (needsComma) builder.append(",");
                     builder.append("M").append(multiplicativeValue);
                 }
                 builder.append(";");
@@ -71,12 +77,15 @@ public class ItemStatistics {
                     ItemStatistic stat = ItemStatistic.valueOf(parts[0]);
                     String[] values = parts[1].split(",");
                     for (String value : values) {
-                        if (value.startsWith("A")) {
+                        if (value.startsWith("B")) {
+                            double baseValue = Double.parseDouble(value.substring(1));
+                            builder.withBase(stat, baseValue);
+                        } else if (value.startsWith("A")) {
                             double additiveValue = Double.parseDouble(value.substring(1));
-                            builder.withBase(stat, additiveValue);
+                            builder.withAdditive(stat, additiveValue);
                         } else if (value.startsWith("M")) {
                             double multiplicativeValue = Double.parseDouble(value.substring(1));
-                            builder.withMultiplicativePercentage(stat, multiplicativeValue);
+                            builder.withMultiplicative(stat, multiplicativeValue);
                         }
                     }
                 }

@@ -12,13 +12,9 @@ public class DarkAuctionItemPool {
     private static final Random random = new Random();
 
     public DarkAuctionItemPool() {
-        // Artifacts (weight 24)
-        items.add(new WeightedItem(ItemType.DIRT, 24));
-        items.add(new WeightedItem(ItemType.COAL, 24));
-        items.add(new WeightedItem(ItemType.ACACIA_BUTTON, 24));
-
         // Special Items (weight 16)
         items.add(new WeightedItem(ItemType.HYPERION, 16));
+        items.add(new WeightedItem(ItemType.MIDAS_SWORD, 16));
 
         // Epic Pets (weight 16)
         items.add(new WeightedItem(ItemType.BEE_PET, 16));
@@ -46,8 +42,8 @@ public class DarkAuctionItemPool {
             }
         }
 
-        // If pool is exhausted, TODO return Midas Sword
-        return ItemType.HYPERION;
+        // If pool is exhausted, return Midas Sword
+        return ItemType.MIDAS_SWORD;
     }
 
     /**

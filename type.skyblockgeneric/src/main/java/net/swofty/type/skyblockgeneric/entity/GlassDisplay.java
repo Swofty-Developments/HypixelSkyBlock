@@ -13,6 +13,7 @@ import net.minestom.server.instance.block.Block;
 import net.swofty.type.generic.entity.InteractionEntity;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 
 import java.util.function.BiConsumer;
 
@@ -53,7 +54,7 @@ public class GlassDisplay extends LivingEntity {
 		super.spawn();
 		itemEntity = new LivingEntity(EntityType.ITEM);
 		itemEntity.editEntityMeta(ItemEntityMeta.class, meta -> {
-			meta.setItem(item.getItemStack());
+			meta.setItem(new NonPlayerItemUpdater(item.getItemStack()).getUpdatedItem().build());
 		});
 		itemEntity.setCanPickupItem(false);
 		itemEntity.setNoGravity(true);

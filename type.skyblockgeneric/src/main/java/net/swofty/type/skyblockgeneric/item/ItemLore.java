@@ -214,14 +214,15 @@ public class ItemLore {
 			addLoreLine(null);
 		}
 
-		// Handle Custom Item Lore
+		// Handle Custom Item Lore (BEFORE_ABILITY location)
 		if (item.hasComponent(LoreUpdateComponent.class)) {
 			LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);
 			if (loreUpdateComponent.getHandler() == null)
 				throw new RuntimeException("Lore update handler is null for " + item.getAttributeHandler().getTypeAsString());
 
-			if (loreUpdateComponent.getHandler().loreGenerator() != null) {
-				loreUpdateComponent.getHandler().loreGenerator().apply(item, player).forEach(line -> addLoreLine("§7" + line));
+			LoreConfig loreConfig = loreUpdateComponent.getHandler();
+			if (loreConfig.loreGenerator() != null && loreConfig.location() == LoreConfig.LoreConfigLocation.BEFORE_ABILITY) {
+				loreConfig.loreGenerator().apply(item, player).forEach(line -> addLoreLine("§7" + line));
 				addLoreLine(null);
 			}
 		}
@@ -250,6 +251,16 @@ public class ItemLore {
 
 				addLoreLine(null);
 			});
+		}
+
+		// Handle Custom Item Lore (AFTER_ABILITY location)
+		if (item.hasComponent(LoreUpdateComponent.class)) {
+			LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);
+			LoreConfig loreConfig = loreUpdateComponent.getHandler();
+			if (loreConfig != null && loreConfig.loreGenerator() != null && loreConfig.location() == LoreConfig.LoreConfigLocation.AFTER_ABILITY) {
+				loreConfig.loreGenerator().apply(item, player).forEach(line -> addLoreLine("§7" + line));
+				addLoreLine(null);
+			}
 		}
 
 		// Handle full set abilities

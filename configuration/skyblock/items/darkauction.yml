@@ -1,0 +1,41 @@
+items:
+  - id: DARK_PURPLE_DYE
+    rarity: LEGENDARY
+    lore:
+      - "§7Can be applied to any vanilla Armor"
+      - "§7piece by combining the two items"
+      - "§7in an Anvil to change the hex"
+      - "§7color of that piece to §5#301934§7."
+      - ""
+      - "§7Costs §b100 Bits §7to combine."
+    components:
+      - id: SKULL_HEAD
+        texture: e6182adee5276372c2258256d50e69b7d857c675f54765acf73af61690a62c7e
+      - id: ANVIL_COMBINABLE
+        handler_id: DARK_PURPLE_DYE
+
+  - id: MIDAS_SWORD
+    material: GOLDEN_SWORD
+    rarity: LEGENDARY
+    lore:
+      - "§6Ability: Greed §e§lPASSIVE"
+      - "§7The §c❁ Strength §7and §c❁ Damage §7bonus"
+      - "§7of this item is dependent on the"
+      - "§7price paid for it at the §5Dark"
+      - "§5Auction§7! §7The maximum bonus of this item is"
+      - "§c120 §7if the bid was §650,000,000"
+      - "§6Coins §7or higher!"
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: MUSEUM
+        museum_category: WEAPONS
+      - id: GEMSTONE
+        gemstones:
+          - "COMBAT:50000"
+          - "COMBAT:100000"
+      - id: LORE_UPDATE
+        handler_id: MIDAS_SWORD
+        is_absolute: false
+    default_statistics:
+      damage: 170.0
