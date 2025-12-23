@@ -16,7 +16,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
 
-public abstract class SkyBlockMiningConfiguration {
+public abstract class SkyBlockRegenConfiguration {
 
     public ArrayList<MiningTask> activeMiningTasks = new ArrayList<>();
 

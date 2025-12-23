@@ -28,6 +28,6 @@ public class PacketListenerPlayerDig extends HypixelPacketClientListener {
 
     @Override
     public boolean overrideMinestomProcessing() {
-        return true;
+        return false;
     }
 }

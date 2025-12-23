@@ -65,7 +65,7 @@ import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.redis.RedisAuthenticate;
 import net.swofty.type.generic.redis.RedisOriginServer;
-import net.swofty.type.skyblockgeneric.region.SkyBlockMiningConfiguration;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
 import net.swofty.type.skyblockgeneric.server.eventcaller.CustomEventCaller;
@@ -270,7 +270,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          * Load regions
          */
         SkyBlockRegion.cacheRegions();
-        SkyBlockMiningConfiguration.startRepeater(MinecraftServer.getSchedulerManager());
+        SkyBlockRegenConfiguration.startRepeater(MinecraftServer.getSchedulerManager());
         MinecraftServer.getDimensionTypeRegistry().register(
                 Key.key("skyblock:island"),
                 DimensionType.builder()

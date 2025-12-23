@@ -5,6 +5,7 @@ items:
       damage: 10.0
     components:
       - id: AXE
+        axe_strength: 2
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -50,6 +51,7 @@ items:
       damage: 15.0
     components:
       - id: AXE
+        axe_strength: 4
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -95,6 +97,7 @@ items:
       damage: 25.0
     components:
       - id: AXE
+        axe_strength: 6
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -140,6 +143,7 @@ items:
       damage: 20.0
     components:
       - id: AXE
+        axe_strength: 12
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -185,6 +189,7 @@ items:
       damage: 30.0
     components:
       - id: AXE
+        axe_strength: 8
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED

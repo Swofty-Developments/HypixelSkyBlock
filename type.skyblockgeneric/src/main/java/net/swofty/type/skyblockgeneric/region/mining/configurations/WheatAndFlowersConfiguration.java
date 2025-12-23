@@ -8,14 +8,14 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.skyblockgeneric.data.monogdb.CrystalDatabase;
-import net.swofty.type.skyblockgeneric.region.SkyBlockMiningConfiguration;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.utility.groups.Groups;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WheatAndFlowersConfiguration extends SkyBlockMiningConfiguration {
+public class WheatAndFlowersConfiguration extends SkyBlockRegenConfiguration {
     @Override
     public MiningTask handleStageOne(MiningTask task, Pos brokenBlock) {
         task.setIntermediaryBlock(Block.AIR);

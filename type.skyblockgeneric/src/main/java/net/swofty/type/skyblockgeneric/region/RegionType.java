@@ -88,11 +88,11 @@ public enum RegionType {
 
 	private final String name;
 	private final String color;
-	private final SkyBlockMiningConfiguration miningHandler;
+	private final SkyBlockRegenConfiguration miningHandler;
 	private final List<Songs> songs;
 
 	@SneakyThrows
-	RegionType(String name, String color, Class<? extends SkyBlockMiningConfiguration> miningHandler, Songs... songs) {
+	RegionType(String name, String color, Class<? extends SkyBlockRegenConfiguration> miningHandler, Songs... songs) {
 		this.name = name;
 		this.color = color;
 
@@ -103,11 +103,11 @@ public enum RegionType {
 		this.songs = new ArrayList<>();
 	}
 
-	RegionType(String name, String color, Class<? extends SkyBlockMiningConfiguration> miningHandler) {
+	RegionType(String name, String color, Class<? extends SkyBlockRegenConfiguration> miningHandler) {
 		this(name, color, miningHandler, new Songs[0]);
 	}
 
-	RegionType(String name, Class<? extends SkyBlockMiningConfiguration> miningHandler) {
+	RegionType(String name, Class<? extends SkyBlockRegenConfiguration> miningHandler) {
 		this(name, "§b", miningHandler);
 	}
 
@@ -131,7 +131,7 @@ public enum RegionType {
 	}
 
 	@SneakyThrows
-	public SkyBlockMiningConfiguration getMiningHandler() {
+	public SkyBlockRegenConfiguration getMiningHandler() {
 		return miningHandler;
 	}
 

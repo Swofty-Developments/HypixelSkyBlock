@@ -80,7 +80,10 @@ public class ItemConfigParser {
 				String category = (String) config.get("category");
 				yield new AuctionCategoryComponent(category);
 			}
-			case "AXE" -> new AxeComponent();
+			case "AXE" -> {
+				int axeStrength = config.containsKey("axe_strength") ? (int) config.get("axe_strength") : 1;
+				yield new AxeComponent(axeStrength);
+			}
 			case "BACKPACK" -> {
 				int rows = (int) config.get("rows");
 				String skullTexture = (String) config.get("skull-texture");
@@ -167,6 +170,7 @@ public class ItemConfigParser {
 				String texture = (String) config.get("skull_texture");
 				yield new GemstoneImplComponent(rarity, gemstone, texture);
 			}
+			case "HOE" -> new HoeComponent();
 			case "HOT_POTATO" -> {
 				String type = (String) config.get("potato_type");
 

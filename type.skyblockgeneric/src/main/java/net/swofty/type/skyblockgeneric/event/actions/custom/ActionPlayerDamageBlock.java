@@ -12,10 +12,10 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.DrillComponent;
-import net.swofty.type.skyblockgeneric.item.components.PickaxeComponent;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.region.mining.BreakingTask;
+import net.swofty.type.skyblockgeneric.region.mining.MineableBlock;
+import net.swofty.type.skyblockgeneric.region.mining.handler.SkyBlockMiningHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.HashMap;
@@ -57,9 +57,16 @@ public class ActionPlayerDamageBlock implements HypixelEventClass {
             return;
         }
 
-        // Ensure that the player isn't just using their hand
+        // Check if the player's tool can break this block using the handler system
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
-        if (!item.hasComponent(PickaxeComponent.class) && !item.hasComponent(DrillComponent.class)) return;
+        MineableBlock mineableBlock = MineableBlock.get(player.getInstance().getBlock(event.getBlockPosition()));
+        if (mineableBlock != null) {
+            SkyBlockMiningHandler handler = mineableBlock.getMiningHandler();
+            // If block doesn't break instantly and tool can't break it, return
+            if (!handler.breaksInstantly() && !handler.canToolBreak(item)) {
+                return;
+            }
+        }
 
         BreakingTask task = new BreakingTask(
                 player,

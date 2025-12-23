@@ -54,6 +54,7 @@ import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.region.mining.MineableBlock;
+import net.swofty.type.skyblockgeneric.region.mining.handler.SkyBlockMiningHandler;
 import net.swofty.type.skyblockgeneric.skill.skills.RunecraftingSkill;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.utility.DeathMessageCreator;
@@ -693,12 +694,34 @@ public class SkyBlockPlayer extends HypixelPlayer {
     public double getTimeToMine(SkyBlockItem item, Block b) {
         MineableBlock block = MineableBlock.get(b);
         if (block == null) return -1;
-        if (!item.getAttributeHandler().isMiningTool()) return -1;
         if (getRegion() == null) return -1;
 
-        if (block.getMiningPowerRequirement() > item.getAttributeHandler().getBreakingPower()) return -1;
-        if (block.getStrength() > 0) {
-            double time = Math.round(block.getStrength() * 30) / (Math.max(getMiningSpeed(), 1));
+        SkyBlockMiningHandler handler = block.getMiningHandler();
+
+        // Check if block breaks instantly
+        if (handler.breaksInstantly()) {
+            return 0;
+        }
+
+        // Check if tool can break this block
+        if (!handler.canToolBreak(item)) {
+            return -1;
+        }
+
+        // Check breaking power requirement
+        if (handler.getMiningPowerRequirement() > item.getAttributeHandler().getBreakingPower()) {
+            return -1;
+        }
+
+        // Handle vanilla-like fixed break times (e.g., logs with axes)
+        if (handler.usesVanillaBreakTime()) {
+            return handler.getBreakTimeForTool(item);
+        }
+
+        if (handler.getStrength() > 0) {
+            // Use handler's speed statistic
+            double speed = this.getStatistics().allStatistics().getOverall(handler.getSpeedStatistic());
+            double time = Math.round(handler.getStrength() * 30) / (Math.max(speed, 1));
             ValueUpdateEvent event = new MiningValueUpdateEvent(this, time, item);
             SkyBlockValueEvent.callValueUpdateEvent(event);
             time = (double) event.getValue();

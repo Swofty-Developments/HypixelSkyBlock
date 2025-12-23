@@ -17,9 +17,10 @@ import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.CustomDropComponent;
 import net.swofty.type.skyblockgeneric.region.RegionType;
-import net.swofty.type.skyblockgeneric.region.SkyBlockMiningConfiguration;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.region.mining.MineableBlock;
+import net.swofty.type.skyblockgeneric.region.mining.handler.SkyBlockMiningHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
         // Handle region-specific block breaks
         else if (region != null) {
             RegionType type = region.getType();
-            SkyBlockMiningConfiguration mining = type.getMiningHandler();
+            SkyBlockRegenConfiguration mining = type.getMiningHandler();
 
             // Validate if block can be mined in this region
             if (material != null && mining != null && !mining.getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(material)) {
@@ -57,12 +58,21 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
                 return;
             }
 
-            // Check if player has sufficient breaking power
+            // Check if player's tool can break this block using the handler system
             MineableBlock mineableBlock = MineableBlock.get(block);
             if (mineableBlock != null) {
                 SkyBlockItem heldItem = new SkyBlockItem(player.getItemInMainHand());
+                SkyBlockMiningHandler handler = mineableBlock.getMiningHandler();
+
+                // Check if tool can break this block (unless it breaks instantly)
+                if (!handler.breaksInstantly() && !handler.canToolBreak(heldItem)) {
+                    event.setCancelled(true);
+                    return;
+                }
+
+                // Check breaking power requirement
                 int playerBreakingPower = heldItem.getAttributeHandler().getBreakingPower();
-                if (playerBreakingPower < mineableBlock.getMiningPowerRequirement()) {
+                if (playerBreakingPower < handler.getMiningPowerRequirement()) {
                     event.setCancelled(true);
                     return;
                 }
