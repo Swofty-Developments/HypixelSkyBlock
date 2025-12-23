@@ -386,6 +386,22 @@ public class ItemConfigParser {
 				yield new TieredTalismanComponent(baseTier, tier);
 			}
 			case "TRACKED_UNIQUE" -> new TrackedUniqueComponent();
+			case "BREWING_INGREDIENT" -> {
+				int brewingTime = ((Number) config.getOrDefault("brewing_time_seconds", 20)).intValue();
+				String effect = (String) config.getOrDefault("effect", "SPEED");
+				int duration = ((Number) config.getOrDefault("effect_duration", 180)).intValue();
+				int amplifier = ((Number) config.getOrDefault("effect_amplifier", 0)).intValue();
+				int alchemyXp = ((Number) config.getOrDefault("alchemy_xp", 0)).intValue();
+				yield new BrewingIngredientComponent(brewingTime, effect, duration, amplifier, alchemyXp);
+			}
+			case "POTION_DATA" -> {
+				String effect = (String) config.getOrDefault("effect", "SPEED");
+				int level = ((Number) config.getOrDefault("level", 1)).intValue();
+				int duration = ((Number) config.getOrDefault("base_duration", 180)).intValue();
+				boolean splash = (Boolean) config.getOrDefault("splash", false);
+				boolean extended = (Boolean) config.getOrDefault("extended", false);
+				yield new PotionDataComponent(effect, level, duration, splash, extended);
+			}
 			case "TRAVEL_SCROLL" -> {
 				String scrollType = (String) config.get("scroll_type");
 				yield new TravelScrollComponent(scrollType);

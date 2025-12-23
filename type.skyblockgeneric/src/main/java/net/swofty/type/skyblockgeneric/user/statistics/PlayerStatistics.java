@@ -412,6 +412,18 @@ public class PlayerStatistics {
         temporaryStatistics.add(temporaryStatistic);
     }
 
+    /**
+     * Get all active temporary statistics that have display info (for tablist)
+     */
+    public List<TemporaryStatistic> getDisplayableActiveEffects() {
+        synchronized (temporaryStatistics) {
+            temporaryStatistics.removeIf(stat -> stat.getExpiration() < System.currentTimeMillis());
+            return temporaryStatistics.stream()
+                    .filter(TemporaryStatistic::hasDisplayInfo)
+                    .toList();
+        }
+    }
+
     public void boostStatistic(TemporaryConditionalStatistic temporaryStatistic) {
         temporaryConditionalStatistics.add(temporaryStatistic);
     }

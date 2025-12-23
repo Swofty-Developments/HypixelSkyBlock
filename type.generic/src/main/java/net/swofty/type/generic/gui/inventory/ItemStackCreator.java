@@ -22,9 +22,6 @@ import java.util.stream.Collectors;
  */
 public class ItemStackCreator {
 	private static final TooltipDisplay DEFAULT_TOOLTIP_DISPLAY = new TooltipDisplay(false, Set.of(
-			DataComponents.CONSUMABLE,
-			DataComponents.DAMAGE,
-			DataComponents.BASE_COLOR,
 			DataComponents.UNBREAKABLE
 	));
 

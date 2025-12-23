@@ -8,11 +8,9 @@ import net.swofty.type.skyblockgeneric.block.BlockType;
 import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
 
 public class ChestBuilder {
-
     private final Instance instance;
     private final Point position;
     private final ChestType chestType;
-
 
     public ChestBuilder(Instance instance, Point position, ChestType chestType) {
         this.instance = instance;

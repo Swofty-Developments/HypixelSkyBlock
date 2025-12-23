@@ -21,8 +21,8 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
         HypixelDataHandler handler = player.getDataHandler();
         handler.runOnLoad(player);
 
+        HypixelNPC.updateForPlayer(player);
         if (HypixelConst.isIslandServer()) return;
         PlayerHolograms.spawnAll(player);
-        HypixelNPC.updateForPlayer(player);
     }
 }

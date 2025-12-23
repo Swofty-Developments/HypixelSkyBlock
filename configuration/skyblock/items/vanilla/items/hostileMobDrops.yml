@@ -5,22 +5,6 @@ items:
       - id: SELLABLE
         value: 9.0
 
-  - id: BLAZE_POWDER
-    rarity: COMMON
-    components:
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPELESS
-            recipe-type: NONE
-            ingredients:
-              - type: BLAZE_ROD
-                amount: 1
-            result:
-              type: BLAZE_POWDER
-              amount: 2
-      - id: SELLABLE
-        value: 4.0
-
   - id: BONE
     rarity: COMMON
     components:
@@ -84,24 +68,24 @@ items:
             result:
               type: FERMENTED_SPIDER_EYE
               amount: 1
-
-  - id: GHAST_TEAR
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 16.0
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: WEAKNESS
+        effect_duration: 90
+        effect_amplifier: 0
+        alchemy_xp: 10
 
   - id: GUNPOWDER
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 4.0
-
-  - id: MAGMA_CREAM
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 8.0
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
 
   - id: ROTTEN_FLESH
     rarity: COMMON
@@ -114,6 +98,12 @@ items:
     components:
       - id: SELLABLE
         value: 5.0
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: SLIME_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 10
 
   - id: SLIME_BLOCK
     rarity: COMMON
@@ -136,12 +126,6 @@ items:
             result:
               type: SLIME_BLOCK
               amount: 1
-
-  - id: SPIDER_EYE
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 3.0
 
   - id: STRING_ITEM
     rarity: COMMON

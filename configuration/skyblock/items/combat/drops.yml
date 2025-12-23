@@ -14,8 +14,12 @@ items:
     components:
       - id: SELLABLE
         value: 25000.0
-      - id: EXTRA_UNDER_NAME
-        display: Brewing Ingredient
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: FOUL_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 400
       - id: MINION_FUEL
         fuel_percentage: 90.0
         last_time_ms: 18000000

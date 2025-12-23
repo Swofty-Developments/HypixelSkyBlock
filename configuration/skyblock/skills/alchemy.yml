@@ -17,6 +17,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 2
     requirement: 125
@@ -30,6 +34,10 @@ rewards:
       - type: STATS_BASE
         data:
           statistic: INTELLIGENCE
+          amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
           amount: 1
 
   - level: 3
@@ -45,6 +53,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 4
     requirement: 300
@@ -58,6 +70,10 @@ rewards:
       - type: STATS_BASE
         data:
           statistic: INTELLIGENCE
+          amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
           amount: 1
 
   - level: 5
@@ -73,6 +89,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 6
     requirement: 750
@@ -86,6 +106,10 @@ rewards:
       - type: STATS_BASE
         data:
           statistic: INTELLIGENCE
+          amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
           amount: 1
 
   - level: 7
@@ -101,6 +125,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 8
     requirement: 1500
@@ -114,6 +142,10 @@ rewards:
       - type: STATS_BASE
         data:
           statistic: INTELLIGENCE
+          amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
           amount: 1
 
   - level: 9
@@ -129,6 +161,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 10
     requirement: 3500
@@ -142,6 +178,10 @@ rewards:
       - type: STATS_BASE
         data:
           statistic: INTELLIGENCE
+          amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
           amount: 1
 
   - level: 11
@@ -157,6 +197,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 12
     requirement: 7500
@@ -170,6 +214,10 @@ rewards:
       - type: STATS_BASE
         data:
           statistic: INTELLIGENCE
+          amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
           amount: 1
 
   - level: 13
@@ -185,6 +233,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 14
     requirement: 15000
@@ -198,6 +250,10 @@ rewards:
       - type: STATS_BASE
         data:
           statistic: INTELLIGENCE
+          amount: 1
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
           amount: 1
 
   - level: 15
@@ -213,6 +269,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 16
     requirement: 30000
@@ -227,6 +287,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 17
     requirement: 50000
@@ -241,6 +305,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 18
     requirement: 75000
@@ -255,6 +323,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 19
     requirement: 100000
@@ -269,6 +341,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 20
     requirement: 200000
@@ -283,6 +359,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 21
     requirement: 300000
@@ -297,6 +377,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 22
     requirement: 400000
@@ -311,6 +395,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 23
     requirement: 500000
@@ -325,6 +413,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 24
     requirement: 600000
@@ -339,6 +431,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 25
     requirement: 700000
@@ -353,6 +449,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 26
     requirement: 800000
@@ -367,6 +467,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 27
     requirement: 900000
@@ -381,6 +485,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 28
     requirement: 1000000
@@ -395,6 +503,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 29
     requirement: 1100000
@@ -409,6 +521,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 30
     requirement: 1200000
@@ -423,6 +539,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 31
     requirement: 1300000
@@ -437,6 +557,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 32
     requirement: 1400000
@@ -451,6 +575,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 33
     requirement: 1500000
@@ -465,6 +593,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 34
     requirement: 1600000
@@ -479,6 +611,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 35
     requirement: 1700000
@@ -493,6 +629,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 36
     requirement: 1800000
@@ -507,6 +647,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 37
     requirement: 1900000
@@ -521,6 +665,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 38
     requirement: 2000000
@@ -535,6 +683,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 39
     requirement: 2100000
@@ -549,6 +701,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 40
     requirement: 2200000
@@ -563,6 +719,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 41
     requirement: 2300000
@@ -577,6 +737,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 42
     requirement: 2400000
@@ -591,6 +755,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 43
     requirement: 2500000
@@ -605,6 +773,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 44
     requirement: 2600000
@@ -619,6 +791,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 45
     requirement: 2750000
@@ -633,6 +809,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 46
     requirement: 2900000
@@ -647,6 +827,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 47
     requirement: 3100000
@@ -661,6 +845,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 48
     requirement: 3400000
@@ -675,6 +863,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 49
     requirement: 3700000
@@ -689,6 +881,10 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1
 
   - level: 50
     requirement: 4000000
@@ -703,3 +899,7 @@ rewards:
         data:
           statistic: INTELLIGENCE
           amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: BREWER
+          amount: 1

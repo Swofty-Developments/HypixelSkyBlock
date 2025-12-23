@@ -11,11 +11,12 @@ public class ActionBlockInteract implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void onInteract(PlayerBlockInteractEvent event) {
-        if (SkyBlockBlock.isSkyBlockBlock(event.getBlock())) {
-            SkyBlockBlock block = new SkyBlockBlock(event.getBlock());
-            if (block.getGenericInstance() instanceof BlockInteractable interactable) {
-                interactable.onInteract(event, block);
-            }
+        if (!SkyBlockBlock.isSkyBlockBlock(event.getBlock())) return;
+
+        SkyBlockBlock block = new SkyBlockBlock(event.getBlock());
+
+        if (block.getGenericInstance() instanceof BlockInteractable interactable) {
+            interactable.onInteract(event, block);
         }
     }
 }
