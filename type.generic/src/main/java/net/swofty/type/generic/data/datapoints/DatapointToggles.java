@@ -75,6 +75,8 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_LIFT_OPERATOR(false),
             HAS_SPOKEN_TO_LAZY_MINER(false),
             HAS_SPOKEN_TO_BAKER(false),
+            HAS_SPOKEN_TO_GAVIN(false),
+            HAS_SPOKEN_TO_FISHERMAN_GERALD(false),
             HAS_SPOKEN_TO_RUSTY(false),
             HAS_SPOKEN_TO_RUSTY_ABOUT_PICKAXE(false),
             HAS_SPOKEN_TO_CURATOR(false),

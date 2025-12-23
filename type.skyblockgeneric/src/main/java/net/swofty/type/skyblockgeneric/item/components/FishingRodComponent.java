@@ -14,12 +14,13 @@ public class FishingRodComponent extends SkyBlockItemComponent {
 					FishingHook hook = FishingHook.getFishingHookForOwner(player);
 					if (hook != null) {
 						hook.remove();
+						float pitch = 0.8f + (float) (Math.random() * 0.4f);
 						player.playSound(
 								Sound.sound()
 										.type(Key.key("entity.fishing_bobber.retrieve"))
 										.source(Sound.Source.NEUTRAL)
 										.volume(1f)
-										.pitch(0.8f) // the pitch is 0.8-1.2
+										.pitch(pitch)
 										.build()
 						);
 					} else {

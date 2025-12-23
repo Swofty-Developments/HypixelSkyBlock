@@ -80,12 +80,13 @@ public class FishingHook {
 		this.hook.setInstance(instance, pos);
 		this.controller.addPassenger(hook);
 		this.controller.setVelocity(owner.getPosition().direction().mul(INITIAL_SPEED_MULTIPLIER));
+		float pitch = (float) 1/3 + (float) (Math.random() * (0.5 - 1.0 / 3.0));
 		owner.playSound(
 				Sound.sound()
 						.type(Key.key("entity.fishing_bobber.throw"))
 						.source(Sound.Source.NEUTRAL)
 						.volume(0.5f)
-						.pitch((float) 1 / 3) // the pitch is 1/3-0.5
+						.pitch(pitch)
 						.build()
 		);
 	}
