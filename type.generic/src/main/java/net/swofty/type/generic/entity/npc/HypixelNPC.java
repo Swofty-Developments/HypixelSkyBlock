@@ -107,6 +107,8 @@ public abstract class HypixelNPC {
                                 throw new IllegalStateException("Unknown NPCConfiguration type: " + config.getClass().getName());
                     }
 
+                    entity.setAutoViewable(false);
+
                     PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
                             .pos(position.add(0, 1.1 + yOffset, 0))
                             .text(Arrays.copyOfRange(holograms, 0, holograms.length - 1))
