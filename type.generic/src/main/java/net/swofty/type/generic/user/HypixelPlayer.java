@@ -2,7 +2,6 @@ package net.swofty.type.generic.user;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.player.GameProfile;
@@ -129,7 +128,4 @@ public class HypixelPlayer extends Player {
 		player.transferTo(type);
 	}
 
-	public void sendMini(String message) {
-		sendMessage(MiniMessage.miniMessage().deserialize(message));
-	}
 }

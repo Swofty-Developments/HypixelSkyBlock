@@ -187,7 +187,7 @@ public class SkyBlockVelocity {
 			return;
 		}
 
-		List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.PROTOTYPE_LOBBY);
+		List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.BEDWARS_LOBBY);
 		if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
 			TestFlowManager.ProxyTestFlowInstance instance = TestFlowManager.getTestFlowForPlayer(player.getUsername());
 			player.sendPlainMessage("§7You are currently in test flow " + instance.getName() + ".");
@@ -219,7 +219,7 @@ public class SkyBlockVelocity {
 			return;
 		}
 
-		List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.PROTOTYPE_LOBBY);
+		List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.BEDWARS_LOBBY);
 		GameManager.GameServer toSendTo = gameServers.getFirst();
 
 		for (BalanceConfiguration configuration : configurations) {

@@ -30,7 +30,7 @@ public class ActionGamePlace implements HypixelEventClass {
 		}
 
 		if (event.getBlockPosition().y() >= 105) {
-			player.sendMini("<red>You cannot place blocks this high!</red>");
+			player.sendMessage("§cYou cannot place blocks this high!");
 			event.setCancelled(true);
 			return;
 		}
@@ -49,7 +49,7 @@ public class ActionGamePlace implements HypixelEventClass {
 			if (spawnPos != null) {
 				Point spawnPoint = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z());
 				if (blockPosition.distance(spawnPoint) <= 6) {
-					player.sendMini("<red>You cannot build here.</red>");
+					player.sendMessage("§cYou cannot build here.");
 					event.setCancelled(true);
 					return;
 				}

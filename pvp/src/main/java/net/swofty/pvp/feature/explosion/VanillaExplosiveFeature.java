@@ -1,25 +1,10 @@
 package net.swofty.pvp.feature.explosion;
 
-import net.swofty.pvp.entity.explosion.CrystalEntity;
-import net.swofty.pvp.events.AnchorChargeEvent;
-import net.swofty.pvp.events.AnchorExplodeEvent;
-import net.swofty.pvp.events.CrystalPlaceEvent;
-import net.swofty.pvp.feature.FeatureType;
-import net.swofty.pvp.feature.RegistrableFeature;
-import net.swofty.pvp.feature.config.DefinedFeature;
-import net.swofty.pvp.feature.config.FeatureConfiguration;
-import net.swofty.pvp.feature.item.ItemDamageFeature;
-import net.swofty.pvp.utils.ViewUtil;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.sound.Sound;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.collision.BoundingBox;
 import net.minestom.server.coordinate.Point;
-import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EquipmentSlot;
-import net.minestom.server.entity.GameMode;
-import net.minestom.server.entity.Player;
-import net.minestom.server.entity.PlayerHand;
+import net.minestom.server.entity.*;
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
@@ -30,6 +15,16 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.sound.SoundEvent;
+import net.swofty.pvp.entity.explosion.CrystalEntity;
+import net.swofty.pvp.events.AnchorChargeEvent;
+import net.swofty.pvp.events.AnchorExplodeEvent;
+import net.swofty.pvp.events.CrystalPlaceEvent;
+import net.swofty.pvp.feature.FeatureType;
+import net.swofty.pvp.feature.RegistrableFeature;
+import net.swofty.pvp.feature.config.DefinedFeature;
+import net.swofty.pvp.feature.config.FeatureConfiguration;
+import net.swofty.pvp.feature.item.ItemDamageFeature;
+import net.swofty.pvp.utils.ViewUtil;
 
 /**
  * Vanilla implementation of {@link ExplosiveFeature}
@@ -142,8 +137,7 @@ public class VanillaExplosiveFeature implements ExplosiveFeature, RegistrableFea
 			
 			if (charges == 0) return;
 			
-			if (instance.getExplosionSupplier() != null
-					&& MinecraftServer.getDimensionTypeRegistry().get(instance.getDimensionType()).respawnAnchorWorks()) {
+			if (instance.getExplosionSupplier() != null) {
 				var anchorExplodeEvent = new AnchorExplodeEvent(player, event.getBlockPosition());
 				EventDispatcher.callCancellable(anchorExplodeEvent, () -> {
 					instance.setBlock(event.getBlockPosition(), Block.AIR);

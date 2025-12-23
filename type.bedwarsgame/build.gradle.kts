@@ -27,7 +27,8 @@ dependencies {
     implementation(project(":pvp"))
     implementation("org.mongodb:bson:4.11.2")
     implementation("net.kyori:adventure-text-minimessage:4.24.0")
-    implementation("dev.hollowcube:polar:1.14.7")
+    implementation("dev.hollowcube:polar:1.15.0")
+    implementation("it.unimi.dsi:fastutil:8.5.18")
     compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }

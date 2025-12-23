@@ -6,6 +6,7 @@ import net.minestom.server.collision.BoundingBox;
 import net.minestom.server.collision.CollisionUtils;
 import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
@@ -23,6 +24,7 @@ import net.minestom.server.network.packet.server.play.ExplosionPacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.tag.Tag;
+import net.minestom.server.utils.WeightedList;
 import net.swofty.pvp.events.ExplosionEvent;
 import net.swofty.pvp.feature.enchantment.EnchantmentFeature;
 import net.swofty.pvp.player.CombatPlayer;
@@ -76,7 +78,7 @@ public final class VanillaExplosionSupplier implements ExplosionSupplier {
 	}
 
 	public static boolean noBlocking(Instance instance, Point start, Point end) {
-		return CollisionUtils.isLineOfSightReachingShape(instance, null, start, end, new BoundingBox(1, 1, 1));
+		return CollisionUtils.isLineOfSightReachingShape(instance, null, start, end, new BoundingBox(1, 1, 1), new Pos(0, 0, 0));
 	}
 
 	@Override
@@ -317,8 +319,20 @@ public final class VanillaExplosionSupplier implements ExplosionSupplier {
 				if (chunk != null) {
 					for (Player player : chunk.getViewers()) {
 						Vec knockbackVec = playerKnockback.getOrDefault(player, Vec.ZERO);
-						player.sendPacket(new ExplosionPacket(new BlockVec(centerX, centerY, centerZ),
-								knockbackVec, Particle.EXPLOSION, SoundEvent.ENTITY_GENERIC_EXPLODE));
+						player.sendPacket(
+								new ExplosionPacket(
+										new BlockVec(centerX, centerY, centerZ),
+										getStrength(),
+										blocks.size(),
+										knockbackVec,
+										Particle.EXPLOSION,
+										SoundEvent.ENTITY_GENERIC_EXPLODE,
+										WeightedList.of(
+												new WeightedList.Entry<>(new ExplosionPacket.BlockParticleInfo(Particle.POOF, 0.5f, 1.0f), 1),
+												new WeightedList.Entry<>(new ExplosionPacket.BlockParticleInfo(Particle.SMOKE, 1.0f, 1.0f), 1)
+										)
+								)
+						);
 					}
 				}
 				playerKnockback.clear();

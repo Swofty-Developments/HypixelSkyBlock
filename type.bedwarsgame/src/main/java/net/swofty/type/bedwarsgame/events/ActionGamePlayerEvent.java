@@ -149,7 +149,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		boolean sameTeam = chestTeamName.equals(teamName);
 		if (!sameTeam && game.getTeamManager().getTeamBedStatus().getOrDefault(chestTeamName, false)) {
 			event.setCancelled(true);
-			player.sendMini("<red>You can only access enemy team chests if their bed is destroyed!</red>");
+			player.sendMessage("§cYou can only access enemy team chests if their bed is destroyed!");
 			return;
 		}
 

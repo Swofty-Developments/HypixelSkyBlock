@@ -155,19 +155,19 @@ public class ActionGameDeath implements HypixelEventClass {
 		if (player.getLastDamageSource() != null && player.getLastDamageSource().getSource() instanceof BedWarsPlayer k) {
 			if (iron > 0) {
 				k.getInventory().addItemStack(ItemStack.of(Material.IRON_INGOT, iron));
-				k.sendMini("<white>+ " + iron + " iron</white>");
+				k.sendMessage("§f+ " + iron + " iron");
 			}
 			if (gold > 0) {
 				k.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, gold));
-				k.sendMini("<yellow>+ " + gold + " gold</yellow>");
+				k.sendMessage("§e+ " + gold + " gold");
 			}
 			if (diamonds > 0) {
 				k.getInventory().addItemStack(ItemStack.of(Material.DIAMOND, diamonds));
-				k.sendMini("<blue>+ " + diamonds + " diamond</blue>");
+				k.sendMessage("§b+ " + diamonds + " diamond");
 			}
 			if (emeralds > 0) {
 				k.getInventory().addItemStack(ItemStack.of(Material.EMERALD, emeralds));
-				k.sendMini("<green>+ " + emeralds + " emerald</green>");
+				k.sendMessage("§a+ " + emeralds + " emerald");
 			}
 		}
 

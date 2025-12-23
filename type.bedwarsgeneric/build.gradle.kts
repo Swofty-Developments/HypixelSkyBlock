@@ -31,11 +31,8 @@ dependencies {
     implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("dev.hollowcube:polar:1.14.7")
+    implementation("dev.hollowcube:polar:1.15.0")
+    implementation("it.unimi.dsi:fastutil:8.5.18")
     implementation("org.yaml:snakeyaml:2.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
-}
-
-tasks.withType<JavaCompile> {
-    options.compilerArgs.add("--enable-preview")
 }

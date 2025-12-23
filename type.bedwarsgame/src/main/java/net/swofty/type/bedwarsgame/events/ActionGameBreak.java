@@ -52,7 +52,7 @@ public class ActionGameBreak implements HypixelEventClass {
 				isTeamBedPart = true;
 				// This is team X's bed
 				if (team.getName().equalsIgnoreCase(playerTeamName)) {
-					player.sendMini("<red>You cannot break your own team's bed!</red>");
+					player.sendMessage("§cYou cannot break your own team's bed!");
 					event.setCancelled(true);
 					return;
 				}
@@ -68,7 +68,7 @@ public class ActionGameBreak implements HypixelEventClass {
 				String breakerTeamColor = player.getTag(Tag.String("teamColor"));
 				if (breakerTeamColor == null) breakerTeamColor = "gray";
 				for (BedWarsPlayer p : game.getPlayers()) {
-					p.sendMini(String.format("<b><red>BED DESTRUCTION ></b> Team %s's bed was destroyed by <%s>%s</%s>!",
+					p.sendMessage(String.format("§c§lBED DESTRUCTION §r§cTeam %s's bed was destroyed by <%s>%s</%s>!",
 							team.getName(), breakerTeamColor, player.getUsername(), breakerTeamColor));
 				}
 				event.setCancelled(true); // handled the bed destruction and block removal
@@ -83,7 +83,7 @@ public class ActionGameBreak implements HypixelEventClass {
 				event.setCancelled(false);
 			} else {
 				// Not a team bed and not a player-placed block
-				player.sendMini("<red>You can only break blocks placed by players!</red>");
+				player.sendMessage("§cYou can only break blocks placed by players!");
 				event.setCancelled(true);
 			}
 		}

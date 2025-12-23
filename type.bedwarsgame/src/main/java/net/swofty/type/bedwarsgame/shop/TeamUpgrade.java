@@ -57,18 +57,18 @@ public abstract class TeamUpgrade {
 	public void purchase(Game game, BedWarsPlayer player) {
 		String teamName = player.getTeamName();
 		if (teamName == null) {
-			player.sendMini("<red>You are not on a team. Report this to the administration.</red>");
+			player.sendMessage("§cYou are not on a team. Report this to the administration.");
 			return;
 		}
 
 		TeamUpgradeTier nextTier = getNextTier(game, teamName);
 		if (nextTier == null) {
-			player.sendMini("<red>Your team has already maxed out this upgrade.</red>");
+			player.sendMessage("§cYour team has already maxed out this upgrade.");
 			return;
 		}
 
 		if (!hasEnoughCurrency(player, nextTier)) {
-			player.sendMini("<red>You do not have enough " + nextTier.getCurrency().getName() + " to purchase this.</red>");
+			player.sendMessage("§cYou do not have enough " + nextTier.getCurrency().getName() + " to purchase this.");
 			return;
 		}
 

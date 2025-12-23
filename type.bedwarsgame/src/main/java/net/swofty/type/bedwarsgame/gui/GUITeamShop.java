@@ -92,12 +92,12 @@ public class GUITeamShop extends HypixelInventoryGUI {
 					TeamUpgrade upgrade = upgrades.get(index);
 					TeamUpgradeTier nextTier = upgrade.getNextTier(playerGame, tag);
 					if (nextTier == null) {
-						player.sendMini("<red>Your team has already bought this upgrade!");
+						player.sendMessage("§cYour team has already bought this upgrade!");
 						playClickSound(player);
 						return;
 					}
 					if (!upgrade.hasEnoughCurrency(player, nextTier)) {
-						player.sendMini("<red>You don't have enough " + nextTier.getCurrency().getName() + "!</red>");
+						player.sendMessage("§cYou don't have enough " + nextTier.getCurrency().getName() + "!");
 						playClickSound(player);
 						return;
 					}
@@ -167,7 +167,7 @@ public class GUITeamShop extends HypixelInventoryGUI {
 							.filter(s -> s.material() == trap.getCurrency().getMaterial())
 							.mapToInt(ItemStack::amount).sum();
 					if (owned < price) {
-						player.sendMini("<red>You don't have enough " + trap.getCurrency().getName() + "!</red>");
+						player.sendMessage("§cYou don't have enough " + trap.getCurrency().getName() + "!");
 						playClickSound(player);
 						return;
 					}
