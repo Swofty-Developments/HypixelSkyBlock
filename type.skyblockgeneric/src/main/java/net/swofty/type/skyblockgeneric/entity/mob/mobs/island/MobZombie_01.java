@@ -26,9 +26,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class MobZombie_1 extends BestiaryMob implements RegionPopulator {
+public class MobZombie_01 extends BestiaryMob implements RegionPopulator {
 
-    public MobZombie_1() {
+    public MobZombie_01() {
         super(EntityType.ZOMBIE);
     }
 
@@ -117,7 +117,7 @@ public class MobZombie_1 extends BestiaryMob implements RegionPopulator {
 
     @Override
     public String getMobID() {
-        return "1_zombie";
+        return "ZOMBIE_01";
     }
 
     @Override

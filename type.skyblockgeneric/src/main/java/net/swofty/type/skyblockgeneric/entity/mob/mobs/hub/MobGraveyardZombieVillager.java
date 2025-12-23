@@ -124,7 +124,7 @@ public class MobGraveyardZombieVillager extends BestiaryMob implements RegionPop
 
 	@Override
 	public String getMobID() {
-		return "1_graveyard_zombie_villager";
+		return "ZOMBIE_VILLIGER";
 	}
 
 	@Override

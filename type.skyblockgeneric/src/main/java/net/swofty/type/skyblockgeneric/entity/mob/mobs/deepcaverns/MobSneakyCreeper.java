@@ -109,7 +109,7 @@ public class MobSneakyCreeper extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public List<MobType> getMobTypes() {
-		return List.of(MobType.UNDEAD);
+		return List.of(MobType.CUBIC);
 	}
 
 	@Override

@@ -132,7 +132,7 @@ public class MobRedstonePigman extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public GUIMaterial getGuiMaterial() {
-		return new GUIMaterial(Material.ZOMBIFIED_PIGLIN_SPAWN_EGG); // todo: find real material
+		return new GUIMaterial("74e9c6e98582ffd8ff8feb3322cd1849c43fb16b158abb11ca7b42eda7743eb");
 	}
 
 	@Override
