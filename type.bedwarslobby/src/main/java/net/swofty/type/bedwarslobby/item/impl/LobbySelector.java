@@ -1,16 +1,16 @@
 package net.swofty.type.bedwarslobby.item.impl;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
+import net.swofty.type.bedwarslobby.gui.GUILobbySelector;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class LobbySelector extends BedWarsItem {
+public class LobbySelector extends SimpleInteractableItem {
 
 	public LobbySelector() {
 		super("lobby_selector");
@@ -18,7 +18,13 @@ public class LobbySelector extends BedWarsItem {
 
 	@Override
 	public ItemStack getBlandItem() {
-		return ItemStackCreator.createNamedItemStack(Material.NETHER_STAR, "§aLobby Selector §7(Right Click)").build();
+		return ItemStackCreator.getStack(
+				"§aLobby Selector §7(Right Click)",
+				Material.NETHER_STAR,
+				1,
+				"§7Right-click to switch between different lobbies!",
+				"§7Use this to stay with your friends."
+		).build();
 	}
 
 	@Override
@@ -29,8 +35,7 @@ public class LobbySelector extends BedWarsItem {
 	@Override
 	public void onItemInteract(PlayerInstanceEvent event) {
 		((CancellableEvent) event).setCancelled(true);
-		event.getPlayer().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+		new GUILobbySelector().open((HypixelPlayer) event.getPlayer());
 	}
 
 }

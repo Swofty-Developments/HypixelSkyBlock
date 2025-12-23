@@ -6,10 +6,10 @@ import net.minestom.server.item.Material;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
-public class LeaveGameBed extends BedWarsItem {
+public class LeaveGameBed extends SimpleInteractableItem {
 
 	public LeaveGameBed() {
 		super("leave_game");

@@ -7,10 +7,10 @@ import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
-public class Collectibles extends BedWarsItem {
+public class Collectibles extends SimpleInteractableItem {
 
 	public Collectibles() {
 		super("collectibles");
@@ -30,7 +30,7 @@ public class Collectibles extends BedWarsItem {
 	public void onItemInteract(PlayerInstanceEvent event) {
 		((CancellableEvent) event).setCancelled(true);
 		event.getPlayer().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-				.clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
+				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
 	}
 
 }

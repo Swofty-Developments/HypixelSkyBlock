@@ -1,18 +1,19 @@
-package net.swofty.type.bedwarslobby.villagers;
+package net.swofty.type.bedwarslobby.npcs.villagers;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
-import net.swofty.type.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class QuestMasterNPC extends HypixelVillagerNPC {
+public class QuestMasterNPC extends HypixelNPC {
 
 	public QuestMasterNPC() {
-		super(new NPCVillagerParameters() {
+		super(new VillagerConfiguration() {
 			@Override
-			public String[] holograms() {
+			public String[] holograms(HypixelPlayer player) {
 				return new String[]{
 						"§bQuest Master",
 						"§e§lRIGHT CLICK",
@@ -21,7 +22,7 @@ public class QuestMasterNPC extends HypixelVillagerNPC {
 
 
 			@Override
-			public Pos position() {
+			public Pos position(HypixelPlayer player) {
 				return new Pos(-23.5, 67, 6.15, 110, 0);
 			}
 
@@ -38,7 +39,7 @@ public class QuestMasterNPC extends HypixelVillagerNPC {
 	}
 
 	@Override
-	public void onClick(PlayerClickVillagerNPCEvent event) {
+	public void onClick(NPCInteractEvent event) {
 		event.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
 				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
 	}

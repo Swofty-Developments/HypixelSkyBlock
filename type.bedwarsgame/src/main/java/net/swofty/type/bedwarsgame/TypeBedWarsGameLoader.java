@@ -36,15 +36,13 @@ import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgeneric.game.MapsConfig;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItemHandler;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItemHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.tab.EmptyTabModule;
@@ -82,7 +80,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	@Getter
 	public static final TrapManager trapManager = new TrapManager();
 	@Getter
-	public static final BedWarsItemHandler itemHandler = new BedWarsItemHandler();
+	public static final SimpleInteractableItemHandler itemHandler = new SimpleInteractableItemHandler();
 
 	public static final Tag<@NotNull Boolean> PLAYER_PLACED_TAG = Tag.Boolean("player_placed");
 	public static final Tag<@NotNull Integer> ARMOR_LEVEL_TAG = Tag.Integer("armor_level");
@@ -219,7 +217,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 				Logger.error(e, "Failed to register command " + command.getCommand().getName() + " in class " + command.getClass().getSimpleName());
 			}
 		});
-		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsgame.item.impl", BedWarsItem.class).forEach(itemHandler::add);
+		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsgame.item.impl", SimpleInteractableItem.class).forEach(itemHandler::add);
 		MinestomPvP.init();
 
 		// heartbeat to orchestrator with supported maps and current load
@@ -309,22 +307,6 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 		return HypixelGenericLoader.loopThroughPackage(
 				"net.swofty.type.bedwarsgame.events.custom",
 				HypixelEventClass.class
-		).toList();
-	}
-
-	@Override
-	public List<HypixelVillagerNPC> getVillagerNPCs() {
-		return HypixelGenericLoader.loopThroughPackage(
-				"net.swofty.type.bedwarsgame.villagers",
-				HypixelVillagerNPC.class
-		).toList();
-	}
-
-	@Override
-	public List<HypixelAnimalNPC> getAnimalNPCs() {
-		return HypixelGenericLoader.loopThroughPackage(
-				"net.swofty.type.bedwarsgame.animalnpcs",
-				HypixelAnimalNPC.class
 		).toList();
 	}
 

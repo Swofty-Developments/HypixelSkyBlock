@@ -14,14 +14,14 @@ import net.minestom.server.item.component.CustomData;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 /**
- * Represents a custom item in a BedWars game. Handles in-game events and properties of items.
+ * Represents a custom item which can be interacted with.
  */
 @Getter
-public abstract class BedWarsItem {
+public abstract class SimpleInteractableItem {
 
 	private final String id;
 
-	public BedWarsItem(String id) {
+	public SimpleInteractableItem(String id) {
 		this.id = id;
 	}
 

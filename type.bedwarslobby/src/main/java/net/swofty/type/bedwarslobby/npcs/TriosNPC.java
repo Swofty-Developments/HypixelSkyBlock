@@ -1,14 +1,14 @@
 package net.swofty.type.bedwarslobby.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.proxyapi.ProxyInformation;
-import net.swofty.commons.BedwarsGameType;
 import net.swofty.type.bedwarslobby.gui.GUIPlay;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class TriosNPC extends HypixelNPC {
 	private static long lastCacheTime = 0;
 
 	public TriosNPC() {
-		super(new NPCParameters() {
+		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
 				if (System.currentTimeMillis() - lastCacheTime > 5000) {
@@ -67,7 +67,7 @@ public class TriosNPC extends HypixelNPC {
 	}
 
 	@Override
-	public void onClick(PlayerClickNPCEvent e) {
+	public void onClick(NPCInteractEvent e) {
 		new GUIPlay(BedwarsGameType.THREE_THREE_THREE_THREE).open(e.player());
 	}
 }

@@ -13,21 +13,21 @@ import net.minestom.server.tag.Tag;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BedWarsItemHandler {
-	private final List<BedWarsItem> items = new ArrayList<>();
+public class SimpleInteractableItemHandler {
+	private final List<SimpleInteractableItem> items = new ArrayList<>();
 
-	public void add(BedWarsItem item) {
+	public void add(SimpleInteractableItem item) {
 		items.add(item);
 	}
 
-	public BedWarsItem getItem(String name) {
+	public SimpleInteractableItem getItem(String name) {
 		return items.stream().filter(
 				p -> p.getId().equalsIgnoreCase(name)
 		).findFirst().orElseThrow();
 	}
 
 	public void onItemFinishUse(PlayerFinishItemUseEvent event) {
-		for (BedWarsItem item : items) {
+		for (SimpleInteractableItem item : items) {
 			ItemStack itemStack = event.getItemStack();
 			if (isItem(item, itemStack)) {
 				item.onItemFinishUse(event);
@@ -36,7 +36,7 @@ public class BedWarsItemHandler {
 	}
 
 	public void onItemUseOnBlock(PlayerUseItemOnBlockEvent event) {
-		for (BedWarsItem item : items) {
+		for (SimpleInteractableItem item : items) {
 			ItemStack itemStack = event.getItemStack();
 			if (isItem(item, itemStack)) {
 				item.onItemUseOnBlock(event);
@@ -46,7 +46,7 @@ public class BedWarsItemHandler {
 	}
 
 	public void onItemUse(PlayerUseItemEvent event) {
-		for (BedWarsItem item : items) {
+		for (SimpleInteractableItem item : items) {
 			ItemStack itemStack = event.getItemStack();
 			if (isItem(item, itemStack)) {
 				item.onItemUse(event);
@@ -56,7 +56,7 @@ public class BedWarsItemHandler {
 	}
 
 	public void onItemDrop(ItemDropEvent event) {
-		for (BedWarsItem item : items) {
+		for (SimpleInteractableItem item : items) {
 			ItemStack itemStack = event.getItemStack();
 			if (isItem(item, itemStack)) {
 				item.onItemDrop(event);
@@ -65,7 +65,7 @@ public class BedWarsItemHandler {
 	}
 
 	public void onBlockPlace(PlayerBlockPlaceEvent event) {
-		for (BedWarsItem item : items) {
+		for (SimpleInteractableItem item : items) {
 			ItemStack itemStack = event.getPlayer().getItemInMainHand();
 			if (isItem(item, itemStack)) {
 				item.onBlockPlace(event);
@@ -73,7 +73,7 @@ public class BedWarsItemHandler {
 		}
 	}
 
-	private boolean isItem(BedWarsItem item, ItemStack itemStack) {
+	private boolean isItem(SimpleInteractableItem item, ItemStack itemStack) {
 		CustomData data = itemStack.get(DataComponents.CUSTOM_DATA);
 		if (data == null) return false;
 		String id = data.getTag(Tag.String("item"));

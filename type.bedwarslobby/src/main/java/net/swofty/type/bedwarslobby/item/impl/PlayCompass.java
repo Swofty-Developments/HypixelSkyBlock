@@ -5,12 +5,12 @@ import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.bedwarslobby.gui.GUIGameMenu;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-public class PlayCompass extends BedWarsItem {
+public class PlayCompass extends SimpleInteractableItem {
 
 	public PlayCompass() {
 		super("play_compass");

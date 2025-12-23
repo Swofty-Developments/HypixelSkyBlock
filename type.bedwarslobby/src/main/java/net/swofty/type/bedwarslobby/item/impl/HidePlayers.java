@@ -13,16 +13,16 @@ import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.CustomData;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.hologram.HologramEntity;
-import net.swofty.type.generic.entity.npc.NPCEntityImpl;
+import net.swofty.type.generic.entity.npc.impl.NPCEntityImpl;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.Arrays;
 
-public class HidePlayers extends BedWarsItem {
+public class HidePlayers extends SimpleInteractableItem {
 
 	public HidePlayers() {
 		super("hide_players");

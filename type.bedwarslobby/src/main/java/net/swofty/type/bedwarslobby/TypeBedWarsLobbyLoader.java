@@ -8,14 +8,12 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItemHandler;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItemHandler;
 import net.swofty.type.bedwarslobby.util.LaunchPads;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
@@ -27,7 +25,7 @@ import java.util.List;
 public class TypeBedWarsLobbyLoader implements HypixelTypeLoader {
 
 	@Getter
-	private static final BedWarsItemHandler itemHandler = new BedWarsItemHandler();
+	private static final SimpleInteractableItemHandler itemHandler = new SimpleInteractableItemHandler();
 
 	@Override
 	public ServerType getType() {
@@ -43,7 +41,7 @@ public class TypeBedWarsLobbyLoader implements HypixelTypeLoader {
 	public void afterInitialize(MinecraftServer server) {
 		BedWarsLobbyScoreboard.start();
 		LaunchPads.register(MinecraftServer.getSchedulerManager());
-		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarslobby.item.impl", BedWarsItem.class).forEach(itemHandler::add);
+		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarslobby.item.impl", SimpleInteractableItem.class).forEach(itemHandler::add);
 	}
 
 	@Override
@@ -89,22 +87,6 @@ public class TypeBedWarsLobbyLoader implements HypixelTypeLoader {
 		return HypixelGenericLoader.loopThroughPackage(
 				"net.swofty.type.bedwarslobby.events.custom",
 				HypixelEventClass.class
-		).toList();
-	}
-
-	@Override
-	public List<HypixelVillagerNPC> getVillagerNPCs() {
-		return HypixelGenericLoader.loopThroughPackage(
-				"net.swofty.type.bedwarslobby.villagers",
-				HypixelVillagerNPC.class
-		).toList();
-	}
-
-	@Override
-	public List<HypixelAnimalNPC> getAnimalNPCs() {
-		return HypixelGenericLoader.loopThroughPackage(
-				"net.swofty.type.bedwarslobby.animalnpcs",
-				HypixelAnimalNPC.class
 		).toList();
 	}
 

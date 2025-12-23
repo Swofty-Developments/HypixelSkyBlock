@@ -16,13 +16,13 @@ import net.swofty.pvp.entity.projectile.CustomEntityProjectile;
 import net.swofty.pvp.entity.projectile.ItemHoldingProjectile;
 import net.swofty.pvp.utils.ViewUtil;
 import net.swofty.type.bedwarsgame.entity.ThrownBridgeEgg;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class BridgeEgg extends BedWarsItem {
+public class BridgeEgg extends SimpleInteractableItem {
 	public BridgeEgg() {
 		super("bridge_egg");
 	}

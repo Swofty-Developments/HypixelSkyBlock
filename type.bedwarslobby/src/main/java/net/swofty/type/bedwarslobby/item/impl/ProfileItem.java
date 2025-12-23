@@ -11,13 +11,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.CustomData;
 import net.minestom.server.item.component.HeadProfile;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.Arrays;
 
-public class ProfileItem extends BedWarsItem {
+public class ProfileItem extends SimpleInteractableItem {
 
 	public ProfileItem() {
 		super("profile");
@@ -45,7 +45,7 @@ public class ProfileItem extends BedWarsItem {
 	public void onItemInteract(PlayerInstanceEvent event) {
 		((CancellableEvent) event).setCancelled(true);
 		event.getPlayer().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-				.clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
+				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
 	}
 
 }

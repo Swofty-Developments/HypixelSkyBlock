@@ -8,12 +8,12 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.bedwarsgeneric.item.BedWarsItem;
+import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class PopupTower extends BedWarsItem {
+public class PopupTower extends SimpleInteractableItem {
 
 	public PopupTower() {
 		super("popup_tower");
