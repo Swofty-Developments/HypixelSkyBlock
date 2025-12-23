@@ -1,17 +1,17 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.hub.gui.GUISeymour;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.hub.gui.GUISeymour;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCSeymour extends NPCDialogue {
+public class NPCSeymour extends HypixelNPC {
 
     public NPCSeymour() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Seymour", "§e§lCLICK"};
@@ -40,7 +40,7 @@ public class NPCSeymour extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_SEYMOUR);
@@ -56,9 +56,9 @@ public class NPCSeymour extends NPCDialogue {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "Looking to buy something fancy?",
                         }).build(),

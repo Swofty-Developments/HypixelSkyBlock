@@ -39,18 +39,30 @@ public class ItemStatistics {
         StringBuilder builder = new StringBuilder();
 
         for (ItemStatistic stat : ItemStatistic.values()) {
+            double baseValue = statisticsBase.getOrDefault(stat, 0D);
             double additiveValue = statisticsAdditive.getOrDefault(stat, 0D);
             double multiplicativeValue = statisticsMultiplicative.getOrDefault(stat, 0D);
 
-            if (additiveValue != 0 || multiplicativeValue != 0) {
+            // For multiplicative, 1.0 is the neutral element (like 0 for addition)
+            // Use epsilon comparison to handle floating point drift
+            boolean hasBase = Math.abs(baseValue) > 1e-9;
+            boolean hasAdditive = Math.abs(additiveValue) > 1e-9;
+            boolean hasMultiplicative = Math.abs(multiplicativeValue - 1.0) > 1e-9 && Math.abs(multiplicativeValue) > 1e-9;
+
+            if (hasBase || hasAdditive || hasMultiplicative) {
                 builder.append(stat.name()).append(":");
-                if (additiveValue != 0) {
-                    builder.append("A").append(additiveValue);
+                boolean needsComma = false;
+                if (hasBase) {
+                    builder.append("B").append(baseValue);
+                    needsComma = true;
                 }
-                if (multiplicativeValue != 0) {
-                    if (additiveValue != 0) {
-                        builder.append(",");
-                    }
+                if (hasAdditive) {
+                    if (needsComma) builder.append(",");
+                    builder.append("A").append(additiveValue);
+                    needsComma = true;
+                }
+                if (hasMultiplicative) {
+                    if (needsComma) builder.append(",");
                     builder.append("M").append(multiplicativeValue);
                 }
                 builder.append(";");
@@ -71,12 +83,15 @@ public class ItemStatistics {
                     ItemStatistic stat = ItemStatistic.valueOf(parts[0]);
                     String[] values = parts[1].split(",");
                     for (String value : values) {
-                        if (value.startsWith("A")) {
+                        if (value.startsWith("B")) {
+                            double baseValue = Double.parseDouble(value.substring(1));
+                            builder.withBase(stat, baseValue);
+                        } else if (value.startsWith("A")) {
                             double additiveValue = Double.parseDouble(value.substring(1));
-                            builder.withBase(stat, additiveValue);
+                            builder.withAdditive(stat, additiveValue);
                         } else if (value.startsWith("M")) {
                             double multiplicativeValue = Double.parseDouble(value.substring(1));
-                            builder.withMultiplicativePercentage(stat, multiplicativeValue);
+                            builder.withMultiplicative(stat, multiplicativeValue);
                         }
                     }
                 }

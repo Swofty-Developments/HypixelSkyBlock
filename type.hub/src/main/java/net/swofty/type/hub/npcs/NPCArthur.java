@@ -1,16 +1,16 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
 import java.util.stream.Stream;
 
-public class NPCArthur extends NPCDialogue {
+public class NPCArthur extends HypixelNPC {
 
     public NPCArthur() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Arthur", "§e§lCLICK"};
@@ -39,46 +39,46 @@ public class NPCArthur extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
 
         setDialogue(e.player(), "dialogue-" + (int) (Math.random() * 7 + 1));
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("dialogue-1").lines(new String[]{
                                 "Fuel makes your Minion work harder for a limited time",
                                 "There are multiple types of Fuel, like Coal, Enchanted Bread and many more!"
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("dialogue-2").lines(new String[]{
                                 "If you place your Minions poorly, they will complain!",
                                 "Open their Menu and look for their Perfect Layout!"
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("dialogue-3").lines(new String[]{
                                 "Once you unlock a Minion, you also unlock all their Level up recipes!"
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("dialogue-4").lines(new String[]{
                                 "Use a §aBudget Hopper§f to make your Minions automatically sell their work once full!"
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("dialogue-5").lines(new String[]{
                                 "My favorite Minion Upgrade is the §aCompactor§f, sooooo useful!",
                                 "I have one in my Minion, look!"
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("dialogue-6").lines(new String[]{
                                 "People always empty the storage of my Minion when I'm not looking!"
                         }).build(),
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("dialogue-7").lines(new String[]{
                                 "Minions always have 4 Upgrade Slots where you can place Fuel or else"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

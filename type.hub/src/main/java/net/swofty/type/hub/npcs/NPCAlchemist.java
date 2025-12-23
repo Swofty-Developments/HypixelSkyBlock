@@ -2,21 +2,22 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
-import net.swofty.type.generic.entity.animalnpc.NPCAnimalParameters;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
 
-public class NPCAlchemist extends HypixelAnimalNPC {
+public class NPCAlchemist extends HypixelNPC {
     public NPCAlchemist() {
-        super(new NPCAnimalParameters() {
+        super(new AnimalConfiguration() {
             @Override
-            public String[] holograms() {
+            public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Alchemist", "§e§lCLICK"};
             }
 
             @Override
-            public int hologramYOffset() {
-                return 75;
+            public float hologramYOffset() {
+                return 0.1f;
             }
 
             @Override
@@ -25,7 +26,7 @@ public class NPCAlchemist extends HypixelAnimalNPC {
             }
 
             @Override
-            public Pos position() {
+            public Pos position(HypixelPlayer player) {
                 return new Pos(41.5, 70, -63.5);
             }
 
@@ -37,7 +38,7 @@ public class NPCAlchemist extends HypixelAnimalNPC {
     }
 
     @Override
-    public void onClick(PlayerClickAnimalNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         new GUIShopAlchemist().open(e.player());
     }
 }

@@ -106,11 +106,14 @@ public class Hypixel {
                 ServerType type = clazz.getDeclaredConstructor().newInstance().getType();
                 Logger.info("Found TypeLoader: " + type.name());
                 return type == serverType;
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                     NoSuchMethodException e) {
+            } catch (Exception e) {
+                Logger.error("Failed to init TypeLoader " + clazz.getName(), e);
                 return false;
             }
-        }).findFirst().orElse(null).getDeclaredConstructor().newInstance();
+        }).findFirst().orElseThrow(() ->
+                new IllegalStateException("No TypeLoader found for server type " + serverType)
+        ).getDeclaredConstructor().newInstance();
+
         new HypixelGenericLoader(typeLoader).initialize(minecraftServer);
 
         /**

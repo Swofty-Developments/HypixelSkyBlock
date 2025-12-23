@@ -12,6 +12,7 @@ import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.event.custom.CollectionUpdateEvent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.Arrays;
 
@@ -71,6 +72,11 @@ public class ActionCollectionDisplay implements HypixelEventClass {
                 Arrays.stream(oldReward.unlocks()).forEach(unlock -> {
                     switch (unlock.type()) {
                         case RECIPE -> {
+                            CollectionCategory.UnlockRecipe recipeUnlock = (CollectionCategory.UnlockRecipe) unlock;
+                            if (recipeUnlock.getRecipe() == null) {
+                                Logger.error("We have a null recipe in collection unlocks for " + event.getItemType().name() + " in " + event.getPlayer().getCollection().get(event.getItemType()));
+                                return;
+                            }
                             ItemStack.Builder item = ((CollectionCategory.UnlockRecipe) unlock).getRecipe().getResult().getItemStackBuilder();
                             item = new NonPlayerItemUpdater(item).getUpdatedItem();
 

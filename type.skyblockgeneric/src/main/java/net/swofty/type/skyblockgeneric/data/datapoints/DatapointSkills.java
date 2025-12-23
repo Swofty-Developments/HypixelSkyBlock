@@ -14,6 +14,7 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.skill.SkillCategory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,8 +57,9 @@ public class DatapointSkills extends SkyBlockDatapoint<DatapointSkills.PlayerSki
 
             try {
                 skillStatistics = ItemStatistics.fromString(jsonObject.getString("statistics"));
-            } catch (Exception ignored) {
+            } catch (Exception e) {
                 skillStatistics = ItemStatistics.empty();
+                e.printStackTrace();
             }
 
             return new PlayerSkills(skills, skillStatistics);

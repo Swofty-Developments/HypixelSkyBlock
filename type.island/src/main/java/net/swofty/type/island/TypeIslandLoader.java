@@ -9,9 +9,9 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.SkyBlockTypeLoader;
-import net.swofty.type.generic.entity.animalnpc.HypixelAnimalNPC;
+
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.villager.HypixelVillagerNPC;
+
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
@@ -101,16 +101,6 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     @Override
     public List<ProxyToClient> getProxyRedisListeners() {
         return List.of();
-    }
-
-    @Override
-    public List<HypixelVillagerNPC> getVillagerNPCs() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public List<HypixelAnimalNPC> getAnimalNPCs() {
-        return new ArrayList<>();
     }
 
     @Override

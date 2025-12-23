@@ -6,7 +6,6 @@ items:
       - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
-
   - id: WHITE_TERRACOTTA
     material: WHITE_TERRACOTTA
     rarity: COMMON
@@ -245,6 +244,14 @@ items:
     material: CYAN_TERRACOTTA
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              serverType: "SKYBLOCK_DWARVEN_MINES"
+            drops:
+              - item: MITHRIL
+                chance: 1
+                amount: 1
       - id: PLACEABLE
       - id: SELLABLE
         value: 1.0

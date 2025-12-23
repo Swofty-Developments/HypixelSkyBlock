@@ -1,9 +1,9 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionBreakOaklog;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
@@ -12,10 +12,10 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
-public class NPCLumberJack extends NPCDialogue {
+public class NPCLumberJack extends HypixelNPC {
 
     public NPCLumberJack() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Lumber Jack", "§e§lCLICK"};
@@ -44,7 +44,7 @@ public class NPCLumberJack extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         MissionData data = player.getMissionData();
@@ -56,7 +56,7 @@ public class NPCLumberJack extends NPCDialogue {
             return;
         }
         if (!data.hasCompleted(MissionBreakOaklog.class)) {
-            player.sendMessage("§e[NPC] Lumber Jack§f: Bring me some Logs. You can chop them down in this Forest!");
+            player.sendMessage("Bring me some Logs. You can chop them down in this Forest!");
             return;
         }
         if (!data.hasCompleted(MissionTalkToLumberjackAgain.class)) {
@@ -69,7 +69,7 @@ public class NPCLumberJack extends NPCDialogue {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return List.of(
                 DialogueSet.builder()
                         .key("initial-hello").lines(new String[]{

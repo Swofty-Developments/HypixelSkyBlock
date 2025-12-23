@@ -7,16 +7,18 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.skyblockgeneric.commands.MinionGenerationCommand;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class SkyBlockCalendar {
     private static final String DAY_SYMBOL = "☀";
     private static final String NIGHT_SYMBOL = "☽";
 
-    private static final int YEAR = 8928000;
-    private static final int MONTH = 744000;
-    private static final int DAY = 24000;
-    private static final int HOUR = 1000;
+    public static final int YEAR = 8928000;
+    public static final int MONTH = 744000;
+    public static final int DAY = 24000;
+    public static final int HOUR = 1000;
 
     public static final int INTEREST_INTERVAL = 31;
     public static final double INTEREST_RATE = 0.02;
@@ -82,9 +84,64 @@ public final class SkyBlockCalendar {
 
     public static void checkForEvents(Long time) {
         List<CalendarEvent> eventsAtTime = CalendarEvent.getCurrentEvents(time);
+        int year = getYear();
         for (CalendarEvent event : eventsAtTime) {
-            event.action().accept(time);
+            event.action().accept(time, year);
         }
+    }
+
+    public static List<CalendarEvent> getCurrentEvents() {
+        return CalendarEvent.getCurrentEvents(getElapsed() % YEAR);
+    }
+
+    /**
+     * A record to hold information about upcoming events.
+     * @param timeUntilBegin <b>ticks</b> until the event begins
+     * @param duration <b>ticks</b> duration of the event
+     * @param year the year the event will occur
+     */
+    public record EventInfo(long timeUntilBegin, long duration, int year) {}
+
+    public static Map<EventInfo, CalendarEvent> getEventsWithDurationUntil(int amount) {
+        Map<EventInfo, CalendarEvent> result = new LinkedHashMap<>();
+        long currentElapsed = getElapsed();
+        int currentYear = getYear();
+
+        int foundEvents = 0;
+        int yearsAhead = 0;
+
+        while (foundEvents < amount) {
+            int targetYear = currentYear + yearsAhead;
+            long yearStartElapsed = (long) (targetYear - 1) * YEAR;
+
+            for (CalendarEvent event : CalendarEvent.getAllEvents()) {
+                if (foundEvents >= amount) break;
+
+                for (Long eventTime : event.times()) {
+                    if (foundEvents >= amount) break;
+
+                    long eventElapsed = yearStartElapsed + eventTime;
+
+                    // Skip events that have already passed (including currently ongoing ones that started)
+                    if (eventElapsed <= currentElapsed) {
+                        continue;
+                    }
+
+                    long timeUntilBegin = eventElapsed - currentElapsed;
+                    int eventYear = targetYear;
+
+                    EventInfo info = new EventInfo(timeUntilBegin, event.duration(), eventYear);
+                    result.put(info, event);
+                    foundEvents++;
+                }
+            }
+            yearsAhead++;
+
+            // Safety check to prevent infinite loops
+            if (yearsAhead > 100) break;
+        }
+
+        return result;
     }
 
     public static String getMonthName(long elapsed) {

@@ -5,6 +5,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.attribute.attributes.*;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeExtraDynamicStatistics;
 import net.swofty.commons.item.reforge.Reforge;
 import net.swofty.commons.item.reforge.ReforgeLoader;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocolObject;
@@ -85,10 +86,32 @@ public class ItemAttributeHandler {
     }
 
     public Color getLeatherColour() {
+        // Check for dynamically applied dye color first
+        String dyeColor = getDyeColor();
+        if (dyeColor != null) {
+            return parseHexColor(dyeColor);
+        }
+        // Fall back to component-defined color
         if (item.hasComponent(LeatherColorComponent.class)) {
             return item.getComponent(LeatherColorComponent.class).getColor();
         }
         return null;
+    }
+
+    public @Nullable String getDyeColor() {
+        return ((ItemAttributeDyeColor) item.getAttribute("dye_color")).getValue();
+    }
+
+    public void setDyeColor(String hexColor) {
+        item.getAttribute("dye_color").setValue(hexColor);
+    }
+
+    private Color parseHexColor(String hex) {
+        hex = hex.replace("#", "");
+        int r = Integer.parseInt(hex.substring(0, 2), 16);
+        int g = Integer.parseInt(hex.substring(2, 4), 16);
+        int b = Integer.parseInt(hex.substring(4, 6), 16);
+        return new Color(r, g, b);
     }
 
     public void setSoulBound(boolean coopAllowed) {
@@ -275,12 +298,33 @@ public class ItemAttributeHandler {
                 .addEnchantment(enchantment.toUnderstandable());
     }
 
-    public ItemStatistics getStatistics() {
+    /**
+     * Gets the base statistics from the item's configuration.
+     * This does NOT include extra dynamic statistics like Greed bonus.
+     */
+    public ItemStatistics getBaseStatistics() {
         return ((ItemAttributeStatistics) item.getAttribute("statistics")).getValue().clone();
     }
 
-    public void setStatistics(ItemStatistics statistics) {
-        ((ItemAttributeStatistics) item.getAttribute("statistics")).setValue(statistics);
+    /**
+     * Gets the combined statistics (base + extra dynamic).
+     * This is what should be used when calculating item stats for display/combat.
+     */
+    public ItemStatistics getStatistics() {
+        ItemStatistics baseStats = getBaseStatistics();
+        ItemStatistics extraStats = getExtraDynamicStatistics();
+        return ItemStatistics.add(baseStats, extraStats);
+    }
+
+    /**
+     * Gets extra dynamic statistics that are added on top of base stats.
+     */
+    public ItemStatistics getExtraDynamicStatistics() {
+        return ((ItemAttributeExtraDynamicStatistics) item.getAttribute("extra_dynamic_statistics")).getValue();
+    }
+
+    public void setExtraDynamicStatistics(ItemStatistics statistics) {
+        ((ItemAttributeExtraDynamicStatistics) item.getAttribute("extra_dynamic_statistics")).setValue(statistics);
     }
 
     public void setRecombobulated(boolean value) {
@@ -315,8 +359,24 @@ public class ItemAttributeHandler {
         ((ItemAttributeBreakingPower) item.getAttribute("breaking-power")).setValue(breakingPower);
     }
 
+    public int getNewYearCakeYear() {
+        return ((ItemAttributeNewYearCakeYear) item.getAttribute("new-year-cake-year")).getValue();
+    }
+
+    public void setNewYearCakeYear(int year) {
+        ((ItemAttributeNewYearCakeYear) item.getAttribute("new-year-cake-year")).setValue(year);
+    }
+
     public boolean isMiningTool() {
         return getBreakingPower() != 0;
+    }
+
+    public long getDarkAuctionPrice() {
+        return ((ItemAttributeDarkAuctionPrice) item.getAttribute("dark_auction_price")).getValue();
+    }
+
+    public void setDarkAuctionPrice(long price) {
+        ((ItemAttributeDarkAuctionPrice) item.getAttribute("dark_auction_price")).setValue(price);
     }
 
     public SkyBlockItem asSkyBlockItem() {

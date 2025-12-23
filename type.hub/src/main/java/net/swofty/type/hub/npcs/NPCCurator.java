@@ -2,18 +2,18 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIYourMuseum;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCCurator extends NPCDialogue {
+public class NPCCurator extends HypixelNPC {
 
     public NPCCurator() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§fCurator", "§e§lCLICK"};
@@ -42,7 +42,7 @@ public class NPCCurator extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_CURATOR);
@@ -58,10 +58,10 @@ public class NPCCurator extends NPCDialogue {
     }
 
     @Override
-    public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer p) {
+    public DialogueSet[] dialogues(HypixelPlayer p) {
         SkyBlockPlayer player = (SkyBlockPlayer) p;
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("initial-hello").lines(new String[]{
                                 "Welcome, " + player.getShortenedDisplayName() + "§f!",
                                 "After years of work, I finally opened the §9Museum§f!",
@@ -72,6 +72,6 @@ public class NPCCurator extends NPCDialogue {
                                 "However - once you donate an item, it will be §dCo-op Soulbound §fto you, meaning that you won't be able to trade, auction or sell the item anymore.",
                                 "Choose carefully!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

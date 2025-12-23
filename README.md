@@ -3,7 +3,7 @@
 
 [<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="" height="55" />](https://discord.gg/paper)
 
-A 1.8 to 1.21.8 recreation of HypixelSkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase. This project is sisters with the [HypixelForums](https://github.com/Swofty-Developments/HypixelForums) project and optionally, can be used together.
+A 1.21.11 recreation of Hypixel SkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase. This project is sisters with the [HypixelForums](https://github.com/Swofty-Developments/HypixelForums) project and optionally, can be used together.
 
 #### Releases
 
@@ -23,7 +23,7 @@ This project is not meant to be a small server, and as such, it requires a decen
 A video of me going through the guide [can be found here](https://www.youtube.com/watch?v=pxzJbjjQL-M)
 1. Ensure that you meet the recommended device specifications above.
 2. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/try/download/community?tck=docs_server).
-3. Ensure you have the `Java 21` SDK installed.
+3. Ensure you have the `Java 25` SDK installed.
 4. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
 5. Follow the 'Proxy Setup Guide' below. (Note, if you want to run a cracked server, you must set "require-authentication" to true in your config)
 6. Follow the 'Game Server Setup Guide' below. (Note, if you want to run a cracked server, you must set "require-authentication" to true in your config)
@@ -124,7 +124,7 @@ To add new servers like the Hub, Islands or Farming Island follow these steps:
   container_name: <server_name>
   restart: "unless-stopped"
   environment:
-    SERVICE_CMD: java --enable-preview -jar HypixelCore.jar <ServerType>
+    SERVICE_CMD: java -jar HypixelCore.jar <ServerType>
   depends_on:
     proxy:
       condition: service_healthy
@@ -148,7 +148,7 @@ hypixelcore_hub2:
   container_name: hypixelcore_hub2
   restart: "unless-stopped"
   environment:
-    SERVICE_CMD: java --enable-preview -jar HypixelCore.jar SKYBLOCK_HUB
+    SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_HUB
   depends_on:
     proxy:
       condition: service_healthy
@@ -163,21 +163,18 @@ hypixelcore_hub2:
 ## Common Issues
 1. `redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.`
 
-    => Your Memurai isn't running. If this can not be fixed, try out [this](https://github.com/tporadowski/redis/releases) instead.
-2. `Preview features are not enabled for... Try running with '--enable-preview'`
+    ⇒ Your Memurai isn't running. If this can not be fixed, try out [this](https://github.com/tporadowski/redis/releases) instead.
+2. Having issues connecting to the server?
 
-    => try `java --enable-preview -jar HypixelCore.jar {ServerType}`
-3. Having issues connecting to the server?
+   ⇒ Check if your velocity secret is the same everywhere including the limbo config.
 
-    => Check if your velocity secret is the same everywhere including the limbo config.
+3. `You have strayed too far from the spawn! Teleporting you back...` when joining an island?
 
-4. `You have strayed too far from the spawn! Teleporting you back...` when joining an island?
+   ⇒ You didn't import your regions (correctly).
 
-    => You didn't import your regions (correctly).
+4. Still having issues? 
 
-5. Still having issues? 
-
-    => Make sure that you followed everything correctly. If that didn't help, join our discord and ask for help in #code-help. Please provide screenshots of all your consoles! 
+   ⇒ Make sure that you followed everything correctly. If that didn't help, join our discord and ask for help in #code-help. Please provide screenshots of all your consoles! 
 ### Pinging staff members won't solve your issue faster!
 
 ## Credits

@@ -1,19 +1,19 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
+import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCElizabeth extends NPCDialogue {
+public class NPCElizabeth extends HypixelNPC {
 
     public NPCElizabeth() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"§dElizabeth", "§e§lCLICK"};
@@ -42,7 +42,7 @@ public class NPCElizabeth extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         SkyBlockLevelRequirement lvl = player.getSkyBlockExperience().getLevel();
@@ -54,14 +54,14 @@ public class NPCElizabeth extends NPCDialogue {
     }
 
     @Override
-    public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
+    public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                NPCDialogue.DialogueSet.builder()
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "§fHello! Welcome to §bSkyBlock§f!",
                                 "§fI have powerful items to offer, but only to experienced adventurers!",
                                 "§fUntil then, I suggest leveling up to SkyBlock Level 3!"
                         }).build()
-        ).toArray(NPCDialogue.DialogueSet[]::new);
+        ).toArray(DialogueSet[]::new);
     }
 }

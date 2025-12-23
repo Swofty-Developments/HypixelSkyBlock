@@ -1,64 +1,28 @@
 package net.swofty.type.skyblockgeneric.skill.skills;
 
-import net.minestom.server.item.Material;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.skill.SkillCategory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.List;
-
-public class RunecraftingSkill extends SkillCategory {
-    @Override
-    public Material getDisplayIcon() {
-        return Material.MAGMA_CREAM;
-    }
-
-    @Override
-    public String getName() {
-        return "Runecrafting";
-    }
-
-    @Override
-    public List<String> getDescription() {
-        return List.of("§7Slay bosses and runic mobs, and",
-                "§7fuse runes to earn Runecrafting XP!");
-    }
-
-    @Override
-    public SkillReward[] getRewards() {
-        return List.of(
-                new SkillReward(1, 50,
-                        new RuneReward() {
-                            @Override
-                            public int getRuneLevel() {
-                                return 1;
-                            }
-                        }
-                )
-        ).toArray(new SkillReward[0]);
+/**
+ * Utility class for Runecrafting skill helper methods.
+ */
+public class RunecraftingSkill {
+    private RunecraftingSkill() {
+        // Utility class - prevent instantiation
     }
 
     public static Integer getUnlockedRune(SkyBlockPlayer player) {
         int level = player.getSkills().getCurrentLevel(SkillCategories.RUNECRAFTING);
-        SkillReward reward = SkillCategories.RUNECRAFTING.asCategory().getReward(level);
-        for (Reward unlock : reward.unlocks()) {
-            if (unlock instanceof RuneReward) {
-                return ((RuneReward) unlock).getRuneLevel();
+        if (level == 0) {
+            return 0;
+        }
+        SkillCategory.SkillReward reward = SkillCategories.RUNECRAFTING.asCategory().getReward(level);
+        for (SkillCategory.Reward unlock : reward.unlocks()) {
+            if (unlock instanceof SkillCategory.RuneReward) {
+                return ((SkillCategory.RuneReward) unlock).getRuneLevel();
             }
         }
         return 0;
-    }
-
-    public abstract class RuneReward extends Reward {
-
-        @Override
-        public UnlockType type() {
-            return UnlockType.RUNE;
-        }
-
-        @Override
-        public void onUnlock(SkyBlockPlayer player) {}
-
-        public abstract int getRuneLevel();
     }
 }

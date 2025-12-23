@@ -15,7 +15,8 @@ import java.util.Map;
 public enum MuseumableItemCategory {
     WEAPONS("Weapons", Material.DIAMOND_SWORD, "§6"),
     ARMOR_SETS("Armor Sets", Material.CHAINMAIL_CHESTPLATE, "§9"),
-    RARITIES("Rarities", Material.EMERALD_BLOCK, "§5")
+    RARITIES("Rarities", Material.EMERALD_BLOCK, "§5"),
+    SPECIAL("Special", Material.CAKE, "§d")
     ;
 
     private final static Map<MuseumableItemCategory, List<ItemType>> ITEMS = new HashMap<>();

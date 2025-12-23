@@ -58,6 +58,7 @@ public class ListenerServersInformation extends RedisListener {
             case "TYPE" -> {
                 String type = message.getString("type");
                 List<GameManager.GameServer> servers = GameManager.getFromType(ServerType.valueOf(type));
+                if (servers == null) servers = new ArrayList<>();
 
                 if (isInTestFlow) {
                     // Remove all servers that are not in the current test flow

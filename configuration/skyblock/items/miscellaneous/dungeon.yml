@@ -13,3 +13,9 @@ items:
       - id: ENCHANTED
       - id: RIGHT_CLICK_RECIPE
         recipe_item: NECRONS_HANDLE
+  - id: SUPERBOOM_TNT
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Superboom TNT
+      - id: ENCHANTED

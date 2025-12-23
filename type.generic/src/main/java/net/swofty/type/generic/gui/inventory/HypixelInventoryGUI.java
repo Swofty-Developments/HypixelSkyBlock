@@ -3,7 +3,6 @@ package net.swofty.type.generic.gui.inventory;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
-import org.tinylog.Logger;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -11,9 +10,11 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.component.TooltipDisplay;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +22,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 public abstract class HypixelInventoryGUI {
     public static final Map<UUID, HypixelInventoryGUI> GUI_MAP = new ConcurrentHashMap<>();
+    public static final ItemStack.Builder FILLER_ITEM = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE)
+            .set(DataComponents.CUSTOM_NAME, Component.space())
+            .set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.EMPTY);
 
     protected String title;
     protected InventoryType size;
@@ -106,25 +110,38 @@ public abstract class HypixelInventoryGUI {
      * @param pickup      is the player able to pick up the items in the rectangle?
      */
     public void fill(ItemStack.Builder stack, int cornerSlot, int cornerSlot2, boolean overwrite, boolean pickup) {
-        if (cornerSlot < 0 || cornerSlot > size.getSize())
+        if (cornerSlot < 0 || cornerSlot >= size.getSize())
             throw new IllegalArgumentException("Corner 1 of the border described is out of bounds");
-        if (cornerSlot2 < 0 || cornerSlot2 > size.getSize())
+        if (cornerSlot2 < 0 || cornerSlot2 >= size.getSize())
             throw new IllegalArgumentException("Corner 2 of the border described is out of bounds");
-        int topLeft = Math.min(cornerSlot, cornerSlot2);
-        int bottomRight = Math.max(cornerSlot, cornerSlot2);
-        int topRight;
-        for (topRight = bottomRight; topRight > topLeft; topRight -= 9) ;
-        int bottomLeft;
-        for (bottomLeft = topLeft; bottomLeft < bottomRight; bottomLeft += 9) ;
-        topRight += 9;
-        bottomLeft -= 9;
-        for (int y = topLeft; y <= bottomLeft; y += 9) {
-            for (int x = y; x <= topRight - topLeft + y; x++) {
-                int f = x;
-                if (items.stream().filter(item -> item.itemSlot == f).toArray().length != 0 && !overwrite)
-                    continue;
-                set(x, stack, pickup);
+
+        int row1 = cornerSlot / 9, col1 = cornerSlot % 9;
+        int row2 = cornerSlot2 / 9, col2 = cornerSlot2 % 9;
+
+        int minRow = Math.min(row1, row2), maxRow = Math.max(row1, row2);
+        int minCol = Math.min(col1, col2), maxCol = Math.max(col1, col2);
+
+        List<Integer> slotsToSet = new ArrayList<>();
+        synchronized (items) {
+            int total = size.getSize();
+            boolean[] occupied = new boolean[total];
+            for (GUIItem item : items) {
+                int s = item.itemSlot;
+                if (s >= 0 && s < total) occupied[s] = true;
             }
+
+            for (int r = minRow; r <= maxRow; r++) {
+                for (int c = minCol; c <= maxCol; c++) {
+                    int slot = r * 9 + c;
+                    if (slot < 0 || slot >= total) continue;
+                    if (!overwrite && occupied[slot]) continue;
+                    slotsToSet.add(slot);
+                }
+            }
+        }
+
+        for (int slot : slotsToSet) {
+            set(slot, stack, pickup);
         }
     }
 
@@ -194,15 +211,24 @@ public abstract class HypixelInventoryGUI {
         for (bottomLeft = topLeft; bottomLeft < bottomRight; bottomLeft += 9) ;
         topRight += 9;
         bottomLeft -= 9;
-        for (int y = topLeft; y <= bottomLeft; y += 9) {
-            for (int x = y; x <= topRight - topLeft + y; x++) {
-                int f = x;
-                if (items.stream().filter(item -> item.itemSlot == f).toArray().length != 0 && !overwrite)
-                    continue;
-                if (y == topLeft || y == bottomLeft)
-                    set(x, stack, pickup);
-                if (x == y || x == topRight - topLeft + y)
-                    set(x, stack, pickup);
+
+        // build a set of occupied slots for O(1) lookup
+        synchronized (items) {
+            Set<Integer> occupiedSlots = new HashSet<>();
+            for (GUIItem item : items) {
+                occupiedSlots.add(item.itemSlot);
+            }
+
+            int rightBound = topRight - topLeft;
+            for (int y = topLeft; y <= bottomLeft; y += 9) {
+                for (int x = y; x <= rightBound + y; x++) {
+                    if (!occupiedSlots.contains(x) || overwrite) {
+                        if (y == topLeft || y == bottomLeft)
+                            set(x, stack, pickup);
+                        if (x == y || x == rightBound + y)
+                            set(x, stack, pickup);
+                    }
+                }
             }
         }
     }
@@ -248,11 +274,15 @@ public abstract class HypixelInventoryGUI {
      * @return an empty slot index
      */
     public int firstEmpty() {
-        for (int i = 0; i < size.getSize(); i++) {
-            int finalI = i;
-            long found = items.stream().filter((item) -> item.itemSlot == finalI).count();
-            if (found == 0)
-                return i;
+        synchronized (items) {
+            Set<Integer> occupiedSlots = new HashSet<>();
+            for (GUIItem item : items) {
+                occupiedSlots.add(item.itemSlot);
+            }
+            for (int i = 0; i < size.getSize(); i++) {
+                if (!occupiedSlots.contains(i))
+                    return i;
+            }
         }
         return -1;
     }

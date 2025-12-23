@@ -102,7 +102,7 @@ public abstract class TablistManager {
                                             GameMode.CREATIVE,
                                             Component.text(entry.content()),
                                             null,
-                                            1)))
+                                            1, true)))
                             );
                         });
                     } catch (Exception e) {}

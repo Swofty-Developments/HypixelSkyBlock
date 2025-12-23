@@ -1,17 +1,17 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.hub.gui.GUIShopZog;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.NPCDialogue;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.entity.npc.NPCParameters;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCZog extends NPCDialogue {
+public class NPCZog extends HypixelNPC {
 
     public NPCZog() {
-        super(new NPCParameters() {
+        super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Zog", "§e§lCLICK"};
@@ -40,7 +40,7 @@ public class NPCZog extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
+    public void onClick(NPCInteractEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_ZOG);
@@ -56,9 +56,9 @@ public class NPCZog extends NPCDialogue {
     }
 
     @Override
-    public NPCDialogue.DialogueSet[] getDialogueSets(HypixelPlayer player) {
-        return new NPCDialogue.DialogueSet[] {
-                NPCDialogue.DialogueSet.builder()
+    public DialogueSet[] dialogues(HypixelPlayer player) {
+        return new DialogueSet[] {
+                DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "Hello! Have you heard of pet items?",
                                 "Pet items give your companions bonuses!",
