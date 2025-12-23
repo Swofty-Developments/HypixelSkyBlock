@@ -5,7 +5,6 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
-import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -17,7 +16,6 @@ import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
 import net.swofty.type.skyblockgeneric.region.RegionType;
@@ -28,28 +26,20 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MobMinerZombie extends BestiaryMob implements RegionPopulator {
+public class MobEmeraldSlime_05 extends BestiaryMob implements RegionPopulator {
 
-	public MobMinerZombie() {
-		super(EntityType.ZOMBIE);
+	public MobEmeraldSlime_05() {
+		super(EntityType.SLIME);
 	}
 
 	@Override
 	public String getDisplayName() {
-		return "Miner Zombie";
+		return "Emerald Slime";
 	}
 
 	@Override
 	public Integer getLevel() {
-		return 15;
-	}
-
-	@Override
-	public void onInit() {
-		setBoots(new SkyBlockItem(ItemType.MINER_ARMOR_BOOTS).getItemStack());
-		setLeggings(new SkyBlockItem(ItemType.MINER_ARMOR_LEGGINGS).getItemStack());
-		setChestplate(new SkyBlockItem(ItemType.MINER_ARMOR_CHESTPLATE).getItemStack());
-		setHelmet(new SkyBlockItem(ItemType.MINER_ARMOR_HELMET).getItemStack());
+		return 5;
 	}
 
 	@Override
@@ -59,8 +49,8 @@ public class MobMinerZombie extends BestiaryMob implements RegionPopulator {
 						1.6,
 						20,
 						TimeUnit.SERVER_TICK,
-						RegionType.DIAMOND_RESERVE),
-				new RandomRegionStrollGoal(this, 15, RegionType.DIAMOND_RESERVE)
+						RegionType.SLIMEHILL),
+				new RandomRegionStrollGoal(this, 15, RegionType.SLIMEHILL)  // Walk around
 		);
 	}
 
@@ -71,15 +61,15 @@ public class MobMinerZombie extends BestiaryMob implements RegionPopulator {
 				new ClosestEntityRegionTarget(this,
 						6,
 						entity -> entity instanceof SkyBlockPlayer,
-						RegionType.DIAMOND_RESERVE) // If there is none, target the nearest player
+						RegionType.SLIMEHILL) // If there is none, target the nearest player
 		);
 	}
 
 	@Override
 	public ItemStatistics getBaseStatistics() {
 		return ItemStatistics.builder()
-				.withBase(ItemStatistic.HEALTH, 250D)
-				.withBase(ItemStatistic.DAMAGE, 200D)
+				.withBase(ItemStatistic.HEALTH, 80D)
+				.withBase(ItemStatistic.DAMAGE, 70D)
 				.withBase(ItemStatistic.SPEED, 100D)
 				.build();
 	}
@@ -90,12 +80,7 @@ public class MobMinerZombie extends BestiaryMob implements RegionPopulator {
 			@Override
 			public @NonNull List<LootRecord> getLootTable() {
 				return List.of(
-						new LootRecord(ItemType.ROTTEN_FLESH, 1, 100),
-						new LootRecord(ItemType.MINER_ARMOR_BOOTS, 1, 1),
-						new LootRecord(ItemType.MINER_ARMOR_LEGGINGS, 1, 1),
-						new LootRecord(ItemType.MINER_ARMOR_CHESTPLATE, 1, 1),
-						new LootRecord(ItemType.MINER_ARMOR_HELMET, 1, 1)
-						//new LootRecord(ItemType.FLAMING_SWORD, 1, 0.01),
+						new LootRecord(ItemType.SLIME_BALL, 1, 100)
 						//new LootRecord(ItemType.EXP_SHARE_CORE, 1, 0.01)
 				);
 			}
@@ -119,12 +104,12 @@ public class MobMinerZombie extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public OtherLoot getOtherLoot() {
-		return new OtherLoot(20, 12, 30);
+		return new OtherLoot(12, 5, 20);
 	}
 
 	@Override
 	public List<MobType> getMobTypes() {
-		return List.of(MobType.UNDEAD);
+		return List.of(MobType.CUBIC);
 	}
 
 	@Override
@@ -139,18 +124,16 @@ public class MobMinerZombie extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public String getMobID() {
-		return "DIAMOND_ZOMBIE";
+		return "EMERALD_SLIME_05";
 	}
 
 	@Override
 	public GUIMaterial getGuiMaterial() {
-		return new GUIMaterial(Material.ZOMBIE_HEAD); // todo: find real material
+		return new GUIMaterial("895aeec6b842ada8669f846d65bc49762597824ab944f22f45bf3bbb941abe6c");
 	}
 
 	@Override
 	public List<Populator> getPopulators() {
-		return List.of(
-				new Populator(RegionType.DIAMOND_RESERVE, 20)
-		);
+		return List.of(new Populator(RegionType.SLIMEHILL, 20));
 	}
 }

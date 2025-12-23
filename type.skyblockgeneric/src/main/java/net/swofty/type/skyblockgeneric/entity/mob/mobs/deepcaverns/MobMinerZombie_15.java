@@ -6,6 +6,7 @@ import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.item.Material;
+import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
@@ -13,6 +14,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
+import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -26,15 +28,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MobMinerSkeleton extends BestiaryMob implements RegionPopulator {
+public class MobMinerZombie_15 extends BestiaryMob implements RegionPopulator {
 
-	public MobMinerSkeleton() {
-		super(EntityType.SKELETON);
+	public MobMinerZombie_15() {
+		super(EntityType.ZOMBIE);
 	}
 
 	@Override
 	public String getDisplayName() {
-		return "Miner Skeleton";
+		return "Miner Zombie";
 	}
 
 	@Override
@@ -53,6 +55,11 @@ public class MobMinerSkeleton extends BestiaryMob implements RegionPopulator {
 	@Override
 	public List<GoalSelector> getGoalSelectors() {
 		return List.of(
+				new MeleeAttackWithinRegionGoal(this,
+						1.6,
+						20,
+						TimeUnit.SERVER_TICK,
+						RegionType.DIAMOND_RESERVE),
 				new RandomRegionStrollGoal(this, 15, RegionType.DIAMOND_RESERVE)
 		);
 	}
@@ -83,14 +90,13 @@ public class MobMinerSkeleton extends BestiaryMob implements RegionPopulator {
 			@Override
 			public @NonNull List<LootRecord> getLootTable() {
 				return List.of(
-						new LootRecord(ItemType.BONE, 1, 300), // hypixel, why is it 300% and what does that mean?
+						new LootRecord(ItemType.ROTTEN_FLESH, 1, 100),
 						new LootRecord(ItemType.MINER_ARMOR_BOOTS, 1, 1),
 						new LootRecord(ItemType.MINER_ARMOR_LEGGINGS, 1, 1),
 						new LootRecord(ItemType.MINER_ARMOR_CHESTPLATE, 1, 1),
 						new LootRecord(ItemType.MINER_ARMOR_HELMET, 1, 1)
-
+						//new LootRecord(ItemType.FLAMING_SWORD, 1, 0.01),
 						//new LootRecord(ItemType.EXP_SHARE_CORE, 1, 0.01)
-						// bone dye
 				);
 			}
 
@@ -133,12 +139,12 @@ public class MobMinerSkeleton extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public String getMobID() {
-		return "DIAMOND_SKELETON";
+		return "DIAMOND_ZOMBIE_15";
 	}
 
 	@Override
 	public GUIMaterial getGuiMaterial() {
-		return new GUIMaterial(Material.SKELETON_SKULL); // todo: find real material
+		return new GUIMaterial("1b8a707e8a58d2ffe297474d18daee86951b21994566358dc0b5d7dcc9e2ed9b");
 	}
 
 	@Override
