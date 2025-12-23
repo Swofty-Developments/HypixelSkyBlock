@@ -7,6 +7,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 
@@ -16,6 +17,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.prototypelobby.util.PrototypeLobbyMap;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -36,6 +38,9 @@ public class TypePrototypeLobbyLoader implements HypixelTypeLoader {
          * Start Prototype Lobby Scoreboard
          */
         PrototypeLobbyScoreboard.start();
+
+        PrototypeLobbyMap prototypeLobbyMap = new PrototypeLobbyMap();
+        prototypeLobbyMap.placeItemFrames(HypixelConst.getInstanceContainer());
     }
 
     @Override
