@@ -1,12 +1,12 @@
 package net.swofty.type.bedwarslobby.npcs;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.proxyapi.ProxyInformation;
-import net.swofty.type.bedwarslobby.gui.GUIPlay;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -14,11 +14,11 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoloNPC extends HypixelNPC {
+public class NPCDream extends HypixelNPC {
 	private static List<UnderstandableProxyServer> cacheServers = new ArrayList<>();
 	private static long lastCacheTime = 0;
 
-	public SoloNPC() {
+	public NPCDream() {
 		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
@@ -39,24 +39,24 @@ public class SoloNPC extends HypixelNPC {
 				String commmaified = StringUtility.commaify(amountOnline);
 				return new String[]{
 						"§e§lCLICK TO PLAY",
-						"§bSolo §7[v1.9]",
+						"§bDreams §7[v1.9]",
 						"§e" + commmaified + " Players",
 				};
 			}
 
 			@Override
 			public String signature(HypixelPlayer player) {
-				return "IV5B6+49GEZKV6oFKFFhTxH9mQ6HBHgdRhxJF8GNdwvnxKoMHWa19IpD7/YhLe8UIblB1TohopvMNUx1f9BIg2QJWkmqcaXVph+HjBokS6NlQ9iX8l0OSgMDH+sR2eZly09vUd0eqy9Ba9pI4GfiZMHWajDDn5ziLAM3RuUGIMKrG5woxKm/8Hrj0Jc1+b88hQN2YCWwelmnY2difn+jz6+h62Z+CVIHFOVmKql0xJG4aLT9fFLGgcTJhYcisP0wU8ml0SHTkJ7EARn5xEMyd5kybZ7h4uf8AwsDbZ5hxTvjljMDOIaFeRLO4EsczBNy1EzSEYc0NS7rMU4AURutdZ2/lOraY4PEUHbMEEmM8em0yGX2qPHkF0jXwcjS2ER7qWUblCyA+3BYXRSdozK793NKAgrFgOpQDvzSyHQL26eeTcXKG7cd1l0KyrKJxWzJ0RY8IzO7CooTs2Rryl16T4PffC3zzK1bANuLG5996Pd4rovMWavmnOMKnCBwYLfXeXhAZ246YhFzTOPI0m38wKi6Spo6SHXZ5AShLcAcac844nrAsgYdL/8bqavDbOW3uxvVej+98vUMwvPAH2fO9y3COqPuAAST3gjvLVt7Xk3wecuzf2tb1zaSWNa0ke0sjMgCitcPz+KG48JK4PcZ8GkGCIPRkyG3sZxUnPo61qI=";
+				return "eKuYfkdZAn7TXoBm469fOoVR9Z7NANyxSiVa0DEekI0RSTrJp2Y3MOBb3WweqlUhQ4+ad70k2PLYwPdyDJfyfNQ6ygXREwer2xvRiuKfXw9vewM0lT4cxpaBWs4TJS9Xy9mOjp+1+VjBrbTrPBObW5adpFT9i/x+Sb5950JyMAcuOtytFgObKbzabyDGlJusm/9bzOHyKwrPHaiNlbb6FdhPQomFLgQYBuMeJGwreeRLiMA7DY6OJcbGRFoT2fupSBJpBT8bQ0mB5bPI4KhBAB891HjQjqBiQVolRjmDwNAtLaRwdUvFgKbxEixFU5B+2KowKwzV24eeL01vOqeeSSmu2PQc85zxEAlfHLIN2KtvyKPJHOr1dyOrgsx6bFLUmtJHeTGKoLUVDcAHVrovhWnSl/QK7lLFQJsOa5fxp38qk4Z+OpMFet2CuTRLr15ttTKjomhSjrdaBaNQYYxMNlhLJDfUiROuPfn/l/CSxtzBMe5VyK/IGx6k1VLyq0igoKFprlAlOh5ZjOeMVZLurT17uISEpChY+fAJpgOgGMA7+1HH4diX0VFwAy6Fx35JRqhC9qNDgao/tmUBnvpOvQpu5TJV7XRxI4J378zo1zFEKEB9f0l0gqYCrpkLKTibJVWivrgm3NXmUnh8pWzJv6a0q9eTTHVYENv5zrtG+Mo=";
 			}
 
 			@Override
 			public String texture(HypixelPlayer player) {
-				return "ewogICJ0aW1lc3RhbXAiIDogMTYxNjg2ODA2NzY1NiwKICAicHJvZmlsZUlkIiA6ICJiYjdjY2E3MTA0MzQ0NDEyOGQzMDg5ZTEzYmRmYWI1OSIsCiAgInByb2ZpbGVOYW1lIiA6ICJsYXVyZW5jaW8zMDMiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTUwZmYwMDcyNTE2ODBjNjNjYTJkM2E2YjY1ZWM1N2YzMWQ4ZjgzZGYxMjc0MWZiMGEzMzlhMWZlMmIwOTRhOSIKICAgIH0KICB9Cn0=";
+				return "ewogICJ0aW1lc3RhbXAiIDogMTYxNjg2ODEwNzY2OCwKICAicHJvZmlsZUlkIiA6ICI5MWYwNGZlOTBmMzY0M2I1OGYyMGUzMzc1Zjg2ZDM5ZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJTdG9ybVN0b3JteSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS85NmYzMWJhNmI2OGEwZmQyMjNiM2UzMTg4NTEwOWJlYmRkNDNhMGI0ZjQwNzE1YjAwZGNlMWEwNjM3NmI0MjRhIgogICAgfQogIH0KfQ==";
 			}
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-5.5, 68, -12.5, 90, 0);
+				return new Pos(-5.5, 68, 13.5, 90, 0);
 			}
 
 			@Override
@@ -67,7 +67,9 @@ public class SoloNPC extends HypixelNPC {
 	}
 
 	@Override
-	public void onClick(NPCInteractEvent e) {
-		new GUIPlay(BedwarsGameType.SOLO).open(e.player());
+	public void onClick(NPCInteractEvent event) {
+		event.player().sendMessage("§7You can dream about this :)");
+		event.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
+				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
 	}
 }

@@ -7,9 +7,9 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-public class StatsNPC extends HypixelNPC {
+public class NPCStats extends HypixelNPC {
 
-	public StatsNPC() {
+	public NPCStats() {
 		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {

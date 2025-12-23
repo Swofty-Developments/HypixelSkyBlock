@@ -14,11 +14,11 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TriosNPC extends HypixelNPC {
+public class NPCTrios extends HypixelNPC {
 	private static List<UnderstandableProxyServer> cacheServers = new ArrayList<>();
 	private static long lastCacheTime = 0;
 
-	public TriosNPC() {
+	public NPCTrios() {
 		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {

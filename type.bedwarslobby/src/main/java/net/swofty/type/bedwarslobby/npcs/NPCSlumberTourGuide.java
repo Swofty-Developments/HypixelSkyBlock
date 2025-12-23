@@ -1,15 +1,16 @@
 package net.swofty.type.bedwarslobby.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.bedwarslobby.gui.GUISlumberLocations;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-public class SlumberTourGuideNPC extends HypixelNPC {
+import java.util.stream.Stream;
 
-	public SlumberTourGuideNPC() {
+public class NPCSlumberTourGuide extends HypixelNPC {
+
+	public NPCSlumberTourGuide() {
 		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
@@ -42,7 +43,20 @@ public class SlumberTourGuideNPC extends HypixelNPC {
 
 	@Override
 	public void onClick(NPCInteractEvent event) {
-		event.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+		new GUISlumberLocations().open(event.player());
+		setDialogue(
+				event.player(),
+				"" + (int) (Math.random() * 4 + 1)
+		);
+	}
+
+	@Override
+	protected DialogueSet[] dialogues(HypixelPlayer player) {
+		return Stream.of(
+				DialogueSet.builder().key("1").lines(new String[]{"Where to?"}).build(),
+				DialogueSet.builder().key("2").lines(new String[]{"Top o' the mornin te ya."}).build(),
+				DialogueSet.builder().key("3").lines(new String[]{"Where can I take you to today?"}).build(),
+				DialogueSet.builder().key("4").lines(new String[]{"Tips are appreciated!"}).build()
+		).toArray(DialogueSet[]::new);
 	}
 }
