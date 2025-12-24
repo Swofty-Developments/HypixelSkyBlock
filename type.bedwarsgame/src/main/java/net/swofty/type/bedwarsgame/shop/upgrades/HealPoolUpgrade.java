@@ -2,20 +2,19 @@ package net.swofty.type.bedwarsgame.shop.upgrades;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Player;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
 import java.util.List;
 
@@ -34,8 +33,7 @@ public class HealPoolUpgrade extends TeamUpgrade {
 	}
 
 	@Override
-	public void applyEffect(Game game, String teamName, int level) {
-		TeamKey teamKey = game.getTeamManager().getTeamKeyByName(teamName);
+	public void applyEffect(Game game, TeamKey teamKey, int level) {
 		MapTeam team = teamKey != null
 				? game.getMapEntry().getConfiguration().getTeams().get(teamKey)
 				: null;
@@ -52,9 +50,8 @@ public class HealPoolUpgrade extends TeamUpgrade {
 				return;
 			}
 
-			for (Player player : game.getPlayers()) {
-				String playerTeamName = player.getTag(Tag.String("team"));
-				if (teamName.equals(playerTeamName)) {
+			for (BedWarsPlayer player : game.getPlayers()) {
+				if (teamKey.equals(player.getTeamKey())) {
 					if (player.getPosition().distance(teamSpawn) <= 15) {
 						// Heal player by 1 heart (2 health)
 						double maxHealth = player.getAttribute(Attribute.MAX_HEALTH).getValue();

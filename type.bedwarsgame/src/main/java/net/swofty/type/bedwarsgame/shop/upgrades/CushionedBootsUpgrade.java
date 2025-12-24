@@ -8,7 +8,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.EnchantmentList;
 import net.minestom.server.item.enchant.Enchantment;
-import net.minestom.server.tag.Tag;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
@@ -31,9 +31,9 @@ public class CushionedBootsUpgrade extends TeamUpgrade {
 	}
 
 	@Override
-	public void applyEffect(Game game, String teamName, int level) {
+	public void applyEffect(Game game, BedWarsMapsConfig.TeamKey teamName, int level) {
 		game.getPlayers().stream()
-				.filter(p -> teamName.equals(p.getTag(Tag.String("team"))))
+				.filter(p -> teamName.equals(p.getTeamKey()))
 				.forEach(player -> {
 					var boots = player.getBoots();
 					if (boots == null) return;

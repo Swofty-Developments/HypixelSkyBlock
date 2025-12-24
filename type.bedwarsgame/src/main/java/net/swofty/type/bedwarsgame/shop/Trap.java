@@ -10,6 +10,7 @@ import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.TooltipDisplay;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
@@ -38,7 +39,7 @@ public abstract class Trap {
 	 * @param teamName  the name of the team that owns the trap
 	 * @param triggerer the player who triggered the trap
 	 */
-	public void trigger(Game game, String teamName, BedWarsPlayer triggerer) {
+	public void trigger(Game game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer triggerer) {
 		game.getTeamManager().removeTeamTrap(teamName, getKey());
 
 		game.getTeamManager().getPlayersOnTeam(teamName).forEach(player -> {
@@ -57,7 +58,7 @@ public abstract class Trap {
 	 * @param teamName  the name of the team that owns the trap
 	 * @param triggerer the player who triggered the trap
 	 */
-	public abstract void onTrigger(Game game, String teamName, BedWarsPlayer triggerer);
+	public abstract void onTrigger(Game game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer triggerer);
 
 	/**
 	 * Gets the price of the trap for the specified team.
@@ -66,7 +67,7 @@ public abstract class Trap {
 	 * @param teamName the name of the team that owns the trap
 	 * @return the price of the trap
 	 */
-	public int getPrice(Game game, String teamName) {
+	public int getPrice(Game game, BedWarsMapsConfig.TeamKey teamName) {
 		return game.getTeamManager().getTeamTraps(teamName).size() + 1;
 	}
 

@@ -1,12 +1,11 @@
 package net.swofty.type.bedwarsgame.shop.impl;
 
-import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 
 public class HardenedClay extends ShopItem {
 
@@ -28,9 +27,8 @@ public class HardenedClay extends ShopItem {
 	}
 
 	@Override
-	public void onPurchase(Player player) {
-		BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
-		Material terracottaMaterial = mapTeamToTerracotta(bwPlayer.getTeamKey());
+	public void onPurchase(BedWarsPlayer player) {
+		Material terracottaMaterial = mapTeamToTerracotta(player.getTeamKey());
 		player.getInventory().addItemStack(ItemStack.builder(terracottaMaterial)
 				.amount(16)
 				.build());

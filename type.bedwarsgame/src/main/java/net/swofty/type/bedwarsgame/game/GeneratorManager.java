@@ -278,12 +278,9 @@ public final class GeneratorManager implements GameEventManager.Listener {
 		}
 	}
 
-	public void addTeamGeneratorTask(String teamName, Task task) {
-		TeamKey teamKey = game.getTeamManager().getTeamKeyByName(teamName);
-		if (teamKey != null) {
+	public void addTeamGeneratorTask(TeamKey teamKey, Task task) {
 			teamGeneratorTasks.computeIfAbsent(teamKey, k -> new ArrayList<>()).add(task);
 		}
-	}
 
 	@Override
 	public void onEventChange(GameEventPosition previous, GameEventPosition current) {

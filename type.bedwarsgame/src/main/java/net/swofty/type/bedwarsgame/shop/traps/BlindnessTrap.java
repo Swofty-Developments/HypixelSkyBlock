@@ -4,6 +4,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.Trap;
@@ -22,7 +23,7 @@ public class BlindnessTrap extends Trap {
 	}
 
 	@Override
-	public void onTrigger(Game game, String teamName, BedWarsPlayer triggerer) {
+	public void onTrigger(Game game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer triggerer) {
 		triggerer.addEffect(new Potion(PotionEffect.BLINDNESS, (byte) 1, 200));
 	}
 }

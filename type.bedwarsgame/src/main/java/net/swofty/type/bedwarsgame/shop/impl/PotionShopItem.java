@@ -1,13 +1,13 @@
 package net.swofty.type.bedwarsgame.shop.impl;
 
 import net.minestom.server.component.DataComponents;
-import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.PotionContents;
 import net.minestom.server.potion.PotionType;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
 public class PotionShopItem extends ShopItem {
 
@@ -26,9 +26,8 @@ public class PotionShopItem extends ShopItem {
 	}
 
 	@Override
-	public void onPurchase(Player player) {
+	public void onPurchase(BedWarsPlayer player) {
 		PotionContents potionContents = new PotionContents(potionType);
-
 		player.getInventory().addItemStack(
 				ItemStack.builder(Material.POTION).set(DataComponents.POTION_CONTENTS, potionContents).build()
 		);

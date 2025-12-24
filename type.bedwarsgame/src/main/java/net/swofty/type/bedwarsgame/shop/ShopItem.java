@@ -43,7 +43,7 @@ public abstract class ShopItem {
      *
      * @param player the player who purchaseed the item
      */
-    public abstract void onPurchase(Player player);
+    public abstract void onPurchase(BedWarsPlayer player);
 
     public boolean isOwned(Player player) {
         return true;

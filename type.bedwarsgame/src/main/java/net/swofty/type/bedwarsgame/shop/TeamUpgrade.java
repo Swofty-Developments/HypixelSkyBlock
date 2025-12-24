@@ -6,10 +6,10 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.TooltipDisplay;
 import net.minestom.server.tag.Tag;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,11 +32,11 @@ public abstract class TeamUpgrade {
 		this.tiers = tiers;
 	}
 
-	public int getCurrentLevel(Game game, String teamName) {
+	public int getCurrentLevel(Game game, BedWarsMapsConfig.TeamKey teamName) {
 		return game.getTeamManager().getTeamUpgradeLevel(teamName, key);
 	}
 
-	public TeamUpgradeTier getNextTier(Game game, String teamName) {
+	public TeamUpgradeTier getNextTier(Game game, BedWarsMapsConfig.TeamKey teamName) {
 		int currentLevel = getCurrentLevel(game, teamName);
 		if (currentLevel >= tiers.size()) {
 			return null;
@@ -52,7 +52,7 @@ public abstract class TeamUpgrade {
 	}
 
 	public void purchase(Game game, BedWarsPlayer player) {
-		String teamName = player.getTeamName();
+		BedWarsMapsConfig.TeamKey teamName = player.getTeamKey();
 		if (teamName == null) {
 			player.sendMessage("§cYou are not on a team. Report this to the administration.");
 			return;
@@ -75,7 +75,7 @@ public abstract class TeamUpgrade {
 		applyEffect(game, teamName, nextTier.getLevel());
 
 		game.getPlayers().stream()
-				.filter(p -> teamName.equals(p.getTeamName()))
+				.filter(p -> teamName.equals(p.getTeamKey()))
 				.forEach(p -> {
 					BedWarsMapsConfig.TeamKey teamKey = player.getTeamKey();
 					p.sendMessage(teamKey.chatColor() + " §apurchased §6" + name + " " + nextTier.getLevel() + "!");
@@ -91,7 +91,7 @@ public abstract class TeamUpgrade {
 	 * @param teamName The name of the team.
 	 * @param level    The new level of the upgrade.
 	 */
-	public abstract void applyEffect(Game game, String teamName, int level);
+	public abstract void applyEffect(Game game, BedWarsMapsConfig.TeamKey teamName, int level);
 
 	public ItemStack getDisplayItem() {
 		return displayItem.with(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(false, Set.of()));

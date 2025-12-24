@@ -11,6 +11,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.shop.*;
@@ -86,10 +87,9 @@ public class GUITeamShop extends HypixelInventoryGUI {
 					if (index >= upgrades.size()) return;
 					BedWarsPlayer player = (BedWarsPlayer) p;
 					Game playerGame = TypeBedWarsGameLoader.getPlayerGame(player);
-					String tag = player.getTag(Tag.String("team"));
-					if (playerGame == null || tag == null) return;
+					if (playerGame == null) return;
 					TeamUpgrade upgrade = upgrades.get(index);
-					TeamUpgradeTier nextTier = upgrade.getNextTier(playerGame, tag);
+					TeamUpgradeTier nextTier = upgrade.getNextTier(playerGame, player.getTeamKey());
 					if (nextTier == null) {
 						player.sendMessage("§cYour team has already bought this upgrade!");
 						playClickSound(player);
@@ -106,10 +106,11 @@ public class GUITeamShop extends HypixelInventoryGUI {
 				}
 
 				@Override
-				public ItemStack.Builder getItem(HypixelPlayer player) {
+				public ItemStack.Builder getItem(HypixelPlayer p) {
 					if (index >= upgrades.size()) return ItemStack.builder(Material.AIR);
+					BedWarsPlayer player = (BedWarsPlayer) p;
 					Game playerGame = TypeBedWarsGameLoader.getPlayerGame(player);
-					String tag = player.getTag(Tag.String("team"));
+					BedWarsMapsConfig.TeamKey tag = player.getTeamKey();
 					if (playerGame == null || tag == null) return ItemStack.builder(Material.BARRIER)
 							.customName(noItalic(Component.text("No Game").color(NamedTextColor.RED)));
 
@@ -158,9 +159,9 @@ public class GUITeamShop extends HypixelInventoryGUI {
 				public void run(InventoryPreClickEvent event, HypixelPlayer p) {
 					if (index >= traps.size()) return;
 					BedWarsPlayer player = (BedWarsPlayer) p;
+					BedWarsMapsConfig.TeamKey tag = player.getTeamKey();
 
 					Game playerGame = TypeBedWarsGameLoader.getPlayerGame(player);
-					String tag = player.getTag(Tag.String("team"));
 					if (playerGame == null || tag == null) return;
 					Trap trap = traps.get(index);
 					int price = trap.getPrice(playerGame, tag);
@@ -183,7 +184,8 @@ public class GUITeamShop extends HypixelInventoryGUI {
 				public ItemStack.Builder getItem(HypixelPlayer player) {
 					if (index >= traps.size()) return ItemStack.builder(Material.AIR);
 					Game playerGame = TypeBedWarsGameLoader.getPlayerGame(player);
-					String t = player.getTag(Tag.String("team"));
+					BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
+					BedWarsMapsConfig.TeamKey t = bwPlayer.getTeamKey();
 					if (playerGame == null || t == null) return ItemStack.builder(Material.BARRIER)
 							.customName(noItalic(Component.text("No Game").color(NamedTextColor.RED)));
 					Trap trap = traps.get(index);
@@ -222,7 +224,8 @@ public class GUITeamShop extends HypixelInventoryGUI {
 				@Override
 				public ItemStack.Builder getItem(HypixelPlayer player) {
 					Game g = TypeBedWarsGameLoader.getPlayerGame(player);
-					String t = player.getTag(Tag.String("team"));
+					BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
+					BedWarsMapsConfig.TeamKey t = bwPlayer.getTeamKey();
 					if (g == null || t == null) return ItemStack.builder(Material.BARRIER)
 							.customName(noItalic(Component.text("No Game").color(NamedTextColor.RED)));
 					List<String> queued = g.getTeamManager().getTeamTraps(t);
@@ -258,9 +261,9 @@ public class GUITeamShop extends HypixelInventoryGUI {
 		updateItemStacks(getInventory(), getPlayer());
 	}
 
-	private void broadcastTeamPurchase(Game game, String teamName, BedWarsPlayer buyer, String name) {
+	private void broadcastTeamPurchase(Game game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer buyer, String name) {
 		for (BedWarsPlayer pl : game.getPlayers()) {
-			if (teamName.equals(pl.getTag(Tag.String("team")))) {
+			if (teamName.equals(pl.getTeamKey())) {
 				pl.sendMessage(buyer.getTeamKey().chatColor() + " §apurchased §6" + name + "!");
 			}
 		}

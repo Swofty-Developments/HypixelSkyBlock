@@ -46,7 +46,7 @@ public abstract class UpgradeableShopItem extends ShopItem {
 	}
 
 	@Override
-	public void onPurchase(Player player) {
+	public void onPurchase(BedWarsPlayer player) {
 		int levelToGive = getNextLevel(player);
 		UpgradeableItemTier tier = getTier(levelToGive);
 

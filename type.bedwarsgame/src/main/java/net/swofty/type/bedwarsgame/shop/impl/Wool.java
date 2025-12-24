@@ -1,6 +1,5 @@
 package net.swofty.type.bedwarsgame.shop.impl;
 
-import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
@@ -28,9 +27,8 @@ public class Wool extends ShopItem {
 	}
 
 	@Override
-	public void onPurchase(Player player) {
-		BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
-		Material woolMaterial = mapTeamToWool(bwPlayer.getTeamKey());
+	public void onPurchase(BedWarsPlayer player) {
+		Material woolMaterial = mapTeamToWool(player.getTeamKey());
 		player.getInventory().addItemStack(ItemStack.builder(woolMaterial)
 				.amount(16)
 				.build());
