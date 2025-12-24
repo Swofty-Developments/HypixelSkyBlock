@@ -10,8 +10,8 @@ import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.Position;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.Position;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 
 import java.util.*;
 

@@ -2,7 +2,7 @@ package net.swofty.type.bedwarsconfigurator.events;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
-import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;

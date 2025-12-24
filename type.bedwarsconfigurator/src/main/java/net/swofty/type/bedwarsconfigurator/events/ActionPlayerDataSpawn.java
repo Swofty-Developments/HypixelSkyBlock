@@ -2,8 +2,8 @@ package net.swofty.type.bedwarsconfigurator.events;
 
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.commons.ServerType;
-import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

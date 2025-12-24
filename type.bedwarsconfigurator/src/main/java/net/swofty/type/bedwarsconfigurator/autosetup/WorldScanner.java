@@ -6,9 +6,9 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.PitchYawPosition;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.Position;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.PitchYawPosition;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.Position;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import org.tinylog.Logger;
 
 import java.util.*;

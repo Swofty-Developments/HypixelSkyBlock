@@ -9,7 +9,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
 import net.swofty.type.bedwarsconfigurator.TypeBedWarsConfiguratorLoader;
 import net.swofty.type.bedwarsconfigurator.autosetup.AutoSetupSession;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;

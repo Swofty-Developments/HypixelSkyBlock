@@ -8,11 +8,9 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
-import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItemHandler;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -35,9 +33,6 @@ public class TypeBedWarsConfiguratorLoader implements HypixelTypeLoader {
 
 	@Getter
 	private static BedWarsMapsConfig mapsConfig;
-
-	@Getter
-	private static final SimpleInteractableItemHandler itemHandler = new SimpleInteractableItemHandler();
 
 	@Override
 	public ServerType getType() {
@@ -78,7 +73,6 @@ public class TypeBedWarsConfiguratorLoader implements HypixelTypeLoader {
 
 	@Override
 	public void afterInitialize(MinecraftServer server) {
-		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsconfigurator.item.impl", SimpleInteractableItem.class).forEach(itemHandler::add);
 		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsconfigurator.commands", HypixelCommand.class).forEach(command -> {
 			try {
 				MinecraftServer.getCommandManager().register(command.getCommand());

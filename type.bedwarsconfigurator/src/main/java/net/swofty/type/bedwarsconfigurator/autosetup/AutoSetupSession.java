@@ -3,9 +3,9 @@ package net.swofty.type.bedwarsconfigurator.autosetup;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.instance.Instance;
-import net.swofty.commons.BedwarsGameType;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.*;
+import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.*;
 
 import java.util.*;
 
