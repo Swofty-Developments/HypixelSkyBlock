@@ -3,10 +3,10 @@ package net.swofty.type.bedwarsgame.shop.impl;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 
 public class Wool extends ShopItem {
 
@@ -18,7 +18,7 @@ public class Wool extends ShopItem {
 		return switch (teamKey) {
 			case RED -> Material.RED_WOOL;
 			case BLUE -> Material.BLUE_WOOL;
-			case GREEN -> Material.GREEN_WOOL;
+			case GREEN -> Material.LIME_WOOL;
 			case YELLOW -> Material.YELLOW_WOOL;
 			case AQUA -> Material.LIGHT_BLUE_WOOL;
 			case PINK -> Material.PINK_WOOL;

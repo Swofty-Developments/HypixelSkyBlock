@@ -1,8 +1,8 @@
 package net.swofty.commons.bedwars.map;
 
 import lombok.Getter;
-import net.swofty.commons.bedwars.BedwarsGameType;
 import lombok.Setter;
+import net.swofty.commons.bedwars.BedwarsGameType;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class BedWarsMapsConfig {
         @Setter
         public static class MapConfiguration {
             private List<BedwarsGameType> types;
-            private Map<String, TeamGeneratorConfig> generator;
+            private GeneratorSpeed generatorSpeed;
             private MapBounds bounds;
             private Map<TeamKey, MapTeam> teams;
             private MapLocations locations;
@@ -45,12 +45,6 @@ public class BedWarsMapsConfig {
                 private MinMax z;
             }
 
-            @Getter
-            @Setter
-            public static class TeamGeneratorConfig {
-                private int delay;
-                private int amount;
-            }
 
             @Getter
             @Setter
@@ -106,18 +100,38 @@ public class BedWarsMapsConfig {
     }
 
     public enum GeneratorSpeed {
-        SLOW(0.7f),
-        MEDIUM(1.4f),
-        FAST(2f),
-        SUPER_FAST(2.2f);
+        // Base speed: 2 iron every 3 seconds (0.666... per second)
+        SLOW(2, 60, 1, 160),           // 2 iron/3s, 1 gold/8s
+        MEDIUM(4, 60, 2, 160),         // 4 iron/3s, 2 gold/8s (2x speed)
+        FAST(6, 60, 3, 160),           // 6 iron/3s, 3 gold/8s (3x speed)
+        SUPER_FAST(7, 60, 3, 160);     // 7 iron/3s, 3 gold/8s (3.3x speed)
 
-        public final float ironSpeed; // per second
+        @Getter
+        private final int ironAmount;      // items per drop
+        @Getter
+        private final int ironDelayTicks;  // ticks between drops (60 ticks = 3 seconds)
+        @Getter
+        private final int goldAmount;      // items per drop
+        @Getter
+        private final int goldDelayTicks;  // ticks between drops (160 ticks = 8 seconds)
+
         // These values are consistent among maps
-        public final float goldDelay = 8f;
         public final int diamondMax = 4;
         public final int emeraldMax = 2;
-        GeneratorSpeed(float speed) {
-            this.ironSpeed = speed;
+
+        GeneratorSpeed(int ironAmount, int ironDelayTicks, int goldAmount, int goldDelayTicks) {
+            this.ironAmount = ironAmount;
+            this.ironDelayTicks = ironDelayTicks;
+            this.goldAmount = goldAmount;
+            this.goldDelayTicks = goldDelayTicks;
+        }
+
+        public int getIronDelaySeconds() {
+            return ironDelayTicks / 20;
+        }
+
+        public int getGoldDelaySeconds() {
+            return goldDelayTicks / 20;
         }
     }
 

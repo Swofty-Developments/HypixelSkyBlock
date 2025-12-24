@@ -16,10 +16,10 @@ import net.minestom.server.item.Material;
 import net.minestom.server.item.component.CustomData;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
 import org.intellij.lang.annotations.Subst;
 import org.tinylog.Logger;
 
@@ -44,7 +44,12 @@ public final class GeneratorManager implements GameEventManager.Listener {
 
 	public void startTeamGenerators(Map<TeamKey, MapTeam> activeTeams) {
 		BedWarsMapsConfig.MapEntry.MapConfiguration mapConfig = game.getMapEntry().getConfiguration();
-		if (mapConfig.getGenerator() == null || mapConfig.getGenerator().isEmpty()) return;
+		BedWarsMapsConfig.GeneratorSpeed generatorSpeed = mapConfig.getGeneratorSpeed();
+
+		if (generatorSpeed == null) {
+			Logger.warn("No generator speed configured for map");
+			return;
+		}
 
 		activeTeams.forEach((teamKey, team) -> {
 			BedWarsMapsConfig.Position genLocation = team.getGenerator();
@@ -52,22 +57,24 @@ public final class GeneratorManager implements GameEventManager.Listener {
 
 			Pos spawnPosition = new Pos(genLocation.x(), genLocation.y(), genLocation.z());
 
-			mapConfig.getGenerator().forEach((materialType, config) ->
-					startTeamGenerator(teamKey, materialType, config, spawnPosition));
+			// Start iron generator
+			startTeamGenerator(teamKey, "iron", generatorSpeed.getIronAmount(),
+					generatorSpeed.getIronDelaySeconds(), spawnPosition);
+
+			// Start gold generator
+			startTeamGenerator(teamKey, "gold", generatorSpeed.getGoldAmount(),
+					generatorSpeed.getGoldDelaySeconds(), spawnPosition);
 		});
 	}
 
 	private void startTeamGenerator(TeamKey teamKey, String materialType,
-	                                BedWarsMapsConfig.MapEntry.MapConfiguration.TeamGeneratorConfig config,
-	                                Pos spawnPosition) {
+	                                int baseAmount, int baseDelay, Pos spawnPosition) {
 		Material itemMaterial = getMaterialFromType(materialType);
 		if (itemMaterial == null) {
 			Logger.warn("Invalid material type: {} for team {}", materialType, teamKey.getName());
 			return;
 		}
 
-		int baseAmount = config.getAmount();
-		int baseDelay = config.getDelay();
 
 		Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
 			if (game.getGameStatus() != GameStatus.IN_PROGRESS) return;

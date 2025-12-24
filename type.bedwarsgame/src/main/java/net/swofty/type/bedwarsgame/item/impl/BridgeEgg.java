@@ -10,13 +10,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.pvp.entity.projectile.CustomEntityProjectile;
 import net.swofty.pvp.entity.projectile.ItemHoldingProjectile;
 import net.swofty.pvp.utils.ViewUtil;
 import net.swofty.type.bedwarsgame.entity.ThrownBridgeEgg;
-import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.Objects;
@@ -31,7 +31,7 @@ public class BridgeEgg extends SimpleInteractableItem {
 		return switch (teamKey) {
 			case RED -> Block.RED_WOOL;
 			case BLUE -> Block.BLUE_WOOL;
-			case GREEN -> Block.GREEN_WOOL;
+			case GREEN -> Block.LIME_WOOL;
 			case YELLOW -> Block.YELLOW_WOOL;
 			case AQUA -> Block.LIGHT_BLUE_WOOL;
 			case PINK -> Block.PINK_WOOL;

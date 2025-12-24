@@ -8,9 +8,9 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,7 +25,7 @@ public class PopupTower extends SimpleInteractableItem {
 		return switch (teamKey) {
 			case RED -> Block.RED_WOOL;
 			case BLUE -> Block.BLUE_WOOL;
-			case GREEN -> Block.GREEN_WOOL;
+			case GREEN -> Block.LIME_WOOL;
 			case YELLOW -> Block.YELLOW_WOOL;
 			case AQUA -> Block.LIGHT_BLUE_WOOL;
 			case PINK -> Block.PINK_WOOL;

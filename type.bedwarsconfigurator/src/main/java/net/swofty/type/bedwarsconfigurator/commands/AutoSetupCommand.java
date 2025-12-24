@@ -12,6 +12,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
 import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.GeneratorSpeed;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.PitchYawPosition;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.Position;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
@@ -598,17 +599,43 @@ public class AutoSetupCommand extends HypixelCommand {
     }
 
     private void registerGeneratorSettingsCommand(MinestomCommand command) {
+        // Speed setting command
+        var speedArg = ArgumentType.String("speed");
+        speedArg.setSuggestionCallback((sender, ctx, suggestion) -> {
+            suggestion.addEntry(new SuggestionEntry("SLOW"));
+            suggestion.addEntry(new SuggestionEntry("MEDIUM"));
+            suggestion.addEntry(new SuggestionEntry("FAST"));
+            suggestion.addEntry(new SuggestionEntry("SUPER_FAST"));
+        });
+
+        command.addSyntax((sender, context) -> {
+            if (!(sender instanceof Player player)) return;
+            if (!permissionCheck(sender)) return;
+
+            String speedStr = context.get(speedArg);
+            AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), player.getInstance());
+
+            try {
+                GeneratorSpeed speed = GeneratorSpeed.valueOf(speedStr.toUpperCase());
+                session.setGeneratorSpeed(speed);
+                player.sendMessage(Component.text("§aSet generator speed to " + speed.name() +
+                    " (" + speed.getIronAmount() + " iron/" + speed.getIronDelaySeconds() + "s, " +
+                    speed.getGoldAmount() + " gold/" + speed.getGoldDelaySeconds() + "s)"));
+            } catch (IllegalArgumentException e) {
+                player.sendMessage(Component.text("§cInvalid speed: " + speedStr));
+            }
+
+        }, ArgumentType.Literal("generator"), ArgumentType.Literal("speed"), speedArg);
+
+        // Diamond/Emerald settings (unchanged)
         var genTypeArg = ArgumentType.String("gentype");
         genTypeArg.setSuggestionCallback((sender, ctx, suggestion) -> {
-            suggestion.addEntry(new SuggestionEntry("iron"));
-            suggestion.addEntry(new SuggestionEntry("gold"));
             suggestion.addEntry(new SuggestionEntry("diamond"));
             suggestion.addEntry(new SuggestionEntry("emerald"));
         });
 
         var settingArg = ArgumentType.String("setting");
         settingArg.setSuggestionCallback((sender, ctx, suggestion) -> {
-            suggestion.addEntry(new SuggestionEntry("delay"));
             suggestion.addEntry(new SuggestionEntry("amount"));
             suggestion.addEntry(new SuggestionEntry("max"));
         });
@@ -626,14 +653,6 @@ public class AutoSetupCommand extends HypixelCommand {
             AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), player.getInstance());
 
             switch (genType.toLowerCase()) {
-                case "iron" -> {
-                    if (setting.equals("delay")) session.setIronDelay(value);
-                    else if (setting.equals("amount")) session.setIronAmount(value);
-                }
-                case "gold" -> {
-                    if (setting.equals("delay")) session.setGoldDelay(value);
-                    else if (setting.equals("amount")) session.setGoldAmount(value);
-                }
                 case "diamond" -> {
                     if (setting.equals("amount")) session.setDiamondAmount(value);
                     else if (setting.equals("max")) session.setDiamondMax(value);

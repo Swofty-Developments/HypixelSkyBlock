@@ -24,10 +24,7 @@ public class AutoSetupSession {
     private final Map<TeamKey, TeamConfig> teams = new EnumMap<>(TeamKey.class);
     private final List<Position> diamondGenerators = new ArrayList<>();
     private final List<Position> emeraldGenerators = new ArrayList<>();
-    private int ironDelay = 3;
-    private int ironAmount = 2;
-    private int goldDelay = 8;
-    private int goldAmount = 1;
+    private GeneratorSpeed generatorSpeed = GeneratorSpeed.SLOW;
     private int diamondAmount = 1;
     private int diamondMax = 4;
     private int emeraldAmount = 1;
@@ -93,10 +90,7 @@ public class AutoSetupSession {
         teams.clear();
         diamondGenerators.clear();
         emeraldGenerators.clear();
-        ironDelay = 3;
-        ironAmount = 2;
-        goldDelay = 8;
-        goldAmount = 1;
+        generatorSpeed = GeneratorSpeed.SLOW;
         diamondAmount = 1;
         diamondMax = 4;
         emeraldAmount = 1;
@@ -137,17 +131,8 @@ public class AutoSetupSession {
         }
 
         // Load generator settings
-        if (config.getGenerator() != null) {
-            var ironGen = config.getGenerator().get("iron");
-            if (ironGen != null) {
-                ironDelay = ironGen.getDelay();
-                ironAmount = ironGen.getAmount();
-            }
-            var goldGen = config.getGenerator().get("gold");
-            if (goldGen != null) {
-                goldDelay = goldGen.getDelay();
-                goldAmount = goldGen.getAmount();
-            }
+        if (config.getGeneratorSpeed() != null) {
+            generatorSpeed = config.getGeneratorSpeed();
         }
 
         // Load teams
@@ -217,17 +202,7 @@ public class AutoSetupSession {
         config.setTypes(new ArrayList<>(gameTypes));
 
         // Generator config
-        Map<String, MapEntry.MapConfiguration.TeamGeneratorConfig> generatorConfig = new HashMap<>();
-        MapEntry.MapConfiguration.TeamGeneratorConfig ironConfig = new MapEntry.MapConfiguration.TeamGeneratorConfig();
-        ironConfig.setDelay(ironDelay);
-        ironConfig.setAmount(ironAmount);
-        generatorConfig.put("iron", ironConfig);
-
-        MapEntry.MapConfiguration.TeamGeneratorConfig goldConfig = new MapEntry.MapConfiguration.TeamGeneratorConfig();
-        goldConfig.setDelay(goldDelay);
-        goldConfig.setAmount(goldAmount);
-        generatorConfig.put("gold", goldConfig);
-        config.setGenerator(generatorConfig);
+        config.setGeneratorSpeed(generatorSpeed);
 
         // Bounds
         if (hasBounds()) {

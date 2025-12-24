@@ -1,22 +1,20 @@
 package net.swofty.type.bedwarsgame.game;
 
-import net.kyori.adventure.key.Key;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.type.bedwarsgame.gui.GUIItemShop;
-import net.swofty.type.bedwarsgame.gui.GUITeamShop;
-import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.type.bedwarsgame.gui.GUIItemShop;
+import net.swofty.type.bedwarsgame.gui.GUITeamShop;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.intellij.lang.annotations.Subst;
 import org.tinylog.Logger;
 
 import java.util.Map;
@@ -102,15 +100,16 @@ public final class GameWorldManager {
     }
 
     private Material getBedMaterialForTeam(TeamKey teamKey) {
-        @Subst("red_bed") String bedBlockName = teamKey.getName().toLowerCase() + "_bed";
-        Material bedMaterial = Material.fromKey(Key.key(Key.MINECRAFT_NAMESPACE, bedBlockName));
-
-        if (bedMaterial == null) {
-            Logger.warn("Could not find bed material for team: {}. Defaulting to RED_BED.", teamKey.getName());
-            return Material.RED_BED;
-        }
-
-        return bedMaterial;
+        return switch (teamKey) {
+            case RED -> Material.RED_BED;
+            case BLUE -> Material.BLUE_BED;
+            case GREEN -> Material.LIME_BED;
+            case YELLOW -> Material.YELLOW_BED;
+            case AQUA -> Material.LIGHT_BLUE_BED;
+            case PINK -> Material.PINK_BED;
+            case WHITE -> Material.WHITE_BED;
+            case GRAY -> Material.GRAY_BED;
+        };
     }
 
     private String calculateBedFacing(BedWarsMapsConfig.Position feetPos, BedWarsMapsConfig.Position headPos) {

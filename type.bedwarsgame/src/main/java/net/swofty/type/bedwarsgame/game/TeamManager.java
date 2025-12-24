@@ -11,10 +11,10 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.scoreboard.BelowNameTag;
 import net.minestom.server.tag.Tag;
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import org.tinylog.Logger;
 
 import java.util.*;
@@ -190,7 +190,6 @@ public final class TeamManager {
 				.count();
 	}
 
-	@Deprecated(forRemoval = true)
 	public TeamKey getTeamKeyByName(String teamName) {
 		return Arrays.stream(TeamKey.values())
 				.filter(k -> k.getName().equalsIgnoreCase(teamName))

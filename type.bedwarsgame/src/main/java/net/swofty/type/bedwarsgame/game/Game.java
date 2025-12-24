@@ -7,6 +7,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
@@ -17,15 +18,16 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.ChatUtility;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
@@ -140,6 +142,22 @@ public final class Game {
 		}).delay(TaskSchedule.minutes(1)).repeat(TaskSchedule.minutes(1)).schedule();
 
 		Logger.info("Game {} started with {} active teams", gameId, activeTeams.size());
+
+		String line = "■".repeat(50);
+		Component[] messages = new Component[] {
+				Component.text(line, NamedTextColor.GREEN),
+				Component.text(ChatUtility.FontInfo.center("Bed Wars"), NamedTextColor.WHITE, TextDecoration.BOLD),
+				Component.space(),
+				Component.text(ChatUtility.FontInfo.center("Protect your bed and destroy the enemy beds."), NamedTextColor.YELLOW, TextDecoration.BOLD),
+				Component.text(ChatUtility.FontInfo.center("Upgrade yourself and your team by collecting"), NamedTextColor.YELLOW, TextDecoration.BOLD),
+				Component.text(ChatUtility.FontInfo.center("Iron, Gold, Emerald and Diamond from generators"), NamedTextColor.YELLOW, TextDecoration.BOLD),
+				Component.text(ChatUtility.FontInfo.center("to access powerful upgrades."), NamedTextColor.YELLOW, TextDecoration.BOLD),
+				Component.space(),
+				Component.text(line, NamedTextColor.GREEN)
+		};
+		for (Component msg : messages) {
+			getPlayersAsAudience().sendMessage(msg);
+		}
 	}
 
 	public void recordBedDestroyed(TeamKey teamKey) {

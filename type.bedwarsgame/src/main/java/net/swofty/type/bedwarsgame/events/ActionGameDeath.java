@@ -20,15 +20,15 @@ import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.shop.impl.AxeShopItem;
 import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -172,9 +172,19 @@ public class ActionGameDeath implements HypixelEventClass {
 		}
 
 		String teamName = player.getTag(Tag.String("team"));
+		TeamKey teamKey = game.getTeamManager().getTeamKeyByName(teamName);
+		if (teamName != null && teamKey == null) {
+			Logger.warn("Player {} has team tag '{}' that does not match any TeamKey", player.getUsername(), teamName);
+		}
 		TextColor victimTeamTextColor = NamedTextColor.GRAY;
+		if (teamKey != null) {
+			TextColor parsedColor = NamedTextColor.NAMES.value(teamKey.chatColor().toLowerCase());
+			if (parsedColor != null) {
+				victimTeamTextColor = parsedColor;
+			}
+		}
 
-		boolean bedExists = game.getTeamManager().getTeamBedStatus().getOrDefault(teamName, false);
+		boolean bedExists = teamKey != null && game.getTeamManager().isBedAlive(teamKey);
 
 		Component deathMessage = calculateDeathMessage(player, victimTeamTextColor);
 
@@ -218,12 +228,9 @@ public class ActionGameDeath implements HypixelEventClass {
 						player.teleport(new Pos(waitingPos.x(), waitingPos.y(), waitingPos.z()));
 						player.setGameMode(GameMode.ADVENTURE);
 					} else {
-						TeamKey playerTeamKey = game.getTeamManager().getTeamKeyByName(teamName);
-						MapTeam playerTeam = playerTeamKey != null
-								? game.getMapEntry().getConfiguration().getTeams().get(playerTeamKey)
-								: null;
+                        MapTeam playerTeam = game.getMapEntry().getConfiguration().getTeams().get(teamKey);
 
-						if (playerTeam != null && playerTeamKey != null) {
+						if (playerTeam != null) {
 							BedWarsMapsConfig.PitchYawPosition spawnPos = playerTeam.getSpawn();
 							player.teleport(new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw()));
 							player.setGameMode(GameMode.SURVIVAL);
@@ -245,7 +252,7 @@ public class ActionGameDeath implements HypixelEventClass {
 							}
 
 							// equip the player with team armor
-							game.getTeamManager().equipTeamArmor(player, playerTeamKey);
+							game.getTeamManager().equipTeamArmor(player, teamKey);
 
 							Integer protectionLevel = player.getTag(Tag.Integer("upgrade_reinforced_armor"));
 							if (protectionLevel != null) {

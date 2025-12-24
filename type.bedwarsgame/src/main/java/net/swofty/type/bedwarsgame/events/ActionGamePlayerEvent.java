@@ -1,9 +1,6 @@
 package net.swofty.type.bedwarsgame.events;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -15,6 +12,9 @@ import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
@@ -22,9 +22,6 @@ import net.swofty.type.bedwarsgame.gui.GUIEnderChest;
 import net.swofty.type.bedwarsgame.gui.GUITeamChest;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -202,13 +199,16 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 				}
 
 				if (itemAdded) {
-					player.sendMessage(Component.text("You deposited x" + itemInHand.amount(), NamedTextColor.GRAY).append(itemInHand.get(DataComponents.CUSTOM_NAME)).append(Component.text("into your ender chest.", NamedTextColor.GRAY)));
 					player.setItemInMainHand(ItemStack.AIR);
+					player.sendMessage("§7You deposited x" + itemInHand.amount()
+							+ " " + itemInHand.material().name().toLowerCase().replace("_", " ")
+							+ " into your ender chest.");
 				} else {
 					player.sendMessage("§cYour ender chest is full!");
 				}
 			} catch (Exception e) {
 				Logger.error("Failed to add item to ender chest for player {}: {}", player.getUsername(), e.getMessage());
+				e.printStackTrace();
 				player.sendMessage("§cFailed to add item to ender chest!");
 			}
 			return;
@@ -270,7 +270,8 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 					player.sendMessage("§cThe team chest is full!");
 				}
 			} catch (Exception e) {
-				Logger.error("Failed to add item to team chest for team {}: {}", chestTeamName, e.getMessage());
+				Logger.error("Failed to add item to team chest for team {}: {}", chestTeamName, e);
+				e.printStackTrace();
 				player.sendMessage("§cFailed to add item to chest!");
 			}
 		}

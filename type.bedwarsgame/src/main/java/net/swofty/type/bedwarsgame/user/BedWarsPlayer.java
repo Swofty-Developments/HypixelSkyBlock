@@ -16,12 +16,12 @@ import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.potion.TimedPotion;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.chunk.ChunkUtils;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.pvp.player.CombatPlayer;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,14 +62,14 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
 
 	public void xp(ExperienceCause cause) {
 		sendMessage("§b+" + cause.getExperience() + " Bed Wars XP (" + cause.getFormattedName() + ")");
-		DatapointLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class);
+		DatapointLeaderboardLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class);
 		dp.setValue(dp.getValue() + cause.getExperience());
 	}
 
 	public void xp(ExperienceCause cause, long units) {
 		long amount = cause.calculateXp(units);
 		sendMessage("§b+" + amount + " Bed Wars XP (" + cause.getFormattedName() + ")");
-		DatapointLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class);
+		DatapointLeaderboardLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class);
 		dp.setValue(dp.getValue() + amount);
 	}
 

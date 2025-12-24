@@ -9,16 +9,7 @@
           "DOUBLES",
           "ULTIMATE_DOUBLES"
         ],
-        "generator": {
-          "iron": {
-            "delay": 3,
-            "amount": 2
-          },
-          "gold": {
-            "delay": 8,
-            "amount": 1
-          }
-        },
+        "generatorSpeed": "SLOW",
         "bounds": {
           "x": {
             "min": -100,
@@ -400,16 +391,6 @@
           "DOUBLES",
           "ULTIMATE_DOUBLES"
         ],
-        "generator": {
-          "gold": {
-            "delay": 8,
-            "amount": 1
-          },
-          "iron": {
-            "delay": 3,
-            "amount": 2
-          }
-        },
         "bounds": {
           "x": {
             "min": -100.0,
@@ -825,7 +806,8 @@
               }
             ]
           }
-        }
+        },
+        "generatorSpeed": "SLOW"
       }
     },
     {
@@ -837,16 +819,6 @@
           "DOUBLES",
           "ULTIMATE_DOUBLES"
         ],
-        "generator": {
-          "gold": {
-            "delay": 8,
-            "amount": 1
-          },
-          "iron": {
-            "delay": 3,
-            "amount": 2
-          }
-        },
         "bounds": {
           "x": {
             "min": -100.0,
@@ -1264,7 +1236,8 @@
               }
             ]
           }
-        }
+        },
+        "generatorSpeed": "SLOW"
       }
     },
     {
@@ -1276,16 +1249,6 @@
           "DOUBLES",
           "ULTIMATE_DOUBLES"
         ],
-        "generator": {
-          "gold": {
-            "delay": 8,
-            "amount": 1
-          },
-          "iron": {
-            "delay": 3,
-            "amount": 2
-          }
-        },
         "bounds": {
           "x": {
             "min": -100.0,
@@ -1703,7 +1666,8 @@
               }
             ]
           }
-        }
+        },
+        "generatorSpeed": "SLOW"
       }
     }
   ]
