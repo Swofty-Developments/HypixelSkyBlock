@@ -6,7 +6,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
-import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
 
 public class GoldenApple extends SimpleInteractableItem {
 

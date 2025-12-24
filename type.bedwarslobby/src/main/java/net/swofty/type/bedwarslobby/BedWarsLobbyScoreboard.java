@@ -6,9 +6,10 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
-import net.swofty.type.bedwarsgeneric.util.LevelColor;
-import net.swofty.type.bedwarsgeneric.util.LevelUtil;
+import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.commons.bedwars.BedwarsLevelColor;
+import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
@@ -45,9 +46,9 @@ public class BedWarsLobbyScoreboard {
 					continue;
 				}
 
-				long experience = bwDataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue();
-				int progress = LevelUtil.calculateExperienceSinceLastLevel(experience);
-				int maxExperience = LevelUtil.calculateMaxExperienceFromExperience(experience);
+				long experience = bwDataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class).getValue();
+				int progress = BedwarsLevelUtil.calculateExperienceSinceLastLevel(experience);
+				int maxExperience = BedwarsLevelUtil.calculateMaxExperienceFromExperience(experience);
 
 				double percentage = Math.min(1.0, (double) progress / maxExperience);
 				int filledSquares = (int) Math.round(percentage * 10);
@@ -69,13 +70,13 @@ public class BedWarsLobbyScoreboard {
 
 				addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
 				addLine("§7 ", sidebar);
-				addLine("§fLevel: §7" + LevelColor.constructLevelString(LevelUtil.calculateLevel(experience)), sidebar);
+				addLine("§fLevel: §7" + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)), sidebar);
 				addLine("§7 ", sidebar);
 				addLine("§fProgress: §b" + suffix(progress) + "§7/" + suffix(maxExperience), sidebar);
 				addLine(progressBar.toString(), sidebar);
 				addLine("§7 ", sidebar);
-				addLine("§fTokens: §2" + bwDataHandler.get(BedWarsDataHandler.Data.TOKENS, DatapointLong.class).getValue(), sidebar);
-				addLine("§fTickets: §b" + bwDataHandler.get(BedWarsDataHandler.Data.SLUMBER_TICKETS, DatapointLong.class).getValue() + "§7/75", sidebar);
+				addLine("§fTokens: §2" + bwDataHandler.get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class).getValue(), sidebar);
+				addLine("§fTickets: §b" + bwDataHandler.get(BedWarsDataHandler.Data.SLUMBER_TICKETS, DatapointLeaderboardLong.class).getValue() + "§7/75", sidebar);
 				addLine("§7 ", sidebar);
 				addLine("§fTotal Kills: §a0", sidebar);
 				addLine("§fTotal Wins: §a0", sidebar);

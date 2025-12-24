@@ -1,7 +1,7 @@
 package net.swofty.type.island.events.custom;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

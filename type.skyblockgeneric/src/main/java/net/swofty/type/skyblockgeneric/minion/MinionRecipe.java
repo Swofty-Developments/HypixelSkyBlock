@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.minion;
 
 import lombok.Getter;
-import net.swofty.commons.item.ItemType;
-import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 

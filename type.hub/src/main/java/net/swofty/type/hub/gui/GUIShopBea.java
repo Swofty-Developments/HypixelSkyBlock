@@ -1,8 +1,8 @@
 package net.swofty.type.hub.gui;
 
-import net.swofty.commons.item.ItemType;
-import net.swofty.commons.item.Rarity;
-import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.Rarity;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;

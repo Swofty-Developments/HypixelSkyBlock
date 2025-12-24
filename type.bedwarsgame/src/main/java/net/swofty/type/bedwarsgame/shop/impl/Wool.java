@@ -6,7 +6,7 @@ import net.minestom.server.item.Material;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 
 public class Wool extends ShopItem {
 

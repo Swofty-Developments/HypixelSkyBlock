@@ -5,13 +5,13 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.BedwarsGameType;
+import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.objects.orchestrator.GetMapsProtocolObject;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
-import net.swofty.type.bedwarslobby.OrchestratorConnector;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.lobby.LobbyOrchestratorConnector;
 import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -173,13 +173,13 @@ public class GUIMapSelection extends HypixelInventoryGUI {
 					}
 					player.closeInventory();
 
-					if (OrchestratorConnector.isSearching(player.getUuid())) {
+					if (LobbyOrchestratorConnector.isSearching(player.getUuid())) {
 						player.sendMessage("§cYou are already searching for a game!");
 						return;
 					}
 
-					OrchestratorConnector connector = new OrchestratorConnector(player);
-					connector.sendToGame(gameType, mapName);
+					LobbyOrchestratorConnector connector = new LobbyOrchestratorConnector(player);
+					connector.sendToGame(ServerType.BEDWARS_GAME, gameType.toString(), mapName);
 				}
 			});
 

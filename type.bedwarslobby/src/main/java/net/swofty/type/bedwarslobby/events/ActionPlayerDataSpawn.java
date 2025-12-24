@@ -2,8 +2,9 @@ package net.swofty.type.bedwarslobby.events;
 
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.commons.ServerType;
-import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
-import net.swofty.type.bedwarsgeneric.util.LevelUtil;
+import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointLong;
@@ -33,8 +34,8 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
         handler.runOnLoad(player);
 
 		// display the player level progression in the experience bar
-		DatapointLong dp = handler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class);
-		player.setLevel(LevelUtil.calculateLevel(dp.getValue()));
-		player.setExp((float) LevelUtil.calculateExperienceSinceLastLevel(dp.getValue()) / LevelUtil.calculateMaxExperienceFromExperience(dp.getValue()));
+        DatapointLeaderboardLong dp = handler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class);
+		player.setLevel(BedwarsLevelUtil.calculateLevel(dp.getValue()));
+		player.setExp((float) BedwarsLevelUtil.calculateExperienceSinceLastLevel(dp.getValue()) / BedwarsLevelUtil.calculateMaxExperienceFromExperience(dp.getValue()));
     }
 }

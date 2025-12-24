@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.handlers.anvilcombine;
 
-import net.swofty.commons.item.PotatoType;
-import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
+import net.swofty.commons.skyblock.item.PotatoType;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeHotPotatoBookData;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.EnchantableComponent;

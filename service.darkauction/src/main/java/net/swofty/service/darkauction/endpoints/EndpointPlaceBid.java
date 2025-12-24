@@ -1,6 +1,6 @@
 package net.swofty.service.darkauction.endpoints;
 
-import net.swofty.commons.auctions.DarkAuctionPhase;
+import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.darkauction.PlaceBidProtocol;

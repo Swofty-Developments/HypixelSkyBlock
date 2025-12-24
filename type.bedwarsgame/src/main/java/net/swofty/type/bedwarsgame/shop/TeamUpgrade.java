@@ -9,7 +9,7 @@ import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 
 import java.util.Arrays;
 import java.util.List;

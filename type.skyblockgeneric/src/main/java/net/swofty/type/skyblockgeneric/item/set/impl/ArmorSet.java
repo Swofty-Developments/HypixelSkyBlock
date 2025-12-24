@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.set.impl;
 
-import net.swofty.commons.item.ItemType;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;

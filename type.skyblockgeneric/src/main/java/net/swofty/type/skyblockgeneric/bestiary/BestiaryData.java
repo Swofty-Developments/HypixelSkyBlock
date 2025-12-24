@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.bestiary;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 
 import java.util.List;

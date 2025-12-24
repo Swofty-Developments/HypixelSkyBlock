@@ -7,7 +7,7 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.SkyBlockPlayerProfiles;
+import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;

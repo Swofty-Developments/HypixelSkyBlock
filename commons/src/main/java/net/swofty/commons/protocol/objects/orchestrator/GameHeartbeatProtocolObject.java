@@ -1,6 +1,5 @@
 package net.swofty.commons.protocol.objects.orchestrator;
 
-import net.swofty.commons.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.game.Game;
 import net.swofty.commons.protocol.ProtocolObject;

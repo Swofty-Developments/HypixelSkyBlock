@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.minion;
 
 import lombok.Getter;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.minion.minions.combat.*;
 import net.swofty.type.skyblockgeneric.minion.minions.farming.*;
 import net.swofty.type.skyblockgeneric.minion.minions.fishing.MinionClay;

@@ -1,8 +1,8 @@
 package net.swofty.service.bazaar;
 
-import net.swofty.commons.bazaar.BazaarTransaction;
-import net.swofty.commons.bazaar.SuccessfulBazaarTransaction;
-import net.swofty.commons.bazaar.OrderExpiredBazaarTransaction;
+import net.swofty.commons.skyblock.bazaar.BazaarTransaction;
+import net.swofty.commons.skyblock.bazaar.SuccessfulBazaarTransaction;
+import net.swofty.commons.skyblock.bazaar.OrderExpiredBazaarTransaction;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.json.JSONObject;

@@ -2,9 +2,9 @@ package net.swofty.service.bazaar;
 
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
-import net.swofty.commons.bazaar.BazaarTransaction;
-import net.swofty.commons.bazaar.OrderExpiredBazaarTransaction;
-import net.swofty.commons.bazaar.SuccessfulBazaarTransaction;
+import net.swofty.commons.skyblock.bazaar.BazaarTransaction;
+import net.swofty.commons.skyblock.bazaar.OrderExpiredBazaarTransaction;
+import net.swofty.commons.skyblock.bazaar.SuccessfulBazaarTransaction;
 import org.bson.Document;
 
 import java.time.Instant;

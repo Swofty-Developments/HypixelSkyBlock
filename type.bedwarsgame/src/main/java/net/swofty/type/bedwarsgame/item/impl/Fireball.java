@@ -14,7 +14,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.pvp.projectile.entities.FireballProjectile;
-import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
 import net.swofty.type.generic.utility.MathUtility;
 
 public class Fireball extends SimpleInteractableItem {

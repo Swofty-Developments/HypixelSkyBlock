@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns;
 
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 
 public class MobMinerZombie_20 extends MobMinerZombie_15 {

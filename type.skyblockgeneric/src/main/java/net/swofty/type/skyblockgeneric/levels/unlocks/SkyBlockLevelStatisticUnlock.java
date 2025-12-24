@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.levels.unlocks;
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelUnlock;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;

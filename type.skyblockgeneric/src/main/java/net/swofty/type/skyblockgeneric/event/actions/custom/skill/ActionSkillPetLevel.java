@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.event.actions.custom.skill;
 
-import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

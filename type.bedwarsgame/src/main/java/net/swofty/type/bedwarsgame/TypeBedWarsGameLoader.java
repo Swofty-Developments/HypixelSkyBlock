@@ -17,7 +17,7 @@ import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
-import net.swofty.commons.BedwarsGameType;
+import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
@@ -35,10 +35,12 @@ import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
-import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItemHandler;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.item.SimpleInteractableItemHandler;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.data.GameDataHandler;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -339,4 +341,8 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 		return null;
 	}
 
+	@Override
+	public List<Class<? extends GameDataHandler>> getAdditionalDataHandlers() {
+		return List.of(BedWarsDataHandler.class);
+	}
 }

@@ -4,7 +4,7 @@ import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
-import net.swofty.commons.BedwarsGameType;
+import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import net.swofty.service.generic.redis.ServiceEndpoint;
@@ -12,8 +12,6 @@ import net.swofty.service.orchestrator.OrchestratorCache;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class GetServerForMapEndpoint implements ServiceEndpoint

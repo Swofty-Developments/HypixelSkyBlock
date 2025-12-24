@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.block.attribute.attributes;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.commons.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
 import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;

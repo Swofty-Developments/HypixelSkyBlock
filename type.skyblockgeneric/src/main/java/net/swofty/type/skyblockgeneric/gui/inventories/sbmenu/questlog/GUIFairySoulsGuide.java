@@ -90,7 +90,7 @@ public class GUIFairySoulsGuide extends HypixelInventoryGUI {
 		DEEP_CAVERNS("Deep Caverns", "569a1f114151b4521373f34bc14c2963a5011cdc25a6554c48c708cd96ebfc", FairySoulZone.DEEP_CAVERNS),
 		CRIMSON_ISLAND("Crimson Isle", "c3687e25c632bce8aa61e0d64c24e694c3eea629ea944f4cf30dcfb4fbce071", FairySoulZone.CRIMSON_ISLE),
 		DUNGEON_HUB("Dungeon Hub", "9b56895b9659896ad647f58599238af532d46db9c1b0389b8bbeb70999dab33d", FairySoulZone.DUNGEON_HUB),
-		HUB("Hub", "686718d85e25b006f2c8f160f619b23c8fd6ae75ddf1c06308ec0f539d931703", FairySoulZone.SKYBLOCK_HUB),
+		HUB("Hub", "686718d85e25b006f2c8f160f619b23c8fd6ae75ddf1c06308ec0f539d931703", FairySoulZone.HUB),
 		SPIDERS_DEN("Spider's Den", "c754318a3376f470e481dfcd6c83a59aa690ad4b4dd7577fdad1c2ef08d8aee6", FairySoulZone.SPIDERS_DEN),
 		THE_RIFT("The Rift", "f26192609d6c46ade73e807fc40dbc3a1a1afbb456ae165785b0fe834dd1cb57", FairySoulZone.THE_RIFT),
 		GOLD_MINE("Gold Mine", "73bc965d579c3c6039f0a17eb7c2e6faf538c7a5de8e60ec7a719360d0a857a9", FairySoulZone.GOLD_MINE),

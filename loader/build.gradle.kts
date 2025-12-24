@@ -33,7 +33,6 @@ dependencies {
     implementation(project(":type.dungeonhub"))
     implementation(project(":type.skyblockgeneric"))
     implementation(project(":type.prototypelobby"))
-    implementation(project(":type.bedwarsgeneric"))
     implementation(project(":type.bedwarslobby"))
     implementation(project(":type.bedwarsgame"))
     implementation(project(":type.bedwarsconfigurator"))

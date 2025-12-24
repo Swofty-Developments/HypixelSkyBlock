@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.event.actions.item;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.item.attribute.attributes.ItemAttributePotionData;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

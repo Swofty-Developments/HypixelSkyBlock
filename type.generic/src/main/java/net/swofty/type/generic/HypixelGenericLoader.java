@@ -21,7 +21,10 @@ import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
 import net.swofty.type.generic.data.mongodb.AuthenticationDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
@@ -31,6 +34,7 @@ import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.leaderboard.LeaderboardService;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.redis.RedisOriginServer;
@@ -168,6 +172,13 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         ProfilesDatabase.connect(mongoClient);
         AttributeDatabase.connect(mongoClient);
         UserDatabase.connect(mongoClient);
+
+        // Initialize leaderboard service (uses Redis for O(log N) leaderboard operations)
+        LeaderboardService.connect(Configuration.get("redis-uri"));
+
+        // Register game data handlers
+        GameDataHandlerRegistry.register(new BedWarsDataHandler());
+        GameDataHandlerRegistry.register(new PrototypeLobbyDataHandler());
 
         // Register NPCs
         if (mainInstance != null) {

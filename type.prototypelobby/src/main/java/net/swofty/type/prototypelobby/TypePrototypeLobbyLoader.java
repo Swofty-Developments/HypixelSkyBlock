@@ -1,5 +1,6 @@
 package net.swofty.type.prototypelobby;
 
+import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
@@ -9,20 +10,34 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
-import net.swofty.type.generic.HypixelTypeLoader;
-
+import net.swofty.type.generic.data.GameDataHandler;
+import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.lobby.LobbyTypeLoader;
+import net.swofty.type.lobby.events.LobbyItemEvents;
+import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
+import net.swofty.type.lobby.item.LobbyItem;
+import net.swofty.type.lobby.item.LobbyItemHandler;
+import net.swofty.type.lobby.item.impl.HidePlayers;
+import net.swofty.type.lobby.item.impl.LobbySelector;
+import net.swofty.type.lobby.item.impl.PlayCompass;
+import net.swofty.type.lobby.launchpad.LaunchPad;
 import net.swofty.type.prototypelobby.util.PrototypeLobbyMap;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class TypePrototypeLobbyLoader implements HypixelTypeLoader {
+public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
+
+    @Getter
+    private static final LobbyItemHandler itemHandler = new LobbyItemHandler();
+
     @Override
     public ServerType getType() {
         return ServerType.PROTOTYPE_LOBBY;
@@ -34,13 +49,32 @@ public class TypePrototypeLobbyLoader implements HypixelTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
-        /**
-         * Start Prototype Lobby Scoreboard
-         */
         PrototypeLobbyScoreboard.start();
 
         PrototypeLobbyMap prototypeLobbyMap = new PrototypeLobbyMap();
         prototypeLobbyMap.placeItemFrames(HypixelConst.getInstanceContainer());
+
+        // Register all hotbar items
+        getHotbarItems().values().forEach(itemHandler::add);
+    }
+
+    @Override
+    public LobbyItemHandler getItemHandler() {
+        return itemHandler;
+    }
+
+    @Override
+    public List<LaunchPad> getLaunchPads() {
+        return List.of(); // No launch pads for prototype lobby
+    }
+
+    @Override
+    public Map<Integer, LobbyItem> getHotbarItems() {
+        return Map.of(
+                0, new PlayCompass(),
+                7, new HidePlayers(),
+                8, new LobbySelector()
+        );
     }
 
     @Override
@@ -66,17 +100,21 @@ public class TypePrototypeLobbyLoader implements HypixelTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> new Pos(11.5, 76, 0.5, 90, 0), // Spawn position
-                false // Announce death messages
+                (type) -> new Pos(11.5, 76, 0.5, 90, 0),
+                false
         );
     }
 
     @Override
     public List<HypixelEventClass> getTraditionalEvents() {
-        return HypixelGenericLoader.loopThroughPackage(
+        List<HypixelEventClass> events = new ArrayList<>(HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.prototypelobby.events",
                 HypixelEventClass.class
-        ).toList();
+        ).toList());
+        // Add lobby base events
+        events.add(new LobbyItemEvents());
+        events.add(new LobbyPlayerJoinEvents());
+        return events;
     }
 
     @Override
@@ -106,6 +144,11 @@ public class TypePrototypeLobbyLoader implements HypixelTypeLoader {
     @Override
     public List<ProxyToClient> getProxyRedisListeners() {
         return List.of();
+    }
+
+    @Override
+    public List<Class<? extends GameDataHandler>> getAdditionalDataHandlers() {
+        return List.of(PrototypeLobbyDataHandler.class);
     }
 
     @Override
