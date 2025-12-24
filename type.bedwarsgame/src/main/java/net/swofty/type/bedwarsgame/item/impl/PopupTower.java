@@ -9,8 +9,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
 import java.util.concurrent.atomic.AtomicInteger;

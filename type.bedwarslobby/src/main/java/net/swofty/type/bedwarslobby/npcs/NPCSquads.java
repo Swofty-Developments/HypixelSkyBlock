@@ -1,7 +1,7 @@
 package net.swofty.type.bedwarslobby.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.BedwarsGameType;
+import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;

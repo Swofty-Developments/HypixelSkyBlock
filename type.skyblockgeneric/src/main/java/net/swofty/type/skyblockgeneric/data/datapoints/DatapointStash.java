@@ -1,9 +1,8 @@
 package net.swofty.type.skyblockgeneric.data.datapoints;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;

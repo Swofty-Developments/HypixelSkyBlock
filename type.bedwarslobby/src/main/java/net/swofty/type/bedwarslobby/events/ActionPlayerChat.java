@@ -2,9 +2,9 @@ package net.swofty.type.bedwarslobby.events;
 
 import net.minestom.server.event.player.PlayerChatEvent;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
-import net.swofty.type.bedwarsgeneric.util.LevelColor;
-import net.swofty.type.bedwarsgeneric.util.LevelUtil;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.commons.bedwars.BedwarsLevelColor;
+import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
@@ -57,8 +57,8 @@ public class ActionPlayerChat implements HypixelEventClass {
 
         List<HypixelPlayer> receivers = HypixelGenericLoader.getLoadedPlayers();
 
-        String levelPrefix = LevelColor.constructLevelBrackets(
-                LevelUtil.calculateLevel(bedWarsDataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue())
+        String levelPrefix = BedwarsLevelColor.constructLevelBrackets(
+                BedwarsLevelUtil.calculateLevel(bedWarsDataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue())
         ) + " ";
 
         receivers.forEach(onlinePlayer -> {

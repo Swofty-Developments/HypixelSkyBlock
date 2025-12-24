@@ -1,7 +1,7 @@
 package net.swofty.service.orchestrator;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.BedwarsGameType;
+import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.game.Game;
 
 import java.time.Instant;

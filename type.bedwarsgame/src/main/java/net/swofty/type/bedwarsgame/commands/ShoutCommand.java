@@ -1,7 +1,7 @@
 package net.swofty.type.bedwarsgame.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentType;
-import net.swofty.commons.BedwarsGameType;
+import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;

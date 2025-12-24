@@ -4,7 +4,7 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.pvp.projectile.BowModule;
 import net.swofty.pvp.projectile.entities.ArrowProjectile;
-import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

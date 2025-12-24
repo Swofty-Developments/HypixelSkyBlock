@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.enchantment.abstr;
 
 import lombok.NonNull;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentSource;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;

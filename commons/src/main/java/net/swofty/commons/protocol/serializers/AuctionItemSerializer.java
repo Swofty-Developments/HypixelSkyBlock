@@ -1,7 +1,7 @@
 package net.swofty.commons.protocol.serializers;
 
-import net.swofty.commons.auctions.AuctionItem;
-import net.swofty.commons.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
+import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
 

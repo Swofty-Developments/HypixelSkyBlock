@@ -1,7 +1,7 @@
 package net.swofty.type.bedwarsgame.shop;
 
 import net.minestom.server.item.Material;
-import net.swofty.commons.BedwarsGameType;
+import net.swofty.commons.bedwars.BedwarsGameType;
 
 import java.util.function.Function;
 

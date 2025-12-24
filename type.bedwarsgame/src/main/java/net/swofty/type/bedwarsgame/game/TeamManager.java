@@ -12,9 +12,9 @@ import net.minestom.server.item.Material;
 import net.minestom.server.scoreboard.BelowNameTag;
 import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import org.tinylog.Logger;
 
 import java.util.*;

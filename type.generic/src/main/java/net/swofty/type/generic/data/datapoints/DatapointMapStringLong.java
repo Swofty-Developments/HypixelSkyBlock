@@ -14,6 +14,11 @@ public class DatapointMapStringLong extends Datapoint<Map<String, Long>> {
         super(key, value, serializer);
     }
 
+    // Required for deepClone() reflection which passes HashMap.class
+    public DatapointMapStringLong(String key, HashMap<String, Long> value) {
+        super(key, value, serializer);
+    }
+
     public DatapointMapStringLong(String key) {
         super(key, new HashMap<>(), serializer);
     }

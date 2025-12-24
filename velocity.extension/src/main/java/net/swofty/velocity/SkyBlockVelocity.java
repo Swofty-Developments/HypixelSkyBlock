@@ -180,14 +180,14 @@ public class SkyBlockVelocity {
 	public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
 		Player player = event.getPlayer();
 
-		if (!GameManager.hasType(ServerType.BEDWARS_LOBBY) || !GameManager.isAnyEmpty(ServerType.BEDWARS_LOBBY)) {
+		if (!GameManager.hasType(ServerType.PROTOTYPE_LOBBY) || !GameManager.isAnyEmpty(ServerType.PROTOTYPE_LOBBY)) {
 			player.disconnect(
-					Component.text("§cThere are no BedWars Lobby servers available at the moment.")
+					Component.text("§cThere are no Prototype Lobby servers available at the moment.")
 			);
 			return;
 		}
 
-		List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.BEDWARS_LOBBY);
+		List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.PROTOTYPE_LOBBY);
 		if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
 			TestFlowManager.ProxyTestFlowInstance instance = TestFlowManager.getTestFlowForPlayer(player.getUsername());
 			player.sendPlainMessage("§7You are currently in test flow " + instance.getName() + ".");

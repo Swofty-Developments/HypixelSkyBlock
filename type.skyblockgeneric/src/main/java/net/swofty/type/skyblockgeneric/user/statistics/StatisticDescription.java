@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.user.statistics;
 
 import lombok.Getter;
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 
 import javax.annotation.Nullable;
 

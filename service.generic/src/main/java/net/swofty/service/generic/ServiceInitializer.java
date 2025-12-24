@@ -3,7 +3,7 @@ package net.swofty.service.generic;
 import lombok.RequiredArgsConstructor;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.item.attribute.ItemAttribute;
+import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;

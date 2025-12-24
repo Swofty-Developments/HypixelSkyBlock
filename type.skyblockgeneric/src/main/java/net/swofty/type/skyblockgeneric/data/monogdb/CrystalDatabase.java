@@ -6,7 +6,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ServerType;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.HypixelConst;
 import org.bson.Document;
 import org.tinylog.Logger;

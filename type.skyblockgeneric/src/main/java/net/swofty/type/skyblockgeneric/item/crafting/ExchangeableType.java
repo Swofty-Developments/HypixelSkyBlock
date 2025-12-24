@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.item.crafting;
 
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 
 import java.util.Arrays;
 import java.util.List;

@@ -24,9 +24,9 @@ import net.swofty.type.skyblockgeneric.potion.PotionEffectType;
 import net.swofty.type.skyblockgeneric.potion.PotionModifier;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.commons.item.ItemType;
-import net.swofty.commons.item.Rarity;
-import net.swofty.commons.item.attribute.attributes.ItemAttributePotionData;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.Rarity;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 
 public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGUI {
 

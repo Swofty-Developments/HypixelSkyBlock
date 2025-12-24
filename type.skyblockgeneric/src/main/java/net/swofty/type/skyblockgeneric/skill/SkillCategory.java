@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.skill;
 
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;

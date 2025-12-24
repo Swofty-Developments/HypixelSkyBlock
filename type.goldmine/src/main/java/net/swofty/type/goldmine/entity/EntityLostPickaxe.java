@@ -7,7 +7,7 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.InteractionEntity;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;

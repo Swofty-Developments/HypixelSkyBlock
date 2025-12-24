@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.event.custom;
 
 import lombok.Getter;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.impl.ProxyUnderstandableEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 

@@ -1,6 +1,6 @@
 package net.swofty.commons.protocol.objects.darkauction;
 
-import net.swofty.commons.auctions.DarkAuctionPhase;
+import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONArray;

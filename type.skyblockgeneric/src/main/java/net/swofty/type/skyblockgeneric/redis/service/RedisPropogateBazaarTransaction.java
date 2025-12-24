@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.redis.service;
 
-import net.swofty.commons.bazaar.BazaarTransaction;
-import net.swofty.commons.bazaar.OrderExpiredBazaarTransaction;
-import net.swofty.commons.bazaar.SuccessfulBazaarTransaction;
+import net.swofty.commons.skyblock.bazaar.BazaarTransaction;
+import net.swofty.commons.skyblock.bazaar.OrderExpiredBazaarTransaction;
+import net.swofty.commons.skyblock.bazaar.SuccessfulBazaarTransaction;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;

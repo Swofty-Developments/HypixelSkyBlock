@@ -1,6 +1,6 @@
 package net.swofty.service.darkauction.loot;
 
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 
 import java.util.ArrayList;
 import java.util.List;

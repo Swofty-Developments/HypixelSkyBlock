@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.collection;
 
 import lombok.Getter;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 
 import java.util.HashMap;
 import java.util.Map;

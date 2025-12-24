@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.enchantment.impl;
 
 import net.minestom.server.entity.LivingEntity;
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.ConflictingEnch;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.DamageEventEnchant;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;

@@ -17,9 +17,9 @@ import net.minestom.server.item.component.CustomData;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.MapTeam;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import org.intellij.lang.annotations.Subst;
 import org.tinylog.Logger;
 

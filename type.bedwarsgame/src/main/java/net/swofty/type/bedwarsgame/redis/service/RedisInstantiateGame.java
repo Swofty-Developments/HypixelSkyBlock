@@ -1,11 +1,11 @@
 package net.swofty.type.bedwarsgame.redis.service;
 
-import net.swofty.commons.BedwarsGameType;
+import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgeneric.game.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import org.json.JSONObject;
 
 public class RedisInstantiateGame implements ServiceToClient {

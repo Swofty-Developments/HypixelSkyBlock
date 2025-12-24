@@ -4,9 +4,10 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.BedwarsGameType;
-import net.swofty.type.bedwarslobby.OrchestratorConnector;
+import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.ServerType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.lobby.LobbyOrchestratorConnector;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -37,13 +38,13 @@ public class GUIPlay extends HypixelInventoryGUI {
 			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
 				player.closeInventory();
 
-				if (OrchestratorConnector.isSearching(player.getUuid())) {
+				if (LobbyOrchestratorConnector.isSearching(player.getUuid())) {
 					player.sendMessage("§cYou are already searching for a game!");
 					return;
 				}
 
-				OrchestratorConnector connector = new OrchestratorConnector(player);
-				connector.sendToGame(type);
+				LobbyOrchestratorConnector connector = new LobbyOrchestratorConnector(player);
+				connector.sendToGame(ServerType.BEDWARS_GAME, type.toString());
 			}
 		});
 

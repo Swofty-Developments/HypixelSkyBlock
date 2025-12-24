@@ -7,10 +7,10 @@ import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.bedwarsgeneric.item.SimpleInteractableItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.lobby.item.LobbyItem;
 
-public class BedWarsMenu extends SimpleInteractableItem {
+public class BedWarsMenu extends LobbyItem {
 
 	public BedWarsMenu() {
 		super("bedwars_menu");

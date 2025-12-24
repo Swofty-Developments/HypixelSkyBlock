@@ -9,7 +9,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.SkyBlockPlayerProfiles;
+import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;

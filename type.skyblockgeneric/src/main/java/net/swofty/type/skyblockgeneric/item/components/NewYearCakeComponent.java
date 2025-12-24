@@ -1,7 +1,6 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.lore.LoreConfig;

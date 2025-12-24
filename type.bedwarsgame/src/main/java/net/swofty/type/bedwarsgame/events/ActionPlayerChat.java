@@ -1,13 +1,13 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.event.player.PlayerChatEvent;
-import net.swofty.commons.BedwarsGameType;
+import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.bedwarsgeneric.data.BedWarsDataHandler;
-import net.swofty.type.bedwarsgeneric.util.LevelColor;
-import net.swofty.type.bedwarsgeneric.util.LevelUtil;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.commons.bedwars.BedwarsLevelColor;
+import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.event.EventNodes;
@@ -62,8 +62,8 @@ public class ActionPlayerChat implements HypixelEventClass {
 			receivers = game.getTeamManager().getPlayersOnTeam(player.getTeamKey()).stream().map(p -> (BedWarsPlayer) p).toList();
 		}
 
-		String levelPrefix = LevelColor.constructLevelBrackets(
-				LevelUtil.calculateLevel(bedWarsDataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue())
+		String levelPrefix = BedwarsLevelColor.constructLevelBrackets(
+				BedwarsLevelUtil.calculateLevel(bedWarsDataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue())
 		) + " ";
 		String textColor = rank.equals(Rank.DEFAULT) ? "§7" : "§f";
 
