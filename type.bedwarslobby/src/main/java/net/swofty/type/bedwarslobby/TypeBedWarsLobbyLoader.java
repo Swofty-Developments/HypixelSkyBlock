@@ -11,7 +11,11 @@ import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.bedwarslobby.item.impl.BedWarsMenu;
 import net.swofty.type.bedwarslobby.item.impl.Collectibles;
 import net.swofty.type.bedwarslobby.launchpad.BedWarsLaunchPads;
+import net.swofty.type.bedwarslobby.util.BedWarsLobbyMap;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
+import net.swofty.type.generic.data.GameDataHandler;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.EmptyTabModule;
@@ -29,8 +33,6 @@ import net.swofty.type.lobby.item.impl.PlayCompass;
 import net.swofty.type.lobby.item.impl.ProfileItem;
 import net.swofty.type.lobby.launchpad.LaunchPad;
 import net.swofty.type.lobby.launchpad.LaunchPadHandler;
-import net.swofty.type.generic.data.GameDataHandler;
-import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -39,9 +41,10 @@ import java.util.List;
 import java.util.Map;
 
 public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
+    public static BedWarsLobbyMap bedWarsLobbyMap = new BedWarsLobbyMap();
 
     @Getter
-    private static final LobbyItemHandler itemHandler = new LobbyItemHandler();
+    private final LobbyItemHandler itemHandler = new LobbyItemHandler();
 
     @Override
     public ServerType getType() {
@@ -55,17 +58,13 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
     @Override
     public void afterInitialize(MinecraftServer server) {
         BedWarsLobbyScoreboard.start();
+        bedWarsLobbyMap.placeItemFrames(HypixelConst.getInstanceContainer());
 
         // Register launch pads
         LaunchPadHandler.register(MinecraftServer.getSchedulerManager(), getLaunchPads());
 
         // Register all hotbar items
         getHotbarItems().values().forEach(itemHandler::add);
-    }
-
-    @Override
-    public LobbyItemHandler getItemHandler() {
-        return itemHandler;
     }
 
     @Override
