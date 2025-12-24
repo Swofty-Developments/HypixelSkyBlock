@@ -14,6 +14,8 @@ include(":loader")
 
 include(":type.prototypelobby")
 include(":type.thefarmingislands")
+include("type.spidersden")
+include("type.theend")
 include(":type.goldmine")
 include(":type.deepcaverns")
 include(":type.dwarvenmines")

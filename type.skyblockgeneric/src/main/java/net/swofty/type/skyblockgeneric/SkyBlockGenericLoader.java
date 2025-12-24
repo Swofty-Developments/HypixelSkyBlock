@@ -292,7 +292,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         MinecraftServer.getDimensionTypeRegistry().register(
                 Key.key("skyblock:island"),
                 DimensionType.builder()
-                        .ambientLight(2)
+                        .ambientLight(1)
                         .build());
         SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());
 

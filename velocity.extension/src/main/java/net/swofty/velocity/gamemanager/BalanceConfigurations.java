@@ -25,6 +25,12 @@ public class BalanceConfigurations {
 			ServerType.SKYBLOCK_THE_FARMING_ISLANDS, List.of(
 					new LowestPlayerCount()
 			),
+			ServerType.SKYBLOCK_SPIDERS_DEN, List.of(
+					new LowestPlayerCount()
+			),
+			ServerType.SKYBLOCK_THE_END, List.of(
+					new LowestPlayerCount()
+			),
 			ServerType.SKYBLOCK_GOLD_MINE, List.of(
 					new LowestPlayerCount()
 			),
