@@ -6,25 +6,24 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
-import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.commons.bedwars.BedwarsLevelColor;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.datapoints.DatapointLong;
+import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static net.swofty.commons.bedwars.BedwarsLevelUtil.suffix;
+
 public class BedWarsLobbyScoreboard {
-	private static final DecimalFormat FORMAT = new DecimalFormat("#,###.#");
 	private static final Map<UUID, Sidebar> sidebarCache = new HashMap<>();
 	private static Integer prototypeName = 0;
 
@@ -72,7 +71,7 @@ public class BedWarsLobbyScoreboard {
 				addLine("§7 ", sidebar);
 				addLine("§fLevel: §7" + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)), sidebar);
 				addLine("§7 ", sidebar);
-				addLine("§fProgress: §b" + suffix(progress) + "§7/" + suffix(maxExperience), sidebar);
+				addLine("§fProgress: §b" + suffix(progress) + "§7/§a" + suffix(maxExperience), sidebar);
 				addLine(progressBar.toString(), sidebar);
 				addLine("§7 ", sidebar);
 				addLine("§fTokens: §2" + bwDataHandler.get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class).getValue(), sidebar);
@@ -119,14 +118,6 @@ public class BedWarsLobbyScoreboard {
 			return colors[0] + baseText + endColor;
 		} else {
 			return colors[2] + baseText + endColor;
-		}
-	}
-
-	private static String suffix(double value) {
-		if (value < 1000) {
-			return FORMAT.format(value);
-		} else {
-			return FORMAT.format(value / 1000) + "k";
 		}
 	}
 

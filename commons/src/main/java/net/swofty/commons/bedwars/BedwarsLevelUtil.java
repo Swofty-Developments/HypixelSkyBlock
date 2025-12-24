@@ -1,6 +1,18 @@
 package net.swofty.commons.bedwars;
 
+import java.text.DecimalFormat;
+
 public class BedwarsLevelUtil {
+
+    private static final DecimalFormat FORMAT = new DecimalFormat("#,###.#");
+
+    public static String suffix(double value) {
+        if (value < 1000) {
+            return FORMAT.format(value);
+        } else {
+            return FORMAT.format(value / 1000) + "k";
+        }
+    }
 
     public static int calculateMaxExperienceFromLevel(int level) {
         int multiplier = level % 100;
