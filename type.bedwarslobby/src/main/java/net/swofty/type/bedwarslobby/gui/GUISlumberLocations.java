@@ -22,6 +22,7 @@ public class GUISlumberLocations extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 player.teleport(new Pos(17, 69, 0, -90, 0));
+                player.closeInventory();
             }
 
             @Override
@@ -37,6 +38,7 @@ public class GUISlumberLocations extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 player.teleport(new Pos(43, 69, 0, -90, 0));
+                player.closeInventory();
             }
 
             @Override
@@ -52,6 +54,7 @@ public class GUISlumberLocations extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 player.teleport(new Pos(34.5, 69.5, 15.5, 90, 0));
+                player.closeInventory();
             }
 
             @Override
