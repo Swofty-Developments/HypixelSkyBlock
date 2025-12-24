@@ -35,6 +35,7 @@ dependencies {
     implementation(project(":type.prototypelobby"))
     implementation(project(":type.bedwarslobby"))
     implementation(project(":type.bedwarsgame"))
+    implementation(project(":type.bedwarsconfigurator"))
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))

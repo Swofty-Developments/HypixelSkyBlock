@@ -24,6 +24,7 @@ include(":type.hub")
 include(":type.dungeonhub")
 include(":type.bedwarslobby")
 include(":type.bedwarsgame")
+include(":type.bedwarsconfigurator")
 
 include(":service.auctionhouse")
 include(":service.bazaar")
