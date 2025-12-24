@@ -1,23 +1,27 @@
 package net.swofty.type.bedwarsgeneric.game;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.swofty.commons.BedwarsGameType;
 
 import java.util.List;
 import java.util.Map;
 
 @Getter
+@Setter
 @SuppressWarnings("unused")
 public class BedWarsMapsConfig {
     private List<MapEntry> maps;
 
     @Getter
+    @Setter
     public static class MapEntry {
         private String id;
         private String name;
         private MapConfiguration configuration;
 
         @Getter
+        @Setter
         public static class MapConfiguration {
             private List<BedwarsGameType> types;
             private Map<String, TeamGeneratorConfig> generator;
@@ -27,12 +31,14 @@ public class BedWarsMapsConfig {
             private Map<String, GlobalGenerator> global_generator;
 
             @Getter
+            @Setter
             public static class MapLocations {
                 private Position waiting;
                 private Position spectator;
             }
 
             @Getter
+            @Setter
             public static class MapBounds {
                 private MinMax x;
                 private MinMax y;
@@ -40,12 +46,14 @@ public class BedWarsMapsConfig {
             }
 
             @Getter
+            @Setter
             public static class TeamGeneratorConfig {
                 private int delay;
                 private int amount;
             }
 
             @Getter
+            @Setter
             public static class GlobalGenerator {
                 private int amount;
                 private int max;
@@ -97,7 +105,24 @@ public class BedWarsMapsConfig {
         }
     }
 
+    public enum GeneratorSpeed {
+        SLOW(0.7f),
+        MEDIUM(1.4f),
+        FAST(2f),
+        SUPER_FAST(2.2f);
+
+        public final float ironSpeed; // per second
+        // these are always the same
+        public final float goldDelay = 8f;
+        public final int diamondMax = 4;
+        public final int emeraldMax = 2;
+        GeneratorSpeed(float speed) {
+            this.ironSpeed = speed;
+        }
+    }
+
     @Getter
+    @Setter
     public static class MapTeam {
         private Shops shop;
         private PitchYawPosition spawn;
