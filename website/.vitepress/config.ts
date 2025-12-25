@@ -32,7 +32,7 @@ export default defineConfig({
       { text: "Guide", link: "/docs/introduction" },
       { text: "Reference", link: "/docs/reference/server-types" },
       { text: "Javadoc", link: "https://swofty-developments.github.io/HypixelSkyBlock/" },
-      { text: "Discord", link: "https://discord.gg/paper" },
+      { text: "Discord", link: "https://discord.gg/ZaGW5wzUJ3" },
     ],
     sidebar: {
       "/docs/": [
@@ -79,7 +79,7 @@ export default defineConfig({
     },
     socialLinks: [
       { icon: "github", link: "https://github.com/Swofty-Developments/HypixelSkyBlock" },
-      { icon: "discord", link: "https://discord.gg/paper" },
+      { icon: "discord", link: "https://discord.gg/ZaGW5wzUJ3" },
     ],
     footer: {
       message: "Released under the MIT License.",

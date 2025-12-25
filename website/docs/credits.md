@@ -33,6 +33,6 @@ This project is open source. See the repository for license details.
 ## Links
 
 - [GitHub Repository](https://github.com/Swofty-Developments/HypixelSkyBlock)
-- [Discord Server](https://discord.gg/paper)
+- [Discord Server](https://discord.gg/ZaGW5wzUJ3)
 - [Javadocs](https://swofty-developments.github.io/HypixelSkyBlock/)
 - [Releases](https://github.com/Swofty-Developments/HypixelSkyBlock/releases)

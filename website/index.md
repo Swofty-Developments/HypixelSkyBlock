@@ -13,7 +13,7 @@ hero:
       link: https://github.com/Swofty-Developments/HypixelSkyBlock
     - theme: alt
       text: Join Discord
-      link: https://discord.gg/paper
+      link: https://discord.gg/ZaGW5wzUJ3
 
 features:
   - icon: 🚀

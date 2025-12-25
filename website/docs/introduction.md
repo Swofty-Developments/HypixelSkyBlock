@@ -34,6 +34,6 @@ This project is designed to work with [HypixelForums](https://github.com/Swofty-
 
 ## Getting Help
 
-- **Discord**: [discord.gg/paper](https://discord.gg/paper)
+- **Discord**: [discord.gg/ZaGW5wzUJ3](https://discord.gg/ZaGW5wzUJ3)
 - **Javadocs**: [swofty-developments.github.io/HypixelSkyBlock](https://swofty-developments.github.io/HypixelSkyBlock/)
 - **Video Guide**: [YouTube Setup Tutorial](https://www.youtube.com/watch?v=pxzJbjjQL-M)
