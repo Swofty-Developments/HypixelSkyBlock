@@ -26,6 +26,12 @@ public class BalanceConfigurations {
 			Map.entry(ServerType.SKYBLOCK_THE_FARMING_ISLANDS, List.of(
 					new LowestPlayerCount()
 			)),
+			Map.entry(ServerType.SKYBLOCK_SPIDERS_DEN, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_THE_END, List.of(
+					new LowestPlayerCount()
+            )),
 			Map.entry(ServerType.BEDWARS_LOBBY, List.of(
 					new LowestPlayerCount()
 			)),

@@ -6,6 +6,8 @@ import lombok.Getter;
 public enum ServerType {
 	SKYBLOCK_ISLAND(true),
 	SKYBLOCK_HUB(true),
+	SKYBLOCK_SPIDERS_DEN(true),
+	SKYBLOCK_THE_END(true),
 	SKYBLOCK_DUNGEON_HUB(true),
 	SKYBLOCK_THE_FARMING_ISLANDS(true),
 	SKYBLOCK_GOLD_MINE(true),

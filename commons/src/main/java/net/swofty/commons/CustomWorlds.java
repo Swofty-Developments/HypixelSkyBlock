@@ -3,6 +3,8 @@ package net.swofty.commons;
 public enum CustomWorlds {
 	SKYBLOCK_ISLAND_TEMPLATE("hypixel_skyblock_island_template"),
 	SKYBLOCK_HUB("hypixel_skyblock_hub"),
+	SKYBLOCK_SPIDERS_DEN("hypixel_skyblock_spiders_den"),
+	SKYBLOCK_THE_END("hypixel_skyblock_the_end"),
 	SKYBLOCK_GOLD_MINE("hypixel_skyblock_gold_mine"),
 	SKYBLOCK_DEEP_CAVERNS("hypixel_skyblock_deep_caverns"),
 	SKYBLOCK_DWARVEN_MINES("hypixel_skyblock_dwarven_mines"),

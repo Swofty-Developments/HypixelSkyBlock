@@ -27,6 +27,8 @@ dependencies {
     implementation(project(":type.island"))
     implementation(project(":type.hub"))
     implementation(project(":type.thefarmingislands"))
+    implementation(project(":type.spidersden"))
+    implementation(project(":type.theend"))
     implementation(project(":type.goldmine"))
     implementation(project(":type.deepcaverns"))
     implementation(project(":type.dwarvenmines"))
