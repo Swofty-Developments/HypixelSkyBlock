@@ -419,6 +419,47 @@ public enum LaunchPads {
 					.text(new String[]{"§bTravel to:", "§aSavanna Woodland"})
 					.build()
 	),
+
+	JUNGLE_ISLAND_TO_GALATEA(
+			getSlimeBlocksNear(new Pos(-488.5, 116, -40)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_GALATEA,
+			new Pos(-542.5, 108, -26.5),
+			(player) -> player.sendTo(ServerType.SKYBLOCK_GALATEA),
+			(player) -> player.getSkills().getCurrentLevel(SkillCategories.FORAGING) >= 12,
+			"§cYou must be at least Foraging Level XII to join this island!",
+			(player) -> {
+				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.FORAGING) >= 12;
+				if (!hasRequirement) {
+					return PlayerHolograms.ExternalPlayerHologram.builder()
+							.pos(new Pos(-489.5, 116.5, -40))
+							.player(player)
+							.text(new String[]{"§bTravel to:", "§aGalatea", "§cRequires Foraging Level 12"})
+							.build();
+				} else {
+					return PlayerHolograms.ExternalPlayerHologram.builder()
+							.pos(new Pos(-489.5, 116.5, -40))
+							.player(player)
+							.text(new String[]{"§bTravel to:", "§aGalatea"})
+							.build();
+				}
+			}
+	),
+
+	GALATEA_TO_JUNGLE_ISLAND(
+			getSlimeBlocksNear(new Pos(-538.5, 108, -29)),
+			ServerType.SKYBLOCK_GALATEA,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-483.5, 117, -41.5),
+			(player) -> player.sendTo(ServerType.SKYBLOCK_THE_PARK),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-538.5, 108.5, -28.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aThe Park"})
+					.build()
+	),
 	;
 
 	private static final List<LaunchPads> launchPads = new ArrayList<>();

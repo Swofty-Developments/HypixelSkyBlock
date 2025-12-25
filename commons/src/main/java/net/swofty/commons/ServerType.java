@@ -15,6 +15,7 @@ public enum ServerType {
 	SKYBLOCK_DEEP_CAVERNS(true),
 	SKYBLOCK_DWARVEN_MINES(true),
 	SKYBLOCK_THE_PARK(true),
+	SKYBLOCK_GALATEA(true),
 	PROTOTYPE_LOBBY(false),
 	BEDWARS_LOBBY(false),
 	BEDWARS_GAME(false),

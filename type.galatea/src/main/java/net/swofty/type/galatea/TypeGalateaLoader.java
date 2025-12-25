@@ -1,4 +1,4 @@
-package net.swofty.type.thepark;
+package net.swofty.type.galatea;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
@@ -7,6 +7,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.galatea.tab.GalateaServerModule;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -15,7 +16,6 @@ import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
-import net.swofty.type.thepark.tab.TheParkServerModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -23,15 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TypeTheParkLoader implements SkyBlockTypeLoader {
+public class TypeGalateaLoader implements SkyBlockTypeLoader {
     @Override
     public ServerType getType() {
-        return ServerType.SKYBLOCK_THE_PARK;
+        return ServerType.SKYBLOCK_GALATEA;
     }
 
     @Override
     public void onInitialize(MinecraftServer server) {
-        Logger.info("TypeTheParkLoader initialized!");
+        Logger.info("TypeGalateaLoader initialized!");
     }
 
     @Override
@@ -43,8 +43,7 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
                 (type) -> switch (type) {
-                    case SKYBLOCK_GALATEA -> new Pos(-483.5, 117, -41.5, -120, 0);
-                    default -> new Pos(-265.5, 79, -17.5, 90, 0);
+                    default -> new Pos(-542.5, 108, -26.5, 45, 0);
                 }, // Spawn position
                 true // Announce death messages
         );
@@ -57,7 +56,7 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new TheParkServerModule(),
+                        new GalateaServerModule(),
                         new AccountInformationModule()
                 ));
             }
@@ -67,7 +66,7 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.thepark.events",
+                "net.swofty.type.galatea.events",
                 HypixelEventClass.class
         ).collect(Collectors.toList());
     }
@@ -80,7 +79,7 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelNPC> getNPCs() {
         return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.thepark.npcs",
+                "net.swofty.type.galatea.npcs",
                 HypixelNPC.class
         ).toList());
     }
@@ -102,6 +101,6 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 
     @Override
     public @Nullable CustomWorlds getMainInstance() {
-        return CustomWorlds.SKYBLOCK_THE_PARK;
+        return CustomWorlds.SKYBLOCK_GALATEA;
     }
 }

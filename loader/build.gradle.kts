@@ -34,6 +34,7 @@ dependencies {
     implementation(project(":type.deepcaverns"))
     implementation(project(":type.dwarvenmines"))
     implementation(project(":type.thepark"))
+    implementation(project(":type.galatea"))
     implementation(project(":type.dungeonhub"))
     implementation(project(":type.skyblockgeneric"))
     implementation(project(":type.prototypelobby"))

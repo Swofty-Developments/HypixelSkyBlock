@@ -8,6 +8,7 @@ public enum FairySoulZone {
     DWARVEN_MINES,
     THE_FARMING_ISLANDS,
     THE_PARK,
+    GALATEA,
     SPIDERS_DEN,
     THE_END,
     CRIMSON_ISLE,
