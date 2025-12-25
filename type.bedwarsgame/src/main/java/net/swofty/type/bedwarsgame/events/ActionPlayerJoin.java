@@ -38,7 +38,14 @@ public class ActionPlayerJoin implements HypixelEventClass {
 					Game preferred = TypeBedWarsGameLoader.getGameById(preferredGameId);
 					if (preferred != null) {
 						MathUtility.delay(
-								() -> preferred.join(player),
+								() -> {
+									// Check if this is a rejoin (player was disconnected from this game)
+									if (preferred.hasDisconnectedPlayer(player.getUuid())) {
+										preferred.rejoin(player);
+									} else {
+										preferred.join(player);
+									}
+								},
 								15
 						);
 					}

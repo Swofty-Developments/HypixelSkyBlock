@@ -33,6 +33,16 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
+import net.kyori.adventure.title.Title;
+import net.minestom.server.item.Material;
+import net.swofty.type.bedwarsgame.shop.impl.AxeShopItem;
+import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
+
+import java.time.Duration;
 
 @Getter
 public final class Game {
@@ -53,6 +63,9 @@ public final class Game {
 
 	private final Map<String, Map<Integer, ItemStack>> chests = new HashMap<>();
 	private final Map<Player, Map<Integer, ItemStack>> enderchests = new HashMap<>();
+
+	// Track players who disconnected during an active game for rejoin
+	private final Map<UUID, DisconnectedPlayerInfo> disconnectedPlayers = new ConcurrentHashMap<>();
 
 	private Task timePlayedTask;
 
@@ -118,6 +131,240 @@ public final class Game {
 		if (gameStatus == GameStatus.IN_PROGRESS && teamName != null) {
 			checkForWinCondition();
 		}
+	}
+
+	/**
+	 * Handle player disconnect during an active game.
+	 * Stores their info for potential rejoin instead of removing them permanently.
+	 */
+	public void handleDisconnect(BedWarsPlayer player) {
+		if (gameStatus != GameStatus.IN_PROGRESS) {
+			leave(player);
+			return;
+		}
+
+		String teamName = player.getTag(Tag.String("team"));
+		TeamKey teamKey = teamManager.getTeamKeyByName(teamName);
+
+		boolean bedAlive = teamKey != null && teamManager.isBedAlive(teamKey);
+
+		// Get current upgrade levels
+		Integer armorLevel = player.getTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG);
+		Integer pickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
+		Integer axeLevel = player.getTag(AxeShopItem.AXE_UPGRADE_TAG);
+
+		// Store disconnect info for rejoin
+		DisconnectedPlayerInfo info = new DisconnectedPlayerInfo(
+				player.getUuid(),
+				player.getUsername(),
+				teamKey,
+				bedAlive,
+				armorLevel != null ? armorLevel : 0,
+				pickaxeLevel != null ? pickaxeLevel : 0,
+				axeLevel != null ? axeLevel : 0
+		);
+		disconnectedPlayers.put(player.getUuid(), info);
+
+		// Remove from active players list
+		players.remove(player);
+
+		// Send disconnect message to remaining players
+		String teamColor = teamKey != null ? teamKey.chatColor() : "§7";
+		getPlayersAsAudience().sendMessage(
+				Component.text(teamColor + player.getUsername() + " §7disconnected.")
+		);
+
+		Logger.info("Player {} disconnected from game {} (team: {}, bed alive: {})",
+				player.getUsername(), gameId, teamName, bedAlive);
+
+		// Clear player tags and send to lobby
+		player.removeTag(Tag.String("gameId"));
+		player.removeTag(Tag.String("team"));
+		player.sendTo(ServerType.BEDWARS_LOBBY);
+
+		// Check win condition
+		checkForWinCondition();
+	}
+
+	/**
+	 * Handle player rejoining an active game.
+	 */
+	public void rejoin(BedWarsPlayer player) {
+		DisconnectedPlayerInfo info = disconnectedPlayers.remove(player.getUuid());
+
+		if (info == null) {
+			player.sendMessage(Component.text("You don't have a game to rejoin!", NamedTextColor.RED));
+			player.sendTo(ServerType.BEDWARS_LOBBY);
+			return;
+		}
+
+		if (gameStatus != GameStatus.IN_PROGRESS) {
+			player.sendMessage(Component.text("The game has ended.", NamedTextColor.RED));
+			player.sendTo(ServerType.BEDWARS_LOBBY);
+			return;
+		}
+
+		// Re-add to players list
+		players.add(player);
+
+		// Restore tags
+		player.setTag(Tag.String("gameId"), gameId);
+		player.setTag(Tag.String("team"), info.getTeamKey().name());
+
+		// Restore upgrade levels
+		if (info.getArmorLevel() > 0) {
+			player.setTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG, info.getArmorLevel());
+		}
+		if (info.getPickaxeLevel() > 0) {
+			player.setTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG, info.getPickaxeLevel());
+		}
+		if (info.getAxeLevel() > 0) {
+			player.setTag(AxeShopItem.AXE_UPGRADE_TAG, info.getAxeLevel());
+		}
+
+		// Set to correct instance
+		player.setInstance(instanceContainer);
+
+		// Send reconnect message to all players
+		String teamColor = info.getTeamKey().chatColor();
+		getPlayersAsAudience().sendMessage(
+				Component.text(teamColor + player.getUsername() + " §7reconnected.")
+		);
+
+		Logger.info("Player {} rejoined game {} (team: {})", player.getUsername(), gameId, info.getTeamKey().getName());
+
+		// Check if bed is currently destroyed (may have been destroyed while disconnected)
+		boolean bedCurrentlyAlive = teamManager.isBedAlive(info.getTeamKey());
+
+		if (info.shouldRejoinAsSpectator() || !bedCurrentlyAlive) {
+			// Rejoin as spectator - bed was broken when they left or is now broken
+			setupAsSpectator(player);
+		} else {
+			// Normal rejoin with respawn timer
+			triggerRespawnTimer(player, info.getTeamKey());
+		}
+	}
+
+	private void setupAsSpectator(BedWarsPlayer player) {
+		player.setTag(ELIMINATED_TAG, true);
+		player.setGameMode(GameMode.SPECTATOR);
+		player.setInvisible(true);
+		player.setFlying(true);
+
+		BedWarsMapsConfig.Position spectatorPos = mapEntry.getConfiguration().getLocations().getSpectator();
+		if (spectatorPos != null) {
+			player.teleport(new Pos(spectatorPos.x(), spectatorPos.y(), spectatorPos.z()));
+		}
+
+		player.sendTitlePart(TitlePart.TITLE, Component.text("SPECTATING", NamedTextColor.GRAY));
+		player.sendTitlePart(TitlePart.SUBTITLE, Component.text("Your bed was destroyed.", NamedTextColor.RED));
+	}
+
+	private void triggerRespawnTimer(BedWarsPlayer player, TeamKey teamKey) {
+		// Put player in spectator mode temporarily
+		player.setGameMode(GameMode.SPECTATOR);
+		player.getInventory().clear();
+
+		BedWarsMapsConfig.Position spectatorPos = mapEntry.getConfiguration().getLocations().getSpectator();
+		if (spectatorPos != null) {
+			player.teleport(new Pos(spectatorPos.x(), spectatorPos.y(), spectatorPos.z()));
+		}
+
+		// Start respawn countdown (same as death handler)
+		final Title.Times titleTimes = Title.Times.times(Duration.ofMillis(100), Duration.ofSeconds(1), Duration.ofMillis(100));
+		final AtomicInteger countdown = new AtomicInteger(5);
+		final AtomicReference<Task> taskRef = new AtomicReference<>();
+
+		final Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
+			if (!player.isOnline()) {
+				Task currentTask = taskRef.get();
+				if (currentTask != null) currentTask.cancel();
+				return;
+			}
+
+			int secondsRemaining = countdown.getAndDecrement();
+
+			if (secondsRemaining > 0) {
+				Component mainTitleText = Component.text("YOU DIED!", NamedTextColor.RED);
+				Component subTitleText = Component.text("You will respawn in " + secondsRemaining + " second" + (secondsRemaining == 1 ? "" : "s") + "!", NamedTextColor.YELLOW);
+				Title title = Title.title(mainTitleText, subTitleText, titleTimes);
+				player.showTitle(title);
+			} else {
+				// Time to respawn
+				player.clearTitle();
+				respawnPlayer(player, teamKey);
+
+				// Cancel repeating task
+				Task currentTask = taskRef.get();
+				if (currentTask != null) {
+					currentTask.cancel();
+				}
+			}
+		}).repeat(TaskSchedule.seconds(1)).schedule();
+		taskRef.set(task);
+	}
+
+	private void respawnPlayer(BedWarsPlayer player, TeamKey teamKey) {
+		MapTeam playerTeam = mapEntry.getConfiguration().getTeams().get(teamKey);
+
+		if (playerTeam != null) {
+			BedWarsMapsConfig.PitchYawPosition spawnPos = playerTeam.getSpawn();
+			player.teleport(new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw()));
+			player.setGameMode(GameMode.SURVIVAL);
+			player.setInvisible(false);
+			player.setFlying(false);
+			player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
+
+			// Give back tools
+			AxeShopItem axeShopItem = new AxeShopItem();
+			Integer currentAxeLevel = player.getTag(AxeShopItem.AXE_UPGRADE_TAG);
+			if (currentAxeLevel != null && currentAxeLevel > 0) {
+				player.getInventory().addItemStack(ItemStack.of(axeShopItem.getTier(currentAxeLevel - 1).material()));
+			}
+
+			PickaxeShopItem pickaxeShopItem = new PickaxeShopItem();
+			Integer currentPickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
+			if (currentPickaxeLevel != null && currentPickaxeLevel > 0) {
+				player.getInventory().addItemStack(ItemStack.of(pickaxeShopItem.getTier(currentPickaxeLevel - 1).material()));
+			}
+
+			// Equip team armor
+			teamManager.equipTeamArmor(player, teamKey);
+
+			// Apply upgrades
+			Integer protectionLevel = player.getTag(Tag.Integer("upgrade_reinforced_armor"));
+			if (protectionLevel != null) {
+				TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("reinforced_armor").applyEffect(this, teamKey, protectionLevel);
+			}
+
+			Integer cushionedBootsLevel = player.getTag(Tag.Integer("upgrade_cushioned_boots"));
+			if (cushionedBootsLevel != null) {
+				TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("cushioned_boots").applyEffect(this, teamKey, cushionedBootsLevel);
+			}
+
+			Integer sharpnessLevel = player.getTag(Tag.Integer("upgrade_sharpness"));
+			if (sharpnessLevel != null) {
+				TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("sharpness").applyEffect(this, teamKey, sharpnessLevel);
+			}
+		} else {
+			Logger.warn("Player {} had team key '{}' but team was not found. Sending to lobby.", player.getUsername(), teamKey.getName());
+			player.sendMessage("§cAn unexpected error occurred while respawning you. Please contact a staff member.");
+			player.sendTo(ServerType.BEDWARS_LOBBY);
+		}
+	}
+
+	/**
+	 * Check if a player has a pending rejoin for this game.
+	 */
+	public boolean hasDisconnectedPlayer(UUID playerUuid) {
+		return disconnectedPlayers.containsKey(playerUuid);
+	}
+
+	/**
+	 * Get list of disconnected player UUIDs for heartbeat.
+	 */
+	public List<UUID> getDisconnectedPlayerUuids() {
+		return new ArrayList<>(disconnectedPlayers.keySet());
 	}
 
 	public void startGame() {
@@ -192,11 +439,25 @@ public final class Game {
 	}
 
 	private boolean hasPlayersOnTeam(TeamKey teamKey) {
-		return players.stream().anyMatch(p -> teamKey.getName().equals(p.getTag(Tag.String("team"))));
+		// Check active players
+		boolean hasActivePlayers = players.stream().anyMatch(p -> teamKey.getName().equals(p.getTag(Tag.String("team"))));
+		if (hasActivePlayers) return true;
+
+		// Check disconnected players who can still rejoin (bed was alive when they left)
+		return disconnectedPlayers.values().stream()
+				.anyMatch(info -> info.getTeamKey() == teamKey && info.isBedWasAliveOnDisconnect());
 	}
 
 	private boolean isTeamViable(TeamKey teamKey) {
-		return teamManager.isBedAlive(teamKey) || teamManager.countActivePlayersOnTeam(teamKey) > 0;
+		// A team is viable if:
+		// 1. Bed is alive, OR
+		// 2. Has active (non-eliminated) players online, OR
+		// 3. Has disconnected players who can still rejoin (bed was alive when they left)
+		boolean hasActivePlayers = teamManager.countActivePlayersOnTeam(teamKey) > 0;
+		boolean hasRejoinablePlayers = disconnectedPlayers.values().stream()
+				.anyMatch(info -> info.getTeamKey() == teamKey && info.isBedWasAliveOnDisconnect());
+
+		return teamManager.isBedAlive(teamKey) || hasActivePlayers || hasRejoinablePlayers;
 	}
 
 	private boolean hasCapacityForPlayer() {

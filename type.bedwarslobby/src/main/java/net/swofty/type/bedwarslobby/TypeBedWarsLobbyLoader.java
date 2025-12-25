@@ -18,6 +18,7 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.leaderboard.BedWarsLeaderboardAggregator;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -38,6 +39,7 @@ import net.swofty.type.lobby.item.impl.ProfileItem;
 import net.swofty.type.lobby.launchpad.LaunchPad;
 import net.swofty.type.lobby.launchpad.LaunchPadHandler;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,6 +74,15 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
 
         // Initialize leaderboard holograms
         LeaderboardHologramManager.initialize(HypixelConst.getInstanceContainer());
+
+        // Register commands
+        HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarslobby.commands", HypixelCommand.class).forEach(command -> {
+            try {
+                MinecraftServer.getCommandManager().register(command.getCommand());
+            } catch (Exception e) {
+                Logger.error(e, "Failed to register command " + command.getCommand().getName() + " in class " + command.getClass().getSimpleName());
+            }
+        });
 
         // Start the leaderboard aggregator (for daily/weekly/monthly leaderboard updates)
         BedWarsLeaderboardAggregator.initialize();
