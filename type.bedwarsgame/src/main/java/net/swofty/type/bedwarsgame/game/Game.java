@@ -26,6 +26,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -247,11 +248,17 @@ public final class Game {
 			subtitleMessage = "It's a draw!";
 		}
 
+		final TeamKey finalWinningTeam = winningTeam;
 		players.forEach(player -> {
 			player.sendTitlePart(TitlePart.TITLE, Component.text(titleMessage));
 			player.sendTitlePart(TitlePart.SUBTITLE, Component.text(subtitleMessage));
 			player.playSound(Sound.sound(Key.key("minecraft:ui.toast.challenge_complete"),
 					Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
+
+			// Record win for players on the winning team
+			if (finalWinningTeam != null && finalWinningTeam.getName().equalsIgnoreCase(player.getTeamName())) {
+				BedWarsStatsRecorder.recordWin(player, bedwarsGameType);
+			}
 
 			if (player.getGameMode() != GameMode.SPECTATOR) {
 				player.setGameMode(GameMode.SPECTATOR);

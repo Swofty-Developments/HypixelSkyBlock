@@ -5,7 +5,12 @@ import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.GameDataHandler;
+import net.swofty.commons.bedwars.BedWarsModeStats;
+import net.swofty.commons.bedwars.LeaderboardPreferences;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsModeStats;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
+import net.swofty.type.generic.data.datapoints.DatapointLeaderboardPreferences;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.leaderboard.LeaderboardService;
@@ -191,7 +196,18 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
         SLUMBER_TICKETS("bedwars_slumber_tickets", DatapointLeaderboardLong.class,
             new DatapointLeaderboardLong("bedwars_slumber_tickets", 0L, "bedwars:slumber_tickets")),
         FAVORITE_MAPS("bedwars_favorite_maps", DatapointStringList.class, new DatapointStringList("bedwars_favorite_maps")),
-        MAP_JOIN_COUNTS("bedwars_map_join_counts", DatapointMapStringLong.class, new DatapointMapStringLong("bedwars_map_join_counts"));
+        MAP_JOIN_COUNTS("bedwars_map_join_counts", DatapointMapStringLong.class, new DatapointMapStringLong("bedwars_map_join_counts")),
+
+        // Cumulative lifetime stats (for quick access without DB aggregation)
+        TOTAL_WINS("bedwars_total_wins", DatapointLong.class, new DatapointLong("bedwars_total_wins", 0L)),
+        TOTAL_FINAL_KILLS("bedwars_total_final_kills", DatapointLong.class, new DatapointLong("bedwars_total_final_kills", 0L)),
+        TOTAL_BEDS_BROKEN("bedwars_total_beds_broken", DatapointLong.class, new DatapointLong("bedwars_total_beds_broken", 0L)),
+
+        // Per-mode and per-period stats (wins, final kills, beds broken)
+        MODE_STATS("bedwars_mode_stats", DatapointBedWarsModeStats.class, new DatapointBedWarsModeStats("bedwars_mode_stats")),
+
+        // Leaderboard hologram filter preferences (period, mode, view, text alignment)
+        LEADERBOARD_PREFS("bedwars_lb_prefs", DatapointLeaderboardPreferences.class, new DatapointLeaderboardPreferences("bedwars_lb_prefs"));
 
         @Getter
         private final String key;

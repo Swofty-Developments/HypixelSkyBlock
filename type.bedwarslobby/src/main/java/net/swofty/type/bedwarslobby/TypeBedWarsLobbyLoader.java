@@ -3,11 +3,13 @@ package net.swofty.type.bedwarslobby;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.bedwarslobby.item.impl.BedWarsMenu;
 import net.swofty.type.bedwarslobby.item.impl.Collectibles;
 import net.swofty.type.bedwarslobby.launchpad.BedWarsLaunchPads;
@@ -16,6 +18,8 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.entity.hologram.PlayerHolograms;
+import net.swofty.type.generic.leaderboard.BedWarsLeaderboardAggregator;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.EmptyTabModule;
@@ -65,6 +69,19 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
 
         // Register all hotbar items
         getHotbarItems().values().forEach(itemHandler::add);
+
+        // Initialize leaderboard holograms
+        LeaderboardHologramManager.initialize(HypixelConst.getInstanceContainer());
+
+        // Start the leaderboard aggregator (for daily/weekly/monthly leaderboard updates)
+        BedWarsLeaderboardAggregator.initialize();
+
+        // Schedule hologram updates every 2 seconds
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            PlayerHolograms.updateExternalHolograms();
+        }).delay(TaskSchedule.seconds(5))
+          .repeat(TaskSchedule.seconds(2))
+          .schedule();
     }
 
     @Override

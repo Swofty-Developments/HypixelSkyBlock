@@ -156,6 +156,26 @@ public class LeaderboardService {
     }
 
     /**
+     * Get a player's rank and score as a LeaderboardEntry.
+     * @param leaderboardKey The leaderboard key
+     * @param playerUuid The player's UUID
+     * @return The player's entry, or null if not found
+     */
+    public static LeaderboardEntry getPlayerRankEntry(String leaderboardKey, UUID playerUuid) {
+        if (!isInitialized()) return null;
+
+        try (Jedis jedis = jedisPool.getResource()) {
+            Long rank = jedis.zrevrank(PREFIX + leaderboardKey, playerUuid.toString());
+            Double score = jedis.zscore(PREFIX + leaderboardKey, playerUuid.toString());
+            if (rank == null || score == null) return null;
+            return new LeaderboardEntry(playerUuid, rank.intValue() + 1, score);
+        } catch (Exception e) {
+            Logger.warn(e, "Failed to get rank entry for {} on {}", playerUuid, leaderboardKey);
+            return null;
+        }
+    }
+
+    /**
      * Get players around a specific player on the leaderboard.
      * @param leaderboardKey The leaderboard key
      * @param playerUuid The player's UUID
