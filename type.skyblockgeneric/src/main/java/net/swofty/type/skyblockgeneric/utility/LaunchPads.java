@@ -77,13 +77,13 @@ public enum LaunchPads {
 				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 1;
 				if (!hasRequirement) {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-162.5, 75, -161.5))
+							.pos(new Pos(-162.5, 73.5, -161.5))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aSpider's Den", "§cRequires Combat Level 1"})
 							.build();
 				} else {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-162.5, 75, -161.5))
+							.pos(new Pos(-162.5, 73.5, -161.5))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aSpider's Den"})
 							.build();
@@ -100,7 +100,7 @@ public enum LaunchPads {
 			(player) -> true,
 			"",
 			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
-					.pos(new Pos(-197.5, 83, -228.5))
+					.pos(new Pos(-197.5, 84, -228.5))
 					.player(player)
 					.text(new String[]{"§bTravel to:", "§aHub Island"})
 					.build()
@@ -118,13 +118,13 @@ public enum LaunchPads {
 				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 12;
 				if (!hasRequirement) {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-383, 120, -261))
+							.pos(new Pos(-383, 119.5, -261))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aThe End", "§cRequires Combat Level 12"})
 							.build();
 				} else {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-383, 120, -261))
+							.pos(new Pos(-383, 119.5, -261))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aThe End"})
 							.build();
@@ -141,7 +141,48 @@ public enum LaunchPads {
 			(player) -> true,
 			"",
 			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
-					.pos(new Pos(-495, 102, -275))
+					.pos(new Pos(-495, 101.7, -275))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aSpider's Den"})
+					.build()
+	),
+
+	SPIDERS_DEN_TO_CRIMSON_ISLE(
+			getSlimeBlocksNear(new Pos(-356, 87, -352)),
+			ServerType.SKYBLOCK_SPIDERS_DEN,
+			ServerType.SKYBLOCK_CRIMSON_ISLE,
+			new Pos(-361, 80, -425),
+			(player) -> player.sendTo(ServerType.SKYBLOCK_CRIMSON_ISLE),
+			(player) -> player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 22,
+			"§cYou must be at least Combat Level XXII to join this island!",
+			(player) -> {
+				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 22;
+				if (!hasRequirement) {
+					return PlayerHolograms.ExternalPlayerHologram.builder()
+							.pos(new Pos(-356, 87, -353))
+							.player(player)
+							.text(new String[]{"§bTravel to:", "§aCrimson Isle", "§cRequires Combat Level 22"})
+							.build();
+				} else {
+					return PlayerHolograms.ExternalPlayerHologram.builder()
+							.pos(new Pos(-356, 87, -353))
+							.player(player)
+							.text(new String[]{"§bTravel to:", "§aCrimson Isle"})
+							.build();
+				}
+			}
+	),
+
+	CRIMSON_ISLE_TO_SPIDERS_DEN(
+			getSlimeBlocksNear(new Pos(-360, 80, -420)),
+			ServerType.SKYBLOCK_CRIMSON_ISLE,
+			ServerType.SKYBLOCK_SPIDERS_DEN,
+			new Pos(-355, 87, -347),
+			(player) -> player.sendTo(ServerType.SKYBLOCK_SPIDERS_DEN),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-360.5, 80, -420))
 					.player(player)
 					.text(new String[]{"§bTravel to:", "§aSpider's Den"})
 					.build()

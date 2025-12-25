@@ -32,6 +32,9 @@ public class BalanceConfigurations {
 			Map.entry(ServerType.SKYBLOCK_THE_END, List.of(
 					new LowestPlayerCount()
             )),
+			Map.entry(ServerType.SKYBLOCK_CRIMSON_ISLE, List.of(
+					new LowestPlayerCount()
+			)),
 			Map.entry(ServerType.BEDWARS_LOBBY, List.of(
 					new LowestPlayerCount()
 			)),
