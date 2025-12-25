@@ -11,8 +11,7 @@ public abstract class GUIQueryItem extends GUIClickableItem {
     }
 
     /**
-     * Run when the player clicks this item
-     *
+     * Runs when the player clicks this item
      * @param e the event of the click
      */
     @Override
@@ -20,7 +19,6 @@ public abstract class GUIQueryItem extends GUIClickableItem {
 
     /**
      * Run when the player enters something into the sign gui
-     *
      * @param query the string the player enters
      * @return the gui that should be opened back after this
      */
@@ -28,7 +26,6 @@ public abstract class GUIQueryItem extends GUIClickableItem {
 
     /**
      * The preset lines on the sign GUI
-     *
      * @return an array that needs only 2 components
      */
     public String[] lines() {

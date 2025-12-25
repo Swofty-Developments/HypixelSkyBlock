@@ -62,8 +62,11 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             toggles.put(type, value);
         }
 
-        public void inverse(ToggleType type) {
-            toggles.put(type, !toggles.getOrDefault(type, type.defaultValue));
+        public boolean inverse(ToggleType type) {
+            // toggles.put(type, !toggles.getOrDefault(type, type.defaultValue));
+			boolean newValue = !toggles.getOrDefault(type, type.defaultValue);
+			toggles.put(type, newValue);
+			return newValue;
         }
 
         public enum ToggleType {
@@ -98,6 +101,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_ALCHEMIST(false),
             HAS_FOUND_LAZY_MINER_PICKAXE(false),
             PAPER_ICONS(false),
+			LOBBY_SHOW_PLAYERS(true)
             ;
 
             private final boolean defaultValue;

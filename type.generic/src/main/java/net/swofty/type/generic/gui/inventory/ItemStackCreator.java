@@ -78,6 +78,24 @@ public class ItemStackCreator {
 		return getStack(name, material, amount, l.toArray(new String[]{}));
 	}
 
+    /**
+     * Creates an {@link ItemStack.Builder} with a single lore line. Will split the lore into multiple lines on every \n.
+     *
+     * @param name     the name of the item stack
+     * @param color    the color to apply to the lore
+     * @param material the material of the item stack
+     * @param amount   the number of items in the stack
+     * @param lore     the lore to display
+     * @return an {@link ItemStack.Builder} with the specified properties
+     */
+    public static ItemStack.Builder getSingleLoreStackLineSplit(String name, String color, Material material, int amount, String lore) {
+        List<String> l = new ArrayList<>();
+        for (String line : lore.split("\n")) {
+            l.add(color + line);
+        }
+        return getStack(name, material, amount, l.toArray(new String[]{}));
+    }
+
 	/**
 	 * Creates an {@link ItemStack.Builder} with specified name, material, amount, and lore.
 	 *

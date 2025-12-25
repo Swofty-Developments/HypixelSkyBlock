@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.mission.missions.barn;
 
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;

@@ -1,9 +1,9 @@
 package net.swofty.service.auction.endpoints;
 
-import net.swofty.commons.auctions.AuctionCategories;
-import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.commons.skyblock.auctions.AuctionCategories;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.service.auction.AuctionActiveDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;

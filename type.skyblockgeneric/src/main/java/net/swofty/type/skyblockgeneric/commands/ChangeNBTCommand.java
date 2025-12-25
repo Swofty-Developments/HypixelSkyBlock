@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.PlayerHand;
-import net.swofty.commons.item.attribute.ItemAttribute;
+import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;

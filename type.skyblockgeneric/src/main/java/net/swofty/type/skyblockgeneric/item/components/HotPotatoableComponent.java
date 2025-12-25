@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
-import net.swofty.commons.item.ItemType;
-import net.swofty.commons.item.PotatoType;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.PotatoType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 
 import java.util.Map;

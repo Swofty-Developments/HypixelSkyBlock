@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.event.actions.custom.bestiary;
 
 import net.swofty.commons.ChatUtility;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

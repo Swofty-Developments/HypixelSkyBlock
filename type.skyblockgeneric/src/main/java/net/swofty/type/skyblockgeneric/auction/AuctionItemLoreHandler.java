@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.auction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.minestom.server.component.DataComponents;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;

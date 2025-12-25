@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.minion;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 
 @AllArgsConstructor
 @Getter

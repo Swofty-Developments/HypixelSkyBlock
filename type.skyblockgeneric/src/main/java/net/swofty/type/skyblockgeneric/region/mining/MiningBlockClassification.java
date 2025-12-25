@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.region.mining;
 
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 
 public record MiningBlockClassification(ItemStatistic baseSkillFortune, ItemStatistic specificBlockFortune) {
 

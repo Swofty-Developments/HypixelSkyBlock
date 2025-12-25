@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.gems;
 
 import lombok.Getter;
-import net.swofty.commons.item.Rarity;
+import net.swofty.commons.skyblock.item.Rarity;
 
 public enum GemStats {
     // RUBY

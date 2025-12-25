@@ -3,7 +3,7 @@ package net.swofty.service.auction;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.mongodb.client.model.Filters;
-import net.swofty.commons.auctions.AuctionsFilter;
+import net.swofty.commons.skyblock.auctions.AuctionsFilter;
 import org.bson.Document;
 
 import java.util.ArrayList;
