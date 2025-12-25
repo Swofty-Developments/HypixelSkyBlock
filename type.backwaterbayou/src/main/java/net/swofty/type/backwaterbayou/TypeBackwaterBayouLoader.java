@@ -1,4 +1,4 @@
-package net.swofty.type.spidersden;
+package net.swofty.type.backwaterbayou;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
@@ -7,6 +7,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.backwaterbayou.tab.BackwaterBayouServerModule;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -15,7 +16,6 @@ import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
-import net.swofty.type.spidersden.tab.SpidersDenServerModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -23,15 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
+public class TypeBackwaterBayouLoader implements SkyBlockTypeLoader {
     @Override
     public ServerType getType() {
-        return ServerType.SKYBLOCK_SPIDERS_DEN;
+        return ServerType.SKYBLOCK_BACKWATER_BAYOU;
     }
 
     @Override
     public void onInitialize(MinecraftServer server) {
-        Logger.info("TypeSpidersDenLoader initialized!");
+        Logger.info("TypeBackwaterBayouLoader initialized!");
     }
 
     @Override
@@ -43,9 +43,7 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
                 (type) -> switch (type) {
-                    case SKYBLOCK_THE_END -> new Pos(-378, 118.5, -261, -90, 0);
-                    case SKYBLOCK_CRIMSON_ISLE -> new Pos(-355, 87, -347, -20, 0);
-                    default -> new Pos(-202.5, 83, -233.5, 135, 0);
+                    default -> new Pos(-12.5, 74, -10.5, -55, 0);
                 }, // Spawn position
                 true // Announce death messages
         );
@@ -58,7 +56,7 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new SpidersDenServerModule(),
+                        new BackwaterBayouServerModule(),
                         new AccountInformationModule()
                 ));
             }
@@ -68,7 +66,7 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.spidersden.events",
+                "net.swofty.type.backwaterbayou.events",
                 HypixelEventClass.class
         ).collect(Collectors.toList());
     }
@@ -81,7 +79,7 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelNPC> getNPCs() {
         return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.spidersden.npcs",
+                "net.swofty.type.backwaterbayou.npcs",
                 HypixelNPC.class
         ).toList());
     }
@@ -103,6 +101,6 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
 
     @Override
     public @Nullable CustomWorlds getMainInstance() {
-        return CustomWorlds.SKYBLOCK_SPIDERS_DEN;
+        return CustomWorlds.SKYBLOCK_BACKWATER_BAYOU;
     }
 }

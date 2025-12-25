@@ -1,4 +1,4 @@
-package net.swofty.type.spidersden;
+package net.swofty.type.thepark;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
@@ -15,7 +15,7 @@ import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
-import net.swofty.type.spidersden.tab.SpidersDenServerModule;
+import net.swofty.type.thepark.tab.TheParkServerModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -23,15 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
+public class TypeTheParkLoader implements SkyBlockTypeLoader {
     @Override
     public ServerType getType() {
-        return ServerType.SKYBLOCK_SPIDERS_DEN;
+        return ServerType.SKYBLOCK_THE_PARK;
     }
 
     @Override
     public void onInitialize(MinecraftServer server) {
-        Logger.info("TypeSpidersDenLoader initialized!");
+        Logger.info("TypeTheParkLoader initialized!");
     }
 
     @Override
@@ -43,9 +43,8 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
                 (type) -> switch (type) {
-                    case SKYBLOCK_THE_END -> new Pos(-378, 118.5, -261, -90, 0);
-                    case SKYBLOCK_CRIMSON_ISLE -> new Pos(-355, 87, -347, -20, 0);
-                    default -> new Pos(-202.5, 83, -233.5, 135, 0);
+                    case SKYBLOCK_GALATEA -> new Pos(-483.5, 117, -41.5, -120, 0);
+                    default -> new Pos(-265.5, 79, -17.5, 90, 0);
                 }, // Spawn position
                 true // Announce death messages
         );
@@ -58,7 +57,7 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new SpidersDenServerModule(),
+                        new TheParkServerModule(),
                         new AccountInformationModule()
                 ));
             }
@@ -68,7 +67,7 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.spidersden.events",
+                "net.swofty.type.thepark.events",
                 HypixelEventClass.class
         ).collect(Collectors.toList());
     }
@@ -81,7 +80,7 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelNPC> getNPCs() {
         return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.spidersden.npcs",
+                "net.swofty.type.thepark.npcs",
                 HypixelNPC.class
         ).toList());
     }
@@ -103,6 +102,6 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
 
     @Override
     public @Nullable CustomWorlds getMainInstance() {
-        return CustomWorlds.SKYBLOCK_SPIDERS_DEN;
+        return CustomWorlds.SKYBLOCK_THE_PARK;
     }
 }

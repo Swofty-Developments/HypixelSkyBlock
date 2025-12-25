@@ -77,13 +77,13 @@ public enum LaunchPads {
 				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 1;
 				if (!hasRequirement) {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-162.5, 75, -161.5))
+							.pos(new Pos(-162.5, 73.5, -161.5))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aSpider's Den", "§cRequires Combat Level 1"})
 							.build();
 				} else {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-162.5, 75, -161.5))
+							.pos(new Pos(-162.5, 73.5, -161.5))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aSpider's Den"})
 							.build();
@@ -100,7 +100,7 @@ public enum LaunchPads {
 			(player) -> true,
 			"",
 			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
-					.pos(new Pos(-197.5, 83, -228.5))
+					.pos(new Pos(-197.5, 84, -228.5))
 					.player(player)
 					.text(new String[]{"§bTravel to:", "§aHub Island"})
 					.build()
@@ -118,13 +118,13 @@ public enum LaunchPads {
 				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 12;
 				if (!hasRequirement) {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-383, 120, -261))
+							.pos(new Pos(-383, 119.5, -261))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aThe End", "§cRequires Combat Level 12"})
 							.build();
 				} else {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-383, 120, -261))
+							.pos(new Pos(-383, 119.5, -261))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aThe End"})
 							.build();
@@ -141,7 +141,48 @@ public enum LaunchPads {
 			(player) -> true,
 			"",
 			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
-					.pos(new Pos(-495, 102, -275))
+					.pos(new Pos(-495, 101.7, -275))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aSpider's Den"})
+					.build()
+	),
+
+	SPIDERS_DEN_TO_CRIMSON_ISLE(
+			getSlimeBlocksNear(new Pos(-356, 87, -352)),
+			ServerType.SKYBLOCK_SPIDERS_DEN,
+			ServerType.SKYBLOCK_CRIMSON_ISLE,
+			new Pos(-361, 80, -425),
+			(player) -> player.sendTo(ServerType.SKYBLOCK_CRIMSON_ISLE),
+			(player) -> player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 22,
+			"§cYou must be at least Combat Level XXII to join this island!",
+			(player) -> {
+				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 22;
+				if (!hasRequirement) {
+					return PlayerHolograms.ExternalPlayerHologram.builder()
+							.pos(new Pos(-356, 87, -353))
+							.player(player)
+							.text(new String[]{"§bTravel to:", "§aCrimson Isle", "§cRequires Combat Level 22"})
+							.build();
+				} else {
+					return PlayerHolograms.ExternalPlayerHologram.builder()
+							.pos(new Pos(-356, 87, -353))
+							.player(player)
+							.text(new String[]{"§bTravel to:", "§aCrimson Isle"})
+							.build();
+				}
+			}
+	),
+
+	CRIMSON_ISLE_TO_SPIDERS_DEN(
+			getSlimeBlocksNear(new Pos(-360, 80, -420)),
+			ServerType.SKYBLOCK_CRIMSON_ISLE,
+			ServerType.SKYBLOCK_SPIDERS_DEN,
+			new Pos(-355, 87, -347),
+			(player) -> player.sendTo(ServerType.SKYBLOCK_SPIDERS_DEN),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-360.5, 80, -420))
 					.player(player)
 					.text(new String[]{"§bTravel to:", "§aSpider's Den"})
 					.build()
@@ -216,7 +257,210 @@ public enum LaunchPads {
 					.player(player)
 					.text(new String[]{"§bTravel to:", "§aGold Mine"})
 					.build()
-	);
+	),
+
+	FOREST_TO_BIRCH_PARK(
+			getSlimeBlocksNear(new Pos(-224.5, 73, -15.5)),
+			ServerType.SKYBLOCK_HUB,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-265.5, 79, -17.5),
+			(player) -> player.sendTo(ServerType.SKYBLOCK_THE_PARK),
+			(player) -> player.getSkills().getCurrentLevel(SkillCategories.FORAGING) >= 1,
+			"§cYou must be at least Foraging Level I to join this island!",
+			(player) -> {
+				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.FORAGING) >= 1;
+				if (!hasRequirement) {
+					return PlayerHolograms.ExternalPlayerHologram.builder()
+							.pos(new Pos(-224.5, 73.5, -15.5))
+							.player(player)
+							.text(new String[]{"§bTravel to:", "§aThe Park", "§cRequires Foraging Level 1"})
+							.build();
+				} else {
+					return PlayerHolograms.ExternalPlayerHologram.builder()
+							.pos(new Pos(-224.5, 73.5, -15.5))
+							.player(player)
+							.text(new String[]{"§bTravel to:", "§aThe Park"})
+							.build();
+				}
+			}
+	),
+
+	BIRCH_PARK_TO_FOREST(
+			getSlimeBlocksNear(new Pos(-261.5, 79, -17.5)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_HUB,
+			new Pos(-221.5, 73, -15.5),
+			(player) -> player.sendTo(ServerType.SKYBLOCK_HUB),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-261.5, 79.5, -17.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aHub Island"})
+					.build()
+	),
+
+	BIRCH_PARK_TO_SPRUCE_WOODS(
+			getSlimeBlocksNear(new Pos(-314.5, 81, -9.5)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-348.5, 90, -4.5),
+			(player) -> player.teleport(new Pos(-348.5, 90, -4.5)),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-314.5, 81.5, -9.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aSpruce Woods"})
+					.build()
+	),
+
+	SPRUCE_WOODS_TO_BIRCH_PARK(
+			getSlimeBlocksNear(new Pos(-343.5, 90, -4.5)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-306.5, 81, -5.5),
+			(player) -> player.teleport(new Pos(-306.5, 81, -5.5)),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-343.5, 90.5, -4.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aBirch Park"})
+					.build()
+	),
+
+	SPRUCE_WOODS_TO_DARK_THICKET(
+			getSlimeBlocksNear(new Pos(-364.5, 90, -18.5)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-380.5, 98, -38.5),
+			(player) -> player.teleport(new Pos(-380.5, 98, -38.5)),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-364.5, 90.5, -18.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aDark Thicket"})
+					.build()
+	),
+
+	DARK_THICKET_TO_SPRUCE_WOODS(
+			getSlimeBlocksNear(new Pos(-376.5, 97, -32.5)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-361.5, 90, -13.5),
+			(player) -> player.teleport(new Pos(-361.5, 90, -13.5)),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-376.5, 97.5, -32.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aSpruce Woods"})
+					.build()
+	),
+
+	DARK_THICKET_TO_SAVANNA_WOODLAND(
+			getSlimeBlocksNear(new Pos(-400.5, 98, -33.5)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-418.5, 110, -12.5),
+			(player) -> player.teleport(new Pos(-418.5, 110, -12.5)),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-400.5, 98.5, -33.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aSavanna Woodland"})
+					.build()
+	),
+
+	SAVANNA_WOODLAND_TO_DARK_THICKET(
+			getSlimeBlocksNear(new Pos(-415.5, 109, -16.5)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-397.5, 98, -37.5),
+			(player) -> player.teleport(new Pos(-397.5, 98, -37.5)),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-415.5, 109.5, -16.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aDark Thicket"})
+					.build()
+	),
+
+	SAVANNA_WOODLAND_TO_JUNGLE_ISLAND(
+			getSlimeBlocksNear(new Pos(-439.5, 111, -17.5)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-462.5, 121, -32.5),
+			(player) -> player.teleport(new Pos(-462.5, 121, -32.5)),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-439.5, 111.5, -17.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aJungle Island"})
+					.build()
+	),
+
+	JUNGLE_ISLAND_TO_SAVANNA_WOODLAND(
+			getSlimeBlocksNear(new Pos(-461.5, 121, -28.5)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-434.5, 110, -13.5),
+			(player) -> player.teleport(new Pos(-434.5, 110, -13.5)),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-461.5, 121.5, -28.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aSavanna Woodland"})
+					.build()
+	),
+
+	JUNGLE_ISLAND_TO_GALATEA(
+			getSlimeBlocksNear(new Pos(-488.5, 116, -40)),
+			ServerType.SKYBLOCK_THE_PARK,
+			ServerType.SKYBLOCK_GALATEA,
+			new Pos(-542.5, 108, -26.5),
+			(player) -> player.sendTo(ServerType.SKYBLOCK_GALATEA),
+			(player) -> player.getSkills().getCurrentLevel(SkillCategories.FORAGING) >= 12,
+			"§cYou must be at least Foraging Level XII to join this island!",
+			(player) -> {
+				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.FORAGING) >= 12;
+				if (!hasRequirement) {
+					return PlayerHolograms.ExternalPlayerHologram.builder()
+							.pos(new Pos(-489.5, 116.5, -40))
+							.player(player)
+							.text(new String[]{"§bTravel to:", "§aGalatea", "§cRequires Foraging Level 12"})
+							.build();
+				} else {
+					return PlayerHolograms.ExternalPlayerHologram.builder()
+							.pos(new Pos(-489.5, 116.5, -40))
+							.player(player)
+							.text(new String[]{"§bTravel to:", "§aGalatea"})
+							.build();
+				}
+			}
+	),
+
+	GALATEA_TO_JUNGLE_ISLAND(
+			getSlimeBlocksNear(new Pos(-538.5, 108, -29)),
+			ServerType.SKYBLOCK_GALATEA,
+			ServerType.SKYBLOCK_THE_PARK,
+			new Pos(-483.5, 117, -41.5),
+			(player) -> player.sendTo(ServerType.SKYBLOCK_THE_PARK),
+			(player) -> true,
+			"",
+			(player) -> PlayerHolograms.ExternalPlayerHologram.builder()
+					.pos(new Pos(-538.5, 108.5, -28.5))
+					.player(player)
+					.text(new String[]{"§bTravel to:", "§aThe Park"})
+					.build()
+	),
+	;
 
 	private static final List<LaunchPads> launchPads = new ArrayList<>();
 
