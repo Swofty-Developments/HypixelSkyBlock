@@ -252,23 +252,28 @@ public enum LaunchPads {
 	public static void register(Scheduler scheduler) {
 		launchPads.addAll(Arrays.asList(LaunchPads.values()));
 		launchPads.removeIf(launchPad -> launchPad.serverType != HypixelConst.getTypeLoader().getType());
-		Map<UUID, PlayerHolograms.ExternalPlayerHologram> hologramMap = new HashMap<>();
+        Map<UUID, List<PlayerHolograms.ExternalPlayerHologram>> hologramMap = new HashMap<>();
 
 		scheduler.scheduleTask(() -> {
-			for (LaunchPads launchPad : launchPads) {
-				List<UUID> updated = new ArrayList<>();
-				SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
-					if (hologramMap.containsKey(player.getUuid()))
-						PlayerHolograms.removeExternalPlayerHologram(hologramMap.get(player.getUuid()));
+            List<UUID> updated = new ArrayList<>();
 
-					PlayerHolograms.ExternalPlayerHologram hologram = launchPad.hologramDisplay.apply(player);
-					hologramMap.put(player.getUuid(), hologram);
-					PlayerHolograms.addExternalPlayerHologram(hologram);
-					updated.add(player.getUuid());
-				});
+            SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+                if (hologramMap.containsKey(player.getUuid())) {
+                    hologramMap.get(player.getUuid()).forEach(PlayerHolograms::removeExternalPlayerHologram);
+                    hologramMap.remove(player.getUuid());
+                }
 
-				hologramMap.keySet().removeIf(uuid -> !updated.contains(uuid));
-			}
+                List<PlayerHolograms.ExternalPlayerHologram> holograms = new ArrayList<>();
+                for (LaunchPads launchPad : launchPads) {
+                    PlayerHolograms.ExternalPlayerHologram hologram = launchPad.hologramDisplay.apply(player);
+                    holograms.add(hologram);
+                    PlayerHolograms.addExternalPlayerHologram(hologram);
+                    updated.add(player.getUuid());
+                }
+                hologramMap.put(player.getUuid(), holograms);
+            });
+
+            hologramMap.keySet().removeIf(uuid -> !updated.contains(uuid));
 		}, TaskSchedule.seconds(2), TaskSchedule.seconds(2), ExecutionType.TICK_END);
 
 		scheduler.scheduleTask(() -> {
