@@ -1,6 +1,6 @@
 package net.swofty.service.auction.endpoints;
 
-import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.service.auction.AuctionActiveDatabase;

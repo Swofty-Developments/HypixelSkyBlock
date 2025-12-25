@@ -137,9 +137,7 @@ public class RedisSkyBlockPropagatePartyEvent implements ServiceToClient {
                     );
 
             component = component.hoverEvent(hoverComponent);
-            component = component.clickEvent(net.kyori.adventure.text.event.ClickEvent.clickEvent(
-                    ClickEvent.Action.RUN_COMMAND, "/p movetoserver " + moverServer.uuid()
-            ));
+            component = component.clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/p movetoserver " + moverServer.uuid()));
             player.sendMessage(component);
         }
     }

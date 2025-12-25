@@ -203,4 +203,12 @@ public class ServiceToServerManager {
 
         return sendToServers(serverUUIDs, FromServiceChannels.KICK_FROM_GUI, message);
     }
+
+    public static CompletableFuture<Map<UUID, JSONObject>> gameInformation(UUID serverUUID, UUID playerUUID, String gameId) {
+        JSONObject message = new JSONObject()
+                .put("uuid", playerUUID)
+                .put("game-id", gameId);
+
+        return sendToServers(List.of(serverUUID), FromServiceChannels.GAME_INFORMATION, message);
+    }
 }

@@ -91,9 +91,9 @@ public class SkyBlockVelocity {
 		plugin = this;
 		server = tempServer;
 
-        limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("limbo-host-name"),
-                Integer.parseInt(Configuration.get("limbo-port")))));
-    }
+		limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("limbo-host-name"),
+				Integer.parseInt(Configuration.get("limbo-port")))));
+	}
 
 	@Subscribe
 	public void onProxyInitialization(ProxyInitializeEvent event) {
@@ -180,7 +180,7 @@ public class SkyBlockVelocity {
 	public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
 		Player player = event.getPlayer();
 
-		if (!GameManager.hasType(ServerType.PROTOTYPE_LOBBY)) {
+		if (!GameManager.hasType(ServerType.PROTOTYPE_LOBBY) || !GameManager.isAnyEmpty(ServerType.PROTOTYPE_LOBBY)) {
 			player.disconnect(
 					Component.text("§cThere are no Prototype Lobby servers available at the moment.")
 			);
@@ -219,7 +219,7 @@ public class SkyBlockVelocity {
 			return;
 		}
 
-		List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.PROTOTYPE_LOBBY);
+		List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.BEDWARS_LOBBY);
 		GameManager.GameServer toSendTo = gameServers.getFirst();
 
 		for (BalanceConfiguration configuration : configurations) {
@@ -309,21 +309,21 @@ public class SkyBlockVelocity {
         ));
     }
 
-    public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {
-        Reflections reflections = new Reflections(packageName);
-        Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(clazz);
+	public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {
+		Reflections reflections = new Reflections(packageName);
+		Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(clazz);
 
-        return subTypes.stream()
-                .map(subClass -> {
-                    try {
-                        return clazz.cast(subClass.getDeclaredConstructor().newInstance());
-                    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-                             InvocationTargetException e) {
-                        return null;
-                    }
-                })
-                .filter(java.util.Objects::nonNull);
-    }
+		return subTypes.stream()
+				.map(subClass -> {
+					try {
+						return clazz.cast(subClass.getDeclaredConstructor().newInstance());
+					} catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+							 InvocationTargetException e) {
+						return null;
+					}
+				})
+				.filter(java.util.Objects::nonNull);
+	}
 
 	private void injectPlayer(Player player) {
 		final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;

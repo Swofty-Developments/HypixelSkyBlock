@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.tabmodules;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;

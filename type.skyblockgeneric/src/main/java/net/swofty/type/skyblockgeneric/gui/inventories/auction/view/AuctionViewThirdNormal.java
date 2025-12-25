@@ -7,8 +7,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.auctions.AuctionCategories;
-import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.commons.skyblock.auctions.AuctionCategories;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.proxyapi.ProxyPlayer;
@@ -50,7 +50,6 @@ public class AuctionViewThirdNormal implements AuctionView {
         gui.set(new GUIItem(33) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add("§7Total bids: §a" + item.getBids().size() + " bids");
 
@@ -104,7 +103,6 @@ public class AuctionViewThirdNormal implements AuctionView {
 
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                            SkyBlockPlayer player = (SkyBlockPlayer) p;
                             return ItemStackCreator.getStack("§cAuction Ended", Material.BARRIER, 1,
                                     "§7This auction has ended.",
                                     "§7You did not win this auction.",
@@ -118,7 +116,6 @@ public class AuctionViewThirdNormal implements AuctionView {
                     gui.set(new GUIItem(29) {
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                            SkyBlockPlayer player = (SkyBlockPlayer) p;
                             return ItemStackCreator.getStack("§cAuction Ended", Material.BARRIER, 1,
                                     "§7This auction has ended.",
                                     "§7You did not win this auction.",
@@ -152,7 +149,6 @@ public class AuctionViewThirdNormal implements AuctionView {
 
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                            SkyBlockPlayer player = (SkyBlockPlayer) p;
                             return ItemStackCreator.getStack("§aAuction Ended", Material.EMERALD, 1,
                                     "§7This auction has ended.",
                                     "§7You won this auction.",
@@ -166,7 +162,6 @@ public class AuctionViewThirdNormal implements AuctionView {
                     gui.set(new GUIItem(29) {
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                            SkyBlockPlayer player = (SkyBlockPlayer) p;
                             return ItemStackCreator.getStack("§aAuction Ended", Material.EMERALD, 1,
                                     "§7This auction has ended.",
                                     "§7You won this auction.",
@@ -307,7 +302,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                             if (playersBid < gui.bidAmount && !alertsSentOutTo.contains(proxyPlayer.getUuid())) {
                                 alertsSentOutTo.add(proxyPlayer.getUuid());
                                 proxyPlayer.sendMessage(Component.text("§6[Auction] " + player.getFullDisplayName() + " §eoutbid you by §6" + (gui.bidAmount - playersBid) + " coins §efor the item §6" + new SkyBlockItem(item.getItem()).getDisplayName() + "§e!").clickEvent(
-                                        ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/ahview " + gui.auctionID)
+                                        ClickEvent.runCommand("/ahview " + gui.auctionID)
                                 ));
                             }
                         }
@@ -316,7 +311,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                     ProxyPlayer auctionOwner = new ProxyPlayer(item.getOriginator());
                     if (auctionOwner.isOnline().join()) {
                         auctionOwner.sendMessage(Component.text("§6[Auction] " + player.getFullDisplayName() + " §eplaced a bid of §6" + gui.bidAmount + " coins §eon your item §6" + new SkyBlockItem(item.getItem()).getDisplayName() + "§e!").clickEvent(
-                                ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/ahview " + gui.auctionID)
+                                ClickEvent.runCommand("/ahview " + gui.auctionID)
                         ));
                     }
                 });
@@ -324,7 +319,6 @@ public class AuctionViewThirdNormal implements AuctionView {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§6Submit Bid", Material.GOLD_NUGGET, 1,
                         " ",
                         "§7New Bid: §6" + gui.bidAmount + " coins",

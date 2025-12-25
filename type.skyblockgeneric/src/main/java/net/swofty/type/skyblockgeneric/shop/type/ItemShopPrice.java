@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.shop.type;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.shop.ShopPrice;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 

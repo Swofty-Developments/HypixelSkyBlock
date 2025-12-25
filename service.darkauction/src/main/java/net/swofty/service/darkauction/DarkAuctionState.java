@@ -2,8 +2,8 @@ package net.swofty.service.darkauction;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.commons.auctions.DarkAuctionPhase;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.service.darkauction.loot.DarkAuctionBookPool;
 import net.swofty.service.darkauction.loot.DarkAuctionItemPool;
 

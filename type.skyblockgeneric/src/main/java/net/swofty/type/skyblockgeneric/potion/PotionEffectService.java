@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.potion;
 
-import net.swofty.commons.item.attribute.attributes.ItemAttributePotionData;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.potion.handler.PotionEffectHandler;

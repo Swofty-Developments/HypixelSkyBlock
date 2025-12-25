@@ -11,7 +11,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;

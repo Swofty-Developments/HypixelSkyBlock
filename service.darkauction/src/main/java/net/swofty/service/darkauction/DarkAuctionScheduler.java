@@ -1,6 +1,6 @@
 package net.swofty.service.darkauction;
 
-import net.swofty.commons.auctions.DarkAuctionPhase;
+import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
 import net.swofty.commons.protocol.objects.darkauction.DarkAuctionEventProtocol;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.service.generic.redis.ServiceToServerManager;

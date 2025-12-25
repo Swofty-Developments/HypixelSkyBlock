@@ -16,6 +16,7 @@ public enum ServerType {
 	PROTOTYPE_LOBBY(false),
 	BEDWARS_LOBBY(false),
 	BEDWARS_GAME(false),
+	BEDWARS_CONFIGURATOR(false)
 	;
 
 	private final boolean isSkyBlock;

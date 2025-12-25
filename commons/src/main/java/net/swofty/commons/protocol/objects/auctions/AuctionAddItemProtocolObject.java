@@ -1,7 +1,7 @@
 package net.swofty.commons.protocol.objects.auctions;
 
-import net.swofty.commons.auctions.AuctionCategories;
-import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.commons.skyblock.auctions.AuctionCategories;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.protocol.serializers.AuctionItemSerializer;

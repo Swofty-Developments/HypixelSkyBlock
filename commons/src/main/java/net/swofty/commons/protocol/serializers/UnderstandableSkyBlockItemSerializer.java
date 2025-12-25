@@ -1,9 +1,9 @@
 package net.swofty.commons.protocol.serializers;
 
 import net.minestom.server.item.Material;
-import net.swofty.commons.item.ItemType;
-import net.swofty.commons.item.UnderstandableSkyBlockItem;
-import net.swofty.commons.item.attribute.ItemAttribute;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
 

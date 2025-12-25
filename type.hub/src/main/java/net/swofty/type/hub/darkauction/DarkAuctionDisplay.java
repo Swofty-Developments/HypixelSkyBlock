@@ -2,7 +2,7 @@ package net.swofty.type.hub.darkauction;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.hub.gui.GUIDarkAuction;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
 import net.swofty.type.skyblockgeneric.entity.GlassDisplay;

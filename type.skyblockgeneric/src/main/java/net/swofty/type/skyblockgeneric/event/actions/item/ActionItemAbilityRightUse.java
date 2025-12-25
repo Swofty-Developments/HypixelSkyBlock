@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.event.actions.item;
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.ItemStack;
-import net.swofty.commons.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

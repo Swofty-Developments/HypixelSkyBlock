@@ -5,7 +5,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionShippingComponent;
 import net.swofty.type.skyblockgeneric.item.components.SellableComponent;

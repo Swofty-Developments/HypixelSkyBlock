@@ -6,7 +6,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
 import net.minestom.server.network.packet.server.play.EntityRotationPacket;
-import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
@@ -78,6 +77,7 @@ public abstract class HypixelNPC {
 
         Thread.startVirtualThread(() -> {
             HypixelNPC.getRegisteredNPCs().forEach((npc) -> {
+                // If the main username can't be used (over 16 chars), use a blank space instead and use holograms for all lines
                 boolean playerHasNPC = perPlayerNPCs.containsKey(player.getUuid()) && perPlayerNPCs.get(player.getUuid()).getEntityImpls().containsKey(npc);
 
                 if (!playerHasNPC) {
@@ -85,21 +85,28 @@ public abstract class HypixelNPC {
                     String[] holograms = config.holograms(player);
                     Pos position = config.position(player);
 
+                    String username = holograms[holograms.length - 1];
+                    boolean overflowing = username.length() > 16;
+                    if (overflowing) {
+                        username = " ";
+                    }
+
                     Entity entity;
-                    float yOffset = 0.0f;
+                    // if overflowing, adjust yOffset downwards to replace username
+                    float yOffset = overflowing ? -0.2f : 0.0f;
                     switch (config) {
                         case HumanConfiguration humanConfig -> entity = new NPCEntityImpl(
-                                holograms[holograms.length - 1],
+                                username,
                                 humanConfig.texture(player),
                                 humanConfig.signature(player),
                                 holograms);
                         case VillagerConfiguration villagerConfig -> {
-                            entity = new NPCVillagerEntityImpl(holograms[holograms.length - 1], villagerConfig.profession());
+                            entity = new NPCVillagerEntityImpl(username, villagerConfig.profession());
                             yOffset = 0.2f;
                         }
                         case AnimalConfiguration animalConfig -> {
                             entity = new NPCAnimalEntityImpl(
-                                    holograms[holograms.length - 1],
+                                    username,
                                     animalConfig.entityType());
                             yOffset = animalConfig.hologramYOffset();
                         }
@@ -111,12 +118,13 @@ public abstract class HypixelNPC {
 
                     PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
                             .pos(position.add(0, 1.1 + yOffset, 0))
-                            .text(Arrays.copyOfRange(holograms, 0, holograms.length - 1))
+                            .text(Arrays.copyOfRange(holograms, 0, holograms.length - (overflowing ? 0 : 1)))
                             .player(player)
+                            .instance(config.instance())
                             .build();
 
                     PlayerHolograms.addExternalPlayerHologram(holo);
-                    entity.setInstance(HypixelConst.getInstanceContainer(), position);
+                    entity.setInstance(config.instance(), position);
                     entity.addViewer(player);
 
                     HypixelNPC.PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
@@ -217,6 +225,10 @@ public abstract class HypixelNPC {
 
     public void register() {
         registeredNPCs.add(this);
+    }
+
+    public void unregister() {
+        registeredNPCs.remove(this);
     }
 
     public void sendNPCMessage(HypixelPlayer player, String message) {

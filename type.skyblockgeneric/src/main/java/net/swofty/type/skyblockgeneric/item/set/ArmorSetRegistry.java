@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.item.set;
 
 import lombok.Getter;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
 import net.swofty.type.skyblockgeneric.item.set.sets.*;
 import org.jetbrains.annotations.Nullable;

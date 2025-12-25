@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.skill;
 import lombok.Data;
 import net.minestom.server.item.Material;
 import net.swofty.commons.YamlFileUtils;
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;

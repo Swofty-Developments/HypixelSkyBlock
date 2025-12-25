@@ -1,13 +1,13 @@
 package net.swofty.service.auction.endpoints;
 
-import net.swofty.commons.auctions.AuctionCategories;
-import net.swofty.commons.auctions.AuctionsFilter;
-import net.swofty.commons.auctions.AuctionsSorting;
+import net.swofty.commons.skyblock.auctions.AuctionCategories;
+import net.swofty.commons.skyblock.auctions.AuctionsFilter;
+import net.swofty.commons.skyblock.auctions.AuctionsSorting;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocolObject;
 import net.swofty.service.auction.AuctionService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
-import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import org.bson.Document;
 
 import java.util.ArrayList;

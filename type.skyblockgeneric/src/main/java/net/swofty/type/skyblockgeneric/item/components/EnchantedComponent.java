@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import net.minestom.server.item.ItemAnimation;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 

@@ -8,5 +8,6 @@ public enum ServiceType {
     DATA_MUTEX,
     PARTY,
     DARK_AUCTION,
+    ORCHESTRATOR
     ;
 }

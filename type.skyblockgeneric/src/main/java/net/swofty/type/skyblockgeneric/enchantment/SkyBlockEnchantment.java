@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.enchantment;
 
 import lombok.Builder;
-import net.swofty.commons.item.UnderstandableSkyBlockEnchantment;
+import net.swofty.commons.skyblock.item.UnderstandableSkyBlockEnchantment;
 
 import java.util.ArrayList;
 import java.util.List;

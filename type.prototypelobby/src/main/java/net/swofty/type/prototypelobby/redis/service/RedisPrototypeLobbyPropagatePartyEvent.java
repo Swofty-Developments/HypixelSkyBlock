@@ -137,9 +137,7 @@ public class RedisPrototypeLobbyPropagatePartyEvent implements ServiceToClient {
                     );
 
             component = component.hoverEvent(hoverComponent);
-            component = component.clickEvent(ClickEvent.clickEvent(
-                    ClickEvent.Action.RUN_COMMAND, "/p movetoserver " + moverServer.uuid()
-            ));
+            component = component.clickEvent(ClickEvent.runCommand("/p movetoserver " + moverServer.uuid()));
             player.sendMessage(component);
         }
     }

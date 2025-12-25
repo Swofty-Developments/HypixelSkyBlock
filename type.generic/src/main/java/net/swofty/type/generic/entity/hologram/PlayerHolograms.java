@@ -3,6 +3,7 @@ package net.swofty.type.generic.entity.hologram;
 import lombok.Builder;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
@@ -78,7 +79,7 @@ public enum PlayerHolograms {
                             HologramEntity existingEntity = perTypeCurrentEntities.get(i);
                             existingEntity.setText(lines[i]);
                             // Update existing hologram position
-                            existingEntity.setInstance(HypixelConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
+                            existingEntity.setInstance(existingEntity.getInstance(), hologram.pos.add(0, startY - (i * 0.3), 0));
                         } else {
                             // Add new hologram
                             HologramEntity entity = new HologramEntity(lines[i]);
@@ -105,10 +106,11 @@ public enum PlayerHolograms {
 
     public static void addExternalPlayerHologram(ExternalPlayerHologram hologram) {
         List<HologramEntity> entities = new ArrayList<>();
-        double startY = hologram.text.length * 0.3 - 0.3;
+        double spacing = hologram.getSpacing();
+        double startY = hologram.text.length * spacing - spacing;
         for (int i = 0; i < hologram.text.length; i++) {
             HologramEntity entity = new HologramEntity(hologram.text[i]);
-            entity.setInstance(HypixelConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
+            entity.setInstance(hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * spacing), 0));
             entity.addViewer(hologram.player);
             entities.add(entity);
         }
@@ -128,6 +130,69 @@ public enum PlayerHolograms {
         externalPlayerHolograms.remove(hologram);
     }
 
+    public static void removeExternalPlayerHologramsAt(HypixelPlayer player, Pos position) {
+        List<ExternalPlayerHologram> toRemove = new ArrayList<>();
+        for (ExternalPlayerHologram hologram : externalPlayerHolograms.keySet()) {
+            if (hologram.player.equals(player) && hologram.pos.sameBlock(position)) {
+                toRemove.add(hologram);
+            }
+        }
+        for (ExternalPlayerHologram hologram : toRemove) {
+            removeExternalPlayerHologram(hologram);
+        }
+    }
+
+    public static void updateExternalHolograms() {
+        List<ExternalPlayerHologram> toRemove = new ArrayList<>();
+
+        for (Map.Entry<ExternalPlayerHologram, List<HologramEntity>> entry : externalPlayerHolograms.entrySet()) {
+            ExternalPlayerHologram hologram = entry.getKey();
+            List<HologramEntity> hologramEntities = entry.getValue();
+
+            if (!hologram.player.isOnline()) {
+                toRemove.add(hologram);
+                continue;
+            }
+
+            // If hologram has a display function, update it
+            if (hologram.displayFunction != null) {
+                String[] newLines = hologram.displayFunction.apply(hologram.player);
+                if (newLines != null) {
+                    double spacing = hologram.getSpacing();
+                    double startY = newLines.length * spacing - spacing;
+
+                    // Update existing lines
+                    for (int i = 0; i < newLines.length && i < hologramEntities.size(); i++) {
+                        hologramEntities.get(i).setText(newLines[i]);
+                    }
+
+                    // Add new lines if needed
+                    while (hologramEntities.size() < newLines.length) {
+                        int i = hologramEntities.size();
+                        HologramEntity entity = new HologramEntity(newLines[i]);
+                        entity.setInstance(
+                                hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(),
+                                hologram.pos.add(0, startY - (i * spacing), 0)
+                        );
+                        entity.addViewer(hologram.player);
+                        hologramEntities.add(entity);
+                    }
+
+                    // Remove excess lines if needed
+                    while (hologramEntities.size() > newLines.length) {
+                        HologramEntity entity = hologramEntities.removeLast();
+                        entity.removeViewer(hologram.player);
+                        entity.remove();
+                    }
+                }
+            }
+        }
+
+        for (ExternalPlayerHologram hologram : toRemove) {
+            removeExternalPlayerHologram(hologram);
+        }
+    }
+
     public static void remove(HypixelPlayer skyBlockPlayer) {
         List<Map.Entry<PlayerHolograms, HologramEntity>> hologramEntries = entities.remove(skyBlockPlayer);
         if (hologramEntries != null) {
@@ -144,5 +209,9 @@ public enum PlayerHolograms {
         private final HypixelPlayer player;
         private final Pos pos;
         private final String[] text;
+        private final Instance instance;
+        private final Function<HypixelPlayer, String[]> displayFunction;
+        @Builder.Default
+        private final double spacing = 0.3;
     }
 }

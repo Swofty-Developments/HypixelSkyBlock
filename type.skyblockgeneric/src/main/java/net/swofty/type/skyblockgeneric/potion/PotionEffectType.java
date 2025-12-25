@@ -5,8 +5,8 @@ import net.kyori.adventure.util.RGBLike;
 import net.minestom.server.color.Color;
 import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.potion.PotionType;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.potion.handler.*;
 import org.jetbrains.annotations.Nullable;
 

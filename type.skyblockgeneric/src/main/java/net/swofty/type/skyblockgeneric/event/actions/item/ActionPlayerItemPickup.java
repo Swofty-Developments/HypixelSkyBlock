@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.event.actions.item;
 
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.network.packet.server.play.CollectItemPacket;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

@@ -6,7 +6,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
@@ -14,7 +14,6 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.skill.SkillCategory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
-import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.List;
