@@ -79,6 +79,66 @@ public class BedWarsStatsRecorder {
 		updateLeaderboards(uuid, BedwarsStatType.BEDS_BROKEN, mode, modeStats, newTotal);
 	}
 
+	public static void recordLoss(BedWarsPlayer player, BedwarsGameType gameType) {
+		BedWarsDataHandler handler = player.getBedWarsDataHandler();
+
+		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
+		BedwarsLeaderboardMode mode = BedwarsLeaderboardMode.fromGameType(gameType);
+		modeStats.recordLoss(mode);
+		modeStats.recordLoss(BedwarsLeaderboardMode.ALL);
+		if (BedwarsLeaderboardMode.CORE.includes(gameType)) {
+			modeStats.recordLoss(BedwarsLeaderboardMode.CORE);
+		}
+	}
+
+	public static void recordKill(BedWarsPlayer player, BedwarsGameType gameType) {
+		BedWarsDataHandler handler = player.getBedWarsDataHandler();
+
+		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
+		BedwarsLeaderboardMode mode = BedwarsLeaderboardMode.fromGameType(gameType);
+		modeStats.recordKill(mode);
+		modeStats.recordKill(BedwarsLeaderboardMode.ALL);
+		if (BedwarsLeaderboardMode.CORE.includes(gameType)) {
+			modeStats.recordKill(BedwarsLeaderboardMode.CORE);
+		}
+	}
+
+	public static void recordDeath(BedWarsPlayer player, BedwarsGameType gameType) {
+		BedWarsDataHandler handler = player.getBedWarsDataHandler();
+
+		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
+		BedwarsLeaderboardMode mode = BedwarsLeaderboardMode.fromGameType(gameType);
+		modeStats.recordDeath(mode);
+		modeStats.recordDeath(BedwarsLeaderboardMode.ALL);
+		if (BedwarsLeaderboardMode.CORE.includes(gameType)) {
+			modeStats.recordDeath(BedwarsLeaderboardMode.CORE);
+		}
+	}
+
+	public static void recordFinalDeath(BedWarsPlayer player, BedwarsGameType gameType) {
+		BedWarsDataHandler handler = player.getBedWarsDataHandler();
+
+		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
+		BedwarsLeaderboardMode mode = BedwarsLeaderboardMode.fromGameType(gameType);
+		modeStats.recordFinalDeath(mode);
+		modeStats.recordFinalDeath(BedwarsLeaderboardMode.ALL);
+		if (BedwarsLeaderboardMode.CORE.includes(gameType)) {
+			modeStats.recordFinalDeath(BedwarsLeaderboardMode.CORE);
+		}
+	}
+
+	public static void recordBedLost(BedWarsPlayer player, BedwarsGameType gameType) {
+		BedWarsDataHandler handler = player.getBedWarsDataHandler();
+
+		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
+		BedwarsLeaderboardMode mode = BedwarsLeaderboardMode.fromGameType(gameType);
+		modeStats.recordBedLost(mode);
+		modeStats.recordBedLost(BedwarsLeaderboardMode.ALL);
+		if (BedwarsLeaderboardMode.CORE.includes(gameType)) {
+			modeStats.recordBedLost(BedwarsLeaderboardMode.CORE);
+		}
+	}
+
 	private static void updateLeaderboards(UUID uuid, BedwarsStatType statType, BedwarsLeaderboardMode mode,
 	                                        BedWarsModeStats modeStats, long allModesTotal) {
 		String statKey = statType.getKey();

@@ -22,9 +22,9 @@ import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.leaderboard.BedWarsLeaderboardAggregator;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.bedwarslobby.tab.BedWarsPlayersOnlineModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
 import net.swofty.type.lobby.events.LobbyItemEvents;
 import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
@@ -112,10 +112,10 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return List.of(
-                        new EmptyTabModule(),
-                        new EmptyTabModule(),
-                        new EmptyTabModule(),
-                        new EmptyTabModule()
+                        new BedWarsPlayersOnlineModule(1),
+                        new BedWarsPlayersOnlineModule(2),
+                        new BedWarsPlayersOnlineModule(3),
+                        new BedWarsPlayersOnlineModule(4)
                 );
             }
         };

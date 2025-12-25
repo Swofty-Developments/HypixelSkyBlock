@@ -18,6 +18,12 @@ public class DatapointBedWarsModeStats extends Datapoint<BedWarsModeStats> {
 				json.put("wins", new JSONObject(value.getWins()));
 				json.put("finalKills", new JSONObject(value.getFinalKills()));
 				json.put("bedsBroken", new JSONObject(value.getBedsBroken()));
+				json.put("losses", new JSONObject(value.getLosses()));
+				json.put("bedsLost", new JSONObject(value.getBedsLost()));
+				json.put("kills", new JSONObject(value.getKills()));
+				json.put("deaths", new JSONObject(value.getDeaths()));
+				json.put("finalDeaths", new JSONObject(value.getFinalDeaths()));
+				json.put("winstreaks", new JSONObject(value.getWinstreaks()));
 				json.put("dailyReset", value.getDailyResetTimestamp());
 				json.put("weeklyReset", value.getWeeklyResetTimestamp());
 				json.put("monthlyReset", value.getMonthlyResetTimestamp());
@@ -34,12 +40,19 @@ public class DatapointBedWarsModeStats extends Datapoint<BedWarsModeStats> {
 				Map<String, Long> wins = parseMap(obj.optJSONObject("wins"));
 				Map<String, Long> finalKills = parseMap(obj.optJSONObject("finalKills"));
 				Map<String, Long> bedsBroken = parseMap(obj.optJSONObject("bedsBroken"));
+				Map<String, Long> losses = parseMap(obj.optJSONObject("losses"));
+				Map<String, Long> bedsLost = parseMap(obj.optJSONObject("bedsLost"));
+				Map<String, Long> kills = parseMap(obj.optJSONObject("kills"));
+				Map<String, Long> deaths = parseMap(obj.optJSONObject("deaths"));
+				Map<String, Long> finalDeaths = parseMap(obj.optJSONObject("finalDeaths"));
+				Map<String, Long> winstreaks = parseMap(obj.optJSONObject("winstreaks"));
 
 				long dailyReset = obj.optLong("dailyReset", 0);
 				long weeklyReset = obj.optLong("weeklyReset", 0);
 				long monthlyReset = obj.optLong("monthlyReset", 0);
 
 				BedWarsModeStats stats = new BedWarsModeStats(wins, finalKills, bedsBroken,
+						losses, bedsLost, kills, deaths, finalDeaths, winstreaks,
 						dailyReset, weeklyReset, monthlyReset);
 				stats.checkAndResetExpiredPeriods();
 				return stats;
