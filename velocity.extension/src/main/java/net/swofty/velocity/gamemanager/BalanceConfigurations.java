@@ -14,10 +14,11 @@ import java.util.Map;
 
 public class BalanceConfigurations {
 	public static HashMap<ServerType, List<BalanceConfiguration>> configurations = new HashMap<>(Map.ofEntries(
-			Map.entry(ServerType.SKYBLOCK_HUB, List.of(
+			Map.entry(ServerType.SKYBLOCK_ISLAND, List.of(
+					new IslandCheck(),
 					new LowestPlayerCount()
 			)),
-			Map.entry(ServerType.PROTOTYPE_LOBBY, List.of(
+			Map.entry(ServerType.SKYBLOCK_HUB, List.of(
 					new LowestPlayerCount()
 			)),
 			Map.entry(ServerType.SKYBLOCK_DUNGEON_HUB, List.of(
@@ -35,15 +36,6 @@ public class BalanceConfigurations {
 			Map.entry(ServerType.SKYBLOCK_CRIMSON_ISLE, List.of(
 					new LowestPlayerCount()
 			)),
-			Map.entry(ServerType.BEDWARS_LOBBY, List.of(
-					new LowestPlayerCount()
-			)),
-			Map.entry(ServerType.BEDWARS_GAME, List.of(
-					new ReadyGames()
-			)),
-			Map.entry(ServerType.BEDWARS_CONFIGURATOR, List.of(
-					new LowestPlayerCount()
-			)),
 			Map.entry(ServerType.SKYBLOCK_GOLD_MINE, List.of(
 					new LowestPlayerCount()
 			)),
@@ -53,8 +45,19 @@ public class BalanceConfigurations {
 			Map.entry(ServerType.SKYBLOCK_DWARVEN_MINES, List.of(
 					new LowestPlayerCount()
 			)),
-			Map.entry(ServerType.SKYBLOCK_ISLAND, List.of(
-					new IslandCheck(),
+			Map.entry(ServerType.SKYBLOCK_THE_PARK, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.PROTOTYPE_LOBBY, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.BEDWARS_LOBBY, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.BEDWARS_GAME, List.of(
+					new ReadyGames()
+			)),
+			Map.entry(ServerType.BEDWARS_CONFIGURATOR, List.of(
 					new LowestPlayerCount()
 			))
 	));

@@ -121,21 +121,24 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
                 notifiedPlayers.remove(player.getUuid());
 
                 // Execute the after finished callback
-                player.sendMessage("Done");
                 pad.getAfterFinished().accept(player);
 
                 // Check after a delay if player is still on this server (transfer failed)
-                scheduler.schedule(() -> {
-                    // If player is still on the same server and instance, teleport them back
-                    if (player.getInstance() != null && player.getInstance().equals(armorStand.getInstance())) {
-                        player.teleport(originalPosition);
-                        player.sendMessage("§cFailed to connect to the server. You have been teleported back.");
-                    }
-                    try {
-                        armorStand.remove();
-                    } catch (Exception e) {
-                    }
-                }, 2, TimeUnit.SECONDS);
+                if (pad.getServerType() != pad.getTargetServerType()) {
+                    scheduler.schedule(() -> {
+                        // If player is still on the same server and instance, teleport them back
+                        if (player.getInstance() != null && player.getInstance().equals(armorStand.getInstance())) {
+                            player.teleport(originalPosition);
+                            player.sendMessage("§cFailed to connect to the server. You have been teleported back.");
+                        }
+                        try {
+                            armorStand.remove();
+                        } catch (Exception e) {
+                        }
+                    }, 2, TimeUnit.SECONDS);
+                } else {
+                    armorStand.remove();
+                }
 
                 return;
             }
