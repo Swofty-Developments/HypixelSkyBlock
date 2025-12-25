@@ -13,6 +13,7 @@ import java.util.function.Function;
 @Getter
 public abstract class ShopItem {
 
+    private final String id;
     private final String name;
     private final String description;
     private final Function<BedwarsGameType, Integer> price;
@@ -20,7 +21,8 @@ public abstract class ShopItem {
     private final Currency currency;
     private final ItemStack display;
 
-    public ShopItem(String name, String description, int price, int amount, Currency currency, Material display) {
+    public ShopItem(String id, String name, String description, int price, int amount, Currency currency, Material display) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = (_) -> price;
@@ -29,7 +31,8 @@ public abstract class ShopItem {
         this.display = ItemStack.of(display);
     }
 
-    public ShopItem(String name, String description, Function<BedwarsGameType, Integer> price, int amount, Currency currency, Material display) {
+    public ShopItem(String id, String name, String description, Function<BedwarsGameType, Integer> price, int amount, Currency currency, Material display) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -41,7 +44,7 @@ public abstract class ShopItem {
     /**
      * Called when a player purchases an item. This method should be used to give items to the player or apply effects.
      *
-     * @param player the player who purchaseed the item
+     * @param player the player who purchased the item
      */
     public abstract void onPurchase(BedWarsPlayer player);
 

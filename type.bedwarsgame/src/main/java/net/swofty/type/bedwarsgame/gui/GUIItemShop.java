@@ -333,7 +333,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
 					}
 
 					if (shopItem == null) {
-						return ItemStack.builder(Material.AIR);
+						return FILLER_ITEM;
 					}
 
 					if (shopItem instanceof UpgradeableShopItem upgradeableShopItem) {

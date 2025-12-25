@@ -14,18 +14,18 @@ public class ReplaceAdderItem extends ShopItem {
 
 	private final Material replacementMaterial;
 
-	public ReplaceAdderItem(String name, String description, Function<BedwarsGameType, Integer> cost, Currency currency, Material material) {
-		super(name, description, cost, 1, currency, material);
+	public ReplaceAdderItem(String id, String name, String description, Function<BedwarsGameType, Integer> cost, Currency currency, Material material) {
+		super(id, name, description, cost, 1, currency, material);
 		this.replacementMaterial = Material.WOODEN_SWORD;
 	}
 
-	public ReplaceAdderItem(String name, String description, int cost, Currency currency, Material material) {
-		super(name, description, cost, 1, currency, material);
+	public ReplaceAdderItem(String id, String name, String description, int cost, Currency currency, Material material) {
+		super(id, name, description, cost, 1, currency, material);
 		this.replacementMaterial = Material.WOODEN_SWORD;
 	}
 
-	public ReplaceAdderItem(String name, String description, int cost, Currency currency, Material material, Material replacementMaterial) {
-		super(name, description, cost, 1, currency, material);
+	public ReplaceAdderItem(String id, String name, String description, int cost, Currency currency, Material material, Material replacementMaterial) {
+		super(id, name, description, cost, 1, currency, material);
 		this.replacementMaterial = replacementMaterial;
 	}
 
