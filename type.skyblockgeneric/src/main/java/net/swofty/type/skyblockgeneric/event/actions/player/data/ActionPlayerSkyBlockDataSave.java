@@ -44,6 +44,9 @@ public class ActionPlayerSkyBlockDataSave implements HypixelEventClass {
             ProfilesDatabase.collection.insertOne(newDoc);
         }
 
+        if(player.getSkyBlockIsland() != null && HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_ISLAND)
+            player.getSkyBlockIsland().runVacantCheck();
+
         // Evict from SkyBlock cache
         SkyBlockDataHandler.skyBlockCache.remove(playerUuid);
 
