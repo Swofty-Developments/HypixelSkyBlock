@@ -11,6 +11,7 @@ public enum CustomWorlds {
 	SKYBLOCK_DWARVEN_MINES("hypixel_skyblock_dwarven_mines"),
 	SKYBLOCK_THE_PARK("hypixel_skyblock_the_park"),
 	SKYBLOCK_GALATEA("hypixel_skyblock_galatea"),
+	SKYBLOCK_BACKWATER_BAYOU("hypixel_skyblock_backwater_bayou"),
 	SKYBLOCK_DUNGEON_HUB("hypixel_skyblock_dungeon_hub"),
 	PROTOTYPE_LOBBY("hypixel_prototype_lobby"),
 	BEDWARS_LOBBY("hypixel_bedwars_lobby"),

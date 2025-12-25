@@ -51,6 +51,9 @@ public class BalanceConfigurations {
 			Map.entry(ServerType.SKYBLOCK_GALATEA, List.of(
 					new LowestPlayerCount()
 			)),
+			Map.entry(ServerType.SKYBLOCK_BACKWATER_BAYOU, List.of(
+					new LowestPlayerCount()
+			)),
 			Map.entry(ServerType.PROTOTYPE_LOBBY, List.of(
 					new LowestPlayerCount()
 			)),
