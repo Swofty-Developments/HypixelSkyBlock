@@ -3,7 +3,7 @@ layout: home
 hero:
   name: HypixelSkyBlock
   text: Minestom Recreation
-  tagline: A 1.21.1 recreation of Hypixel SkyBlock with a properly abstracted, scalable codebase
+  tagline: A 1.21.11 recreation of Hypixel SkyBlock with a properly abstracted, scalable codebase
   actions:
     - theme: brand
       text: Get Started
