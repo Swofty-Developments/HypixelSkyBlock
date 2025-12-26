@@ -14,6 +14,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCSolo extends HypixelNPC {
 	private static List<UnderstandableProxyServer> cacheServers = new ArrayList<>();
 	private static long lastCacheTime = 0;

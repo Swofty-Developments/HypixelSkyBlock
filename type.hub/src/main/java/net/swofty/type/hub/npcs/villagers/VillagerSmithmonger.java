@@ -8,6 +8,8 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class VillagerSmithmonger extends HypixelNPC {
     public VillagerSmithmonger() {
         super(new VillagerConfiguration() {

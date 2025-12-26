@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
 import net.minestom.server.network.packet.server.play.EntityRotationPacket;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
@@ -14,6 +15,7 @@ import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.entity.npc.impl.NPCAnimalEntityImpl;
 import net.swofty.type.generic.entity.npc.impl.NPCEntityImpl;
 import net.swofty.type.generic.entity.npc.impl.NPCVillagerEntityImpl;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 
@@ -214,15 +216,6 @@ public abstract class HypixelNPC {
 
     public abstract void onClick(NPCInteractEvent event);
 
-    /**
-     * Called when a NPC is called (with an Abiphone) by a player.
-     *
-     * @param player The player who called the NPC.
-     */
-    public void onCalled(HypixelPlayer player) {
-
-    }
-
     public void register() {
         registeredNPCs.add(this);
     }
@@ -237,9 +230,6 @@ public abstract class HypixelNPC {
 
     public void sendNPCAbiphoneMessage(HypixelPlayer player, String message) {
         player.sendMessage("§e[NPC] " + getName() + "§f: §b✆ §f" + message);
-    }
-
-    public record NPCInteractEvent(HypixelPlayer player, HypixelNPC npc) {
     }
 
     protected DialogueController dialogue() {
