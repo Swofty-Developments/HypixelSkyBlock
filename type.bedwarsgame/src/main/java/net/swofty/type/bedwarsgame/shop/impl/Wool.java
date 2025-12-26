@@ -10,7 +10,7 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 public class Wool extends ShopItem {
 
 	public Wool() {
-		super("Wool", "Great for bridging across islands.\nTurns into your team's color.", 4, 16, Currency.IRON, Material.WHITE_WOOL);
+		super("wool", "Wool", "Great for bridging across islands.\nTurns into your team's color.", 4, 16, Currency.IRON, Material.WHITE_WOOL);
 	}
 
 	private Material mapTeamToWool(BedWarsMapsConfig.TeamKey teamKey) {

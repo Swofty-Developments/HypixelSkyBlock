@@ -7,8 +7,8 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
 public class BasicItem extends ShopItem {
 
-	public BasicItem(String name, String description, int cost, int amount, Currency currency, Material material) {
-		super(name, description, cost, amount, currency, material);
+	public BasicItem(String id, String name, String description, int cost, int amount, Currency currency, Material material) {
+		super(id, name, description, cost, amount, currency, material);
 	}
 
 	@Override

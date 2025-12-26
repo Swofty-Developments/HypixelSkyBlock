@@ -17,9 +17,9 @@ public abstract class UpgradeableShopItem extends ShopItem {
 	private final List<UpgradeableItemTier> tiers;
 	private final Tag<Integer> upgradeTag;
 
-	public UpgradeableShopItem(String name, String description, List<UpgradeableItemTier> tiers, Tag<Integer> upgradeTag) {
+	public UpgradeableShopItem(String id, String name, String description, List<UpgradeableItemTier> tiers, Tag<Integer> upgradeTag) {
 		// The initial price and other details are taken from the first tier.
-		super(name, description, tiers.getFirst().price(), 1, tiers.getFirst().currency(), tiers.getFirst().material());
+		super(id, name, description, tiers.getFirst().price(), 1, tiers.getFirst().currency(), tiers.getFirst().material());
 		this.tiers = tiers;
 		this.upgradeTag = upgradeTag;
 	}
