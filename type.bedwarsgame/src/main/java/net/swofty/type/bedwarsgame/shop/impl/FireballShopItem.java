@@ -9,7 +9,7 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 public class FireballShopItem extends ShopItem {
 
 	public FireballShopItem() {
-		super("Fireball", "Right-click to launch! Great to knock\nback enemies walking on thin bridges.", 40, 1, Currency.IRON, Material.FIRE_CHARGE);
+		super("fireball", "Fireball", "Right-click to launch! Great to knock\nback enemies walking on thin bridges.", 40, 1, Currency.IRON, Material.FIRE_CHARGE);
 	}
 
 	@Override

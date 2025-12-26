@@ -10,7 +10,7 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 public class HardenedClay extends ShopItem {
 
 	public HardenedClay() {
-		super("Hardened Clay", "Basic block to defend your bed.", 12, 16, Currency.IRON, Material.TERRACOTTA);
+		super("hardened_clay", "Hardened Clay", "Basic block to defend your bed.", 12, 16, Currency.IRON, Material.TERRACOTTA);
 	}
 
 	private Material mapTeamToTerracotta(BedWarsMapsConfig.TeamKey teamKey) {

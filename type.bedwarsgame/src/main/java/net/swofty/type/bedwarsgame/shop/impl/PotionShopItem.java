@@ -13,8 +13,8 @@ public class PotionShopItem extends ShopItem {
 
 	final PotionType potionType;
 
-	public PotionShopItem(String name, String description, int cost, int amount, Currency currency, PotionType potionType) {
-		super(name, description, cost, amount, currency, Material.POTION);
+	public PotionShopItem(String id, String name, String description, int cost, int amount, Currency currency, PotionType potionType) {
+		super(id, name, description, cost, amount, currency, Material.POTION);
 		this.potionType = potionType;
 	}
 

@@ -16,8 +16,8 @@ public class ArmorShopItem extends ShopItem {
 	private final Material leggings;
 	private final int armorLevel;
 
-	public ArmorShopItem(String name, String description, int price, Currency currency, Material boots, Material leggings, int armorLevel) {
-		super(name, description, price, 1, currency, boots);
+	public ArmorShopItem(String id, String name, String description, int price, Currency currency, Material boots, Material leggings, int armorLevel) {
+		super(id, name, description, price, 1, currency, boots);
 		this.boots = boots;
 		this.leggings = leggings;
 		this.armorLevel = armorLevel;

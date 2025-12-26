@@ -9,7 +9,7 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 public class GappleShopItem extends ShopItem {
 
 	public GappleShopItem() {
-		super("Golden Apple", "Well-rounded healing.", 3, 1, Currency.GOLD, Material.GOLDEN_APPLE);
+		super("golden_apple", "Golden Apple", "Well-rounded healing.", 3, 1, Currency.GOLD, Material.GOLDEN_APPLE);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 public class BridgeEggShopItem extends ShopItem {
 
 	public BridgeEggShopItem() {
-		super("Bridge Egg", "This egg creates a bridge in its trail\nafter being thrown.", 1, 1, Currency.EMERALD, Material.EGG);
+		super("bridge_egg", "Bridge Egg", "This egg creates a bridge in its trail\nafter being thrown.", 1, 1, Currency.EMERALD, Material.EGG);
 	}
 
 	@Override

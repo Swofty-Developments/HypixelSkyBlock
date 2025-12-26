@@ -12,8 +12,8 @@ public class BowShopItem extends ShopItem {
 
 	final EnchantmentList enchantmentList;
 
-	public BowShopItem(String name, String description, int price, Currency currency, EnchantmentList enchantmentList) {
-		super(name, description, price, 1, currency, Material.BOW);
+	public BowShopItem(String id, String name, String description, int price, Currency currency, EnchantmentList enchantmentList) {
+		super(id, name, description, price, 1, currency, Material.BOW);
 		this.enchantmentList = enchantmentList;
 	}
 
