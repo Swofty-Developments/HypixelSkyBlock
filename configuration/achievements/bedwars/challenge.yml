@@ -234,11 +234,11 @@ achievements:
 
   - id: "bedwars.minefield"
     name: "Minefield"
-    description: "Place 10 traps in a single game"
+    description: "Place 3 traps in a single game"
     type: CHALLENGE
     points: 10
     trigger: "bedwars.traps_placed"
-    goal: 10
+    goal: 1
     perGame: true
 
   - id: "bedwars.not_today"
@@ -294,6 +294,13 @@ achievements:
     goal: 5
     perGame: true
 
+  - id: "bedwars.sneaky_rusher"
+    name: "Sneaky Rusher"
+    description: "Destroy a bed while being invisible"
+    points: 5
+    trigger: "bedwars.sneaky_rusher_trigger"
+    goal: 1
+
   - id: "bedwars.ultimate_defense"
     name: "Ultimate Defense"
     description: "Have 5 active upgrades at once"
@@ -311,11 +318,11 @@ achievements:
     goal: 10
     perGame: true
 
-  - id: "bed_wars.that_s_a_first"
+  - id: "bedwars.thats_a_first"
     name: "That's a First"
     description: "Win your first game of Bed Wars."
     type: CHALLENGE
     points: 5
-    trigger: "bedwars.thats_a_first_trigger"
+    trigger: "bedwars.wins"
     goal: 1
 

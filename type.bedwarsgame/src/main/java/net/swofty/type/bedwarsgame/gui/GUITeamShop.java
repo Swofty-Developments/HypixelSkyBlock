@@ -163,6 +163,12 @@ public class GUITeamShop extends HypixelInventoryGUI {
 
 					Game playerGame = TypeBedWarsGameLoader.getPlayerGame(player);
 					if (playerGame == null || tag == null) return;
+					int trapSize = playerGame.getTeamManager().getTeamTraps(tag).size();
+					if (trapSize >= 3) {
+						player.sendMessage("§cYou can't have more traps than 3");
+						playClickSound(player);
+					}
+
 					Trap trap = traps.get(index);
 					int price = trap.getPrice(playerGame, tag);
 					int owned = Arrays.stream(player.getInventory().getItemStacks())
@@ -173,11 +179,17 @@ public class GUITeamShop extends HypixelInventoryGUI {
 						playClickSound(player);
 						return;
 					}
+
 					BedWarsInventoryManipulator.removeItems(player, trap.getCurrency().getMaterial(), price);
 					playerGame.getTeamManager().addTeamTrap(tag, trap.getKey());
 					broadcastTeamPurchase(playerGame, tag, player, trap.getName());
 					playBuySound(player);
 					updateGUI(player);
+					if (trapSize == 2) {
+						for (BedWarsPlayer teamPlayer : game.getTeamManager().getPlayersOnTeam(player.getTeamKey())) {
+							teamPlayer.getAchievementHandler().completeAchievement("bedwars.minefield");
+						}
+					}
 				}
 
 				@Override

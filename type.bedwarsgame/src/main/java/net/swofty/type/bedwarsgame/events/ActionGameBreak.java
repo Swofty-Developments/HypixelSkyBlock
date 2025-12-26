@@ -6,6 +6,7 @@ import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
@@ -63,7 +64,7 @@ public class ActionGameBreak implements HypixelEventClass {
 					return;
 				}
 				if (!game.getTeamManager().isBedAlive(teamKey)) {
-					// Bed already destroyed logically, block might linger if not cleared perfectly
+					// Bed already destroyed logically; block might linger if not cleared perfectly
 					event.setCancelled(true);
 					return;
 				}
@@ -71,6 +72,10 @@ public class ActionGameBreak implements HypixelEventClass {
 				BedWarsStatsRecorder.recordBedBroken(player, game.getBedwarsGameType());
 				player.getInstance().setBlock(feetPoint, Block.AIR);
 				player.getInstance().setBlock(headPoint, Block.AIR);
+
+				if (player.hasEffect(PotionEffect.INVISIBILITY)) {
+					player.getAchievementHandler().completeAchievement("bedwars.sneaky_rusher"); // break an bed while invisible
+				}
 
 				for (BedWarsPlayer p : game.getPlayers()) {
 					p.sendMessage(String.format("§c§lBED DESTRUCTION §r§cTeam %s's bed was destroyed by %s%s!",

@@ -518,6 +518,7 @@ public final class Game {
 			// Record win for players on the winning team
 			if (finalWinningTeam != null && finalWinningTeam.getName().equalsIgnoreCase(player.getTeamName())) {
 				BedWarsStatsRecorder.recordWin(player, bedwarsGameType);
+				player.getAchievementHandler().addProgressByTrigger("bedwars.wins", 1);
 			}
 
 			if (player.getGameMode() != GameMode.SPECTATOR) {
