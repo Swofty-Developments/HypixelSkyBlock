@@ -40,12 +40,12 @@ This project requires substantial resources to run properly. Make sure your syst
 
 The following ports are used by default:
 
-| Port | Service |
-|------|---------|
+| Port  | Service                             |
+|-------|-------------------------------------|
 | 25565 | Velocity Proxy (player connections) |
-| 27017 | MongoDB |
-| 6379 | Redis |
-| 8080 | API Service |
+| 27017 | MongoDB                             |
+| 6379  | Redis                               |
+| 8080  | API Service                         |
 
 :::alert warning
 Ensure these ports are available and not blocked by your firewall when running locally.

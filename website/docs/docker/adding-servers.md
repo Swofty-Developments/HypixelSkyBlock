@@ -28,10 +28,10 @@ Add this template to your `docker-compose.yml`:
 
 Replace the placeholders:
 
-| Placeholder | Description | Example |
-|-------------|-------------|---------|
+| Placeholder     | Description           | Example            |
+|-----------------|-----------------------|--------------------|
 | `<server_name>` | Unique container name | `hypixelcore_hub2` |
-| `<ServerType>` | Valid ServerType enum | `SKYBLOCK_HUB` |
+| `<ServerType>`  | Valid ServerType enum | `SKYBLOCK_HUB`     |
 
 ## Example: Adding a Second Hub
 

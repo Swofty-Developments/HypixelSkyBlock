@@ -4,16 +4,16 @@ Services are independent microservices that handle specific features. They commu
 
 ## Overview
 
-| Service | JAR Name | Purpose |
-|---------|----------|---------|
-| API | `ServiceAPI.jar` | REST API for external access |
-| Auction House | `ServiceAuctionHouse.jar` | Manages auction listings |
-| Bazaar | `ServiceBazaar.jar` | Market/trading operations |
-| Party | `ServiceParty.jar` | Player party management |
-| Item Tracker | `ServiceItemTracker.jar` | Tracks items across servers |
-| Data Mutex | `ServiceDataMutex.jar` | Distributed data locking |
-| Dark Auction | `ServiceDarkAuction.jar` | Dark auction events |
-| Orchestrator | `ServiceOrchestrator.jar` | Game server orchestration |
+| Service       | JAR Name                  | Purpose                      |
+|---------------|---------------------------|------------------------------|
+| API           | `ServiceAPI.jar`          | REST API for external access |
+| Auction House | `ServiceAuctionHouse.jar` | Manages auction listings     |
+| Bazaar        | `ServiceBazaar.jar`       | Market/trading operations    |
+| Party         | `ServiceParty.jar`        | Player party management      |
+| Item Tracker  | `ServiceItemTracker.jar`  | Tracks items across servers  |
+| Data Mutex    | `ServiceDataMutex.jar`    | Distributed data locking     |
+| Dark Auction  | `ServiceDarkAuction.jar`  | Dark auction events          |
+| Orchestrator  | `ServiceOrchestrator.jar` | Game server orchestration    |
 
 ## Download
 

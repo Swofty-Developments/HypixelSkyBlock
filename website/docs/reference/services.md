@@ -1,6 +1,6 @@
 # Services Reference
 
-Services are microservices that handle specific features independently from game servers.
+Services are microservices that handle specific features independently of game servers.
 
 ## Architecture Overview
 
@@ -237,16 +237,16 @@ ServiceInitializer.register(
 
 ## Memory Requirements
 
-| Service | Minimum RAM | Recommended RAM |
-|---------|-------------|-----------------|
-| API | 256 MB | 512 MB |
-| Auction House | 256 MB | 512 MB |
-| Bazaar | 256 MB | 512 MB |
-| Party | 128 MB | 256 MB |
-| Item Tracker | 128 MB | 256 MB |
-| Data Mutex | 128 MB | 256 MB |
-| Dark Auction | 128 MB | 256 MB |
-| Orchestrator | 128 MB | 256 MB |
+| Service       | Minimum RAM | Recommended RAM |
+|---------------|-------------|-----------------|
+| API           | 256 MB      | 512 MB          |
+| Auction House | 256 MB      | 512 MB          |
+| Bazaar        | 256 MB      | 512 MB          |
+| Party         | 128 MB      | 256 MB          |
+| Item Tracker  | 128 MB      | 256 MB          |
+| Data Mutex    | 128 MB      | 256 MB          |
+| Dark Auction  | 128 MB      | 256 MB          |
+| Orchestrator  | 128 MB      | 256 MB          |
 
 ## Docker Reference
 
