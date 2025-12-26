@@ -1,4 +1,4 @@
-package net.swofty.type.goldmine.gui;
+package net.swofty.type.goldmine.gui.rusty;
 
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
@@ -23,7 +23,7 @@ public class GUIRusty extends HypixelInventoryGUI {
         set(new GUIClickableItem(10) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-
+                new GUIRustyWeaponsAndGear().open(player);
             }
 
             @Override
@@ -42,13 +42,13 @@ public class GUIRusty extends HypixelInventoryGUI {
         set(new GUIClickableItem(12) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-
+                new GUIRustyPetsAndPetItems().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack(
-                        "§aPets", Material.PLAYER_HEAD, 1,
+                return ItemStackCreator.getStackHead(
+                        "§aPets", "4e794274c1bb197ad306540286a7aa952974f5661bccf2b725424f6ed79c7884", 1,
                         "§7Contains pets, and some reobtainable",
                         "§7pet items from all around SkyBlock",
                         "§7",
@@ -60,13 +60,13 @@ public class GUIRusty extends HypixelInventoryGUI {
         set(new GUIClickableItem(14) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-
+                new GUIRustyAccessories().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack(
-                        "§aAccessories", Material.PLAYER_HEAD, 1,
+                return ItemStackCreator.getStackHead(
+                        "§aAccessories", "3ada666715bfd2aa9fbd81daef59b9fe1c96c4fa0d08dbc72eae5633177dbf88", 1,
                         "§7Contains accessories and talismans",
                         "§7from all around SkyBlock.",
                         "§7",
@@ -78,7 +78,7 @@ public class GUIRusty extends HypixelInventoryGUI {
         set(new GUIClickableItem(16) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-
+                new GUIRustyMiscellaneous().open(player);
             }
 
             @Override

@@ -1,4 +1,4 @@
-package net.swofty.type.goldmine.villagers;
+package net.swofty.type.goldmine.npcs.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
@@ -7,9 +7,10 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.goldmine.gui.GUIRusty;
+import net.swofty.type.goldmine.gui.rusty.GUIRusty;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AbiphoneComponent;
+import net.swofty.type.skyblockgeneric.mission.missions.lazyminer.MissionFindLazyMinerPickaxe;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
@@ -61,7 +62,7 @@ public class VillagerRusty extends HypixelNPC {
 		}
 
 		boolean hasSpokenAboutPickaxe = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY_ABOUT_PICKAXE);
-		boolean hasFoundPickaxe = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_FOUND_LAZY_MINER_PICKAXE);
+		boolean hasFoundPickaxe = player.getMissionData().hasCompleted(MissionFindLazyMinerPickaxe.class);
 		if (!hasSpokenAboutPickaxe && hasFoundPickaxe) {
 			setDialogue(player, "found-pickaxe").thenRun(() -> {
 				player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY_ABOUT_PICKAXE, true);
