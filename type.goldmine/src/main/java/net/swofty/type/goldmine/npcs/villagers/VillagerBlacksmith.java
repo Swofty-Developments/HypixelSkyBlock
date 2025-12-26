@@ -1,4 +1,4 @@
-package net.swofty.type.goldmine.villagers;
+package net.swofty.type.goldmine.npcs.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
