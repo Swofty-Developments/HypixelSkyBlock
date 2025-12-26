@@ -58,14 +58,14 @@ Or use the stop button in Docker Desktop.
 
 The Docker Compose setup starts:
 
-| Container | Purpose |
-|-----------|---------|
-| MongoDB | Database |
-| Redis | Caching & messaging |
-| Velocity Proxy | Player connections |
-| NanoLimbo | Connection queue |
-| Game Servers | Gameplay instances |
-| Services | Microservices |
+| Container      | Purpose             |
+|----------------|---------------------|
+| MongoDB        | Database            |
+| Redis          | Caching & messaging |
+| Velocity Proxy | Player connections  |
+| NanoLimbo      | Connection queue    |
+| Game Servers   | Gameplay instances  |
+| Services       | Microservices       |
 
 ## Logs and Debugging
 

@@ -19,14 +19,14 @@ This implementation is under active development and is not yet production-ready.
 
 The project is organized into several module types:
 
-| Module Type | Purpose |
-|-------------|---------|
-| `commons` | Shared enums, configs, and protocols |
-| `service.*` | Independent microservices (API, Auctions, Bazaar, etc.) |
-| `type.*` | Server type implementations (Hub, Island, Dungeons, etc.) |
-| `loader` | Main entry point (HypixelCore.jar) |
-| `velocity.extension` | Velocity proxy plugin |
-| `packer` | Resource pack builder |
+| Module Type          | Purpose                                                   |
+|----------------------|-----------------------------------------------------------|
+| `commons`            | Shared enums, configs, and protocols                      |
+| `service.*`          | Independent microservices (API, Auctions, Bazaar, etc.)   |
+| `type.*`             | Server type implementations (Hub, Island, Dungeons, etc.) |
+| `loader`             | Main entry point (HypixelCore.jar)                        |
+| `velocity.extension` | Velocity proxy plugin                                     |
+| `packer`             | Resource pack builder                                     |
 
 ## Related Projects
 

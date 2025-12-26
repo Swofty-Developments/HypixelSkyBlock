@@ -6,23 +6,27 @@ ServerTypes define the different game modes and locations that can be run as sep
 
 These server types are part of the SkyBlock gamemode and share SkyBlock-specific functionality.
 
-| ServerType | Description | World Required |
-|------------|-------------|----------------|
-| `SKYBLOCK_ISLAND` | Player personal islands | `hypixel_skyblock_island_template` |
-| `SKYBLOCK_HUB` | Main SkyBlock hub | `hypixel_skyblock_hub` |
-| `SKYBLOCK_SPIDERS_DEN` | Spider's Den area | Custom world |
-| `SKYBLOCK_THE_END` | The End dimension | Custom world |
-| `SKYBLOCK_DUNGEON_HUB` | Dungeon hub area | Custom world |
-| `SKYBLOCK_THE_FARMING_ISLANDS` | Farming Islands | Custom world |
-| `SKYBLOCK_GOLD_MINE` | Gold Mine location | Custom world |
-| `SKYBLOCK_DEEP_CAVERNS` | Deep Caverns area | Custom world |
-| `SKYBLOCK_DWARVEN_MINES` | Dwarven Mines | Custom world |
+| ServerType                     | Description     | World Required                     |
+|--------------------------------|-----------------|------------------------------------|
+| `SKYBLOCK_ISLAND`              | Personal Island | `hypixel_skyblock_island_template` |
+| `SKYBLOCK_HUB`                 | Hub             | `hypixel_skyblock_hub`             |
+| `SKYBLOCK_SPIDERS_DEN`         | Spider's Den    | `hypixel_skyblock_spiders_den`     |
+| `SKYBLOCK_THE_END`             | The End         | `hypixel_skyblock_the_end`         |
+| `SKYBLOCK_CRIMSON_ISLE`        | Crimson isle    | `hypixel_skyblock_crimson_isle`    |
+| `SKYBLOCK_DUNGEON_HUB`         | Dungeon hub     | `hypixel_skyblock_dungeon_hub`     |
+| `SKYBLOCK_THE_FARMING_ISLANDS` | Farming Islands | `hypixel_skyblock_hub`             |
+| `SKYBLOCK_GOLD_MINE`           | Gold Mine       | `hypixel_skyblock_gold_mine`       |
+| `SKYBLOCK_DEEP_CAVERNS`        | Deep Caverns    | `hypixel_skyblock_deep_caverns`    |
+| `SKYBLOCK_DWARVEN_MINES`       | Dwarven Mines   | `hypixel_skyblock_dwarven_mines`   |
+| `SKYBLOCK_THE_PARK`            | The Park        | `hypixel_skyblock_the_park`        |
+| `SKYBLOCK_GALATEA`             | Galatea         | `hypixel_skyblock_galatea`         |
+| `SKYBLOCK_BACKWATER_BAYOU`     | Backwater Bayou | `hypixel_skyblock_galatea`         |
 
 ### Starting a SkyBlock Server
 
 ```bash
-java -jar HypixelCore.jar SKYBLOCK_HUB
 java -jar HypixelCore.jar SKYBLOCK_ISLAND
+java -jar HypixelCore.jar SKYBLOCK_HUB
 java -jar HypixelCore.jar SKYBLOCK_SPIDERS_DEN
 ```
 
@@ -30,11 +34,11 @@ java -jar HypixelCore.jar SKYBLOCK_SPIDERS_DEN
 
 These server types run independently of SkyBlock features.
 
-| ServerType | Description |
-|------------|-------------|
-| `PROTOTYPE_LOBBY` | Prototype/testing lobby |
-| `BEDWARS_LOBBY` | BedWars lobby server |
-| `BEDWARS_GAME` | Active BedWars game server |
+| ServerType             | Description                    |
+|------------------------|--------------------------------|
+| `PROTOTYPE_LOBBY`      | Prototype/testing lobby        |
+| `BEDWARS_LOBBY`        | BedWars lobby server           |
+| `BEDWARS_GAME`         | Active BedWars game server     |
 | `BEDWARS_CONFIGURATOR` | BedWars map configuration tool |
 
 ### Starting Non-SkyBlock Servers
@@ -106,11 +110,11 @@ The proxy will distribute players across all available instances.
 
 ### Required Worlds
 
-| World | Location | Used By |
-|-------|----------|---------|
-| `hypixel_skyblock_hub` | `configuration/skyblock/islands/` | SKYBLOCK_HUB |
+| World                              | Location                          | Used By         |
+|------------------------------------|-----------------------------------|-----------------|
+| `hypixel_skyblock_hub`             | `configuration/skyblock/islands/` | SKYBLOCK_HUB    |
 | `hypixel_skyblock_island_template` | `configuration/skyblock/islands/` | SKYBLOCK_ISLAND |
-| `hypixel_prototype_lobby` | `configuration/` | PROTOTYPE_LOBBY |
+| `hypixel_prototype_lobby`          | `configuration/`                  | PROTOTYPE_LOBBY |
 
 ### Custom Worlds
 
@@ -119,15 +123,15 @@ Other locations require their own world files. These can be created or obtained 
 ## Docker Reference
 
 ```yaml
-# SkyBlock Hub
-hypixelcore_hub:
-  environment:
-    SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_HUB
-
 # SkyBlock Island
 hypixelcore_island:
   environment:
     SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_ISLAND
+
+# SkyBlock Hub
+hypixelcore_hub:
+  environment:
+    SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_HUB
 
 # Spider's Den
 hypixelcore_spiders:

@@ -20,13 +20,13 @@ The main configuration file shared by all servers and services.
 
 ### Fields
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `velocity-secret` | Yes | Must match `forwarding.secret` from Velocity |
-| `mongodb-uri` | Yes | MongoDB connection string |
-| `redis-uri` | Yes | Redis connection string |
-| `resource-pack-url` | No | URL to download resource pack |
-| `resource-pack-hash` | No | SHA1 hash for pack verification |
+| Field                | Required | Description                                  |
+|----------------------|----------|----------------------------------------------|
+| `velocity-secret`    | Yes      | Must match `forwarding.secret` from Velocity |
+| `mongodb-uri`        | Yes      | MongoDB connection string                    |
+| `redis-uri`          | Yes      | Redis connection string                      |
+| `resource-pack-url`  | No       | URL to download resource pack                |
+| `resource-pack-hash` | No       | SHA1 hash for pack verification              |
 
 ### Docker Configuration
 
@@ -140,24 +140,24 @@ services/
 
 Some settings can be overridden via environment variables:
 
-| Variable | Description |
-|----------|-------------|
+| Variable      | Description                 |
+|---------------|-----------------------------|
 | `MONGODB_URI` | Override MongoDB connection |
-| `REDIS_URI` | Override Redis connection |
-| `API_PORT` | Override API service port |
+| `REDIS_URI`   | Override Redis connection   |
+| `API_PORT`    | Override API service port   |
 
 ## Database Collections
 
 MongoDB collections created automatically:
 
-| Collection | Purpose |
-|------------|---------|
-| `profiles` | Player profiles and data |
-| `users` | User accounts |
-| `auction_active` | Active auctions |
-| `auction_inactive` | Completed auctions |
-| `orders` | Bazaar orders |
-| `tracked_items` | Item tracking |
-| `regions` | World regions |
-| `fairysouls` | Fairy soul locations |
-| `crystals` | Hub crystal locations |
+| Collection         | Purpose                  |
+|--------------------|--------------------------|
+| `profiles`         | Player profiles and data |
+| `users`            | User accounts            |
+| `auction_active`   | Active auctions          |
+| `auction_inactive` | Completed auctions       |
+| `orders`           | Bazaar orders            |
+| `tracked_items`    | Item tracking            |
+| `regions`          | World regions            |
+| `fairysouls`       | Fairy soul locations     |
+| `crystals`         | Hub crystal locations    |
