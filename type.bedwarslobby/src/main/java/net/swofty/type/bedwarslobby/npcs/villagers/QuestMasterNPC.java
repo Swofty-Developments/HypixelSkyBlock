@@ -2,10 +2,11 @@ package net.swofty.type.bedwarslobby.npcs.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.swofty.type.bedwarslobby.gui.GUIBedWarsQuests;
+import net.swofty.type.generic.achievement.AchievementCategory;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.lobby.gui.GUIGameQuests;
 
 public class QuestMasterNPC extends HypixelNPC {
 
@@ -39,6 +40,6 @@ public class QuestMasterNPC extends HypixelNPC {
 
 	@Override
 	public void onClick(NPCInteractEvent event) {
-		new GUIBedWarsQuests().open(event.player());
+		new GUIGameQuests(AchievementCategory.BEDWARS).open(event.player());
 	}
 }

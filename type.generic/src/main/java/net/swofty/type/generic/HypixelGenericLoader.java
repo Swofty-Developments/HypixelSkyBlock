@@ -35,9 +35,12 @@ import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.achievement.AchievementRegistry;
+import net.swofty.type.generic.achievement.AchievementStatisticsService;
 import net.swofty.type.generic.leaderboard.LeaderboardService;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
+import net.swofty.type.generic.quest.QuestRegistry;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -177,6 +180,13 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
 
         // Initialize leaderboard service (uses Redis for O(log N) leaderboard operations)
         LeaderboardService.connect(Configuration.get("redis-uri"));
+
+        // Load achievement and quest registries from YAML configuration
+        AchievementRegistry.loadFromConfiguration();
+        QuestRegistry.loadFromConfiguration();
+
+        // Initialize achievement statistics service for unlock percentages
+        AchievementStatisticsService.initialize();
 
         // Register game data handlers
         GameDataHandlerRegistry.register(new BedWarsDataHandler());

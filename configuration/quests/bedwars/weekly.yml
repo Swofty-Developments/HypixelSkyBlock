@@ -1,0 +1,53 @@
+# BedWars Weekly Quests
+# Resets every Thursday at midnight UTC
+
+quests:
+  - id: "bedwars.weekly.win_games"
+    name: "Weekly Winner"
+    description: "Win 10 games of Bed Wars"
+    type: WEEKLY
+    trigger: "bedwars.games_won"
+    goal: 10
+    rewards:
+      hypixel_experience: 10000
+      game_experience: 500
+
+  - id: "bedwars.weekly.kill_players"
+    name: "Weekly Slayer"
+    description: "Kill 100 players"
+    type: WEEKLY
+    trigger: "bedwars.kills"
+    goal: 100
+    rewards:
+      hypixel_experience: 8000
+      game_experience: 400
+
+  - id: "bedwars.weekly.destroy_beds"
+    name: "Weekly Bed Destroyer"
+    description: "Destroy 25 beds"
+    type: WEEKLY
+    trigger: "bedwars.beds_destroyed"
+    goal: 25
+    rewards:
+      hypixel_experience: 8000
+      game_experience: 400
+
+  - id: "bedwars.weekly.final_kills"
+    name: "Weekly Eliminator"
+    description: "Get 50 final kills"
+    type: WEEKLY
+    trigger: "bedwars.final_kills"
+    goal: 50
+    rewards:
+      hypixel_experience: 10000
+      game_experience: 500
+
+  - id: "bedwars.weekly.games_played"
+    name: "Dedicated Player"
+    description: "Play 25 games of Bed Wars"
+    type: WEEKLY
+    trigger: "bedwars.games_played"
+    goal: 25
+    rewards:
+      hypixel_experience: 7500
+      game_experience: 350

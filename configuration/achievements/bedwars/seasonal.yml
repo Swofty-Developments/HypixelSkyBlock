@@ -1,0 +1,119 @@
+achievements:
+  # Seasonal achievements from GUI - organized by season
+
+  # ===== HOLIDAY SEASON =====
+  - id: "bedwars.big_bag_o_gifts"
+    name: "Big Bag o' Gifts"
+    description: "Claim 6 Gifts at the same time"
+    type: SEASONAL
+    season: HOLIDAY
+    points: 5
+    trigger: "bedwars.holiday_gifts_claimed"
+    goal: 6
+
+  - id: "bedwars.holiday_miracle"
+    name: "Holiday Miracle"
+    description: "Win a game after falling behind by 3+ beds"
+    type: SEASONAL
+    season: HOLIDAY
+    points: 10
+    trigger: "bedwars.holiday_comeback_win"
+    goal: 1
+    customCheck: true
+
+  - id: "bedwars.holidays_ruined"
+    name: "Holidays Ruined"
+    description: "Destroy 10 Gift generators in a single game"
+    type: SEASONAL
+    season: HOLIDAY
+    points: 5
+    trigger: "bedwars.holiday_gifts_destroyed"
+    goal: 10
+    perGame: true
+
+  # ===== EASTER SEASON =====
+  - id: "bedwars.jumpstart_investment"
+    name: "Jumpstart Investment"
+    description: "Purchase an Easter Bunny within 60 seconds of a game starting"
+    type: SEASONAL
+    season: EASTER
+    points: 5
+    trigger: "bedwars.easter_bunny_early"
+    goal: 1
+    customCheck: true
+
+  - id: "bedwars.midspring_nights_dream"
+    name: "Midspring Night's Dream"
+    description: "Win 25 games during the Easter event"
+    type: SEASONAL
+    season: EASTER
+    points: 15
+    trigger: "bedwars.easter_wins"
+    goal: 25
+
+  - id: "bedwars.pep_in_your_step"
+    name: "Pep in Your Step"
+    description: "Collect 100 eggs from Easter Bunnies"
+    type: SEASONAL
+    season: EASTER
+    points: 10
+    trigger: "bedwars.easter_eggs_collected"
+    goal: 100
+
+  - id: "bedwars.you_didnt_see_that_coming"
+    name: "You Didn't See That Coming"
+    description: "Kill an enemy within 3 seconds of teleporting with an Easter Egg"
+    type: SEASONAL
+    season: EASTER
+    points: 5
+    trigger: "bedwars.easter_egg_kill"
+    goal: 1
+    customCheck: true
+
+  # ===== SUMMER SEASON =====
+  - id: "bedwars.kind_refreshment"
+    name: "Kind Refreshment"
+    description: "Share a drink with a teammate"
+    type: SEASONAL
+    season: SUMMER
+    points: 5
+    trigger: "bedwars.summer_drink_shared"
+    goal: 1
+
+  - id: "bedwars.punch_out"
+    name: "Punch Out"
+    description: "Punch 50 enemies into the void during Summer games"
+    type: SEASONAL
+    season: SUMMER
+    points: 10
+    trigger: "bedwars.summer_void_punches"
+    goal: 50
+
+  # ===== HALLOWEEN SEASON =====
+  - id: "bedwars.pumpkinator_rampage"
+    name: "Pumpkinator Rampage"
+    description: "Summon 3 Pumpkinators in a single game"
+    type: SEASONAL
+    season: HALLOWEEN
+    points: 10
+    trigger: "bedwars.halloween_pumpkinators"
+    goal: 3
+    perGame: true
+
+  - id: "bedwars.reach_pumpkin_milestone_v"
+    name: "Reach Pumpkin Milestone V"
+    description: "Collect 500 pumpkins during Halloween"
+    type: SEASONAL
+    season: HALLOWEEN
+    points: 15
+    trigger: "bedwars.halloween_pumpkins"
+    goal: 500
+
+  - id: "bedwars.tricked"
+    name: "Tricked!"
+    description: "Trick an enemy into opening a trapped chest"
+    type: SEASONAL
+    season: HALLOWEEN
+    points: 5
+    trigger: "bedwars.halloween_trap_triggered"
+    goal: 1

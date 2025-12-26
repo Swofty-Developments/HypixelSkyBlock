@@ -1,0 +1,30 @@
+# BedWars Challenge Quests
+# Can be completed multiple times per day, once per game
+
+quests:
+  - id: "bedwars.challenge.defensive"
+    name: "Defensive"
+    description: "Defend your bed against 5 attackers in a single game."
+    type: CHALLENGE
+    trigger: "bedwars.bed_defended"
+    goal: 5
+    rewards:
+      hypixel_experience: 500
+
+  - id: "bedwars.challenge.support"
+    name: "Support"
+    description: "Collect 10 diamonds from generators in a single game."
+    type: CHALLENGE
+    trigger: "bedwars.diamonds_collected"
+    goal: 10
+    rewards:
+      hypixel_experience: 500
+
+  - id: "bedwars.challenge.offensive"
+    name: "Offensive"
+    description: "Destroy 2 beds in a single game."
+    type: CHALLENGE
+    trigger: "bedwars.beds_destroyed_game"
+    goal: 2
+    rewards:
+      hypixel_experience: 500

@@ -2,8 +2,14 @@ package net.swofty.type.bedwarslobby.events;
 
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.commons.ServerType;
+import net.swofty.type.generic.achievement.AchievementCategory;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.quest.QuestData;
+import net.swofty.type.generic.quest.QuestDefinition;
+import net.swofty.type.generic.quest.QuestRegistry;
+import net.swofty.type.generic.quest.QuestType;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.generic.HypixelConst;
@@ -41,5 +47,37 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
 
 		// Spawn leaderboard holograms for this player
 		LeaderboardHologramManager.spawnHologramsForPlayer(player);
+
+		// Auto-accept quests if enabled and player is MVP+
+		if (player.getRank().isEqualOrHigherThan(Rank.MVP_PLUS) &&
+			player.getToggles().get(DatapointToggles.Toggles.ToggleType.AUTO_ACCEPT_QUESTS)) {
+			autoAcceptQuests(player, AchievementCategory.BEDWARS);
+		}
     }
+
+	private void autoAcceptQuests(HypixelPlayer player, AchievementCategory category) {
+		QuestData questData = player.getQuestHandler().getQuestData();
+		int startedCount = 0;
+
+		// Auto-accept daily quests
+		for (QuestDefinition quest : QuestRegistry.getByCategory(category, QuestType.DAILY)) {
+			if (!questData.isActive(quest.getId()) && !questData.isCompleted(quest.getId())) {
+				player.getQuestHandler().startQuest(quest.getId());
+				startedCount++;
+			}
+		}
+
+		// Auto-accept weekly quests
+		for (QuestDefinition quest : QuestRegistry.getByCategory(category, QuestType.WEEKLY)) {
+			if (!questData.isActive(quest.getId()) && !questData.isCompleted(quest.getId())) {
+				player.getQuestHandler().startQuest(quest.getId());
+				startedCount++;
+			}
+		}
+
+		if (startedCount > 0) {
+			player.sendMessage("§aYou have automatically started " + startedCount +
+					" " + category.getDisplayName() + " quest" + (startedCount > 1 ? "s" : "") + "!");
+		}
+	}
 }

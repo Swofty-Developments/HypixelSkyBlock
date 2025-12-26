@@ -1,8 +1,6 @@
 package net.swofty.type.lobby.item.impl;
 
 import net.kyori.adventure.nbt.CompoundBinaryTag;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.trait.CancellableEvent;
@@ -13,6 +11,7 @@ import net.minestom.server.item.component.CustomData;
 import net.minestom.server.network.player.ResolvableProfile;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.lobby.gui.GUIMyProfile;
 import net.swofty.type.lobby.item.LobbyItem;
 
 import java.util.Arrays;
@@ -46,7 +45,6 @@ public class ProfileItem extends LobbyItem {
         if (event instanceof CancellableEvent cancellable) {
             cancellable.setCancelled(true);
         }
-        event.getPlayer().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        new GUIMyProfile().open((HypixelPlayer) event.getPlayer());
     }
 }

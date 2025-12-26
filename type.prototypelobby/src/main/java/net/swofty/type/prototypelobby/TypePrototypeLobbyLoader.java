@@ -25,6 +25,7 @@ import net.swofty.type.lobby.item.LobbyItemHandler;
 import net.swofty.type.lobby.item.impl.HidePlayers;
 import net.swofty.type.lobby.item.impl.LobbySelector;
 import net.swofty.type.lobby.item.impl.PlayCompass;
+import net.swofty.type.lobby.item.impl.ProfileItem;
 import net.swofty.type.lobby.launchpad.LaunchPad;
 import net.swofty.type.prototypelobby.util.PrototypeLobbyMap;
 import org.jetbrains.annotations.Nullable;
@@ -70,6 +71,7 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
     public Map<Integer, LobbyItem> getHotbarItems() {
         return Map.of(
                 0, new PlayCompass(),
+                1, new ProfileItem(),
                 7, new HidePlayers(),
                 8, new LobbySelector()
         );

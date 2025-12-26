@@ -1,0 +1,14 @@
+# BedWars Special Daily Quests
+# Special daily quests with unique rewards
+
+quests:
+  - id: "bedwars.special_daily.gifting_spirit"
+    name: "Gifting Spirit"
+    description: "Claim 5 gifts! Gifts regularly spawn at diamond and emerald generators."
+    type: SPECIAL_DAILY
+    trigger: "bedwars.gifts_claimed"
+    goal: 5
+    head_texture: "cfb1d1037c08f3affbb6ce13b7acc427b50cc87490003b0bb6d2bd9e7924de18"
+    rewards:
+      hypixel_experience: 16500
+      game_experience: 700

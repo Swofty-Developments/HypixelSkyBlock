@@ -211,6 +211,15 @@ public class HypixelDataHandler extends DataHandler {
                 DatapointString.class, new DatapointString("skin_texture", "null"),
                 (player, datapoint) -> {},
                 (player, datapoint) -> ((DatapointString) datapoint).setValue(player.getSkin().textures())),
+
+        HYPIXEL_EXPERIENCE("hypixel_experience",
+                DatapointHypixelExperience.class, new DatapointHypixelExperience("hypixel_experience", 0L)),
+
+        ACHIEVEMENT_DATA("achievement_data",
+                DatapointAchievementData.class, new DatapointAchievementData("achievement_data")),
+
+        QUEST_DATA("quest_data",
+                DatapointQuestData.class, new DatapointQuestData("quest_data")),
         ;
 
         @Getter private final String key;

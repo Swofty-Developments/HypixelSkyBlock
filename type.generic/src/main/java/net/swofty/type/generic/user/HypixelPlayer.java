@@ -16,6 +16,9 @@ import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.achievement.PlayerAchievementHandler;
+import net.swofty.type.generic.experience.PlayerExperienceHandler;
+import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.NotNull;
 
@@ -97,6 +100,18 @@ public class HypixelPlayer extends Player {
 
 	public AntiCheatHandler getAntiCheatHandler() {
 		return new AntiCheatHandler(this);
+	}
+
+	public PlayerAchievementHandler getAchievementHandler() {
+		return new PlayerAchievementHandler(this);
+	}
+
+	public PlayerExperienceHandler getExperienceHandler() {
+		return new PlayerExperienceHandler(this);
+	}
+
+	public PlayerQuestHandler getQuestHandler() {
+		return new PlayerQuestHandler(this);
 	}
 
 	public PlayerSkin getPlayerSkin() {

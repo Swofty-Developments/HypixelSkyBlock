@@ -101,7 +101,8 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_ALCHEMIST(false),
             HAS_FOUND_LAZY_MINER_PICKAXE(false),
             PAPER_ICONS(false),
-			LOBBY_SHOW_PLAYERS(true)
+			LOBBY_SHOW_PLAYERS(true),
+			AUTO_ACCEPT_QUESTS(false)
             ;
 
             private final boolean defaultValue;
