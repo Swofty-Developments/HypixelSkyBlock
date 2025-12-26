@@ -26,11 +26,12 @@ public class GUIAchievementsMenu extends HypixelInventoryGUI {
 
         set(createCategoryItem(1, AchievementCategory.GENERAL, Material.BOOK, handler));
         set(createCategoryItem(2, "Housing", Material.DARK_OAK_DOOR, handler, AchievementCategory.GENERAL));
-        set(createSkyBlockItem(3, handler));
         set(createCategoryItem(4, AchievementCategory.ARCADE, Material.SLIME_BALL, handler));
         set(createClassicGamesItem(5, handler));
         set(createSeasonalItem(6, handler));
         set(createLegacyItem(7, handler));
+
+        set(createCategoryItem(3, AchievementCategory.SKYBLOCK, Material.PLAYER_HEAD, handler));
 
         set(createCategoryItem(19, AchievementCategory.TNT_GAMES, Material.TNT, handler));
         set(createCategoryItem(20, AchievementCategory.BLITZ_SG, Material.DIAMOND_SWORD, handler));
@@ -207,28 +208,6 @@ public class GUIAchievementsMenu extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 new GUIGameAchievements(fallbackCategory).open(player);
-            }
-        };
-    }
-
-    private GUIClickableItem createSkyBlockItem(int slot, PlayerAchievementHandler handler) {
-        return new GUIClickableItem(slot) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStackHead(
-                        "§aSkyBlock Achievements",
-                        "d7cc6687423d0570d556ac53e0676cb563bbdd9717cd8269bdebed6f6d4e7bf8",
-                        1,
-                        "§7Unlocked: §b0§7/§b333 §8(0%)",
-                        "§7Points: §e0§7/§e3,085 §8(0%)",
-                        "",
-                        "§eClick to view achievements!"
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                player.sendMessage("§cSkyBlock achievements are accessed from SkyBlock!");
             }
         };
     }

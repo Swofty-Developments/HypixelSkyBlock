@@ -8,6 +8,7 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.title.Title;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
@@ -15,6 +16,7 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
@@ -26,23 +28,19 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.shop.impl.AxeShopItem;
+import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-
-import net.kyori.adventure.title.Title;
-import net.minestom.server.item.Material;
-import net.swofty.type.bedwarsgame.shop.impl.AxeShopItem;
-import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
-
-import java.time.Duration;
 
 @Getter
 public final class Game {
@@ -230,6 +228,7 @@ public final class Game {
 		getPlayersAsAudience().sendMessage(
 				Component.text(teamColor + player.getUsername() + " §7reconnected.")
 		);
+		player.getAchievementHandler().completeAchievement("");
 
 		Logger.info("Player {} rejoined game {} (team: {})", player.getUsername(), gameId, info.getTeamKey().getName());
 

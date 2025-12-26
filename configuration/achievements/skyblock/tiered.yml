@@ -1,0 +1,487 @@
+achievements:
+  # Tiered achievements from GUI - each has 5 tiers (I-V)
+
+  - id: "skyblock.festive_altruist"
+    name: "Festive Altruist"
+    description: "Give gifts to 5 different players"
+    type: TIERED
+    trigger: "skyblock.festive_altruist_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 10
+      - tier: 3
+        goal: 25
+        points: 15
+      - tier: 4
+        goal: 50
+        points: 20
+      - tier: 5
+        goal: 100
+        points: 25
+
+  - id: "skyblock.treasury"
+    name: "Treasury"
+    description: "Unlock 10 Collections"
+    type: TIERED
+    trigger: "skyblock.treasury_trigger"
+    tiers:
+      - tier: 1
+        goal: 10
+        points: 5
+      - tier: 2
+        goal: 20
+        points: 10
+      - tier: 3
+        goal: 30
+        points: 15
+      - tier: 4
+        goal: 40
+        points: 20
+      - tier: 5
+        goal: 50
+        points: 25
+
+  - id: "skyblock.gatherer"
+    name: "Gatherer"
+    description: "Achieve Foraging Level V"
+    type: TIERED
+    trigger: "skyblock.gatherer_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 5
+      - tier: 3
+        goal: 15
+        points: 10
+      - tier: 4
+        goal: 20
+        points: 10
+      - tier: 5
+        goal: 25
+        points: 15
+
+  - id: "skyblock.augmentation"
+    name: "Augmentation"
+    description: "Achieve Enchanting Level V"
+    type: TIERED
+    trigger: "skyblock.augmentation_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 5
+      - tier: 3
+        goal: 15
+        points: 10
+      - tier: 4
+        goal: 20
+        points: 10
+      - tier: 5
+        goal: 25
+        points: 15
+
+  - id: "skyblock.domesticator"
+    name: "Domesticator"
+    description: "Achieve Taming Level V"
+    type: TIERED
+    trigger: "skyblock.domesticator_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 5
+      - tier: 3
+        goal: 15
+        points: 10
+      - tier: 4
+        goal: 20
+        points: 10
+      - tier: 5
+        goal: 25
+        points: 15
+
+  - id: "skyblock.harvester"
+    name: "Harvester"
+    description: "Achieve Farming Level V"
+    type: TIERED
+    trigger: "skyblock.harvester_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 5
+      - tier: 3
+        goal: 15
+        points: 10
+      - tier: 4
+        goal: 20
+        points: 10
+      - tier: 5
+        goal: 25
+        points: 15
+
+  - id: "skyblock.excavator"
+    name: "Excavator"
+    description: "Achieve Mining Level V"
+    type: TIERED
+    trigger: "skyblock.excavator_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 5
+      - tier: 3
+        goal: 15
+        points: 10
+      - tier: 4
+        goal: 20
+        points: 10
+      - tier: 5
+        goal: 25
+        points: 15
+
+  - id: "skyblock.hard_working_miner"
+    name: "Hard Working Miner"
+    description: "Complete 5 commissions"
+    type: TIERED
+    trigger: "skyblock.hard_working_miner_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 25
+        points: 10
+      - tier: 3
+        goal: 100
+        points: 15
+      - tier: 4
+        goal: 250
+        points: 20
+      - tier: 5
+        goal: 500
+        points: 25
+
+  - id: "skyblock.minion_lover"
+    name: "Minion Lover"
+    description: "[Co-op or you] Craft 10 unique minions"
+    type: TIERED
+    trigger: "skyblock.minion_lover_trigger"
+    tiers:
+      - tier: 1
+        goal: 10
+        points: 5
+      - tier: 2
+        goal: 25
+        points: 10
+      - tier: 3
+        goal: 100
+        points: 15
+      - tier: 4
+        goal: 250
+        points: 20
+      - tier: 5
+        goal: 500
+        points: 25
+
+  - id: "skyblock.divan_s_treasures"
+    name: "Divan's Treasures"
+    description: "Find treasures in the Mines of Divan 30 times"
+    type: TIERED
+    trigger: "skyblock.divan_s_treasures_trigger"
+    tiers:
+      - tier: 1
+        goal: 30
+        points: 5
+      - tier: 2
+        goal: 60
+        points: 10
+      - tier: 3
+        goal: 90
+        points: 15
+      - tier: 4
+        goal: 120
+        points: 20
+      - tier: 5
+        goal: 150
+        points: 25
+
+  - id: "skyblock.combat"
+    name: "Combat"
+    description: "Achieve Combat Level V"
+    type: TIERED
+    trigger: "skyblock.combat_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 5
+      - tier: 3
+        goal: 15
+        points: 10
+      - tier: 4
+        goal: 20
+        points: 10
+      - tier: 5
+        goal: 25
+        points: 15
+
+  - id: "skyblock.people_pleaser"
+    name: "People Pleaser"
+    description: "Serve 5 Total Visitors in The Garden"
+    type: TIERED
+    trigger: "skyblock.people_pleaser_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 25
+        points: 10
+      - tier: 3
+        goal: 100
+        points: 15
+      - tier: 4
+        goal: 250
+        points: 20
+      - tier: 5
+        goal: 500
+        points: 25
+
+  - id: "skyblock.predator"
+    name: "Predator"
+    description: "Achieve Hunting Level V"
+    type: TIERED
+    trigger: "skyblock.predator_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 10
+      - tier: 3
+        goal: 15
+        points: 15
+      - tier: 4
+        goal: 20
+        points: 20
+      - tier: 5
+        goal: 25
+        points: 25
+
+  - id: "skyblock.climbing_the_ranks"
+    name: "Climbing the Ranks"
+    description: "Reach SkyBlock Level 40"
+    type: TIERED
+    trigger: "skyblock.climbing_the_ranks_trigger"
+    tiers:
+      - tier: 1
+        goal: 40
+        points: 5
+      - tier: 2
+        goal: 80
+        points: 10
+      - tier: 3
+        goal: 120
+        points: 15
+      - tier: 4
+        goal: 160
+        points: 20
+      - tier: 5
+        goal: 200
+        points: 25
+
+  - id: "skyblock.goblin_killer"
+    name: "Goblin Killer"
+    description: "Kill 5 Golden Goblins"
+    type: TIERED
+    trigger: "skyblock.goblin_killer_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 10
+      - tier: 3
+        goal: 25
+        points: 15
+      - tier: 4
+        goal: 50
+        points: 20
+      - tier: 5
+        goal: 100
+        points: 25
+
+  - id: "skyblock.angler"
+    name: "Angler"
+    description: "Achieve Fishing Level V"
+    type: TIERED
+    trigger: "skyblock.angler_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 5
+      - tier: 3
+        goal: 15
+        points: 10
+      - tier: 4
+        goal: 20
+        points: 10
+      - tier: 5
+        goal: 25
+        points: 15
+
+  - id: "skyblock.concoctor"
+    name: "Concoctor"
+    description: "Achieve Alchemy Level V"
+    type: TIERED
+    trigger: "skyblock.concoctor_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 5
+      - tier: 3
+        goal: 15
+        points: 10
+      - tier: 4
+        goal: 20
+        points: 10
+      - tier: 5
+        goal: 25
+        points: 15
+
+  - id: "skyblock.crystal_nucleus"
+    name: "Crystal Nucleus"
+    description: "Complete the Crystal Nucleus 5 times"
+    type: TIERED
+    trigger: "skyblock.crystal_nucleus_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 10
+      - tier: 3
+        goal: 15
+        points: 15
+      - tier: 4
+        goal: 20
+        points: 20
+      - tier: 5
+        goal: 25
+        points: 25
+
+  - id: "skyblock.curator"
+    name: "Curator"
+    description: "Donate 10 items/sets to the Museum"
+    type: TIERED
+    trigger: "skyblock.curator_trigger"
+    tiers:
+      - tier: 1
+        goal: 10
+        points: 5
+      - tier: 2
+        goal: 25
+        points: 10
+      - tier: 3
+        goal: 50
+        points: 15
+      - tier: 4
+        goal: 100
+        points: 20
+      - tier: 5
+        goal: 150
+        points: 25
+
+  - id: "skyblock.treasure_hunter"
+    name: "Treasure Hunter"
+    description: "Find 10 Secrets in dungeons"
+    type: TIERED
+    trigger: "skyblock.treasure_hunter_trigger"
+    tiers:
+      - tier: 1
+        goal: 10
+        points: 5
+      - tier: 2
+        goal: 50
+        points: 10
+      - tier: 3
+        goal: 100
+        points: 15
+      - tier: 4
+        goal: 250
+        points: 20
+      - tier: 5
+        goal: 1
+        points: 25
+
+  - id: "skyblock.slayer"
+    name: "Slayer"
+    description: "Get 10k Slayer exp"
+    type: TIERED
+    trigger: "skyblock.slayer_trigger"
+    tiers:
+      - tier: 1
+        goal: 10
+        points: 5
+      - tier: 2
+        goal: 50
+        points: 10
+      - tier: 3
+        goal: 100
+        points: 15
+      - tier: 4
+        goal: 250
+        points: 20
+      - tier: 5
+        goal: 500
+        points: 25
+
+  - id: "skyblock.dungeoneer"
+    name: "Dungeoneer"
+    description: "Reach Level 15 of any Dungeon Class"
+    type: TIERED
+    trigger: "skyblock.dungeoneer_trigger"
+    tiers:
+      - tier: 1
+        goal: 15
+        points: 5
+      - tier: 2
+        goal: 20
+        points: 5
+      - tier: 3
+        goal: 25
+        points: 10
+      - tier: 4
+        goal: 30
+        points: 10
+      - tier: 5
+        goal: 35
+        points: 15
+
