@@ -9,6 +9,7 @@ public enum FairySoulZone {
     THE_FARMING_ISLANDS,
     THE_PARK,
     GALATEA,
+    BACKWATER_BAYOU,
     SPIDERS_DEN,
     THE_END,
     CRIMSON_ISLE,
@@ -17,6 +18,6 @@ public enum FairySoulZone {
     MISC_DUNGEONS,
     MISC_FISHING,
     MISC_GARDEN,
-    MISC_PLACEABLE
-
+    MISC_PLACEABLE,
+    MISC_GLACITE_MINESHAFTS,
 }

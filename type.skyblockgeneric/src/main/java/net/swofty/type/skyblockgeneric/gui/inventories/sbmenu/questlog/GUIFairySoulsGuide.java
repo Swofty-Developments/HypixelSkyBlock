@@ -18,8 +18,9 @@ import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
 public class GUIFairySoulsGuide extends HypixelInventoryGUI {
 
 	private final int[] LOCATION_SLOTS = {
-			11, 12, 13, 14, 15, 16,
-			19, 20, 21, 22, 23, 24
+				11, 12, 13, 14, 15, 16,
+			19, 20, 21, 22, 23, 24, 25,
+			28
 	};
 
 	public GUIFairySoulsGuide() {
@@ -36,14 +37,16 @@ public class GUIFairySoulsGuide extends HypixelInventoryGUI {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				int x = player.getFairySoulHandler().getFound(FairySoulZone.MISC_DUNGEONS) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_FISHING) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_GARDEN) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_PLACEABLE);
-				int y = player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_FISHING) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_GARDEN) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE);
+				int optainedSouls = player.getFairySoulHandler().getFound(FairySoulZone.MISC_DUNGEONS) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_FISHING) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_GARDEN) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_PLACEABLE) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_GLACITE_MINESHAFTS);
+				int totalSouls = player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_FISHING) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_GARDEN) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_GLACITE_MINESHAFTS);
 				return ItemStackCreator.getStackHead("§dMiscellaneous", "126ec1ca185b47aad39f931db8b0a8500ded86a127a204886ed4b3783ad1775c", 1,
-						"§7Fairy Souls: §e" + x + "§7/§d" + y,
-						" §7Dungeon: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS),
+						"§7Fairy Souls: §e" + optainedSouls + "§7/§d" + totalSouls,
+						" §7Dungeons: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS),
 						" §7Fishing: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_FISHING),
 						" §7Garden: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_GARDEN),
-						" §7Placeable: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE));
+						" §7Placeable: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE),
+						" §7Glacite Mineshafts: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_GLACITE_MINESHAFTS)
+				);
 			}
 		});
 		FairySouls[] allFairySouls = FairySouls.values();
@@ -95,6 +98,8 @@ public class GUIFairySoulsGuide extends HypixelInventoryGUI {
 		THE_RIFT("The Rift", "f26192609d6c46ade73e807fc40dbc3a1a1afbb456ae165785b0fe834dd1cb57", FairySoulZone.THE_RIFT),
 		GOLD_MINE("Gold Mine", "73bc965d579c3c6039f0a17eb7c2e6faf538c7a5de8e60ec7a719360d0a857a9", FairySoulZone.GOLD_MINE),
 		THE_PARK("The Park", "a221f813dacee0fef8c59f76894dbb26415478d9ddfc44c2e708a6d3b7549b", FairySoulZone.THE_PARK),
+		GALATEA("Galatea", "a211ac81698c229d8ef2fae89f62a6a961b30d8b82b97161863090e90bff02a5", FairySoulZone.GALATEA),
+		BACKWATER_BAYOU("Backwater Bayou", "1c0cd33590f64d346d98cdd01606938742e715dda6737353306a44f81c8ba426", FairySoulZone.BACKWATER_BAYOU),
 		;
 		private final String regionName;
 		private final String texture;
