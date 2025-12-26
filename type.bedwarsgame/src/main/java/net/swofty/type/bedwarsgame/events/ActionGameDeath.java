@@ -27,6 +27,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.shop.impl.AxeShopItem;
 import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -189,6 +190,12 @@ public class ActionGameDeath implements HypixelEventClass {
             deathMessage = deathMessage.append(
                     MiniMessage.miniMessage().deserialize("<gray> </gray><aqua><bold>FINAL KILL!</bold></aqua>")
             );
+
+            // Record final kill stat for the killer
+            if (player.getLastDamageSource() != null &&
+                    player.getLastDamageSource().getSource() instanceof BedWarsPlayer killer) {
+                BedWarsStatsRecorder.recordFinalKill(killer, game.getBedwarsGameType());
+            }
         }
         event.setChatMessage(deathMessage);
 

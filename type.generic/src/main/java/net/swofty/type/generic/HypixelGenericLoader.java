@@ -27,6 +27,7 @@ import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
 import net.swofty.type.generic.data.mongodb.AuthenticationDatabase;
+import net.swofty.type.generic.data.mongodb.BedWarsStatsDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 
@@ -172,6 +173,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         ProfilesDatabase.connect(mongoClient);
         AttributeDatabase.connect(mongoClient);
         UserDatabase.connect(mongoClient);
+        BedWarsStatsDatabase.connect(mongoClient);
 
         // Initialize leaderboard service (uses Redis for O(log N) leaderboard operations)
         LeaderboardService.connect(Configuration.get("redis-uri"));

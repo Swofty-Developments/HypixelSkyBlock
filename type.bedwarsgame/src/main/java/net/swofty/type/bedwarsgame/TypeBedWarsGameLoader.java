@@ -244,6 +244,9 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 				}
 				commonsGame.setInvolvedPlayers(playerUuids);
 
+				// Add disconnected players for rejoin system
+				commonsGame.setDisconnectedPlayers(internalGame.getDisconnectedPlayerUuids());
+
 				commonsGames.add(commonsGame);
 			}
 

@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -17,7 +18,13 @@ public class ActionPlayerDisconnect implements HypixelEventClass {
 		final BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		Game game = TypeBedWarsGameLoader.getPlayerGame(player);
 		if (game != null) {
-			game.leave(player);
+			if (game.getGameStatus() == GameStatus.IN_PROGRESS) {
+				// Use handleDisconnect for active games to enable rejoin
+				game.handleDisconnect(player);
+			} else {
+				// Normal leave for waiting/ending games
+				game.leave(player);
+			}
 		}
 	}
 }

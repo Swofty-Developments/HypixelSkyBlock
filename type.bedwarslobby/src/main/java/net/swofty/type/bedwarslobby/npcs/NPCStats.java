@@ -1,10 +1,13 @@
 package net.swofty.type.bedwarslobby.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.bedwars.BedWarsModeStats;
+import net.swofty.commons.bedwars.BedwarsLeaderboardMode;
+import net.swofty.commons.bedwars.BedwarsLeaderboardPeriod;
 import net.swofty.commons.bedwars.BedwarsLevelColor;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
+import net.swofty.type.bedwarslobby.gui.GUIBedWarsStatistics;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsModeStats;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -23,20 +26,25 @@ public class NPCStats extends HypixelNPC {
 				int level = 0;
 				int progress = 0;
 				int maxExperience = 0;
-				long experience = 0;
+				long totalWins = 0;
+				long winstreak = 0;
 				if (handler != null) {
-					experience = handler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class).getValue();
+					long experience = handler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class).getValue();
 					level = BedwarsLevelUtil.calculateLevel(experience);
 					progress = BedwarsLevelUtil.calculateExperienceSinceLastLevel(experience);
 					maxExperience = BedwarsLevelUtil.calculateMaxExperienceFromExperience(experience);
+
+					BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
+					totalWins = modeStats.getWins(BedwarsLeaderboardMode.ALL, BedwarsLeaderboardPeriod.LIFETIME);
+					winstreak = modeStats.getWinstreak(BedwarsLeaderboardMode.ALL);
 				}
 				return new String[]{
 						"§6§lBed Wars Profile",
 						"§fYour Level: " + BedwarsLevelColor.constructLevelBrackets(level),
 						"§fProgress: §b" + suffix(progress) + "§7/§a" + suffix(maxExperience),
 						"§fAchievements: §e" + 0 + "§a/" + 0,
-						"§fTotal Wins: §a" + 0,
-						"§fCurrent Winstreak: §a" + 0,
+						"§fTotal Wins: §a" + suffix(totalWins),
+						"§fCurrent Winstreak: §a" + suffix(winstreak),
 						"§e§lCLICK FOR STATS",
 				};
 			}
@@ -65,7 +73,6 @@ public class NPCStats extends HypixelNPC {
 
 	@Override
 	public void onClick(NPCInteractEvent event) {
-		event.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+		new GUIBedWarsStatistics().open(event.player());
 	}
 }

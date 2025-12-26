@@ -16,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Game {
     private List<UUID> involvedPlayers;
+    private List<UUID> disconnectedPlayers;
     private UUID gameId;
     private ServerType type;
     private String map;
@@ -27,6 +28,10 @@ public class Game {
         json.put("map", map);
         List<String> players = involvedPlayers.stream().map(UUID::toString).toList();
         json.put("players", players);
+        List<String> disconnected = disconnectedPlayers != null
+                ? disconnectedPlayers.stream().map(UUID::toString).toList()
+                : List.of();
+        json.put("disconnectedPlayers", disconnected);
         return json;
     }
 
@@ -36,6 +41,9 @@ public class Game {
         game.type = ServerType.valueOf(json.getString("type"));
         game.map = json.getString("map");
         game.involvedPlayers = json.getJSONArray("players").toList().stream().map(obj -> UUID.fromString(obj.toString())).toList();
+        game.disconnectedPlayers = json.has("disconnectedPlayers")
+                ? json.getJSONArray("disconnectedPlayers").toList().stream().map(obj -> UUID.fromString(obj.toString())).toList()
+                : List.of();
         return game;
     }
 }

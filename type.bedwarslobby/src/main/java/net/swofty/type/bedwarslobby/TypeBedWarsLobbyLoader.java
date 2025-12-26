@@ -3,11 +3,13 @@ package net.swofty.type.bedwarslobby;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.bedwarslobby.item.impl.BedWarsMenu;
 import net.swofty.type.bedwarslobby.item.impl.Collectibles;
 import net.swofty.type.bedwarslobby.launchpad.BedWarsLaunchPads;
@@ -16,11 +18,14 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.entity.hologram.PlayerHolograms;
+import net.swofty.type.generic.leaderboard.BedWarsLeaderboardAggregator;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.bedwarslobby.tab.BedWarsPlayersOnlineModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
 import net.swofty.type.lobby.events.LobbyItemEvents;
 import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
@@ -34,6 +39,7 @@ import net.swofty.type.lobby.item.impl.ProfileItem;
 import net.swofty.type.lobby.launchpad.LaunchPad;
 import net.swofty.type.lobby.launchpad.LaunchPadHandler;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,6 +71,28 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
 
         // Register all hotbar items
         getHotbarItems().values().forEach(itemHandler::add);
+
+        // Initialize leaderboard holograms
+        LeaderboardHologramManager.initialize(HypixelConst.getInstanceContainer());
+
+        // Register commands
+        HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarslobby.commands", HypixelCommand.class).forEach(command -> {
+            try {
+                MinecraftServer.getCommandManager().register(command.getCommand());
+            } catch (Exception e) {
+                Logger.error(e, "Failed to register command " + command.getCommand().getName() + " in class " + command.getClass().getSimpleName());
+            }
+        });
+
+        // Start the leaderboard aggregator (for daily/weekly/monthly leaderboard updates)
+        BedWarsLeaderboardAggregator.initialize();
+
+        // Schedule hologram updates every 2 seconds
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            PlayerHolograms.updateExternalHolograms();
+        }).delay(TaskSchedule.seconds(5))
+          .repeat(TaskSchedule.seconds(2))
+          .schedule();
     }
 
     @Override
@@ -95,10 +123,10 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return List.of(
-                        new EmptyTabModule(),
-                        new EmptyTabModule(),
-                        new EmptyTabModule(),
-                        new EmptyTabModule()
+                        new BedWarsPlayersOnlineModule(1),
+                        new BedWarsPlayersOnlineModule(2),
+                        new BedWarsPlayersOnlineModule(3),
+                        new BedWarsPlayersOnlineModule(4)
                 );
             }
         };

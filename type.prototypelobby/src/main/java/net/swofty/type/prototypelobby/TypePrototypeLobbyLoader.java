@@ -34,8 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
-
-    @Getter
     private static final LobbyItemHandler itemHandler = new LobbyItemHandler();
 
     @Override

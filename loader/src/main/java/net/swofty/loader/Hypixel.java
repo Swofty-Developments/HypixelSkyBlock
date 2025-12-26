@@ -357,7 +357,7 @@ public class Hypixel {
                     Logger.error("Proxy did not respond to alive check. Shutting down...");
                     System.exit(0);
                 }
-            }, TaskSchedule.tick(4), TaskSchedule.stop());
+            }, TaskSchedule.tick(20), TaskSchedule.stop());
 
             return TaskSchedule.seconds(1);
         }, ExecutionType.TICK_END);

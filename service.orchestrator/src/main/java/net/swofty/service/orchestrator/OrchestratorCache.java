@@ -112,6 +112,27 @@ public class OrchestratorCache {
 		return maps;
 	}
 
+	/**
+	 * Find a game that a player is part of (either active or disconnected).
+	 * Used for the rejoin system.
+	 */
+	public static GameWithServer findPlayerGame(UUID playerUuid) {
+		cleanup();
+
+		for (GameWithServer gameWithServer : gamesByGameId.values()) {
+			Game game = gameWithServer.game();
+			// Check active players
+			if (game.getInvolvedPlayers().contains(playerUuid)) {
+				return gameWithServer;
+			}
+			// Check disconnected players
+			if (game.getDisconnectedPlayers() != null && game.getDisconnectedPlayers().contains(playerUuid)) {
+				return gameWithServer;
+			}
+		}
+		return null;
+	}
+
 	private static boolean isGameJoinable(Game game, BedwarsGameType gameType) {
 		int maxPlayersForType = gameType.maxPlayers();
 		int currentPlayers = game.getInvolvedPlayers().size();

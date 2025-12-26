@@ -1,0 +1,69 @@
+:root {
+  --vp-c-brand-1: #4ade80;
+  --vp-c-brand-2: #22c55e;
+  --vp-c-brand-3: #16a34a;
+  --vp-c-brand-soft: rgba(74, 222, 128, 0.14);
+}
+
+.dark {
+  --vp-c-brand-1: #4ade80;
+  --vp-c-brand-2: #22c55e;
+  --vp-c-brand-3: #16a34a;
+  --vp-c-brand-soft: rgba(74, 222, 128, 0.16);
+}
+
+/* Alert boxes */
+.alert {
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 4px solid;
+}
+
+.alert-header {
+  font-weight: 700;
+  font-size: 0.85em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.alert-content p:last-child {
+  margin-bottom: 0;
+}
+
+.alert-info {
+  background-color: var(--vp-c-default-soft);
+  border-color: var(--vp-c-brand-1);
+}
+
+.alert-warning {
+  background-color: rgba(234, 179, 8, 0.1);
+  border-color: #eab308;
+}
+
+.alert-warning .alert-header {
+  color: #eab308;
+}
+
+.alert-danger {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+}
+
+.alert-danger .alert-header {
+  color: #ef4444;
+}
+
+.alert-note {
+  background-color: var(--vp-c-default-soft);
+  border-color: var(--vp-c-text-2);
+}
+
+/* Hero gradient */
+.VPHero .name {
+  background: linear-gradient(135deg, #4ade80 0%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

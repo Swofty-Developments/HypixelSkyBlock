@@ -5,6 +5,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
+import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointLong;
@@ -37,5 +38,8 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
         DatapointLeaderboardLong dp = handler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class);
 		player.setLevel(BedwarsLevelUtil.calculateLevel(dp.getValue()));
 		player.setExp((float) BedwarsLevelUtil.calculateExperienceSinceLastLevel(dp.getValue()) / BedwarsLevelUtil.calculateMaxExperienceFromExperience(dp.getValue()));
+
+		// Spawn leaderboard holograms for this player
+		LeaderboardHologramManager.spawnHologramsForPlayer(player);
     }
 }
