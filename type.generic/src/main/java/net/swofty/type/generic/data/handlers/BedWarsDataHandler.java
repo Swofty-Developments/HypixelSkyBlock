@@ -5,6 +5,7 @@ import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.GameDataHandler;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsQuickBuy;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
@@ -189,7 +190,7 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
         SLUMBER_TICKETS("bedwars_slumber_tickets", DatapointLeaderboardLong.class,
             new DatapointLeaderboardLong("bedwars_slumber_tickets", 0L, "bedwars:slumber_tickets")),
         FAVORITE_MAPS("bedwars_favorite_maps", DatapointStringList.class, new DatapointStringList("bedwars_favorite_maps")),
-        QUICK_BUY("bedwars_quick_buy", DatapointStringList.class, new DatapointStringList("bedwars_quick_buy")),
+        QUICK_BUY("bedwars_quick_buy", DatapointBedWarsQuickBuy.class, new DatapointBedWarsQuickBuy("bedwars_quick_buy")),
         MAP_JOIN_COUNTS("bedwars_map_join_counts", DatapointMapStringLong.class, new DatapointMapStringLong("bedwars_map_join_counts"));
 
         @Getter

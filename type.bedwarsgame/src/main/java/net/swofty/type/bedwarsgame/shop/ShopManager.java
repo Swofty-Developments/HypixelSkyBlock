@@ -6,7 +6,7 @@ import net.minestom.server.item.enchant.Enchantment;
 import net.minestom.server.potion.PotionType;
 import net.swofty.type.bedwarsgame.shop.impl.*;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.generic.data.datapoints.DatapointStringList;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsQuickBuy;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 
 import java.util.ArrayList;
@@ -109,42 +109,16 @@ public class ShopManager {
 		return null;
 	}
 
-	private void populateDefaultQuickBuy(Map<Integer, ShopItem> quickBuy) {
-		quickBuy.put(0, WOOL);
-		quickBuy.put(1, STONE_SWORD);
-		quickBuy.put(2, CHAINMAIL_ARMOR);
-		quickBuy.put(3, PICKAXE);
-		quickBuy.put(4, BOW);
-		quickBuy.put(5, INVISIBILITY_POTION);
-		quickBuy.put(6, TNT);
-		quickBuy.put(7, PLANKS);
-		quickBuy.put(8, IRON_SWORD);
-		quickBuy.put(9, IRON_ARMOR);
-		quickBuy.put(10, SHEARS);
-		quickBuy.put(11, ARROW);
-		quickBuy.put(12, SPEED_POTION);
-		quickBuy.put(13, WATER_BUCKET);
-		quickBuy.put(14, GOLDEN_APPLE);
-		quickBuy.put(15, JUMP_POTION);
-		quickBuy.put(16, GLASS);
-		quickBuy.put(17, ENDSTONE);
-		quickBuy.put(18, AXE);
-	}
-
 	public Map<Integer, ShopItem> getQuickBuy(BedWarsPlayer player) {
 		BedWarsDataHandler dataHandler = BedWarsDataHandler.getUser(player);
-		List<String> customQuickBuy = dataHandler.get(BedWarsDataHandler.Data.QUICK_BUY, DatapointStringList.class).getValue();
+		DatapointBedWarsQuickBuy.PlayerQuickBuy playerQuickBuy = dataHandler.get(BedWarsDataHandler.Data.QUICK_BUY, DatapointBedWarsQuickBuy.class).getValue();
 		Map<Integer, ShopItem> quickBuy = new HashMap<>();
 
-		if (customQuickBuy.isEmpty()) {
-			populateDefaultQuickBuy(quickBuy);
-		} else {
-			for (int i = 0; i < customQuickBuy.size() && i <= 20; i++) {
-				String itemId = customQuickBuy.get(i);
-				ShopItem item = getShopItemById(itemId);
-				if (item != null) {
-					quickBuy.put(i, item);
-				}
+		for (int slot : playerQuickBuy.getOccupiedSlots()) {
+			String itemId = playerQuickBuy.getItemId(slot);
+			ShopItem item = getShopItemById(itemId);
+			if (item != null) {
+				quickBuy.put(slot, item);
 			}
 		}
 
@@ -157,55 +131,36 @@ public class ShopManager {
 	}
 
 	public void setQuickBuyItem(BedWarsPlayer player, int slot, ShopItem item) {
-		if (slot < 0 || slot > 20) {
-			throw new IllegalArgumentException("Quick buy slot must be between 0 and 20");
-		}
 		if (item == null) {
 			throw new IllegalArgumentException("Item cannot be null");
 		}
 
 		BedWarsDataHandler dataHandler = BedWarsDataHandler.getUser(player);
-		DatapointStringList quickBuyData = dataHandler.get(BedWarsDataHandler.Data.QUICK_BUY, DatapointStringList.class);
-		List<String> quickBuyList = new ArrayList<>(quickBuyData.getValue());
+		DatapointBedWarsQuickBuy quickBuyData = dataHandler.get(BedWarsDataHandler.Data.QUICK_BUY, DatapointBedWarsQuickBuy.class);
+		DatapointBedWarsQuickBuy.PlayerQuickBuy playerQuickBuy = quickBuyData.getValue();
 
-		// Ensure the list is large enough
-		while (quickBuyList.size() <= slot) {
-			quickBuyList.add("");
-		}
-
-		quickBuyList.set(slot, item.getId());
-		quickBuyData.setValue(quickBuyList);
+		playerQuickBuy.setItemId(slot, item.getId());
+		quickBuyData.setValue(playerQuickBuy);
 	}
 
-	public void removeQuickBuyItem(BedWarsPlayer player, int slot) {
-		if (slot < 0 || slot > 20) {
-			throw new IllegalArgumentException("Quick buy slot must be between 0 and 20");
-		}
+	public void removeQuickBuyItem(BedWarsPlayer player, ShopItem item) {
+		if (item == null) return;
 
 		BedWarsDataHandler dataHandler = BedWarsDataHandler.getUser(player);
-		DatapointStringList quickBuyData = dataHandler.get(BedWarsDataHandler.Data.QUICK_BUY, DatapointStringList.class);
-		List<String> quickBuyList = new ArrayList<>(quickBuyData.getValue());
+		DatapointBedWarsQuickBuy quickBuyData = dataHandler.get(BedWarsDataHandler.Data.QUICK_BUY, DatapointBedWarsQuickBuy.class);
+		DatapointBedWarsQuickBuy.PlayerQuickBuy playerQuickBuy = quickBuyData.getValue();
 
-		if (slot < quickBuyList.size()) {
-			quickBuyList.set(slot, "");
-			quickBuyData.setValue(quickBuyList);
+		int slotToRemove = playerQuickBuy.findSlotByItemId(item.getId());
+		if (slotToRemove != -1) {
+			playerQuickBuy.removeFromSlot(slotToRemove);
+			quickBuyData.setValue(playerQuickBuy);
 		}
 	}
 
-	public void resetQuickBuyToDefault(BedWarsPlayer player) {
+	public boolean isItemIDinQuickBuy(BedWarsPlayer player, String itemId) {
 		BedWarsDataHandler dataHandler = BedWarsDataHandler.getUser(player);
-		DatapointStringList quickBuyData = dataHandler.get(BedWarsDataHandler.Data.QUICK_BUY, DatapointStringList.class);
-
-		List<String> defaultItemIds = new ArrayList<>();
-		Map<Integer, ShopItem> defaultLayout = new HashMap<>();
-		populateDefaultQuickBuy(defaultLayout);
-
-		for (int i = 0; i <= 20; i++) {
-			ShopItem item = defaultLayout.get(i);
-			defaultItemIds.add(item != null ? item.getId() : "");
-		}
-
-		quickBuyData.setValue(defaultItemIds);
+		DatapointBedWarsQuickBuy.PlayerQuickBuy playerQuickBuy = dataHandler.get(BedWarsDataHandler.Data.QUICK_BUY, DatapointBedWarsQuickBuy.class).getValue();
+		return playerQuickBuy.containsItemId(itemId);
 	}
 
 }
