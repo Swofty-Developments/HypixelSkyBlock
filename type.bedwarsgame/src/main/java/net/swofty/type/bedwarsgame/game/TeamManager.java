@@ -197,42 +197,6 @@ public final class TeamManager {
 				.orElse(null);
 	}
 
-	@Deprecated(forRemoval = true)
-	public int getTeamUpgradeLevel(String teamName, String upgradeKey) {
-		TeamKey teamKey = getTeamKeyByName(teamName);
-		return teamKey != null ? getTeamUpgradeLevel(teamKey, upgradeKey) : 0;
-	}
-
-	@Deprecated(forRemoval = true)
-	public void setTeamUpgradeLevel(String teamName, String upgradeKey, int level) {
-		TeamKey teamKey = getTeamKeyByName(teamName);
-		if (teamKey != null) setTeamUpgradeLevel(teamKey, upgradeKey, level);
-	}
-
-	@Deprecated(forRemoval = true)
-	public List<String> getTeamTraps(String teamName) {
-		TeamKey teamKey = getTeamKeyByName(teamName);
-		return teamKey != null ? getTeamTraps(teamKey) : new ArrayList<>();
-	}
-
-	@Deprecated(forRemoval = true)
-	public void addTeamTrap(String teamName, String trapKey) {
-		TeamKey teamKey = getTeamKeyByName(teamName);
-		if (teamKey != null) addTeamTrap(teamKey, trapKey);
-	}
-
-	@Deprecated(forRemoval = true)
-	public void removeTeamTrap(String teamName, String trapKey) {
-		TeamKey teamKey = getTeamKeyByName(teamName);
-		if (teamKey != null) removeTeamTrap(teamKey, trapKey);
-	}
-
-	@Deprecated(forRemoval = true)
-	public List<Player> getPlayersOnTeam(String teamName) {
-		TeamKey teamKey = getTeamKeyByName(teamName);
-		return teamKey != null ? getPlayersOnTeam(teamKey) : new ArrayList<>();
-	}
-
 	public void recordBedDestroyed(TeamKey teamKey) {
 		teamBedStatus.put(teamKey, false);
 		Logger.info("Bed destroyed for team: {}", teamKey.getName());
