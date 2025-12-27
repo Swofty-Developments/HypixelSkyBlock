@@ -130,6 +130,7 @@ public class ItemConfigParser {
 				int maxDiscs = (int) config.getOrDefault("max_discs", 0);
 				yield new AbiphoneComponent(maxContacts, maxDiscs, abiphoneFeatures);
 			}
+            case "FISHING_ROD" -> new FishingRodComponent();
 			case "ENCHANTABLE" -> {
 				List<String> groups = (List<String>) config.getOrDefault("enchant_groups", List.of());
 				boolean showLores = (boolean) config.getOrDefault("show_lores", true);
