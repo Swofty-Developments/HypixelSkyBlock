@@ -92,6 +92,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
         player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(
                 player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000
         );
+        player.getAchievementHandler().completeAchievement("skyblock.quest_complete");
     }
 
     @Override

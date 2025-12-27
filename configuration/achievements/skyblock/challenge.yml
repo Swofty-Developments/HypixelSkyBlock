@@ -895,12 +895,12 @@ achievements:
     trigger: "skyblock.time_to_start_fishing_trigger"
     goal: 1
 
-  - id: "skyblock.wow_that_s_useful"
+  - id: "skyblock.wow_thats_useful"
     name: "Wow, that's useful!"
     description: "Use the /wiki, /wikithis, or /wikihand command to view the Official Hypixel Wiki."
     type: CHALLENGE
     points: 5
-    trigger: "skyblock.wow_that_s_useful_trigger"
+    trigger: "skyblock.wow_thats_useful_trigger"
     goal: 1
 
   - id: "skyblock.at_the_speed_of_light"
@@ -1412,8 +1412,8 @@ achievements:
     description: "Find 20 fairy souls."
     type: CHALLENGE
     points: 10
-    trigger: "skyblock.soul_hunter_trigger"
-    goal: 1
+    trigger: "skyblock.fairy_soul_found"
+    goal: 20
 
   - id: "skyblock.a_challenging_climb"
     name: "A Challenging Climb"
@@ -1524,7 +1524,7 @@ achievements:
     description: "Find a fairy soul."
     type: CHALLENGE
     points: 5
-    trigger: "skyblock.lost_soul_trigger"
+    trigger: "skyblock.fairy_soul_found"
     goal: 1
 
   - id: "skyblock.your_big_break"

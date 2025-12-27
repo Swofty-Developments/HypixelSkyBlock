@@ -61,7 +61,7 @@ public class WikiThisCommand extends HypixelCommand {
 
             player.sendMessage(line1);
             player.sendMessage(line2);
-
+            player.getAchievementHandler().completeAchievement("skyblock.wow_thats_useful");
         });
     }
 }

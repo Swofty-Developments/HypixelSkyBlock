@@ -50,6 +50,7 @@ public class GUIClaimCake extends HypixelInventoryGUI {
                 player.addAndUpdateItem(item);
                 p.closeInventory();
                 player.sendMessage("§aYou claimed §cNew Year Cake§a!");
+                player.getAchievementHandler().completeAchievement("skyblock.happy_new_year");
             }
 
             @Override
