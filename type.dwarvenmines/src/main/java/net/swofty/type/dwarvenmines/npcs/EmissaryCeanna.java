@@ -27,7 +27,7 @@ public class EmissaryCeanna extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(42, 134, 22);
+				return new Pos(42.5, 134.5, 22.5);
 			}
 
 			@Override
