@@ -502,7 +502,7 @@ public final class Game {
 		String subtitleMessage;
 
 		if (winningTeam != null) {
-			titleMessage = winningTeam.chatColor() + "Team " + winningTeam.getName() + "has won!";
+			titleMessage = winningTeam.chatColor() + "Team " + winningTeam.getName() + " has won!";
 			subtitleMessage = "Congratulations!";
 		} else {
 			titleMessage = "§cGame Over!";
