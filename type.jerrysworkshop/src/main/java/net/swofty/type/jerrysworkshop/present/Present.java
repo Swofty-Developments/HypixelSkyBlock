@@ -9,6 +9,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.tag.Tag;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointPresentYear;
 import net.swofty.type.generic.entity.BlockDisplayEntity;
@@ -72,6 +73,7 @@ public class Present {
 						DatapointPresentYear.class
 				).setValue(new DatapointPresentYear.YearData(currentYear, List.of(index)));
 				player.sendMessage("§2§LGIFT! §aYou found a §fWhite Gift§a! §7(§f1§7/§a20§7)");
+				((SkyBlockPlayer) player).addAndUpdateItem(ItemType.WHITE_GIFT);
 				return;
 			}
 			List<Integer> value = new ArrayList<>(presents.value());
@@ -84,6 +86,7 @@ public class Present {
 						DatapointPresentYear.class
 				).setValue(new DatapointPresentYear.YearData(currentYear, value));
 				player.sendMessage("§2§LGIFT! §aYou found a §fWhite Gift§a! §7(§f" + value.size() + "§7/§a20§7)");
+				((SkyBlockPlayer) player).addAndUpdateItem(ItemType.WHITE_GIFT);
 			}
 		});
 		entity.setInstance(instance, position.add(0.5, 0, 0.5));
