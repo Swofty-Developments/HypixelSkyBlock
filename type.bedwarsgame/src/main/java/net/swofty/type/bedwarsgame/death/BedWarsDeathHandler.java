@@ -155,27 +155,18 @@ public class BedWarsDeathHandler {
     public static Component createDeathMessage(@NotNull BedWarsDeathResult result) {
         String victimName = result.victim().getUsername();
         String victimColor = getTeamColor(result.victim());
+        BedWarsDeathType deathType = result.deathType();
+        String messageFormat = deathType.getMessageFormat();
 
-        Component message = switch (result.deathType()) {
-            case PLAYER_MELEE -> createPlayerKillMessage(victimName, victimColor, result.killer(), " was slain by ");
-            case PLAYER_VOID_KNOCK -> createPlayerKillMessage(victimName, victimColor, result.killer(), " was knocked into the void by ");
-            case PLAYER_FALL_KNOCK -> createPlayerKillMessage(victimName, victimColor, result.killer(), " was knocked off by ");
-            case PLAYER_PROJECTILE -> createPlayerKillMessage(victimName, victimColor, result.killer(), " was shot by ");
-            case PLAYER_EXPLOSION -> createPlayerKillMessage(victimName, victimColor, result.killer(), " was blown up by ");
-            case PLAYER_FIRE -> createPlayerKillMessage(victimName, victimColor, result.killer(), " was burned to death by ");
-
-            case VOID_ASSISTED -> createAssistedMessage(victimName, victimColor, result.assistPlayer(), " was knocked into the void by ");
-            case FALL_ASSISTED -> createAssistedMessage(victimName, victimColor, result.assistPlayer(), " was knocked off by ");
-
-            case VOID -> createSimpleMessage(victimName, victimColor, " fell into the void.");
-            case FALL -> createSimpleMessage(victimName, victimColor, " fell from a high place.");
-            case FIRE -> createSimpleMessage(victimName, victimColor, " burned to death.");
-            case EXPLOSION -> createSimpleMessage(victimName, victimColor, " blew up.");
-
-            case MOB_KILL -> createMobKillMessage(victimName, victimColor, result.attackerEntity());
-
-            case GENERIC -> createSimpleMessage(victimName, victimColor, " died.");
-        };
+        Component message;
+        if (deathType.involvesPlayer()) {
+            BedWarsPlayer involvedPlayer = deathType.isAssisted() ? result.assistPlayer() : result.killer();
+            message = createPlayerInvolvedMessage(victimName, victimColor, involvedPlayer, messageFormat);
+        } else if (deathType == BedWarsDeathType.MOB_KILL) {
+            message = createMobKillMessage(victimName, victimColor, messageFormat, result.attackerEntity());
+        } else {
+            message = createSingleMessage(victimName, victimColor, messageFormat);
+        }
 
         // Append FINAL KILL if applicable
         if (result.isFinalKill()) {
@@ -187,38 +178,28 @@ public class BedWarsDeathHandler {
         return message;
     }
 
-    private static Component createPlayerKillMessage(String victimName, String victimColor,
-                                                     @Nullable BedWarsPlayer killer, String action) {
-        if (killer == null) {
-            return createSimpleMessage(victimName, victimColor, " died.");
+    private static Component createPlayerInvolvedMessage(String victimName, String victimColor,
+                                                         @Nullable BedWarsPlayer otherPlayer,
+                                                         String messageFormat) {
+        if (otherPlayer == null) {
+            return createSingleMessage(victimName, victimColor, messageFormat);
         }
 
-        String killerColor = getTeamColor(killer);
-
-        return Component.text(victimColor + victimName + "§7" + action + killerColor + killer.getUsername() + "§7.");
+        String otherColor = getTeamColor(otherPlayer);
+        return Component.text(victimColor + victimName + "§7" + messageFormat + otherColor + otherPlayer.getUsername() + "§7.");
     }
 
-    private static Component createAssistedMessage(String victimName, String victimColor,
-                                                   @Nullable BedWarsPlayer assistPlayer, String action) {
-        if (assistPlayer == null) {
-            return createSimpleMessage(victimName, victimColor, " died.");
-        }
-
-        String assistColor = getTeamColor(assistPlayer);
-
-        return Component.text(victimColor + victimName + "§7" + action + assistColor + assistPlayer.getUsername() + "§7.");
+    private static Component createSingleMessage(String victimName, String victimColor, String messageFormat) {
+        return Component.text(victimColor + victimName + "§7" + messageFormat);
     }
 
-    private static Component createSimpleMessage(String victimName, String victimColor, String suffix) {
-        return Component.text(victimColor + victimName + "§7" + suffix);
-    }
-
-    private static Component createMobKillMessage(String victimName, String victimColor, @Nullable Entity mob) {
+    private static Component createMobKillMessage(String victimName, String victimColor, String messageFormat,
+                                                  @Nullable Entity mob) {
         String mobName = mob != null
                 ? mob.getEntityType().name().toLowerCase().replace("_", " ")
                 : "a mob";
 
-        return Component.text(victimColor + victimName + "§7 was killed by " + mobName + "§7.");
+        return Component.text(victimColor + victimName + "§7" + messageFormat + mobName + "§7.");
     }
 
     private static String getTeamColor(@Nullable BedWarsPlayer player) {

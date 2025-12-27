@@ -1,5 +1,8 @@
 package net.swofty.type.bedwarsgame.death;
 
+import lombok.Getter;
+
+@Getter
 public enum BedWarsDeathType {
     PLAYER_MELEE(" was slain by "),
     PLAYER_VOID_KNOCK(" was knocked into the void by "),
@@ -26,11 +29,7 @@ public enum BedWarsDeathType {
         this.messageFormat = messageFormat;
     }
 
-    public String getMessageFormat() {
-        return messageFormat;
-    }
-
-    public boolean involvesPlayer() {
+	public boolean involvesPlayer() {
         return switch (this) {
             case PLAYER_MELEE, PLAYER_VOID_KNOCK, PLAYER_FALL_KNOCK, PLAYER_PROJECTILE,
                  PLAYER_EXPLOSION, PLAYER_FIRE, VOID_ASSISTED, FALL_ASSISTED -> true;
