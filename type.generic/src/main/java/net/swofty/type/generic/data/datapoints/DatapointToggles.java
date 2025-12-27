@@ -99,6 +99,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_JAX(false),
             HAS_REALLY_SPOKEN_TO_JAX(false),
             HAS_SPOKEN_TO_ALCHEMIST(false),
+            HAS_SPOKEN_TO_EMISSARY_BRAUM(false),
             PAPER_ICONS(false),
 			LOBBY_SHOW_PLAYERS(true),
 			AUTO_ACCEPT_QUESTS(false),
