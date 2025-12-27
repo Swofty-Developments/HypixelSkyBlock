@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.shop.GUIShopAlda;
 public class AbiphoneAlda extends AbiphoneNPC {
 
 	public AbiphoneAlda() {
-		super("alda", "§6Alda", "Sells §aAbiphones §ffor beginners.");
+		super("alda", "§6Alda", "Sells §aAbiphones §7for beginners.");
 	}
 
 	@Override
