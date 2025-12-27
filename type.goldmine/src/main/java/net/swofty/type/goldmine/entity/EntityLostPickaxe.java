@@ -45,23 +45,27 @@ public class EntityLostPickaxe extends LivingEntity {
 		super.spawn();
 		InteractionEntity interactionEntity = new InteractionEntity(width, height, (p, event) -> {
 			SkyBlockPlayer player = (SkyBlockPlayer) p;
-			boolean hasFound = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_FOUND_LAZY_MINER_PICKAXE);
+			MissionData data = player.getMissionData();
+
+			if (!data.isCurrentlyActive(MissionFindLazyMinerPickaxe.class)) return;
+
+			boolean hasFound = player.getMissionData().hasCompleted(MissionFindLazyMinerPickaxe.class);
 			if (hasFound) {
 				player.sendMessage("§cYou have already picked that up!");
 				return;
 			}
 
-			// Set the toggle for backwards compatibility and special case handling
-			player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_FOUND_LAZY_MINER_PICKAXE, true);
 			player.sendMessage("§aYou have found the Lazy Miner's Pickaxe!");
 
-			// End mission if active (this will start MissionTalkToLazyMiner)
-			MissionData data = player.getMissionData();
-			if (data.isCurrentlyActive(MissionFindLazyMinerPickaxe.class)) {
-				data.endMission(MissionFindLazyMinerPickaxe.class);
-			}
+			data.endMission(MissionFindLazyMinerPickaxe.class);
 
             SkyBlockItem pickaxe = new SkyBlockItem(ItemType.IRON_PICKAXE);
+			pickaxe.getAttributeHandler().addEnchantment(
+					new SkyBlockEnchantment(
+							EnchantmentType.EFFICIENCY,
+							1
+					)
+			);
             pickaxe.getAttributeHandler().addEnchantment(
                     new SkyBlockEnchantment(
                             EnchantmentType.SMELTING_TOUCH,

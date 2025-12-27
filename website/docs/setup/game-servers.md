@@ -50,11 +50,11 @@ Copy the `forwarding.secret` from your Velocity proxy directory and add it to `r
 
 Extract the world files download and place them:
 
-| World | Location |
-|-------|----------|
-| SkyBlock Hub | `configuration/skyblock/islands/hypixel_skyblock_hub/` |
+| World           | Location                                                           |
+|-----------------|--------------------------------------------------------------------|
+| SkyBlock Hub    | `configuration/skyblock/islands/hypixel_skyblock_hub/`             |
 | Island Template | `configuration/skyblock/islands/hypixel_skyblock_island_template/` |
-| Prototype Lobby | `configuration/hypixel_prototype_lobby/` |
+| Prototype Lobby | `configuration/hypixel_prototype_lobby/`                           |
 
 ### 4. Install Data Files
 
