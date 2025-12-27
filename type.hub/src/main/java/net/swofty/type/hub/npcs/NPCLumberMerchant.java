@@ -8,6 +8,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopLumberMerchant;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCLumberMerchant extends HypixelNPC {
     public NPCLumberMerchant() {
         super(new HumanConfiguration() {

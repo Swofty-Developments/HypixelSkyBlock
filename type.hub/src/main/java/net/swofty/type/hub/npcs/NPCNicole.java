@@ -9,6 +9,8 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCNicole extends HypixelNPC {
 
     public NPCNicole() {

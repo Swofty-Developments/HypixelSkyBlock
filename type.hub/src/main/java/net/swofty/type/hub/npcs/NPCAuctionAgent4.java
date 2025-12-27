@@ -6,6 +6,8 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionHouse;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCAuctionAgent4 extends HypixelNPC {
     public NPCAuctionAgent4() {
         super(new HumanConfiguration() {

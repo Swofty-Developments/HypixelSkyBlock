@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.item.components;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.skyblockgeneric.gui.inventories.abiphone.GUIAbiphone;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 
 import java.util.ArrayList;
@@ -36,8 +37,7 @@ public class AbiphoneComponent extends SkyBlockItemComponent {
 		addInheritedComponent(new LoreUpdateComponent(lore, false));
 		addInheritedComponent(new InteractableComponent(
 				(player, item) -> {
-					player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-							.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+					new GUIAbiphone(item).open(player);
 				},
 				null,
 				null

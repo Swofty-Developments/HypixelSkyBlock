@@ -6,6 +6,8 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCShania extends HypixelNPC {
     public NPCShania() {
         super(new AnimalConfiguration() {

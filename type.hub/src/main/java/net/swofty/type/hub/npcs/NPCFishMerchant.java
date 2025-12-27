@@ -8,6 +8,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopFishMerchant;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCFishMerchant extends HypixelNPC {
     public NPCFishMerchant() {
         super(new HumanConfiguration() {

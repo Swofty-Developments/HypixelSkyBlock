@@ -8,6 +8,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCSlumberTourGuide extends HypixelNPC {
 
 	public NPCSlumberTourGuide() {

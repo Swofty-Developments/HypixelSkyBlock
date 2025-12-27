@@ -9,6 +9,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class INPCRoyalGuard extends HypixelNPC {
 
 	public INPCRoyalGuard(Function<HypixelPlayer, String> signature, Function<HypixelPlayer, String> texture, Function<HypixelPlayer, Pos> position) {

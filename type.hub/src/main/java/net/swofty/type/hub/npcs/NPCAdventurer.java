@@ -7,6 +7,8 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.hub.gui.GUIShopAdventurer;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCAdventurer extends HypixelNPC {
     public NPCAdventurer() {
         super(new HumanConfiguration() {

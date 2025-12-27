@@ -27,6 +27,8 @@ import net.swofty.type.generic.data.mongodb.*;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
+import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
+import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
 import net.swofty.type.skyblockgeneric.block.placement.BlockPlacementManager;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
@@ -170,6 +172,9 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
             loopThroughPackage("net.swofty.type.skyblockgeneric.entity.npc.npcs", HypixelNPC.class)
                     .forEach(HypixelNPC::register);
         }
+
+        loopThroughPackage("net.swofty.type.skyblockgeneric.abiphone.impl", AbiphoneNPC.class)
+                .forEach(AbiphoneRegistry::registerContact);
 
         // Register entities
         loopThroughPackage("net.swofty.type.skyblockgeneric.entity.mob.mobs", SkyBlockMob.class)

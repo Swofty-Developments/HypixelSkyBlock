@@ -8,6 +8,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.goldmine.gui.GUIShopGoldForger;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCGoldForger extends HypixelNPC {
 
 	public NPCGoldForger() {

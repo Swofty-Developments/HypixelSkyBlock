@@ -10,6 +10,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCBanker extends HypixelNPC {
     public NPCBanker() {
         super(new HumanConfiguration() {
@@ -41,7 +43,7 @@ public class NPCBanker extends HypixelNPC {
     }
 
     @Override
-    public void onClick(HypixelNPC.NPCInteractEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
 
         MissionData missionData = ((SkyBlockPlayer) e.player()).getMissionData();

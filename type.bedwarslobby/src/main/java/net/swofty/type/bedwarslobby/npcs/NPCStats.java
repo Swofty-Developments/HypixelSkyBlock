@@ -16,6 +16,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 import static net.swofty.commons.bedwars.BedwarsLevelUtil.suffix;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCStats extends HypixelNPC {
 
 	public NPCStats() {

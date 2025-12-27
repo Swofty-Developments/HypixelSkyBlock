@@ -11,6 +11,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCAuctionMaster extends HypixelNPC {
     public NPCAuctionMaster() {
         super(new HumanConfiguration() {

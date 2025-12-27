@@ -10,6 +10,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCElizabeth extends HypixelNPC {
 
     public NPCElizabeth() {

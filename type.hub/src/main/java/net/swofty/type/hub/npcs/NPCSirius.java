@@ -12,6 +12,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCSirius extends HypixelNPC {
     private static final long MINIMUM_COINS = 400_000;
 
@@ -59,7 +61,7 @@ public class NPCSirius extends HypixelNPC {
     }
 
     @Override
-    public void onClick(HypixelNPC.NPCInteractEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
 
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();

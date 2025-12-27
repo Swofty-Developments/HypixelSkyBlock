@@ -9,10 +9,13 @@ import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.type.bedwarslobby.gui.GUIPlay;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCDoubles extends HypixelNPC {
 	private static List<UnderstandableProxyServer> cacheServers = new ArrayList<>();

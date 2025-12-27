@@ -13,6 +13,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.UUID;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCMuseumDisplay extends HypixelNPC {
     public NPCMuseumDisplay() {
         super(new MuseumHumanConfiguration());

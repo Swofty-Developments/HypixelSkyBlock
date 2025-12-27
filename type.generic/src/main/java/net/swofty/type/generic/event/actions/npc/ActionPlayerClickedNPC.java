@@ -11,7 +11,7 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.generic.event.custom.VillagerSpokenToEvent;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
@@ -27,30 +27,16 @@ public class ActionPlayerClickedNPC implements HypixelEventClass {
 		HypixelNPC npc = HypixelNPC.getFromImpl(player, entity);
 		if (npc == null) return;
 
-        switch (entity) {
-            case NPCEntityImpl _ -> npc.onClick(new HypixelNPC.NPCInteractEvent(
-                    player,
-                    npc
-            ));
-            case NPCVillagerEntityImpl _ -> {
-                VillagerSpokenToEvent spokenToEvent = new VillagerSpokenToEvent(player, npc);
-                HypixelEventHandler.callCustomEvent(spokenToEvent);
+		NPCInteractEvent clickEvent = new NPCInteractEvent(player, event.getHand(), npc);
+		HypixelEventHandler.callCustomEvent(clickEvent);
+		if (clickEvent.isCancelled()) return;
 
-                if (spokenToEvent.isCancelled()) return;
-
-                npc.onClick(new HypixelNPC.NPCInteractEvent(
-                        player,
-                        npc
-                ));
-            }
-            case NPCAnimalEntityImpl _ -> npc.onClick(new HypixelNPC.NPCInteractEvent(
-                    player,
-                    npc
-            ));
-            default -> {
+		switch (entity) {
+			case NPCEntityImpl _, NPCVillagerEntityImpl _, NPCAnimalEntityImpl _ -> npc.onClick(clickEvent);
+			default -> {
 				// This is not a NPC we can handle here
 				Logger.warn("Player " + player.getUsername() + " clicked on an unknown NPC type: " + entity.getClass().getName());
-            }
-        }
+			}
+		}
 	}
 }

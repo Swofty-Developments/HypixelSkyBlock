@@ -9,6 +9,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCAlchemist extends HypixelNPC {
     public NPCAlchemist() {
         super(new AnimalConfiguration() {
