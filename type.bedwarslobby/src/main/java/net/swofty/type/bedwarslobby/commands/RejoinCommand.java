@@ -46,6 +46,7 @@ public class RejoinCommand extends HypixelCommand {
 
                         // Transfer player to the game server
                         player.asProxyPlayer().transferToWithIndication(resp.server().uuid());
+                        player.getAchievementHandler().completeAchievement("bedwars.rejoining_the_dream");
                     } else {
                         player.sendMessage("§cYou don't have an active game to rejoin!");
                     }

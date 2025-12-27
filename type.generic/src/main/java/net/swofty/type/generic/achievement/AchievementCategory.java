@@ -27,7 +27,8 @@ public enum AchievementCategory {
     PIT("Pit", "pit", Material.DIRT),
     WOOL_GAMES("Wool Games", "woolgames", Material.WHITE_WOOL),
     COPS_AND_CRIMS("Cops and Crims", "copsandcrims", Material.IRON_BARS),
-    GENERAL("General", "general", Material.NETHER_STAR);
+    GENERAL("General", "general", Material.NETHER_STAR),
+    SKYBLOCK("SkyBlock", "skyblock", Material.PLAYER_HEAD);
 
     private final String displayName;
     private final String configKey;
