@@ -5,7 +5,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.generic.experience.HypixelExperience;
 import net.swofty.type.generic.experience.LevelReward;
 import net.swofty.type.generic.experience.LevelRewardRegistry;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
@@ -263,7 +262,7 @@ public class GUIHypixelLeveling extends HypixelInventoryGUI {
 
                 return ItemStackCreator.getStack(
                         nameColor + "Hypixel Level Reward " + level,
-                        Material.MINECART,
+                        claimed ? Material.MINECART : Material.CHEST_MINECART,
                         1,
                         lore.toArray(new String[0])
                 );

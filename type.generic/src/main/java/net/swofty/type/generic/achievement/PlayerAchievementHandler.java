@@ -1,6 +1,10 @@
 package net.swofty.type.generic.achievement;
 
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointAchievementData;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -153,15 +157,23 @@ public class PlayerAchievementHandler {
             tierText = " " + toRoman(progress.getCurrentTier());
         }
 
-        player.sendMessage("§6§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-        player.sendMessage("§6§lACHIEVEMENT UNLOCKED: §a" + def.getName() + tierText);
-        player.sendMessage("");
+        Component tierHover = Component.text(def.getName() + tierText, NamedTextColor.GREEN).appendNewline()
+                .append(Component.text(def.getDescription(), NamedTextColor.GRAY))
+                .appendNewline().appendNewline()
+                .append(Component.text("Reward:", NamedTextColor.GRAY))
+                .appendNewline()
+                .append(Component.text(" §8+§e5 §7Achievement Points"))
+                .appendNewline().appendNewline()
+                .append(Component.text("Click to open achievements menu!", NamedTextColor.YELLOW));
 
-        int points = def.getType() == AchievementType.TIERED
-                ? def.getPointsForTier(progress.getCurrentTier())
-                : def.getPoints();
-        player.sendMessage("§7Reward: §e+" + points + " Achievement Points");
-        player.sendMessage("§6§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+        Component obf = Component.text("A", NamedTextColor.YELLOW, TextDecoration.OBFUSCATED);
+        player.sendMessage(
+                obf
+                        .append(Component.text(">>   Achievement Unlocked: ", NamedTextColor.GREEN).decorationIfAbsent(TextDecoration.OBFUSCATED, TextDecoration.State.FALSE))
+                        .append(Component.text(def.getName() + tierText, NamedTextColor.GOLD).hoverEvent(HoverEvent.showText(tierHover)).decorationIfAbsent(TextDecoration.OBFUSCATED, TextDecoration.State.FALSE))
+                        .append(Component.text("   <<", NamedTextColor.GREEN).decorationIfAbsent(TextDecoration.OBFUSCATED, TextDecoration.State.FALSE))
+                        .append(obf)
+        );
 
         player.playSound(net.kyori.adventure.sound.Sound.sound(
                 net.minestom.server.sound.SoundEvent.ENTITY_PLAYER_LEVELUP,

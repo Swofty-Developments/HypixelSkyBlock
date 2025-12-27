@@ -5,7 +5,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.generic.experience.HypixelExperience;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -122,7 +121,7 @@ public class GUIMyProfile extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStackHead(
                         "§aCharacter Information",
-                        "18614241b980319c02f5ee3ae1a7fc7ebf8b3fdd5301ed3d4e2159a80dae1d2c",
+                        player.getSkin(),
                         1,
                         "§7Rank: " + player.getRank().getPrefix().trim(),
                         "§7Level: §6" + level,

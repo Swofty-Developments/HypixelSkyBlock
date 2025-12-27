@@ -36,6 +36,22 @@ achievements:
     goal: 200
     perGame: true
 
+  - id: "bedwars.you_cant_do_that"
+    name: "You can't do that!"
+    description: "Attempt to break your teams's bed."
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.break_own_bed"
+    goal: 1
+
+  - id: "bedwars.rejoining_the_dream"
+    name: "Rejoining the Dream"
+    description: "Use the /rejoin command to warp back into a Bed Wars game."
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.rejoin_used"
+    goal: 1
+
   - id: "bedwars.cant_wake_up"
     name: "Can't Wake Up"
     description: "Enter the Slumber Hotel temple"
@@ -52,6 +68,22 @@ achievements:
     trigger: "bedwars.close_win"
     goal: 1
     customCheck: true
+
+  - id: "bedwars.shear_luck"
+    name: "Shear Luck"
+    description: "Kill a player with shears!"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.shear_kill"
+    goal: 1
+
+  - id: "bedwars.future_is_now"
+    name: "The Future is Now"
+    description: "Punch a chest to deposit your held item."
+    points: 5
+    type: CHALLENGE
+    trigger: "bedwars.chest_deposit"
+    goal: 1
 
   - id: "bedwars.diamond_hoarder"
     name: "Diamond Hoarder"
@@ -184,7 +216,7 @@ achievements:
   # Page 2 achievements
   - id: "bedwars.its_dark_down_there"
     name: "It's dark down there"
-    description: "Fall into the void 5 times in a game"
+    description: "Fall into the void"
     type: CHALLENGE
     points: 5
     trigger: "bedwars.void_falls"
@@ -202,11 +234,11 @@ achievements:
 
   - id: "bedwars.minefield"
     name: "Minefield"
-    description: "Place 10 traps in a single game"
+    description: "Place 3 traps in a single game"
     type: CHALLENGE
     points: 10
     trigger: "bedwars.traps_placed"
-    goal: 10
+    goal: 1
     perGame: true
 
   - id: "bedwars.not_today"
@@ -246,10 +278,10 @@ achievements:
 
   - id: "bedwars.stay_away"
     name: "Stay away from me!"
-    description: "Knock 5 enemies into the void in one game"
+    description: "Knock 5 enemies into the void in a single game using a Knockback Stick."
     type: CHALLENGE
     points: 10
-    trigger: "bedwars.void_kills"
+    trigger: "bedwars.knockback_void_kill"
     goal: 5
     perGame: true
 
@@ -261,6 +293,13 @@ achievements:
     trigger: "bedwars.mid_chests_opened"
     goal: 5
     perGame: true
+
+  - id: "bedwars.sneaky_rusher"
+    name: "Sneaky Rusher"
+    description: "Destroy a bed while being invisible"
+    points: 5
+    trigger: "bedwars.sneaky_rusher_trigger"
+    goal: 1
 
   - id: "bedwars.ultimate_defense"
     name: "Ultimate Defense"
@@ -278,3 +317,12 @@ achievements:
     trigger: "bedwars.game_kills"
     goal: 10
     perGame: true
+
+  - id: "bedwars.thats_a_first"
+    name: "That's a First"
+    description: "Win your first game of Bed Wars."
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.wins"
+    goal: 1
+
