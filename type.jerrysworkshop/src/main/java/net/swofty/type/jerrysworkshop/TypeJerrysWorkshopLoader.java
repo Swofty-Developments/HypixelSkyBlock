@@ -16,6 +16,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.jerrysworkshop.present.Present;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.entity.GlassDisplay;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -66,6 +67,8 @@ public class TypeJerrysWorkshopLoader implements SkyBlockTypeLoader {
             player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
                     .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
         });
+
+        Present.spawnAll();
     }
 
     @Override

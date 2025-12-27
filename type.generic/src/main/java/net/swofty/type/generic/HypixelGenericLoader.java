@@ -20,6 +20,8 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
+import net.swofty.type.generic.block.PlayerHeadBlockHandler;
+import net.swofty.type.generic.block.SignBlockHandler;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
@@ -191,6 +193,10 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         // Register game data handlers
         GameDataHandlerRegistry.register(new BedWarsDataHandler());
         GameDataHandlerRegistry.register(new PrototypeLobbyDataHandler());
+
+        // Register Block Handlers
+        MinecraftServer.getBlockManager().registerHandler(PlayerHeadBlockHandler.KEY, PlayerHeadBlockHandler::new);
+        MinecraftServer.getBlockManager().registerHandler(SignBlockHandler.KEY, SignBlockHandler::new);
 
         // Register NPCs
         if (mainInstance != null) {
