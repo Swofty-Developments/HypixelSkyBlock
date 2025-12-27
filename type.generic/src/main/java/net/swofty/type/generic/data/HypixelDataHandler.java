@@ -220,6 +220,8 @@ public class HypixelDataHandler extends DataHandler {
 
         QUEST_DATA("quest_data",
                 DatapointQuestData.class, new DatapointQuestData("quest_data")),
+
+        PARKOUR_DATA("parkour_data", DatapointParkourData.class, new DatapointParkourData("parkour_data"))
         ;
 
         @Getter private final String key;

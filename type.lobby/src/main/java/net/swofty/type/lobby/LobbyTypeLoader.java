@@ -4,6 +4,9 @@ import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
 import net.swofty.type.lobby.launchpad.LaunchPad;
+import net.swofty.type.lobby.parkour.LobbyParkourManager;
+import net.swofty.type.lobby.parkour.Parkour;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -27,4 +30,10 @@ public interface LobbyTypeLoader extends HypixelTypeLoader {
      * Returns Map<slot, LobbyItem> - only items in map are given to players.
      */
     Map<Integer, LobbyItem> getHotbarItems();
+
+    default Parkour getParkour() {
+        return null;
+    }
+
+    @Nullable LobbyParkourManager getParkourManager();
 }

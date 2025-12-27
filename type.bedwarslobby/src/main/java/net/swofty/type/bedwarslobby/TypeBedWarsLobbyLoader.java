@@ -27,6 +27,7 @@ import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.bedwarslobby.tab.BedWarsPlayersOnlineModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
+import net.swofty.type.lobby.events.LobbyBlockBreak;
 import net.swofty.type.lobby.events.LobbyItemEvents;
 import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
 import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
@@ -38,6 +39,7 @@ import net.swofty.type.lobby.item.impl.PlayCompass;
 import net.swofty.type.lobby.item.impl.ProfileItem;
 import net.swofty.type.lobby.launchpad.LaunchPad;
 import net.swofty.type.lobby.launchpad.LaunchPadHandler;
+import net.swofty.type.lobby.parkour.LobbyParkourManager;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -88,9 +90,7 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
         BedWarsLeaderboardAggregator.initialize();
 
         // Schedule hologram updates every 2 seconds
-        MinecraftServer.getSchedulerManager().buildTask(() -> {
-            PlayerHolograms.updateExternalHolograms();
-        }).delay(TaskSchedule.seconds(5))
+        MinecraftServer.getSchedulerManager().buildTask(PlayerHolograms::updateExternalHolograms).delay(TaskSchedule.seconds(5))
           .repeat(TaskSchedule.seconds(2))
           .schedule();
     }
@@ -110,6 +110,11 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
                 7, new HidePlayers(),
                 8, new LobbySelector()
         );
+    }
+
+    @Override
+    public LobbyParkourManager getParkourManager() {
+        return null;
     }
 
     @Override
@@ -150,6 +155,7 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
         events.add(new LobbyItemEvents());
         events.add(new LobbyLaunchPadEvents());
         events.add(new LobbyPlayerJoinEvents());
+        events.add(new LobbyBlockBreak());
         return events;
     }
 
