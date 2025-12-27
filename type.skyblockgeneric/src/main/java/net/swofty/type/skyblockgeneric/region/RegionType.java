@@ -34,6 +34,17 @@ public enum RegionType {
 	DARK_AUCTION("Dark Auction", "§5"),
 	FOREST("Forest", MineLogsConfiguration.class),
 
+	JERRYS_WORKSHOP("Jerry's Workshop", "§c"),
+	JERRY_POND("Jerry Pond", "§b"),
+	SUNKEN_JERRY_POND("Sunken Jerry Pond", "§b"),
+	TERRYS_SHACK("Terry's Shack", "§b"),
+	MOUNT_JERRY("Mount Jerry", "§c"),
+	HOT_SPRINGS("Hot Springs", "§4"),
+	GLACIAL_CAVE("Glacial Cave", "§3"),
+	GARYS_SHACK("Gary's Shack", "§b"),
+	SHERRYS_SHOWROOM("Sherry's Showroom", "§e"),
+	EINARYS_EMPORIUM("Einary's Emporium", "§6"),
+
 	BIRCH_PARK("Birch Park", "§a"),
 	HOWLING_CAVE("Howling Cave"),
 	SPRUCE_WOODS("Spruce Woods", "§a"),
