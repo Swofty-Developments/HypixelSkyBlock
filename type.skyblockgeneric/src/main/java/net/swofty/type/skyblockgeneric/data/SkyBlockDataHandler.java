@@ -428,6 +428,9 @@ public class SkyBlockDataHandler extends DataHandler {
         LATEST_NEW_YEAR_CAKE_YEAR("latest_new_year_cake_year", false, false, false,
                 DatapointInteger.class, new DatapointInteger("latest_new_year_cake_year", 0)),
 
+        LATEST_YEAR_PRESENT_PICKUP("latest_year_pickup_present", false, false, false,
+                DatapointPresentYear.class, new DatapointPresentYear("latest_year_pickup_present")),
+
         KAT("kat", false, false, false,
                 DatapointKat.class, new DatapointKat("kat")),
 

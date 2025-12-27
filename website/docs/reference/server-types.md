@@ -6,22 +6,22 @@ ServerTypes define the different game modes and locations that can be run as sep
 
 These server types are part of the SkyBlock gamemode and share SkyBlock-specific functionality.
 
-| ServerType                     | Description     | World Required                     |
-|--------------------------------|-----------------|------------------------------------|
-| `SKYBLOCK_ISLAND`              | Personal Island | `hypixel_skyblock_island_template` |
-| `SKYBLOCK_HUB`                 | Hub             | `hypixel_skyblock_hub`             |
-| `SKYBLOCK_SPIDERS_DEN`         | Spider's Den    | `hypixel_skyblock_spiders_den`     |
-| `SKYBLOCK_THE_END`             | The End         | `hypixel_skyblock_the_end`         |
-| `SKYBLOCK_CRIMSON_ISLE`        | Crimson isle    | `hypixel_skyblock_crimson_isle`    |
-| `SKYBLOCK_DUNGEON_HUB`         | Dungeon hub     | `hypixel_skyblock_dungeon_hub`     |
-| `SKYBLOCK_THE_FARMING_ISLANDS` | Farming Islands | `hypixel_skyblock_hub`             |
-| `SKYBLOCK_GOLD_MINE`           | Gold Mine       | `hypixel_skyblock_gold_mine`       |
-| `SKYBLOCK_DEEP_CAVERNS`        | Deep Caverns    | `hypixel_skyblock_deep_caverns`    |
-| `SKYBLOCK_DWARVEN_MINES`       | Dwarven Mines   | `hypixel_skyblock_dwarven_mines`   |
-| `SKYBLOCK_THE_PARK`            | The Park        | `hypixel_skyblock_the_park`        |
-| `SKYBLOCK_GALATEA`             | Galatea         | `hypixel_skyblock_galatea`         |
-| `SKYBLOCK_BACKWATER_BAYOU`     | Backwater Bayou | `hypixel_skyblock_galatea`         |
-
+| ServerType                     | Description      | World Required                     |
+|--------------------------------|------------------|------------------------------------|
+| `SKYBLOCK_ISLAND`              | Personal Island  | `hypixel_skyblock_island_template` |
+| `SKYBLOCK_HUB`                 | Hub              | `hypixel_skyblock_hub`             |
+| `SKYBLOCK_SPIDERS_DEN`         | Spider's Den     | `hypixel_skyblock_spiders_den`     |
+| `SKYBLOCK_THE_END`             | The End          | `hypixel_skyblock_the_end`         |
+| `SKYBLOCK_CRIMSON_ISLE`        | Crimson isle     | `hypixel_skyblock_crimson_isle`    |
+| `SKYBLOCK_DUNGEON_HUB`         | Dungeon hub      | `hypixel_skyblock_dungeon_hub`     |
+| `SKYBLOCK_THE_FARMING_ISLANDS` | Farming Islands  | `hypixel_skyblock_hub`             |
+| `SKYBLOCK_GOLD_MINE`           | Gold Mine        | `hypixel_skyblock_gold_mine`       |
+| `SKYBLOCK_DEEP_CAVERNS`        | Deep Caverns     | `hypixel_skyblock_deep_caverns`    |
+| `SKYBLOCK_DWARVEN_MINES`       | Dwarven Mines    | `hypixel_skyblock_dwarven_mines`   |
+| `SKYBLOCK_THE_PARK`            | The Park         | `hypixel_skyblock_the_park`        |
+| `SKYBLOCK_GALATEA`             | Galatea          | `hypixel_skyblock_galatea`         |
+| `SKYBLOCK_BACKWATER_BAYOU`     | Backwater Bayou  | `hypixel_skyblock_galatea`         |
+| `SKYBLOCK_JERRYS_WORKSHOP`     | Jerry's Workshop | `hypixel_skyblock_jerrys_workshop` |
 ### Starting a SkyBlock Server
 
 ```bash

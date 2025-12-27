@@ -16,6 +16,10 @@ public final class MiningHandlers {
         return new PickaxeMiningHandler(strength, powerRequirement);
     }
 
+    public static SkyBlockMiningHandler hand(double strength, int powerRequirement) {
+        return new PickaxeMiningHandler(strength, powerRequirement);
+    }
+
     /**
      * Create an axe mining handler.
      * Uses FORAGING_SPEED stat for axes, fixed time for bare hands.

@@ -22,7 +22,7 @@ import java.util.List;
 
 public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIBanker() {
-        super("Bank Account", InventoryType.CHEST_4_ROW);
+        super("Bank", InventoryType.CHEST_4_ROW);
     }
 
     @Override
