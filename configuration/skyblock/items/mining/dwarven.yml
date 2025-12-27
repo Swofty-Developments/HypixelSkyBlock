@@ -10,12 +10,25 @@ items:
     rarity: COMMON
   - id: MITHRIL
     rarity: COMMON
+    lore:
+      - "§7§o\"The Man called it \"true-silver\" while"
+      - "§7§othe Dwarves, who loved it above all"
+      - "§7§othings, had their own, secret name"
+      - "§7§ofor it.\""
     components:
       - id: SELLABLE
         value: 8.0
       - id: SKILLABLE_MINE
         category: MINING
         mining_value: 6.0
+      - id: EXTRA_RARITY
+        display: DWARVEN METAL
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: SPELUNKER_POTION_1
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
   - id: PLASMA
     rarity: COMMON
     components:
@@ -49,6 +62,10 @@ items:
         value: 15.0
   - id: TITANIUM
     rarity: COMMON
+    lore:
+      - "§7Its strength and resistance to"
+      - "§7corrosion are the highest of any"
+      - "§7metallic element."
     components:
       - id: SELLABLE
         value: 20.0
@@ -57,6 +74,8 @@ items:
         mining_value: 0.0
       - id: SKULL_HEAD
         texture: a14c6e41a762d37863a9fff6888c738905b92cc6c3898892a38dfdfe2ac4bf
+      - id: EXTRA_RARITY
+        display: DWARVEN METAL
   - id: TREASURITE
     rarity: COMMON
     components:

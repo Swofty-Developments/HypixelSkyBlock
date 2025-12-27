@@ -5,6 +5,8 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.world.DimensionType;
+import net.minestom.server.world.biome.Biome;
+import net.minestom.server.world.biome.BiomeEffects;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
@@ -110,7 +112,8 @@ public class TypeDwarvenMinesLoader implements SkyBlockTypeLoader {
 		return MinecraftServer.getDimensionTypeRegistry().register(
 				Key.key("skyblock:dwarven_mines"),
 				DimensionType.builder()
-						.ambientLight(0.4f)
+						.ambientLight(1f)
 						.build());
 	}
+
 }
