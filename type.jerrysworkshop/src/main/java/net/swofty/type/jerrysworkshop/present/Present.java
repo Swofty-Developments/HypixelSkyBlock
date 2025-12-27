@@ -26,7 +26,14 @@ public class Present {
 	static List<BlockVec> positions = List.of(
 			new BlockVec(-1, 76, 81),
 			new BlockVec(-9, 76, 104),
-			new BlockVec(-1, 79, 113)
+			new BlockVec(-1, 79, 113),
+			new BlockVec(-34, 76, 81),
+			new BlockVec(-25, 76, 69),
+			new BlockVec(16, 95, 96),
+			new BlockVec(26, 86, 43),
+			new BlockVec(-17, 82, 30),
+			new BlockVec(-12, 76, 9),
+			new BlockVec(9, 77, 9)
 	);
 
 	public static void spawnAll() {

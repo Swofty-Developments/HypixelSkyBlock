@@ -40,7 +40,7 @@ public enum RegionType {
 	TERRYS_SHACK("Terry's Shack", "§b"),
 	MOUNT_JERRY("Mount Jerry", "§c"),
 	HOT_SPRINGS("Hot Springs", "§4"),
-	GLACIAL_CAVE("Glacial Cave", "§3"),
+	GLACIAL_CAVE("Glacial Cave", "§3", GlacialCaveConfiguration.class),
 	GARYS_SHACK("Gary's Shack", "§b"),
 	SHERRYS_SHOWROOM("Sherry's Showroom", "§e"),
 	EINARYS_EMPORIUM("Einary's Emporium", "§6"),
