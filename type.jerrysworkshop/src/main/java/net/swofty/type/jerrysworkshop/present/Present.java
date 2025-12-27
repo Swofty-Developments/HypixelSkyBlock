@@ -72,7 +72,7 @@ public class Present {
 				dataHandler.get(SkyBlockDataHandler.Data.LATEST_YEAR_PRESENT_PICKUP,
 						DatapointPresentYear.class
 				).setValue(new DatapointPresentYear.YearData(currentYear, List.of(index)));
-				player.sendMessage("§2§LGIFT! §aYou found a §fWhite Gift§a! §7(§f1§7/§a20§7)");
+				player.sendMessage("§2§lGIFT! §aYou found a §fWhite Gift§a! §7(§f1§7/§a20§7)");
 				((SkyBlockPlayer) player).addAndUpdateItem(ItemType.WHITE_GIFT);
 				return;
 			}
@@ -85,7 +85,7 @@ public class Present {
 				dataHandler.get(SkyBlockDataHandler.Data.LATEST_YEAR_PRESENT_PICKUP,
 						DatapointPresentYear.class
 				).setValue(new DatapointPresentYear.YearData(currentYear, value));
-				player.sendMessage("§2§LGIFT! §aYou found a §fWhite Gift§a! §7(§f" + value.size() + "§7/§a20§7)");
+				player.sendMessage("§2§lGIFT! §aYou found a §fWhite Gift§a! §7(§f" + value.size() + "§7/§a20§7)");
 				((SkyBlockPlayer) player).addAndUpdateItem(ItemType.WHITE_GIFT);
 			}
 		});
