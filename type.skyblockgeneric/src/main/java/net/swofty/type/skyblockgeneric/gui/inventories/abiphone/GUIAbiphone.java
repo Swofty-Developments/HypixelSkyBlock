@@ -42,6 +42,7 @@ public class GUIAbiphone extends HypixelInventoryGUI {
 				public void run(InventoryPreClickEvent e, HypixelPlayer player) {
 					Click click = e.getClick();
 					if (click instanceof Click.Left) {
+						player.closeInventory();
 						player.sendMessage(Component.text("§e✆ RING..."));
 						MinecraftServer.getSchedulerManager().buildTask(() -> {
 							player.sendMessage(Component.text("§e✆ RING... RING..."));
@@ -49,9 +50,9 @@ public class GUIAbiphone extends HypixelInventoryGUI {
 								player.sendMessage(Component.text("§e✆ RING... RING... RING..."));
 								MinecraftServer.getSchedulerManager().buildTask(() -> {
 									npc.onCall(player);
-								}).delay(TaskSchedule.seconds(2)).schedule();
-							}).delay(TaskSchedule.seconds(2)).schedule();
-						}).delay(TaskSchedule.seconds(2)).schedule();
+								}).delay(TaskSchedule.seconds(1)).schedule();
+							}).delay(TaskSchedule.seconds(1)).schedule();
+						}).delay(TaskSchedule.seconds(1)).schedule();
 					} else if (click instanceof Click.Right) {
 						new GUIContactManagement(abiphone, npc).open(player);
 					}
@@ -60,7 +61,7 @@ public class GUIAbiphone extends HypixelInventoryGUI {
 				@Override
 				public ItemStack.Builder getItem(HypixelPlayer player) {
 					return ItemStackCreator.updateLore(
-							npc.getIcon().set(DataComponents.CUSTOM_NAME, Component.text("§a" + npc.getName())),
+							npc.getIcon().set(DataComponents.CUSTOM_NAME, Component.text("§f" + npc.getName())),
 							List.of(
 									"§7" + npc.getDescription(),
 									"",
@@ -104,7 +105,7 @@ public class GUIAbiphone extends HypixelInventoryGUI {
 						"§7which both own an Abiphone AND are",
 						"§7willing to add you as a contact.",
 						"",
-						"§7Your contacts: §a"+ contacts.size() +"§b/" + AbiphoneRegistry.getRegisteredContactNPCs().size(),
+						"§7Your contacts: §a" + contacts.size() + "§b/" + AbiphoneRegistry.getRegisteredContactNPCs().size(),
 						"",
 						"§eClick to view contacts!"
 				);
@@ -120,7 +121,7 @@ public class GUIAbiphone extends HypixelInventoryGUI {
 
 	@Override
 	public void onBottomClick(InventoryPreClickEvent e) {
-
+		e.setCancelled(true);
 	}
 }
 

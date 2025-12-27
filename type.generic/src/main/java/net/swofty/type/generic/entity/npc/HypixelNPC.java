@@ -228,10 +228,6 @@ public abstract class HypixelNPC {
         player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
     }
 
-    public void sendNPCAbiphoneMessage(HypixelPlayer player, String message) {
-        player.sendMessage("§e[NPC] " + getName() + "§f: §b✆ §f" + message);
-    }
-
     protected DialogueController dialogue() {
         return dialogueController;
     }
@@ -296,7 +292,7 @@ public abstract class HypixelNPC {
     }
 
     @Builder
-    public record DialogueSet(String key, String[] lines, boolean abiPhone) {
+    public record DialogueSet(String key, String[] lines) {
         public static final DialogueSet[] EMPTY = new DialogueSet[0];
     }
 }

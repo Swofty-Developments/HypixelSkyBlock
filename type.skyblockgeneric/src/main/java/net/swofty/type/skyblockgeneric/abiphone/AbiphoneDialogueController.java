@@ -1,4 +1,4 @@
-package net.swofty.type.generic.entity.npc;
+package net.swofty.type.skyblockgeneric.abiphone;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.Scheduler;
@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class DialogueController {
-    private final HashMap<HypixelPlayer, Map.Entry<HypixelNPC.DialogueSet, CompletableFuture<String>>> activeDialogues = new HashMap<>();
-    private final HypixelNPC npc;
+public class AbiphoneDialogueController {
+    private final HashMap<HypixelPlayer, Map.Entry<AbiphoneNPC.DialogueSet, CompletableFuture<String>>> activeDialogues = new HashMap<>();
+    private final AbiphoneNPC npc;
 
-    public DialogueController(HypixelNPC npc) {
+    public AbiphoneDialogueController(AbiphoneNPC npc) {
         this.npc = npc;
     }
 
@@ -37,8 +37,8 @@ public class DialogueController {
     public CompletableFuture<String> setDialogue(HypixelPlayer player, String key) {
         CompletableFuture<String> future = new CompletableFuture<>();
 
-        HypixelNPC.DialogueSet[] dialogueSets = npc.dialogues(player);
-        for (HypixelNPC.DialogueSet dialogueSet : dialogueSets) {
+        AbiphoneNPC.DialogueSet[] dialogueSets = npc.dialogues(player);
+        for (AbiphoneNPC.DialogueSet dialogueSet : dialogueSets) {
             if (dialogueSet.key().equals(key)) {
                 activeDialogues.put(player, Map.entry(dialogueSet, future));
                 handleLineSendingLoop(player, dialogueSet);
@@ -56,22 +56,21 @@ public class DialogueController {
      * @param player The player to remove from dialogue.
      */
     public void cancelDialogue(HypixelPlayer player) {
-        Map.Entry<HypixelNPC.DialogueSet, CompletableFuture<String>> entry = activeDialogues.get(player);
+        Map.Entry<AbiphoneNPC.DialogueSet, CompletableFuture<String>> entry = activeDialogues.get(player);
         if (entry != null) {
             entry.getValue().complete(null);
             activeDialogues.remove(player);
         }
     }
 
-    private void handleLineSendingLoop(HypixelPlayer player, HypixelNPC.DialogueSet dialogueSet) {
+    private void handleLineSendingLoop(HypixelPlayer player, AbiphoneNPC.DialogueSet dialogueSet) {
         npc.sendNPCMessage(player, dialogueSet.lines()[0]);
-
 
         String[] newLines = new String[dialogueSet.lines().length - 1];
         System.arraycopy(dialogueSet.lines(), 1, newLines, 0, dialogueSet.lines().length - 1);
 
         if (newLines.length == 0) {
-            Map.Entry<HypixelNPC.DialogueSet, CompletableFuture<String>> entry = activeDialogues.get(player);
+            Map.Entry<AbiphoneNPC.DialogueSet, CompletableFuture<String>> entry = activeDialogues.get(player);
             if (entry != null) {
                 entry.getValue().complete(dialogueSet.key());
             }
@@ -83,7 +82,7 @@ public class DialogueController {
         scheduler.buildTask(() -> {
             // Check if the player is still in dialogue (might have been canceled)
             if (activeDialogues.containsKey(player)) {
-                handleLineSendingLoop(player, HypixelNPC.DialogueSet.builder()
+                handleLineSendingLoop(player, AbiphoneNPC.DialogueSet.builder()
                         .key(dialogueSet.key())
                         .lines(newLines)
                         .build());
@@ -92,7 +91,7 @@ public class DialogueController {
     }
 
     public static void removeAllDialogues(HypixelPlayer player) {
-        for (HypixelNPC npc : HypixelNPC.getRegisteredNPCs()) {
+        for (AbiphoneNPC npc : AbiphoneRegistry.getRegisteredContactNPCs()) {
             npc.dialogue().cancelDialogue(player);
         }
     }

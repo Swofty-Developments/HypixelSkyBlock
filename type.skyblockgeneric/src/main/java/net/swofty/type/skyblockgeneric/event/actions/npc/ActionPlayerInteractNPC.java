@@ -11,13 +11,14 @@ import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AbiphoneComponent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.tinylog.Logger;
 
 public class ActionPlayerInteractNPC implements HypixelEventClass {
 
 	@HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
 	public void run(NPCInteractEvent event) {
-		final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+		final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 		HypixelNPC npc = event.getNpc();
 		SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
 		if (item.hasComponent(AbiphoneComponent.class)) {
@@ -32,8 +33,7 @@ public class ActionPlayerInteractNPC implements HypixelEventClass {
 					player.sendMessage("§7[§b✆§7] §7This NPC is already in your contacts list!");
 					return;
 				}
-				item.getAttributeHandler().addAbiphoneNPC(abiphoneNPC);
-				player.sendMessage("§b✆ " + abiphoneNPC.getName() + " §fhas been added to your Abiphone's contacts!");
+				abiphoneNPC.onAdd(player, player.getHeldSlot());
 			} else {
 				Logger.warn("NPC " + npc.getClass().getName() + " has an invalid Abiphone key: " + trait.getAbiphoneKey());
 			}

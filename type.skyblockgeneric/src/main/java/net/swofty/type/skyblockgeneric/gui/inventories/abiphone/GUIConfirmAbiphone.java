@@ -34,7 +34,7 @@ public class GUIConfirmAbiphone extends HypixelInventoryGUI {
 				return ItemStackCreator.getStack("§aConfirm", Material.GREEN_TERRACOTTA, 1, "§eClick to remove " + npc.getName(), "§efrom your", "contacts!");
 			}
 		});
-		set(new GUIClickableItem(11) {
+		set(new GUIClickableItem(15) {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
 				player.closeInventory();

@@ -36,7 +36,7 @@ public class GUIContactManagement extends HypixelInventoryGUI {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
 				return ItemStackCreator.updateLore(
-						npc.getIcon().set(DataComponents.CUSTOM_NAME, Component.text(npc.getName())),
+						npc.getIcon().set(DataComponents.CUSTOM_NAME, Component.text("§f" + npc.getName())),
 						List.of("§7" + npc.getDescription())
 				);
 			}

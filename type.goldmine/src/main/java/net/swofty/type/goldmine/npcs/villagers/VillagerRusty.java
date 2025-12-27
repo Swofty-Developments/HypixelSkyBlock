@@ -97,20 +97,7 @@ public class VillagerRusty extends HypixelNPC implements NPCAbiphoneTrait {
 								"It drives me insane, but at least you'll unlock §aAuto-pickup §fat §3SkyBlock Level 6.",
 								"It makes my job a lot easier, but despite that, I still find so many items on the ground.",
 								"Maybe some of those items are yours? In which case I'll let you buy them back."
-						}).build(),
-				DialogueSet.builder()
-						.key("abiphone").lines(new String[]{ // when clicking with an Abiphone
-								"§fDid I find an Abiphone?",
-								"§fYes, sometimes I do find one lying around.",
-								"§fWhat?",
-								"§fYou?",
-								"§fYou want my contact?",
-								"§fMe?",
-								"§fThe janitor?",
-								"§fI...",
-								"§fI don't... don't know what to say...",
-								"§fYes of course you can have it!",
-						}).abiPhone(true).build()
+						}).build()
 		).toArray(DialogueSet[]::new);
 	}
 
