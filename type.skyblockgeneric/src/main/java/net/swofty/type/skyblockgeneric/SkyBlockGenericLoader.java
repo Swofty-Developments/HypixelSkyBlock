@@ -303,10 +303,6 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
             if (region.getServerType() != HypixelConst.getTypeLoader().getType()) return;
             SkyBlockBiomeConfiguration biomeConfig = region.getType().getBiomeHandler();
             if (biomeConfig == null) return;
-            Logger.info("Setting biome for region {} to {}", region.getName(), biomeConfig.getKey().asString());
-            Logger.info("Region corners: {} and {}",
-                    region.getFirstLocation().toString(),
-                    region.getSecondLocation().toString());
             RegistryKey<Biome> biomeKey = MinecraftServer.getBiomeRegistry().register(biomeConfig.getKey(), biomeConfig.getBiome());
             setBiome(region.getFirstLocation(), region.getSecondLocation(), biomeKey);
         });
