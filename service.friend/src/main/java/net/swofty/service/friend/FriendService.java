@@ -10,7 +10,7 @@ import java.util.List;
 public class FriendService implements SkyBlockService {
 
     public static void main(String[] args) {
-        String mongoUri = Configuration.get("mongodb-uri");
+        String mongoUri = Configuration.get("mongodb");
         new FriendDatabase(null).connect(mongoUri);
 
         FriendCache.startExpirationChecker();
