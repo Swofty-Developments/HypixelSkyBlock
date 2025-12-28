@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.entity.npc.configuration.NPCConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCTerry extends HypixelNPC {
