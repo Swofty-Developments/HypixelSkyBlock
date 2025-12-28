@@ -4,6 +4,7 @@ import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
+import net.minestom.server.entity.ai.goal.RandomStrollGoal;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
@@ -28,15 +29,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MobGlaciteWalker extends BestiaryMob implements RegionPopulator {
+public class DiamondGoblin extends BestiaryMob {
 
-	public MobGlaciteWalker() {
+	public DiamondGoblin() {
 		super(EntityType.PLAYER);
 	}
 
 	@Override
 	public Integer getLevel() {
-		return 45;
+		return 500;
 	}
 
 	@Override
@@ -46,61 +47,50 @@ public class MobGlaciteWalker extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public int getBestiaryBracket() {
-		return 2;
+		return 7;
 	}
 
 	@Override
 	public String getMobID() {
-		return "ICE_WALKER";
+		return "GOBLIN_2";
 	}
 
 	@Override
 	public void onInit() {
-		setBoots(new SkyBlockItem(ItemType.LAPIS_ARMOR_BOOTS).getItemStack());
-		setLeggings(new SkyBlockItem(ItemType.LAPIS_ARMOR_LEGGINGS).getItemStack());
-		setChestplate(new SkyBlockItem(ItemType.LAPIS_ARMOR_CHESTPLATE).getItemStack());
-		setHelmet(new SkyBlockItem(ItemType.LAPIS_ARMOR_HELMET).getItemStack());
+		setBoots(new SkyBlockItem(ItemType.DIAMOND_BOOTS).getItemStack());
+		setLeggings(new SkyBlockItem(ItemType.DIAMOND_LEGGINGS).getItemStack());
+		setChestplate(new SkyBlockItem(ItemType.DIAMOND_CHESTPLATE).getItemStack());
+		setHelmet(new SkyBlockItem(ItemType.DIAMOND_HELMET).getItemStack());
 	}
 
 	@Override
 	public GUIMaterial getGuiMaterial() {
-		return new GUIMaterial(Material.PACKED_ICE);
+		return new GUIMaterial("81d2116827a41a713660bb52c9ba3bc6dd038175afb74a473b85f0cf60ff70e2");
 	}
 
 	@Override
 	public String getDisplayName() {
-		return "Glacite Walker";
+		return "Diamond Goblin";
 	}
 
 	@Override
 	public List<GoalSelector> getGoalSelectors() {
 		return List.of(
-				new MeleeAttackWithinRegionGoal(this,
-						1.6,
-						20,
-						TimeUnit.SERVER_TICK,
-						RegionType.GREAT_ICE_WALL),
-				new RandomRegionStrollGoal(this, 15, RegionType.GREAT_ICE_WALL)
+				new RandomStrollGoal(this, 50)
 		);
 	}
 
 	@Override
 	public List<TargetSelector> getTargetSelectors() {
-		return List.of(
-				new LastEntityDamagerTarget(this, 16),
-				new ClosestEntityRegionTarget(this,
-						6,
-						entity -> entity instanceof SkyBlockPlayer,
-						RegionType.GREAT_ICE_WALL)
-		);
+		return List.of();
 	}
 
 	@Override
 	public ItemStatistics getBaseStatistics() {
 		return ItemStatistics.builder()
-				.withBase(ItemStatistic.HEALTH, 200D)
-				.withBase(ItemStatistic.DAMAGE, 50D)
-				.withBase(ItemStatistic.SPEED, 100D)
+				.withBase(ItemStatistic.HEALTH, 5D)
+				.withBase(ItemStatistic.DAMAGE, 250D)
+				.withBase(ItemStatistic.SPEED, 150D)
 				.build();
 	}
 
@@ -110,7 +100,7 @@ public class MobGlaciteWalker extends BestiaryMob implements RegionPopulator {
 			@Override
 			public @NonNull List<LootRecord> getLootTable() {
 				return List.of(
-						new LootRecord(ItemType.GLACITE_JEWEL, 1, 0.5)
+						new LootRecord(ItemType.MITHRIL, 20, 100)
 				);
 			}
 
@@ -133,7 +123,7 @@ public class MobGlaciteWalker extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public OtherLoot getOtherLoot() {
-		return new OtherLoot(40, 8, 8);
+		return new OtherLoot(20, 250, 100);
 	}
 
 	@Override
@@ -141,8 +131,4 @@ public class MobGlaciteWalker extends BestiaryMob implements RegionPopulator {
 		return List.of(MobType.GLACIAL, MobType.HUMANOID);
 	}
 
-	@Override
-	public List<Populator> getPopulators() {
-		return List.of(new Populator(RegionType.GREAT_ICE_WALL, 20));
-	}
 }

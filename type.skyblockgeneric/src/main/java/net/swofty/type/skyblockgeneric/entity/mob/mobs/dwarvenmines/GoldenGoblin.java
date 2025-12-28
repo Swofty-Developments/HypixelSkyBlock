@@ -4,6 +4,7 @@ import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
+import net.minestom.server.entity.ai.goal.RandomStrollGoal;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
@@ -16,7 +17,6 @@ import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
-import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
@@ -28,15 +28,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MobGlaciteWalker extends BestiaryMob implements RegionPopulator {
+public class GoldenGoblin extends BestiaryMob {
 
-	public MobGlaciteWalker() {
+	public GoldenGoblin() {
 		super(EntityType.PLAYER);
 	}
 
 	@Override
 	public Integer getLevel() {
-		return 45;
+		return 500;
 	}
 
 	@Override
@@ -46,60 +46,49 @@ public class MobGlaciteWalker extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public int getBestiaryBracket() {
-		return 2;
+		return 5;
 	}
 
 	@Override
 	public String getMobID() {
-		return "ICE_WALKER";
+		return "GOBLIN";
 	}
 
 	@Override
 	public void onInit() {
-		setBoots(new SkyBlockItem(ItemType.LAPIS_ARMOR_BOOTS).getItemStack());
-		setLeggings(new SkyBlockItem(ItemType.LAPIS_ARMOR_LEGGINGS).getItemStack());
-		setChestplate(new SkyBlockItem(ItemType.LAPIS_ARMOR_CHESTPLATE).getItemStack());
-		setHelmet(new SkyBlockItem(ItemType.LAPIS_ARMOR_HELMET).getItemStack());
+		setBoots(new SkyBlockItem(ItemType.GOLDEN_BOOTS).getItemStack());
+		setLeggings(new SkyBlockItem(ItemType.GOLDEN_LEGGINGS).getItemStack());
+		setChestplate(new SkyBlockItem(ItemType.GOLDEN_CHESTPLATE).getItemStack());
+		setHelmet(new SkyBlockItem(ItemType.GOLDEN_HELMET).getItemStack());
 	}
 
 	@Override
 	public GUIMaterial getGuiMaterial() {
-		return new GUIMaterial(Material.PACKED_ICE);
+		return new GUIMaterial("29d9fbe74cbd9ebeda4d571a4176c66e298ec409dc10510f6ddf1496f48840b1");
 	}
 
 	@Override
 	public String getDisplayName() {
-		return "Glacite Walker";
+		return "Golden Goblin";
 	}
 
 	@Override
 	public List<GoalSelector> getGoalSelectors() {
 		return List.of(
-				new MeleeAttackWithinRegionGoal(this,
-						1.6,
-						20,
-						TimeUnit.SERVER_TICK,
-						RegionType.GREAT_ICE_WALL),
-				new RandomRegionStrollGoal(this, 15, RegionType.GREAT_ICE_WALL)
+				new RandomStrollGoal(this, 50)
 		);
 	}
 
 	@Override
 	public List<TargetSelector> getTargetSelectors() {
-		return List.of(
-				new LastEntityDamagerTarget(this, 16),
-				new ClosestEntityRegionTarget(this,
-						6,
-						entity -> entity instanceof SkyBlockPlayer,
-						RegionType.GREAT_ICE_WALL)
-		);
+		return List.of();
 	}
 
 	@Override
 	public ItemStatistics getBaseStatistics() {
 		return ItemStatistics.builder()
-				.withBase(ItemStatistic.HEALTH, 200D)
-				.withBase(ItemStatistic.DAMAGE, 50D)
+				.withBase(ItemStatistic.HEALTH, 3D)
+				.withBase(ItemStatistic.DAMAGE, 250D)
 				.withBase(ItemStatistic.SPEED, 100D)
 				.build();
 	}
@@ -110,7 +99,7 @@ public class MobGlaciteWalker extends BestiaryMob implements RegionPopulator {
 			@Override
 			public @NonNull List<LootRecord> getLootTable() {
 				return List.of(
-						new LootRecord(ItemType.GLACITE_JEWEL, 1, 0.5)
+						new LootRecord(ItemType.MITHRIL, 5, 100)
 				);
 			}
 
@@ -133,16 +122,12 @@ public class MobGlaciteWalker extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public OtherLoot getOtherLoot() {
-		return new OtherLoot(40, 8, 8);
+		return new OtherLoot(0, 100, 50);
 	}
 
 	@Override
 	public List<MobType> getMobTypes() {
-		return List.of(MobType.GLACIAL, MobType.HUMANOID);
+		return List.of(MobType.HUMANOID, MobType.SHIELDED);
 	}
 
-	@Override
-	public List<Populator> getPopulators() {
-		return List.of(new Populator(RegionType.GREAT_ICE_WALL, 20));
-	}
 }
