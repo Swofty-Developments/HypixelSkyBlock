@@ -27,7 +27,7 @@ public class EmissaryLilith extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(58, 198, -8);
+				return new Pos(58, 198, -8, -180, 0);
 			}
 
 			@Override
