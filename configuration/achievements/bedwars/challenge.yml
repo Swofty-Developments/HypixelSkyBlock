@@ -297,6 +297,7 @@ achievements:
   - id: "bedwars.sneaky_rusher"
     name: "Sneaky Rusher"
     description: "Destroy a bed while being invisible"
+    type: CHALLENGE
     points: 5
     trigger: "bedwars.sneaky_rusher_trigger"
     goal: 1
