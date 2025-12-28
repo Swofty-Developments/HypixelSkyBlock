@@ -6,11 +6,11 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
+import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.SimpleDateFormat;
@@ -57,7 +57,7 @@ public class PrototypeLobbyScoreboard {
                 addLine("§ehypixel.net/ptl", sidebar);
                 addLine("§7 ", sidebar);
                 addLine("§fHype: §b" +
-                        prototypeDataHandler.get(PrototypeLobbyDataHandler.Data.HYPE, DatapointInteger.class).getValue()
+                        prototypeDataHandler.get(PrototypeLobbyDataHandler.Data.HYPE, DatapointLeaderboardLong.class).getValue()
                         + "§7/200", sidebar);
                 addLine("§7 ", sidebar);
 

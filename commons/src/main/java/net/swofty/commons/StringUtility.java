@@ -5,12 +5,13 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -258,6 +259,16 @@ public class StringUtility {
 		}
 
 		return result;
+	}
+
+	public static List<String> splitByNewLine(String string) {
+        return new ArrayList<>(Arrays.asList(string.split("\n", -1)));
+	}
+
+	public static List<String> splitByNewLine(String string, String lineStarter) {
+		List<String> lines = new ArrayList<>(Arrays.asList(string.split("\n", -1)));
+        lines.replaceAll(s -> lineStarter + s);
+		return lines;
 	}
 
 	public static double random(double min, double max) {

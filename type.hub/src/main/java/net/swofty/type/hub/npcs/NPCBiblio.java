@@ -6,6 +6,8 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.hub.gui.GUIBiblio;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCBiblio extends HypixelNPC {
 
     public NPCBiblio() {
@@ -27,7 +29,7 @@ public class NPCBiblio extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(7.6, 71, -99.8, 90, 0);
+                return new Pos(14, 72, -106, 50, 0);
             }
 
             @Override

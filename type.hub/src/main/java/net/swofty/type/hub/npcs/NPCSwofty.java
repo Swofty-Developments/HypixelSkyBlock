@@ -7,6 +7,8 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCSwofty extends HypixelNPC {
 
     public NPCSwofty() {

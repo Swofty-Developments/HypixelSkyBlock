@@ -16,13 +16,13 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
-import net.swofty.commons.PlayerShopData;
-import net.swofty.commons.SkyBlockPlayerProfiles;
+import net.swofty.commons.skyblock.PlayerShopData;
+import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.item.ItemType;
-import net.swofty.commons.item.Rarity;
-import net.swofty.commons.item.UnderstandableSkyBlockItem;
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.Rarity;
+import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.*;
@@ -375,6 +375,17 @@ public class SkyBlockPlayer extends HypixelPlayer {
         update.accept(item);
 
         origin.setStack(this, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
+        return item;
+    }
+
+    public SkyBlockItem updateItemInSlot(int slot, Consumer<SkyBlockItem> update) {
+        ItemStack toUpdate = getInventory().getItemStack(slot);
+        if (toUpdate == null) return null;
+
+        SkyBlockItem item = new SkyBlockItem(toUpdate);
+        update.accept(item);
+
+        getInventory().setItemStack(slot, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
         return item;
     }
 

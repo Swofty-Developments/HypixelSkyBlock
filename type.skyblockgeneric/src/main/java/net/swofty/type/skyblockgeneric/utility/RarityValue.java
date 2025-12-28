@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.utility;
 
-import net.swofty.commons.item.Rarity;
+import net.swofty.commons.skyblock.item.Rarity;
 
 public record RarityValue<T>(T common, T uncommon, T rare, T epic, T legendary, T rest) {
 

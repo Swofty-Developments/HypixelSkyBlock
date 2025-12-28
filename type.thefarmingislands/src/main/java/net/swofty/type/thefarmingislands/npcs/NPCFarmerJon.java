@@ -7,6 +7,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCFarmerJon extends HypixelNPC {
     public NPCFarmerJon() {
         super(new HumanConfiguration() {
@@ -38,7 +40,7 @@ public class NPCFarmerJon extends HypixelNPC {
     }
 
     @Override
-    public void onClick(HypixelNPC.NPCInteractEvent e) {
+    public void onClick(NPCInteractEvent e) {
         e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
                 .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
     }

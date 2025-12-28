@@ -1,7 +1,7 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -10,6 +10,8 @@ import net.swofty.type.skyblockgeneric.mission.missions.MissionGiveWoolToCarpent
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
+
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCCarpenter extends HypixelNPC {
 

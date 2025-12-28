@@ -1,0 +1,156 @@
+achievements:
+  # Tiered achievements from GUI - each has 5 tiers (I-V)
+
+  - id: "bedwars.bed_removal"
+    name: "Bed Removal"
+    description: "Destroy beds"
+    type: TIERED
+    trigger: "bedwars.beds_destroyed"
+    tiers:
+      - tier: 1
+        goal: 10
+        points: 5
+      - tier: 2
+        goal: 25
+        points: 10
+      - tier: 3
+        goal: 100
+        points: 15
+      - tier: 4
+        goal: 250
+        points: 20
+      - tier: 5
+        goal: 500
+        points: 25
+
+  - id: "bedwars.bed_wars_killer"
+    name: "Bed Wars Killer"
+    description: "Kill players"
+    type: TIERED
+    trigger: "bedwars.kills"
+    tiers:
+      - tier: 1
+        goal: 25
+        points: 5
+      - tier: 2
+        goal: 100
+        points: 10
+      - tier: 3
+        goal: 250
+        points: 15
+      - tier: 4
+        goal: 500
+        points: 20
+      - tier: 5
+        goal: 1500
+        points: 25
+
+  - id: "bedwars.collectors_edition"
+    name: "Collectors Edition"
+    description: "Collect resources from generators"
+    type: TIERED
+    trigger: "bedwars.resources_collected"
+    tiers:
+      - tier: 1
+        goal: 25
+        points: 5
+      - tier: 2
+        goal: 50
+        points: 10
+      - tier: 3
+        goal: 100
+        points: 15
+      - tier: 4
+        goal: 250
+        points: 20
+      - tier: 5
+        goal: 500
+        points: 25
+
+  - id: "bedwars.dream_catcher"
+    name: "Dream Catcher"
+    description: "Win games in the Dreams rotation"
+    type: TIERED
+    trigger: "bedwars.dreams_wins"
+    tiers:
+      - tier: 1
+        goal: 25
+        points: 5
+      - tier: 2
+        goal: 100
+        points: 10
+      - tier: 3
+        goal: 500
+        points: 15
+      - tier: 4
+        goal: 1000
+        points: 20
+      - tier: 5
+        goal: 2500
+        points: 25
+
+  - id: "bedwars.road_to_prestige"
+    name: "Road to Prestige"
+    description: "Earn Bed Wars levels"
+    type: TIERED
+    trigger: "bedwars.level_earned"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 25
+        points: 10
+      - tier: 3
+        goal: 50
+        points: 15
+      - tier: 4
+        goal: 75
+        points: 20
+      - tier: 5
+        goal: 100
+        points: 25
+
+  - id: "bedwars.true_challenger"
+    name: "True Challenger"
+    description: "Complete daily challenges"
+    type: TIERED
+    trigger: "bedwars.challenges_completed"
+    tiers:
+      - tier: 1
+        goal: 1
+        points: 5
+      - tier: 2
+        goal: 5
+        points: 10
+      - tier: 3
+        goal: 10
+        points: 15
+      - tier: 4
+        goal: 20
+        points: 20
+      - tier: 5
+        goal: 30
+        points: 25
+
+  - id: "bedwars.victory_dancer"
+    name: "Victory Dancer"
+    description: "Win games"
+    type: TIERED
+    trigger: "bedwars.wins"
+    tiers:
+      - tier: 1
+        goal: 25
+        points: 5
+      - tier: 2
+        goal: 75
+        points: 10
+      - tier: 3
+        goal: 200
+        points: 15
+      - tier: 4
+        goal: 500
+        points: 20
+      - tier: 5
+        goal: 1000
+        points: 25

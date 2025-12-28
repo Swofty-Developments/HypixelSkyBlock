@@ -54,11 +54,7 @@ public class GUIEmblems extends HypixelInventoryGUI {
                     lore.add(" ");
                     lore.add("§eClick to view!");
 
-                    if (guiMaterial.hasTexture()) {
-                        return ItemStackCreator.getStackHead("§a" + displayName, guiMaterial.texture(), 1, lore);
-                    } else {
-                        return ItemStackCreator.getStack("§a" + displayName, guiMaterial.material(), 1, lore);
-                    }
+                    return ItemStackCreator.getUsingGUIMaterial("§a" + displayName, guiMaterial, 1, lore);
                 }
             });
         });

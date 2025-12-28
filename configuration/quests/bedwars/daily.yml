@@ -1,0 +1,43 @@
+# BedWars Daily Quests
+# Resets every day at midnight UTC
+
+quests:
+  - id: "bedwars.daily.win_games"
+    name: "Winner"
+    description: "Win 2 games of Bed Wars"
+    type: DAILY
+    trigger: "bedwars.games_won"
+    goal: 2
+    rewards:
+      hypixel_experience: 2500
+      game_experience: 100
+
+  - id: "bedwars.daily.kill_players"
+    name: "Warrior"
+    description: "Kill 15 players"
+    type: DAILY
+    trigger: "bedwars.kills"
+    goal: 15
+    rewards:
+      hypixel_experience: 2000
+      game_experience: 75
+
+  - id: "bedwars.daily.destroy_beds"
+    name: "Bed Breaker"
+    description: "Destroy 5 beds"
+    type: DAILY
+    trigger: "bedwars.beds_destroyed"
+    goal: 5
+    rewards:
+      hypixel_experience: 2000
+      game_experience: 75
+
+  - id: "bedwars.daily.final_kills"
+    name: "Eliminator"
+    description: "Get 10 final kills"
+    type: DAILY
+    trigger: "bedwars.final_kills"
+    goal: 10
+    rewards:
+      hypixel_experience: 2500
+      game_experience: 100

@@ -30,7 +30,7 @@ public abstract class HypixelInventoryGUI {
     protected InventoryType size;
     protected final List<GUIItem> items;
     private Inventory inventory;
-    private HypixelPlayer player;
+    protected HypixelPlayer player;
     private boolean hasFinishedLoading = false;
     private int itemInHand = 0;
 
@@ -428,7 +428,7 @@ public abstract class HypixelInventoryGUI {
         }
     }
 
-    public record InventoryGUIOpenEvent(HypixelPlayer player, HypixelInventoryGUI opened, Inventory inventory) {
+	public record InventoryGUIOpenEvent(HypixelPlayer player, HypixelInventoryGUI opened, Inventory inventory) {
     }
 
     public enum CloseReason {

@@ -6,9 +6,9 @@ import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
-import net.swofty.commons.item.ItemType;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.MobType;
@@ -124,7 +124,7 @@ public class MobGraveyardZombieVillager extends BestiaryMob implements RegionPop
 
 	@Override
 	public String getMobID() {
-		return "1_graveyard_zombie_villager";
+		return "ZOMBIE_VILLIGER";
 	}
 
 	@Override

@@ -2,15 +2,17 @@ package net.swofty.type.skyblockgeneric.item;
 
 import net.minestom.server.color.Color;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.item.ItemType;
-import net.swofty.commons.item.Rarity;
-import net.swofty.commons.item.attribute.attributes.*;
-import net.swofty.commons.item.attribute.attributes.ItemAttributeExtraDynamicStatistics;
-import net.swofty.commons.item.reforge.Reforge;
-import net.swofty.commons.item.reforge.ReforgeLoader;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.Rarity;
+import net.swofty.commons.skyblock.item.attribute.attributes.*;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeExtraDynamicStatistics;
+import net.swofty.commons.skyblock.item.reforge.Reforge;
+import net.swofty.commons.skyblock.item.reforge.ReforgeLoader;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocolObject;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.proxyapi.ProxyService;
+import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
+import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
 import net.swofty.type.skyblockgeneric.item.components.*;
@@ -18,6 +20,9 @@ import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
@@ -377,6 +382,44 @@ public class ItemAttributeHandler {
 
     public void setDarkAuctionPrice(long price) {
         ((ItemAttributeDarkAuctionPrice) item.getAttribute("dark_auction_price")).setValue(price);
+    }
+
+    public List<AbiphoneNPC> getAbiphoneNPCs() {
+        return ((ItemAttributeAbiphoneContacts) item.getAttribute("abiphone_contacts")).getValue().stream()
+                .map(AbiphoneRegistry::getFromId)
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
+    public void setAbiphoneNPCs(List<AbiphoneNPC> npcs) {
+        List<String> ids = npcs.stream()
+                .map(AbiphoneNPC::getId)
+                .toList();
+        ((ItemAttributeAbiphoneContacts) item.getAttribute("abiphone_contacts")).setValue(ids);
+    }
+
+    public void addAbiphoneNPC(AbiphoneNPC npc) {
+        ItemAttributeAbiphoneContacts attribute = (ItemAttributeAbiphoneContacts) item.getAttribute("abiphone_contacts");
+        List<String> ids = new ArrayList<>(attribute.getValue());
+        if (!ids.contains(npc.getId())) {
+            ids.add(npc.getId());
+            attribute.setValue(ids);
+        }
+    }
+
+    public void removeAbiphoneNPC(AbiphoneNPC npc) {
+        ItemAttributeAbiphoneContacts attribute = (ItemAttributeAbiphoneContacts) item.getAttribute("abiphone_contacts");
+        List<String> ids = new ArrayList<>(attribute.getValue());
+        if (ids.contains(npc.getId())) {
+            ids.remove(npc.getId());
+            attribute.setValue(ids);
+        }
+    }
+
+    public boolean hasAbiphoneNPC(AbiphoneNPC npc) {
+        ItemAttributeAbiphoneContacts attribute = (ItemAttributeAbiphoneContacts) item.getAttribute("abiphone_contacts");
+        List<String> ids = attribute.getValue();
+        return ids.contains(npc.getId());
     }
 
     public SkyBlockItem asSkyBlockItem() {

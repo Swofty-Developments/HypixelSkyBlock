@@ -7,6 +7,8 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCClerkSeraphine extends HypixelNPC {
 
     public NPCClerkSeraphine() {
@@ -28,7 +30,7 @@ public class NPCClerkSeraphine extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(11.5, 71, -101, 90, 0);
+                return new Pos(4.5, 72, -104.5, 0, 0);
             }
 
             @Override

@@ -14,6 +14,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCLazyMiner extends HypixelNPC {
 
     public NPCLazyMiner() {
@@ -76,7 +78,7 @@ public class NPCLazyMiner extends HypixelNPC {
         }
 
         // First interaction - check special case where player already found pickaxe
-        boolean hasFoundPickaxe = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_FOUND_LAZY_MINER_PICKAXE);
+        boolean hasFoundPickaxe = player.getMissionData().hasCompleted(MissionFindLazyMinerPickaxe.class);
         if (hasFoundPickaxe) {
             // Player found the pickaxe before talking to Lazy Miner - skip to talk mission
             setDialogue(player, "found-pick-intro").thenRun(() -> {

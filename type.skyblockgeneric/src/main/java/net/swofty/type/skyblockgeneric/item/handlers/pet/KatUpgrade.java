@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.item.handlers.pet;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 
 @RequiredArgsConstructor
 @Getter

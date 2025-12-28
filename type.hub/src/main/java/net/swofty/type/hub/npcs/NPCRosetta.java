@@ -6,6 +6,8 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.hub.gui.rosetta.GUIRosetta;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCRosetta extends HypixelNPC {
 
     public NPCRosetta() {

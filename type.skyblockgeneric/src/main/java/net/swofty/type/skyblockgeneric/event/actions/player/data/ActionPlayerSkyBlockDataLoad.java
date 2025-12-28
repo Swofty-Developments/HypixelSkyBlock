@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.event.actions.player.data;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
-import net.swofty.commons.SkyBlockPlayerProfiles;
+import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.EventNodes;

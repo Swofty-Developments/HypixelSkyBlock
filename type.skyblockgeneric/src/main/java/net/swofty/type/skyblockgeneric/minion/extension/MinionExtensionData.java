@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.minion.extension;
 
 import lombok.SneakyThrows;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionFuelExtension;
 import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionShippingExtension;

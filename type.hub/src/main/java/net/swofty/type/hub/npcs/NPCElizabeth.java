@@ -10,6 +10,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCElizabeth extends HypixelNPC {
 
     public NPCElizabeth() {
@@ -31,7 +33,7 @@ public class NPCElizabeth extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(0, 71, -101, -90, 0);
+                return new Pos(-3.5, 72, -101.5, -90, 0);
             }
 
             @Override

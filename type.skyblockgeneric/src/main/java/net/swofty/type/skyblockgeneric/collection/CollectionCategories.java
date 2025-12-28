@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.collection;
 
 import lombok.Getter;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

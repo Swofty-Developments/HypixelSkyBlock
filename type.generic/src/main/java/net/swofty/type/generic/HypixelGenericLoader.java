@@ -19,10 +19,15 @@ import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
+import net.swofty.commons.ServerType;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
 import net.swofty.type.generic.data.mongodb.AuthenticationDatabase;
+import net.swofty.type.generic.data.mongodb.BedWarsStatsDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 
@@ -30,8 +35,12 @@ import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.achievement.AchievementRegistry;
+import net.swofty.type.generic.achievement.AchievementStatisticsService;
+import net.swofty.type.generic.leaderboard.LeaderboardService;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
+import net.swofty.type.generic.quest.QuestRegistry;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -117,7 +126,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
          * Start generic tablist
          * SkyBlock has its own format so let SkyBlockGenericLoader handle it
          */
-        if (!loader.getType().isSkyBlock()) {
+        if (!loader.getType().isSkyBlock() && !(loader.getType() == ServerType.BEDWARS_GAME)) {
             MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
                     LAST_TICK.set(event.getTickMonitor()));
             BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
@@ -167,6 +176,21 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         ProfilesDatabase.connect(mongoClient);
         AttributeDatabase.connect(mongoClient);
         UserDatabase.connect(mongoClient);
+        BedWarsStatsDatabase.connect(mongoClient);
+
+        // Initialize leaderboard service (uses Redis for O(log N) leaderboard operations)
+        LeaderboardService.connect(Configuration.get("redis-uri"));
+
+        // Load achievement and quest registries from YAML configuration
+        AchievementRegistry.loadFromConfiguration();
+        QuestRegistry.loadFromConfiguration();
+
+        // Initialize achievement statistics service for unlock percentages
+        AchievementStatisticsService.initialize();
+
+        // Register game data handlers
+        GameDataHandlerRegistry.register(new BedWarsDataHandler());
+        GameDataHandlerRegistry.register(new PrototypeLobbyDataHandler());
 
         // Register NPCs
         if (mainInstance != null) {

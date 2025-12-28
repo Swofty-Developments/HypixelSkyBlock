@@ -6,14 +6,21 @@ import lombok.Getter;
 public enum ServerType {
 	SKYBLOCK_ISLAND(true),
 	SKYBLOCK_HUB(true),
+	SKYBLOCK_SPIDERS_DEN(true),
+	SKYBLOCK_THE_END(true),
+	SKYBLOCK_CRIMSON_ISLE(true),
 	SKYBLOCK_DUNGEON_HUB(true),
 	SKYBLOCK_THE_FARMING_ISLANDS(true),
 	SKYBLOCK_GOLD_MINE(true),
 	SKYBLOCK_DEEP_CAVERNS(true),
 	SKYBLOCK_DWARVEN_MINES(true),
+	SKYBLOCK_THE_PARK(true),
+	SKYBLOCK_GALATEA(true),
+	SKYBLOCK_BACKWATER_BAYOU(true),
 	PROTOTYPE_LOBBY(false),
 	BEDWARS_LOBBY(false),
 	BEDWARS_GAME(false),
+	BEDWARS_CONFIGURATOR(false)
 	;
 
 	private final boolean isSkyBlock;

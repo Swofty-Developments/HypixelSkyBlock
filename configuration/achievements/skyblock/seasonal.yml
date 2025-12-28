@@ -1,0 +1,77 @@
+achievements:
+  # Seasonal achievements from GUI - organized by season
+
+  # ===== SUMMER SEASON =====
+  - id: "skyblock.oasis_jake"
+    name: "Oasis Jake"
+    description: "Bring an Oasis Sheep Sea Creature to Jake in SkyBlock."
+    type: SEASONAL
+    season: SUMMER
+    points: 5
+    trigger: "skyblock.oasis_jake_trigger"
+    goal: 1
+
+  - id: "skyblock.drought"
+    name: "Drought"
+    description: "Fish up a Water Hydra in the Oasis in SkyBlock."
+    type: SEASONAL
+    season: SUMMER
+    points: 10
+    trigger: "skyblock.drought_trigger"
+    goal: 1
+
+  - id: "skyblock.ocean_in_a_bucket"
+    name: "Ocean in a Bucket"
+    description: "Craft a Magical Water Bucket in SkyBlock."
+    type: SEASONAL
+    season: SUMMER
+    points: 10
+    trigger: "skyblock.ocean_in_a_bucket_trigger"
+    goal: 1
+
+  - id: "skyblock.cool_off"
+    name: "Cool Off"
+    description: "Vote for Marina in a SkyBlock Election."
+    type: SEASONAL
+    season: SUMMER
+    points: 5
+    trigger: "skyblock.cool_off_trigger"
+    goal: 1
+
+  # ===== EASTER SEASON =====
+  - id: "skyblock.egg_assault"
+    name: "Egg Assault"
+    description: "Kill a Zombie with eggs in SkyBlock."
+    type: SEASONAL
+    season: EASTER
+    points: 5
+    trigger: "skyblock.egg_assault_trigger"
+    goal: 1
+
+  - id: "skyblock.egg_betrayer"
+    name: "Egg Betrayer"
+    description: "Kill a Chicken with eggs in SkyBlock."
+    type: SEASONAL
+    season: EASTER
+    points: 5
+    trigger: "skyblock.egg_betrayer_trigger"
+    goal: 1
+
+  - id: "skyblock.egg_layer"
+    name: "Egg Layer"
+    description: "Lay 50 eggs with the Chicken Head in SkyBlock."
+    type: SEASONAL
+    season: EASTER
+    points: 10
+    trigger: "skyblock.egg_layer_trigger"
+    goal: 1
+
+  # ===== HALLOWEEN SEASON =====
+  - id: "skyblock.trick_or_treat_time"
+    name: "Trick or Treat Time!"
+    description: "Put a Halloween Minion Skin on any of your minions in SkyBlock."
+    type: SEASONAL
+    season: HALLOWEEN
+    points: 5
+    trigger: "skyblock.trick_or_treat_time_trigger"
+    goal: 1

@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.commands;
 
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
-import net.swofty.commons.item.attribute.ItemAttribute;
+import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;

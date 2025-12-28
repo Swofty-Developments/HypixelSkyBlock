@@ -1,0 +1,1545 @@
+achievements:
+  - id: "skyblock.the_family"
+    name: "The Family"
+    description: "Show 20 Fishes to Coral."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.the_family_trigger"
+    goal: 1
+
+  - id: "skyblock.the_jade_dragon_s_egg"
+    name: "The Jade Dragon's Egg"
+    description: "Buy a Jade Dragon Egg from the dragon in Galatea."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.the_jade_dragon_s_egg_trigger"
+    goal: 1
+
+  - id: "skyblock.lifelong_contract"
+    name: "Lifelong Contract"
+    description: "Obtain the Seal of the Family."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.lifelong_contract_trigger"
+    goal: 1
+
+  - id: "skyblock.multi_dimensional_slayer"
+    name: "Multi-Dimensional Slayer"
+    description: "Defeat a T5 Riftstalker Bloodfiend."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.multi_dimensional_slayer_trigger"
+    goal: 1
+
+  - id: "skyblock.six_star_meal"
+    name: "Six-star Meal"
+    description: "Consume a McGrubber's Burger."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.six_star_meal_trigger"
+    goal: 1
+
+  - id: "skyblock.no_enchants_needed"
+    name: "No Enchants Needed"
+    description: "Drink a Burning Potion."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.no_enchants_needed_trigger"
+    goal: 1
+
+  - id: "skyblock.rough_deal"
+    name: "Rough Deal"
+    description: "Buy something from Tomioka."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.rough_deal_trigger"
+    goal: 1
+
+  - id: "skyblock.infinite_darkness"
+    name: "Infinite Darkness"
+    description: "Kill a squid with the Ink Wand Ability."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.infinite_darkness_trigger"
+    goal: 1
+
+  - id: "skyblock.seriously"
+    name: "Seriously?"
+    description: "Recombobulate an Aspect of the Jerry."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.seriously_trigger"
+    goal: 1
+
+  - id: "skyblock.second_chance"
+    name: "Second Chance"
+    description: "Consume the Saving Grace."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.second_chance_trigger"
+    goal: 1
+
+  - id: "skyblock.baited"
+    name: "Baited"
+    description: "Craft a Bait Ring."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.baited_trigger"
+    goal: 1
+
+  - id: "skyblock.the_golden_dragon_s_egg"
+    name: "The Golden Dragon's Egg"
+    description: "Buy a Golden Dragon Egg from the dragon in the Crystal Hollows."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.the_golden_dragon_s_egg_trigger"
+    goal: 1
+
+  - id: "skyblock.united_in_blood"
+    name: "United in Blood"
+    description: "Obtain a Gilded Midas Staff or Midas' Sword."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.united_in_blood_trigger"
+    goal: 1
+
+  - id: "skyblock.dojo_grand_master"
+    name: "Dojo Grand Master"
+    description: "Obtain the Black Belt from Master Tao in the Dojo."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.dojo_grand_master_trigger"
+    goal: 1
+
+  - id: "skyblock.still_sad"
+    name: "Still Sad"
+    description: "Talk to Sad Jacquelle after finding all 9 pieces of Montezuma's soul."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.still_sad_trigger"
+    goal: 1
+
+  - id: "skyblock.evolution"
+    name: "Evolution"
+    description: "Complete 50 Shard Fusions."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.evolution_trigger"
+    goal: 1
+
+  - id: "skyblock.agile"
+    name: "Agile"
+    description: "Drink an Agility potion."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.agile_trigger"
+    goal: 1
+
+  - id: "skyblock.shine_bright"
+    name: "Shine Bright"
+    description: "Reach Agatha's Milestone 5."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.shine_bright_trigger"
+    goal: 1
+
+  - id: "skyblock.true_adventurer"
+    name: "True Adventurer"
+    description: "Reach Catacombs level 40."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.true_adventurer_trigger"
+    goal: 1
+
+  - id: "skyblock.glass_cannon"
+    name: "Glass Cannon"
+    description: "Wear the Elegant Tux."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.glass_cannon_trigger"
+    goal: 1
+
+  - id: "skyblock.the_crux_of_it_all"
+    name: "The Crux of it All"
+    description: "Max out all milestones on a Crux Chronomicon."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.the_crux_of_it_all_trigger"
+    goal: 1
+
+  - id: "skyblock.brain_power"
+    name: "Brain Power"
+    description: "Drink an Adrenaline Potion."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.brain_power_trigger"
+    goal: 1
+
+  - id: "skyblock.not_worth_it_bro"
+    name: "Not Worth It, Bro"
+    description: "Have Wizardman decide not to help you."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.not_worth_it_bro_trigger"
+    goal: 1
+
+  - id: "skyblock.precious_minerals"
+    name: "Precious Minerals"
+    description: "Wear a full set of Emerald Armor."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.precious_minerals_trigger"
+    goal: 1
+
+  - id: "skyblock.inner_machinations"
+    name: "Inner Machinations"
+    description: "Max out the Enigma Cloak (including extra upgrades)."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.inner_machinations_trigger"
+    goal: 1
+
+  - id: "skyblock.blaze_wrangler"
+    name: "Blaze Wrangler"
+    description: "Grapple 5 blazes at once."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.blaze_wrangler_trigger"
+    goal: 1
+
+  - id: "skyblock.didn_t_mean_to"
+    name: "Didn't mean to!"
+    description: "Kill a Kalhuiki Youngling."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.didn_t_mean_to_trigger"
+    goal: 1
+
+  - id: "skyblock.forgotten_shrine"
+    name: "Forgotten Shrine"
+    description: "Reactivate a Starborn Temple."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.forgotten_shrine_trigger"
+    goal: 1
+
+  - id: "skyblock.buzzkill"
+    name: "Buzzkill"
+    description: "Unlock all of Neuroscientist Kat's rewards in the Rift."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.buzzkill_trigger"
+    goal: 1
+
+  - id: "skyblock.water_blade"
+    name: "Water Blade"
+    description: "Kill a squid using the Prismarine Blade."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.water_blade_trigger"
+    goal: 1
+
+  - id: "skyblock.i_am_groot"
+    name: "I Am Groot"
+    description: "Wear a set of Growth Armor with a Bonus 100 HP."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.i_am_groot_trigger"
+    goal: 1
+
+  - id: "skyblock.humble_beginnings"
+    name: "Humble Beginnings"
+    description: "Catch all 18 types of Trophy Fish."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.humble_beginnings_trigger"
+    goal: 1
+
+  - id: "skyblock.this_is_fair"
+    name: "This is fair"
+    description: "Kill a pig using the Pigman Sword."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.this_is_fair_trigger"
+    goal: 1
+
+  - id: "skyblock.arcadia"
+    name: "Arcadia"
+    description: "[Co-op or you] Place 5 unique Islands on your private world."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.arcadia_trigger"
+    goal: 1
+
+  - id: "skyblock.gottagofast"
+    name: "Gottagofast"
+    description: "Wear the full Speedster Armor."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.gottagofast_trigger"
+    goal: 1
+
+  - id: "skyblock.handyman"
+    name: "Handyman"
+    description: "Tune the Beacon on Galatea."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.handyman_trigger"
+    goal: 1
+
+  - id: "skyblock.forbidden_fruit"
+    name: "Forbidden Fruit"
+    description: "Wear a full set of Fermento Armor."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.forbidden_fruit_trigger"
+    goal: 1
+
+  - id: "skyblock.saddle_up"
+    name: "Saddle Up!"
+    description: "[Co-op or you] Craft a saddle."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.saddle_up_trigger"
+    goal: 1
+
+  - id: "skyblock.lapidarist"
+    name: "Lapidarist"
+    description: "Forge a perfect Gemstone."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.lapidarist_trigger"
+    goal: 1
+
+  - id: "skyblock.the_perfect_heist"
+    name: "The Perfect Heist"
+    description: "Gather 3 Heavy Pearls from the Matriarch and escape without taking damage."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.the_perfect_heist_trigger"
+    goal: 1
+
+  - id: "skyblock.dojo_master"
+    name: "Dojo Master"
+    description: "Reach the highest rank in any of the Dojo challenges."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.dojo_master_trigger"
+    goal: 1
+
+  - id: "skyblock.always_sunny_in_skyblock"
+    name: "Always Sunny in SkyBlock"
+    description: "Open the Garden Time menu in The Garden."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.always_sunny_in_skyblock_trigger"
+    goal: 1
+
+  - id: "skyblock.i_own_this_place"
+    name: "I own this place!"
+    description: "Kill all the mini-bosses on the Crimson Isle."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.i_own_this_place_trigger"
+    goal: 1
+
+  - id: "skyblock.friar_lawrence"
+    name: "Friar Lawrence"
+    description: "Complete the Romero & Juliette questline."
+    type: CHALLENGE
+    points: 25
+    trigger: "skyblock.friar_lawrence_trigger"
+    goal: 1
+
+  - id: "skyblock.to_space_we_go"
+    name: "To space we go!"
+    description: "Use a launch pad on your private island."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.to_space_we_go_trigger"
+    goal: 1
+
+  - id: "skyblock.he_s_bac"
+    name: "He's Bac!"
+    description: "Kill Bacte in the Rift."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.he_s_bac_trigger"
+    goal: 1
+
+  - id: "skyblock.flamin_hot"
+    name: "Flamin Hot"
+    description: "Consume 200 Magma Creams using the Magma Bow."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.flamin_hot_trigger"
+    goal: 1
+
+  - id: "skyblock.snake_charmer"
+    name: "Snake Charmer"
+    description: "Mine a Living Metal Snake in the Rift."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.snake_charmer_trigger"
+    goal: 1
+
+  - id: "skyblock.see_ya_later"
+    name: "See ya later!"
+    description: "Fully repair Reed's Boat in the Rift."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.see_ya_later_trigger"
+    goal: 1
+
+  - id: "skyblock.the_prodigy"
+    name: "The Prodigy"
+    description: "Complete Through the Campfire song at any score."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.the_prodigy_trigger"
+    goal: 1
+
+  - id: "skyblock.no_other_choice"
+    name: "No Other Choice"
+    description: "Solve the reverse murder case in the Rift."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.no_other_choice_trigger"
+    goal: 1
+
+  - id: "skyblock.gotcha"
+    name: "Gotcha!"
+    description: "Hunt a mob with a Black Hole."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.gotcha_trigger"
+    goal: 1
+
+  - id: "skyblock.a_face_to_remember"
+    name: "A Face to Remember"
+    description: "Obtain Seraphine's old face in the Rift."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.a_face_to_remember_trigger"
+    goal: 1
+
+  - id: "skyblock.stubborn_gifter"
+    name: "Stubborn Gifter"
+    description: "Give 1000 total gifts."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.stubborn_gifter_trigger"
+    goal: 1
+
+  - id: "skyblock.hsssss"
+    name: "Hsssss"
+    description: "Wear the Creeper Pants."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.hsssss_trigger"
+    goal: 1
+
+  - id: "skyblock.i_call_that_mercy"
+    name: "I Call That... Mercy"
+    description: "Place all 5 Gemstones into the Gemstone Gauntlet."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.i_call_that_mercy_trigger"
+    goal: 1
+
+  - id: "skyblock.long_way_down"
+    name: "Long Way Down..."
+    description: "Claim the Enigma soul at the top of the Beanstalk in the Rift."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.long_way_down_trigger"
+    goal: 1
+
+  - id: "skyblock.beaconator_2_0"
+    name: "Beaconator 2.0"
+    description: "Power a Beacon of any kind."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.beaconator_2_0_trigger"
+    goal: 1
+
+  - id: "skyblock.swaying_the_vote"
+    name: "Swaying the Vote"
+    description: "Appease all of Barry's protestors in the Rift."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.swaying_the_vote_trigger"
+    goal: 1
+
+  - id: "skyblock.eye_for_an_i"
+    name: "Eye for an I"
+    description: "Calm The Bankster in the Rift."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.eye_for_an_i_trigger"
+    goal: 1
+
+  - id: "skyblock.death_from_above"
+    name: "Death From Above"
+    description: "Kill a mob using the damage from the leaping sword ability."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.death_from_above_trigger"
+    goal: 1
+
+  - id: "skyblock.i_believe_i_can_fly"
+    name: "I believe I can fly!"
+    description: "Wear a full set of Bat Person Armor."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.i_believe_i_can_fly_trigger"
+    goal: 1
+
+  - id: "skyblock.kuudra_conundrum"
+    name: "Kuudra Conundrum"
+    description: "Defeat Kuudra."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.kuudra_conundrum_trigger"
+    goal: 1
+
+  - id: "skyblock.what_is_this_place"
+    name: "What is this place..."
+    description: "Enter the secret room in The End."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.what_is_this_place_trigger"
+    goal: 1
+
+  - id: "skyblock.scam"
+    name: "Scam?"
+    description: "Pay 1,000,000 Coins for a Fairy Soul."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.scam_trigger"
+    goal: 1
+
+  - id: "skyblock.memories_of_a_bal"
+    name: "Memories of a Bal"
+    description: "Wear a full set of Divan's Armor."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.memories_of_a_bal_trigger"
+    goal: 1
+
+  - id: "skyblock.gotta_go_fast"
+    name: "Gotta go fast!"
+    description: "Craft a Speed Artifact."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.gotta_go_fast_trigger"
+    goal: 1
+
+  - id: "skyblock.frozen_monster"
+    name: "Frozen Monster"
+    description: "Kill a Yeti on the Jerry Island."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.frozen_monster_trigger"
+    goal: 1
+
+  - id: "skyblock.animal_fishing"
+    name: "Animal Fishing"
+    description: "Fish an Oasis Sea Creature."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.animal_fishing_trigger"
+    goal: 1
+
+  - id: "skyblock.expensive_brew"
+    name: "Expensive Brew"
+    description: "Brew a Tier VIII Potion."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.expensive_brew_trigger"
+    goal: 1
+
+  - id: "skyblock.do_you_even_voodoo"
+    name: "Do you even Voodoo?"
+    description: "Kill a mob with the Voodoo Doll ability."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.do_you_even_voodoo_trigger"
+    goal: 1
+
+  - id: "skyblock.sea_monsters"
+    name: "Sea Monsters"
+    description: "Obtain the Sea Creature Artifact."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.sea_monsters_trigger"
+    goal: 1
+
+  - id: "skyblock.king_of_the_sea"
+    name: "King Of The Sea"
+    description: "Wear the Guardian Chestplate."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.king_of_the_sea_trigger"
+    goal: 1
+
+  - id: "skyblock.yucky"
+    name: "Yucky!"
+    description: "Slay the Leech Supreme in the Rift."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.yucky_trigger"
+    goal: 1
+
+  - id: "skyblock.librarian"
+    name: "Librarian"
+    description: "Complete 10 Dungeon Journals."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.librarian_trigger"
+    goal: 1
+
+  - id: "skyblock.weird_science"
+    name: "Weird Science"
+    description: "Syphon 50 Attributes."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.weird_science_trigger"
+    goal: 1
+
+  - id: "skyblock.gonna_put_a_spell_on_you"
+    name: "Gonna Put a Spell on You"
+    description: "Use the Hex for the first time."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.gonna_put_a_spell_on_you_trigger"
+    goal: 1
+
+  - id: "skyblock.two_nine"
+    name: "Two/Nine"
+    description: "Find two pieces of Montezuma's Soul."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.two_nine_trigger"
+    goal: 1
+
+  - id: "skyblock.storage_forever"
+    name: "Storage Forever"
+    description: "Craft a Greater Backpack."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.storage_forever_trigger"
+    goal: 1
+
+  - id: "skyblock.king_of_the_chickens"
+    name: "King Of The Chickens"
+    description: "Craft the Feather Artifact."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.king_of_the_chickens_trigger"
+    goal: 1
+
+  - id: "skyblock.long_way_gone"
+    name: "Long Way Gone"
+    description: "Secure a Timecharm in the Rift Gallery."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.long_way_gone_trigger"
+    goal: 1
+
+  - id: "skyblock.it_worked"
+    name: "It worked?!"
+    description: "Retrieve a Rift-Transferrable item in the overworld."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.it_worked_trigger"
+    goal: 1
+
+  - id: "skyblock.raaaiiinnnnbbooww"
+    name: "Raaaiiinnnnbbooww!"
+    description: "Wear a full set of Fairy Armor."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.raaaiiinnnnbbooww_trigger"
+    goal: 1
+
+  - id: "skyblock.vanquished"
+    name: "Vanquished"
+    description: "Kill a Vanquisher."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.vanquished_trigger"
+    goal: 1
+
+  - id: "skyblock.true_alchemist"
+    name: "True Alchemist"
+    description: "Obtain the Potion Affinity Artifact."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.true_alchemist_trigger"
+    goal: 1
+
+  - id: "skyblock.king_of_the_pets"
+    name: "King Of The Pets"
+    description: "Obtain a pet score of 100 or more."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.king_of_the_pets_trigger"
+    goal: 1
+
+  - id: "skyblock.there_can_only_be_one"
+    name: "There Can Only Be One"
+    description: "Kill a Tier 5 Revenant Boss."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.there_can_only_be_one_trigger"
+    goal: 1
+
+  - id: "skyblock.legendary_rod"
+    name: "Legendary Rod"
+    description: "Fish using the Rod of Legends."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.legendary_rod_trigger"
+    goal: 1
+
+  - id: "skyblock.shining_scales"
+    name: "Shining Scales"
+    description: "Fish up a gold tier Trophy Fish."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.shining_scales_trigger"
+    goal: 1
+
+  - id: "skyblock.bountiful_harvest"
+    name: "Bountiful Harvest"
+    description: "Find a Squash while farming."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.bountiful_harvest_trigger"
+    goal: 1
+
+  - id: "skyblock.the_one_bottle"
+    name: "The One Bottle"
+    description: "Craft a Titanic experience bottle."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.the_one_bottle_trigger"
+    goal: 1
+
+  - id: "skyblock.cute_little_cube"
+    name: "Cute Little Cube"
+    description: "Kill the Magma Boss."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.cute_little_cube_trigger"
+    goal: 1
+
+  - id: "skyblock.absorb_it_all"
+    name: "Absorb it all!"
+    description: "Wear a full set of Sponge or Shark Scale Armor."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.absorb_it_all_trigger"
+    goal: 1
+
+  - id: "skyblock.player_of_the_people"
+    name: "Player of the People"
+    description: "Serve 50 Unique Visitors in The Garden."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.player_of_the_people_trigger"
+    goal: 1
+
+  - id: "skyblock.welcome_to_my_factory"
+    name: "Welcome to my Factory"
+    description: "[Co-op or you] Place a Farm Crystal."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.welcome_to_my_factory_trigger"
+    goal: 1
+
+  - id: "skyblock.higher_than_a_rabbit"
+    name: "Higher Than a Rabbit"
+    description: "Wear the Spider's Boots."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.higher_than_a_rabbit_trigger"
+    goal: 1
+
+  - id: "skyblock.smells_better"
+    name: "Smells Better"
+    description: "Wash off the King's Scent using water."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.smells_better_trigger"
+    goal: 1
+
+  - id: "skyblock.ghost_buster"
+    name: "Ghost Buster"
+    description: "Kill a Ghost."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.ghost_buster_trigger"
+    goal: 1
+
+  - id: "skyblock.the_real_zoo_shady"
+    name: "The Real Zoo Shady"
+    description: "Have 20 different pets in your pet menu."
+    type: CHALLENGE
+    points: 20
+    trigger: "skyblock.the_real_zoo_shady_trigger"
+    goal: 1
+
+  - id: "skyblock.the_next_generation"
+    name: "The Next Generation"
+    description: "Find a Golden Goblin by throwing a Goblin Egg."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.the_next_generation_trigger"
+    goal: 1
+
+  - id: "skyblock.amalgamation"
+    name: "Amalgamation"
+    description: "Obtain a new shard from the Fusion Machine."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.amalgamation_trigger"
+    goal: 1
+
+  - id: "skyblock.how_to_train_your_dragon"
+    name: "How to train your dragon?"
+    description: "Find the dragon room."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.how_to_train_your_dragon_trigger"
+    goal: 1
+
+  - id: "skyblock.watch_me_shine"
+    name: "Watch Me Shine"
+    description: "Wear the Crystal Armor Set."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.watch_me_shine_trigger"
+    goal: 1
+
+  - id: "skyblock.explosive_ending"
+    name: "Explosive Ending"
+    description: "Survive the Blast from the Unstable Dragon."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.explosive_ending_trigger"
+    goal: 1
+
+  - id: "skyblock.knowledge_is_power"
+    name: "Knowledge is Power!"
+    description: "Equip the Textbook Item on a pet."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.knowledge_is_power_trigger"
+    goal: 1
+
+  - id: "skyblock.caught_the_grinch"
+    name: "Caught the Grinch"
+    description: "Kill a Grinch on the Jerry Island."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.caught_the_grinch_trigger"
+    goal: 1
+
+  - id: "skyblock.supreme_farmer"
+    name: "Supreme Farmer"
+    description: "Wear a full set of Farm Armor."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.supreme_farmer_trigger"
+    goal: 1
+
+  - id: "skyblock.declaring_allegiance"
+    name: "Declaring Allegiance"
+    description: "Join a Crimson Isle Faction."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.declaring_allegiance_trigger"
+    goal: 1
+
+  - id: "skyblock.night_eyes"
+    name: "Night Eyes"
+    description: "Craft a Night Vision Charm."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.night_eyes_trigger"
+    goal: 1
+
+  - id: "skyblock.ring_ring_who_s_this"
+    name: "Ring Ring... Who's this?"
+    description: "Buy an Abiphone."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.ring_ring_who_s_this_trigger"
+    goal: 1
+
+  - id: "skyblock.compost_collector"
+    name: "Compost Collector"
+    description: "Retrieve 8 compost from the Composter at once."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.compost_collector_trigger"
+    goal: 1
+
+  - id: "skyblock.time_to_start_fishing"
+    name: "Time To Start Fishing"
+    description: "[Co-op or you] Place the Pond Island."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.time_to_start_fishing_trigger"
+    goal: 1
+
+  - id: "skyblock.wow_thats_useful"
+    name: "Wow, that's useful!"
+    description: "Use the /wiki, /wikithis, or /wikihand command to view the Official Hypixel Wiki."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.wow_thats_useful_trigger"
+    goal: 1
+
+  - id: "skyblock.at_the_speed_of_light"
+    name: "At the speed of light"
+    description: "[Co-op or you] Use Crystal Fuel."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.at_the_speed_of_light_trigger"
+    goal: 1
+
+  - id: "skyblock.the_end_race"
+    name: "The End Race"
+    description: "Complete the End Race in under 42 Seconds."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.the_end_race_trigger"
+    goal: 1
+
+  - id: "skyblock.i_m_fast_as_heck_boy"
+    name: "I'm fast as heck boy!!"
+    description: "Obtain the Cheetah Talisman from Guildford."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.i_m_fast_as_heck_boy_trigger"
+    goal: 1
+
+  - id: "skyblock.it_never_ends"
+    name: "It Never Ends"
+    description: "Kill a zombie using the zombie sword."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.it_never_ends_trigger"
+    goal: 1
+
+  - id: "skyblock.prepare_for_trouble"
+    name: "Prepare for trouble!"
+    description: "Kill Corleone."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.prepare_for_trouble_trigger"
+    goal: 1
+
+  - id: "skyblock.should_ve_stayed_cool"
+    name: "Should've stayed cool"
+    description: "Melt to death in the Magma Fields."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.should_ve_stayed_cool_trigger"
+    goal: 1
+
+  - id: "skyblock.helpful_hand"
+    name: "Helpful Hand"
+    description: "Give Fetchur the item he asks for."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.helpful_hand_trigger"
+    goal: 1
+
+  - id: "skyblock.spiky"
+    name: "Spiky"
+    description: "Apply the Thorns 3 enchantment to an armor piece."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.spiky_trigger"
+    goal: 1
+
+  - id: "skyblock.peak_of_the_mountain"
+    name: "Peak of the Mountain"
+    description: "Reach tier V of the Heart of the Mountain."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.peak_of_the_mountain_trigger"
+    goal: 1
+
+  - id: "skyblock.mystical"
+    name: "Mystical"
+    description: "Use a Recombobulator 3000 to obtain a Mythic rarity."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.mystical_trigger"
+    goal: 1
+
+  - id: "skyblock.big_game_fisher"
+    name: "Big Game Fisher"
+    description: "Kill a sea creature that requires fishing level 20 or higher."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.big_game_fisher_trigger"
+    goal: 1
+
+  - id: "skyblock.magical_place"
+    name: "Magical Place"
+    description: "Find the Fairy Grotto."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.magical_place_trigger"
+    goal: 1
+
+  - id: "skyblock.upgrades_people_upgrades"
+    name: "Upgrades people, Upgrades!"
+    description: "Recombobulate any item."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.upgrades_people_upgrades_trigger"
+    goal: 1
+
+  - id: "skyblock.a_good_spider_is_a_dead_spider"
+    name: "A good spider is a dead spider"
+    description: "Kill the Broodmother."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.a_good_spider_is_a_dead_spider_trigger"
+    goal: 1
+
+  - id: "skyblock.goblin_slayer"
+    name: "Goblin Slayer"
+    description: "Get 100 points during the Goblin Raid event."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.goblin_slayer_trigger"
+    goal: 1
+
+  - id: "skyblock.sirius_business"
+    name: "Sirius Business"
+    description: "Participate in the Dark Auction."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.sirius_business_trigger"
+    goal: 1
+
+  - id: "skyblock.the_flash"
+    name: "The Flash"
+    description: "Reach a speed of 500%"
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.the_flash_trigger"
+    goal: 1
+
+  - id: "skyblock.i_m_not_dead"
+    name: "I'm Not Dead!"
+    description: "Enter the Rift."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.i_m_not_dead_trigger"
+    goal: 1
+
+  - id: "skyblock.worth_it"
+    name: "Worth it"
+    description: "Spend more than 200 levels on a single Sword enchantment."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.worth_it_trigger"
+    goal: 1
+
+  - id: "skyblock.indiana_bones"
+    name: "Indiana Bones"
+    description: "Find 10 secrets in a single Dungeon run."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.indiana_bones_trigger"
+    goal: 1
+
+  - id: "skyblock.hidden_secrets"
+    name: "Hidden Secrets"
+    description: "Find a Dark Monolith."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.hidden_secrets_trigger"
+    goal: 1
+
+  - id: "skyblock.a_good_review"
+    name: "A Good Review"
+    description: "Feed Don Expresso some Tasty Mithril."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.a_good_review_trigger"
+    goal: 1
+
+  - id: "skyblock.jerry"
+    name: "Jerry!!"
+    description: "Use an Inflatable Jerry."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.jerry_trigger"
+    goal: 1
+
+  - id: "skyblock.friend_for_life"
+    name: "Friend for Life"
+    description: "Level up a pet to 100."
+    type: CHALLENGE
+    points: 20
+    trigger: "skyblock.friend_for_life_trigger"
+    goal: 1
+
+  - id: "skyblock.next_level"
+    name: "Next Level"
+    description: "Upgrade an item to a dungeon item."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.next_level_trigger"
+    goal: 1
+
+  - id: "skyblock.more_space"
+    name: "More Space"
+    description: "[Co-op or you] Expand a minion using the Minion Expander."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.more_space_trigger"
+    goal: 1
+
+  - id: "skyblock.dullahan"
+    name: "Dullahan"
+    description: "Kill a Headless Horseman."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.dullahan_trigger"
+    goal: 1
+
+  - id: "skyblock.fancy_farming"
+    name: "Fancy Farming"
+    description: "Change your Barn skin in The Garden."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.fancy_farming_trigger"
+    goal: 1
+
+  - id: "skyblock.safety_first"
+    name: "Safety First"
+    description: "Obtain Stonk."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.safety_first_trigger"
+    goal: 1
+
+  - id: "skyblock.overkill"
+    name: "Overkill"
+    description: "Drink a Critical 3 Potion."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.overkill_trigger"
+    goal: 1
+
+  - id: "skyblock.wonderful_treasures"
+    name: "Wonderful Treasures"
+    description: "Open an Obsidian Chest."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.wonderful_treasures_trigger"
+    goal: 1
+
+  - id: "skyblock.a_royal_meeting"
+    name: "A Royal Meeting"
+    description: "Obtain the King's Talisman."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.a_royal_meeting_trigger"
+    goal: 1
+
+  - id: "skyblock.three_birds_one_arrow"
+    name: "Three Birds, One Arrow"
+    description: "Kill 3 monsters with one shot from the Runaan's Bow."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.three_birds_one_arrow_trigger"
+    goal: 1
+
+  - id: "skyblock.zookeeper"
+    name: "Zookeeper"
+    description: "Buy a pet from Oringo during the Traveling Zoo."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.zookeeper_trigger"
+    goal: 1
+
+  - id: "skyblock.rebirth"
+    name: "Rebirth"
+    description: "Kill a Fairy while you are a Ghost."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.rebirth_trigger"
+    goal: 1
+
+  - id: "skyblock.s_squad"
+    name: "S+ Squad"
+    description: "Get an S+ Score in a Dungeon."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.s_squad_trigger"
+    goal: 1
+
+  - id: "skyblock.bigger_storage_is_seeded"
+    name: "Bigger Storage Is Seeded"
+    description: "[Co-op or you] Place a Large Storage Chest."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.bigger_storage_is_seeded_trigger"
+    goal: 1
+
+  - id: "skyblock.sacrifices_must_be_made"
+    name: "Sacrifices must be made"
+    description: "Salvage an item for Essence."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.sacrifices_must_be_made_trigger"
+    goal: 1
+
+  - id: "skyblock.fortunate"
+    name: "Fortunate"
+    description: "Apply the Fortune enchantment to an item."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.fortunate_trigger"
+    goal: 1
+
+  - id: "skyblock.the_flint_bros"
+    name: "The Flint Bros!"
+    description: "Find both Pat and Rick."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.the_flint_bros_trigger"
+    goal: 1
+
+  - id: "skyblock.tough_choice"
+    name: "Tough Choice"
+    description: "Apply an Ultimate Enchantment on an item."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.tough_choice_trigger"
+    goal: 1
+
+  - id: "skyblock.every_little_bit_helps"
+    name: "Every Little Bit Helps"
+    description: "Apply a Hot or Fuming Potato Book to an item."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.every_little_bit_helps_trigger"
+    goal: 1
+
+  - id: "skyblock.advanced_transportation"
+    name: "Advanced Transportation"
+    description: "Sell an item using the Enchanted Hopper."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.advanced_transportation_trigger"
+    goal: 1
+
+  - id: "skyblock.quite_the_crowd"
+    name: "Quite the Crowd"
+    description: "Have 5 visitors at once in The Garden."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.quite_the_crowd_trigger"
+    goal: 1
+
+  - id: "skyblock.wham_pow"
+    name: "WHAM! POW!"
+    description: "Kill a Bat Piñata."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.wham_pow_trigger"
+    goal: 1
+
+  - id: "skyblock.wanderer"
+    name: "Wanderer"
+    description: "Discover every Area of the Hub"
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.wanderer_trigger"
+    goal: 1
+
+  - id: "skyblock.suited_up"
+    name: "Suited Up"
+    description: "Wear all forms of equipment at the same time."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.suited_up_trigger"
+    goal: 1
+
+  - id: "skyblock.flawless"
+    name: "Flawless"
+    description: "Beat a dungeon without anyone dying."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.flawless_trigger"
+    goal: 1
+
+  - id: "skyblock.caretaker"
+    name: "Caretaker"
+    description: "Level up a pet to 80."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.caretaker_trigger"
+    goal: 1
+
+  - id: "skyblock.treasure_fishing"
+    name: "Treasure Fishing"
+    description: "Fish up a Large Treasure."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.treasure_fishing_trigger"
+    goal: 1
+
+  - id: "skyblock.dungeon_explorer"
+    name: "Dungeon Explorer"
+    description: "Get a score on exploration of 95 or more in a dungeon."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.dungeon_explorer_trigger"
+    goal: 1
+
+  - id: "skyblock.smell_like_roses"
+    name: "Smell like roses"
+    description: "Take down an Endstone Protector."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.smell_like_roses_trigger"
+    goal: 1
+
+  - id: "skyblock.happy_holidays"
+    name: "Happy Holidays"
+    description: "Collect all 20 White Gifts on the Jerry Island."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.happy_holidays_trigger"
+    goal: 1
+
+  - id: "skyblock.deep_storage"
+    name: "Deep Storage"
+    description: "Gain an extra Ender Chest page from Elizabeth."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.deep_storage_trigger"
+    goal: 1
+
+  - id: "skyblock.fully_evolved"
+    name: "Fully Evolved"
+    description: "Obtain a legendary pet."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.fully_evolved_trigger"
+    goal: 1
+
+  - id: "skyblock.higher_enchants"
+    name: "Higher Enchants"
+    description: "Obtain a level 6 enchantment book."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.higher_enchants_trigger"
+    goal: 1
+
+  - id: "skyblock.master_enchanter"
+    name: "Master Enchanter"
+    description: "Enchant something using 64 levels."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.master_enchanter_trigger"
+    goal: 1
+
+  - id: "skyblock.speedrunner"
+    name: "Speedrunner"
+    description: "Beat a Dungeon Boss in under 4 minutes."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.speedrunner_trigger"
+    goal: 1
+
+  - id: "skyblock.oh_shiny"
+    name: "Oh Shiny"
+    description: "Mine a Glowing Block on the End Island."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.oh_shiny_trigger"
+    goal: 1
+
+  - id: "skyblock.cleanup_crew"
+    name: "Cleanup Crew"
+    description: "Finish clearing a plot in The Garden."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.cleanup_crew_trigger"
+    goal: 1
+
+  - id: "skyblock.dragon_slayer"
+    name: "Dragon Slayer"
+    description: "Take down a dragon."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.dragon_slayer_trigger"
+    goal: 1
+
+  - id: "skyblock.happy_new_year"
+    name: "Happy New Year"
+    description: "Obtain a New Year's Cake from the Baker."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.happy_new_year_trigger"
+    goal: 1
+
+  - id: "skyblock.sweet_tooth"
+    name: "Sweet Tooth"
+    description: "Find a Purple Candy."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.sweet_tooth_trigger"
+    goal: 1
+
+  - id: "skyblock.soul_hunter"
+    name: "Soul Hunter"
+    description: "Find 20 fairy souls."
+    type: CHALLENGE
+    points: 10
+    trigger: "skyblock.fairy_soul_found"
+    goal: 20
+
+  - id: "skyblock.a_challenging_climb"
+    name: "A Challenging Climb"
+    description: "Scale the Spider's Den."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.a_challenging_climb_trigger"
+    goal: 1
+
+  - id: "skyblock.mass_production"
+    name: "Mass Production"
+    description: "[Co-op or you] Craft a level XI minion."
+    type: CHALLENGE
+    points: 15
+    trigger: "skyblock.mass_production_trigger"
+    goal: 1
+
+  - id: "skyblock.accessories_galore"
+    name: "Accessories Galore"
+    description: "[Co-op or you] Unlock the Greater Accessory Bag upgrade."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.accessories_galore_trigger"
+    goal: 1
+
+  - id: "skyblock.super_fuel"
+    name: "Super Fuel"
+    description: "[Co-op or you] Upgrade a minion with the Enchanted Lava Bucket."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.super_fuel_trigger"
+    goal: 1
+
+  - id: "skyblock.promise_fulfilled"
+    name: "Promise Fulfilled"
+    description: "Max out a promising tool."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.promise_fulfilled_trigger"
+    goal: 1
+
+  - id: "skyblock.resourceful"
+    name: "Resourceful"
+    description: "Give Rhys the materials to enter the Dwarven Mines."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.resourceful_trigger"
+    goal: 1
+
+  - id: "skyblock.heart_of_the_end"
+    name: "Heart of the End"
+    description: "Reach the Dragon's Nest in the End."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.heart_of_the_end_trigger"
+    goal: 1
+
+  - id: "skyblock.time_to_go_on_vacation"
+    name: "Time to go on vacation"
+    description: "[Co-op or you] Upgrade a minion with the Super Compactor 3000."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.time_to_go_on_vacation_trigger"
+    goal: 1
+
+  - id: "skyblock.into_the_deep"
+    name: "Into the Deep"
+    description: "Reach the obsidian sanctuary in the Deep Caverns."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.into_the_deep_trigger"
+    goal: 1
+
+  - id: "skyblock.quest_complete"
+    name: "Quest complete!"
+    description: "Complete the Villager Quest."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.quest_complete_trigger"
+    goal: 1
+
+  - id: "skyblock.combined_efforts"
+    name: "Combined efforts"
+    description: "Start a co-op."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.combined_efforts_trigger"
+    goal: 1
+
+  - id: "skyblock.businessman"
+    name: "Businessman"
+    description: "Complete a trade with another player."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.businessman_trigger"
+    goal: 1
+
+  - id: "skyblock.production_expanded"
+    name: "Production Expanded"
+    description: "[Co-op or you] Unlock a new minion slot."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.production_expanded_trigger"
+    goal: 1
+
+  - id: "skyblock.lost_soul"
+    name: "Lost Soul"
+    description: "Find a fairy soul."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.fairy_soul_found"
+    goal: 1
+
+  - id: "skyblock.your_big_break"
+    name: "Your Big Break"
+    description: "Survive an entire SkyBlock year without dying."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.your_big_break_trigger"
+    goal: 1
+
+  - id: "skyblock.your_adventure_begins"
+    name: "Your adventure begins..."
+    description: "Travel to hub from your island."
+    type: CHALLENGE
+    points: 5
+    trigger: "skyblock.your_adventure_begins_trigger"
+    goal: 1
+

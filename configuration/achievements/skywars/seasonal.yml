@@ -1,0 +1,132 @@
+achievements:
+  # Seasonal achievements from GUI - organized by season
+
+  # ===== SUMMER SEASON =====
+  - id: "skywars.bbq_in_the_sky"
+    name: "BBQ in the Sky"
+    description: "Win a game of SkyWars Mega while using the Pyro Kit."
+    type: SEASONAL
+    season: SUMMER
+    points: 10
+    trigger: "skywars.bbq_in_the_sky_trigger"
+    goal: 1
+
+  - id: "skywars.grillmaster"
+    name: "Grillmaster"
+    description: "Kill 5 players in a SkyWars game with the BBQ Kill Messages."
+    type: SEASONAL
+    season: SUMMER
+    points: 10
+    trigger: "skywars.grillmaster_trigger"
+    goal: 1
+
+  - id: "skywars.out_fishing"
+    name: "Out Fishing"
+    description: "Win a game of SkyWars while using the Fisherman Kit."
+    type: SEASONAL
+    season: SUMMER
+    points: 5
+    trigger: "skywars.out_fishing_trigger"
+    goal: 1
+
+  - id: "skywars.home_run"
+    name: "Home Run"
+    description: "Knock a player into the void while using the Baseball Player Kit in SkyWars."
+    type: SEASONAL
+    season: SUMMER
+    points: 5
+    trigger: "skywars.home_run_trigger"
+    goal: 1
+
+  # ===== HALLOWEEN SEASON =====
+  - id: "skywars.full_bat_mode"
+    name: "Full Bat Mode"
+    description: "Kill a player whilst blinded with the Batguy kit equipped in SkyWars."
+    type: SEASONAL
+    season: HALLOWEEN
+    points: 5
+    trigger: "skywars.full_bat_mode_trigger"
+    goal: 1
+
+  - id: "skywars.tis_the_season"
+    name: "'Tis The Season"
+    description: "Complete the Harvest Season Special One-Time Quest in SkyWars."
+    type: SEASONAL
+    season: HALLOWEEN
+    points: 10
+    trigger: "skywars.tis_the_season_trigger"
+    goal: 1
+
+  - id: "skywars.rising_dead"
+    name: "Rising Dead"
+    description: "Trigger the Necromancer Perk in SkyWars."
+    type: SEASONAL
+    season: HALLOWEEN
+    points: 5
+    trigger: "skywars.rising_dead_trigger"
+    goal: 1
+
+  # ===== HOLIDAY SEASON =====
+  - id: "skywars.snowball_sniper"
+    name: "Snowball Sniper"
+    description: "Throw 3 players into the void using snowballs in a game of SkyWars."
+    type: SEASONAL
+    season: HOLIDAY
+    points: 10
+    trigger: "skywars.snowball_sniper_trigger"
+    goal: 1
+
+  - id: "skywars.spreading_the_love"
+    name: "Spreading the Love"
+    description: "Get a kill with the Merry Projectile Trail in SkyWars."
+    type: SEASONAL
+    season: HOLIDAY
+    points: 10
+    trigger: "skywars.spreading_the_love_trigger"
+    goal: 1
+
+  - id: "skywars.snow_wars"
+    name: "Snow Wars"
+    description: "Win a SkyWars game using the Snowman Kit."
+    type: SEASONAL
+    season: HOLIDAY
+    points: 5
+    trigger: "skywars.snow_wars_trigger"
+    goal: 1
+
+  - id: "skywars.slice_and_ice"
+    name: "Slice and Ice"
+    description: "Kill a player while sliding on ice in SkyWars."
+    type: SEASONAL
+    season: HOLIDAY
+    points: 5
+    trigger: "skywars.slice_and_ice_trigger"
+    goal: 1
+
+  # ===== EASTER SEASON =====
+  - id: "skywars.fill_the_void"
+    name: "Fill the Void"
+    description: "Throw 3 players in the void using eggs in a game of SkyWars."
+    type: SEASONAL
+    season: EASTER
+    points: 10
+    trigger: "skywars.fill_the_void_trigger"
+    goal: 1
+
+  - id: "skywars.saving_the_planet"
+    name: "Saving the Planet"
+    description: "Kill 2 players in 10 seconds while using the Ecologist Kit in SkyWars."
+    type: SEASONAL
+    season: EASTER
+    points: 10
+    trigger: "skywars.saving_the_planet_trigger"
+    goal: 1
+
+  - id: "skywars.close_enough"
+    name: "Close Enough?"
+    description: "Win a game of SkyWars using the Frog Kit."
+    type: SEASONAL
+    season: EASTER
+    points: 10
+    trigger: "skywars.close_enough_trigger"
+    goal: 1

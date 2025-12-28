@@ -14,6 +14,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class VillagerBlacksmith extends HypixelNPC {
     public VillagerBlacksmith() {
         super(new VillagerConfiguration(){

@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.item.handlers.customstatistics;
 
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 
 import java.util.HashMap;
 import java.util.Map;

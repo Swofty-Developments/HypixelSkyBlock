@@ -2,7 +2,7 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.auctions.DarkAuctionPhase;
+import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -11,6 +11,8 @@ import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
+
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCSirius extends HypixelNPC {
     private static final long MINIMUM_COINS = 400_000;
@@ -59,7 +61,7 @@ public class NPCSirius extends HypixelNPC {
     }
 
     @Override
-    public void onClick(HypixelNPC.NPCInteractEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
 
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();

@@ -3,8 +3,9 @@ package net.swofty.type.skyblockgeneric.data.datapoints;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.protocol.Serializer;
+import net.swofty.type.generic.leaderboard.MapLeaderboardTracked;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
@@ -12,7 +13,10 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-public class DatapointCollection extends SkyBlockDatapoint<DatapointCollection.PlayerCollection> {
+public class DatapointCollection extends SkyBlockDatapoint<DatapointCollection.PlayerCollection>
+        implements MapLeaderboardTracked {
+
+    private static final String LEADERBOARD_PREFIX = "skyblock:collection";
 
     public DatapointCollection(String key, DatapointCollection.PlayerCollection value) {
         super(key, value, new Serializer<>() {
@@ -56,6 +60,52 @@ public class DatapointCollection extends SkyBlockDatapoint<DatapointCollection.P
     public DatapointCollection(String key) {
         this(key, new PlayerCollection(new HashMap<>()));
     }
+
+    // ============ MapLeaderboardTracked Implementation ============
+
+    @Override
+    public String getLeaderboardPrefix() {
+        return LEADERBOARD_PREFIX;
+    }
+
+    @Override
+    public Map<String, Double> getAllLeaderboardScores() {
+        Map<String, Double> scores = new HashMap<>();
+        if (value == null || value.getItems() == null) {
+            return scores;
+        }
+
+        for (Map.Entry<ItemType, Integer> entry : value.getItems().entrySet()) {
+            // Only include items that are part of a collection category
+            if (CollectionCategories.getCategory(entry.getKey()) != null) {
+                scores.put(entry.getKey().name(), entry.getValue().doubleValue());
+            }
+        }
+        return scores;
+    }
+
+    @Override
+    public Map<String, Double> getChangedScores(Object oldValue, Object newValue) {
+        // If either value is null, return all scores
+        if (!(oldValue instanceof PlayerCollection oldCollection) ||
+            !(newValue instanceof PlayerCollection newCollection)) {
+            return getAllLeaderboardScores();
+        }
+
+        Map<String, Double> changed = new HashMap<>();
+        Map<ItemType, Map.Entry<Integer, Integer>> diffs =
+            PlayerCollection.getDifferentValues(oldCollection, newCollection);
+
+        for (Map.Entry<ItemType, Map.Entry<Integer, Integer>> diff : diffs.entrySet()) {
+            // Only include items that are part of a collection category
+            if (CollectionCategories.getCategory(diff.getKey()) != null) {
+                changed.put(diff.getKey().name(), diff.getValue().getValue().doubleValue());
+            }
+        }
+        return changed;
+    }
+
+    // ============ End MapLeaderboardTracked Implementation ============
 
     @Getter
     @AllArgsConstructor

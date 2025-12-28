@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.loottable;
 
 import lombok.Getter;
 import net.minestom.server.entity.LivingEntity;
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.enchantment.impl.EnchantmentLooting;
 import net.swofty.type.skyblockgeneric.enchantment.impl.EnchantmentLuck;

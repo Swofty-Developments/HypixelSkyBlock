@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.region.mining.handler;
 
-import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 

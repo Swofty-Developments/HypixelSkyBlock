@@ -4,6 +4,7 @@ import com.velocitypowered.api.proxy.Player;
 import net.swofty.commons.ServerType;
 import net.swofty.velocity.gamemanager.balanceconfigurations.IslandCheck;
 import net.swofty.velocity.gamemanager.balanceconfigurations.LowestPlayerCount;
+import net.swofty.velocity.gamemanager.balanceconfigurations.ReadyGames;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,33 +13,60 @@ import java.util.List;
 import java.util.Map;
 
 public class BalanceConfigurations {
-	public static HashMap<ServerType, List<BalanceConfiguration>> configurations = new HashMap<>(Map.of(
-			ServerType.SKYBLOCK_HUB, List.of(
-					new LowestPlayerCount()
-			),
-			ServerType.PROTOTYPE_LOBBY, List.of(
-					new LowestPlayerCount()
-			),
-			ServerType.SKYBLOCK_DUNGEON_HUB, List.of(
-					new LowestPlayerCount()
-			),
-			ServerType.SKYBLOCK_THE_FARMING_ISLANDS, List.of(
-					new LowestPlayerCount()
-			),
-			ServerType.SKYBLOCK_GOLD_MINE, List.of(
-					new LowestPlayerCount()
-			),
-			ServerType.SKYBLOCK_DEEP_CAVERNS, List.of(
-					new LowestPlayerCount()
-			),
-			ServerType.SKYBLOCK_DWARVEN_MINES, List.of(
-					new LowestPlayerCount()
-			),
-			ServerType.SKYBLOCK_ISLAND, List.of(
+	public static HashMap<ServerType, List<BalanceConfiguration>> configurations = new HashMap<>(Map.ofEntries(
+			Map.entry(ServerType.SKYBLOCK_ISLAND, List.of(
 					new IslandCheck(),
 					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_HUB, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_DUNGEON_HUB, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_THE_FARMING_ISLANDS, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_SPIDERS_DEN, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_THE_END, List.of(
+					new LowestPlayerCount()
+            )),
+			Map.entry(ServerType.SKYBLOCK_CRIMSON_ISLE, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_GOLD_MINE, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_DEEP_CAVERNS, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_DWARVEN_MINES, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_THE_PARK, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_GALATEA, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.SKYBLOCK_BACKWATER_BAYOU, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.PROTOTYPE_LOBBY, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.BEDWARS_LOBBY, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.BEDWARS_GAME, List.of(
+					new ReadyGames()
+			)),
+			Map.entry(ServerType.BEDWARS_CONFIGURATOR, List.of(
+					new LowestPlayerCount()
 			))
-	);
+	));
 
 	public static @Nullable GameManager.GameServer getServerFor(Player player, ServerType type) {
 		if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {

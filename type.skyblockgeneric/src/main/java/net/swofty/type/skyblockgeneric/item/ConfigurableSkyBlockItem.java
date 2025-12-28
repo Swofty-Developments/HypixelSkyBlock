@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.item;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import net.swofty.type.skyblockgeneric.item.components.ExtraUnderNameComponent;

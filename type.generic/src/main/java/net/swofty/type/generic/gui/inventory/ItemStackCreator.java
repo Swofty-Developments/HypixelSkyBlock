@@ -11,6 +11,7 @@ import net.minestom.server.item.component.TooltipDisplay;
 import net.minestom.server.network.player.ResolvableProfile;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -77,6 +78,24 @@ public class ItemStackCreator {
 		}
 		return getStack(name, material, amount, l.toArray(new String[]{}));
 	}
+
+    /**
+     * Creates an {@link ItemStack.Builder} with a single lore line. Will split the lore into multiple lines on every \n.
+     *
+     * @param name     the name of the item stack
+     * @param color    the color to apply to the lore
+     * @param material the material of the item stack
+     * @param amount   the number of items in the stack
+     * @param lore     the lore to display
+     * @return an {@link ItemStack.Builder} with the specified properties
+     */
+    public static ItemStack.Builder getSingleLoreStackLineSplit(String name, String color, Material material, int amount, String lore) {
+        List<String> l = new ArrayList<>();
+        for (String line : lore.split("\n")) {
+            l.add(color + line);
+        }
+        return getStack(name, material, amount, l.toArray(new String[]{}));
+    }
 
 	/**
 	 * Creates an {@link ItemStack.Builder} with specified name, material, amount, and lore.
@@ -275,6 +294,18 @@ public class ItemStackCreator {
 				)))
 				.set(DataComponents.PROFILE, new ResolvableProfile(skin))
 				.amount(amount));
+	}
+
+	public static ItemStack.Builder getUsingGUIMaterial(String name, GUIMaterial material, int amount, List<String> lore) {
+		if (material.hasTexture()) {
+			return ItemStackCreator.getStackHead(name, material.texture(), amount, lore);
+		} else {
+			return ItemStackCreator.getStack(name, material.material(), amount, lore);
+		}
+	}
+
+	public static ItemStack.Builder getUsingGUIMaterial(String name, GUIMaterial material, int amount, String... lore) {
+		return getUsingGUIMaterial(name, material, amount, Arrays.asList(lore));
 	}
 
 	/**

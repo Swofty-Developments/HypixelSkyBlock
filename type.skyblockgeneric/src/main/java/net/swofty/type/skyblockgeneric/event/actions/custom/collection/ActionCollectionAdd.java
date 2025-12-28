@@ -1,7 +1,7 @@
 package net.swofty.type.skyblockgeneric.event.actions.custom.collection;
 
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;

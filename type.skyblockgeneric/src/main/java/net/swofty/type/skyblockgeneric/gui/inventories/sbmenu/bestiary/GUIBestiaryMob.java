@@ -7,7 +7,8 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.item.Rarity;
+import net.swofty.commons.skyblock.item.Rarity;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -16,6 +17,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
+import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -73,13 +75,8 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
 
                 player.getBestiaryData().getMobDisplay(lore, kills, mob, bestiaryEntry);
 
-                if (guiMaterial.hasTexture()) {
-                    return ItemStackCreator.getStackHead("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                            guiMaterial.texture(), 1, lore);
-                } else {
-                    return ItemStackCreator.getStack("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                            guiMaterial.material(), 1, lore);
-                }
+                return ItemStackCreator.getUsingGUIMaterial("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
+                        guiMaterial, 1, lore);
             }
         });
 
@@ -118,9 +115,30 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
                         else commonLoot.add(lootRecord);
                     }
 
+                    List<MobType> mobtypes = mob.getMobTypes();
+
+                    if (mobtypes.size() == 1) {
+                        lore.add("§7Mob Type: " + mobtypes.getFirst().getFullDisplayName());
+                        lore.add("");
+                    } else if (mobtypes.size() > 1) {
+                        StringBuilder sb = new StringBuilder();
+                        for (MobType mobType : mobtypes) {
+                            sb.append(mobType.getFullDisplayName());
+                            sb.append("§7, ");
+                        }
+                        sb.delete(sb.chars().sum() - 3, sb.chars().sum());
+
+                        lore.add("§7Mob Types: " + sb);
+                        lore.add("");
+                    }
+
+
+                    lore.add("§7Mob Stats:");
+                    lore.add("§7Health: " + ItemStatistic.HEALTH.getDisplayColor() + Math.round(mob.getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue()) + ItemStatistic.HEALTH.getSymbol());
+                    lore.add("§7Damage: " + ItemStatistic.DAMAGE.getDisplayColor() + Math.round(mob.getBaseStatistics().getOverall(ItemStatistic.DAMAGE).floatValue()) + ItemStatistic.DAMAGE.getSymbol());
                     lore.add("§7Coins per Kill: §6" + otherLoot.getCoinAmount());
                     lore.add("§7" + mob.getSkillCategory().asCategory().getName() + " Exp: §3" + otherLoot.getSkillXPAmount());
-                    lore.add("§7Xp Orbs: §3" + otherLoot.getXpOrbAmount());
+                    lore.add("§7XP Orbs: §3" + otherLoot.getXpOrbAmount());
                     lore.add("");
                     lore.add("§7Kills: §a" + kills);
                     lore.add("§7Deaths: §a" + deaths);
@@ -164,11 +182,7 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
 
                     lore.removeLast();
 
-                    if (guiMaterial.hasTexture()) {
-                        return ItemStackCreator.getStackHead("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), guiMaterial.texture(), 1, lore);
-                    } else {
-                        return ItemStackCreator.getStack("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), guiMaterial.material(), 1, lore);
-                    }
+                    return ItemStackCreator.getUsingGUIMaterial("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), guiMaterial, 1, lore);
                 }
             });
         }

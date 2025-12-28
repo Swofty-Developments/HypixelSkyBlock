@@ -62,8 +62,11 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             toggles.put(type, value);
         }
 
-        public void inverse(ToggleType type) {
-            toggles.put(type, !toggles.getOrDefault(type, type.defaultValue));
+        public boolean inverse(ToggleType type) {
+            // toggles.put(type, !toggles.getOrDefault(type, type.defaultValue));
+			boolean newValue = !toggles.getOrDefault(type, type.defaultValue);
+			toggles.put(type, newValue);
+			return newValue;
         }
 
         public enum ToggleType {
@@ -79,6 +82,9 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_FISHERMAN_GERALD(false),
             HAS_SPOKEN_TO_RUSTY(false),
             HAS_SPOKEN_TO_RUSTY_ABOUT_PICKAXE(false),
+            HAS_SPOKEN_TO_RUSTY_ABOUT_ABIPHONE(false),
+            HAS_GIVEN_WALTER_CUBE(false),
+            HAS_GIVEN_BUILDER_BUILDERS_WAND(false),
             HAS_SPOKEN_TO_CURATOR(false),
             HAS_SPOKEN_TO_MADAME_ELEANOR(false),
             HAS_DONE_COAL_TRADE_WITH_BLACKSMITH(false),
@@ -86,6 +92,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_FISH_MERCHANT(false),
             HAS_SPOKEN_TO_GOLD_FORGER(false),
             HAS_SPOKEN_TO_IRON_FORGER(false),
+            HAS_SPOKEN_TO_GOLD_BLACKSMITH(false),
             HAS_SPOKEN_TO_FARM_MERCHANT(false),
             HAS_SPOKEN_TO_ADVENTURER(false),
             HAS_SPOKEN_TO_LUMBER_MERCHANT(false),
@@ -98,8 +105,11 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_JAX(false),
             HAS_REALLY_SPOKEN_TO_JAX(false),
             HAS_SPOKEN_TO_ALCHEMIST(false),
-            HAS_FOUND_LAZY_MINER_PICKAXE(false),
             PAPER_ICONS(false),
+			LOBBY_SHOW_PLAYERS(true),
+			AUTO_ACCEPT_QUESTS(false),
+            RUSTY_PURCHASE_CONFIRMATION(false),
+            RUSTY_SORT_BY_RARITY(false),
             ;
 
             private final boolean defaultValue;

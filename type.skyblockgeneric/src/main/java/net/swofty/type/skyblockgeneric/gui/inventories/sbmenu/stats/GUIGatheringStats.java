@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats;
 
-import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -8,7 +7,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -20,7 +19,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
@@ -491,10 +489,7 @@ public class GUIGatheringStats extends HypixelInventoryGUI {
                     StringUtility.decimalify(value, 1);
             List<String> lore = buildLore(player);
 
-            if (guiMaterial.hasTexture()) {
-                return ItemStackCreator.getStackHead(title, guiMaterial.texture(), 1, lore);
-            }
-            return ItemStackCreator.getStack(title, guiMaterial.material(), 1, lore);
+            return ItemStackCreator.getUsingGUIMaterial(title, guiMaterial, 1, lore);
         }
     }
 

@@ -7,7 +7,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -177,10 +177,7 @@ public class GUIMiscStats extends HypixelInventoryGUI {
                     StringUtility.decimalify(value, 1);
             List<String> lore = buildLore(player);
 
-            if (guiMaterial.hasTexture()) {
-                return ItemStackCreator.getStackHead(title, guiMaterial.texture(), 1, lore);
-            }
-            return ItemStackCreator.getStack(title, guiMaterial.material(), 1, lore);
+            return ItemStackCreator.getUsingGUIMaterial(title, guiMaterial, 1, lore);
         }
     }
 

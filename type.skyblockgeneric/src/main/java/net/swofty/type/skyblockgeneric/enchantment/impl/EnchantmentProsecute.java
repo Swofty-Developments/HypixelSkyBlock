@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.enchantment.impl;
 
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.entity.LivingEntity;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.ConflictingEnch;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.Ench;

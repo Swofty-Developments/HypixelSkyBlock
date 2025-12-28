@@ -11,7 +11,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
@@ -26,7 +26,7 @@ import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.hub.darkauction.DarkAuctionDisplay;
 import net.swofty.type.hub.runes.RuneEntityImpl;
 import net.swofty.type.hub.tab.HubServerModule;
-import net.swofty.type.hub.util.HubMapUtility;
+import net.swofty.type.hub.util.HubMap;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
 import net.swofty.type.skyblockgeneric.entity.GlassDisplay;
@@ -127,8 +127,8 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 			darkAuctionDisplay.update();
 		});
 
-		// Place maps in the hub
-		HubMapUtility.setMaps(HypixelConst.getInstanceContainer());
+		HubMap hubMap = new HubMap();
+		hubMap.placeItemFrames(HypixelConst.getInstanceContainer());
 	}
 
     @Override
@@ -136,7 +136,8 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
         return new LoaderValues(
                 (type) -> switch (type) {
                     case SKYBLOCK_THE_FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
-                    case SKYBLOCK_GOLD_MINE -> new Pos(-9.5, 64, -228, 0, 0); // TODO: UPDATE TO PROPER POSITION
+					case SKYBLOCK_SPIDERS_DEN -> new Pos(-159.5, 73, -158.5, -45, 0);
+                    case SKYBLOCK_GOLD_MINE -> new Pos(-9.5, 64, -228.5, 0, 0);
                     case SKYBLOCK_DUNGEON_HUB -> new Pos(-44, 88, 11.5, 0, 0);
                     default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
                 }, // Spawn position

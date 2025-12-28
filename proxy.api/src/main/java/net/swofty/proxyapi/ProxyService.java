@@ -21,7 +21,7 @@ public record ProxyService(ServiceType type) {
             hasReceivedResponse.set(true);
         });
 
-        CompletableFuture.delayedExecutor(50, TimeUnit.MILLISECONDS)
+        CompletableFuture.delayedExecutor(150, TimeUnit.MILLISECONDS)
                 .execute(() -> {
                     if (!hasReceivedResponse.get()) {
                         future.complete(false);

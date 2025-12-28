@@ -1,0 +1,328 @@
+achievements:
+  # Page 1 achievements from GUI
+  - id: "bedwars.alchemist"
+    name: "Alchemist"
+    description: "Buy 10 Potions in a game"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.potions_bought"
+    goal: 10
+    perGame: true
+
+  - id: "bedwars.already_over"
+    name: "Already over?"
+    description: "Win a game within 10 minutes"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.fast_win"
+    goal: 1
+    customCheck: true
+
+  - id: "bedwars.bomber"
+    name: "Bomber"
+    description: "Use 5 TNTs in a single game of Bed Wars"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.tnt_used"
+    goal: 5
+    perGame: true
+
+  - id: "bedwars.builder"
+    name: "Builder"
+    description: "Place over 200 blocks in a game"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.blocks_placed"
+    goal: 200
+    perGame: true
+
+  - id: "bedwars.you_cant_do_that"
+    name: "You can't do that!"
+    description: "Attempt to break your teams's bed."
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.break_own_bed"
+    goal: 1
+
+  - id: "bedwars.rejoining_the_dream"
+    name: "Rejoining the Dream"
+    description: "Use the /rejoin command to warp back into a Bed Wars game."
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.rejoin_used"
+    goal: 1
+
+  - id: "bedwars.cant_wake_up"
+    name: "Can't Wake Up"
+    description: "Enter the Slumber Hotel temple"
+    type: CHALLENGE
+    points: 15
+    trigger: "bedwars.slumber_temple"
+    goal: 1
+
+  - id: "bedwars.cutting_it_close"
+    name: "Cutting It Close!"
+    description: "Win a game with less than 30 seconds before bed destruction"
+    type: CHALLENGE
+    points: 15
+    trigger: "bedwars.close_win"
+    goal: 1
+    customCheck: true
+
+  - id: "bedwars.shear_luck"
+    name: "Shear Luck"
+    description: "Kill a player with shears!"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.shear_kill"
+    goal: 1
+
+  - id: "bedwars.future_is_now"
+    name: "The Future is Now"
+    description: "Punch a chest to deposit your held item."
+    points: 5
+    type: CHALLENGE
+    trigger: "bedwars.chest_deposit"
+    goal: 1
+
+  - id: "bedwars.diamond_hoarder"
+    name: "Diamond Hoarder"
+    description: "Collect at least 50 Diamonds from generators in a game"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.diamonds_collected"
+    goal: 50
+    perGame: true
+
+  - id: "bedwars.distraction"
+    name: "Distraction"
+    description: "Get a kill while you have your glyph active"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.glyph_kill"
+    goal: 1
+
+  - id: "bedwars.dragon_slayer"
+    name: "Dragon Slayer"
+    description: "Kill an Ender Dragon"
+    type: CHALLENGE
+    points: 15
+    trigger: "bedwars.dragon_kill"
+    goal: 1
+
+  - id: "bedwars.emerald_hoarder"
+    name: "Emerald Hoarder"
+    description: "Collect at least 25 Emeralds from generators in a game"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.emeralds_collected"
+    goal: 25
+    perGame: true
+
+  - id: "bedwars.fell_into_deep_sleep"
+    name: "Fell Into a Deep Sleep"
+    description: "Help John Indigos decipher the map"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.decipher_map"
+    goal: 1
+
+  - id: "bedwars.first_blood"
+    name: "First Blood"
+    description: "Be the first player to kill an enemy"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.first_kill"
+    goal: 1
+    perGame: true
+
+  - id: "bedwars.forged_in_fire"
+    name: "Forged in Fire"
+    description: "Obtain the mystery item from the Blacksmith's quest line"
+    type: CHALLENGE
+    points: 20
+    trigger: "bedwars.blacksmith_quest"
+    goal: 1
+
+  - id: "bedwars.geared_up"
+    name: "Geared up!"
+    description: "Purchase the Diamond armor & sword"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.diamond_gear"
+    goal: 1
+    perGame: true
+
+  - id: "bedwars.getting_job_done_better"
+    name: "Getting The Job Done Better"
+    description: "Destroy all of the beds in a single game"
+    type: CHALLENGE
+    points: 15
+    trigger: "bedwars.all_beds_destroyed"
+    goal: 1
+    perGame: true
+
+  - id: "bedwars.getting_job_done"
+    name: "Getting the job done"
+    description: "Destroy half of the beds in one game"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.half_beds_destroyed"
+    goal: 1
+    perGame: true
+
+  - id: "bedwars.golems_rose"
+    name: "Golem's Rose"
+    description: "Kill 5 enemy Golems in a single game"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.golems_killed"
+    goal: 5
+    perGame: true
+
+  - id: "bedwars.great_lord_of_fire"
+    name: "Great lord of fire!"
+    description: "Have 10 Fireballs in your inventory at the same time"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.fireballs_held"
+    goal: 10
+
+  - id: "bedwars.i_dont_need_bed"
+    name: "I don't need a bed!"
+    description: "Survive for 10 minutes without a bed"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.survive_no_bed"
+    goal: 1
+    customCheck: true
+
+  - id: "bedwars.introduce_yourself"
+    name: "Introduce Yourself"
+    description: "Introduce yourself to the Slumber Hotel Receptionist"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.receptionist"
+    goal: 1
+
+  - id: "bedwars.iron_punch"
+    name: "Iron Punch"
+    description: "Get a kill with an Iron Golem"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.golem_kill"
+    goal: 1
+
+  # Page 2 achievements
+  - id: "bedwars.its_dark_down_there"
+    name: "It's dark down there"
+    description: "Fall into the void"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.void_falls"
+    goal: 5
+    perGame: true
+
+  - id: "bedwars.katniss_everdeen"
+    name: "Katniss Everdeen"
+    description: "Kill 5 enemies with a bow in a game"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.bow_kills"
+    goal: 5
+    perGame: true
+
+  - id: "bedwars.minefield"
+    name: "Minefield"
+    description: "Place 3 traps in a single game"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.traps_placed"
+    goal: 1
+    perGame: true
+
+  - id: "bedwars.not_today"
+    name: "Not Today!"
+    description: "Get a final kill while on half a heart"
+    type: CHALLENGE
+    points: 15
+    trigger: "bedwars.clutch_final_kill"
+    goal: 1
+    customCheck: true
+
+  - id: "bedwars.pickaxe_challenge"
+    name: "Pickaxe Challenge"
+    description: "Get 3 kills with a pickaxe in a game"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.pickaxe_kills"
+    goal: 3
+    perGame: true
+
+  - id: "bedwars.revenge"
+    name: "Revenge"
+    description: "Kill your killer within 30 seconds"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.revenge_kill"
+    goal: 1
+    customCheck: true
+
+  - id: "bedwars.sleepy"
+    name: "Sleepy"
+    description: "Sleep in your bed during a game"
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.sleep_in_bed"
+    goal: 1
+
+  - id: "bedwars.stay_away"
+    name: "Stay away from me!"
+    description: "Knock 5 enemies into the void in a single game using a Knockback Stick."
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.knockback_void_kill"
+    goal: 5
+    perGame: true
+
+  - id: "bedwars.super_looter"
+    name: "Super Looter"
+    description: "Open 5 chests from the middle island in one game"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.mid_chests_opened"
+    goal: 5
+    perGame: true
+
+  - id: "bedwars.sneaky_rusher"
+    name: "Sneaky Rusher"
+    description: "Destroy a bed while being invisible"
+    points: 5
+    trigger: "bedwars.sneaky_rusher_trigger"
+    goal: 1
+
+  - id: "bedwars.ultimate_defense"
+    name: "Ultimate Defense"
+    description: "Have 5 active upgrades at once"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.upgrades_active"
+    goal: 5
+
+  - id: "bedwars.warrior"
+    name: "Warrior"
+    description: "Get 10 kills in a single game"
+    type: CHALLENGE
+    points: 10
+    trigger: "bedwars.game_kills"
+    goal: 10
+    perGame: true
+
+  - id: "bedwars.thats_a_first"
+    name: "That's a First"
+    description: "Win your first game of Bed Wars."
+    type: CHALLENGE
+    points: 5
+    trigger: "bedwars.wins"
+    goal: 1
+

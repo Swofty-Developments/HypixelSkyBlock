@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.event.actions.player.mobdamage;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.damage.EntityDamage;
 import net.minestom.server.event.entity.EntityAttackEvent;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

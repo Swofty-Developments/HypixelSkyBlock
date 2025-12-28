@@ -1,0 +1,139 @@
+# Hypixel Network Level Rewards
+# These rewards are granted when players reach specific levels
+
+rewards:
+  # Early levels - small rewards
+  - level: 5
+    coins: 2500
+    dust: 500
+
+  - level: 10
+    coins: 5000
+    dust: 1000
+    specialRewards:
+      - "multiplier_1.5x"
+
+  - level: 15
+    coins: 7500
+    dust: 1500
+    boosterType: "EXPERIENCE"
+    boosterDuration: 60
+
+  - level: 20
+    coins: 10000
+    dust: 2000
+
+  - level: 25
+    coins: 15000
+    dust: 2500
+    specialRewards:
+      - "multiplier_2.0x"
+
+  - level: 30
+    coins: 20000
+    dust: 3000
+    boosterType: "COINS"
+    boosterDuration: 60
+
+  - level: 35
+    coins: 25000
+    dust: 3500
+
+  - level: 40
+    coins: 30000
+    dust: 4000
+    boosterType: "EXPERIENCE"
+    boosterDuration: 120
+
+  - level: 45
+    coins: 35000
+    dust: 4500
+
+  - level: 50
+    coins: 50000
+    dust: 5000
+    mysteryDust: 1000
+    specialRewards:
+      - "multiplier_2.5x"
+      - "title_half_century"
+
+  - level: 60
+    coins: 60000
+    dust: 6000
+    boosterType: "COINS"
+    boosterDuration: 120
+
+  - level: 70
+    coins: 70000
+    dust: 7000
+    boosterType: "EXPERIENCE"
+    boosterDuration: 180
+
+  - level: 75
+    coins: 75000
+    dust: 7500
+    specialRewards:
+      - "multiplier_3.0x"
+
+  - level: 80
+    coins: 80000
+    dust: 8000
+
+  - level: 90
+    coins: 90000
+    dust: 9000
+    boosterType: "COINS"
+    boosterDuration: 180
+
+  - level: 100
+    coins: 150000
+    dust: 15000
+    mysteryDust: 5000
+    boosterType: "EXPERIENCE"
+    boosterDuration: 360
+    specialRewards:
+      - "multiplier_3.5x"
+      - "veteran_status"
+      - "title_century"
+
+  - level: 125
+    coins: 125000
+    dust: 12500
+    specialRewards:
+      - "multiplier_4.0x"
+
+  - level: 150
+    coins: 200000
+    dust: 20000
+    mysteryDust: 10000
+    boosterType: "COINS"
+    boosterDuration: 360
+
+  - level: 175
+    coins: 175000
+    dust: 17500
+
+  - level: 200
+    coins: 300000
+    dust: 30000
+    mysteryDust: 15000
+    specialRewards:
+      - "multiplier_4.5x"
+      - "title_bicentennial"
+
+  - level: 225
+    coins: 225000
+    dust: 22500
+    boosterType: "EXPERIENCE"
+    boosterDuration: 480
+
+  - level: 250
+    coins: 500000
+    dust: 50000
+    mysteryDust: 25000
+    boosterType: "COINS"
+    boosterDuration: 600
+    specialRewards:
+      - "multiplier_5.0x"
+      - "title_legendary"
+      - "prestige_unlocked"

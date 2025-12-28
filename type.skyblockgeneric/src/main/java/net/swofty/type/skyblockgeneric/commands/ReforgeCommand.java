@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.commands;
 
-import net.swofty.commons.item.reforge.Reforge;
-import net.swofty.commons.item.reforge.ReforgeLoader;
-import net.swofty.commons.item.reforge.ReforgeType;
+import net.swofty.commons.skyblock.item.reforge.Reforge;
+import net.swofty.commons.skyblock.item.reforge.ReforgeLoader;
+import net.swofty.commons.skyblock.item.reforge.ReforgeType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;

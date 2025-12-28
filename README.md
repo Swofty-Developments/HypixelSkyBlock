@@ -1,184 +1,70 @@
-> This is a Minestom-implementation of a Hypixel-SkyBlock recreation hosted on my server at discord.gg/paper. This implementation is nowhere near complete and is not ready for production. There are still portions of the codebase which are messy and aren't following proper Minestom standard practice.
 # Hypixel SkyBlock
 
-[<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="" height="55" />](https://discord.gg/paper)
+[<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="Discord" height="55" />](https://discord.gg/ZaGW5wzUJ3)
 
-A 1.21.11 recreation of Hypixel SkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase. This project is sisters with the [HypixelForums](https://github.com/Swofty-Developments/HypixelForums) project and optionally, can be used together.
+A 1.21.11 Minestom-based recreation of Hypixel SkyBlock with a properly abstracted, scalable microservices architecture.
 
-#### Releases
+> **Note**: This implementation is under active development and is not yet production-ready.
 
-Releases are auto deployed on push onto the GitHub releases page which can be found [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases). Updates are also periodically sent within my discord server located at [discord.gg/paper](https://discord.gg/discord.gg/paper).
+## Documentation
 
-#### Javadocs
+Full documentation is available at **[opensource.swofty.net](https://opensource.swofty.net)**
 
-Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlock/).
+- [Getting Started](https://opensource.swofty.net/docs/introduction)
+- [Requirements](https://opensource.swofty.net/docs/requirements)
+- [Setup Guide](https://opensource.swofty.net/docs/setup/proxy)
+- [Docker Deployment](https://opensource.swofty.net/docs/docker/setup)
+- [Server Types Reference](https://opensource.swofty.net/docs/reference/server-types)
+- [Services Reference](https://opensource.swofty.net/docs/reference/services)
+- [Troubleshooting](https://opensource.swofty.net/docs/troubleshooting)
 
-## Recommended Device Specifications
-This project is not meant to be a small server, and as such, it requires a decent amount of resources to run. The following are the minimum specifications for running this server:
-- 16GB of RAM (4GB for MongoDB, 12GB across servers and services)
-- 6 Cores (For sufficient multi-threading)
-- 15GB of Storage
+## Quick Links
 
-## Setup Guide
-A video of me going through the guide [can be found here](https://www.youtube.com/watch?v=pxzJbjjQL-M)
-1. Ensure that you meet the recommended device specifications above.
-2. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/try/download/community?tck=docs_server).
-3. Ensure you have the `Java 25` SDK installed.
-4. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
-5. Follow the 'Proxy Setup Guide' below. (Note, if you want to run a cracked server, you must set "require-authentication" to true in your config)
-6. Follow the 'Game Server Setup Guide' below. (Note, if you want to run a cracked server, you must set "require-authentication" to true in your config)
-7. Follow the 'Service Setup Guide' below.
-8. Follow the 'Resource Pack Setup Guide' below.
-9. To give yourself ADMIN, log in and out of the server, go into your MongoDB compass, click on Minestom -> profiles and set your rank to "ADMIN". If there is not a rank field, create one just like `rank: ""ADMIN""`, log back in and you'll have it.
+- [Releases](https://github.com/Swofty-Developments/HypixelSkyBlock/releases)
+- [Javadocs](https://swofty-developments.github.io/HypixelSkyBlock/)
+- [Discord](https://discord.gg/ZaGW5wzUJ3)
+- [Video Guide](https://www.youtube.com/watch?v=pxzJbjjQL-M)
 
-### Proxy Setup Guide
-1. Download 'SkyBlockProxy.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
-2. Download the Velocity proxy from [here](https://fill-data.papermc.io/v1/objects/303f9c60d5d75c52585c9e95efbc46d43ae8683efe7dee8763a16d6506681ee1/velocity-3.4.0-SNAPSHOT-528.jar)
-3. Download `velocity.toml` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and move it to where you want your Proxy server to run.
-4. Move your Velocity proxy JAR into that folder as well, and run the proxy using `java -jar velocity-3.4.0-SNAPSHOT-528.jar` as a command in that directory.
-5. Close this proxy once it has generated the `plugins` folder, just by pressing `CTRL + C` or closing the CMD Prompt.
-6. Move the `SkyBlockProxy.jar` from earlier into the plugins' folder.
-7. Make a new folder where your `velocity.toml` is and call it `configuration`
-8. Download `resources.json` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
-9. Move this file into the `configuration` folder you just made.
-10. Start the proxy again using `java -jar velocity-3.4.0-SNAPSHOT-528.jar`. This will need to be on for your game servers to work.
+## Features
 
-### Game Server Setup Guide
-1. Download 'HypixelCore.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
-2. Make a folder called `configuration` in the same directory as the JAR file. (Note this should be placed differently to where your Proxy is)
-3. Download `resources.json` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
-4. Move this file into the `configuration` folder you just made.
-5. Create a folder called `skyblock` in the existing configuration folder.
-6. Download the [world files for the SkyBlock Hub, Prototype Lobby, and Island worlds.](https://www.mediafire.com/file/xxnxgkqejlh17fn/HypixelRecreationWorlds.zip/file)
-7. Get the Hypixel SkyBlock hub from the above download and put it in the configuration/skyblock/islands/ folder you made under the name `hypixel_skyblock_hub`, and the Island Template under `hypixel_skyblock_island_template`.
-8. Get the Prototype lobby from the above download and put it in the configuration folder under the name `hypixel_prototype_lobby`..
-9. Get the item and collection folders from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock) and put them into your configuration/skyblock/ folder.
-10. There should be a `forwarding.secret` file where your Velocity JAR is, take this and put it into your `resources.json` under `velocity-secret`.
-11. Run the jar using `java -jar {Insert the JAR file} SKYBLOCK_ISLAND`, this will create an Island server that will latch onto your running proxy.
-12. To make other game servers for the other islands merely run the command above again but with different island types, you can see all the possible types [here](https://github.com/Swofty-Developments/HypixelSkyBlock/blob/7df2db59ef0f14281f332d2cf43fdbf8ab09e574/commons/src/main/java/net/swofty/commons/ServerType.java#L4).
-13. Download `NanoLimbo.jar` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration), and download its configuration file from the same place. Start it in the background using `java -jar NanoLimbo-1.9.8.jar`. After running, a `settings.yml` file will be generated. Open it and scroll down till you see `secret: ''`. Put your velocity forwarding secret in there. Make sure that the `type` is set to `MODERN`.
-14. Download `Minestom.regions.csv` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock) and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
-15. If you wish to have fairy souls, download `Minestom.fairysouls.csv` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock) and upload them to the `fairysouls` collection made in your Mongo after starting the server. Once you have done this restart your server.
-16. If you wish to have the Hub crystals (you can also just `/addcrystal`), download `Minestom.crystals.csv` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock) and upload them to the `crystals` collection made in your Mongo after starting the server. Once you have done this restart your server.
-17. (OPTIONAL) If you wish to have Songs on your server, copy the `songs` folder from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock), and put it inside your configuration folder.
+- **Multi-Server Architecture** - 13 server types (SkyBlock + BedWars)
+- **Microservices** - 8 independent services (Auctions, Bazaar, Party, etc.)
+- **Redis Communication** - Real-time inter-service messaging
+- **MongoDB Storage** - Persistent data storage
+- **Velocity Proxy** - Load balancing and player routing
+- **Docker Support** - Full Docker Compose deployment
+- **Java 25** - Modern Java with virtual threads
 
-### Service Setup Guide
-1. Due to the nature of SkyBlock, there may be a variety of services that need to be run. Go to the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest) and download any .JAR files that start with `Service`.
-2. Move these JAR files into the same directory as your Game Servers, they will share the configuration JSON with the services.
-3. Run them using `java -jar {Insert the JAR file}`.
+## Requirements
 
-### Forums Website Setup Guide
-1. Ensure that your API service is running.
-2. Follow the steps found at [the HypixelForums repository](https://github.com/Swofty-Developments/HypixelForums).
+- 16GB+ RAM
+- 6+ CPU Cores
+- Java 25
+- MongoDB
+- Redis
 
-### Resource Pack Setup Guide
-1. In preparation for SkyBlock version 1, we already have a resource pack system setup. To start, download the `SkyBlockPacker.jar` from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest).
-2. Download the [pack_textures](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock) and [SkyBlockPack](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock) folders and move them where the packer JAR is.
-3. Run the packer JAR using `java -jar SkyBlockPacker.jar -v (Location of SkyBlockPack) -o (Output Directory) -t (Location of Pack Textures)`.
-4. Once this has finished, you should have a resource pack in the output directory you specified. Merely apply this on Minecraft and you'll be good to go.
+See the [full requirements](https://opensource.swofty.net/docs/requirements) for details.
 
-
-## 🐋 Running with Docker
-- Install the git repository using `git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git`
-
-Most parts about downloading and setting up files will be automated for you, but you will need to add the following files to the `configuration` folder:
-
-- Download the [world files for the Hub and Island worlds](https://www.mediafire.com/file/xxnxgkqejlh17fn/HypixelRecreationWorlds.zip/file). Make sure they are named as **world.zip**
-
-- In your configuration file Remove the default `resources.json` and rename `resources.json.docker` to `resources.json`
-
-## Running the containers! 
-
-- (Recommended) Install Docker Desktop from [here](https://www.docker.com/products/docker-desktop).
-- Open Docker Desktop/Docker and ensure that it is running.
-- Open a terminal and navigate to the directory where you cloned the repository.
-- Run the following command to build and run the containers (Your Server):
+## Quick Start
 
 ```bash
+# Clone the repository
+git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git
+
+# Docker deployment
 docker-compose up --build
 ```
 
-- If you want to run the server in detached mode, you can use the `-d` flag:
+For manual setup, follow the [documentation](https://opensource.swofty.net/docs/setup/proxy).
 
-```bash
-docker-compose up --build -d
-```
-> Note: If you have already run the server before with `docker-compose up --build` you can just run `docker-compose up` to start the server without rebuilding the images making it faster.
+## Related Projects
 
-- To stop the containers, you can use:
-
-```bash
-docker-compose down
-```
-
-Or click the stop button in Docker Desktop.
-
-### How to add new servers using Docker?
-To add new servers like the Hub, Islands or Farming Island follow these steps:
-1. Open the `docker-compose.yml` file.
-2. Modify the following template and add it to the `docker-compose.yml`. (Make sure to use proper indentation):
-
-```yaml
-<server_name>:
-  image: game_server_prepared
-  container_name: <server_name>
-  restart: "unless-stopped"
-  environment:
-    SERVICE_CMD: java -jar HypixelCore.jar <ServerType>
-  depends_on:
-    proxy:
-      condition: service_healthy
-    game_server_builder:
-      condition: service_started
-  volumes:
-    - ./configuration:/app/configuration_files
-  networks:
-    - hypixel_network
-```
-
-3. Replace `<server_name>` with a unique name for your server (e.g., `hub`, `island_1`, etc.).
-
-4. Replace `<ServerType>` with the appropriate server type (e.g., `SKYBLOCK_HUB`, `SKYBLOCK_ISLAND`, etc.)
-
-Example:
-
-```yaml
-hypixelcore_hub2:
-  image: game_server_prepared
-  container_name: hypixelcore_hub2
-  restart: "unless-stopped"
-  environment:
-    SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_HUB
-  depends_on:
-    proxy:
-      condition: service_healthy
-    game_server_builder:
-      condition: service_started
-  volumes:
-    - ./configuration:/app/configuration_files
-  networks:
-    - hypixel_network
-```
-
-## Common Issues
-1. `redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.`
-
-    ⇒ Your Memurai isn't running. If this can not be fixed, try out [this](https://github.com/tporadowski/redis/releases) instead.
-2. Having issues connecting to the server?
-
-   ⇒ Check if your velocity secret is the same everywhere including the limbo config.
-
-3. `You have strayed too far from the spawn! Teleporting you back...` when joining an island?
-
-   ⇒ You didn't import your regions (correctly).
-
-4. Still having issues? 
-
-   ⇒ Make sure that you followed everything correctly. If that didn't help, join our discord and ask for help in #code-help. Please provide screenshots of all your consoles! 
-### Pinging staff members won't solve your issue faster!
+- [HypixelForums](https://github.com/Swofty-Developments/HypixelForums) - Web forum integration
 
 ## Credits
 
-Thanks to:
-* All the lovely people in the Minestom discord for single-handedly carrying all of my knowledge about this API.
-* Myself and any other contributors, who can be viewed [HERE](https://github.com/Swofty-Developments/HypixelSkyBlock/graphs/contributors).
+Thanks to the Minestom community and all [contributors](https://github.com/Swofty-Developments/HypixelSkyBlock/graphs/contributors).
+
+## License
+
+See repository for license details.
