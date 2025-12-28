@@ -1,0 +1,144 @@
+achievements:
+  # Tiered achievements from GUI - each has 5 tiers (I-V)
+
+  - id: "skywars.cage_hoarder"
+    name: "Cage Hoarder"
+    description: "Unlock 1 cage"
+    type: TIERED
+    trigger: "skywars.cage_hoarder_trigger"
+    tiers:
+      - tier: 1
+        goal: 1
+        points: 5
+      - tier: 2
+        goal: 5
+        points: 10
+      - tier: 3
+        goal: 10
+        points: 15
+      - tier: 4
+        goal: 15
+        points: 20
+      - tier: 5
+        goal: 20
+        points: 25
+
+  - id: "skywars.you_re_a_star"
+    name: "You're a Star"
+    description: "Reach SkyWars level 3"
+    type: TIERED
+    trigger: "skywars.you_re_a_star_trigger"
+    tiers:
+      - tier: 1
+        goal: 3
+        points: 5
+      - tier: 2
+        goal: 6
+        points: 10
+      - tier: 3
+        goal: 9
+        points: 15
+      - tier: 4
+        goal: 12
+        points: 20
+      - tier: 5
+        goal: 15
+        points: 25
+
+  - id: "skywars.head_hoarder"
+    name: "Head Hoarder"
+    description: "Gather 5 Heads"
+    type: TIERED
+    trigger: "skywars.head_hoarder_trigger"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 25
+        points: 10
+      - tier: 3
+        goal: 100
+        points: 15
+      - tier: 4
+        goal: 250
+        points: 20
+      - tier: 5
+        goal: 1
+        points: 25
+
+  - id: "skywars.solo_winner"
+    name: "Solo Winner"
+    description: "Win 10 games in Solo mode"
+    type: TIERED
+    trigger: "skywars.solo_winner_trigger"
+    tiers:
+      - tier: 1
+        goal: 10
+        points: 5
+      - tier: 2
+        goal: 50
+        points: 10
+      - tier: 3
+        goal: 100
+        points: 15
+      - tier: 4
+        goal: 500
+        points: 20
+      - tier: 5
+        goal: 1
+        points: 25
+
+  - id: "skywars.kit_hoarder_normal"
+    name: "Kit Hoarder (Normal)"
+    description: "Unlock 1 Normal kit"
+    type: TIERED
+    trigger: "skywars.kit_hoarder_normal_trigger"
+    tiers:
+      - tier: 1
+        goal: 1
+        points: 5
+      - tier: 2
+        goal: 5
+        points: 10
+      - tier: 3
+        goal: 10
+        points: 15
+      - tier: 4
+        goal: 15
+        points: 20
+
+  - id: "skywars.kit_hoarder_insane"
+    name: "Kit Hoarder (Insane)"
+    description: "Unlock 1 Insane kit"
+    type: TIERED
+    trigger: "skywars.kit_hoarder_insane_trigger"
+    tiers:
+      - tier: 1
+        goal: 1
+        points: 5
+      - tier: 2
+        goal: 5
+        points: 10
+      - tier: 3
+        goal: 10
+        points: 15
+      - tier: 4
+        goal: 15
+        points: 20
+
+  - id: "skywars.kit_hoarder_mega"
+    name: "Kit Hoarder (Mega)"
+    description: "Unlock 1 Mega kit"
+    type: TIERED
+    trigger: "skywars.kit_hoarder_mega_trigger"
+    tiers:
+      - tier: 1
+        goal: 1
+        points: 5
+      - tier: 2
+        goal: 5
+        points: 10
+      - tier: 3
+        goal: 10
+        points: 15

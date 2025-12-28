@@ -6,15 +6,16 @@ import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.tag.Tag;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -57,12 +58,13 @@ public class ActionGameBreak implements HypixelEventClass {
 			if (brokenBlockPosition.sameBlock(feetPoint) || brokenBlockPosition.sameBlock(headPoint)) {
 				// This is team X's bed
 				if (teamKey.getName().equalsIgnoreCase(playerTeamName)) {
+					player.getAchievementHandler().completeAchievement("bedwars.you_cant_do_that");
 					player.sendMessage("§cYou cannot break your own team's bed!");
 					event.setCancelled(true);
 					return;
 				}
 				if (!game.getTeamManager().isBedAlive(teamKey)) {
-					// Bed already destroyed logically, block might linger if not cleared perfectly
+					// Bed already destroyed logically; block might linger if not cleared perfectly
 					event.setCancelled(true);
 					return;
 				}
@@ -70,6 +72,10 @@ public class ActionGameBreak implements HypixelEventClass {
 				BedWarsStatsRecorder.recordBedBroken(player, game.getBedwarsGameType());
 				player.getInstance().setBlock(feetPoint, Block.AIR);
 				player.getInstance().setBlock(headPoint, Block.AIR);
+
+				if (player.hasEffect(PotionEffect.INVISIBILITY)) {
+					player.getAchievementHandler().completeAchievement("bedwars.sneaky_rusher"); // break an bed while invisible
+				}
 
 				for (BedWarsPlayer p : game.getPlayers()) {
 					p.sendMessage(String.format("§c§lBED DESTRUCTION §r§cTeam %s's bed was destroyed by %s%s!",

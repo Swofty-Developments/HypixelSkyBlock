@@ -131,13 +131,8 @@ public class GUIBestiaryIsland extends HypixelInventoryGUI {
 
                         lore.add("§eClick to view!");
 
-                        if (guiMaterial.hasTexture()) {
-                            return ItemStackCreator.getStackHead("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                                    guiMaterial.texture(), 1, lore);
-                        } else {
-                            return ItemStackCreator.getStack("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                                    guiMaterial.material(), 1, lore);
-                        }
+                        return ItemStackCreator.getUsingGUIMaterial("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
+                                guiMaterial, 1, lore);
                     }
                 });
             } else {

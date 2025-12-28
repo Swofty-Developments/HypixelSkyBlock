@@ -75,13 +75,8 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
 
                 player.getBestiaryData().getMobDisplay(lore, kills, mob, bestiaryEntry);
 
-                if (guiMaterial.hasTexture()) {
-                    return ItemStackCreator.getStackHead("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                            guiMaterial.texture(), 1, lore);
-                } else {
-                    return ItemStackCreator.getStack("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                            guiMaterial.material(), 1, lore);
-                }
+                return ItemStackCreator.getUsingGUIMaterial("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
+                        guiMaterial, 1, lore);
             }
         });
 
@@ -187,11 +182,7 @@ public class GUIBestiaryMob extends HypixelInventoryGUI {
 
                     lore.removeLast();
 
-                    if (guiMaterial.hasTexture()) {
-                        return ItemStackCreator.getStackHead("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), guiMaterial.texture(), 1, lore);
-                    } else {
-                        return ItemStackCreator.getStack("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), guiMaterial.material(), 1, lore);
-                    }
+                    return ItemStackCreator.getUsingGUIMaterial("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), guiMaterial, 1, lore);
                 }
             });
         }

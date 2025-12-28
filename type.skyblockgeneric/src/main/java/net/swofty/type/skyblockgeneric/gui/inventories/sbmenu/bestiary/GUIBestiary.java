@@ -98,11 +98,8 @@ public class GUIBestiary extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     GUIMaterial guiMaterial = bestiaryRegion.guiMaterial;
-                    if (guiMaterial.hasTexture()) {
-                        return ItemStackCreator.getStackHead(bestiaryRegion.regionName, guiMaterial.texture(), 1, bestiaryRegion.lore);
-                    } else {
-                        return ItemStackCreator.getStack(bestiaryRegion.regionName, guiMaterial.material(), 1, bestiaryRegion.lore);
-                    }
+
+                    return ItemStackCreator.getUsingGUIMaterial(bestiaryRegion.regionName, guiMaterial, 1, bestiaryRegion.lore);
                 }
             });
             index++;

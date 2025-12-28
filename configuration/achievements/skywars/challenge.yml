@@ -1,0 +1,515 @@
+achievements:
+  # Challenge achievements from GUI
+
+  - id: "skywars.blasphemous"
+    name: "Blasphemous"
+    description: "Unlock the Fallen Angel Kit."
+    type: CHALLENGE
+    points: 25
+    trigger: "skywars.blasphemous_trigger"
+    goal: 1
+
+  - id: "skywars.digging_through_the_descent"
+    name: "Digging Through The Descent"
+    description: "Unlock the Archeologist Kit in the Angel's Descent."
+    type: CHALLENGE
+    points: 25
+    trigger: "skywars.digging_through_the_descent_trigger"
+    goal: 1
+
+  - id: "skywars.kit_connoisseur"
+    name: "Kit Connoisseur"
+    description: "Win a game of solo normal/insane SkyWars with every single kit."
+    type: CHALLENGE
+    points: 15
+    trigger: "skywars.kit_connoisseur_trigger"
+    goal: 1
+
+  - id: "skywars.skewered"
+    name: "Skewered"
+    description: "Kill a player by pricking them to death with a cactus."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.skewered_trigger"
+    goal: 1
+
+  - id: "skywars.challenger"
+    name: "Challenger"
+    description: "Reach the first SkyWars Challenge Milestone."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.challenger_trigger"
+    goal: 1
+
+  - id: "skywars.mega_warrior"
+    name: "Mega Warrior"
+    description: "Kill 20 players in a single Mega game or 12 players in a single Mega Doubles game."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.mega_warrior_trigger"
+    goal: 1
+
+  - id: "skywars.ender_party"
+    name: "Ender Party"
+    description: "Have a corrupted, time warp and normal ender pearl in your inventory at the same time."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.ender_party_trigger"
+    goal: 1
+
+  - id: "skywars.teamwork"
+    name: "Teamwork"
+    description: "Win a Mega game with all your teammates alive."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.teamwork_trigger"
+    goal: 1
+
+  - id: "skywars.all_perks"
+    name: "All Perks!"
+    description: "Purchase all perks in any mode."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.all_perks_trigger"
+    goal: 1
+
+  - id: "skywars.no_chest_challenge"
+    name: "No Chest Challenge"
+    description: "Win a Mega game without opening any chest."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.no_chest_challenge_trigger"
+    goal: 1
+
+  - id: "skywars.slow_and_steady_wins_the_race"
+    name: "Slow and steady wins the race"
+    description: "Win a game using the sloth kit."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.slow_and_steady_wins_the_race_trigger"
+    goal: 1
+
+  - id: "skywars.killstolen"
+    name: "Killstolen"
+    description: "Get 5 assists in a single game of SkyWars."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.killstolen_trigger"
+    goal: 1
+
+  - id: "skywars.teamwork_makes_the_dream_work"
+    name: "Teamwork makes the dream work"
+    description: "Win a game of teams SkyWars with 15 or more kills across your team."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.teamwork_makes_the_dream_work_trigger"
+    goal: 1
+
+  - id: "skywars.challenge_master"
+    name: "Challenge Master"
+    description: "Win a game while doing 7 or more SkyWars Challenges."
+    type: CHALLENGE
+    points: 15
+    trigger: "skywars.challenge_master_trigger"
+    goal: 1
+
+  - id: "skywars.challenge_pro"
+    name: "Challenge Pro"
+    description: "Win a game while doing 3 or more SkyWars Challenges."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.challenge_pro_trigger"
+    goal: 1
+
+  - id: "skywars.max_soul_well"
+    name: "Max Soul Well"
+    description: "Max out the capacity on your soul well."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.max_soul_well_trigger"
+    goal: 1
+
+  - id: "skywars.sniper"
+    name: "Sniper"
+    description: "Get 30 bow hits in one game."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.sniper_trigger"
+    goal: 1
+
+  - id: "skywars.archer_challenge"
+    name: "Archer Challenge"
+    description: "Win a game doing the Archer Challenge."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.archer_challenge_trigger"
+    goal: 1
+
+  - id: "skywars.ultimate_warrior_challenge"
+    name: "Ultimate Warrior Challenge"
+    description: "Win a game doing the Ultimate Warrior Challenge."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.ultimate_warrior_challenge_trigger"
+    goal: 1
+
+  - id: "skywars.half_health_challenge"
+    name: "Half Health Challenge"
+    description: "Win a game doing the Half Health Challenge."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.half_health_challenge_trigger"
+    goal: 1
+
+  - id: "skywars.uh_oh"
+    name: "Uh oh..."
+    description: "Spawn the mystery mob using the zookeeper kit."
+    type: CHALLENGE
+    points: 15
+    trigger: "skywars.uh_oh_trigger"
+    goal: 1
+
+  - id: "skywars.challenge_achievements"
+    name: "Challenge Achievements"
+    description: "SkyWars Unlocked: 28/59 (47%) Points: 210/510 (41%)"
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.challenge_achievements_trigger"
+    goal: 1
+
+  - id: "skywars.fear_me_mortals"
+    name: "Fear me mortals"
+    description: "Max out a Mega Kit."
+    type: CHALLENGE
+    points: 15
+    trigger: "skywars.fear_me_mortals_trigger"
+    goal: 1
+
+  - id: "skywars.criminal"
+    name: "Criminal"
+    description: "Use the robbery perk to drop an item from another player."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.criminal_trigger"
+    goal: 1
+
+  - id: "skywars.no_block_challenge"
+    name: "No Block Challenge"
+    description: "Win a game doing the No Block Challenge."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.no_block_challenge_trigger"
+    goal: 1
+
+  - id: "skywars.uhc_challenge"
+    name: "UHC Challenge"
+    description: "Win a game doing the UHC Challenge."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.uhc_challenge_trigger"
+    goal: 1
+
+  - id: "skywars.trolololololol"
+    name: "Trolololololol"
+    description: "Win a game with the Troll Kit."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.trolololololol_trigger"
+    goal: 1
+
+  - id: "skywars.rookie_challenge"
+    name: "Rookie Challenge"
+    description: "Win a game doing the Rookie Challenge."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.rookie_challenge_trigger"
+    goal: 1
+
+  - id: "skywars.nick_cage"
+    name: "Nick Cage"
+    description: "Unlock Nicolas Cage."
+    type: CHALLENGE
+    points: 15
+    trigger: "skywars.nick_cage_trigger"
+    goal: 1
+
+  - id: "skywars.speed_runner"
+    name: "Speed Runner"
+    description: "Win a Mega game before the last chest refill."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.speed_runner_trigger"
+    goal: 1
+
+  - id: "skywars.kill_streak"
+    name: "Kill Streak"
+    description: "Get 5 kills in 15 seconds."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.kill_streak_trigger"
+    goal: 1
+
+  - id: "skywars.solo_warrior"
+    name: "Solo warrior"
+    description: "Win a Mega game while joining without a party."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.solo_warrior_trigger"
+    goal: 1
+
+  - id: "skywars.mythical"
+    name: "Mythical"
+    description: "Unlock a Mythic Kit."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.mythical_trigger"
+    goal: 1
+
+  - id: "skywars.playing_it_safe"
+    name: "Playing it safe"
+    description: "Win a game of Lucky Block Mode while only opening Insane Lucky Blocks."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.playing_it_safe_trigger"
+    goal: 1
+
+  - id: "skywars.going_ham"
+    name: "Going Ham"
+    description: "Win a game of solo SkyWars having 8 or more kills."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.going_ham_trigger"
+    goal: 1
+
+  - id: "skywars.well_deserved"
+    name: "Well deserved"
+    description: "Gain a reward from a Ranked Season."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.well_deserved_trigger"
+    goal: 1
+
+  - id: "skywars.is_this_a_portal_game"
+    name: "Is this a Portal game?"
+    description: "Obtain a stack of ender pearls."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.is_this_a_portal_game_trigger"
+    goal: 1
+
+  - id: "skywars.speed_run"
+    name: "Speed Run"
+    description: "Win a Ranked game in less than a minute."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.speed_run_trigger"
+    goal: 1
+
+  - id: "skywars.sold_your_soul"
+    name: "Sold Your Soul"
+    description: "Make a donation to the Angel of Death."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.sold_your_soul_trigger"
+    goal: 1
+
+  - id: "skywars.attention_seeking"
+    name: "Attention Seeking"
+    description: "Have a bounty placed on you in Lucky Block Mode."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.attention_seeking_trigger"
+    goal: 1
+
+  - id: "skywars.hasta_la_vista"
+    name: "Hasta la Vista"
+    description: "Punch someone into the void with a punch bow."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.hasta_la_vista_trigger"
+    goal: 1
+
+  - id: "skywars.lucky_souls"
+    name: "Lucky Souls"
+    description: "Obtain 10 Mega Perks."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.lucky_souls_trigger"
+    goal: 1
+
+  - id: "skywars.baller"
+    name: "Baller!"
+    description: "Get 2 snowball kills in one game."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.baller_trigger"
+    goal: 1
+
+  - id: "skywars.rng"
+    name: "RNG"
+    description: "Win a game using a random kit."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.rng_trigger"
+    goal: 1
+
+  - id: "skywars.who_needs_teammates"
+    name: "Who needs teammates?"
+    description: "Summon a skeleton and a blaze."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.who_needs_teammates_trigger"
+    goal: 1
+
+  - id: "skywars.happy_meal"
+    name: "Happy Meal"
+    description: "Obtain a Divine Head or better."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.happy_meal_trigger"
+    goal: 1
+
+  - id: "skywars.corruption_lord"
+    name: "Corruption Lord"
+    description: "Win a Corrupted game."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.corruption_lord_trigger"
+    goal: 1
+
+  - id: "skywars.enderdragon"
+    name: "Enderdragon"
+    description: "Play a Game with an Enderdragon."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.enderdragon_trigger"
+    goal: 1
+
+  - id: "skywars.fist_of_fury"
+    name: "Fist of Fury!"
+    description: "Kill someone with your bare hands."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.fist_of_fury_trigger"
+    goal: 1
+
+  - id: "skywars.2fast3furious"
+    name: "2Fast3Furious"
+    description: "Get a kill in the first 10 seconds of the game."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.2fast3furious_trigger"
+    goal: 1
+
+  - id: "skywars.gone_fishing"
+    name: "Gone Fishing"
+    description: "Get a Fishing Rod kill."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.gone_fishing_trigger"
+    goal: 1
+
+  - id: "skywars.the_siege"
+    name: "The siege"
+    description: "Get the final kill of a game in your spawn island."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.the_siege_trigger"
+    goal: 1
+
+  - id: "skywars.so_much_choice"
+    name: "So much choice"
+    description: "Use the map selector."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.so_much_choice_trigger"
+    goal: 1
+
+  - id: "skywars.now_i_m_enchanted"
+    name: "Now I'm Enchanted!"
+    description: "Enchant a Diamond Sword."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.now_i_m_enchanted_trigger"
+    goal: 1
+
+  - id: "skywars.shiny_stuff"
+    name: "Shiny Stuff"
+    description: "Wear a full Diamond set of armor."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.shiny_stuff_trigger"
+    goal: 1
+
+  - id: "skywars.peacemaker"
+    name: "Peacemaker"
+    description: "Win a game without killing anyone."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.peacemaker_trigger"
+    goal: 1
+
+  - id: "skywars.max_perk"
+    name: "Max Perk!"
+    description: "Max out a tiered perk."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.max_perk_trigger"
+    goal: 1
+
+  - id: "skywars.mob_spawner"
+    name: "Mob Spawner"
+    description: "Spawn a mob."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.mob_spawner_trigger"
+    goal: 1
+
+  - id: "skywars.gotcha"
+    name: "Gotcha!"
+    description: "Kill someone while you have less than 1 heart left."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.gotcha_trigger"
+    goal: 1
+
+  - id: "skywars.3_2_1_go"
+    name: "3; 2; 1; GO"
+    description: "Be the first player to open a chest."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.3_2_1_go_trigger"
+    goal: 1
+
+  - id: "skywars.well_well"
+    name: "Well, well"
+    description: "Use the Soul Well."
+    type: CHALLENGE
+    points: 5
+    trigger: "skywars.well_well_trigger"
+    goal: 1
+
+  - id: "skywars.touch_of_death"
+    name: "Touch of Death!"
+    description: "Knock someone into the void with a single punch."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.touch_of_death_trigger"
+    goal: 1
+
+  - id: "skywars.legendary"
+    name: "LEGENDARY!!!"
+    description: "Obtain a Legendary item in the Soul Well or by purchasing one from the shop."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.legendary_trigger"
+    goal: 1
+
+  - id: "skywars.gapple"
+    name: "Gapple!"
+    description: "Eat a Golden Apple."
+    type: CHALLENGE
+    points: 10
+    trigger: "skywars.gapple_trigger"
+    goal: 1
+

@@ -9,13 +9,17 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.CoordConversion;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
+import net.minestom.server.instance.Chunk;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
+import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
+import net.minestom.server.world.biome.Biome;
 import net.swofty.commons.*;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
@@ -66,6 +70,7 @@ import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.redis.RedisAuthenticate;
 import net.swofty.type.generic.redis.RedisOriginServer;
+import net.swofty.type.skyblockgeneric.region.SkyBlockBiomeConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
@@ -288,9 +293,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         HypixelPacketClientListener.register(HypixelConst.getEventHandler());
         HypixelPacketServerListener.register(HypixelConst.getEventHandler());
 
-        /**
-         * Load regions
-         */
+        // Load regions
         SkyBlockRegion.cacheRegions();
         SkyBlockRegenConfiguration.startRepeater(MinecraftServer.getSchedulerManager());
         MinecraftServer.getDimensionTypeRegistry().register(
@@ -299,6 +302,15 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                         .ambientLight(1)
                         .build());
         SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());
+
+        // Set region biomes
+        SkyBlockRegion.getRegions().forEach(region -> {
+            if (region.getServerType() != HypixelConst.getTypeLoader().getType()) return;
+            SkyBlockBiomeConfiguration biomeConfig = region.getType().getBiomeHandler();
+            if (biomeConfig == null) return;
+            RegistryKey<Biome> biomeKey = MinecraftServer.getBiomeRegistry().register(biomeConfig.getKey(), biomeConfig.getBiome());
+            setBiome(region.getFirstLocation(), region.getSecondLocation(), biomeKey);
+        });
 
         /**
          * Load fairy souls
@@ -564,6 +576,21 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                     }
                 })
                 .filter(java.util.Objects::nonNull);
+    }
+
+    private void setBiome(int x, int y, int z, RegistryKey<Biome> biome) {
+        Chunk chunk = HypixelConst.getInstanceContainer().getChunk(CoordConversion.globalToChunk(x), CoordConversion.globalToChunk(z));
+		chunk.setBiome(x, y, z, biome);
+    }
+
+    private void setBiome(Pos start, Pos end, RegistryKey<Biome> biome) {
+        for (int x = start.blockX(); x <= end.blockX(); x++) {
+            for (int y = start.blockY(); y <= end.blockY(); y++) {
+                for (int z = start.blockZ(); z <= end.blockZ(); z++) {
+                    setBiome(x, y, z, biome);
+                }
+            }
+        }
     }
 
     private static String formatEffectDuration(long durationMs) {

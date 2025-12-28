@@ -15,6 +15,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import org.tinylog.Logger;
 
 import java.util.*;
@@ -174,7 +175,7 @@ public final class TeamManager {
 		}
 	}
 
-	public List<Player> getPlayersOnTeam(TeamKey teamKey) {
+	public List<BedWarsPlayer> getPlayersOnTeam(TeamKey teamKey) {
 		return game.getPlayers().stream()
 				.filter(player -> teamKey.getName().equals(player.getTag(Tag.String("team")))
 						&& player.isOnline()
