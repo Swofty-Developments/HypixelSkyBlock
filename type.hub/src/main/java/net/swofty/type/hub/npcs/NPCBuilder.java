@@ -3,14 +3,15 @@ package net.swofty.type.hub.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.NPCAbiphoneTrait;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.hub.gui.builder.GUIBuilder;
+import net.swofty.type.skyblockgeneric.gui.inventories.builder.GUIBuilder;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
-public class NPCBuilder extends HypixelNPC {
+public class NPCBuilder extends HypixelNPC implements NPCAbiphoneTrait {
 
     public NPCBuilder() {
         super(new HumanConfiguration() {
@@ -68,4 +69,8 @@ public class NPCBuilder extends HypixelNPC {
         };
     }
 
+    @Override
+    public String getAbiphoneKey() {
+        return "builder";
+    }
 }

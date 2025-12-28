@@ -1,4 +1,4 @@
-package net.swofty.type.hub.gui.builder;
+package net.swofty.type.skyblockgeneric.gui.inventories.builder;
 
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;

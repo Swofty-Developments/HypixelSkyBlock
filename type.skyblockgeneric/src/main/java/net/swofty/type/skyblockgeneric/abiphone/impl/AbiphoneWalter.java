@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.abiphone.impl;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCOption;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -13,8 +13,8 @@ import java.util.Collections;
 
 public class AbiphoneWalter extends AbiphoneNPC {
 
-	public AbiphoneWalter(String id, String name, String description) {
-		super(id, name, description);
+	public AbiphoneWalter() {
+		super("walter", "Walter", "Sells Superboom TNT.");
 	}
 
 	@Override
@@ -68,6 +68,6 @@ public class AbiphoneWalter extends AbiphoneNPC {
 
 	@Override
 	public ItemStack.Builder getIcon() {
-		return null;
+		return ItemStackCreator.getStackHead("43ac21b653a27632dbc8373c6e6fba5b8c97b7ecbfef2d793630d149b116ba81");
 	}
 }
