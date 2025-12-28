@@ -127,7 +127,7 @@ public class GUIChallengeAchievements extends HypixelInventoryGUI {
         set(new GUIItem(49) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack(
+                return ItemStackCreator.getUsingGUIMaterial(
                         "§aChallenge Achievements",
                         category.getMaterial(),
                         1,

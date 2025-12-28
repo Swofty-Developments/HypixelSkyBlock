@@ -111,7 +111,7 @@ public class GUIGameAchievements extends HypixelInventoryGUI {
         set(new GUIItem(31) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack(
+                return ItemStackCreator.getUsingGUIMaterial(
                         "§aTotal Completion",
                         category.getMaterial(),
                         1,

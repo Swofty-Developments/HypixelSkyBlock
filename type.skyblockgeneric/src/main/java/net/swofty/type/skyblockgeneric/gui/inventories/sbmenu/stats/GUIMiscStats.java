@@ -177,10 +177,7 @@ public class GUIMiscStats extends HypixelInventoryGUI {
                     StringUtility.decimalify(value, 1);
             List<String> lore = buildLore(player);
 
-            if (guiMaterial.hasTexture()) {
-                return ItemStackCreator.getStackHead(title, guiMaterial.texture(), 1, lore);
-            }
-            return ItemStackCreator.getStack(title, guiMaterial.material(), 1, lore);
+            return ItemStackCreator.getUsingGUIMaterial(title, guiMaterial, 1, lore);
         }
     }
 
