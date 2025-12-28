@@ -66,7 +66,7 @@ public class NPCBaker extends HypixelNPC {
         if (isInDialogue(player)) return;
 
         if(!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_BAKER)) {
-            setDialogue(player, "idle").thenRun(() -> {
+            setDialogue(player, "initial-hello").thenRun(() -> {
                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_BAKER, true);
             });
             return;
@@ -84,7 +84,7 @@ public class NPCBaker extends HypixelNPC {
     protected DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
-                        .key("idle").lines(new String[]{
+                        .key("initial-hello").lines(new String[]{
                                 "At the end of each year I bake cakes for everyone in town to celebrate the year.",
                                 "I made one especially for you, here you go.",
                                 "I've recently added a §dNew Year Cake Bag §fto my inventory. Sadly, it's not free! Click me again to open my shop!",
