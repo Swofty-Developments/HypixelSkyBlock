@@ -6,6 +6,8 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.hub.gui.GUIBiblio;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCBiblio extends HypixelNPC {
 
     public NPCBiblio() {

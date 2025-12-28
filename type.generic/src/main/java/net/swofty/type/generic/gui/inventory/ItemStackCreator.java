@@ -11,6 +11,7 @@ import net.minestom.server.item.component.TooltipDisplay;
 import net.minestom.server.network.player.ResolvableProfile;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -293,6 +294,18 @@ public class ItemStackCreator {
 				)))
 				.set(DataComponents.PROFILE, new ResolvableProfile(skin))
 				.amount(amount));
+	}
+
+	public static ItemStack.Builder getUsingGUIMaterial(String name, GUIMaterial material, int amount, List<String> lore) {
+		if (material.hasTexture()) {
+			return ItemStackCreator.getStackHead(name, material.texture(), amount, lore);
+		} else {
+			return ItemStackCreator.getStack(name, material.material(), amount, lore);
+		}
+	}
+
+	public static ItemStack.Builder getUsingGUIMaterial(String name, GUIMaterial material, int amount, String... lore) {
+		return getUsingGUIMaterial(name, material, amount, Arrays.asList(lore));
 	}
 
 	/**

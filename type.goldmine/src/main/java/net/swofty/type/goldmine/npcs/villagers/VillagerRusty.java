@@ -2,20 +2,20 @@ package net.swofty.type.goldmine.npcs.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
-import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.NPCAbiphoneTrait;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.goldmine.gui.rusty.GUIRusty;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.AbiphoneComponent;
+import net.swofty.type.skyblockgeneric.gui.inventories.rusty.GUIRusty;
 import net.swofty.type.skyblockgeneric.mission.missions.lazyminer.MissionFindLazyMinerPickaxe;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class VillagerRusty extends HypixelNPC {
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
+public class VillagerRusty extends HypixelNPC implements NPCAbiphoneTrait {
 	public VillagerRusty() {
 		super(new VillagerConfiguration() {
 			@Override
@@ -70,14 +70,6 @@ public class VillagerRusty extends HypixelNPC {
 			return;
 		}
 
-		ItemStack itemStack = player.getItemInMainHand();
-		SkyBlockItem item = new SkyBlockItem(itemStack);
-		if (item.hasComponent(AbiphoneComponent.class)) {
-			setDialogue(player, "abiphone").thenRun(() -> {
-				// add to the Abiphone
-			});
-		}
-
 		new GUIRusty().open(player);
 	}
 
@@ -105,20 +97,12 @@ public class VillagerRusty extends HypixelNPC {
 								"It drives me insane, but at least you'll unlock §aAuto-pickup §fat §3SkyBlock Level 6.",
 								"It makes my job a lot easier, but despite that, I still find so many items on the ground.",
 								"Maybe some of those items are yours? In which case I'll let you buy them back."
-						}).build(),
-				DialogueSet.builder()
-						.key("abiphone").lines(new String[]{ // when clicking with an Abiphone
-								"§fDid I find an Abiphone?",
-								"§fYes, sometimes I do find one lying around.",
-								"§fWhat?",
-								"§fYou?",
-								"§fYou want my contact?",
-								"§fMe?",
-								"§fThe janitor?",
-								"§fI...",
-								"§fI don't... don't know what to say...",
-								"§fYes of course you can have it!",
-						}).abiPhone(true).build()
+						}).build()
 		).toArray(DialogueSet[]::new);
+	}
+
+	@Override
+	public String getAbiphoneKey() {
+		return "rusty";
 	}
 }

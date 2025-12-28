@@ -7,6 +7,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCTrevorTheTrapper extends HypixelNPC {
     public NPCTrevorTheTrapper() {
         super(new HumanConfiguration() {

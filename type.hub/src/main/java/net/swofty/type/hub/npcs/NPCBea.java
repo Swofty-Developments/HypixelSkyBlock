@@ -9,6 +9,8 @@ import net.swofty.type.hub.gui.GUIShopBea;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCBea extends HypixelNPC {
 
     public NPCBea() {

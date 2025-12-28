@@ -164,7 +164,12 @@ public class HypixelEventHandler {
     public static void callCustomEvent(Event event) {
         if (customEventNode != null) {
             if (event instanceof PlayerEvent playerEvent) {
-                if (HypixelDataHandler.getUser(playerEvent.getPlayer()) == null) return;
+                if (HypixelDataHandler.getUser(playerEvent.getPlayer()) == null) {
+                    Logger.warn("Tried to call custom event {} for player {} but their data is not loaded.",
+                            event.getClass().getSimpleName(),
+                            playerEvent.getPlayer().getUsername());
+                    return;
+                }
             }
             customEventNode.call(event);
         }

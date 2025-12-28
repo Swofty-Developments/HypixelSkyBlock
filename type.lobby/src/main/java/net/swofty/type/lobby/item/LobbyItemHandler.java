@@ -9,13 +9,22 @@ import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.CustomData;
 import net.minestom.server.tag.Tag;
+import net.swofty.type.lobby.item.impl.CancelParkour;
+import net.swofty.type.lobby.item.impl.LastCheckpoint;
+import net.swofty.type.lobby.item.impl.ResetParkour;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class LobbyItemHandler {
-    private final List<LobbyItem> items = new ArrayList<>();
+    private final List<LobbyItem> items = new ArrayList<>(
+            List.of(
+                    new LastCheckpoint(),
+                    new CancelParkour(),
+                    new ResetParkour()
+            )
+    );
 
     public void add(LobbyItem item) {
         items.add(item);
@@ -70,6 +79,7 @@ public class LobbyItemHandler {
             ItemStack itemStack = event.getPlayer().getItemInMainHand();
             if (isItem(item, itemStack)) {
                 item.onBlockPlace(event);
+                item.onItemInteract(event);
             }
         }
     }

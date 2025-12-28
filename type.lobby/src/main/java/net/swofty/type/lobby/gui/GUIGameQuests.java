@@ -37,7 +37,7 @@ public class GUIGameQuests extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack(
+                return ItemStackCreator.getUsingGUIMaterial(
                         "§a" + category.getDisplayName() + " Quests & Challenges",
                         category.getMaterial(),
                         1,
