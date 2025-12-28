@@ -64,7 +64,7 @@ public class GUICommisions extends HypixelInventoryGUI {
 						SkyBlockDataHandler dataHandler = player.getSkyblockDataHandler();
 
 						DatapointHOTM.PlayerHOTMData hotmData =
-							dataHandler.get(SkyBlockDataHandler.Data.HOTM, DatapointHOTM.class).getValue();
+								dataHandler.get(SkyBlockDataHandler.Data.HOTM, DatapointHOTM.class).getValue();
 
 						int hotmTier = hotmData.getTier();
 						boolean isHotmMaxed = hotmData.isMaxed();
@@ -72,18 +72,18 @@ public class GUICommisions extends HypixelInventoryGUI {
 
 						CommissionReward reward = CommissionReward.calculate(hotmTier, isHotmMaxed, isDailyBonus);
 
-						if (reward.getHotmXp() > 0) {
-							hotmData.addExperience(reward.getHotmXp());
+						if (reward.hotmXp() > 0) {
+							hotmData.addExperience(reward.hotmXp());
 							dataHandler.get(SkyBlockDataHandler.Data.HOTM, DatapointHOTM.class).setValue(hotmData);
 						}
 
-						if (reward.getMithrilPowder() > 0) {
-							hotmData.addMithrilPowder(reward.getMithrilPowder());
+						if (reward.mithrilPowder() > 0) {
+							hotmData.addMithrilPowder(reward.mithrilPowder());
 							dataHandler.get(SkyBlockDataHandler.Data.HOTM, DatapointHOTM.class).setValue(hotmData);
 						}
 
-						if (reward.getMiningXp() > 0) {
-							player.getSkills().increase(player, SkillCategories.MINING, (double) reward.getMiningXp());
+						if (reward.miningXp() > 0) {
+							player.getSkills().increase(player, SkillCategories.MINING, (double) reward.miningXp());
 						}
 
 						activeCommission.setClaimed(true);

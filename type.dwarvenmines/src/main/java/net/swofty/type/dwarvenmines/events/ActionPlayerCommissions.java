@@ -19,18 +19,9 @@ import java.util.Set;
 
 public class ActionPlayerCommissions implements HypixelEventClass {
 
-	private static final Set<Material> MITHRIL_BLOCKS = Set.of(
-			Material.LIGHT_BLUE_WOOL,
-			Material.GRAY_WOOL,
-			Material.CYAN_TERRACOTTA,
-			Material.PRISMARINE,
-			Material.DARK_PRISMARINE,
-			Material.PRISMARINE_BRICKS
-	);
+	private static final Set<Material> MITHRIL_BLOCKS = Set.of(Material.LIGHT_BLUE_WOOL, Material.GRAY_WOOL, Material.CYAN_TERRACOTTA, Material.PRISMARINE, Material.DARK_PRISMARINE, Material.PRISMARINE_BRICKS);
 
-	private static final Set<Material> TITANIUM_BLOCKS = Set.of(
-			Material.POLISHED_DIORITE
-	);
+	private static final Set<Material> TITANIUM_BLOCKS = Set.of(Material.POLISHED_DIORITE);
 
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
 	public void run(PlayerBlockBreakEvent event) {
@@ -39,7 +30,6 @@ public class ActionPlayerCommissions implements HypixelEventClass {
 		Material brokenMaterial = event.getBlock().registry().material();
 		if (brokenMaterial == null) return;
 
-		// Determine what type of block was broken
 		Objective.BlockTarget target = null;
 		if (MITHRIL_BLOCKS.contains(brokenMaterial)) {
 			target = Objective.BlockTarget.MITHRIL;
@@ -55,20 +45,9 @@ public class ActionPlayerCommissions implements HypixelEventClass {
 		updateCommissionProgress(player, ObjectiveType.MINE, target, 1, regionType);
 	}
 
-	/**
-	 * Updates the progress of matching commissions for the player.
-	 *
-	 * @param player     the player
-	 * @param type       the objective type (MINE, SLAY, etc.)
-	 * @param target     the target (MITHRIL, TITANIUM, GOBLIN, etc.)
-	 * @param amount     the amount to add to progress
-	 * @param regionType the current region (can be null for any region)
-	 */
-	public static void updateCommissionProgress(SkyBlockPlayer player, ObjectiveType type,
-												Objective.BlockTarget target, int amount, RegionType regionType) {
+	public static void updateCommissionProgress(SkyBlockPlayer player, ObjectiveType type, Objective.BlockTarget target, int amount, RegionType regionType) {
 		SkyBlockDataHandler dataHandler = player.getSkyblockDataHandler();
-		DatapointCommissions.PlayerCommissionData commissionData =
-				dataHandler.get(SkyBlockDataHandler.Data.COMMISSIONS, DatapointCommissions.class).getValue();
+		DatapointCommissions.PlayerCommissionData commissionData = dataHandler.get(SkyBlockDataHandler.Data.COMMISSIONS, DatapointCommissions.class).getValue();
 
 		boolean anyUpdated = false;
 
