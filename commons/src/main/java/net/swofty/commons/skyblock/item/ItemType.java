@@ -582,6 +582,8 @@ public enum ItemType {
 	MINER_ARMOR_LEGGINGS(Material.IRON_LEGGINGS, Rarity.RARE),
 	MINER_ARMOR_BOOTS(Material.IRON_BOOTS, Rarity.RARE),
 
+	CHARLIE_TROUSERS(Material.LEATHER_LEGGINGS, Rarity.COMMON),
+
 	/**
 	 * Pickaxes
 	 */
@@ -741,6 +743,8 @@ public enum ItemType {
 	HUB_MUSEUM_TRAVEL_SCROLL(Material.MAP, Rarity.EPIC),
 	HUB_DARK_AUCTION_TRAVEL_SCROLL(Material.MAP, Rarity.EPIC),
     HUB_CRYPTS_TRAVEL_SCROLL(Material.MAP, Rarity.EPIC),
+
+	FORAGING_1_TRAVEL_SCROLL(Material.MAP, Rarity.RARE),
 
 	/**
 	 * Crimson Isles

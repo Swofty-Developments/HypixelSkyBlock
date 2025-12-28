@@ -18,7 +18,7 @@ public class MissionTalkToLumberjackAgain extends SkyBlockMission {
 
     @Override
     public String getName() {
-        return "Talk to the Lumber Jack";
+        return "Give Lumber Jack Oak Logs";
     }
 
     @Override
@@ -29,7 +29,7 @@ public class MissionTalkToLumberjackAgain extends SkyBlockMission {
 
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-        player.addAndUpdateItem(ItemType.SWEET_AXE);
+        player.addAndUpdateItem(ItemType.PROMISING_AXE);
     }
 
     @Override

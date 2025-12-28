@@ -63,6 +63,6 @@ public class MissionBreakOaklog extends SkyBlockProgressMission {
 
     @Override
     public int getMaxProgress() {
-        return 10;
+        return 20;
     }
 }

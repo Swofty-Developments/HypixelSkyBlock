@@ -111,13 +111,13 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
                     "Talk to the farmer.", "Travel to The Barn.");
 
             case BIRCH_PARK -> onNewZone(player, RegionType.BIRCH_PARK,
-                    "Chop down trees.",
-                    "Collect all Log types.");
+                    "Talk to Charlie.",
+                    "Chop down Birch logs.");
 
             case FOREST -> onNewZone(player, RegionType.FOREST,
-                    "Visit the Lumberjack.",
+                    "Visit the §aLumber Jack.",
                     "Chop down trees.",
-                    "Travel to the Birch Park.");
+                    "Travel to the §aBirch Park§f.");
 
             case GRAVEYARD -> onNewZone(player, RegionType.GRAVEYARD,
                     "Fight Zombies.",
