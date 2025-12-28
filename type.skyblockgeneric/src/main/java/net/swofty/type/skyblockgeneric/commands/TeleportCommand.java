@@ -42,12 +42,5 @@ public class TeleportCommand extends HypixelCommand {
             int z = context.get(zArgument);
             player.teleport(player.getPosition().withX(x).withY(y).withZ(z));
         }, xArgument, yArgument, zArgument);
-
-        ArgumentRelativeVec3 blockPosArgument = ArgumentType.RelativeVec3("position");
-        command.addSyntax((sender, context) -> {
-            SkyBlockPlayer player = (SkyBlockPlayer) sender;
-            RelativeVec relativeVec = context.get(blockPosArgument);
-            player.teleport(player.getPosition().add(relativeVec.from(player)));
-        }, blockPosArgument);
     }
 }
