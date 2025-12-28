@@ -344,6 +344,11 @@ public class SkyBlockItem {
 		return StringUtility.getTextFromComponent(new NonPlayerItemUpdater(this).getUpdatedItem().build().get(DataComponents.CUSTOM_NAME));
 	}
 
+	public String getCleanName() {
+		String displayName = getDisplayName();
+		return displayName.replaceAll("§[0-9a-fk-or]", "");
+	}
+
 	public List<String> getLore() {
 		return new NonPlayerItemUpdater(this).getUpdatedItem().build().get(DataComponents.LORE).stream().map(
 				StringUtility::getTextFromComponent

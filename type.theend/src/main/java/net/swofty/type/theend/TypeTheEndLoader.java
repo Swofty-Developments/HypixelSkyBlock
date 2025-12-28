@@ -1,7 +1,10 @@
 package net.swofty.type.theend;
 
+import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.registry.RegistryKey;
+import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
@@ -82,6 +85,16 @@ public class TypeTheEndLoader implements SkyBlockTypeLoader {
                 "net.swofty.type.theend.npcs",
                 HypixelNPC.class
         ).toList());
+    }
+
+    @Override
+    public @Nullable RegistryKey<DimensionType> getDimensionType() {
+        return MinecraftServer.getDimensionTypeRegistry().register(
+                Key.key("skyblock:the_end"),
+                DimensionType.builder()
+                        .skybox(DimensionType.Skybox.END)
+                        .ambientLight(1f)
+                        .build());
     }
 
     @Override

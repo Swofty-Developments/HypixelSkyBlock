@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.region;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.commons.Songs;
+import net.swofty.type.skyblockgeneric.region.biome.*;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.*;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.*;
 
@@ -34,13 +35,13 @@ public enum RegionType {
 	DARK_AUCTION("Dark Auction", "§5"),
 	FOREST("Forest", MineLogsConfiguration.class),
 
-	BIRCH_PARK("Birch Park", "§a"),
-	HOWLING_CAVE("Howling Cave"),
-	SPRUCE_WOODS("Spruce Woods", "§a"),
-	DARK_THICKET("Dark Thicket", "§a"),
-	SAVANNA_WOODLAND("Savanna Woodland", "§a"),
-	MELODY_PLATEAU("Melody's Plateau", "§5"),
-	JUNGLE_ISLAND("Jungle Island", "§a"),
+	BIRCH_PARK("Birch Park", "§a", null, BirchParkBiome.class),
+	HOWLING_CAVE("Howling Cave", null, BirchParkBiome.class),
+	SPRUCE_WOODS("Spruce Woods", "§a", null, SpruceWoodsBiome.class),
+	DARK_THICKET("Dark Thicket", "§a", null, DarkThicketBiome.class),
+	SAVANNA_WOODLAND("Savanna Woodland", "§a", null, SavannaWoodlandsBiome.class),
+	MELODY_PLATEAU("Melody's Plateau", "§5", null, SavannaWoodlandsBiome.class),
+	JUNGLE_ISLAND("Jungle Island", "§a", null, JungleIslandBiome.class),
 
 	THE_BARN("The Barn", "§b", BarnConfiguration.class),
 	MUSHROOM_DESERT("Mushroom Desert"),
@@ -95,10 +96,11 @@ public enum RegionType {
 	private final String name;
 	private final String color;
 	private final SkyBlockRegenConfiguration miningHandler;
+	private final SkyBlockBiomeConfiguration biomeHandler;
 	private final List<Songs> songs;
 
 	@SneakyThrows
-	RegionType(String name, String color, Class<? extends SkyBlockRegenConfiguration> miningHandler, Songs... songs) {
+	RegionType(String name, String color, Class<? extends SkyBlockRegenConfiguration> miningHandler, Class<? extends SkyBlockBiomeConfiguration> biomeHandler, Songs... songs) {
 		this.name = name;
 		this.color = color;
 
@@ -106,15 +108,26 @@ public enum RegionType {
 			this.miningHandler = miningHandler.getDeclaredConstructor().newInstance();
 		else
 			this.miningHandler = null;
+
+		if (biomeHandler != null)
+			this.biomeHandler = biomeHandler.getDeclaredConstructor().newInstance();
+		else
+			this.biomeHandler = null;
+
 		this.songs = new ArrayList<>();
 	}
 
 	RegionType(String name, String color, Class<? extends SkyBlockRegenConfiguration> miningHandler) {
-		this(name, color, miningHandler, new Songs[0]);
+		this(name, color, miningHandler, null, new Songs[0]);
 	}
 
 	RegionType(String name, Class<? extends SkyBlockRegenConfiguration> miningHandler) {
 		this(name, "§b", miningHandler);
+	}
+
+
+	RegionType(String name, Class<? extends SkyBlockRegenConfiguration> miningHandler, Class<? extends SkyBlockBiomeConfiguration> biomeHandler) {
+		this(name, "§b", miningHandler, biomeHandler);
 	}
 
 	RegionType(String name, String color) {
@@ -126,6 +139,7 @@ public enum RegionType {
 		this.color = color;
 		this.miningHandler = null;
 		this.songs = new ArrayList<>(List.of(songs));
+		this.biomeHandler = null;
 	}
 
 	RegionType(String name) {
@@ -139,6 +153,11 @@ public enum RegionType {
 	@SneakyThrows
 	public SkyBlockRegenConfiguration getMiningHandler() {
 		return miningHandler;
+	}
+
+	@SneakyThrows
+	public SkyBlockBiomeConfiguration getBiomeHandler() {
+		return biomeHandler;
 	}
 
 	@Override

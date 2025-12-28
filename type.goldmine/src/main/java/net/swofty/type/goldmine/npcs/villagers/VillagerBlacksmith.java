@@ -8,6 +8,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIReforge;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class VillagerBlacksmith extends HypixelNPC {
 	public VillagerBlacksmith() {
 		super(new VillagerConfiguration() {

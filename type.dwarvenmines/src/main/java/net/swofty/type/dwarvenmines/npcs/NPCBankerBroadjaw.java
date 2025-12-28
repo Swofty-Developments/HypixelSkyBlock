@@ -6,6 +6,8 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.banker.GUIBanker;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCBankerBroadjaw extends HypixelNPC {
 
 	public NPCBankerBroadjaw() {

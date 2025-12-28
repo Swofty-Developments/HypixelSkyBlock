@@ -24,32 +24,31 @@ public class GUIAchievementsMenu extends HypixelInventoryGUI {
         HypixelPlayer player = e.player();
         PlayerAchievementHandler handler = player.getAchievementHandler();
 
-        set(createCategoryItem(1, AchievementCategory.GENERAL, Material.BOOK, handler));
-        set(createCategoryItem(2, "Housing", Material.DARK_OAK_DOOR, handler, AchievementCategory.GENERAL));
-        set(createCategoryItem(4, AchievementCategory.ARCADE, Material.SLIME_BALL, handler));
+        set(createCategoryItem(1, AchievementCategory.GENERAL, handler));
+        set(createCategoryItem(2, AchievementCategory.HOUSING, handler));
+        set(createCategoryItem(3, AchievementCategory.SKYBLOCK, handler));
+        set(createCategoryItem(4, AchievementCategory.ARCADE, handler));
         set(createClassicGamesItem(5, handler));
         set(createSeasonalItem(6, handler));
         set(createLegacyItem(7, handler));
 
-        set(createCategoryItem(3, AchievementCategory.SKYBLOCK, Material.PLAYER_HEAD, handler));
+        set(createCategoryItem(19, AchievementCategory.TNT_GAMES, handler));
+        set(createCategoryItem(20, AchievementCategory.BLITZ_SG, handler));
+        set(createCategoryItem(21, AchievementCategory.MEGA_WALLS, handler));
+        set(createCategoryItem(22, AchievementCategory.COPS_AND_CRIMS, handler));
+        set(createCategoryItem(23, AchievementCategory.UHC_CHAMPIONS, handler));
+        set(createCategoryItem(24, AchievementCategory.WARLORDS, handler));
+        set(createCategoryItem(25, AchievementCategory.SKYWARS, handler));
 
-        set(createCategoryItem(19, AchievementCategory.TNT_GAMES, Material.TNT, handler));
-        set(createCategoryItem(20, AchievementCategory.BLITZ_SG, Material.DIAMOND_SWORD, handler));
-        set(createCategoryItem(21, AchievementCategory.MEGA_WALLS, Material.SOUL_SAND, handler));
-        set(createCategoryItem(22, AchievementCategory.COPS_AND_CRIMS, Material.IRON_BARS, handler));
-        set(createCategoryItem(23, AchievementCategory.UHC_CHAMPIONS, Material.GOLDEN_APPLE, handler));
-        set(createCategoryItem(24, AchievementCategory.WARLORDS, Material.STONE_AXE, handler));
-        set(createCategoryItem(25, AchievementCategory.SKYWARS, Material.ENDER_EYE, handler));
+        set(createCategoryItem(28, AchievementCategory.SMASH_HEROES, handler));
+        set(createCategoryItem(29, AchievementCategory.SPEED_UHC, handler));
+        set(createCategoryItem(30, AchievementCategory.BEDWARS, handler));
+        set(createCategoryItem(31, AchievementCategory.MURDER_MYSTERY, handler));
+        set(createCategoryItem(32, AchievementCategory.BUILD_BATTLE, handler));
+        set(createCategoryItem(33, AchievementCategory.DUELS, handler));
+        set(createCategoryItem(34, AchievementCategory.PIT, handler));
 
-        set(createSmashHeroesItem(28, handler));
-        set(createCategoryItem(29, AchievementCategory.SPEED_UHC, Material.GOLDEN_CARROT, handler));
-        set(createCategoryItem(30, AchievementCategory.BEDWARS, Material.RED_BED, handler));
-        set(createCategoryItem(31, AchievementCategory.MURDER_MYSTERY, Material.BOW, handler));
-        set(createCategoryItem(32, AchievementCategory.BUILD_BATTLE, Material.CRAFTING_TABLE, handler));
-        set(createCategoryItem(33, AchievementCategory.DUELS, Material.FISHING_ROD, handler));
-        set(createCategoryItem(34, AchievementCategory.PIT, Material.DIRT, handler));
-
-        set(createCategoryItem(40, AchievementCategory.WOOL_GAMES, Material.WHITE_WOOL, handler));
+        set(createCategoryItem(40, AchievementCategory.WOOL_GAMES, handler));
 
         set(new GUIItem(45) {
             @Override
@@ -154,7 +153,7 @@ public class GUIAchievementsMenu extends HypixelInventoryGUI {
         updateItemStacks(getInventory(), player);
     }
 
-    private GUIClickableItem createCategoryItem(int slot, AchievementCategory category, Material material, PlayerAchievementHandler handler) {
+    private GUIClickableItem createCategoryItem(int slot, AchievementCategory category, PlayerAchievementHandler handler) {
         return new GUIClickableItem(slot) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
@@ -165,9 +164,9 @@ public class GUIAchievementsMenu extends HypixelInventoryGUI {
                 double unlockedPercent = total > 0 ? (unlocked * 100.0 / total) : 0;
                 double pointsPercent = maxPoints > 0 ? (points * 100.0 / maxPoints) : 0;
 
-                return ItemStackCreator.getStack(
+                return ItemStackCreator.getUsingGUIMaterial(
                         "§a" + category.getDisplayName() + " Achievements",
-                        material,
+                        category.getMaterial(),
                         1,
                         "§7Unlocked: §b" + unlocked + "§7/§b" + total + " §8(" + (int) unlockedPercent + "%)",
                         "§7Points: §e" + points + "§7/§e" + maxPoints + " §8(" + (int) pointsPercent + "%)",
@@ -179,35 +178,6 @@ public class GUIAchievementsMenu extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 new GUIGameAchievements(category).open(player);
-            }
-        };
-    }
-
-    private GUIClickableItem createCategoryItem(int slot, String name, Material material, PlayerAchievementHandler handler, AchievementCategory fallbackCategory) {
-        return new GUIClickableItem(slot) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                int unlocked = handler.getUnlockedCount(fallbackCategory);
-                int total = AchievementRegistry.getByCategory(fallbackCategory).size();
-                int points = handler.getTotalPoints(fallbackCategory);
-                int maxPoints = AchievementRegistry.getTotalPoints(fallbackCategory);
-                double unlockedPercent = total > 0 ? (unlocked * 100.0 / total) : 0;
-                double pointsPercent = maxPoints > 0 ? (points * 100.0 / maxPoints) : 0;
-
-                return ItemStackCreator.getStack(
-                        "§a" + name + " Achievements",
-                        material,
-                        1,
-                        "§7Unlocked: §b" + unlocked + "§7/§b" + total + " §8(" + (int) unlockedPercent + "%)",
-                        "§7Points: §e" + points + "§7/§e" + maxPoints + " §8(" + (int) pointsPercent + "%)",
-                        "",
-                        "§eClick to view achievements!"
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                new GUIGameAchievements(fallbackCategory).open(player);
             }
         };
     }
@@ -273,35 +243,6 @@ public class GUIAchievementsMenu extends HypixelInventoryGUI {
                         "",
                         "§eClick to view achievements!"
                 );
-            }
-        };
-    }
-
-    private GUIClickableItem createSmashHeroesItem(int slot, PlayerAchievementHandler handler) {
-        return new GUIClickableItem(slot) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                int unlocked = handler.getUnlockedCount(AchievementCategory.SMASH_HEROES);
-                int total = AchievementRegistry.getByCategory(AchievementCategory.SMASH_HEROES).size();
-                int points = handler.getTotalPoints(AchievementCategory.SMASH_HEROES);
-                int maxPoints = AchievementRegistry.getTotalPoints(AchievementCategory.SMASH_HEROES);
-                double unlockedPercent = total > 0 ? (unlocked * 100.0 / total) : 0;
-                double pointsPercent = maxPoints > 0 ? (points * 100.0 / maxPoints) : 0;
-
-                return ItemStackCreator.getStackHead(
-                        "§aSmash Heroes Achievements",
-                        "d29a9f57267ed342a13e3ad3a240c4c5af5a1a36ab2de0d6c2a31af0e3cdde",
-                        1,
-                        "§7Unlocked: §b" + unlocked + "§7/§b" + total + " §8(" + (int) unlockedPercent + "%)",
-                        "§7Points: §e" + points + "§7/§e" + maxPoints + " §8(" + (int) pointsPercent + "%)",
-                        "",
-                        "§eClick to view achievements!"
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                new GUIGameAchievements(AchievementCategory.SMASH_HEROES).open(player);
             }
         };
     }

@@ -8,6 +8,8 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCZog extends HypixelNPC {
 
     public NPCZog() {

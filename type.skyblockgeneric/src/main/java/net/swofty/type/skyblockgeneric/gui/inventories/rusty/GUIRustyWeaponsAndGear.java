@@ -1,4 +1,4 @@
-package net.swofty.type.goldmine.gui.rusty;
+package net.swofty.type.skyblockgeneric.gui.inventories.rusty;
 
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -22,9 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class GUIRustyAccessories extends HypixelPaginatedGUI<GUIRustyAccessories.DisplayItem> {
-    public GUIRustyAccessories() {
+public class GUIRustyWeaponsAndGear extends HypixelPaginatedGUI<GUIRustyWeaponsAndGear.DisplayItem> {
+    public GUIRustyWeaponsAndGear() {
         super(InventoryType.CHEST_6_ROW);
+    }
+
+    @Override
+    protected String getTitle(HypixelPlayer player, String query, int page, PaginationList paged) {
+        return "Rusty ➜ Weapons & Gear";
     }
 
     @Override
@@ -146,11 +151,6 @@ public class GUIRustyAccessories extends HypixelPaginatedGUI<GUIRustyAccessories
         if (page < maxPage) {
             set(createNavigationButton(this, 53, query, page, true));
         }
-    }
-
-    @Override
-    protected String getTitle(HypixelPlayer player, String query, int page, PaginationList paged) {
-        return "Rusty ➜ Accessories";
     }
 
     @Override

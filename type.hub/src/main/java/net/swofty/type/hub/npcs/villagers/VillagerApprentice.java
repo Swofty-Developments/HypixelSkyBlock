@@ -9,6 +9,8 @@ import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class VillagerApprentice extends HypixelNPC {
     public VillagerApprentice() {
         super(new VillagerConfiguration(){

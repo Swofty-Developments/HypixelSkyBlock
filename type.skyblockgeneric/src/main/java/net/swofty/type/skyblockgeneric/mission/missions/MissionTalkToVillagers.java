@@ -13,7 +13,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.generic.event.custom.VillagerSpokenToEvent;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.MissionRepeater;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
@@ -39,7 +39,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
     );
 
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
-    public void onVillagerSpokenTo(VillagerSpokenToEvent event) {
+    public void onVillagerSpokenTo(NPCInteractEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         MissionData data = player.getMissionData();
 
@@ -56,15 +56,15 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
 
         Map<String, Object> customData = mission.getCustomData();
 
-        if (customData.values().stream().anyMatch(value -> value.toString().contains(event.getVillager().getClass().getSimpleName())))
+        if (customData.values().stream().anyMatch(value -> value.toString().contains(event.getNpc().getClass().getSimpleName())))
             return;
 
         // Check if villager is a part of the mission
         if (villagers.stream().noneMatch(villager ->
-                event.getVillager().getClass().getSimpleName().contains(villager)
+                event.getNpc().getClass().getSimpleName().contains(villager)
         )) return;
 
-        customData.put("villager_" + mission.getMissionProgress(), event.getVillager().getClass().getSimpleName());
+        customData.put("villager_" + mission.getMissionProgress(), event.getNpc().getClass().getSimpleName());
         customData.put("last_updated", System.currentTimeMillis());
 
         mission.setMissionProgress(mission.getMissionProgress() + 1);
@@ -92,6 +92,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
         player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(
                 player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000
         );
+        player.getAchievementHandler().completeAchievement("skyblock.quest_complete");
     }
 
     @Override

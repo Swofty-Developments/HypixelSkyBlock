@@ -5,6 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.deepcaverns.gui.GUIShopWalter;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.NPCAbiphoneTrait;
 import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -16,7 +17,9 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Collections;
 import java.util.stream.Stream;
 
-public class NPCWalter extends HypixelNPC {
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
+public class NPCWalter extends HypixelNPC implements NPCAbiphoneTrait {
 
 	public NPCWalter() {
 		super(new HumanConfiguration() {
@@ -52,23 +55,6 @@ public class NPCWalter extends HypixelNPC {
 		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
 		if (isInDialogue(player)) return;
 
-		ItemStack itemStack = player.getItemInMainHand();
-		SkyBlockItem item = new SkyBlockItem(itemStack);
-
-		if (item.hasComponent(AbiphoneComponent.class)) {
-			setDialogue(player, "abiphone").thenRun(() -> {
-				NPCOption.sendOption(player, "walter", Collections.singletonList(new NPCOption.Option(
-						"pay", // actual id from Hypixel
-						NamedTextColor.GREEN,
-						"DONATE CUBE",
-						(p) -> {
-							setDialogue(player, "donate_cube_no_requirements");
-						}
-				)));
-			});
-			return;
-		}
-
 		setDialogue(player, "none").thenRun(() -> {
 			MathUtility.delay(() -> new GUIShopWalter().open(player), 20);
 		});
@@ -80,23 +66,12 @@ public class NPCWalter extends HypixelNPC {
 				DialogueSet.builder()
 						.key("none").lines(new String[]{
 								"With the right tools, you can get through anything!",
-						}).build(),
-				DialogueSet.builder()
-						.key("abiphone").lines(new String[]{ // when clicking with an Abiphone
-								"My abiphone is for Platinum-level donors of the Walter cause only.",
-								"You know these superbooms don't craft themselves right?",
-								"You just need §3Sulphur Collection 7 §fand to then donate an Enchanted Sulphur Cube!", // then show "donate cube" option
-						}).abiPhone(true).build(),
-				DialogueSet.builder()
-						.key("donate_cube").lines(new String[]{ // when donating the cube with requirements met
-								"Welcome to the Platinum club, high roller!",
-								"Call me anytime!",
-								"And before you ask... yes, I do try to commercialize all of my friendships.",
-						}).abiPhone(true).build(),
-				DialogueSet.builder()
-						.key("donate_cube_no_requirements").lines(new String[]{ // when donating the cube without requirements met
-								"Mmh... you're missing something to become a Platinum-level donor...",
-						}).abiPhone(true).build()
+						}).build()
 		).toArray(DialogueSet[]::new);
+	}
+
+	@Override
+	public String getAbiphoneKey() {
+		return "walter";
 	}
 }

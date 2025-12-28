@@ -9,6 +9,8 @@ import net.swofty.type.hub.gui.GUITiaTheFairy;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCTiaTheFairy extends HypixelNPC {
     public NPCTiaTheFairy() {
         super(new HumanConfiguration() {
