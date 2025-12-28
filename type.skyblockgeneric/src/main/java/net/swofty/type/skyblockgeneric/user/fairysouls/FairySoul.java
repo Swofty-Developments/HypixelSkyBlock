@@ -56,8 +56,6 @@ public class FairySoul {
         }
 
         player.sendMessage("§dYou have already found that Fairy Soul!");
-        if (!fairySouls.getExchangedFairySouls().contains(id))
-            player.sendMessage("§7Go to Tia the Fairy in the §eHub§7 to exchange it for rewards!");
     }
 
     public static List<FairySoul> getFairySouls() {

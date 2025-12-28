@@ -1,23 +1,26 @@
-package net.swofty.type.skyblockgeneric.mission.missions.lazyminer;
+package net.swofty.type.skyblockgeneric.mission.missions.goldmine.lazyminer;
 
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionFindLazyMinerPickaxe extends SkyBlockMission {
+public class MissionTalkToLazyMiner extends SkyBlockMission {
     @Override
     public String getID() {
-        return "find_lazy_miner_pickaxe";
+        return "talk_to_lazy_miner";
     }
 
     @Override
     public String getName() {
-        return "Find Lazy Miner's Pickaxe";
+        return "Talk to Lazy Miner";
     }
 
     @Override
@@ -28,7 +31,8 @@ public class MissionFindLazyMinerPickaxe extends SkyBlockMission {
 
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-        player.getMissionData().startMission(MissionTalkToLazyMiner.class);
+        mission.getObjectiveCompleteText(new ArrayList<>(List.of("§b10 Mining XP"))).forEach(player::sendMessage);
+        player.getSkills().increase(player, SkillCategories.MINING, 10D);
     }
 
     @Override
