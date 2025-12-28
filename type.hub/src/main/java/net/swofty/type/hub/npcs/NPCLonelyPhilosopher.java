@@ -11,6 +11,8 @@ import net.swofty.type.hub.gui.GUILonelyPhilosopher;
 
 import java.util.stream.Stream;
 
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+
 public class NPCLonelyPhilosopher extends HypixelNPC {
 
     public NPCLonelyPhilosopher() {
@@ -43,7 +45,7 @@ public class NPCLonelyPhilosopher extends HypixelNPC {
     }
 
     @Override
-    public void onClick(HypixelNPC.NPCInteractEvent e) {
+    public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
 
         Rank rank = e.player().getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();

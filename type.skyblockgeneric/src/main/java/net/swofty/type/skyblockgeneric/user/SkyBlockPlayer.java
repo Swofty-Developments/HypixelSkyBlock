@@ -378,6 +378,17 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return item;
     }
 
+    public SkyBlockItem updateItemInSlot(int slot, Consumer<SkyBlockItem> update) {
+        ItemStack toUpdate = getInventory().getItemStack(slot);
+        if (toUpdate == null) return null;
+
+        SkyBlockItem item = new SkyBlockItem(toUpdate);
+        update.accept(item);
+
+        getInventory().setItemStack(slot, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
+        return item;
+    }
+
     public @Nullable SkyBlockRegion getRegion() {
         if (isOnIsland()) return SkyBlockRegion.getIslandRegion();
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
