@@ -144,6 +144,16 @@ public class SkyBlockVelocity {
 							PresencePublisher.publish(serverConnectedEvent.getPlayer(), true, newServer, type != null ? type.name() : null);
 						}));
 
+        // Heartbeat to refresh presence in case events are missed
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            server.getAllPlayers().forEach(p -> {
+                var current = p.getCurrentServer();
+                var type = current.map(conn -> GameManager.getTypeFromRegisteredServer(conn.getServer())).orElse(null);
+                PresencePublisher.publish(p, true, current.map(ServerConnection::getServer).orElse(null),
+                        type != null ? type.name() : null);
+            });
+        }).delay(TaskSchedule.seconds(5)).repeat(TaskSchedule.seconds(10)).schedule();
+
 		/**
 		 * Register commands
 		 */
