@@ -198,12 +198,12 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
             loader.getNPCs().forEach(HypixelNPC::register);
         }
 
-        // Update NPCs for loaded players every second
+        // Update NPCs for loaded players
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             for (HypixelPlayer player : getLoadedPlayers()) {
                 HypixelNPC.updateForPlayer(player);
             }
-        }, TaskSchedule.tick(2), TaskSchedule.seconds(1));
+        }, TaskSchedule.tick(2), TaskSchedule.tick(2));
 
         // Register player provider given we aren't a SkyBlock server
         // If we are a SkyBlock server, we will handle the player provider in the SkyBlockGenericLoader
