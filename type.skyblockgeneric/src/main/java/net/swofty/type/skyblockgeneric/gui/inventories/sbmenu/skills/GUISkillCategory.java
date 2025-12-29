@@ -7,6 +7,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -46,7 +47,7 @@ public class GUISkillCategory extends HypixelInventoryGUI {
         int level = skills.getCurrentLevel(category);
         Integer nextLevel = skills.getNextLevel(category);
 
-        if (category == SkillCategories.COMBAT) {
+        if (category == SkillCategories.COMBAT && player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_BRAMASS_BEASTSLAYER)) {
             set(new GUIClickableItem(39) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {

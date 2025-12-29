@@ -30,6 +30,7 @@ public class AbiphoneWalter extends AbiphoneNPC {
 				NPCOption.sendOption(player, "walter", Collections.singletonList(new NPCOption.Option(
 						"pay", // actual id from Hypixel
 						NamedTextColor.GREEN,
+						true,
 						"DONATE CUBE",
 						(p) -> {
 							// TODO: check requirements
