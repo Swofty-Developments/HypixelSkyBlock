@@ -311,8 +311,11 @@ public class FriendCache {
         for (Friend friend : pageFriends) {
             String name = playerNames.getOrDefault(friend.getUuid(), "Unknown");
             boolean isOnline = onlineStatus.getOrDefault(friend.getUuid(), false);
-            long lastSeen = presenceInfo.getOrDefault(friend.getUuid(),
-                    new net.swofty.commons.presence.PresenceInfo(friend.getUuid(), false, null, null, 0L)).getLastSeen();
+            net.swofty.commons.presence.PresenceInfo pInfo = presenceInfo.get(friend.getUuid());
+            long lastSeen = pInfo != null ? pInfo.getLastSeen() : 0L;
+            String server = (pInfo != null && pInfo.isOnline() && pInfo.getServerType() != null)
+                    ? formatServerDisplay(pInfo)
+                    : null;
             long friendSince = friend.getAddedTimestamp();
             entries.add(new FriendListResponseEvent.FriendListEntry(
                     friend.getUuid(),
@@ -321,7 +324,8 @@ public class FriendCache {
                     friend.isBestFriend(),
                     isOnline,
                     lastSeen,
-                    friendSince
+                    friendSince,
+                    server
             ));
         }
 
@@ -454,6 +458,14 @@ public class FriendCache {
             raw = raw.substring(1, raw.length() - 1);
         }
         return raw.isEmpty() ? null : raw;
+    }
+
+    private static String formatServerDisplay(net.swofty.commons.presence.PresenceInfo info) {
+        String type = info.getServerType();
+        String id = info.getServerId();
+        if (type == null && id == null) return null;
+        if (type != null && id != null) return type + " - " + id;
+        return type != null ? type : id;
     }
 
     private static void persistFriendData(UUID playerUuid) {

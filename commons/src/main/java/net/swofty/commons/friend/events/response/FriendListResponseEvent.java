@@ -50,6 +50,7 @@ public class FriendListResponseEvent extends FriendResponseEvent {
                     entryJson.put("isOnline", entry.isOnline);
                     entryJson.put("lastSeen", entry.lastSeen);
                     entryJson.put("friendSince", entry.friendSince);
+                    entryJson.put("server", entry.server != null ? entry.server : JSONObject.NULL);
                     friendsArray.put(entryJson);
                 }
                 json.put("friends", friendsArray);
@@ -75,7 +76,8 @@ public class FriendListResponseEvent extends FriendResponseEvent {
                             entryJson.getBoolean("isBest"),
                             entryJson.getBoolean("isOnline"),
                             entryJson.optLong("lastSeen", 0L),
-                            entryJson.optLong("friendSince", 0L)
+                            entryJson.optLong("friendSince", 0L),
+                            entryJson.isNull("server") ? null : entryJson.getString("server")
                     ));
                 }
 
@@ -104,8 +106,9 @@ public class FriendListResponseEvent extends FriendResponseEvent {
         private final boolean isOnline;
         private final long lastSeen;
         private final long friendSince;
+        private final String server;
 
-        public FriendListEntry(UUID uuid, String name, String nickname, boolean isBest, boolean isOnline, long lastSeen, long friendSince) {
+        public FriendListEntry(UUID uuid, String name, String nickname, boolean isBest, boolean isOnline, long lastSeen, long friendSince, String server) {
             this.uuid = uuid;
             this.name = name;
             this.nickname = nickname;
@@ -113,6 +116,7 @@ public class FriendListResponseEvent extends FriendResponseEvent {
             this.isOnline = isOnline;
             this.lastSeen = lastSeen;
             this.friendSince = friendSince;
+            this.server = server;
         }
     }
 }

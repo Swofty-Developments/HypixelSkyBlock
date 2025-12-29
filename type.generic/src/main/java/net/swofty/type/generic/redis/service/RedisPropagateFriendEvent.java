@@ -224,8 +224,13 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
                     sb.append("§6✦ ");
                 }
 
-                // Name (rank-colored, matches tablist). Fallback to plain name if unavailable.
-                String displayName = HypixelPlayer.getDisplayName(friend.getUuid());
+                // Name (rank-colored, matches tablist). Fallback to plain name if unavailable or failure.
+                String displayName;
+                try {
+                    displayName = HypixelPlayer.getDisplayName(friend.getUuid());
+                } catch (Exception e) {
+                    displayName = "§e" + friend.getName();
+                }
                 if (displayName == null || displayName.isEmpty()) {
                     displayName = "§e" + friend.getName();
                 }
@@ -235,6 +240,11 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
                     sb.append(displayName).append(" §7(").append(friend.getNickname()).append(")");
                 } else {
                     sb.append(displayName);
+                }
+
+                // Server info (when online)
+                if (friend.isOnline() && friend.getServer() != null && !friend.getServer().isEmpty()) {
+                    sb.append(" §7- §e").append(friend.getServer());
                 }
 
                 TextComponent line = LegacyComponentSerializer.legacySection().deserialize(sb.toString());
