@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
 import net.minestom.server.network.packet.server.play.EntityRotationPacket;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
@@ -41,7 +40,7 @@ public abstract class HypixelNPC {
     public HypixelNPC(NPCConfiguration configuration) {
         this.parameters = configuration;
         String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
-        this.name = className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+        this.name = parameters.chatName() != null ? parameters.chatName() : className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
         this.dialogueController = new DialogueController(this);
     }
 
@@ -98,10 +97,10 @@ public abstract class HypixelNPC {
                     float yOffset = overflowing ? -0.2f : 0.0f;
                     switch (config) {
                         case HumanConfiguration humanConfig -> entity = new NPCEntityImpl(
-                                username,
-                                humanConfig.texture(player),
-                                humanConfig.signature(player),
-                                holograms);
+									 username,
+									 humanConfig.texture(player),
+									 humanConfig.signature(player),
+									 holograms);
                         case VillagerConfiguration villagerConfig -> {
                             entity = new NPCVillagerEntityImpl(username, villagerConfig.profession());
                             yOffset = 0.2f;
@@ -144,14 +143,18 @@ public abstract class HypixelNPC {
                 String[] npcHolograms = config.holograms(player);
 
                 boolean needsUpdate = !entity.getPosition().equals(npcPosition);
+                boolean needsFullUpdate = false;
                 if (entity instanceof NPCEntityImpl playerEntity && config instanceof HumanConfiguration humanConfig) {
-                    needsUpdate = needsUpdate ||
-                            !Arrays.equals(playerEntity.getHolograms(), npcHolograms) ||
+                    needsFullUpdate = !Arrays.equals(playerEntity.getHolograms(), npcHolograms) ||
                             !playerEntity.getSkinTexture().equals(humanConfig.texture(player)) ||
                             !playerEntity.getSkinSignature().equals(humanConfig.signature(player));
                 }
 
-                if (needsUpdate) {
+                if (needsUpdate && !needsFullUpdate) {
+                    entity.setView(npcPosition.yaw(), npcPosition.pitch());
+                    entity.setInstance(config.instance(), npcPosition);
+                }
+                if (needsFullUpdate) {
                     entity.remove();
                     PlayerHolograms.removeExternalPlayerHologram(holo);
                     cache.remove(npc);
@@ -160,7 +163,7 @@ public abstract class HypixelNPC {
 
                 Pos playerPosition = player.getPosition();
                 double entityDistance = playerPosition.distance(npcPosition);
-                boolean isLookingNPC = config.looking();
+                boolean isLookingNPC = config.looking(player);
 
                 // Get inRangeOf list based on entity type
                 List<HypixelPlayer> inRange = getInRangeList(entity);

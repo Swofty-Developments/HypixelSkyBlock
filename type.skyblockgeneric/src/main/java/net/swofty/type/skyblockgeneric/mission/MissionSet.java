@@ -17,6 +17,10 @@ import net.swofty.type.skyblockgeneric.mission.missions.goldmine.lazyminer.Missi
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionBreakOaklog;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjackAgain;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionCompleteTrialOfFireOne;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionFindTheCampfire;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionSneakUpOnRyan;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionTravelToTheDarkThicket;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,6 +37,7 @@ public enum MissionSet {
     BACK_AT_THE_BARNYARD(MissionTalkToFarmHand.class, MissionCraftWheatMinion.class, MissionTalkToFarmhandAgain.class),
     CARPENTRY(MissionGiveWoolToCarpenter.class),
     LOST_AND_FOUND(MissionFindLazyMinerPickaxe.class, MissionTalkToLazyMiner.class),
+    THE_CAMPFIRE_CULT(MissionTravelToTheDarkThicket.class, MissionFindTheCampfire.class, MissionSneakUpOnRyan.class, MissionCompleteTrialOfFireOne.class)
     ;
 
     private final Class<? extends SkyBlockMission>[] missions;

@@ -6,6 +6,9 @@ import net.swofty.commons.Songs;
 import net.swofty.type.skyblockgeneric.region.biome.*;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.*;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.*;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.BirchParkConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.DarkOakConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.SpruceWoodsConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +38,11 @@ public enum RegionType {
 	DARK_AUCTION("Dark Auction", "§5"),
 	FOREST("Forest", MineLogsConfiguration.class),
 
-	BIRCH_PARK("Birch Park", "§a", null, BirchParkBiome.class),
+	BIRCH_PARK("Birch Park", "§a", BirchParkConfiguration.class, BirchParkBiome.class),
 	HOWLING_CAVE("Howling Cave", null, BirchParkBiome.class),
-	SPRUCE_WOODS("Spruce Woods", "§a", null, SpruceWoodsBiome.class),
-	DARK_THICKET("Dark Thicket", "§a", null, DarkThicketBiome.class),
+	SPRUCE_WOODS("Spruce Woods", "§a", SpruceWoodsConfiguration.class, SpruceWoodsBiome.class),
+	DARK_THICKET("Dark Thicket", "§a", DarkOakConfiguration.class, DarkThicketBiome.class),
+	TRIALS_OF_FIRE("Trials of Fire", "§c", null, DarkThicketBiome.class),
 	SAVANNA_WOODLAND("Savanna Woodland", "§a", null, SavannaWoodlandsBiome.class),
 	MELODY_PLATEAU("Melody's Plateau", "§5", null, SavannaWoodlandsBiome.class),
 	JUNGLE_ISLAND("Jungle Island", "§a", null, JungleIslandBiome.class),

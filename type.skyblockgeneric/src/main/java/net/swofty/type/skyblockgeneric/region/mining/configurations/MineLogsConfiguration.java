@@ -27,7 +27,7 @@ public class MineLogsConfiguration extends SkyBlockRegenConfiguration {
 
     @Override
     public List<Material> getMineableBlocks(Instance instance, Point point) {
-        return List.of(Material.OAK_LOG, Material.OAK_LEAVES);
+        return List.of(Material.OAK_LOG, Material.OAK_LEAVES, Material.OAK_WOOD);
     }
 
     @Override

@@ -120,12 +120,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 		DarkAuctionDisplay darkAuctionDisplay = new DarkAuctionDisplay(HypixelConst.getInstanceContainer());
 
 		// Register callback to refresh Sirius NPC and Dark Auction display when state changes
-		DarkAuctionHandler.setOnStateChangeCallback(() -> {
-			for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
-				HypixelNPC.updateForPlayer(player);
-			}
-			darkAuctionDisplay.update();
-		});
+		DarkAuctionHandler.setOnStateChangeCallback(darkAuctionDisplay::update);
 
 		HubMap hubMap = new HubMap();
 		hubMap.placeItemFrames(HypixelConst.getInstanceContainer());
@@ -139,7 +134,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 					case SKYBLOCK_SPIDERS_DEN -> new Pos(-159.5, 73, -158.5, -45, 0);
                     case SKYBLOCK_GOLD_MINE -> new Pos(-9.5, 64, -228.5, 0, 0);
                     case SKYBLOCK_DUNGEON_HUB -> new Pos(-44, 88, 11.5, 0, 0);
-                    default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
+                    default -> new Pos(-2.5, 70, -69.5, 180, 0);
                 }, // Spawn position
                 true // Announce death messages
         );

@@ -27,7 +27,7 @@ public class AbiphoneWalter extends AbiphoneNPC {
 		if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_GIVEN_WALTER_CUBE)) {
 			if (dialogue().isInDialogue(player)) return;
 			dialogue().setDialogue(player, "abiphone").thenRun(() -> {
-				NPCOption.sendOption(player, "walter", Collections.singletonList(new NPCOption.Option(
+				NPCOption.sendOption(player, "walter", false, Collections.singletonList(new NPCOption.Option(
 						"pay", // actual id from Hypixel
 						NamedTextColor.GREEN,
 						true,
