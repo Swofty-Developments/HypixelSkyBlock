@@ -137,11 +137,11 @@ public class SkyBlockVelocity {
 		);
 
 		server.getEventManager().register(this, ServerConnectedEvent.class,
-				(AwaitingEventExecutor<ServerConnectedEvent>) event ->
+				(AwaitingEventExecutor<ServerConnectedEvent>) serverConnectedEvent ->
 						EventTask.async(() -> {
-							RegisteredServer newServer = event.getServer();
+							RegisteredServer newServer = serverConnectedEvent.getServer();
 							var type = GameManager.getTypeFromRegisteredServer(newServer);
-							PresencePublisher.publish(event.getPlayer(), true, newServer, type != null ? type.name() : null);
+							PresencePublisher.publish(serverConnectedEvent.getPlayer(), true, newServer, type != null ? type.name() : null);
 						}));
 
 		/**
