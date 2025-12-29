@@ -16,18 +16,39 @@ import java.util.function.Consumer;
 
 public class NPCOption {
 	public static final Map<HypixelPlayer, OptionData> options = new HashMap<>();
+	private static final Component selectAnOption = Component.text("Select an option:").color(NamedTextColor.YELLOW);
 
-	public static void sendOption(HypixelPlayer player, String id, List<Option> message) {
+	public static void sendOption(
+			HypixelPlayer player,
+			String id,
+			List<Option> message
+	) {
 		Component optionMessage = Component.empty();
-		for (Option option : message) {
-			optionMessage = optionMessage.append(Component.text("[" + option.name() + "]", Style.style().color(option.color()).decoration(TextDecoration.BOLD, true).build())
-					.clickEvent(ClickEvent.runCommand("/selectnpcoption " + id + " " + option.key())));
-			if (message.indexOf(option) != message.size() - 1) {
+
+		if (message.size() >= 2) {
+			optionMessage = optionMessage.append(selectAnOption).appendSpace();
+		}
+
+		for (int i = 0; i < message.size(); i++) {
+			Option option = message.get(i);
+
+			Component optionComponent = Component.text("[" + option.name() + "]")
+					.color(option.color())
+					.decoration(TextDecoration.BOLD, option.bold())
+					.clickEvent(
+							ClickEvent.runCommand("/selectnpcoption " + id + " " + option.key())
+					);
+
+			optionMessage = optionMessage.append(optionComponent);
+
+			if (i != message.size() - 1) {
 				optionMessage = optionMessage.appendSpace();
 			}
 		}
+
 		player.sendMessage(optionMessage);
 		options.put(player, new OptionData(id, message));
+
 		MathUtility.delay(
 				() -> options.remove(player),
 				20 * 60 * 5 // 5 minutes
@@ -41,8 +62,8 @@ public class NPCOption {
 	public record Option(
 			String key,
 			NamedTextColor color,
+			boolean bold,
 			String name,
-			Consumer<HypixelPlayer> action) {
-	}
-
+			Consumer<HypixelPlayer> action
+	){}
 }
