@@ -224,11 +224,17 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
                     sb.append("§6✦ ");
                 }
 
-                // Name (with nickname if set)
+                // Name (rank-colored, matches tablist). Fallback to plain name if unavailable.
+                String displayName = HypixelPlayer.getDisplayName(friend.getUuid());
+                if (displayName == null || displayName.isEmpty()) {
+                    displayName = "§e" + friend.getName();
+                }
+
+                // Append nickname if set
                 if (friend.getNickname() != null && !friend.getNickname().isEmpty()) {
-                    sb.append("§e").append(friend.getName()).append(" §7(").append(friend.getNickname()).append(")");
+                    sb.append(displayName).append(" §7(").append(friend.getNickname()).append(")");
                 } else {
-                    sb.append("§e").append(friend.getName());
+                    sb.append(displayName);
                 }
 
                 TextComponent line = LegacyComponentSerializer.legacySection().deserialize(sb.toString());
@@ -236,9 +242,9 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
                 String friendsSinceText;
                 if (friend.getFriendSince() > 0) {
                     long secondsSince = Math.max(0, (System.currentTimeMillis() - friend.getFriendSince()) / 1000);
-                    friendsSinceText = "Friends for " + formatDuration(secondsSince);
+                    friendsSinceText = "§7Friends for " + formatDuration(secondsSince);
                 } else {
-                    friendsSinceText = "Friends since: Unknown";
+                    friendsSinceText = "§7Friends since: Unknown";
                 }
 
                 TextComponent hovered;
@@ -248,9 +254,9 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
                     String lastSeenText;
                     if (friend.getLastSeen() > 0) {
                         long secondsAgo = Math.max(0, (System.currentTimeMillis() - friend.getLastSeen()) / 1000);
-                        lastSeenText = "Last seen " + formatDuration(secondsAgo) + " ago";
+                        lastSeenText = "§7Last seen " + formatDuration(secondsAgo) + " ago";
                     } else {
-                        lastSeenText = "Last seen: Unknown";
+                        lastSeenText = "§7Last seen: Unknown";
                     }
                     hovered = line.hoverEvent(Component.text(lastSeenText + "\n" + friendsSinceText));
                 }

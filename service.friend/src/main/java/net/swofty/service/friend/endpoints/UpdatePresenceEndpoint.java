@@ -1,7 +1,9 @@
 package net.swofty.service.friend.endpoints;
 
 import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.presence.PresenceInfo;
 import net.swofty.commons.protocol.objects.presence.UpdatePresenceProtocolObject;
+import net.swofty.service.friend.FriendCache;
 import net.swofty.service.friend.PresenceStorage;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 
@@ -19,7 +21,22 @@ public class UpdatePresenceEndpoint implements ServiceEndpoint<
             ServiceProxyRequest message,
             UpdatePresenceProtocolObject.UpdatePresenceMessage messageObject) {
 
-        PresenceStorage.upsert(messageObject.presence());
+        PresenceInfo incoming = messageObject.presence();
+        PresenceInfo previous = PresenceStorage.get(incoming.getUuid());
+
+        // Detect state change to trigger friend join/leave notifications
+        boolean stateChanged = previous == null || previous.isOnline() != incoming.isOnline();
+        PresenceStorage.upsert(incoming);
+
+        if (stateChanged) {
+            String playerName = FriendCache.getPlayerName(incoming.getUuid());
+            if (incoming.isOnline()) {
+                FriendCache.handlePlayerJoin(incoming.getUuid(), playerName);
+            } else {
+                FriendCache.handlePlayerLeave(incoming.getUuid(), playerName);
+            }
+        }
+
         return new UpdatePresenceProtocolObject.UpdatePresenceResponse(true);
     }
 }
