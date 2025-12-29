@@ -22,11 +22,9 @@ public final class PresencePublisher {
                 System.currentTimeMillis()
         );
 
-        ServerOutboundMessage.sendMessageToService(
-                ServiceType.FRIEND,
+        ServerOutboundMessage.sendMessageToAllServicesFireAndForget(
                 new UpdatePresenceProtocolObject(),
-                new UpdatePresenceProtocolObject.UpdatePresenceMessage(info),
-                (ignored) -> {}
+                new UpdatePresenceProtocolObject.UpdatePresenceMessage(info)
         );
     }
 
