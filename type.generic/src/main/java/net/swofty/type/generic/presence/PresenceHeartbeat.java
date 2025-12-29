@@ -18,15 +18,21 @@ public final class PresenceHeartbeat {
 
     public static void start() {
         MinecraftServer.getSchedulerManager().buildTask(PresenceHeartbeat::pulse)
-                .delay(TaskSchedule.seconds(20))
-                .repeat(TaskSchedule.seconds(45))
+                .delay(TaskSchedule.seconds(2))
+                .repeat(TaskSchedule.seconds(10))
                 .schedule();
     }
 
     private static void pulse() {
         String serverType = null;
+        String serverId = null;
         try {
             serverType = HypixelConst.getTypeLoader().getType().name();
+            if (HypixelConst.getServerUUID() != null) {
+                serverId = HypixelConst.getServerUUID().toString();
+            } else if (HypixelConst.getServerName() != null) {
+                serverId = HypixelConst.getServerName();
+            }
         } catch (Exception ignored) {
         }
 
@@ -35,7 +41,7 @@ public final class PresenceHeartbeat {
                     player.getUuid(),
                     true,
                     serverType,
-                    null,
+                    serverId,
                     System.currentTimeMillis()
             );
 
