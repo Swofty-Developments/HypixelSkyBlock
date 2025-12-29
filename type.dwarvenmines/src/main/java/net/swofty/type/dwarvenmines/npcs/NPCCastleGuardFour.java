@@ -31,11 +31,11 @@ public class NPCCastleGuardFour extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(122.000, 192.000, 148.000, -180, 0);
+				return new Pos(122, 192, 148, -180, 0);
 			}
 
 			@Override
-			public boolean looking() {
+			public boolean looking(HypixelPlayer player) {
 				return false;
 			}
 		});

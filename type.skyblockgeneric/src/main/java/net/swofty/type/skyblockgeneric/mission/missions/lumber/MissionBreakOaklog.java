@@ -21,7 +21,7 @@ public class MissionBreakOaklog extends SkyBlockProgressMission {
             return;
         }
 
-        if (event.getMaterial().equals(Material.OAK_LOG)) {
+        if (event.getMaterial().equals(Material.OAK_LOG) || event.getMaterial().equals(Material.OAK_WOOD)) {
             MissionData.ActiveMission mission = data.getMission(this.getClass()).getKey();
             mission.setMissionProgress(mission.getMissionProgress() + 1);
             mission.checkIfMissionEnded(event.getPlayer());
@@ -63,6 +63,6 @@ public class MissionBreakOaklog extends SkyBlockProgressMission {
 
     @Override
     public int getMaxProgress() {
-        return 10;
+        return 20;
     }
 }

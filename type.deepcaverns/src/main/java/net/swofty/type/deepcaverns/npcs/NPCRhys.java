@@ -31,11 +31,11 @@ public class NPCRhys extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(31.500, 12.000, 14.500, -90, 0);
+				return new Pos(31.5, 12, 14.5, -90, 0);
 			}
 
 			@Override
-			public boolean looking() {
+			public boolean looking(HypixelPlayer player) {
 				return true;
 			}
 		});

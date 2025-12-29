@@ -29,11 +29,11 @@ public class NPCFragilis extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(88.000, 199.000, -108.000, 0, 0);
+				return new Pos(88, 199, -108, 0, 0);
 			}
 
 			@Override
-			public boolean looking() {
+			public boolean looking(HypixelPlayer player) {
 				return true;
 			}
 		});

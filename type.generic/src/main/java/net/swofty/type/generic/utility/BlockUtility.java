@@ -57,15 +57,16 @@ public class BlockUtility {
 
         int direction = (int) (relativeAngle / 45.0f);
 
+        String color = from.distance(to) > 20 ? "§e§l" : "§a§l";
         return switch (direction) {
-            case 0 -> "↑";  // Straight ahead
-            case 1 -> "↗";  // Forward-right
-            case 2 -> "→";  // Right
-            case 3 -> "↘";  // Back-right
-            case 4 -> "↓";  // Behind
-            case 5 -> "↙";  // Back-left
-            case 6 -> "←";  // Left
-            case 7 -> "↖";  // Forward-left
+            case 0 -> color + "⬆";  // Straight ahead
+            case 1 -> color + "⬈";  // Forward-right
+            case 2 -> color + "➡";  // Right
+            case 3 -> color + "⬊";  // Back-right
+            case 4 -> color + "⬇";  // Behind
+            case 5 -> color + "⬋";  // Back-left
+            case 6 -> color + "⬅";  // Left
+            case 7 -> color + "⬉";  // Forward-left
             default -> throw new IllegalArgumentException("Invalid direction: " + direction);
         };
     }

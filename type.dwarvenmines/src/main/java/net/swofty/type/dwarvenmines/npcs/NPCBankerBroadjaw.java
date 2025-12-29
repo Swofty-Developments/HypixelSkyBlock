@@ -29,11 +29,11 @@ public class NPCBankerBroadjaw extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(13.500, 201.000, -148.500, 44, 0);
+				return new Pos(13.5, 201, -148.5, 44, 0);
 			}
 
 			@Override
-			public boolean looking() {
+			public boolean looking(HypixelPlayer player) {
 				return true;
 			}
 		});

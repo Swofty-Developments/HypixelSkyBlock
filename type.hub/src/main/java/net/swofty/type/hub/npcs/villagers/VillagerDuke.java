@@ -26,7 +26,7 @@ public class VillagerDuke extends HypixelNPC {
             }
 
             @Override
-            public boolean looking() {
+            public boolean looking(HypixelPlayer player) {
                 return true;
             }
 

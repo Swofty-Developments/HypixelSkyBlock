@@ -1,0 +1,120 @@
+package net.swofty.type.thepark;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.title.Title;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.damage.Damage;
+import net.minestom.server.entity.damage.DamageType;
+import net.minestom.server.instance.block.Block;
+import net.minestom.server.timer.ExecutionType;
+import net.minestom.server.timer.Task;
+import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionCompleteTrialOfFireOne;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
+
+import java.time.Duration;
+import java.util.*;
+
+public class TrialOfFire {
+
+	private static final Map<UUID, Integer> competingPlayers = new HashMap<>();
+
+	public static void start(SkyBlockPlayer player) {
+		if (isCompeting(player)) {
+			return;
+		}
+
+		SkyBlockDataHandler dataHandler = player.getSkyblockDataHandler();
+		int level = dataHandler.get(SkyBlockDataHandler.Data.TRIAL_OF_FIRE_LEVEL, DatapointInteger.class).getValue();
+		Trial trial = Arrays.stream(Trial.values())
+				.filter(t -> (t.ordinal() + 1) == (level + 1))
+				.findFirst()
+				.orElse(null);
+
+		if (trial == null) {
+			sendMessage(player, "§cYou have already completed the §6Trial of Fire§f!");
+			return;
+		}
+
+		competingPlayers.put(player.getUuid(), 0);
+		MinecraftServer.getSchedulerManager().submitTask(() -> {
+			int iterations = competingPlayers.get(player.getUuid());
+			if (iterations == 0) {
+				sendMessage(player, "Started §6Trial of Fire§f!");
+			}
+
+			player.damage(new Damage(DamageType.CAMPFIRE, null, null, player.getPosition(), trial.dps));
+			if (player.getInstance().getBlock(player.getPosition().sub(0, 0.3, 0)).key() != Block.CAMPFIRE.key()) {
+				sendMessage(player, "§cTrial cancelled: §fYou stepped out of the campfire!");
+				competingPlayers.remove(player.getUuid());
+				return TaskSchedule.stop();
+			}
+
+			competingPlayers.put(player.getUuid(), iterations + 1);
+
+			if (iterations + 1 >= 10) {
+				player.showTitle(Title.title(
+						Component.text("Complete!", NamedTextColor.GREEN),
+						Component.space(),
+						Title.Times.times(Duration.ofSeconds(1), Duration.ZERO, Duration.ofSeconds(1))
+				));
+				sendMessage(player, "§aCompleted §6Trial of Fire " + (trial.name()));
+				player.setVelocity(new Vec(2, 1, 2));
+				competingPlayers.remove(player.getUuid());
+
+				SkyBlockDataHandler handler = player.getSkyblockDataHandler();
+				DatapointInteger levelData = handler.get(SkyBlockDataHandler.Data.TRIAL_OF_FIRE_LEVEL, DatapointInteger.class);
+				levelData.setValue(levelData.getValue() + 1);
+
+				switch (levelData.getValue() + 1) {
+					case 1:
+						player.getMissionData().endMission(MissionCompleteTrialOfFireOne.class);
+						break;
+				}
+
+				return TaskSchedule.stop();
+			}
+
+			return TaskSchedule.seconds(1);
+		}, ExecutionType.TICK_END);
+
+	}
+
+	public static boolean isCompeting(SkyBlockPlayer player) {
+		return competingPlayers.containsKey(player.getUuid());
+	}
+
+	private static void sendMessage(SkyBlockPlayer player, String message) {
+		player.sendMessage("§6§lTRIAL OF FIRE! §f" + message);
+	}
+
+	enum Trial {
+		I(10),
+		II(15),
+		III(25),
+		IV(35),
+		V(50),
+		VI(65),
+		VII(85),
+		VIII(110),
+		IX(140),
+		X(185),
+		XI(240),
+		XII(315),
+		XIII(410),
+		XIV(530),
+		;
+
+		private final int dps;
+
+		Trial(int dps) {
+			this.dps = dps;
+		}
+	}
+
+}

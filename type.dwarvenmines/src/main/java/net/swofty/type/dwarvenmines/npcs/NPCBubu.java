@@ -31,11 +31,11 @@ public class NPCBubu extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-10.500, 201.000, -103.500, 45, 0);
+				return new Pos(-10.5, 201, -103.5, 45, 0);
 			}
 
 			@Override
-			public boolean looking() {
+			public boolean looking(HypixelPlayer player) {
 				return true;
 			}
 		});

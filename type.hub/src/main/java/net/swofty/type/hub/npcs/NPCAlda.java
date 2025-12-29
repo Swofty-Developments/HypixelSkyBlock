@@ -2,9 +2,8 @@ package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCAbiphoneTrait;
+import net.swofty.type.generic.entity.npc.trait.NPCAbiphoneTrait;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.generic.entity.npc.configuration.NPCConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.shop.GUIShopAlda;
@@ -30,11 +29,11 @@ public class NPCAlda extends HypixelNPC implements NPCAbiphoneTrait {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(66.000, 71.000, -59.000, 25, 0);
+				return new Pos(66, 71, -59, 25, 0);
 			}
 
 			@Override
-			public boolean looking() {
+			public boolean looking(HypixelPlayer player) {
 				return true;
 			}
 		});

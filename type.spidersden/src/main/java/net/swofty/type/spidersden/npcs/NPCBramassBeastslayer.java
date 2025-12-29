@@ -2,6 +2,7 @@ package net.swofty.type.spidersden.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ChatColor;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
@@ -38,7 +39,7 @@ public class NPCBramassBeastslayer extends HypixelNPC {
             }
 
             @Override
-            public boolean looking() {
+            public boolean looking(HypixelPlayer player) {
                 return true;
             }
         });
@@ -52,6 +53,8 @@ public class NPCBramassBeastslayer extends HypixelNPC {
                 player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_BRAMASS_BEASTSLAYER, true);
             });
         }
+
+        setDialogue(player, "idle-" + (1 + (int)(Math.random() * 7)));
     }
 
     @Override
@@ -65,6 +68,34 @@ public class NPCBramassBeastslayer extends HypixelNPC {
                                 "Your " + ChatColor.DARK_AQUA + "Bestiary" + ChatColor.WHITE + " is a compendium of all of the mobs in SkyBlock!",
                                 "View your mob stats, unlock rewards, and more!",
                                 "You can find the Bestiary in your " + ChatColor.GREEN + "Combat Skill" + ChatColor.WHITE + " menu!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("idle-1").lines(new String[] {
+                                "Killing mobs in a Family enough times rewards you with " + ItemStatistic.MAGIC_FIND.getFullDisplayName() + ChatColor.WHITE + " towards that mob!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("idle-2").lines(new String[] {
+                                "This increases your chance to find rare loot when killing this mob!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("idle-3").lines(new String[] {
+                                "Killing enough mobs in a given " + ChatColor.GREEN + "Family" + ChatColor.WHITE + " unlocks " + ChatColor.GREEN + "rewards" + ChatColor.WHITE + "."
+                        }).build(),
+                DialogueSet.builder()
+                        .key("idle-4").lines(new String[] {
+                                "You can unlock " + ItemStatistic.MAGIC_FIND.getFullDisplayName() + ChatColor.WHITE + ", " + ItemStatistic.STRENGTH.getFullDisplayName() + ChatColor.WHITE + " bonuses, and loot drop information for that Family!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("idle-5").lines(new String[] {
+                                "You can always view your Bestiary in your " + ChatColor.GREEN + "Combat Skill" + ChatColor.WHITE + " menu!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("idle-6").lines(new String[] {
+                                "Reach " + ChatColor.GREEN + "Milestones" + ChatColor.WHITE + " in your Bestiary by unlocking unique Family tiers."
+                        }).build(),
+                DialogueSet.builder()
+                        .key("idle-7").lines(new String[] {
+                                "Reaching Milestones rewards " + ItemStatistic.HEALTH.getFullDisplayName() + ChatColor.WHITE + ", " + ChatColor.DARK_AQUA + "Combat Exp" + ChatColor.WHITE + ", and more!"
                         }).build(),
         };
     }

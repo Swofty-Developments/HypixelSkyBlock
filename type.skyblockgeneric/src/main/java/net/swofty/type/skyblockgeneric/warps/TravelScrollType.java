@@ -35,6 +35,12 @@ public enum TravelScrollType {
             new ScrollUnlockCustomRecipe("Unlock this scroll's recipe through Recipe Unlock."),
             new Pos(-190, 74, -89, -90, 0),
             Rank.MVP_PLUS),
+    FORAGING_1_TRAVEL_SCROLL("foraging_1", "§aForaging §7- §aTravel Scroll I",
+            "Spawn at the Foraging Skill Area.",
+            "2f6f5e2f6d3e1c3b4a5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6071",
+            new ScrollUnlockCustomRecipe("Unlock this scroll's recipe through Foraging Skill Rewards."),
+            new Pos(200, 70, 200, 0, 0),
+            Rank.DEFAULT)
     ;
 
     private final @NotNull String internalName;

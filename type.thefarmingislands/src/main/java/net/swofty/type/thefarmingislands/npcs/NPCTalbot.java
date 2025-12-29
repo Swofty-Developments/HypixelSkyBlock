@@ -33,7 +33,7 @@ public class NPCTalbot extends HypixelNPC { //only there if Finnegan is mayor
             }
 
             @Override
-            public boolean looking() {
+            public boolean looking(HypixelPlayer player) {
                 return true;
             }
         });

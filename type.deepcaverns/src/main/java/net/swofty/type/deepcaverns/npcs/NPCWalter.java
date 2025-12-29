@@ -1,20 +1,14 @@
 package net.swofty.type.deepcaverns.npcs;
 
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.item.ItemStack;
 import net.swofty.type.deepcaverns.gui.GUIShopWalter;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.NPCAbiphoneTrait;
-import net.swofty.type.generic.entity.npc.NPCOption;
+import net.swofty.type.generic.entity.npc.trait.NPCAbiphoneTrait;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.AbiphoneComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.Collections;
 import java.util.stream.Stream;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
@@ -40,11 +34,11 @@ public class NPCWalter extends HypixelNPC implements NPCAbiphoneTrait {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(19.000, 156.000, -36.000, -25, 0);
+				return new Pos(19, 156, -36, -25, 0);
 			}
 
 			@Override
-			public boolean looking() {
+			public boolean looking(HypixelPlayer player) {
 				return true;
 			}
 		});

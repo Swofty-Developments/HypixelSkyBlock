@@ -86,6 +86,8 @@ public class SkyBlockPlayer extends HypixelPlayer {
     @Setter
     public boolean hasAuthenticated = true;
     @Setter
+    public boolean speedManaged = false;
+    @Setter
     private SkyBlockIsland skyBlockIsland;
 
     private static final Pattern SACK_PATTERN = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$");

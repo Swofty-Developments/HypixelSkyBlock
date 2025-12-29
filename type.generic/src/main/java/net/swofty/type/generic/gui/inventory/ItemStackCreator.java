@@ -130,6 +130,23 @@ public class ItemStackCreator {
 	}
 
 	/**
+	 * Appends lore lines to the existing lore of the given {@link ItemStack.Builder}.
+	 *
+	 * @param builder the {@link ItemStack.Builder} to modify
+	 * @param lore    the lore lines to append
+	 * @return the modified {@link ItemStack.Builder}
+	 */
+	public static ItemStack.Builder appendLore(ItemStack.Builder builder, List<String> lore) {
+		List<Component> existingLore = new ArrayList<>(builder.build().get(DataComponents.LORE));
+		for (String s : lore) {
+			existingLore.add(Component.text(color(s)).decoration(TextDecoration.ITALIC, false));
+		}
+
+		return clearAttributes(builder.set(DataComponents.LORE, existingLore)
+				.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
+	}
+
+	/**
 	 * Marks the given {@link ItemStack.Builder} as not editable.
 	 *
 	 * @param builder the {@link ItemStack.Builder} to modify
