@@ -95,6 +95,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
@@ -303,7 +304,6 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                         .build());
         SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());
 
-        // Set region biomes
         SkyBlockRegion.getRegions().forEach(region -> {
             if (region.getServerType() != HypixelConst.getTypeLoader().getType()) return;
             SkyBlockBiomeConfiguration biomeConfig = region.getType().getBiomeHandler();
@@ -579,14 +579,23 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
     }
 
     private void setBiome(int x, int y, int z, RegistryKey<Biome> biome) {
-        Chunk chunk = HypixelConst.getInstanceContainer().getChunk(CoordConversion.globalToChunk(x), CoordConversion.globalToChunk(z));
-		chunk.setBiome(x, y, z, biome);
+        CompletableFuture<Chunk> chunk = HypixelConst.getInstanceContainer().loadChunk(CoordConversion.globalToChunk(x), CoordConversion.globalToChunk(z));
+		chunk.thenAccept((c) -> c.setBiome(x, y, z, biome));
     }
 
     private void setBiome(Pos start, Pos end, RegistryKey<Biome> biome) {
-        for (int x = start.blockX(); x <= end.blockX(); x++) {
-            for (int y = start.blockY(); y <= end.blockY(); y++) {
-                for (int z = start.blockZ(); z <= end.blockZ(); z++) {
+        int minX = Math.min(start.blockX(), end.blockX());
+        int maxX = Math.max(start.blockX(), end.blockX());
+
+        int minY = Math.min(start.blockY(), end.blockY());
+        int maxY = Math.max(start.blockY(), end.blockY());
+
+        int minZ = Math.min(start.blockZ(), end.blockZ());
+        int maxZ = Math.max(start.blockZ(), end.blockZ());
+
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                for (int z = minZ; z <= maxZ; z++) {
                     setBiome(x, y, z, biome);
                 }
             }
