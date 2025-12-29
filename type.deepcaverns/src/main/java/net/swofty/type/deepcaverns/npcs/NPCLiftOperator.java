@@ -34,12 +34,12 @@ public class NPCLiftOperator extends HypixelNPC {
 			@Override
 			public Pos position(HypixelPlayer player) {
 				final Pos[] positions = new Pos[]{
-						new Pos(45.500, 150.000, 15.500, 90f, 0f),
-						new Pos(45.500, 121.000, 15.500, 90f, 0f),
-						new Pos(45.500, 101.000, 17.500, 90f, 0f),
-						new Pos(45.500, 66.000, 15.500, 90f, 0f),
-						new Pos(45.500, 38.000, 15.500, 90f, 0f),
-						new Pos(45.500, 13.0, 15.500, 90f, 0f),
+						new Pos(45.5, 150, 15.5, 90f, 0f),
+						new Pos(45.5, 121, 15.5, 90f, 0f),
+						new Pos(45.5, 101, 17.5, 90f, 0f),
+						new Pos(45.5, 66, 15.5, 90f, 0f),
+						new Pos(45.5, 38, 15.5, 90f, 0f),
+						new Pos(45.5, 13.0, 15.5, 90f, 0f),
 				};
 
 				final Pos playerPos = player.getPosition();

@@ -31,7 +31,7 @@ public class NPCPuzzler extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(181.500, 196.000, 135.500, 0, 0);
+				return new Pos(181.5, 196, 135.5, 0, 0);
 			}
 
 			@Override

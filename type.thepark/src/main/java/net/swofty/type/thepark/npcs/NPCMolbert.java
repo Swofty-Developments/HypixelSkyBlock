@@ -27,7 +27,7 @@ public class NPCMolbert extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-447.500, 120.000, -63.500, 45, 0);
+				return new Pos(-447.5, 120, -63.5, 45, 0);
 			}
 
 			@Override

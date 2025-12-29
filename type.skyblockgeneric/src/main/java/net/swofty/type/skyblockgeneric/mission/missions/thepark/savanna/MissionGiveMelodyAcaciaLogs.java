@@ -21,7 +21,7 @@ public class MissionGiveMelodyAcaciaLogs extends SkyBlockMission implements Loca
 
 	@Override
 	public Pos getLocation() {
-		return new Pos(-411.500, 109.000, 71.500);
+		return new Pos(-411.5, 109, 71.500);
 	}
 
 	@Override

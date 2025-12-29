@@ -14,7 +14,7 @@ public class MissionTalkToMolbert extends SkyBlockMission implements LocationAss
 
 	@Override
 	public Pos getLocation() {
-		return new Pos(-447.500, 120.000, -63.500);
+		return new Pos(-447.5, 120, -63.500);
 	}
 
 	@Override

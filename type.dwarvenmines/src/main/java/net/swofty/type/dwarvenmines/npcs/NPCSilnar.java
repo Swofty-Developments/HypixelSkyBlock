@@ -31,7 +31,7 @@ public class NPCSilnar extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(53.063, 141.500, 19.500, 45, 0);
+				return new Pos(53.063, 141.5, 19.5, 45, 0);
 			}
 
 			@Override

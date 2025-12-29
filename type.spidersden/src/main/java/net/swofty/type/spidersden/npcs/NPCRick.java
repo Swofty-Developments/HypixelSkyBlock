@@ -56,16 +56,21 @@ public class NPCRick extends HypixelNPC {
                 player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RICK, true);
                 missionData.startMission(MissionTheFlintBros.class);
             });
+            return;
         } else if (missionData.isCurrentlyActive(MissionTheFlintBros.class)) {
             if (player.removeItemFromPlayer(ItemType.IRON_INGOT, 2)) {
                 setDialogue(player, "got-iron").thenRun(() -> {
                     missionData.endMission(MissionTheFlintBros.class);
                     player.addAndUpdateItem(ItemType.PROMISING_SHOVEL);
                 });
+                return;
             } else {
                 setDialogue(player, "still-need-iron");
+                return;
             }
         }
+
+        setDialogue(player, "idle-" + (1 + (int)(Math.random() * 3)));
     }
 
     @Override
@@ -83,6 +88,18 @@ public class NPCRick extends HypixelNPC {
                 DialogueSet.builder()
                         .key("got-iron").lines(new String[] {
                                 "Thanks a lot. Here's your Promising Shovel."
+                        }).build(),
+                DialogueSet.builder()
+                        .key("idle-1").lines(new String[] {
+                                "Have you met Pat? He's my brother. We're the Flint Bros!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("idle-2").lines(new String[] {
+                                "Careful when it rains around here, it gets dangerous!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("idle-3").lines(new String[] {
+                                "Mining gravel is hard work, but the flint is worth it."
                         }).build(),
         };
     }

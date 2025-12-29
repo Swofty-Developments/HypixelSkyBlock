@@ -31,7 +31,7 @@ public class NPCBulvar extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-15.500, 201.000, -98.500, -135, 0);
+				return new Pos(-15.5, 201, -98.5, -135, 0);
 			}
 
 			@Override

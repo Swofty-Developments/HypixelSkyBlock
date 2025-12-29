@@ -30,7 +30,7 @@ public class NPCHypixelStore extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(11.500, 69.000, 20.500, 90, 0);
+				return new Pos(11.5, 69, 20.5, 90, 0);
 			}
 
 			@Override
