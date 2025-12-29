@@ -16,6 +16,7 @@ import net.minestom.server.instance.anvil.AnvilLoader;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
+import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
@@ -202,6 +203,13 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         if (mainInstance != null) {
             loader.getNPCs().forEach(HypixelNPC::register);
         }
+
+        // Update NPCs for loaded players
+        MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+            for (HypixelPlayer player : getLoadedPlayers()) {
+                HypixelNPC.updateForPlayer(player);
+            }
+        }, TaskSchedule.tick(2), TaskSchedule.tick(2));
 
         // Register player provider given we aren't a SkyBlock server
         // If we are a SkyBlock server, we will handle the player provider in the SkyBlockGenericLoader

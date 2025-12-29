@@ -35,6 +35,12 @@ items:
     components:
       - id: TRAVEL_SCROLL
         scroll_type: HUB_DARK_AUCTION
+  - id: FORAGING_1_TRAVEL_SCROLL
+    material: PAPER
+    rarity: RARE
+    components:
+      - id: TRAVEL_SCROLL
+        scroll_type: THE_PARK
   - id: HUB_CRYPTS_TRAVEL_SCROLL
     material: PAPER
     rarity: UNCOMMON

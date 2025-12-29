@@ -1,0 +1,19 @@
+items:
+  - id: CHARLIE_TROUSERS
+    rarity: COMMON
+    default_statistics:
+      defense: 15
+      health: 45
+      foraging_fortune: 6
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Charlie's Trousers
+      - id: STANDARD_ITEM
+        standard_item_type: HELMET
+      - id: LEATHER_COLOR
+        r: '20'
+        g: '121'
+        b: '100'
+      - id: TRACKED_UNIQUE
+      - id: MUSEUM
+        museum_category: ARMOR_SETS

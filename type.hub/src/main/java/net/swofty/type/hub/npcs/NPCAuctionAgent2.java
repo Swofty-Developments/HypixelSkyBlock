@@ -32,7 +32,7 @@ public class NPCAuctionAgent2 extends HypixelNPC {
             }
 
             @Override
-            public boolean looking() {
+            public boolean looking(HypixelPlayer player) {
                 return true;
             }
         });
