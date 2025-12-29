@@ -11,9 +11,9 @@ import java.util.stream.Stream;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
-public class INPCRoyalGuard extends HypixelNPC {
+public class AbstractRoyalGuard extends HypixelNPC {
 
-	public INPCRoyalGuard(Function<HypixelPlayer, String> signature, Function<HypixelPlayer, String> texture, Function<HypixelPlayer, Pos> position) {
+	public AbstractRoyalGuard(Function<HypixelPlayer, String> signature, Function<HypixelPlayer, String> texture, Function<HypixelPlayer, Pos> position) {
 		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {

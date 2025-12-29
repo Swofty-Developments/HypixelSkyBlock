@@ -67,12 +67,6 @@ public class MobGoblin extends BestiaryMob implements RegionPopulator, MobPlayer
 	}
 
 	@Override
-	public void tick(long time) {
-		setView(0, 0);
-		super.tick(time);
-	}
-
-	@Override
 	public List<GoalSelector> getGoalSelectors() {
 		return List.of(
 				new MeleeAttackWithinRegionGoal(this,
