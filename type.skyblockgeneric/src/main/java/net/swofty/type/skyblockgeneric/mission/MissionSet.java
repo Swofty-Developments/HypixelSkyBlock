@@ -12,8 +12,8 @@ import net.swofty.type.skyblockgeneric.mission.missions.blacksmith.MissionTalkTo
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionCollectWheat;
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarmer;
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarmerAgain;
-import net.swofty.type.skyblockgeneric.mission.missions.lazyminer.MissionFindLazyMinerPickaxe;
-import net.swofty.type.skyblockgeneric.mission.missions.lazyminer.MissionTalkToLazyMiner;
+import net.swofty.type.skyblockgeneric.mission.missions.goldmine.lazyminer.MissionFindLazyMinerPickaxe;
+import net.swofty.type.skyblockgeneric.mission.missions.goldmine.lazyminer.MissionTalkToLazyMiner;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionBreakOaklog;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjackAgain;

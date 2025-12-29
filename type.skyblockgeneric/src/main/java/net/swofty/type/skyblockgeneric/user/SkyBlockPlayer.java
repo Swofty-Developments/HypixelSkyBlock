@@ -324,6 +324,25 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getAllOfTypeInInventory(type).values().stream().mapToInt(Integer::intValue).sum();
     }
 
+    public boolean removeItemFromPlayer(ItemType type, int amount) {
+        int inventoryAmount = getAmountInInventory(type);
+        int sacksAmount = getSackItems().getAmount(type);
+        int leftToTakeFromSacks = amount - inventoryAmount;
+
+        if ((inventoryAmount + sacksAmount) < amount) return false;
+
+        if (inventoryAmount >= amount) {
+            takeItem(type, amount);
+        } else if (inventoryAmount >= 1) {
+            takeItem(type, inventoryAmount);
+            getSackItems().decrease(type, leftToTakeFromSacks);
+        } else {
+            getSackItems().decrease(type, sacksAmount);
+        }
+
+        return true;
+    }
+
     public boolean isCoop() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue();
     }

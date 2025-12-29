@@ -34,6 +34,7 @@ public class AbiphoneBuilder extends AbiphoneNPC {
 				NPCOption.sendOption(player, "builder", Collections.singletonList(new NPCOption.Option(
 						"pay",
 						NamedTextColor.GREEN,
+						true,
 						"GIVE ITEM",
 						(p) -> {
 							SkyBlockPlayer sp = (SkyBlockPlayer) p;

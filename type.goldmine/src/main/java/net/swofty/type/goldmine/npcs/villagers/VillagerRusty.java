@@ -8,7 +8,7 @@ import net.swofty.type.generic.entity.npc.NPCAbiphoneTrait;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.rusty.GUIRusty;
-import net.swofty.type.skyblockgeneric.mission.missions.lazyminer.MissionFindLazyMinerPickaxe;
+import net.swofty.type.skyblockgeneric.mission.missions.goldmine.lazyminer.MissionFindLazyMinerPickaxe;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;

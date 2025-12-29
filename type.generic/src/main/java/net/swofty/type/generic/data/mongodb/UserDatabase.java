@@ -39,7 +39,7 @@ public class UserDatabase {
         return SkyBlockPlayerProfiles.deserialize(document);
     }
 
-    public void deleteProfiles() {
+    public void deleteSelf() {
         collection.deleteOne(new Document("_id", id.toString()));
     }
 

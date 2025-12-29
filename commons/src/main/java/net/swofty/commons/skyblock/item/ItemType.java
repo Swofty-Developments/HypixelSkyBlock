@@ -626,6 +626,7 @@ public enum ItemType {
 	GOLDEN_SHOVEL(Material.GOLDEN_SHOVEL, Rarity.COMMON),
 	IRON_SHOVEL(Material.IRON_SHOVEL, Rarity.COMMON),
 	DIAMOND_SHOVEL(Material.DIAMOND_SHOVEL, Rarity.UNCOMMON),
+	PROMISING_SHOVEL(Material.IRON_SHOVEL, Rarity.UNCOMMON),
 
 	/**
 	 * Bows
