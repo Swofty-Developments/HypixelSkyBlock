@@ -31,7 +31,7 @@ public class NPCLiftOperator extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-79.500, 200, -123.500, -59, 0);
+				return new Pos(-79.5, 200, -123.5, -59, 0);
 			}
 
 			@Override

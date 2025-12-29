@@ -53,9 +53,9 @@ public class NPCRyan extends HypixelNPC {
 						&& !hasInteractedMap.getOrDefault(player.getUuid(), false)) {
 					long step = (System.currentTimeMillis() / 30000) % 4;
 					int rotation = (int) (step * 90);
-					return new Pos(-364.500, 102.500, -90.500, rotation, 0);
+					return new Pos(-364.5, 102.5, -90.5, rotation, 0);
 				}
-				return new Pos(-364.500, 102.500, -90.500, -135, 0);
+				return new Pos(-364.5, 102.5, -90.5, -135, 0);
 			}
 
 			@Override

@@ -44,6 +44,6 @@ public class MissionGiveCharlieBirchLogs extends SkyBlockMission implements Loca
 
 	@Override
 	public Pos getLocation() {
-		return new Pos(-277.500, 80.000, -17.500);
+		return new Pos(-277.5, 80, -17.500);
 	}
 }

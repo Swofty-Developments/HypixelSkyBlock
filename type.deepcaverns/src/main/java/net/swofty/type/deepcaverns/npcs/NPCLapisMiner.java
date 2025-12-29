@@ -31,7 +31,7 @@ public class NPCLapisMiner extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-10.500, 120.000, 35.500, -115, 0);
+				return new Pos(-10.5, 120, 35.5, -115, 0);
 			}
 
 			@Override

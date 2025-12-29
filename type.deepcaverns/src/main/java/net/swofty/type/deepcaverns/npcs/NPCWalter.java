@@ -34,7 +34,7 @@ public class NPCWalter extends HypixelNPC implements NPCAbiphoneTrait {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(19.000, 156.000, -36.000, -25, 0);
+				return new Pos(19, 156, -36, -25, 0);
 			}
 
 			@Override

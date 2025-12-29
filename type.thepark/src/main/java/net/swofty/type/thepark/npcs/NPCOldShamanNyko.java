@@ -27,7 +27,7 @@ public class NPCOldShamanNyko extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-370.500, 84.000, -64.500, 45, 0);
+				return new Pos(-370.5, 84, -64.5, 45, 0);
 			}
 
 			@Override

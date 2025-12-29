@@ -27,7 +27,7 @@ public class NPCGustave extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-363.500, 89.000, 44.500, -135, 0);
+				return new Pos(-363.5, 89, 44.5, -135, 0);
 			}
 
 			@Override

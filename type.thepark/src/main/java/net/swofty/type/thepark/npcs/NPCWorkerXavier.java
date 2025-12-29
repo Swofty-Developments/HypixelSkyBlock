@@ -32,7 +32,7 @@ public class NPCWorkerXavier extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-424.500, 110.000, -15.500, -60, 0);
+				return new Pos(-424.5, 110, -15.5, -60, 0);
 			}
 
 			@Override

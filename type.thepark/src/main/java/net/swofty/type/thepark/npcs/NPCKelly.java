@@ -36,7 +36,7 @@ public class NPCKelly extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-350.500, 94.000, 33.500, -180, 0);
+				return new Pos(-350.5, 94, 33.5, -180, 0);
 			}
 
 			@Override
