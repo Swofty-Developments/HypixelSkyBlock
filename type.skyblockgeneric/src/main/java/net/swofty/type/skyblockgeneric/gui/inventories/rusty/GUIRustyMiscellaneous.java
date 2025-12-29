@@ -26,211 +26,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class GUIRustyMiscellaneous extends HypixelPaginatedGUI<GUIRustyMiscellaneous.DisplayItem> {
+public class GUIRustyMiscellaneous extends GUIRustySubMenu<GUIRustyMiscellaneous.RustyItem> {
     public GUIRustyMiscellaneous() {
-        super(InventoryType.CHEST_6_ROW);
+        super(
+                () -> "Rusty ➜ Miscellaneous",
+                () -> List.of(RustyItem.values())
+        );
     }
 
-    @Override
-    public boolean allowHotkeying() {
-        return false;
-    }
 
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
-
-    @Override
-    public int[] getPaginatedSlots() {
-        return new int[]{
-                10, 11, 12, 13, 14, 15, 16,
-                19, 20, 21, 22, 23, 24, 25,
-                28, 29, 30, 31, 32, 33, 34,
-                37, 38, 39, 40, 41, 42, 43
-        };
-    }
-
-    @Override
-    public PaginationList<DisplayItem> fillPaged(HypixelPlayer player, PaginationList<DisplayItem> paged) {
-        List<DisplayItem> items = new ArrayList<>();
-        SkyBlockPlayer skyblockPlayer = (SkyBlockPlayer) player;
-
-        for (MiscellaneousItems miscItem : MiscellaneousItems.values()) {
-            boolean unlocked = miscItem.hasUnlocked.apply(skyblockPlayer);
-            items.add(new DisplayItem(miscItem, unlocked));
-        }
-
-        if (player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_SORT_BY_RARITY)) {
-            items.sort((item1, item2) -> {
-                if (item1.unlocked && !item2.unlocked) return -1;
-                if (!item1.unlocked && item2.unlocked) return 1;
-
-                int rarity1 = item1.miscItem.item.getAttributeHandler().getRarity().ordinal();
-                int rarity2 = item2.miscItem.item.getAttributeHandler().getRarity().ordinal();
-                return Integer.compare(rarity1, rarity2);
-            });
-        } else {
-            items.sort((item1, item2) -> {
-                if (item1.unlocked && !item2.unlocked) return -1;
-                if (!item1.unlocked && item2.unlocked) return 1;
-                return Integer.compare(item1.miscItem.ordinal(), item2.miscItem.ordinal());
-            });
-        }
-
-        paged.addAll(items);
-        return paged;
-    }
-
-    @Override
-    public boolean shouldFilterFromSearch(String query, DisplayItem item) {
-        return false;
-    }
-
-    @Override
-    public void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
-        set(GUIClickableItem.getGoBackItem(49, new GUIRusty()));
-
-        set(new GUIClickableItem(48) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                boolean purchaseConfirmation = player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION);
-                player.getToggles().set(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION, !purchaseConfirmation);
-
-                GUIRustyMiscellaneous newGui = new GUIRustyMiscellaneous();
-                newGui.open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack("§aShop Confirmations",
-                        player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION) ? Material.LIME_DYE : Material.LIGHT_GRAY_DYE,
-                        1, "§7Confirm when purchasing item worth", "§7at least a million coins.", "",
-                        "§eClick to " + (player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION) ? "disable" : "enable") +  "!");
-            }
-        });
-
-        set(new GUIItem(50) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack("§aThe Janitor", Material.REDSTONE_TORCH, 1,
-                        "§7Rusty watches over the neatness of the §6Gold",
-                        "§6Mines§7, but really he watches over the whole of",
-                        "§aSkyBlock§7.",
-                        "",
-                        "§7If you misplace a §6one-time reward §7from a",
-                        "§7quest, it may be offered here!");
-            }
-        });
-
-        set(new GUIClickableItem(51) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                boolean sortByRarity = player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_SORT_BY_RARITY);
-                player.getToggles().set(DatapointToggles.Toggles.ToggleType.RUSTY_SORT_BY_RARITY, !sortByRarity);
-
-                GUIRustyMiscellaneous newGui = new GUIRustyMiscellaneous();
-                newGui.open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack("§aSort by Rarity",
-                        Material.ENDER_EYE, 1,
-                        "§7Enabled: " + (player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_SORT_BY_RARITY) ? "§aYES" : "§cNO"),
-                        "",
-                        "§eClick to toggle!");
-            }
-        });
-
-        if (page > 1) {
-            set(createNavigationButton(this, 45, query, page, false));
-        }
-        if (page < maxPage) {
-            set(createNavigationButton(this, 53, query, page, true));
-        }
-    }
-
-    @Override
-    public String getTitle(HypixelPlayer player, String query, int page, PaginationList<DisplayItem> paged) {
-        return "Rusty ➜ Miscellaneous";
-    }
-
-    @Override
-    public GUIClickableItem createItemFor(DisplayItem displayItem, int slot, HypixelPlayer player) {
-        MiscellaneousItems miscItem = displayItem.miscItem;
-        boolean unlocked = displayItem.unlocked;
-
-        if (!unlocked) {
-            return new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                }
-
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer player) {
-                    return ItemStackCreator.getStackHead("§c???",
-                            "5359d91277242fc01c309accb87b533f1929be176ecba2cde63bf635e05e699b",
-                            1);
-                }
-            };
-        }
-
-        return new GUIClickableItem(slot) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                SkyBlockPlayer skyblockPlayer = (SkyBlockPlayer) player;
-                SkyBlockItem item = miscItem.item;
-                int price = miscItem.price;
-
-                if (player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION) && price >= 1_000_000) {
-                    new GUIConfirmBuy(item, price).open(player);
-                    return;
-                }
-
-                if (skyblockPlayer.getCoins() >= price) {
-                    skyblockPlayer.addAndUpdateItem(item);
-                    skyblockPlayer.removeCoins(price);
-
-                    skyblockPlayer.sendMessage("§aYou bought " + item.getDisplayName() + " §afor §6" + price + " Coins§a!");
-                } else {
-                    skyblockPlayer.sendMessage("§4You don't have enough coins!");
-                }
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                ItemStack.Builder itemStack = new NonPlayerItemUpdater(miscItem.item).getUpdatedItem();
-                List<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
-
-                lore.add("");
-                lore.add("§7Cost");
-                lore.add("§6" + StringUtility.commaify(miscItem.price) + " Coins");
-                lore.add("");
-                lore.add("§eClick to trade!");
-
-                return ItemStackCreator.updateLore(itemStack, lore);
-            }
-        };
-    }
-
-    public record DisplayItem(MiscellaneousItems miscItem, boolean unlocked) {
-    }
-
-    private enum MiscellaneousItems {
+    public enum RustyItem implements ShopEntry {
         IRON_PICKAXE(getRustyPickaxe(), 200, (player) -> player.getMissionData().hasCompleted(MissionFindLazyMinerPickaxe.class)),
         ;
 
         private final SkyBlockItem item;
         private final int price;
-        private final Function<SkyBlockPlayer, Boolean> hasUnlocked;
+        private final Function<SkyBlockPlayer, Boolean> unlocked;
 
-        MiscellaneousItems(SkyBlockItem item, int price, Function<SkyBlockPlayer, Boolean> hasUnlocked) {
+        RustyItem(
+                SkyBlockItem item,
+                int price,
+                Function<SkyBlockPlayer, Boolean> unlocked
+        ) {
             this.item = item;
             this.price = price;
-            this.hasUnlocked = hasUnlocked;
+            this.unlocked = unlocked;
         }
+
+        @Override public SkyBlockItem item() { return item; }
+        @Override public int price() { return price; }
+        @Override public Function<SkyBlockPlayer, Boolean> hasUnlocked() { return unlocked; }
     }
 
     private static SkyBlockItem getRustyPickaxe() {

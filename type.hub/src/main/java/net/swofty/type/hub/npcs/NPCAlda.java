@@ -29,7 +29,7 @@ public class NPCAlda extends HypixelNPC implements NPCAbiphoneTrait {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(66.000, 71.000, -59.000, 25, 0);
+				return new Pos(66, 71, -59, 25, 0);
 			}
 
 			@Override
