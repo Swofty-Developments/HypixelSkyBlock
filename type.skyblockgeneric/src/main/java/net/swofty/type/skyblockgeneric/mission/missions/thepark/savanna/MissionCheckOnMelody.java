@@ -40,6 +40,6 @@ public class MissionCheckOnMelody extends SkyBlockMission implements LocationAss
 
 	@Override
 	public Pos getLocation() {
-		return new Pos(-411.5, 109, 71.500);
+		return new Pos(-411.5, 109, 71.5);
 	}
 }

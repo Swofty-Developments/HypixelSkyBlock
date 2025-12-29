@@ -28,7 +28,7 @@ public class NPCKingName extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(129.500, 196.000, 196.500, 180, 0);
+				return new Pos(129.5, 196.000, 196.5, 180, 0);
 			}
 
 			@Override

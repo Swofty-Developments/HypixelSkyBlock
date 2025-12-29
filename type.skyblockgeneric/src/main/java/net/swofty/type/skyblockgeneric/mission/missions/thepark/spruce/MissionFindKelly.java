@@ -14,7 +14,7 @@ public class MissionFindKelly extends SkyBlockMission implements LocationAssocia
 
 	@Override
 	public Pos getLocation() {
-		return new Pos(-350.5, 94, 33.500);
+		return new Pos(-350.5, 94, 33.5);
 	}
 
 	@Override
