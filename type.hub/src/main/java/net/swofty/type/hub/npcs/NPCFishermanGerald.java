@@ -32,7 +32,7 @@ public class NPCFishermanGerald extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(153.500, 68.500, 55.500, -60, 0);
+                return new Pos(153.5, 68.5, 55.5, -60, 0);
             }
 
             @Override

@@ -30,7 +30,7 @@ public class NPCCaptainBaha extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(179.500, 69.000, 55.500, 105, 0);
+                return new Pos(179.5, 69, 55.5, 105, 0);
             }
 
             @Override

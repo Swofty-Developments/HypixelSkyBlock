@@ -30,7 +30,7 @@ public class NPCGavin extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(161.500, 69.900, 43.500, 203, 17);
+                return new Pos(161.5, 69.900, 43.5, 203, 17);
             }
 
             @Override
