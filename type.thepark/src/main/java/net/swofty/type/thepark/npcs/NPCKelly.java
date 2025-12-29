@@ -115,7 +115,6 @@ public class NPCKelly extends HypixelNPC {
 						"Anyways, I was breaking this tree right here, right.",
 						"But then I broke my axe!",
 						"And now I don't want to break any more trees, in case I break any more axes!",
-						"And now I don't want to break any more trees, in case I break any more axes!",
 						"If you can bring me §a128 Spruce Logs§f, I'll give you a reward!"
 				}).build(),
 				DialogueSet.builder().key("during-collect").lines(new String[]{
