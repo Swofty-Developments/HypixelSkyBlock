@@ -231,7 +231,30 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
                     sb.append("§e").append(friend.getName());
                 }
 
-                player.sendMessage(sb.toString());
+                TextComponent line = LegacyComponentSerializer.legacySection().deserialize(sb.toString());
+
+                String friendsSinceText;
+                if (friend.getFriendSince() > 0) {
+                    long secondsSince = Math.max(0, (System.currentTimeMillis() - friend.getFriendSince()) / 1000);
+                    friendsSinceText = "Friends for " + formatDuration(secondsSince);
+                } else {
+                    friendsSinceText = "Friends since: Unknown";
+                }
+
+                TextComponent hovered;
+                if (friend.isOnline()) {
+                    hovered = line.hoverEvent(Component.text(friendsSinceText));
+                } else {
+                    String lastSeenText;
+                    if (friend.getLastSeen() > 0) {
+                        long secondsAgo = Math.max(0, (System.currentTimeMillis() - friend.getLastSeen()) / 1000);
+                        lastSeenText = "Last seen " + formatDuration(secondsAgo) + " ago";
+                    } else {
+                        lastSeenText = "Last seen: Unknown";
+                    }
+                    hovered = line.hoverEvent(Component.text(lastSeenText + "\n" + friendsSinceText));
+                }
+                player.sendMessage(hovered);
             }
         }
 
@@ -276,6 +299,22 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
         player.sendMessage("§9§m-----------------------------------------------------");
         player.sendMessage(message);
         player.sendMessage("§9§m-----------------------------------------------------");
+    }
+
+    private String formatDuration(long seconds) {
+        long days = seconds / 86400;
+        long hours = (seconds % 86400) / 3600;
+        long minutes = (seconds % 3600) / 60;
+        if (days > 0) {
+            return days + "d " + hours + "h";
+        }
+        if (hours > 0) {
+            return hours + "h " + minutes + "m";
+        }
+        if (minutes > 0) {
+            return minutes + "m";
+        }
+        return seconds + "s";
     }
 
     private JSONObject createSuccessResponse(int playersHandled, List<UUID> playersHandledUuids) {

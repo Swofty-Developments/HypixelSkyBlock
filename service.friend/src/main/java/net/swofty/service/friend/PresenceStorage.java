@@ -24,6 +24,14 @@ public class PresenceStorage {
                 .toList();
     }
 
+    public static Map<UUID, PresenceInfo> getMap(Collection<UUID> uuids) {
+        if (uuids == null || uuids.isEmpty()) return Map.of();
+        return uuids.stream()
+                .map(presenceByUuid::get)
+                .filter(java.util.Objects::nonNull)
+                .collect(Collectors.toMap(PresenceInfo::getUuid, p -> p, (a, b) -> a));
+    }
+
     public static Map<UUID, Boolean> getOnlineStatus(Collection<UUID> uuids) {
         if (uuids == null || uuids.isEmpty()) return Map.of();
         return uuids.stream()

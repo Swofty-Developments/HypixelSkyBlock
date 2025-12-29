@@ -303,20 +303,25 @@ public class FriendCache {
         Map<UUID, String> playerNames = resolvePlayerNames(pageFriends.stream()
                 .map(Friend::getUuid)
                 .toList());
-        Map<UUID, Boolean> onlineStatus = PresenceStorage.getOnlineStatus(pageFriends.stream()
-                .map(Friend::getUuid)
-                .toList());
+        List<UUID> friendUuids = pageFriends.stream().map(Friend::getUuid).toList();
+        Map<UUID, Boolean> onlineStatus = PresenceStorage.getOnlineStatus(friendUuids);
+        Map<UUID, net.swofty.commons.presence.PresenceInfo> presenceInfo = PresenceStorage.getMap(friendUuids);
 
         List<FriendListResponseEvent.FriendListEntry> entries = new ArrayList<>();
         for (Friend friend : pageFriends) {
             String name = playerNames.getOrDefault(friend.getUuid(), "Unknown");
             boolean isOnline = onlineStatus.getOrDefault(friend.getUuid(), false);
+            long lastSeen = presenceInfo.getOrDefault(friend.getUuid(),
+                    new net.swofty.commons.presence.PresenceInfo(friend.getUuid(), false, null, null, 0L)).getLastSeen();
+            long friendSince = friend.getAddedTimestamp();
             entries.add(new FriendListResponseEvent.FriendListEntry(
                     friend.getUuid(),
                     name,
                     friend.getNickname(),
                     friend.isBestFriend(),
-                    isOnline
+                    isOnline,
+                    lastSeen,
+                    friendSince
             ));
         }
 
