@@ -1,7 +1,7 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket;
 
-import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.minestom.server.coordinate.Pos;
+import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
@@ -10,16 +10,21 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionGiveCharlieBirchLogs extends SkyBlockMission {
+public class MissionSneakUpOnRyan extends SkyBlockMission implements LocationAssociatedMission {
+
+	@Override
+	public Pos getLocation() {
+		return new Pos(-364.500, 102.500, -90.500);
+	}
 
 	@Override
 	public String getID() {
-		return "give_charlie_birch_logs";
+		return "sneak_up_on_ryan";
 	}
 
 	@Override
 	public String getName() {
-		return "Give Charlie Birch Logs";
+		return "Sneak up on Ryan";
 	}
 
 	@Override
@@ -30,14 +35,11 @@ public class MissionGiveCharlieBirchLogs extends SkyBlockMission {
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionClaimTheTrousers.class);
-		new GUIClaimReward(ItemType.CHARLIE_TROUSERS, () -> {
-			player.getMissionData().endMission(MissionClaimTheTrousers.class);
-		}).open(player);
+		player.getMissionData().startMission(MissionCompleteTrialOfFireOne.class);
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
-		return Set.of(RegionType.BIRCH_PARK);
+		return Set.of(RegionType.DARK_THICKET, RegionType.TRIALS_OF_FIRE);
 	}
 }

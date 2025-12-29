@@ -1,4 +1,4 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
@@ -10,36 +10,35 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionTalkToCharlie extends SkyBlockMission implements LocationAssociatedMission {
+public class MissionTalkToMolbert extends SkyBlockMission implements LocationAssociatedMission {
+
+	@Override
+	public Pos getLocation() {
+		return new Pos(-447.500, 120.000, -63.500);
+	}
 
 	@Override
 	public String getID() {
-		return "talk_to_charlie";
+		return "talk_to_molbert";
 	}
 
 	@Override
 	public String getName() {
-		return "Talk to Charlie";
+		return "Talk to Molbert";
 	}
 
 	@Override
 	public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
-		mission.getNewObjectiveText().forEach(player::sendMessage);
 		return Map.of();
 	}
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionCollectBirchLogs.class);
+
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
-		return Set.of(RegionType.BIRCH_PARK);
-	}
-
-	@Override
-	public Pos getLocation() {
-		return new Pos(-277.500, 80.000, -17.500);
+		return Set.of(RegionType.JUNGLE_ISLAND);
 	}
 }

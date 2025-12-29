@@ -3,6 +3,7 @@ package net.swofty.type.generic.entity.npc;
 import lombok.Builder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -21,11 +22,12 @@ public class NPCOption {
 	public static void sendOption(
 			HypixelPlayer player,
 			String id,
+			boolean prefix,
 			List<Option> message
 	) {
 		Component optionMessage = Component.empty();
 
-		if (message.size() >= 2) {
+		if (prefix) {
 			optionMessage = optionMessage.append(selectAnOption).appendSpace();
 		}
 
@@ -35,6 +37,9 @@ public class NPCOption {
 			Component optionComponent = Component.text("[" + option.name() + "]")
 					.color(option.color())
 					.decoration(TextDecoration.BOLD, option.bold())
+					.hoverEvent(
+							HoverEvent.showText(Component.text("Click to select", NamedTextColor.YELLOW))
+					)
 					.clickEvent(
 							ClickEvent.runCommand("/selectnpcoption " + id + " " + option.key())
 					);

@@ -6,10 +6,9 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.MissionCollectBirchLogs;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.MissionTalkToCharlie;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.MissionTalkToCharlieAgain;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionCollectBirchLogs;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionTalkToCharlie;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionTalkToCharlieAgain;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
@@ -39,7 +38,7 @@ public class NPCCharlie extends HypixelNPC {
 			}
 
 			@Override
-			public boolean looking() {
+			public boolean looking(HypixelPlayer player) {
 				return true;
 			}
 		});
@@ -85,7 +84,7 @@ public class NPCCharlie extends HypixelNPC {
 						}).build(),
 				DialogueSet.builder()
 						.key("talk-again").lines(new String[]{
-								"§aThe Park is home to many different kinds of wood. Each kind has its own §ecollection§f.",
+								"§aThe Park §fis home to many different kinds of wood. Each kind has its own §ecollection§f.",
 								"Me and my mates each gather a specific type of wood, and then split it all evenly so we can all increase our different collections!",
 								"I wanted §eKelly §fto get some §aSpruce Logs §ffor us today, but I've not seen her in a while... Can you maybe look for her in the §aSpruce Woods§f?"
 						}).build(),

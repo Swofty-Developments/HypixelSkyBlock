@@ -120,12 +120,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 		DarkAuctionDisplay darkAuctionDisplay = new DarkAuctionDisplay(HypixelConst.getInstanceContainer());
 
 		// Register callback to refresh Sirius NPC and Dark Auction display when state changes
-		DarkAuctionHandler.setOnStateChangeCallback(() -> {
-			for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
-				HypixelNPC.updateForPlayer(player);
-			}
-			darkAuctionDisplay.update();
-		});
+		DarkAuctionHandler.setOnStateChangeCallback(darkAuctionDisplay::update);
 
 		HubMap hubMap = new HubMap();
 		hubMap.placeItemFrames(HypixelConst.getInstanceContainer());

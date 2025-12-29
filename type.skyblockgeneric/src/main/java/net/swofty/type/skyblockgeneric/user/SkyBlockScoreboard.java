@@ -105,7 +105,7 @@ public class SkyBlockScoreboard {
                         SkyBlockMission skyBlockMission = MissionData.getMissionClass(mission.getMissionID());
 
                         if (skyBlockMission instanceof LocationAssociatedMission locationAssociatedMission) {
-                            addLine("§fObjective §e" + BlockUtility.getArrow(
+                            addLine("§fObjective " + BlockUtility.getArrow(
                                     player.getPosition(),
                                     locationAssociatedMission.getLocation()
                             ), sidebar);
@@ -117,7 +117,7 @@ public class SkyBlockScoreboard {
 
                         SkyBlockProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
                         if (progressMission != null)
-                            addLine("§7 (" + mission.getMissionProgress() + "§7/" + progressMission.getMaxProgress() + "§7)", sidebar);
+                            addLine("§7 (§e" + mission.getMissionProgress() + "§7/§a" + progressMission.getMaxProgress() + "§7)", sidebar);
                     }
                 }
 

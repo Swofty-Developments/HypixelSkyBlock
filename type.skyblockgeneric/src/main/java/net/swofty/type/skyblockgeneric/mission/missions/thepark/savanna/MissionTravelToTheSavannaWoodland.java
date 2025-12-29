@@ -1,5 +1,7 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna;
 
+import net.minestom.server.coordinate.Pos;
+import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
@@ -8,16 +10,22 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionClaimTheTrousers extends SkyBlockMission {
+public class MissionTravelToTheSavannaWoodland extends SkyBlockMission implements LocationAssociatedMission {
+
+
+	@Override
+	public Pos getLocation() {
+		return new Pos(-401, 97, -34);
+	}
 
 	@Override
 	public String getID() {
-		return "claim_charlie_trousers";
+		return "travel_to_the_savanna_woodland";
 	}
 
 	@Override
 	public String getName() {
-		return "Claim the trousers from Charlie!";
+		return "Visit the Savanna Woodland";
 	}
 
 	@Override
@@ -28,11 +36,12 @@ public class MissionClaimTheTrousers extends SkyBlockMission {
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionTalkToCharlie.class);
+		player.getMissionData().startMission(MissionCheckOnMelody.class);
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
-		return Set.of(RegionType.BIRCH_PARK);
+		return Set.of(RegionType.DARK_THICKET);
 	}
+
 }

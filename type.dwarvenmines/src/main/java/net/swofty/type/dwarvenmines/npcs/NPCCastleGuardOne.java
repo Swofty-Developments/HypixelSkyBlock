@@ -35,7 +35,7 @@ public class NPCCastleGuardOne extends HypixelNPC {
 			}
 
 			@Override
-			public boolean looking() {
+			public boolean looking(HypixelPlayer player) {
 				return false;
 			}
 		});

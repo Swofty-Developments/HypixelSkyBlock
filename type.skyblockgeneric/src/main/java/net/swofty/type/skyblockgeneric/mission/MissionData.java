@@ -206,18 +206,22 @@ public class MissionData {
         }
 
         public List<String> getObjectiveCompleteText(ArrayList<String> rewards) {
+            return getObjectiveCompleteText("OBJECTIVE COMPLETE", rewards);
+        }
+
+        public List<String> getObjectiveCompleteText(String title, ArrayList<String> rewards) {
             SkyBlockMission mission = getMissionFromCache(missionID);
 
             if (rewards == null || rewards.isEmpty())
                 return Arrays.asList(
                         "§7 ",
-                        "§6§l  OBJECTIVE COMPLETE",
+                        "§6§l  " + title,
                         "§f  " + mission.getName(),
                         "§7 ");
 
             ArrayList<String> display = new ArrayList<>(Arrays.asList(
                     "§7 ",
-                    "§6§l  OBJECTIVE COMPLETE",
+                    "§6§l  " + title,
                     "§f  " + mission.getName(),
                     "§7 ",
                     "§a§l    REWARDS"

@@ -1,4 +1,4 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce;
 
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.event.EventNodes;
@@ -13,10 +13,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionCollectBirchLogs extends SkyBlockProgressMission {
+public class MissionCollectSpruceLogs extends SkyBlockProgressMission {
 
-	// TODO: this is not exactly as how Hypixel does it. It's only counted when it's added to inventory or sacks.
-	//  And the progress depletes when logs are removed from either inventory.
 	@HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
 	public void onBlockBreak(CustomBlockBreakEvent event) {
 		MissionData data = event.getPlayer().getMissionData();
@@ -25,7 +23,7 @@ public class MissionCollectBirchLogs extends SkyBlockProgressMission {
 			return;
 		}
 
-		if (event.getMaterial().equals(Material.BIRCH_LOG)) {
+		if (event.getMaterial().equals(Material.SPRUCE_LOG)) {
 			MissionData.ActiveMission mission = data.getMission(this.getClass()).getKey();
 			mission.setMissionProgress(mission.getMissionProgress() + 1);
 			mission.checkIfMissionEnded(event.getPlayer());
@@ -34,12 +32,12 @@ public class MissionCollectBirchLogs extends SkyBlockProgressMission {
 
 	@Override
 	public String getID() {
-		return "collect_birch_logs";
+		return "collect_spruce_logs";
 	}
 
 	@Override
 	public String getName() {
-		return "Collect Birch Logs";
+		return "Collect Spruce Logs";
 	}
 
 	@Override
@@ -50,16 +48,16 @@ public class MissionCollectBirchLogs extends SkyBlockProgressMission {
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionCollectBirchLogs.class);
+		player.getMissionData().startMission(MissionGiveKellySpruceLogs.class);
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
-		return Set.of(RegionType.BIRCH_PARK);
+		return Set.of(RegionType.SPRUCE_WOODS);
 	}
 
 	@Override
 	public int getMaxProgress() {
-		return 64;
+		return 128;
 	}
 }

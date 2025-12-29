@@ -119,6 +119,19 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
                     "Chop down trees.",
                     "Travel to the §aBirch Park§f.");
 
+            case SPRUCE_WOODS -> onNewZone(player, RegionType.SPRUCE_WOODS,
+                    "Chop down Spruce logs.");
+
+            case DARK_THICKET -> onNewZone(player, RegionType.DARK_THICKET,
+                    "Chop down Dark Oak Logs.",
+                    "Talk to §cRyan §fabout the §6Trial of Fire§f.");
+
+            case TRIALS_OF_FIRE -> onNewZone(player, RegionType.TRIALS_OF_FIRE,
+                    "Compete in a §6Trial of Fire§f.");
+
+            case SAVANNA_WOODLAND -> onNewZone(player, RegionType.SAVANNA_WOODLAND,
+                    "Chop down Acacia logs.");
+
             case GRAVEYARD -> onNewZone(player, RegionType.GRAVEYARD,
                     "Fight Zombies.",
                     "Travel to the Spider's Den.",

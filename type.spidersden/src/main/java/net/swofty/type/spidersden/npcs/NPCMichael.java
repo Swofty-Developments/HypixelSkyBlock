@@ -44,7 +44,7 @@ public class NPCMichael extends HypixelNPC {
             }
 
             @Override
-            public boolean looking() {
+            public boolean looking(HypixelPlayer player) {
                 return true;
             }
         });
@@ -56,7 +56,7 @@ public class NPCMichael extends HypixelNPC {
         if (dialogue().isInDialogue(player)) return;
 
         setDialogue(player, "initial-hello").thenRun(() -> {
-            NPCOption.sendOption(player, "michael", List.of(
+            NPCOption.sendOption(player, "michael", true, List.of(
                     new NPCOption.Option(
                             "dont-know",
                             NamedTextColor.GREEN,
