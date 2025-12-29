@@ -12,6 +12,7 @@ import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.permission.PermissionsSetupEvent;
 import com.velocitypowered.api.event.player.KickedFromServerEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
+import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.permission.PermissionFunction;
@@ -43,6 +44,7 @@ import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
+import net.swofty.velocity.presence.PresencePublisher;
 import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
@@ -114,6 +116,7 @@ public class SkyBlockVelocity {
 				(AwaitingEventExecutor<PostLoginEvent>) postLoginEvent -> EventTask.withContinuation(continuation -> {
 					injectPlayer(postLoginEvent.getPlayer());
 					TestFlowManager.handlePlayerJoin(postLoginEvent.getPlayer().getUsername());
+					PresencePublisher.publish(postLoginEvent.getPlayer(), true, (String) null, null);
 					continuation.resume();
 				}));
 		server.getEventManager().register(this, PermissionsSetupEvent.class,
@@ -128,9 +131,18 @@ public class SkyBlockVelocity {
 								: EventTask.async(() -> {
 							// Handle test flow player leave
 							TestFlowManager.handlePlayerLeave(disconnectEvent.getPlayer().getUsername());
+							PresencePublisher.publish(disconnectEvent.getPlayer(), false, (String) null, null);
 							removePlayer(disconnectEvent.getPlayer());
 						})
 		);
+
+		server.getEventManager().register(this, ServerConnectedEvent.class,
+				(AwaitingEventExecutor<ServerConnectedEvent>) event ->
+						EventTask.async(() -> {
+							RegisteredServer newServer = event.getServer();
+							var type = GameManager.getTypeFromRegisteredServer(newServer);
+							PresencePublisher.publish(event.getPlayer(), true, newServer, type != null ? type.name() : null);
+						}));
 
 		/**
 		 * Register commands

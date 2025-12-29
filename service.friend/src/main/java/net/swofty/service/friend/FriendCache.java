@@ -6,7 +6,6 @@ import net.swofty.commons.friend.*;
 import net.swofty.commons.friend.events.*;
 import net.swofty.commons.friend.events.response.*;
 import net.swofty.commons.service.FromServiceChannels;
-import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.json.JSONObject;
 import org.bson.Document;
@@ -21,7 +20,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -305,7 +303,7 @@ public class FriendCache {
         Map<UUID, String> playerNames = resolvePlayerNames(pageFriends.stream()
                 .map(Friend::getUuid)
                 .toList());
-        Map<UUID, Boolean> onlineStatus = resolveOnlineStatus(pageFriends.stream()
+        Map<UUID, Boolean> onlineStatus = PresenceStorage.getOnlineStatus(pageFriends.stream()
                 .map(Friend::getUuid)
                 .toList());
 
@@ -358,6 +356,14 @@ public class FriendCache {
     }
 
     public static void handlePlayerJoin(UUID playerUuid, String playerName) {
+        PresenceStorage.upsert(new net.swofty.commons.presence.PresenceInfo(
+                playerUuid,
+                true,
+                null,
+                null,
+                System.currentTimeMillis()
+        ));
+
         FriendData playerData = getFriendData(playerUuid);
 
         for (Friend friend : playerData.getFriends()) {
@@ -369,6 +375,14 @@ public class FriendCache {
     }
 
     public static void handlePlayerLeave(UUID playerUuid, String playerName) {
+        PresenceStorage.upsert(new net.swofty.commons.presence.PresenceInfo(
+                playerUuid,
+                false,
+                null,
+                null,
+                System.currentTimeMillis()
+        ));
+
         FriendData playerData = cachedFriendData.get(playerUuid);
         if (playerData == null) return;
 
@@ -401,24 +415,6 @@ public class FriendCache {
         }
 
         return names;
-    }
-
-    private static Map<UUID, Boolean> resolveOnlineStatus(Collection<UUID> uuids) {
-        Map<UUID, Boolean> status = new ConcurrentHashMap<>();
-        if (uuids == null || uuids.isEmpty()) return status;
-
-        List<CompletableFuture<Void>> futures = new ArrayList<>();
-        for (UUID uuid : uuids) {
-            CompletableFuture<Void> future = new ProxyPlayer(uuid)
-                    .isOnline()
-                    .orTimeout(2, TimeUnit.SECONDS)
-                    .exceptionally(e -> false)
-                    .thenAccept(isOnline -> status.put(uuid, isOnline));
-            futures.add(future);
-        }
-
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-        return status;
     }
 
     private static Map<UUID, String> fetchNamesFromCollection(String collectionName, List<String> ids) {
