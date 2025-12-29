@@ -27,7 +27,7 @@ public class NPCMelancholicViking extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-335.500, 92.500, 73.500, -180, 0);
+				return new Pos(-335.5, 92.5, 73.5, -180, 0);
 			}
 
 			@Override

@@ -39,7 +39,7 @@ public class NPCMelody extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-411.500, 109.000, 71.500, 169, 0);
+				return new Pos(-411.5, 109, 71.5, 169, 0);
 			}
 
 			@Override

@@ -31,7 +31,7 @@ public class NPCRedstoneMiner extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(25.000, 104.000, 16.500, -66, 0);
+				return new Pos(25, 104, 16.5, -66, 0);
 			}
 
 			@Override

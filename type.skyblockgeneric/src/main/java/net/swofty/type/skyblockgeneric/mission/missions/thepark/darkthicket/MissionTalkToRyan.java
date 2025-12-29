@@ -14,7 +14,7 @@ public class MissionTalkToRyan extends SkyBlockMission implements LocationAssoci
 
 	@Override
 	public Pos getLocation() {
-		return new Pos(-364.500, 102.500, -90.500);
+		return new Pos(-364.5, 102.5, -90.500);
 	}
 
 	@Override

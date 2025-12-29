@@ -31,7 +31,7 @@ public class NPCCastleGuardEight extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(108.500, 202.000, 253.000, -180, 0);
+				return new Pos(108.5, 202, 253, -180, 0);
 			}
 
 			@Override

@@ -27,7 +27,7 @@ public class NPCJuliette extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-415.500, 130.000, -121.500, 14, 0);
+				return new Pos(-415.5, 130, -121.5, 14, 0);
 			}
 
 			@Override
