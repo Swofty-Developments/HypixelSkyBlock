@@ -1,7 +1,5 @@
 package net.swofty.type.thepark.events;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
