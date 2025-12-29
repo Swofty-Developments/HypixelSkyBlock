@@ -74,6 +74,7 @@ public enum ItemType {
 	REZAR_ABICASE(Material.PLAYER_HEAD, Rarity.RARE),
 	SUMSUNG_G3_ABICASE(Material.PLAYER_HEAD, Rarity.RARE),
 	SUMSUNG_GG_ABICASE(Material.PLAYER_HEAD, Rarity.RARE),
+	CAMPFIRE_TALISMAN_1(Material.PLAYER_HEAD, Rarity.COMMON),
 
 	/**
 	 * Community Shop Items
@@ -583,6 +584,8 @@ public enum ItemType {
 	MINER_ARMOR_BOOTS(Material.IRON_BOOTS, Rarity.RARE),
 
 	CHARLIE_TROUSERS(Material.LEATHER_LEGGINGS, Rarity.COMMON),
+	KELLY_TSHIRT(Material.LEATHER_CHESTPLATE, Rarity.COMMON),
+	MELODY_SHOES(Material.LEATHER_BOOTS, Rarity.COMMON),
 
 	/**
 	 * Pickaxes

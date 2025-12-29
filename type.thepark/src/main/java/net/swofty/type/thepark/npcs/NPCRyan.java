@@ -1,18 +1,34 @@
 package net.swofty.type.thepark.npcs;
 
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.swofty.type.skyblockgeneric.mission.MissionData;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.*;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.jspecify.annotations.NonNull;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class NPCRyan extends HypixelNPC {
+
+	public static final Map<UUID, Boolean> hasInteractedMap = new HashMap<>();
 
 	public NPCRyan() {
 		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
-				return new String[]{"Ryan"};
+				return new String[]{"§cRyan", "§e§lCLICK"};
 			}
 
 			@Override
@@ -26,19 +42,124 @@ public class NPCRyan extends HypixelNPC {
 			}
 
 			@Override
-			public Pos position(HypixelPlayer player) {
-				return new Pos(-364.500, 102.500, -90.500, -146, 20);
+			public String chatName() {
+				return "§cRyan";
 			}
 
 			@Override
-			public boolean looking() {
-				return true;
+			public Pos position(HypixelPlayer p) {
+				SkyBlockPlayer player = (SkyBlockPlayer) p;
+				if (!player.getMissionData().hasCompleted(MissionSneakUpOnRyan.class)
+						&& !hasInteractedMap.getOrDefault(player.getUuid(), false)) {
+					long step = (System.currentTimeMillis() / 30000) % 4;
+					int rotation = (int) (step * 90);
+					return new Pos(-364.500, 102.500, -90.500, rotation, 0);
+				}
+				return new Pos(-364.500, 102.500, -90.500, -135, 0);
+			}
+
+			@Override
+			public boolean looking(HypixelPlayer p) {
+				SkyBlockPlayer player = (SkyBlockPlayer) p;
+				return player.getMissionData().hasCompleted(MissionSneakUpOnRyan.class)
+						|| hasInteractedMap.getOrDefault(player.getUuid(), false);
 			}
 		});
 	}
 
 	@Override
 	public void onClick(NPCInteractEvent event) {
+		SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+		if (isInDialogue(player)) return;
 
+		MissionData data = player.getMissionData();
+		if (data.isCurrentlyActive(MissionSneakUpOnRyan.class)) {
+			UUID playerUUID = player.getUuid();
+			hasInteractedMap.put(playerUUID, true);
+			updateForPlayer(player);
+			setDialogue(player, "startled").thenRun(() -> {
+				NPCOption.sendOption(player, "ryan", true, List.of(
+						new NPCOption.Option(
+								"accept",
+								NamedTextColor.GREEN,
+								false,
+								"Sure, I guess?",
+								p -> {
+									setDialogue(p, "accept").thenRun(() -> {
+										NPCOption.sendOption(p, "ryan", true, List.of(
+												new NPCOption.Option(
+														"accept_2",
+														NamedTextColor.RED,
+														false,
+														"WHAT?",
+														p2 -> {
+															setDialogue(p2, "accept_2").thenRun(() -> {
+																SkyBlockPlayer sbPlayer = (SkyBlockPlayer) p2;
+																sbPlayer.getMissionData().endMission(MissionSneakUpOnRyan.class);
+															});
+														})
+										));
+									});
+								}
+						)
+				));
+			});
+			return;
+		}
+
+		if (data.isCurrentlyActive(MissionCompleteTrialOfFireOne.class)) {
+			sendNPCMessage(player, "If you can last for §a10 seconds §fwhile standing in the campfire, I'll give you a reward!");
+			return;
+		}
+
+		if (data.isCurrentlyActive(MissionTalkToRyan.class)) {
+			setDialogue(player, "talk").thenRun(() -> {
+				player.getMissionData().endMission(MissionTalkToRyan.class);
+			});
+		}
+
+		if (data.isCurrentlyActive(MissionCollectDarkOakLogs.class)) {
+			sendNPCMessage(player, "Grab me §a256 Dark Oak Logs §fand I'll make you a badge! You don't have enough yet!");
+		}
+
+		if (data.isCurrentlyActive(MissionGiveRyanDarkOakLogs.class)) {
+			setDialogue(player, "give_logs").thenRun(() -> {
+				new GUIClaimReward(ItemType.CAMPFIRE_TALISMAN_1, () -> {
+					player.getMissionData().endMission(MissionGiveRyanDarkOakLogs.class);
+				});
+			});
+		}
+	}
+
+	@Override
+	protected DialogueSet[] dialogues(HypixelPlayer player) {
+		return List.of(
+				DialogueSet.builder().key("startled").lines(new String[]{
+						"§cAAAHHHHH! §fDon't startle me like that bro!",
+						"§fY'know, someone as stealthy as you could be a useful member of the §cCampfire Cult§f.",
+						"§fWhat do you say to that?"
+				}).build(),
+				DialogueSet.builder().key("accept").lines(new String[]{
+						"Cool! Anyways, there's just one thing you have to do before you can join.",
+						"Stand in the §6§lCAMPFIRE§f!"
+				}).build(),
+				DialogueSet.builder().key("accept_2").lines(new String[]{
+						"Yeah don't worry, it's not as hot as it looks.",
+						"If you can last for §a10 seconds §fwhile standing in the campfire, I'll give you a reward!"
+				}).build(),
+				DialogueSet.builder().key("talk").lines(new String[]{
+						"Wow, you did it!",
+						"Nice job, hotshot! I'd give you the Campfire Initiate Badge I right now, but I'm out of wood to make one with...",
+						"Sorry about that...",
+						"I need to keep watch and make sure nobody blows out thee §6Campfire§f, but if you can grab me §a256 Dark Oak Logs§f, I'll make one for ya!"
+				}).build(),
+				DialogueSet.builder().key("give_logs").lines(new String[]{
+						"Thanks for the wood! Here's your badge, as promised!",
+						"A Campfire Initiate Badge I, for our latest initiate, " + LegacyComponentSerializer.legacyAmpersand().serialize(player.getColouredName()) + "§f!",
+						"I can upgrade that badge for you as you survive more §cCampfire Trials§f, you know?",
+						"§fSimply stand in the §6campfire §fwhenever you think you're ready!",
+						"§fBut be careful, though, as each trial burns a little hotter than the last!"
+				}).build()
+		).toArray(DialogueSet[]::new);
 	}
 }

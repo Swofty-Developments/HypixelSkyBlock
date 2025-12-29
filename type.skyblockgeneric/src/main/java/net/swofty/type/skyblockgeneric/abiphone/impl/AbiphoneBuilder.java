@@ -31,7 +31,7 @@ public class AbiphoneBuilder extends AbiphoneNPC {
 		if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_GIVEN_BUILDER_BUILDERS_WAND)) {
 			if (dialogue().isInDialogue(player)) return;
 			dialogue().setDialogue(player, "abiphone").thenRun(() -> {
-				NPCOption.sendOption(player, "builder", Collections.singletonList(new NPCOption.Option(
+				NPCOption.sendOption(player, "builder", false, Collections.singletonList(new NPCOption.Option(
 						"pay",
 						NamedTextColor.GREEN,
 						true,

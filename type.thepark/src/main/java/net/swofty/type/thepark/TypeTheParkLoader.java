@@ -36,7 +36,6 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
-
     }
 
     @Override

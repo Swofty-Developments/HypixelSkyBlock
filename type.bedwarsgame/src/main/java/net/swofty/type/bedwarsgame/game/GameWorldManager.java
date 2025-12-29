@@ -150,7 +150,7 @@ public final class GameWorldManager {
                         }
 
                         @Override
-                        public boolean looking() {
+                        public boolean looking(HypixelPlayer player) {
                             return true;
                         }
 
@@ -189,7 +189,7 @@ public final class GameWorldManager {
                         }
 
                         @Override
-                        public boolean looking() {
+                        public boolean looking(HypixelPlayer player) {
                             return true;
                         }
 

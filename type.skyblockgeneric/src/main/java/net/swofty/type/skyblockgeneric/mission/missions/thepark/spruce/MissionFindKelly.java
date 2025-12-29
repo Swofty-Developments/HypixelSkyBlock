@@ -1,5 +1,7 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce;
 
+import net.minestom.server.coordinate.Pos;
+import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
@@ -8,16 +10,21 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionTravelToTheSpruceWoods extends SkyBlockMission {
+public class MissionFindKelly extends SkyBlockMission implements LocationAssociatedMission {
+
+	@Override
+	public Pos getLocation() {
+		return new Pos(-350.500, 94.000, 33.500);
+	}
 
 	@Override
 	public String getID() {
-		return "travel_to_the_spruce_woods";
+		return "find_kelly";
 	}
 
 	@Override
 	public String getName() {
-		return "Travel to the Spruce Woods";
+		return "Find Kelly";
 	}
 
 	@Override
@@ -28,7 +35,7 @@ public class MissionTravelToTheSpruceWoods extends SkyBlockMission {
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-
+		player.getMissionData().startMission(MissionCollectSpruceLogs.class);
 	}
 
 	@Override

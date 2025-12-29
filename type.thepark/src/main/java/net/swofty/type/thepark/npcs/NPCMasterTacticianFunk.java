@@ -1,10 +1,14 @@
 package net.swofty.type.thepark.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.List;
 
 public class NPCMasterTacticianFunk extends HypixelNPC {
 
@@ -31,7 +35,7 @@ public class NPCMasterTacticianFunk extends HypixelNPC {
 			}
 
 			@Override
-			public boolean looking() {
+			public boolean looking(HypixelPlayer player) {
 				return true;
 			}
 		});
@@ -39,6 +43,26 @@ public class NPCMasterTacticianFunk extends HypixelNPC {
 
 	@Override
 	public void onClick(NPCInteractEvent event) {
+		SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+		if (isInDialogue(player)) return;
 
+		if(!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_MASTER_TACTICIAN_FUNK)) {
+			setDialogue(player, "intro").thenRun(() -> {
+				player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_MASTER_TACTICIAN_FUNK, true);
+			});
+			return;
+		}
+
+	}
+
+	@Override
+	protected DialogueSet[] dialogues(HypixelPlayer player) {
+		return List.of(
+				DialogueSet.builder().key("intro").lines(new String[]{
+						"Welcome to the Woodlands!",
+						"I use all sorts of wood types to create strong and useful items!",
+						"Here. Check theme out!"
+				}).build()
+		).toArray(DialogueSet[]::new);
 	}
 }

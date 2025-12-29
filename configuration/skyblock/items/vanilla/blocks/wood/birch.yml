@@ -22,6 +22,12 @@ items:
     material: BIRCH_WOOD
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - drops:
+              - item: BIRCH_LOG
+                chance: 1
+                amount: 1
       - id: SELLABLE
         value: 2.0
       - id: PLACEABLE

@@ -137,7 +137,7 @@ public class ItemStackCreator {
 	 * @return the modified {@link ItemStack.Builder}
 	 */
 	public static ItemStack.Builder appendLore(ItemStack.Builder builder, List<String> lore) {
-		List<Component> existingLore = builder.build().get(DataComponents.LORE);
+		List<Component> existingLore = new ArrayList<>(builder.build().get(DataComponents.LORE));
 		for (String s : lore) {
 			existingLore.add(Component.text(color(s)).decoration(TextDecoration.ITALIC, false));
 		}

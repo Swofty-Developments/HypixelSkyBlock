@@ -1,7 +1,9 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark;
 
+import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
@@ -10,16 +12,16 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionTalkToCharlieAgain extends SkyBlockMission {
+public class MissionGiveCharlieBirchLogs extends SkyBlockMission implements LocationAssociatedMission {
 
 	@Override
 	public String getID() {
-		return "talk_to_charlie_2";
+		return "give_charlie_birch_logs";
 	}
 
 	@Override
 	public String getName() {
-		return "Talk to Charlie";
+		return "Give Charlie Birch Logs";
 	}
 
 	@Override
@@ -30,13 +32,18 @@ public class MissionTalkToCharlieAgain extends SkyBlockMission {
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		new GUIClaimReward(ItemType.FORAGING_1_TRAVEL_SCROLL, () -> {
-			player.getMissionData().startMission(MissionTravelToTheSpruceWoods.class);
-		});
+		new GUIClaimReward(ItemType.CHARLIE_TROUSERS, () -> {
+			player.getMissionData().endMission(MissionClaimTheTrousers.class);
+		}).open(player);
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
 		return Set.of(RegionType.BIRCH_PARK);
+	}
+
+	@Override
+	public Pos getLocation() {
+		return new Pos(-277.500, 80.000, -17.500);
 	}
 }

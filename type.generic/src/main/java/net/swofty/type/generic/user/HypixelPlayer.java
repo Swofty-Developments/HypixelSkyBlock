@@ -2,6 +2,8 @@ package net.swofty.type.generic.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.player.GameProfile;
@@ -96,6 +98,12 @@ public class HypixelPlayer extends Player {
 	public String getFullDisplayName() {
 		Rank rank = getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
 		return rank.getPrefix() + getUsername();
+	}
+
+	public Component getColouredName() {
+
+		Rank rank = getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
+		return Component.text(getUsername(), rank.getTextColor());
 	}
 
 	public AntiCheatHandler getAntiCheatHandler() {

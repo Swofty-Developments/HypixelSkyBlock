@@ -43,7 +43,7 @@ public class NPCLumberJack extends HypixelNPC {
             }
 
             @Override
-            public boolean looking() {
+            public boolean looking(HypixelPlayer player) {
                 return true;
             }
         });
@@ -57,7 +57,7 @@ public class NPCLumberJack extends HypixelNPC {
 
         if (data.isCurrentlyActive(MissionTalkToLumberjack.class)) {
             setDialogue(player, "initial-hello").thenRun(() -> {
-                NPCOption.sendOption(player, "lumber_jack", List.of(
+                NPCOption.sendOption(player, "lumber_jack", true, List.of(
                         new NPCOption.Option(
                                 "r_2_1",
                                 NamedTextColor.GREEN,
@@ -94,6 +94,7 @@ public class NPCLumberJack extends HypixelNPC {
             });
             return;
         }
+		setDialogue(player, "idle-" + (1 + (int)(Math.random() * 3)));
     }
 
     @Override
@@ -121,8 +122,20 @@ public class NPCLumberJack extends HypixelNPC {
 						.key("spoke-again").lines(new String[]{
 								"Nice job! In return for those logs, I'll give ya this §aPromising Axe§f.",
 								"It's far less painful than using your fists to punch trees, I'll tell ya that much!",
-								"If you feel like Foraging is the thin for you, continue down the path and head towards §aThe Park§f.",
+								"If you feel like Foraging is the thing for you, continue down the path and head towards §aThe Park§f.",
 								"My friend §eCharlie §fcan be found there. I'm sure he'll have some work for you!",
+						}).build(),
+				DialogueSet.builder()
+						.key("idl-1").lines(new String[]{
+								"My mate §dCharlie §fhas a §5Treecapitator§f! With it, he can break down entire trees in a single swipe!"
+						}).build(),
+				DialogueSet.builder()
+						.key("idle-2").lines(new String[]{
+								"Have you spoken to my mate §eCharlie §fover in §aThe Park §fyet? He could probably use your help."
+						}).build(),
+				DialogueSet.builder()
+						.key("idle-3").lines(new String[]{
+								"Have you enchanted your axe with §aEfficiency V§f? It'll help ya break stuff a lot faster."
 						}).build()
 		).toArray(DialogueSet[]::new);
     }

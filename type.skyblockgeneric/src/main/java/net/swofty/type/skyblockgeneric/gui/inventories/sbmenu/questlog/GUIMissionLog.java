@@ -166,7 +166,7 @@ public class GUIMissionLog extends HypixelInventoryGUI {
                         SkyBlockMission skyBlockMission = MissionData.getMissionClass(activeMission.getKey().getMissionID());
                         SkyBlockProgressMission progressMission = missionData.getAsProgressMission(skyBlockMission.getID());
 
-                        lore.add(" " + (activeMission.getValue() ? "§a✓§f " : "§c✗§e ") + skyBlockMission.getName()
+                        lore.add(" " + (activeMission.getValue() ? "§a✔§f " : "§c✖§e ") + skyBlockMission.getName()
                                 + (progressMission != null ? ". §7(§b" + activeMission.getKey().getMissionProgress()
                                 + "§7/§b" + progressMission.getMaxProgress() + ")" : "."));
                     });

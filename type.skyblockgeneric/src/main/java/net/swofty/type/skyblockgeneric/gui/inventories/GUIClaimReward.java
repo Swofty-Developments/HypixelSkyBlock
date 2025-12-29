@@ -18,6 +18,7 @@ public class GUIClaimReward extends HypixelInventoryGUI {
 
 	private final ItemType rewardItem;
 	private final Runnable onClaim;
+	private boolean claimed = false;
 
 	public GUIClaimReward(ItemType rewardItem, Runnable onClaim) {
 		super("Claim Reward", InventoryType.CHEST_6_ROW);
@@ -27,14 +28,17 @@ public class GUIClaimReward extends HypixelInventoryGUI {
 
 	@Override
 	public void onOpen(InventoryGUIOpenEvent e) {
+		fill(FILLER_ITEM);
 		set(new GUIClickableItem(22) {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+				claimed = true;
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
 				onClaim.run();
 				SkyBlockItem item = new SkyBlockItem(rewardItem);
 				player.addAndUpdateItem(item);
 				player.sendMessage("§aYou claimed §f" + item.getDisplayName() + "§a!");
+				p.closeInventory();
 			}
 
 			@Override
@@ -59,6 +63,7 @@ public class GUIClaimReward extends HypixelInventoryGUI {
 
 	@Override
 	public void onClose(InventoryCloseEvent e, CloseReason reason) {
+		if (claimed) return;
 		SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
 		onClaim.run();
 		player.addAndUpdateItem(rewardItem);
