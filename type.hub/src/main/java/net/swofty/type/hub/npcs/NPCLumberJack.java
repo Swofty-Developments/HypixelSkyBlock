@@ -61,6 +61,7 @@ public class NPCLumberJack extends HypixelNPC {
                         new NPCOption.Option(
                                 "r_2_1",
                                 NamedTextColor.GREEN,
+								false,
                                 "Sure",
                                 (p) -> {
                                     setDialogue(p, "option-accept").thenRun(() -> {
@@ -71,6 +72,7 @@ public class NPCLumberJack extends HypixelNPC {
                         new NPCOption.Option(
                                 "r_2_2",
                                 NamedTextColor.RED,
+								false,
                                 "Nah, I'm good",
                                 (p) -> {
                                     setDialogue(player, "option-nah");
@@ -87,7 +89,7 @@ public class NPCLumberJack extends HypixelNPC {
         if (!data.hasCompleted(MissionTalkToLumberjackAgain.class)) {
             setDialogue(player, "spoke-again").thenRun(() -> {
 				new GUIClaimReward(ItemType.PROMISING_AXE, () -> {
-
+					data.endMission(MissionTalkToLumberjackAgain.class);
 				}).open(player);
             });
             return;
