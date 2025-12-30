@@ -11,7 +11,9 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionCompleteTrialOfFireOne;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -23,6 +25,21 @@ import java.util.*;
 public class TrialOfFire {
 
 	private static final Map<UUID, Integer> competingPlayers = new HashMap<>();
+
+	public static void init() {
+		MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+			for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
+				if (!player.getMissionData().isCurrentlyActive(MissionCompleteTrialOfFireOne.class)) {
+					return;
+				}
+
+				Block block = player.getInstance().getBlock(player.getPosition().sub(0, 0.3, 0));
+				if (block.key() == Block.CAMPFIRE.key()) {
+					start(player);
+				}
+			}
+		}, TaskSchedule.seconds(1), TaskSchedule.millis(200));
+	}
 
 	public static void start(SkyBlockPlayer player) {
 		if (isCompeting(player)) {

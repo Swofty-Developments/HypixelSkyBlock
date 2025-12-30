@@ -1,15 +1,13 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle;
 
-import net.minestom.server.event.player.PlayerTickEndEvent;
 import net.minestom.server.event.player.PlayerTickEvent;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionGiveRyanDarkOakLogs;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -18,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class MissionCollectDarkOakLogs extends SkyBlockProgressMission {
+public class MissionCollectJungleLogs extends SkyBlockProgressMission {
 
 	private final Map<UUID, Long> testTimes = new HashMap<>();
 
@@ -43,13 +41,13 @@ public class MissionCollectDarkOakLogs extends SkyBlockProgressMission {
 
 		int amount = 0;
 		for (SkyBlockItem item : player.getAllInventoryItems()) {
-			if (item.getMaterial() == Material.DARK_OAK_LOG || item.getMaterial() == Material.DARK_OAK_WOOD) {
+			if (item.getMaterial() == Material.JUNGLE_LOG || item.getMaterial() == Material.JUNGLE_WOOD) {
 				amount += item.getAmount();
 			}
 		}
 
 		for (SkyBlockItem item : player.getAllSacks()) {
-			if (item.getMaterial() == Material.DARK_OAK_LOG || item.getMaterial() == Material.DARK_OAK_WOOD) {
+			if (item.getMaterial() == Material.JUNGLE_LOG || item.getMaterial() == Material.JUNGLE_WOOD) {
 				amount += item.getAmount();
 			}
 		}
@@ -61,17 +59,17 @@ public class MissionCollectDarkOakLogs extends SkyBlockProgressMission {
 
 	@Override
 	public int getMaxProgress() {
-		return 256;
+		return 512;
 	}
 
 	@Override
 	public String getID() {
-		return "collect_dark_oak_logs";
+		return "collect_jungle_logs";
 	}
 
 	@Override
 	public String getName() {
-		return "Collect Dark Oak Logs";
+		return "Collect Jungle Logs";
 	}
 
 	@Override
@@ -82,11 +80,11 @@ public class MissionCollectDarkOakLogs extends SkyBlockProgressMission {
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionGiveRyanDarkOakLogs.class);
+		player.getMissionData().startMission(MissionGiveMolbertJungleLogs.class);
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
-		return Set.of(RegionType.DARK_THICKET, RegionType.TRIALS_OF_FIRE);
+		return Set.of(RegionType.JUNGLE_ISLAND);
 	}
 }

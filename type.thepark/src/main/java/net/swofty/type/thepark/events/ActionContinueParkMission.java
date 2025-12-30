@@ -59,9 +59,6 @@ public class ActionContinueParkMission implements HypixelEventClass {
 					});
 				}
 			}
-			case JUNGLE_ISLAND -> {
-				data.startMission(MissionTalkToMolbert.class);
-			}
 			case null, default -> {
 			}
 		}

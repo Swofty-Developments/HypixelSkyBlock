@@ -1,20 +1,32 @@
 package net.swofty.type.thepark;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.BlockVec;
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.network.packet.server.SendablePacket;
+import net.minestom.server.timer.ExecutionType;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
+import net.swofty.type.generic.entity.InteractionEntity;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.entity.TextDisplayEntity;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle.MissionPlaceTraps;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.thepark.tab.TheParkServerModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -24,6 +36,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TypeTheParkLoader implements SkyBlockTypeLoader {
+
     @Override
     public ServerType getType() {
         return ServerType.SKYBLOCK_THE_PARK;
@@ -36,6 +49,39 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
+        List<Point> trapBlocks = List.of(
+                new BlockVec(-466, 119, -54),
+                new BlockVec(-449, 120, -65),
+                new BlockVec(-440, 122, -92)
+        );
+
+        for (Point trap : trapBlocks) {
+            InteractionEntity hitbox = new InteractionEntity(1f, 1f, (p, event) -> {
+                SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+                if (!player.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {
+                    return;
+                }
+
+            });
+
+            TextDisplayEntity text = new TextDisplayEntity(Component.text("Place Trap Here", NamedTextColor.GREEN), meta -> {});
+            hitbox.setInstance(HypixelConst.getInstanceContainer(), trap);
+            text.setInstance(HypixelConst.getInstanceContainer(), trap.add(0, 1, 0));
+        }
+
+        MinecraftServer.getSchedulerManager().submitTask(() -> {
+            for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
+                //if (!player.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) continue;
+                for (Point position : trapBlocks) {
+                    if (!(player.getPosition().distance(position) <= 25)) continue;
+                    List<SendablePacket> packets = TrapParticles.getParticlePackets(position);
+                    player.sendPackets(packets);
+                }
+            }
+            return TaskSchedule.millis(400);
+        }, ExecutionType.TICK_START);
+
+        TrialOfFire.init();
     }
 
     @Override

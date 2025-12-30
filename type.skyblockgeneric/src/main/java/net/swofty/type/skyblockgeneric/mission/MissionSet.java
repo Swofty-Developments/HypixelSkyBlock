@@ -17,6 +17,7 @@ import net.swofty.type.skyblockgeneric.mission.missions.goldmine.lazyminer.Missi
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionBreakOaklog;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjackAgain;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.*;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionCompleteTrialOfFireOne;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionFindTheCampfire;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionSneakUpOnRyan;
@@ -33,6 +34,7 @@ public enum MissionSet {
     TIME_TO_MINE(MissionTalkToBlacksmith.class, MissionMineCoal.class, MissionTalkToBlacksmithAgain.class),
     TIME_TO_STRIKE(MissionKillZombies.class, MissionTalkToBartender.class),
     TIMBER(MissionTalkToLumberjack.class, MissionBreakOaklog.class, MissionTalkToLumberjackAgain.class),
+    INTO_THE_WOODS(MissionTravelToThePark.class, MissionTalkToCharlie.class, MissionCollectBirchLogs.class, MissionGiveCharlieBirchLogs.class, MissionClaimTheTrousers.class, MissionTalkToCharlieAgain.class),
     FIRST_HARVEST(MissionTalkToFarmer.class, MissionCollectWheat.class, MissionTalkToFarmerAgain.class),
     BACK_AT_THE_BARNYARD(MissionTalkToFarmHand.class, MissionCraftWheatMinion.class, MissionTalkToFarmhandAgain.class),
     CARPENTRY(MissionGiveWoolToCarpenter.class),

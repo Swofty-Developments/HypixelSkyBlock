@@ -10,16 +10,11 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionTalkToMolbert extends SkyBlockMission implements LocationAssociatedMission {
-
-	@Override
-	public Pos getLocation() {
-		return new Pos(-447.5, 120, -63.500);
-	}
+public class MissionTalkToMolbertAgain extends SkyBlockMission implements LocationAssociatedMission {
 
 	@Override
 	public String getID() {
-		return "talk_to_molbert";
+		return "talk_to_molbert_again";
 	}
 
 	@Override
@@ -29,16 +24,22 @@ public class MissionTalkToMolbert extends SkyBlockMission implements LocationAss
 
 	@Override
 	public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
+		mission.getNewObjectiveText().forEach(player::sendMessage);
 		return Map.of();
 	}
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionCollectJungleLogs.class);
+		player.getMissionData().startMission(MissionPlaceTraps.class);
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
-		return Set.of(RegionType.JUNGLE_ISLAND, RegionType.SAVANNA_WOODLAND);
+		return Set.of(RegionType.SAVANNA_WOODLAND, RegionType.JUNGLE_ISLAND);
+	}
+
+	@Override
+	public Pos getLocation() {
+		return new Pos(-447.5, 120, -63.500);
 	}
 }
