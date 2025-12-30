@@ -153,6 +153,7 @@ public abstract class HypixelNPC {
                 if (needsUpdate && !needsFullUpdate) {
                     entity.setView(npcPosition.yaw(), npcPosition.pitch());
                     entity.setInstance(config.instance(), npcPosition);
+                    return;
                 }
                 if (needsFullUpdate) {
                     entity.remove();
