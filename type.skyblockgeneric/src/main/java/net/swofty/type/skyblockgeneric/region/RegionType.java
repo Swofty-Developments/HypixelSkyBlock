@@ -47,6 +47,17 @@ public enum RegionType {
 	MELODY_PLATEAU("Melody's Plateau", "§5", null, SavannaWoodlandsBiome.class),
 	JUNGLE_ISLAND("Jungle Island", "§a", null, JungleIslandBiome.class),
 
+	JERRYS_WORKSHOP("Jerry's Workshop", "§c"),
+	JERRY_POND("Jerry Pond", "§b"),
+	SUNKEN_JERRY_POND("Sunken Jerry Pond", "§b"),
+	TERRYS_SHACK("Terry's Shack", "§b"),
+	MOUNT_JERRY("Mount Jerry", "§c"),
+	HOT_SPRINGS("Hot Springs", "§4"),
+	GLACIAL_CAVE("Glacial Cave", "§3", GlacialCaveConfiguration.class),
+	GARYS_SHACK("Gary's Shack", "§b"),
+	SHERRYS_SHOWROOM("Sherry's Showroom", "§e"),
+	EINARYS_EMPORIUM("Einary's Emporium", "§6"),
+
 	THE_BARN("The Barn", "§b", BarnConfiguration.class),
 	MUSHROOM_DESERT("Mushroom Desert"),
 	DESERT_SETTLEMENT("Desert Settlement", "§e"),
