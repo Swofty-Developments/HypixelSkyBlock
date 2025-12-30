@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.item.handlers.ability;
 
+import net.minestom.server.coordinate.BlockVec;
+import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Pos;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.abilities.BuildersWandAbility;
 
 import java.util.HashMap;
@@ -24,13 +27,29 @@ public class AbilityRegistry {
 		register(new RegisteredAbility(
 				"INSTANT_TRANSMISSION",
 				"Instant Transmission",
-				"§7Teleports §a8 Blocks §7ahead of you and gain §a+50 §fSpeed for §a3 seconds§f.",
+				"§7Teleports §a8 Blocks §7ahead of you and gain §a+50 §fSpeed for §a3 seconds§7.",
 				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
 				5,
 				new RegisteredAbility.AbilityManaCost(50),
 				(player, item, ignored, ignored2) -> {
 					player.teleport(player.getPosition().add(player.getPosition().direction().mul(8)));
-					// add speed too
+					// TODO: add speed too
+				}
+		));
+
+		register(new RegisteredAbility(
+				"ETHER_TRANSMISSION",
+				"Ether Transmission",
+				"§7Teleport to your targeted block up to §a57 §7blocks away.",
+				RegisteredAbility.AbilityActivation.SNEAK_RIGHT_CLICK,
+				5,
+				new RegisteredAbility.AbilityManaSoulflowCost(180, 1),
+				(player, item, ignored, ignored2) -> {
+					Point targetedBlock = player.getTargetBlockPosition(57);
+					if (targetedBlock == null) return;
+					BlockVec tpPos = targetedBlock.asBlockVec();
+					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return; // TODO: don't consume mana/soulflow if teleport fails
+					player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
 				}
 		));
 

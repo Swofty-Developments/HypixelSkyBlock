@@ -23,7 +23,15 @@ public class ActionItemAbilityLeftUse implements HypixelEventClass {
 
         if (item.hasComponent(AbilityComponent.class)) {
             AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
-            RegisteredAbility ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.LEFT_CLICK);
+
+            RegisteredAbility ability = null;
+            if(player.isSneaking()) {
+                ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.SNEAK_LEFT_CLICK);
+            }
+            if (ability == null) {
+                abilityComponent.getAbility(RegisteredAbility.AbilityActivation.LEFT_CLICK);
+            }
+
             if (ability != null) {
                 if (!ability.getCost().canUse(player)) {
                     ability.getCost().onFail(player);

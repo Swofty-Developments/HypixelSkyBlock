@@ -46,6 +46,25 @@ items:
               type: ASPECT_OF_THE_JERRY
               amount: 1
 
+  - id: ASPECT_OF_THE_DRAGON
+    material: DIAMOND_SWORD
+    rarity: LEGENDARY
+    abilities:
+      - DRAGON_RAGE
+    default_statistics:
+        damage: 225
+        strength: 100
+    components:
+      - id: ABILITY
+        abilities:
+          - DRAGON_RAGE
+      - id: SELLABLE
+        value: 100000
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: "Aspect of the Dragons"
+
   - id: END_SWORD
     material: IRON_SWORD
     rarity: UNCOMMON
@@ -57,6 +76,26 @@ items:
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
+
+  - id: ASPECT_OF_THE_VOID
+    material: DIAMOND_SHOVEL
+    rarity: EPIC
+    default_statistics:
+      intelligence: 5000
+      damage: 120
+      strength: 100
+    abilities:
+      - INSTANT_TRANSMISSION
+      - ETHER_TRANSMISSION
+    components:
+      - id: ABILITY
+        abilities:
+        - INSTANT_TRANSMISSION
+        - ETHER_TRANSMISSION
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: "Aspect of the Void"
 
   - id: FANCY_SWORD
     material: GOLDEN_SWORD

@@ -34,6 +34,9 @@ public enum ItemType {
 	NEW_YEAR_CAKE(Material.CAKE, Rarity.SPECIAL),
 	NEW_YEAR_CAKE_BAG(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
+	RAW_SOULFLOW(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+	SOULFLOW(Material.PLAYER_HEAD, Rarity.RARE),
+
 	/**
 	 * Accessories
 	 */
@@ -621,6 +624,8 @@ public enum ItemType {
 	ASPECT_OF_THE_END(Material.DIAMOND_SWORD, Rarity.RARE),
 	SQUIRE_SWORD(Material.IRON_SWORD, Rarity.UNCOMMON),
 	MERCENARY_AXE(Material.IRON_AXE, Rarity.RARE),
+	ASPECT_OF_THE_DRAGON(Material.DIAMOND_SWORD, Rarity.LEGENDARY),
+	ASPECT_OF_THE_VOID(Material.DIAMOND_SHOVEL, Rarity.EPIC),
 
 	/**
 	 * Shovels
