@@ -20,6 +20,7 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
@@ -58,6 +59,7 @@ import org.reflections.Reflections;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -144,20 +146,18 @@ public class SkyBlockVelocity {
 							PresencePublisher.publish(serverConnectedEvent.getPlayer(), true, newServer, type != null ? type.name() : null);
 						}));
 
-        // Heartbeat to refresh presence in case events are missed
-        MinecraftServer.getSchedulerManager().buildTask(() -> {
-            server.getAllPlayers().forEach(p -> {
-                var current = p.getCurrentServer();
+        server.getScheduler().buildTask(SkyBlockVelocity.getPlugin(), () -> {
+            server.getAllPlayers().forEach(player -> {
+                var current = player.getCurrentServer();
                 var type = current.map(conn -> GameManager.getTypeFromRegisteredServer(conn.getServer())).orElse(null);
-                PresencePublisher.publish(p, true, current.map(ServerConnection::getServer).orElse(null),
+                PresencePublisher.publish(player, true, current.map(ServerConnection::getServer).orElse(null),
                         type != null ? type.name() : null);
             });
-        }).delay(TaskSchedule.seconds(5)).repeat(TaskSchedule.seconds(10)).schedule();
+        }).repeat(Duration.ofSeconds(10)).schedule();
 
 		/**
 		 * Register commands
 		 */
-
 		CommandManager commandManager = proxy.getCommandManager();
 		CommandMeta statusCommandMeta = commandManager.metaBuilder("serverstatus")
 				.aliases("status")
