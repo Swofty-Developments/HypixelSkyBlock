@@ -1,6 +1,7 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.component.DataComponents;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.item.PickupItemEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.CustomData;
@@ -18,6 +19,12 @@ public class ActionGamePickup implements HypixelEventClass {
 	public void run(PickupItemEvent event) {
 		ItemStack itemStack = event.getItemEntity().getItemStack();
 		if (event.getLivingEntity() instanceof BedWarsPlayer player) {
+			// Only allow players on survival mode to pickup items
+			if (player.getGameMode() != GameMode.SURVIVAL) {
+				event.setCancelled(true);
+				return;
+			}
+
 			player.getInventory().addItemStack(itemStack);
 
 			// handle bedwars xp for diamonds and emeralds
