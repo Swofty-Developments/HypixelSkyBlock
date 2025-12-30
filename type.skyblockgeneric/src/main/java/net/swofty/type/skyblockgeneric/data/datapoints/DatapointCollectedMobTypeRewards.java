@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -15,18 +16,17 @@ public class DatapointCollectedMobTypeRewards extends SkyBlockDatapoint<Datapoin
         super(key, value, new Serializer<>() {
             @Override
             public String serialize(PlayerCollectedMobTypeRewards value) {
-                JSONObject jsonObject = new JSONObject(value.collectedMobTypes);
-                return jsonObject.toString();
+                return new JSONArray(value.collectedMobTypes).toString();
             }
 
             @Override
             public PlayerCollectedMobTypeRewards deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
+                JSONArray array = new JSONArray(json);
                 List<String> collectedMobTypes = new ArrayList<>();
 
-                jsonObject.getJSONArray("values").forEach((value) -> {
+                array.forEach(value -> {
                     if (value instanceof String)
-                        collectedMobTypes.add(value.toString());
+                        collectedMobTypes.add((String) value);
                 });
 
                 return new PlayerCollectedMobTypeRewards(collectedMobTypes);
