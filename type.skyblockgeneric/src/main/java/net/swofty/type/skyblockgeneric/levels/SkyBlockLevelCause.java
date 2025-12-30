@@ -4,6 +4,7 @@ import lombok.NonNull;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
+import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
 import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
@@ -58,6 +59,11 @@ public class SkyBlockLevelCause {
         // Register all Fairy Exchange rewards
         for (int i = 0; i <= FairySoulExchangeLevels.values().length; i++) {
             CAUSES.put("fairy-soul-exchange-" + i, new FairySoulExchangeLevelCause(i));
+        }
+
+        // Register all collected mob type rewards
+        for (MobType mobType : MobType.values()) {
+            CAUSES.put("mob-type-" + mobType.name(), new CollectedMobTypesCause(mobType.name()));
         }
 
         // Register all Mission rewards

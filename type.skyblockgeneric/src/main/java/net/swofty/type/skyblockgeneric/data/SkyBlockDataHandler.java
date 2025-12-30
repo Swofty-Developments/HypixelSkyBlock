@@ -438,7 +438,11 @@ public class SkyBlockDataHandler extends DataHandler {
                 DatapointKat.class, new DatapointKat("kat")),
 
         STASH("stash", false, false, false,
-                DatapointStash.class, new DatapointStash("stash"));
+                DatapointStash.class, new DatapointStash("stash")),
+
+        COLLECTED_MOB_TYPE_REWARDS("collected_mob_type_rewards", false, false, false,
+                DatapointCollectedMobTypeRewards.class, new DatapointCollectedMobTypeRewards("collected_mob_type_rewards")),
+        ;
 
         @Getter private final String key;
         @Getter private final Boolean isProfilePersistent;
