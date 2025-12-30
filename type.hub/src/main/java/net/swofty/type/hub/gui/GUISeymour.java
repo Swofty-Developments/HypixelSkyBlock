@@ -8,13 +8,59 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.HypixelPlayer;
 
+import java.util.List;
+
 public class GUISeymour extends HypixelInventoryGUI {
+    private final List<SkyBlockItem> cheapTuxedoSet = List.of(
+            new SkyBlockItem(ItemType.CHEAP_TUXEDO_CHESTPLATE),
+            new SkyBlockItem(ItemType.CHEAP_TUXEDO_LEGGINGS),
+            new SkyBlockItem(ItemType.CHEAP_TUXEDO_BOOTS)
+    );
+
+    private final List<SkyBlockItem> fancyTuxedoSet = List.of(
+            new SkyBlockItem(ItemType.FANCY_TUXEDO_CHESTPLATE),
+            new SkyBlockItem(ItemType.FANCY_TUXEDO_LEGGINGS),
+            new SkyBlockItem(ItemType.FANCY_TUXEDO_BOOTS)
+    );
+
+    private final List<SkyBlockItem> elegantTuxedoSet = List.of(
+            new SkyBlockItem(ItemType.ELEGANT_TUXEDO_CHESTPLATE),
+            new SkyBlockItem(ItemType.ELEGANT_TUXEDO_LEGGINGS),
+            new SkyBlockItem(ItemType.ELEGANT_TUXEDO_BOOTS)
+    );
+
+    private final double cheapTuxedoPrice = 3_000_000;
+    private final double fancyTuxedoPrice = 20_000_000;
+    private final double elegantTuxedoPrice = 74_999_999;
+
+    private final double cheapTuxedoCritDamage = cheapTuxedoSet.stream()
+                    .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.CRIT_DAMAGE))
+                    .sum();
+    private final double fancyTuxedoCritDamage = cheapTuxedoSet.stream()
+            .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.CRIT_DAMAGE))
+            .sum();
+    private final double elegantTuxedoCritDamage = cheapTuxedoSet.stream()
+            .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.CRIT_DAMAGE))
+            .sum();
+
+    private final double cheapTuxedoIntelligence = cheapTuxedoSet.stream()
+            .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.INTELLIGENCE))
+            .sum();
+    private final double fancyTuxedoIntelligence = cheapTuxedoSet.stream()
+            .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.INTELLIGENCE))
+            .sum();
+    private final double elegantTuxedoIntelligence = cheapTuxedoSet.stream()
+            .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.INTELLIGENCE))
+            .sum();
+
     public GUISeymour() {
         super("Seymour's Fancy Suits", InventoryType.CHEST_4_ROW);
     }
@@ -23,21 +69,16 @@ public class GUISeymour extends HypixelInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(31));
 
-        double cheapTuxedoPrice = 3000000;
-        double fancyTuxedoPrice = 20000000;
-        double elegantTuxedoPrice = 74999999;
-
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 double coins = player.getCoins();
                 if (coins < cheapTuxedoPrice) {
+                    player.sendMessage("§cYou don't have enough coins!");
                     return;
                 }
-                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_CHESTPLATE);
-                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_BOOTS);
-                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_LEGGINGS);
+                cheapTuxedoSet.forEach(player::addAndUpdateItem);
                 player.playSuccessSound();
                 player.removeCoins(cheapTuxedoPrice);
             }
@@ -48,8 +89,8 @@ public class GUISeymour extends HypixelInventoryGUI {
                 ItemStack.Builder builder = ItemStackCreator.getStack("§5Cheap Tuxedo", Material.LEATHER_CHESTPLATE, 1,
                         "",
                         "§8Complete suit",
-                        "§7Crit Damage: §c+100%",
-                        "§7Intelligence: §a+100",
+                        "§7Crit Damage: §c+" + (int) cheapTuxedoCritDamage + "%",
+                        "§7Intelligence: §a+" + (int) cheapTuxedoIntelligence,
                         "",
                         "§6Full Set Bonus: Dashing §7(0/3)",
                         "§7Max Health set to §c75♥§7.",
@@ -72,11 +113,10 @@ public class GUISeymour extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 double coins = player.getCoins();
                 if (coins < fancyTuxedoPrice) {
+                    player.sendMessage("§cYou don't have enough coins!");
                     return;
                 }
-                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_CHESTPLATE);
-                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_BOOTS);
-                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_LEGGINGS);
+                fancyTuxedoSet.forEach(player::addAndUpdateItem);
                 player.playSuccessSound();
                 player.removeCoins(fancyTuxedoPrice);
             }
@@ -87,8 +127,8 @@ public class GUISeymour extends HypixelInventoryGUI {
                 ItemStack.Builder builder = ItemStackCreator.getStack("§6Fancy Tuxedo", Material.LEATHER_CHESTPLATE, 1,
                         "",
                         "§8Complete suit",
-                        "§7Crit Damage: §c+150%",
-                        "§7Intelligence: §a+300",
+                        "§7Crit Damage: §c+" + (int) fancyTuxedoCritDamage + "%",
+                        "§7Intelligence: §a+" + (int) fancyTuxedoIntelligence,
                         "",
                         "§6Full Set Bonus: Dashing §7(0/3)",
                         "§7Max Health set to §c150♥§7.",
@@ -112,11 +152,10 @@ public class GUISeymour extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
                 double coins = player.getCoins();
                 if (coins < elegantTuxedoPrice) {
+                    player.sendMessage("§cYou don't have enough coins!");
                     return;
                 }
-                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_CHESTPLATE);
-                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_BOOTS);
-                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_LEGGINGS);
+                elegantTuxedoSet.forEach(player::addAndUpdateItem);
                 player.playSuccessSound();
                 player.removeCoins(elegantTuxedoPrice);
             }
@@ -127,8 +166,8 @@ public class GUISeymour extends HypixelInventoryGUI {
                 ItemStack.Builder builder = ItemStackCreator.getStack("§6Elegant Tuxedo", Material.LEATHER_CHESTPLATE, 1,
                         "",
                         "§8Complete suit",
-                        "§7Crit Damage: §c+200%",
-                        "§7Intelligence: §a+500",
+                        "§7Crit Damage: §c+" + (int) elegantTuxedoCritDamage + "%",
+                        "§7Intelligence: §a+" + (int) elegantTuxedoIntelligence,
                         "",
                         "§6Full Set Bonus: Dashing §7(0/3)",
                         "§7Max Health set to §c1250♥§7.",
