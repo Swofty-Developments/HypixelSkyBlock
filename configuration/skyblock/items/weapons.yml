@@ -81,7 +81,6 @@ items:
     material: DIAMOND_SHOVEL
     rarity: EPIC
     default_statistics:
-      intelligence: 5000
       damage: 120
       strength: 100
     abilities:

@@ -78,7 +78,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     @Setter
     public boolean isBankDelayed = false;
     @Setter
-    private float mana = 5000;
+    private float mana = 100;
     @Setter
     private boolean inLaunchpad = false;
     @Setter
