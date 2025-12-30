@@ -431,6 +431,9 @@ public class SkyBlockDataHandler extends DataHandler {
         LATEST_NEW_YEAR_CAKE_YEAR("latest_new_year_cake_year", false, false, false,
                 DatapointInteger.class, new DatapointInteger("latest_new_year_cake_year", 0)),
 
+        LATEST_YEAR_PRESENT_PICKUP("latest_year_pickup_present", false, false, false,
+                DatapointPresentYear.class, new DatapointPresentYear("latest_year_pickup_present")),
+
         SOULFLOW("soulflow", false, false, false,
                 DatapointInteger.class, new DatapointInteger("soulflow", 0)),
 
@@ -438,7 +441,11 @@ public class SkyBlockDataHandler extends DataHandler {
                 DatapointKat.class, new DatapointKat("kat")),
 
         STASH("stash", false, false, false,
-                DatapointStash.class, new DatapointStash("stash"));
+                DatapointStash.class, new DatapointStash("stash")),
+
+        COLLECTED_MOB_TYPE_REWARDS("collected_mob_type_rewards", false, false, false,
+                DatapointCollectedMobTypeRewards.class, new DatapointCollectedMobTypeRewards("collected_mob_type_rewards")),
+        ;
 
         @Getter private final String key;
         @Getter private final Boolean isProfilePersistent;

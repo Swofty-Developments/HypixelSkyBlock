@@ -22,13 +22,13 @@ public class GUIShopWoolWeaverCool extends SkyBlockShopGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                new GUIShopWoolWeaverCool().open(player);
+                new GUIShopWoolWeaverVibrant().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                return ItemStackCreator.createNamedItemStack(Material.ARROW, "§a->");
+                return ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1, "§ePage 1");
             }
         });
     }

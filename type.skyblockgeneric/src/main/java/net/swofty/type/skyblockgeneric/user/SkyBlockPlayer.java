@@ -916,6 +916,10 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.DEATHS, DatapointDeaths.class).getValue();
     }
 
+    public DatapointCollectedMobTypeRewards.PlayerCollectedMobTypeRewards getCollectedMobTypesData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COLLECTED_MOB_TYPE_REWARDS, DatapointCollectedMobTypeRewards.class).getValue();
+    }
+
     @Override
     public void kill() {
         setHealth(getMaxHealth());
