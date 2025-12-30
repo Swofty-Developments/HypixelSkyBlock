@@ -20,8 +20,13 @@ gameserver/
 │       ├── islands/
 │       │   ├── hypixel_skyblock_hub/
 │       │   └── hypixel_skyblock_island_template/
-│       ├── items/
 │       ├── collection/
+│       ├── items/
+│       ├── levels/
+│       ├── pack_texturess/ # Optional
+│       ├── reforges/
+│       ├── items/
+│       ├── skills/
 │       └── songs/           # Optional
 ├── hypixel_prototype_lobby/ # In configuration folder
 ```
@@ -60,16 +65,19 @@ Extract the world files download and place them:
 
 Download from [configuration/skyblock](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock):
 
+- `skills/` folder → `configuration/skyblock/skills/`
+- `levels/` folder → `configuration/skyblock/levels/`
+- `reforges/` folder → `configuration/skyblock/reforges/`
 - `items/` folder → `configuration/skyblock/items/`
-- `collection/` folder → `configuration/skyblock/collection/`
+- `collections/` folder → `configuration/skyblock/collections/`
 - `songs/` folder → `configuration/skyblock/songs/` (optional)
 
 ### 5. Setup NanoLimbo
 
 NanoLimbo handles players during server transfers:
 
-1. Place `NanoLimbo-1.9.8.jar` in a separate directory
-2. Run it once: `java -jar NanoLimbo-1.9.8.jar`
+1. Place `NanoLimbo-1.10.2.jar` in a separate directory
+2. Run it once: `java -jar NanoLimbo-1.10.2.jar`
 3. Edit generated `settings.yml`:
    - Set `type: MODERN`
    - Set `secret: 'YOUR_VELOCITY_SECRET'`
