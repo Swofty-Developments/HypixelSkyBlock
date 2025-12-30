@@ -175,7 +175,7 @@ public class RegisteredAbility {
 
         @Override
         public String getLoreDisplay() {
-            return "§8Soulflow Cost: §e" + soulflow + "\n§8Mana Cost: §3" + cost;
+            return "§8Soulflow Cost: §3" + soulflow + "\n§8Mana Cost: §3" + cost;
         }
     }
 
