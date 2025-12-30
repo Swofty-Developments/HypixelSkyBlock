@@ -2,9 +2,6 @@ items:
   - id: RAW_SOULFLOW
     material: PLAYER_HEAD
     rarity: UNCOMMON
-    lore:
-      - "§7Hold and right-click to consume,"
-      - "§7gaining §3+1⸎ Soulflow§7."
     components:
       - id: SOULFLOW
         amount: 1
@@ -13,9 +10,6 @@ items:
   - id: SOULFLOW
     material: PLAYER_HEAD
     rarity: RARE
-    lore:
-      - "§7Hold and right-click to consume,"
-      - "§7gaining §3+160⸎ Soulflow§7."
     components:
       - id: SOULFLOW
         amount: 160
