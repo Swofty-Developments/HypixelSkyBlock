@@ -20,6 +20,7 @@ gameserver/
 │       ├── islands/
 │       │   ├── hypixel_skyblock_hub/
 │       │   └── hypixel_skyblock_island_template/
+│       ├── collection/
 │       ├── items/
 │       ├── levels/
 │       ├── pack_texturess/ # Optional
