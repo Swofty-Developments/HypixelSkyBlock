@@ -108,10 +108,10 @@ public final class Game {
 		String randomLetters = UUID.randomUUID().toString().replaceAll("-", "")
 				.substring(0, new Random().nextInt(10) + 4);
 		for (BedWarsPlayer p : players) {
-			String name = p == player ? player.getUsername() : randomLetters;
-			p.sendMessage("§k" + name + " §ehas joined (§b" + players.size() + "§e/§b" + maxPlayers + "§e)");
+			String name = p.getUuid().compareTo(player.getUuid()) == 0 ? player.getUsername() : "§k" + randomLetters;
+			p.sendMessage(name + " §ehas joined (§b" + players.size() + "§e/§b" + maxPlayers + "§e)");
 		}
-		player.setDisplayName(Component.text(randomLetters));
+		player.setDisplayName(Component.text(randomLetters, NamedTextColor.WHITE, TextDecoration.OBFUSCATED));
 
 		if (hasMinimumPlayersForStart() && !countdown.isActive()) {
 			countdown.startCountdown();
