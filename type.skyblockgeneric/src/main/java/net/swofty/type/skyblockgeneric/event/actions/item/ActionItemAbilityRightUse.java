@@ -28,7 +28,15 @@ public class ActionItemAbilityRightUse implements HypixelEventClass {
 
         if (item.hasComponent(AbilityComponent.class)) {
             AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
-            RegisteredAbility ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.RIGHT_CLICK);
+
+            RegisteredAbility ability = null;
+            if(player.isSneaking()) {
+                ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.SNEAK_RIGHT_CLICK);
+            }
+            if (ability == null) {
+                abilityComponent.getAbility(RegisteredAbility.AbilityActivation.RIGHT_CLICK);
+            }
+
             if (ability != null) {
                 if (!ability.getCost().canUse(player)) {
                     ability.getCost().onFail(player);

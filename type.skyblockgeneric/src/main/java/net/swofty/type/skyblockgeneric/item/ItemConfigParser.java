@@ -119,6 +119,10 @@ public class ItemConfigParser {
 				List<ItemAnimation> animations = (List<ItemAnimation>) config.get("disabled_animations");
 				yield new DisableAnimationComponent(animations);
 			}
+			case "SOULFLOW" -> {
+				int amount = (int) config.get("amount");
+				yield new SoulflowComponent(amount);
+			}
 			case "DRILL" -> new DrillComponent();
 			case "ABIPHONE" -> {
 				List<String> features = (List<String>) config.get("features");
