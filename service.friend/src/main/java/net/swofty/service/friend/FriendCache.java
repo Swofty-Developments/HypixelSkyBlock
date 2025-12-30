@@ -1,15 +1,23 @@
 package net.swofty.service.friend;
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import net.swofty.commons.friend.*;
 import net.swofty.commons.friend.events.*;
 import net.swofty.commons.friend.events.response.*;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.json.JSONObject;
+import org.bson.Document;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -276,7 +284,7 @@ public class FriendCache {
         sendEvent(new FriendSettingToggledResponseEvent(player, settingType, newValue));
     }
 
-    public static void handleListRequest(FriendListRequestEvent event, Map<UUID, String> playerNames, Map<UUID, Boolean> onlineStatus) {
+    public static void handleListRequest(FriendListRequestEvent event) {
         UUID player = event.getPlayer();
         int page = event.getPage();
         boolean bestOnly = event.isBestOnly();
@@ -291,24 +299,40 @@ public class FriendCache {
         int startIndex = (page - 1) * FRIENDS_PER_PAGE;
         int endIndex = Math.min(startIndex + FRIENDS_PER_PAGE, totalFriends);
 
+        List<Friend> pageFriends = friends.subList(startIndex, endIndex);
+        Map<UUID, String> playerNames = resolvePlayerNames(pageFriends.stream()
+                .map(Friend::getUuid)
+                .toList());
+        List<UUID> friendUuids = pageFriends.stream().map(Friend::getUuid).toList();
+        Map<UUID, Boolean> onlineStatus = PresenceStorage.getOnlineStatus(friendUuids);
+        Map<UUID, net.swofty.commons.presence.PresenceInfo> presenceInfo = PresenceStorage.getMap(friendUuids);
+
         List<FriendListResponseEvent.FriendListEntry> entries = new ArrayList<>();
-        for (int i = startIndex; i < endIndex; i++) {
-            Friend friend = friends.get(i);
+        for (Friend friend : pageFriends) {
             String name = playerNames.getOrDefault(friend.getUuid(), "Unknown");
             boolean isOnline = onlineStatus.getOrDefault(friend.getUuid(), false);
+            net.swofty.commons.presence.PresenceInfo pInfo = presenceInfo.get(friend.getUuid());
+            long lastSeen = pInfo != null ? pInfo.getLastSeen() : 0L;
+            String server = (pInfo != null && pInfo.isOnline() && pInfo.getServerType() != null)
+                    ? formatServerDisplay(pInfo)
+                    : null;
+            long friendSince = friend.getAddedTimestamp();
             entries.add(new FriendListResponseEvent.FriendListEntry(
                     friend.getUuid(),
                     name,
                     friend.getNickname(),
                     friend.isBestFriend(),
-                    isOnline
+                    isOnline,
+                    lastSeen,
+                    friendSince,
+                    server
             ));
         }
 
         sendEvent(new FriendListResponseEvent(player, entries, page, totalPages, bestOnly));
     }
 
-    public static void handleRequestsListRequest(FriendRequestsListEvent event, Map<UUID, String> playerNames) {
+    public static void handleRequestsListRequest(FriendRequestsListEvent event) {
         UUID player = event.getPlayer();
         int page = event.getPage();
 
@@ -322,10 +346,14 @@ public class FriendCache {
         int startIndex = (page - 1) * FRIENDS_PER_PAGE;
         int endIndex = Math.min(startIndex + FRIENDS_PER_PAGE, totalRequests);
 
+        List<PendingFriendRequest> pageRequests = requests.subList(startIndex, endIndex);
+        Map<UUID, String> playerNames = resolvePlayerNames(pageRequests.stream()
+                .map(PendingFriendRequest::getFrom)
+                .toList());
+
         List<FriendRequestsListResponseEvent.FriendRequestEntry> entries = new ArrayList<>();
-        for (int i = startIndex; i < endIndex; i++) {
-            PendingFriendRequest request = requests.get(i);
-            String senderName = playerNames.getOrDefault(request.getFrom(), "Unknown");
+        for (PendingFriendRequest request : pageRequests) {
+            String senderName = playerNames.getOrDefault(request.getFrom(), request.getFromName());
             entries.add(new FriendRequestsListResponseEvent.FriendRequestEntry(
                     request.getFrom(),
                     senderName,
@@ -337,6 +365,14 @@ public class FriendCache {
     }
 
     public static void handlePlayerJoin(UUID playerUuid, String playerName) {
+        PresenceStorage.upsert(new net.swofty.commons.presence.PresenceInfo(
+                playerUuid,
+                true,
+                null,
+                null,
+                System.currentTimeMillis()
+        ));
+
         FriendData playerData = getFriendData(playerUuid);
 
         for (Friend friend : playerData.getFriends()) {
@@ -348,6 +384,14 @@ public class FriendCache {
     }
 
     public static void handlePlayerLeave(UUID playerUuid, String playerName) {
+        PresenceStorage.upsert(new net.swofty.commons.presence.PresenceInfo(
+                playerUuid,
+                false,
+                null,
+                null,
+                System.currentTimeMillis()
+        ));
+
         FriendData playerData = cachedFriendData.get(playerUuid);
         if (playerData == null) return;
 
@@ -359,6 +403,69 @@ public class FriendCache {
         }
 
         cachedFriendData.remove(playerUuid);
+    }
+
+    public static String getPlayerName(UUID uuid) {
+        return resolvePlayerNames(List.of(uuid)).getOrDefault(uuid, "Unknown");
+    }
+
+    private static Map<UUID, String> resolvePlayerNames(Collection<UUID> uuids) {
+        Map<UUID, String> names = new HashMap<>();
+        if (uuids == null || uuids.isEmpty() || FriendDatabase.database == null) return names;
+
+        List<String> idStrings = uuids.stream().map(UUID::toString).toList();
+        names.putAll(fetchNamesFromCollection("data", idStrings));
+
+        Set<UUID> unresolved = new HashSet<>(uuids);
+        unresolved.removeAll(names.keySet());
+        if (!unresolved.isEmpty()) {
+            List<String> unresolvedIds = unresolved.stream().map(UUID::toString).toList();
+            names.putAll(fetchNamesFromCollection("profiles", unresolvedIds));
+        }
+
+        return names;
+    }
+
+    private static Map<UUID, String> fetchNamesFromCollection(String collectionName, List<String> ids) {
+        Map<UUID, String> names = new HashMap<>();
+        try {
+            MongoCollection<Document> collection = FriendDatabase.database.getCollection(collectionName);
+            if (collection == null || ids.isEmpty()) return names;
+
+            for (Document doc : collection.find(Filters.in("_id", ids))) {
+                String id = doc.getString("_id");
+                if (id == null) continue;
+
+                String ign = parseStoredName(doc.getString("ign"));
+                if (ign == null && doc.containsKey("ignLowercase")) {
+                    ign = parseStoredName(doc.getString("ignLowercase"));
+                }
+
+                if (ign != null) {
+                    names.put(UUID.fromString(id), ign);
+                }
+            }
+        } catch (Exception e) {
+            Logger.error(e, "Failed to resolve player names from collection {}", collectionName);
+        }
+        return names;
+    }
+
+    private static String parseStoredName(String raw) {
+        if (raw == null) return null;
+        raw = raw.trim();
+        if (raw.startsWith("\"") && raw.endsWith("\"") && raw.length() >= 2) {
+            raw = raw.substring(1, raw.length() - 1);
+        }
+        return raw.isEmpty() ? null : raw;
+    }
+
+    private static String formatServerDisplay(net.swofty.commons.presence.PresenceInfo info) {
+        String type = info.getServerType();
+        String id = info.getServerId();
+        if (type == null && id == null) return null;
+        if (type != null && id != null) return type + " - " + id;
+        return type != null ? type : id;
     }
 
     private static void persistFriendData(UUID playerUuid) {
