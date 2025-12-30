@@ -31,6 +31,7 @@ dependencies {
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.3")
     // implementation("net.swofty:AtlasRedisAPI:1.1.4")
     implementation(project(":commons"))
+    implementation(project(":proxy.api"))
 
     implementation("org.mongodb:bson:4.11.2")
     implementation("org.mongodb:mongodb-driver-sync:4.11.2")

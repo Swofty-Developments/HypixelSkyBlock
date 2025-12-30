@@ -14,6 +14,7 @@ import net.swofty.commons.proxy.requirements.to.PlayerHandlerRequirements;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
+import net.swofty.velocity.presence.PresencePublisher;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
@@ -43,6 +44,8 @@ public class ListenerPlayerHandler extends RedisListener {
             return new JSONObject();
         }
         if (action == PlayerHandlerRequirements.PlayerHandlerActions.IS_ONLINE) {
+            Player player = potentialPlayer.get();
+            publishPresence(player, true);
             return new JSONObject().put("isOnline", true);
         }
         Player player = potentialPlayer.get();
@@ -56,6 +59,7 @@ public class ListenerPlayerHandler extends RedisListener {
                     return new JSONObject();
                 }
 
+                publishPresence(player, true);
                 return new JSONObject().put("server", new UnderstandableProxyServer(
                         serverInfo.displayName(),
                         serverInfo.internalID(),
@@ -151,5 +155,15 @@ public class ListenerPlayerHandler extends RedisListener {
 			}
 		}
         return new JSONObject();
+    }
+
+    private void publishPresence(Player player, boolean online) {
+        try {
+            Optional<ServerConnection> serverConn = player.getCurrentServer();
+            var type = serverConn.map(conn -> GameManager.getTypeFromRegisteredServer(conn.getServer())).orElse(null);
+            PresencePublisher.publish(player, online, serverConn.map(ServerConnection::getServer).orElse(null),
+                    type != null ? type.name() : null);
+        } catch (Exception ignored) {
+        }
     }
 }

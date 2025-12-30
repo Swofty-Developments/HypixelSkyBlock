@@ -224,14 +224,53 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
                     sb.append("§6✦ ");
                 }
 
-                // Name (with nickname if set)
-                if (friend.getNickname() != null && !friend.getNickname().isEmpty()) {
-                    sb.append("§e").append(friend.getName()).append(" §7(").append(friend.getNickname()).append(")");
-                } else {
-                    sb.append("§e").append(friend.getName());
+                // Name (rank-colored, matches tablist). Fallback to plain name if unavailable or failure.
+                String displayName;
+                try {
+                    displayName = HypixelPlayer.getDisplayName(friend.getUuid());
+                } catch (Exception e) {
+                    displayName = "§e" + friend.getName();
+                }
+                if (displayName == null || displayName.isEmpty()) {
+                    displayName = "§e" + friend.getName();
                 }
 
-                player.sendMessage(sb.toString());
+                // Append nickname if set
+                if (friend.getNickname() != null && !friend.getNickname().isEmpty()) {
+                    sb.append(displayName).append(" §7(").append(friend.getNickname()).append(")");
+                } else {
+                    sb.append(displayName);
+                }
+
+                // Server info (when online)
+                if (friend.isOnline() && friend.getServer() != null && !friend.getServer().isEmpty()) {
+                    sb.append(" §7- §e").append(friend.getServer());
+                }
+
+                TextComponent line = LegacyComponentSerializer.legacySection().deserialize(sb.toString());
+
+                String friendsSinceText;
+                if (friend.getFriendSince() > 0) {
+                    long secondsSince = Math.max(0, (System.currentTimeMillis() - friend.getFriendSince()) / 1000);
+                    friendsSinceText = "§7Friends for " + formatDuration(secondsSince);
+                } else {
+                    friendsSinceText = "§7Friends since: Unknown";
+                }
+
+                TextComponent hovered;
+                if (friend.isOnline()) {
+                    hovered = line.hoverEvent(Component.text(friendsSinceText));
+                } else {
+                    String lastSeenText;
+                    if (friend.getLastSeen() > 0) {
+                        long secondsAgo = Math.max(0, (System.currentTimeMillis() - friend.getLastSeen()) / 1000);
+                        lastSeenText = "§7Last seen " + formatDuration(secondsAgo) + " ago";
+                    } else {
+                        lastSeenText = "§7Last seen: Unknown";
+                    }
+                    hovered = line.hoverEvent(Component.text(lastSeenText + "\n" + friendsSinceText));
+                }
+                player.sendMessage(hovered);
             }
         }
 
@@ -276,6 +315,22 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
         player.sendMessage("§9§m-----------------------------------------------------");
         player.sendMessage(message);
         player.sendMessage("§9§m-----------------------------------------------------");
+    }
+
+    private String formatDuration(long seconds) {
+        long days = seconds / 86400;
+        long hours = (seconds % 86400) / 3600;
+        long minutes = (seconds % 3600) / 60;
+        if (days > 0) {
+            return days + "d " + hours + "h";
+        }
+        if (hours > 0) {
+            return hours + "h " + minutes + "m";
+        }
+        if (minutes > 0) {
+            return minutes + "m";
+        }
+        return seconds + "s";
     }
 
     private JSONObject createSuccessResponse(int playersHandled, List<UUID> playersHandledUuids) {

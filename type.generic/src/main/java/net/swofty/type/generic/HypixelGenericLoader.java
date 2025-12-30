@@ -167,6 +167,11 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         loader.getTablistManager().runScheduler(MinecraftServer.getSchedulerManager());
 
         /**
+         * Presence heartbeat to keep friend status fresh
+         */
+        net.swofty.type.generic.presence.PresenceHeartbeat.start();
+
+        /**
          * Register databases
          */
         ConnectionString cs = new ConnectionString(Configuration.get("mongodb"));
