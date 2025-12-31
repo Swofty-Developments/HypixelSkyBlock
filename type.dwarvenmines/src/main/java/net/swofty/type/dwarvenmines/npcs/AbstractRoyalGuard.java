@@ -10,6 +10,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import org.jspecify.annotations.NonNull;
 
 public class AbstractRoyalGuard extends HypixelNPC {
 
@@ -33,6 +34,11 @@ public class AbstractRoyalGuard extends HypixelNPC {
 			@Override
 			public Pos position(HypixelPlayer player) {
 				return position.apply(player);
+			}
+
+			@Override
+			public @NonNull String chatName() {
+				return "§6Royal Guard";
 			}
 
 			@Override
