@@ -1,0 +1,65 @@
+package net.swofty.type.murdermysterygame.item.impl;
+
+import net.minestom.server.event.player.PlayerUseItemEvent;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
+import net.swofty.commons.ServerType;
+import net.swofty.commons.ServiceType;
+import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
+import net.swofty.proxyapi.ProxyService;
+import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
+import net.swofty.type.murdermysterygame.game.Game;
+import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
+import net.swofty.type.murdermysterygame.item.SimpleInteractableItem;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+
+public class PlayAgainItem extends SimpleInteractableItem {
+    private static final ProxyService PROXY_SERVICE = new ProxyService(ServiceType.ORCHESTRATOR);
+
+    public PlayAgainItem() {
+        super("play_again");
+    }
+
+    @Override
+    public ItemStack getBlandItem() {
+        return ItemStackCreator.getStack("§aPlay Again §7(Right Click)", Material.PAPER, 1,
+                "§7Right-click to queue for another game!").build();
+    }
+
+    @Override
+    public void onItemUse(PlayerUseItemEvent event) {
+        MurderMysteryPlayer player = (MurderMysteryPlayer) event.getPlayer();
+        Game game = TypeMurderMysteryGameLoader.getPlayerGame(player);
+        if (game != null) {
+            String gameType = game.getGameType().toString();
+            game.leave(player);
+
+            // Queue for new game using ProxyService directly
+            GetServerForMapProtocolObject.GetServerForMapMessage message =
+                new GetServerForMapProtocolObject.GetServerForMapMessage(
+                    ServerType.MURDER_MYSTERY_GAME,
+                    null,
+                    gameType,
+                    1
+                );
+
+            PROXY_SERVICE.handleRequest(message).thenAccept(response -> {
+                if (response instanceof GetServerForMapProtocolObject.GetServerForMapResponse resp) {
+                    if (resp.server() != null) {
+                        ChooseGameProtocolObject.ChooseGameMessage chooseMessage =
+                            new ChooseGameProtocolObject.ChooseGameMessage(
+                                player.getUuid(),
+                                resp.server(),
+                                resp.gameId()
+                            );
+
+                        PROXY_SERVICE.handleRequest(chooseMessage).thenRun(() -> {
+                            player.asProxyPlayer().transferToWithIndication(resp.server().uuid());
+                        });
+                    }
+                }
+            });
+        }
+    }
+}

@@ -25,6 +25,7 @@ public class DatapointParkourData extends Datapoint<Map<DatapointParkourData.Par
 
     @Getter
     public enum ParkourType {
-        PROTOTYPE_LOBBY
+        PROTOTYPE_LOBBY,
+        MURDER_MYSTERY_LOBBY
     }
 }

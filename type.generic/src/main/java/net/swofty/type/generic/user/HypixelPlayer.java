@@ -101,7 +101,6 @@ public class HypixelPlayer extends Player {
 	}
 
 	public Component getColouredName() {
-
 		Rank rank = getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
 		return Component.text(getUsername(), rank.getTextColor());
 	}
