@@ -6,6 +6,7 @@ import net.swofty.commons.bedwars.BedwarsLevelColor;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
@@ -52,6 +53,15 @@ public class ActionPlayerChat implements HypixelEventClass {
 			}
 
 			PartyManager.sendChat(player, message);
+			return;
+		}
+
+		if (game.getGameStatus() == GameStatus.WAITING) {
+			String textColor = rank.equals(Rank.DEFAULT) ? "§7" : "§f";
+
+			game.getPlayers().forEach(onlinePlayer -> {
+				onlinePlayer.sendMessage(rank.getPrefix() + player.getUsername() + textColor + ": " + finalMessage);
+			});
 			return;
 		}
 

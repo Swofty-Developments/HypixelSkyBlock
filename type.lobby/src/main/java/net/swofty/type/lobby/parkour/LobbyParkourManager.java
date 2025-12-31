@@ -129,11 +129,13 @@ public class LobbyParkourManager {
 	}
 
 	public void finishedParkour(HypixelPlayer player) {
-		Long startTime = perPlayerStartTime.get(player.getUuid()).startTime();
-		if (startTime == null) {
+		RunData runData = perPlayerStartTime.get(player.getUuid());
+		if (runData == null || runData.startTime() == null) {
 			player.sendMessage("§cYou haven't started the parkour challenge yet! Use §e/parkour start §cto start!");
 			return;
 		}
+
+		long startTime = runData.startTime();
 
 		int lastCheckpointIndex = perPlayerStartTime.get(player.getUuid()).lastCheckpointIndex();
 		if (lastCheckpointIndex != parkour.getCheckpoints().size() - 2) {
