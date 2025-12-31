@@ -1,55 +1,50 @@
 package net.swofty.type.lobby.game;
 
 import lombok.Getter;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.lobby.ServerInfoCache;
 
-/**
- * Enum representing all game types available in the game menu.
- * Only games with a non-null lobbyType are implemented and playable.
- */
 @Getter
 public enum GameType {
-    SKYBLOCK("SkyBlock", Material.GRASS_BLOCK, ServerType.SKYBLOCK_ISLAND,
-            "§7Collect resources and become the",
-            "§7richest player on the server!",
-            "",
-            "§7Build your island, farm resources,",
-            "§7fight dragons, and more!"),
+    SKYBLOCK("SkyBlock §2§l0.24 §a§lTHE GREENHOUSE",
+            ItemStackCreator.getStackHead("686718d85e25b006f2c8f160f619b23c8fd6ae75ddf1c06308ec0f539d931703"),
+            Category.PERSISTENT_GAME,
+            ServerType.SKYBLOCK_ISLAND,
+            "§7SkyBlock has finally arrived on",
+            "§7Hypixel! Play with friends (or solo!),",
+            "§7build your private islands and",
+            "§7collect all the items!"),
 
-    BED_WARS("Bed Wars", Material.RED_BED, ServerType.BEDWARS_LOBBY,
-            "§7Protect your bed and destroy",
-            "§7the enemy beds. Upgrade yourself",
-            "§7and your team by collecting Iron,",
-            "§7Gold, Emerald and Diamond from",
-            "§7generators to access powerful",
-            "§7upgrades."),
-
-    // Non-functional placeholders
-    SKYWARS("SkyWars", Material.ENDER_EYE, null,
-            "§cComing Soon!"),
-
-    MURDER_MYSTERY("Murder Mystery", Material.BOW, null,
-            "§cComing Soon!"),
-
-    BUILD_BATTLE("Build Battle", Material.CRAFTING_TABLE, null,
-            "§cComing Soon!"),
-
-    DUELS("Duels", Material.IRON_SWORD, null,
-            "§cComing Soon!"),
-
-    ARCADE("Arcade Games", Material.SLIME_BALL, null,
-            "§cComing Soon!");
+    BED_WARS("Bed Wars §6§lv1.10 - DREAM MODE & QOL",
+            Material.RED_BED,
+            Category.TEAM_SURVIVAL,
+            ServerType.BEDWARS_LOBBY,
+            "§7Protect your bed along with your",
+            "§7teammates and destroy enemy beds",
+            "§7to win!"),
+    ;
 
     private final String displayName;
-    private final Material material;
+    private final ItemStack.Builder item;
+    private final Category category;
     private final ServerType lobbyType;
     private final String[] lore;
 
-    GameType(String displayName, Material material, ServerType lobbyType, String... lore) {
+    GameType(String displayName, ItemStack.Builder item, Category category, ServerType lobbyType, String... lore) {
         this.displayName = displayName;
-        this.material = material;
+        this.item = item;
+        this.category = category;
+        this.lobbyType = lobbyType;
+        this.lore = lore;
+    }
+
+    GameType(String displayName, Material item, Category category, ServerType lobbyType, String... lore) {
+        this.displayName = displayName;
+        this.item = ItemStackCreator.getStack("", item, 1);
+        this.category = category;
         this.lobbyType = lobbyType;
         this.lore = lore;
     }
@@ -74,5 +69,12 @@ public enum GameType {
         }
 
         return ServerInfoCache.getTotalPlayersForType(lobbyType);
+    }
+
+    public enum Category {
+        PROTOTYPE_GAME,
+        PERSISTENT_GAME,
+        TEAM_SURVIVAL,
+        COMPETITIVE,
     }
 }

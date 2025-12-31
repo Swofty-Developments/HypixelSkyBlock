@@ -176,6 +176,7 @@ public class ItemStackCreator {
 	public static ItemStack.Builder getFromStack(ItemStack stack) {
 		return clearAttributes(ItemStack.builder(stack.material())
 				.amount(stack.amount())
+                .set(DataComponents.PROFILE, stack.get(DataComponents.PROFILE))
 				.set(DataComponents.LORE, stack.get(DataComponents.LORE))
 				.set(DataComponents.CUSTOM_NAME, stack.get(DataComponents.CUSTOM_NAME))
 				.set(DataComponents.CUSTOM_DATA, stack.get(DataComponents.CUSTOM_DATA)));
