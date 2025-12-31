@@ -173,12 +173,6 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
             }
         });
 
-        // Register SkyBlock NPCs
-        if (mainInstance != null) {
-            loopThroughPackage("net.swofty.type.skyblockgeneric.entity.npc.npcs", HypixelNPC.class)
-                    .forEach(HypixelNPC::register);
-        }
-
         loopThroughPackage("net.swofty.type.skyblockgeneric.abiphone.impl", AbiphoneNPC.class)
                 .forEach(AbiphoneRegistry::registerContact);
 
