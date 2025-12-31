@@ -16,6 +16,7 @@ public enum CustomWorlds {
 	SKYBLOCK_DUNGEON_HUB("hypixel_skyblock_dungeon_hub"),
 	PROTOTYPE_LOBBY("hypixel_prototype_lobby"),
 	BEDWARS_LOBBY("hypixel_bedwars_lobby"),
+	MURDER_MYSTERY_LOBBY("hypixel_murder_mystery_lobby"),
 	;
 
 	private final String folderName;

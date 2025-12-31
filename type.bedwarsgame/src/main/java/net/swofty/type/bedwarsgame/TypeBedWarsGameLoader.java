@@ -236,6 +236,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 				commonsGame.setGameId(UUID.fromString(internalGame.getGameId()));
 				commonsGame.setType(ServerType.BEDWARS_GAME);
 				commonsGame.setMap(internalGame.getMapEntry().getName());
+				commonsGame.setGameTypeName(internalGame.getBedwarsGameType().name());
 
 				// Get involved players from the internal game
 				List<UUID> playerUuids = new ArrayList<>();
