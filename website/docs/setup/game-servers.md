@@ -23,7 +23,7 @@ gameserver/
 │       ├── collection/
 │       ├── items/
 │       ├── levels/
-│       ├── pack_texturess/ # Optional
+│       ├── pack_textures/ # Optional
 │       ├── reforges/
 │       ├── items/
 │       ├── skills/

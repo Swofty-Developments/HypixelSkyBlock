@@ -122,6 +122,9 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 		// Register callback to refresh Sirius NPC and Dark Auction display when state changes
 		DarkAuctionHandler.setOnStateChangeCallback(darkAuctionDisplay::update);
 
+        // Place forest trees
+        ForestTreePlacement.placeTrees(HypixelConst.getInstanceContainer());
+
 		HubMap hubMap = new HubMap();
 		hubMap.placeItemFrames(HypixelConst.getInstanceContainer());
 	}

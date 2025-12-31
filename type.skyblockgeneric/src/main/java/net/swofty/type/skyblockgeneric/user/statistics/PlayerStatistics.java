@@ -476,7 +476,7 @@ public class PlayerStatistics {
                         player.sendMessage(" ");
                         player.sendMessage(Component.text("§e§lCLICK HERE §r§eto learn more on the Official SkyBlock Wiki!")
                                 .hoverEvent(Component.text("§eClick to view the " + statistic.getDisplayName() + " §eWiki page!"))
-                                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://wiki.hypixel.net/" + description.getWikiName()))
+                                .clickEvent(ClickEvent.openUrl("https://wiki.hypixel.net/" + description.getWikiName()))
                         );
                         player.sendMessage("§a§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                     }
