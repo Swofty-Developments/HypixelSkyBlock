@@ -7,6 +7,7 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionCollectBirchLogs;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionGiveCharlieBirchLogs;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionTalkToCharlie;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionTalkToCharlieAgain;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -59,6 +60,12 @@ public class NPCCharlie extends HypixelNPC {
 
 		if (data.isCurrentlyActive(MissionCollectBirchLogs.class)) {
 			sendNPCMessage(player, "I don't see §a64 Birch Logs§f. Where are they?");
+			return;
+		}
+
+		if (data.isCurrentlyActive(MissionGiveCharlieBirchLogs.class)) {
+			sendNPCMessage(player, "Cheers! Here, take these §atrousers §ffor payment!");
+			data.endMission(MissionGiveCharlieBirchLogs.class);
 			return;
 		}
 

@@ -589,6 +589,7 @@ public enum ItemType {
 	CHARLIE_TROUSERS(Material.LEATHER_LEGGINGS, Rarity.COMMON),
 	KELLY_TSHIRT(Material.LEATHER_CHESTPLATE, Rarity.COMMON),
 	MELODY_SHOES(Material.LEATHER_BOOTS, Rarity.COMMON),
+	MOLE_HAT(Material.PLAYER_HEAD, Rarity.COMMON),
 
 	/**
 	 * Pickaxes

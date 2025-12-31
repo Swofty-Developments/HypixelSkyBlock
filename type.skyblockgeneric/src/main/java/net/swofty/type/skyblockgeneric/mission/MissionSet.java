@@ -43,7 +43,8 @@ public enum MissionSet {
     LOST_AND_FOUND(MissionFindLazyMinerPickaxe.class, MissionTalkToLazyMiner.class),
     THE_CAMPFIRE_CULT(MissionTravelToTheDarkThicket.class, MissionFindTheCampfire.class, MissionSneakUpOnRyan.class, MissionCompleteTrialOfFireOne.class, MissionTalkToRyan.class, MissionCollectDarkOakLogs.class, MissionGiveRyanDarkOakLogs.class),
     THE_REBUILD(MissionTravelToTheSavannaWoodland.class, MissionCheckOnMelody.class, MissionCollectAcaciaLogs.class, MissionGiveMelodyAcaciaLogs.class),
-    MOLE_PROBLEMS(MissionTalkToMolbert.class, MissionCollectJungleLogs.class, MissionGiveMolbertJungleLogs.class, MissionLeaveTheArea.class, MissionTalkToMolbertAgain.class, MissionPlaceTraps.class)
+    MOLE_PROBLEMS(MissionTalkToMolbert.class, MissionCollectJungleLogs.class, MissionGiveMolbertJungleLogs.class, MissionLeaveTheArea.class, MissionTalkToMolbertAgain.class, MissionPlaceTraps.class, MissionTalkToMolbertAgainAgain.class,
+            MissionLeaveTheAreaAgain.class, MissionTalkToMolbertAgainAgainAgain.class)
     ;
 
     private final Class<? extends SkyBlockMission>[] missions;

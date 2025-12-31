@@ -231,6 +231,18 @@ public class MissionData {
             return display;
         }
 
+        public List<String> getQuestCompleteText(ArrayList<String> rewards) {
+            ArrayList<String> display = new ArrayList<>(Arrays.asList(
+                    "§7 ",
+                    "§6§l  QUEST COMPLETE",
+                    "§7 ",
+                    "§a§l    REWARDS"
+            ));
+            display.addAll(rewards.stream().map(reward -> "§8    +" + reward).toList());
+            display.add("§7 ");
+            return display;
+        }
+
         public List<String> getNewObjectiveText() {
             SkyBlockMission mission = getMissionFromCache(missionID);
 

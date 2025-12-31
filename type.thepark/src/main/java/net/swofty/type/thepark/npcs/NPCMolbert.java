@@ -2,6 +2,7 @@ package net.swofty.type.thepark.npcs;
 
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Entity;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -9,9 +10,11 @@ import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle.*;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.thepark.TypeTheParkLoader;
 
 import java.util.List;
 
@@ -35,9 +38,14 @@ public class NPCMolbert extends HypixelNPC {
 			}
 
 			@Override
-			public Pos position(HypixelPlayer player) {
-				if (!((SkyBlockPlayer) player).getMissionData().hasCompleted(MissionPlaceTraps.class)) {
+			public Pos position(HypixelPlayer p) {
+				SkyBlockPlayer player = (SkyBlockPlayer) p;
+				MissionData data = player.getMissionData();
+				if (!data.hasCompleted(MissionLeaveTheAreaAgain.class)) {
 					return new Pos(-465.500, 120.000, -42.500, 10, 0);
+				}
+				if (data.isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class) || data.isCurrentlyActive(MissionHelpMolbert.class)) {
+					return new Pos(-448.500, 119.281, -64.125, 180, 0);
 				}
 				return new Pos(-447.5, 120, -63.5, 45, 0);
 			}
@@ -109,18 +117,71 @@ public class NPCMolbert extends HypixelNPC {
 			return;
 		}
 
-		if(data.isCurrentlyActive(MissionTalkToMolbertAgain.class)) {
+		if (data.isCurrentlyActive(MissionTalkToMolbertAgain.class)) {
 			setDialogue(player, "after-coming-back").thenRun(() -> {
 				data.endMission(MissionTalkToMolbertAgain.class);
 			});
+			TypeTheParkLoader.entities.forEach(Entity::updateViewableRule);
 			return;
 		}
 
 		if (data.isCurrentlyActive(MissionPlaceTraps.class)) {
 			setDialogue(player, "after-coming-back");
+			TypeTheParkLoader.entities.forEach(Entity::updateViewableRule);
 			return;
 		}
 
+		if (data.isCurrentlyActive(MissionTalkToMolbertAgainAgain.class)) {
+			setDialogue(player, "after-placing-traps").thenRun(() -> {
+				data.endMission(MissionTalkToMolbertAgainAgain.class);
+			});
+			return;
+		}
+		if (data.isCurrentlyActive(MissionLeaveTheAreaAgain.class)) {
+			sendNPCMessage(player, "This might take some time, so you should come back later.");
+			return;
+		}
+
+		if (data.isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class)) {
+			TypeTheParkLoader.entities.forEach(Entity::updateViewableRule);
+			setDialogue(player, "stuck").thenRun(() -> {
+				NPCOption.sendOption(player, "molbert", false, List.of(
+						new NPCOption.Option(
+								"help",
+								NamedTextColor.GREEN,
+								true,
+								"HELP MOLBERT",
+								(p) -> {
+									data.endMission(MissionHelpMolbert.class);
+								}
+						)
+				));
+				if (data.isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class))
+					data.endMission(MissionTalkToMolbertAgainAgainAgain.class);
+			});
+			return;
+		}
+		if (data.isCurrentlyActive(MissionTalkToMolbertFourth.class)) {
+			setDialogue(player, "explain").thenRun(() -> {
+				NPCOption.sendOption(player, "molbert", true, List.of(
+						new NPCOption.Option(
+								"iknow",
+								NamedTextColor.GREEN,
+								false,
+								"I know that you are a mole",
+								(p) -> {
+									setDialogue(player, "option-iknow").thenRun(() -> {
+										new GUIClaimReward(ItemType.MOLE_HAT, () -> {
+											data.endMission(MissionTalkToMolbertFourth.class);
+										}).open(player);
+									});
+								}
+						)
+				));
+			});
+			return;
+		}
+		setDialogue(player, "idle-" + (int) (1 + Math.random() * 2));
 	}
 
 	@Override
@@ -155,6 +216,30 @@ public class NPCMolbert extends HypixelNPC {
 				}).build(),
 				DialogueSet.builder().key("after-coming-back").lines(new String[]{
 						"The §5traps §fare ready for use; All that remains is to set them up in the §aright place§f. Once you find the ideal spots, go ahead and deploy them."
+				}).build(),
+				DialogueSet.builder().key("after-placing-traps").lines(new String[]{
+						"Good job, partner. Now we only need to §6wait §ffor the §aright moment §ffor these pests to show up.",
+						"This might take some time, so you should come back later."
+				}).build(),
+				DialogueSet.builder().key("stuck").lines(new String[]{
+						"Hey.. §ouhm §fpartner! I §lswear §fit's not what you think!",
+						"Could you lend me a hand here, I can §aexplain everything§f!"
+				}).build(),
+				DialogueSet.builder().key("explain").lines(new String[]{
+						"§aThank you so much§f, I was stuck there for §oat least ??? minutes§f, I was almost gone for good.",
+						"§oI.. I §fmust have §dslipped by accident §fand then fell right into the §5trap§f! ... §oYes§f, §lthat's what happened§f!",
+						"...and then I ate the §6carrot §fbecause I was almost starving in there!"
+				}).build(),
+				DialogueSet.builder().key("option-iknow").lines(new String[]{
+						"§cOf, fine you caught me. But §cplease don't tell the others§f, they wouldn't want to be my friends anymore if they knew the truth.",
+						"Here, take this §acompensation §ffor all the trouble I made you go through.",
+						"I hope you forgive me after this and we can still be §6friends§f."
+				}).build(),
+				DialogueSet.builder().key("idle-1").lines(new String[]{
+						"I wish I could be in love just like §9Romero §f& §dJuliette§f."
+				}).build(),
+				DialogueSet.builder().key("idle-2").lines(new String[]{
+						"I hope you forgive me after this and we can still be §6friends§f."
 				}).build()
 		).toArray(DialogueSet[]::new);
 	}

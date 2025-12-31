@@ -7,6 +7,8 @@ import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.server.SendablePacket;
 import net.minestom.server.timer.ExecutionType;
@@ -27,7 +29,8 @@ import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.entity.TextDisplayEntity;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle.MissionPlaceTraps;
+import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle.*;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -42,6 +45,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TypeTheParkLoader implements SkyBlockTypeLoader {
+
+	public static List<LivingEntity> entities = new ArrayList<>();
 
 	@Override
 	public ServerType getType() {
@@ -78,26 +83,33 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 				placedTraps.add(finalIndex);
 				activeMission.setCustomData(Map.of("placedTraps", placedTraps));
 				player.sendMessage("§aPlaced trap §7(§e" + placedTraps.size() + "§7/§a3§7)");
+				TypeTheParkLoader.entities.forEach(Entity::updateViewableRule);
+
+				// check if all placed:
+				if (placedTraps.size() >= 3) {
+					player.getMissionData().endMission(MissionPlaceTraps.class);
+				}
 			});
 
 			TextDisplayEntity text = new TextDisplayEntity(Component.text("Place Trap Here", NamedTextColor.GREEN), meta -> {});
 			hitbox.setInstance(HypixelConst.getInstanceContainer(), trap);
 			text.setInstance(HypixelConst.getInstanceContainer(), trap.add(0, 1, 0));
 
-			text.updateViewerRule(player -> {
+			text.updateViewableRule(player -> {
 				if (!(player instanceof SkyBlockPlayer p)) return false;
-				if (!p.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {
+				if (shouldRenderTraps(p)) {
+					return true;
+				}
+				if(!p.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {
 					return false;
 				}
 
 				MissionData.ActiveMission activeMission = p.getMissionData().getMission(MissionPlaceTraps.class).getKey();
 				List<Integer> placedTraps = (List<Integer>) activeMission.getCustomData().getOrDefault("placedTraps", new ArrayList<Integer>());
-				if (placedTraps.contains(finalIndex)) {
-					return false;
-				}
-
-				return p.getPosition().distance(trap) <= 25;
+				Logger.info("Placed traps for player {}: {}", p.getUsername(), placedTraps);
+				return !placedTraps.contains(finalIndex);
 			});
+			entities.add(text);
 
 			float size = 0.6f;
 			TrapdoorSide[] sides = {
@@ -117,20 +129,23 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 				});
 
 				trapdoor.setInstance(HypixelConst.getInstanceContainer(), trap);
-				trapdoor.updateViewerRule((p) -> {
+				trapdoor.updateViewableRule((p) -> {
 					if (!(p instanceof SkyBlockPlayer player)) return false;
-					if (!player.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {
+					if (shouldRenderTraps(player)) {
+						return true;
+					}
+					if (player.getMissionData().isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class)) {
+						return finalIndex == 1;
+					}
+					if(!player.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {
 						return false;
 					}
 
 					MissionData.ActiveMission activeMission = player.getMissionData().getMission(MissionPlaceTraps.class).getKey();
 					List<Integer> placedTraps = (List<Integer>) activeMission.getCustomData().getOrDefault("placedTraps", new ArrayList<Integer>());
-					if (!placedTraps.contains(finalIndex)) {
-						return false;
-					}
-
-					return player.getPosition().distance(trap) <= 25;
+					return placedTraps.contains(finalIndex);
 				});
+				entities.add(trapdoor);
 			}
 
 
@@ -160,6 +175,21 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 		}, ExecutionType.TICK_START);
 
 		TrialOfFire.init();
+	}
+
+	private boolean shouldRenderTraps(SkyBlockPlayer player) {
+		MissionData data = player.getMissionData();
+		List<Class<? extends SkyBlockMission>> relevantMissions = List.of(
+				MissionTalkToMolbertAgainAgain.class,
+				MissionLeaveTheAreaAgain.class,
+				MissionTalkToMolbertAgainAgainAgain.class
+		);
+		for (Class<? extends SkyBlockMission> missionClass : relevantMissions) {
+			if (data.isCurrentlyActive(missionClass)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static float[] rotation(float xDeg, float yDeg, float zDeg) {
