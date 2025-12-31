@@ -4,39 +4,22 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.UnderstandableProxyServer;
-import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.type.bedwarslobby.gui.GUIPlay;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import net.swofty.type.generic.utility.GameCountCache;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCTrios extends HypixelNPC {
-	private static List<UnderstandableProxyServer> cacheServers = new ArrayList<>();
-	private static long lastCacheTime = 0;
-
 	public NPCTrios() {
 		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
-				if (System.currentTimeMillis() - lastCacheTime > 5000) {
-					ProxyInformation information = new ProxyInformation();
-					List<UnderstandableProxyServer> servers = information.getAllServersInformation().join();
-					cacheServers.clear();
-					cacheServers.addAll(servers);
-					lastCacheTime = System.currentTimeMillis();
-				}
-
-				int amountOnline = cacheServers.stream().map((server) -> {
-					if (!(server.type() == ServerType.BEDWARS_GAME))
-						return 0; // todo: actually check for bedwars players
-					return server.players().size();
-				}).reduce(0, Integer::sum);
+				int amountOnline = GameCountCache.getPlayerCount(
+						ServerType.BEDWARS_GAME,
+						BedwarsGameType.THREE_THREE_THREE_THREE.name()
+				);
 
 				String commmaified = StringUtility.commaify(amountOnline);
 				return new String[]{

@@ -40,16 +40,23 @@ public class OrchestratorCache {
 	}
 
 	/**
-	 * Finds an existing joinable game for the specified game type and map
+	 * Finds an existing joinable game for the specified game type and map (Bedwars-specific)
 	 */
 	public static GameWithServer findExisting(BedwarsGameType gameType, String map) {
+		return findExisting(ServerType.BEDWARS_GAME, gameType.maxPlayers(), map);
+	}
+
+	/**
+	 * Generic version - finds an existing joinable game for any server type
+	 */
+	public static GameWithServer findExisting(ServerType serverType, int maxPlayers, String map) {
 		cleanup();
 
 		List<GameWithServer> candidates = new ArrayList<>();
 		for (GameWithServer gameWithServer : gamesByGameId.values()) {
 			Game game = gameWithServer.game();
-			if (game.getType() == ServerType.BEDWARS_GAME &&
-					isGameJoinable(game, gameType) &&
+			if (game.getType() == serverType &&
+					game.getInvolvedPlayers().size() < maxPlayers &&
 					(map == null || game.getMap().equals(map))) {
 				candidates.add(gameWithServer);
 			}
@@ -65,15 +72,22 @@ public class OrchestratorCache {
 	}
 
 	/**
-	 * Finds a server with capacity to host a new game
+	 * Finds a server with capacity to host a new game (Bedwars-specific)
 	 */
 	public static GameServerState instantiateServer(BedwarsGameType gameType, String map) {
+		return instantiateServer(ServerType.BEDWARS_GAME, gameType.maxPlayers());
+	}
+
+	/**
+	 * Generic version - finds a server with capacity to host a new game for any server type
+	 */
+	public static GameServerState instantiateServer(ServerType serverType, int maxPlayers) {
 		cleanup();
 
 		List<GameServerState> candidates = new ArrayList<>();
 		for (GameServerState server : serversByShortName.values()) {
-			if (server.type() == ServerType.BEDWARS_GAME &&
-					server.canHostNewGame(gameType)) {
+			if (server.type() == serverType &&
+					server.availableSlots() >= maxPlayers) {
 				candidates.add(server);
 			}
 		}
@@ -133,12 +147,6 @@ public class OrchestratorCache {
 		return null;
 	}
 
-	private static boolean isGameJoinable(Game game, BedwarsGameType gameType) {
-		int maxPlayersForType = gameType.maxPlayers();
-		int currentPlayers = game.getInvolvedPlayers().size();
-		return currentPlayers < maxPlayersForType;
-	}
-
 	private static void cleanup() {
 		long now = Instant.now().toEpochMilli();
 
@@ -166,10 +174,6 @@ public class OrchestratorCache {
 		public int availableSlots() {
 			return Math.max(0, maxPlayers - onlinePlayers);
 		}
-
-		public boolean canHostNewGame(BedwarsGameType gameType) {
-			return availableSlots() >= gameType.maxPlayers();
-		}
 	}
 
 	public record GameWithServer(Game game, UUID serverUuid, String serverShortName) {
@@ -192,4 +196,30 @@ public class OrchestratorCache {
 				.findFirst()
 				.orElse(null);
 	}
+
+	/**
+	 * Get player and game counts filtered by server type and optionally by game type name.
+	 * @param type The server type (e.g., MURDER_MYSTERY_GAME, BEDWARS_GAME)
+	 * @param gameTypeName Optional game type name to filter by (e.g., "CLASSIC", "SOLO"). Pass null for all.
+	 * @return GameCountStats with player count and game count
+	 */
+	public static GameCountStats getGameCounts(ServerType type, String gameTypeName) {
+		cleanup();
+		int playerCount = 0;
+		int gameCount = 0;
+
+		for (GameWithServer gameWithServer : gamesByGameId.values()) {
+			Game game = gameWithServer.game();
+			if (game.getType() == type) {
+				if (gameTypeName == null || gameTypeName.equals(game.getGameTypeName())) {
+					playerCount += game.getInvolvedPlayers().size();
+					gameCount++;
+				}
+			}
+		}
+
+		return new GameCountStats(playerCount, gameCount);
+	}
+
+	public record GameCountStats(int playerCount, int gameCount) {}
 }

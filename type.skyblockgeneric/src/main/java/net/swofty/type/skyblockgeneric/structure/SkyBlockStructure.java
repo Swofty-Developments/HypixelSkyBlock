@@ -65,7 +65,7 @@ public abstract class SkyBlockStructure {
                     set(instance, x, y, z, block);
     }
 
-    protected int rotateValue(int value, int difference, CoordinateType type) {
+    public int rotateValue(int value, int difference, CoordinateType type) {
         switch (type) {
             case X:
                 switch (rotation) {

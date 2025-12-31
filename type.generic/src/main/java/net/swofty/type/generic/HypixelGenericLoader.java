@@ -27,6 +27,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
 import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
 import net.swofty.type.generic.data.mongodb.AuthenticationDatabase;
@@ -199,6 +200,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         // Register game data handlers
         GameDataHandlerRegistry.register(new BedWarsDataHandler());
         GameDataHandlerRegistry.register(new PrototypeLobbyDataHandler());
+        GameDataHandlerRegistry.register(new MurderMysteryDataHandler());
 
         // Register Block Handlers
         MinecraftServer.getBlockManager().registerHandler(PlayerHeadBlockHandler.KEY, PlayerHeadBlockHandler::new);
