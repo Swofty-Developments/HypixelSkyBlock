@@ -6,7 +6,7 @@ Game servers run the actual gameplay using Minestom. Each server runs as a speci
 
 1. Download `HypixelCore.jar` from the [releases page](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
 2. Download [`resources.json`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
-3. Download [world files](https://www.mediafire.com/file/xxnxgkqejlh17fn/HypixelRecreationWorlds.zip/file)
+3. Download [world files](https://files.catbox.moe/of7snu.zip)
 4. Download [`NanoLimbo.jar`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and its config
 
 ## Directory Structure
@@ -16,19 +16,23 @@ gameserver/
 ├── HypixelCore.jar
 ├── configuration/
 │   ├── resources.json
-│   └── skyblock/
-│       ├── islands/
-│       │   ├── hypixel_skyblock_hub/
-│       │   └── hypixel_skyblock_island_template/
-│       ├── collection/
-│       ├── items/
-│       ├── levels/
-│       ├── pack_textures/ # Optional
-│       ├── reforges/
-│       ├── items/
-│       ├── skills/
-│       └── songs/           # Optional
-├── hypixel_prototype_lobby/ # In configuration folder
+│   ├── skyblock/
+│   │   ├── islands/
+│   │   │   ├── hypixel_skyblock_hub/
+│   │   │   ├── hypixel_skyblock_island_template/
+│   │   │   └── ... (other islands)
+│   │   ├── collections/
+│   │   ├── items/
+│   │   ├── levels/
+│   │   ├── reforges/
+│   │   ├── skills/
+│   │   ├── pack_textures/    # Optional
+│   │   └── songs/            # Optional
+│   ├── bedwars/              # BedWars maps (.polar)
+│   ├── murdermystery/        # Murder Mystery maps (.polar)
+│   ├── hypixel_prototype_lobby/
+│   ├── hypixel_bedwars_lobby/
+│   └── hypixel_murder_mystery_lobby/
 ```
 
 ## Setup Steps
@@ -53,13 +57,7 @@ Copy the `forwarding.secret` from your Velocity proxy directory and add it to `r
 
 ### 3. Install World Files
 
-Extract the world files download and place them:
-
-| World           | Location                                                           |
-|-----------------|--------------------------------------------------------------------|
-| SkyBlock Hub    | `configuration/skyblock/islands/hypixel_skyblock_hub/`             |
-| Island Template | `configuration/skyblock/islands/hypixel_skyblock_island_template/` |
-| Prototype Lobby | `configuration/hypixel_prototype_lobby/`                           |
+Extract the world files zip directly into your `configuration/` folder. The zip already contains the correct folder structure.
 
 ### 4. Install Data Files
 

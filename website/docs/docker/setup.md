@@ -18,7 +18,7 @@ cd HypixelSkyBlock
 
 ### 2. Add World Files
 
-Download the [world files](https://www.mediafire.com/file/xxnxgkqejlh17fn/HypixelRecreationWorlds.zip/file) and place them in the `configuration` folder as `world.zip`.
+Download the [world files](https://files.catbox.moe/of7snu.zip) and extract them directly into the `configuration/` folder. The zip already contains the correct folder structure.
 
 ### 3. Configure resources.json
 
