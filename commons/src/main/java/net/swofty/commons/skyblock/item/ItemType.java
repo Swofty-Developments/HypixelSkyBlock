@@ -37,6 +37,9 @@ public enum ItemType {
 	RAW_SOULFLOW(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 	SOULFLOW(Material.PLAYER_HEAD, Rarity.RARE),
 
+	ROYAL_COMPASS(Material.PLAYER_HEAD, Rarity.RARE),
+	ROYAL_PIGEON(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+
 	/**
 	 * Accessories
 	 */

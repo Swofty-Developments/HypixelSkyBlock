@@ -5,6 +5,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.dwarvenmines.commission.CommissionMilestone;
 import net.swofty.type.dwarvenmines.commission.Commissions;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -186,7 +187,7 @@ public class GUICommissionMilestones extends HypixelInventoryGUI {
 		player.sendMessage("§7 - §b+" + milestone.getSkyBlockXpReward() + " SkyBlock XP");
 
 		if (milestone.isUnlocksEmissaries()) {
-			// TODO: Give Royal Compass item
+			player.addAndUpdateItem(ItemType.ROYAL_COMPASS);
 		}
 		if (milestone.isUnlocksExtraSlot()) {
 		}
@@ -194,7 +195,7 @@ public class GUICommissionMilestones extends HypixelInventoryGUI {
 			// TODO: Give Travel Scroll item
 		}
 		if (milestone.isUnlocksRoyalPigeon()) {
-			// TODO: Give Royal Pigeon item
+			player.addAndUpdateItem(ItemType.ROYAL_PIGEON);
 		}
 		if (milestone.isUnlocksCrystalNucleusScroll()) {
 			// TODO: Give Travel Scroll item

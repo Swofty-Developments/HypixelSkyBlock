@@ -23,21 +23,22 @@ public class Commission {
 
         switch (objective.type) {
             case MINE -> {
-                sb.append("Mine ").append(objective.amount).append(" ");
+                sb.append("Mine §a").append(objective.amount).append(" §7");
                 sb.append(getTargetName(objective.target)).append(" Ore");
                 appendLocation(sb);
                 sb.append(".");
             }
             case SLAY -> {
-                sb.append("Slay ").append(objective.amount).append(" ");
+                sb.append("Slay §a").append(objective.amount).append(" §7");
                 sb.append(getTargetNamePlural(objective.target));
+                sb.append("§7");
                 appendLocation(sb);
                 appendEvent(sb);
                 sb.append(".");
             }
             case DAMAGE -> {
                 sb.append("Damage ").append(getTargetNamePlural(objective.target));
-                sb.append(" ").append(objective.amount).append(" times");
+                sb.append(" §7").append(objective.amount).append(" times");
                 appendLocation(sb);
                 sb.append(".");
             }
@@ -61,7 +62,7 @@ public class Commission {
     private void appendLocation(StringBuilder sb) {
         if (!objective.location.isAny()) {
             objective.location.getRegion().ifPresent(region ->
-                    sb.append(" in ").append(region.getName()));
+                    sb.append(" in §b").append(region.getName()));
         }
     }
 
@@ -88,10 +89,10 @@ public class Commission {
         return switch (target) {
             case MITHRIL -> "Mithril Ore";
             case TITANIUM -> "Titanium Ore";
-            case GOBLIN -> "Goblins";
-            case GLACITE_WALKER -> "Glacite Walkers";
-            case TREASURE_HOARDER -> "Treasure Hoarders";
-            case GOLDEN_GOBLIN -> "Golden Goblin";
+            case GOBLIN -> "§cGoblins";
+            case GLACITE_WALKER -> "§bGlacite Walkers";
+            case TREASURE_HOARDER -> "§cTreasure Hoarders";
+            case GOLDEN_GOBLIN -> "§6Golden Goblin";
             case STAR_SENTRY -> "Star Sentrys";
             case NONE -> "";
         };
@@ -106,8 +107,8 @@ public class Commission {
 
     private String getEventName(EventType event) {
         return switch (event) {
-            case GOBLIN_RAID -> "Goblin Raid Event";
-            case RAFFLE -> "Raffle Event";
+            case GOBLIN_RAID -> "§cGoblin Raid §7Event";
+            case RAFFLE -> "§eRaffle §7Event";
             case DOUBLE_POWDER -> "2x Powder Event";
             case NONE -> "";
         };

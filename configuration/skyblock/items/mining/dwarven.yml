@@ -90,3 +90,22 @@ items:
         texture: 63a405fb286dbb32e9b3908f60948f0207306c825e63ac9e626ed1dbb2f7a2be
       - id: EXTRA_UNDER_NAME
         display: Machine Fuel
+  - id: ROYAL_PIGEON
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+    components:
+      - id: SKULL_HEAD
+        texture: 63a405fb286dbb32e9b3908f60948f0207306c825e63ac9e626ed1dbb2f7a2be
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: true
+  - id: ROYAL_COMPASS
+    rarity: RARE
+    material: PLAYER_HEAD
+    components:
+      - id: ABILITY
+        abilities:
+          - TRUE_DWARTH
+      - id: SKULL_HEAD
+        texture: f106277ad541aa76d9d4a19e7aac92621a3f0251ff9427dfdea539b51dd8d1ea
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: true
