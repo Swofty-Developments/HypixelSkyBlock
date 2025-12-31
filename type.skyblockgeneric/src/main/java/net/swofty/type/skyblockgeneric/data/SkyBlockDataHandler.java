@@ -437,6 +437,15 @@ public class SkyBlockDataHandler extends DataHandler {
         SOULFLOW("soulflow", false, false, false,
                 DatapointInteger.class, new DatapointInteger("soulflow", 0)),
 
+        COMMISSIONS_COMPLETED("commissions_completed", false, false, false,
+                DatapointInteger.class, new DatapointInteger("commissions_completed", 0)),
+
+        COMMISSIONS("commissions", false, false, false,
+                DatapointCommissions.class, new DatapointCommissions("commissions")),
+
+        HOTM("hotm", false, false, false,
+                DatapointHOTM.class, new DatapointHOTM("hotm")),
+
         KAT("kat", false, false, false,
                 DatapointKat.class, new DatapointKat("kat")),
 

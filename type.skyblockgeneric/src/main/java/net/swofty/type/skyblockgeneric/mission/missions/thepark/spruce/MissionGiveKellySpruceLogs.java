@@ -15,7 +15,7 @@ public class MissionGiveKellySpruceLogs extends SkyBlockMission implements Locat
 
 	@Override
 	public Pos getLocation() {
-		return new Pos(-350.5, 94, 33.500);
+		return new Pos(-350.5, 94, 33.5);
 	}
 
 	@Override

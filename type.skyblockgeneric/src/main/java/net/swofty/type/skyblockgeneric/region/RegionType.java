@@ -97,7 +97,13 @@ public enum RegionType {
 	THE_FORGE("The Forge", DwarvenMinesConfiguration.class),
 	CLIFFSIDE_VEINS("Cliffside Veins", DwarvenMinesConfiguration.class),
 	ROYAL_MINES("Royal Mines", DwarvenMinesConfiguration.class),
+	UPPER_MINES("Upper Mines", DwarvenMinesConfiguration.class),
+	LAVA_SPRINGS("Lava Springs", DwarvenMinesConfiguration.class),
 	DIVANS_GATEWAY("Divan's Gateway", DwarvenMinesConfiguration.class),
+	FAR_REACH("Far Reserve", DwarvenMinesConfiguration.class),
+	PALACE_BRIDGE("Palace Bridge", DwarvenMinesConfiguration.class),
+	ROYAL_PALACE("Royal Palace", DwarvenMinesConfiguration.class),
+	ARISTOCRAT_PASSAGE("Aristocrat's Passage", DwarvenMinesConfiguration.class),
 	FAR_RESERVE("Far Reserve", DwarvenMinesConfiguration.class);
 
 	private final String name;

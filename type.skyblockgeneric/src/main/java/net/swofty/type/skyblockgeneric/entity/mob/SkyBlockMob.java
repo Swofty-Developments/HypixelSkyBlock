@@ -8,14 +8,18 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EntityCreature;
-import net.minestom.server.entity.EntityType;
+import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.*;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.entity.damage.Damage;
+import net.minestom.server.entity.metadata.avatar.PlayerMeta;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
+import net.minestom.server.network.packet.server.play.EntityMetaDataPacket;
+import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
+import net.minestom.server.network.packet.server.play.SpawnEntityPacket;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.skyblock.item.ItemType;
@@ -25,6 +29,7 @@ import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
+import net.swofty.type.skyblockgeneric.entity.mob.impl.MobPlayerSkin;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -53,6 +58,8 @@ public abstract class SkyBlockMob extends EntityCreature {
     @Getter
     private boolean hasBeenDamaged = false;
 
+    private Component customName;
+
     public SkyBlockMob(EntityType entityType) {
         super(entityType);
         init();
@@ -67,19 +74,54 @@ public abstract class SkyBlockMob extends EntityCreature {
                 .setBaseValue((float) ((getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
         this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
-        this.set(DataComponents.CUSTOM_NAME, Component.text(
+        this.customName = Component.text(
                 "§8[§7Lv" + getLevel() + "§8] §c"
                         + getMobTypes().getFirst().getColor() + getMobTypes().getFirst().getSymbol() + "§c "
                         + getDisplayName()
                         + " §a" + Math.round(getHealth())
                         + "§f/§a"
                         + Math.round(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue())
-        ));
+        );
+        this.set(DataComponents.CUSTOM_NAME, customName);
 
         setAutoViewable(true);
         setAutoViewEntities(true);
         this.addAIGroup(getGoalSelectors(), getTargetSelectors());
         onInit();
+    }
+
+    @Override
+    public void updateNewViewer(@NotNull Player player) {
+        super.updateNewViewer(player);
+        if (this instanceof MobPlayerSkin skin) {
+            List<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
+            if (skin.getSkinTexture() != null && skin.getSkinSignature() != null) {
+                properties.add(new PlayerInfoUpdatePacket.Property("textures", skin.getSkinTexture(), skin.getSkinSignature()));
+            }
+            player.sendPackets(
+                    new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER,
+                            new PlayerInfoUpdatePacket.Entry(
+                                    getUuid(),
+                                    "SB_MOB_" + getEntityId(),
+                                    properties,
+                                    false,
+                                    0,
+                                    GameMode.SURVIVAL,
+                                    customName,
+                                    null,
+                                    1, true)),
+                    new SpawnEntityPacket(this.getEntityId(), this.getUuid(), EntityType.PLAYER,
+                            getPosition(),
+                            (float) 0,
+                            0,
+                            Vec.ZERO),
+                    new EntityHeadLookPacket(getEntityId(), 0),
+                    new EntityMetaDataPacket(getEntityId(), Map.of(
+                            MetadataDef.Avatar.DISPLAYED_MODEL_PARTS_FLAGS.index(),
+                            Metadata.Byte((byte) 127) // 127 is all parts
+                    ))
+            );
+        }
     }
 
     @Override
@@ -138,7 +180,7 @@ public abstract class SkyBlockMob extends EntityCreature {
                     -Math.cos(sourcePoint.getPosition().yaw() * Math.PI / 180));
         }
 
-        this.setCustomName(Component.text(
+        this.set(DataComponents.CUSTOM_NAME, Component.text(
                 "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
                         + " §a" + Math.round(getHealth())
                         + "§f/§a"

@@ -10,10 +10,11 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import org.jspecify.annotations.NonNull;
 
-public class INPCRoyalGuard extends HypixelNPC {
+public class AbstractRoyalGuard extends HypixelNPC {
 
-	public INPCRoyalGuard(Function<HypixelPlayer, String> signature, Function<HypixelPlayer, String> texture, Function<HypixelPlayer, Pos> position) {
+	public AbstractRoyalGuard(Function<HypixelPlayer, String> signature, Function<HypixelPlayer, String> texture, Function<HypixelPlayer, Pos> position) {
 		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
@@ -33,6 +34,11 @@ public class INPCRoyalGuard extends HypixelNPC {
 			@Override
 			public Pos position(HypixelPlayer player) {
 				return position.apply(player);
+			}
+
+			@Override
+			public @NonNull String chatName() {
+				return "§6Royal Guard";
 			}
 
 			@Override

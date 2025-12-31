@@ -1,5 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.handlers.ability;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
@@ -50,6 +52,19 @@ public class AbilityRegistry {
 					BlockVec tpPos = targetedBlock.asBlockVec();
 					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return; // TODO: don't consume mana/soulflow if teleport fails
 					player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
+				}
+		));
+
+		register(new RegisteredAbility(
+				"TRUE_DWARTH",
+						"True Dwarth",
+				"§7Shows the way towards the nearest §6Emissary §7while in the §2Dwarven Mines§7.",
+				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
+				20 * 3,
+				new RegisteredAbility.NoAbilityCost(),
+				(player, item, targetedBlock, blockFace) -> {
+					player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
+							.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
 				}
 		));
 

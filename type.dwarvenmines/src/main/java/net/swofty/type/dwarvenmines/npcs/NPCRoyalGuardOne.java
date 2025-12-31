@@ -2,7 +2,7 @@ package net.swofty.type.dwarvenmines.npcs;
 
 import net.minestom.server.coordinate.Pos;
 
-public class NPCRoyalGuardOne extends INPCRoyalGuard {
+public class NPCRoyalGuardOne extends AbstractRoyalGuard {
 
 	public NPCRoyalGuardOne() {
 		super(

@@ -66,7 +66,6 @@ public class DialogueController {
     private void handleLineSendingLoop(HypixelPlayer player, HypixelNPC.DialogueSet dialogueSet) {
         npc.sendNPCMessage(player, dialogueSet.lines()[0]);
 
-
         String[] newLines = new String[dialogueSet.lines().length - 1];
         System.arraycopy(dialogueSet.lines(), 1, newLines, 0, dialogueSet.lines().length - 1);
 
