@@ -1,15 +1,10 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionClaimTheTrousers;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle.MissionTalkToMolbert;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.MissionTalkToGustave;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -19,21 +14,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionGiveMelodyAcaciaLogs extends SkyBlockMission implements LocationAssociatedMission {
-
-	@Override
-	public Pos getLocation() {
-		return new Pos(-411.5, 109, 71.500);
-	}
+public class MissionTalkToMolbertFourth extends SkyBlockMission implements LocationAssociatedMission {
 
 	@Override
 	public String getID() {
-		return "give_melody_acacia_logs";
+		return "talk_to_molbert_fourth";
 	}
 
 	@Override
 	public String getName() {
-		return "Give Melody Acacia Logs";
+		return "Talk to Molbert";
 	}
 
 	@Override
@@ -49,27 +39,27 @@ public class MissionGiveMelodyAcaciaLogs extends SkyBlockMission implements Loca
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		mission.getObjectiveCompleteText(
-				"QUEST COMPLETE",
+		mission.getQuestCompleteText(
 				new ArrayList<>(List.of(
-						"§8+§7Access to §dMelody's Harp",
-						"§8+§62,000 §7Coins",
-						"§8+§31,500 §7Foraging Experience",
+						"§8+§61,500 §7Coins",
+						"§8+§3500 §7Foraging Experience",
 						"§8+§b5 SkyBlock XP",
-						"§fMelody's Shoes"
+						"§fMole Hat"
 				))
 		).forEach(player::sendMessage);
 
 		player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(getID()));
-		player.addCoins(2000);
-		player.getSkills().increase(player, SkillCategories.FORAGING, 1500D);
-
-		player.getMissionData().startMission(MissionTalkToMolbert.class);
-		player.getMissionData().startMission(MissionTalkToGustave.class);
+		player.addCoins(1500);
+		player.getSkills().increase(player, SkillCategories.FORAGING, 500D);
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
-		return Set.of(RegionType.SAVANNA_WOODLAND, RegionType.MELODY_PLATEAU);
+		return Set.of(RegionType.SAVANNA_WOODLAND, RegionType.JUNGLE_ISLAND);
+	}
+
+	@Override
+	public Pos getLocation() {
+		return new Pos(-448.500, 119.281, -64.125);
 	}
 }

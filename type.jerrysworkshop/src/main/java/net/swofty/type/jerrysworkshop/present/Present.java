@@ -61,7 +61,7 @@ public class Present {
 
 		Logger.info(playerHead.getTag(Tag.NBT("profile")).toString());
 
-		BlockDisplayEntity displayEntity = new BlockDisplayEntity(playerHead);
+		BlockDisplayEntity displayEntity = new BlockDisplayEntity(playerHead, _ -> {});
 		displayEntity.setInstance(instance, position);
 		InteractionEntity entity = new InteractionEntity(0.5f, 0.5f, (player, interactEvent) -> {
 			SkyBlockDataHandler dataHandler = ((SkyBlockPlayer) player).getSkyblockDataHandler();

@@ -7,6 +7,7 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionCollectBirchLogs;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionGiveCharlieBirchLogs;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionTalkToCharlie;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionTalkToCharlieAgain;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -62,6 +63,12 @@ public class NPCCharlie extends HypixelNPC {
 			return;
 		}
 
+		if (data.isCurrentlyActive(MissionGiveCharlieBirchLogs.class)) {
+			sendNPCMessage(player, "Cheers! Here, take these §atrousers §ffor payment!");
+			data.endMission(MissionGiveCharlieBirchLogs.class);
+			return;
+		}
+
 		if(data.isCurrentlyActive(MissionTalkToCharlieAgain.class)) {
 			setDialogue(player, "talk-again").thenRun(() -> {
 				data.endMission(MissionTalkToCharlieAgain.class);
@@ -80,7 +87,7 @@ public class NPCCharlie extends HypixelNPC {
 								"Howdy! Yer a friend of §aLumber Jack§f, are ya?",
 								"Well, works for me!",
 								"I need §a64 Birch Logs§f. Could you grab 'em for me?",
-								"Do that, and then wee can talk!"
+								"Do that, and then we can talk!"
 						}).build(),
 				DialogueSet.builder()
 						.key("talk-again").lines(new String[]{

@@ -1,4 +1,24 @@
 items:
+  - id: MELODY_SHOES
+    rarity: COMMON
+    default_statistics:
+      health: 90
+      defense: 20
+      foraging_fortune: 6
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Melody's Shoes
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
+      - id: LEATHER_COLOR
+        r: '141'
+        g: '53'
+        b: '146'
+      - id: TRACKED_UNIQUE
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: true
+      - id: MUSEUM
+        museum_category: ARMOR_SETS
   - id: CHARLIE_TROUSERS
     rarity: COMMON
     default_statistics:
@@ -11,9 +31,49 @@ items:
       - id: STANDARD_ITEM
         standard_item_type: HELMET
       - id: LEATHER_COLOR
-        r: '20'
-        g: '121'
-        b: '100'
+        r: '246'
+        g: '222'
+        b: '81'
       - id: TRACKED_UNIQUE
       - id: MUSEUM
         museum_category: ARMOR_SETS
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: true
+  - id: KELLY_TSHIRT
+    rarity: COMMON
+    default_statistics:
+      health: 100
+      defense: 30
+      foraging_fortune: 6
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Kelly's T-Shirt
+      - id: STANDARD_ITEM
+        standard_item_type: HELMET
+      - id: LEATHER_COLOR
+        r: '255'
+        g: '255'
+        b: '255'
+      - id: TRACKED_UNIQUE
+      - id: MUSEUM
+        museum_category: ARMOR_SETS
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: true
+  - id: MOLE_HAT
+    rarity: COMMON
+    default_statistics:
+      health: 35
+      defense: 10
+      foraging_fortune: 6
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Mole Hat
+      - id: STANDARD_ITEM
+        standard_item_type: HELMET
+      - id: SKULL_HEAD
+        texture: f20783e2743b8976b00f827ee283675d7911140c98284239f6bc1c8dd1d27c81
+      - id: TRACKED_UNIQUE
+      - id: MUSEUM
+        museum_category: ARMOR_SETS
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: true

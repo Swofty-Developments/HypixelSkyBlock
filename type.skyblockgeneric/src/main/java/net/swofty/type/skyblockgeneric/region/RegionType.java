@@ -6,9 +6,7 @@ import net.swofty.commons.Songs;
 import net.swofty.type.skyblockgeneric.region.biome.*;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.*;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.*;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.BirchParkConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.DarkOakConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.SpruceWoodsConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +41,9 @@ public enum RegionType {
 	SPRUCE_WOODS("Spruce Woods", "§a", SpruceWoodsConfiguration.class, SpruceWoodsBiome.class),
 	DARK_THICKET("Dark Thicket", "§a", DarkOakConfiguration.class, DarkThicketBiome.class),
 	TRIALS_OF_FIRE("Trials of Fire", "§c", null, DarkThicketBiome.class),
-	SAVANNA_WOODLAND("Savanna Woodland", "§a", null, SavannaWoodlandsBiome.class),
-	MELODY_PLATEAU("Melody's Plateau", "§5", null, SavannaWoodlandsBiome.class),
-	JUNGLE_ISLAND("Jungle Island", "§a", null, JungleIslandBiome.class),
+	SAVANNA_WOODLAND("Savanna Woodland", "§a", SavannaWoodlandConfiguration.class),
+	MELODY_PLATEAU("Melody's Plateau", "§5", SavannaWoodlandConfiguration.class),
+	JUNGLE_ISLAND("Jungle Island", "§a", JungleIslandConfiguration.class),
 
 	JERRYS_WORKSHOP("Jerry's Workshop", "§c"),
 	JERRY_POND("Jerry Pond", "§b"),

@@ -1,7 +1,9 @@
 package net.swofty.type.generic.user.categories;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.swofty.commons.StringUtility;
 
 @Getter
@@ -30,6 +32,7 @@ public enum Rank {
         this.prefix = prefix;
         this.isStaff = isStaff;
         this.textColor = textColor;
+
     }
 
     public boolean isEqualOrHigherThan(Rank rank) {

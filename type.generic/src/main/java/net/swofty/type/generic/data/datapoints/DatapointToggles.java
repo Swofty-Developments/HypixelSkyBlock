@@ -93,6 +93,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_GOLD_BLACKSMITH(false),
             HAS_SPOKEN_TO_FARM_MERCHANT(false),
             HAS_SPOKEN_TO_ADVENTURER(false),
+            HAS_SAID_MOLBERT_IS_MOLE(false),
             HAS_SPOKEN_TO_LUMBER_MERCHANT(false),
             HAS_SPOKEN_TO_MINE_MERCHANT(false),
             HAS_SPOKEN_TO_MASTER_TACTICIAN_FUNK(false),

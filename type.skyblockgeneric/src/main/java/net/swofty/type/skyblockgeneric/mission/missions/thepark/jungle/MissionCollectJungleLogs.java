@@ -1,14 +1,13 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle;
 
 import net.minestom.server.event.player.PlayerTickEvent;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionGiveRyanDarkOakLogs;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -17,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class MissionCollectSpruceLogs extends SkyBlockProgressMission {
+public class MissionCollectJungleLogs extends SkyBlockProgressMission {
 
 	private final Map<UUID, Long> testTimes = new HashMap<>();
 
@@ -42,13 +41,13 @@ public class MissionCollectSpruceLogs extends SkyBlockProgressMission {
 
 		int amount = 0;
 		for (SkyBlockItem item : player.getAllInventoryItems()) {
-			if (item.getMaterial() == Material.SPRUCE_LOG || item.getMaterial() == Material.SPRUCE_WOOD) {
+			if (item.getMaterial() == Material.JUNGLE_LOG || item.getMaterial() == Material.JUNGLE_WOOD) {
 				amount += item.getAmount();
 			}
 		}
 
 		for (SkyBlockItem item : player.getAllSacks()) {
-			if (item.getMaterial() == Material.SPRUCE_LOG || item.getMaterial() == Material.SPRUCE_WOOD) {
+			if (item.getMaterial() == Material.JUNGLE_LOG || item.getMaterial() == Material.JUNGLE_WOOD) {
 				amount += item.getAmount();
 			}
 		}
@@ -59,13 +58,18 @@ public class MissionCollectSpruceLogs extends SkyBlockProgressMission {
 	}
 
 	@Override
+	public int getMaxProgress() {
+		return 512;
+	}
+
+	@Override
 	public String getID() {
-		return "collect_spruce_logs";
+		return "collect_jungle_logs";
 	}
 
 	@Override
 	public String getName() {
-		return "Collect Spruce Logs";
+		return "Collect Jungle Logs";
 	}
 
 	@Override
@@ -76,16 +80,11 @@ public class MissionCollectSpruceLogs extends SkyBlockProgressMission {
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionGiveKellySpruceLogs.class);
+		player.getMissionData().startMission(MissionGiveMolbertJungleLogs.class);
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
-		return Set.of(RegionType.SPRUCE_WOODS);
-	}
-
-	@Override
-	public int getMaxProgress() {
-		return 128;
+		return Set.of(RegionType.JUNGLE_ISLAND);
 	}
 }

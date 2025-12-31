@@ -1,6 +1,7 @@
 package net.swofty.type.thepark;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
@@ -11,10 +12,15 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionCompleteTrialOfFireOne;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna.MissionTravelToTheSavannaWoodland;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.thepark.npcs.NPCRyan;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -23,6 +29,21 @@ import java.util.*;
 public class TrialOfFire {
 
 	private static final Map<UUID, Integer> competingPlayers = new HashMap<>();
+
+	public static void init() {
+		MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+			for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
+				if (!player.getMissionData().isCurrentlyActive(MissionCompleteTrialOfFireOne.class)) {
+					return;
+				}
+
+				Block block = player.getInstance().getBlock(player.getPosition().sub(0, 0.3, 0));
+				if (block.key() == Block.CAMPFIRE.key()) {
+					start(player);
+				}
+			}
+		}, TaskSchedule.seconds(1), TaskSchedule.millis(200));
+	}
 
 	public static void start(SkyBlockPlayer player) {
 		if (isCompeting(player)) {
@@ -38,6 +59,14 @@ public class TrialOfFire {
 
 		if (trial == null) {
 			sendMessage(player, "§cYou have already completed the §6Trial of Fire§f!");
+			return;
+		}
+
+		// TODO: remove this
+		if (trial == Trial.II) {
+			sendMessage(player, "§cTrials are not finished.");
+			player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
+					.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
 			return;
 		}
 
@@ -64,14 +93,14 @@ public class TrialOfFire {
 						Title.Times.times(Duration.ofSeconds(1), Duration.ZERO, Duration.ofSeconds(1))
 				));
 				sendMessage(player, "§aCompleted §6Trial of Fire " + (trial.name()));
-				player.setVelocity(new Vec(2, 1, 2));
+				player.setVelocity(new Vec(12, 18, 12));
 				competingPlayers.remove(player.getUuid());
 
 				SkyBlockDataHandler handler = player.getSkyblockDataHandler();
 				DatapointInteger levelData = handler.get(SkyBlockDataHandler.Data.TRIAL_OF_FIRE_LEVEL, DatapointInteger.class);
 				levelData.setValue(levelData.getValue() + 1);
 
-				switch (levelData.getValue() + 1) {
+				switch (levelData.getValue()) {
 					case 1:
 						player.getMissionData().endMission(MissionCompleteTrialOfFireOne.class);
 						break;

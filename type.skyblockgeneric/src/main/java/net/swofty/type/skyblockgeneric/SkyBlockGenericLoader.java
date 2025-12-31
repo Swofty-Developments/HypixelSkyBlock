@@ -173,12 +173,6 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
             }
         });
 
-        // Register SkyBlock NPCs
-        if (mainInstance != null) {
-            loopThroughPackage("net.swofty.type.skyblockgeneric.entity.npc.npcs", HypixelNPC.class)
-                    .forEach(HypixelNPC::register);
-        }
-
         loopThroughPackage("net.swofty.type.skyblockgeneric.abiphone.impl", AbiphoneNPC.class)
                 .forEach(AbiphoneRegistry::registerContact);
 
@@ -304,13 +298,13 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                         .build());
         SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());
 
-        SkyBlockRegion.getRegions().forEach(region -> {
+        /*SkyBlockRegion.getRegions().forEach(region -> {
             if (region.getServerType() != HypixelConst.getTypeLoader().getType()) return;
             SkyBlockBiomeConfiguration biomeConfig = region.getType().getBiomeHandler();
             if (biomeConfig == null) return;
             RegistryKey<Biome> biomeKey = MinecraftServer.getBiomeRegistry().register(biomeConfig.getKey(), biomeConfig.getBiome());
             setBiome(region.getFirstLocation(), region.getSecondLocation(), biomeKey);
-        });
+        });*/
 
         /**
          * Load fairy souls

@@ -1,8 +1,6 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
@@ -12,16 +10,16 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionGiveCharlieBirchLogs extends SkyBlockMission implements LocationAssociatedMission {
+public class MissionTalkToMolbertAgainAgain extends SkyBlockMission implements LocationAssociatedMission {
 
 	@Override
 	public String getID() {
-		return "give_charlie_birch_logs";
+		return "talk_to_molbert_again_again";
 	}
 
 	@Override
 	public String getName() {
-		return "Give Charlie Birch Logs";
+		return "Talk to Molbert";
 	}
 
 	@Override
@@ -32,19 +30,16 @@ public class MissionGiveCharlieBirchLogs extends SkyBlockMission implements Loca
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionClaimTheTrousers.class);
-		new GUIClaimReward(ItemType.CHARLIE_TROUSERS, () -> {
-			player.getMissionData().endMission(MissionClaimTheTrousers.class);
-		}).open(player);
+		player.getMissionData().startMission(MissionLeaveTheAreaAgain.class);
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
-		return Set.of(RegionType.BIRCH_PARK);
+		return Set.of(RegionType.SAVANNA_WOODLAND, RegionType.JUNGLE_ISLAND);
 	}
 
 	@Override
 	public Pos getLocation() {
-		return new Pos(-277.5, 80, -17.500);
+		return new Pos(-447.5, 120, -63.500);
 	}
 }

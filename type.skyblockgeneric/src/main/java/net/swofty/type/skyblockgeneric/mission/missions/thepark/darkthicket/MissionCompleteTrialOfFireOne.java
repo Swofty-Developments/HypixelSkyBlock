@@ -4,12 +4,14 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerTickEvent;
 import net.minestom.server.instance.block.Block;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna.MissionTravelToTheSavannaWoodland;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -35,7 +37,7 @@ public class MissionCompleteTrialOfFireOne extends SkyBlockMission implements Lo
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		// handled elsewhere
+		player.getMissionData().startMission(MissionTalkToRyan.class);
 	}
 
 	@Override
