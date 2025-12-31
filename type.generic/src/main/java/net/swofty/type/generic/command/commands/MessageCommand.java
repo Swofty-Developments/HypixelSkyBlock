@@ -7,6 +7,8 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.data.DataHandler;
+import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
