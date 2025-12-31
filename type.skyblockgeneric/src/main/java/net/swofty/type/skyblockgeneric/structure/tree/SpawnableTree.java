@@ -1,7 +1,11 @@
-package net.swofty.type.skyblockgeneric.tree;
+package net.swofty.type.skyblockgeneric.structure.tree;
 
 import lombok.Getter;
+import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
+import net.swofty.type.skyblockgeneric.structure.SkyBlockStructure;
+
+import java.util.ArrayList;
 
 @Getter
 public enum SpawnableTree {
@@ -79,5 +83,38 @@ public enum SpawnableTree {
      */
     public SkyBlockTree createAt(int rotation, int x, int y, int z) {
         return new SkyBlockTree(rotation, x, y, z, treeType, config);
+    }
+
+    /**
+     * Create a SkyBlockTree, build it, and register it in the TreeRegistry.
+     * This allows the tree to be tracked for later respawning.
+     */
+    public SkyBlockTree createAndRegister(int x, int y, int z, long seed, SharedInstance instance) {
+        SkyBlockTree tree = new SkyBlockTree(0, x, y, z, treeType, config, seed);
+        tree.build(instance);
+
+        // Convert local coordinates to world coordinates and build block list
+        var blocks = new ArrayList<TreeRegistry.BlockEntry>();
+
+        for (SkyBlockTree.LogPosition log : tree.getPlacedLogs()) {
+            int worldX = tree.rotateValue(x, log.x(), SkyBlockStructure.CoordinateType.X);
+            int worldY = y + log.y();
+            int worldZ = tree.rotateValue(z, log.z(), SkyBlockStructure.CoordinateType.Z);
+            blocks.add(new TreeRegistry.BlockEntry(worldX, worldY, worldZ, treeType.getLogBlock()));
+        }
+
+        for (SkyBlockTree.LogPosition leaf : tree.getPlacedLeaves()) {
+            int worldX = tree.rotateValue(x, leaf.x(), SkyBlockStructure.CoordinateType.X);
+            int worldY = y + leaf.y();
+            int worldZ = tree.rotateValue(z, leaf.z(), SkyBlockStructure.CoordinateType.Z);
+            blocks.add(new TreeRegistry.BlockEntry(worldX, worldY, worldZ, treeType.getLeavesBlock()));
+        }
+
+        TreeRegistry.RegisteredTree registeredTree = new TreeRegistry.RegisteredTree(
+                x, y, z, this, seed, blocks
+        );
+        TreeRegistry.registerTree(instance, registeredTree);
+
+        return tree;
     }
 }

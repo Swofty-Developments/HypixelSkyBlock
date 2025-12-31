@@ -1,4 +1,4 @@
-package net.swofty.type.skyblockgeneric.tree;
+package net.swofty.type.skyblockgeneric.structure.tree;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +16,7 @@ public class SkyBlockTree extends SkyBlockStructure {
     private Random random;
 
     private final Set<LogPosition> placedLogs = new HashSet<>();
+    private final Set<LogPosition> placedLeaves = new HashSet<>();
     private final List<LogPosition> branchEndpoints = new ArrayList<>();
 
     // Calculated per-tree
@@ -48,6 +49,7 @@ public class SkyBlockTree extends SkyBlockStructure {
     @Override
     public void setBlocks(Instance instance) {
         placedLogs.clear();
+        placedLeaves.clear();
         branchEndpoints.clear();
         random = new Random(seed);
 
@@ -249,12 +251,32 @@ public class SkyBlockTree extends SkyBlockStructure {
         int centerY = sumY / branchEndpoints.size();
         int centerZ = sumZ / branchEndpoints.size();
 
-        // Canopy radius based on target width
-        int radius = Math.max(config.leafRadius(), targetWidth);
+        // Calculate required radius based on furthest log from centroid
+        // This ensures all logs are covered by leaves
+        double maxLogDistance = 0;
+        for (LogPosition pos : placedLogs) {
+            double dx = pos.x() - centerX;
+            double dz = pos.z() - centerZ;
+            double dist = Math.sqrt(dx * dx + dz * dz);
+            maxLogDistance = Math.max(maxLogDistance, dist);
+        }
+
+        // 20% of trees are "bulbous" with fuller leaves, 80% are sparser
+        boolean isBulbous = random.nextDouble() < 0.2;
+
+        // Radius buffer: bulbous trees get +2, sparse trees get +1
+        int radiusBuffer = isBulbous ? 2 : 1;
+        int radius = Math.max((int) Math.ceil(maxLogDistance) + radiusBuffer, config.leafRadius());
+
+        // Extra skip chance for sparse trees
+        double sparseSkipBonus = isBulbous ? 0.0 : 0.15;
 
         // Generate the unified canopy
+        // Leaves don't hang as low: only go down 1-2 blocks max instead of radius/2
+        int minDy = isBulbous ? -2 : -1;
+
         for (int dx = -radius; dx <= radius; dx++) {
-            for (int dy = -radius / 2 - 1; dy <= radius; dy++) {
+            for (int dy = minDy; dy <= radius; dy++) {
                 for (int dz = -radius; dz <= radius; dz++) {
                     int leafX = centerX + dx;
                     int leafY = centerY + dy;
@@ -269,9 +291,10 @@ public class SkyBlockTree extends SkyBlockStructure {
                     if (totalDist <= threshold) {
                         LogPosition pos = new LogPosition(leafX, leafY, leafZ);
                         if (!placedLogs.contains(pos)) {
-                            double skipChance = calculateLeafSkipChance(horizontalDist, dy, radius, totalDist);
+                            double skipChance = calculateLeafSkipChance(horizontalDist, dy, radius, totalDist) + sparseSkipBonus;
                             if (random.nextDouble() > skipChance) {
                                 set(instance, leafX, leafY, leafZ, treeType.getLeavesBlock());
+                                placedLeaves.add(pos);
                             }
                         }
                     }
@@ -323,5 +346,13 @@ public class SkyBlockTree extends SkyBlockStructure {
         return List.of();
     }
 
-    private record LogPosition(int x, int y, int z) {}
+    public Set<LogPosition> getPlacedLogs() {
+        return Collections.unmodifiableSet(placedLogs);
+    }
+
+    public Set<LogPosition> getPlacedLeaves() {
+        return Collections.unmodifiableSet(placedLeaves);
+    }
+
+    public record LogPosition(int x, int y, int z) {}
 }

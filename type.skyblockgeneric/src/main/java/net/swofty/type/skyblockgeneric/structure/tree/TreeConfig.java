@@ -1,4 +1,4 @@
-package net.swofty.type.skyblockgeneric.tree;
+package net.swofty.type.skyblockgeneric.structure.tree;
 
 public record TreeConfig(
         int minHeight,
