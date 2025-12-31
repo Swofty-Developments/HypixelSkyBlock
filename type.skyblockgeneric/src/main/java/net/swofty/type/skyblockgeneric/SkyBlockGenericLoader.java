@@ -304,13 +304,13 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                         .build());
         SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());
 
-        SkyBlockRegion.getRegions().forEach(region -> {
+        /*SkyBlockRegion.getRegions().forEach(region -> {
             if (region.getServerType() != HypixelConst.getTypeLoader().getType()) return;
             SkyBlockBiomeConfiguration biomeConfig = region.getType().getBiomeHandler();
             if (biomeConfig == null) return;
             RegistryKey<Biome> biomeKey = MinecraftServer.getBiomeRegistry().register(biomeConfig.getKey(), biomeConfig.getBiome());
             setBiome(region.getFirstLocation(), region.getSecondLocation(), biomeKey);
-        });
+        });*/
 
         /**
          * Load fairy souls
