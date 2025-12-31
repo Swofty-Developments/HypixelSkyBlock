@@ -107,7 +107,6 @@ public class Hypixel {
                 Logger.info("Found TypeLoader: " + type.name());
                 return type == serverType;
             } catch (Exception e) {
-                Logger.error("Failed to init TypeLoader " + clazz.getName(), e);
                 return false;
             }
         }).findFirst().orElseThrow(() ->

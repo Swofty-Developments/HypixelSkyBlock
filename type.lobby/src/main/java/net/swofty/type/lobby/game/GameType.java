@@ -25,6 +25,27 @@ public enum GameType {
             "§7Protect your bed along with your",
             "§7teammates and destroy enemy beds",
             "§7to win!"),
+
+    PROTOTYPE("Prototype §c§lDISASTERS RELEASED TO ARCADE!",
+            Material.ANVIL,
+            Category.CASUAL_GAMES,
+            ServerType.PROTOTYPE_LOBBY,
+            "§7PTL is a place for testing fun and",
+            "§7creative new minigames and systems",
+            "§7on Hypixel.",
+            " ",
+            "§cEverything in this lobby is currently",
+            "§cin development, and may be removed",
+            "§cat any time."),
+
+    MURDER_MYSTERY("Murder Mystery",
+            Material.BOW,
+            Category.TEAM_SURVIVAL,
+            ServerType.MURDER_MYSTERY_LOBBY,
+            "§71 Murderer. 1 Detective. And a whole",
+            "§7lot of Innocents. Can you survive",
+            "§7this tense social game of betrayal",
+            "§7and murder?"),
     ;
 
     private final String displayName;
@@ -76,5 +97,6 @@ public enum GameType {
         PERSISTENT_GAME,
         TEAM_SURVIVAL,
         COMPETITIVE,
+        CASUAL_GAMES,
     }
 }

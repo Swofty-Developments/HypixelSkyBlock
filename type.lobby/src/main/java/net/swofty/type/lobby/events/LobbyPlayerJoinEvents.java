@@ -1,6 +1,7 @@
 package net.swofty.type.lobby.events;
 
 import lombok.SneakyThrows;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
@@ -46,5 +47,6 @@ public class LobbyPlayerJoinEvents implements HypixelEventClass {
 
         // Set up visibility based on player's toggle setting
         PlayerVisibilityManager.setupViewerRuleFromToggle(player);
+        player.setGameMode(GameMode.SURVIVAL);
     }
 }

@@ -85,7 +85,7 @@ public class GUIGameMenu extends HypixelInventoryGUI implements RefreshingGUI {
                     if (cycleIndex % 2 == 0) {
                         lore.add("§a   Click to Connect!");
                     } else {
-                        lore.add("§a▶ Click to Connect!");
+                        lore.add("§a► Click to Connect!");
                     }
                     lore.add("§7" + playerCount + " currently playing!");
                 }

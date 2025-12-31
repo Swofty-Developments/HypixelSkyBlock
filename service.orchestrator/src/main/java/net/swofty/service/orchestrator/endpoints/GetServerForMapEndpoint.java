@@ -1,10 +1,12 @@
 package net.swofty.service.orchestrator.endpoints;
 
+import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
 import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.murdermystery.MurderMysteryGameType;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import net.swofty.service.generic.redis.ServiceEndpoint;
@@ -26,6 +28,15 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 	@Override
 	public GetServerForMapProtocolObject.GetServerForMapResponse onMessage(ServiceProxyRequest message,
 																		   GetServerForMapProtocolObject.GetServerForMapMessage body) {
+		return switch (body.type()) {
+			case BEDWARS_GAME -> handleBedwars(body);
+			case MURDER_MYSTERY_GAME -> handleMurderMystery(body);
+			default -> new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+		};
+	}
+
+	private GetServerForMapProtocolObject.GetServerForMapResponse handleBedwars(
+			GetServerForMapProtocolObject.GetServerForMapMessage body) {
 		try {
 			BedwarsGameType gameType = parseBedwarsGameType(body.mode());
 			if (gameType == null) {
@@ -81,7 +92,76 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.getString("gameId"));
 					}
 				} catch (Exception e) {
-					System.err.println("Failed to instantiate game: " + e.getMessage());
+					System.err.println("Failed to instantiate Bedwars game: " + e.getMessage());
+				}
+			}
+
+			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+		} catch (Exception e) {
+			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+		}
+	}
+
+	private GetServerForMapProtocolObject.GetServerForMapResponse handleMurderMystery(
+			GetServerForMapProtocolObject.GetServerForMapMessage body) {
+		try {
+			MurderMysteryGameType gameType = parseMurderMysteryGameType(body.mode());
+			if (gameType == null) {
+				return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+			}
+
+			// First, try to find an existing joinable game
+			OrchestratorCache.GameWithServer existingGameWithServer = OrchestratorCache.findExisting(
+					ServerType.MURDER_MYSTERY_GAME, gameType.getMaxPlayers(), body.map());
+			if (existingGameWithServer != null) {
+				OrchestratorCache.GameServerState hostingServer = OrchestratorCache.getServerByUuid(existingGameWithServer.serverUuid());
+				if (hostingServer != null) {
+					UnderstandableProxyServer proxy = new UnderstandableProxyServer(
+							hostingServer.shortName(),
+							hostingServer.uuid(),
+							hostingServer.type(),
+							-1,
+							new ArrayList<>(),
+							hostingServer.maxPlayers(),
+							hostingServer.shortName()
+					);
+					return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, existingGameWithServer.game().getGameId().toString());
+				}
+			}
+
+			// If no existing game found, find a server that can instantiate a new one
+			OrchestratorCache.GameServerState availableServer = OrchestratorCache.instantiateServer(
+					ServerType.MURDER_MYSTERY_GAME, gameType.getMaxPlayers());
+			if (availableServer != null) {
+				// Send service message to create the game
+				JSONObject instantiateMessage = new JSONObject();
+				instantiateMessage.put("gameType", gameType.name());
+				instantiateMessage.put("map", body.map());
+
+				try {
+					CompletableFuture<JSONObject> responseFuture = ServiceToServerManager.sendToServer(
+							availableServer.uuid(),
+							FromServiceChannels.INSTANTIATE_GAME,
+							instantiateMessage
+					);
+
+					JSONObject response = responseFuture.get();
+
+					if (response != null && response.optBoolean("success", false)) {
+						// Game created successfully, return the server
+						UnderstandableProxyServer proxy = new UnderstandableProxyServer(
+								availableServer.shortName(),
+								availableServer.uuid(),
+								availableServer.type(),
+								-1,
+								new ArrayList<>(),
+								availableServer.maxPlayers(),
+								availableServer.shortName()
+						);
+						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.getString("gameId"));
+					}
+				} catch (Exception e) {
+					System.err.println("Failed to instantiate Murder Mystery game: " + e.getMessage());
 				}
 			}
 
@@ -106,5 +186,25 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 				default -> { return null; }
 			}
 		}
+	}
+
+	private MurderMysteryGameType parseMurderMysteryGameType(String mode) {
+		if (mode == null) return null;
+
+		// First try the enum's from() method
+		MurderMysteryGameType type = MurderMysteryGameType.from(mode);
+		if (type != null) return type;
+
+		// Try display name
+		type = MurderMysteryGameType.fromDisplayName(mode);
+		if (type != null) return type;
+
+		// Handle common aliases
+		return switch (mode.toLowerCase()) {
+			case "classic" -> MurderMysteryGameType.CLASSIC;
+			case "double_up", "doubleup", "double up" -> MurderMysteryGameType.DOUBLE_UP;
+			case "assassins" -> MurderMysteryGameType.ASSASSINS;
+			default -> null;
+		};
 	}
 }

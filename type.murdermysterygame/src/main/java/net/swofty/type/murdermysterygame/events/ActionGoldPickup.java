@@ -1,0 +1,69 @@
+package net.swofty.type.murdermysterygame.events;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.event.item.PickupItemEvent;
+import net.minestom.server.item.Material;
+import net.minestom.server.entity.metadata.item.ItemEntityMeta;
+import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
+import net.swofty.type.murdermysterygame.game.Game;
+import net.swofty.type.murdermysterygame.game.GameStatus;
+import net.swofty.type.murdermysterygame.role.GameRole;
+import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
+
+public class ActionGoldPickup implements HypixelEventClass {
+
+    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    public void run(PickupItemEvent event) {
+        if (!(event.getLivingEntity() instanceof MurderMysteryPlayer player)) return;
+
+        Entity itemEntity = event.getItemEntity();
+        if (itemEntity.getEntityType() != EntityType.ITEM) return;
+
+        Game game = TypeMurderMysteryGameLoader.getPlayerGame(player);
+        if (game == null) return;
+        if (game.getGameStatus() != GameStatus.IN_PROGRESS) {
+            event.setCancelled(true);
+            return;
+        }
+
+        ItemEntityMeta meta = (ItemEntityMeta) itemEntity.getEntityMeta();
+        Material material = meta.getItem().material();
+
+        // Handle bow pickup (dropped detective bow)
+        if (material == Material.BOW) {
+            event.setCancelled(true);
+
+            // Check if this is the dropped detective bow
+            if (game.isDroppedDetectiveBow(itemEntity)) {
+                // Murderer cannot pick up the bow
+                GameRole playerRole = game.getRoleManager().getRole(player.getUuid());
+                if (playerRole == GameRole.MURDERER) {
+                    // Silently prevent pickup - murderer cannot pick up the bow
+                    return;
+                }
+
+                // Non-murderer picks up the bow
+                game.onDetectiveBowPickedUp(player);
+            }
+            return;
+        }
+
+        // Handle gold pickup
+        if (material == Material.GOLD_INGOT) {
+            // Cancel the default pickup behavior
+            event.setCancelled(true);
+
+            // Use our gold collection system
+            game.getGoldManager().collectGold(player, itemEntity);
+
+            // Send chat message
+            player.sendMessage(Component.text("+1 Gold", NamedTextColor.GOLD));
+        }
+    }
+}
