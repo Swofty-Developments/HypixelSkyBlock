@@ -114,7 +114,7 @@ public class NPCLumberJack extends HypixelNPC {
 						"Cheers!, Let me tell ya a little about what we're going to be doing.",
 						"We will be §aForaging§f! As one of SkyBlock's core skills, Foraging involves cutting down lots of different types of trees!",
 						"As you do this, you'll unlock various crafts and useful stat boots that will help in other areas of your adventure.",
-						"Here, let me unlock the §aForaging skill for you, and then you can get started!",
+						"Here, let me unlock the §aForaging skill §ffor you, and then you can get started!",
 						"To get you started, please bring me §a20 Oak Logs§f! You can break the trees just off the trail to get 'em",
 						"§fUse your fists for now - I'll give you my previous assistant's axe if you can prove your worth!"
 				}).build(),

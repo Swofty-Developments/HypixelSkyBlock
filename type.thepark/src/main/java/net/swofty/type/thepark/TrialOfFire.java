@@ -1,6 +1,7 @@
 package net.swofty.type.thepark;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
@@ -13,10 +14,13 @@ import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionCompleteTrialOfFireOne;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna.MissionTravelToTheSavannaWoodland;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.thepark.npcs.NPCRyan;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -58,6 +62,14 @@ public class TrialOfFire {
 			return;
 		}
 
+		// TODO: remove this
+		if (trial == Trial.II) {
+			sendMessage(player, "§cTrials are not finished.");
+			player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
+					.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+			return;
+		}
+
 		competingPlayers.put(player.getUuid(), 0);
 		MinecraftServer.getSchedulerManager().submitTask(() -> {
 			int iterations = competingPlayers.get(player.getUuid());
@@ -81,14 +93,14 @@ public class TrialOfFire {
 						Title.Times.times(Duration.ofSeconds(1), Duration.ZERO, Duration.ofSeconds(1))
 				));
 				sendMessage(player, "§aCompleted §6Trial of Fire " + (trial.name()));
-				player.setVelocity(new Vec(2, 1, 2));
+				player.setVelocity(new Vec(12, 18, 12));
 				competingPlayers.remove(player.getUuid());
 
 				SkyBlockDataHandler handler = player.getSkyblockDataHandler();
 				DatapointInteger levelData = handler.get(SkyBlockDataHandler.Data.TRIAL_OF_FIRE_LEVEL, DatapointInteger.class);
 				levelData.setValue(levelData.getValue() + 1);
 
-				switch (levelData.getValue() + 1) {
+				switch (levelData.getValue()) {
 					case 1:
 						player.getMissionData().endMission(MissionCompleteTrialOfFireOne.class);
 						break;

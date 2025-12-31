@@ -80,13 +80,12 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 				player.sendMessage("§aPlaced trap §7(§e" + placedTraps.size() + "§7/§a3§7)");
 			});
 
-			TextDisplayEntity text = new TextDisplayEntity(Component.text("Place Trap Here", NamedTextColor.GREEN), meta -> {
-			});
+			TextDisplayEntity text = new TextDisplayEntity(Component.text("Place Trap Here", NamedTextColor.GREEN), meta -> {});
 			hitbox.setInstance(HypixelConst.getInstanceContainer(), trap);
 			text.setInstance(HypixelConst.getInstanceContainer(), trap.add(0, 1, 0));
 
-			text.updateViewableRule(player -> {
-				SkyBlockPlayer p = (SkyBlockPlayer) player;
+			text.updateViewerRule(player -> {
+				if (!(player instanceof SkyBlockPlayer p)) return false;
 				if (!p.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {
 					return false;
 				}
@@ -102,10 +101,10 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 
 			float size = 0.6f;
 			TrapdoorSide[] sides = {
-					new TrapdoorSide(-size / 2, 0.4f, -size / 2, 0f, -90f, 0f), // NORTH
+					new TrapdoorSide(-size / 2, 0f, -size / 2 + 0.1f, 0f, -90f, 0f), // NORTH
 					new TrapdoorSide(-size / 2 + 0.1f, 0f, size / 2, 0f, -90f, 90f), // WEST
 					new TrapdoorSide(size / 2, 0f, size / 2, 0f, -90f, 90f), // EAST
-					new TrapdoorSide(-size / 2, 0f, size / 2, 0f, -90f, 0f), // SOUTH
+					new TrapdoorSide(-size / 2, 0.3f, size / 2, 0f, -90f, 0f), // SOUTH
 					new TrapdoorSide(-size / 2, 0.5f, -size / 2, 0f, 0f, 0f), // TOP
 			};
 
@@ -118,8 +117,8 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 				});
 
 				trapdoor.setInstance(HypixelConst.getInstanceContainer(), trap);
-				trapdoor.updateViewableRule((p) -> {
-					SkyBlockPlayer player = (SkyBlockPlayer) p;
+				trapdoor.updateViewerRule((p) -> {
+					if (!(p instanceof SkyBlockPlayer player)) return false;
 					if (!player.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {
 						return false;
 					}

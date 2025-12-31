@@ -35,7 +35,7 @@ public class MissionGiveMolbertJungleLogs extends SkyBlockMission implements Loc
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		// TODO: take logs from inv
+		player.getMissionData().startMission(MissionLeaveTheArea.class);
 	}
 
 	@Override

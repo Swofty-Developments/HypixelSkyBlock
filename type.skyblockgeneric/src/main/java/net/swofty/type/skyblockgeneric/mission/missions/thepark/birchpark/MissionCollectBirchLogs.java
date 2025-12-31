@@ -74,7 +74,7 @@ public class MissionCollectBirchLogs extends SkyBlockProgressMission {
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionTalkToCharlieAgain.class);
+		player.getMissionData().startMission(MissionGiveCharlieBirchLogs.class);
 	}
 
 	@Override

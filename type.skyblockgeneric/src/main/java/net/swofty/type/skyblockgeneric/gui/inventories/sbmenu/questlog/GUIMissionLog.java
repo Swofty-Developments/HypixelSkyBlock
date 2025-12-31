@@ -156,7 +156,7 @@ public class GUIMissionLog extends HypixelInventoryGUI {
 
                         if (activeMission == null) {
                             try {
-                                lore.add(" §c✗§e " + mission.newInstance().getName() + ".");
+                                lore.add(" §c✖§e " + mission.newInstance().getName() + ".");
                             } catch (InstantiationException | IllegalAccessException e) {
                                 throw new RuntimeException(e);
                             }

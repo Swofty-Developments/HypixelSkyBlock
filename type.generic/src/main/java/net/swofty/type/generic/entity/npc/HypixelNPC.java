@@ -2,6 +2,8 @@ package net.swofty.type.generic.entity.npc;
 
 import lombok.Builder;
 import lombok.Getter;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
@@ -230,6 +232,7 @@ public abstract class HypixelNPC {
 
     public void sendNPCMessage(HypixelPlayer player, String message) {
         player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
+		player.playSound(Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
     }
 
     protected DialogueController dialogue() {

@@ -2,6 +2,7 @@ package net.swofty.type.thepark.npcs;
 
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCOption;
@@ -92,6 +93,11 @@ public class NPCMolbert extends HypixelNPC {
 		}
 
 		if (data.isCurrentlyActive(MissionGiveMolbertJungleLogs.class)) {
+			if (!player.removeItemFromPlayer(ItemType.JUNGLE_LOG, 512)) {
+				sendNPCMessage(player, "You don't have §a512 Jungle Logs§f on you.");
+				return;
+			}
+
 			setDialogue(player, "after-resources").thenRun(() -> {
 				data.endMission(MissionGiveMolbertJungleLogs.class);
 			});
@@ -121,9 +127,9 @@ public class NPCMolbert extends HypixelNPC {
 	protected DialogueSet[] dialogues(HypixelPlayer player) {
 		return List.of(
 				DialogueSet.builder().key("intro").lines(new String[]{
-						"§6Moles§f, you see. They have been burrowing everywhere, their tunnels are disrupting the landscape, they ruined the §5§obeaty §fof this place. It's gotten hard to ignore.",
+						"§6Moles§f, you see. They have been burrowing everywhere, their tunnels are disrupting the landscape, they ruined the §5§obeauty §fof this place. It's gotten hard to ignore.",
 						"You need an experienced person to handle the situation.",
-						"Those troublesome creatures are ruining everything and must be dealt with. DO you understand?",
+						"Those troublesome creatures are ruining everything and must be dealt with. Do you understand?",
 						"This park deserves better and I want see it flourish like it used to be.",
 						"Let us keep this between us, and I will §agenerously reward §fyou for your efforts.",
 						"The moles must be dealt with, and I am sure you will do so quickly and quietly."
@@ -141,7 +147,7 @@ public class NPCMolbert extends HypixelNPC {
 						"For that however, I need §a512 Jungle Logs§f, should be enough to get things going.",
 						"Moles §6loooove carrots§f, they are just too good to resist.",
 						"Don't worry, I've got a stash ready.",
-						"Just thinking about them §omakes me§f... Uhm I meean §omakes them §fcome out of their hiding space."
+						"Just thinking about them §omakes me§f... Uhm I mean §omakes them §fcome out of their hiding space."
 				}).build(),
 				DialogueSet.builder().key("after-resources").lines(new String[]{
 						"Fantastic, that's all I needed to build the §5traps§f.",

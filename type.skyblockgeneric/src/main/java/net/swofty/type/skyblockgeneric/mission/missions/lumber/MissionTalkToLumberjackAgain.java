@@ -30,7 +30,6 @@ public class MissionTalkToLumberjackAgain extends SkyBlockMission {
 
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-        player.addAndUpdateItem(ItemType.PROMISING_AXE);
         player.getMissionData().startMission(MissionTravelToThePark.class);
     }
 

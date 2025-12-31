@@ -2,11 +2,13 @@ package net.swofty.type.thepark.npcs;
 
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.MissionCollectSpruceLogs;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.MissionFindKelly;
@@ -54,7 +56,7 @@ public class NPCKelly extends HypixelNPC {
 		MissionData data = player.getMissionData();
 		if (data.isCurrentlyActive(MissionFindKelly.class)) {
 			setDialogue(player, "first-interaction").thenRun(() -> {
-				NPCOption.sendOption(player, "kelly", false, List.of(
+				NPCOption.sendOption(player, "kelly", true, List.of(
 						new NPCOption.Option(
 								"yes",
 								NamedTextColor.GREEN,
@@ -86,10 +88,14 @@ public class NPCKelly extends HypixelNPC {
 			return;
 		}
 		if (data.isCurrentlyActive(MissionGiveKellySpruceLogs.class)) {
-			// TODO: take 128 spruce logs from player
+			if (!player.removeItemFromPlayer(ItemType.SPRUCE_LOG, 128)) {
+				setDialogue(player, "during-collect");
+				return;
+			}
 			setDialogue(player, "after-collecting").thenRun(() -> {
-				// TODO: claim Kelly's T-Shirt reward
-				data.endMission(MissionGiveKellySpruceLogs.class);
+				new GUIClaimReward(ItemType.KELLY_TSHIRT, () -> {
+					data.endMission(MissionGiveKellySpruceLogs.class);
+				}).open(player);
 			});
 			return;
 		}
@@ -124,7 +130,7 @@ public class NPCKelly extends HypixelNPC {
 				DialogueSet.builder().key("after-collecting").lines(new String[]{
 						"Oh, that's amazing! Thank you so much!",
 						"Now I can take this all back to §eCharlie§f, and say §lI did it!",
-						"And then, with the coins he gives me, I can get a §3Spruce Minion!",
+						"And then, with the coins he gives me, I can get a §3Spruce Minion§f!",
 						// "Thank you, (player), please take this reward!", // seems to be missing from the server, even though docs say it exists.
 						"You should check out the §aDark Thicket §fnext. Be careful though!",
 						"I've heard some people are holding a §cCult Meeting §fthere §c§lRIGHT NOW!"

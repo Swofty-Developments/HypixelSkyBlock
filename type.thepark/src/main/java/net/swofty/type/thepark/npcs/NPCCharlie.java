@@ -80,7 +80,7 @@ public class NPCCharlie extends HypixelNPC {
 								"Howdy! Yer a friend of §aLumber Jack§f, are ya?",
 								"Well, works for me!",
 								"I need §a64 Birch Logs§f. Could you grab 'em for me?",
-								"Do that, and then wee can talk!"
+								"Do that, and then we can talk!"
 						}).build(),
 				DialogueSet.builder()
 						.key("talk-again").lines(new String[]{

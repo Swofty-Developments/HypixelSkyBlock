@@ -49,7 +49,6 @@ public class MissionGiveMelodyAcaciaLogs extends SkyBlockMission implements Loca
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		// todo: take from inventory
 		mission.getObjectiveCompleteText(
 				"QUEST COMPLETE",
 				new ArrayList<>(List.of(

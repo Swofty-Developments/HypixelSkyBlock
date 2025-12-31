@@ -48,7 +48,7 @@ public class MissionGiveRyanDarkOakLogs extends SkyBlockMission implements Locat
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		// todo: take from inventory
+		player.removeItemFromPlayer(ItemType.DARK_OAK_LOG, 256);
 		mission.getObjectiveCompleteText(
 				"QUEST COMPLETE",
 				new ArrayList<>(List.of(

@@ -35,7 +35,6 @@ public class MissionGiveKellySpruceLogs extends SkyBlockMission implements Locat
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		// todo: take from inventory
 		player.getMissionData().startMission(MissionTravelToTheDarkThicket.class);
 	}
 
