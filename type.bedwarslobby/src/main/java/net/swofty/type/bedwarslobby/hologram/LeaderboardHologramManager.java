@@ -117,6 +117,10 @@ public class LeaderboardHologramManager {
 			refreshHologramForPlayer(player, hologram);
 		}
 		refreshSettingsHologramForPlayer(player);
+
+        for (InteractionEntity clickZone : clickZones) {
+            clickZone.addViewer(player);
+        }
 	}
 
 	public static void refreshHologramForPlayer(HypixelPlayer player, BedWarsLeaderboardHologram hologram) {

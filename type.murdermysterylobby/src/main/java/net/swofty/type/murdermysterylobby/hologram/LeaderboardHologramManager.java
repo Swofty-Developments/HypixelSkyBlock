@@ -70,8 +70,8 @@ public class LeaderboardHologramManager {
                 handleClick(hypixelPlayer, hologram, event);
             }
         });
-        System.out.println("Spawning click zone at " + pos.add(0, 4, 0));
-        clickZone.setInstance(instance, pos.add(0, 4, 0));
+        clickZone.setInstance(instance, pos);
+        clickZones.add(clickZone);
     }
 
     public static void handleClick(HypixelPlayer player, MurderMysteryLeaderboardHologram hologram, PlayerEntityInteractEvent event) {
@@ -119,6 +119,10 @@ public class LeaderboardHologramManager {
             refreshHologramForPlayer(player, hologram);
         }
         refreshSettingsHologramForPlayer(player);
+
+        for (InteractionEntity clickZone : clickZones) {
+            clickZone.addViewer(player);
+        }
     }
 
     public static void refreshHologramForPlayer(HypixelPlayer player, MurderMysteryLeaderboardHologram hologram) {
