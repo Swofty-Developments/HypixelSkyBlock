@@ -135,8 +135,8 @@ public class HypixelDataHandler extends DataHandler {
         if (userCache.containsKey(uuid))
             return (HypixelDataHandler) userCache.get(uuid);
 
-        ProfilesDatabase profilesDatabase = new ProfilesDatabase(uuid.toString());
-        Document doc = profilesDatabase.getDocument();
+        UserDatabase userDatabase = new UserDatabase(uuid.toString());
+        Document doc = userDatabase.getHypixelData();
         return createFromDocument(doc);
     }
 
