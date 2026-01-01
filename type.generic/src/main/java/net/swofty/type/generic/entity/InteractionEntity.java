@@ -16,6 +16,7 @@ public class InteractionEntity extends LivingEntity {
 		super(EntityType.INTERACTION);
 		this.onClick = onClick;
 
+        setAutoViewable(true);
 		editEntityMeta(InteractionMeta.class, meta -> {
 			meta.setHeight(height);
 			meta.setWidth(width);

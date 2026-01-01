@@ -17,6 +17,7 @@ public class GetGameCountsProtocolObject extends ProtocolObject
                 JSONObject json = new JSONObject();
                 json.put("type", value.type.name());
                 if (value.gameTypeName != null) json.put("gameTypeName", value.gameTypeName);
+                if (value.mapName != null) json.put("mapName", value.mapName);
                 return json.toString();
             }
 
@@ -25,13 +26,14 @@ public class GetGameCountsProtocolObject extends ProtocolObject
                 JSONObject obj = new JSONObject(json);
                 return new GetGameCountsMessage(
                         ServerType.valueOf(obj.getString("type")),
-                        obj.optString("gameTypeName", null)
+                        obj.optString("gameTypeName", null),
+                        obj.optString("mapName", null)
                 );
             }
 
             @Override
             public GetGameCountsMessage clone(GetGameCountsMessage value) {
-                return new GetGameCountsMessage(value.type, value.gameTypeName);
+                return new GetGameCountsMessage(value.type, value.gameTypeName, value.mapName);
             }
         };
     }
@@ -63,7 +65,7 @@ public class GetGameCountsProtocolObject extends ProtocolObject
         };
     }
 
-    public record GetGameCountsMessage(ServerType type, String gameTypeName) { }
+    public record GetGameCountsMessage(ServerType type, String gameTypeName, String mapName) { }
 
     public record GetGameCountsResponse(int playerCount, int gameCount) { }
 }

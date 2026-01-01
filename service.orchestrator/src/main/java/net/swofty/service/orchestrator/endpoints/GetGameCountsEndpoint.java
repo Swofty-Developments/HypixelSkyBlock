@@ -17,7 +17,7 @@ public class GetGameCountsEndpoint implements ServiceEndpoint
 
     @Override
     public GetGameCountsProtocolObject.GetGameCountsResponse onMessage(ServiceProxyRequest message, GetGameCountsProtocolObject.GetGameCountsMessage body) {
-        var stats = OrchestratorCache.getGameCounts(body.type(), body.gameTypeName());
+        var stats = OrchestratorCache.getGameCounts(body.type(), body.gameTypeName(), body.mapName());
         return new GetGameCountsProtocolObject.GetGameCountsResponse(stats.playerCount(), stats.gameCount());
     }
 }

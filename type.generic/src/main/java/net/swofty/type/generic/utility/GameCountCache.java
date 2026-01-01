@@ -25,14 +25,26 @@ public class GameCountCache {
      * @return The player count (may be stale during refresh)
      */
     public static int getPlayerCount(ServerType type, String gameTypeName) {
-        String key = type.name() + ":" + (gameTypeName != null ? gameTypeName : "ALL");
+        return getPlayerCount(type, gameTypeName, null);
+    }
+
+    /**
+     * Get the player count for a specific server type, game type, and map.
+     *
+     * @param type The server type (e.g., MURDER_MYSTERY_GAME, BEDWARS_GAME)
+     * @param gameTypeName The game mode name (e.g., "CLASSIC", "SOLO"), or null for all modes
+     * @param mapName The map name, or null for all maps
+     * @return The player count (may be stale during refresh)
+     */
+    public static int getPlayerCount(ServerType type, String gameTypeName, String mapName) {
+        String key = buildCacheKey(type, gameTypeName, mapName);
         CachedCount cached = cache.get(key);
 
         long now = System.currentTimeMillis();
 
         if (cached == null || now - cached.timestamp > CACHE_TTL_MS) {
             // Trigger async refresh
-            refreshAsync(type, gameTypeName, key);
+            refreshAsync(type, gameTypeName, mapName, key);
 
             // Return stale value if available, otherwise 0
             return cached != null ? cached.playerCount : 0;
@@ -49,14 +61,26 @@ public class GameCountCache {
      * @return The game count (may be stale during refresh)
      */
     public static int getGameCount(ServerType type, String gameTypeName) {
-        String key = type.name() + ":" + (gameTypeName != null ? gameTypeName : "ALL");
+        return getGameCount(type, gameTypeName, null);
+    }
+
+    /**
+     * Get the game count for a specific server type, game type, and map.
+     *
+     * @param type The server type
+     * @param gameTypeName The game mode name, or null for all modes
+     * @param mapName The map name, or null for all maps
+     * @return The game count (may be stale during refresh)
+     */
+    public static int getGameCount(ServerType type, String gameTypeName, String mapName) {
+        String key = buildCacheKey(type, gameTypeName, mapName);
         CachedCount cached = cache.get(key);
 
         long now = System.currentTimeMillis();
 
         if (cached == null || now - cached.timestamp > CACHE_TTL_MS) {
             // Trigger async refresh
-            refreshAsync(type, gameTypeName, key);
+            refreshAsync(type, gameTypeName, mapName, key);
 
             // Return stale value if available, otherwise 0
             return cached != null ? cached.gameCount : 0;
@@ -65,8 +89,15 @@ public class GameCountCache {
         return cached.gameCount;
     }
 
-    private static void refreshAsync(ServerType type, String gameTypeName, String cacheKey) {
-        var message = new GetGameCountsProtocolObject.GetGameCountsMessage(type, gameTypeName);
+    private static String buildCacheKey(ServerType type, String gameTypeName, String mapName) {
+        StringBuilder key = new StringBuilder(type.name());
+        key.append(":").append(gameTypeName != null ? gameTypeName : "ALL");
+        key.append(":").append(mapName != null ? mapName : "ALL");
+        return key.toString();
+    }
+
+    private static void refreshAsync(ServerType type, String gameTypeName, String mapName, String cacheKey) {
+        var message = new GetGameCountsProtocolObject.GetGameCountsMessage(type, gameTypeName, mapName);
 
         new ProxyService(ServiceType.ORCHESTRATOR)
                 .<GetGameCountsProtocolObject.GetGameCountsMessage, GetGameCountsProtocolObject.GetGameCountsResponse>handleRequest(message)
