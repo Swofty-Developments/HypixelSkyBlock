@@ -149,8 +149,12 @@ public class HypixelDataHandler extends DataHandler {
         return handler.get(Data.IGN, DatapointString.class).getValue();
     }
 
+    @Blocking
     public static @Nullable UUID getPotentialUUIDFromName(String name) throws RuntimeException {
-        Document doc = UserDatabase.collection.find(new Document("ignLowercase", "\"" + name.toLowerCase() + "\"")).first();
+        Document doc = UserDatabase.collection.find(
+                new Document("ignLowercase", "\"" + name.toLowerCase() + "\"")
+        ).first();
+
         if (doc == null)
             return null;
         return UUID.fromString(doc.getString("_id"));
