@@ -1,10 +1,9 @@
-package net.swofty.type.thepark.events;
+package net.swofty.type.thepark;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.attribute.Attribute;
-import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.potion.Potion;
@@ -12,10 +11,8 @@ import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionSneakUpOnRyan;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -25,14 +22,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ActionPlayerMove implements HypixelEventClass {
+public class RyanScene {
 
-	private final Map<UUID, Long> lastTriggered = new HashMap<>();
+	private static final Map<UUID, Long> lastTriggered = new HashMap<>();
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
-	public void onMove(PlayerMoveEvent event) {
-		SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+	public static void init() {
+		MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+			for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
+				handlePlayer(player);
+			}
+		}, TaskSchedule.seconds(1), TaskSchedule.tick(5));
+	}
 
+	private static void handlePlayer(SkyBlockPlayer player) {
 		if (lastTriggered.containsKey(player.getUuid())) {
 			long lastTime = lastTriggered.get(player.getUuid());
 			if (System.currentTimeMillis() - lastTime < 5000) {
@@ -96,7 +98,7 @@ public class ActionPlayerMove implements HypixelEventClass {
 		}
 	}
 
-	private boolean isInView(Instance instance, Pos viewer, SkyBlockPlayer player) {
+	private static boolean isInView(Instance instance, Pos viewer, SkyBlockPlayer player) {
 		Pos targetPos = player.getPosition();
 
 		double dx = targetPos.x() - viewer.x();

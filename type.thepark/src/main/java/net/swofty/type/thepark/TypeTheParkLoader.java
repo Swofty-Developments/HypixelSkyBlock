@@ -175,6 +175,7 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 		}, ExecutionType.TICK_START);
 
 		TrialOfFire.init();
+		RyanScene.init();
 	}
 
 	private boolean shouldRenderTraps(SkyBlockPlayer player) {
