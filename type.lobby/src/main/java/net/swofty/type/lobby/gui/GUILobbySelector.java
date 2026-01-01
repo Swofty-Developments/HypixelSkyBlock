@@ -78,11 +78,10 @@ public class GUILobbySelector extends HypixelInventoryGUI {
     }
 
     private void populateLobbies(HypixelPlayer player) {
-        // Clear all slots first
+        items.clear();
         for (int i = 0; i < 18; i++) {
             getInventory().setItemStack(i, ItemStack.AIR);
         }
-        items.clear();
 
         UUID currentServer = HypixelConst.getServerUUID();
 
