@@ -29,7 +29,7 @@ public class TrapParticles {
 
 					if (edgeCount == 2) {
 						EDGE_PARTICLES.add(new ParticlePacket(
-								Particle.COMPOSTER,
+								Particle.HAPPY_VILLAGER,
 								false,
 								false,
 								x, y, z,

@@ -64,7 +64,7 @@ public class MissionCollectAcaciaLogs extends SkyBlockProgressMission {
 
 	@Override
 	public String getID() {
-		return "collect_dark_oak_logs";
+		return "collect_acacia_logs";
 	}
 
 	@Override

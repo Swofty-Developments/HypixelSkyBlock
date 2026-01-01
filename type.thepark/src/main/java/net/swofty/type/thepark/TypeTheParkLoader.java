@@ -171,10 +171,11 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 					i++;
 				}
 			}
-			return TaskSchedule.millis(400);
+			return TaskSchedule.millis(800);
 		}, ExecutionType.TICK_START);
 
 		TrialOfFire.init();
+		RyanScene.init();
 	}
 
 	private boolean shouldRenderTraps(SkyBlockPlayer player) {
