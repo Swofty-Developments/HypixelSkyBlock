@@ -1,15 +1,11 @@
 package net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionClaimTheTrousers;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle.MissionTalkToMolbert;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.MissionTalkToGustave;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -65,7 +61,6 @@ public class MissionGiveMelodyAcaciaLogs extends SkyBlockMission implements Loca
 		player.getSkills().increase(player, SkillCategories.FORAGING, 1500D);
 
 		player.getMissionData().startMission(MissionTalkToMolbert.class);
-		player.getMissionData().startMission(MissionTalkToGustave.class);
 	}
 
 	@Override
