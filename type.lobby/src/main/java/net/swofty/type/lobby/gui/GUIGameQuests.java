@@ -371,7 +371,7 @@ public class GUIGameQuests extends HypixelInventoryGUI {
 
     private void populateChallengeQuests(HypixelPlayer player, QuestData questData) {
         List<QuestDefinition> challengeQuests = QuestRegistry.getByCategory(category, QuestType.CHALLENGE);
-        int[] challengeSlots = {39, 40, 41};
+        int[] challengeSlots = {38, 39, 41, 42};
         int challengesRemaining = questData.getRemainingChallenges();
 
         for (int i = 0; i < challengeSlots.length && i < challengeQuests.size(); i++) {

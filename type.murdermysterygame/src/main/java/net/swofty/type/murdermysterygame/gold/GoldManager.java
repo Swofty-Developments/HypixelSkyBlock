@@ -13,6 +13,7 @@ import net.minestom.server.network.packet.server.play.CollectItemPacket;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
+import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.game.GameStatus;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
@@ -78,6 +79,9 @@ public class GoldManager {
                         player.sendMessage(Component.text("+1 Gold", NamedTextColor.GOLD));
                         player.sendActionBar(Component.text("Gold: " + current + "/" + GOLD_FOR_BOW, NamedTextColor.GOLD));
 
+                        // === GOLD ACHIEVEMENT TRACKING ===
+                        trackGoldAchievements(player, 1);
+
                         if (current >= GOLD_FOR_BOW) {
                             game.getWeaponManager().giveInnocentBow(player);
                             player.resetGold();
@@ -123,6 +127,9 @@ public class GoldManager {
 
         player.sendActionBar(Component.text("Gold: " + current + "/" + GOLD_FOR_BOW, NamedTextColor.GOLD));
 
+        // === GOLD ACHIEVEMENT TRACKING ===
+        trackGoldAchievements(player, 1);
+
         if (current >= GOLD_FOR_BOW) {
             game.getWeaponManager().giveInnocentBow(player);
             player.resetGold();
@@ -130,6 +137,28 @@ public class GoldManager {
         }
 
         return false;
+    }
+
+    private void trackGoldAchievements(MurderMysteryPlayer player, int amount) {
+        PlayerAchievementHandler achHandler = new PlayerAchievementHandler(player);
+
+        // Track total gold collected this game for player tracking
+        player.addGoldCollectedThisGame(amount);
+
+        // Per-game: Gold Hunter - pick up 30 gold in single game
+        achHandler.addProgress("murdermystery.gold_hunter", amount);
+
+        // Tiered: Hoarder - gather total gold
+        achHandler.addProgress("murdermystery.hoarder", amount);
+
+        // That Was Easy - collect 10 gold in first minute
+        long gameStartTime = game.getGameStartTime();
+        if (gameStartTime > 0 && System.currentTimeMillis() - gameStartTime <= 60000) {
+            player.addGoldInFirstMinute(amount);
+            if (player.getGoldCollectedInFirstMinute() >= 10) {
+                achHandler.addProgress("murdermystery.that_was_easy", 1);
+            }
+        }
     }
 
     public int getGoldForBow() {

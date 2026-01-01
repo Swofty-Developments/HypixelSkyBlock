@@ -68,12 +68,12 @@ public class LeaderboardHologramManager {
 	private static void createClickZone(Instance instance, BedWarsLeaderboardHologram hologram) {
 		Pos pos = hologram.getPosition();
 
-		InteractionEntity clickZone = new InteractionEntity(2.5f, 7.0f, (player, event) -> {
+		InteractionEntity clickZone = new InteractionEntity(3.5f, 9.0f, (player, event) -> {
 			if (player instanceof HypixelPlayer hypixelPlayer) {
 				handleClick(hypixelPlayer, hologram, event);
 			}
 		});
-		clickZone.setInstance(instance, pos.add(0, 2, 0));
+		clickZone.setInstance(instance, pos.add(0, 4, 0));
 		clickZones.add(clickZone);
 	}
 

@@ -20,6 +20,7 @@ public class InteractionEntity extends LivingEntity {
 			meta.setHeight(height);
 			meta.setWidth(width);
 			meta.setHasNoGravity(true);
+			meta.setResponse(true);
 		});
 	}
 }

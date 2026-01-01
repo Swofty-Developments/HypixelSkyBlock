@@ -1,0 +1,33 @@
+# Murder Mystery Daily Quests
+# Resets every day at midnight UTC
+
+quests:
+  - id: "murdermystery.daily.winner"
+    name: "Winner"
+    description: "Win a game in any mode"
+    type: DAILY
+    trigger: "murdermystery.games_won"
+    goal: 1
+    rewards:
+      hypixel_experience: 3300
+      tokens: 2500
+
+  - id: "murdermystery.daily.power_play"
+    name: "Power Play"
+    description: "Kill the Murderer or win as Murderer in Classic or Double Up"
+    type: DAILY
+    trigger: "murdermystery.power_play"
+    goal: 1
+    rewards:
+      hypixel_experience: 3300
+      tokens: 2500
+
+  - id: "murdermystery.daily.hitman"
+    name: "Hitman"
+    description: "Kill 2 Targets in Assassins"
+    type: DAILY
+    trigger: "murdermystery.assassin_target_kills"
+    goal: 2
+    rewards:
+      hypixel_experience: 1980
+      tokens: 2500

@@ -1,0 +1,39 @@
+# Murder Mystery Challenge Quests
+# Can be completed multiple times per day, once per game
+
+quests:
+  - id: "murdermystery.challenge.murder_spree"
+    name: "Murder Spree"
+    description: "Kill 5 players as the Murderer in a single game."
+    type: CHALLENGE
+    trigger: "murdermystery.murder_spree"
+    goal: 1
+    rewards:
+      hypixel_experience: 3700
+
+  - id: "murdermystery.challenge.sherlock"
+    name: "Sherlock"
+    description: "Kill the Murderer in under 2 minutes as the Detective."
+    type: CHALLENGE
+    trigger: "murdermystery.sherlock"
+    goal: 1
+    rewards:
+      hypixel_experience: 3700
+
+  - id: "murdermystery.challenge.hero"
+    name: "Hero"
+    description: "Become the Hero by killing the Murderer as an Innocent or the Detective."
+    type: CHALLENGE
+    trigger: "murdermystery.hero"
+    goal: 1
+    rewards:
+      hypixel_experience: 3700
+
+  - id: "murdermystery.challenge.serial_killer"
+    name: "Serial Killer"
+    description: "Get the most kills in Assassins mode."
+    type: CHALLENGE
+    trigger: "murdermystery.serial_killer"
+    goal: 1
+    rewards:
+      hypixel_experience: 3700

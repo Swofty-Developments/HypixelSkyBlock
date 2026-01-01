@@ -1,14 +1,20 @@
 package net.swofty.type.generic.data.datapoints;
 
+import net.swofty.commons.murdermystery.MurderMysteryLeaderboardMode;
+import net.swofty.commons.murdermystery.MurderMysteryLeaderboardPeriod;
 import net.swofty.commons.murdermystery.MurderMysteryModeStats;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.type.generic.data.Datapoint;
+import net.swofty.type.generic.leaderboard.MapLeaderboardTracked;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DatapointMurderMysteryModeStats extends Datapoint<MurderMysteryModeStats> {
+public class DatapointMurderMysteryModeStats extends Datapoint<MurderMysteryModeStats>
+        implements MapLeaderboardTracked {
+
+    private static final String LEADERBOARD_PREFIX = "murdermystery";
 
     public DatapointMurderMysteryModeStats(String key, MurderMysteryModeStats value) {
         super(key, value, new Serializer<>() {
@@ -25,6 +31,7 @@ public class DatapointMurderMysteryModeStats extends Datapoint<MurderMysteryMode
                 json.put("detectiveWins", new JSONObject(value.getDetectiveWins()));
                 json.put("murdererWins", new JSONObject(value.getMurdererWins()));
                 json.put("killsAsHero", new JSONObject(value.getKillsAsHero()));
+                json.put("killsAsMurderer", new JSONObject(value.getKillsAsMurderer()));
                 json.put("survivorWins", new JSONObject(value.getSurvivorWins()));
                 json.put("alphaWins", new JSONObject(value.getAlphaWins()));
                 json.put("killsAsInfected", new JSONObject(value.getKillsAsInfected()));
@@ -55,6 +62,7 @@ public class DatapointMurderMysteryModeStats extends Datapoint<MurderMysteryMode
                 Map<String, Long> detectiveWins = parseMap(obj.optJSONObject("detectiveWins"));
                 Map<String, Long> murdererWins = parseMap(obj.optJSONObject("murdererWins"));
                 Map<String, Long> killsAsHero = parseMap(obj.optJSONObject("killsAsHero"));
+                Map<String, Long> killsAsMurderer = parseMap(obj.optJSONObject("killsAsMurderer"));
                 Map<String, Long> survivorWins = parseMap(obj.optJSONObject("survivorWins"));
                 Map<String, Long> alphaWins = parseMap(obj.optJSONObject("alphaWins"));
                 Map<String, Long> killsAsInfected = parseMap(obj.optJSONObject("killsAsInfected"));
@@ -69,7 +77,7 @@ public class DatapointMurderMysteryModeStats extends Datapoint<MurderMysteryMode
 
                 MurderMysteryModeStats stats = new MurderMysteryModeStats(
                         wins, kills, gamesPlayed, bowKills, knifeKills, thrownKnifeKills, trapKills,
-                        detectiveWins, murdererWins, killsAsHero, survivorWins, alphaWins,
+                        detectiveWins, murdererWins, killsAsHero, killsAsMurderer, survivorWins, alphaWins,
                         killsAsInfected, killsAsSurvivor, timeSurvived,
                         quickestDetectiveWin, quickestMurdererWin,
                         tokens,
@@ -98,5 +106,37 @@ public class DatapointMurderMysteryModeStats extends Datapoint<MurderMysteryMode
 
     public DatapointMurderMysteryModeStats(String key) {
         this(key, MurderMysteryModeStats.empty());
+    }
+
+    // ============ MapLeaderboardTracked Implementation ============
+
+    @Override
+    public String getLeaderboardPrefix() {
+        return LEADERBOARD_PREFIX;
+    }
+
+    @Override
+    public Map<String, Double> getAllLeaderboardScores() {
+        Map<String, Double> scores = new HashMap<>();
+        MurderMysteryModeStats stats = getValue();
+        if (stats == null) return scores;
+
+        for (MurderMysteryLeaderboardMode mode : MurderMysteryLeaderboardMode.values()) {
+            for (MurderMysteryLeaderboardPeriod period : MurderMysteryLeaderboardPeriod.values()) {
+                String suffix = mode.getKey() + ":" + period.getKey();
+
+                // Stats displayed on leaderboard holograms
+                scores.put("wins:" + suffix, (double) stats.getWins(mode, period));
+                scores.put("kills:" + suffix, (double) stats.getKills(mode, period));
+                scores.put("kills_as_murderer:" + suffix, (double) stats.getKillsAsMurderer(mode, period));
+
+                // Additional stats that could be displayed
+                scores.put("games_played:" + suffix, (double) stats.getGamesPlayed(mode, period));
+                scores.put("detective_wins:" + suffix, (double) stats.getDetectiveWins(mode, period));
+                scores.put("murderer_wins:" + suffix, (double) stats.getMurdererWins(mode, period));
+                scores.put("kills_as_hero:" + suffix, (double) stats.getKillsAsHero(mode, period));
+            }
+        }
+        return scores;
     }
 }
