@@ -105,7 +105,7 @@ public class GUILobbySelector extends HypixelInventoryGUI {
         for (int i = 0; i < lobbies.size() && i < 18; i++) {
             UnderstandableProxyServer lobby = lobbies.get(i);
             boolean isCurrentServer = lobby.uuid().equals(currentServer);
-            int lobbyNumber = extractLobbyNumber(lobby.shortName());
+            int lobbyNumber = i + 1;
 
             set(new GUIClickableItem(i) {
                 @Override
@@ -120,7 +120,7 @@ public class GUILobbySelector extends HypixelInventoryGUI {
                     return ItemStackCreator.getStack(
                             titleColor + lobbyName + " #" + lobbyNumber,
                             material,
-                            Math.max(1, lobbyNumber),
+                            lobbyNumber,
                             "§7Players: " + players + "/" + max,
                             "",
                             statusLine
