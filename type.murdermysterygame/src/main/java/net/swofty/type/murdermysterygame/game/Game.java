@@ -36,6 +36,7 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.metadata.item.ItemEntityMeta;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 
 @Getter
 public class Game {
@@ -58,9 +59,14 @@ public class Game {
 
     private boolean murdererReceivedSword = false;
     private long gameStartTime = 0;
+    private long murdererSwordTime = 0;
     private Entity droppedDetectiveBow = null;
     private boolean detectiveBowPickedUp = false;
     private MurderMysteryPlayer murdererKiller = null;
+    private final Map<UUID, Integer> murdererKillsThisGame = new HashMap<>();
+    private int deathCount = 0;
+    private long lastMurdererKillTime = 0;
+    private final Map<UUID, Game.KillType> murdererKillMethods = new HashMap<>();
 
     public Game(MurderMysteryMapsConfig.MapEntry mapEntry,
                 InstanceContainer instanceContainer,
@@ -222,6 +228,7 @@ public class Game {
             if (gameStatus != GameStatus.IN_PROGRESS) return;
             task.cancel();
             murdererReceivedSword = true;
+            murdererSwordTime = System.currentTimeMillis();
 
             // Give the knife to all murderers
             for (MurderMysteryPlayer murderer : roleManager.getPlayersWithRole(GameRole.MURDERER)) {
@@ -269,6 +276,10 @@ public class Game {
         var killRegions = mapEntry.getConfiguration() != null ? mapEntry.getConfiguration().getKillRegions() : null;
         if (killRegions == null || killRegions.isEmpty()) return;
 
+        // Check if this is the Aquarium map for JAWS! achievement
+        boolean isAquariumMap = mapEntry.getName() != null &&
+                mapEntry.getName().toLowerCase().contains("aquarium");
+
         MinecraftServer.getSchedulerManager().buildTask(() -> {
             if (gameStatus != GameStatus.IN_PROGRESS) return;
 
@@ -282,6 +293,11 @@ public class Game {
 
                 for (MurderMysteryMapsConfig.KillRegion region : killRegions) {
                     if (region.contains(x, y, z)) {
+                        // JAWS! achievement - get eaten by shark on Aquarium
+                        if (isAquariumMap) {
+                            PlayerAchievementHandler achHandler = new PlayerAchievementHandler(player);
+                            achHandler.addProgress("murdermystery.jaws", 1);
+                        }
                         onEnvironmentalDeath(player);
                         break;
                     }
@@ -407,9 +423,109 @@ public class Game {
         // Record kill to persistent stats
         recordKillStats(killer, killType);
 
+        // Track death count for achievements
+        deathCount++;
+
+        // Record kill timestamp for rapid kill achievements
+        killer.recordKillTimestamp();
+
+        // === QUEST TRIGGERS ===
+        // Weekly: Professional - Kill any player
+        killer.getQuestHandler().addProgressByTrigger("murdermystery.kills", 1);
+
+        // Track murderer kills for Murder Spree challenge
+        if (killerRole == GameRole.MURDERER) {
+            int currentKills = murdererKillsThisGame.getOrDefault(killer.getUuid(), 0) + 1;
+            murdererKillsThisGame.put(killer.getUuid(), currentKills);
+            lastMurdererKillTime = System.currentTimeMillis();
+
+            // === ACHIEVEMENT TRIGGERS FOR MURDERER ===
+            PlayerAchievementHandler killerAchHandler = new PlayerAchievementHandler(killer);
+
+            // Tiered: Stabber - kills as murderer
+            killerAchHandler.addProgress("murdermystery.stabber", 1);
+
+            // Per-game: Where's my EMP? - 15 kills as murderer
+            killerAchHandler.addProgress("murdermystery.wheres_my_emp", 1);
+
+            // Slice N Dice - 5 kills within 5 seconds as murderer
+            if (killer.getKillsInLast5Seconds() >= 5) {
+                killerAchHandler.addProgress("murdermystery.slice_n_dice", 1);
+            }
+
+            // Not Today - Kill Detective within 30s of receiving sword
+            if (victimRole == GameRole.DETECTIVE && murdererSwordTime > 0) {
+                if (System.currentTimeMillis() - murdererSwordTime <= 30000) {
+                    killerAchHandler.addProgress("murdermystery.not_today", 1);
+                }
+            }
+
+            // Reset bow kill streak on knife kill
+            if (killType == KillType.KNIFE) {
+                killer.resetBowKillStreak();
+            }
+        }
+
         // Track who killed the murderer (for hero detection)
         if (victimRole == GameRole.MURDERER) {
             murdererKiller = killer;
+
+            // Only in Classic/Double Up mode (not Assassins)
+            if (gameType != MurderMysteryGameType.ASSASSINS) {
+                // Daily: Power Play - killed the murderer
+                killer.getQuestHandler().addProgressByTrigger("murdermystery.power_play", 1);
+
+                // Challenge: Hero - killed murderer as any role
+                killer.getQuestHandler().addProgressByTrigger("murdermystery.hero", 1);
+
+                // Challenge: Sherlock - Detective killed Murderer under 2 minutes
+                if (killerRole == GameRole.DETECTIVE) {
+                    long elapsedMs = System.currentTimeMillis() - gameStartTime;
+                    if (elapsedMs < 120_000) { // Under 2 minutes
+                        killer.getQuestHandler().addProgressByTrigger("murdermystery.sherlock", 1);
+                    }
+                }
+
+                // === ACHIEVEMENT TRIGGERS FOR KILLING MURDERER ===
+                PlayerAchievementHandler killerAchHandler = new PlayerAchievementHandler(killer);
+
+                // Clean Round - killed murderer before anyone died
+                if (deathCount == 1) { // This is the first death (the murderer)
+                    killerAchHandler.addProgress("murdermystery.clean_round", 1);
+                }
+
+                // Close Enough - killed murderer as last person alive
+                int aliveNonMurderers = countAliveNonMurderers();
+                if (aliveNonMurderers == 1) {
+                    killerAchHandler.addProgress("murdermystery.close_enough", 1);
+                }
+
+                // Caught In The Act - killed murderer within 3 seconds of their kill
+                if (lastMurdererKillTime > 0 && System.currentTimeMillis() - lastMurdererKillTime <= 3000) {
+                    killerAchHandler.addProgress("murdermystery.caught_in_the_act", 1);
+                }
+
+                // Track for Double Duty (Double Up mode)
+                if (gameType == MurderMysteryGameType.DOUBLE_UP) {
+                    murdererKillMethods.put(killer.getUuid(), killType);
+                    // Check if player killed both murderers with different methods
+                    long killsOfMurderersByThisPlayer = murdererKillMethods.entrySet().stream()
+                            .filter(e -> e.getKey().equals(killer.getUuid()))
+                            .count();
+                    if (killsOfMurderersByThisPlayer >= 2) {
+                        // Check if different kill types were used
+                        Set<KillType> usedTypes = new HashSet<>();
+                        for (var entry : murdererKillMethods.entrySet()) {
+                            if (entry.getKey().equals(killer.getUuid())) {
+                                usedTypes.add(entry.getValue());
+                            }
+                        }
+                        if (usedTypes.size() >= 2) {
+                            killerAchHandler.addProgress("murdermystery.double_duty", 1);
+                        }
+                    }
+                }
+            }
         }
 
         victim.setEliminated(true);
@@ -439,6 +555,12 @@ public class Game {
                 MurderMysteryDataHandler.Data.MODE_STATS,
                 DatapointMurderMysteryModeStats.class);
         var stats = statsDP.getValue();
+
+        // Track kills as murderer
+        GameRole killerRole = roleManager.getRole(killer.getUuid());
+        if (killerRole == GameRole.MURDERER) {
+            stats.recordKillAsMurderer(leaderboardMode);
+        }
 
         switch (killType) {
             case BOW -> stats.recordBowKill(leaderboardMode);
@@ -532,6 +654,20 @@ public class Game {
             // Inherit the victim's target
             UUID newTarget = roleManager.getAssassinTarget(victim.getUuid());
             roleManager.reassignTarget(killer.getUuid(), newTarget);
+
+            // Daily: Hitman - killed assigned target in Assassins
+            killer.getQuestHandler().addProgressByTrigger("murdermystery.assassin_target_kills", 1);
+
+            // === ASSASSINS MODE ACHIEVEMENTS ===
+            PlayerAchievementHandler achHandler = new PlayerAchievementHandler(killer);
+
+            // Tiered: Hitman - kill players in Assassins
+            achHandler.addProgress("murdermystery.hitman", 1);
+
+            // Sixth Sense - kill 2 targets within 5 seconds in Assassins
+            if (killer.getKillsInLast5Seconds() >= 2) {
+                achHandler.addProgress("murdermystery.sixth_sense", 1);
+            }
         } else {
             // Wrong target - killer dies
             killer.setEliminated(true);
@@ -568,6 +704,118 @@ public class Game {
 
         // Record stats for all players
         recordGameStats(condition);
+
+        // === CHALLENGE COMPLETIONS ===
+        // Challenge: Murder Spree - Murderer with 5+ kills
+        for (MurderMysteryPlayer player : players) {
+            GameRole role = roleManager.getRole(player.getUuid());
+            if (role == GameRole.MURDERER) {
+                int kills = murdererKillsThisGame.getOrDefault(player.getUuid(), 0);
+                if (kills >= 5) {
+                    player.getQuestHandler().addProgressByTrigger("murdermystery.murder_spree", 1);
+                }
+            }
+        }
+
+        // Challenge: Serial Killer - Most kills in Assassins (no ties)
+        if (gameType == MurderMysteryGameType.ASSASSINS) {
+            MurderMysteryPlayer topKiller = null;
+            int maxKills = 0;
+            boolean tied = false;
+
+            for (MurderMysteryPlayer player : players) {
+                int kills = player.getKillsThisGame();
+                if (kills > maxKills) {
+                    maxKills = kills;
+                    topKiller = player;
+                    tied = false;
+                } else if (kills == maxKills && kills > 0) {
+                    tied = true;
+                }
+            }
+
+            if (topKiller != null && !tied && maxKills > 0) {
+                topKiller.getQuestHandler().addProgressByTrigger("murdermystery.serial_killer", 1);
+            }
+        }
+
+        // === ACHIEVEMENT TRIGGERS FOR GAME END ===
+        long elapsedMs = System.currentTimeMillis() - gameStartTime;
+        long remainingMs = (5 * 60 * 1000) - elapsedMs; // 5-minute game duration
+        boolean innocentsWon = (condition == WinCondition.INNOCENTS_WIN || condition == WinCondition.TIME_EXPIRED);
+        boolean murdererWon = (condition == WinCondition.MURDERER_WINS);
+
+        for (MurderMysteryPlayer player : players) {
+            GameRole role = roleManager.getRole(player.getUuid());
+            if (role == null) continue;
+
+            PlayerAchievementHandler achHandler = new PlayerAchievementHandler(player);
+
+            // === TIMING-BASED ACHIEVEMENTS (Murderer wins) ===
+            if (murdererWon && role == GameRole.MURDERER) {
+                // Tiered: You're All Mine - win games as murderer
+                achHandler.addProgress("murdermystery.youre_all_mine", 1);
+
+                // Calculated - win as murderer with 15 seconds or less remaining
+                if (remainingMs <= 15000) {
+                    achHandler.addProgress("murdermystery.calculated", 1);
+                }
+
+                // Uncalculated - win as murderer with 2+ minutes remaining
+                if (remainingMs >= 120000) {
+                    achHandler.addProgress("murdermystery.uncalculated", 1);
+                }
+            }
+
+            // === INNOCENT/DETECTIVE WIN ACHIEVEMENTS ===
+            if (innocentsWon && (role == GameRole.INNOCENT || role == GameRole.DETECTIVE)) {
+                // Tiered: Peace is Mine - win as innocent/detective without dying
+                if (!player.isEliminated()) {
+                    achHandler.addProgress("murdermystery.peace_is_mine", 1);
+                }
+
+                // TIME_EXPIRED specific achievements
+                if (condition == WinCondition.TIME_EXPIRED) {
+                    // Catch Me If You Can - survive until time runs out as innocent
+                    if (role == GameRole.INNOCENT && !player.isEliminated()) {
+                        achHandler.addProgress("murdermystery.catch_me_if_you_can", 1);
+                    }
+
+                    // No Money, No Problems - survive timeout without collecting gold
+                    if (role == GameRole.INNOCENT && !player.isEliminated() && !player.isHasCollectedGoldThisGame()) {
+                        achHandler.addProgress("murdermystery.no_money_no_problems", 1);
+                    }
+                }
+            }
+
+            // === HERO ACHIEVEMENTS ===
+            if (murdererKiller != null && murdererKiller.getUuid().equals(player.getUuid())) {
+                GameRole heroRole = roleManager.getRole(murdererKiller.getUuid());
+                // Saving The Day - be the hero of the game (non-detective kills murderer)
+                if (heroRole != GameRole.DETECTIVE) {
+                    achHandler.addProgress("murdermystery.saving_the_day", 1);
+                }
+
+                // Tiered: Countermeasures - hero wins in Classic/Double Up
+                if (gameType != MurderMysteryGameType.ASSASSINS) {
+                    achHandler.addProgress("murdermystery.countermeasures", 1);
+                }
+            }
+
+            // === ROLE STREAK ACHIEVEMENT ===
+            // I Am Special - be Murderer/Detective two games in a row
+            if (role == GameRole.MURDERER || role == GameRole.DETECTIVE) {
+                GameRole lastRole = player.getLastGameRole();
+                if (lastRole != null && (lastRole == GameRole.MURDERER || lastRole == GameRole.DETECTIVE)) {
+                    achHandler.addProgress("murdermystery.i_am_special", 1);
+                }
+            }
+            // Store current role for next game comparison
+            player.setLastGameRole(role);
+        }
+
+        // Clear per-game tracking
+        murdererKillsThisGame.clear();
 
         String message = switch (condition) {
             case INNOCENTS_WIN -> "The Innocents have won!";
@@ -719,6 +967,9 @@ public class Game {
                 MurderMysteryPlayer winner = getLastStandingPlayer();
                 if (winner != null && winner.getUuid().equals(player.getUuid())) {
                     stats.recordWin(leaderboardMode);
+
+                    // Quest: Winner - won a game
+                    player.getQuestHandler().addProgressByTrigger("murdermystery.games_won", 1);
                 }
             } else {
                 // Classic/Double Up mode
@@ -732,6 +983,9 @@ public class Game {
                         stats.recordWin(leaderboardMode);
                     }
 
+                    // Quest: Winner - won a game
+                    player.getQuestHandler().addProgressByTrigger("murdermystery.games_won", 1);
+
                     // Check if this player killed the murderer (hero)
                     if (murdererKiller != null && murdererKiller.getUuid().equals(player.getUuid())
                             && role != GameRole.DETECTIVE) {
@@ -741,6 +995,11 @@ public class Game {
                     stats.recordMurdererWin(leaderboardMode);
                     // Record quickest murderer win
                     stats.setQuickestMurdererWin(leaderboardMode, gameDuration);
+
+                    // Quest: Winner - won a game
+                    player.getQuestHandler().addProgressByTrigger("murdermystery.games_won", 1);
+                    // Quest: Power Play - won as Murderer
+                    player.getQuestHandler().addProgressByTrigger("murdermystery.power_play", 1);
                 }
             }
         }
@@ -753,6 +1012,13 @@ public class Game {
     private int countAlivePlayers() {
         return (int) players.stream()
                 .filter(p -> !p.isEliminated())
+                .count();
+    }
+
+    private int countAliveNonMurderers() {
+        return (int) players.stream()
+                .filter(p -> !p.isEliminated())
+                .filter(p -> roleManager.getRole(p.getUuid()) != GameRole.MURDERER)
                 .count();
     }
 

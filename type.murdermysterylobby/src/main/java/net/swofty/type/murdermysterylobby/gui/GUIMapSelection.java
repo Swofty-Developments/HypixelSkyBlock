@@ -14,6 +14,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.GameCountCache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,11 +130,16 @@ public class GUIMapSelection extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer player) {
+                    int gameCount = GameCountCache.getGameCount(
+                            ServerType.MURDER_MYSTERY_GAME,
+                            gameType.toString(),
+                            mapName
+                    );
                     return ItemStackCreator.getStack("§a" + mapName,
                             Material.PAPER, 1,
                             "§7" + gameType.getDisplayName(),
                             "",
-                            "§7Available Games: §aUnknown",
+                            "§7Available Games: §a" + gameCount,
                             "",
                             "§eClick to Play!"
                     );

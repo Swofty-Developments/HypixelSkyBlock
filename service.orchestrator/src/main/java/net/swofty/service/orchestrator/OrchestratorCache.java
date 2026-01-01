@@ -204,6 +204,17 @@ public class OrchestratorCache {
 	 * @return GameCountStats with player count and game count
 	 */
 	public static GameCountStats getGameCounts(ServerType type, String gameTypeName) {
+		return getGameCounts(type, gameTypeName, null);
+	}
+
+	/**
+	 * Get player and game counts filtered by server type, game type name, and map name.
+	 * @param type The server type (e.g., MURDER_MYSTERY_GAME, BEDWARS_GAME)
+	 * @param gameTypeName Optional game type name to filter by (e.g., "CLASSIC", "SOLO"). Pass null for all.
+	 * @param mapName Optional map name to filter by. Pass null for all maps.
+	 * @return GameCountStats with player count and game count
+	 */
+	public static GameCountStats getGameCounts(ServerType type, String gameTypeName, String mapName) {
 		cleanup();
 		int playerCount = 0;
 		int gameCount = 0;
@@ -212,8 +223,10 @@ public class OrchestratorCache {
 			Game game = gameWithServer.game();
 			if (game.getType() == type) {
 				if (gameTypeName == null || gameTypeName.equals(game.getGameTypeName())) {
-					playerCount += game.getInvolvedPlayers().size();
-					gameCount++;
+					if (mapName == null || mapName.equals(game.getMap())) {
+						playerCount += game.getInvolvedPlayers().size();
+						gameCount++;
+					}
 				}
 			}
 		}

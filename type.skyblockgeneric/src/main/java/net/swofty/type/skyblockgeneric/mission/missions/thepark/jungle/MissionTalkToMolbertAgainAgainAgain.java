@@ -14,7 +14,7 @@ public class MissionTalkToMolbertAgainAgainAgain extends SkyBlockMission impleme
 
 	@Override
 	public String getID() {
-		return "talk_to_molbert_again_again";
+		return "talk_to_molbert_again_again_again";
 	}
 
 	@Override

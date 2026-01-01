@@ -1,0 +1,229 @@
+achievements:
+  # Timing-based achievements
+  - id: "murdermystery.calculated"
+    name: "Calculated"
+    description: "Win a game as Murderer with only 15 seconds remaining"
+    type: CHALLENGE
+    points: 5
+    trigger: "murdermystery.calculated_win"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.catch_me_if_you_can"
+    name: "Catch Me If You Can"
+    description: "Win a game as Innocent by surviving until time runs out"
+    type: CHALLENGE
+    points: 5
+    trigger: "murdermystery.timeout_win_innocent"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.uncalculated"
+    name: "Uncalculated"
+    description: "Win a game as Murderer with over 2 minutes remaining"
+    type: CHALLENGE
+    points: 15
+    trigger: "murdermystery.fast_murderer_win"
+    goal: 1
+    customCheck: true
+
+  # Kill-based achievements
+  - id: "murdermystery.caught_in_the_act"
+    name: "Caught In The Act"
+    description: "Kill the Murderer within 3 seconds of them killing someone"
+    type: CHALLENGE
+    points: 10
+    trigger: "murdermystery.quick_revenge"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.clean_round"
+    name: "Clean Round"
+    description: "Kill the Murderer before anybody has died"
+    type: CHALLENGE
+    points: 15
+    trigger: "murdermystery.clean_round"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.close_enough"
+    name: "Close Enough"
+    description: "Kill the Murderer as the last person alive"
+    type: CHALLENGE
+    points: 15
+    trigger: "murdermystery.last_alive_kill"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.double_duty"
+    name: "Double Duty"
+    description: "Kill both Murderers in different ways in Double Up!"
+    type: CHALLENGE
+    points: 10
+    trigger: "murdermystery.double_duty"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.slice_n_dice"
+    name: "Slice N Dice"
+    description: "Kill 5 players within 5 seconds as the Murderer"
+    type: CHALLENGE
+    points: 10
+    trigger: "murdermystery.rapid_kills"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.wheres_my_emp"
+    name: "Where's my EMP?"
+    description: "Kill 15 players in one round as Murderer"
+    type: CHALLENGE
+    points: 15
+    trigger: "murdermystery.murderer_kills"
+    goal: 15
+    perGame: true
+
+  # Bow-related achievements
+  - id: "murdermystery.elementary"
+    name: "Elementary, my dear Watson."
+    description: "Accidentally shoot yourself with a Bow"
+    type: CHALLENGE
+    points: 5
+    trigger: "murdermystery.self_shot"
+    goal: 1
+
+  - id: "murdermystery.humiliation"
+    name: "Humiliation"
+    description: "Kill the Detective as the Murderer with a Bow"
+    type: CHALLENGE
+    points: 15
+    trigger: "murdermystery.bow_kill_detective"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.on_point"
+    name: "On Point"
+    description: "Kill the Murderer as an Innocent with your first Arrow"
+    type: CHALLENGE
+    points: 10
+    trigger: "murdermystery.first_shot_kill"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.sharpshooter"
+    name: "Sharpshooter"
+    description: "Kill the Murderer as the Detective from over 30 blocks away"
+    type: CHALLENGE
+    points: 15
+    trigger: "murdermystery.long_range_kill"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.arrow_streak"
+    name: "The Arrow Streak"
+    description: "Kill 5 players in a row with a Bow"
+    type: CHALLENGE
+    points: 10
+    trigger: "murdermystery.bow_kill_streak"
+    goal: 5
+    perGame: true
+
+  - id: "murdermystery.trigger_happy"
+    name: "Trigger Happy Havoc"
+    description: "Fire 50 Arrows in a single game"
+    type: CHALLENGE
+    points: 5
+    trigger: "murdermystery.arrows_fired"
+    goal: 50
+    perGame: true
+
+  - id: "murdermystery.wrong_weapon"
+    name: "Wrong Weapon"
+    description: "Kill 3 people with a Bow as Murderer in a single game"
+    type: CHALLENGE
+    points: 10
+    trigger: "murdermystery.murderer_bow_kills"
+    goal: 3
+    perGame: true
+
+  # Gold-related achievements
+  - id: "murdermystery.gold_hunter"
+    name: "Gold Hunter"
+    description: "Pick up 30 Gold in a single game"
+    type: CHALLENGE
+    points: 10
+    trigger: "murdermystery.gold_pickup"
+    goal: 30
+    perGame: true
+
+  - id: "murdermystery.that_was_easy"
+    name: "That Was Easy"
+    description: "Collect 10 Gold in the first minute of the game"
+    type: CHALLENGE
+    points: 5
+    trigger: "murdermystery.early_gold"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.no_money_no_problems"
+    name: "No Money, No Problems"
+    description: "Survive until time runs out as an Innocent without collecting any Gold"
+    type: CHALLENGE
+    points: 15
+    trigger: "murdermystery.no_gold_survival"
+    goal: 1
+    customCheck: true
+
+  # Role-based achievements
+  - id: "murdermystery.i_am_special"
+    name: "I Am Special"
+    description: "Be Murderer or Detective two games in a row"
+    type: CHALLENGE
+    points: 10
+    trigger: "murdermystery.special_role_streak"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.not_today"
+    name: "Not Today"
+    description: "Kill the Detective as the Murderer within 30 seconds of receiving your weapon"
+    type: CHALLENGE
+    points: 10
+    trigger: "murdermystery.quick_detective_kill"
+    goal: 1
+    customCheck: true
+
+  - id: "murdermystery.saving_the_day"
+    name: "Saving The Day"
+    description: "Be the Hero of the game"
+    type: CHALLENGE
+    points: 5
+    trigger: "murdermystery.hero_win"
+    goal: 1
+
+  # Assassins mode achievements
+  - id: "murdermystery.sixth_sense"
+    name: "Sixth Sense"
+    description: "Kill 2 Targets within 5 seconds in Assassins"
+    type: CHALLENGE
+    points: 10
+    trigger: "murdermystery.quick_double_kill"
+    goal: 1
+    customCheck: true
+
+  # Map-specific achievements (Aquarium)
+  - id: "murdermystery.jaws"
+    name: "JAWS!"
+    description: "Get eaten by a Shark on Aquarium"
+    type: CHALLENGE
+    points: 5
+    trigger: "murdermystery.shark_death"
+    goal: 1
+
+  # Lobby achievement
+  - id: "murdermystery.well_thats_cool"
+    name: "Well, That's Cool"
+    description: "Play one of the minigames in the lobby"
+    type: CHALLENGE
+    points: 5
+    trigger: "murdermystery.lobby_minigame"
+    goal: 1

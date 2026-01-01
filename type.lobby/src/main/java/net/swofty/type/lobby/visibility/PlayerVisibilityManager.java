@@ -14,7 +14,7 @@ public class PlayerVisibilityManager {
             if (entity instanceof NPCEntityImpl) return true;
             if (entity instanceof HologramEntity) return true;
             if (entity.getEntityType() == EntityType.ITEM_FRAME) return true;
-            return (entity instanceof Player) != showPlayers;
+            return (entity instanceof Player) == showPlayers;
         });
     }
 
