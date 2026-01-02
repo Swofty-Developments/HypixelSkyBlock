@@ -23,4 +23,5 @@ public class ActionPlayerJoin implements HypixelEventClass {
                 .apply(player.getOriginServer())
         );
     }
+
 }
