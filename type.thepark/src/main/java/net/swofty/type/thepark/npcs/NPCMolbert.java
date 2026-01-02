@@ -153,6 +153,7 @@ public class NPCMolbert extends HypixelNPC {
 								"HELP MOLBERT",
 								(p) -> {
 									data.endMission(MissionHelpMolbert.class);
+									TypeTheParkLoader.entities.forEach(Entity::updateViewableRule);
 								}
 						)
 				));
