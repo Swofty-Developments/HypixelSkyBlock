@@ -5,7 +5,10 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.abilities.BuildersWandAbility;
+import net.swofty.type.skyblockgeneric.user.statistics.TemporaryStatistic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +39,9 @@ public class AbilityRegistry {
 				new RegisteredAbility.AbilityManaCost(50),
 				(player, item, ignored, ignored2) -> {
 					player.teleport(player.getPosition().add(player.getPosition().direction().mul(8)));
-					// TODO: add speed too
+					ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 50.0).build();
+					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(3000).withDisplayName("Instant Transmission").withDisplayColor("§a").build();
+					player.getStatistics().boostStatistic(speedBoost);
 				}
 		));
 
