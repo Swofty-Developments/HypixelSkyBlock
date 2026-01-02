@@ -1,32 +1,30 @@
-package net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce;
+package net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.race;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionTravelToTheDarkThicket;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.race.MissionTalkToGustave;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
 import java.util.Set;
 
-public class MissionGiveKellySpruceLogs extends SkyBlockMission implements LocationAssociatedMission {
+public class MissionTalkToGustave extends SkyBlockMission implements LocationAssociatedMission {
 
 	@Override
 	public Pos getLocation() {
-		return new Pos(-350.5, 94, 33.5);
+		return new Pos(-363.5, 89, 44.5);
 	}
 
 	@Override
 	public String getID() {
-		return "give_kelly_spruce_logs";
+		return "talk_to_gustave";
 	}
 
 	@Override
 	public String getName() {
-		return "Give Kelly Spruce Logs";
+		return "Talk to Gustave";
 	}
 
 	@Override
@@ -36,8 +34,7 @@ public class MissionGiveKellySpruceLogs extends SkyBlockMission implements Locat
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionTravelToTheDarkThicket.class);
-		player.getMissionData().startMission(MissionTalkToGustave.class);
+		player.getMissionData().startMission(MissionCompleteTheRaceTwoMinutes.class);
 	}
 
 	@Override

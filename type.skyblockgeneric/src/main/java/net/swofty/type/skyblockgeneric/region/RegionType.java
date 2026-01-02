@@ -39,10 +39,11 @@ public enum RegionType {
 	BIRCH_PARK("Birch Park", "§a", BirchParkConfiguration.class, BirchParkBiome.class),
 	HOWLING_CAVE("Howling Cave", null, BirchParkBiome.class),
 	SPRUCE_WOODS("Spruce Woods", "§a", SpruceWoodsConfiguration.class, SpruceWoodsBiome.class),
+	VIKING_LONGHOUSE("Viking Longhouse", "§b", SpruceWoodsConfiguration.class, SpruceWoodsBiome.class),
 	DARK_THICKET("Dark Thicket", "§a", DarkOakConfiguration.class, DarkThicketBiome.class),
 	TRIALS_OF_FIRE("Trials of Fire", "§c", null, DarkThicketBiome.class),
 	SAVANNA_WOODLAND("Savanna Woodland", "§a", SavannaWoodlandConfiguration.class),
-	MELODY_PLATEAU("Melody's Plateau", "§5", SavannaWoodlandConfiguration.class),
+	MELODY_PLATEAU("Melody's Plateau", "§d", SavannaWoodlandConfiguration.class),
 	JUNGLE_ISLAND("Jungle Island", "§a", JungleIslandConfiguration.class),
 
 	JERRYS_WORKSHOP("Jerry's Workshop", "§c"),
