@@ -9,6 +9,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MinerOutfitSet implements ArmorSet, SetEvents, MuseumableSet {
 
@@ -19,7 +20,7 @@ public class MinerOutfitSet implements ArmorSet, SetEvents, MuseumableSet {
 
     @Override
     public ArrayList<String> getDescription() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(List.of(
                 "§7Grants the wearer with §apermanent",
                 "§aHaste II §7while worn."
         ));
