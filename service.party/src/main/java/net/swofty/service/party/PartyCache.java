@@ -10,6 +10,7 @@ import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -276,10 +277,22 @@ public class PartyCache {
         List<UUID> intendedToWarp = party.getParticipants().stream().filter(uuid -> !uuid.equals(warperUUID)).toList();
         Map<UUID, JSONObject> responses = ServiceToServerManager.sendToAllServers(FromServiceChannels.PROPAGATE_PARTY_EVENT, message, 3000).join();
         List<UUID> actualWarped = new ArrayList<>();
+        Map<UUID, String> failureReasons = new HashMap<>();
+
         for (JSONObject response : responses.values()) {
             boolean success = response.getBoolean("success");
 
-            if (!success) continue;
+            // Check if the warp was blocked (e.g., game already started)
+            if (!success) {
+                if (response.optBoolean("blocked", false)) {
+                    String blockReason = response.optString("blockReason", "Unable to warp");
+                    // Apply block reason to all intended warp targets
+                    for (UUID uuid : intendedToWarp) {
+                        failureReasons.put(uuid, blockReason);
+                    }
+                }
+                continue;
+            }
 
             List<UUID> playersHandledUuids = response.getJSONArray("playersHandledUUIDs")
                     .toList().stream().map(object -> {
@@ -295,6 +308,18 @@ public class PartyCache {
                     actualWarped.add(uuid);
                 }
             }
+
+            // Collect rejection reasons from server response
+            if (response.has("rejectedPlayers")) {
+                JSONObject rejectedPlayers = response.getJSONObject("rejectedPlayers");
+                for (String key : rejectedPlayers.keySet()) {
+                    try {
+                        UUID rejectedUuid = UUID.fromString(key);
+                        String reason = rejectedPlayers.getString(key);
+                        failureReasons.put(rejectedUuid, reason);
+                    } catch (Exception ignored) {}
+                }
+            }
         }
 
         List<UUID> didNotWarp = new ArrayList<>();
@@ -304,7 +329,7 @@ public class PartyCache {
             }
         });
 
-        PartyWarpOverviewResponseEvent warpOverviewResponse = new PartyWarpOverviewResponseEvent(party, warperUUID, actualWarped, didNotWarp);
+        PartyWarpOverviewResponseEvent warpOverviewResponse = new PartyWarpOverviewResponseEvent(party, warperUUID, actualWarped, didNotWarp, failureReasons);
         sendEvent(warpOverviewResponse);
     }
 

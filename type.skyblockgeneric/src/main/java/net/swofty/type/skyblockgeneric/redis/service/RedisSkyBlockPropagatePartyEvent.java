@@ -153,7 +153,9 @@ public class RedisSkyBlockPropagatePartyEvent implements ServiceToClient {
                 player.sendMessage("§a§l✔ " + SkyBlockPlayer.getDisplayName(uuid) + " §awarped to your server");
             }
             for (UUID uuid : event.getFailedToWarp()) {
-                player.sendMessage("§c§l✖ " + SkyBlockPlayer.getDisplayName(uuid) + " §cwas unable to be warped");
+                String reason = event.getFailureReasons() != null ?
+                        event.getFailureReasons().getOrDefault(uuid, "Unable to warp") : "Unable to warp";
+                player.sendMessage("§c§l✖ " + SkyBlockPlayer.getDisplayName(uuid) + " §c- " + reason);
             }
             player.sendMessage("§9§m-----------------------------------------------------");
         }

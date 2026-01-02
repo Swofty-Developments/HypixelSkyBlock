@@ -1,10 +1,13 @@
 package net.swofty.type.murdermysterygame.events;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.item.Material;
 import net.swofty.pvp.events.PrepareAttackEvent;
 import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.game.GameStatus;
+import net.swofty.type.murdermysterygame.protection.WeaknessProtectionManager;
 import net.swofty.type.murdermysterygame.role.GameRole;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 import net.swofty.type.generic.event.EventNodes;
@@ -53,7 +56,15 @@ public class ActionPlayerCombat implements HypixelEventClass {
             // Check if holding knife (iron sword) and murderer has received their sword
             Material heldItem = attacker.getItemInMainHand().material();
             if (heldItem == Material.IRON_SWORD && game.hasMurdererReceivedSword()) {
-                // Instant kill
+                // Check if murderer is weakened (from weakness splash potion)
+                if (!WeaknessProtectionManager.handleMurdererAttack(attacker)) {
+                    // Murderer is weakened - attack absorbed
+                    attacker.sendMessage(Component.text("Your attack was weakened!",
+                            NamedTextColor.YELLOW));
+                    event.setCancelled(true);
+                    return;
+                }
+                // Kill the victim
                 game.onPlayerKill(attacker, victim);
             }
             // Cancel the attack either way - murderer either kills instantly or does nothing

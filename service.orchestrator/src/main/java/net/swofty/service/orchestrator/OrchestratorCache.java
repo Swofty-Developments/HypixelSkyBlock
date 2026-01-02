@@ -43,20 +43,35 @@ public class OrchestratorCache {
 	 * Finds an existing joinable game for the specified game type and map (Bedwars-specific)
 	 */
 	public static GameWithServer findExisting(BedwarsGameType gameType, String map) {
-		return findExisting(ServerType.BEDWARS_GAME, gameType.maxPlayers(), map);
+		return findExisting(ServerType.BEDWARS_GAME, gameType.maxPlayers(), map, 1);
+	}
+
+	/**
+	 * Finds an existing joinable game for the specified game type and map with needed slots (Bedwars-specific)
+	 */
+	public static GameWithServer findExisting(BedwarsGameType gameType, String map, int neededSlots) {
+		return findExisting(ServerType.BEDWARS_GAME, gameType.maxPlayers(), map, neededSlots);
 	}
 
 	/**
 	 * Generic version - finds an existing joinable game for any server type
 	 */
 	public static GameWithServer findExisting(ServerType serverType, int maxPlayers, String map) {
+		return findExisting(serverType, maxPlayers, map, 1);
+	}
+
+	/**
+	 * Finds an existing joinable game with at least neededSlots available slots
+	 */
+	public static GameWithServer findExisting(ServerType serverType, int maxPlayers, String map, int neededSlots) {
 		cleanup();
 
 		List<GameWithServer> candidates = new ArrayList<>();
 		for (GameWithServer gameWithServer : gamesByGameId.values()) {
 			Game game = gameWithServer.game();
+			int availableSlots = maxPlayers - game.getInvolvedPlayers().size();
 			if (game.getType() == serverType &&
-					game.getInvolvedPlayers().size() < maxPlayers &&
+					availableSlots >= neededSlots &&
 					(map == null || game.getMap().equals(map))) {
 				candidates.add(gameWithServer);
 			}

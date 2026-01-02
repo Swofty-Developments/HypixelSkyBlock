@@ -43,8 +43,10 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 				return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
 			}
 
-			// First, try to find an existing joinable game
-			OrchestratorCache.GameWithServer existingGameWithServer = OrchestratorCache.findExisting(gameType, body.map());
+			int neededSlots = body.neededSlots() > 0 ? body.neededSlots() : 1;
+
+			// First, try to find an existing joinable game with enough slots
+			OrchestratorCache.GameWithServer existingGameWithServer = OrchestratorCache.findExisting(gameType, body.map(), neededSlots);
 			if (existingGameWithServer != null) {
 				OrchestratorCache.GameServerState hostingServer = OrchestratorCache.getServerByUuid(existingGameWithServer.serverUuid());
 				if (hostingServer != null) {
@@ -110,9 +112,11 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 				return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
 			}
 
-			// First, try to find an existing joinable game
+			int neededSlots = body.neededSlots() > 0 ? body.neededSlots() : 1;
+
+			// First, try to find an existing joinable game with enough slots
 			OrchestratorCache.GameWithServer existingGameWithServer = OrchestratorCache.findExisting(
-					ServerType.MURDER_MYSTERY_GAME, gameType.getMaxPlayers(), body.map());
+					ServerType.MURDER_MYSTERY_GAME, gameType.getMaxPlayers(), body.map(), neededSlots);
 			if (existingGameWithServer != null) {
 				OrchestratorCache.GameServerState hostingServer = OrchestratorCache.getServerByUuid(existingGameWithServer.serverUuid());
 				if (hostingServer != null) {

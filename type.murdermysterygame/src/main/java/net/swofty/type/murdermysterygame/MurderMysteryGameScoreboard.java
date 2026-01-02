@@ -70,29 +70,89 @@ public class MurderMysteryGameScoreboard {
                     player.sendActionBar(actionBar);
                 } else if (game.getGameStatus() == GameStatus.IN_PROGRESS) {
                     GameRole role = game.getRoleManager().getRole(player.getUuid());
+
+                    // Check if player is spectating (eliminated)
+                    if (player.isEliminated()) {
+                        // Spectator scoreboard
+                        addLine("§7§lSPECTATING", sidebar);
+                        addLine("§7 ", sidebar);
+
+                        if (role != null) {
+                            addLine("§fYour Role: " + getScoreboardRoleColor(role) + role.getDisplayName(), sidebar);
+                        }
+                        addLine("§7 ", sidebar);
+
+                        // Players alive
+                        int playersAlive = game.getRoleManager().countAliveWithRole(GameRole.INNOCENT)
+                                + game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE)
+                                + game.getRoleManager().countAliveWithRole(GameRole.MURDERER);
+                        addLine("§fPlayers Alive: §a" + playersAlive, sidebar);
+
+                        // Time Left
+                        String timeLeft = formatTimeRemaining(game.getGameStartTime());
+                        addLine("§fTime Left: §a" + timeLeft, sidebar);
+                        addLine("§7 ", sidebar);
+
+                        // Detective status
+                        boolean detectiveAlive = game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE) > 0;
+                        String detectiveStatus = detectiveAlive ? "§aAlive" : "§cDead";
+                        addLine("§fDetective: " + detectiveStatus, sidebar);
+                        addLine("§7 ", sidebar);
+
+                        // Map name
+                        addLine("§fMap: §a" + game.getMapEntry().getName(), sidebar);
+                    } else {
+                        // Normal in-game scoreboard for alive players
+                        if (role != null) {
+                            addLine("§fRole: " + getScoreboardRoleColor(role) + role.getDisplayName(), sidebar);
+                        }
+                        addLine("§7 ", sidebar);
+
+                        // Innocents Left (includes innocents and detectives that aren't murderer)
+                        int innocentsLeft = game.getRoleManager().countAliveWithRole(GameRole.INNOCENT)
+                                + game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE);
+                        addLine("§fInnocents Left: §a" + innocentsLeft, sidebar);
+
+                        // Time Left
+                        String timeLeft = formatTimeRemaining(game.getGameStartTime());
+                        addLine("§fTime Left: §a" + timeLeft, sidebar);
+                        addLine("§7 ", sidebar);
+
+                        // Detective status
+                        boolean detectiveAlive = game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE) > 0;
+                        String detectiveStatus = detectiveAlive ? "§aAlive" : "§cDead";
+                        addLine("§fDetective: " + detectiveStatus, sidebar);
+                        addLine("§7 ", sidebar);
+
+                        // Map name
+                        addLine("§fMap: §a" + game.getMapEntry().getName(), sidebar);
+                    }
+                } else if (game.getGameStatus() == GameStatus.ENDING) {
+                    // End game scoreboard
+                    addLine("§a§lGAME OVER!", sidebar);
+                    addLine("§7 ", sidebar);
+
+                    // Show the player's role
+                    GameRole role = game.getRoleManager().getRole(player.getUuid());
                     if (role != null) {
-                        addLine("§fRole: " + getScoreboardRoleColor(role) + role.getDisplayName(), sidebar);
+                        addLine("§fYour Role: " + getScoreboardRoleColor(role) + role.getDisplayName(), sidebar);
                     }
                     addLine("§7 ", sidebar);
 
-                    // Innocents Left (includes innocents and detectives that aren't murderer)
-                    int innocentsLeft = game.getRoleManager().countAliveWithRole(GameRole.INNOCENT)
-                            + game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE);
-                    addLine("§fInnocents Left: §a" + innocentsLeft, sidebar);
+                    // Show kills if any
+                    int kills = player.getKillsThisGame();
+                    if (kills > 0) {
+                        addLine("§fYour Kills: §a" + kills, sidebar);
+                    }
 
-                    // Time Left
-                    String timeLeft = formatTimeRemaining(game.getGameStartTime());
-                    addLine("§fTime Left: §a" + timeLeft, sidebar);
-                    addLine("§7 ", sidebar);
-
-                    // Detective status
-                    boolean detectiveAlive = game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE) > 0;
-                    String detectiveStatus = detectiveAlive ? "§aAlive" : "§cDead";
-                    addLine("§fDetective: " + detectiveStatus, sidebar);
+                    // Show tokens earned
+                    int tokens = player.getTokensEarnedThisGame();
+                    addLine("§fTokens Earned: §6" + tokens, sidebar);
                     addLine("§7 ", sidebar);
 
                     // Map name
                     addLine("§fMap: §a" + game.getMapEntry().getName(), sidebar);
+                    addLine("§fMode: §a" + game.getGameType().getDisplayName(), sidebar);
                 }
 
                 addLine("§7 ", sidebar);

@@ -1,8 +1,9 @@
-package net.swofty.type.prototypelobby.redis.service;
+package net.swofty.type.bedwarsgame.redis.service;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
@@ -15,16 +16,17 @@ import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class RedisPrototypeLobbyPropagatePartyEvent implements ServiceToClient {
+public class RedisBedWarsGamePropagatePartyEvent implements ServiceToClient {
 
     @Override
     public FromServiceChannels getChannel() {
@@ -48,8 +50,12 @@ public class RedisPrototypeLobbyPropagatePartyEvent implements ServiceToClient {
                 return createFailureResponse("Failed to parse event of type: " + eventType);
             }
 
+            // Special handling for warp events on game servers
+            if (event instanceof PartyWarpResponseEvent warpEvent) {
+                return handleWarpEventWithGameValidation(warpEvent, participants);
+            }
+
             List<UUID> playersHandled = handleEventForPlayers(event, participants);
-            // Logger.info("Handled party event: " + event.getClass().getSimpleName() + " for " + participants.size() + " players");
             return createSuccessResponse(playersHandled.size(), playersHandled);
         } catch (Exception e) {
             Logger.error("Failed to handle party event: " + e.getMessage());
@@ -57,14 +63,89 @@ public class RedisPrototypeLobbyPropagatePartyEvent implements ServiceToClient {
         }
     }
 
+    private JSONObject handleWarpEventWithGameValidation(PartyWarpResponseEvent warpEvent, List<UUID> participants) {
+        UUID warperUUID = warpEvent.getWarper();
+
+        // Find the warper on this server
+        BedWarsPlayer warper = findPlayerByUuid(warperUUID);
+        if (warper == null) {
+            // Warper is not on this server, handle normally for other participants
+            List<UUID> playersHandled = handleEventForPlayers(warpEvent, participants);
+            return createSuccessResponse(playersHandled.size(), playersHandled);
+        }
+
+        // Warper IS on this game server - check if they're in a game
+        Game warperGame = TypeBedWarsGameLoader.getPlayerGame(warper);
+
+        if (warperGame == null) {
+            // Warper is on this server but not in a game - handle normally
+            List<UUID> playersHandled = handleEventForPlayers(warpEvent, participants);
+            return createSuccessResponse(playersHandled.size(), playersHandled);
+        }
+
+        // Warper is in a game - check if the game can accept new players
+        String blockReason = warperGame.canAcceptPartyWarp();
+        if (blockReason != null) {
+            // Game is IN_PROGRESS or ENDING - block the entire warp
+            warper.sendMessage(Component.text(blockReason, NamedTextColor.RED));
+            return createBlockedResponse(blockReason);
+        }
+
+        // Game is in WAITING state - check capacity
+        List<UUID> membersToWarp = participants.stream()
+                .filter(uuid -> !uuid.equals(warperUUID))
+                .toList();
+
+        int availableSlots = warperGame.getAvailableSlots();
+        List<UUID> accepted = new ArrayList<>();
+        Map<UUID, String> rejected = new HashMap<>();
+
+        for (UUID memberUUID : membersToWarp) {
+            if (accepted.size() < availableSlots) {
+                accepted.add(memberUUID);
+            } else {
+                rejected.put(memberUUID, "Game is full");
+            }
+        }
+
+        // Notify the warper
+        warper.sendMessage(Component.text("Warping party...", NamedTextColor.GRAY));
+
+        // Transfer accepted players
+        for (UUID uuid : accepted) {
+            // Check if player is on a different server
+            ProxyPlayer memberProxy = new ProxyPlayer(uuid);
+            if (memberProxy.isOnline().join()) {
+                UnderstandableProxyServer memberServer = memberProxy.getServer().join();
+                if (memberServer != null && !memberServer.uuid().equals(HypixelConst.getServerUUID())) {
+                    // Player is on different server - transfer them
+                    memberProxy.sendMessage("§eParty Leader summoned you to their game!");
+                    memberProxy.transferToWithIndication(HypixelConst.getServerUUID());
+                }
+            }
+        }
+
+        // Create response with rejection reasons
+        return createGameWarpResponse(accepted, rejected);
+    }
+
     private PartyEvent parseEvent(String eventType, String eventData) {
         try {
             PartyEvent templateEvent = PartyEvent.findFromType(eventType);
             return (PartyEvent) templateEvent.getSerializer().deserialize(eventData);
         } catch (Exception e) {
-            Logger.error(e, "Failed to parse party event of type: {}", eventType);
+            e.printStackTrace();
             return null;
         }
+    }
+
+    private BedWarsPlayer findPlayerByUuid(UUID uuid) {
+        return HypixelGenericLoader.getLoadedPlayers().stream()
+                .filter(p -> p.getUuid().equals(uuid))
+                .filter(p -> p instanceof BedWarsPlayer)
+                .map(p -> (BedWarsPlayer) p)
+                .findFirst()
+                .orElse(null);
     }
 
     private List<UUID> handleEventForPlayers(PartyEvent event, List<UUID> participants) {
@@ -162,13 +243,9 @@ public class RedisPrototypeLobbyPropagatePartyEvent implements ServiceToClient {
 
     private void handleInviteExpiredEvent(HypixelPlayer player, PartyInviteExpiredResponseEvent event) {
         if (event.getInvitee().equals(player.getUuid())) {
-            player.sendMessage("§9§m-----------------------------------------------------");
-            player.sendMessage("§eThe party invite from " + HypixelPlayer.getDisplayName(event.getInviter()) + " §ehas expired!");
-            player.sendMessage("§9§m-----------------------------------------------------");
+            sendMessage(player, "§eThe party invite from " + HypixelPlayer.getDisplayName(event.getInviter()) + " §ehas expired!");
         } else if (event.getInviter().equals(player.getUuid())) {
-            player.sendMessage("§9§m-----------------------------------------------------");
-            player.sendMessage("§eThe party invite to " + HypixelPlayer.getDisplayName(event.getInvitee()) + " §ehas expired.");
-            player.sendMessage("§9§m-----------------------------------------------------");
+            sendMessage(player, "§eThe party invite to " + HypixelPlayer.getDisplayName(event.getInvitee()) + " §ehas expired.");
         }
     }
 
@@ -185,9 +262,7 @@ public class RedisPrototypeLobbyPropagatePartyEvent implements ServiceToClient {
             player.sendMessage(component);
             player.sendMessage("§9§m-----------------------------------------------------");
         } else {
-            player.sendMessage("§9§m-----------------------------------------------------");
-            player.sendMessage(HypixelPlayer.getDisplayName(event.getInviter()) + " §einvited " + HypixelPlayer.getDisplayName(event.getInvitee()) + " §eto join the party! They have §c60 §eseconds to accept.");
-            player.sendMessage("§9§m-----------------------------------------------------");
+            sendMessage(player, HypixelPlayer.getDisplayName(event.getInviter()) + " §einvited " + HypixelPlayer.getDisplayName(event.getInvitee()) + " §eto join the party! They have §c60 §eseconds to accept.");
         }
     }
 
@@ -281,7 +356,7 @@ public class RedisPrototypeLobbyPropagatePartyEvent implements ServiceToClient {
                 throw new RuntimeException("Couldn't find a proxy for " + warperName);
             }
 
-            if (warperServer.uuid() == HypixelConst.getServerUUID()) {
+            if (warperServer.uuid().equals(HypixelConst.getServerUUID())) {
                 return;
             }
 
@@ -292,7 +367,7 @@ public class RedisPrototypeLobbyPropagatePartyEvent implements ServiceToClient {
                         if (player.isOnline()) {
                             throw new RuntimeException(throwable);
                         }
-                        return null; // Return value for the CompletableFuture
+                        return null;
                     }).join();
         } else {
             player.sendMessage("§7Warping party...");
@@ -321,6 +396,36 @@ public class RedisPrototypeLobbyPropagatePartyEvent implements ServiceToClient {
         JSONObject response = new JSONObject();
         response.put("success", false);
         response.put("error", reason);
+        return response;
+    }
+
+    private JSONObject createBlockedResponse(String reason) {
+        JSONObject response = new JSONObject();
+        response.put("success", false);
+        response.put("blocked", true);
+        response.put("blockReason", reason);
+        return response;
+    }
+
+    private JSONObject createGameWarpResponse(List<UUID> accepted, Map<UUID, String> rejected) {
+        JSONObject response = new JSONObject();
+        response.put("success", true);
+        response.put("playersHandled", accepted.size());
+
+        JSONArray acceptedArray = new JSONArray();
+        for (UUID uuid : accepted) {
+            acceptedArray.put(uuid.toString());
+        }
+        response.put("playersHandledUUIDs", acceptedArray);
+
+        if (!rejected.isEmpty()) {
+            JSONObject rejectedObj = new JSONObject();
+            for (Map.Entry<UUID, String> entry : rejected.entrySet()) {
+                rejectedObj.put(entry.getKey().toString(), entry.getValue());
+            }
+            response.put("rejectedPlayers", rejectedObj);
+        }
+
         return response;
     }
 }

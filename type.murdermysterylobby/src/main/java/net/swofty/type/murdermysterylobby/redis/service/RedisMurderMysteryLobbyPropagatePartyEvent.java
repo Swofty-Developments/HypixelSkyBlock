@@ -1,4 +1,4 @@
-package net.swofty.type.bedwarslobby.service;
+package net.swofty.type.murdermysterylobby.redis.service;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class RedisBedWarsLobbyPropagatePartyEvent implements ServiceToClient {
+public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClient {
 
     @Override
     public FromServiceChannels getChannel() {
@@ -49,7 +49,6 @@ public class RedisBedWarsLobbyPropagatePartyEvent implements ServiceToClient {
             }
 
             List<UUID> playersHandled = handleEventForPlayers(event, participants);
-            // Logger.info("Handled party event: " + event.getClass().getSimpleName() + " for " + participants.size() + " players");
             return createSuccessResponse(playersHandled.size(), playersHandled);
         } catch (Exception e) {
             Logger.error("Failed to handle party event: " + e.getMessage());
@@ -152,7 +151,9 @@ public class RedisBedWarsLobbyPropagatePartyEvent implements ServiceToClient {
                 player.sendMessage("§a§l✔ " + HypixelPlayer.getDisplayName(uuid) + " §awarped to your server");
             }
             for (UUID uuid : event.getFailedToWarp()) {
-                player.sendMessage("§c§l✖ " + HypixelPlayer.getDisplayName(uuid) + " §cwas unable to be warped");
+                String reason = event.getFailureReasons() != null ?
+                        event.getFailureReasons().getOrDefault(uuid, "Unable to warp") : "Unable to warp";
+                player.sendMessage("§c§l✖ " + HypixelPlayer.getDisplayName(uuid) + " §c- " + reason);
             }
             player.sendMessage("§9§m-----------------------------------------------------");
         }
@@ -290,7 +291,7 @@ public class RedisBedWarsLobbyPropagatePartyEvent implements ServiceToClient {
                         if (player.isOnline()) {
                             throw new RuntimeException(throwable);
                         }
-                        return null; // Return value for the CompletableFuture
+                        return null;
                     }).join();
         } else {
             player.sendMessage("§7Warping party...");
