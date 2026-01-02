@@ -94,6 +94,8 @@ public class CustomDropComponent extends SkyBlockItemComponent {
             List<Drop> drops
     ) {
         public boolean matches(SkyBlockItem brokenWith, SkyBlockRegion region, ServerType serverType, boolean isOnIsland) {
+            if (conditions == null) return true;
+
             return conditions.matches(brokenWith, region, serverType, isOnIsland);
         }
     }

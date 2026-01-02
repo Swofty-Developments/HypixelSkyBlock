@@ -20,7 +20,7 @@ public enum ItemStatistic {
     ABILITY_DAMAGE("Ability Damage", "§c", "§c", true, "๑"),
     TRUE_DEFENSE("True Defense", "§a", "§f", false, "❂"),
     FEROCITY("Ferocity", "§a", "§c", false, "⫽"),
-    HEALTH_REGEN("Health Regen", "§a", "§c",
+    HEALTH_REGENERATION("Health Regen", "§a", "§c",
             false, "❣", 100D, 1D),
     VITALITY("Vitality", "§a", "§4",
             false, "♨", 100D, 1D),

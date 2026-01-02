@@ -465,6 +465,24 @@ public final class Game {
 		return players.size() < getMaxPlayers();
 	}
 
+	public boolean canAcceptNewPlayers() {
+		return gameStatus == GameStatus.WAITING;
+	}
+
+	public int getAvailableSlots() {
+		return Math.max(0, getMaxPlayers() - players.size());
+	}
+
+	public String canAcceptPartyWarp() {
+		if (gameStatus == GameStatus.IN_PROGRESS) {
+			return "Cannot warp - game has already started";
+		}
+		if (gameStatus == GameStatus.ENDING) {
+			return "Cannot warp - game is ending";
+		}
+		return null;
+	}
+
 	private boolean hasMinimumPlayersForStart() {
 		int teamSize = Math.max(1, bedwarsGameType.getTeamSize());
 		int teamCount = mapEntry.getConfiguration().getTeams().size();

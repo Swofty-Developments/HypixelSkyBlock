@@ -104,6 +104,9 @@ public class RedisSkyBlockPropagatePartyEvent implements ServiceToClient {
             case PartyWarpOverviewResponseEvent overviewEvent -> handleWarpOverviewEvent(player, overviewEvent);
             case PartyChatMessageResponseEvent chatEvent -> handleChatMessageEvent(player, chatEvent);
             case PartyPlayerSwitchedServerResponseEvent switchEvent -> handlePlayerSwitchedServerEvent(player, switchEvent);
+            case PartyMemberDisconnectedResponseEvent disconnectedEvent -> handleMemberDisconnectedEvent(player, disconnectedEvent);
+            case PartyMemberRejoinedResponseEvent rejoinedEvent -> handleMemberRejoinedEvent(player, rejoinedEvent);
+            case PartyMemberDisconnectTimeoutResponseEvent timeoutEvent -> handleMemberDisconnectTimeoutEvent(player, timeoutEvent);
             default -> Logger.warn("Unhandled party event type: " + event.getClass().getSimpleName());
         }
     }
@@ -153,7 +156,9 @@ public class RedisSkyBlockPropagatePartyEvent implements ServiceToClient {
                 player.sendMessage("§a§l✔ " + SkyBlockPlayer.getDisplayName(uuid) + " §awarped to your server");
             }
             for (UUID uuid : event.getFailedToWarp()) {
-                player.sendMessage("§c§l✖ " + SkyBlockPlayer.getDisplayName(uuid) + " §cwas unable to be warped");
+                String reason = event.getFailureReasons() != null ?
+                        event.getFailureReasons().getOrDefault(uuid, "Unable to warp") : "Unable to warp";
+                player.sendMessage("§c§l✖ " + SkyBlockPlayer.getDisplayName(uuid) + " §c- " + reason);
             }
             player.sendMessage("§9§m-----------------------------------------------------");
         }
@@ -295,6 +300,32 @@ public class RedisSkyBlockPropagatePartyEvent implements ServiceToClient {
                     }).join();
         } else {
             player.sendMessage("§7Warping party...");
+        }
+    }
+
+    private void handleMemberDisconnectedEvent(SkyBlockPlayer player, PartyMemberDisconnectedResponseEvent event) {
+        if (!event.getDisconnectedPlayer().equals(player.getUuid())) {
+            String disconnectedName = SkyBlockPlayer.getDisplayName(event.getDisconnectedPlayer());
+            int minutes = (int) (event.getTimeoutSeconds() / 60);
+            sendMessage(player, disconnectedName + " §ehas disconnected. They have §c" + minutes + " minutes §eto rejoin before being removed.");
+        }
+    }
+
+    private void handleMemberRejoinedEvent(SkyBlockPlayer player, PartyMemberRejoinedResponseEvent event) {
+        if (!event.getRejoinedPlayer().equals(player.getUuid())) {
+            String rejoinedName = SkyBlockPlayer.getDisplayName(event.getRejoinedPlayer());
+            sendMessage(player, rejoinedName + " §ehas reconnected to the party.");
+        }
+    }
+
+    private void handleMemberDisconnectTimeoutEvent(SkyBlockPlayer player, PartyMemberDisconnectTimeoutResponseEvent event) {
+        String timedOutName = SkyBlockPlayer.getDisplayName(event.getTimedOutPlayer());
+        if (event.wasLeader()) {
+            sendMessage(player, "§cThe party leader " + timedOutName + " §ctimed out. The party has been disbanded.");
+        } else {
+            if (!event.getTimedOutPlayer().equals(player.getUuid())) {
+                sendMessage(player, timedOutName + " §ehas been removed from the party due to disconnect timeout.");
+            }
         }
     }
 

@@ -46,7 +46,7 @@ public enum PotionEffectType {
 
     REGENERATION("Regeneration", PotionEffectCategory.BUFF, 9, 45,
             level -> ItemStatistics.builder()
-                    .withBase(ItemStatistic.HEALTH_REGEN, 5.0 + (level - 1) * 5.0) // +5 to +45 Health Regen
+                    .withBase(ItemStatistic.HEALTH_REGENERATION, 5.0 + (level - 1) * 5.0) // +5 to +45 Health Regen
                     .build(),
             PotionEffect.REGENERATION),
 
@@ -191,7 +191,7 @@ public enum PotionEffectType {
 
     WOUNDED("Wounded", PotionEffectCategory.DEBUFF, 4, 45,
             level -> ItemStatistics.builder()
-                    .withBase(ItemStatistic.HEALTH_REGEN, -25.0 * level) // -25 to -100% healing
+                    .withBase(ItemStatistic.HEALTH_REGENERATION, -25.0 * level) // -25 to -100% healing
                     .build(),
             null),
 
@@ -344,7 +344,7 @@ public enum PotionEffectType {
             case STRENGTH -> "Increases §cStrength §7by §c" + stats.getOverall(ItemStatistic.STRENGTH).intValue() + "§7.";
             case CRITICAL -> "Grants §9+" + stats.getOverall(ItemStatistic.CRIT_CHANCE).intValue() + "% Crit Chance §7and §9+" + stats.getOverall(ItemStatistic.CRIT_DAMAGE).intValue() + "% Crit Damage§7.";
             case HASTE -> "Increases §6Mining Speed §7by §6" + stats.getOverall(ItemStatistic.MINING_SPEED).intValue() + "§7.";
-            case REGENERATION -> "Increases §cHealth Regen §7by §c" + stats.getOverall(ItemStatistic.HEALTH_REGEN).intValue() + "§7.";
+            case REGENERATION -> "Increases §cHealth Regen §7by §c" + stats.getOverall(ItemStatistic.HEALTH_REGENERATION).intValue() + "§7.";
             case RESISTANCE -> "Increases §aDefense §7by §a" + stats.getOverall(ItemStatistic.DEFENSE).intValue() + "§7.";
             case MANA -> "Regenerate §b" + level + " Mana §7per second.";
             case ABSORPTION -> "Grants §6" + stats.getOverall(ItemStatistic.HEALTH).intValue() + " Absorption Hearts§7.";

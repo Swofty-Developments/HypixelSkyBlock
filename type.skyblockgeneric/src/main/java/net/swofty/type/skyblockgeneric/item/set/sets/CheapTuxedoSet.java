@@ -9,6 +9,7 @@ import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CheapTuxedoSet extends SkyBlockValueEvent implements ArmorSet {
     @Override
@@ -18,7 +19,7 @@ public class CheapTuxedoSet extends SkyBlockValueEvent implements ArmorSet {
 
     @Override
     public ArrayList<String> getDescription() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(List.of(
                 "Max health set to §c75♥§7.",
                 "Deal §c+50% §7damage!",
                 "§8Very stylish."

@@ -247,7 +247,11 @@ public class HypixelDataHandler extends DataHandler {
         QUEST_DATA("quest_data",
                 DatapointQuestData.class, new DatapointQuestData("quest_data")),
 
-        PARKOUR_DATA("parkour_data", DatapointParkourData.class, new DatapointParkourData("parkour_data"))
+        PARKOUR_DATA("parkour_data", DatapointParkourData.class, new DatapointParkourData("parkour_data")),
+
+        FRIEND_SORT("friend_sort", DatapointFriendSort.class,
+                new DatapointFriendSort("friend_sort",
+                        new DatapointFriendSort.FriendSortData(DatapointFriendSort.SortType.DEFAULT, false)))
         ;
 
         @Getter private final String key;

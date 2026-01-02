@@ -5,7 +5,10 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.abilities.BuildersWandAbility;
+import net.swofty.type.skyblockgeneric.user.statistics.TemporaryStatistic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +25,8 @@ public class AbilityRegistry {
 				50,
 				new RegisteredAbility.AbilityManaCost(25),
 				(player, item, ignored, ignored2) -> {
-					player.sendMessage("Hey");
+					player.teleport(player.getPosition().add(player.getPosition().direction().mul(10)));
+					// TODO: damage nearby mobs
 				}
 		));
 
@@ -35,7 +39,9 @@ public class AbilityRegistry {
 				new RegisteredAbility.AbilityManaCost(50),
 				(player, item, ignored, ignored2) -> {
 					player.teleport(player.getPosition().add(player.getPosition().direction().mul(8)));
-					// TODO: add speed too
+					ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 50.0).build();
+					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(3000).withDisplayName("Instant Transmission").build();
+					player.getStatistics().boostStatistic(speedBoost);
 				}
 		));
 
@@ -65,6 +71,20 @@ public class AbilityRegistry {
 				(player, item, targetedBlock, blockFace) -> {
 					player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
 							.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+				}
+		));
+
+		register(new RegisteredAbility(
+				"SPEED_BOOST",
+				"Speed Boost",
+				"§7Grants §7+100 Speed",
+				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
+				20 * 5,
+				new RegisteredAbility.AbilityManaCost(50),
+				(player, item, ignored, ignored2) -> {
+					ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 100.0).build();
+					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(30000).withDisplayName("Speed Boost").build();
+					player.getStatistics().boostStatistic(speedBoost);
 				}
 		));
 

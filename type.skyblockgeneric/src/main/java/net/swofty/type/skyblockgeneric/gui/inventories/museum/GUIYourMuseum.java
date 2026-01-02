@@ -25,9 +25,11 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GUIYourMuseum extends HypixelInventoryGUI {
-    private static final int[] SLOTS = new int[]{
-            20, 22, 24
-    };
+    private static final Map<MuseumableItemCategory, Integer> CATEGORY_SLOTS = Map.of(
+            MuseumableItemCategory.WEAPONS, 20,
+            MuseumableItemCategory.ARMOR_SETS, 22,
+            MuseumableItemCategory.RARITIES, 24
+    );
 
     public GUIYourMuseum() {
         super("Your Museum", InventoryType.CHEST_6_ROW);
@@ -133,7 +135,10 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
         });
 
         for (MuseumableItemCategory category : MuseumableItemCategory.values()) {
-            int slot = SLOTS[category.ordinal()];
+            Integer slot = CATEGORY_SLOTS.get(category);
+            if (slot == null) {
+                continue;
+            }
 
             set(new GUIClickableItem(slot) {
                 @Override

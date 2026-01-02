@@ -5,6 +5,7 @@ import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionTravelToTheDarkThicket;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.race.MissionTalkToGustave;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -36,6 +37,7 @@ public class MissionGiveKellySpruceLogs extends SkyBlockMission implements Locat
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
 		player.getMissionData().startMission(MissionTravelToTheDarkThicket.class);
+		player.getMissionData().startMission(MissionTalkToGustave.class);
 	}
 
 	@Override

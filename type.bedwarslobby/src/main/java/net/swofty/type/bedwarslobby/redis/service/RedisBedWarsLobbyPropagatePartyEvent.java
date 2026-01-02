@@ -1,4 +1,4 @@
-package net.swofty.type.murdermysterylobby.service;
+package net.swofty.type.bedwarslobby.redis.service;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClient {
+public class RedisBedWarsLobbyPropagatePartyEvent implements ServiceToClient {
 
     @Override
     public FromServiceChannels getChannel() {
@@ -49,6 +49,7 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
             }
 
             List<UUID> playersHandled = handleEventForPlayers(event, participants);
+            // Logger.info("Handled party event: " + event.getClass().getSimpleName() + " for " + participants.size() + " players");
             return createSuccessResponse(playersHandled.size(), playersHandled);
         } catch (Exception e) {
             Logger.error("Failed to handle party event: " + e.getMessage());
@@ -102,6 +103,9 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
             case PartyWarpOverviewResponseEvent overviewEvent -> handleWarpOverviewEvent(player, overviewEvent);
             case PartyChatMessageResponseEvent chatEvent -> handleChatMessageEvent(player, chatEvent);
             case PartyPlayerSwitchedServerResponseEvent switchEvent -> handlePlayerSwitchedServerEvent(player, switchEvent);
+            case PartyMemberDisconnectedResponseEvent disconnectedEvent -> handleMemberDisconnectedEvent(player, disconnectedEvent);
+            case PartyMemberRejoinedResponseEvent rejoinedEvent -> handleMemberRejoinedEvent(player, rejoinedEvent);
+            case PartyMemberDisconnectTimeoutResponseEvent timeoutEvent -> handleMemberDisconnectTimeoutEvent(player, timeoutEvent);
             default -> Logger.warn("Unhandled party event type: " + event.getClass().getSimpleName());
         }
     }
@@ -151,7 +155,9 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
                 player.sendMessage("§a§l✔ " + HypixelPlayer.getDisplayName(uuid) + " §awarped to your server");
             }
             for (UUID uuid : event.getFailedToWarp()) {
-                player.sendMessage("§c§l✖ " + HypixelPlayer.getDisplayName(uuid) + " §cwas unable to be warped");
+                String reason = event.getFailureReasons() != null ?
+                        event.getFailureReasons().getOrDefault(uuid, "Unable to warp") : "Unable to warp";
+                player.sendMessage("§c§l✖ " + HypixelPlayer.getDisplayName(uuid) + " §c- " + reason);
             }
             player.sendMessage("§9§m-----------------------------------------------------");
         }
@@ -289,10 +295,36 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
                         if (player.isOnline()) {
                             throw new RuntimeException(throwable);
                         }
-                        return null;
+                        return null; // Return value for the CompletableFuture
                     }).join();
         } else {
             player.sendMessage("§7Warping party...");
+        }
+    }
+
+    private void handleMemberDisconnectedEvent(HypixelPlayer player, PartyMemberDisconnectedResponseEvent event) {
+        if (!event.getDisconnectedPlayer().equals(player.getUuid())) {
+            String disconnectedName = HypixelPlayer.getDisplayName(event.getDisconnectedPlayer());
+            int minutes = (int) (event.getTimeoutSeconds() / 60);
+            sendMessage(player, disconnectedName + " §ehas disconnected. They have §c" + minutes + " minutes §eto rejoin before being removed.");
+        }
+    }
+
+    private void handleMemberRejoinedEvent(HypixelPlayer player, PartyMemberRejoinedResponseEvent event) {
+        if (!event.getRejoinedPlayer().equals(player.getUuid())) {
+            String rejoinedName = HypixelPlayer.getDisplayName(event.getRejoinedPlayer());
+            sendMessage(player, rejoinedName + " §ehas reconnected to the party.");
+        }
+    }
+
+    private void handleMemberDisconnectTimeoutEvent(HypixelPlayer player, PartyMemberDisconnectTimeoutResponseEvent event) {
+        String timedOutName = HypixelPlayer.getDisplayName(event.getTimedOutPlayer());
+        if (event.wasLeader()) {
+            sendMessage(player, "§cThe party leader " + timedOutName + " §ctimed out. The party has been disbanded.");
+        } else {
+            if (!event.getTimedOutPlayer().equals(player.getUuid())) {
+                sendMessage(player, timedOutName + " §ehas been removed from the party due to disconnect timeout.");
+            }
         }
     }
 

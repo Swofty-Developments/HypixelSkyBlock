@@ -17,7 +17,9 @@ public enum ArmorSetRegistry {
 	MUSHROOM(MushroomSet.class, ItemType.MUSHROOM_BOOTS, ItemType.MUSHROOM_LEGGINGS, ItemType.MUSHROOM_CHESTPLATE, ItemType.MUSHROOM_HELMET),
 	LAPIS(LapisArmorSet.class, ItemType.LAPIS_ARMOR_BOOTS, ItemType.LAPIS_ARMOR_LEGGINGS, ItemType.LAPIS_ARMOR_CHESTPLATE, ItemType.LAPIS_ARMOR_HELMET),
     MINER(MinerArmorSet.class, ItemType.MINER_ARMOR_BOOTS, ItemType.MINER_ARMOR_LEGGINGS, ItemType.MINER_ARMOR_CHESTPLATE, ItemType.MINER_ARMOR_HELMET),
-	PUMPKIN(PumpkinSet.class, ItemType.PUMPKIN_BOOTS, ItemType.PUMPKIN_LEGGINGS, ItemType.PUMPKIN_CHESTPLATE, ItemType.PUMPKIN_HELMET);
+	PUMPKIN(PumpkinSet.class, ItemType.PUMPKIN_BOOTS, ItemType.PUMPKIN_LEGGINGS, ItemType.PUMPKIN_CHESTPLATE, ItemType.PUMPKIN_HELMET),
+	PARK_ARMOR(null, ItemType.MELODY_SHOES, ItemType.CHARLIE_TROUSERS, ItemType.KELLY_TSHIRT, ItemType.MOLE_HAT),
+	;
 
 	private final Class<? extends ArmorSet> clazz;
 	private final ItemType boots;
@@ -34,7 +36,7 @@ public enum ArmorSetRegistry {
 		this.helmet = helmet;
 	}
 
-	public static ArmorSetRegistry getArmorSet(Class<? extends ArmorSet> clazz) {
+	public static @Nullable ArmorSetRegistry getArmorSet(Class<? extends ArmorSet> clazz) {
 		for (ArmorSetRegistry armorSetRegistry : values()) {
 			if (armorSetRegistry.getClazz() == clazz) {
 				return armorSetRegistry;

@@ -2,6 +2,7 @@ package net.swofty.type.murdermysterygame.game;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.hollowcube.polar.PolarLoader;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -28,12 +29,14 @@ import net.swofty.type.murdermysterygame.role.RoleManager;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 import net.swofty.type.murdermysterygame.weapon.WeaponManager;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.Player;
 import net.minestom.server.entity.metadata.item.ItemEntityMeta;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -310,6 +313,10 @@ public class Game {
     }
 
     public void onEnvironmentalDeath(MurderMysteryPlayer victim) {
+        onEnvironmentalDeath(victim, "You fell out of the world.");
+    }
+
+    public void onEnvironmentalDeath(MurderMysteryPlayer victim, String deathReason) {
         GameRole victimRole = roleManager.getRole(victim.getUuid());
 
         victim.setEliminated(true);
@@ -317,7 +324,7 @@ public class Game {
         setupPlayerForSpectator(victim);
 
         // Send death message
-        sendDeathMessage(victim, "You fell out of the world.");
+        sendDeathMessage(victim, deathReason);
 
         // Handle detective death - drop bow
         if (victimRole == GameRole.DETECTIVE) {
@@ -681,8 +688,6 @@ public class Game {
     private void handleClassicKill(MurderMysteryPlayer killer, MurderMysteryPlayer victim,
                                    GameRole killerRole, GameRole victimRole) {
         if (killerRole == GameRole.MURDERER) {
-            // Murderer killed someone - no penalty
-            broadcastMessage(Component.text(victim.getUsername() + " was killed!", NamedTextColor.RED));
             sendDeathMessage(victim, "You were killed by the Murderer.");
         } else {
             // Innocent or Detective killed someone
@@ -718,10 +723,8 @@ public class Game {
             UUID newTarget = roleManager.getAssassinTarget(victim.getUuid());
             roleManager.reassignTarget(killer.getUuid(), newTarget);
 
-            // Daily: Hitman - killed assigned target in Assassins
             killer.getQuestHandler().addProgressByTrigger("murdermystery.assassin_target_kills", 1);
 
-            // === ASSASSINS MODE ACHIEVEMENTS ===
             PlayerAchievementHandler achHandler = new PlayerAchievementHandler(killer);
 
             // Tiered: Hitman - kill players in Assassins
@@ -916,6 +919,10 @@ public class Game {
             players.clear();
             roleManager.clear();
             murdererKiller = null;
+
+            // Reset the instance to fresh state from polar file
+            resetInstance();
+
             gameStatus = GameStatus.WAITING;
         }).delay(TaskSchedule.seconds(10)).schedule();
     }
@@ -1109,7 +1116,57 @@ public class Game {
         getPlayersAsAudience().sendMessage(message);
     }
 
+    @lombok.SneakyThrows
+    private void resetInstance() {
+        // Remove all entities from the instance (dropped items, etc.)
+        for (Entity entity : instanceContainer.getEntities()) {
+            if (!(entity instanceof Player)) {
+                entity.remove();
+            }
+        }
+
+        // Reload the map from the polar file by unloading all chunks
+        // When chunks are re-loaded, they'll come fresh from the PolarLoader
+        PolarLoader loader = new PolarLoader(new File("./configuration/murdermystery/" + mapEntry.getId() + ".polar").toPath());
+        instanceContainer.setChunkLoader(loader);
+
+        // Unload all chunks so they reload fresh from the polar file
+        instanceContainer.getChunks().forEach(chunk -> {
+            instanceContainer.unloadChunk(chunk);
+        });
+    }
+
     private enum WinCondition {
         INNOCENTS_WIN, MURDERER_WINS, TIME_EXPIRED, LAST_STANDING
+    }
+
+    /**
+     * Checks if the game can accept new players (party warp validation).
+     * @return true if game is in WAITING state and can accept players
+     */
+    public boolean canAcceptNewPlayers() {
+        return gameStatus == GameStatus.WAITING;
+    }
+
+    /**
+     * Gets the number of available slots in this game.
+     * @return number of slots available for new players
+     */
+    public int getAvailableSlots() {
+        return Math.max(0, gameType.getMaxPlayers() - players.size());
+    }
+
+    /**
+     * Checks if the game can accept a party warp and returns an error message if not.
+     * @return null if warp is allowed, otherwise an error message
+     */
+    public String canAcceptPartyWarp() {
+        if (gameStatus == GameStatus.IN_PROGRESS) {
+            return "Cannot warp - game has already started";
+        }
+        if (gameStatus == GameStatus.ENDING) {
+            return "Cannot warp - game is ending";
+        }
+        return null; // Warp is allowed
     }
 }

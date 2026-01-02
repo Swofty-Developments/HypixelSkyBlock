@@ -30,10 +30,23 @@ items:
         standard_item_type: SWORD
       - id: MUSEUM
         museum_category: WEAPONS
+        game_stage: EXPERT
+        donation_xp: 6
+        mapped_item_ids:
+          - STARRED_MIDAS_SWORD
       - id: GEMSTONE
-        gemstones:
-          - "COMBAT:50000"
-          - "COMBAT:100000"
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_RUBY_GEM:40
+              - FINE_AMETHYST_GEM:40
       - id: LORE_UPDATE
         handler_id: MIDAS_SWORD
         is_absolute: false

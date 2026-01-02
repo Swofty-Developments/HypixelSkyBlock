@@ -10,6 +10,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class GUIClaimReward extends HypixelInventoryGUI {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
 				return ItemStackCreator.appendLore(
-						new SkyBlockItem(rewardItem).getDisplayItem(),
+						new NonPlayerItemUpdater(new SkyBlockItem(rewardItem)).getUpdatedItem(),
 						List.of(
 								"",
 								"§eClick to claim!"
