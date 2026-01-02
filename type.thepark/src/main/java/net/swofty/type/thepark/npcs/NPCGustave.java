@@ -2,10 +2,12 @@ package net.swofty.type.thepark.npcs;
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.race.*;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -78,8 +80,9 @@ public class NPCGustave extends HypixelNPC {
 		}
 		if (missionData.isCurrentlyActive(MissionTalkToGustaveAgainAgain.class)) {
 			setDialogue(player, "completed-2").thenRun(() -> {
-				// TODO: give hunter knife
-				missionData.endMission(MissionTalkToGustaveAgainAgain.class);
+				new GUIClaimReward(ItemType.HUNTER_KNIFE, () -> {
+					missionData.endMission(MissionTalkToGustaveAgainAgain.class);
+				}).open(player);
 			});
 			return;
 		}
@@ -89,7 +92,7 @@ public class NPCGustave extends HypixelNPC {
 		}
 		if (missionData.isCurrentlyActive(MissionTalkToGustaveFourth.class)) {
 			setDialogue(player, "completed-3").thenRun(() -> {
-				// TODO: give trinket
+				// TODO: give trinket (wolf paw)
 				missionData.endMission(MissionTalkToGustaveFourth.class);
 			});
 			return;
