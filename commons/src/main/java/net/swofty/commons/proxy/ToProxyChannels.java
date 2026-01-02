@@ -2,6 +2,7 @@ package net.swofty.commons.proxy;
 
 import lombok.Getter;
 import net.swofty.commons.proxy.requirements.to.*;
+import net.swofty.commons.proxy.requirements.to.StaffChatRequirements;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -15,6 +16,7 @@ public enum ToProxyChannels {
     REQUEST_SERVERS("servers", new ServersRequirement()),
     REGISTER_TEST_FLOW("register-test-flow", new RegisterTestFlowRequirements()),
     TEST_FLOW_SERVER_READY("test-flow-server-ready", new TestFlowServerReadyRequirements()),
+    STAFF_CHAT("staff-chat", new StaffChatRequirements()),
     ;
 
     @Getter

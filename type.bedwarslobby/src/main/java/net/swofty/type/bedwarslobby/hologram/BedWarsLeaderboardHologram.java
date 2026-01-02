@@ -64,7 +64,7 @@ public enum BedWarsLeaderboardHologram {
 		int maxNameWidth = 0;
 		if (alignment == BedwarsTextAlignment.BLOCK && !entries.isEmpty()) {
 			for (LeaderboardService.LeaderboardEntry entry : entries) {
-				String name = new BedwarsNameFormatter(entry.playerUuid()).getDisplayName();
+				String name = HypixelPlayer.getDisplayName(entry.playerUuid());
 				maxNameWidth = Math.max(maxNameWidth, getMinecraftStringWidth(name));
 			}
 		}
@@ -74,7 +74,7 @@ public enum BedWarsLeaderboardHologram {
 		} else {
 			int displayRank = 1;
 			for (LeaderboardService.LeaderboardEntry entry : entries) {
-				String playerName = new BedwarsNameFormatter(entry.playerUuid()).getDisplayName();
+				String playerName = HypixelPlayer.getDisplayName(entry.playerUuid());
 				String formattedScore = formatScore(entry.scoreAsLong());
 
 				String paddedName = playerName;
