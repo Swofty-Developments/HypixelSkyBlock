@@ -2,6 +2,8 @@ package net.swofty.type.skyblockgeneric.race;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.instance.Instance;
@@ -133,11 +135,17 @@ public class RaceManager {
 			if (!perPlayerStartTime.containsKey(player.getUuid())) {
 				return TaskSchedule.stop();
 			}
+
+			// Check for time limit
 			if (race.timeLimit() > 0) {
 				long timeElapsed = System.currentTimeMillis() - perPlayerStartTime.get(player.getUuid()).startTime();
 				if (timeElapsed >= race.timeLimit() * 1000L) {
 					perPlayerStartTime.remove(player.getUuid());
 					player.sendMessage(race.getTitle() + " §cRace cancelled! Time limit reached!");
+					player.playSound(Sound.sound(
+							Key.key("block.note_block.pling"), Sound.Source.NEUTRAL,
+							.3f, 0.75f
+					));
 					updateForPlayer(HypixelConst.getInstanceContainer(), player);
 					return TaskSchedule.stop();
 				}
