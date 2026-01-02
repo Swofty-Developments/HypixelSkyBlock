@@ -127,27 +127,37 @@ public class HypixelPlayer extends Player {
 		return new PlayerSkin(texture, signature);
 	}
 
-	public void sendTo(ServerType type) {
-		sendTo(type, false);
-	}
+    public void sendTo(ServerType type) {
+        sendTo(type, false);
+    }
 
-	public void sendTo(ServerType type, boolean force) {
-		ProxyPlayer player = asProxyPlayer();
+    public void sendTo(ServerType type, boolean force) {
+        ProxyPlayer player = asProxyPlayer();
 
-		if (type == HypixelConst.getTypeLoader().getType() && !force) {
-			this.teleport(HypixelConst.getTypeLoader().getLoaderValues().spawnPosition().apply(this.getOriginServer()));
-			return;
-		}
+        if (type == HypixelConst.getTypeLoader().getType() && !force) {
+            this.teleport(HypixelConst.getTypeLoader().getLoaderValues().spawnPosition().apply(this.getOriginServer()));
+            return;
+        }
 
-		HypixelConst.getTypeLoader().getTablistManager().nullifyCache(this);
+        HypixelConst.getTypeLoader().getTablistManager().nullifyCache(this);
 
-        /*showTitle(Title.title(
-                Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
-                Component.empty(),
-                Title.Times.times(Duration.ofSeconds(1), Duration.ofMillis(300), Duration.ZERO)
-        ));*/
+        player.transferTo(type);
+    }
 
-		player.transferTo(type);
-	}
+    // --- NEW: UUID transfer (for m1A / mini2B etc) ---
+    public void sendTo(UUID serverUuid) {
+        sendTo(serverUuid, false);
+    }
+
+    public void sendTo(UUID serverUuid, boolean force) {
+        ProxyPlayer player = asProxyPlayer();
+
+        // you can ignore 'force' for now unless you want extra logic;
+        // keeping signature consistent with ServerType sendTo.
+        HypixelConst.getTypeLoader().getTablistManager().nullifyCache(this);
+
+        // This exists in ProxyPlayer
+        player.transferToWithIndication(serverUuid);
+    }
 
 }

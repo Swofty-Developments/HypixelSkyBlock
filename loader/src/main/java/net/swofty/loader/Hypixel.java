@@ -208,6 +208,11 @@ public class Hypixel {
                         }
 
                         Logger.info("Received server name: " + HypixelConst.getServerName());
+
+                        new net.swofty.proxyapi.ProxyInformation()
+                                .getAllServersInformation()
+                                .thenAccept(net.swofty.type.generic.utility.ProxyServersCache::update)
+                                .exceptionally(ex -> null);
                     });
             checkProxyConnected(MinecraftServer.getSchedulerManager());
 
@@ -332,6 +337,7 @@ public class Hypixel {
         }
         return options;
     }
+
 
     private static void checkProxyConnected(Scheduler scheduler) {
         scheduler.submitTask(() -> {

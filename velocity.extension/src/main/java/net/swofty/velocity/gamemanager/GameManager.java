@@ -162,18 +162,4 @@ public class GameManager {
             return maxPlayers > registeredServer().getPlayersConnected().size();
         }
     }
-    public static @Nullable GameServer getFromDisplayName(String name) {
-        for (ArrayList<GameServer> list : servers.values()) {
-            for (GameServer gs : list) {
-                if (gs.displayName().equalsIgnoreCase(name)
-                        || gs.shortDisplayName().equalsIgnoreCase(name)) {
-                    return gs;
-                }
-            }
-        }
-        return null;
-    }
-    public static boolean hasServer(String name) {
-        return getFromDisplayName(name) != null;
-    }
 }
