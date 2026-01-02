@@ -1,6 +1,8 @@
 package net.swofty.type.generic.command.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
+import net.minestom.server.command.builder.arguments.ArgumentString;
+import net.swofty.commons.ServerManager;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -16,6 +18,7 @@ public class SendToCommand extends HypixelCommand {
     @Override
     public void registerUsage(MinestomCommand command) {
         ArgumentEnum<ServerType> serverType = new ArgumentEnum<>("server_type", ServerType.class);
+        ArgumentString serverId = new ArgumentString("server_id");
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
@@ -24,5 +27,17 @@ public class SendToCommand extends HypixelCommand {
 
             player.sendTo(type, true);
         }, serverType);
+
+        command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+            String id = context.get(serverId);
+            HypixelPlayer player = (HypixelPlayer) sender;
+
+            if (ServerManager.isValidServerId(id)) {
+                player.sendTo(id, true);
+            } else {
+                player.sendMessage("Invalid server ID.");
+            }
+        }, serverId);
     }
 }
