@@ -145,6 +145,7 @@ public class NPCMolbert extends HypixelNPC {
 		if (data.isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class)) {
 			TypeTheParkLoader.entities.forEach(Entity::updateViewableRule);
 			setDialogue(player, "stuck").thenRun(() -> {
+				data.endMission(MissionTalkToMolbertAgainAgainAgain.class);
 				NPCOption.sendOption(player, "molbert", false, List.of(
 						new NPCOption.Option(
 								"help",
@@ -157,8 +158,6 @@ public class NPCMolbert extends HypixelNPC {
 								}
 						)
 				));
-				if (data.isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class))
-					data.endMission(MissionTalkToMolbertAgainAgainAgain.class);
 			});
 			return;
 		}
