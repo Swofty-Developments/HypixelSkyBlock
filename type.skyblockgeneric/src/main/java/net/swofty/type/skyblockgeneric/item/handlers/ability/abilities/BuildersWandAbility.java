@@ -15,7 +15,6 @@ import java.util.List;
 
 public class BuildersWandAbility extends RegisteredAbility {
 
-    @SuppressWarnings("preview")
     public BuildersWandAbility() {
         super("GRAND_ARCHITECT", "Grand Architect",
                 "Right-click the face of a block to extend all connected block faces.",
