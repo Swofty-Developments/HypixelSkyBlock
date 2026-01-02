@@ -10,6 +10,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
@@ -150,6 +151,7 @@ public class Game {
             GameRole role = roleManager.getRole(player.getUuid());
             if (role != null) {
                 setupPlayerForGame(player, role);
+                addPlayerToHiddenNametagsTeam(player);
                 player.setInstance(instanceContainer, getWaitingPosition());
                 player.sendMessage(Component.text("You have rejoined the game!", NamedTextColor.GREEN));
             } else {
@@ -182,6 +184,7 @@ public class Game {
         murdererReceivedSword = false;
 
         roleManager.assignRoles();
+        setupHiddenNametags();
 
         for (MurderMysteryPlayer player : players) {
             GameRole role = roleManager.getRole(player.getUuid());
@@ -387,6 +390,66 @@ public class Game {
         // Allow flying
         player.setAllowFlying(true);
         player.setFlying(true);
+    }
+
+    private void setupHiddenNametags() {
+        // Create a team with hidden nametags for all players
+        List<String> playerNames = players.stream()
+                .map(MurderMysteryPlayer::getUsername)
+                .toList();
+
+        TeamsPacket createTeamPacket = new TeamsPacket(
+                "mm_hidden",
+                new TeamsPacket.CreateTeamAction(
+                        Component.empty(),
+                        (byte) 0x00,
+                        TeamsPacket.NameTagVisibility.NEVER,
+                        TeamsPacket.CollisionRule.ALWAYS,
+                        NamedTextColor.WHITE,
+                        Component.empty(),
+                        Component.empty(),
+                        playerNames
+                )
+        );
+
+        // Send to all players
+        for (MurderMysteryPlayer player : players) {
+            player.sendPacket(createTeamPacket);
+        }
+    }
+
+    private void addPlayerToHiddenNametagsTeam(MurderMysteryPlayer newPlayer) {
+        // Send existing team info to the new player
+        List<String> allPlayerNames = players.stream()
+                .map(MurderMysteryPlayer::getUsername)
+                .toList();
+
+        TeamsPacket createTeamPacket = new TeamsPacket(
+                "mm_hidden",
+                new TeamsPacket.CreateTeamAction(
+                        Component.empty(),
+                        (byte) 0x00,
+                        TeamsPacket.NameTagVisibility.NEVER,
+                        TeamsPacket.CollisionRule.ALWAYS,
+                        NamedTextColor.WHITE,
+                        Component.empty(),
+                        Component.empty(),
+                        allPlayerNames
+                )
+        );
+        newPlayer.sendPacket(createTeamPacket);
+
+        // Tell existing players to add the new player to the team
+        TeamsPacket addPlayerPacket = new TeamsPacket(
+                "mm_hidden",
+                new TeamsPacket.AddEntitiesToTeamAction(List.of(newPlayer.getUsername()))
+        );
+
+        for (MurderMysteryPlayer player : players) {
+            if (!player.equals(newPlayer)) {
+                player.sendPacket(addPlayerPacket);
+            }
+        }
     }
 
     private Pos getRandomSpawnPosition() {
