@@ -30,8 +30,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AquariumMapHandler extends MapHandler {
-
-    // Track if bridge is currently raised to prevent spam
     private boolean bridgeRaising = false;
 
     @Override
@@ -72,6 +70,13 @@ public class AquariumMapHandler extends MapHandler {
                 .action(this::onTradingButton)
                 .build());
 
+        elements.add(InteractiveElement.builder("trading_button_2")
+                .type(InteractionType.BUTTON)
+                .position(0, 75, 73)
+                .goldCost(0) // Custom cost validation in action
+                .action(this::onTradingButton)
+                .build());
+
         return elements;
     }
 
@@ -94,7 +99,6 @@ public class AquariumMapHandler extends MapHandler {
 
         final int maxHeight = 6;
 
-        // Store FULL VOLUME snapshot (minY to maxY + maxHeight) to restore blocks properly
         Map<Point, Block> volumeSnapshot = new HashMap<>();
         for (int x = minX; x <= maxX; x++) {
             for (int y = minY; y <= maxY + maxHeight; y++) {
@@ -119,10 +123,6 @@ public class AquariumMapHandler extends MapHandler {
             }
         }
 
-        // Single task with phase tracking
-        // Phase 0: Raising (6 iterations)
-        // Phase 1: Holding (20 iterations = 10 seconds)
-        // Phase 2: Lowering (6 iterations)
         AtomicInteger phase = new AtomicInteger(0);
         AtomicInteger height = new AtomicInteger(0);
         AtomicInteger holdCounter = new AtomicInteger(0);
@@ -164,25 +164,20 @@ public class AquariumMapHandler extends MapHandler {
                     phase.set(1); // Switch to holding
                 }
             } else if (currentPhase == 1) {
-                // HOLDING PHASE
-                if (holdCounter.incrementAndGet() >= 20) { // 20 * 500ms = 10 seconds
-                    phase.set(2); // Switch to lowering
+                if (holdCounter.incrementAndGet() >= 20) {
+                    phase.set(2);
                 }
             } else if (currentPhase == 2) {
-                // LOWERING PHASE
                 int h = height.getAndDecrement();
 
-                // For each bridge block, move it down by 1
                 for (Map.Entry<Point, Block> entry : bridgeBlocks.entrySet()) {
                     Point originalPos = entry.getKey();
                     Block block = entry.getValue();
 
-                    // When lowering, restore the position the bridge is leaving from snapshot
                     Point leavingPos = new Vec(originalPos.x(), originalPos.y() + h, originalPos.z());
                     Block originalBlock = volumeSnapshot.get(leavingPos);
                     game.getInstanceContainer().setBlock(leavingPos, originalBlock != null ? originalBlock : Block.AIR);
 
-                    // Place bridge block at new position
                     Point newPos = new Vec(originalPos.x(), originalPos.y() + h - 1, originalPos.z());
                     game.getInstanceContainer().setBlock(newPos, block);
                 }
@@ -193,17 +188,14 @@ public class AquariumMapHandler extends MapHandler {
                         new Pos(0, 72, 54));
 
                 if (h <= 1) {
-                    // Done - bridge is back at original position
                     bridgeRaising = false;
                 }
             }
         }).delay(TaskSchedule.millis(500)).repeat(TaskSchedule.millis(500)).schedule();
 
-        // Cancel task after all phases complete (6 raise + 20 hold + 6 lower = 32 iterations + buffer)
         MinecraftServer.getSchedulerManager().buildTask(() -> {
             task.cancel();
             if (bridgeRaising) {
-                // Safety: ensure flag is reset
                 bridgeRaising = false;
             }
         }).delay(TaskSchedule.millis(500 * 35)).schedule();
@@ -219,14 +211,12 @@ public class AquariumMapHandler extends MapHandler {
                                 MurderMysteryPlayer player,
                                 Game game,
                                 MapHandler handler) {
-        // Floor region: light blue stained glass between (-32, 65, 27) and (-40, 65, 19)
         int minX = Math.min(-32, -40);
         int maxX = Math.max(-32, -40);
         int y = 65;
         int minZ = Math.min(27, 19);
         int maxZ = Math.max(27, 19);
 
-        // Store and remove floor blocks
         Map<Point, Block> removedBlocks = new HashMap<>();
         for (int x = minX; x <= maxX; x++) {
             for (int z = minZ; z <= maxZ; z++) {
@@ -250,7 +240,6 @@ public class AquariumMapHandler extends MapHandler {
                 for (Map.Entry<Point, Block> entry : removedBlocks.entrySet()) {
                     game.getInstanceContainer().setBlock(entry.getKey(), entry.getValue());
                 }
-                // Play bell/beep sound when glass regenerates
                 game.getInstanceContainer().playSound(
                         Sound.sound(Key.key("minecraft:block.note_block.bell"), Sound.Source.BLOCK, 1f, 1f),
                         new Pos(-36, 65, 23));

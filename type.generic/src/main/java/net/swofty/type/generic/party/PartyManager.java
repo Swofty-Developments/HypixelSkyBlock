@@ -156,6 +156,18 @@ public class PartyManager {
         sendEventToService(event);
     }
 
+    public static void notifyPlayerDisconnect(UUID playerUUID) {
+        if (!partyService.isOnline().join()) return;
+        PartyPlayerDisconnectEvent event = new PartyPlayerDisconnectEvent(playerUUID);
+        sendEventToService(event);
+    }
+
+    public static void notifyPlayerRejoin(UUID playerUUID) {
+        if (!partyService.isOnline().join()) return;
+        PartyPlayerRejoinEvent event = new PartyPlayerRejoinEvent(playerUUID);
+        sendEventToService(event);
+    }
+
     public static void hijackParty(HypixelPlayer hijacker, String targetName) {
         if (!hijacker.getRank().isEqualOrHigherThan(Rank.STAFF)) {
             hijacker.sendMessage("§cYou need STAFF to do this command");

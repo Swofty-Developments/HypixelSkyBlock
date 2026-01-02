@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.friend.FriendEvent;
 import net.swofty.commons.friend.FriendSettingType;
 import net.swofty.commons.friend.events.response.*;
@@ -185,7 +186,7 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
 
     private void handleLeaveNotification(HypixelPlayer player, FriendLeaveNotificationEvent event) {
         String displayName = HypixelPlayer.getDisplayName(event.getFriend());
-        player.sendMessage("§cFriend > " + displayName + " §7left.");
+        player.sendMessage("§aFriend > " + displayName + " §7left.");
     }
 
     private void handleRequestExpired(HypixelPlayer player, FriendRequestExpiredResponseEvent event) {
@@ -244,7 +245,7 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
 
                 // Server info (when online)
                 if (friend.isOnline() && friend.getServer() != null && !friend.getServer().isEmpty()) {
-                    sb.append(" §7- §e").append(friend.getServer());
+                    sb.append(" §7- §e").append(StringUtility.toNormalCase(friend.getServer()));
                 }
 
                 TextComponent line = LegacyComponentSerializer.legacySection().deserialize(sb.toString());

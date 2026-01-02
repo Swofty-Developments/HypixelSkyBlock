@@ -14,6 +14,9 @@ import net.swofty.type.generic.quest.QuestData;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIMyProfile extends HypixelInventoryGUI {
+    private static int[] COLOURED_PANE_SLOTS = {
+            9, 10, 11, 12, 13, 14, 15, 16, 17
+    };
 
     public GUIMyProfile() {
         super("My Profile", InventoryType.CHEST_6_ROW);
@@ -30,13 +33,22 @@ public class GUIMyProfile extends HypixelInventoryGUI {
         double progress = xpHandler.getProgressToNextLevel();
         long xpNeeded = xpHandler.getXPForNextLevel() - xpHandler.getXPInCurrentLevel();
 
+        for (int slot : COLOURED_PANE_SLOTS) {
+            set(new GUIItem(slot) {
+                @Override
+                public ItemStack.Builder getItem(HypixelPlayer player) {
+                    return ItemStackCreator.createNamedItemStack(Material.ORANGE_STAINED_GLASS_PANE);
+                }
+            });
+        }
+
         set(new GUIItem(2) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 String displayName = player.getFullDisplayName();
-                return ItemStackCreator.getStack(
+                return ItemStackCreator.getStackHead(
                         displayName,
-                        Material.PLAYER_HEAD,
+                        player.getSkin(),
                         1,
                         "§7Hypixel Level: §6" + level,
                         "§7Achievement Points: §e" + StringUtility.commaify(achievementPoints),
@@ -44,7 +56,7 @@ public class GUIMyProfile extends HypixelInventoryGUI {
                 );
             }
         });
-        set(new GUIItem(3) {
+        set(new GUIClickableItem(3) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStackHead(
@@ -52,11 +64,18 @@ public class GUIMyProfile extends HypixelInventoryGUI {
                         "e063eedb2184354bd43a19deffba51b53dd6b7222f8388caa239cabcdce84",
                         1,
                         "§7View your Hypixel friends' profiles,",
-                        "§7and interact with your online friends!"
+                        "§7and interact with your online friends!",
+                        "",
+                        "§eClick to view!"
                 );
             }
+
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                new GUIFriends().open(player);
+            }
         });
-        set(new GUIItem(4) {
+        set(new GUIClickableItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStackHead(
@@ -65,8 +84,15 @@ public class GUIMyProfile extends HypixelInventoryGUI {
                         1,
                         "§7Create a party and join up with",
                         "§7other players to play games",
-                        "§7together!"
+                        "§7together!",
+                        "",
+                        "§eClick to manage!"
                 );
+            }
+
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                new GUIParty().open(player);
             }
         });
         set(new GUIItem(5) {

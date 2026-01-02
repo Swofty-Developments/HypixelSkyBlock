@@ -723,10 +723,8 @@ public class Game {
             UUID newTarget = roleManager.getAssassinTarget(victim.getUuid());
             roleManager.reassignTarget(killer.getUuid(), newTarget);
 
-            // Daily: Hitman - killed assigned target in Assassins
             killer.getQuestHandler().addProgressByTrigger("murdermystery.assassin_target_kills", 1);
 
-            // === ASSASSINS MODE ACHIEVEMENTS ===
             PlayerAchievementHandler achHandler = new PlayerAchievementHandler(killer);
 
             // Tiered: Hitman - kill players in Assassins
