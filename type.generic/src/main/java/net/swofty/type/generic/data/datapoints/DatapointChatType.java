@@ -43,6 +43,7 @@ public class DatapointChatType extends Datapoint<DatapointChatType.ChatType> {
 
     public enum Chats {
         ALL,
-        PARTY
+        PARTY,
+        STAFF
     }
 }

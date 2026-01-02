@@ -22,11 +22,9 @@ public class UpdatePresenceEndpoint implements ServiceEndpoint<
             UpdatePresenceProtocolObject.UpdatePresenceMessage messageObject) {
 
         PresenceInfo incoming = messageObject.presence();
-        PresenceInfo previous = PresenceStorage.get(incoming.getUuid());
+        PresenceInfo previous = PresenceStorage.upsertPreservingServer(incoming);
 
-        // Detect state change to trigger friend join/leave notifications
         boolean stateChanged = previous == null || previous.isOnline() != incoming.isOnline();
-        PresenceStorage.upsert(incoming);
 
         if (stateChanged) {
             String playerName = FriendCache.getPlayerName(incoming.getUuid());
