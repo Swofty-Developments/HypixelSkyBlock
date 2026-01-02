@@ -40,7 +40,7 @@ public class AbilityRegistry {
 				(player, item, ignored, ignored2) -> {
 					player.teleport(player.getPosition().add(player.getPosition().direction().mul(8)));
 					ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 50.0).build();
-					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(3000).withDisplayName("Instant Transmission").withDisplayColor("§a").build();
+					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(3000).withDisplayName("Instant Transmission").build();
 					player.getStatistics().boostStatistic(speedBoost);
 				}
 		));
@@ -71,6 +71,20 @@ public class AbilityRegistry {
 				(player, item, targetedBlock, blockFace) -> {
 					player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
 							.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+				}
+		));
+
+		register(new RegisteredAbility(
+				"SPEED_BOOST",
+				"Speed Boost",
+				"§7Grants §7+100 Speed",
+				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
+				20 * 5,
+				new RegisteredAbility.AbilityManaCost(50),
+				(player, item, ignored, ignored2) -> {
+					ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 100.0).build();
+					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(30000).withDisplayName("Speed Boost").build();
+					player.getStatistics().boostStatistic(speedBoost);
 				}
 		));
 
