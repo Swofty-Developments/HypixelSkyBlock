@@ -12,20 +12,6 @@ import net.swofty.type.skyblockgeneric.item.components.InteractableComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionItemRightUse implements HypixelEventClass {
-
-    @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
-    public void run(PlayerUseItemOnBlockEvent event) {
-        ItemStack itemStack = event.getPlayer().getItemInMainHand();
-        SkyBlockItem item = new SkyBlockItem(itemStack);
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
-
-        if (item.hasComponent(InteractableComponent.class)) {
-            InteractableComponent interactableComponent = item.getComponent(InteractableComponent.class);
-            interactableComponent.onRightClick(player, item);
-        }
-    }
-
     @SneakyThrows
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(PlayerUseItemEvent event) {
