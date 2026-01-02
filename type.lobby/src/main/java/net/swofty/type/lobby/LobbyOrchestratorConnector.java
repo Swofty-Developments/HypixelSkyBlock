@@ -3,9 +3,12 @@ package net.swofty.type.lobby;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.UnderstandableProxyServer;
+import net.swofty.commons.party.FullParty;
 import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocolObject;
 import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
+import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
+import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,7 +24,8 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
     public CompletableFuture<Pair<UnderstandableProxyServer, String>> findGameServer(
             ServerType targetServerType,
             String gameType,
-            @Nullable String map
+            @Nullable String map,
+            int neededSlots
     ) {
         if (PLAYERS_SEARCHING.contains(player.getUuid())) {
             return CompletableFuture.completedFuture(null);
@@ -34,7 +38,7 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
                         targetServerType,
                         map,
                         gameType,
-                        1
+                        neededSlots
                 );
 
         return PROXY_SERVICE.handleRequest(message)
@@ -61,7 +65,17 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
             return;
         }
 
-        findGameServer(targetServerType, gameType, map).thenAccept(pair -> {
+        // Check if player is party leader - if so, queue for entire party
+        if (PartyManager.isInParty(player)) {
+            FullParty party = PartyManager.getPartyFromPlayer(player);
+            if (party != null && party.getLeader().getUuid().equals(player.getUuid())) {
+                sendPartyToGame(targetServerType, gameType, map, party);
+                return;
+            }
+        }
+
+        // Solo queue
+        findGameServer(targetServerType, gameType, map, 1).thenAccept(pair -> {
             if (pair != null && pair.first() != null) {
                 ChooseGameProtocolObject.ChooseGameMessage message =
                         new ChooseGameProtocolObject.ChooseGameMessage(player.getUuid(), pair.first(), pair.second());
@@ -76,6 +90,55 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
                 player.asProxyPlayer().transferToWithIndication(pair.first().uuid());
             } else {
                 player.sendMessage("§cNo available servers found! Please try again later.");
+            }
+        });
+    }
+
+    public void sendPartyToGame(ServerType targetServerType, String gameType, @Nullable String map, FullParty party) {
+        int partySize = party.getMembers().size();
+
+        player.sendMessage("§aSearching for a game for your party (" + partySize + " players)...");
+
+        findGameServer(targetServerType, gameType, map, partySize).thenAccept(pair -> {
+            if (pair != null && pair.first() != null) {
+                UnderstandableProxyServer server = pair.first();
+                String gameId = pair.second();
+
+                // Register all party members for this game
+                List<UUID> partyMemberUuids = party.getMembers().stream()
+                        .map(FullParty.Member::getUuid)
+                        .toList();
+
+                int registeredCount = 0;
+                for (UUID memberUuid : partyMemberUuids) {
+                    ChooseGameProtocolObject.ChooseGameMessage message =
+                            new ChooseGameProtocolObject.ChooseGameMessage(memberUuid, server, gameId);
+
+                    PROXY_SERVICE.handleRequest(message)
+                            .exceptionally(throwable -> {
+                                // Log error but continue
+                                return null;
+                            });
+                    registeredCount++;
+                }
+
+                player.sendMessage("§aSending your party to " + server.shortName() + "!");
+
+                // Transfer leader first
+                player.asProxyPlayer().transferToWithIndication(server.uuid());
+
+                // Transfer all other party members
+                for (UUID memberUuid : partyMemberUuids) {
+                    if (!memberUuid.equals(player.getUuid())) {
+                        ProxyPlayer memberProxy = new ProxyPlayer(memberUuid);
+                        if (memberProxy.isOnline().join()) {
+                            memberProxy.sendMessage("§eYour party leader is starting a game! Joining...");
+                            memberProxy.transferToWithIndication(server.uuid());
+                        }
+                    }
+                }
+            } else {
+                player.sendMessage("§cNo available servers found with enough space for your party! Please try again later.");
             }
         });
     }

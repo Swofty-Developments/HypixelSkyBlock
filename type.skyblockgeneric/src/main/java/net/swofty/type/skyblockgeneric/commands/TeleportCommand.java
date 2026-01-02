@@ -15,7 +15,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "tp",
         description = "teleports to a player",
         usage = "/teleport",
-        permission = Rank.HELPER,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class TeleportCommand extends HypixelCommand {
     @Override

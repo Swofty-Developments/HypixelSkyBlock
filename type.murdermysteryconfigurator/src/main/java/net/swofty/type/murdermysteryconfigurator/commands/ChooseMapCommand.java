@@ -28,7 +28,7 @@ import java.util.*;
 @CommandParameters(aliases = "choose choosemap selectmap select",
         description = "Choose a Murder Mystery map to configure",
         usage = "/choosemap <map>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class ChooseMapCommand extends HypixelCommand {
 

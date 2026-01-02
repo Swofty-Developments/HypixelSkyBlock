@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "giveskyblockxp",
         description = "Gives yourself skyblock xp",
         usage = "/giveskyblockxp <cause>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class AwardHypixelXPCommand extends HypixelCommand {
     @Override

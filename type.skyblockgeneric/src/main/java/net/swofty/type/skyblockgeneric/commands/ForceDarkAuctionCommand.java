@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @CommandParameters(description = "Force starts a Dark Auction",
         usage = "/forcedarkauction",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class ForceDarkAuctionCommand extends HypixelCommand {
     private static final ProxyService darkAuctionService = new ProxyService(ServiceType.DARK_AUCTION);

@@ -33,6 +33,8 @@ import net.swofty.pvp.utils.CombatVersion;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.item.SimpleInteractableItem;
 import net.swofty.type.murdermysterygame.item.SimpleInteractableItemHandler;
+import net.swofty.type.murdermysterygame.maphandler.MapHandler;
+import net.swofty.type.murdermysterygame.maphandler.MapHandlerRegistry;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
 import net.swofty.type.generic.HypixelConst;
@@ -179,6 +181,9 @@ public class TypeMurderMysteryGameLoader implements HypixelTypeLoader {
         MinecraftServer.getGlobalEventHandler().addChild(MinestomPvP.events());
         MurderMysteryGameScoreboard.start();
         HypixelGenericLoader.loopThroughPackage("net.swofty.type.murdermysterygame.item.impl", SimpleInteractableItem.class).forEach(itemHandler::add);
+
+        // Register map handlers
+        HypixelGenericLoader.loopThroughPackage("net.swofty.type.murdermysterygame.maphandler.impl", MapHandler.class).forEach(MapHandlerRegistry::register);
 
         // heartbeat to orchestrator with supported maps and current load
         MinecraftServer.getSchedulerManager().buildTask(() -> {

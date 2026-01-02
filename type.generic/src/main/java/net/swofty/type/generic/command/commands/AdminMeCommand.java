@@ -54,9 +54,9 @@ public class AdminMeCommand extends HypixelCommand {
                     return;
                 }
 
-                player.getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).setValue(Rank.ADMIN);
+                player.getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).setValue(Rank.STAFF);
 
-                sender.sendMessage("§aSuccessfully set rank to §c[ADMIN]§a.");
+                sender.sendMessage("§aSuccessfully set rank to " + Rank.STAFF.getPrefix() + "§a.");
             });
         });
     }

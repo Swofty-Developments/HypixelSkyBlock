@@ -20,7 +20,7 @@ public record LogHandler(HypixelPlayer player) {
     }
 
     public void debug(TextComponent message, Supplier<Boolean> condition) {
-        if (player.getRank().isEqualOrHigherThan(Rank.ADMIN)) {
+        if (player.getRank().isEqualOrHigherThan(Rank.STAFF)) {
             if (!condition.get()) return;
             player.sendMessage(Component.text("§9[HELPER DEBUG] §f").append(message));
         }

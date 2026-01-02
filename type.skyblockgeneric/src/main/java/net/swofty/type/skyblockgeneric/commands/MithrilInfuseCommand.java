@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.commands;
 
-import net.minestom.server.component.DataComponents;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
@@ -13,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "mithrilinfuse",
         description = "Mithril Infuses the minion in the players hand",
         usage = "/mithrilinfuse",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class MithrilInfuseCommand extends HypixelCommand {
     @Override

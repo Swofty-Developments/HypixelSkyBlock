@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "forcestart",
         description = "Starts a murder mystery game immediately.",
         usage = "/forcestart [seconds]",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class ForceStartCommand extends HypixelCommand {
 

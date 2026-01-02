@@ -49,7 +49,7 @@ public class NPCBazaar extends HypixelNPC {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (isInDialogue(player)) return;
         SkyBlockLevelRequirement lvl = player.getSkyBlockExperience().getLevel();
-        if (lvl.asInt() >= 7 || player.getRank().isEqualOrHigherThan(Rank.DEVELOPER)) {
+        if (lvl.asInt() >= 7 || player.getRank().isEqualOrHigherThan(Rank.STAFF)) {
             player.getLogHandler().debug("As a staff member, you have bypassed the bazaar requirement.");
             new GUIBazaar(BazaarCategories.FARMING).open(player);
             return;

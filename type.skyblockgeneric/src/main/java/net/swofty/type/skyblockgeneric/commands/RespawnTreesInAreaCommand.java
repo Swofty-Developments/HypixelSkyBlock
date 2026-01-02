@@ -19,7 +19,7 @@ import java.util.List;
         aliases = "regrowtrees",
         description = "Respawns trees in an area with a new seed",
         usage = "/respawntreesinarea <distance> <seed>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false
 )
 public class RespawnTreesInAreaCommand extends HypixelCommand {

@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @CommandParameters(aliases = "iteminfo",
         description = "Returns the players held item info",
         usage = "/nbt",
-        permission = Rank.HELPER,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class NBTCommand extends HypixelCommand {
     private static Map<UUID, String> itemNBTCache = new HashMap<>();

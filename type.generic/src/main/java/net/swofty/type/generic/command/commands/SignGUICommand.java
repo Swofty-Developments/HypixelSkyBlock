@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "signgraphicaluserinterface",
         description = "Opens a graphical user interface",
         usage = "/signgui <text>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class SignGUICommand extends HypixelCommand {
     @Override

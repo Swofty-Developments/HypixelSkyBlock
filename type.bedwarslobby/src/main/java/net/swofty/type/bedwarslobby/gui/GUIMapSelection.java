@@ -18,6 +18,8 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.party.PartyManager;
+import net.swofty.commons.party.FullParty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,6 +178,15 @@ public class GUIMapSelection extends HypixelInventoryGUI {
 					if (LobbyOrchestratorConnector.isSearching(player.getUuid())) {
 						player.sendMessage("§cYou are already searching for a game!");
 						return;
+					}
+
+					// Party check - non-leaders cannot queue
+					if (PartyManager.isInParty(player)) {
+						FullParty party = PartyManager.getPartyFromPlayer(player);
+						if (party != null && !party.getLeader().getUuid().equals(player.getUuid())) {
+							player.sendMessage("§cYou are in a party! Ask your leader to start the game, or /p leave");
+							return;
+						}
 					}
 
 					LobbyOrchestratorConnector connector = new LobbyOrchestratorConnector(player);

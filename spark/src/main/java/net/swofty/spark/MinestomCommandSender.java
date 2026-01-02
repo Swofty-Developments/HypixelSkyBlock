@@ -46,7 +46,7 @@ public class MinestomCommandSender extends AbstractCommandSender<CommandSender> 
         if (delegate instanceof Player player) {
             return HypixelGenericLoader.getFromUUID(player.getUuid()).getDataHandler()
                     .get(HypixelDataHandler.Data.RANK, DatapointRank.class)
-                    .getValue() == Rank.ADMIN;
+                    .getValue() == Rank.STAFF;
         }
         return false;
 

@@ -14,7 +14,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 @CommandParameters(aliases = "addtostash",
         description = "Force add an item to your stash",
         usage = "/addtostash <item> [amount]",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class AddToStashCommand extends HypixelCommand {
     @Override

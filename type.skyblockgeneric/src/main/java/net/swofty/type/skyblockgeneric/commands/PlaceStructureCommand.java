@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "structure",
         description = "Places a test debug structure",
         usage = "/structure",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class PlaceStructureCommand extends HypixelCommand {
     @Override

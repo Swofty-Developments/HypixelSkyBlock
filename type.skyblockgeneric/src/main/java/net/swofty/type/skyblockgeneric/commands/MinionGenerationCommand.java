@@ -8,7 +8,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "handleminionspeed",
         description = "Handle minion speed",
         usage = "/handleminionspeed",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class MinionGenerationCommand extends HypixelCommand {
     public static int divisionFactor = 1;

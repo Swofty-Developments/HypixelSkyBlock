@@ -21,7 +21,7 @@ public class ServerInfoCache {
      * Get all servers, using cache if available.
      */
     public static CompletableFuture<List<UnderstandableProxyServer>> getServers() {
-        if (System.currentTimeMillis() - lastCacheTime < CACHE_TTL_MS && !cachedServers.isEmpty()) {
+        if (!isCacheStale()) {
             return CompletableFuture.completedFuture(new ArrayList<>(cachedServers));
         }
         return refreshCache();

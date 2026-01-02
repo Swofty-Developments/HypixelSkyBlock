@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "anvilgraphicaluserinterface",
         description = "Opens a graphical user interface",
         usage = "/anvilgui <text>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class AnvilGUICommand extends HypixelCommand {
     @Override
