@@ -22,7 +22,8 @@ public class AbilityRegistry {
 				50,
 				new RegisteredAbility.AbilityManaCost(25),
 				(player, item, ignored, ignored2) -> {
-					player.sendMessage("Hey");
+					player.teleport(player.getPosition().add(player.getPosition().direction().mul(10)));
+					// TODO: damage nearby mobs
 				}
 		));
 
