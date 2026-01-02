@@ -10,17 +10,18 @@ import java.util.List;
 public class GemstoneComponent extends SkyBlockItemComponent {
     private final List<GemstoneSlot> slots;
 
-    public GemstoneComponent(List<String> gemstoneConfigs) {
-        this.slots = gemstoneConfigs.stream()
-                .map(config -> {
-                    String[] parts = config.split(":");
-                    return new GemstoneSlot(
-                            Gemstone.Slots.valueOf(parts[0]),
-                            Integer.parseInt(parts[1])
-                    );
-                })
-                .toList();
+    public GemstoneComponent(List<GemstoneSlot> slots) {
+        this.slots = slots;
     }
 
-    public record GemstoneSlot(Gemstone.Slots slot, int unlockPrice) {}
+    public record GemstoneSlot(
+            Gemstone.Slots slot,
+            int unlockPrice,
+            List<ItemRequirement> itemRequirements
+    ) {}
+
+    public record ItemRequirement(
+            net.swofty.commons.skyblock.item.ItemType itemId,
+            int amount
+    ) {}
 }

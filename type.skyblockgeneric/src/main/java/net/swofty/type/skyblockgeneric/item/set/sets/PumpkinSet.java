@@ -9,6 +9,7 @@ import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class PumpkinSet extends SkyBlockValueEvent implements ArmorSet {
     @Override
@@ -18,7 +19,7 @@ public class PumpkinSet extends SkyBlockValueEvent implements ArmorSet {
 
     @Override
     public ArrayList<String> getDescription() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(List.of(
                 "Reduces all taken damage by §a+10%",
                 "and deal &a+10% §7more damage."
         ));

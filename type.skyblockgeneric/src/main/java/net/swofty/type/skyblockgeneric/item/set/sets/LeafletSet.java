@@ -9,6 +9,7 @@ import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class LeafletSet extends SkyBlockValueEvent implements ArmorSet {
     @Override
@@ -18,7 +19,7 @@ public class LeafletSet extends SkyBlockValueEvent implements ArmorSet {
 
     @Override
     public ArrayList<String> getDescription() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(List.of(
                 "While in a Forest zone you regain §a5.0",
                 "§c♥ Health §7every second."
         ));

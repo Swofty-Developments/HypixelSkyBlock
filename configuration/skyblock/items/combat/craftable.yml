@@ -29,9 +29,18 @@ items:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
       - id: GEMSTONE
-        gemstones:
-          - JASPER:50000
-          - COMBAT:100000
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_RUBY_GEM:40
+              - FINE_AMETHYST_GEM:40
       - id: NOT_FINISHED_YET
   - id: CRYSTALLIZED_HEART
     rarity: COMMON
@@ -95,8 +104,11 @@ items:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
       - id: GEMSTONE
-        gemstones:
-          - JASPER:50000
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
       - id: NOT_FINISHED_YET
   - id: REAPER_MASK
     rarity: COMMON
@@ -135,9 +147,13 @@ items:
               type: REAPER_MASK
               amount: 1
       - id: GEMSTONE
-        gemstones:
-          - RUBY:0
-          - SAPPHIRE:50000
+        gemstone_slots:
+          - gemstone: RUBY
+            coins: 50000
+          - gemstone: SAPPHIRE
+            coins: 50000
+            items:
+              - FINE_SAPPHIRE_GEM:20
       - id: TRACKED_UNIQUE
       - id: STANDARD_ITEM
         standard_item_type: HELMET
@@ -237,8 +253,9 @@ items:
       - id: STANDARD_ITEM
         standard_item_type: HELMET
       - id: GEMSTONE
-        gemstones:
-          - RUBY:0
+        gemstone_slots:
+          - gemstone: RUBY
+            coins: 50000
       - id: NOT_FINISHED_YET
   - id: WARDEN_HELMET
     rarity: COMMON

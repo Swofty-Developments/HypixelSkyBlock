@@ -151,8 +151,7 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
                 e.setCancelled(true);
                 if (isShift) {
                     player.addAndUpdateItem(craftedItem);
-                }
-                else {
+                } else {
                     p.getInventory().setCursorItem(craftedItem);
                 }
                 HypixelEventHandler.callCustomEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), finalRecipe));

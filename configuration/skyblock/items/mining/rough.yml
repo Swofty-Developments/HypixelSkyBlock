@@ -1,6 +1,6 @@
 items:
-  - id: ROUGH_AMBER_GEMSTONE
-    rarity: ROUGH
+  - id: ROUGH_AMBER_GEM
+    rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
         rarity: ROUGH
@@ -8,8 +8,11 @@ items:
         skull_texture: da19436f6151a7b66d65ed7624add4325cfbbc2eee815fcf76f4c29ddf08f75b
       - id: SELLABLE
         value: 3.0
-  - id: ROUGH_AMETHYST_GEMSTONE
-    rarity: ROUGH
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Amber Gemstone
+
+  - id: ROUGH_AMETHYST_GEM
+    rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
         rarity: ROUGH
@@ -17,8 +20,11 @@ items:
         skull_texture: e493c6f540c7001fed97b07f6b4c89128e3a7c37563aa223f0acca314f175515
       - id: SELLABLE
         value: 3.0
-  - id: ROUGH_JADE_GEMSTONE
-    rarity: ROUGH
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Amethyst Gemstone
+
+  - id: ROUGH_JADE_GEM
+    rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
         rarity: ROUGH
@@ -26,8 +32,11 @@ items:
         skull_texture: 3b4c2afd544d0a6139e6ae8ef8f0bfc09a9fd837d0cad4f5cd0fe7f607b7d1a0
       - id: SELLABLE
         value: 3.0
-  - id: ROUGH_JASPER_GEMSTONE
-    rarity: ROUGH
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Jade Gemstone
+
+  - id: ROUGH_JASPER_GEM
+    rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
         rarity: ROUGH
@@ -35,8 +44,11 @@ items:
         skull_texture: 23d064ec150172d05844c11a18619c1421bbfb2ddd1dbb87cdc10e22252b773b
       - id: SELLABLE
         value: 3.0
-  - id: ROUGH_RUBY_GEMSTONE
-    rarity: ROUGH
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Jasper Gemstone
+
+  - id: ROUGH_RUBY_GEM
+    rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
         rarity: ROUGH
@@ -44,8 +56,11 @@ items:
         skull_texture: d159b03243be18a14f3eae763c4565c78f1f339a8742d26fde541be59b7de07
       - id: SELLABLE
         value: 3.0
-  - id: ROUGH_SAPPHIRE_GEMSTONE
-    rarity: ROUGH
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Ruby Gemstone
+
+  - id: ROUGH_SAPPHIRE_GEM
+    rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
         rarity: ROUGH
@@ -53,8 +68,11 @@ items:
         skull_texture: cfcebe54dbc345ea7e22206f703e6b33befbe95b6a918bd1754b76188bc65bb5
       - id: SELLABLE
         value: 3.0
-  - id: ROUGH_TOPAZ_GEMSTONE
-    rarity: ROUGH
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Sapphire Gemstone
+
+  - id: ROUGH_TOPAZ_GEM
+    rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
         rarity: ROUGH
@@ -62,3 +80,65 @@ items:
         skull_texture: 3fd960722ec29c66716ae5ca97b9b6b2628984e1d6f9d2592cd089914206a1b
       - id: SELLABLE
         value: 3.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Topaz Gemstone
+
+  - id: ROUGH_OPAL_GEM
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Opal Gemstone
+      - id: SELLABLE
+        value: 3
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: OPAL
+        skull_texture: a14d3c57f80824b3839b8b220f2158bca505d497fd1c9e3f29f422b1e6206a45
+
+  - id: ROUGH_AQUAMARINE_GEM
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Aquamarine Gemstone
+      - id: SELLABLE
+        value: 4
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: AQUAMARINE
+        skull_texture: 5a58a38f77b5f0f3610b164da29e901661b4628a482d5f702b71054f665e352c
+
+  - id: ROUGH_CITRINE_GEM
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Citrine Gemstone
+      - id: SELLABLE
+        value: 4
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: CITRINE
+        skull_texture: 50e8517b3014e783556da47b17be931501b09da5bf8889b797ec087a8749a89
+
+  - id: ROUGH_ONYX_GEM
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Onyx Gemstone
+      - id: SELLABLE
+        value: 4
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: ONYX
+        skull_texture: c04d7b3d11143da776c25b85c0d3f4c2ba1c99ff57aea4e34b808002db7f39e9
+
+  - id: ROUGH_PERIDOT_GEM
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Rough Peridot Gemstone
+      - id: SELLABLE
+        value: 4
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: PERIDOT
+        skull_texture: 23c2b194d38922e493cfaf276d68f6f9ba0c0cd3a645bf2a06dc51424ea622d7
