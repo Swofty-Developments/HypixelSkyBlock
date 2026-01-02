@@ -231,7 +231,7 @@ public class NPCMolbert extends HypixelNPC {
 						"...and then I ate the §6carrot §fbecause I was almost starving in there!"
 				}).build(),
 				DialogueSet.builder().key("option-iknow").lines(new String[]{
-						"§cOf, fine you caught me. But §cplease don't tell the others§f, they wouldn't want to be my friends anymore if they knew the truth.",
+						"§fOk, fine you caught me. But §cplease don't tell the others§f, they wouldn't want to be my friends anymore if they knew the truth.",
 						"Here, take this §acompensation §ffor all the trouble I made you go through.",
 						"I hope you forgive me after this and we can still be §6friends§f."
 				}).build(),
