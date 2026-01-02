@@ -29,12 +29,12 @@ public class SendToCommand extends HypixelCommand {
                 new ArgumentEnum<>("server_type", ServerType.class);
 
 
-        ArgumentString serverId = new ArgumentString("server_id")
-                .setSuggestionCallback((sender, context, suggestion) -> {
-                    for (String s : ProxyServersCache.getSuggestions()) {
-                        suggestion.addEntry(new SuggestionEntry(s));
-                    }
-                });
+        ArgumentString serverId = new ArgumentString("server_id");
+        serverId.setSuggestionCallback((sender, context, suggestion) -> {
+            for (String s : ProxyServersCache.getSuggestions()) {
+                suggestion.addEntry(new SuggestionEntry(s));
+            }
+        });
 
 
         command.addSyntax((sender, context) -> {
@@ -43,6 +43,7 @@ public class SendToCommand extends HypixelCommand {
             HypixelPlayer player = (HypixelPlayer) sender;
             player.sendTo(context.get(serverType), true);
         }, serverType);
+
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
