@@ -103,13 +103,18 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader, RaceInstance {
 				if (shouldRenderTraps(p)) {
 					return true;
 				}
+				if (p.getMissionData().isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class)) {
+					return finalIndex == 1;
+				}
+				if (p.getMissionData().isCurrentlyActive(MissionHelpMolbert.class)) {
+					return finalIndex == 1;
+				}
 				if(!p.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {
 					return false;
 				}
 
 				MissionData.ActiveMission activeMission = p.getMissionData().getMission(MissionPlaceTraps.class).getKey();
 				List<Integer> placedTraps = (List<Integer>) activeMission.getCustomData().getOrDefault("placedTraps", new ArrayList<Integer>());
-				Logger.info("Placed traps for player {}: {}", p.getUsername(), placedTraps);
 				return !placedTraps.contains(finalIndex);
 			});
 			entities.add(text);
@@ -138,6 +143,9 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader, RaceInstance {
 						return true;
 					}
 					if (player.getMissionData().isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class)) {
+						return finalIndex == 1;
+					}
+					if (player.getMissionData().isCurrentlyActive(MissionHelpMolbert.class)) {
 						return finalIndex == 1;
 					}
 					if(!player.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {

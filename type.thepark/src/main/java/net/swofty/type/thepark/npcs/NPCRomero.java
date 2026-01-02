@@ -16,7 +16,7 @@ public class NPCRomero extends HypixelNPC {
 		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
-				return new String[]{};
+				return new String[]{" "};
 			}
 
 			@Override
