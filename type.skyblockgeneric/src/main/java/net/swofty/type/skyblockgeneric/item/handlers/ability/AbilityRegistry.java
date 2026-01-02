@@ -96,9 +96,9 @@ public class AbilityRegistry {
 				"Stored Potential",
 				(player, item) -> "§7Grants §6+10⸕ Mining Speed §7for every \n100 blocks mines.\n§8(Max +250⸕ Mining Speed)",
 				new RegisteredPassiveAbility.Action<>(
-						PlayerMoveEvent.class,
+						CustomBlockBreakEvent.class,
 						event -> {
-							event.getPlayer().sendMessage("test" );
+							event.getPlayer().sendMessage("You broke a block");
 						}
 				)
 		));
