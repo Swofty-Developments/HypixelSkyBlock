@@ -30,11 +30,12 @@ public class GameManager {
                 new ServerInfo(serverID.toString(), new InetSocketAddress(host, port))
         );
 
-        String rootName = maxPlayers <= 20 ? "mini" : "mega";
-        String shortenedRootName = maxPlayers <= 20 ? "m" : "M";
+        boolean isLobby = type.name().endsWith("_LOBBY");
+        String rootName = isLobby ? "L" : (maxPlayers <= 20 ? "mini" : "mega");
+        String shortenedRootName = isLobby ? "L" : (maxPlayers <= 20 ? "m" : "M");
 
-        String displayName = getNextAvailableDisplayName() + "" +
-                Character.toUpperCase((char) (new Random().nextInt(26) + 'a'));
+        char letter = (char) (new Random().nextInt(26) + (isLobby ? 'a' : 'A'));
+        String displayName = getNextAvailableDisplayName() + "" + letter;
 
         GameServer server = new GameServer(
                 rootName + displayName, shortenedRootName + displayName,
