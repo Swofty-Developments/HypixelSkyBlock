@@ -231,9 +231,13 @@ public abstract class HypixelNPC {
     }
 
     public void sendNPCMessage(HypixelPlayer player, String message) {
-        player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
-		player.playSound(Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
+        sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
     }
+
+	public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
+		player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
+		player.playSound(sound);
+	}
 
     protected DialogueController dialogue() {
         return dialogueController;
@@ -299,7 +303,7 @@ public abstract class HypixelNPC {
     }
 
     @Builder
-    public record DialogueSet(String key, String[] lines) {
+    public record DialogueSet(String key, String[] lines, Sound sound) {
         public static final DialogueSet[] EMPTY = new DialogueSet[0];
     }
 }
