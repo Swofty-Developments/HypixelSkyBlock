@@ -9,6 +9,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
@@ -109,8 +110,10 @@ public class HypixelDataHandler extends DataHandler {
         for (Data data : Data.values()) {
             if (data.onQuit != null) {
                 Datapoint<?> produced = data.onQuit.apply(player);
-                Datapoint<?> target = get(data);
-                target.setFrom(produced); // no onChange during save
+                if (produced != null) {
+                    Datapoint<?> target = get(data);
+                    target.setFrom(produced); // no onChange during save
+                }
             }
         }
     }
@@ -202,9 +205,28 @@ public class HypixelDataHandler extends DataHandler {
         TOGGLES("toggles", DatapointToggles.class, new DatapointToggles("toggles")),
 
         GAMEMODE("gamemode", DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL),
-                (player, datapoint) -> player.setGameMode((GameMode) datapoint.getValue()),
-                (player, datapoint) -> player.setGameMode((GameMode) datapoint.getValue()),
-                (player) -> new DatapointGamemode("gamemode", player.getGameMode())),
+                (player, datapoint) -> {
+                    if (HypixelConst.getTypeLoader().getType().isSkyBlock()) {
+                        player.setGameMode((GameMode) datapoint.getValue());
+                    }
+                },
+                (player, datapoint) -> {
+                    if (HypixelConst.getTypeLoader().getType().isSkyBlock()) {
+                        // Reset to SURVIVAL if coming from non-SkyBlock server
+                        HypixelPlayer hypixelPlayer = (HypixelPlayer) player;
+                        if (hypixelPlayer.getOriginServer() == null || !hypixelPlayer.getOriginServer().isSkyBlock()) {
+                            player.setGameMode(GameMode.SURVIVAL);
+                        } else {
+                            player.setGameMode((GameMode) datapoint.getValue());
+                        }
+                    }
+                },
+                (player) -> {
+                    if (HypixelConst.getTypeLoader().getType().isSkyBlock()) {
+                        return new DatapointGamemode("gamemode", player.getGameMode());
+                    }
+                    return null; // Don't update gamemode for non-SkyBlock servers
+                }),
 
         SKIN_SIGNATURE("skin_signature",
                 DatapointString.class, new DatapointString("skin_signature", "null"),

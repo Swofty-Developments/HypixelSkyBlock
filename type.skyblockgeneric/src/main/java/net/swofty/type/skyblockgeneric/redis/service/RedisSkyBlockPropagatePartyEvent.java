@@ -82,6 +82,7 @@ public class RedisSkyBlockPropagatePartyEvent implements ServiceToClient {
                     playersHandled.add(participantUUID);
                 } catch (Exception e) {
                     Logger.error("Failed to handle party event for player " + participantUUID + ": " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         }
