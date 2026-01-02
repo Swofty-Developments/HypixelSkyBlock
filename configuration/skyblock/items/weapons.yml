@@ -214,9 +214,9 @@ items:
     material: IRON_SWORD
     rarity: LEGENDARY
     lore:
-      - "§7This item literally comes"
-      - "§7out of your mum and"
-      - "§7says §aHELLO §7lmao."
+      - "Deals §c+50% §7damage to §8☠ Wither §7mobs."
+      - "Grants §c+1 ❁ Damage §7and §a+2 §b✎"
+      - "§bIntelligence §7per §cCatacombs §7level."
     default_statistics:
       health: 20
       damage: 100
