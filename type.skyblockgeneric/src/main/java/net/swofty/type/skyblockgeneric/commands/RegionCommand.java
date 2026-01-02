@@ -16,7 +16,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "regions",
         description = "Handles regions across the server",
         usage = "/signgui <text>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class RegionCommand extends HypixelCommand {
     @Override

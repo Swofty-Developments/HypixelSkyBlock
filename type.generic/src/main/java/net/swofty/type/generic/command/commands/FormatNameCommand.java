@@ -13,7 +13,7 @@ import java.util.UUID;
 @CommandParameters(aliases = "getnameformatted",
         description = "Gets the format of a players name from their username",
         usage = "/formatname <name>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class FormatNameCommand extends HypixelCommand {
     @Override

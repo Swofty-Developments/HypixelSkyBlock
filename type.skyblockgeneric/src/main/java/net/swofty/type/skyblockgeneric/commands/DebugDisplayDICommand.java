@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
 @CommandParameters(aliases = "dmgindicdisplaydebugcmd",
         description = "Display damage indic",
         usage = "/dmgindicdisplaydebugcmd <dmg> <crit>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class DebugDisplayDICommand extends HypixelCommand {
     @Override

@@ -19,7 +19,7 @@ import java.util.Map;
 @CommandParameters(aliases = "mininginfo",
         description = "Debug command to display mining handler relationships",
         usage = "/miningdebug",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class MiningDebugCommand extends HypixelCommand {
 

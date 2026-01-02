@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "updatepetlevel",
         description = "Sets the level of the pet",
         usage = "/setpetlevel <level>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class SetPetLevel extends HypixelCommand {
     @Override

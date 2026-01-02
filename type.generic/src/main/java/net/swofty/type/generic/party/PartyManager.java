@@ -13,7 +13,6 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.Nullable;
 
@@ -158,7 +157,7 @@ public class PartyManager {
     }
 
     public static void hijackParty(HypixelPlayer hijacker, String targetName) {
-        if (!hijacker.getRank().isEqualOrHigherThan(Rank.ADMIN)) {
+        if (!hijacker.getRank().isEqualOrHigherThan(Rank.STAFF)) {
             hijacker.sendMessage("§cYou need ADMIN or above to do this command");
             return;
         }

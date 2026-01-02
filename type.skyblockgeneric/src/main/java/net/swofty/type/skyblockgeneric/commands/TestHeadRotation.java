@@ -13,7 +13,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Tests the head rotation of ArmorStands",
         usage = "/testheadrotation",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         aliases = "testheadrot",
         allowsConsole = false)
 public class TestHeadRotation extends HypixelCommand {

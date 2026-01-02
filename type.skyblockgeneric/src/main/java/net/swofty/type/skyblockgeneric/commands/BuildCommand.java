@@ -7,7 +7,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Toggles whether or not you are in build mode",
         usage = "/build",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         aliases = "buildmode",
         allowsConsole = false)
 public class BuildCommand extends HypixelCommand {

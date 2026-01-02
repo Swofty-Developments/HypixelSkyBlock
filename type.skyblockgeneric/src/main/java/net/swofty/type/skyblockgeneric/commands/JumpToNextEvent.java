@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 @CommandParameters(aliases = "jumptonextevent",
         description = "Jumps to the next SkyBlock calendar event",
         usage = "/jumptonextevent <eventName>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = true)
 public class JumpToNextEvent extends HypixelCommand {
     @Override

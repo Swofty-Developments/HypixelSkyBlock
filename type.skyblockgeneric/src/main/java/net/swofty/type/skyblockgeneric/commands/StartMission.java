@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.commands;
 
-import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.suggestion.SuggestionEntry;
@@ -11,12 +10,10 @@ import net.swofty.type.skyblockgeneric.mission.MissionSet;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.Arrays;
-
 @CommandParameters(aliases = "startmission",
 		description = "Starts a mission for testing purposes",
 		usage = "/startmission <mission_id>",
-		permission = Rank.ADMIN,
+		permission = Rank.STAFF,
 		allowsConsole = false)
 public class StartMission extends HypixelCommand{
 	@Override

@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Tests the black texture of the resource pack",
         usage = "/testblack",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         aliases = "testblackresource",
         allowsConsole = false)
 public class TestBlackCommand extends HypixelCommand {

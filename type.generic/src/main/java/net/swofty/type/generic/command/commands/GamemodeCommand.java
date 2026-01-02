@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "gm",
         description = "Sets a players gamemode",
         usage = "/gamemode <gamemode>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class GamemodeCommand extends HypixelCommand {
 

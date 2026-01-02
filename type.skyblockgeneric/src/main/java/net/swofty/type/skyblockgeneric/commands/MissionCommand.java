@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "missiondata",
         description = "Collects mission information",
         usage = "/mission",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class MissionCommand extends HypixelCommand {
     @Override

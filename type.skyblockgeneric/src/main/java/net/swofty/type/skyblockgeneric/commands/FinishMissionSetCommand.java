@@ -13,7 +13,7 @@ import java.util.Arrays;
 @CommandParameters(aliases = "clearmissionset completemissionset",
         description = "Clears the mission set given",
         usage = "/finishmissionset <set>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class FinishMissionSetCommand extends HypixelCommand {
     @Override
