@@ -36,12 +36,18 @@ public class ItemAttributeGemData extends ItemAttribute<ItemAttributeGemData.Gem
             String[] gemSplit = gem.split(":");
             int index = Integer.parseInt(gemSplit[0]);
             ItemType filledWith = null;
+            boolean unlocked = false;
 
             if (!gemSplit[1].equals("null")) {
                 filledWith = ItemType.valueOf(gemSplit[1]);
             }
 
-            gemData.putGem(new GemData.GemSlots(index, filledWith));
+            // Load unlocked state if it exists in the string (for backward compatibility)
+            if (gemSplit.length > 2) {
+                unlocked = Boolean.parseBoolean(gemSplit[2]);
+            }
+
+            gemData.putGem(new GemData.GemSlots(index, filledWith, unlocked));
         }
 
         return gemData;
@@ -52,11 +58,8 @@ public class ItemAttributeGemData extends ItemAttribute<ItemAttributeGemData.Gem
         List<String> serializedGems = new ArrayList<>();
 
         this.value.slots.forEach(gem -> {
-            if (gem.filledWith == null) {
-                serializedGems.add(gem.index + ":null");
-            } else {
-                serializedGems.add(gem.index + ":" + gem.filledWith.name());
-            }
+            String filledWith = gem.filledWith == null ? "null" : gem.filledWith.name();
+            serializedGems.add(gem.index + ":" + filledWith + ":" + gem.unlocked);
         });
 
         return String.join(",", serializedGems);
@@ -74,14 +77,12 @@ public class ItemAttributeGemData extends ItemAttribute<ItemAttributeGemData.Gem
         }
 
         public boolean hasGem(int index) {
-            boolean hasGem = false;
             for (GemSlots slot : slots) {
                 if (slot.index == index) {
-                    hasGem = true;
-                    break;
+                    return true;
                 }
             }
-            return hasGem;
+            return false;
         }
 
         public GemSlots getGem(int index) {
@@ -93,12 +94,34 @@ public class ItemAttributeGemData extends ItemAttribute<ItemAttributeGemData.Gem
             return null;
         }
 
+        public boolean isSlotUnlocked(int index) {
+            GemSlots slot = getGem(index);
+            return slot != null && slot.unlocked;
+        }
+
+        public void unlockSlot(int index) {
+            GemSlots existing = getGem(index);
+            if (existing != null) {
+                existing.unlocked = true;
+            } else {
+                putGem(new GemSlots(index, null, true));
+            }
+        }
+
+        public void removeGem(int index) {
+            GemSlots existing = getGem(index);
+            if (existing != null) {
+                existing.filledWith = null;
+            }
+        }
+
         @AllArgsConstructor
         @Getter
         @Setter
         public static class GemSlots {
             public int index;
             public @Nullable ItemType filledWith;
+            public boolean unlocked;
         }
     }
 }

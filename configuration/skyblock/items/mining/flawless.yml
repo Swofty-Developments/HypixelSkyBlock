@@ -27,7 +27,7 @@ items:
       - id: GEMSTONE_IMPL
         rarity: FLAWLESS
         gemstone: JADE
-        skull_texture: d3623521c8111ad29e9dcf7acc56085a9ab07da732d1518976aee61d0b3e3bd6
+        skull_texture: f89f75e0b00378a583dbba728dcdc6e9346f31dd601d448f3d60615c7465cc3e
       - id: TRACKED_UNIQUE
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawless Jade Gemstone

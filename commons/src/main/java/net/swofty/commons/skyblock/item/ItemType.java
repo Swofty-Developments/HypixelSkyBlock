@@ -773,6 +773,8 @@ public enum ItemType {
 	PLASMA(Material.PLAYER_HEAD, Rarity.RARE),
 	VOLTA(Material.PLAYER_HEAD, Rarity.RARE),
 	CORLEONITE(Material.PLAYER_HEAD, Rarity.EPIC),
+	LANTERN(Material.PLAYER_HEAD, Rarity.RARE),
+	INFINI_TORCH(Material.TORCH, Rarity.EPIC),
 
 	/**
 	 * Travel Scrolls
