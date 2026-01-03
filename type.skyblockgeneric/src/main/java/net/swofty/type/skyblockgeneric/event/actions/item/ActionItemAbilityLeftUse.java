@@ -29,7 +29,7 @@ public class ActionItemAbilityLeftUse implements HypixelEventClass {
                 ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.SNEAK_LEFT_CLICK);
             }
             if (ability == null) {
-                abilityComponent.getAbility(RegisteredAbility.AbilityActivation.LEFT_CLICK);
+                ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.LEFT_CLICK);
             }
 
             if (ability != null) {
