@@ -3,26 +3,22 @@ items:
     material: PLAYER_HEAD
     rarity: COMMON
     components:
-      - id: TIERED_TALISMAN
-        base_tier: SPIDER_TALISMAN
-        tier: 1
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: 9d7e3b19ac4f3dee9c5677c135333b9d35a7f568b63d1ef4ada4b068b5a25
+
   - id: SPIDER_RING
     material: PLAYER_HEAD
     rarity: COMMON
     components:
-      - id: TIERED_TALISMAN
-        base_tier: SPIDER_TALISMAN
-        tier: 2
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: 7652bd7617e56c756514f83c28dd1d96a7e5e167bf7fb593693fc65046f799
+
   - id: SPIDER_ARTIFACT
     material: PLAYER_HEAD
     rarity: COMMON
     components:
-      - id: TIERED_TALISMAN
-        base_tier: SPIDER_TALISMAN
-        tier: 3
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: 8300986ed0a04ea79904f6ae53f49ed3a0ff5b1df62bba622ecbd3777f156df8

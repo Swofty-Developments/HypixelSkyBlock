@@ -1,0 +1,35 @@
+items:
+  - id: SOULFLOW_PILE
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soulflow Pile
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 468c1fa4a21ba4f27dcb30ab3bfab0dc22a1e4fcf9ed12c1d7a70feb07f8d7ae
+      - id: SELLABLE
+        value: 160
+      - id: NOT_FINISHED_YET
+
+  - id: SOULFLOW_BATTERY
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soulflow Battery
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 468c1fa4a21ba4f27dcb30ab3bfab0dc22a1e4fcf9ed12c1d7a70feb07f8d7ae
+      - id: NOT_FINISHED_YET
+
+  - id: SOULFLOW_SUPERCELL
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soulflow Supercell
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 468c1fa4a21ba4f27dcb30ab3bfab0dc22a1e4fcf9ed12c1d7a70feb07f8d7ae
+      - id: NOT_FINISHED_YET

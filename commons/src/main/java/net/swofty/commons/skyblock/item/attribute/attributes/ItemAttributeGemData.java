@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.SkyBlockItemType;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 

@@ -448,12 +448,6 @@ public class ItemConfigParser {
 					String handlerId = safeConfig.getString("handler_id");
 					yield new CustomStatisticsComponent(handlerId);
 				}
-				case "TIERED_TALISMAN" -> {
-					String baseTierStr = safeConfig.getString("base_tier");
-					ItemType baseTier = ItemType.valueOf(baseTierStr);
-					int tier = safeConfig.getInt("tier");
-					yield new TieredTalismanComponent(baseTier, tier);
-				}
 				case "TRACKED_UNIQUE" -> new TrackedUniqueComponent();
 				case "BREWING_INGREDIENT" -> {
 					int brewingTime = safeConfig.getInt("brewing_time_seconds", 20);

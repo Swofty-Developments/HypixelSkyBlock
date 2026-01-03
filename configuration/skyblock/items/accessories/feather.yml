@@ -1,0 +1,38 @@
+items:
+  - id: FEATHER_TALISMAN
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Feather Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 5120a863869320af4cfa7d1d58d0b2dd8182eb0be834b8caaeb5639421cd893b
+      - id: SELLABLE
+        value: 160
+      - id: NOT_FINISHED_YET
+
+  - id: FEATHER_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Feather Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: cb6851f4e9a87707ad72f5b5cd17efeca36c2c18cc99aaad7121fe72cf79b9b1
+      - id: SELLABLE
+        value: 1800
+      - id: NOT_FINISHED_YET
+
+  - id: FEATHER_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Feather Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: da239e8b52ed91fe518d7c690b03de9dc69846a8d5c208ac1c102edd68d9ca18
+      - id: SELLABLE
+        value: 32000
+      - id: NOT_FINISHED_YET

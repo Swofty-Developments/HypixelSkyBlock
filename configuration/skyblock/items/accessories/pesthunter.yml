@@ -1,0 +1,52 @@
+items:
+  - id: PESTHUNTER_BADGE
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      bonus_pest_chance: 20
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Pesthunter Badge
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: b4f1f0cf3adb4adc6b996ff9cb4e6d9d8912e0a5ab851c366c8bfbdaf8b2ef04
+      - id: NOT_FINISHED_YET
+
+  - id: PESTHUNTER_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      bonus_pest_chance: 40
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Pesthunter Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 1d06b74d6bd02b795f7bcbf17ac3b77d3bc57b695a8d54a1770c76e84896c8f8
+      - id: NOT_FINISHED_YET
+
+  - id: PESTHUNTER_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      bonus_pest_chance: 60
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Pesthunter Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: b3aefd8bca236d315920d53bea1fe4892c8f1f308d6d57630677f059a3b0293f
+      - id: NOT_FINISHED_YET
+
+  - id: PESTHUNTER_RELIC
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      bonus_pest_chance: 80
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Pesthunter Relic
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 7b36c204f50a11f7fe22c1d16e6a85777b24b4ad316140c666295721214d1310
+      - id: NOT_FINISHED_YET

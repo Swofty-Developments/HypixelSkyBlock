@@ -1,0 +1,67 @@
+items:
+  - id: CROPIE_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    default_statistics:
+      wheat_fortune: 10
+      potato_fortune: 10
+      carrot_fortune: 10
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Cropie Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: ac7d5520a73e1d6d785496b5f5af8c9e14b40d6f6ebd629231ddbce27d422214
+      - id: NOT_FINISHED_YET
+
+  - id: SQUASH_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      wheat_fortune: 20
+      potato_fortune: 20
+      carrot_fortune: 20
+      pumpkin_fortune: 20
+      melon_fortune: 20
+      cocoa_beans_fortune: 20
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Squash Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: f881a38800a1c867d2a1a8a10c8543ae8a3b8a9a87c1ac58ba1e283bb0dc3d68
+      - id: NOT_FINISHED_YET
+
+  - id: FERMENTO_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      wheat_fortune: 30
+      potato_fortune: 30
+      carrot_fortune: 30
+      pumpkin_fortune: 30
+      melon_fortune: 30
+      cactus_fortune: 30
+      cocoa_beans_fortune: 30
+      mushroom_fortune: 30
+      sugar_cane_fortune: 30
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fermento Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: e1add7231c97e77a169be764a41f981cc9f542aa8c6a1336d8be2d817211bbfd
+      - id: NOT_FINISHED_YET
+
+  - id: HELIANTHUS_RELIC
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      farming_fortune: 40
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Helianthus Relic
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 2e6c711f74f92bcbe486ec7e67810a16f0d1eaaac39b80d7a650cd81d611a2e7
+      - id: NOT_FINISHED_YET

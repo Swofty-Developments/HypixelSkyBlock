@@ -1,0 +1,39 @@
+items:
+  - id: RED_CLAW_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      critical_damage: 1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Red Claw Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 317b51e086f201448a4b45b0b91e97faf4d1739071480be6d5cab0a054512164
+      - id: NOT_FINISHED_YET
+
+  - id: RED_CLAW_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      critical_damage: 3
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Red Claw Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 59d9b327ff82f6e109b8746c48bfb7f641e1552855493dd4118be24d5b02bc0a
+      - id: NOT_FINISHED_YET
+
+  - id: RED_CLAW_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      critical_damage: 5
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Red Claw Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: caf59b8aa0f83546ef0d178ccf87e7ed88cf7858caae79b3633cbd75b650525f
+      - id: NOT_FINISHED_YET

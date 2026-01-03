@@ -1,0 +1,39 @@
+items:
+  - id: BURNING_KUUDRA_CORE
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Burning Kuudra Core
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 368743497820c08627d2cc5e891c0f9fc3793f75b6e41e140ac9b007d3b505a5
+      - id: SELLABLE
+        value: 1
+      - id: NOT_FINISHED_YET
+
+  - id: FIERY_KUUDRA_CORE
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fiery Kuudra Core
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 200c16738c372484628ca15cf7b0731b810bd3142e07c1053b5e3da6b6e523ca
+      - id: SELLABLE
+        value: 1
+      - id: NOT_FINISHED_YET
+
+  - id: INFERNAL_KUUDRA_CORE
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Infernal Kuudra Core
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: ece252963a5188cef8ede9d8523bd91d284a785b418b39eec29a91aea07c61e2
+      - id: SELLABLE
+        value: 1
+      - id: NOT_FINISHED_YET

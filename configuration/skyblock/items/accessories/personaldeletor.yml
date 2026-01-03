@@ -1,0 +1,36 @@
+items:
+  - id: PERSONAL_DELETOR_4000
+    material: DISPENSER
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Deletor 4000
+      - id: ACCESSORY
+      - id: NOT_FINISHED_YET
+
+  - id: PERSONAL_DELETOR_5000
+    material: DISPENSER
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Deletor 5000
+      - id: ACCESSORY
+      - id: NOT_FINISHED_YET
+
+  - id: PERSONAL_DELETOR_6000
+    material: DISPENSER
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Deletor 6000
+      - id: ACCESSORY
+      - id: NOT_FINISHED_YET
+
+  - id: PERSONAL_DELETOR_7000
+    material: DISPENSER
+    rarity: LEGENDARY
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Deletor 7000
+      - id: ACCESSORY
+      - id: NOT_FINISHED_YET

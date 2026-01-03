@@ -1,0 +1,22 @@
+items:
+  - id: ENDER_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Ender Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 288748014809862e8bd210a0a3dfcd7be6e0ddc7b453e3947ee6d73f46fde9e2
+      - id: NOT_FINISHED_YET
+
+  - id: ENDER_RELIC
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Ender Relic
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 288748014809862e8bd210a0a3dfcd7be6e0ddc7b453e3947ee6d73f46fde9e2
+      - id: NOT_FINISHED_YET

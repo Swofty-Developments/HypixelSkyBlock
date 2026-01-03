@@ -1,0 +1,45 @@
+items:
+  - id: RESPIRATION_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    default_statistics:
+      respiration: 10
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Respiration Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 76c62727dabd55df897c74094be1c51bb5d2d4ab6c4286df22f40830df5017f4
+      - id: SELLABLE
+        value: 1000
+      - id: NOT_FINISHED_YET
+
+  - id: RESPIRATION_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      respiration: 20
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Respiration Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 1c28bdf6165b597a1b765692ab8cd02335254eb258bc5e91ce61836b56fecb90
+      - id: SELLABLE
+        value: 2000
+      - id: NOT_FINISHED_YET
+
+  - id: RESPIRATION_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      respiration: 30
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Respiration Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 1af839c1bfaa88aefe65a0a799f4f32cf36667d9fe0e7f9fc200b33069726f78
+      - id: SELLABLE
+        value: 3000
+      - id: NOT_FINISHED_YET

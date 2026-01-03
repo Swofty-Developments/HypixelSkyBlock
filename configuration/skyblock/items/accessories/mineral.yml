@@ -1,0 +1,26 @@
+items:
+  - id: MINERAL_TALISMAN
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      mining_fortune: 3
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Mineral Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 5ab7b04dbba61cc0e10907ca11f84f871b7aa234dde0e4f1ad8bbe4914fbc513
+      - id: NOT_FINISHED_YET
+
+  - id: GLOSSY_MINERAL_TALISMAN
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      mining_fortune: 6
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Glossy Mineral Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 53a26ad4620ddec27bc1d65f43cedc13315c783e1a5a3e3122c0ad458dad55c4
+      - id: NOT_FINISHED_YET

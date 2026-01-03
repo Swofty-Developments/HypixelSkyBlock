@@ -1,0 +1,40 @@
+items:
+  - id: PERSONAL_COMPACTOR_4000
+    material: DROPPER
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Compactor 4000
+      - id: ACCESSORY
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+
+  - id: PERSONAL_COMPACTOR_5000
+    material: DROPPER
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Compactor 5000
+      - id: ACCESSORY
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+
+  - id: PERSONAL_COMPACTOR_6000
+    material: DROPPER
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Compactor 6000
+      - id: ACCESSORY
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+
+  - id: PERSONAL_COMPACTOR_7000
+    material: DROPPER
+    rarity: LEGENDARY
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Compactor 7000
+      - id: ACCESSORY
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET

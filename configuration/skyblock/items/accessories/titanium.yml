@@ -1,0 +1,60 @@
+items:
+  - id: TITANIUM_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      mining_speed: 15
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Titanium Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 10feda53576c8a6e57466f5dbdb99ea480ed122a09fdd850ed8c2e755f55cac2
+      - id: SELLABLE
+        value: 51200
+      - id: NOT_FINISHED_YET
+
+  - id: TITANIUM_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      mining_speed: 30
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Titanium Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 2c3edd919c0cc6d9668ffd210e46d2c07fe088c44d85f47d251b4f87481174f5
+      - id: SELLABLE
+        value: 2000
+      - id: NOT_FINISHED_YET
+
+  - id: TITANIUM_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      mining_speed: 45
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Titanium Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 98ec21d20f1aaf5635f48beda88626403c6385b81673fb7cfa7ff82179c63e39
+      - id: SELLABLE
+        value: 5000
+      - id: NOT_FINISHED_YET
+
+  - id: TITANIUM_RELIC
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      mining_speed: 60
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Titanium Relic
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: d2f2405a7b8defddb0b8268bea8f2e12fc09bbc7de12981f85db2a7001ac81eb
+      - id: SELLABLE
+        value: 10000
+      - id: NOT_FINISHED_YET
