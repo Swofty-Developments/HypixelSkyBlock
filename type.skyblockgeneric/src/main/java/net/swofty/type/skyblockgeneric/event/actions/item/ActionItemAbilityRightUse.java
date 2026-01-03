@@ -30,11 +30,11 @@ public class ActionItemAbilityRightUse implements HypixelEventClass {
             AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
 
             RegisteredAbility ability = null;
-            if(player.isSneaking()) {
+            if (player.isSneaking()) {
                 ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.SNEAK_RIGHT_CLICK);
             }
             if (ability == null) {
-                abilityComponent.getAbility(RegisteredAbility.AbilityActivation.RIGHT_CLICK);
+                ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.RIGHT_CLICK);
             }
 
             if (ability != null) {

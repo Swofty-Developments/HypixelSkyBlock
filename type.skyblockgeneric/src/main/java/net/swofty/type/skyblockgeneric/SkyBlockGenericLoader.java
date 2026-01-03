@@ -11,6 +11,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.CoordConversion;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.event.Event;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.monitoring.BenchmarkManager;
@@ -28,7 +29,7 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.data.mongodb.*;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
@@ -57,6 +58,8 @@ import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
 import net.swofty.type.skyblockgeneric.item.components.MuseumComponent;
 import net.swofty.type.skyblockgeneric.item.components.ServerOrbComponent;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
+import net.swofty.type.skyblockgeneric.item.handlers.ability.AbilityRegistry;
+import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredPassiveAbility;
 import net.swofty.type.skyblockgeneric.item.set.impl.SetRepeatable;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
@@ -93,6 +96,7 @@ import org.tinylog.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -407,6 +411,12 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         SkyBlockValueEvent.register(); // Value events are SkyBlock-specific
         CustomEventCaller.start(); // Value events are SkyBlock-specific
         HypixelEventHandler.register(HypixelConst.getEventHandler());
+
+        AbilityRegistry.getRegisteredAbilities().forEach(((_, registeredAbility) -> {
+            if (registeredAbility instanceof RegisteredPassiveAbility passiveAbility) {
+                passiveAbility.getPassiveAction().forEach(RegisteredPassiveAbility.Action::register);
+            }
+        }));
 
         /**
          * Cache SkyBlock levels

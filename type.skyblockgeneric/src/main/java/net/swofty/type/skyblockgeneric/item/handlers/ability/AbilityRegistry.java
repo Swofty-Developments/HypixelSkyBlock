@@ -7,10 +7,14 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.abilities.BuildersWandAbility;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.TemporaryStatistic;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AbilityRegistry {
@@ -20,7 +24,7 @@ public class AbilityRegistry {
 		register(new RegisteredAbility(
 				"WITHER_IMPACT",
 				"Wither Impact",
-				"§7Teleports §a10 Blocks §7ahead of you. Then implode dealing §c10000 §7damage to nearby enemies. Also applies the wither shield scroll ability reducing mobdamage taken and granting an absorption shield for §e5 §7seconds.",
+				(player, item) -> "§7Teleports §a10 Blocks §7ahead of you. Then implode dealing §c10000 §7damage to nearby enemies. Also applies the wither shield scroll ability reducing mobdamage taken and granting an absorption shield for §e5 §7seconds.",
 				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
 				50,
 				new RegisteredAbility.AbilityManaCost(25),
@@ -33,7 +37,7 @@ public class AbilityRegistry {
 		register(new RegisteredAbility(
 				"INSTANT_TRANSMISSION",
 				"Instant Transmission",
-				"§7Teleports §a8 Blocks §7ahead of you and gain §a+50 §fSpeed for §a3 seconds§7.",
+				(player, item) -> "§7Teleports §a8 Blocks §7ahead of you and gain §a+50 §fSpeed for §a3 seconds§7.",
 				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
 				5,
 				new RegisteredAbility.AbilityManaCost(50),
@@ -48,7 +52,7 @@ public class AbilityRegistry {
 		register(new RegisteredAbility(
 				"ETHER_TRANSMISSION",
 				"Ether Transmission",
-				"§7Teleport to your targeted block up to §a57 §7blocks away.",
+				(player, item) -> "§7Teleport to your targeted block up to §a57 §7blocks away.",
 				RegisteredAbility.AbilityActivation.SNEAK_RIGHT_CLICK,
 				5,
 				new RegisteredAbility.AbilityManaSoulflowCost(180, 1),
@@ -64,7 +68,7 @@ public class AbilityRegistry {
 		register(new RegisteredAbility(
 				"TRUE_DWARTH",
 						"True Dwarth",
-				"§7Shows the way towards the nearest §6Emissary §7while in the §2Dwarven Mines§7.",
+				(player, item) -> "§7Shows the way towards the nearest §6Emissary §7while in the §2Dwarven Mines§7.",
 				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
 				20 * 3,
 				new RegisteredAbility.NoAbilityCost(),
@@ -77,7 +81,7 @@ public class AbilityRegistry {
 		register(new RegisteredAbility(
 				"SPEED_BOOST",
 				"Speed Boost",
-				"§7Grants §7+100 Speed",
+				(player, item) -> "§7Grants §7+100 Speed",
 				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
 				20 * 5,
 				new RegisteredAbility.AbilityManaCost(50),
@@ -88,7 +92,36 @@ public class AbilityRegistry {
 				}
 		));
 
-//		register(new RegisteredAbility( // TODO: Figure out how to implement passive abiltiies
+		register(new RegisteredPassiveAbility(
+				"STORED_POTENTIAL",
+				"Stored Potential",
+				(player, item) -> {
+					StringBuilder description = new StringBuilder();
+					description.append("§7Grants §6+10⸕ Mining Speed §7for every\n100 blocks mined.\n§8(Max +250⸕ Mining Speed)\n\n");
+					description.append("§7Blocks Mined: §a").append(item.getAttributeHandler().getStoredPotential()).append("\n");
+					int miningSpeed = Math.min((item.getAttributeHandler().getStoredPotential() / 100) * 10, 250);
+					description.append("§7Current Bonus: §a").append(miningSpeed);
+					return description.toString();
+				},
+				List.of(new RegisteredPassiveAbility.Action<>(
+						CustomBlockBreakEvent.class,
+						EventNodes.CUSTOM,
+						event -> {
+							SkyBlockPlayer player = event.getPlayer();
+							player.updateItemInSlot(player.getHeldSlot(), (item) -> {
+								item.getAttributeHandler().setStoredPotential(item.getAttributeHandler().getStoredPotential() + 1);
+								item.getAttributeHandler().setExtraDynamicStatistics(
+										ItemStatistics.builder().withAdditive(
+												ItemStatistic.MINING_SPEED, (double) Math.min((item.getAttributeHandler().getStoredPotential() / 100) * 10, 250)
+										).build()
+								);
+							});
+						},
+						RegisteredPassiveAbility.Action.createDefaultCondition("STORED_POTENTIAL")
+				))
+		));
+
+//		register(new RegisteredAbility( // TODO: Figure out how to implement passive abilities
 //				"BEJEWELED_BLADE",
 //				"Bejeweled Blade",
 //				"§7Deals §a+150% §7damage to mobs on §bMining Islands.",
@@ -105,4 +138,9 @@ public class AbilityRegistry {
 	public static RegisteredAbility getAbility(String id) {
 		return REGISTERED_ABILITIES.get(id);
 	}
+
+	public static Map<String, RegisteredAbility> getRegisteredAbilities() {
+		return REGISTERED_ABILITIES;
+	}
+
 }

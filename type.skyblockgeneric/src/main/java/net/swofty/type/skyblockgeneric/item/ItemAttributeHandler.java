@@ -422,6 +422,14 @@ public class ItemAttributeHandler {
         return ids.contains(npc.getId());
     }
 
+    public void setStoredPotential(int storedPotential) {
+        ((ItemAttributeStoredPotential) item.getAttribute("stored_potential")).setValue(storedPotential);
+    }
+
+    public int getStoredPotential() {
+        return ((ItemAttributeStoredPotential) item.getAttribute("stored_potential")).getValue();
+    }
+
     public SkyBlockItem asSkyBlockItem() {
         return item;
     }
