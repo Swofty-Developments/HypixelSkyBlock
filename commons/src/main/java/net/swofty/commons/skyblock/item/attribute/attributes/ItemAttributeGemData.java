@@ -42,11 +42,6 @@ public class ItemAttributeGemData extends ItemAttribute<ItemAttributeGemData.Gem
                 filledWith = ItemType.valueOf(gemSplit[1]);
             }
 
-            // Load unlocked state if it exists in the string (for backward compatibility)
-            if (gemSplit.length > 2) {
-                unlocked = Boolean.parseBoolean(gemSplit[2]);
-            }
-
             gemData.putGem(new GemData.GemSlots(index, filledWith, unlocked));
         }
 
