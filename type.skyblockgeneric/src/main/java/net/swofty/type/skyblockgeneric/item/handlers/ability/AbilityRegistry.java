@@ -108,8 +108,13 @@ public class AbilityRegistry {
 						EventNodes.CUSTOM,
 						event -> {
 							SkyBlockPlayer player = event.getPlayer();
-							player.updateItemInSlot(player.getHeldSlot(), (i) -> {
-								i.getAttributeHandler().setStoredPotential(i.getAttributeHandler().getStoredPotential() + 1);
+							player.updateItemInSlot(player.getHeldSlot(), (item) -> {
+								item.getAttributeHandler().setStoredPotential(item.getAttributeHandler().getStoredPotential() + 1);
+								item.getAttributeHandler().setExtraDynamicStatistics(
+										ItemStatistics.builder().withAdditive(
+												ItemStatistic.MINING_SPEED, (double) Math.min((item.getAttributeHandler().getStoredPotential() / 100) * 10, 250)
+										).build()
+								);
 							});
 						},
 						RegisteredPassiveAbility.Action.createDefaultCondition("STORED_POTENTIAL")
