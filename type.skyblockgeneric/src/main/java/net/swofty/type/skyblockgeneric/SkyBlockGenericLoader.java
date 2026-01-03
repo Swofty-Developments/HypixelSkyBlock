@@ -414,7 +414,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
 
         AbilityRegistry.getRegisteredAbilities().forEach(((_, registeredAbility) -> {
             if (registeredAbility instanceof RegisteredPassiveAbility passiveAbility) {
-                HypixelEventHandler.registerEventMethods(passiveAbility.getPassiveAction());
+                passiveAbility.getPassiveAction().forEach(RegisteredPassiveAbility.Action::register);
             }
         }));
 

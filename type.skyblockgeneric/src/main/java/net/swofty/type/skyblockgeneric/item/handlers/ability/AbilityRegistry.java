@@ -5,15 +5,16 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.player.PlayerBlockBreakEvent;
-import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
+import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.abilities.BuildersWandAbility;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.TemporaryStatistic;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AbilityRegistry {
@@ -94,13 +95,25 @@ public class AbilityRegistry {
 		register(new RegisteredPassiveAbility(
 				"STORED_POTENTIAL",
 				"Stored Potential",
-				(player, item) -> "§7Grants §6+10⸕ Mining Speed §7for every \n100 blocks mines.\n§8(Max +250⸕ Mining Speed)",
-				new RegisteredPassiveAbility.Action<>(
+				(player, item) -> {
+					StringBuilder description = new StringBuilder();
+					description.append("§7Grants §6+10⸕ Mining Speed §7for every\n100 blocks mined.\n§8(Max +250⸕ Mining Speed)\n\n");
+					description.append("§7Blocks Mined: §a").append(item.getAttributeHandler().getStoredPotential()).append("\n");
+					int miningSpeed = Math.min((item.getAttributeHandler().getStoredPotential() / 100) * 10, 250);
+					description.append("§7Current Bonus: §a").append(miningSpeed);
+					return description.toString();
+				},
+				List.of(new RegisteredPassiveAbility.Action<>(
 						CustomBlockBreakEvent.class,
+						EventNodes.CUSTOM,
 						event -> {
-							event.getPlayer().sendMessage("You broke a block");
-						}
-				)
+							SkyBlockPlayer player = event.getPlayer();
+							player.updateItemInSlot(player.getHeldSlot(), (i) -> {
+								i.getAttributeHandler().setStoredPotential(i.getAttributeHandler().getStoredPotential() + 1);
+							});
+						},
+						RegisteredPassiveAbility.Action.createDefaultCondition("STORED_POTENTIAL")
+				))
 		));
 
 //		register(new RegisteredAbility( // TODO: Figure out how to implement passive abilities

@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
+import lombok.Getter;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.AbilityRegistry;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredAbility;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class AbilityComponent extends SkyBlockItemComponent {
+    @Getter
     private final List<String> abilityIds;
 
     public AbilityComponent(List<String> abilityIds) {

@@ -2,10 +2,13 @@ items:
   - id: PROMISING_PICKAXE
     rarity: UNCOMMON
     default_statistics:
-      damage: 30.0
-      mining_speed: 1500.0
+      damage: 20.0
+      mining_speed: 50.0
       breaking_power: 3.0
     components:
+      - id: ABILITY
+        abilities:
+          - STORED_POTENTIAL
       - id: PICKAXE
       - id: SELLABLE
         value: 10.0

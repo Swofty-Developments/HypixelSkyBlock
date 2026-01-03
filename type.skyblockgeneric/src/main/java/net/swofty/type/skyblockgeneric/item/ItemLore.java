@@ -292,7 +292,7 @@ public class ItemLore {
 			abilityComponent.getAbilities().forEach(ability -> {
 				addLoreLine("§6Ability: " + ability.getName() + "  §e§l" +
 						ability.getActivation().getDisplay());
-				for (String line : StringUtility.splitByWordAndLength(ability.getDescription().apply(player, item), 34))
+				for (String line : StringUtility.splitByWordAndLength(ability.getDescription().apply(player, item), 40))
 					addLoreLine("§7" + line);
 
 				String costDisplay = ability.getCost().getLoreDisplay();
