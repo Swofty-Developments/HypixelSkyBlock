@@ -16,6 +16,25 @@ items:
       - id: SKULL_HEAD
         texture: 9af328c87b068509aca9834eface197705fe5d4f0871731b7b21cd99b9fddc
       - id: TALISMAN
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - ABA
+              - BAB
+              - ABA
+            ingredients:
+              A:
+                type: WHEAT
+                amount: 8
+              B:
+                type: WHEAT_SEEDS
+                amount: 1
+            result:
+              type: FARMING_TALISMAN
+              amount: 1
 
   - id: FIRE_TALISMAN
     material: PLAYER_HEAD

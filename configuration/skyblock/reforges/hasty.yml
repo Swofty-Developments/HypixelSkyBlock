@@ -4,7 +4,7 @@ applicableTypes:
   - "BOWS"
 
 statistics:
-  CRIT_CHANCE:
+  CRITICAL_CHANCE:
     common: 20
     uncommon: 25
     rare: 30

@@ -25,6 +25,25 @@ items:
         donation_xp: 4
         parent:
           ASPECT_OF_THE_END: ASPECT_OF_THE_VOID
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: COMBAT
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: ENCHANTED_EYE_OF_ENDER
+                amount: 16
+              B:
+                type: ENCHANTED_DIAMOND
+                amount: 1
+            result:
+              type: ASPECT_OF_THE_END
+              amount: 1
 
   - id: ASPECT_OF_THE_JERRY
     material: WOODEN_SWORD
@@ -205,6 +224,25 @@ items:
         standard_item_type: SWORD
       - id: SELLABLE
         value: 160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FISHING
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: PRISMARINE_SHARD
+                amount: 32
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: PRISMARINE_BLADE
+              amount: 1
 
   - id: ROGUE_SWORD
     material: GOLDEN_SWORD
@@ -229,6 +267,25 @@ items:
         standard_item_type: SWORD
       - id: SELLABLE
         value: 2000
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: COMBAT
+            pattern:
+              - OAO
+              - AAA
+              - OAO
+            ingredients:
+              A:
+                type: ENCHANTED_GHAST_TEAR
+                amount: 5
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: SILVER_FANG
+              amount: 1
 
   - id: SPIDER_SWORD
     material: IRON_SWORD

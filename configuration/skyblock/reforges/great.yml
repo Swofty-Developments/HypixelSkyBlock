@@ -20,7 +20,7 @@ statistics:
     legendary: 12
     mythic: 16
 
-  CRIT_DAMAGE:
+  CRITICAL_DAMAGE:
     common: 2
     uncommon: 4
     rare: 6

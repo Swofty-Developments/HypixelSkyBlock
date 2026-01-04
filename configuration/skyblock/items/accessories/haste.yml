@@ -13,6 +13,25 @@ items:
       - id: SELLABLE
         value: 20500
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_COBBLESTONE
+                amount: 16
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: HASTE_RING
+              amount: 1
 
   - id: HASTE_ARTIFACT
     material: PLAYER_HEAD

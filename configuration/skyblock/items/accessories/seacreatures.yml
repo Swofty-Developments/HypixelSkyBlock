@@ -12,6 +12,22 @@ items:
       - id: SELLABLE
         value: 180
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: SPONGE
+                amount: 2
+            result:
+              type: SEA_CREATURE_TALISMAN
+              amount: 1
 
   - id: SEA_CREATURE_RING
     material: PLAYER_HEAD
@@ -27,6 +43,28 @@ items:
       - id: SELLABLE
         value: 1000
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - ABA
+              - ACA
+              - ABA
+            ingredients:
+              A:
+                type: SPONGE
+                amount: 1
+              B:
+                type: ENCHANTED_SPONGE
+                amount: 1
+              c:
+                type: SEA_CREATURE_TALISMAN
+                amount: 1
+            result:
+              type: SEA_CREATURE_RING
+              amount: 1
 
   - id: SEA_CREATURE_ARTIFACT
     material: PLAYER_HEAD
@@ -42,3 +80,22 @@ items:
       - id: SELLABLE
         value: 25000
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_SPONGE
+                amount: 8
+              B:
+                type: SEA_CREATURE_RING
+                amount: 1
+            result:
+              type: SEA_CREATURE_ARTIFACT
+              amount: 1

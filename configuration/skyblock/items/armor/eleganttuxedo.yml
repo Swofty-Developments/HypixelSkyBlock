@@ -2,7 +2,7 @@ items:
   - id: ELEGANT_TUXEDO_BOOTS
     rarity: COMMON
     default_statistics:
-      crit_damage: 50.0
+      CRITICAL_DAMAGE: 50.0
       speed: 10.0
       intelligence: 100.0
     components:
@@ -17,7 +17,7 @@ items:
   - id: ELEGANT_TUXEDO_CHESTPLATE
     rarity: COMMON
     default_statistics:
-      crit_damage: 100.0
+      CRITICAL_DAMAGE: 100.0
       intelligence: 300.0
     components:
       - id: STANDARD_ITEM
@@ -31,7 +31,7 @@ items:
   - id: ELEGANT_TUXEDO_LEGGINGS
     rarity: COMMON
     default_statistics:
-      crit_damage: 50.0
+      CRITICAL_DAMAGE: 50.0
       intelligence: 100.0
     components:
       - id: STANDARD_ITEM

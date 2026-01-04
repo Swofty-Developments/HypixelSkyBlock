@@ -1,10 +1,108 @@
 items:
+  - id: SMALL_BACKPACK
+    rarity: COMMON
+    components:
+      - id: BACKPACK
+        rows: 1
+        skull-texture: 21d837ca222cbc0bc12426f5da018c3a931b406008800960a9df112a596e7d62
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: LEATHER
+                amount: 10
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: SMALL_BACKPACK
+              amount: 1
+
+  - id: MEDIUM_BACKPACK
+    rarity: COMMON
+    components:
+      - id: BACKPACK
+        rows: 2
+        skull-texture: 62f3b3a05481cde77240005c0ddcee1c069e5504a62ce0977879f55a39396146
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: LEATHER
+                amount: 64
+              B:
+                type: SMALL_BACKPACK
+                amount: 1
+            result:
+              type: MEDIUM_BACKPACK
+              amount: 1
+
+  - id: LARGE_BACKPACK
+    rarity: COMMON
+    components:
+      - id: BACKPACK
+        rows: 3
+        skull-texture: 62f3b3a05481cde77240005c0ddcee1c069e5504a62ce0977879f55a39396146
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_LEATHER
+                amount: 2
+              B:
+                type: MEDIUM_BACKPACK
+                amount: 1
+            result:
+              type: LARGE_BACKPACK
+              amount: 1
+
   - id: GREATER_BACKPACK
     rarity: COMMON
     components:
       - id: BACKPACK
         rows: 4
         skull-texture: 62f3b3a05481cde77240005c0ddcee1c069e5504a62ce0977879f55a39396146
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_LEATHER
+                amount: 4
+              B:
+                type: LARGE_BACKPACK
+                amount: 1
+            result:
+              type: GREATER_BACKPACK
+              amount: 1
+
   - id: JUMBO_BACKPACK
     rarity: COMMON
     components:
@@ -23,21 +121,3 @@ items:
                 amount: 1
               - type: JUMBO_BACKPACK_UPGRADE
                 amount: 1
-  - id: LARGE_BACKPACK
-    rarity: COMMON
-    components:
-      - id: BACKPACK
-        rows: 3
-        skull-texture: 62f3b3a05481cde77240005c0ddcee1c069e5504a62ce0977879f55a39396146
-  - id: MEDIUM_BACKPACK
-    rarity: COMMON
-    components:
-      - id: BACKPACK
-        rows: 2
-        skull-texture: 62f3b3a05481cde77240005c0ddcee1c069e5504a62ce0977879f55a39396146
-  - id: SMALL_BACKPACK
-    rarity: COMMON
-    components:
-      - id: BACKPACK
-        rows: 1
-        skull-texture: 21d837ca222cbc0bc12426f5da018c3a931b406008800960a9df112a596e7d62

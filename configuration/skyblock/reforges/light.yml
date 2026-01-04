@@ -4,7 +4,7 @@ applicableTypes:
   - "ARMOR"
 
 statistics:
-  CRIT_CHANCE:
+  CRITICAL_CHANCE:
     common: 1
     uncommon: 1
     rare: 2
@@ -18,7 +18,7 @@ statistics:
   BONUS_ATTACK_SPEED:
     expression: "{level} + 1"
 
-  CRIT_DAMAGE:
+  CRITICAL_DAMAGE:
     expression: "{level} + 1"
 
   HEALTH:

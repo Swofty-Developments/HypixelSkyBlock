@@ -20,7 +20,7 @@ public enum MinionRegistry {
     GOLD(MinionGold.class, ItemType.GOLD_MINION),
     LAPIS(MinionLapis.class, ItemType.LAPIS_MINION),
     IRON(MinionIron.class, ItemType.IRON_MINION),
-    ENDSTONE(MinionEndstone.class, ItemType.ENDSTONE_MINION),
+    ENDSTONE(MinionEndstone.class, ItemType.END_STONE_MINION),
     REDSTONE(MinionRedstone.class, ItemType.REDSTONE_MINION),
     EMERALD(MinionEmerald.class, ItemType.EMERALD_MINION),
     ICE(MinionIce.class, ItemType.ICE_MINION),
