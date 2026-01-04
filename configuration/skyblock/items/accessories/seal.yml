@@ -1,0 +1,30 @@
+items:
+  - id: SEAL_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      sea_creature_chance: 0.5
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Seal Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 872a8efa33090fa79929d568512ea2dd0e48c1bac6b185ba34fdeea07c01113b
+      - id: SELLABLE
+        value: 10000
+      - id: NOT_FINISHED_YET
+
+  - id: SEAL_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      sea_creature_chance: 1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Seal Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 777d15363626bbdf43bc345ea20c42529074342028df572802b6ea386bc566a1
+      - id: SELLABLE
+        value: 20000
+      - id: NOT_FINISHED_YET

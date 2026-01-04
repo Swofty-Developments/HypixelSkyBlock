@@ -1,19 +1,34 @@
 items:
-  - id: LEAFLET_BOOTS
+  - id: LEAFLET_HELMET
     rarity: COMMON
     default_statistics:
-      health: 15.0
+      health: 20.0
     components:
       - id: STANDARD_ITEM
-        standard_item_type: BOOTS
-      - id: LEATHER_COLOR
-        r: '77'
-        g: '204'
-        b: '77'
+        standard_item_type: HELMET
       - id: SELLABLE
         value: 2.0
       - id: CUSTOM_DISPLAY_NAME
-        display_name: Leaflet Sandals
+        display_name: Leaflet Hat
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FORAGING
+            pattern:
+              - AAA
+              - AOA
+            ingredients:
+              A:
+                type: OAK_LEAVES
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: LEAFLET_HELMET
+              amount: 1
+
   - id: LEAFLET_CHESTPLATE
     rarity: COMMON
     default_statistics:
@@ -29,17 +44,26 @@ items:
         value: 4.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Leaflet Tunic
-  - id: LEAFLET_HELMET
-    rarity: COMMON
-    default_statistics:
-      health: 20.0
-    components:
-      - id: STANDARD_ITEM
-        standard_item_type: HELMET
-      - id: SELLABLE
-        value: 2.0
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Leaflet Hat
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FORAGING
+            pattern:
+              - AOA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: OAK_LEAVES
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: LEAFLET_CHESTPLATE
+              amount: 1
+
   - id: LEAFLET_LEGGINGS
     rarity: COMMON
     default_statistics:
@@ -55,3 +79,56 @@ items:
         value: 3.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Leaflet Pants
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FORAGING
+            pattern:
+              - AAA
+              - AOA
+              - AOA
+            ingredients:
+              A:
+                type: OAK_LEAVES
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: LEAFLET_LEGGINGS
+              amount: 1
+
+  - id: LEAFLET_BOOTS
+    rarity: COMMON
+    default_statistics:
+      health: 15.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
+      - id: LEATHER_COLOR
+        r: '77'
+        g: '204'
+        b: '77'
+      - id: SELLABLE
+        value: 2.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Leaflet Sandals
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FORAGING
+            pattern:
+              - AOA
+              - AOA
+            ingredients:
+              A:
+                type: OAK_LEAVES
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: LEAFLET_BOOTS
+              amount: 1

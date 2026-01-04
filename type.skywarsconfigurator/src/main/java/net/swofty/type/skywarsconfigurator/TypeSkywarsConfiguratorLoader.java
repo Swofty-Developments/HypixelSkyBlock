@@ -1,6 +1,7 @@
 package net.swofty.type.skywarsconfigurator;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
@@ -34,6 +35,7 @@ public class TypeSkywarsConfiguratorLoader implements HypixelTypeLoader {
     @Getter
     private static InstanceContainer mainInstance;
 
+    @Setter
     @Getter
     private static MapConfigurationSession currentSession;
 
@@ -78,10 +80,6 @@ public class TypeSkywarsConfiguratorLoader implements HypixelTypeLoader {
         });
 
         Logger.info("SkyWars Configurator loaded. Use /swconfig to start.");
-    }
-
-    public static void setCurrentSession(MapConfigurationSession session) {
-        currentSession = session;
     }
 
     @Override
@@ -138,10 +136,5 @@ public class TypeSkywarsConfiguratorLoader implements HypixelTypeLoader {
     @Override
     public @Nullable CustomWorlds getMainInstance() {
         return null;
-    }
-
-    @Override
-    public List<Class<? extends GameDataHandler>> getAdditionalDataHandlers() {
-        return List.of();
     }
 }

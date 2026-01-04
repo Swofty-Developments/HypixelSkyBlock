@@ -2,7 +2,7 @@ items:
   - id: FANCY_TUXEDO_BOOTS
     rarity: COMMON
     default_statistics:
-      crit_damage: 35.0
+      CRITICAL_DAMAGE: 35.0
       speed: 10.0
       intelligence: 75.0
     components:
@@ -17,7 +17,7 @@ items:
   - id: FANCY_TUXEDO_CHESTPLATE
     rarity: COMMON
     default_statistics:
-      crit_damage: 80.0
+      CRITICAL_DAMAGE: 80.0
       intelligence: 150.0
     components:
       - id: STANDARD_ITEM
@@ -31,7 +31,7 @@ items:
   - id: FANCY_TUXEDO_LEGGINGS
     rarity: COMMON
     default_statistics:
-      crit_damage: 35.0
+      CRITICAL_DAMAGE: 35.0
       intelligence: 75.0
     components:
       - id: STANDARD_ITEM

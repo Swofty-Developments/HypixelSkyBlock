@@ -1,0 +1,26 @@
+items:
+  - id: HUNTER_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      combat_wisdom: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Hunter Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 5c577e7d31e5e04c2ce71e13e3962192d80bd54b55efaacaaea12966fe27bf9
+      - id: NOT_FINISHED_YET
+
+  - id: HUNTER_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      combat_wisdom: 5
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Hunter Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 5c577e7d31e5e04c2ce71e13e3962192d80bd54b55efaacaaea12966fe27bf9
+      - id: NOT_FINISHED_YET

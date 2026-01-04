@@ -1,0 +1,45 @@
+items:
+  - id: INTIMIDATION_TALISMAN
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Intimidation Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 68117c209b69eeaf2684816e16bed25e665008e7329632fdfca6523799cd7f71
+      - id: SELLABLE
+        value: 200
+      - id: NOT_FINISHED_YET
+
+  - id: INTIMIDATION_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Intimidation Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 41fbc5010e8047ebc0bfd5b7635ab54772d8fd5a28099aeebc8ae2407f026b08
+      - id: NOT_FINISHED_YET
+
+  - id: INTIMIDATION_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Intimidation Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 96e977ae2f796dce6c80cb6bed9294e9ed4b11b88f9fde6c31f435dfd0382529
+      - id: NOT_FINISHED_YET
+
+  - id: INTIMIDATION_RELIC
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Intimidation Relic
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: c066fd07683989e66bf752398c4861c71ae6fe228a493f2fdf427381650a1280
+      - id: NOT_FINISHED_YET

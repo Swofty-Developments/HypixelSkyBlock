@@ -1,0 +1,52 @@
+items:
+  - id: JERRY_TALISMAN_GREEN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      intelligence: -1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Green Jerry Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 2567251d71b6f3a4dc03fa01e441de7edf9354794e74aec16c04f141ddf31c70
+      - id: NOT_FINISHED_YET
+
+  - id: JERRY_TALISMAN_BLUE
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      intelligence: -2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Blue Jerry Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: d3b919f040922eb17733b42d216b7cdefeaea366be14c1ae6993ca7e5909e0f0
+      - id: NOT_FINISHED_YET
+
+  - id: JERRY_TALISMAN_PURPLE
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      intelligence: -3
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Purple Jerry Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: ff8bd61b60a425d2e0deb1df9665327750ceba822a0be85e2f4a3a722e20f7d6
+      - id: NOT_FINISHED_YET
+
+  - id: JERRY_TALISMAN_GOLDEN
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      intelligence: -4
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Golden Jerry Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 7964f606fecc32451fbded1b6f5d4f22db8f018f7d8db78b122ca75f9d1c0574
+      - id: NOT_FINISHED_YET

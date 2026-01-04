@@ -8,6 +8,28 @@ items:
         fuel_percentage: 25.0
         last_time_ms: 0
       - id: ENCHANTED
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - ABA
+              - OAO
+            ingredients:
+              A:
+                type: ENCHANTED_IRON_INGOT
+                amount: 1
+              B:
+                type: ENCHANTED_COAL_BLOCK
+                amount: 2
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: ENCHANTED_LAVA_BUCKET
+              amount: 1
+
   - id: EVERBURNING_FLAME
     rarity: COMMON
     components:
@@ -19,6 +41,32 @@ items:
         fuel_percentage: 35.0
         last_time_ms: 0
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - ABA
+              - CDC
+              - ABA
+            ingredients:
+              A:
+                type: FLAMES
+                amount: 4
+              B:
+                type: ENCHANTED_RED_SAND_CUBE
+                amount: 1
+              C:
+                type: ENCHANTED_SULPHUR_CUBE
+                amount: 1
+              D:
+                type: PLASMA_BUCKET
+                amount: 1
+            result:
+              type: EVERBURNING_FLAME
+              amount: 1
+
   - id: MAGMA_BUCKET
     rarity: COMMON
     components:
@@ -45,6 +93,7 @@ items:
             result:
               type: MAGMA_BUCKET
               amount: 1
+
   - id: PLASMA_BUCKET
     rarity: COMMON
     components:

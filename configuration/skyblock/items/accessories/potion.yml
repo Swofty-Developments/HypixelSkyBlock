@@ -1,0 +1,92 @@
+items:
+  - id: POTION_AFFINITY_TALISMAN
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Potion Affinity Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: d6a59f4abcf5516e50b5a9b1cf2f7eca78eaf0c07ffb254cd45131b169068a5a
+      - id: SELLABLE
+        value: 192
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: NETHER_WART
+                amount: 16
+            result:
+              type: POTION_AFFINITY_TALISMAN
+              amount: 1
+
+  - id: RING_POTION_AFFINITY
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Potion Affinity Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 46b5cfdd804d76249e7c6946b1d9afa22e9bdc72149f682e71654aee885dffbb
+      - id: SELLABLE
+        value: 2100
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_NETHER_WART
+                amount: 1
+              B:
+                type: POTION_AFFINITY_TALISMAN
+                amount: 1
+            result:
+              type: RING_POTION_AFFINITY
+              amount: 1
+
+  - id: ARTIFACT_POTION_AFFINITY
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Potion Affinity Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 56f9119a1d1fb01bb97db89aeba56ff5ee112079e432a2b50fa3a80a8954db38
+      - id: SELLABLE
+        value: 64000
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_NETHER_WART
+                amount: 32
+              B:
+                type: RING_POTION_AFFINITY
+                amount: 1
+            result:
+              type: ARTIFACT_POTION_AFFINITY
+              amount: 1

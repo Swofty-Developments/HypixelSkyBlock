@@ -1,0 +1,64 @@
+items:
+  - id: RAGGEDY_SHARK_TOOTH_NECKLACE
+    material: PLAYER_HEAD
+    default_statistics:
+      strength: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Raggedy Shark Tooth Necklace
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: d77309ddebbdc278ee2772d92fa4905dd850c5f213a77ffaed5a67eecb23984a
+      - id: NOT_FINISHED_YET
+
+  - id: DULL_SHARK_TOOTH_NECKLACE
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      strength: 4
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Dull Shark Tooth Necklace
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: f3ab3aa1ade74915dacd298613904361c18877eebfa81d9f936309f271e1389a
+      - id: NOT_FINISHED_YET
+
+  - id: HONED_SHARK_TOOTH_NECKLACE
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      strength: 6
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Honed Shark Tooth Necklace
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: e6b120938d83bf49ddab3a78666a0bf37a3de7b46b9d97b984da3be62ce3e5e3
+      - id: NOT_FINISHED_YET
+
+  - id: SHARP_SHARK_TOOTH_NECKLACE
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      strength: 8
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Sharp Shark Tooth Necklace
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 228e3fb6bd9887d60434ccd279ec3e59227826c9a2f8dd9ce9899ea6683d4ee8
+      - id: NOT_FINISHED_YET
+
+  - id: RAZOR_SHARP_SHARK_TOOTH_NECKLACE
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      strength: 10
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Razor-sharp Shark Tooth Necklace
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 7792676664ac711488641f72b25961835613da9ffd43ea3bdd163cb365343a6
+      - id: NOT_FINISHED_YET

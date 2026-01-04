@@ -3,24 +3,20 @@ items:
     material: ZOMBIE_HEAD
     rarity: COMMON
     components:
-      - id: TIERED_TALISMAN
-        base_tier: ZOMBIE_TALISMAN
-        tier: 1
+      - id: TALISMAN
+
   - id: ZOMBIE_RING
     material: PLAYER_HEAD
     rarity: COMMON
     components:
-      - id: TIERED_TALISMAN
-        base_tier: ZOMBIE_TALISMAN
-        tier: 2
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: 55d996cb5a8e5a71a274275f46944b944eeeacd2e1cadef918b05b879a03336f
+
   - id: ZOMBIE_ARTIFACT
     material: PLAYER_HEAD
     rarity: COMMON
     components:
-      - id: TIERED_TALISMAN
-        base_tier: ZOMBIE_TALISMAN
-        tier: 3
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: c3fb4e5db97f479c66a42bbd8a7d781daf201a8ddaf77afcf4aef87779aa8b4

@@ -2,7 +2,7 @@ items:
   - id: CHEAP_TUXEDO_BOOTS
     rarity: COMMON
     default_statistics:
-      crit_damage: 25.0
+      CRITICAL_DAMAGE: 25.0
       intelligence: 25.0
     components:
       - id: STANDARD_ITEM
@@ -16,7 +16,7 @@ items:
   - id: CHEAP_TUXEDO_CHESTPLATE
     rarity: COMMON
     default_statistics:
-      crit_damage: 50.0
+      CRITICAL_DAMAGE: 50.0
       intelligence: 50.0
     components:
       - id: STANDARD_ITEM
@@ -30,7 +30,7 @@ items:
   - id: CHEAP_TUXEDO_LEGGINGS
     rarity: COMMON
     default_statistics:
-      crit_damage: 25.0
+      CRITICAL_DAMAGE: 25.0
       intelligence: 25.0
     components:
       - id: STANDARD_ITEM

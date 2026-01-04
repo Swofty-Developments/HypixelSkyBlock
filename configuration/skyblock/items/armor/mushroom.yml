@@ -1,18 +1,37 @@
 items:
-  - id: MUSHROOM_BOOTS
+  - id: MUSHROOM_HELMET
     rarity: COMMON
     default_statistics:
-      health: 15.0
+      health: 20.0
     components:
       - id: NOT_FINISHED_YET
       - id: SELLABLE
-        value: 8.0
+        value: 10.0
       - id: STANDARD_ITEM
-        standard_item_type: BOOTS
+        standard_item_type: HELMET
       - id: LEATHER_COLOR
         r: '255'
         g: '0'
         b: '0'
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - AOA
+            ingredients:
+              A:
+                type: RED_MUSHROOM
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: MUSHROOM_HELMET
+              amount: 1
+
   - id: MUSHROOM_CHESTPLATE
     rarity: COMMON
     default_statistics:
@@ -28,20 +47,26 @@ items:
         r: '255'
         g: '0'
         b: '0'
-  - id: MUSHROOM_HELMET
-    rarity: COMMON
-    default_statistics:
-      health: 20.0
-    components:
-      - id: NOT_FINISHED_YET
-      - id: SELLABLE
-        value: 10.0
-      - id: STANDARD_ITEM
-        standard_item_type: HELMET
-      - id: LEATHER_COLOR
-        r: '255'
-        g: '0'
-        b: '0'
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AOA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: RED_MUSHROOM
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: MUSHROOM_CHESTPLATE
+              amount: 1
+
   - id: MUSHROOM_LEGGINGS
     rarity: COMMON
     default_statistics:
@@ -57,3 +82,55 @@ items:
         r: '255'
         g: '0'
         b: '0'
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - AOA
+              - AOA
+            ingredients:
+              A:
+                type: RED_MUSHROOM
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: MUSHROOM_LEGGINGS
+              amount: 1
+
+  - id: MUSHROOM_BOOTS
+    rarity: COMMON
+    default_statistics:
+      health: 15.0
+    components:
+      - id: NOT_FINISHED_YET
+      - id: SELLABLE
+        value: 8.0
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
+      - id: LEATHER_COLOR
+        r: '255'
+        g: '0'
+        b: '0'
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AOA
+              - AOA
+            ingredients:
+              A:
+                type: RED_MUSHROOM
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: MUSHROOM_BOOTS
+              amount: 1

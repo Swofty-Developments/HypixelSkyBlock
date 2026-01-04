@@ -1,0 +1,26 @@
+items:
+  - id: WITHER_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Wither Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 17b8ef7e8e0af19399cc32485f2ee47b2bb4d5802c71b3021f4d5d6b5f3afe03
+      - id: SELLABLE
+        value: 1000
+      - id: NOT_FINISHED_YET
+
+  - id: WITHER_RELIC
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Wither Relic
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 17b8ef7e8e0af19399cc32485f2ee47b2bb4d5802c71b3021f4d5d6b5f3afe03
+      - id: SELLABLE
+        value: 1000
+      - id: NOT_FINISHED_YET

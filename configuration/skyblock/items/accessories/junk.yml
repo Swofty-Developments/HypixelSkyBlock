@@ -1,0 +1,39 @@
+items:
+  - id: JUNK_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - '%%dark_gray%%%%italic%%One man''s trash is another man''s treasure.'
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Junk Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: d24c6d00c53b51685a6be7453d236228f9837f1c1e27a9175813983ca49c792f
+      - id: NOT_FINISHED_YET
+
+  - id: JUNK_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - '%%dark_gray%%%%italic%%One man''s trash is another man''s treasure.'
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Junk Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4c920d3593ed4936defc894b88c43a2bb0b50c3a1e9a6dd8e859cb27bd3cabd
+      - id: NOT_FINISHED_YET
+
+  - id: JUNK_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - '%%dark_gray%%%%italic%%One man''s trash is another man''s treasure.'
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Junk Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 9727812f708dee1826bceecdadb9c7719e3d0f385a3b2515d00b5f665d8ba83e
+      - id: NOT_FINISHED_YET

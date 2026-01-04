@@ -1,0 +1,39 @@
+items:
+  - id: BIOANALYSIS_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bioanalysis Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 19ca2fedab02df448906b25f25f2df2c9b9c532ce48276447113dca6825e9e05
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: BIOANALYSIS_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bioanalysis Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 80b774ffeb5878d6e34e9f244642e4ee489fd1dc9a2da52b87e2ecc0449c22f9
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: BIOANALYSIS_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bioanalysis Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: e5f2e8e4f040d1dbef5a5369bd09db86a79b81a249547e458b3cc5997e24c0eb
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET

@@ -1,0 +1,128 @@
+items:
+  - id: PERSONAL_COMPACTOR_4000
+    material: DROPPER
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Compactor 4000
+      - id: ACCESSORY
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: ENCHANTED_REDSTONE
+                amount: 64
+              B:
+                type: SUPER_COMPACTOR_3000
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PERSONAL_COMPACTOR_4000
+              amount: 1
+
+  - id: PERSONAL_COMPACTOR_5000
+    material: DROPPER
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Compactor 5000
+      - id: ACCESSORY
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: ENCHANTED_REDSTONE_BLOCK
+                amount: 2
+              B:
+                type: PERSONAL_COMPACTOR_4000
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PERSONAL_COMPACTOR_5000
+              amount: 1
+
+  - id: PERSONAL_COMPACTOR_6000
+    material: DROPPER
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Compactor 6000
+      - id: ACCESSORY
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: ENCHANTED_REDSTONE_BLOCK
+                amount: 4
+              B:
+                type: PERSONAL_COMPACTOR_5000
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PERSONAL_COMPACTOR_6000
+              amount: 1
+
+  - id: PERSONAL_COMPACTOR_7000
+    material: DROPPER
+    rarity: LEGENDARY
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Compactor 7000
+      - id: ACCESSORY
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: ENCHANTED_REDSTONE_BLOCK
+                amount: 8
+              B:
+                type: PERSONAL_COMPACTOR_6000
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PERSONAL_COMPACTOR_7000
+              amount: 1

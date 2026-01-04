@@ -10,6 +10,17 @@ items:
         value: 240.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawed Amber Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_AMBER_GEM
+                amount: 80
+            result:
+              type: FLAWED_AMBER_GEM
+              amount: 1
 
   - id: FLAWED_AMETHYST_GEM
     rarity: UNCOMMON
@@ -22,6 +33,17 @@ items:
         value: 240.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawed Amethyst Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_AMETHYST_GEM
+                amount: 80
+            result:
+              type: FLAWED_AMETHYST_GEM
+              amount: 1
 
   - id: FLAWED_JADE_GEM
     rarity: UNCOMMON
@@ -34,6 +56,17 @@ items:
         value: 240.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawed Jade Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_JADE_GEM
+                amount: 80
+            result:
+              type: FLAWED_JADE_GEM
+              amount: 1
 
   - id: FLAWED_JASPER_GEM
     rarity: UNCOMMON
@@ -46,6 +79,17 @@ items:
         value: 240.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawed Jasper Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_JASPER_GEM
+                amount: 80
+            result:
+              type: FLAWED_JASPER_GEM
+              amount: 1
 
   - id: FLAWED_RUBY_GEM
     rarity: UNCOMMON
@@ -58,6 +102,17 @@ items:
         value: 240.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawed Ruby Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_RUBY_GEM
+                amount: 80
+            result:
+              type: FLAWED_RUBY_GEM
+              amount: 1
 
   - id: FLAWED_SAPPHIRE_GEM
     rarity: UNCOMMON
@@ -70,6 +125,17 @@ items:
         value: 240.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawed Sapphire Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_SAPPHIRE_GEM
+                amount: 80
+            result:
+              type: FLAWED_SAPPHIRE_GEM
+              amount: 1
 
   - id: FLAWED_TOPAZ_GEM
     rarity: UNCOMMON
@@ -82,6 +148,17 @@ items:
         value: 240.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawed Topaz Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_TOPAZ_GEM
+                amount: 80
+            result:
+              type: FLAWED_TOPAZ_GEM
+              amount: 1
 
   - id: FLAWED_OPAL_GEM
     rarity: UNCOMMON
@@ -94,6 +171,17 @@ items:
         rarity: FLAWED
         gemstone: OPAL
         skull_texture: eadc3bcdd7c701b63f8b8b4a96e429316a08388669d9a98c1a98791729b961df
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_OPAL_GEM
+                amount: 80
+            result:
+              type: FLAWED_OPAL_GEM
+              amount: 1
 
   - id: FLAWED_AQUAMARINE_GEM
     rarity: UNCOMMON
@@ -106,6 +194,17 @@ items:
         rarity: FLAWED
         gemstone: AQUAMARINE
         skull_texture: e4166254ac8b324c1b78eadc7c249866c6742c17586a33aea6a89fe346b2acf0
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_AQUAMARINE_GEM
+                amount: 80
+            result:
+              type: FLAWED_AQUAMARINE_GEM
+              amount: 1
 
   - id: FLAWED_CITRINE_GEM
     rarity: UNCOMMON
@@ -118,6 +217,17 @@ items:
         rarity: FLAWED
         gemstone: CITRINE
         skull_texture: dc0b8433579f480adc685748b2bf2eccc69221137f704bbb922614191f801b26
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_CITRINE_GEM
+                amount: 80
+            result:
+              type: FLAWED_CITRINE_GEM
+              amount: 1
 
   - id: FLAWED_ONYX_GEM
     rarity: UNCOMMON
@@ -130,6 +240,17 @@ items:
         rarity: FLAWED
         gemstone: ONYX
         skull_texture: 352a91f44bcbc78d4c9d045e941a23f7bdb4d99609e60bdcec842396feb315a7
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_ONYX_GEM
+                amount: 80
+            result:
+              type: FLAWED_ONYX_GEM
+              amount: 1
 
   - id: FLAWED_PERIDOT_GEM
     rarity: UNCOMMON
@@ -142,3 +263,14 @@ items:
         rarity: FLAWED
         gemstone: PERIDOT
         skull_texture: 75da734e63aa22116e64703bb33271c4fbc3d1332a6a60c24af49b804193bf46
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: ROUGH_PERIDOT_GEM
+                amount: 80
+            result:
+              type: FLAWED_PERIDOT_GEM
+              amount: 1

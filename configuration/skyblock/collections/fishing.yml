@@ -8,21 +8,17 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: CLAY_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_CLAY
-        isEnchantedRecipe: true
-        recipeType: FISHING
-        craftingMaterial: CLAY_BALL
   - amount: 250
     rewards:
     - type: XP
@@ -68,6 +64,9 @@ collections:
     - type: CUSTOM_AWARD
       data:
         customAward: SACK_OF_SACKS
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_TROPICAL_FISH
   - amount: 200
     rewards:
     - type: XP
@@ -125,6 +124,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_INK_SAC
   - amount: 200
     rewards:
     - type: XP
@@ -177,12 +179,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_LILY_PAD
-        isEnchantedRecipe: true
-        recipeType: FISHING
-        craftingMaterial: LILY_PAD
   - amount: 500
     rewards:
     - type: XP
@@ -287,6 +286,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_PRISMARINE_CRYSTALS
   - amount: 100
     rewards:
     - type: XP
@@ -322,27 +324,17 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: NONE
-        craftingMaterial: PRISMARINE_BLADE
-        resultAmount: 1
-        pattern:
-          - A
-          - A
-          - B
-        ingredients:
-          A:
-            type: PRISMARINE_SHARD
-            amount: 32
-          B:
-            type: STICK
-            amount: 1
+        unlockedItemType: PRISMARINE_BLADE
   - amount: 50
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_PRISMARINE_SHARD
   - amount: 100
     rewards:
     - type: XP
@@ -375,12 +367,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_PUFFERFISH
-        isEnchantedRecipe: true
-        recipeType: FISHING
-        craftingMaterial: PUFFERFISH
   - amount: 100
     rewards:
     - type: XP
@@ -436,10 +425,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: FISHING_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -463,12 +451,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_RAW_FISH
-        isEnchantedRecipe: true
-        recipeType: FISHING
-        craftingMaterial: COD
   - amount: 2500
     rewards:
     - type: XP
@@ -482,12 +467,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_COOKED_FISH
-        isEnchantedRecipe: true
-        recipeType: FISHING
-        craftingMaterial: ENCHANTED_COD
   - amount: 30000
     rewards:
     - type: XP
@@ -534,12 +516,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_RAW_SALMON
-        isEnchantedRecipe: true
-        recipeType: FISHING
-        craftingMaterial: SALMON
   - amount: 500
     rewards:
     - type: XP
@@ -560,12 +539,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_COOKED_SALMON
-        isEnchantedRecipe: true
-        recipeType: FISHING
-        craftingMaterial: ENCHANTED_RAW_SALMON
   - amount: 10000
     rewards:
     - type: XP
@@ -578,7 +554,7 @@ collections:
     - type: XP
       data:
         xp: 4
-  - amount: 40
+  - amount: 50
     rewards:
     - type: XP
       data:
@@ -588,31 +564,46 @@ collections:
     - type: XP
       data:
         xp: 4
-  - amount: 200
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: SEA_CREATURE_TALISMAN
+  - amount: 250
     rewards:
     - type: XP
       data:
         xp: 4
-  - amount: 400
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_SPONGE
+  - amount: 500
     rewards:
     - type: XP
       data:
         xp: 4
-  - amount: 800
+  - amount: 1000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: SEA_CREATURE_RING
   - amount: 1500
     rewards:
     - type: XP
       data:
         xp: 4
-  - amount: 2500
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_WET_SPONGE
+  - amount: 2000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: SEA_CREATURE_ARTIFACT
   - amount: 4000
     rewards:
     - type: XP

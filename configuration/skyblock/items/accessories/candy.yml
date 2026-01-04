@@ -1,0 +1,33 @@
+items:
+  - id: CANDY_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Candy Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: e6ae8c4c983ac24d93c48417a95beeb1ca055b9b49764143cc98c1392548eed3
+      - id: NOT_FINISHED_YET
+
+  - id: CANDY_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Candy Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 18c0d7034a7dac30e2b52c00eeec0eca55fe688d25faf4efd9c0a07dce9eaf30
+      - id: NOT_FINISHED_YET
+
+  - id: CANDY_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Candy Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: b797add1b3ae64d510bcc6ac16c2fa1dd69369edf59821239c955f7f11e1177b
+      - id: NOT_FINISHED_YET

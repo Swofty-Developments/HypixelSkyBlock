@@ -424,45 +424,19 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         SkyBlockLevelRequirement.loadFromYaml();
 
         /**
-         * Cache custom collections
-         */
-        Thread.startVirtualThread(() -> {
-            // Collection Unlocks
-            CollectionCategories.getCategories().forEach(category -> {
-                Arrays.stream(category.getCollections()).forEach(collection -> {
-                    List<CollectionCategory.ItemCollectionReward> rewards = List.of(collection.rewards());
-                    rewards.parallelStream().forEach(reward -> {
-                        Arrays.stream(reward.unlocks()).forEach(unlock -> {
-                            if (unlock instanceof CollectionCategory.UnlockCustomAward award) {
-                                CustomCollectionAward.AWARD_CACHE.put(award.getAward(),
-                                        Map.entry(collection.type(), reward.requirement()));
-                            }
-                        });
-                    });
-                });
-            });
-
-            // Level Unlocks
-            Arrays.stream(SkyBlockLevelRequirement.values()).forEach(requirement -> {
-                requirement.getUnlocks().forEach(unlock -> {
-                    if (unlock instanceof CustomLevelUnlock award) {
-                        CustomLevelAward.addToCache(requirement.asInt(), award.getAward());
-                    }
-                });
-            });
-        });
-
-        /**
          * Load item recipes
          */
         Arrays.stream(ItemType.values()).forEach(type -> {
             SkyBlockItem item = new SkyBlockItem(type);
             if (item.hasComponent(CraftableComponent.class)) {
                 CraftableComponent craftableComponent = item.getComponent(CraftableComponent.class);
-                if (!craftableComponent.isDefaultCraftable()) return;
 
                 try {
-                    craftableComponent.getRecipes().forEach(SkyBlockRecipe::init);
+                    List<SkyBlockRecipe<?>> recipes = craftableComponent.getRecipes();
+                    if (recipes != null && !recipes.isEmpty()) {
+                        recipes.forEach(SkyBlockRecipe::init);
+                        Logger.debug("Initialized " + recipes.size() + " recipe(s) for item: " + type.name());
+                    }
                 } catch (Exception e) {
                     Logger.error(e, "Failed to initialize recipe for item type: {}", type.name());
                 }
@@ -497,6 +471,35 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                     });
                 });
                 recipes.forEach(SkyBlockRecipe::init);
+            });
+        });
+
+        /**
+         * Cache custom collections
+         */
+        Thread.startVirtualThread(() -> {
+            // Collection Unlocks
+            CollectionCategories.getCategories().forEach(category -> {
+                Arrays.stream(category.getCollections()).forEach(collection -> {
+                    List<CollectionCategory.ItemCollectionReward> rewards = List.of(collection.rewards());
+                    rewards.parallelStream().forEach(reward -> {
+                        Arrays.stream(reward.unlocks()).forEach(unlock -> {
+                            if (unlock instanceof CollectionCategory.UnlockCustomAward award) {
+                                CustomCollectionAward.AWARD_CACHE.put(award.getAward(),
+                                        Map.entry(collection.type(), reward.requirement()));
+                            }
+                        });
+                    });
+                });
+            });
+
+            // Level Unlocks
+            Arrays.stream(SkyBlockLevelRequirement.values()).forEach(requirement -> {
+                requirement.getUnlocks().forEach(unlock -> {
+                    if (unlock instanceof CustomLevelUnlock award) {
+                        CustomLevelAward.addToCache(requirement.asInt(), award.getAward());
+                    }
+                });
             });
         });
 

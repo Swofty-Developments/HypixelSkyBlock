@@ -18,7 +18,6 @@ import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAccessoryBag;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
-import net.swofty.type.skyblockgeneric.item.components.TieredTalismanComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -222,7 +221,7 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
         if (item.getMaterial().equals(Material.AIR)) return true;
 
         SkyBlockPlayer player = (SkyBlockPlayer) getPlayer();
-        if (item.hasComponent(AccessoryComponent.class) || item.hasComponent(TieredTalismanComponent.class)) {
+        if (item.hasComponent(AccessoryComponent.class)) {
             DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = player.getAccessoryBag();
             accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getPotentialType());
 

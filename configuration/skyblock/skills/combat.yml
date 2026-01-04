@@ -19,7 +19,7 @@ rewards:
           amount: 100
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -37,7 +37,7 @@ rewards:
           amount: 250
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -55,7 +55,7 @@ rewards:
           amount: 500
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -73,7 +73,7 @@ rewards:
           amount: 750
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -91,7 +91,7 @@ rewards:
           amount: 1000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -109,7 +109,7 @@ rewards:
           amount: 2000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -127,7 +127,7 @@ rewards:
           amount: 3000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -145,7 +145,7 @@ rewards:
           amount: 4000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -163,7 +163,7 @@ rewards:
           amount: 5000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -181,7 +181,7 @@ rewards:
           amount: 7500
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -199,7 +199,7 @@ rewards:
           amount: 10000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -220,7 +220,7 @@ rewards:
           amount: 15000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -238,7 +238,7 @@ rewards:
           amount: 20000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -256,7 +256,7 @@ rewards:
           amount: 25000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -274,7 +274,7 @@ rewards:
           amount: 30000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -292,7 +292,7 @@ rewards:
           amount: 40000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -310,7 +310,7 @@ rewards:
           amount: 50000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -328,7 +328,7 @@ rewards:
           amount: 65000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -346,7 +346,7 @@ rewards:
           amount: 80000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -364,7 +364,7 @@ rewards:
           amount: 100000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -382,7 +382,7 @@ rewards:
           amount: 125000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -400,7 +400,7 @@ rewards:
           amount: 150000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -418,7 +418,7 @@ rewards:
           amount: 175000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -436,7 +436,7 @@ rewards:
           amount: 200000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -454,7 +454,7 @@ rewards:
           amount: 225000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -472,7 +472,7 @@ rewards:
           amount: 250000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -490,7 +490,7 @@ rewards:
           amount: 275000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -508,7 +508,7 @@ rewards:
           amount: 300000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -526,7 +526,7 @@ rewards:
           amount: 325000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -544,7 +544,7 @@ rewards:
           amount: 350000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -562,7 +562,7 @@ rewards:
           amount: 375000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -580,7 +580,7 @@ rewards:
           amount: 400000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -598,7 +598,7 @@ rewards:
           amount: 425000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -616,7 +616,7 @@ rewards:
           amount: 450000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -634,7 +634,7 @@ rewards:
           amount: 475000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -652,7 +652,7 @@ rewards:
           amount: 500000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -670,7 +670,7 @@ rewards:
           amount: 550000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -688,7 +688,7 @@ rewards:
           amount: 600000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -706,7 +706,7 @@ rewards:
           amount: 650000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -724,7 +724,7 @@ rewards:
           amount: 700000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -742,7 +742,7 @@ rewards:
           amount: 750000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -760,7 +760,7 @@ rewards:
           amount: 800000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -778,7 +778,7 @@ rewards:
           amount: 850000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -796,7 +796,7 @@ rewards:
           amount: 900000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -814,7 +814,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -832,7 +832,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -850,7 +850,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -868,7 +868,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -886,7 +886,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -904,7 +904,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
       - type: STATS_ADDITIVE_PERCENTAGE
         data:
@@ -922,7 +922,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
 
   - level: 52
@@ -936,7 +936,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
 
   - level: 53
@@ -950,7 +950,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
 
   - level: 54
@@ -964,7 +964,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
 
   - level: 55
@@ -978,7 +978,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
 
   - level: 56
@@ -992,7 +992,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
 
   - level: 57
@@ -1006,7 +1006,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
 
   - level: 58
@@ -1020,7 +1020,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
 
   - level: 59
@@ -1034,7 +1034,7 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5
 
   - level: 60
@@ -1048,5 +1048,5 @@ rewards:
           amount: 1000000
       - type: STATS_BASE
         data:
-          statistic: CRIT_CHANCE
+          statistic: CRITICAL_CHANCE
           amount: 0.5

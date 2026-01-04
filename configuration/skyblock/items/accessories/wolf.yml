@@ -1,0 +1,25 @@
+items:
+  - id: WOLF_TALISMAN
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Wolf Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: f4cb7a6bf6c32c49f2589147e6f0f888e9e35875dd1ea2a8af379ca710589e6b
+      - id: SELLABLE
+        value: 50
+      - id: NOT_FINISHED_YET
+
+  - id: WOLF_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Wolf Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: f83a2aa9d3734b919ac24c9659e5e0f86ecafbf64d4788cfa433bbec189e8
+      - id: SELLABLE
+        value: 100
+      - id: NOT_FINISHED_YET
