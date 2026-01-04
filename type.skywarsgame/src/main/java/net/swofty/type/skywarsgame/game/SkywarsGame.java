@@ -907,10 +907,6 @@ public class SkywarsGame {
         return nextEvent;
     }
 
-    public GameEvent getCurrentEvent() {
-        return currentEvent;
-    }
-
     public int getAvailableSlots() {
         return Math.max(0, gameType.getMaxPlayers() - players.size());
     }

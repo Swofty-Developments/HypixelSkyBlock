@@ -28,9 +28,11 @@ public class DragonManager {
     private static final double RETURN_SPEED = 0.6;
     private static final double ATTACK_RANGE = 6.0;
     private static final float ATTACK_DAMAGE = 10f;
+    private static final double DIVE_THROUGH_DISTANCE = 40;
     private static final int EXPLOSION_RADIUS = 8;
     private static final double EXPLOSION_KNOCKBACK = 6.0;
-    private static final long EXPLOSION_INTERVAL_MS = 1000;
+    private static final float EXPLOSION_DAMAGE = 6f;
+    private static final long EXPLOSION_INTERVAL_MS = 250;
 
     private final SkywarsGame game;
     private final Instance instance;
@@ -43,6 +45,8 @@ public class DragonManager {
     private DragonState state = DragonState.IDLE;
 
     private SkywarsPlayer diveTarget = null;
+    private Pos diveThroughPoint = null;
+    private boolean hasHitPlayer = false;
     private long idleStartTime = 0;
     private long diveStartTime = 0;
     private long lastExplosionTime = 0;
@@ -103,7 +107,7 @@ public class DragonManager {
         long now = System.currentTimeMillis();
         if (now - lastExplosionTime >= EXPLOSION_INTERVAL_MS) {
             lastExplosionTime = now;
-            AnimatedExplosion.create(instance, dragon.getPosition(), EXPLOSION_RADIUS, EXPLOSION_KNOCKBACK);
+            AnimatedExplosion.create(instance, dragon.getPosition(), EXPLOSION_RADIUS, EXPLOSION_KNOCKBACK, EXPLOSION_DAMAGE, null);
         }
 
         switch (state) {
@@ -121,39 +125,59 @@ public class DragonManager {
                 diveTarget = target;
                 state = DragonState.DIVING;
                 diveStartTime = now;
+                hasHitPlayer = false;
                 dragon.clearTarget();
+
+                Pos dragonPos = dragon.getPosition();
+                Pos playerPos = target.getPosition();
+                double dx = playerPos.x() - dragonPos.x();
+                double dy = playerPos.y() - dragonPos.y();
+                double dz = playerPos.z() - dragonPos.z();
+                double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                if (dist > 0.1) {
+                    double nx = dx / dist;
+                    double ny = dy / dist;
+                    double nz = dz / dist;
+                    diveThroughPoint = playerPos.add(nx * DIVE_THROUGH_DISTANCE, ny * DIVE_THROUGH_DISTANCE * 0.3, nz * DIVE_THROUGH_DISTANCE);
+                } else {
+                    diveThroughPoint = playerPos.add(DIVE_THROUGH_DISTANCE, 0, 0);
+                }
+
                 broadcaster.accept(Component.text("The Ender Dragon is diving at " + target.getUsername() + "!", NamedTextColor.RED));
             }
         }
     }
 
     private void handleDiving() {
-        if (diveTarget == null || diveTarget.isEliminated() || !diveTarget.isOnline()) {
+        if (diveThroughPoint == null) {
             state = DragonState.RETURNING;
             diveTarget = null;
             return;
         }
 
-        if (System.currentTimeMillis() - diveStartTime > 5000) {
-            state = DragonState.RETURNING;
-            return;
-        }
-
-        Pos targetPos = diveTarget.getPosition();
-        dragon.setTarget(targetPos.add(0, 2, 0), DIVE_SPEED);
-
-        double dist = dragon.getPosition().distance(diveTarget.getPosition());
-        if (dist < ATTACK_RANGE) {
-            diveTarget.damage(DamageType.MOB_ATTACK, ATTACK_DAMAGE);
-            broadcaster.accept(Component.text(diveTarget.getUsername() + " was struck by the Ender Dragon!", NamedTextColor.RED));
+        if (System.currentTimeMillis() - diveStartTime > 8000) {
             state = DragonState.RETURNING;
             diveTarget = null;
             return;
         }
 
-        if (dragon.getPosition().y() < targetPos.y() - 10) {
+        dragon.setTarget(diveThroughPoint, DIVE_SPEED);
+
+        if (!hasHitPlayer && diveTarget != null && !diveTarget.isEliminated() && diveTarget.isOnline()) {
+            double dist = dragon.getPosition().distance(diveTarget.getPosition());
+            if (dist < ATTACK_RANGE) {
+                diveTarget.damage(DamageType.MOB_ATTACK, ATTACK_DAMAGE);
+                broadcaster.accept(Component.text(diveTarget.getUsername() + " was struck by the Ender Dragon!", NamedTextColor.RED));
+                hasHitPlayer = true;
+            }
+        }
+
+        double distToEnd = dragon.getPosition().distance(diveThroughPoint);
+        if (distToEnd < 5) {
             state = DragonState.RETURNING;
             diveTarget = null;
+            diveThroughPoint = null;
         }
     }
 

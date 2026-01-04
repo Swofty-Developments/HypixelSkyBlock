@@ -30,6 +30,7 @@ public class DragonEntity extends LivingEntity {
     public DragonEntity() {
         super(EntityType.ENDER_DRAGON);
         setNoGravity(true);
+        hasPhysics = false;
     }
 
     public void setTarget(Pos target, double speed) {
