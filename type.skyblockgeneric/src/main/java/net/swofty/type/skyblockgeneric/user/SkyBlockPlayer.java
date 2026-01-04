@@ -345,6 +345,22 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return true;
     }
 
+    public boolean removeItemsFromPlayer(Map<ItemType, Integer> items) {
+        for (Map.Entry<ItemType, Integer> item : items.entrySet()) {
+            int amount = item.getValue();
+            ItemType type = item.getKey();
+
+            int inventoryAmount = getAmountInInventory(type);
+            int sacksAmount = getSackItems().getAmount(type);
+
+            if ((inventoryAmount + sacksAmount) < amount) return false;
+        }
+        for (Map.Entry<ItemType, Integer> item : items.entrySet()) {
+            removeItemFromPlayer(item.getKey(), item.getValue());
+        }
+        return true;
+    }
+
     public boolean isCoop() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue();
     }

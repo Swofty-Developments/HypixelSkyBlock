@@ -12,17 +12,19 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.BiFunction;
+
 @Getter
 public class RegisteredAbility {
     private final String id;
     private final String name;
-    private final String description;
+    private final BiFunction<SkyBlockPlayer, SkyBlockItem, String> description;
     private final AbilityActivation activation;
     private final int cooldownTicks;
     private final AbilityCost cost;
     private final AbilityAction action;
 
-    public RegisteredAbility(String id, String name, String description,
+    public RegisteredAbility(String id, String name, BiFunction<SkyBlockPlayer, SkyBlockItem, String> description,
                              AbilityActivation activation, int cooldownTicks,
                              AbilityCost cost, AbilityAction action) {
         this.id = id;
@@ -49,6 +51,11 @@ public class RegisteredAbility {
     }
 
     @FunctionalInterface
+    public interface Description {
+        void execute(SkyBlockPlayer player, SkyBlockItem item, Point targetedBlock, BlockFace blockFace);
+    }
+
+    @FunctionalInterface
     public interface AbilityAction {
         void execute(SkyBlockPlayer player, SkyBlockItem item, Point targetedBlock, BlockFace blockFace);
     }
@@ -60,7 +67,8 @@ public class RegisteredAbility {
         LEFT_CLICK_BLOCK("LEFT CLICK"),
         RIGHT_CLICK_BLOCK("RIGHT CLICK"),
         SNEAK_RIGHT_CLICK("SNEAK RIGHT CLICK"),
-        SNEAK_LEFT_CLICK("SNEAK LEFT CLICK")
+        SNEAK_LEFT_CLICK("SNEAK LEFT CLICK"),
+        NEVER("")
         ;
 
         private final @NonNull String display;

@@ -1,5 +1,6 @@
 package net.swofty.type.dwarvenmines.gui.fragilis;
 
+import lombok.Getter;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -10,8 +11,11 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-// TODO: hardcoded
+import java.util.Arrays;
+import java.util.List;
+
 public class GUIDwarvenMetals extends HypixelInventoryGUI {
+    private final int[] SLOTS = {10, 11, 12, 13, 14};
 
     public GUIDwarvenMetals() {
         super("Dwarven Metals", InventoryType.CHEST_6_ROW);
@@ -20,6 +24,9 @@ public class GUIDwarvenMetals extends HypixelInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         border(FILLER_ITEM);
+        set(GUIClickableItem.getGoBackItem(48, new GUIHandyBlockGuide()));
+        set(GUIClickableItem.getCloseItem(49));
+
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
@@ -36,83 +43,34 @@ public class GUIDwarvenMetals extends HypixelInventoryGUI {
                 );
             }
         });
-        set(new GUIItem(10) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack(
-                        "§aMithril Ore",
-                        Material.PRISMARINE_BRICKS,
-                        1,
-                        "§8Dwarven Metal",
-                        "",
-                        "§7Properties",
-                        "§7 Breaking Power: §24",
-                        "§7 Block Strength: §e800"
-                );
-            }
-        });
-        set(new GUIItem(11) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack(
-                        "§aTitanium Ore",
-                        Material.POLISHED_DIORITE,
-                        1,
-                        "§8Dwarven Metal",
-                        "",
-                        "§7Properties",
-                        "§7 Breaking Power: §25",
-                        "§7 Block Strength: §e2,000"
-                );
-            }
-        });
-        set(new GUIItem(12) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack(
-                        "§aUmber",
-                        Material.RED_SANDSTONE,
-                        1,
-                        "§8Dwarven Metal",
-                        "",
-                        "§7Properties",
-                        "§7 Breaking Power: §29",
-                        "§7 Block Strength: §e5,600"
-                );
-            }
-        });
-        set(new GUIItem(13) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack(
-                        "§aTungsten",
-                        Material.CLAY,
-                        1,
-                        "§8Dwarven Metal",
-                        "",
-                        "§7Properties",
-                        "§7 Breaking Power: §29",
-                        "§7 Block Strength: §e5,600"
-                );
-            }
-        });
-        set(new GUIItem(14) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack(
-                        "§aGlacite",
-                        Material.PACKED_ICE,
-                        1,
-                        "§8Dwarven Metal",
-                        "",
-                        "§7Properties",
-                        "§7 Breaking Power: §29",
-                        "§7 Block Strength: §e6,000"
-                );
-            }
-        });
-        set(GUIClickableItem.getGoBackItem(48, new GUIHandyBlockGuide()));
-        set(GUIClickableItem.getCloseItem(49));
+
+        List<DwarvenMetalData> metals = Arrays.asList(DwarvenMetalData.values());
+
+        for (int i = 0; i < metals.size() && i < SLOTS.length; i++) {
+            final DwarvenMetalData metal = metals.get(i);
+            final int slot = SLOTS[i];
+
+            set(new GUIItem(slot) {
+                @Override
+                public ItemStack.Builder getItem(HypixelPlayer player) {
+                    List<String> lore = Arrays.asList(
+                            "§8Dwarven Metal",
+                            "",
+                            "§7Properties",
+                            "§7 Breaking Power: §2" + metal.getBreakingPower(),
+                            "§7 Block Strength: §e" + String.format("%,d", metal.getBlockStrength())
+                    );
+
+                    return ItemStackCreator.getStack(
+                            "§a" + metal.getDisplayName(),
+                            metal.getMaterial(),
+                            1,
+                            lore.toArray(new String[0])
+                    );
+                }
+            });
+        }
+
         updateItemStacks(getInventory(), getPlayer());
     }
 
@@ -124,5 +82,26 @@ public class GUIDwarvenMetals extends HypixelInventoryGUI {
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
         e.setCancelled(true);
+    }
+
+    @Getter
+    public enum DwarvenMetalData {
+        MITHRIL_ORE("Mithril Ore", Material.PRISMARINE_BRICKS, 4, 800),
+        TITANIUM_ORE("Titanium Ore", Material.POLISHED_DIORITE, 5, 2000),
+        UMBER("Umber", Material.RED_SANDSTONE, 9, 5600),
+        TUNGSTEN("Tungsten", Material.CLAY, 9, 5600),
+        GLACITE("Glacite", Material.PACKED_ICE, 9, 6000);
+
+        private final String displayName;
+        private final Material material;
+        private final int breakingPower;
+        private final int blockStrength;
+
+        DwarvenMetalData(String displayName, Material material, int breakingPower, int blockStrength) {
+            this.displayName = displayName;
+            this.material = material;
+            this.breakingPower = breakingPower;
+            this.blockStrength = blockStrength;
+        }
     }
 }

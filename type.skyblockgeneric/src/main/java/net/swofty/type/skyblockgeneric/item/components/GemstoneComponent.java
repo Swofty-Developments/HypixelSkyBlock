@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 
@@ -21,7 +22,7 @@ public class GemstoneComponent extends SkyBlockItemComponent {
     ) {}
 
     public record ItemRequirement(
-            net.swofty.commons.skyblock.item.ItemType itemId,
+            ItemType itemId,
             int amount
     ) {}
 }
