@@ -39,13 +39,21 @@ dependencies {
     implementation(project(":type.jerrysworkshop"))
     implementation(project(":type.dungeonhub"))
     implementation(project(":type.skyblockgeneric"))
+
     implementation(project(":type.prototypelobby"))
+
     implementation(project(":type.bedwarslobby"))
     implementation(project(":type.bedwarsgame"))
     implementation(project(":type.bedwarsconfigurator"))
+
     implementation(project(":type.murdermysterylobby"))
     implementation(project(":type.murdermysterygame"))
     implementation(project(":type.murdermysteryconfigurator"))
+
+    implementation(project(":type.skywarslobby"))
+    implementation(project(":type.skywarsgame"))
+    implementation(project(":type.skywarsconfigurator"))
+
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))

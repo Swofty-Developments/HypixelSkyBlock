@@ -1,0 +1,1414 @@
+# SkyWars Kits Configuration
+# Defines all kits with their items, costs, and rarities
+
+kits:
+  # ==================== DEFAULT KIT ====================
+  default:
+    name: "Default"
+    material: "WOODEN_PICKAXE"
+    rarity: "COMMON"
+    cost: 0
+    soulWellDrop: false
+    isDefault: true
+    modes:
+      NORMAL:
+        items:
+          - material: WOODEN_PICKAXE
+          - material: WOODEN_AXE
+          - material: WOODEN_SHOVEL
+          - material: WOODEN_SWORD
+          - material: LEATHER_CHESTPLATE
+      INSANE:
+        items:
+          - material: IRON_PICKAXE
+          - material: IRON_AXE
+          - material: IRON_SHOVEL
+          - material: IRON_SWORD
+          - material: IRON_CHESTPLATE
+
+  # ==================== COMMON KITS (15,000 coins) ====================
+  armorsmith:
+    name: "Armorsmith"
+    material: "ANVIL"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: ANVIL
+          - material: ENCHANTED_BOOK
+            enchantments:
+              - type: PROTECTION
+                level: 2
+              - type: SHARPNESS
+                level: 1
+          - material: EXPERIENCE_BOTTLE
+            amount: 64
+          - material: DIAMOND_HELMET
+          - material: ENCHANTED_BOOK
+            enchantments:
+              - type: POWER
+                level: 1
+      INSANE:
+        items:
+          - material: ANVIL
+          - material: ENCHANTED_BOOK
+            enchantments:
+              - type: PROTECTION
+                level: 3
+              - type: SHARPNESS
+                level: 1
+              - type: POWER
+                level: 3
+              - type: FEATHER_FALLING
+                level: 4
+              - type: INFINITY
+                level: 1
+          - material: EXPERIENCE_BOTTLE
+            amount: 64
+          - material: DIAMOND_HELMET
+          - material: ENCHANTED_BOOK
+            enchantments:
+              - type: POWER
+                level: 1
+
+  ecologist:
+    name: "Ecologist"
+    material: "STONE_AXE"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: STONE_AXE
+            enchantments:
+              - type: EFFICIENCY
+                level: 2
+              - type: SHARPNESS
+                level: 1
+          - material: OAK_LOG
+            amount: 24
+          - material: LEATHER_LEGGINGS
+            enchantments:
+              - type: PROTECTION
+                level: 1
+      INSANE:
+        items:
+          - material: IRON_AXE
+            enchantments:
+              - type: EFFICIENCY
+                level: 2
+              - type: SHARPNESS
+                level: 1
+          - material: OAK_LOG
+            amount: 24
+          - material: LEATHER_LEGGINGS
+            enchantments:
+              - type: PROTECTION
+                level: 3
+
+  enchanter:
+    name: "Enchanter"
+    material: "ENCHANTING_TABLE"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: ENCHANTING_TABLE
+          - material: EXPERIENCE_BOTTLE
+            amount: 64
+          - material: BOOKSHELF
+            amount: 8
+          - material: GOLDEN_LEGGINGS
+          - material: GOLDEN_BOOTS
+      INSANE:
+        items:
+          - material: ENCHANTING_TABLE
+          - material: EXPERIENCE_BOTTLE
+            amount: 64
+          - material: BOOKSHELF
+            amount: 8
+          - material: GOLDEN_HELMET
+          - material: GOLDEN_CHESTPLATE
+          - material: GOLDEN_LEGGINGS
+          - material: GOLDEN_BOOTS
+
+  rookie:
+    name: "Rookie"
+    material: "LEATHER_HELMET"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: LEATHER_HELMET
+          - material: LEATHER_CHESTPLATE
+          - material: LEATHER_LEGGINGS
+          - material: LEATHER_BOOTS
+          - material: STONE_SWORD
+          - material: GLASS
+            amount: 16
+
+  batguy:
+    name: "Batguy"
+    material: "LEATHER_HELMET"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: LEATHER_HELMET
+          - material: LEATHER_CHESTPLATE
+          - material: LEATHER_LEGGINGS
+          - material: LEATHER_BOOTS
+          - material: SPLASH_POTION
+            amount: 2
+            potionType: BLINDNESS
+            potionDuration: 200
+          - material: BAT_SPAWN_EGG
+            amount: 5
+      INSANE:
+        items:
+          - material: LEATHER_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 2
+          - material: LEATHER_CHESTPLATE
+          - material: LEATHER_LEGGINGS
+          - material: IRON_BOOTS
+            enchantments:
+              - type: PROTECTION
+                level: 2
+          - material: SPLASH_POTION
+            amount: 2
+            potionType: BLINDNESS
+            potionDuration: 220
+          - material: BAT_SPAWN_EGG
+            amount: 10
+
+  disco:
+    name: "Disco"
+    material: "JUKEBOX"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: LEATHER_HELMET
+            enchantments:
+              - type: PROJECTILE_PROTECTION
+                level: 2
+          - material: LEATHER_CHESTPLATE
+          - material: LEATHER_LEGGINGS
+          - material: LEATHER_BOOTS
+            enchantments:
+              - type: FEATHER_FALLING
+                level: 2
+          - material: JUKEBOX
+          - material: NOTE_BLOCK
+            amount: 24
+          - material: MUSIC_DISC_CAT
+      INSANE:
+        items:
+          - material: LEATHER_HELMET
+            enchantments:
+              - type: PROJECTILE_PROTECTION
+                level: 4
+          - material: LEATHER_CHESTPLATE
+            enchantments:
+              - type: PROTECTION
+                level: 3
+              - type: THORNS
+                level: 3
+          - material: LEATHER_LEGGINGS
+            enchantments:
+              - type: PROTECTION
+                level: 4
+          - material: LEATHER_BOOTS
+            enchantments:
+              - type: FEATHER_FALLING
+                level: 4
+          - material: JUKEBOX
+          - material: NOTE_BLOCK
+            amount: 12
+          - material: MUSIC_DISC_CAT
+
+  energix:
+    name: "Energix"
+    material: "POTION"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: POTION
+            potionType: STRENGTH
+            potionDuration: 100
+          - material: LEATHER_LEGGINGS
+            enchantments:
+              - type: PROTECTION
+                level: 1
+      INSANE:
+        items:
+          - material: POTION
+            potionType: STRENGTH
+            potionDuration: 140
+          - material: LEATHER_LEGGINGS
+            enchantments:
+              - type: PROTECTION
+                level: 2
+
+  frog:
+    name: "Frog"
+    texture: "fa72d7d2195a51fbe546e7348a6b75de1197bce21ea1dec6227df1f2ed8b73"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: PLAYER_HEAD
+            texture: "fa72d7d2195a51fbe546e7348a6b75de1197bce21ea1dec6227df1f2ed8b73"
+            customName: "Frog's Hat"
+          - material: LEATHER_CHESTPLATE
+          - material: LEATHER_LEGGINGS
+          - material: LEATHER_BOOTS
+          - material: POTION
+            potionType: JUMP
+            potionDuration: 600
+            customName: "Frog's Potion"
+          - material: LILY_PAD
+            amount: 16
+      INSANE:
+        items:
+          - material: PLAYER_HEAD
+            texture: "fa72d7d2195a51fbe546e7348a6b75de1197bce21ea1dec6227df1f2ed8b73"
+            customName: "Frog's Hat"
+          - material: LEATHER_CHESTPLATE
+          - material: LEATHER_LEGGINGS
+          - material: LEATHER_BOOTS
+          - material: POTION
+            potionType: JUMP
+            potionDuration: 600
+            customName: "Frog's Potion"
+          - material: LILY_PAD
+            amount: 16
+
+  grenade:
+    name: "Grenade"
+    material: "CREEPER_SPAWN_EGG"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: CREEPER_SPAWN_EGG
+            customName: "Charged Creeper Egg"
+          - material: LEATHER_CHESTPLATE
+            enchantments:
+              - type: BLAST_PROTECTION
+                level: 4
+          - material: LEATHER_LEGGINGS
+            enchantments:
+              - type: BLAST_PROTECTION
+                level: 4
+      INSANE:
+        items:
+          - material: CREEPER_SPAWN_EGG
+            amount: 3
+            customName: "Charged Creeper Egg"
+          - material: LEATHER_CHESTPLATE
+            enchantments:
+              - type: BLAST_PROTECTION
+                level: 4
+          - material: LEATHER_LEGGINGS
+            enchantments:
+              - type: BLAST_PROTECTION
+                level: 4
+          - material: LEATHER_BOOTS
+            enchantments:
+              - type: BLAST_PROTECTION
+                level: 4
+
+  healer:
+    name: "Healer"
+    material: "CAKE"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: SPLASH_POTION
+            amount: 3
+            potionType: INSTANT_HEALTH
+          - material: SPLASH_POTION
+            amount: 2
+            potionType: REGENERATION
+            potionDuration: 660
+          - material: GOLDEN_APPLE
+      INSANE:
+        items:
+          - material: SPLASH_POTION
+            amount: 3
+            potionType: INSTANT_HEALTH
+          - material: SPLASH_POTION
+            amount: 2
+            potionType: REGENERATION
+            potionDuration: 320
+            potionAmplifier: 1
+          - material: GOLDEN_APPLE
+            amount: 2
+
+  scout:
+    name: "Scout"
+    material: "POTION"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: WOODEN_SWORD
+          - material: POTION
+            amount: 2
+            potionType: SPEED
+            potionDuration: 1200
+          - material: IRON_BOOTS
+      INSANE:
+        items:
+          - material: DIAMOND_SWORD
+          - material: POTION
+            amount: 2
+            potionType: SPEED
+            potionDuration: 1200
+            potionAmplifier: 1
+          - material: DIAMOND_BOOTS
+
+  cactus:
+    name: "Cactus"
+    material: "CACTUS"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: CACTUS
+            amount: 8
+          - material: SAND
+            amount: 16
+          - material: SANDSTONE
+            amount: 16
+          - material: LEATHER_CHESTPLATE
+            enchantments:
+              - type: THORNS
+                level: 5
+              - type: UNBREAKING
+                level: 5
+          - material: LEATHER_HELMET
+            enchantments:
+              - type: THORNS
+                level: 5
+              - type: UNBREAKING
+                level: 5
+      INSANE:
+        items:
+          - material: CACTUS
+            amount: 16
+          - material: SAND
+            amount: 32
+          - material: SANDSTONE
+            amount: 16
+          - material: LEATHER_CHESTPLATE
+            enchantments:
+              - type: THORNS
+                level: 5
+              - type: UNBREAKING
+                level: 5
+          - material: LEATHER_LEGGINGS
+            enchantments:
+              - type: THORNS
+                level: 5
+              - type: UNBREAKING
+                level: 5
+          - material: LEATHER_HELMET
+            enchantments:
+              - type: THORNS
+                level: 5
+              - type: UNBREAKING
+                level: 5
+
+  pro:
+    name: "Pro"
+    material: "IRON_HELMET"
+    rarity: "COMMON"
+    cost: 15000
+    soulWellDrop: true
+    modes:
+      INSANE:
+        items:
+          - material: IRON_HELMET
+          - material: IRON_CHESTPLATE
+          - material: IRON_SWORD
+            enchantments:
+              - type: SHARPNESS
+                level: 1
+          - material: GLASS
+            amount: 16
+          - material: GOLDEN_APPLE
+
+  # ==================== RARE KITS (20,000 coins) ====================
+  armorer:
+    name: "Armorer"
+    material: "GOLDEN_CHESTPLATE"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: GOLDEN_HELMET
+          - material: GOLDEN_CHESTPLATE
+      INSANE:
+        items:
+          - material: IRON_CHESTPLATE
+          - material: IRON_LEGGINGS
+          - material: DIAMOND_BOOTS
+          - material: SPLASH_POTION
+            potionType: RESISTANCE
+            potionDuration: 200
+
+  baseball_player:
+    name: "Baseball Player"
+    material: "IRON_HELMET"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: IRON_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 1
+          - material: WOODEN_SWORD
+            enchantments:
+              - type: KNOCKBACK
+                level: 1
+      INSANE:
+        items:
+          - material: IRON_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 4
+          - material: STONE_SWORD
+            enchantments:
+              - type: KNOCKBACK
+                level: 1
+
+  enderchest:
+    name: "Enderchest"
+    material: "ENDER_CHEST"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    specialAbility: "EXTRA_CHEST"
+    modes:
+      NORMAL:
+        items:
+          - material: GOLDEN_APPLE
+      INSANE:
+        items:
+          - material: GOLDEN_APPLE
+            amount: 3
+
+  farmer:
+    name: "Farmer"
+    material: "IRON_LEGGINGS"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: IRON_LEGGINGS
+            enchantments:
+              - type: PROJECTILE_PROTECTION
+                level: 3
+          - material: EGG
+            amount: 16
+      INSANE:
+        items:
+          - material: DIAMOND_LEGGINGS
+            enchantments:
+              - type: PROJECTILE_PROTECTION
+                level: 4
+          - material: EGG
+            amount: 16
+          - material: GOLDEN_APPLE
+
+  fisherman:
+    name: "Fisherman"
+    material: "FISHING_ROD"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: FISHING_ROD
+            enchantments:
+              - type: UNBREAKING
+                level: 10
+              - type: LUCK_OF_THE_SEA
+                level: 10
+              - type: LURE
+                level: 7
+          - material: CHAINMAIL_HELMET
+            enchantments:
+              - type: RESPIRATION
+                level: 2
+          - material: CHAINMAIL_LEGGINGS
+      INSANE:
+        items:
+          - material: FISHING_ROD
+            enchantments:
+              - type: UNBREAKING
+                level: 10
+              - type: LUCK_OF_THE_SEA
+                level: 10
+              - type: LURE
+                level: 10
+          - material: CHAINMAIL_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 2
+              - type: RESPIRATION
+                level: 3
+          - material: CHAINMAIL_LEGGINGS
+            enchantments:
+              - type: PROTECTION
+                level: 1
+
+  hunter:
+    name: "Hunter"
+    material: "BOW"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: BOW
+            enchantments:
+              - type: POWER
+                level: 1
+          - material: ARROW
+            amount: 8
+      INSANE:
+        items:
+          - material: BOW
+            enchantments:
+              - type: POWER
+                level: 2
+          - material: ARROW
+            amount: 16
+
+  knight:
+    name: "Knight"
+    material: "GOLDEN_SWORD"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: GOLDEN_SWORD
+            enchantments:
+              - type: SHARPNESS
+                level: 2
+              - type: UNBREAKING
+                level: 5
+          - material: GOLDEN_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 1
+      INSANE:
+        items:
+          - material: IRON_SWORD
+            enchantments:
+              - type: SHARPNESS
+                level: 2
+          - material: GOLDEN_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 2
+              - type: UNBREAKING
+                level: 3
+
+  pharaoh:
+    name: "Pharaoh"
+    material: "GOLDEN_HELMET"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: GOLDEN_HELMET
+          - material: LEATHER_CHESTPLATE
+            color: "FFFFFF"
+          - material: LEATHER_LEGGINGS
+            color: "FFFFFF"
+          - material: BEACON
+          - material: EMERALD_BLOCK
+            amount: 42
+      INSANE:
+        items:
+          - material: GOLDEN_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 4
+              - type: UNBREAKING
+                level: 5
+          - material: LEATHER_CHESTPLATE
+            color: "FFFFFF"
+          - material: LEATHER_LEGGINGS
+            color: "FFFFFF"
+          - material: BEACON
+          - material: EMERALD_BLOCK
+            amount: 42
+          - material: GOLDEN_BOOTS
+            enchantments:
+              - type: PROTECTION
+                level: 4
+              - type: UNBREAKING
+                level: 5
+          - material: IRON_BLOCK
+            amount: 2
+          - material: GOLD_BLOCK
+            amount: 2
+
+  snowman:
+    name: "Snowman"
+    material: "SNOWBALL"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: SNOWBALL
+            amount: 16
+          - material: SNOW_BLOCK
+            amount: 2
+          - material: IRON_SHOVEL
+            enchantments:
+              - type: SHARPNESS
+                level: 2
+          - material: CARVED_PUMPKIN
+          - material: COAL_BLOCK
+            amount: 16
+          - material: LEATHER_HELMET
+            enchantments:
+              - type: FIRE_PROTECTION
+                level: 3
+      INSANE:
+        items:
+          - material: SNOWBALL
+            amount: 32
+          - material: SNOW_BLOCK
+            amount: 2
+          - material: DIAMOND_SHOVEL
+            enchantments:
+              - type: SHARPNESS
+                level: 3
+          - material: CARVED_PUMPKIN
+          - material: COAL_BLOCK
+            amount: 16
+          - material: LEATHER_HELMET
+            color: "FFFFFF"
+            enchantments:
+              - type: FIRE_PROTECTION
+                level: 4
+          - material: LEATHER_CHESTPLATE
+            color: "FFFFFF"
+          - material: LEATHER_LEGGINGS
+            color: "FFFFFF"
+          - material: LEATHER_BOOTS
+            color: "FFFFFF"
+
+  speleologist:
+    name: "Speleologist"
+    material: "IRON_PICKAXE"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: IRON_PICKAXE
+            enchantments:
+              - type: EFFICIENCY
+                level: 3
+              - type: SHARPNESS
+                level: 1
+              - type: UNBREAKING
+                level: 3
+          - material: STONE
+            amount: 24
+          - material: GOLDEN_HELMET
+      INSANE:
+        items:
+          - material: DIAMOND_PICKAXE
+            enchantments:
+              - type: EFFICIENCY
+                level: 3
+              - type: SHARPNESS
+                level: 2
+              - type: UNBREAKING
+                level: 3
+              - type: FORTUNE
+                level: 2
+          - material: STONE
+            amount: 32
+          - material: DIAMOND_HELMET
+
+  princess:
+    name: "Princess"
+    material: "POPPY"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    specialAbility: "EXTRA_CHEST_LEATHER"
+    modes:
+      NORMAL:
+        items:
+          - material: GOLDEN_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 1
+          - material: BOW
+            enchantments:
+              - type: FLAME
+                level: 1
+          - material: ARROW
+            amount: 3
+
+  engineer:
+    name: "Engineer"
+    material: "REDSTONE"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: TRIPWIRE_HOOK
+            amount: 64
+          - material: COBWEB
+            amount: 8
+          - material: PISTON
+            amount: 64
+          - material: SLIME_BALL
+            amount: 64
+          - material: REDSTONE
+            amount: 64
+          - material: LEVER
+            amount: 64
+          - material: DISPENSER
+            amount: 64
+          - material: GUNPOWDER
+            amount: 64
+          - material: SAND
+            amount: 64
+          - material: GRAVEL
+            amount: 64
+          - material: ARROW
+            amount: 64
+          - material: FLINT_AND_STEEL
+            amount: 4
+          - material: GOLDEN_HELMET
+      INSANE:
+        items:
+          - material: TRIPWIRE_HOOK
+            amount: 64
+          - material: COBWEB
+            amount: 8
+          - material: PISTON
+            amount: 64
+          - material: SLIME_BALL
+            amount: 64
+          - material: REDSTONE
+            amount: 64
+          - material: LEVER
+            amount: 64
+          - material: DISPENSER
+            amount: 64
+          - material: GUNPOWDER
+            amount: 64
+          - material: SAND
+            amount: 64
+          - material: GRAVEL
+            amount: 64
+          - material: ARROW
+            amount: 64
+          - material: FLINT_AND_STEEL
+            amount: 4
+          - material: GOLDEN_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 2
+
+  pig_rider:
+    name: "Pig Rider"
+    material: "CARROT_ON_A_STICK"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: SADDLE
+          - material: PIG_SPAWN_EGG
+          - material: GOLDEN_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 4
+          - material: CARROT_ON_A_STICK
+          - material: HAY_BLOCK
+            amount: 16
+      INSANE:
+        items:
+          - material: SADDLE
+          - material: PIG_SPAWN_EGG
+          - material: GOLDEN_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 2
+          - material: GOLDEN_CHESTPLATE
+            enchantments:
+              - type: PROTECTION
+                level: 2
+          - material: GOLDEN_LEGGINGS
+            enchantments:
+              - type: PROTECTION
+                level: 2
+          - material: GOLDEN_BOOTS
+            enchantments:
+              - type: PROTECTION
+                level: 2
+          - material: CARROT_ON_A_STICK
+          - material: GOLDEN_SWORD
+            enchantments:
+              - type: SHARPNESS
+                level: 2
+          - material: HAY_BLOCK
+            amount: 16
+
+  sloth:
+    name: "Sloth"
+    material: "POTION"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    specialAbility: "PERMANENT_SLOWNESS"
+    modes:
+      NORMAL:
+        items:
+          - material: SPLASH_POTION
+            amount: 3
+            potionType: SLOWNESS
+            customName: "Sloth Potion"
+          - material: LEATHER_CHESTPLATE
+          - material: LEATHER_LEGGINGS
+          - material: LEATHER_HELMET
+          - material: LEATHER_BOOTS
+          - material: JUNGLE_LOG
+            amount: 4
+      INSANE:
+        items:
+          - material: SPLASH_POTION
+            amount: 5
+            potionType: SLOWNESS
+            customName: "Sloth Potion"
+          - material: LEATHER_CHESTPLATE
+            enchantments:
+              - type: PROTECTION
+                level: 1
+          - material: LEATHER_LEGGINGS
+            enchantments:
+              - type: PROTECTION
+                level: 1
+          - material: LEATHER_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 1
+          - material: LEATHER_BOOTS
+            enchantments:
+              - type: PROTECTION
+                level: 1
+          - material: JUNGLE_LOG
+            amount: 16
+          - material: GHAST_TEAR
+            enchantments:
+              - type: SHARPNESS
+                level: 5
+            customName: "Sloth Claw"
+
+  magician:
+    name: "Magician"
+    material: "SPLASH_POTION"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: RABBIT_SPAWN_EGG
+          - material: LEATHER_HELMET
+          - material: SPLASH_POTION
+            amount: 2
+            customName: "Magician Potion"
+          - material: BLAZE_ROD
+            enchantments:
+              - type: SHARPNESS
+                level: 4
+            customName: "The Wand"
+      INSANE:
+        items:
+          - material: RABBIT_SPAWN_EGG
+          - material: LEATHER_HELMET
+          - material: SPLASH_POTION
+            amount: 2
+            customName: "Magician Potion"
+          - material: BLAZE_ROD
+            enchantments:
+              - type: SHARPNESS
+                level: 7
+            customName: "The Wand"
+
+  warlock:
+    name: "Warlock"
+    material: "BREWING_STAND"
+    rarity: "RARE"
+    cost: 20000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: SPLASH_POTION
+            amount: 2
+            potionType: INSTANT_DAMAGE
+          - material: SPLASH_POTION
+            amount: 2
+            potionType: WEAKNESS
+            potionDuration: 200
+            potionAmplifier: 1
+          - material: SPLASH_POTION
+            potionType: POISON
+            potionDuration: 200
+          - material: LEATHER_CHESTPLATE
+            enchantments:
+              - type: PROTECTION
+                level: 2
+          - material: CHAINMAIL_BOOTS
+      INSANE:
+        items:
+          - material: SPLASH_POTION
+            amount: 2
+            potionType: INSTANT_DAMAGE
+          - material: SPLASH_POTION
+            amount: 2
+            potionType: WEAKNESS
+            potionDuration: 200
+            potionAmplifier: 2
+          - material: SPLASH_POTION
+            potionType: POISON
+            potionDuration: 200
+          - material: GOLDEN_APPLE
+            amount: 2
+          - material: LEATHER_CHESTPLATE
+            enchantments:
+              - type: PROTECTION
+                level: 4
+          - material: CHAINMAIL_BOOTS
+            enchantments:
+              - type: PROTECTION
+                level: 1
+
+  # ==================== LEGENDARY KITS (30,000 coins) ====================
+  cannoneer:
+    name: "Cannoneer"
+    material: "TNT"
+    rarity: "LEGENDARY"
+    cost: 30000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: TNT
+            amount: 16
+          - material: REDSTONE_BLOCK
+            amount: 4
+          - material: IRON_BOOTS
+            enchantments:
+              - type: FEATHER_FALLING
+                level: 3
+              - type: BLAST_PROTECTION
+                level: 3
+          - material: WATER_BUCKET
+          - material: STONE_PRESSURE_PLATE
+            amount: 4
+
+  enderman:
+    name: "Enderman"
+    material: "ENDER_PEARL"
+    rarity: "LEGENDARY"
+    cost: 30000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: ENDER_PEARL
+            customName: "Corrupted Pearl"
+          - material: IRON_HELMET
+            enchantments:
+              - type: PROTECTION
+                level: 1
+          - material: IRON_BOOTS
+            enchantments:
+              - type: PROTECTION
+                level: 1
+
+  pyro:
+    name: "Pyro"
+    material: "FLINT_AND_STEEL"
+    rarity: "LEGENDARY"
+    cost: 30000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: FLINT_AND_STEEL
+          - material: LAVA_BUCKET
+          - material: LAVA_BUCKET
+          - material: CHAINMAIL_CHESTPLATE
+          - material: CHAINMAIL_BOOTS
+          - material: POTION
+            potionType: FIRE_RESISTANCE
+            potionDuration: 600
+
+  troll:
+    name: "Troll"
+    material: "COBWEB"
+    rarity: "LEGENDARY"
+    cost: 30000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: COBWEB
+            amount: 12
+          - material: FIREWORK_ROCKET
+            amount: 5
+          - material: LEATHER_HELMET
+          - material: LEATHER_CHESTPLATE
+          - material: LEATHER_LEGGINGS
+          - material: LEATHER_BOOTS
+          - material: SPLASH_POTION
+            potionType: POISON
+            potionDuration: 100
+            potionAmplifier: 1
+          - material: SPLASH_POTION
+            potionType: SLOWNESS
+            potionDuration: 100
+            potionAmplifier: 1
+
+  guardian:
+    name: "Guardian"
+    material: "OBSIDIAN"
+    rarity: "LEGENDARY"
+    cost: 30000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: OBSIDIAN
+            amount: 6
+          - material: SPLASH_POTION
+            potionType: RESISTANCE
+            potionDuration: 200
+          - material: SKELETON_SPAWN_EGG
+            amount: 2
+          - material: ZOMBIE_SPAWN_EGG
+            amount: 2
+          - material: CHAINMAIL_LEGGINGS
+          - material: CHAINMAIL_BOOTS
+
+  salmon:
+    name: "Salmon"
+    material: "SALMON"
+    rarity: "LEGENDARY"
+    cost: 30000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: SALMON
+            enchantments:
+              - type: SHARPNESS
+                level: 2
+              - type: KNOCKBACK
+                level: 1
+          - material: SPONGE
+            amount: 16
+          - material: LEATHER_LEGGINGS
+          - material: LEATHER_BOOTS
+
+  slime:
+    name: "Slime"
+    material: "SLIME_BLOCK"
+    rarity: "LEGENDARY"
+    cost: 30000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: IRON_BOOTS
+            enchantments:
+              - type: FEATHER_FALLING
+                level: 4
+          - material: SLIME_BLOCK
+            amount: 32
+
+  jester:
+    name: "Jester"
+    material: "DIAMOND_SWORD"
+    rarity: "LEGENDARY"
+    cost: 30000
+    soulWellDrop: true
+    specialAbility: "RANDOM_SWORD"
+    modes:
+      NORMAL:
+        items:
+          - material: WOODEN_SWORD
+            customName: "Random Sword"
+          - material: GOLDEN_APPLE
+            amount: 2
+
+  zookeeper:
+    name: "Zookeeper"
+    material: "POLAR_BEAR_SPAWN_EGG"
+    rarity: "LEGENDARY"
+    cost: 30000
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: EGG
+            amount: 3
+            customName: "Mystery Egg"
+
+  archeologist:
+    name: "Archeologist"
+    material: "GOLDEN_PICKAXE"
+    rarity: "LEGENDARY"
+    cost: 0
+    soulWellDrop: false
+    unlockMethod: "ANGELS_DESCENT"
+    modes:
+      NORMAL:
+        items:
+          - material: IRON_HELMET
+            enchantments:
+              - type: UNBREAKING
+                level: 10
+            customName: "Knight's Helmet"
+          - material: IRON_CHESTPLATE
+            customName: "Legionnaire's Chestplate"
+          - material: LEATHER_BOOTS
+            color: "FF0000"
+            customName: "Red Socks"
+          - material: FISHING_ROD
+            enchantments:
+              - type: UNBREAKING
+                level: 10
+              - type: LUCK_OF_THE_SEA
+                level: 3
+              - type: LURE
+                level: 255
+            customName: "Simple Fishing Rod"
+          - material: POTION
+            potionType: FIRE_RESISTANCE
+            customName: "Blazing Potion"
+          - material: POTION
+            potionType: REGENERATION
+            customName: "Potion of Hearts"
+
+  fallen_angel:
+    name: "Fallen Angel"
+    material: "DIAMOND_HOE"
+    rarity: "LEGENDARY"
+    cost: 0
+    soulWellDrop: false
+    unlockMethod: "ANGELS_DESCENT"
+    modes:
+      NORMAL:
+        items:
+          - material: DIAMOND_HOE
+            enchantments:
+              - type: SHARPNESS
+                level: 6
+
+  # ==================== MYTHICAL KITS (1 Opal) ====================
+  end_lord:
+    name: "End Lord"
+    texture: "f868a0df866e7a9dab139b9b67fbd776f266970e541118678dccbdc8719fcc"
+    rarity: "MYTHICAL"
+    opalCost: 1
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: LEATHER_CHESTPLATE
+            color: "800080"
+          - material: LEATHER_LEGGINGS
+            color: "800080"
+          - material: LEATHER_BOOTS
+            color: "800080"
+          - material: ENDER_PEARL
+            amount: 2
+            customName: "Time Warp Pearl"
+
+  monster_trainer:
+    name: "Monster Trainer"
+    texture: "168af4244eb46b7ce51f53369d6fec8c3b4e2fe57aca852475716152fc9f1c"
+    rarity: "MYTHICAL"
+    opalCost: 1
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: LEATHER_CHESTPLATE
+            color: "00FF00"
+          - material: LEATHER_LEGGINGS
+            color: "00FF00"
+          - material: LEATHER_BOOTS
+            color: "00FF00"
+          - material: EGG
+            amount: 5
+            customName: "Capture Egg"
+
+  nether_lord:
+    name: "Nether Lord"
+    texture: "984ff79d490f463ff72ab98d325b2640597c16d5bc82d242ad0769b5705279bf"
+    rarity: "MYTHICAL"
+    opalCost: 1
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: LEATHER_CHESTPLATE
+            color: "FFA500"
+          - material: LEATHER_LEGGINGS
+            color: "FFA500"
+          - material: LEATHER_BOOTS
+            color: "FFA500"
+          - material: GOLD_NUGGET
+            enchantments:
+              - type: FIRE_ASPECT
+                level: 1
+              - type: SHARPNESS
+                level: 1
+            customName: "Nether Lord's Fire Nugget"
+          - material: POTION
+            potionType: FIRE_RESISTANCE
+          - material: NETHERRACK
+            amount: 16
+
+  fishmonger:
+    name: "Fishmonger"
+    texture: "1ff081df8e0de2dc64def9ab946ff0feaebe532884dbab8c5bbba9fe9fb17684"
+    rarity: "MYTHICAL"
+    opalCost: 1
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: LEATHER_CHESTPLATE
+            color: "808080"
+          - material: LEATHER_LEGGINGS
+            color: "808080"
+          - material: LEATHER_BOOTS
+            color: "808080"
+          - material: SILVERFISH_SPAWN_EGG
+            customName: "Fishmonger Silverfish"
+
+  thundermeister:
+    name: "Thundermeister"
+    texture: "22b857d44acc670716b9c2c8915a5a9dba64fe8d4c5ad0456fabb7206a6cb4d4"
+    rarity: "MYTHICAL"
+    opalCost: 1
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: LEATHER_CHESTPLATE
+            color: "0000FF"
+          - material: LEATHER_LEGGINGS
+            color: "0000FF"
+          - material: LEATHER_BOOTS
+            color: "0000FF"
+          - material: IRON_AXE
+            customName: "Thundermeister Axe"
+
+  chronobreaker:
+    name: "Chronobreaker"
+    texture: "e0bbde9dbcf2970faad195d586155fec61c236c2a7d89ab3b1389646e125b520"
+    rarity: "MYTHICAL"
+    opalCost: 1
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: LEATHER_CHESTPLATE
+            color: "0000FF"
+          - material: LEATHER_LEGGINGS
+            color: "0000FF"
+          - material: LEATHER_BOOTS
+            color: "0000FF"
+          - material: CLOCK
+            amount: 2
+            customName: "Echo"
+
+  cryomancer:
+    name: "Cryomancer"
+    texture: "c1b2dfe8ed5dffc5b1687bc1c249c39de2d8a6c3d90305c95f6d1a1a330a0b1"
+    rarity: "MYTHICAL"
+    opalCost: 1
+    soulWellDrop: true
+    modes:
+      NORMAL:
+        items:
+          - material: LEATHER_CHESTPLATE
+            color: "C0C0C0"
+          - material: LEATHER_LEGGINGS
+            color: "C0C0C0"
+          - material: LEATHER_BOOTS
+            color: "C0C0C0"
+          - material: SNOWBALL
+            amount: 16
+          - material: EGG
+            amount: 2
+            customName: "Ice Bridge Egg"

@@ -46,6 +46,16 @@ public enum GameType {
             "§7lot of Innocents. Can you survive",
             "§7this tense social game of betrayal",
             "§7and murder?"),
+
+    SKYWARS("SkyWars §d§lOLD EMBLEMS + QOL CHANGES",
+            Material.ENDER_EYE,
+            Category.SURVIVAL,
+            ServerType.SKYWARS_LOBBY,
+            "§7Hypixel's take on the SkyWars",
+            "§7gamemode. Featuring the angel of",
+            "§7Death, Soul Well, and §cINSANE MODE§7!",
+            "§7Play on your own or in teams."
+            ),
     ;
 
     private final String displayName;
@@ -95,6 +105,7 @@ public enum GameType {
     public enum Category {
         PROTOTYPE_GAME,
         PERSISTENT_GAME,
+        SURVIVAL,
         TEAM_SURVIVAL,
         COMPETITIVE,
         CASUAL_GAMES,

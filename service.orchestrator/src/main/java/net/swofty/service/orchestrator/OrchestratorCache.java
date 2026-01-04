@@ -64,6 +64,13 @@ public class OrchestratorCache {
 	 * Finds an existing joinable game with at least neededSlots available slots
 	 */
 	public static GameWithServer findExisting(ServerType serverType, int maxPlayers, String map, int neededSlots) {
+		return findExisting(serverType, maxPlayers, map, neededSlots, null);
+	}
+
+	/**
+	 * Finds an existing joinable game with at least neededSlots available slots, filtered by game type name
+	 */
+	public static GameWithServer findExisting(ServerType serverType, int maxPlayers, String map, int neededSlots, String gameTypeName) {
 		cleanup();
 
 		List<GameWithServer> candidates = new ArrayList<>();
@@ -72,7 +79,8 @@ public class OrchestratorCache {
 			int availableSlots = maxPlayers - game.getInvolvedPlayers().size();
 			if (game.getType() == serverType &&
 					availableSlots >= neededSlots &&
-					(map == null || game.getMap().equals(map))) {
+					(map == null || game.getMap().equals(map)) &&
+					(gameTypeName == null || gameTypeName.equals(game.getGameTypeName()))) {
 				candidates.add(gameWithServer);
 			}
 		}

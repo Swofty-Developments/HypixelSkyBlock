@@ -1,5 +1,6 @@
 package net.swofty.service.orchestrator.endpoints;
 
+import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.ProtocolObject;
@@ -31,6 +32,11 @@ public class RejoinGameEndpoint implements ServiceEndpoint<
 
             OrchestratorCache.GameServerState hostingServer = OrchestratorCache.getServerByUuid(gameWithServer.serverUuid());
             if (hostingServer == null) {
+                return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false);
+            }
+
+            // Skywars does not support rejoining
+            if (hostingServer.type() == ServerType.SKYWARS_GAME) {
                 return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false);
             }
 
