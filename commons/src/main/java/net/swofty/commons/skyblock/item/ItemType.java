@@ -450,6 +450,7 @@ public enum ItemType {
 	DIAMOND_SPREADING(Material.DIAMOND, Rarity.RARE),
 	MINION_EXPANDER(Material.COMMAND_BLOCK, Rarity.RARE),
 	MITHRIL_INFUSION(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+	HYPER_FURNACE(Material.FURNACE, Rarity.UNCOMMON),
 
 	/**
 	 * Minion Fuels

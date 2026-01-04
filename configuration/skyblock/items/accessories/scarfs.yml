@@ -26,6 +26,21 @@ items:
       - id: TALISMAN
       - id: SKULL_HEAD
         texture: 8ce4c87eb4dde27459e3e7f85921e7e57b11199260caa5ce63f139ee3d188c
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: true
+        recipes:
+          - type: SHAPED
+            recipe-type: SPECIAL
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SCARFS_STUDIES
+                amount: 1
+            result:
+              type: SCARFS_THESIS
+              amount: 1
 
   - id: SCARFS_GRIMOIRE
     material: PLAYER_HEAD
@@ -41,3 +56,18 @@ items:
       - id: TALISMAN
       - id: SKULL_HEAD
         texture: bafb195cc75f31b619a077b7853653254ac18f220dc32d1412982ff437b4d57a
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: true
+        recipes:
+          - type: SHAPED
+            recipe-type: SPECIAL
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SCARFS_THESIS
+                amount: 1
+            result:
+              type: SCARFS_GRIMOIRE
+              amount: 1

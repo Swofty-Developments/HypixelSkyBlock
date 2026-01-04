@@ -10,6 +10,22 @@ items:
       - id: SELLABLE
         value: 192
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: NETHER_WART
+                amount: 16
+            result:
+              type: POTION_AFFINITY_TALISMAN
+              amount: 1
 
   - id: RING_POTION_AFFINITY
     material: PLAYER_HEAD
@@ -23,6 +39,25 @@ items:
       - id: SELLABLE
         value: 2100
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_NETHER_WART
+                amount: 1
+              B:
+                type: POTION_AFFINITY_TALISMAN
+                amount: 1
+            result:
+              type: RING_POTION_AFFINITY
+              amount: 1
 
   - id: ARTIFACT_POTION_AFFINITY
     material: PLAYER_HEAD
@@ -36,3 +71,22 @@ items:
       - id: SELLABLE
         value: 64000
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_NETHER_WART
+                amount: 32
+              B:
+                type: RING_POTION_AFFINITY
+                amount: 1
+            result:
+              type: ARTIFACT_POTION_AFFINITY
+              amount: 1

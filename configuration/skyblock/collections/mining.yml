@@ -52,21 +52,15 @@ collections:
         xp: 4
     - type: RECIPE_UNLOCK
       data:
-        unlockedItemType: MINER_OUTFIT_HELMET
-    - type: RECIPE_UNLOCK
-      data:
-        unlockedItemType: MINER_OUTFIT_CHESTPLATE
-    - type: RECIPE_UNLOCK
-      data:
-        unlockedItemType: MINER_OUTFIT_LEGGINGS
-    - type: RECIPE_UNLOCK
-      data:
-        unlockedItemType: MINER_OUTFIT_BOOTS
+        unlockedItemType: HASTE_RING
   - amount: 25000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: HYPER_FURNACE
   - amount: 40000
     rewards:
     - type: XP
@@ -74,7 +68,7 @@ collections:
         xp: 4
     - type: RECIPE_UNLOCK
       data:
-        unlockedItemType: HASTE_RING
+        unlockedItemType: HASTE_ARTIFACT
   - amount: 70000
     rewards:
     - type: XP
@@ -441,6 +435,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: EMERALD_RING
   - amount: 15000
     rewards:
     - type: XP
@@ -860,6 +857,18 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MINER_OUTFIT_HELMET
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MINER_OUTFIT_CHESTPLATE
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MINER_OUTFIT_LEGGINGS
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MINER_OUTFIT_BOOTS
   - amount: 250
     rewards:
     - type: XP
@@ -910,21 +919,33 @@ collections:
     - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_HOPPER
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_DELETOR_4000
   - amount: 100000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_DELETOR_5000
   - amount: 200000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_DELETOR_6000
   - amount: 400000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_DELETOR_7000
 - itemType: MITHRIL
   rewards:
   - amount: 50
@@ -1302,6 +1323,9 @@ collections:
     - type: CUSTOM_AWARD
       data:
         customAward: ACCESSORY_BAG_UPGRADE_2
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_COMPACTOR_4000
   - amount: 200000
     rewards:
     - type: XP
@@ -1318,6 +1342,9 @@ collections:
     - type: CUSTOM_AWARD
       data:
         customAward: ACCESSORY_BAG_UPGRADE_4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_COMPACTOR_5000
   - amount: 600000
     rewards:
     - type: XP
@@ -1334,6 +1361,9 @@ collections:
     - type: CUSTOM_AWARD
       data:
         customAward: ACCESSORY_BAG_UPGRADE_6
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_COMPACTOR_6000
   - amount: 1000000
     rewards:
     - type: XP
@@ -1342,6 +1372,9 @@ collections:
     - type: CUSTOM_AWARD
       data:
         customAward: ACCESSORY_BAG_UPGRADE_7
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_COMPACTOR_7000
   - amount: 1200000
     rewards:
     - type: XP

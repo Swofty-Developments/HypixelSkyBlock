@@ -278,6 +278,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FEATHER_TALISMAN
   - amount: 2500
     rewards:
     - type: XP
@@ -296,6 +299,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FEATHER_RING
   - amount: 25000
     rewards:
     - type: XP
@@ -306,6 +312,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FEATHER_ARTIFACT
 - itemType: LEATHER
   rewards:
   - amount: 50
@@ -596,6 +605,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: POTION_AFFINITY_TALISMAN
   - amount: 1000
     rewards:
     - type: XP
@@ -622,6 +634,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: RING_POTION_AFFINITY
   - amount: 25000
     rewards:
     - type: XP
@@ -635,6 +650,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: ARTIFACT_POTION_AFFINITY
   - amount: 75000
     rewards:
     - type: XP

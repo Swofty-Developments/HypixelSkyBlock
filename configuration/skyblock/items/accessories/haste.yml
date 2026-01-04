@@ -45,3 +45,22 @@ items:
       - id: SKULL_HEAD
         texture: 2fe7a882ffe0d0dd245d91bd8e6dcc1ed450ae13880b12276fbaf66d4a4164c9
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_COBBLESTONE
+                amount: 32
+              B:
+                type: HASTE_RING
+                amount: 1
+            result:
+              type: HASTE_ARTIFACT
+              amount: 1

@@ -55,6 +55,32 @@ items:
               type: COMPACTOR
               amount: 1
 
+  - id: HYPER_FURNACE
+    rarity: UNCOMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+      - id: TRACKED_UNIQUE
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_COBBLESTONE
+                amount: 8
+              B:
+                type: ENCHANTED_COAL
+                amount: 8
+            result:
+              type: HYPER_FURNACE
+              amount: 1
+
   - id: DIAMOND_SPREADING
     rarity: COMMON
     components:

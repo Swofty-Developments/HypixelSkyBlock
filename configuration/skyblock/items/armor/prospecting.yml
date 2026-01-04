@@ -31,7 +31,7 @@ items:
               - AOA
             ingredients:
               A:
-                type: ENCHANTED_COBBLESTONE
+                type: IRON_BLOCK
                 amount: 1
               O:
                 type: AIR
@@ -73,7 +73,7 @@ items:
               - AAA
             ingredients:
               A:
-                type: ENCHANTED_COBBLESTONE
+                type: IRON_BLOCK
                 amount: 1
               O:
                 type: AIR
@@ -115,7 +115,7 @@ items:
               - AOA
             ingredients:
               A:
-                type: ENCHANTED_COBBLESTONE
+                type: IRON_BLOCK
                 amount: 1
               O:
                 type: AIR
@@ -156,7 +156,7 @@ items:
               - AOA
             ingredients:
               A:
-                type: ENCHANTED_COBBLESTONE
+                type: IRON_BLOCK
                 amount: 1
               O:
                 type: AIR

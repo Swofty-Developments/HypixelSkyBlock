@@ -11,6 +11,25 @@ items:
       - id: SELLABLE
         value: 7600
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_EMERALD
+                amount: 4
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: EMERALD_RING
+              amount: 1
 
   - id: EMERALD_ARTIFACT
     material: PLAYER_HEAD

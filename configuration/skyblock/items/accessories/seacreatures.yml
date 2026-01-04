@@ -16,7 +16,7 @@ items:
         default-craftable: false
         recipes:
           - type: SHAPED
-            recipe-type: FARMING
+            recipe-type: FISHING
             pattern:
               - AAA
               - AAA
@@ -47,7 +47,7 @@ items:
         default-craftable: false
         recipes:
           - type: SHAPED
-            recipe-type: FARMING
+            recipe-type: FISHING
             pattern:
               - ABA
               - ACA
@@ -84,7 +84,7 @@ items:
         default-craftable: false
         recipes:
           - type: SHAPED
-            recipe-type: FARMING
+            recipe-type: FISHING
             pattern:
               - AAA
               - ABA

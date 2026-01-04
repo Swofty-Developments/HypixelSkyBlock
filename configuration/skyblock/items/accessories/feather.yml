@@ -10,6 +10,22 @@ items:
       - id: SELLABLE
         value: 160
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: FEATHER
+                amount: 12
+            result:
+              type: FEATHER_TALISMAN
+              amount: 1
 
   - id: FEATHER_RING
     material: PLAYER_HEAD
@@ -23,6 +39,28 @@ items:
       - id: SELLABLE
         value: 1800
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - ABA
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_FEATHER
+                amount: 1
+              B:
+                type: FEATHER_TALISMAN
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: FEATHER_RING
+              amount: 1
 
   - id: FEATHER_ARTIFACT
     material: PLAYER_HEAD
@@ -36,3 +74,25 @@ items:
       - id: SELLABLE
         value: 32000
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - OAO
+              - ABA
+              - OAO
+            ingredients:
+              A:
+                type: ENCHANTED_FEATHER
+                amount: 32
+              B:
+                type: FEATHER_RING
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: FEATHER_ARTIFACT
+              amount: 1
