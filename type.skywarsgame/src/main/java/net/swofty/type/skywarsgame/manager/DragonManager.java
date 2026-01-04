@@ -5,7 +5,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.attribute.Attribute;
-import net.swofty.type.skywarsgame.entity.DragonEntity;
+import net.swofty.type.generic.entity.DragonEntity;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.Task;

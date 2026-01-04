@@ -1,14 +1,20 @@
 package net.swofty.type.generic.data.datapoints;
 
+import net.swofty.commons.skywars.SkywarsLeaderboardMode;
+import net.swofty.commons.skywars.SkywarsLeaderboardPeriod;
 import net.swofty.commons.skywars.SkywarsModeStats;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.type.generic.data.Datapoint;
+import net.swofty.type.generic.leaderboard.MapLeaderboardTracked;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DatapointSkywarsModeStats extends Datapoint<SkywarsModeStats> {
+public class DatapointSkywarsModeStats extends Datapoint<SkywarsModeStats>
+        implements MapLeaderboardTracked {
+
+    private static final String LEADERBOARD_PREFIX = "skywars";
 
     public DatapointSkywarsModeStats(String key, SkywarsModeStats value) {
         super(key, value, new Serializer<>() {
@@ -87,5 +93,27 @@ public class DatapointSkywarsModeStats extends Datapoint<SkywarsModeStats> {
 
     public DatapointSkywarsModeStats(String key) {
         this(key, SkywarsModeStats.empty());
+    }
+
+    @Override
+    public String getLeaderboardPrefix() {
+        return LEADERBOARD_PREFIX;
+    }
+
+    @Override
+    public Map<String, Double> getAllLeaderboardScores() {
+        Map<String, Double> scores = new HashMap<>();
+        SkywarsModeStats stats = getValue();
+        if (stats == null) return scores;
+
+        for (SkywarsLeaderboardMode mode : SkywarsLeaderboardMode.values()) {
+            for (SkywarsLeaderboardPeriod period : SkywarsLeaderboardPeriod.values()) {
+                String suffix = mode.getKey() + ":" + period.getKey();
+
+                scores.put("wins:" + suffix, (double) stats.getWins(mode, period));
+                scores.put("kills:" + suffix, (double) stats.getKills(mode, period));
+            }
+        }
+        return scores;
     }
 }
