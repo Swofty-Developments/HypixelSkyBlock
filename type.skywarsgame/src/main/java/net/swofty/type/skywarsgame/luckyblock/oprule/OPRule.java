@@ -54,28 +54,6 @@ public enum OPRule {
             }
     ),
 
-    STRENGTH_II(
-            "Strength II",
-            "All players have Strength II!",
-            NamedTextColor.DARK_RED,
-            (game, activator) -> {
-                for (SkywarsPlayer player : game.getAlivePlayers()) {
-                    player.addEffect(new Potion(PotionEffect.STRENGTH, (byte) 1, Integer.MAX_VALUE));
-                }
-            }
-    ),
-
-    JUMP_BOOST_V(
-            "Jump Boost V",
-            "All players can jump super high!",
-            NamedTextColor.GREEN,
-            (game, activator) -> {
-                for (SkywarsPlayer player : game.getAlivePlayers()) {
-                    player.addEffect(new Potion(PotionEffect.JUMP_BOOST, (byte) 4, Integer.MAX_VALUE));
-                }
-            }
-    ),
-
     TNT_RAIN(
             "TNT Rain",
             "TNT is raining from the sky!",
@@ -96,16 +74,6 @@ public enum OPRule {
             }
     ),
 
-    NO_FALL_DAMAGE(
-            "No Fall Damage",
-            "Nobody takes fall damage!",
-            NamedTextColor.WHITE,
-            (game, activator) -> {
-                // Fall damage prevention is checked in damage handler
-                game.broadcastMessage(Component.text("Fall damage has been disabled!", NamedTextColor.WHITE));
-            }
-    ),
-
     THROW_FURTHER(
             "Throw Projectiles Further",
             "All projectiles travel twice as far!",
@@ -113,16 +81,6 @@ public enum OPRule {
             (game, activator) -> {
                 // Projectile velocity modification is handled in projectile launch event
                 game.broadcastMessage(Component.text("Projectiles now travel twice as far!", NamedTextColor.YELLOW));
-            }
-    ),
-
-    INSTANT_KILL(
-            "Instant Kill",
-            "All attacks deal massive damage!",
-            NamedTextColor.DARK_RED,
-            (game, activator) -> {
-                // Damage modification is handled in attack event
-                game.broadcastMessage(Component.text("One hit, one kill!", NamedTextColor.DARK_RED));
             }
     );
 

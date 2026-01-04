@@ -11,9 +11,13 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
+import net.swofty.type.skywarsgame.game.SkywarsGame;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
+import net.minestom.server.coordinate.Vec;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Random;
 import java.util.function.BiConsumer;
 
@@ -298,6 +302,190 @@ public enum LuckyBlockEnvironmentEffect {
                 player.addEffect(new Potion(PotionEffect.WEAKNESS, (byte) 0, 200));
                 player.addEffect(new Potion(PotionEffect.MINING_FATIGUE, (byte) 1, 200));
                 player.addEffect(new Potion(PotionEffect.HUNGER, (byte) 1, 200));
+            }
+    ),
+
+    FIREWORKS(
+            "Fireworks",
+            "Celebration time!",
+            NamedTextColor.AQUA,
+            true,
+            (player, pos) -> {
+                Instance instance = player.getInstance();
+                if (instance == null) return;
+
+                for (int i = 0; i < 5; i++) {
+                    Entity firework = new Entity(EntityType.FIREWORK_ROCKET);
+                    firework.setInstance(instance, player.getPosition());
+                    firework.setVelocity(new Vec(0, 20, 0));
+
+                    firework.scheduler().buildTask(firework::remove)
+                            .delay(Duration.ofSeconds(3))
+                            .schedule();
+                }
+            }
+    ),
+
+    INSTA_HOLE(
+            "Insta Hole",
+            "The ground disappears beneath you!",
+            NamedTextColor.DARK_GRAY,
+            false,
+            (player, pos) -> {
+                Instance instance = player.getInstance();
+                if (instance == null) return;
+
+                SkywarsGame game = TypeSkywarsGameLoader.getPlayerGame(player);
+                int startY = (int) pos.y();
+                for (int y = startY; y >= 0; y--) {
+                    for (int dx = -1; dx <= 1; dx++) {
+                        for (int dz = -1; dz <= 1; dz++) {
+                            Pos blockPos = new Pos(pos.x() + dx, y, pos.z() + dz);
+                            Block current = instance.getBlock(blockPos);
+                            boolean isChest = game != null && game.getChestManager().isChestPosition(blockPos);
+                            if (!current.compare(Block.BEDROCK) && !current.isAir() && !isChest) {
+                                instance.setBlock(blockPos, Block.AIR);
+                            }
+                        }
+                    }
+                }
+            }
+    ),
+
+    IRON_POLE(
+            "Iron Pole",
+            "A tower of iron rises!",
+            NamedTextColor.WHITE,
+            true,
+            (player, pos) -> {
+                Instance instance = player.getInstance();
+                if (instance == null) return;
+
+                for (int i = 1; i <= 10; i++) {
+                    Pos polePos = pos.add(0, i, 0);
+                    instance.setBlock(polePos, Block.IRON_BLOCK);
+                }
+            }
+    ),
+
+    NINJA_MODE(
+            "Ninja Mode",
+            "You vanish into the shadows!",
+            NamedTextColor.DARK_GRAY,
+            true,
+            (player, pos) -> {
+                player.addEffect(new Potion(PotionEffect.INVISIBILITY, (byte) 127, 600));
+            }
+    ),
+
+    SWAPPING_PLACE(
+            "Swapping Places",
+            "You're about to swap places with someone!",
+            NamedTextColor.LIGHT_PURPLE,
+            false,
+            (player, pos) -> {
+                SkywarsGame game = TypeSkywarsGameLoader.getPlayerGame(player);
+                if (game == null) return;
+
+                List<SkywarsPlayer> alivePlayers = game.getAlivePlayers().stream()
+                        .filter(p -> !p.equals(player))
+                        .toList();
+
+                if (alivePlayers.isEmpty()) return;
+
+                Random random = new Random();
+                SkywarsPlayer target = alivePlayers.get(random.nextInt(alivePlayers.size()));
+
+                player.sendMessage(Component.text("Swapping in 3 seconds...", NamedTextColor.YELLOW));
+                target.sendMessage(Component.text("You're being swapped in 3 seconds!", NamedTextColor.YELLOW));
+
+                Pos playerPos = player.getPosition();
+                Pos targetPos = target.getPosition();
+
+                player.scheduler().buildTask(() -> {
+                    player.teleport(targetPos);
+                    target.teleport(playerPos);
+                }).delay(Duration.ofSeconds(3)).schedule();
+            }
+    ),
+
+    SPAWN_LARGE_TREE(
+            "Spawn Large Tree",
+            "A mighty oak grows!",
+            NamedTextColor.DARK_GREEN,
+            true,
+            (player, pos) -> {
+                Instance instance = player.getInstance();
+                if (instance == null) return;
+
+                for (int i = 1; i <= 5; i++) {
+                    Pos trunkPos = pos.add(0, i, 0);
+                    instance.setBlock(trunkPos, Block.OAK_LOG);
+                }
+
+                Pos topPos = pos.add(0, 5, 0);
+                int leafRadius = 2;
+                for (int dx = -leafRadius; dx <= leafRadius; dx++) {
+                    for (int dy = 0; dy <= 3; dy++) {
+                        for (int dz = -leafRadius; dz <= leafRadius; dz++) {
+                            double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                            if (distance <= leafRadius + 0.5 && distance > 0) {
+                                Pos leafPos = topPos.add(dx, dy, dz);
+                                Block current = instance.getBlock(leafPos);
+                                if (current.isAir()) {
+                                    instance.setBlock(leafPos, Block.OAK_LEAVES);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+    ),
+
+    KABOOM(
+            "KABOOM",
+            "Everyone goes flying!",
+            NamedTextColor.RED,
+            false,
+            (player, pos) -> {
+                SkywarsGame game = TypeSkywarsGameLoader.getPlayerGame(player);
+                if (game == null) return;
+
+                for (SkywarsPlayer alivePlayer : game.getAlivePlayers()) {
+                    alivePlayer.setVelocity(alivePlayer.getVelocity().add(0, 40, 0));
+                    alivePlayer.addEffect(new Potion(PotionEffect.SLOW_FALLING, (byte) 0, 200));
+                }
+            }
+    ),
+
+    INSTANT_WALL(
+            "Instant Wall",
+            "A brick wall rises before you!",
+            NamedTextColor.RED,
+            true,
+            (player, pos) -> {
+                Instance instance = player.getInstance();
+                if (instance == null) return;
+
+                float yaw = player.getPosition().yaw();
+                double radians = Math.toRadians(yaw);
+                int forwardX = (int) Math.round(-Math.sin(radians));
+                int forwardZ = (int) Math.round(Math.cos(radians));
+
+                int perpX = -forwardZ;
+                int perpZ = forwardX;
+
+                Pos wallCenter = pos.add(forwardX * 2, 0, forwardZ * 2);
+
+                for (int w = -2; w <= 2; w++) {
+                    for (int h = 0; h < 4; h++) {
+                        Pos wallPos = wallCenter.add(perpX * w, h, perpZ * w);
+                        Block current = instance.getBlock(wallPos);
+                        if (current.isAir()) {
+                            instance.setBlock(wallPos, Block.BRICKS);
+                        }
+                    }
+                }
             }
     );
 

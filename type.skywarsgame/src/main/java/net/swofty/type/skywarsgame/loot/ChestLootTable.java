@@ -2,6 +2,8 @@ package net.swofty.type.skywarsgame.loot;
 
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.skywars.SkywarsGameType;
+import net.swofty.type.skywarsgame.luckyblock.LuckyBlockType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,10 @@ public class ChestLootTable {
     private static final Random RANDOM = new Random();
 
     public static List<ItemStack> generateLoot(LootTier tier, boolean insane) {
+        return generateLoot(tier, insane, null);
+    }
+
+    public static List<ItemStack> generateLoot(LootTier tier, boolean insane, SkywarsGameType gameType) {
         List<ItemStack> loot = new ArrayList<>();
 
         int itemCount = switch (tier) {
@@ -19,25 +25,35 @@ public class ChestLootTable {
         };
 
         for (int i = 0; i < itemCount; i++) {
-            ItemStack item = generateItem(tier, insane);
+            ItemStack item = generateItem(tier, insane, gameType);
             if (item != null) {
                 loot.add(item);
+            }
+        }
+
+        if (gameType == SkywarsGameType.SOLO_LUCKY_BLOCK) {
+            int luckyBlockCount = switch (tier) {
+                case ISLAND -> 1 + RANDOM.nextInt(2);
+                case CENTER -> 2 + RANDOM.nextInt(2);
+            };
+            for (int i = 0; i < luckyBlockCount; i++) {
+                loot.add(tier == LootTier.ISLAND ? getIslandLuckyBlock() : getCenterLuckyBlock());
             }
         }
 
         return loot;
     }
 
-    private static ItemStack generateItem(LootTier tier, boolean insane) {
+    private static ItemStack generateItem(LootTier tier, boolean insane, SkywarsGameType gameType) {
         int roll = RANDOM.nextInt(100);
 
         return switch (tier) {
-            case ISLAND -> generateIslandLoot(roll, insane);
-            case CENTER -> generateCenterLoot(roll, insane);
+            case ISLAND -> generateIslandLoot(roll, insane, gameType);
+            case CENTER -> generateCenterLoot(roll, insane, gameType);
         };
     }
 
-    private static ItemStack generateIslandLoot(int roll, boolean insane) {
+    private static ItemStack generateIslandLoot(int roll, boolean insane, SkywarsGameType gameType) {
         if (roll < 20) {
             return insane ? getInsaneWeapon() : getNormalWeapon();
         } else if (roll < 40) {
@@ -57,7 +73,7 @@ public class ChestLootTable {
         }
     }
 
-    private static ItemStack generateCenterLoot(int roll, boolean insane) {
+    private static ItemStack generateCenterLoot(int roll, boolean insane, SkywarsGameType gameType) {
         if (roll < 30) {
             return insane ? getInsaneCenterWeapon() : getCenterWeapon();
         } else if (roll < 55) {
@@ -70,6 +86,34 @@ public class ChestLootTable {
             return ItemStack.of(Material.ARROW, 8 + RANDOM.nextInt(9));
         } else {
             return insane ? getInsaneCenterSpecial() : getCenterSpecial();
+        }
+    }
+
+    private static ItemStack getIslandLuckyBlock() {
+        int roll = RANDOM.nextInt(100);
+        if (roll < 40) {
+            return LuckyBlockType.GUARDIAN.createItemStack();
+        } else if (roll < 80) {
+            return LuckyBlockType.WEAPONRY.createItemStack();
+        } else {
+            return LuckyBlockType.WILD.createItemStack();
+        }
+    }
+
+    private static ItemStack getCenterLuckyBlock() {
+        int roll = RANDOM.nextInt(100);
+        if (roll < 20) {
+            return LuckyBlockType.GUARDIAN.createItemStack();
+        } else if (roll < 40) {
+            return LuckyBlockType.WEAPONRY.createItemStack();
+        } else if (roll < 55) {
+            return LuckyBlockType.WILD.createItemStack();
+        } else if (roll < 70) {
+            return LuckyBlockType.CRAZY.createItemStack();
+        } else if (roll < 90) {
+            return LuckyBlockType.INSANE.createItemStack();
+        } else {
+            return LuckyBlockType.OP_RULE.createItemStack();
         }
     }
 

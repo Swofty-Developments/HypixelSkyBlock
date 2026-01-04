@@ -148,7 +148,7 @@ public class GUIPlaySkywars extends HypixelInventoryGUI {
             case SOLO_NORMAL -> Material.GRASS_BLOCK;
             case SOLO_INSANE -> Material.DIAMOND_SWORD;
             case DOUBLES_NORMAL -> Material.PLAYER_HEAD;
-            case SOLO_LUCKY_BLOCK -> Material.SPONGE;
+            case SOLO_LUCKY_BLOCK -> Material.RED_STAINED_GLASS;
         };
     }
 

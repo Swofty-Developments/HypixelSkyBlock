@@ -48,7 +48,7 @@ public class ChestManager {
 
     private void fillChest(Inventory chest, LootTier tier) {
         chest.clear();
-        List<ItemStack> loot = ChestLootTable.generateLoot(tier, gameType.isInsane());
+        List<ItemStack> loot = ChestLootTable.generateLoot(tier, gameType.isInsane(), gameType);
 
         Random random = new Random();
         Set<Integer> usedSlots = new HashSet<>();

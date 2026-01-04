@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class OrchestratorCache {
 	private static final Map<String, GameServerState> serversByShortName = new ConcurrentHashMap<>();
 	private static final Map<UUID, GameWithServer> gamesByGameId = new ConcurrentHashMap<>();
-	private static final long HEARTBEAT_TTL_MS = 20000; // 20s
+	private static final long HEARTBEAT_TTL_MS = 10000; // 10s
 
 	public static void handleHeartbeat(UUID uuid,
 									   String shortName,
@@ -170,7 +170,7 @@ public class OrchestratorCache {
 		return null;
 	}
 
-	private static void cleanup() {
+	public static void cleanup() {
 		long now = Instant.now().toEpochMilli();
 
 		// Remove stale servers
@@ -214,6 +214,7 @@ public class OrchestratorCache {
 	}
 
 	public static GameServerState getServerByUuid(UUID serverUuid) {
+		cleanup();
 		return serversByShortName.values().stream()
 				.filter(server -> server.uuid().equals(serverUuid))
 				.findFirst()

@@ -9,7 +9,6 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
 import net.swofty.type.skywarsgame.game.SkywarsGame;
 import net.swofty.type.skywarsgame.game.SkywarsGameStatus;
-import net.swofty.type.skywarsgame.luckyblock.oprule.OPRuleManager;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 
 public class ActionPlayerCombat implements HypixelEventClass {
@@ -28,22 +27,7 @@ public class ActionPlayerCombat implements HypixelEventClass {
             return;
         }
 
-        OPRuleManager opRuleManager = game.getOpRuleManager();
-        DamageType damageType = event.getDamage().getType().asValue();
-
-        if (opRuleManager != null && opRuleManager.shouldPreventFallDamage()) {
-            if (damageType == DamageType.FALL.asValue()) {
-                event.setCancelled(true);
-                return;
-            }
-        }
-
         float damageAmount = event.getDamage().getAmount();
-        if (opRuleManager != null && opRuleManager.isInstantKillActive()) {
-            if (event.getDamage().getAttacker() instanceof SkywarsPlayer) {
-                damageAmount = 1000f;
-            }
-        }
 
         if (event.getDamage().getAttacker() instanceof SkywarsPlayer attacker) {
             if (!attacker.equals(victim)) {

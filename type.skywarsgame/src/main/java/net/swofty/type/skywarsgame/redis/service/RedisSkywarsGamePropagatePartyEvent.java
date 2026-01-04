@@ -5,6 +5,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.minestom.server.entity.EntityType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.party.FullParty;

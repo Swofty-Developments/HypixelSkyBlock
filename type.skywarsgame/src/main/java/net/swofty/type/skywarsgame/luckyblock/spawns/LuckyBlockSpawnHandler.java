@@ -7,6 +7,7 @@ import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
 import net.minestom.server.entity.ai.target.ClosestEntityTarget;
+import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.entity.metadata.monster.zombie.ZombieMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.ItemStack;
@@ -40,12 +41,13 @@ public class LuckyBlockSpawnHandler {
             Pos spawnPos = position.add(offsetX, 0, offsetZ);
 
             EntityCreature zombie = new EntityCreature(EntityType.ZOMBIE);
+            zombie.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.23);
             zombie.setCustomName(Component.text(player.getUsername() + "'s Zombie", NamedTextColor.GREEN));
             zombie.setCustomNameVisible(true);
 
             // Add AI to target enemies (not the owner)
             zombie.addAIGroup(
-                    List.of(new MeleeAttackGoal(zombie, 1.2, 20, TimeUnit.SERVER_TICK)),
+                    List.of(new MeleeAttackGoal(zombie, 1.0, 20, TimeUnit.SERVER_TICK)),
                     List.of(new ClosestEntityTarget(zombie, 32,
                             entity -> entity instanceof SkywarsPlayer && entity != player))
             );
@@ -74,12 +76,13 @@ public class LuckyBlockSpawnHandler {
             Pos spawnPos = position.add(offsetX, 0, offsetZ);
 
             EntityCreature wolf = new EntityCreature(EntityType.WOLF);
+            wolf.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
             wolf.setCustomName(Component.text(names[i], NamedTextColor.WHITE));
             wolf.setCustomNameVisible(true);
 
             // Add AI to target enemies
             wolf.addAIGroup(
-                    List.of(new MeleeAttackGoal(wolf, 1.5, 15, TimeUnit.SERVER_TICK)),
+                    List.of(new MeleeAttackGoal(wolf, 1.0, 15, TimeUnit.SERVER_TICK)),
                     List.of(new ClosestEntityTarget(wolf, 24,
                             entity -> entity instanceof SkywarsPlayer && entity != player))
             );
@@ -106,12 +109,13 @@ public class LuckyBlockSpawnHandler {
             Pos spawnPos = position.add(offsetX, 0, offsetZ);
 
             EntityCreature slime = new EntityCreature(EntityType.SLIME);
+            slime.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.2);
             slime.setCustomName(Component.text("Slime", NamedTextColor.GREEN));
             slime.setCustomNameVisible(true);
 
             // Target the player who opened the block
             slime.addAIGroup(
-                    List.of(new MeleeAttackGoal(slime, 0.8, 30, TimeUnit.SERVER_TICK)),
+                    List.of(new MeleeAttackGoal(slime, 1.0, 30, TimeUnit.SERVER_TICK)),
                     List.of(new ClosestEntityTarget(slime, 48, entity -> entity == player))
             );
 
@@ -131,6 +135,8 @@ public class LuckyBlockSpawnHandler {
         player.sendMessage(Component.text("THE GOLDEN CHILD HAS ARRIVED!", NamedTextColor.GOLD));
 
         EntityCreature babyZombie = new EntityCreature(EntityType.ZOMBIE);
+        // Baby zombies are faster than adults (0.46 vs 0.23)
+        babyZombie.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.46);
         babyZombie.setCustomName(Component.text("The Golden Child", NamedTextColor.GOLD));
         babyZombie.setCustomNameVisible(true);
 
@@ -147,7 +153,7 @@ public class LuckyBlockSpawnHandler {
 
         // Target the player
         babyZombie.addAIGroup(
-                List.of(new MeleeAttackGoal(babyZombie, 1.5, 15, TimeUnit.SERVER_TICK)),
+                List.of(new MeleeAttackGoal(babyZombie, 1.0, 15, TimeUnit.SERVER_TICK)),
                 List.of(new ClosestEntityTarget(babyZombie, 32, entity -> entity == player))
         );
 

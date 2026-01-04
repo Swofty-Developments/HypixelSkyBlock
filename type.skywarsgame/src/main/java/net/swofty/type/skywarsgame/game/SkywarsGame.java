@@ -51,14 +51,6 @@ public class SkywarsGame {
     public static final int SECOND_REFILL_SECONDS = 360;
     public static final int DRAGON_SPAWN_SECONDS = 600;
 
-    private static final int ISLAND_LUCKY_BLOCKS_MIN = 3;
-    private static final int ISLAND_LUCKY_BLOCKS_VARIANCE = 3;
-    private static final double ISLAND_SPAWN_OFFSET = 5.0;
-    private static final int CENTER_LUCKY_BLOCKS_MIN = 8;
-    private static final int CENTER_LUCKY_BLOCKS_VARIANCE = 5;
-    private static final double CENTER_SPAWN_OFFSET = 10.0;
-
-    private static final java.util.Random RANDOM = new java.util.Random();
 
     private final InstanceContainer instanceContainer;
     private final SkywarsGameType gameType;
@@ -285,13 +277,19 @@ public class SkywarsGame {
         }
 
         player.getInventory().clear();
-        player.getInventory().setItemStack(0,
-                TypeSkywarsGameLoader.getItemHandler().getItem("kit_selector").getItemStack());
+        if (gameType != SkywarsGameType.SOLO_LUCKY_BLOCK) {
+            player.getInventory().setItemStack(0,
+                    TypeSkywarsGameLoader.getItemHandler().getItem("kit_selector").getItemStack());
+        }
         player.getInventory().setItemStack(8,
                 TypeSkywarsGameLoader.getItemHandler().getItem("leave_game").getItemStack());
         player.setFlying(false);
         player.setGameMode(GameMode.ADVENTURE);
         player.resetGameState();
+
+        if (gameType == SkywarsGameType.SOLO_LUCKY_BLOCK) {
+            player.sendActionBar(Component.text("Kits and perks are disabled in Lucky Block SkyWars", NamedTextColor.RED));
+        }
     }
 
     private static final String THICK_BAR = "§a§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬";
@@ -304,18 +302,17 @@ public class SkywarsGame {
 
         for (SkywarsPlayer player : players) {
             player.setGameMode(GameMode.SURVIVAL);
-            giveKitItems(player);
-            SkywarsPerkHandler.applyPerkEffects(player, this);
+            player.getInventory().clear();
+            if (gameType != SkywarsGameType.SOLO_LUCKY_BLOCK) {
+                giveKitItems(player);
+                SkywarsPerkHandler.applyPerkEffects(player, this);
+            }
         }
 
         sendGameIntroMessage();
 
         broadcastMessage(Component.text("Cages opened! ", NamedTextColor.YELLOW)
                 .append(Component.text("FIGHT!", NamedTextColor.RED)));
-
-        if (gameType == SkywarsGameType.SOLO_LUCKY_BLOCK && luckyBlockManager != null) {
-            spawnLuckyBlocks();
-        }
 
         Title title = Title.title(
                 Component.text("FIGHT!", NamedTextColor.RED),
@@ -739,61 +736,6 @@ public class SkywarsGame {
         return players.stream()
                 .filter(p -> !p.isEliminated())
                 .toList();
-    }
-
-    private void spawnLuckyBlocks() {
-        if (luckyBlockManager == null) return;
-
-        SkywarsMapsConfig.MapEntry.MapConfiguration config = mapEntry.getConfiguration();
-
-        for (SkywarsMapsConfig.IslandSpawn island : config.getIslands()) {
-            SkywarsMapsConfig.PitchYawPosition cageCenter = island.getCageCenter();
-
-            int luckyBlockCount = ISLAND_LUCKY_BLOCKS_MIN + RANDOM.nextInt(ISLAND_LUCKY_BLOCKS_VARIANCE);
-            for (int i = 0; i < luckyBlockCount; i++) {
-                double offsetX = (RANDOM.nextDouble() * ISLAND_SPAWN_OFFSET * 2) - ISLAND_SPAWN_OFFSET;
-                double offsetZ = (RANDOM.nextDouble() * ISLAND_SPAWN_OFFSET * 2) - ISLAND_SPAWN_OFFSET;
-                Pos luckyPos = new Pos(
-                        cageCenter.x() + offsetX,
-                        cageCenter.y() - 1,
-                        cageCenter.z() + offsetZ
-                );
-
-                if (instanceContainer.getBlock(luckyPos.sub(0, 1, 0)).isSolid()) {
-                    luckyBlockManager.spawnLuckyBlock(luckyPos);
-                }
-            }
-        }
-
-        SkywarsMapsConfig.PitchYawPosition center = config.getCenter();
-        int centerLuckyBlocks = CENTER_LUCKY_BLOCKS_MIN + RANDOM.nextInt(CENTER_LUCKY_BLOCKS_VARIANCE);
-        boolean opRuleSpawned = false;
-
-        for (int i = 0; i < centerLuckyBlocks; i++) {
-            double offsetX = (RANDOM.nextDouble() * CENTER_SPAWN_OFFSET * 2) - CENTER_SPAWN_OFFSET;
-            double offsetZ = (RANDOM.nextDouble() * CENTER_SPAWN_OFFSET * 2) - CENTER_SPAWN_OFFSET;
-            Pos luckyPos = new Pos(
-                    center.x() + offsetX,
-                    center.y(),
-                    center.z() + offsetZ
-            );
-
-            for (int y = (int) luckyPos.y(); y > config.getVoidY(); y--) {
-                Pos checkPos = new Pos(luckyPos.x(), y, luckyPos.z());
-                if (instanceContainer.getBlock(checkPos).isSolid()) {
-                    Pos spawnPos = checkPos.add(0, 1, 0);
-                    if (!opRuleSpawned && i == centerLuckyBlocks / 2) {
-                        luckyBlockManager.spawnOPRuleLuckyBlock(spawnPos);
-                        opRuleSpawned = true;
-                    } else {
-                        luckyBlockManager.spawnCenterLuckyBlock(spawnPos);
-                    }
-                    break;
-                }
-            }
-        }
-
-        broadcastMessage(Component.text("Lucky Blocks have been spawned!", NamedTextColor.GOLD));
     }
 
     private void waitForEmptyThenDestroy() {

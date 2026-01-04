@@ -132,7 +132,9 @@ public class OPRuleManager {
                     if (RANDOM.nextDouble() < 0.4) {
                         Pos blockPos = pos.add(dx, dy, dz);
                         var block = instance.getBlock(blockPos);
-                        if (!block.isAir() && !block.compare(net.minestom.server.instance.block.Block.BEDROCK)) {
+                        if (!block.isAir()
+                                && !block.compare(net.minestom.server.instance.block.Block.BEDROCK)
+                                && !game.getChestManager().isChestPosition(blockPos)) {
                             instance.setBlock(blockPos, net.minestom.server.instance.block.Block.AIR);
                         }
                     }
@@ -206,14 +208,6 @@ public class OPRuleManager {
 
     public boolean isDoubleJumpEnabled() {
         return isRuleActive(OPRule.DOUBLE_JUMPS);
-    }
-
-    public boolean shouldPreventFallDamage() {
-        return isRuleActive(OPRule.NO_FALL_DAMAGE);
-    }
-
-    public boolean isInstantKillActive() {
-        return isRuleActive(OPRule.INSTANT_KILL);
     }
 
     public double getProjectileVelocityMultiplier() {

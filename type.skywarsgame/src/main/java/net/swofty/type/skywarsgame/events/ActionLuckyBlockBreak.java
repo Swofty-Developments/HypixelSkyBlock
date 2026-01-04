@@ -21,18 +21,22 @@ public class ActionLuckyBlockBreak implements HypixelEventClass {
         SkywarsGame game = TypeSkywarsGameLoader.getPlayerGame(player);
         if (game == null) return;
 
-        if (game.getGameType() != SkywarsGameType.SOLO_LUCKY_BLOCK) return;
-
         if (game.getGameStatus() != SkywarsGameStatus.IN_PROGRESS) return;
+
+        Pos blockPos = new Pos(event.getBlockPosition());
+
+        if (game.getChestManager().isChestPosition(blockPos)) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (game.getGameType() != SkywarsGameType.SOLO_LUCKY_BLOCK) return;
 
         Block block = event.getBlock();
         LuckyBlock luckyBlockManager = game.getLuckyBlockManager();
 
         if (luckyBlockManager != null && luckyBlockManager.isLuckyBlockMaterial(block)) {
-            Pos blockPos = new Pos(event.getBlockPosition());
-
             event.setCancelled(true);
-
             luckyBlockManager.breakLuckyBlock(player, blockPos);
         }
     }

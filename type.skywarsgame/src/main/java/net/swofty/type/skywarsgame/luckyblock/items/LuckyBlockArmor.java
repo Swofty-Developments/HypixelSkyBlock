@@ -38,6 +38,13 @@ public interface LuckyBlockArmor extends LuckyBlockItem {
         return false;
     }
 
+    default boolean hasHitEffect() {
+        return false;
+    }
+
+    default void onHit(SkywarsPlayer holder, net.minestom.server.entity.Entity target) {
+    }
+
     @Override
     default boolean hasTickEffect() {
         return hasTrailEffect() || hasPermanentBuff() || hasVisualEffect();

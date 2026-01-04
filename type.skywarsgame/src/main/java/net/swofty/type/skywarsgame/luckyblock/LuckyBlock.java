@@ -3,26 +3,27 @@ package net.swofty.type.skywarsgame.luckyblock;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.LivingEntity;
+import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
 import net.minestom.server.entity.ai.target.ClosestEntityTarget;
 import net.minestom.server.entity.damage.Damage;
+import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skywarsgame.game.SkywarsGame;
 import net.swofty.type.skywarsgame.luckyblock.oprule.OPRuleManager;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class LuckyBlock {
     private static final float EXPLOSION_DAMAGE = 6.0f;
@@ -41,6 +42,7 @@ public class LuckyBlock {
 
     private final Instance instance;
     private final Map<Pos, LuckyBlockType> luckyBlockPositions = new HashMap<>();
+    private final Map<Pos, Entity> blockDisplayEntities = new HashMap<>();
     @Nullable
     private SkywarsGame game;
 
@@ -57,52 +59,22 @@ public class LuckyBlock {
         return game;
     }
 
-    public void spawnLuckyBlocks(Iterable<Pos> positions, LuckyBlockType type) {
-        for (Pos pos : positions) {
-            spawnLuckyBlock(pos, type);
-        }
-    }
-
-    public void spawnLuckyBlocksWithRandomTypes(Iterable<Pos> positions, boolean isCenter) {
-        for (Pos pos : positions) {
-            LuckyBlockType type = getRandomTypeForLocation(isCenter);
-            spawnLuckyBlock(pos, type);
-        }
-    }
-
-    public void spawnLuckyBlock(Pos pos, LuckyBlockType type) {
+    public void placeLuckyBlock(Pos pos, LuckyBlockType type) {
         Pos blockPos = new Pos(pos.blockX(), pos.blockY(), pos.blockZ());
-        instance.setBlock(blockPos, type.getBlock());
+
+        instance.setBlock(blockPos, type.getGlassBlock());
+
+        ItemStack headItem = ItemStackCreator.getStackHead(type.getSkullTexture()).build();
+        LivingEntity displayEntity = new LivingEntity(EntityType.ITEM_DISPLAY);
+        displayEntity.editEntityMeta(ItemDisplayMeta.class, meta -> {
+            meta.setItemStack(headItem);
+            meta.setScale(new Vec(1.2, 1.2, 1.2));
+            meta.setHasNoGravity(true);
+        });
+        displayEntity.setInstance(instance, blockPos.add(0.5, 0.8, 0.5));
+
         luckyBlockPositions.put(blockPos, type);
-    }
-
-    public void spawnLuckyBlock(Pos pos) {
-        spawnLuckyBlock(pos, getRandomTypeForLocation(false));
-    }
-
-    public void spawnCenterLuckyBlock(Pos pos) {
-        spawnLuckyBlock(pos, getRandomTypeForLocation(true));
-    }
-
-    private LuckyBlockType getRandomTypeForLocation(boolean isCenter) {
-        int roll = RANDOM.nextInt(100);
-
-        if (isCenter) {
-            if (roll < 20) return LuckyBlockType.GUARDIAN;
-            if (roll < 40) return LuckyBlockType.WEAPONRY;
-            if (roll < 55) return LuckyBlockType.WILD;
-            if (roll < 75) return LuckyBlockType.CRAZY;
-            return LuckyBlockType.INSANE;
-        } else {
-            if (roll < 30) return LuckyBlockType.GUARDIAN;
-            if (roll < 60) return LuckyBlockType.WEAPONRY;
-            if (roll < 85) return LuckyBlockType.WILD;
-            return LuckyBlockType.CRAZY;
-        }
-    }
-
-    public void spawnOPRuleLuckyBlock(Pos pos) {
-        spawnLuckyBlock(pos, LuckyBlockType.OP_RULE);
+        blockDisplayEntities.put(blockPos, displayEntity);
     }
 
     public boolean isLuckyBlock(Pos pos) {
@@ -133,6 +105,11 @@ public class LuckyBlock {
 
         luckyBlockPositions.remove(normalizedPos);
         instance.setBlock(normalizedPos, Block.AIR);
+
+        Entity displayEntity = blockDisplayEntities.remove(normalizedPos);
+        if (displayEntity != null) {
+            displayEntity.remove();
+        }
 
         player.sendMessage(Component.text("You broke a ", NamedTextColor.GRAY)
                 .append(Component.text(type.getDisplayName(), NamedTextColor.nearestTo(
@@ -211,10 +188,14 @@ public class LuckyBlock {
             Pos spawnPos = blockPos.add(offsetX, 0, offsetZ);
 
             EntityCreature mob = new EntityCreature(mobType);
+
+            double vanillaSpeed = getVanillaMobSpeed(mobType);
+            mob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(vanillaSpeed);
+
             mob.setInstance(instance, spawnPos);
 
             mob.addAIGroup(
-                    List.of(new MeleeAttackGoal(mob, 1.2, 20, net.minestom.server.utils.time.TimeUnit.SERVER_TICK)),
+                    List.of(new MeleeAttackGoal(mob, 1.0, 20, net.minestom.server.utils.time.TimeUnit.SERVER_TICK)),
                     List.of(new ClosestEntityTarget(mob, MOB_AI_TARGET_RANGE, entity -> entity instanceof SkywarsPlayer))
             );
 
@@ -222,6 +203,28 @@ public class LuckyBlock {
                     .delay(MOB_DESPAWN_DURATION)
                     .schedule();
         }
+    }
+
+    private double getVanillaMobSpeed(EntityType type) {
+        if (type == EntityType.ZOMBIE) return 0.23;
+        if (type == EntityType.SKELETON) return 0.25;
+        if (type == EntityType.SPIDER) return 0.3;
+        if (type == EntityType.CAVE_SPIDER) return 0.3;
+        if (type == EntityType.CREEPER) return 0.25;
+        if (type == EntityType.SLIME) return 0.2;
+        if (type == EntityType.SILVERFISH) return 0.25;
+        if (type == EntityType.ENDERMAN) return 0.3;
+        if (type == EntityType.WOLF) return 0.3;
+        if (type == EntityType.BLAZE) return 0.23;
+        if (type == EntityType.WITHER_SKELETON) return 0.35;
+        if (type == EntityType.WITCH) return 0.25;
+        if (type == EntityType.VINDICATOR) return 0.35;
+        if (type == EntityType.PIGLIN) return 0.35;
+        if (type == EntityType.PIGLIN_BRUTE) return 0.35;
+        if (type == EntityType.ZOMBIFIED_PIGLIN) return 0.23;
+        if (type == EntityType.IRON_GOLEM) return 0.25;
+        if (type == EntityType.RAVAGER) return 0.3;
+        return 0.25;
     }
 
     private void createExplosion(SkywarsPlayer player, Pos blockPos) {
@@ -240,7 +243,8 @@ public class LuckyBlock {
                     if (RANDOM.nextDouble() < BLOCK_DESTROY_CHANCE) {
                         Pos destroyPos = blockPos.add(dx, dy, dz);
                         Block block = instance.getBlock(destroyPos);
-                        if (!block.isAir() && block.isSolid() && !block.compare(Block.BEDROCK)) {
+                        boolean isChest = game != null && game.getChestManager().isChestPosition(destroyPos);
+                        if (!block.isAir() && block.isSolid() && !block.compare(Block.BEDROCK) && !isChest) {
                             instance.setBlock(destroyPos, Block.AIR);
                         }
                     }
@@ -266,6 +270,10 @@ public class LuckyBlock {
     }
 
     public void reset() {
+        for (Entity entity : blockDisplayEntities.values()) {
+            entity.remove();
+        }
+        blockDisplayEntities.clear();
         luckyBlockPositions.clear();
     }
 }
