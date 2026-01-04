@@ -39,7 +39,6 @@ public class ActionPlayerJoin implements HypixelEventClass {
                     if (preferred != null) {
                         MathUtility.delay(
                                 () -> {
-                                    // Check if this is a rejoin (player was disconnected from this game)
                                     if (preferred.hasDisconnectedPlayer(player.getUuid())) {
                                         preferred.rejoin(player);
                                     } else {

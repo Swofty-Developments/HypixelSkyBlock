@@ -1,6 +1,6 @@
 # Hypixel SkyBlock
 
-[<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="Discord" height="55" />](https://discord.gg/ZaGW5wzUJ3)
+[<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="Discord" height="55" />](https://discord.swofty.net)
 
 A 1.21.11 Minestom-based recreation of Hypixel SkyBlock with a properly abstracted, scalable microservices architecture.
 
@@ -22,7 +22,7 @@ Full documentation is available at **[opensource.swofty.net](https://opensource.
 
 - [Releases](https://github.com/Swofty-Developments/HypixelSkyBlock/releases)
 - [Javadocs](https://swofty-developments.github.io/HypixelSkyBlock/)
-- [Discord](https://discord.gg/ZaGW5wzUJ3)
+- [Discord](https://discord.swofty.net)
 - [Video Guide](https://www.youtube.com/watch?v=pxzJbjjQL-M)
 
 ## Features

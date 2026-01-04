@@ -57,20 +57,32 @@ public class BalanceConfigurations {
 			Map.entry(ServerType.SKYBLOCK_JERRYS_WORKSHOP, List.of(
 					new LowestPlayerCount()
 			)),
+
 			Map.entry(ServerType.PROTOTYPE_LOBBY, List.of(
 					new LowestPlayerCount()
 			)),
+
 			Map.entry(ServerType.BEDWARS_LOBBY, List.of(
 					new LowestPlayerCount()
 			)),
 			Map.entry(ServerType.BEDWARS_GAME, List.of(
 					new ReadyGames()
 			)),
+            Map.entry(ServerType.SKYWARS_LOBBY, List.of(
+                    new LowestPlayerCount()
+            )),
+            Map.entry(ServerType.SKYWARS_GAME, List.of(
+                    new ReadyGames()
+            )),
             Map.entry(ServerType.MURDER_MYSTERY_LOBBY, List.of(
                     new LowestPlayerCount()
             )),
             Map.entry(ServerType.MURDER_MYSTERY_GAME, List.of(
                     new ReadyGames()
+            )),
+
+            Map.entry(ServerType.SKYWARS_CONFIGURATOR, List.of(
+                    new LowestPlayerCount()
             )),
 			Map.entry(ServerType.BEDWARS_CONFIGURATOR, List.of(
 					new LowestPlayerCount()
