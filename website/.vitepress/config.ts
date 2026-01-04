@@ -83,7 +83,7 @@ export default defineConfig({
     ],
     footer: {
       message: "Released under the MIT License.",
-      copyright: "Copyright © 2024 Swofty Developments",
+      copyright: "Copyright © 2026 Swofty Developments",
     },
   },
 });
