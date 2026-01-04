@@ -5,27 +5,32 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.attribute.Attribute;
-import net.swofty.type.generic.entity.DragonEntity;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.generic.entity.DragonEntity;
+import net.swofty.type.generic.utility.AnimatedExplosion;
 import net.swofty.type.skywarsgame.game.SkywarsGame;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 
 public class DragonManager {
-    private static final double CIRCLE_RADIUS = 35;
-    private static final double CIRCLE_HEIGHT = 25;
-    private static final double CIRCLE_SPEED = 0.03;
-    private static final double FLIGHT_SPEED = 0.8;
+    private static final double IDLE_DISTANCE = 35;
+    private static final double IDLE_HEIGHT = 25;
+    private static final double IDLE_SPEED = 0.6;
+    private static final long IDLE_DURATION_MS = 30000;
     private static final double DIVE_SPEED = 1.2;
     private static final double RETURN_SPEED = 0.6;
-    private static final long DIVE_COOLDOWN_MS = 12000;
     private static final double ATTACK_RANGE = 6.0;
     private static final float ATTACK_DAMAGE = 10f;
+    private static final int EXPLOSION_RADIUS = 8;
+    private static final double EXPLOSION_KNOCKBACK = 6.0;
+    private static final long EXPLOSION_INTERVAL_MS = 1000;
 
     private final SkywarsGame game;
     private final Instance instance;
@@ -34,13 +39,13 @@ public class DragonManager {
     private Task behaviorTask;
     private boolean dragonSpawned = false;
 
-    private enum DragonState { CIRCLING, DIVING, RETURNING }
-    private DragonState state = DragonState.CIRCLING;
+    private enum DragonState { IDLE, DIVING, RETURNING }
+    private DragonState state = DragonState.IDLE;
 
-    private double circleAngle = 0;
     private SkywarsPlayer diveTarget = null;
-    private long lastDiveTime = 0;
+    private long idleStartTime = 0;
     private long diveStartTime = 0;
+    private long lastExplosionTime = 0;
     private Consumer<Component> broadcaster;
 
     public DragonManager(SkywarsGame game, Instance instance, Pos centerPos) {
@@ -76,14 +81,12 @@ public class DragonManager {
         dragon.setCustomName(Component.text("Ender Dragon", NamedTextColor.DARK_PURPLE));
         dragon.setCustomNameVisible(true);
 
-        double startX = centerPos.x() + CIRCLE_RADIUS;
-        double startY = centerPos.y() + CIRCLE_HEIGHT;
-        double startZ = centerPos.z();
-        dragon.setInstance(instance, new Pos(startX, startY, startZ));
+        Pos idleCenter = centerPos.add(0, IDLE_HEIGHT, 0);
+        dragon.setInstance(instance, idleCenter.add(IDLE_DISTANCE, 0, 0));
+        dragon.setIdle(idleCenter, IDLE_DISTANCE, IDLE_SPEED);
 
-        state = DragonState.CIRCLING;
-        circleAngle = 0;
-        lastDiveTime = System.currentTimeMillis();
+        state = DragonState.IDLE;
+        idleStartTime = System.currentTimeMillis();
 
         behaviorTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
             if (dragon == null || dragon.isDead() || !dragonSpawned) {
@@ -97,33 +100,28 @@ public class DragonManager {
     }
 
     private void dragonBehaviorTick() {
+        long now = System.currentTimeMillis();
+        if (now - lastExplosionTime >= EXPLOSION_INTERVAL_MS) {
+            lastExplosionTime = now;
+            AnimatedExplosion.create(instance, dragon.getPosition(), EXPLOSION_RADIUS, EXPLOSION_KNOCKBACK);
+        }
+
         switch (state) {
-            case CIRCLING -> handleCircling();
+            case IDLE -> handleIdle();
             case DIVING -> handleDiving();
             case RETURNING -> handleReturning();
         }
     }
 
-    private void handleCircling() {
-        circleAngle += CIRCLE_SPEED;
-        if (circleAngle >= Math.PI * 2) {
-            circleAngle -= Math.PI * 2;
-        }
-
-        double targetX = centerPos.x() + Math.cos(circleAngle) * CIRCLE_RADIUS;
-        double targetZ = centerPos.z() + Math.sin(circleAngle) * CIRCLE_RADIUS;
-        double targetY = centerPos.y() + CIRCLE_HEIGHT;
-
-        moveToward(targetX, targetY, targetZ, FLIGHT_SPEED);
-
+    private void handleIdle() {
         long now = System.currentTimeMillis();
-        if (now - lastDiveTime > DIVE_COOLDOWN_MS) {
-            SkywarsPlayer target = findClosestPlayer();
+        if (now - idleStartTime > IDLE_DURATION_MS) {
+            SkywarsPlayer target = findRandomPlayer();
             if (target != null) {
                 diveTarget = target;
                 state = DragonState.DIVING;
-                lastDiveTime = now;
                 diveStartTime = now;
+                dragon.clearTarget();
                 broadcaster.accept(Component.text("The Ender Dragon is diving at " + target.getUsername() + "!", NamedTextColor.RED));
             }
         }
@@ -142,7 +140,7 @@ public class DragonManager {
         }
 
         Pos targetPos = diveTarget.getPosition();
-        moveToward(targetPos.x(), targetPos.y() + 2, targetPos.z(), DIVE_SPEED);
+        dragon.setTarget(targetPos.add(0, 2, 0), DIVE_SPEED);
 
         double dist = dragon.getPosition().distance(diveTarget.getPosition());
         if (dist < ATTACK_RANGE) {
@@ -160,37 +158,24 @@ public class DragonManager {
     }
 
     private void handleReturning() {
-        double targetY = centerPos.y() + CIRCLE_HEIGHT;
+        Pos idleCenter = centerPos.add(0, IDLE_HEIGHT, 0);
+        dragon.setTarget(idleCenter, RETURN_SPEED);
 
-        double targetX = centerPos.x() + Math.cos(circleAngle) * CIRCLE_RADIUS;
-        double targetZ = centerPos.z() + Math.sin(circleAngle) * CIRCLE_RADIUS;
-
-        moveToward(targetX, targetY, targetZ, RETURN_SPEED);
-
-        if (dragon.getPosition().y() >= targetY - 3) {
-            state = DragonState.CIRCLING;
+        if (dragon.getPosition().distance(idleCenter) < 10) {
+            state = DragonState.IDLE;
             diveTarget = null;
+            idleStartTime = System.currentTimeMillis();
+            dragon.setIdle(idleCenter, IDLE_DISTANCE, IDLE_SPEED);
         }
     }
 
-    private void moveToward(double x, double y, double z, double speed) {
-        dragon.setTarget(new Pos(x, y, z), speed);
-    }
+    private SkywarsPlayer findRandomPlayer() {
+        List<SkywarsPlayer> alivePlayers = game.getPlayers().stream()
+                .filter(p -> !p.isEliminated() && p.isOnline())
+                .toList();
 
-    private SkywarsPlayer findClosestPlayer() {
-        SkywarsPlayer closest = null;
-        double closestDist = Double.MAX_VALUE;
-
-        for (SkywarsPlayer player : game.getPlayers()) {
-            if (player.isEliminated() || !player.isOnline()) continue;
-            double dist = dragon.getPosition().distance(player.getPosition());
-            if (dist < closestDist) {
-                closestDist = dist;
-                closest = player;
-            }
-        }
-
-        return closest;
+        if (alivePlayers.isEmpty()) return null;
+        return alivePlayers.get(ThreadLocalRandom.current().nextInt(alivePlayers.size()));
     }
 
     public void onDragonDamaged(UUID damagerUuid, float damage) {
@@ -225,7 +210,7 @@ public class DragonManager {
             dragon.remove();
         }
         dragonSpawned = false;
-        state = DragonState.CIRCLING;
+        state = DragonState.IDLE;
         diveTarget = null;
     }
 }
