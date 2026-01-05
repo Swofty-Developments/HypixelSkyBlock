@@ -245,7 +245,7 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
 
                 // Server info (when online)
                 if (friend.isOnline() && friend.getServer() != null && !friend.getServer().isEmpty()) {
-                    sb.append(" §7- §e").append(StringUtility.toNormalCase(friend.getServer()));
+                    sb.append(" §eis in a ").append(StringUtility.toNormalCase(friend.getServer()));
                 }
 
                 TextComponent line = LegacyComponentSerializer.legacySection().deserialize(sb.toString());
