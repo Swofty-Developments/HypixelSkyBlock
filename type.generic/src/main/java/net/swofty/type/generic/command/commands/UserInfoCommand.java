@@ -187,8 +187,8 @@ public class UserInfoCommand extends HypixelCommand {
                     sender.sendMessage("§6Most Recent Name: §f" + HypixelPlayer.getRawName(finalTargetUUID));
                     sender.sendMessage("§6UUID: §f" + finalTargetUUID);
                     sender.sendMessage("§6Rank: §f" + rank.name());
-                    sender.sendMessage("&6PackageRank: &fNone");
-                    sender.sendMessage("&6OldPackageRank: &fNone");
+                    sender.sendMessage("§6PackageRank: §fNone");
+                    sender.sendMessage("§6OldPackageRank: §fNone");
                     sender.sendMessage("§6Network Level: §f" + networkLevel);
                     sender.sendMessage("§6Network EXP: §f" + networkExp);
                     sender.sendMessage("§6Guild: §fNone"); // TODO: Implement guild system
@@ -197,7 +197,7 @@ public class UserInfoCommand extends HypixelCommand {
                     sender.sendMessage("§6Last Login: §f" + lastLoginDisplay);
                     sender.sendMessage("§6Packages: §fNone"); // TODO: Implement package system
                     sender.sendMessage("§6Boosters: §fNone"); // TODO: Implement booster system
-                    sender.sendMessage("§6Punishments: §a§lBans §f0 &6- §a§lMutes §f0 &6- §a§lKicks §f0");
+                    sender.sendMessage("§6Punishments: §a§lBans §f0 §6- §a§lMutes §f0 §6- §a§lKicks §f0");
                     sender.sendMessage("§6Actions: §b[TPTO] [BAN] [TEMPBAN] [KICK] [MUTE]"); // Staff action buttons
 
                 } catch (Exception e) {
