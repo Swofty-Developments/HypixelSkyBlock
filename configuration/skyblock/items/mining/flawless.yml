@@ -9,6 +9,17 @@ items:
       - id: TRACKED_UNIQUE
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawless Amber Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_AMBER_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_AMBER_GEM
+              amount: 1
 
   - id: FLAWLESS_AMETHYST_GEM
     rarity: EPIC
@@ -20,6 +31,17 @@ items:
       - id: TRACKED_UNIQUE
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawless Amethyst Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_AMETHYST_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_AMETHYST_GEM
+              amount: 1
 
   - id: FLAWLESS_JADE_GEM
     rarity: EPIC
@@ -27,10 +49,21 @@ items:
       - id: GEMSTONE_IMPL
         rarity: FLAWLESS
         gemstone: JADE
-        skull_texture: d3623521c8111ad29e9dcf7acc56085a9ab07da732d1518976aee61d0b3e3bd6
+        skull_texture: f89f75e0b00378a583dbba728dcdc6e9346f31dd601d448f3d60615c7465cc3e
       - id: TRACKED_UNIQUE
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawless Jade Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_JADE_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_JADE_GEM
+              amount: 1
 
   - id: FLAWLESS_JASPER_GEM
     rarity: EPIC
@@ -42,6 +75,17 @@ items:
       - id: TRACKED_UNIQUE
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawless Jasper Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_JASPER_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_JASPER_GEM
+              amount: 1
 
   - id: FLAWLESS_RUBY_GEM
     rarity: EPIC
@@ -53,6 +97,17 @@ items:
       - id: TRACKED_UNIQUE
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawless Ruby Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_RUBY_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_RUBY_GEM
+              amount: 1
 
   - id: FLAWLESS_SAPPHIRE_GEM
     rarity: EPIC
@@ -64,6 +119,17 @@ items:
       - id: TRACKED_UNIQUE
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawless Sapphire Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_SAPPHIRE_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_SAPPHIRE_GEM
+              amount: 1
 
   - id: FLAWLESS_TOPAZ_GEM
     rarity: EPIC
@@ -75,6 +141,17 @@ items:
       - id: TRACKED_UNIQUE
       - id: CUSTOM_DISPLAY_NAME
         display_name: Flawless Topaz Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_TOPAZ_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_TOPAZ_GEM
+              amount: 1
 
   - id: FLAWLESS_OPAL_GEM
     rarity: EPIC
@@ -86,6 +163,17 @@ items:
         rarity: FLAWLESS
         gemstone: OPAL
         skull_texture: 5d15ed70e720040ad7311e69359dfdf5e114eadd2a4c1f971a9501341a45264b
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_OPAL_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_OPAL_GEM
+              amount: 1
 
   - id: FLAWLESS_AQUAMARINE_GEM
     rarity: EPIC
@@ -97,6 +185,17 @@ items:
         rarity: FLAWLESS
         gemstone: AQUAMARINE
         skull_texture: d37699bdf8cb43eff147d9ce19b14802f9bc88a21e63ad28b669530e8a3c0b57
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_AQUAMARINE_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_AQUAMARINE_GEM
+              amount: 1
 
   - id: FLAWLESS_CITRINE_GEM
     rarity: EPIC
@@ -108,6 +207,17 @@ items:
         rarity: FLAWLESS
         gemstone: CITRINE
         skull_texture: f06b4f63d3d3a39c98565af4858a5135be774ad672eb236bb65adfc8cb3425e8
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_CITRINE_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_CITRINE_GEM
+              amount: 1
 
   - id: FLAWLESS_ONYX_GEM
     rarity: EPIC
@@ -119,6 +229,17 @@ items:
         rarity: FLAWLESS
         gemstone: ONYX
         skull_texture: 1ca9b2841f71ba6fc4d6d2e97e80c1801f36ca3958e5a9a81a4f8785f6434367
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_ONYX_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_ONYX_GEM
+              amount: 1
 
   - id: FLAWLESS_PERIDOT_GEM
     rarity: EPIC
@@ -130,3 +251,14 @@ items:
         rarity: FLAWLESS
         gemstone: PERIDOT
         skull_texture: 1884a8dcb7128341ce09cb3616c11c3e46f80d083a6f2dbb4dbe0bb932318b09
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FINE_PERIDOT_GEM
+                amount: 80
+            result:
+              type: FLAWLESS_PERIDOT_GEM
+              amount: 1

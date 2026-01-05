@@ -181,12 +181,12 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
 
     private void handleJoinNotification(HypixelPlayer player, FriendJoinNotificationEvent event) {
         String displayName = HypixelPlayer.getDisplayName(event.getFriend());
-        player.sendMessage("§aFriend > " + displayName + " §7joined.");
+        player.sendMessage("§aFriend > " + displayName + " §ejoined.");
     }
 
     private void handleLeaveNotification(HypixelPlayer player, FriendLeaveNotificationEvent event) {
         String displayName = HypixelPlayer.getDisplayName(event.getFriend());
-        player.sendMessage("§aFriend > " + displayName + " §7left.");
+        player.sendMessage("§aFriend > " + displayName + " §eleft.");
     }
 
     private void handleRequestExpired(HypixelPlayer player, FriendRequestExpiredResponseEvent event) {

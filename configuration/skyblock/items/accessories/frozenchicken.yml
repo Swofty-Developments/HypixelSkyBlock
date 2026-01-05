@@ -1,0 +1,36 @@
+items:
+  - id: FROZEN_CHICKEN
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      speed: 1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Frozen Chicken
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: d61c33024246ed219a1317e2459130f2aed227655e85cf01fc513481236d8dd1
+      - id: SELLABLE
+        value: 1
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: FRIED_FROZEN_CHICKEN
+    material: PLAYER_HEAD
+    rarity: EPIC
+    lore:
+      - '%%dark_gray%%%%italic%%Fried Frozen?! There is no such thing!'
+    default_statistics:
+      speed: 1
+      heat_resistance: 1
+      cold_resistance: 1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fried Frozen Chicken
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: adf30116f254f60167cee4137122783d2b4a4ccc36373077d507352424045ce4
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET

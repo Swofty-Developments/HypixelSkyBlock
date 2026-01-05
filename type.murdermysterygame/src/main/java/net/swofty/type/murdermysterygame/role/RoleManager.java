@@ -33,26 +33,21 @@ public class RoleManager {
         int detectiveCount = type.getDetectiveCount();
 
         int index = 0;
-        // Assign murderers
         for (int i = 0; i < murdererCount && index < players.size(); i++, index++) {
             playerRoles.put(players.get(index).getUuid(), GameRole.MURDERER);
         }
-        // Assign detectives
         for (int i = 0; i < detectiveCount && index < players.size(); i++, index++) {
             playerRoles.put(players.get(index).getUuid(), GameRole.DETECTIVE);
         }
-        // Rest are innocents
         for (; index < players.size(); index++) {
             playerRoles.put(players.get(index).getUuid(), GameRole.INNOCENT);
         }
     }
 
     private void assignAssassinsMode(List<MurderMysteryPlayer> players) {
-        // Everyone is an assassin with a target
         for (MurderMysteryPlayer player : players) {
             playerRoles.put(player.getUuid(), GameRole.ASSASSIN);
         }
-        // Assign targets in a circle
         for (int i = 0; i < players.size(); i++) {
             UUID hunter = players.get(i).getUuid();
             UUID target = players.get((i + 1) % players.size()).getUuid();

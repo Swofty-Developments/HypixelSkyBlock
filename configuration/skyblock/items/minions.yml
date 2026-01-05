@@ -152,12 +152,12 @@ items:
           - SLIME_BALL:20
           - SLIME_BALL:40
           - SLIME_BALL:64
-          - ENCHANTED_SLIMEBALL:1
-          - ENCHANTED_SLIMEBALL:3
-          - ENCHANTED_SLIMEBALL:8
-          - ENCHANTED_SLIMEBALL:16
-          - ENCHANTED_SLIMEBALL:32
-          - ENCHANTED_SLIMEBALL:64
+          - ENCHANTED_SLIME_BALL:1
+          - ENCHANTED_SLIME_BALL:3
+          - ENCHANTED_SLIME_BALL:8
+          - ENCHANTED_SLIME_BALL:16
+          - ENCHANTED_SLIME_BALL:32
+          - ENCHANTED_SLIME_BALL:64
           - ENCHANTED_SLIME_BLOCK:1
   - id: SPIDER_MINION
     material: PLAYER_HEAD
@@ -760,7 +760,7 @@ items:
           - ENCHANTED_EMERALD:32
           - ENCHANTED_EMERALD:64
           - ENCHANTED_EMERALD_BLOCK:1
-  - id: ENDSTONE_MINION
+  - id: END_STONE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:

@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.gems;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import net.minestom.server.item.Material;
 import net.swofty.commons.ChatColor;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeGemData;
@@ -23,9 +24,9 @@ public enum Gemstone {
     JASPER(List.of(ItemType.ROUGH_JASPER_GEM, ItemType.FLAWED_JASPER_GEM, ItemType.FINE_JASPER_GEM, ItemType.FLAWLESS_JASPER_GEM, ItemType.PERFECT_JASPER_GEM), ChatColor.LIGHT_PURPLE, ItemStatistic.STRENGTH),
     OPAL(List.of(ItemType.ROUGH_OPAL_GEM, ItemType.FLAWED_OPAL_GEM, ItemType.FINE_OPAL_GEM, ItemType.FLAWLESS_OPAL_GEM, ItemType.PERFECT_OPAL_GEM), ChatColor.WHITE, ItemStatistic.TRUE_DEFENSE),
     AQUAMARINE(List.of(ItemType.ROUGH_AQUAMARINE_GEM, ItemType.FLAWED_AQUAMARINE_GEM, ItemType.FINE_AQUAMARINE_GEM, ItemType.FLAWLESS_AQUAMARINE_GEM, ItemType.PERFECT_AQUAMARINE_GEM), ChatColor.AQUA, ItemStatistic.FISHING_SPEED),
-    CITRINE(List.of(ItemType.ROUGH_CITRINE_GEM, ItemType.FLAWED_CITRINE_GEM, ItemType.FINE_CITRINE_GEM, ItemType.FLAWLESS_CITRINE_GEM, ItemType.PERFECT_CITRINE_GEM), ChatColor.GOLD, ItemStatistic.FORAGING_FORTUNE),
+    CITRINE(List.of(ItemType.ROUGH_CITRINE_GEM, ItemType.FLAWED_CITRINE_GEM, ItemType.FINE_CITRINE_GEM, ItemType.FLAWLESS_CITRINE_GEM, ItemType.PERFECT_CITRINE_GEM), ChatColor.DARK_RED, ItemStatistic.FORAGING_FORTUNE),
     PERIDOT(List.of(ItemType.ROUGH_PERIDOT_GEM, ItemType.FLAWED_PERIDOT_GEM, ItemType.FINE_PERIDOT_GEM, ItemType.FLAWLESS_PERIDOT_GEM, ItemType.PERFECT_PERIDOT_GEM), ChatColor.GREEN, ItemStatistic.FARMING_FORTUNE),
-    ONYX(List.of(ItemType.ROUGH_ONYX_GEM, ItemType.FLAWED_ONYX_GEM, ItemType.FINE_ONYX_GEM, ItemType.FLAWLESS_ONYX_GEM, ItemType.PERFECT_ONYX_GEM), ChatColor.BLACK, ItemStatistic.CRIT_DAMAGE),
+    ONYX(List.of(ItemType.ROUGH_ONYX_GEM, ItemType.FLAWED_ONYX_GEM, ItemType.FINE_ONYX_GEM, ItemType.FLAWLESS_ONYX_GEM, ItemType.PERFECT_ONYX_GEM), ChatColor.DARK_GRAY, ItemStatistic.CRITICAL_DAMAGE),
     ;
 
     public final List<ItemType> item;
@@ -63,40 +64,55 @@ public enum Gemstone {
         return toReturn;
     }
 
+    public static Gemstone getFromItemType(ItemType item) {
+        for (Gemstone gemstone : Gemstone.values()) {
+            if (gemstone.getItem().contains(item)) {
+                return gemstone;
+            }
+        };
+        return null;
+    }
+
     public enum Slots {
         //NORMAL
-        RUBY("Ruby", ChatColor.RED, "❤", (short) 14, List.of(Gemstone.RUBY)),
-        AMETHYST("Amethyst", ChatColor.DARK_PURPLE, "❈", (short) 10, List.of(Gemstone.AMETHYST)),
-        JADE("Jade", ChatColor.GREEN, "☘", (short) 13, List.of(Gemstone.JADE)),
-        SAPPHIRE("Sapphire", ChatColor.GREEN, "✎", (short) 5, List.of(Gemstone.SAPPHIRE)),
-        AMBER("Amber", ChatColor.GOLD, "⸕", (short) 1, List.of(Gemstone.AMBER)),
-        TOPAZ("Topaz", ChatColor.YELLOW, "✧", (short) 4, List.of(Gemstone.TOPAZ)),
-        JASPER("Jasper", ChatColor.LIGHT_PURPLE, "❁", (short) 2, List.of(Gemstone.JASPER)),
+        RUBY("Ruby", "❤", ChatColor.RED, Material.RED_STAINED_GLASS_PANE, List.of(Gemstone.RUBY)),
+        AMETHYST("Amethyst", "❈", ChatColor.DARK_PURPLE, Material.PURPLE_STAINED_GLASS_PANE, List.of(Gemstone.AMETHYST)),
+        JADE("Jade", "☘", ChatColor.GREEN, Material.LIME_STAINED_GLASS_PANE, List.of(Gemstone.JADE)),
+        SAPPHIRE("Sapphire", "✎", ChatColor.BLUE, Material.LIGHT_BLUE_STAINED_GLASS_PANE, List.of(Gemstone.SAPPHIRE)),
+        AMBER("Amber", "⸕", ChatColor.GOLD, Material.ORANGE_STAINED_GLASS_PANE, List.of(Gemstone.AMBER)),
+        TOPAZ("Topaz", "✧", ChatColor.YELLOW, Material.YELLOW_STAINED_GLASS_PANE, List.of(Gemstone.TOPAZ)),
+        JASPER("Jasper", "❁", ChatColor.LIGHT_PURPLE, Material.PINK_STAINED_GLASS_PANE, List.of(Gemstone.JASPER)),
+        OPAL("Opal", "❂", ChatColor.WHITE, Material.WHITE_STAINED_GLASS_PANE, List.of(Gemstone.OPAL)),
+        AQUAMARINE("Aquamarine", "☂", ChatColor.AQUA, Material.LIGHT_BLUE_STAINED_GLASS_PANE, List.of(Gemstone.AQUAMARINE)),
+        CITRINE("Citrine", "☘", ChatColor.DARK_RED, Material.RED_STAINED_GLASS_PANE, List.of(Gemstone.CITRINE)),
+        PERIDOT("Peridot", "☘", ChatColor.DARK_GREEN, Material.GREEN_STAINED_GLASS_PANE, List.of(Gemstone.PERIDOT)),
+        ONYX("Onyx", "☠", ChatColor.DARK_GRAY, Material.BLACK_STAINED_GLASS_PANE, List.of(Gemstone.ONYX)),
 
         //SPECIAL
-        COMBAT("Combat", ChatColor.RED, "⚔", (short) 14, List.of(Gemstone.RUBY, Gemstone.AMETHYST, Gemstone.SAPPHIRE, Gemstone.JASPER)),
-        OFFENSIVE("Offensive", ChatColor.BLUE, "☠", (short) 11, List.of(Gemstone.SAPPHIRE, Gemstone.JASPER)),
-        DEFENSIVE("Defensive", ChatColor.GREEN, "☤", (short) 13, List.of(Gemstone.RUBY, Gemstone.AMETHYST)),
-        MINING("Mining", ChatColor.GREEN, "✦", (short) 5, List.of(Gemstone.JADE, Gemstone.AMBER, Gemstone.TOPAZ)),
-        UNIVERSAL("Universal", ChatColor.WHITE, "❂", (short) 0, List.of(Gemstone.values())),
+        COMBAT("Combat", "⚔", ChatColor.DARK_RED, Material.RED_STAINED_GLASS_PANE, List.of(Gemstone.RUBY, Gemstone.AMETHYST, Gemstone.SAPPHIRE, Gemstone.JASPER, Gemstone.ONYX, Gemstone.OPAL)),
+        DEFENSIVE("Defensive", "☤", ChatColor.GREEN, Material.LIME_STAINED_GLASS_PANE, List.of(Gemstone.RUBY, Gemstone.AMETHYST, Gemstone.OPAL)),
+        OFFENSIVE("Offensive", "☠", ChatColor.DARK_BLUE, Material.BLUE_STAINED_GLASS_PANE, List.of(Gemstone.SAPPHIRE, Gemstone.JASPER)),
+        MINING("Mining", "✦", ChatColor.DARK_PURPLE, Material.PURPLE_STAINED_GLASS_PANE, List.of(Gemstone.JADE, Gemstone.AMBER, Gemstone.TOPAZ)),
+        CHISEL("Chisel", "❥", ChatColor.GOLD, Material.ORANGE_STAINED_GLASS_PANE, List.of(Gemstone.CITRINE, Gemstone.AQUAMARINE, Gemstone.ONYX, Gemstone.PERIDOT)),
+        UNIVERSAL("Universal", "❂", ChatColor.WHITE, Material.WHITE_STAINED_GLASS_PANE, List.of(Gemstone.values())),
         ;
 
         @Getter
         public final String name;
         @Getter
-        public final ChatColor color;
-        @Getter
         public final String symbol;
         @Getter
-        public final short paneColour;
+        public final ChatColor color;
+        @Getter
+        public final Material paneColor;
         @Getter
         public final List<Gemstone> validGemstones;
 
-        Slots(String name, ChatColor color, String symbol, short paneColour, List<Gemstone> validGemstones) {
+        Slots(String name, String symbol, ChatColor color, Material paneColor, List<Gemstone> validGemstones) {
             this.name = name;
             this.symbol = symbol;
             this.color = color;
-            this.paneColour = paneColour;
+            this.paneColor = paneColor;
             this.validGemstones = validGemstones;
         }
 

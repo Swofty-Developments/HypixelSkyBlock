@@ -154,9 +154,20 @@ public abstract class HypixelNPC {
 				}
 
 				if (needsUpdate && !needsFullUpdate) {
-                            entity.setView(npcPosition.yaw(), npcPosition.pitch());
-                            entity.setInstance(config.instance(), npcPosition);
-                            return;
+					boolean onlyViewChanged = entity.getPosition().x() == npcPosition.x() && entity.getPosition().z() == npcPosition.z() && entity.getPosition().y() == npcPosition.y();
+					entity.setView(npcPosition.yaw(), npcPosition.pitch());
+					entity.setInstance(config.instance(), npcPosition);
+					if (!onlyViewChanged) {
+						boolean overflowing = npcHolograms[npcHolograms.length - 1].length() > 16;
+						float yOffset = overflowing ? -0.2f : 0.0f;
+						if (config instanceof VillagerConfiguration) {
+							yOffset = 0.2f;
+						} else if (config instanceof AnimalConfiguration animalConfig) {
+							yOffset = animalConfig.hologramYOffset();
+						}
+						PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, 1.1f + yOffset, 0));
+					}
+					return;
 				}
 				if (needsFullUpdate) {
                             entity.remove();

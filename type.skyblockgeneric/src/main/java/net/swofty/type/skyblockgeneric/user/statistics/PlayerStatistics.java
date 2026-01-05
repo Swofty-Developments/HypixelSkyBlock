@@ -374,13 +374,13 @@ public class PlayerStatistics {
 
     private static Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics originStatistics, ItemStatistics enemyStatistics, LivingEntity enemy) {
         boolean isCrit = false;
-        double critChance = originStatistics.getBase(ItemStatistic.CRIT_CHANCE);
+        double critChance = originStatistics.getBase(ItemStatistic.CRITICAL_CHANCE);
         if (Math.random() <= (critChance / 100))
             isCrit = true;
 
         double baseDamage = originStatistics.getOverall(ItemStatistic.DAMAGE);
         double strength = originStatistics.getOverall(ItemStatistic.STRENGTH);
-        double critDamage = originStatistics.getOverall(ItemStatistic.CRIT_DAMAGE);
+        double critDamage = originStatistics.getOverall(ItemStatistic.CRITICAL_DAMAGE);
 
         double strengthDamage = (1 + (strength / 100));
         double criticalDamage = isCrit ? 1 + (critDamage / 100) : 1;

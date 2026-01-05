@@ -15,7 +15,7 @@ statistics:
   SPEED:
     expression: "-1"
 
-  CRIT_DAMAGE:
+  CRITICAL_DAMAGE:
     common: -2
     uncommon: -2
     rare: -3

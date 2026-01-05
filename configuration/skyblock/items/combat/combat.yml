@@ -1,12 +1,4 @@
 items:
-  - id: ABSOLUTE_ENDER_PEARL
-    rarity: COMMON
-    components:
-      - id: ENCHANTED
-      - id: SELLABLE
-        value: 11200.0
-      - id: SKULL_HEAD
-        texture: 67d9fe065024fff4b34c78f92cd3150d6bdfaab7c375a0ee785076e1a4a254e9
   - id: CHILI_PEPPER
     rarity: COMMON
     components:
@@ -14,28 +6,13 @@ items:
         value: 5000.0
       - id: SKULL_HEAD
         texture: f859c8df1109c08a756275f1d2887c2748049fe33877769a7b415d56eda469d8
+
   - id: SOUL_STRING
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 5000.0
-  - id: STUFFED_CHILI_PEPPER
-    rarity: COMMON
-    components:
-      - id: ENCHANTED
-        recipe_type: COMBAT
-      - id: SELLABLE
-        value: 200000.0
-      - id: SKULL_HEAD
-        texture: f599f959f0ebcb1eb0f2e5852d122ca55bf5258fd4613ab50d72ad8cf5e12603
-  - id: WHIPPED_MAGMA_CREAM
-    rarity: COMMON
-    components:
-      - id: ENCHANTED
-      - id: SELLABLE
-        value: 204800.0
-      - id: SKULL_HEAD
-        texture: 7da530ad09e69e4678c69cf5b8e0f0751e4630355fc7f0c226c955baace30fb2
+
   - id: ZOMBIE_HEART
     rarity: COMMON
     default_statistics:
@@ -49,3 +26,22 @@ items:
       - id: TRACKED_UNIQUE
       - id: STANDARD_ITEM
         standard_item_type: HELMET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_ROTTEN_FLESH
+                amount: 32
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: ZOMBIE_HEART
+              amount: 1

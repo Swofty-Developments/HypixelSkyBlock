@@ -1,0 +1,32 @@
+items:
+  - id: BAT_PERSON_TALISMAN
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bat Person Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: b841a49b199a59c431bf3fc3783f6b6545ce78c38042617f66ebd87cdd548e8c
+      - id: NOT_FINISHED_YET
+
+  - id: BAT_PERSON_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bat Person Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: b4451ecf2584a36de4297031c6d852977d3e249e85a3f0add967fcd7d6bde953
+      - id: NOT_FINISHED_YET
+
+  - id: BAT_PERSON_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bat Person Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: c4444c3982720b30938f504c4374232b11a4f6f56cd57c973d8abb07fd0dcff7
+      - id: NOT_FINISHED_YET

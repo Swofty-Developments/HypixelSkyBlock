@@ -1,0 +1,45 @@
+items:
+  - id: COIN_TALISMAN
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Talisman of Coins
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 35a12dc77e8969fb775b9159c9d7e1999ea31a6a6e39a729b5ef8c876fc63c6a
+      - id: SELLABLE
+        value: 70
+      - id: NOT_FINISHED_YET
+
+  - id: RING_OF_COINS
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Ring of Coins
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 41a3e7c7699bf8378f582c1d3eb9af068b85db235ba78ebb253a04af3ec565a3
+      - id: NOT_FINISHED_YET
+
+  - id: ARTIFACT_OF_COINS
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Artifact of Coins
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4d7318c21c2a53693222cd60191518a8e2a885956dd0823b6142c9ce77d13811
+      - id: NOT_FINISHED_YET
+
+  - id: RELIC_OF_COINS
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Relic of Coins
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a4285382178f7abd9ee8291340aafbe3f616785cee39dab654e135c9525f1a87
+      - id: NOT_FINISHED_YET

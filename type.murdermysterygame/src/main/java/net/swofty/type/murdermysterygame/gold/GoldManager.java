@@ -40,7 +40,6 @@ public class GoldManager {
     public void startSpawning() {
         var config = game.getMapEntry().getConfiguration();
         if (config == null || config.getGoldSpawns() == null || config.getGoldSpawns().isEmpty()) {
-            // No gold spawns configured, use default positions
             return;
         }
 
@@ -69,21 +68,16 @@ public class GoldManager {
 
                     double distance = goldEntity.getPosition().distance(player.getPosition());
                     if (distance <= PICKUP_DISTANCE) {
-                        // Collect the gold
                         goldToRemove.add(goldEntity);
 
-                        // Send pickup animation packet
                         player.sendPacket(new CollectItemPacket(goldEntity.getEntityId(), player.getEntityId(), 1));
 
-                        // Give physical gold item to inventory
                         player.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, 1));
 
                         player.sendMessage(Component.text("+1 Gold", NamedTextColor.GOLD));
 
-                        // === GOLD ACHIEVEMENT TRACKING ===
                         trackGoldAchievements(player, 1);
 
-                        // Check if player has enough gold in inventory for bow
                         int goldInInventory = countGoldInInventory(player);
                         if (goldInInventory >= GOLD_FOR_BOW) {
                             removeGoldFromInventory(player, GOLD_FOR_BOW);
@@ -91,7 +85,7 @@ public class GoldManager {
                         }
 
                         goldEntity.remove();
-                        break; // Only one player can pick up each gold
+                        break;
                     }
                 }
             }
@@ -125,13 +119,10 @@ public class GoldManager {
         spawnedGold.remove(goldEntity);
         goldEntity.remove();
 
-        // Give physical gold item to inventory
         player.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, 1));
 
-        // === GOLD ACHIEVEMENT TRACKING ===
         trackGoldAchievements(player, 1);
 
-        // Check if player has enough gold in inventory for bow
         int goldInInventory = countGoldInInventory(player);
         if (goldInInventory >= GOLD_FOR_BOW) {
             removeGoldFromInventory(player, GOLD_FOR_BOW);
@@ -145,16 +136,12 @@ public class GoldManager {
     private void trackGoldAchievements(MurderMysteryPlayer player, int amount) {
         PlayerAchievementHandler achHandler = new PlayerAchievementHandler(player);
 
-        // Track total gold collected this game for player tracking
         player.addGoldCollectedThisGame(amount);
 
-        // Per-game: Gold Hunter - pick up 30 gold in single game
         achHandler.addProgress("murdermystery.gold_hunter", amount);
 
-        // Tiered: Hoarder - gather total gold
         achHandler.addProgress("murdermystery.hoarder", amount);
 
-        // That Was Easy - collect 10 gold in first minute
         long gameStartTime = game.getGameStartTime();
         if (gameStartTime > 0 && System.currentTimeMillis() - gameStartTime <= 60000) {
             player.addGoldInFirstMinute(amount);

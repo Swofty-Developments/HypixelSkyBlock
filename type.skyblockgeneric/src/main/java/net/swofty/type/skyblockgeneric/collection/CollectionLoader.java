@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.collection;
 
 import lombok.Data;
+import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
 import org.tinylog.Logger;
 import net.minestom.server.item.Material;
 import net.swofty.commons.YamlFileUtils;
@@ -15,10 +16,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 public class CollectionLoader {
@@ -52,18 +50,8 @@ public class CollectionLoader {
 
     @Data
     public static class RewardData {
-        // Recipe data
-        public String recipeType;
-        public String craftingMaterial;
-        public String resultType;
-        public int resultAmount;
-        public List<String> pattern;
-        public Map<String, RecipeIngredient> ingredients;
-
-        // Special unlock data
+        // For recipe unlocks
         public String unlockedItemType;
-        public boolean isEnchantedRecipe;
-        public boolean isMinionRecipes;
 
         // XP data
         public Integer xp;
@@ -138,8 +126,7 @@ public class CollectionLoader {
 
         for (Reward r : reward.rewards) {
             switch (r.type.toUpperCase()) {
-                case "RECIPE" -> rewardTypes.add(parseRecipe(r.data));
-                case "SPECIAL_UNLOCK" -> rewardTypes.add(parseSpecialUnlock(r.data));
+                case "RECIPE_UNLOCK" -> rewardTypes.add(parseRecipeUnlock(r.data));
                 case "XP" -> rewardTypes.add(new CollectionCategory.UnlockXP() {
                     @Override
                     public int xp() {
@@ -152,101 +139,45 @@ public class CollectionLoader {
                         return CustomCollectionAward.valueOf(r.data.customAward);
                     }
                 });
+                default -> throw new IllegalArgumentException("Unknown reward type: " + r.type);
             }
         }
 
         return new CollectionCategory.ItemCollectionReward(reward.amount, rewardTypes.toArray(new CollectionCategory.Unlock[0]));
     }
 
-    private static CollectionCategory.UnlockRecipe parseRecipe(RewardData data) {
+    private static CollectionCategory.UnlockRecipe parseRecipeUnlock(RewardData data) {
         return new CollectionCategory.UnlockRecipe() {
             @Override
             public SkyBlockRecipe<?> getRecipe() {
-                // Convert RewardData to the Map format expected by RecipeParser
-                Map<String, Object> config = convertToRecipeConfig(data);
-                return RecipeParser.parseRecipe(config);
-            }
-        };
-    }
+                if (data.unlockedItemType == null || data.unlockedItemType.isEmpty()) {
+                    throw new IllegalArgumentException("unlockedItemType cannot be null or empty for RECIPE_UNLOCK");
+                }
 
-    private static Map<String, Object> convertToRecipeConfig(RewardData data) {
-        Map<String, Object> config = new HashMap<>();
-        config.put("type", data.pattern != null ? "shaped" : "shapeless");
-        config.put("recipe-type", data.recipeType);
+                ItemType itemType = ItemType.valueOf(data.unlockedItemType);
+                List<SkyBlockRecipe<?>> recipes = SkyBlockRecipe.getFromType(itemType);
 
-        // Convert result
-        Map<String, Object> result = new HashMap<>();
-        if (data.craftingMaterial == null) {
-            throw new RuntimeException("Crafting material is null for " + data.unlockedItemType);
-        }
-        result.put("type", data.craftingMaterial);
-        result.put("amount", data.resultAmount);
-        config.put("result", result);
+                if (recipes.isEmpty()) {
+                    SkyBlockItem item = new SkyBlockItem(data.unlockedItemType);
+                    if (item.hasComponent(EnchantedComponent.class)) {
+                        EnchantedComponent enchanted = item.getComponent(EnchantedComponent.class);
+                        List<SkyBlockRecipe<?>> enchantedRecipes = enchanted.getRecipes();
+                        if (!enchantedRecipes.isEmpty()) {
+                            return enchantedRecipes.getFirst();
+                        }
+                    }
 
-        // Convert ingredients based on recipe type
-        if (data.pattern != null) {
-            config.put("pattern", data.pattern);
-            config.put("ingredients", convertShapedIngredients(data.ingredients));
-        } else {
-            config.put("ingredients", convertShapelessIngredients(data.ingredients));
-        }
+                    throw new RuntimeException("No recipes found for item: " + data.unlockedItemType +
+                            ". Make sure the item has a CraftableComponent or EnchantedComponent with recipes defined.");
+                }
 
-        return config;
-    }
-
-    private static Map<String, Map<String, Object>> convertShapedIngredients(Map<String, RecipeIngredient> ingredients) {
-        Map<String, Map<String, Object>> converted = new HashMap<>();
-
-        for (Map.Entry<String, RecipeIngredient> entry : ingredients.entrySet()) {
-            Map<String, Object> ingredient = new HashMap<>();
-            ingredient.put("type", entry.getValue().type);
-            ingredient.put("amount", entry.getValue().amount);
-            converted.put(entry.getKey(), ingredient);
-        }
-
-        return converted;
-    }
-
-    private static List<Map<String, Object>> convertShapelessIngredients(Map<String, RecipeIngredient> ingredients) {
-        List<Map<String, Object>> converted = new ArrayList<>();
-
-        for (RecipeIngredient ingredient : ingredients.values()) {
-            Map<String, Object> ingredientMap = new HashMap<>();
-            ingredientMap.put("type", ingredient.type);
-            ingredientMap.put("amount", ingredient.amount);
-            converted.add(ingredientMap);
-        }
-
-        return converted;
-    }
-
-    private static CollectionCategory.UnlockRecipe parseSpecialUnlock(RewardData data) {
-        return new CollectionCategory.UnlockRecipe() {
-            @Override
-            public SkyBlockRecipe<?> getRecipe() {
-                return null;
+                return recipes.getFirst();
             }
 
             @Override
             public List<SkyBlockRecipe<?>> getRecipes() {
-                if (data.isMinionRecipes) {
-                    SkyBlockItem item = new SkyBlockItem(data.unlockedItemType);
-                    if (!item.hasComponent(CraftableComponent.class)) {
-                        throw new RuntimeException("Item " + data.unlockedItemType + " does not have a craftable component");
-                    }
-                    CraftableComponent component = item.getComponent(CraftableComponent.class);
-                    return component.getRecipes();
-                } else if (data.isEnchantedRecipe) {
-                    if (data.craftingMaterial == null) {
-                        System.out.println("Crafting material is null for " + data.unlockedItemType);
-                    }
-                    return List.of(SkyBlockRecipe.getStandardEnchantedRecipe(
-                            SkyBlockRecipe.RecipeType.valueOf(data.recipeType),
-                            ItemType.valueOf(data.craftingMaterial),
-                            ItemType.valueOf(data.unlockedItemType)
-                    ));
-                }
-                return null;
+                SkyBlockRecipe<?> recipe = getRecipe();
+                return recipe != null ? List.of(recipe) : Collections.emptyList();
             }
         };
     }

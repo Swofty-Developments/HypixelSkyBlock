@@ -1,0 +1,51 @@
+items:
+  - id: CAT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      speed: 1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Cat Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 2220107a77f8eac0743ee8cca378183d256c4a89ac9660ef942cd3759467ba01
+      - id: SELLABLE
+        value: 1000
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: LYNX_TALISMAN
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      speed: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lynx Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 2360f1de777efe05d272a61cfeea0006496aacadf1943573a3f0d7655016e609
+      - id: SELLABLE
+        value: 1000
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: CHEETAH_TALISMAN
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      speed: 3
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Cheetah Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 8ca45bf11990f018f3b0b8d49a432ea4e9dcef75621126f0568d7900e169a8e2
+      - id: SELLABLE
+        value: 1000
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET

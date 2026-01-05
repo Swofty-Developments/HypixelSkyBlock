@@ -1,0 +1,44 @@
+items:
+  - id: BINGO_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bingo Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 2f25944b7465ff4586a341f881f488b6f9d4b3ffc100f50a77087075b3ceb1b
+      - id: NOT_FINISHED_YET
+
+  - id: BINGO_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bingo Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 22f2499ab4cfc97e65f0fa9fe63cc606707a4ae96af407846b1b5354f3fad99
+      - id: NOT_FINISHED_YET
+
+  - id: BINGO_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bingo Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: d2dad868f8d865baa32d6158672d1b134db61ea56d33efa0c09f6ba6f276ff2
+      - id: NOT_FINISHED_YET
+
+  - id: BINGO_RELIC
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bingo Relic
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: c515acf4a6ac698736e54def0bc78143c14449978e750afbb8d7ade0adf0ef00
+      - id: NOT_FINISHED_YET

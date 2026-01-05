@@ -4,7 +4,7 @@ applicableTypes:
   - "BOWS"
 
 statistics:
-  CRIT_CHANCE:
+  CRITICAL_CHANCE:
     common: 10
     uncommon: 13
     rare: 16
@@ -12,7 +12,7 @@ statistics:
     legendary: 22
     mythic: 25
 
-  CRIT_DAMAGE:
+  CRITICAL_DAMAGE:
     common: 5
     uncommon: 10
     rare: 18

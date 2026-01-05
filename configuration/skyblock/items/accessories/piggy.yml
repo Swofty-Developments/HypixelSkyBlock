@@ -1,0 +1,39 @@
+items:
+  - id: PIGGY_BANK
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Piggy Bank
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 3298cd257027d67a1bb20f7a5bc328a3debb78a9dfbf1e1e92af2f23aa640d89
+      - id: SELLABLE
+        value: 16000
+      - id: NOT_FINISHED_YET
+
+  - id: CRACKED_PIGGY_BANK
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Cracked Piggy Bank
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 14a7aac08593a1a0bc6666fe0aeedfb195d413fc9cf87c73f4a8c04da6418857
+      - id: SELLABLE
+        value: 16000
+      - id: NOT_FINISHED_YET
+
+  - id: BROKEN_PIGGY_BANK
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Broken Piggy Bank
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: b590207aeea2d8fc80194f2a109f5b1999c91ebd377dff01b9e7ebe091a3a419
+      - id: SELLABLE
+        value: 16000
+      - id: NOT_FINISHED_YET

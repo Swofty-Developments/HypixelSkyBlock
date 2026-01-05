@@ -1,0 +1,26 @@
+items:
+  - id: CENTURY_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - What's better than a party? A party with free goodies!
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Talisman of the Century
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 720b77eaa6bc4a183a6888ba52df48417a6e385c3b463ac49b40a3b96e0a5b75
+      - id: NOT_FINISHED_YET
+
+  - id: CENTURY_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - What's better than a party? A party with free goodies and an accessory upgrade!
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Ring of the Century
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: dda95b02398026109c42cc22e7d82d4e1d7a58adf11009cedbef36496ff8dc58
+      - id: NOT_FINISHED_YET

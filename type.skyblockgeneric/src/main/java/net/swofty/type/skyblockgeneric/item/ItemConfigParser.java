@@ -17,6 +17,7 @@ import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
 import net.swofty.type.skyblockgeneric.minion.MinionIngredient;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
+import net.swofty.type.skyblockgeneric.utility.RecipeParser;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -47,7 +48,7 @@ public class ItemConfigParser {
 				SafeConfig statsConfig = safeConfig.getNested("default_statistics");
 				for (String key : statsConfig.getKeys()) {
 					double value = statsConfig.getDouble(key, 0.0);
-					statistics.put(key, value);
+					statistics.put(key.toUpperCase(), value);
 				}
 			}
 
@@ -158,12 +159,25 @@ public class ItemConfigParser {
 					);
 				}
 				case "ENCHANTED" -> {
-					if (safeConfig.containsKey("recipe_type") && safeConfig.containsKey("item_id")) {
+					if (safeConfig.containsKey("recipes")) {
+						List<Map<String, Object>> recipeConfigs = safeConfig.getMapList("recipes");
+						List<SkyBlockRecipe<?>> recipes = new ArrayList<>();
+
+						for (Map<String, Object> recipeConfig : recipeConfigs) {
+							SkyBlockRecipe<?> recipe = RecipeParser.parseRecipe(recipeConfig);
+							recipes.add(recipe);
+						}
+
+						yield new EnchantedComponent(recipes);
+					}
+					else if (safeConfig.containsKey("recipe_type") && safeConfig.containsKey("item_id")) {
 						SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.valueOf(safeConfig.getString("recipe_type"));
 						String baseMaterial = safeConfig.getString("item_id");
 						yield new EnchantedComponent(type, itemId, baseMaterial);
 					}
-					yield new EnchantedComponent();
+					else {
+						yield new EnchantedComponent();
+					}
 				}
 				case "EXTRA_RARITY" -> {
 					String display = safeConfig.getString("display");
@@ -447,12 +461,6 @@ public class ItemConfigParser {
 				case "CUSTOM_STATISTICS" -> {
 					String handlerId = safeConfig.getString("handler_id");
 					yield new CustomStatisticsComponent(handlerId);
-				}
-				case "TIERED_TALISMAN" -> {
-					String baseTierStr = safeConfig.getString("base_tier");
-					ItemType baseTier = ItemType.valueOf(baseTierStr);
-					int tier = safeConfig.getInt("tier");
-					yield new TieredTalismanComponent(baseTier, tier);
 				}
 				case "TRACKED_UNIQUE" -> new TrackedUniqueComponent();
 				case "BREWING_INGREDIENT" -> {

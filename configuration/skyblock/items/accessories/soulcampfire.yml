@@ -1,0 +1,392 @@
+items:
+  - id: SOUL_CAMPFIRE_TALISMAN_1
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Initiate Badge I
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 45c408adee23c607e8d183dfbe602b9fa562f36933722e3f7378498382425b88
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_2
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Initiate Badge II
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 45c408adee23c607e8d183dfbe602b9fa562f36933722e3f7378498382425b88
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_3
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Initiate Badge III
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 45c408adee23c607e8d183dfbe602b9fa562f36933722e3f7378498382425b88
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_4
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Adept Badge I
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a51bd6265d0a2f9259f76194e6deaf07b10a412d5246c1d66847aa935fff2a6
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_5
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Adept Badge II
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a51bd6265d0a2f9259f76194e6deaf07b10a412d5246c1d66847aa935fff2a6
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_6
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Adept Badge III
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a51bd6265d0a2f9259f76194e6deaf07b10a412d5246c1d66847aa935fff2a6
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_7
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Adept Badge IV
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a51bd6265d0a2f9259f76194e6deaf07b10a412d5246c1d66847aa935fff2a6
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_8
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Cultist Badge I
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: fac49359dc5d8aa9df02645365d3066800f0ffeaf57328f0b7e673aa56d0458a
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_9
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Cultist Badge II
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: fac49359dc5d8aa9df02645365d3066800f0ffeaf57328f0b7e673aa56d0458a
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_10
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Cultist Badge III
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: fac49359dc5d8aa9df02645365d3066800f0ffeaf57328f0b7e673aa56d0458a
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_11
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Cultist Badge IV
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: fac49359dc5d8aa9df02645365d3066800f0ffeaf57328f0b7e673aa56d0458a
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_12
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Cultist Badge V
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: fac49359dc5d8aa9df02645365d3066800f0ffeaf57328f0b7e673aa56d0458a
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_13
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Scion Badge I
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a823073ae1c2ee9d85818449572981773f7f6decefe3f9118db10d42911ef5d7
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_14
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Scion Badge II
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a823073ae1c2ee9d85818449572981773f7f6decefe3f9118db10d42911ef5d7
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_15
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Scion Badge III
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a823073ae1c2ee9d85818449572981773f7f6decefe3f9118db10d42911ef5d7
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_16
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Scion Badge IV
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a823073ae1c2ee9d85818449572981773f7f6decefe3f9118db10d42911ef5d7
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_17
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Scion Badge V
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a823073ae1c2ee9d85818449572981773f7f6decefe3f9118db10d42911ef5d7
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_18
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Scion Badge VI
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a823073ae1c2ee9d85818449572981773f7f6decefe3f9118db10d42911ef5d7
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_19
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Scion Badge VII
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a823073ae1c2ee9d85818449572981773f7f6decefe3f9118db10d42911ef5d7
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_20
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire Scion Badge VIII
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a823073ae1c2ee9d85818449572981773f7f6decefe3f9118db10d42911ef5d7
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_21
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      mending: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire God Badge I
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4106a4f22b5b523a269e59cab936d3221a7af987201838e1f806c00c133684a2
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_22
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      mending: 3
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire God Badge II
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4106a4f22b5b523a269e59cab936d3221a7af987201838e1f806c00c133684a2
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_23
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      mending: 4
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire God Badge III
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4106a4f22b5b523a269e59cab936d3221a7af987201838e1f806c00c133684a2
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_24
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      mending: 5
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire God Badge IV
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4106a4f22b5b523a269e59cab936d3221a7af987201838e1f806c00c133684a2
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_25
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      mending: 6
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire God Badge V
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4106a4f22b5b523a269e59cab936d3221a7af987201838e1f806c00c133684a2
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_26
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      mending: 7
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire God Badge VI
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4106a4f22b5b523a269e59cab936d3221a7af987201838e1f806c00c133684a2
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_27
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      mending: 8
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire God Badge VII
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4106a4f22b5b523a269e59cab936d3221a7af987201838e1f806c00c133684a2
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_28
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      mending: 9
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire God Badge VIII
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4106a4f22b5b523a269e59cab936d3221a7af987201838e1f806c00c133684a2
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET
+
+  - id: SOUL_CAMPFIRE_TALISMAN_29
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      mending: 10
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Soul Campfire God Badge IX
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4106a4f22b5b523a269e59cab936d3221a7af987201838e1f806c00c133684a2
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: NOT_FINISHED_YET

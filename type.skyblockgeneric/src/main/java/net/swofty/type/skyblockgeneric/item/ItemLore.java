@@ -7,6 +7,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.ChatColor;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
@@ -139,7 +140,7 @@ public class ItemLore {
 			addLoreLine(null);
 		}
 
-		List<ItemStatistic> itemStatistics = new ArrayList<>(List.of(ItemStatistic.DAMAGE, ItemStatistic.STRENGTH, ItemStatistic.CRIT_CHANCE, ItemStatistic.CRIT_DAMAGE,
+		List<ItemStatistic> itemStatistics = new ArrayList<>(List.of(ItemStatistic.DAMAGE, ItemStatistic.STRENGTH, ItemStatistic.CRITICAL_CHANCE, ItemStatistic.CRITICAL_DAMAGE,
 				ItemStatistic.SEA_CREATURE_CHANCE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.HEALTH, ItemStatistic.DEFENSE,
 				ItemStatistic.SPEED, ItemStatistic.INTELLIGENCE, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK, ItemStatistic.TRUE_DEFENSE, ItemStatistic.HEALTH_REGENERATION,
 				ItemStatistic.MENDING, ItemStatistic.VITALITY, ItemStatistic.FEROCITY, ItemStatistic.MINING_SPEED, ItemStatistic.MINING_FORTUNE,
@@ -171,8 +172,8 @@ public class ItemLore {
 				index++;
 				Gemstone.Slots gemstone = entry.slot();
 
-				if (!gemData.hasGem(index)) {
-					gemstoneLore.append("§8[").append(gemstone.symbol).append("] ");
+				if (gemData.getGem(index) == null || !gemData.getGem(index).isUnlocked()) {
+					gemstoneLore.append(ChatColor.DARK_GRAY).append("[").append(gemstone.symbol).append("] ");
 					continue;
 				}
 
@@ -180,7 +181,7 @@ public class ItemLore {
 				ItemType filledWith = gemSlot.filledWith;
 
 				if (filledWith == null) {
-					gemstoneLore.append("§7[").append(gemstone.symbol).append("] ");
+					gemstoneLore.append(ChatColor.DARK_GRAY).append("[").append(ChatColor.GRAY).append(gemstone.symbol).append(ChatColor.DARK_GRAY).append("]");
 					continue;
 				}
 
@@ -190,7 +191,7 @@ public class ItemLore {
 				Gemstone gemstoneEnum = gemstoneImplComponent.getGemstone();
 				Gemstone.Slots gemstoneSlot = Gemstone.Slots.getFromGemstone(gemstoneEnum);
 
-				gemstoneLore.append(gemRarity.bracketColor).append("[").append(gemstoneSlot.symbol).append(gemRarity.bracketColor).append("] ");
+				gemstoneLore.append(gemRarity.bracketColor).append("[").append(gemstoneEnum.color).append(gemstoneSlot.symbol).append(gemRarity.bracketColor).append("] ");
 			}
 
 			if (!gemstoneLore.toString().trim().isEmpty()) {
@@ -222,7 +223,7 @@ public class ItemLore {
 
 				// Display level-specific description: "Increases Strength by 20."
 				String description = effectType.getDescription(potionData.getLevel());
-				if (description != null && !description.isEmpty()) {
+				if (!description.isEmpty()) {
 					addLoreLine("§7" + description);
 				}
 
@@ -292,7 +293,7 @@ public class ItemLore {
 			abilityComponent.getAbilities().forEach(ability -> {
 				addLoreLine("§6Ability: " + ability.getName() + "  §e§l" +
 						ability.getActivation().getDisplay());
-				for (String line : StringUtility.splitByWordAndLength(ability.getDescription(), 34))
+				for (String line : StringUtility.splitByWordAndLength(ability.getDescription().apply(player, item), 40))
 					addLoreLine("§7" + line);
 
 				String costDisplay = ability.getCost().getLoreDisplay();

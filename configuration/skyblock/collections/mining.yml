@@ -8,10 +8,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: COBBLESTONE_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -22,57 +21,25 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: MINING
-        craftingMaterial: AUTO_SMELTER
-        resultAmount: 1
-        pattern:
-          - AAA
-          - ABA
-          - AAA
-        ingredients:
-          A:
-            type: COBBLESTONE
-            amount: 8
-          B:
-            type: COAL
-            amount: 1
+        unlockedItemType: AUTO_SMELTER
   - amount: 1000
     rewards:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_COBBLESTONE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: COBBLESTONE
   - amount: 2500
     rewards:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: MINING
-        craftingMaterial: COMPACTOR
-        resultAmount: 1
-        pattern:
-          - AAA
-          - AOA
-          - ABA
-        ingredients:
-          A:
-            type: ENCHANTED_COBBLESTONE
-            amount: 1
-          B:
-            type: ENCHANTED_REDSTONE
-            amount: 1
-          O:
-            type: AIR
-            amount: 1
+        unlockedItemType: COMPACTOR
   - amount: 5000
     rewards:
     - type: XP
@@ -83,118 +50,33 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: MINING
-        craftingMaterial: MINERS_OUTFIT_BOOTS
-        resultAmount: 1
-        pattern:
-          - AOA
-          - AOA
-        ingredients:
-          A:
-            type: ENCHANTED_COBBLESTONE
-            amount: 1
-          O:
-            type: AIR
-            amount: 1
-    - type: RECIPE
-      data:
-        recipeType: MINING
-        craftingMaterial: MINERS_OUTFIT_CHESTPLATE
-        resultAmount: 1
-        pattern:
-          - AOA
-          - AAA
-          - AAA
-        ingredients:
-          A:
-            type: ENCHANTED_COBBLESTONE
-            amount: 1
-          O:
-            type: AIR
-            amount: 1
-    - type: RECIPE
-      data:
-        recipeType: MINING
-        craftingMaterial: MINERS_OUTFIT_HELMET
-        resultAmount: 1
-        pattern:
-          - AAA
-          - AOA
-        ingredients:
-          A:
-            type: ENCHANTED_COBBLESTONE
-            amount: 1
-          O:
-            type: AIR
-            amount: 1
-    - type: RECIPE
-      data:
-        recipeType: MINING
-        craftingMaterial: MINERS_OUTFIT_LEGGINGS
-        resultAmount: 1
-        pattern:
-          - AAA
-          - AOA
-          - AOA
-        ingredients:
-          A:
-            type: ENCHANTED_COBBLESTONE
-            amount: 1
-          O:
-            type: AIR
-            amount: 1
+        unlockedItemType: HASTE_RING
   - amount: 25000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: HYPER_FURNACE
   - amount: 40000
     rewards:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: MINING
-        craftingMaterial: HASTE_RING
-        resultAmount: 1
-        pattern:
-          - AAA
-          - AOA
-          - AAA
-        ingredients:
-          A:
-            type: ENCHANTED_COBBLESTONE
-            amount: 16
-          O:
-            type: AIR
-            amount: 1
+        unlockedItemType: HASTE_ARTIFACT
   - amount: 70000
     rewards:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: MINING
-        craftingMaterial: SUPER_COMPACTOR_3000
-        resultAmount: 1
-        pattern:
-          - AAA
-          - AOA
-          - ABA
-        ingredients:
-          A:
-            type: ENCHANTED_COBBLESTONE
-            amount: 64
-          B:
-            type: ENCHANTED_REDSTONE_BLOCK
-            amount: 1
-          O:
-            type: AIR
-            amount: 1
+        unlockedItemType: SUPER_COMPACTOR_3000
 - itemType: COAL
   rewards:
   - amount: 50
@@ -202,10 +84,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: COAL_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -221,17 +102,17 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_COAL
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: COAL
   - amount: 2500
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_CHARCOAL
   - amount: 5000
     rewards:
     - type: XP
@@ -242,35 +123,17 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_COAL_BLOCK
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_COAL
   - amount: 25000
     rewards:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: NONE
-        craftingMaterial: ENCHANTED_LAVA_BUCKET
-        resultAmount: 1
-        pattern:
-          - ABA
-          - OAO
-        ingredients:
-          A:
-            type: ENCHANTED_IRON_INGOT
-            amount: 1
-          B:
-            type: ENCHANTED_COAL_BLOCK
-            amount: 2
-          O:
-            type: AIR
-            amount: 1
+        unlockedItemType: ENCHANTED_LAVA_BUCKET
   - amount: 50000
     rewards:
     - type: XP
@@ -288,10 +151,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: GOLD_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -315,12 +177,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_GOLD_INGOT
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: GOLD_INGOT
   - amount: 2500
     rewards:
     - type: XP
@@ -339,12 +198,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_GOLD_BLOCK
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_GOLD_BLOCK
   - amount: 25000
     rewards:
     - type: XP
@@ -365,10 +221,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: LAPIS_MINION
-        isMinionRecipes: true
   - amount: 500
     rewards:
     - type: XP
@@ -387,12 +242,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_LAPIS_LAZULI
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: LAPIS_LAZULI
   - amount: 10000
     rewards:
     - type: XP
@@ -408,12 +260,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_LAPIS_LAZULI_BLOCK
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_LAPIS_LAZULI
   - amount: 100000
     rewards:
     - type: XP
@@ -436,10 +285,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: GRAVEL_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -463,12 +311,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_FLINT
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: FLINT
   - amount: 5000
     rewards:
     - type: XP
@@ -499,10 +344,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: DIAMOND_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -521,12 +365,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_DIAMOND
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: DIAMOND
   - amount: 2500
     rewards:
     - type: XP
@@ -540,22 +381,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: MINING
-        craftingMaterial: DIAMOND_SPREADING
-        resultAmount: 1
-        pattern:
-          - AAA
-          - ABA
-          - AAA
-        ingredients:
-          A:
-            type: VINES
-            amount: 1
-          B:
-            type: ENCHANTED_DIAMOND
-            amount: 1
+        unlockedItemType: DIAMOND_SPREADING
   - amount: 10000
     rewards:
     - type: XP
@@ -566,12 +394,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_DIAMOND_BLOCK
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_DIAMOND
   - amount: 50000
     rewards:
     - type: XP
@@ -584,10 +409,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: EMERALD_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -603,17 +427,17 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_EMERALD
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: EMERALD
   - amount: 5000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: EMERALD_RING
   - amount: 15000
     rewards:
     - type: XP
@@ -624,12 +448,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_EMERALD_BLOCK
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_EMERALD
   - amount: 50000
     rewards:
     - type: XP
@@ -647,10 +468,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
-        unlockedItemType: ENDSTONE_MINION
-        isMinionRecipes: true
+        unlockedItemType: END_STONE_MINION
   - amount: 100
     rewards:
     - type: XP
@@ -676,12 +496,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_END_STONE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: END_STONE
   - amount: 10000
     rewards:
     - type: XP
@@ -714,12 +531,42 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: FLAWED_RUBY_GEM
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ROUGH_RUBY_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_JADE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_SAPPHIRE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_AMETHYST_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_AMBER_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_TOPAZ_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_JASPER_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_OPAL_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_ONYX_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_CITRINE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_AQUAMARINE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWED_PERIDOT_GEM
   - amount: 1000
     rewards:
     - type: XP
@@ -735,12 +582,42 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: FINE_RUBY_GEM
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: FLAWED_RUBY_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_JADE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_SAPPHIRE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_AMETHYST_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_AMBER_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_TOPAZ_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_JASPER_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_OPAL_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_ONYX_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_CITRINE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_AQUAMARINE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FINE_PERIDOT_GEM
   - amount: 25000
     rewards:
     - type: XP
@@ -761,12 +638,42 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: FLAWLESS_RUBY_GEM
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: FINE_RUBY_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_JADE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_SAPPHIRE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_AMETHYST_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_AMBER_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_TOPAZ_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_JASPER_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_OPAL_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_ONYX_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_CITRINE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_AQUAMARINE_GEM
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: FLAWLESS_PERIDOT_GEM
   - amount: 1000000
     rewards:
     - type: XP
@@ -784,10 +691,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: GLOWSTONE_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -798,12 +704,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_GLOWSTONE_DUST
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: GLOWSTONE_DUST
   - amount: 2500
     rewards:
     - type: XP
@@ -814,17 +717,17 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_GLOWSTONE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_GLOWSTONE_DUST
   - amount: 10000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_REDSTONE_LAMP
   - amount: 25000
     rewards:
     - type: XP
@@ -847,12 +750,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_HARD_STONE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: HARD_STONE
   - amount: 50000
     rewards:
     - type: XP
@@ -868,12 +768,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: CONCENTRATED_STONE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_HARD_STONE
   - amount: 1000000
     rewards:
     - type: XP
@@ -886,10 +783,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ICE_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -905,12 +801,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_ICE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: PACKED_ICE
   - amount: 1000
     rewards:
     - type: XP
@@ -926,12 +819,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_PACKED_ICE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_ICE
   - amount: 50000
     rewards:
     - type: XP
@@ -959,15 +849,26 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: IRON_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MINER_OUTFIT_HELMET
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MINER_OUTFIT_CHESTPLATE
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MINER_OUTFIT_LEGGINGS
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MINER_OUTFIT_BOOTS
   - amount: 250
     rewards:
     - type: XP
@@ -981,36 +882,17 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_IRON_INGOT
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: IRON_INGOT
   - amount: 2500
     rewards:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: MINING
-        craftingMaterial: BUDGET_HOPPER
-        resultAmount: 1
-        pattern:
-          - AOA
-          - ABA
-          - OAO
-        ingredients:
-          A:
-            type: ENCHANTED_IRON_INGOT
-            amount: 1
-          B:
-            type: CHEST
-            amount: 1
-          O:
-            type: AIR
-            amount: 1
+        unlockedItemType: BUDGET_HOPPER
   - amount: 5000
     rewards:
     - type: XP
@@ -1021,12 +903,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_IRON_BLOCK
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_IRON_INGOT
   - amount: 25000
     rewards:
     - type: XP
@@ -1037,40 +916,36 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_HOPPER
-        resultAmount: 1
-        pattern:
-          - AOA
-          - ABA
-          - OAO
-        ingredients:
-          A:
-            type: ENCHANTED_IRON_BLOCK
-            amount: 1
-          B:
-            type: CHEST
-            amount: 1
-          O:
-            type: AIR
-            amount: 1
+        unlockedItemType: ENCHANTED_HOPPER
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_DELETOR_4000
   - amount: 100000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_DELETOR_5000
   - amount: 200000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_DELETOR_6000
   - amount: 400000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_DELETOR_7000
 - itemType: MITHRIL
   rewards:
   - amount: 50
@@ -1078,10 +953,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: MITHRIL_MINION
-        isMinionRecipes: true
   - amount: 250
     rewards:
     - type: XP
@@ -1092,12 +966,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_MITHRIL
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: MITHRIL
   - amount: 2500
     rewards:
     - type: XP
@@ -1145,12 +1016,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_MYCELIUM
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: MYCELIUM
   - amount: 1000
     rewards:
     - type: XP
@@ -1171,12 +1039,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_MYCELIUM_CUBE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_MYCELIUM
   - amount: 25000
     rewards:
     - type: XP
@@ -1199,10 +1064,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: QUARTZ_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -1218,12 +1082,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_QUARTZ
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: QUARTZ
   - amount: 2500
     rewards:
     - type: XP
@@ -1234,12 +1095,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_QUARTZ_BLOCK
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_QUARTZ
   - amount: 10000
     rewards:
     - type: XP
@@ -1277,12 +1135,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_NETHERRACK
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: NETHERRACK
   - amount: 5000
     rewards:
     - type: XP
@@ -1295,10 +1150,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: OBSIDIAN_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -1317,12 +1171,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_OBSIDIAN
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: OBSIDIAN
   - amount: 2500
     rewards:
     - type: XP
@@ -1365,12 +1216,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_RED_SAND
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: RED_SAND
   - amount: 2500
     rewards:
     - type: XP
@@ -1381,12 +1229,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_RED_SAND_CUBE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_RED_SAND
   - amount: 15000
     rewards:
     - type: XP
@@ -1407,28 +1252,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: RECIPE
+    - type: RECIPE_UNLOCK
       data:
-        recipeType: NONE
-        craftingMaterial: EVERBURNING_FLAME
-        resultAmount: 1
-        pattern:
-          - ABA
-          - CDC
-          - ABA
-        ingredients:
-          A:
-            type: FLAMES
-            amount: 4
-          B:
-            type: ENCHANTED_RED_SAND_CUBE
-            amount: 1
-          C:
-            type: ENCHANTED_SULPHUR_CUBE
-            amount: 1
-          D:
-            type: PLASMA_BUCKET
-            amount: 1
+        unlockedItemType: EVERBURNING_FLAME
 - itemType: REDSTONE
   rewards:
   - amount: 100
@@ -1436,10 +1262,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: REDSTONE_MINION
-        isMinionRecipes: true
   - amount: 250
     rewards:
     - type: XP
@@ -1461,12 +1286,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_REDSTONE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: REDSTONE
   - amount: 3000
     rewards:
     - type: XP
@@ -1490,12 +1312,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_REDSTONE_BLOCK
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_REDSTONE
   - amount: 50000
     rewards:
     - type: XP
@@ -1504,6 +1323,9 @@ collections:
     - type: CUSTOM_AWARD
       data:
         customAward: ACCESSORY_BAG_UPGRADE_2
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_COMPACTOR_4000
   - amount: 200000
     rewards:
     - type: XP
@@ -1520,6 +1342,9 @@ collections:
     - type: CUSTOM_AWARD
       data:
         customAward: ACCESSORY_BAG_UPGRADE_4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_COMPACTOR_5000
   - amount: 600000
     rewards:
     - type: XP
@@ -1536,6 +1361,9 @@ collections:
     - type: CUSTOM_AWARD
       data:
         customAward: ACCESSORY_BAG_UPGRADE_6
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_COMPACTOR_6000
   - amount: 1000000
     rewards:
     - type: XP
@@ -1544,6 +1372,9 @@ collections:
     - type: CUSTOM_AWARD
       data:
         customAward: ACCESSORY_BAG_UPGRADE_7
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: PERSONAL_COMPACTOR_7000
   - amount: 1200000
     rewards:
     - type: XP
@@ -1567,10 +1398,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: SAND_MINION
-        isMinionRecipes: true
   - amount: 100
     rewards:
     - type: XP
@@ -1591,12 +1421,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_SAND
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: SAND
   - amount: 2500
     rewards:
     - type: XP
@@ -1619,12 +1446,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_SULPHUR
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: SULPHUR
   - amount: 2500
     rewards:
     - type: XP
@@ -1645,12 +1469,9 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
+    - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_SULPHUR_CUBE
-        isEnchantedRecipe: true
-        recipeType: MINING
-        craftingMaterial: ENCHANTED_SULPHUR
   - amount: 25000
     rewards:
     - type: XP
