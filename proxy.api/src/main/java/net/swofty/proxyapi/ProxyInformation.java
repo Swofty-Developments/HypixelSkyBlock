@@ -53,4 +53,21 @@ public class ProxyInformation {
         });
         return future;
     }
+
+    /**
+     * Get the UUID of the current server
+     */
+    public CompletableFuture<UUID> getServerUUID() {
+        JSONObject message = new JSONObject()
+                .put("request_type", "CURRENT_SERVER");
+        CompletableFuture<UUID> future = new CompletableFuture<>();
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.REQUEST_SERVER_NAME, message, (response) -> {
+            if (response.has("uuid")) {
+                future.complete(UUID.fromString(response.getString("uuid")));
+            } else {
+                future.completeExceptionally(new RuntimeException("No UUID in response"));
+            }
+        });
+        return future;
+    }
 }
