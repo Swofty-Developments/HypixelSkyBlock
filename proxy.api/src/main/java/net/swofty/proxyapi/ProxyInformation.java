@@ -61,7 +61,7 @@ public class ProxyInformation {
         JSONObject message = new JSONObject()
                 .put("request_type", "CURRENT_SERVER");
         CompletableFuture<UUID> future = new CompletableFuture<>();
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.REQUEST_SERVER_NAME, message, (response) -> {
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.REQUEST_SERVERS_NAME, message, (response) -> {
             if (response.has("uuid")) {
                 future.complete(UUID.fromString(response.getString("uuid")));
             } else {
