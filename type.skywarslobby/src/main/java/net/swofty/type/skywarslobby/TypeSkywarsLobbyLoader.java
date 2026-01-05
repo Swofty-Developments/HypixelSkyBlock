@@ -110,6 +110,8 @@ public class TypeSkywarsLobbyLoader implements LobbyTypeLoader {
                 .delay(TaskSchedule.seconds(5))
                 .repeat(TaskSchedule.seconds(2))
                 .schedule();
+
+        LobbyTypeLoader.registerLobbyCommands();
     }
 
     @Override
