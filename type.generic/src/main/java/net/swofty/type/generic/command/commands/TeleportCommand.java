@@ -39,7 +39,7 @@ public class TeleportCommand extends HypixelCommand {
             HypixelPlayer targetPlayer = (HypixelPlayer) target;
             player.teleport(target.getPosition());
 
-            sender.sendMessage("§2Teleported to " + targetPlayer.getColouredName() + "§2.");
+            sender.sendMessage("§2Teleported to " + targetPlayer.getColouredDisplayName() + "§2.");
         }, entityArgument);
     }
 }

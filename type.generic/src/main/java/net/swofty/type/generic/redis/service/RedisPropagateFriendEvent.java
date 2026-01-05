@@ -228,7 +228,7 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
                 // Name (rank-colored, matches tablist). Fallback to plain name if unavailable or failure.
                 String displayName;
                 try {
-                    displayName = HypixelPlayer.getDisplayName(friend.getUuid());
+                    displayName = HypixelPlayer.getColouredDisplayName(friend.getUuid());
                 } catch (Exception e) {
                     displayName = "§e" + friend.getName();
                 }

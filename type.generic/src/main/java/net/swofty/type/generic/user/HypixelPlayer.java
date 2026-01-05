@@ -58,6 +58,23 @@ public class HypixelPlayer extends Player {
 		}
 	}
 
+	public static String getColouredDisplayName(UUID uuid) {
+		if (HypixelGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
+			return HypixelGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getColouredDisplayName();
+		} else {
+			// Fallback for offline name display: use rank color + ign (no prefix)
+			HypixelDataHandler account = HypixelDataHandler.getOfOfflinePlayer(uuid);
+			Rank rank = account.get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
+			String colorCode = switch (rank) {
+				case STAFF, YOUTUBE -> "§c";
+				case MVP_PLUS, MVP -> "§b";
+				case VIP_PLUS, VIP -> "§a";
+				case DEFAULT -> "§7";
+			};
+			return colorCode + account.get(HypixelDataHandler.Data.IGN, DatapointString.class).getValue();
+		}
+	}
+
 	public static String getRawName(UUID uuid) {
 		if (HypixelGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
 			return HypixelGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getUsername();
@@ -103,6 +120,19 @@ public class HypixelPlayer extends Player {
 	public Component getColouredName() {
 		Rank rank = getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
 		return Component.text(getUsername(), rank.getTextColor());
+	}
+
+	public String getColouredDisplayName() {
+		Rank rank = getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
+		// Extract the last color code from the rank prefix (e.g., "§c[§6ዞ§c] " -> "§c")
+		// or use textColor mapping
+		String colorCode = switch (rank) {
+			case STAFF, YOUTUBE -> "§c";
+			case MVP_PLUS, MVP -> "§b";
+			case VIP_PLUS, VIP -> "§a";
+			case DEFAULT -> "§7";
+		};
+		return colorCode + getUsername();
 	}
 
 	public AntiCheatHandler getAntiCheatHandler() {
