@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @CommandParameters(
-        aliases = "tpto",
+        aliases = "tpto|tunnel",
         description = "Teleport to a player across servers",
         usage = "/teleportto <player>",
         permission = Rank.STAFF,
@@ -86,8 +86,8 @@ public class TeleportToCommand extends HypixelCommand {
                                 ? finalTargetServer.shortName()
                                 : finalTargetServer.name();
 
-                        sender.sendMessage("§2Transferring to server §e" + serverDisplay + "§2 and teleporting to " +
-                                HypixelPlayer.getColouredDisplayName(finalTargetUUID) + "§2...");
+                        sender.sendMessage("§aSending you to §e" + serverDisplay + " §awith " +
+                                HypixelPlayer.getColouredDisplayName(finalTargetUUID) + "§a.");
 
                         // Store target UUID in hook manager for cross-server teleport
                         player.getHookManager().setHook("tpto_target", finalTargetUUID.toString());

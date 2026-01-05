@@ -251,7 +251,25 @@ public class HypixelDataHandler extends DataHandler {
 
         FRIEND_SORT("friend_sort", DatapointFriendSort.class,
                 new DatapointFriendSort("friend_sort",
-                        new DatapointFriendSort.FriendSortData(DatapointFriendSort.SortType.DEFAULT, false)))
+                        new DatapointFriendSort.FriendSortData(DatapointFriendSort.SortType.DEFAULT, false))),
+
+        FIRST_LOGIN("first_login", DatapointLong.class,
+                new DatapointLong("first_login", 0L),
+                null,
+                (player, datapoint) -> {
+                    // Set first login timestamp if not already set
+                    if (((DatapointLong) datapoint).getValue() == 0L) {
+                        ((DatapointLong) datapoint).setValue(System.currentTimeMillis());
+                    }
+                }),
+
+        LAST_LOGIN("last_login", DatapointLong.class,
+                new DatapointLong("last_login", 0L),
+                null,
+                (player, datapoint) -> {
+                    // Update last login timestamp on every login
+                    ((DatapointLong) datapoint).setValue(System.currentTimeMillis());
+                })
         ;
 
         @Getter private final String key;

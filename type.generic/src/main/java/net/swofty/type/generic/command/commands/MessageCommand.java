@@ -45,8 +45,8 @@ public class MessageCommand extends HypixelCommand {
                 player.sendMessage("§cThe player you tried to message, " + playerName + ", is not online.");
                 return;
             }
-            String targetName = HypixelPlayer.getColouredDisplayName(targetUUID);
-            String ourName = player.getColouredDisplayName();
+            String targetName = HypixelPlayer.getDisplayName(targetUUID);
+            String ourName = player.getFullDisplayName();
 
             player.sendMessage("§dTo " + targetName + "§7: " + String.join(" ", message));
             target.sendMessage("§dFrom " + ourName + "§7: " + String.join(" ", message));
