@@ -29,7 +29,7 @@ public class SkyBlockLevelStatisticUnlock extends SkyBlockLevelUnlock {
         List<String> statisticsDisplay = new ArrayList<>();
         statistics.getStatisticsAdditive().forEach((key, value) -> {
             if (value > 0)
-                statisticsDisplay.add("§8 +§a" + value + key.getSuffix() + " " + key.getDisplayColor() + key.getSymbol() + " " + key.getDisplayName());
+                statisticsDisplay.add("§8 +§a" + value + key.getSuffix() + " " + key.getFullDisplayName());
         });
 
         if (statisticsDisplay.isEmpty()) {
@@ -50,7 +50,7 @@ public class SkyBlockLevelStatisticUnlock extends SkyBlockLevelUnlock {
         ArrayList<String> lore = new ArrayList<>();
         statistics.getStatisticsAdditive().forEach((key, value) -> {
             if (value > 0)
-                lore.add("§8 +§a" + value + key.getSuffix() + " " + key.getDisplayColor() + key.getSymbol() + " " + key.getDisplayName());
+                lore.add("§8 +§a" + value + key.getSuffix() + " " + key.getFullDisplayName());
         });
         return lore;
     }

@@ -215,8 +215,8 @@ public class BestiaryData {
 
     public List<String> getTotalBonuses(List<String> lore, String name, int tier) {
         lore.add("§a" + name + " §aBonuses");
-        lore.add("§8+" + ItemStatistic.MAGIC_FIND.getDisplayColor() + getTotalMagicFind(tier) + " " + StringUtility.getFormatedStatistic(ItemStatistic.MAGIC_FIND));
-        lore.add("§8+" + ItemStatistic.STRENGTH.getDisplayColor() + getTotalStrength(tier) + " " + StringUtility.getFormatedStatistic(ItemStatistic.STRENGTH));
+        lore.add("§8+" + ItemStatistic.MAGIC_FIND.getDisplayColor() + getTotalMagicFind(tier) + " " + ItemStatistic.MAGIC_FIND.getFullDisplayName());
+        lore.add("§8+" + ItemStatistic.STRENGTH.getDisplayColor() + getTotalStrength(tier) + " " + ItemStatistic.STRENGTH.getFullDisplayName());
         lore.add("§8+§6" + getTotalExtraCoinPercentage(tier) + "% §7coin gain");
 
         int totalXp = getTotalExtraXPPercentage(tier);
@@ -231,8 +231,8 @@ public class BestiaryData {
 
     public List<String> getNextBonuses(List<String> lore, String name, int tier) {
         lore.add("§7Tier " + StringUtility.getAsRomanNumeral(tier) + " Rewards");
-        lore.add("  §8+" + ItemStatistic.MAGIC_FIND.getDisplayColor() + getMagicFind(tier) + " " + StringUtility.getFormatedStatistic(ItemStatistic.MAGIC_FIND));
-        lore.add("  §8+" + ItemStatistic.STRENGTH.getDisplayColor() + getStrength(tier) + " " + StringUtility.getFormatedStatistic(ItemStatistic.STRENGTH));
+        lore.add("  §8+" + ItemStatistic.MAGIC_FIND.getDisplayColor() + getMagicFind(tier) + " " + ItemStatistic.MAGIC_FIND.getFullDisplayName());
+        lore.add("  §8+" + ItemStatistic.STRENGTH.getDisplayColor() + getStrength(tier) + " " + ItemStatistic.STRENGTH.getFullDisplayName());
         lore.add("  §8+§6" + getExtraCoinPercentage(tier) + "% §7coin gain");
 
         int totalXp = getExtraXpPercentage(tier);
