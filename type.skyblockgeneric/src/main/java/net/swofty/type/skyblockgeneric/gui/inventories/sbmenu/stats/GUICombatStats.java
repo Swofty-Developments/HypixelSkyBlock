@@ -294,7 +294,7 @@ public class GUICombatStats extends HypixelInventoryGUI {
 
         public ItemStack.Builder buildItemStack(SkyBlockPlayer player) {
             double value = player.getStatistics().allStatistics().getOverall(statistic);
-            String title = StringUtility.getFormatedStatistic(statistic) + " §f" +
+            String title = statistic.getFullDisplayName() + " §f" +
                     StringUtility.decimalify(value, 1);
             List<String> lore = buildLore(player);
 
@@ -324,7 +324,7 @@ public class GUICombatStats extends HypixelInventoryGUI {
 
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                     if (stats.contains(statistic)) {
-                        lore.add(" " + StringUtility.getFormatedStatistic(statistic) + " §f" +
+                        lore.add(" " + statistic.getFullDisplayName() + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
                     }
                 });

@@ -53,12 +53,12 @@ public class ActionSkillLevelUp implements HypixelEventClass {
 					case STATS_BASE -> {
 						ItemStatistic statistic = ((SkillCategory.BaseStatisticReward) unlock).getStatistic();
 						player.sendMessage("    §8+§a" + StringUtility.decimalify(((SkillCategory.BaseStatisticReward) unlock).amountAdded(), 1)
-								+ statistic.getSuffix() + " " + statistic.getDisplayColor() + statistic.getSymbol() + " " + statistic.getDisplayName());
+								+ statistic.getSuffix() + " " + statistic.getFullDisplayName());
 					}
 					case STATS_ADDITIVE_PERCENTAGE -> {
 						ItemStatistic statistic = ((SkillCategory.AdditivePercentageStatisticReward) unlock).getStatistic();
 						player.sendMessage("    §8+§a" + StringUtility.decimalify(((SkillCategory.AdditivePercentageStatisticReward) unlock).amountAdded(), 1) +
-								"% " + statistic.getDisplayColor() + statistic.getSymbol() + " " + statistic.getDisplayName());
+								"% " + statistic.getFullDisplayName());
 					}
 					case REGION_ACCESS ->
 							player.sendMessage("    §8+§aAccess to " + ((SkillCategory.RegionReward) unlock).getRegion());

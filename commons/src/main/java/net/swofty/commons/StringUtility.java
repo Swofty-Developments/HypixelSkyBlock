@@ -298,9 +298,4 @@ public class StringUtility {
 			};
 		};
 	}
-
-	public static String getFormatedStatistic(ItemStatistic statistic) {
-		return statistic.getDisplayColor() + statistic.getSymbol() + " " + statistic.getDisplayName();
-	}
-
 }

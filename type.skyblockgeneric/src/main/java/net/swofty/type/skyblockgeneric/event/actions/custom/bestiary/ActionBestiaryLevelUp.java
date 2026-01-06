@@ -53,8 +53,8 @@ public class ActionBestiaryLevelUp implements HypixelEventClass {
 			lines.add(transitionLine);
 			lines.add("");
 			lines.add("§6§lREWARDS");
-			lines.add("§8+§a" + magicFind + " " + mobName + " " + StringUtility.getFormatedStatistic(ItemStatistic.MAGIC_FIND));
-			lines.add("§8+§a" + strength + " " + mobName + " " + StringUtility.getFormatedStatistic(ItemStatistic.STRENGTH));
+			lines.add("§8+§a" + magicFind + " " + mobName + " " + ItemStatistic.MAGIC_FIND.getFullDisplayName());
+			lines.add("§8+§a" + strength + " " + mobName + " " + ItemStatistic.STRENGTH.getFullDisplayName());
 			lines.add("§8+§6" + coinBonus + "% §a" + mobName + " §7coins");
 			lines.add("§8+§a" + xpBonus + "% §7chance for extra XP orbs");
 			lines.add("§8+§b1 SkyBlock XP");

@@ -60,7 +60,7 @@ public class GUIWisdomStats extends HypixelInventoryGUI {
                 )); // WISDOM STATS
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                     if (stats.contains(statistic)) {
-                        lore.add(" " + StringUtility.getFormatedStatistic(statistic) + " §f" +
+                        lore.add(" " + statistic.getFullDisplayName() + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
                     }
                 });
@@ -95,7 +95,7 @@ public class GUIWisdomStats extends HypixelInventoryGUI {
 
                     if (value == 0D) lore.add("§8You have none of this stat!");
                     lore.add("§eClick to view!");
-                    return ItemStackCreator.getStack(StringUtility.getFormatedStatistic(statistic) + " §f" +
+                    return ItemStackCreator.getStack(statistic.getFullDisplayName() + " §f" +
                                     StringUtility.decimalify(value, 1),
                             Material.WRITABLE_BOOK, 1, lore
                     );
