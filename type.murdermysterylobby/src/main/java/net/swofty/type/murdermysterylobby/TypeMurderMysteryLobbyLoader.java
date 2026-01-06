@@ -90,6 +90,8 @@ public class TypeMurderMysteryLobbyLoader implements LobbyTypeLoader {
                 .delay(TaskSchedule.seconds(5))
                 .repeat(TaskSchedule.seconds(2))
                 .schedule();
+
+        LobbyTypeLoader.registerLobbyCommands();
     }
 
     @Override

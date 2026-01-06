@@ -100,6 +100,8 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
           .schedule();
 
         parkourManager = new LobbyParkourManager(getParkour());
+
+        LobbyTypeLoader.registerLobbyCommands();
     }
 
     @Override

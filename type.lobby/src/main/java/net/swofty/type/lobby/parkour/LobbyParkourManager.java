@@ -229,6 +229,11 @@ public class LobbyParkourManager {
 		}
 	}
 
+	public void resetPlayer(HypixelPlayer player) {
+		player.teleport(parkour.getStartLocation());
+		startParkour(player);
+	}
+
 	public static void removePlayerHolograms(HypixelPlayer player) {
 		HologramCache cache = perPlayerHolo.remove(player.getUuid());
 		if (cache != null) {
