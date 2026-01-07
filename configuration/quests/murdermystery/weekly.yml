@@ -1,0 +1,23 @@
+# Murder Mystery Weekly Quests
+# Resets every Thursday at midnight UTC
+
+quests:
+  - id: "murdermystery.weekly.professional"
+    name: "Professional"
+    description: "Kill 40 players in any mode"
+    type: WEEKLY
+    trigger: "murdermystery.kills"
+    goal: 40
+    rewards:
+      hypixel_experience: 13200
+      tokens: 10000
+
+  - id: "murdermystery.weekly.big_winner"
+    name: "Big Winner"
+    description: "Win 15 games in any mode"
+    type: WEEKLY
+    trigger: "murdermystery.games_won"
+    goal: 15
+    rewards:
+      hypixel_experience: 13200
+      tokens: 15000

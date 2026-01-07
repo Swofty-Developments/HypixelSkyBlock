@@ -1,0 +1,39 @@
+items:
+  - id: SMALL_FISH_BOWL
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Small Fish Bowl
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 777447c9c815f02e7ce9414b749a326ab83beb4f14b9c84418f0b11b7b013735
+      - id: SELLABLE
+        value: 100
+      - id: NOT_FINISHED_YET
+
+  - id: MEDIUM_FISH_BOWL
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Medium Fish Bowl
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 2b8d3b3328b46ea7b7dc67c43bdff6dbaebcdc0b582e6c7fb1574b38ac0c9ad3
+      - id: SELLABLE
+        value: 500
+      - id: NOT_FINISHED_YET
+
+  - id: LARGE_FISH_BOWL
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Large Fish Bowl
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a8b631b344b6c9e1b1c1e779d71c59df54b3e2ec20e63ca4c293d6d59905f044
+      - id: SELLABLE
+        value: 1000
+      - id: NOT_FINISHED_YET

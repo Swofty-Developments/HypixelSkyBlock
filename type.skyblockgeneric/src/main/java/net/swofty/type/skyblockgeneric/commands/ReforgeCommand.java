@@ -17,7 +17,7 @@ import java.util.List;
 @CommandParameters(aliases = "reforgeitem",
         description = "Reforges the item in the players hand",
         usage = "/reforge",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class ReforgeCommand extends HypixelCommand {
     @Override

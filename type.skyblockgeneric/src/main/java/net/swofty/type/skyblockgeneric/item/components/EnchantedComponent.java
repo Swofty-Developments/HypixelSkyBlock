@@ -8,15 +8,31 @@ import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import java.util.List;
 
 public class EnchantedComponent extends SkyBlockItemComponent {
+    private CraftableComponent craftableComponent;
+
     public EnchantedComponent(SkyBlockRecipe.RecipeType type, String enchantedItem, String nonEnchantedID) {
         addInheritedComponent(new DisableAnimationComponent(
                 List.of(ItemAnimation.EAT)
         ));
-        addInheritedComponent(new CraftableComponent(getStandardEnchantedRecipe(
+
+        // Create a standard enchanted recipe
+        SkyBlockRecipe<?> recipe = SkyBlockRecipe.getStandardEnchantedRecipe(
                 type,
-                ItemType.valueOf(enchantedItem),
-                ItemType.valueOf(nonEnchantedID)
-        ), true));
+                ItemType.valueOf(nonEnchantedID),  // Base material
+                ItemType.valueOf(enchantedItem)    // Result
+        );
+
+        this.craftableComponent = new CraftableComponent(List.of(recipe), false);
+        addInheritedComponent(craftableComponent);
+    }
+
+    public EnchantedComponent(List<SkyBlockRecipe<?>> customRecipes) {
+        addInheritedComponent(new DisableAnimationComponent(
+                List.of(ItemAnimation.EAT)
+        ));
+
+        this.craftableComponent = new CraftableComponent(customRecipes, false);
+        addInheritedComponent(craftableComponent);
     }
 
     public EnchantedComponent() {
@@ -25,7 +41,7 @@ public class EnchantedComponent extends SkyBlockItemComponent {
         ));
     }
 
-    public SkyBlockRecipe<?> getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType type, ItemType enchantedItem, ItemType nonEnchantedID) {
-        return SkyBlockRecipe.getStandardEnchantedRecipe(type, enchantedItem, nonEnchantedID);
+    public List<SkyBlockRecipe<?>> getRecipes() {
+        return craftableComponent != null ? craftableComponent.getRecipes() : List.of();
     }
 }

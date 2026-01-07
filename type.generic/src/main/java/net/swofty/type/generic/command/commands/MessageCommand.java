@@ -34,7 +34,7 @@ public class MessageCommand extends HypixelCommand {
             String[] message = context.get(messageArgument);
             HypixelPlayer player = (HypixelPlayer) sender;
 
-            @Nullable UUID targetUUID = resolveUUID(playerName);
+            @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(playerName);
             if (targetUUID == null) {
                 player.sendMessage("§cCan't find a player by the name of '" + playerName + "'");
                 return;
@@ -51,16 +51,5 @@ public class MessageCommand extends HypixelCommand {
             player.sendMessage("§dTo " + targetName + "§7: " + String.join(" ", message));
             target.sendMessage("§dFrom " + ourName + "§7: " + String.join(" ", message));
         }, playerArgument, messageArgument);
-    }
-
-    private @Nullable UUID resolveUUID(String name) {
-        // First, try online players (case-insensitive)
-        for (HypixelPlayer online : HypixelGenericLoader.getLoadedPlayers()) {
-            if (online.getUsername().equalsIgnoreCase(name)) {
-                return online.getUuid();
-            }
-        }
-        // Fallback to stored data lookup
-        return HypixelDataHandler.getPotentialUUIDFromName(name);
     }
 }

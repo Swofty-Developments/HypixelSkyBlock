@@ -80,7 +80,7 @@ public class EnchantmentDrain implements Ench, EnchFromTable, DamageEventEnchant
     }
 
     private double calculateCritDamageDealt(SkyBlockPlayer player, double totalDamageDealt) {
-        double critDamageStat = player.getStatistics().allStatistics().getOverall(ItemStatistic.CRIT_DAMAGE);
+        double critDamageStat = player.getStatistics().allStatistics().getOverall(ItemStatistic.CRITICAL_DAMAGE);
 
         double baseDamage = totalDamageDealt / (1 + (critDamageStat / 100));
 

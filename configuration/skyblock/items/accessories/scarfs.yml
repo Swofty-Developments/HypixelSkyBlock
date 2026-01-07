@@ -9,11 +9,10 @@ items:
       - "§7§7§oThe collection of his studies,"
       - "§7§obeautiful handwriting!"
     components:
-      - id: TIERED_TALISMAN
-        base_tier: SCARFS_STUDIES
-        tier: 1
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: 6de4ab129e137f9f4cbf7060318ee1748dc39da9b5d129a8da0e614e2337693
+
   - id: SCARFS_THESIS
     material: PLAYER_HEAD
     rarity: COMMON
@@ -24,11 +23,25 @@ items:
       - "§7§7§oA research on how to preserve and"
       - "§7§oenhance class abilities in death."
     components:
-      - id: TIERED_TALISMAN
-        base_tier: SCARFS_STUDIES
-        tier: 2
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: 8ce4c87eb4dde27459e3e7f85921e7e57b11199260caa5ce63f139ee3d188c
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: true
+        recipes:
+          - type: SHAPED
+            recipe-type: SPECIAL
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SCARFS_STUDIES
+                amount: 1
+            result:
+              type: SCARFS_THESIS
+              amount: 1
+
   - id: SCARFS_GRIMOIRE
     material: PLAYER_HEAD
     rarity: COMMON
@@ -40,8 +53,21 @@ items:
       - '§7§ohis favorite "Barrier" that his'
       - "§7§oProfessor taught him."
     components:
-      - id: TIERED_TALISMAN
-        base_tier: SCARFS_STUDIES
-        tier: 3
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: bafb195cc75f31b619a077b7853653254ac18f220dc32d1412982ff437b4d57a
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: true
+        recipes:
+          - type: SHAPED
+            recipe-type: SPECIAL
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SCARFS_THESIS
+                amount: 1
+            result:
+              type: SCARFS_GRIMOIRE
+              amount: 1

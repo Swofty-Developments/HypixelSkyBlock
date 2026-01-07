@@ -300,7 +300,6 @@ public abstract class HypixelInventoryGUI {
         HypixelInventoryGUI previouslyOpen = GUI_MAP.get(player.getUuid());
         if (previouslyOpen != null) {
             if (!previouslyOpen.hasFinishedLoading) {
-                player.sendMessage("§cPlease wait before doing this!");
                 return;
             }
 

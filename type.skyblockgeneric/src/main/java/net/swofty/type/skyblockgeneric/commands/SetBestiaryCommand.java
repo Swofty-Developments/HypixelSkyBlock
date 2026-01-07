@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "updatebestiary",
         description = "Updates the bestiary of a player",
         usage = "/setbestiary <mob> <amount>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class SetBestiaryCommand extends HypixelCommand {
     @Override

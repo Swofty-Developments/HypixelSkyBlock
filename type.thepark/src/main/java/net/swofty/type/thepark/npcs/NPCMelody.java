@@ -78,6 +78,10 @@ public class NPCMelody extends HypixelNPC {
 			return;
 		}
 		if (data.isCurrentlyActive(MissionGiveMelodyAcaciaLogs.class)) {
+			if (!player.removeItemFromPlayer(ItemType.ACACIA_LOG, 256)) {
+				sendNPCMessage(player, "It seems like you don't have enough §aAcacia Logs§f with you. Please come back when you have collected enough!");
+				return;
+			}
 			new GUIClaimReward(ItemType.MELODY_SHOES, () -> {
 				player.getMissionData().endMission(MissionGiveMelodyAcaciaLogs.class);
 			}).open(player);

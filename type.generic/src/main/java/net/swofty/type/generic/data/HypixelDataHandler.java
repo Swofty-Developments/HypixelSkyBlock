@@ -9,6 +9,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
@@ -109,8 +110,10 @@ public class HypixelDataHandler extends DataHandler {
         for (Data data : Data.values()) {
             if (data.onQuit != null) {
                 Datapoint<?> produced = data.onQuit.apply(player);
-                Datapoint<?> target = get(data);
-                target.setFrom(produced); // no onChange during save
+                if (produced != null) {
+                    Datapoint<?> target = get(data);
+                    target.setFrom(produced); // no onChange during save
+                }
             }
         }
     }
@@ -135,8 +138,8 @@ public class HypixelDataHandler extends DataHandler {
         if (userCache.containsKey(uuid))
             return (HypixelDataHandler) userCache.get(uuid);
 
-        ProfilesDatabase profilesDatabase = new ProfilesDatabase(uuid.toString());
-        Document doc = profilesDatabase.getDocument();
+        UserDatabase userDatabase = new UserDatabase(uuid.toString());
+        Document doc = userDatabase.getHypixelData();
         return createFromDocument(doc);
     }
 
@@ -149,8 +152,12 @@ public class HypixelDataHandler extends DataHandler {
         return handler.get(Data.IGN, DatapointString.class).getValue();
     }
 
+    @Blocking
     public static @Nullable UUID getPotentialUUIDFromName(String name) throws RuntimeException {
-        Document doc = UserDatabase.collection.find(new Document("ignLowercase", "\"" + name.toLowerCase() + "\"")).first();
+        Document doc = UserDatabase.collection.find(
+                new Document("ignLowercase", "\"" + name.toLowerCase() + "\"")
+        ).first();
+
         if (doc == null)
             return null;
         return UUID.fromString(doc.getString("_id"));
@@ -198,9 +205,28 @@ public class HypixelDataHandler extends DataHandler {
         TOGGLES("toggles", DatapointToggles.class, new DatapointToggles("toggles")),
 
         GAMEMODE("gamemode", DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL),
-                (player, datapoint) -> player.setGameMode((GameMode) datapoint.getValue()),
-                (player, datapoint) -> player.setGameMode((GameMode) datapoint.getValue()),
-                (player) -> new DatapointGamemode("gamemode", player.getGameMode())),
+                (player, datapoint) -> {
+                    if (HypixelConst.getTypeLoader().getType().isSkyBlock()) {
+                        player.setGameMode((GameMode) datapoint.getValue());
+                    }
+                },
+                (player, datapoint) -> {
+                    if (HypixelConst.getTypeLoader().getType().isSkyBlock()) {
+                        // Reset to SURVIVAL if coming from non-SkyBlock server
+                        HypixelPlayer hypixelPlayer = (HypixelPlayer) player;
+                        if (hypixelPlayer.getOriginServer() == null || !hypixelPlayer.getOriginServer().isSkyBlock()) {
+                            player.setGameMode(GameMode.SURVIVAL);
+                        } else {
+                            player.setGameMode((GameMode) datapoint.getValue());
+                        }
+                    }
+                },
+                (player) -> {
+                    if (HypixelConst.getTypeLoader().getType().isSkyBlock()) {
+                        return new DatapointGamemode("gamemode", player.getGameMode());
+                    }
+                    return null; // Don't update gamemode for non-SkyBlock servers
+                }),
 
         SKIN_SIGNATURE("skin_signature",
                 DatapointString.class, new DatapointString("skin_signature", "null"),
@@ -221,7 +247,11 @@ public class HypixelDataHandler extends DataHandler {
         QUEST_DATA("quest_data",
                 DatapointQuestData.class, new DatapointQuestData("quest_data")),
 
-        PARKOUR_DATA("parkour_data", DatapointParkourData.class, new DatapointParkourData("parkour_data"))
+        PARKOUR_DATA("parkour_data", DatapointParkourData.class, new DatapointParkourData("parkour_data")),
+
+        FRIEND_SORT("friend_sort", DatapointFriendSort.class,
+                new DatapointFriendSort("friend_sort",
+                        new DatapointFriendSort.FriendSortData(DatapointFriendSort.SortType.DEFAULT, false)))
         ;
 
         @Getter private final String key;

@@ -10,7 +10,7 @@ import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "setrank", description = "Rank command", usage = "/rank <player> <rank>", permission = Rank.ADMIN, allowsConsole = true)
+@CommandParameters(aliases = "setrank", description = "Rank command", usage = "/rank <player> <rank>", permission = Rank.STAFF, allowsConsole = true)
 public class RankCommand extends HypixelCommand {
     @Override
     public void registerUsage(MinestomCommand command) {

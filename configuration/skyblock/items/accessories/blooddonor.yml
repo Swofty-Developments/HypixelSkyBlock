@@ -1,0 +1,51 @@
+items:
+  - id: BLOOD_DONOR_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    lore:
+      - Do your part bro.
+    default_statistics:
+      health_regeneration: 1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Blood Donor Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4463e5334ecd9b3b986f6e9cb04dba3b643a63f39e934ead76ece518f82f865
+      - id: SELLABLE
+        value: 800
+      - id: NOT_FINISHED_YET
+
+  - id: BLOOD_DONOR_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    lore:
+      - There's like 5 liters in you.
+    default_statistics:
+      health_regeneration: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Blood Donor Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: e3e95c83f54e2662f0b0df287afb5c48d9cad2eac46cb80c8cb4c4f468e13c33
+      - id: SELLABLE
+        value: 2000
+      - id: NOT_FINISHED_YET
+
+  - id: BLOOD_DONOR_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    lore:
+      - The human body produces 2-3 million red blood cells per SECOND.
+    default_statistics:
+      health_regeneration: 3
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Blood Donor Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: ff7bb97480c10fdfeb8fae93929e5eeb4f0491d8cca70ed00b45e3fb2b74f6c5
+      - id: SELLABLE
+        value: 10000
+      - id: NOT_FINISHED_YET

@@ -146,17 +146,34 @@ public class LobbyParkourManager {
 		long timeTaken = System.currentTimeMillis() - startTime;
 		DatapointParkourData datapoint = player.getDataHandler().get(HypixelDataHandler.Data.PARKOUR_DATA, DatapointParkourData.class);
 		Map<DatapointParkourData.ParkourType, Long> data = datapoint.getValue();
+
+		long previousTimeTaken = data.getOrDefault(parkour.getId(), 0L);
+		boolean newRecord = false;
 		if (data.containsKey(parkour.getId())) {
-			data.replace(parkour.getId(), Math.min(data.getOrDefault(parkour.getId(), Long.MAX_VALUE), timeTaken));
+			long previousBest = data.get(parkour.getId());
+			if (timeTaken < previousBest) {
+				data.put(parkour.getId(), timeTaken);
+				newRecord = true;
+			}
 		} else {
 			data.put(parkour.getId(), timeTaken);
+			newRecord = true;
 		}
 		datapoint.setValue(data);
 		String timeString = String.format("%02d:%02d.%03d",
 				(timeTaken / 60000),
 				(timeTaken % 60000) / 1000,
 				(timeTaken % 1000));
-		player.sendMessage("§a§lCongratulations! You finished the parkour challenge in §e§l" + timeString + "§a§l!");
+
+		if (newRecord) {
+			player.sendMessage("§a§lThat's a new record of §e§l" + timeString + "§a§l! Try again to get an even better record!");
+		} else {
+			String previousTimeString = String.format("%02d:%02d.%03d",
+					(previousTimeTaken / 60000),
+					(previousTimeTaken % 60000) / 1000,
+					(previousTimeTaken % 1000));
+			player.sendMessage("§a§lYour time of §e§l" + timeString + "§a§l did not beat your previous record of §e§l" + previousTimeString + "§a§l! Try again to beat your old record!");
+		}
 
 		if (HypixelConst.getTypeLoader() instanceof LobbyTypeLoader lobbyLoader) {
 			player.getInventory().clear();
@@ -182,7 +199,11 @@ public class LobbyParkourManager {
 			return;
 		}
 		perPlayerStartTime.put(player.getUuid(), new RunData(runData.startTime(), checkpointIndex));
-		player.sendMessage("§a§lCheckpoint §e§l#" + checkpointIndex + " §areached!");
+		String timeString = String.format("%02d:%02d.%03d",
+				((System.currentTimeMillis() - runData.startTime()) / 60000),
+				((System.currentTimeMillis() - runData.startTime()) % 60000) / 1000,
+				((System.currentTimeMillis() - runData.startTime()) % 1000));
+		player.sendMessage("§a§lYou reached §e§lCheckpoint #" + checkpointIndex + " §a§lafter §e§l" + timeString + "§a§l.");
 	}
 
 	public void cancelParkour(HypixelPlayer player) {
@@ -206,6 +227,11 @@ public class LobbyParkourManager {
 			if (!player.isOnline()) return;
 			player.sendMessage("§cYou haven't started the parkour challenge yet! Use §e/parkour start §cto start!");
 		}
+	}
+
+	public void resetPlayer(HypixelPlayer player) {
+		player.teleport(parkour.getStartLocation());
+		startParkour(player);
 	}
 
 	public static void removePlayerHolograms(HypixelPlayer player) {

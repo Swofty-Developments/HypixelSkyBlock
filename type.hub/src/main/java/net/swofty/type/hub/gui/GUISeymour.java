@@ -42,13 +42,13 @@ public class GUISeymour extends HypixelInventoryGUI {
     private final double elegantTuxedoPrice = 74_999_999;
 
     private final double cheapTuxedoCritDamage = cheapTuxedoSet.stream()
-                    .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.CRIT_DAMAGE))
+                    .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.CRITICAL_DAMAGE))
                     .sum();
     private final double fancyTuxedoCritDamage = cheapTuxedoSet.stream()
-            .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.CRIT_DAMAGE))
+            .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.CRITICAL_DAMAGE))
             .sum();
     private final double elegantTuxedoCritDamage = cheapTuxedoSet.stream()
-            .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.CRIT_DAMAGE))
+            .mapToDouble(item -> item.getAttributeHandler().getStatistics().getOverall(ItemStatistic.CRITICAL_DAMAGE))
             .sum();
 
     private final double cheapTuxedoIntelligence = cheapTuxedoSet.stream()

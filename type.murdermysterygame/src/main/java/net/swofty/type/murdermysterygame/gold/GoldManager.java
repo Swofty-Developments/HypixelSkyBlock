@@ -13,9 +13,12 @@ import net.minestom.server.network.packet.server.play.CollectItemPacket;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
+import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.game.GameStatus;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
+
+import net.minestom.server.inventory.PlayerInventory;
 
 import java.util.*;
 
@@ -37,7 +40,6 @@ public class GoldManager {
     public void startSpawning() {
         var config = game.getMapEntry().getConfiguration();
         if (config == null || config.getGoldSpawns() == null || config.getGoldSpawns().isEmpty()) {
-            // No gold spawns configured, use default positions
             return;
         }
 
@@ -66,25 +68,24 @@ public class GoldManager {
 
                     double distance = goldEntity.getPosition().distance(player.getPosition());
                     if (distance <= PICKUP_DISTANCE) {
-                        // Collect the gold
                         goldToRemove.add(goldEntity);
 
-                        // Send pickup animation packet
                         player.sendPacket(new CollectItemPacket(goldEntity.getEntityId(), player.getEntityId(), 1));
 
-                        player.addGold(1);
-                        int current = player.getGoldCollected();
+                        player.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, 1));
 
                         player.sendMessage(Component.text("+1 Gold", NamedTextColor.GOLD));
-                        player.sendActionBar(Component.text("Gold: " + current + "/" + GOLD_FOR_BOW, NamedTextColor.GOLD));
 
-                        if (current >= GOLD_FOR_BOW) {
+                        trackGoldAchievements(player, 1);
+
+                        int goldInInventory = countGoldInInventory(player);
+                        if (goldInInventory >= GOLD_FOR_BOW) {
+                            removeGoldFromInventory(player, GOLD_FOR_BOW);
                             game.getWeaponManager().giveInnocentBow(player);
-                            player.resetGold();
                         }
 
                         goldEntity.remove();
-                        break; // Only one player can pick up each gold
+                        break;
                     }
                 }
             }
@@ -118,18 +119,36 @@ public class GoldManager {
         spawnedGold.remove(goldEntity);
         goldEntity.remove();
 
-        player.addGold(1);
-        int current = player.getGoldCollected();
+        player.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, 1));
 
-        player.sendActionBar(Component.text("Gold: " + current + "/" + GOLD_FOR_BOW, NamedTextColor.GOLD));
+        trackGoldAchievements(player, 1);
 
-        if (current >= GOLD_FOR_BOW) {
+        int goldInInventory = countGoldInInventory(player);
+        if (goldInInventory >= GOLD_FOR_BOW) {
+            removeGoldFromInventory(player, GOLD_FOR_BOW);
             game.getWeaponManager().giveInnocentBow(player);
-            player.resetGold();
             return true;
         }
 
         return false;
+    }
+
+    private void trackGoldAchievements(MurderMysteryPlayer player, int amount) {
+        PlayerAchievementHandler achHandler = new PlayerAchievementHandler(player);
+
+        player.addGoldCollectedThisGame(amount);
+
+        achHandler.addProgress("murdermystery.gold_hunter", amount);
+
+        achHandler.addProgress("murdermystery.hoarder", amount);
+
+        long gameStartTime = game.getGameStartTime();
+        if (gameStartTime > 0 && System.currentTimeMillis() - gameStartTime <= 60000) {
+            player.addGoldInFirstMinute(amount);
+            if (player.getGoldCollectedInFirstMinute() >= 10) {
+                achHandler.addProgress("murdermystery.that_was_easy", 1);
+            }
+        }
     }
 
     public int getGoldForBow() {
@@ -138,5 +157,33 @@ public class GoldManager {
 
     public List<Entity> getSpawnedGold() {
         return spawnedGold;
+    }
+
+    public int countGoldInInventory(MurderMysteryPlayer player) {
+        return Arrays.stream(player.getInventory().getItemStacks())
+                .filter(stack -> stack.material() == Material.GOLD_INGOT)
+                .mapToInt(ItemStack::amount)
+                .sum();
+    }
+
+    public void removeGoldFromInventory(MurderMysteryPlayer player, int amount) {
+        PlayerInventory inventory = player.getInventory();
+        int remaining = amount;
+        for (int i = 0; i < inventory.getSize() && remaining > 0; i++) {
+            ItemStack stack = inventory.getItemStack(i);
+            if (stack.material() == Material.GOLD_INGOT) {
+                int remove = Math.min(stack.amount(), remaining);
+                inventory.setItemStack(i, stack.amount() > remove ? stack.withAmount(stack.amount() - remove) : ItemStack.AIR);
+                remaining -= remove;
+            }
+        }
+    }
+
+    public void checkPlayerGoldForBow(MurderMysteryPlayer player) {
+        int goldInInventory = countGoldInInventory(player);
+        if (goldInInventory >= GOLD_FOR_BOW) {
+            removeGoldFromInventory(player, GOLD_FOR_BOW);
+            game.getWeaponManager().giveInnocentBow(player);
+        }
     }
 }

@@ -32,6 +32,7 @@ public class MissionGiveCharlieBirchLogs extends SkyBlockMission implements Loca
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+		player.getMissionData().startMission(MissionClaimTheTrousers.class);
 		new GUIClaimReward(ItemType.CHARLIE_TROUSERS, () -> {
 			player.getMissionData().endMission(MissionClaimTheTrousers.class);
 		}).open(player);

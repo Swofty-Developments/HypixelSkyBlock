@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "allowaccessforapiauthentication",
         description = "Allows access for API authentication for the given code",
         usage = "/allowaccessforapiauthentication <code>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class VerifyApiCommand extends HypixelCommand {
     @Override

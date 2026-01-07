@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "gamestate",
         description = "Changes something about the game state.",
         usage = "/gamestate <message>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class GameStateCommand extends HypixelCommand {
     @Override

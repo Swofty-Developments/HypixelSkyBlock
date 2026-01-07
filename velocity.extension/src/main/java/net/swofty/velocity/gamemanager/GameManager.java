@@ -30,11 +30,12 @@ public class GameManager {
                 new ServerInfo(serverID.toString(), new InetSocketAddress(host, port))
         );
 
-        String rootName = maxPlayers <= 20 ? "mini" : "mega";
-        String shortenedRootName = maxPlayers <= 20 ? "m" : "M";
+        boolean isLobby = type.name().endsWith("_LOBBY");
+        String rootName = isLobby ? "L" : (maxPlayers <= 20 ? "mini" : "mega");
+        String shortenedRootName = isLobby ? "L" : (maxPlayers <= 20 ? "m" : "M");
 
-        String displayName = getNextAvailableDisplayName() + "" +
-                Character.toUpperCase((char) (new Random().nextInt(26) + 'a'));
+        char letter = (char) (new Random().nextInt(26) + (isLobby ? 'a' : 'A'));
+        String displayName = getNextAvailableDisplayName() + "" + letter;
 
         GameServer server = new GameServer(
                 rootName + displayName, shortenedRootName + displayName,
@@ -125,18 +126,23 @@ public class GameManager {
     }
 
     private static int getNextAvailableDisplayName() {
-        if (servers.isEmpty()) return 1;
-        if (servers.values().stream().allMatch(ArrayList::isEmpty)) return 1;
-
-        List<GameServer> gameServers = new ArrayList<>();
-        servers.values().forEach(gameServers::addAll);
-
-        int highestDisplayName = (gameServers.stream().mapToInt(server -> {
-            String displayName = server.displayName().replaceAll("[^0-9]", "");
-            return Integer.parseInt(displayName);
-        }).max().getAsInt());
-        return highestDisplayName + 1;
+        Set<Integer> used = new HashSet<>();
+        for (ArrayList<GameServer> list : servers.values()) {
+            for (GameServer gs : list) {
+                String digits = gs.displayName().replaceAll("[^0-9]", "");
+                if (!digits.isEmpty()) {
+                    try {
+                        int n = Integer.parseInt(digits);
+                        if (n > 0) used.add(n);
+                    } catch (NumberFormatException ignored) {}
+                }
+            }
+        }
+        int candidate = 1;
+        while (used.contains(candidate)) candidate++;
+        return candidate;
     }
+
 
     private static int getNextAvailablePort() {
         if (servers.isEmpty()) return 20000;

@@ -4,33 +4,6 @@ items:
     components:
       - id: SKULL_HEAD
         texture: 19b393eb6a5bd65d735aaa3b3cfa993b50f5e536d7a13b535514bd0740d63350
-  - id: ENCHANTED_MYCELIUM_CUBE
-    rarity: COMMON
-    components:
-      - id: ENCHANTED
-        recipe_type: MINING
-      - id: SELLABLE
-        value: 128000.0
-      - id: SKULL_HEAD
-        texture: 9a351d5316e5b508fbbf595e0773aec9639a0891807fef09bc59a56d46490cb0
-  - id: ENCHANTED_RED_SAND_CUBE
-    rarity: COMMON
-    components:
-      - id: ENCHANTED
-        recipe_type: MINING
-      - id: SELLABLE
-        value: 128000.0
-      - id: SKULL_HEAD
-        texture: f31f5c78b7e961591293756b9e15012db10457846c5ebc5db0f2b0e1873468ee
-  - id: ENCHANTED_SULPHUR_CUBE
-    rarity: COMMON
-    components:
-      - id: ENCHANTED
-        recipe_type: MINING
-      - id: SELLABLE
-        value: 256000.0
-      - id: SKULL_HEAD
-        texture: 4f0c28dfcf42d4dbd27c3378f67176c84800bc69b4cd531702c95ca6fb990458
   - id: FLAMES
     rarity: COMMON
     components:

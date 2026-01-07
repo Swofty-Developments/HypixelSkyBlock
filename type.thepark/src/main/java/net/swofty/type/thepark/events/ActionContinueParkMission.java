@@ -1,5 +1,6 @@
 package net.swofty.type.thepark.events;
 
+import net.minestom.server.entity.Entity;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -9,10 +10,11 @@ import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionTravelToThePark;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionFindTheCampfire;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionTravelToTheDarkThicket;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle.MissionTalkToMolbert;
+import net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle.MissionTalkToMolbertAgainAgainAgain;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna.MissionTravelToTheSavannaWoodland;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.MissionTravelToTheSpruceWoods;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.thepark.TypeTheParkLoader;
 import net.swofty.type.thepark.npcs.NPCWorkerXavier;
 
 public class ActionContinueParkMission implements HypixelEventClass {
@@ -60,7 +62,9 @@ public class ActionContinueParkMission implements HypixelEventClass {
 				}
 			}
 			case JUNGLE_ISLAND -> {
-				data.startMission(MissionTalkToMolbert.class);
+				if (data.isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class)) {
+					TypeTheParkLoader.entities.forEach(Entity::updateViewableRule);
+				}
 			}
 			case null, default -> {
 			}

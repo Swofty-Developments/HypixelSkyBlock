@@ -6,9 +6,7 @@ import net.swofty.commons.Songs;
 import net.swofty.type.skyblockgeneric.region.biome.*;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.*;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.*;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.BirchParkConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.DarkOakConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.SpruceWoodsConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +39,12 @@ public enum RegionType {
 	BIRCH_PARK("Birch Park", "§a", BirchParkConfiguration.class, BirchParkBiome.class),
 	HOWLING_CAVE("Howling Cave", null, BirchParkBiome.class),
 	SPRUCE_WOODS("Spruce Woods", "§a", SpruceWoodsConfiguration.class, SpruceWoodsBiome.class),
+	VIKING_LONGHOUSE("Viking Longhouse", "§b", SpruceWoodsConfiguration.class, SpruceWoodsBiome.class),
 	DARK_THICKET("Dark Thicket", "§a", DarkOakConfiguration.class, DarkThicketBiome.class),
 	TRIALS_OF_FIRE("Trials of Fire", "§c", null, DarkThicketBiome.class),
-	SAVANNA_WOODLAND("Savanna Woodland", "§a", null, SavannaWoodlandsBiome.class),
-	MELODY_PLATEAU("Melody's Plateau", "§5", null, SavannaWoodlandsBiome.class),
-	JUNGLE_ISLAND("Jungle Island", "§a", null, JungleIslandBiome.class),
+	SAVANNA_WOODLAND("Savanna Woodland", "§a", SavannaWoodlandConfiguration.class),
+	MELODY_PLATEAU("Melody's Plateau", "§d", SavannaWoodlandConfiguration.class),
+	JUNGLE_ISLAND("Jungle Island", "§a", JungleIslandConfiguration.class),
 
 	JERRYS_WORKSHOP("Jerry's Workshop", "§c"),
 	JERRY_POND("Jerry Pond", "§b"),
@@ -99,7 +98,13 @@ public enum RegionType {
 	THE_FORGE("The Forge", DwarvenMinesConfiguration.class),
 	CLIFFSIDE_VEINS("Cliffside Veins", DwarvenMinesConfiguration.class),
 	ROYAL_MINES("Royal Mines", DwarvenMinesConfiguration.class),
+	UPPER_MINES("Upper Mines", DwarvenMinesConfiguration.class),
+	LAVA_SPRINGS("Lava Springs", DwarvenMinesConfiguration.class),
 	DIVANS_GATEWAY("Divan's Gateway", DwarvenMinesConfiguration.class),
+	FAR_REACH("Far Reserve", DwarvenMinesConfiguration.class),
+	PALACE_BRIDGE("Palace Bridge", DwarvenMinesConfiguration.class),
+	ROYAL_PALACE("Royal Palace", DwarvenMinesConfiguration.class),
+	ARISTOCRAT_PASSAGE("Aristocrat's Passage", DwarvenMinesConfiguration.class),
 	FAR_RESERVE("Far Reserve", DwarvenMinesConfiguration.class);
 
 	private final String name;

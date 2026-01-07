@@ -1,0 +1,132 @@
+achievements:
+  - id: "murdermystery.countermeasures"
+    name: "Countermeasures"
+    description: "Get Hero wins in Classic or Double Up!"
+    type: TIERED
+    trigger: "murdermystery.hero_wins"
+    tiers:
+      - tier: 1
+        goal: 10
+        points: 5
+      - tier: 2
+        goal: 50
+        points: 10
+      - tier: 3
+        goal: 100
+        points: 15
+      - tier: 4
+        goal: 250
+        points: 20
+      - tier: 5
+        goal: 500
+        points: 25
+
+  - id: "murdermystery.hitman"
+    name: "Hitman"
+    description: "Kill players in Assassins"
+    type: TIERED
+    trigger: "murdermystery.assassin_kills"
+    tiers:
+      - tier: 1
+        goal: 25
+        points: 5
+      - tier: 2
+        goal: 100
+        points: 10
+      - tier: 3
+        goal: 250
+        points: 15
+      - tier: 4
+        goal: 500
+        points: 20
+      - tier: 5
+        goal: 1000
+        points: 25
+
+  - id: "murdermystery.hoarder"
+    name: "Hoarder"
+    description: "Gather a total of Gold"
+    type: TIERED
+    trigger: "murdermystery.total_gold"
+    tiers:
+      - tier: 1
+        goal: 100
+        points: 5
+      - tier: 2
+        goal: 250
+        points: 10
+      - tier: 3
+        goal: 500
+        points: 15
+      - tier: 4
+        goal: 1000
+        points: 20
+      - tier: 5
+        goal: 2000
+        points: 25
+
+  - id: "murdermystery.peace_is_mine"
+    name: "Peace is Mine"
+    description: "Win games as Innocent or Detective without dying"
+    type: TIERED
+    trigger: "murdermystery.survivor_wins"
+    tiers:
+      - tier: 1
+        goal: 1
+        points: 5
+      - tier: 2
+        goal: 10
+        points: 10
+      - tier: 3
+        goal: 25
+        points: 15
+      - tier: 4
+        goal: 40
+        points: 20
+      - tier: 5
+        goal: 60
+        points: 25
+
+  - id: "murdermystery.stabber"
+    name: "Stabber"
+    description: "Kill survivors as Murderer"
+    type: TIERED
+    trigger: "murdermystery.murderer_total_kills"
+    tiers:
+      - tier: 1
+        goal: 5
+        points: 5
+      - tier: 2
+        goal: 20
+        points: 10
+      - tier: 3
+        goal: 50
+        points: 15
+      - tier: 4
+        goal: 100
+        points: 20
+      - tier: 5
+        goal: 150
+        points: 25
+
+  - id: "murdermystery.youre_all_mine"
+    name: "You're All Mine"
+    description: "Win games as Murderer"
+    type: TIERED
+    trigger: "murdermystery.murderer_wins"
+    tiers:
+      - tier: 1
+        goal: 1
+        points: 5
+      - tier: 2
+        goal: 5
+        points: 10
+      - tier: 3
+        goal: 10
+        points: 15
+      - tier: 4
+        goal: 20
+        points: 20
+      - tier: 5
+        goal: 35
+        points: 25

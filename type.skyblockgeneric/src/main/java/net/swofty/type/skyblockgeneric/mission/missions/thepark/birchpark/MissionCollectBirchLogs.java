@@ -22,6 +22,13 @@ public class MissionCollectBirchLogs extends SkyBlockProgressMission {
 	@HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
 	public void onTick(PlayerTickEvent event) {
 		SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+		if (testTimes.containsKey(player.getUuid())) {
+			long lastTime = testTimes.get(player.getUuid());
+			if (System.currentTimeMillis() - lastTime < 650) {
+				return;
+			}
+		}
+
 		MissionData data = player.getMissionData();
 
 		if (!data.isCurrentlyActive(this.getClass()) || data.hasCompleted(this.getClass())) {
@@ -29,12 +36,6 @@ public class MissionCollectBirchLogs extends SkyBlockProgressMission {
 			return;
 		}
 
-		if (testTimes.containsKey(player.getUuid())) {
-			long lastTime = testTimes.get(player.getUuid());
-			if (System.currentTimeMillis() - lastTime < 650) {
-				return;
-			}
-		}
 		testTimes.put(player.getUuid(), System.currentTimeMillis());
 
 		int amount = 0;
@@ -73,7 +74,7 @@ public class MissionCollectBirchLogs extends SkyBlockProgressMission {
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		player.getMissionData().startMission(MissionTalkToCharlieAgain.class);
+		player.getMissionData().startMission(MissionGiveCharlieBirchLogs.class);
 	}
 
 	@Override

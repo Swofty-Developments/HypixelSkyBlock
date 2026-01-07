@@ -3,7 +3,9 @@ package net.swofty.type.generic.friend;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.friend.*;
 import net.swofty.commons.friend.events.*;
+import net.swofty.commons.presence.PresenceInfo;
 import net.swofty.commons.protocol.objects.friend.*;
+import net.swofty.commons.protocol.objects.presence.GetPresenceBulkProtocolObject;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.data.DataHandler;
@@ -42,6 +44,17 @@ public class FriendManager {
         return friendService.<GetPendingFriendRequestsProtocolObject.GetPendingRequestsMessage,
                         GetPendingFriendRequestsProtocolObject.GetPendingRequestsResponse>handleRequest(message)
                 .thenApply(GetPendingFriendRequestsProtocolObject.GetPendingRequestsResponse::requests)
+                .join();
+    }
+
+    public static List<PresenceInfo> getPresenceBulk(List<UUID> uuids) {
+        if (!friendService.isOnline().join()) return List.of();
+        if (uuids.isEmpty()) return List.of();
+        GetPresenceBulkProtocolObject.GetPresenceBulkMessage message =
+                new GetPresenceBulkProtocolObject.GetPresenceBulkMessage(uuids);
+        return friendService.<GetPresenceBulkProtocolObject.GetPresenceBulkMessage,
+                        GetPresenceBulkProtocolObject.GetPresenceBulkResponse>handleRequest(message)
+                .thenApply(GetPresenceBulkProtocolObject.GetPresenceBulkResponse::presence)
                 .join();
     }
 

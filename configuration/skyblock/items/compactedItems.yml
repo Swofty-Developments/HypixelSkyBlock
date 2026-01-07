@@ -1,0 +1,1612 @@
+items:
+  - id: ENCHANTED_ACACIA_LOG
+    material: ACACIA_LOG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: ACACIA_LOG
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_ANCIENT_CLAW
+    material: FLINT
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: ANCIENT_CLAW
+
+  - id: ENCHANTED_BAKED_POTATO
+    material: BAKED_POTATO
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_POTATO
+      - id: SELLABLE
+        value: 76800
+
+  - id: ENCHANTED_BIRCH_LOG
+    material: BIRCH_LOG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: BIRCH_LOG
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_BLAZE_POWDER
+    material: BLAZE_POWDER
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: BLAZE_ROD
+      - id: SELLABLE
+        value: 1440
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: STRENGTH
+        effect_duration: 180
+        effect_amplifier: 1
+        alchemy_xp: 500
+
+  - id: ENCHANTED_BLAZE_ROD
+    material: BLAZE_ROD
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: ENCHANTED_BLAZE_POWDER
+      - id: SELLABLE
+        value: 230400
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: STRENGTH
+        effect_duration: 480
+        effect_amplifier: 2
+        alchemy_xp: 23000
+
+  - id: ENCHANTED_BONE
+    material: BONE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: BONE
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_BONE_BLOCK
+    material: BONE_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: ENCHANTED_BONE
+
+  - id: ENCHANTED_BONE_MEAL
+    material: BONE_MEAL
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: BONE_MEAL
+      - id: SELLABLE
+        value: 1
+
+  - id: ENCHANTED_BOOKSHELF
+    material: BOOKSHELF
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: BOOKSHELF
+      - id: SELLABLE
+        value: 2700
+
+  - id: ENCHANTED_BREAD
+    material: BREAD
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: BREAD
+      - id: SELLABLE
+        value: 60
+
+  - id: ENCHANTED_BROWN_MUSHROOM
+    material: BROWN_MUSHROOM
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: BROWN_MUSHROOM
+      - id: SELLABLE
+        value: 1600
+
+  - id: ENCHANTED_BROWN_MUSHROOM_BLOCK
+    material: BROWN_MUSHROOM_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: BROWN_MUSHROOM_BLOCK
+      - id: SELLABLE
+        value: 51200
+
+  - id: ENCHANTED_CACTUS
+    material: CACTUS
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: CACTUS
+      - id: SELLABLE
+        value: 76800
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: CACTUS_BREW
+        effect_duration: 0
+        effect_amplifier: 1
+        alchemy_xp: 500
+
+  - id: ENCHANTED_CACTUS_GREEN
+    material: CACTUS_GREEN
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: CACTUS_GREEN
+      - id: SELLABLE
+        value: 480
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: CACTUS_GREEN_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 250
+
+  - id: ENCHANTED_CARROT
+    material: CARROT
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: CARROT
+      - id: SELLABLE
+        value: 480
+
+  - id: ENCHANTED_CAKE
+    material: CAKE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipes:
+          - type: shaped
+            recipe-type: FARMING
+            result:
+              type: ENCHANTED_CAKE
+              amount: 1
+            pattern:
+              - AAA
+              - BCB
+              - DDD
+            ingredients:
+              A:
+                type: MILK_BUCKET
+                amount: 1
+              B:
+                type: ENCHANTED_SUGAR
+                amount: 1
+              C:
+                type: ENCHANTED_EGG
+                amount: 1
+              D:
+                type: WHEAT
+                amount: 1
+
+      - id: SELLABLE
+        value: 10000
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: CAKE_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 400
+
+  - id: ENCHANTED_CHARCOAL
+    material: CHARCOAL
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipes:
+          - type: shaped
+            recipe-type: FORAGING
+            result:
+              type: ENCHANTED_CHARCOAL
+              amount: 1
+            pattern:
+              - OAO
+              - ABA
+              - OAO
+            ingredients:
+              A:
+                type: COAL
+                amount: 32
+              B:
+                type: OAK_LOG
+                amount: 32
+              O:
+                type: AIR
+                amount: 1
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_CLAY
+    material: CLAY_BALL
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: CLAY_BALL
+      - id: SELLABLE
+        value: 480
+
+  - id: ENCHANTED_TROPICAL_FISH
+    material: TROPICAL_FISH
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: TROPICAL_FISH
+      - id: SELLABLE
+        value: 3200
+
+  - id: ENCHANTED_COAL
+    material: COAL
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: COAL
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_COAL_BLOCK
+    material: COAL_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: COAL_BLOCK
+      - id: SELLABLE
+        value: 51000
+
+  - id: ENCHANTED_COBBLESTONE
+    material: COBBLESTONE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: COBBLESTONE
+      - id: SELLABLE
+        value: 160
+
+  - id: ENCHANTED_COCOA_BEANS
+    material: COCOA_BEANS
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: COCOA_BEANS
+      - id: SELLABLE
+        value: 480
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: COCOA_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 300
+
+  - id: ENCHANTED_COOKED_FISH
+    material: COOKED_COD
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: ENCHANTED_RAW_FISH
+      - id: SELLABLE
+        value: 150000
+
+  - id: ENCHANTED_COOKED_MUTTON
+    material: COOKED_MUTTON
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_MUTTON
+      - id: SELLABLE
+        value: 128000
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MUTTON_BREW
+        effect_duration: 0
+        effect_amplifier: 1
+        alchemy_xp: 15000
+
+  - id: ENCHANTED_COOKED_SALMON
+    material: COOKED_SALMON
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: ENCHANTED_RAW_SALMON
+      - id: SELLABLE
+        value: 256000
+
+  - id: ENCHANTED_COOKIE
+    material: COOKIE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipes:
+          - type: shaped
+            recipe-type: FARMING
+            result:
+              type: ENCHANTED_COOKIE
+              amount: 1
+            pattern:
+              - OAO
+              - ABA
+              - OAO
+            ingredients:
+              A:
+                type: ENCHANTED_COCOA_BEANS
+                amount: 32
+              B:
+                type: WHEAT
+                amount: 32
+              O:
+                type: AIR
+                amount: 1
+      - id: SELLABLE
+        value: 61500
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: COOKIE_BREW
+        effect_duration: 0
+        effect_amplifier: 1
+        alchemy_xp: 12000
+
+  - id: ENCHANTED_DANDELION
+    material: DANDELION
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: DANDELION
+      - id: SELLABLE
+        value: 160
+
+  - id: ENCHANTED_DARK_OAK_LOG
+    material: DARK_OAK_LOG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: DARK_OAK_LOG
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_DIAMOND
+    material: DIAMOND
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: DIAMOND
+      - id: SELLABLE
+        value: 1280
+
+  - id: ENCHANTED_DIAMOND_BLOCK
+    material: DIAMOND_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: DIAMOND_BLOCK
+      - id: SELLABLE
+        value: 204800
+
+  - id: ENCHANTED_EGG
+    material: EGG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: EGG
+      - id: SELLABLE
+        value: 432
+
+  - id: ENCHANTED_EMERALD
+    material: EMERALD
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: EMERALD
+      - id: SELLABLE
+        value: 960
+
+  - id: ENCHANTED_EMERALD_BLOCK
+    material: EMERALD_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: EMERALD_BLOCK
+      - id: SELLABLE
+        value: 153600
+
+  - id: ENCHANTED_ENDER_PEARL
+    material: ENDER_PEARL
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: ENDER_PEARL
+      - id: SELLABLE
+        value: 140
+
+  - id: ENCHANTED_END_STONE
+    material: END_STONE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: END_STONE
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_EYE_OF_ENDER
+    material: EYE_OF_ENDER
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: EYE_OF_ENDER
+      - id: SELLABLE
+        value: 3520
+
+  - id: ENCHANTED_FEATHER
+    material: FEATHER
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: FEATHER
+      - id: SELLABLE
+        value: 480
+
+  - id: ENCHANTED_FERMENTED_SPIDER_EYE
+    material: FERMENTED_SPIDER_EYE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: FERMENTED_SPIDER_EYE
+      - id: SELLABLE
+        value: 31000
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: WEAKNESS
+        effect_duration: 240
+        effect_amplifier: 1
+        alchemy_xp: 15000
+
+  - id: ENCHANTED_FIREWORK_ROCKET
+    material: FIREWORK_ROCKET
+    rarity: RARE
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipes:
+          - type: shaped
+            recipe-type: COMBAT
+            result:
+              type: ENCHANTED_FIREWORK_ROCKET
+              amount: 1
+            pattern:
+              - OAO
+              - ABA
+              - OAO
+            ingredients:
+              A:
+                type: ENCHANTED_GUNPOWDER
+                amount: 16
+              B:
+                type: PAPER
+                amount: 16
+              O:
+                type: AIR
+                amount: 1
+      - id: SELLABLE
+        value: 41000
+
+  - id: ENCHANTED_FLINT
+    material: FLINT
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: FLINT
+      - id: SELLABLE
+        value: 640
+
+  - id: ENCHANTED_GHAST_TEAR
+    material: GHAST_TEAR
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: GHAST_TEAR
+      - id: SELLABLE
+        value: 80
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: REGENERATION
+        effect_duration: 45
+        effect_amplifier: 1
+        alchemy_xp: 100
+
+  - id: ENCHANTED_GLISTERING_MELON
+    material: GLISTERING_MELON
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: GLISTERING_MELON
+      - id: SELLABLE
+        value: 1000
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: INSTANT_HEALTH
+        effect_duration: 0
+        effect_amplifier: 1
+        alchemy_xp: 500
+
+  - id: ENCHANTED_GLOWSTONE
+    material: GLOWSTONE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: GLOWSTONE
+      - id: SELLABLE
+        value: 51200
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 20
+
+  - id: ENCHANTED_GLOWSTONE_DUST
+    material: GLOWSTONE_DUST
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: GLOWSTONE_DUST
+      - id: SELLABLE
+        value: 320
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 10
+
+  - id: ENCHANTED_GOLD_INGOT
+    material: GOLD
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: GOLD_INGOT
+      - id: SELLABLE
+        value: 640
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: GOLD_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 300
+
+  - id: ENCHANTED_GOLD_BLOCK
+    material: GOLD_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: GOLD_BLOCK
+      - id: SELLABLE
+        value: 102000
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: GOLD_BLOCK_BREW
+        effect_duration: 0
+        effect_amplifier: 1
+        alchemy_xp: 15000
+
+  - id: ENCHANTED_GOLDEN_CARROT
+    material: GOLDEN_CARROT
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: GOLDEN_CARROT
+      - id: SELLABLE
+        value: 61440
+
+  - id: ENCHANTED_GRILLED_PORK
+    material: COOKED_PORKCHOP
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_PORK
+      - id: SELLABLE
+        value: 128000
+
+  - id: ENCHANTED_GUNPOWDER
+    material: GUNPOWDER
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: GUNPOWDER
+      - id: SELLABLE
+        value: 640
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 10
+
+  - id: ENCHANTED_HARD_STONE
+    material: HARD_STONE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: HARD_STONE
+      - id: SELLABLE
+        value: 576
+
+  - id: ENCHANTED_HAY_BALE
+    material: HAY_BLOCK
+    rarity: RARE
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_WHEAT
+      - id: SELLABLE
+        value: 153600
+
+  - id: ENCHANTED_WHEAT
+    material: WHEAT
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: WHEAT
+      - id: SELLABLE
+        value: 960
+
+  - id: ENCHANTED_ICE
+    material: ICE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: ICE
+      - id: SELLABLE
+        value: 80
+
+  - id: ENCHANTED_INK_SAC
+    material: INK_SAC
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: INK_SAC
+      - id: SELLABLE
+        value: 160
+
+  - id: ENCHANTED_IRON_INGOT
+    material: IRON
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: IRON_INGOT
+      - id: SELLABLE
+        value: 480
+
+  - id: ENCHANTED_IRON_BLOCK
+    material: IRON_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: IRON_BLOCK
+      - id: SELLABLE
+        value: 76800
+
+  - id: ENCHANTED_JUNGLE_LOG
+    material: JUNGLE_LOG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: JUNGLE_LOG
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_LAPIS_LAZULI
+    material: LAPIS_LAZULI
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: LAPIS_LAZULI
+      - id: SELLABLE
+        value: 160
+
+  - id: ENCHANTED_LAPIS_LAZULI_BLOCK
+    material: LAPIS_LAZULI_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: LAPIS_LAZULI_BLOCK
+      - id: SELLABLE
+        value: 25600
+
+  - id: ENCHANTED_LEATHER
+    material: LEATHER
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: LEATHER
+      - id: SELLABLE
+        value: 1700
+
+  - id: ENCHANTED_LILY_PAD
+    material: LILY_PAD
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: LILY_PAD
+      - id: SELLABLE
+        value: 1600
+
+  - id: ENCHANTED_MAGMA_CREAM
+    material: MAGMA_CREAM
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: MAGMA_CREAM
+      - id: SELLABLE
+        value: 1280
+
+  - id: ENCHANTED_MELON
+    material: MELON_SLICE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: MELON_SLICE
+      - id: SELLABLE
+        value: 320
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MELON_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 250
+
+  - id: ENCHANTED_MELON_BLOCK
+    material: MELON_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: MELON_BLOCK
+      - id: SELLABLE
+        value: 51200
+
+  - id: ENCHANTED_MITHRIL
+    material: MITHRIL
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: MITHRIL
+      - id: SELLABLE
+        value: 1280
+
+  - id: ENCHANTED_MUTTON
+    material: MUTTON
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: MUTTON
+      - id: SELLABLE
+        value: 800
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MUTTON_BREW
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 300
+
+  - id: ENCHANTED_MYCELIUM
+    material: MYCELIUM
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: MYCELIUM
+      - id: SELLABLE
+        value: 800
+
+  - id: ENCHANTED_NETHERRACK
+    material: NETHERRACK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: NETHERRACK
+      - id: SELLABLE
+        value: 160
+
+  - id: ENCHANTED_NETHER_WART
+    material: NETHER_WART
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: NETHER_WART
+      - id: SELLABLE
+        value: 640
+
+  - id: ENCHANTED_OAK_LOG
+    material: OAK_LOG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: OAK_LOG
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_OBSIDIAN
+    material: OBSIDIAN
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: OBSIDIAN
+      - id: SELLABLE
+        value: 1440
+
+  - id: ENCHANTED_PACKED_ICE
+    material: PACKED_ICE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: PACKED_ICE
+      - id: SELLABLE
+        value: 12800
+
+  - id: ENCHANTED_PAPER
+    material: PAPER
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: PAPER
+      - id: SELLABLE
+        value: 384
+
+  - id: ENCHANTED_POISONOUS_POTATO
+    material: POISONOUS_POTATO
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: POISONOUS_POTATO
+      - id: SELLABLE
+        value: 1600
+
+  - id: ENCHANTED_POPPY
+    material: POPPY
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: POPPY
+      - id: SELLABLE
+        value: 576
+
+  - id: ENCHANTED_PORK
+    material: PORKCHOP
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: PORKCHOP
+      - id: SELLABLE
+        value: 800
+
+  - id: ENCHANTED_POTATO
+    material: POTATO
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: POTATO
+      - id: SELLABLE
+        value: 480
+
+  - id: ENCHANTED_PRISMARINE_CRYSTALS
+    material: PRISMARINE_CRYSTALS
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: PRISMARINE_CRYSTALS
+      - id: SELLABLE
+        value: 400
+
+  - id: ENCHANTED_PRISMARINE_SHARD
+    material: PRISMARINE_SHARD
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: PRISMARINE_SHARD
+      - id: SELLABLE
+        value: 400
+
+  - id: ENCHANTED_PUFFERFISH
+    material: PUFFERFISH
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: PUFFERFISH
+      - id: SELLABLE
+        value: 2400
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: WATER_BREATHING
+        effect_duration: 480
+        effect_amplifier: 0
+        alchemy_xp: 600
+
+  - id: ENCHANTED_PUMPKIN
+    material: PUMPKIN
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: PUMPKIN
+      - id: SELLABLE
+        value: 1600
+
+  - id: ENCHANTED_QUARTZ
+    material: QUARTZ
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: QUARTZ
+      - id: SELLABLE
+        value: 640
+
+  - id: ENCHANTED_QUARTZ_BLOCK
+    material: QUARTZ_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: QUARTZ_BLOCK
+      - id: SELLABLE
+        value: 102400
+
+  - id: ENCHANTED_RABBIT_FOOT
+    material: RABBIT_FOOT
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: RABBIT_FOOT
+      - id: SELLABLE
+        value: 800
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: LEAPING
+        effect_duration: 480
+        effect_amplifier: 1
+        alchemy_xp: 600
+
+  - id: ENCHANTED_RABBIT_HIDE
+    material: RABBIT_HIDE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: RABBIT_HIDE
+      - id: SELLABLE
+        value: 2880
+
+  - id: ENCHANTED_RAW_BEEF
+    material: RAW_BEEF
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: RAW_BEEF
+      - id: SELLABLE
+        value: 640
+
+  - id: ENCHANTED_RAW_CHICKEN
+    material: RAW_CHICKEN
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: RAW_CHICKEN
+      - id: SELLABLE
+        value: 640
+
+  - id: ENCHANTED_RAW_FISH
+    material: COD
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: COD
+      - id: SELLABLE
+        value: 960
+
+  - id: ENCHANTED_RAW_RABBIT
+    material: RABBIT
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: RABBIT
+      - id: SELLABLE
+        value: 640
+
+  - id: ENCHANTED_RAW_SALMON
+    material: SALMON
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: SALMON
+      - id: SELLABLE
+        value: 1600
+
+  - id: ENCHANTED_RED_MUSHROOM
+    material: RED_MUSHROOM
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: RED_MUSHROOM
+      - id: SELLABLE
+        value: 1600
+
+  - id: ENCHANTED_RED_MUSHROOM_BLOCK
+    material: RED_MUSHROOM_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: RED_MUSHROOM_BLOCK
+      - id: SELLABLE
+        value: 51200
+
+  - id: ENCHANTED_RED_SAND
+    material: RED_SAND
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: RED_SAND
+      - id: SELLABLE
+        value: 800
+
+  - id: ENCHANTED_REDSTONE
+    material: REDSTONE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: REDSTONE
+      - id: SELLABLE
+        value: 160
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 10
+
+  - id: ENCHANTED_REDSTONE_BLOCK
+    material: REDSTONE_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: REDSTONE_BLOCK
+      - id: SELLABLE
+        value: 25600
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 20
+
+  - id: ENCHANTED_REDSTONE_LAMP
+    material: REDSTONE_LAMP
+    rarity: RARE
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: REDSTONE_LAMP
+      - id: SELLABLE
+        value: 204800
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: MODIFIER
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 30
+
+  - id: ENCHANTED_ROTTEN_FLESH
+    material: ROTTEN_FLESH
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: ROTTEN_FLESH
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_SAND
+    material: SAND
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: SAND
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_SEEDS
+    material: WHEAT_SEEDS
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: WHEAT_SEEDS
+      - id: SELLABLE
+        value: 480
+
+  - id: ENCHANTED_SHARK_FIN
+    material: SHARK_FIN
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: SHARK_FIN
+
+  - id: ENCHANTED_SLIME_BALL
+    material: SLIME_BALL
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: SLIME_BALL
+      - id: SELLABLE
+        value: 800
+
+  - id: ENCHANTED_SLIME_BLOCK
+    material: SLIME_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: ENCHANTED_SLIME_BALL
+      - id: SELLABLE
+        value: 128000
+
+  - id: ENCHANTED_SNOW_BLOCK
+    material: SNOW_BLOCK
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: SNOW_BLOCK
+      - id: SELLABLE
+        value: 600
+
+  - id: ENCHANTED_SPIDER_EYE
+    material: SPIDER_EYE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: SPIDER_EYE
+      - id: SELLABLE
+        value: 480
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: POISON
+        effect_duration: 45
+        effect_amplifier: 1
+        alchemy_xp: 500
+
+  - id: ENCHANTED_SPONGE
+    material: SPONGE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: SPONGE
+      - id: SELLABLE
+        value: 2000
+
+  - id: ENCHANTED_SPRUCE_LOG
+    material: SPRUCE_LOG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: SPRUCE_LOG
+      - id: SELLABLE
+        value: 320
+
+  - id: ENCHANTED_STRING
+    material: STRING
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: STRING
+      - id: SELLABLE
+        value: 576
+
+  - id: ENCHANTED_SUGAR
+    material: SUGAR
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: SUGAR_CANE
+      - id: SELLABLE
+        value: 640
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: SPEED
+        effect_duration: 180
+        effect_amplifier: 1
+        alchemy_xp: 300
+
+  - id: ENCHANTED_SUGAR_CANE
+    material: SUGAR_CANE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_SUGAR
+      - id: SELLABLE
+        value: 102400
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: SPEED
+        effect_duration: 480
+        effect_amplifier: 2
+        alchemy_xp: 15000
+
+  - id: ENCHANTED_SULPHUR
+    material: SULPHUR
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: SULPHUR
+      - id: SELLABLE
+        value: 1600
+
+  - id: ENCHANTED_TITANIUM
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: TITANIUM
+      - id: SELLABLE
+        value: 3200
+      - id: SKULL_HEAD
+        texture: 3dcc0ec9873f4f8d407ba0a0f983e257787772eaf8784e226a61c7f727ac9e26
+
+  - id: ENCHANTED_WET_SPONGE
+    material: WET_SPONGE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: WET_SPONGE
+      - id: SELLABLE
+        value: 80000
+
+  - id: ENCHANTED_WOOL
+    material: WOOL
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: WHITE_WOOL
+      - id: SELLABLE
+        value: 320
+
+  - id: OMEGA_ENCHANTED_EGG
+    material: ENDERMITE_SPAWN_EGG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: SUPER_ENCHANTED_EGG
+      - id: SELLABLE
+        value: 432
+
+  - id: SUPER_ENCHANTED_EGG
+    material: POLAR_BEAR_SPAWN_EGG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_EGG
+
+  - id: STUFFED_CHILI_PEPPER
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: CHILI_PEPPER
+      - id: SELLABLE
+        value: 200000.0
+      - id: SKULL_HEAD
+        texture: f599f959f0ebcb1eb0f2e5852d122ca55bf5258fd4613ab50d72ad8cf5e12603
+
+  - id: WHIPPED_MAGMA_CREAM
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: ENCHANTED_MAGMA_CREAM
+      - id: SELLABLE
+        value: 204800.0
+      - id: SKULL_HEAD
+        texture: 7da530ad09e69e4678c69cf5b8e0f0751e4630355fc7f0c226c955baace30fb2
+
+  - id: ABSOLUTE_ENDER_PEARL
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: COMBAT
+        item_id: ENCHANTED_ENDER_PEARL
+      - id: SELLABLE
+        value: 11200.0
+      - id: SKULL_HEAD
+        texture: 67d9fe065024fff4b34c78f92cd3150d6bdfaab7c375a0ee785076e1a4a254e9
+
+  - id: ENCHANTED_MYCELIUM_CUBE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: ENCHANTED_MYCELIUM
+      - id: SELLABLE
+        value: 128000.0
+      - id: SKULL_HEAD
+        texture: 9a351d5316e5b508fbbf595e0773aec9639a0891807fef09bc59a56d46490cb0
+
+  - id: ENCHANTED_RED_SAND_CUBE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: ENCHANTED_RED_SAND
+      - id: SELLABLE
+        value: 128000.0
+      - id: SKULL_HEAD
+        texture: f31f5c78b7e961591293756b9e15012db10457846c5ebc5db0f2b0e1873468ee
+
+  - id: ENCHANTED_SULPHUR_CUBE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: MINING
+        item_id: ENCHANTED_SULPHUR
+      - id: SELLABLE
+        value: 256000.0
+      - id: SKULL_HEAD
+        texture: 4f0c28dfcf42d4dbd27c3378f67176c84800bc69b4cd531702c95ca6fb990458
+
+  - id: BOX_OF_SEEDS
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_SEEDS
+      - id: SELLABLE
+        value: 76800.0
+      - id: SKULL_HEAD
+        texture: 2c3f854bb65265ab3ff2e362669a5f806ab84dc240a4b99f9a62ab7267728ba3
+
+  - id: MUTANT_NETHER_WART
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_NETHER_WART
+      - id: SELLABLE
+        value: 102400.0
+      - id: SKULL_HEAD
+        texture: 111a3cec7aaf904212ccf93bb67a3caf3d649783ba90b8b60bb63c7687eb39f
+
+  - id: POLISHED_PUMPKIN
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_PUMPKIN
+      - id: SELLABLE
+        value: 256000.0
+      - id: SKULL_HEAD
+        texture: 8db711ff52eedda59c434bb03169763d7c40b5b89127778feacd63aa94dfc

@@ -1,0 +1,33 @@
+items:
+  - id: GLACIAL_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Glacial Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: cb8f4a68845622b80caf7ac924d48bafaefc819c47c67f93978a09bc082983ff
+      - id: NOT_FINISHED_YET
+
+  - id: GLACIAL_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Glacial Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 479b58ae7f0a10efbaebb4bac553b668623ca964d8da959a1d373fc6f0660fe6
+      - id: NOT_FINISHED_YET
+
+  - id: GLACIAL_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Glacial Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: f2ae6028a75441a5d3f718e574fb9ac7c310d4d7dc97ba56ba3d278d79e7ec23
+      - id: NOT_FINISHED_YET

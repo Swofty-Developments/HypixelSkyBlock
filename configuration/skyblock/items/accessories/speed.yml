@@ -5,30 +5,80 @@ items:
     default_statistics:
       speed: 1.0
     components:
-      - id: TIERED_TALISMAN
-        base_tier: SPEED_TALISMAN
-        tier: 1
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: 8624bacb5f1986e6477abce4ae7dca1820a5260b6233b55ba1d9ba936c84b
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: SUGAR_CANE
+                amount: 12
+            result:
+              type: SPEED_TALISMAN
+              amount: 1
+
   - id: SPEED_RING
     material: PLAYER_HEAD
     rarity: COMMON
     default_statistics:
       speed: 3.0
     components:
-      - id: TIERED_TALISMAN
-        base_tier: SPEED_TALISMAN
-        tier: 2
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: c2da40a91f8fa7e1cbdd934da92a7668dc95d75b57c9c80a381c5e178cee6ba7
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_SUGAR
+                amount: 12
+              B:
+                type: SPEED_TALISMAN
+                amount: 1
+            result:
+              type: SPEED_RING
+              amount: 1
+
   - id: SPEED_ARTIFACT
     material: PLAYER_HEAD
     rarity: COMMON
     default_statistics:
       speed: 5.0
     components:
-      - id: TIERED_TALISMAN
-        base_tier: SPEED_TALISMAN
-        tier: 3
+      - id: TALISMAN
       - id: SKULL_HEAD
         texture: f06706eecb2d558ace27abda0b0b7b801d36d17dd7a890a9520dbe522374f8a6
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_SUGAR_CANE
+                amount: 6
+              B:
+                type: SPEED_RING
+                amount: 1
+            result:
+              type: SPEED_ARTIFACT
+              amount: 1

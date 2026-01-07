@@ -6,6 +6,7 @@ items:
       - id: ACCESSORY
       - id: SKULL_HEAD
         texture: 5dff8dbbab15bfbb11e23b1f50b34ef548ad9832c0bd7f5a13791adad0057e1b
+
   - id: CATACOMBS_EXPERT_RING
     material: PLAYER_HEAD
     rarity: COMMON

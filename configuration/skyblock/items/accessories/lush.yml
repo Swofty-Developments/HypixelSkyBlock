@@ -1,0 +1,40 @@
+items:
+  - id: LUSH_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      health: 1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lush Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 1f4f65d8a49eb5187218908cde43c589d113942ebc43c5d12eea7c81f359c769
+      - id: NOT_FINISHED_YET
+
+  - id: LUSH_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      health: 3
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lush Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: b34bd06e200478e453cd1ebcae047ae77a12bc30018313c2da49c2b068a695af
+      - id: NOT_FINISHED_YET
+
+  - id: LUSH_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      health: 5
+      health_regeneration: 1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lush Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 39a9ce70dc163f3f069fc895860234cc9371ed693cbfa6e0eb4b48a9fe588c19
+      - id: NOT_FINISHED_YET

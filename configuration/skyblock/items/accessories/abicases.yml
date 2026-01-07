@@ -8,6 +8,7 @@ items:
       - id: SKULL_HEAD
         texture: a3c153c391c34e2d328a60839e683a9f82ad3048299d8bc6a39e6f915cc5a
       - id: ACCESSORY
+
   - id: BLUE_BUT_GREEN_ABICASE
     material: PLAYER_HEAD
     rarity: COMMON
@@ -17,6 +18,7 @@ items:
       - id: SKULL_HEAD
         texture: a9909a9779b946b9787442fa483af4de4b2f19fd40dc2370f7a9b8f521f21ddc
       - id: TALISMAN
+
   - id: BLUE_BUT_RED_ABICASE
     material: PLAYER_HEAD
     rarity: COMMON
@@ -26,6 +28,7 @@ items:
       - id: SKULL_HEAD
         texture: 85e4f9da68c81fa481eecdca48a138cecde2cddffeeae84ab1afd24a363e028
       - id: TALISMAN
+
   - id: BLUE_BUT_YELLOW_ABICASE
     material: PLAYER_HEAD
     rarity: COMMON
@@ -35,6 +38,7 @@ items:
       - id: SKULL_HEAD
         texture: a254aacbf623175ff98df7ae366e0b89e91713441752f3cdf965f038b174b5
       - id: TALISMAN
+
   - id: LIGHTER_BLUE_ABICASE
     material: PLAYER_HEAD
     rarity: COMMON
@@ -44,6 +48,7 @@ items:
       - id: SKULL_HEAD
         texture: df70fab3246fe027ce0bba885a73c6e82d8ff8f358231e8461f956560cfa58f
       - id: TALISMAN
+
   - id: REZAR_ABICASE
     material: PLAYER_HEAD
     rarity: COMMON
@@ -53,6 +58,7 @@ items:
       - id: SKULL_HEAD
         texture: b2128f48d997186563fbc5b47a88c0d0aac92fa2c285cd1fae420c34fa8f2010
       - id: TALISMAN
+
   - id: SUMSUNG_G3_ABICASE
     material: PLAYER_HEAD
     rarity: COMMON
@@ -62,6 +68,7 @@ items:
       - id: SKULL_HEAD
         texture: 70ce32b90e16419319daf35e6ad01bb715d898548b9ef66dd799a00107e87376
       - id: TALISMAN
+
   - id: SUMSUNG_GG_ABICASE
     material: PLAYER_HEAD
     rarity: COMMON

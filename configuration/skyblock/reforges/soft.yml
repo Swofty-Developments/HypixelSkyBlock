@@ -28,10 +28,10 @@ statistics:
     legendary: 2
     mythic: 2
 
-  CRIT_CHANCE:
+  CRITICAL_CHANCE:
     expression: "1"
 
-  CRIT_DAMAGE:
+  CRITICAL_DAMAGE:
     common: 1
     uncommon: 1
     rare: 1

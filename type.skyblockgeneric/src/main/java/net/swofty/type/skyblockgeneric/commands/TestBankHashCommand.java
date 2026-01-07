@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "runhash",
         description = "Tests the bank hashing system",
         usage = "/runhash",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class TestBankHashCommand extends HypixelCommand {
     @Override

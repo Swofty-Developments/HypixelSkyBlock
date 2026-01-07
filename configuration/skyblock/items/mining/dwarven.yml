@@ -10,12 +10,25 @@ items:
     rarity: COMMON
   - id: MITHRIL
     rarity: COMMON
+    lore:
+      - "§7§o\"The Man called it \"true-silver\" while"
+      - "§7§othe Dwarves, who loved it above all"
+      - "§7§othings, had their own, secret name"
+      - "§7§ofor it.\""
     components:
       - id: SELLABLE
         value: 8.0
       - id: SKILLABLE_MINE
         category: MINING
         mining_value: 6.0
+      - id: EXTRA_RARITY
+        display: DWARVEN METAL
+      - id: BREWING_INGREDIENT
+        brewing_time_seconds: 20
+        effect: SPELUNKER_POTION_1
+        effect_duration: 0
+        effect_amplifier: 0
+        alchemy_xp: 5
   - id: PLASMA
     rarity: COMMON
     components:
@@ -49,6 +62,10 @@ items:
         value: 15.0
   - id: TITANIUM
     rarity: COMMON
+    lore:
+      - "§7Its strength and resistance to"
+      - "§7corrosion are the highest of any"
+      - "§7metallic element."
     components:
       - id: SELLABLE
         value: 20.0
@@ -57,6 +74,8 @@ items:
         mining_value: 0.0
       - id: SKULL_HEAD
         texture: a14c6e41a762d37863a9fff6888c738905b92cc6c3898892a38dfdfe2ac4bf
+      - id: EXTRA_RARITY
+        display: DWARVEN METAL
   - id: TREASURITE
     rarity: COMMON
     components:
@@ -71,3 +90,22 @@ items:
         texture: 63a405fb286dbb32e9b3908f60948f0207306c825e63ac9e626ed1dbb2f7a2be
       - id: EXTRA_UNDER_NAME
         display: Machine Fuel
+  - id: ROYAL_PIGEON
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+    components:
+      - id: SKULL_HEAD
+        texture: 63a405fb286dbb32e9b3908f60948f0207306c825e63ac9e626ed1dbb2f7a2be
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: true
+  - id: ROYAL_COMPASS
+    rarity: RARE
+    material: PLAYER_HEAD
+    components:
+      - id: ABILITY
+        abilities:
+          - TRUE_DWARTH
+      - id: SKULL_HEAD
+        texture: f106277ad541aa76d9d4a19e7aac92621a3f0251ff9427dfdea539b51dd8d1ea
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: true

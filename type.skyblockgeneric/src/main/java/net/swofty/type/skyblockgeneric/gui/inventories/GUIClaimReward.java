@@ -10,15 +10,17 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUIClaimReward extends HypixelInventoryGUI {
 
 	private final ItemType rewardItem;
 	private final Runnable onClaim;
-	private boolean claimed = false;
+	private final AtomicBoolean claimed = new AtomicBoolean(false);
 
 	public GUIClaimReward(ItemType rewardItem, Runnable onClaim) {
 		super("Claim Reward", InventoryType.CHEST_6_ROW);
@@ -32,7 +34,10 @@ public class GUIClaimReward extends HypixelInventoryGUI {
 		set(new GUIClickableItem(22) {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-				claimed = true;
+				if (!claimed.compareAndSet(false, true)) {
+					return;
+				}
+
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
 				onClaim.run();
 				SkyBlockItem item = new SkyBlockItem(rewardItem);
@@ -44,7 +49,7 @@ public class GUIClaimReward extends HypixelInventoryGUI {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
 				return ItemStackCreator.appendLore(
-						new SkyBlockItem(rewardItem).getDisplayItem(),
+						new NonPlayerItemUpdater(new SkyBlockItem(rewardItem)).getUpdatedItem(),
 						List.of(
 								"",
 								"§eClick to claim!"
@@ -63,7 +68,10 @@ public class GUIClaimReward extends HypixelInventoryGUI {
 
 	@Override
 	public void onClose(InventoryCloseEvent e, CloseReason reason) {
-		if (claimed) return;
+		if (!claimed.compareAndSet(false, true)) {
+			return; // Already claimed
+		}
+
 		SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
 		onClaim.run();
 		player.addAndUpdateItem(rewardItem);

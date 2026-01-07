@@ -116,18 +116,25 @@ public class NPCRyan extends HypixelNPC {
 			setDialogue(player, "talk").thenRun(() -> {
 				player.getMissionData().endMission(MissionTalkToRyan.class);
 			});
+			return;
 		}
 
 		if (data.isCurrentlyActive(MissionCollectDarkOakLogs.class)) {
 			sendNPCMessage(player, "Grab me §a256 Dark Oak Logs §fand I'll make you a badge! You don't have enough yet!");
+			return;
 		}
 
 		if (data.isCurrentlyActive(MissionGiveRyanDarkOakLogs.class)) {
+			if (!player.removeItemFromPlayer(ItemType.DARK_OAK_LOG, 512)) {
+				sendNPCMessage(player, "Grab me §a256 Dark Oak Logs §fand I'll make you a badge! You don't have enough yet!");
+				return;
+			}
 			setDialogue(player, "give_logs").thenRun(() -> {
 				new GUIClaimReward(ItemType.CAMPFIRE_TALISMAN_1, () -> {
 					player.getMissionData().endMission(MissionGiveRyanDarkOakLogs.class);
-				});
+				}).open(player);
 			});
+			return;
 		}
 	}
 

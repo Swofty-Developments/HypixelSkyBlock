@@ -1,0 +1,267 @@
+# SkyWars Perks Configuration
+# Based on Hypixel's perk system
+# Normal mode: Players can select up to 6 perks
+# Insane mode: All owned perks are active (toggle on/off)
+
+perks:
+  # ==================== COMMON PERKS (Free/Soul Well) ====================
+  bridger:
+    name: "Bridger"
+    material: "OAK_PLANKS"
+    rarity: "COMMON"
+    cost: 0
+    soulWellDrop: true
+    description: "Block conservation"
+    effectDescription: "50% chance to not consume blocks when placing them"
+    modes: [NORMAL, INSANE]
+
+  knowledge:
+    name: "Knowledge"
+    material: "BOOK"
+    rarity: "COMMON"
+    cost: 0
+    soulWellDrop: true
+    description: "Gain experience on kills"
+    effectDescription: "Kills grant 3 EXP Levels"
+    modes: [NORMAL, INSANE]
+
+  lucky_charm:
+    name: "Lucky Charm"
+    material: "RABBIT_FOOT"
+    rarity: "COMMON"
+    cost: 0
+    soulWellDrop: true
+    description: "Golden apple chance on kill"
+    effectDescription: "30% chance to get a Golden Apple on kill"
+    modes: [NORMAL, INSANE]
+
+  mining_expertise:
+    name: "Mining Expertise"
+    material: "IRON_PICKAXE"
+    rarity: "COMMON"
+    cost: 5000
+    soulWellDrop: true
+    description: "Double ore drops"
+    effectDescription: "Ores have a 20% chance to drop double the materials"
+    modes: [NORMAL, INSANE]
+
+  resistance_boost:
+    name: "Resistance Boost"
+    material: "IRON_INGOT"
+    rarity: "COMMON"
+    cost: 0
+    soulWellDrop: true
+    description: "Starting resistance"
+    effectDescription: "Grants 15s of Resistance II at the start of the game"
+    modes: [NORMAL, INSANE]
+
+  savior:
+    name: "Savior"
+    material: "GOLDEN_APPLE"
+    rarity: "COMMON"
+    cost: 0
+    soulWellDrop: true
+    description: "Absorption on kill"
+    effectDescription: "Kills grant 7s of Absorption I"
+    modes: [NORMAL, INSANE]
+
+  # ==================== GLOBAL PERKS (Always active for everyone) ====================
+  bulldozer:
+    name: "Bulldozer"
+    material: "REDSTONE"
+    rarity: "COMMON"
+    cost: 0
+    soulWellDrop: false
+    global: true
+    description: "Strength on kill"
+    effectDescription: "Kills grant 5s of Strength I (Solo) / 2s (Doubles)"
+    modes: [NORMAL, INSANE]
+
+  juggernaut:
+    name: "Juggernaut"
+    material: "RED_DYE"
+    rarity: "COMMON"
+    cost: 0
+    soulWellDrop: false
+    global: true
+    description: "Regeneration on kill"
+    effectDescription: "Kills grant 10s of Regeneration I"
+    modes: [NORMAL, INSANE]
+
+  telekinesis:
+    name: "Telekinesis"
+    material: "ENDER_EYE"
+    rarity: "COMMON"
+    cost: 0
+    soulWellDrop: false
+    global: true
+    description: "Auto-pickup ores"
+    effectDescription: "Mined ores go straight into your inventory"
+    modes: [NORMAL, INSANE]
+
+  # ==================== RARE PERKS (50,000 coins) ====================
+  annoy_o_mite:
+    name: "Annoy-o-mite"
+    material: "SILVERFISH_SPAWN_EGG"
+    rarity: "RARE"
+    cost: 50000
+    soulWellDrop: true
+    description: "Spawn silverfish on bow hits"
+    effectDescription: "Bow hits have a 10% chance to spawn a Silverfish next to your enemy"
+    modes: [NORMAL, INSANE]
+
+  arrow_recovery:
+    name: "Arrow Recovery"
+    material: "HOPPER"
+    rarity: "RARE"
+    cost: 50000
+    soulWellDrop: true
+    description: "Recover arrows on hit"
+    effectDescription: "Bow hits have a 50% chance to give you an Arrow back"
+    modes: [NORMAL, INSANE]
+
+  blazing_arrows:
+    name: "Blazing Arrows"
+    material: "BLAZE_POWDER"
+    rarity: "RARE"
+    cost: 50000
+    soulWellDrop: true
+    description: "Flaming arrows"
+    effectDescription: "Arrows you shoot have a 15% chance to light on fire"
+    modes: [NORMAL, INSANE]
+
+  environmental_expert:
+    name: "Environmental Expert"
+    material: "OAK_SAPLING"
+    rarity: "RARE"
+    cost: 50000
+    soulWellDrop: true
+    description: "Reduced environmental damage"
+    effectDescription: "Reduces 50% of damage taken from environmental sources"
+    modes: [NORMAL, INSANE]
+
+  fat:
+    name: "Fat"
+    material: "COOKED_BEEF"
+    rarity: "RARE"
+    cost: 50000
+    soulWellDrop: true
+    description: "Starting absorption"
+    effectDescription: "Grants 20s of Absorption I at the start of the game"
+    modes: [NORMAL, INSANE]
+
+  speed_boost:
+    name: "Speed Boost"
+    material: "SUGAR"
+    rarity: "RARE"
+    cost: 50000
+    soulWellDrop: true
+    description: "Extended haste"
+    effectDescription: "Grants 300s of Haste II at the start of the game"
+    modes: [NORMAL, INSANE]
+
+  # ==================== LEGENDARY PERKS (150,000 coins) ====================
+  barbarian:
+    name: "Barbarian"
+    material: "IRON_AXE"
+    rarity: "LEGENDARY"
+    cost: 150000
+    soulWellDrop: true
+    description: "Axe mastery"
+    effectDescription: "Grants a Sharpness level after 3 kills with an Axe"
+    modes: [NORMAL, INSANE]
+
+  black_magic:
+    name: "Black Magic"
+    material: "CAULDRON"
+    rarity: "LEGENDARY"
+    cost: 150000
+    soulWellDrop: true
+    description: "Ender pearl from void kills"
+    effectDescription: "Void kills have a 30% chance to give you an Ender Pearl"
+    modes: [NORMAL, INSANE]
+
+  frost:
+    name: "Frost"
+    material: "SNOWBALL"
+    rarity: "LEGENDARY"
+    cost: 150000
+    soulWellDrop: true
+    description: "Slow enemies with bow"
+    effectDescription: "Bow crits have a 40% chance to inflict 3s of Slowness I"
+    modes: [NORMAL, INSANE]
+
+  marksmanship:
+    name: "Marksmanship"
+    material: "BOW"
+    rarity: "LEGENDARY"
+    cost: 150000
+    soulWellDrop: true
+    description: "Bow mastery"
+    effectDescription: "Grants a Power level after 2 kills with a Bow"
+    modes: [NORMAL, INSANE]
+
+  necromancer:
+    name: "Necromancer"
+    material: "ROTTEN_FLESH"
+    rarity: "LEGENDARY"
+    cost: 150000
+    soulWellDrop: true
+    description: "Summon zombies"
+    effectDescription: "Kills have a 16% chance to spawn a friendly Zombie"
+    modes: [NORMAL, INSANE]
+
+  robbery:
+    name: "Robbery"
+    material: "IRON_BARS"
+    rarity: "LEGENDARY"
+    cost: 150000
+    soulWellDrop: true
+    description: "Steal items"
+    effectDescription: "Melee hits with your fist have a 20% chance to steal a held item"
+    modes: [NORMAL, INSANE]
+
+  # ==================== SPECIAL PERKS (Angel's Descent / Tournament) ====================
+  apothecary:
+    name: "Apothecary"
+    material: "BREWING_STAND"
+    rarity: "LEGENDARY"
+    opalCost: 1
+    soulWellDrop: false
+    angelsDescentOnly: true
+    description: "Extended potion effects"
+    effectDescription: "Positive potion effects have a 30% longer duration"
+    modes: [NORMAL, INSANE]
+
+  diamond_in_the_rough:
+    name: "Diamond In The Rough I"
+    material: "DIAMOND"
+    rarity: "LEGENDARY"
+    opalCost: 1
+    soulWellDrop: false
+    angelsDescentOnly: true
+    description: "Diamond drops on kill"
+    effectDescription: "Grants a 5% chance to earn a Diamond on kill"
+    modes: [NORMAL, INSANE]
+
+  double_edged_sword:
+    name: "Double-Edged Sword"
+    material: "WOODEN_SWORD"
+    rarity: "LEGENDARY"
+    opalCost: 1
+    soulWellDrop: false
+    angelsDescentOnly: true
+    description: "Power at a cost"
+    effectDescription: "Your first 3 Sword kills put a Sharpness level on your Sword but inflict -2 Max Health"
+    modes: [NORMAL, INSANE]
+
+  diamondpiercer:
+    name: "Diamondpiercer"
+    material: "DIAMOND_CHESTPLATE"
+    rarity: "LEGENDARY"
+    cost: 0
+    soulWellDrop: false
+    tournamentExclusive: true
+    description: "Anti-diamond armor"
+    effectDescription: "20% chance to crit diamond armor wearers for 20% increased damage"
+    modes: [NORMAL, INSANE]

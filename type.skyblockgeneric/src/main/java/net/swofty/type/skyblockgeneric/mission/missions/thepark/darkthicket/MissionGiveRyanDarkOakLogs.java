@@ -48,9 +48,8 @@ public class MissionGiveRyanDarkOakLogs extends SkyBlockMission implements Locat
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		// todo: take from inventory
-		mission.getObjectiveCompleteText(
-				"QUEST COMPLETE",
+		player.removeItemFromPlayer(ItemType.DARK_OAK_LOG, 256);
+		mission.getQuestCompleteText(
 				new ArrayList<>(List.of(
 						"§fCampfire Initiate Badge I",
 						"§8+§62,000 §7Coins",

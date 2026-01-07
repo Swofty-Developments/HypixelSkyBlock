@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "playsong",
         description = "Plays a song",
         usage = "/playmusic <song>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class PlayMusicCommand extends HypixelCommand {
     @Override

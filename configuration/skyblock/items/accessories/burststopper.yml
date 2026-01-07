@@ -1,0 +1,28 @@
+items:
+  - id: BURSTSTOPPER_TALISMAN
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      strength: 1
+      true_defense: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Burststopper Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 5b68ad1a3ac2444d7bddc22eefecd5d61b4d326871179119c52a7740b4d83cc7
+      - id: NOT_FINISHED_YET
+
+  - id: BURSTSTOPPER_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      strength: 2
+      true_defense: 3
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Burststopper Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 89cbbbe7ed0356d5846596c4ad1cfa9fa719db1c4568f3f7f0c7979e7a401208
+      - id: NOT_FINISHED_YET

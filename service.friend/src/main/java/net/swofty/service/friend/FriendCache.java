@@ -365,7 +365,7 @@ public class FriendCache {
     }
 
     public static void handlePlayerJoin(UUID playerUuid, String playerName) {
-        PresenceStorage.upsert(new net.swofty.commons.presence.PresenceInfo(
+        PresenceStorage.upsertPreservingServer(new net.swofty.commons.presence.PresenceInfo(
                 playerUuid,
                 true,
                 null,
@@ -376,7 +376,15 @@ public class FriendCache {
         FriendData playerData = getFriendData(playerUuid);
 
         for (Friend friend : playerData.getFriends()) {
+            net.swofty.commons.presence.PresenceInfo friendPresence = PresenceStorage.get(friend.getUuid());
+            if (friendPresence == null || !friendPresence.isOnline()) continue;
+
             FriendData friendData = cachedFriendData.get(friend.getUuid());
+            if (friendData == null) {
+                friendData = getFriendData(friend.getUuid());
+                cachedFriendData.put(friend.getUuid(), friendData);
+            }
+
             if (friendData != null && friendData.getSettings().isJoinLeaveNotifications()) {
                 sendEvent(new FriendJoinNotificationEvent(friend.getUuid(), playerUuid, playerName));
             }
@@ -384,7 +392,7 @@ public class FriendCache {
     }
 
     public static void handlePlayerLeave(UUID playerUuid, String playerName) {
-        PresenceStorage.upsert(new net.swofty.commons.presence.PresenceInfo(
+        PresenceStorage.upsertPreservingServer(new net.swofty.commons.presence.PresenceInfo(
                 playerUuid,
                 false,
                 null,
@@ -396,7 +404,15 @@ public class FriendCache {
         if (playerData == null) return;
 
         for (Friend friend : playerData.getFriends()) {
+            net.swofty.commons.presence.PresenceInfo friendPresence = PresenceStorage.get(friend.getUuid());
+            if (friendPresence == null || !friendPresence.isOnline()) continue;
+
             FriendData friendData = cachedFriendData.get(friend.getUuid());
+            if (friendData == null) {
+                friendData = getFriendData(friend.getUuid());
+                cachedFriendData.put(friend.getUuid(), friendData);
+            }
+
             if (friendData != null && friendData.getSettings().isJoinLeaveNotifications()) {
                 sendEvent(new FriendLeaveNotificationEvent(friend.getUuid(), playerUuid, playerName));
             }
@@ -464,6 +480,9 @@ public class FriendCache {
         String type = info.getServerType();
         String id = info.getServerId();
         if (type == null && id == null) return null;
+        if (id != null && id.matches("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")) {
+            return type; // hide raw UUIDs; show type only
+        }
         if (type != null && id != null) return type + " - " + id;
         return type != null ? type : id;
     }

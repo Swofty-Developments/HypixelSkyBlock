@@ -5,7 +5,7 @@ applicableTypes:
   - "FISHING_RODS"
 
 statistics:
-  CRIT_CHANCE:
+  CRITICAL_CHANCE:
     common: 10
     uncommon: 12
     rare: 14
@@ -13,7 +13,7 @@ statistics:
     legendary: 20
     mythic: 25
 
-  CRIT_DAMAGE:
+  CRITICAL_DAMAGE:
     common: 20
     uncommon: 30
     rare: 40

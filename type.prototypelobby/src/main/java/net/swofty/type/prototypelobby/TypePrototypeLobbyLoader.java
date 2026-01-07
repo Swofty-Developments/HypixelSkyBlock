@@ -62,6 +62,8 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         getHotbarItems().values().forEach(itemHandler::add);
 
         parkourManager = new LobbyParkourManager(getParkour());
+
+        LobbyTypeLoader.registerLobbyCommands();
     }
 
     @Override

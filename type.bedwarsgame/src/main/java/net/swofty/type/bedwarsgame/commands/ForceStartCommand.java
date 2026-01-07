@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "forcestart",
 		description = "Starts a bedwars game immediately.",
 		usage = "/forcestart",
-		permission = Rank.ADMIN,
+		permission = Rank.STAFF,
 		allowsConsole = false)
 public class ForceStartCommand extends HypixelCommand {
 

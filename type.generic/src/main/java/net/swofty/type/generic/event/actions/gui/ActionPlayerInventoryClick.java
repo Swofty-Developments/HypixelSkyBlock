@@ -61,9 +61,7 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
 				int slot = event.getSlot();
 				GUIItem item = gui.get(slot);
 
-				// Cancel click for empty slots - prevents item theft
 				if (item == null) {
-					event.setCancelled(true);
 					return;
 				}
 

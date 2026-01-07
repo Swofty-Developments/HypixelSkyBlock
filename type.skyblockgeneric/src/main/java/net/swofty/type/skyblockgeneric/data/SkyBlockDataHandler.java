@@ -362,6 +362,9 @@ public class SkyBlockDataHandler extends DataHandler {
         QUIVER("quiver", false, false, false,
                 DatapointQuiver.class, new DatapointQuiver("quiver")),
 
+        RACE_BEST_TIME("race_best_time", false, false, false, DatapointMapStringLong.class,
+                new DatapointMapStringLong("race_best_time")),
+
         ACCESSORY_BAG("accessory_bag", false, false, false,
                 DatapointAccessoryBag.class, new DatapointAccessoryBag("accessory_bag")),
 
@@ -436,6 +439,15 @@ public class SkyBlockDataHandler extends DataHandler {
 
         SOULFLOW("soulflow", false, false, false,
                 DatapointInteger.class, new DatapointInteger("soulflow", 0)),
+
+        COMMISSIONS_COMPLETED("commissions_completed", false, false, false,
+                DatapointInteger.class, new DatapointInteger("commissions_completed", 0)),
+
+        COMMISSIONS("commissions", false, false, false,
+                DatapointCommissions.class, new DatapointCommissions("commissions")),
+
+        HOTM("hotm", false, false, false,
+                DatapointHOTM.class, new DatapointHOTM("hotm")),
 
         KAT("kat", false, false, false,
                 DatapointKat.class, new DatapointKat("kat")),

@@ -4,12 +4,12 @@ import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.bedwars.*;
 import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager.PlayerLeaderboardState;
+import net.swofty.type.bedwarslobby.util.BedwarsNameFormatter;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.leaderboard.BedWarsLeaderboardAggregator;
 import net.swofty.type.generic.leaderboard.LeaderboardService;
-import net.swofty.type.generic.leaderboard.PlayerNameCache;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.NumberFormat;
@@ -64,7 +64,7 @@ public enum BedWarsLeaderboardHologram {
 		int maxNameWidth = 0;
 		if (alignment == BedwarsTextAlignment.BLOCK && !entries.isEmpty()) {
 			for (LeaderboardService.LeaderboardEntry entry : entries) {
-				String name = PlayerNameCache.getUsername(entry.playerUuid());
+				String name = HypixelPlayer.getDisplayName(entry.playerUuid());
 				maxNameWidth = Math.max(maxNameWidth, getMinecraftStringWidth(name));
 			}
 		}
@@ -74,7 +74,7 @@ public enum BedWarsLeaderboardHologram {
 		} else {
 			int displayRank = 1;
 			for (LeaderboardService.LeaderboardEntry entry : entries) {
-				String playerName = PlayerNameCache.getUsername(entry.playerUuid());
+				String playerName = HypixelPlayer.getDisplayName(entry.playerUuid());
 				String formattedScore = formatScore(entry.scoreAsLong());
 
 				String paddedName = playerName;

@@ -34,11 +34,11 @@ public class MissionTalkToMolbert extends SkyBlockMission implements LocationAss
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-
+		player.getMissionData().startMission(MissionCollectJungleLogs.class);
 	}
 
 	@Override
 	public Set<RegionType> getValidRegions() {
-		return Set.of(RegionType.JUNGLE_ISLAND);
+		return Set.of(RegionType.JUNGLE_ISLAND, RegionType.SAVANNA_WOODLAND);
 	}
 }

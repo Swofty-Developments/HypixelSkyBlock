@@ -97,10 +97,10 @@ public class PetComponent extends SkyBlockItemComponent {
 
         addPropertyInt("Magic Find", (baseStatistics.getOverall(ItemStatistic.MAGIC_FIND) +
                 getPerLevelStatistics(rarity).getOverall(ItemStatistic.MAGIC_FIND) * 100.0 * level), lore);
-        addPropertyPercent("Crit Damage", (baseStatistics.getOverall(ItemStatistic.CRIT_DAMAGE) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRIT_DAMAGE) * level), lore);
-        addPropertyPercent("Crit Chance", (baseStatistics.getOverall(ItemStatistic.CRIT_CHANCE) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRIT_CHANCE) * level), lore);
+        addPropertyPercent("Crit Damage", (baseStatistics.getOverall(ItemStatistic.CRITICAL_DAMAGE) +
+                getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRITICAL_DAMAGE) * level), lore);
+        addPropertyPercent("Crit Chance", (baseStatistics.getOverall(ItemStatistic.CRITICAL_CHANCE) +
+                getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRITICAL_CHANCE) * level), lore);
         addPropertyPercent("Health", (baseStatistics.getOverall(ItemStatistic.HEALTH) +
                 getPerLevelStatistics(rarity).getOverall(ItemStatistic.HEALTH) * level), lore);
         addPropertyInt("Strength", baseStatistics.getOverall(ItemStatistic.STRENGTH) +

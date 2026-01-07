@@ -1,0 +1,38 @@
+items:
+  - id: VACCINE_TALISMAN
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Vaccine Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 71408ede8b4f444015c59abd5cd32b8769de51881edabcc15abb6519f5b49
+      - id: SELLABLE
+        value: 22
+      - id: NOT_FINISHED_YET
+
+  - id: VACCINE_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Vaccine Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: e48ee92b9ef1dd9f6083dab113fe1708fde4f4039ad2f85f06f317cefe49f3ad
+      - id: SELLABLE
+        value: 100
+      - id: NOT_FINISHED_YET
+
+  - id: VACCINE_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Vaccine Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: c4332067f9fa1695c3d577c3ef264355bee161b5e3a301906a4f443b002b92fa
+      - id: SELLABLE
+        value: 500
+      - id: NOT_FINISHED_YET

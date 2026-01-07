@@ -1,0 +1,54 @@
+items:
+  - id: BEASTMASTER_CREST_COMMON
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Beastmaster Crest
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 53415667de3fb89c5f40c880c39e4971a0caa7f3a9d2c8f712ba37fadcee
+      - id: NOT_FINISHED_YET
+
+  - id: BEASTMASTER_CREST_UNCOMMON
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Beastmaster Crest
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 53415667de3fb89c5f40c880c39e4971a0caa7f3a9d2c8f712ba37fadcee
+      - id: NOT_FINISHED_YET
+
+  - id: BEASTMASTER_CREST_RARE
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Beastmaster Crest
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 53415667de3fb89c5f40c880c39e4971a0caa7f3a9d2c8f712ba37fadcee
+      - id: NOT_FINISHED_YET
+
+  - id: BEASTMASTER_CREST_EPIC
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Beastmaster Crest
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 53415667de3fb89c5f40c880c39e4971a0caa7f3a9d2c8f712ba37fadcee
+      - id: NOT_FINISHED_YET
+
+  - id: BEASTMASTER_CREST_LEGENDARY
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Beastmaster Crest
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 53415667de3fb89c5f40c880c39e4971a0caa7f3a9d2c8f712ba37fadcee
+      - id: NOT_FINISHED_YET

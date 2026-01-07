@@ -64,8 +64,11 @@ public class DialogueController {
     }
 
     private void handleLineSendingLoop(HypixelPlayer player, HypixelNPC.DialogueSet dialogueSet) {
-        npc.sendNPCMessage(player, dialogueSet.lines()[0]);
-
+        if (dialogueSet.sound() != null) {
+            npc.sendNPCMessage(player, dialogueSet.lines()[0], dialogueSet.sound());
+        } else {
+            npc.sendNPCMessage(player, dialogueSet.lines()[0]);
+        }
 
         String[] newLines = new String[dialogueSet.lines().length - 1];
         System.arraycopy(dialogueSet.lines(), 1, newLines, 0, dialogueSet.lines().length - 1);
@@ -86,6 +89,7 @@ public class DialogueController {
                 handleLineSendingLoop(player, HypixelNPC.DialogueSet.builder()
                         .key(dialogueSet.key())
                         .lines(newLines)
+                        .sound(dialogueSet.sound())
                         .build());
             }
         }).delay(TaskSchedule.seconds(2)).schedule();

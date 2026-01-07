@@ -130,6 +130,21 @@ public enum PlayerHolograms {
         externalPlayerHolograms.remove(hologram);
     }
 
+    public static void relocateExternalPlayerHologram(ExternalPlayerHologram hologram, Pos newPosition) {
+        List<HologramEntity> entities = externalPlayerHolograms.get(hologram);
+        if (entities == null) return;
+
+        double spacing = hologram.getSpacing();
+        double startY = hologram.text.length * spacing - spacing;
+        for (int i = 0; i < entities.size(); i++) {
+            HologramEntity entity = entities.get(i);
+            entity.setInstance(
+                    hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(),
+                    newPosition.add(0, startY - (i * spacing), 0)
+            );
+        }
+    }
+
     public static void removeExternalPlayerHologramsAt(HypixelPlayer player, Pos position) {
         List<ExternalPlayerHologram> toRemove = new ArrayList<>();
         for (ExternalPlayerHologram hologram : externalPlayerHolograms.keySet()) {

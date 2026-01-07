@@ -32,10 +32,23 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
     private static final ItemStack.Builder RECIPE_REQUIRED = ItemStackCreator.getStack("§cRecipe Required", Material.BARRIER, 1, "§7Add the items for a valid", "§7recipe in the crafting grid", "§7to the left!");
     private static final int[] CRAFT_SLOTS = new int[]{10, 11, 12, 19, 20, 21, 28, 29, 30};
     private static final int RESULT_SLOT = 23;
+    private int lastGridHash = 0;
+    private SkyBlockRecipe<?> lastParsedRecipe = null;
 
     public GUICrafting() {
         super("Craft Item", InventoryType.CHEST_6_ROW);
     }
+
+    private int computeGridHash(Inventory inv) { // TODO: Account for metadata
+        int h = 1;
+        for (int slot : CRAFT_SLOTS) {
+            ItemStack it = inv.getItemStack(slot);
+            h = 31 * h + it.material().id();
+            h = 31 * h + it.amount();
+        }
+        return h;
+    }
+
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
@@ -76,7 +89,16 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
     @Override
     public void refreshItems(HypixelPlayer player) {
         Inventory inventory = getInventory();
-        SkyBlockRecipe<?> recipe = SkyBlockRecipe.parseRecipe(getCurrentRecipe(inventory));
+        int gridHash = computeGridHash(inventory);
+        SkyBlockRecipe<?> recipe;
+
+        if (gridHash == lastGridHash) {
+            recipe = lastParsedRecipe;
+        } else {
+            lastGridHash = gridHash;
+            recipe = SkyBlockRecipe.parseRecipe(getCurrentRecipe(inventory));
+            lastParsedRecipe = recipe;
+        }
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 13, 34);
         border(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE));
@@ -129,8 +151,7 @@ public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
                 e.setCancelled(true);
                 if (isShift) {
                     player.addAndUpdateItem(craftedItem);
-                }
-                else {
+                } else {
                     p.getInventory().setCursorItem(craftedItem);
                 }
                 HypixelEventHandler.callCustomEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), finalRecipe));

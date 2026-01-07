@@ -13,7 +13,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "spawnholo",
         description = "Rank command",
         usage = "/spawnhologram <text>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class SpawnHologramCommand extends HypixelCommand {
     @Override

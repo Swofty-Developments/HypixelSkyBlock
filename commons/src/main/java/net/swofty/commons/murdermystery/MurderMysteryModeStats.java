@@ -27,6 +27,7 @@ public class MurderMysteryModeStats {
     private final Map<String, Long> detectiveWins;
     private final Map<String, Long> murdererWins;
     private final Map<String, Long> killsAsHero;
+    private final Map<String, Long> killsAsMurderer;
 
     // Infection mode stats
     private final Map<String, Long> survivorWins;
@@ -56,6 +57,7 @@ public class MurderMysteryModeStats {
         this.detectiveWins = new HashMap<>();
         this.murdererWins = new HashMap<>();
         this.killsAsHero = new HashMap<>();
+        this.killsAsMurderer = new HashMap<>();
         this.survivorWins = new HashMap<>();
         this.alphaWins = new HashMap<>();
         this.killsAsInfected = new HashMap<>();
@@ -71,7 +73,8 @@ public class MurderMysteryModeStats {
             Map<String, Long> wins, Map<String, Long> kills, Map<String, Long> gamesPlayed,
             Map<String, Long> bowKills, Map<String, Long> knifeKills, Map<String, Long> thrownKnifeKills,
             Map<String, Long> trapKills, Map<String, Long> detectiveWins, Map<String, Long> murdererWins,
-            Map<String, Long> killsAsHero, Map<String, Long> survivorWins, Map<String, Long> alphaWins,
+            Map<String, Long> killsAsHero, Map<String, Long> killsAsMurderer,
+            Map<String, Long> survivorWins, Map<String, Long> alphaWins,
             Map<String, Long> killsAsInfected, Map<String, Long> killsAsSurvivor, Map<String, Long> timeSurvived,
             Map<String, Long> quickestDetectiveWin, Map<String, Long> quickestMurdererWin,
             Map<String, Long> tokens,
@@ -86,6 +89,7 @@ public class MurderMysteryModeStats {
         this.detectiveWins = new HashMap<>(detectiveWins);
         this.murdererWins = new HashMap<>(murdererWins);
         this.killsAsHero = new HashMap<>(killsAsHero);
+        this.killsAsMurderer = new HashMap<>(killsAsMurderer);
         this.survivorWins = new HashMap<>(survivorWins);
         this.alphaWins = new HashMap<>(alphaWins);
         this.killsAsInfected = new HashMap<>(killsAsInfected);
@@ -180,6 +184,10 @@ public class MurderMysteryModeStats {
         return killsAsHero.getOrDefault(key(mode, period), 0L);
     }
 
+    public long getKillsAsMurderer(MurderMysteryLeaderboardMode mode, MurderMysteryLeaderboardPeriod period) {
+        return killsAsMurderer.getOrDefault(key(mode, period), 0L);
+    }
+
     public long getSurvivorWins(MurderMysteryLeaderboardMode mode, MurderMysteryLeaderboardPeriod period) {
         return survivorWins.getOrDefault(key(mode, period), 0L);
     }
@@ -259,6 +267,10 @@ public class MurderMysteryModeStats {
 
     public void addKillAsHero(MurderMysteryLeaderboardMode mode, MurderMysteryLeaderboardPeriod period) {
         addStat(killsAsHero, mode, period);
+    }
+
+    public void addKillAsMurderer(MurderMysteryLeaderboardMode mode, MurderMysteryLeaderboardPeriod period) {
+        addStat(killsAsMurderer, mode, period);
     }
 
     public void addSurvivorWin(MurderMysteryLeaderboardMode mode, MurderMysteryLeaderboardPeriod period) {
@@ -366,6 +378,12 @@ public class MurderMysteryModeStats {
         }
     }
 
+    public void recordKillAsMurderer(MurderMysteryLeaderboardMode mode) {
+        for (MurderMysteryLeaderboardPeriod period : MurderMysteryLeaderboardPeriod.values()) {
+            addKillAsMurderer(mode, period);
+        }
+    }
+
     public void recordSurvivorWin(MurderMysteryLeaderboardMode mode) {
         for (MurderMysteryLeaderboardPeriod period : MurderMysteryLeaderboardPeriod.values()) {
             addSurvivorWin(mode, period);
@@ -419,6 +437,7 @@ public class MurderMysteryModeStats {
             detectiveWins.remove(k);
             murdererWins.remove(k);
             killsAsHero.remove(k);
+            killsAsMurderer.remove(k);
             survivorWins.remove(k);
             alphaWins.remove(k);
             killsAsInfected.remove(k);
@@ -520,7 +539,7 @@ public class MurderMysteryModeStats {
     public MurderMysteryModeStats copy() {
         return new MurderMysteryModeStats(
                 wins, kills, gamesPlayed, bowKills, knifeKills, thrownKnifeKills, trapKills,
-                detectiveWins, murdererWins, killsAsHero, survivorWins, alphaWins,
+                detectiveWins, murdererWins, killsAsHero, killsAsMurderer, survivorWins, alphaWins,
                 killsAsInfected, killsAsSurvivor, timeSurvived,
                 quickestDetectiveWin, quickestMurdererWin,
                 tokens,

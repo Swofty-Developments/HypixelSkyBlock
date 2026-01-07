@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "displaymissiondata",
         description = "Displays the mission data of a player",
         usage = "/displaymissiondata",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class PrintMissionDataCommand extends HypixelCommand {
     @Override

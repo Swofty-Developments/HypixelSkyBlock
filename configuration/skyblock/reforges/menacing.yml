@@ -4,7 +4,7 @@ applicableTypes:
   - "EQUIPMENT"
 
 statistics:
-  CRIT_CHANCE:
+  CRITICAL_CHANCE:
     common: 1
     uncommon: 1
     rare: 1
@@ -12,7 +12,7 @@ statistics:
     legendary: 2
     mythic: 2
 
-  CRIT_DAMAGE:
+  CRITICAL_DAMAGE:
     common: 2
     uncommon: 3
     rare: 3

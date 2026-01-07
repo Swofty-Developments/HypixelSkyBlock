@@ -6,14 +6,7 @@ import net.swofty.commons.StringUtility;
 
 @Getter
 public enum Rank {
-    OWNER("§c[OWNER] ", true, NamedTextColor.RED),
-    ADMIN("§c[ADMIN] ", true, NamedTextColor.RED),
-    DEVELOPER("§d[DEV] ", true, NamedTextColor.LIGHT_PURPLE),
-    GAMEMASTER("§2[GM] ", true, NamedTextColor.DARK_GREEN),
-    MOD("§2[MOD] ", true, NamedTextColor.DARK_GREEN),
-    HELPER("§9[HELPER] ", true, NamedTextColor.BLUE),
-    JRHELPER("§9[JR HELPER] ", true, NamedTextColor.BLUE),
-    BT("§d[BT] ", false, NamedTextColor.LIGHT_PURPLE),
+    STAFF("§c[§6ዞ§c] ", true, NamedTextColor.RED),
     YOUTUBE("§c[§fYOUTUBE§c] ", false, NamedTextColor.RED),
     MVP_PLUS("§b[MVP§c+§b] ", false, NamedTextColor.AQUA),
     MVP("§b[MVP] ", false, NamedTextColor.AQUA),
@@ -30,6 +23,7 @@ public enum Rank {
         this.prefix = prefix;
         this.isStaff = isStaff;
         this.textColor = textColor;
+
     }
 
     public boolean isEqualOrHigherThan(Rank rank) {

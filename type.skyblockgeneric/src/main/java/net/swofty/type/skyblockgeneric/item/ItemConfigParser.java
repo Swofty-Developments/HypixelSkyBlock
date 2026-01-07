@@ -17,6 +17,7 @@ import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
 import net.swofty.type.skyblockgeneric.minion.MinionIngredient;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
+import net.swofty.type.skyblockgeneric.utility.RecipeParser;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -28,485 +29,635 @@ import java.util.Map;
 
 public class ItemConfigParser {
 	public static ConfigurableSkyBlockItem parseItem(Map<String, Object> config) {
-		String id = (String) config.get("id");
-		// Clean up the ID
-		id = id.replaceAll("[^a-zA-Z0-9_]", "");
+		SafeConfig safeConfig = SafeConfig.of(config);
 
-		Material material = Material.values().stream().filter(loopedMaterial -> {
-			return loopedMaterial.key().value().equalsIgnoreCase((String) config.get("material"));
-		}).findFirst().orElse(Material.AIR);
+		try {
+			String id = safeConfig.getString("id", "");
+			id = id.replaceAll("[^a-zA-Z0-9_]", "");
 
-		List<String> lore = (List<String>) config.get("lore");
-		Map<String, Double> statistics = new HashMap<>();
+			String materialName = safeConfig.getString("material", "AIR");
+			Material material = Material.values().stream()
+					.filter(m -> m.key().value().equalsIgnoreCase(materialName))
+					.findFirst()
+					.orElse(Material.AIR);
 
-		if (config.containsKey("default_statistics")) {
-			// Convert all the objects to doubles, noting they may be integers
-			for (Map.Entry<String, Object> entry : ((Map<String, Object>) config.get("default_statistics")).entrySet()) {
-				statistics.put(entry.getKey(), Double.parseDouble(entry.getValue().toString()));
+			List<String> lore = safeConfig.getList("lore", String.class);
+			Map<String, Double> statistics = new HashMap<>();
+
+			if (safeConfig.containsKey("default_statistics")) {
+				SafeConfig statsConfig = safeConfig.getNested("default_statistics");
+				for (String key : statsConfig.getKeys()) {
+					double value = statsConfig.getDouble(key, 0.0);
+					statistics.put(key.toUpperCase(), value);
+				}
 			}
-		}
 
-		ConfigurableSkyBlockItem item = new ConfigurableSkyBlockItem(id, material, lore, statistics);
+			ConfigurableSkyBlockItem item = new ConfigurableSkyBlockItem(id, material, lore, statistics);
 
-		List<Map<String, Object>> components = (List<Map<String, Object>>) config.get("components");
-		if (components == null) components = new ArrayList<>();
-		for (Map<String, Object> componentConfig : components) {
-			String componentId = (String) componentConfig.get("id");
-			SkyBlockItemComponent component = parseComponent(id, componentId, componentConfig);
-			if (component != null) {
-				// Mark all components from YAML as explicit
-				item.addComponent(component, true);
+			List<Map<String, Object>> components = safeConfig.getMapList("components");
+			for (Map<String, Object> componentConfig : components) {
+				SafeConfig componentSafeConfig = SafeConfig.of(componentConfig);
+				String componentId = componentSafeConfig.getString("id");
+				if (componentId != null) {
+					SkyBlockItemComponent component = parseComponent(id, componentId, componentConfig);
+					if (component != null) {
+						item.addComponent(component, true);
+					}
+				}
 			}
-		}
 
-		item.register();
-		return item;
+			item.register();
+			return item;
+
+		} catch (SafeConfig.ConfigParseException e) {
+			Logger.error("Failed to parse item: {}", e.getMessage());
+			return null;
+		} catch (Exception e) {
+			Logger.error("Unexpected error parsing item: {}", e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	private static @Nullable SkyBlockItemComponent parseComponent(String itemId, String id, Map<String, Object> config) {
-		return switch (id.toUpperCase()) {
-			case "ABILITY" -> {
-				List<String> abilities = (List<String>) config.get("abilities");
-				yield new AbilityComponent(abilities);
-			}
-			case "TALISMAN", "ACCESSORY" -> new AccessoryComponent();
-			case "ANVIL_COMBINABLE" -> {
-				String handlerId = (String) config.get("handler_id");
-				yield new AnvilCombinableComponent(handlerId);
-			}
-			case "ARMOR" -> new ArmorComponent();
-			case "ARROW" -> new ArrowComponent();
-			case "AUCTION_CATEGORY" -> {
-				String category = (String) config.get("category");
-				yield new AuctionCategoryComponent(category);
-			}
-			case "AXE" -> {
-				int axeStrength = config.containsKey("axe_strength") ? (int) config.get("axe_strength") : 1;
-				yield new AxeComponent(axeStrength);
-			}
-			case "BACKPACK" -> {
-				int rows = (int) config.get("rows");
-				String skullTexture = (String) config.get("skull-texture");
-				yield new BackpackComponent(rows, skullTexture);
-			}
-			case "BOW" -> {
-				String handlerId = (String) config.get("handler_id");
-				boolean shouldBeArrow = (boolean) config.getOrDefault("should-be-arrow", true);
-				yield new BowComponent(handlerId, shouldBeArrow);
-			}
-			case "CONSTANT_STATISTICS" -> new ConstantStatisticsComponent();
-			case "DEFAULT_CRAFTABLE" -> {
-				List<Map<String, Object>> recipes = (List<Map<String, Object>>) config.get("recipes");
-				boolean defaultCraftable = true;
-				if (config.containsKey("default-craftable")) {
-					defaultCraftable = (boolean) config.get("default-craftable");
-				}
-				CraftableComponent component = new CraftableComponent(recipes);
-				component.setDefaultCraftable(defaultCraftable);
-				yield component;
-			}
-			case "CUSTOM_DISPLAY_NAME" ->
-					new CustomDisplayNameComponent((item) -> config.get("display_name").toString());
-			case "DECORATION_HEAD" -> {
-				String texture = (String) config.get("texture");
-				yield new DecorationHeadComponent(texture);
-			}
-			case "DEFAULT_SOULBOUND" -> {
-				boolean coopAllowed = (boolean) config.get("coop_allowed");
-				yield new DefaultSoulboundComponent(coopAllowed);
-			}
-			case "DISABLE_ANIMATION" -> {
-				List<ItemAnimation> animations = (List<ItemAnimation>) config.get("disabled_animations");
-				yield new DisableAnimationComponent(animations);
-			}
-			case "SOULFLOW" -> {
-				int amount = (int) config.get("amount");
-				yield new SoulflowComponent(amount);
-			}
-			case "DRILL" -> new DrillComponent();
-			case "ABIPHONE" -> {
-				List<String> features = (List<String>) config.get("features");
-				List<AbiphoneComponent.AbiphoneFeature> abiphoneFeatures = new ArrayList<>();
-				for (String feature : features) {
-					abiphoneFeatures.add(AbiphoneComponent.AbiphoneFeature.valueOf(feature.toUpperCase().replace(" ", "_")));
-				}
-				int maxContacts = (int) config.getOrDefault("max_contacts", 7);
-				int maxDiscs = (int) config.getOrDefault("max_discs", 0);
-				yield new AbiphoneComponent(maxContacts, maxDiscs, abiphoneFeatures);
-			}
-            case "FISHING_ROD" -> new FishingRodComponent();
-			case "ENCHANTABLE" -> {
-				List<String> groups = (List<String>) config.getOrDefault("enchant_groups", List.of());
-				boolean showLores = (boolean) config.getOrDefault("show_lores", true);
-				yield new EnchantableComponent(
-						groups.stream().map(EnchantItemGroups::valueOf).toList(),
-						showLores
-				);
-			}
-			case "ENCHANTED" -> {
-				if (config.containsKey("recipe_type") && config.containsKey("item_id")) {
-					SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.valueOf((String) config.get("recipe_type"));
-					String baseMaterial = (String) config.get("item_id");
-					yield new EnchantedComponent(type, itemId, baseMaterial);
-				}
-				yield new EnchantedComponent();
-			}
-			case "EXTRA_RARITY" -> {
-				String display = (String) config.get("display");
-				yield new ExtraRarityComponent(display);
-			}
-			case "DUNGEON_ITEM" -> new ExtraRarityComponent("DUNGEON ITEM");
-			case "EXTRA_UNDER_NAME" -> {
-				if (config.containsKey("displays")) {
-					List<String> displays = (List<String>) config.get("displays");
-					yield new ExtraUnderNameComponent(displays);
-				} else {
-					String display = (String) config.get("display");
-					yield new ExtraUnderNameComponent(display);
-				}
-			}
-			case "GEMSTONE" -> {
-				List<String> gemstones = (List<String>) config.get("gemstones");
-				yield new GemstoneComponent(gemstones);
-			}
-			case "GEMSTONE_IMPL" -> {
-				GemRarity rarity = GemRarity.valueOf((String) config.get("rarity"));
-				Gemstone gemstone = Gemstone.valueOf((String) config.get("gemstone"));
-				String texture = (String) config.get("skull_texture");
-				yield new GemstoneImplComponent(rarity, gemstone, texture);
-			}
-			case "HOE" -> new HoeComponent();
-			case "HOT_POTATO" -> {
-				String type = (String) config.get("potato_type");
+		SafeConfig safeConfig = SafeConfig.of(config);
 
-				if (config.containsKey("appliable_items")) {
-					var appliableItems = (List<String>) config.get("appliable_items");
-					HashMap<ItemType, Integer> appliable = new HashMap<>();
-
-					for (var item : appliableItems) {
-						var split = item.split(":");
-
-						if (split.length != 2)
-							continue;
-
-						appliable.put(ItemType.valueOf(split[0]), Integer.parseInt(split[1]));
+		try {
+			return switch (id.toUpperCase()) {
+				case "ABILITY" -> {
+					List<String> abilities = safeConfig.getList("abilities", String.class);
+					yield new AbilityComponent(abilities);
+				}
+				case "TALISMAN", "ACCESSORY" -> new AccessoryComponent();
+				case "ANVIL_COMBINABLE" -> {
+					String handlerId = safeConfig.getString("handler_id");
+					yield new AnvilCombinableComponent(handlerId);
+				}
+				case "ARMOR" -> new ArmorComponent();
+				case "ARROW" -> new ArrowComponent();
+				case "AUCTION_CATEGORY" -> {
+					String category = safeConfig.getString("category");
+					yield new AuctionCategoryComponent(category);
+				}
+				case "AXE" -> {
+					int axeStrength = safeConfig.getInt("axe_strength", 1);
+					yield new AxeComponent(axeStrength);
+				}
+				case "BACKPACK" -> {
+					int rows = safeConfig.getInt("rows");
+					String skullTexture = safeConfig.getString("skull-texture");
+					yield new BackpackComponent(rows, skullTexture);
+				}
+				case "BOW" -> {
+					String handlerId = safeConfig.getString("handler_id");
+					boolean shouldBeArrow = safeConfig.getBoolean("should-be-arrow", true);
+					yield new BowComponent(handlerId, shouldBeArrow);
+				}
+				case "CONSTANT_STATISTICS" -> new ConstantStatisticsComponent();
+				case "DEFAULT_CRAFTABLE" -> {
+					List<Map<String, Object>> recipes = safeConfig.getMapList("recipes");
+					boolean defaultCraftable = safeConfig.getBoolean("default-craftable", true);
+					CraftableComponent component = new CraftableComponent(recipes);
+					component.setDefaultCraftable(defaultCraftable);
+					yield component;
+				}
+				case "CUSTOM_DISPLAY_NAME" ->
+						new CustomDisplayNameComponent((_) -> safeConfig.getString("display_name", ""));
+				case "DECORATION_HEAD" -> {
+					String texture = safeConfig.getString("texture");
+					yield new DecorationHeadComponent(texture);
+				}
+				case "DEFAULT_SOULBOUND" -> {
+					boolean coopAllowed = safeConfig.getBoolean("coop_allowed");
+					yield new DefaultSoulboundComponent(coopAllowed);
+				}
+				case "DISABLE_ANIMATION" -> {
+					List<ItemAnimation> animations = safeConfig.getList("disabled_animations", ItemAnimation.class);
+					yield new DisableAnimationComponent(animations);
+				}
+				case "SOULFLOW" -> {
+					int amount = safeConfig.getInt("amount");
+					yield new SoulflowComponent(amount);
+				}
+				case "DRILL" -> new DrillComponent();
+				case "ABIPHONE" -> {
+					List<String> features = safeConfig.getList("features", String.class);
+					List<AbiphoneComponent.AbiphoneFeature> abiphoneFeatures = new ArrayList<>();
+					for (String feature : features) {
+						abiphoneFeatures.add(AbiphoneComponent.AbiphoneFeature.valueOf(feature.toUpperCase().replace(" ", "_")));
 					}
-
-					yield new HotPotatoableComponent(PotatoType.valueOf(type), appliable);
+					int maxContacts = safeConfig.getInt("max_contacts", 7);
+					int maxDiscs = safeConfig.getInt("max_discs", 0);
+					yield new AbiphoneComponent(maxContacts, maxDiscs, abiphoneFeatures);
 				}
-
-				yield new HotPotatoableComponent(PotatoType.valueOf(type));
-			}
-			case "INTERACTABLE" -> {
-				String handlerId = (String) config.get("handler_id");
-				try {
-					yield new InteractableComponent(handlerId);
-				} catch (Exception e) {
-					Logger.error("Failed to parse InteractableComponent for " + handlerId);
-					yield null;
-				}
-			}
-			case "KAT" -> {
-				int reducedDays = (int) config.get("reduced_days");
-				yield new KatComponent(reducedDays);
-			}
-			case "LEATHER_COLOR" -> {
-				String r = (String) config.get("r");
-				String g = (String) config.get("g");
-				String b = (String) config.get("b");
-
-				Color color = new Color(Integer.parseInt(r), Integer.parseInt(g), Integer.parseInt(b));
-				yield new LeatherColorComponent(color);
-			}
-			case "MINION" -> {
-				String minionType = (String) config.get("minion_type");
-				String baseItem = (String) config.get("base_item");
-				boolean isByDefaultCraftable = (boolean) config.get("default_craftable");
-
-				List<String> ingredients = (List<String>) config.get("ingredients");
-				List<MinionIngredient> ingredientsMap = new ArrayList<>();
-
-				for (String ingredient : ingredients) {
-					String[] ingredientParts = ingredient.split(":");
-					ingredientsMap.add(new MinionIngredient(
-							ItemType.valueOf(ingredientParts[0]),
-							Integer.parseInt(ingredientParts[1])
-					));
-				}
-
-				yield new MinionComponent(minionType, baseItem, isByDefaultCraftable, ingredientsMap);
-			}
-			case "MINION_FUEL" -> {
-				double percentage = (double) config.get("fuel_percentage");
-				long lastTime = (int) config.get("last_time_ms");
-				yield new MinionFuelComponent(percentage, lastTime);
-			}
-			case "MINION_SHIPPING" -> {
-				double percentage = (double) config.get("percentage");
-				yield new MinionShippingComponent(percentage);
-			}
-			case "MINION_SKIN" -> {
-				String skinName = (String) config.get("name");
-				Map<String, Object> helmetConfig = (Map<String, Object>) config.get("helmet");
-				Map<String, Object> chestplateConfig = (Map<String, Object>) config.get("chestplate");
-				Map<String, Object> leggingsConfig = (Map<String, Object>) config.get("leggings");
-				Map<String, Object> bootsConfig = (Map<String, Object>) config.get("boots");
-
-				MinionSkinComponent.MinionArmorPiece helmet = helmetConfig != null ? MinionSkinComponent.MinionArmorPiece.fromConfig(helmetConfig) :
-						new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null);
-				MinionSkinComponent.MinionArmorPiece chestplate = chestplateConfig != null ? MinionSkinComponent.MinionArmorPiece.fromConfig(chestplateConfig) :
-						new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null);
-				MinionSkinComponent.MinionArmorPiece leggings = leggingsConfig != null ? MinionSkinComponent.MinionArmorPiece.fromConfig(leggingsConfig) :
-						new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null);
-				MinionSkinComponent.MinionArmorPiece boots = bootsConfig != null ? MinionSkinComponent.MinionArmorPiece.fromConfig(bootsConfig) :
-						new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null);
-
-				yield new MinionSkinComponent(skinName, helmet, chestplate, leggings, boots);
-			}
-			case "MINION_UPGRADE" -> {
-				double speedIncrease = (double) config.get("speed_increase");
-				yield new MinionUpgradeComponent(speedIncrease);
-			}
-			case "MUSEUM" -> {
-				String category = (String) config.get("museum_category");
-				yield new MuseumComponent(category);
-			}
-			case "NOT_FINISHED_YET" -> new NotFinishedYetComponent();
-			case "NEW_YEAR_CAKE" -> new NewYearCakeComponent();
-			case "LORE_UPDATE" -> {
-				boolean isAbsolute = (boolean) config.getOrDefault("is_absolute", false);
-				yield new LoreUpdateComponent(config.get("handler_id").toString(), isAbsolute);
-			}
-			case "PET_ITEM" -> new PetItemComponent();
-			case "PICKAXE" -> new PickaxeComponent();
-			case "PLACEABLE" -> {
-				String blockType = (String) config.get("block_type");
-				yield new PlaceableComponent(blockType);
-			}
-			case "PLACE_EVENT" -> {
-				String handlerId = (String) config.get("handler_id");
-				yield new PlaceEventComponent(handlerId);
-			}
-			case "POWER_STONE" -> new PowerStoneComponent();
-			case "QUIVER_DISPLAY" -> {
-				boolean shouldBeArrow = (boolean) config.get("should_be_arrow");
-				yield new QuiverDisplayComponent(shouldBeArrow);
-			}
-			case "REFORGABLE" -> {
-				String type = (String) config.get("reforge_type");
-				yield new ReforgableComponent(ReforgeType.valueOf(type));
-			}
-			case "RIGHT_CLICK_RECIPE" -> {
-				String recipeItem = (String) config.get("recipe_item");
-				yield new RightClickRecipeComponent(recipeItem);
-			}
-			case "RUNEABLE" -> {
-				String applicableTo = (String) config.get("applicable_to");
-				yield new RuneableComponent(RuneableComponent.RuneApplicableTo.valueOf(applicableTo));
-			}
-			case "CUSTOM_DROP" -> {
-				List<Map<String, Object>> rulesConfig = (List<Map<String, Object>>) config.get("rules");
-				List<CustomDropComponent.DropRule> rules = new ArrayList<>();
-
-				for (Map<String, Object> ruleConfig : rulesConfig) {
-					// Parse conditions
-					Map<String, Object> conditionsConfig = (Map<String, Object>) ruleConfig.get("conditions");
-					CustomDropComponent.DropConditions conditions = CustomDropComponent.parseDropConditions(conditionsConfig);
-
-					// Parse drops
-					List<Map<String, Object>> dropsConfig = (List<Map<String, Object>>) ruleConfig.get("drops");
-					List<CustomDropComponent.Drop> drops = new ArrayList<>();
-
-					for (Map<String, Object> dropConfig : dropsConfig) {
-						String itemName = (String) dropConfig.get("item");
-						ItemType itemType = ItemType.valueOf(itemName);
-						double chance = ((Number) dropConfig.get("chance")).doubleValue();
-						String amount = dropConfig.get("amount").toString();
-
-						drops.add(new CustomDropComponent.Drop(itemType, chance, amount));
-					}
-
-					rules.add(new CustomDropComponent.DropRule(conditions, drops));
-				}
-
-				yield new CustomDropComponent(rules);
-			}
-			case "RUNE" -> {
-				int level = (int) config.get("required_level");
-				String color = (String) config.get("color");
-				String applicableTo = (String) config.get("applicable_to");
-				String texture = (String) config.get("skull_texture");
-				yield new RuneComponent(level, color, applicableTo, texture);
-			}
-			case "SACK" -> {
-				List<String> items = (List<String>) config.get("valid_items");
-				int capacity = (int) config.get("max_capacity");
-				yield new SackComponent(items, capacity);
-			}
-			case "SELLABLE" -> {
-				Object value = config.get("value");
-				if (value instanceof Double) {
-					yield new SellableComponent((double) value);
-				} else if (value instanceof Integer) {
-					yield new SellableComponent((int) value);
-				}
-				yield new SellableComponent(1);
-			}
-			case "SERVER_ORB" -> {
-				String handlerId = (String) config.get("handler_id");
-				List<String> blockStrings = ((List<String>) config.getOrDefault("valid_blocks", List.of())).stream().map(
-						String::toLowerCase
-				).toList();
-				List<Material> materials = Material.values().stream()
-						.filter(material -> blockStrings.contains(material.key().value().toLowerCase()))
-						.toList();
-
-				yield new ServerOrbComponent(handlerId, materials);
-			}
-			case "SHORT_BOW" -> {
-				String handlerId = (String) config.get("handler_id");
-				float cooldown = (float) config.get("cooldown");
-				boolean shouldBeArrow = (boolean) config.getOrDefault("should-be-arrow", true);
-				yield new ShortBowComponent(cooldown, handlerId, shouldBeArrow);
-			}
-			case "SHOVEL" -> new ShovelComponent();
-			case "SKILLABLE_MINE" -> {
-				String category = (String) config.get("category");
-				double value = (double) config.get("mining_value");
-				yield new SkillableMineComponent(category, value);
-			}
-			case "SKULL_HEAD" -> new SkullHeadComponent((item) -> config.get("texture").toString());
-			case "STANDARD_ITEM" -> {
-				String type = (String) config.get("standard_item_type");
-				yield new StandardItemComponent(type);
-			}
-			case "CUSTOM_STATISTICS" -> {
-				String handlerId = (String) config.get("handler_id");
-				yield new CustomStatisticsComponent(handlerId);
-			}
-			case "TIERED_TALISMAN" -> {
-				ItemType baseTier = ItemType.valueOf((String) config.get("base_tier"));
-				int tier = (int) config.get("tier");
-				yield new TieredTalismanComponent(baseTier, tier);
-			}
-			case "TRACKED_UNIQUE" -> new TrackedUniqueComponent();
-			case "BREWING_INGREDIENT" -> {
-				int brewingTime = ((Number) config.getOrDefault("brewing_time_seconds", 20)).intValue();
-				String effect = (String) config.getOrDefault("effect", "SPEED");
-				int duration = ((Number) config.getOrDefault("effect_duration", 180)).intValue();
-				int amplifier = ((Number) config.getOrDefault("effect_amplifier", 0)).intValue();
-				int alchemyXp = ((Number) config.getOrDefault("alchemy_xp", 0)).intValue();
-				yield new BrewingIngredientComponent(brewingTime, effect, duration, amplifier, alchemyXp);
-			}
-			case "POTION_DATA" -> {
-				String effect = (String) config.getOrDefault("effect", "SPEED");
-				int level = ((Number) config.getOrDefault("level", 1)).intValue();
-				int duration = ((Number) config.getOrDefault("base_duration", 180)).intValue();
-				boolean splash = (Boolean) config.getOrDefault("splash", false);
-				boolean extended = (Boolean) config.getOrDefault("extended", false);
-				yield new PotionDataComponent(effect, level, duration, splash, extended);
-			}
-			case "TRAVEL_SCROLL" -> {
-				String scrollType = (String) config.get("scroll_type");
-				yield new TravelScrollComponent(scrollType);
-			}
-			case "PET" -> {
-				String petName = (String) config.get("pet_name");
-
-				// Parse george price
-				Map<String, Integer> georgePriceMap = (Map<String, Integer>) config.get("george_price");
-				RarityValue<Integer> georgePrice = new RarityValue<>(
-						georgePriceMap.get("common"),
-						georgePriceMap.get("uncommon"),
-						georgePriceMap.get("rare"),
-						georgePriceMap.get("epic"),
-						georgePriceMap.get("legendary"),
-						georgePriceMap.get("rest")
-				);
-
-				// Parse kat upgrades if present
-				RarityValue<KatUpgrade> katUpgrades = null;
-				if (config.containsKey("kat_upgrades")) {
-					Map<String, Map<String, Object>> katUpgradeMap = (Map<String, Map<String, Object>>) config.get("kat_upgrades");
-					katUpgrades = new RarityValue<>(
-							parseKatUpgrade(katUpgradeMap.get("common")),
-							parseKatUpgrade(katUpgradeMap.get("uncommon")),
-							parseKatUpgrade(katUpgradeMap.get("rare")),
-							parseKatUpgrade(katUpgradeMap.get("epic")),
-							parseKatUpgrade(katUpgradeMap.get("legendary")),
-							parseKatUpgrade(katUpgradeMap.get("rest"))
+				case "ENCHANTABLE" -> {
+					List<String> groups = safeConfig.getList("enchant_groups", String.class);
+					boolean showLores = safeConfig.getBoolean("show_lores", true);
+					yield new EnchantableComponent(
+							groups.stream().map(EnchantItemGroups::valueOf).toList(),
+							showLores
 					);
 				}
+				case "FISHING_ROD" -> new FishingRodComponent();
+				case "ENCHANTED" -> {
+					if (safeConfig.containsKey("recipes")) {
+						List<Map<String, Object>> recipeConfigs = safeConfig.getMapList("recipes");
+						List<SkyBlockRecipe<?>> recipes = new ArrayList<>();
 
-				// Parse base statistics
-				Map<String, Double> baseStatsMap = (Map<String, Double>) config.get("base_statistics");
-				ItemStatistics.Builder baseBuilder = ItemStatistics.builder();
-				baseStatsMap.forEach((stat, value) ->
-						baseBuilder.withBase(ItemStatistic.valueOf(stat.toUpperCase()), value)
-				);
-				ItemStatistics baseStatistics = baseBuilder.build();
-
-				// Parse per level statistics
-				Map<String, Object> perLevelStatsMap = (Map<String, Object>) config.get("per_level_statistics");
-				Map<Rarity, ItemStatistics> perLevelStatistics = new HashMap<>();
-				for (Map.Entry<String, Object> entry : perLevelStatsMap.entrySet()) {
-					String rarity = entry.getKey();
-					ItemStatistics.Builder rarityBuilder = ItemStatistics.builder();
-					try {
-						Map<String, Double> rarityStatsMap = (Map<String, Double>) entry.getValue();
-						rarityBuilder = ItemStatistics.builder();
-						for (Map.Entry<String, Double> e : rarityStatsMap.entrySet()) {
-							String stat = e.getKey();
-							Double value = e.getValue();
-							rarityBuilder.withBase(ItemStatistic.valueOf(stat.toUpperCase()), value);
+						for (Map<String, Object> recipeConfig : recipeConfigs) {
+							SkyBlockRecipe<?> recipe = RecipeParser.parseRecipe(recipeConfig);
+							recipes.add(recipe);
 						}
-					} catch (ClassCastException e) {
-						// Per level statistics is a map with an Integer, so we need to convert it to a double
-						Map<String, Integer> rarityStatsMap = (Map<String, Integer>) entry.getValue();
-						rarityBuilder = ItemStatistics.builder();
-						for (Map.Entry<String, Integer> mapEntry : rarityStatsMap.entrySet()) {
-							String stat = mapEntry.getKey();
-							Integer value = mapEntry.getValue();
-							rarityBuilder.withBase(ItemStatistic.valueOf(stat.toUpperCase()), Double.valueOf(value));
+
+						yield new EnchantedComponent(recipes);
+					}
+					else if (safeConfig.containsKey("recipe_type") && safeConfig.containsKey("item_id")) {
+						SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.valueOf(safeConfig.getString("recipe_type"));
+						String baseMaterial = safeConfig.getString("item_id");
+						yield new EnchantedComponent(type, itemId, baseMaterial);
+					}
+					else {
+						yield new EnchantedComponent();
+					}
+				}
+				case "EXTRA_RARITY" -> {
+					String display = safeConfig.getString("display");
+					yield new ExtraRarityComponent(display);
+				}
+				case "DUNGEON_ITEM" -> new ExtraRarityComponent("DUNGEON ITEM");
+				case "EXTRA_UNDER_NAME" -> {
+					if (safeConfig.containsKey("displays")) {
+						List<String> displays = safeConfig.getList("displays", String.class);
+						yield new ExtraUnderNameComponent(displays);
+					} else {
+						String display = safeConfig.getString("display");
+						yield new ExtraUnderNameComponent(display);
+					}
+				}
+				case "GEMSTONE" -> {
+					List<Map<String, Object>> gemstoneEntries = safeConfig.getMapList("gemstone_slots");
+					List<GemstoneComponent.GemstoneSlot> gemstoneSlots = parseGemstoneEntries(gemstoneEntries);
+					yield new GemstoneComponent(gemstoneSlots);
+				}
+				case "GEMSTONE_IMPL" -> {
+					GemRarity rarity = safeConfig.getEnum("rarity", GemRarity.class);
+					Gemstone gemstone = safeConfig.getEnum("gemstone", Gemstone.class);
+					String texture = safeConfig.getString("skull_texture");
+					yield new GemstoneImplComponent(rarity, gemstone, texture);
+				}
+				case "HOE" -> new HoeComponent();
+				case "HOT_POTATO" -> {
+					String type = safeConfig.getString("potato_type");
+					PotatoType potatoType = PotatoType.valueOf(type);
+
+					if (safeConfig.containsKey("appliable_items")) {
+						List<String> appliableItems = safeConfig.getList("appliable_items", String.class);
+						HashMap<ItemType, Integer> appliable = new HashMap<>();
+
+						for (String item : appliableItems) {
+							String[] split = item.split(":");
+
+							if (split.length != 2)
+								continue;
+
+							appliable.put(ItemType.valueOf(split[0]), Integer.parseInt(split[1]));
+						}
+
+						yield new HotPotatoableComponent(potatoType, appliable);
+					}
+
+					yield new HotPotatoableComponent(potatoType);
+				}
+				case "INTERACTABLE" -> {
+					String handlerId = safeConfig.getString("handler_id");
+					try {
+						yield new InteractableComponent(handlerId);
+					} catch (Exception e) {
+						Logger.error("Failed to parse InteractableComponent for " + handlerId);
+						yield null;
+					}
+				}
+				case "KAT" -> {
+					int reducedDays = safeConfig.getInt("reduced_days");
+					yield new KatComponent(reducedDays);
+				}
+				case "LEATHER_COLOR" -> {
+					String r = safeConfig.getString("r");
+					String g = safeConfig.getString("g");
+					String b = safeConfig.getString("b");
+
+					if (r == null || g == null || b == null) {
+						yield null;
+					}
+
+					Color color = new Color(Integer.parseInt(r), Integer.parseInt(g), Integer.parseInt(b));
+					yield new LeatherColorComponent(color);
+				}
+				case "MINION" -> {
+					String minionType = safeConfig.getString("minion_type");
+					String baseItem = safeConfig.getString("base_item");
+					boolean isByDefaultCraftable = safeConfig.getBoolean("default_craftable");
+
+					List<String> ingredients = safeConfig.getList("ingredients", String.class);
+					List<MinionIngredient> ingredientsMap = new ArrayList<>();
+
+					for (String ingredient : ingredients) {
+						String[] ingredientParts = ingredient.split(":");
+						ingredientsMap.add(new MinionIngredient(
+								ItemType.valueOf(ingredientParts[0]),
+								Integer.parseInt(ingredientParts[1])
+						));
+					}
+
+					yield new MinionComponent(minionType, baseItem, isByDefaultCraftable, ingredientsMap);
+				}
+				case "MINION_FUEL" -> {
+					double percentage = safeConfig.getDouble("fuel_percentage");
+					long lastTime = safeConfig.getInt("last_time_ms");
+					yield new MinionFuelComponent(percentage, lastTime);
+				}
+				case "MINION_SHIPPING" -> {
+					double percentage = safeConfig.getDouble("percentage");
+					yield new MinionShippingComponent(percentage);
+				}
+				case "MINION_SKIN" -> {
+					String skinName = safeConfig.getString("name");
+					SafeConfig helmetConfig = safeConfig.getNested("helmet");
+					SafeConfig chestplateConfig = safeConfig.getNested("chestplate");
+					SafeConfig leggingsConfig = safeConfig.getNested("leggings");
+					SafeConfig bootsConfig = safeConfig.getNested("boots");
+
+					MinionSkinComponent.MinionArmorPiece helmet = helmetConfig.getKeys().isEmpty() ?
+							new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null) :
+							MinionSkinComponent.MinionArmorPiece.fromConfig(helmetConfig.config);
+					MinionSkinComponent.MinionArmorPiece chestplate = chestplateConfig.getKeys().isEmpty() ?
+							new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null) :
+							MinionSkinComponent.MinionArmorPiece.fromConfig(chestplateConfig.config);
+					MinionSkinComponent.MinionArmorPiece leggings = leggingsConfig.getKeys().isEmpty() ?
+							new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null) :
+							MinionSkinComponent.MinionArmorPiece.fromConfig(leggingsConfig.config);
+					MinionSkinComponent.MinionArmorPiece boots = bootsConfig.getKeys().isEmpty() ?
+							new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null) :
+							MinionSkinComponent.MinionArmorPiece.fromConfig(bootsConfig.config);
+
+					yield new MinionSkinComponent(skinName, helmet, chestplate, leggings, boots);
+				}
+				case "MINION_UPGRADE" -> {
+					double speedIncrease = safeConfig.getDouble("speed_increase");
+					yield new MinionUpgradeComponent(speedIncrease);
+				}
+				case "MUSEUM" -> {
+					String category = safeConfig.getString("museum_category", null);
+					String gameStage = safeConfig.getString("game_stage", null);
+					int donationXp = safeConfig.getInt("donation_xp", 0);
+
+					Map<String, String> parent = null;
+					if (safeConfig.containsKey("parent")) {
+						Map<String, Object> parentMap = safeConfig.getMap("parent");
+						if (!parentMap.isEmpty()) {
+							parent = new java.util.LinkedHashMap<>();
+							for (Map.Entry<String, Object> entry : parentMap.entrySet()) {
+								parent.put(entry.getKey(), entry.getValue().toString());
+							}
 						}
 					}
-					perLevelStatistics.put(Rarity.valueOf(rarity.toUpperCase()), rarityBuilder.build());
+
+					List<String> mappedItemIds = null;
+					if (safeConfig.containsKey("mapped_item_ids")) {
+						mappedItemIds = safeConfig.getList("mapped_item_ids", String.class);
+					}
+
+					yield new MuseumComponent(category, gameStage, donationXp, parent, mappedItemIds);
 				}
+				case "NOT_FINISHED_YET" -> new NotFinishedYetComponent();
+				case "NEW_YEAR_CAKE" -> new NewYearCakeComponent();
+				case "LORE_UPDATE" -> {
+					boolean isAbsolute = safeConfig.getBoolean("is_absolute", false);
+					String handlerId = safeConfig.getString("handler_id", "");
+					yield new LoreUpdateComponent(handlerId, isAbsolute);
+				}
+				case "PET_ITEM" -> new PetItemComponent();
+				case "PICKAXE" -> new PickaxeComponent();
+				case "PLACEABLE" -> {
+					String blockType = safeConfig.getString("block_type");
+					yield new PlaceableComponent(blockType);
+				}
+				case "PLACE_EVENT" -> {
+					String handlerId = safeConfig.getString("handler_id");
+					yield new PlaceEventComponent(handlerId);
+				}
+				case "POWER_STONE" -> new PowerStoneComponent();
+				case "QUIVER_DISPLAY" -> {
+					boolean shouldBeArrow = safeConfig.getBoolean("should_be_arrow");
+					yield new QuiverDisplayComponent(shouldBeArrow);
+				}
+				case "REFORGABLE" -> {
+					String type = safeConfig.getString("reforge_type");
+					yield new ReforgableComponent(ReforgeType.valueOf(type));
+				}
+				case "RIGHT_CLICK_RECIPE" -> {
+					String recipeItem = safeConfig.getString("recipe_item");
+					yield new RightClickRecipeComponent(recipeItem);
+				}
+				case "RUNEABLE" -> {
+					String applicableTo = safeConfig.getString("applicable_to");
+					yield new RuneableComponent(RuneableComponent.RuneApplicableTo.valueOf(applicableTo));
+				}
+				case "CUSTOM_DROP" -> {
+					List<Map<String, Object>> rulesConfig = safeConfig.getMapList("rules");
+					List<CustomDropComponent.DropRule> rules = new ArrayList<>();
 
-				// Parse other fields
-				Particle particleId = Particle.fromId((Integer) config.get("particle"));
-				String skillCategory = (String) config.get("skill_category");
-				String skullTexture = (String) config.get("skull_texture");
-				String handlerId = (String) config.get("handler_id");
+					for (Map<String, Object> ruleConfig : rulesConfig) {
+						SafeConfig ruleSafeConfig = SafeConfig.of(ruleConfig);
 
-				yield new PetComponent(
-						petName,
-						georgePrice,
-						katUpgrades,
-						baseStatistics,
-						perLevelStatistics,
-						particleId,
-						skillCategory,
-						skullTexture,
-						handlerId
-				);
-			}
-			default -> throw new IllegalArgumentException("Unknown component type: " + id);
-		};
+						Map<String, Object> conditionsConfig = ruleSafeConfig.getMap("conditions");
+						CustomDropComponent.DropConditions conditions = !conditionsConfig.isEmpty()
+								? CustomDropComponent.parseDropConditions(conditionsConfig)
+								: null;
+
+						List<Map<String, Object>> dropsConfig = ruleSafeConfig.getMapList("drops");
+						List<CustomDropComponent.Drop> drops = new ArrayList<>();
+
+						for (Map<String, Object> dropConfig : dropsConfig) {
+							Object itemObj = dropConfig.get("item");
+							String itemName;
+							if (itemObj instanceof String) {
+								itemName = (String) itemObj;
+							} else {
+								itemName = itemObj.toString();
+							}
+
+							ItemType itemType = ItemType.valueOf(itemName.toUpperCase().replace(" ", "_"));
+
+							Object chanceObj = dropConfig.get("chance");
+							double chance;
+							if (chanceObj instanceof Number) {
+								chance = ((Number) chanceObj).doubleValue();
+							} else if (chanceObj instanceof String) {
+								chance = Double.parseDouble((String) chanceObj);
+							} else {
+								chance = 1.0;
+							}
+
+							Object amountObj = dropConfig.get("amount");
+							String amount;
+							if (amountObj instanceof String) {
+								amount = (String) amountObj;
+							} else if (amountObj instanceof Number) {
+								amount = amountObj.toString();
+							} else {
+								amount = "1";
+							}
+
+							drops.add(new CustomDropComponent.Drop(itemType, chance, amount));
+						}
+
+						rules.add(new CustomDropComponent.DropRule(conditions, drops));
+					}
+
+					yield new CustomDropComponent(rules);
+				}
+				case "RUNE" -> {
+					int level = safeConfig.getInt("required_level");
+					String color = safeConfig.getString("color");
+					String applicableTo = safeConfig.getString("applicable_to");
+					String texture = safeConfig.getString("skull_texture");
+					yield new RuneComponent(level, color, applicableTo, texture);
+				}
+				case "SACK" -> {
+					List<String> items = safeConfig.getList("valid_items", String.class);
+					int capacity = safeConfig.getInt("max_capacity");
+					yield new SackComponent(items, capacity);
+				}
+				case "SELLABLE" -> {
+					double value = safeConfig.getDouble("value", 1.0);
+					yield new SellableComponent(value);
+				}
+				case "SERVER_ORB" -> {
+					String handlerId = safeConfig.getString("handler_id");
+					List<String> blockStrings = safeConfig.getList("valid_blocks", String.class);
+					List<Material> materials = Material.values().stream()
+							.filter(material -> blockStrings.contains(material.key().value().toLowerCase()))
+							.toList();
+
+					yield new ServerOrbComponent(handlerId, materials);
+				}
+				case "SHORT_BOW" -> {
+					String handlerId = safeConfig.getString("handler_id");
+					float cooldown = (float) safeConfig.getDouble("cooldown");
+					boolean shouldBeArrow = safeConfig.getBoolean("should-be-arrow", true);
+					yield new ShortBowComponent(cooldown, handlerId, shouldBeArrow);
+				}
+				case "SHOVEL" -> new ShovelComponent();
+				case "SKILLABLE_MINE" -> {
+					String category = safeConfig.getString("category");
+					double value = safeConfig.getDouble("mining_value");
+					yield new SkillableMineComponent(category, value);
+				}
+				case "SKULL_HEAD" -> new SkullHeadComponent((item) -> safeConfig.getString("texture", ""));
+				case "STANDARD_ITEM" -> {
+					String type = safeConfig.getString("standard_item_type");
+					yield new StandardItemComponent(type);
+				}
+				case "CUSTOM_STATISTICS" -> {
+					String handlerId = safeConfig.getString("handler_id");
+					yield new CustomStatisticsComponent(handlerId);
+				}
+				case "TRACKED_UNIQUE" -> new TrackedUniqueComponent();
+				case "BREWING_INGREDIENT" -> {
+					int brewingTime = safeConfig.getInt("brewing_time_seconds", 20);
+					String effect = safeConfig.getString("effect", "SPEED");
+					int duration = safeConfig.getInt("effect_duration", 180);
+					int amplifier = safeConfig.getInt("effect_amplifier", 0);
+					int alchemyXp = safeConfig.getInt("alchemy_xp", 0);
+					yield new BrewingIngredientComponent(brewingTime, effect, duration, amplifier, alchemyXp);
+				}
+				case "POTION_DATA" -> {
+					String effect = safeConfig.getString("effect", "SPEED");
+					int level = safeConfig.getInt("level", 1);
+					int duration = safeConfig.getInt("base_duration", 180);
+					boolean splash = safeConfig.getBoolean("splash", false);
+					boolean extended = safeConfig.getBoolean("extended", false);
+					yield new PotionDataComponent(effect, level, duration, splash, extended);
+				}
+				case "TRAVEL_SCROLL" -> {
+					String scrollType = safeConfig.getString("scroll_type");
+					yield new TravelScrollComponent(scrollType);
+				}
+				case "PET" -> {
+					String petName = safeConfig.getString("pet_name");
+
+					// Parse george price
+					SafeConfig georgePriceConfig = safeConfig.getNested("george_price");
+					RarityValue<Integer> georgePrice = new RarityValue<>(
+							georgePriceConfig.getInt("common"),
+							georgePriceConfig.getInt("uncommon"),
+							georgePriceConfig.getInt("rare"),
+							georgePriceConfig.getInt("epic"),
+							georgePriceConfig.getInt("legendary"),
+							georgePriceConfig.getInt("rest")
+					);
+
+					// Parse kat upgrades if present
+					RarityValue<KatUpgrade> katUpgrades = null;
+					if (safeConfig.containsKey("kat_upgrades")) {
+						SafeConfig katUpgradeConfig = safeConfig.getNested("kat_upgrades");
+						katUpgrades = new RarityValue<>(
+								parseKatUpgrade(katUpgradeConfig.getNested("common").config),
+								parseKatUpgrade(katUpgradeConfig.getNested("uncommon").config),
+								parseKatUpgrade(katUpgradeConfig.getNested("rare").config),
+								parseKatUpgrade(katUpgradeConfig.getNested("epic").config),
+								parseKatUpgrade(katUpgradeConfig.getNested("legendary").config),
+								parseKatUpgrade(katUpgradeConfig.getNested("rest").config)
+						);
+					}
+
+					// Parse base statistics
+					SafeConfig baseStatsConfig = safeConfig.getNested("base_statistics");
+					ItemStatistics.Builder baseBuilder = ItemStatistics.builder();
+					for (String statKey : baseStatsConfig.getKeys()) {
+						double value = baseStatsConfig.getDouble(statKey);
+						baseBuilder.withBase(ItemStatistic.valueOf(statKey.toUpperCase()), value);
+					}
+					ItemStatistics baseStatistics = baseBuilder.build();
+
+					// Parse per level statistics
+					SafeConfig perLevelStatsConfig = safeConfig.getNested("per_level_statistics");
+					Map<Rarity, ItemStatistics> perLevelStatistics = new HashMap<>();
+					for (String rarityKey : perLevelStatsConfig.getKeys()) {
+						SafeConfig rarityStatsConfig = perLevelStatsConfig.getNested(rarityKey);
+						ItemStatistics.Builder rarityBuilder = ItemStatistics.builder();
+
+						for (String statKey : rarityStatsConfig.getKeys()) {
+							double value = rarityStatsConfig.getDouble(statKey);
+							rarityBuilder.withBase(ItemStatistic.valueOf(statKey.toUpperCase()), value);
+						}
+
+						perLevelStatistics.put(Rarity.valueOf(rarityKey.toUpperCase()), rarityBuilder.build());
+					}
+
+					// Parse other fields
+					int particleIdValue = safeConfig.getInt("particle");
+					Particle particleId = Particle.fromId(particleIdValue);
+					String skillCategory = safeConfig.getString("skill_category");
+					String skullTexture = safeConfig.getString("skull_texture");
+					String handlerId = safeConfig.getString("handler_id");
+
+					yield new PetComponent(
+							petName,
+							georgePrice,
+							katUpgrades,
+							baseStatistics,
+							perLevelStatistics,
+							particleId,
+							skillCategory,
+							skullTexture,
+							handlerId
+					);
+				}
+				case "UPGRADES" -> {
+					List<Map<String, Object>> levelsConfig = safeConfig.getMapList("levels");
+					List<UpgradesComponent.UpgradeLevel> levels = new ArrayList<>();
+
+					for (Map<String, Object> levelConfig : levelsConfig) {
+						SafeConfig levelSafeConfig = SafeConfig.of(levelConfig);
+
+						int level = levelSafeConfig.getInt("level");
+						List<Map<String, Object>> requirementsConfig = levelSafeConfig.getMapList("requirements");
+						List<UpgradesComponent.UpgradeRequirement> requirements = new ArrayList<>();
+
+						for (Map<String, Object> reqConfig : requirementsConfig) {
+							SafeConfig reqSafeConfig = SafeConfig.of(reqConfig);
+
+							String typeStr = reqSafeConfig.getString("type");
+							UpgradesComponent.UpgradeRequirement.RequirementType type =
+									UpgradesComponent.UpgradeRequirement.RequirementType.valueOf(typeStr.toUpperCase());
+
+							Object requirementData;
+
+							switch (type) {
+								case ESSENCE -> {
+									String essence = reqSafeConfig.getString("essence");
+									int amount = reqSafeConfig.getInt("amount");
+									requirementData = new UpgradesComponent.UpgradeRequirement.EssenceRequirement(essence, amount);
+								}
+								case ITEM -> {
+									String itemName = reqSafeConfig.getString("item");
+									ItemType itemType = ItemType.valueOf(itemName);
+									int amount = reqSafeConfig.getInt("amount");
+									requirementData = new UpgradesComponent.UpgradeRequirement.ItemRequirement(itemType, amount);
+								}
+								default -> throw new IllegalArgumentException("Unknown requirement type: " + type);
+							}
+
+							requirements.add(new UpgradesComponent.UpgradeRequirement(type, requirementData));
+						}
+
+						levels.add(new UpgradesComponent.UpgradeLevel(level, requirements));
+					}
+
+					yield new UpgradesComponent(levels);
+				}
+				default -> throw new IllegalArgumentException("Unknown component type: " + id);
+			};
+		} catch (SafeConfig.ConfigParseException e) {
+			Logger.error("Failed to parse component {} for item {}: {}", id, itemId, e.getMessage());
+			return null;
+		} catch (Exception e) {
+			Logger.error("Unexpected error parsing component {} for item {}: {}", id, itemId, e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	private static KatUpgrade parseKatUpgrade(Map<String, Object> config) {
-		if (config == null) return null;
+		if (config == null || config.isEmpty()) return null;
 
-		Long time = ((Number) config.get("time")).longValue();
-		Integer coins = (Integer) config.get("coins");
+		SafeConfig safeConfig = SafeConfig.of(config);
+		Long time = safeConfig.getLong("time");
+		Integer coins = safeConfig.getInt("coins");
 
-		if (config.containsKey("item")) {
-			String item = (String) config.get("item");
-			Integer amount = (Integer) config.get("amount");
+		if (safeConfig.containsKey("item")) {
+			String item = safeConfig.getString("item");
+			Integer amount = safeConfig.getInt("amount");
 			return KatUpgrade.WithItem(time, coins, ItemType.valueOf(item), amount);
 		}
 
 		return KatUpgrade.OnlyCoins(time, coins);
+	}
+
+	private static List<GemstoneComponent.GemstoneSlot> parseGemstoneEntries(List<Map<String, Object>> gemstoneEntries) {
+		List<GemstoneComponent.GemstoneSlot> slots = new ArrayList<>();
+
+		for (Map<String, Object> entry : gemstoneEntries) {
+			SafeConfig entryConfig = SafeConfig.of(entry);
+
+			String gemstoneName = entryConfig.getString("gemstone");
+			Gemstone.Slots slot;
+			try {
+				slot = Gemstone.Slots.valueOf(gemstoneName);
+			} catch (IllegalArgumentException e) {
+				slot = Gemstone.Slots.UNIVERSAL;
+			}
+
+			int coins = entryConfig.getInt("coins", 50000);
+			List<GemstoneComponent.ItemRequirement> itemRequirements = new ArrayList<>();
+
+			if (entryConfig.containsKey("items")) {
+				List<String> items = entryConfig.getList("items", String.class);
+				for (String item : items) {
+					String[] itemParts = item.split(":");
+					if (itemParts.length == 2) {
+						ItemType itemId = ItemType.valueOf(itemParts[0]);
+						int amount = Integer.parseInt(itemParts[1]);
+						itemRequirements.add(new GemstoneComponent.ItemRequirement(itemId, amount));
+					}
+				}
+			}
+
+			slots.add(new GemstoneComponent.GemstoneSlot(slot, coins, itemRequirements));
+		}
+
+		return slots;
 	}
 }

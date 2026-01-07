@@ -32,7 +32,7 @@ import java.util.List;
         aliases = "setup mapsetup",
         description = "Murder Mystery map configuration tool",
         usage = "/mmsetup <subcommand>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false
 )
 public class AutoSetupCommand extends HypixelCommand {

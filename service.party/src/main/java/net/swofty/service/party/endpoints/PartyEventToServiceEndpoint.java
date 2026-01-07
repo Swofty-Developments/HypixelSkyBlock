@@ -39,6 +39,8 @@ public class PartyEventToServiceEndpoint implements ServiceEndpoint<
                 case PartyHijackRequestEvent hijackEvent -> PartyCache.handleHijackRequest(hijackEvent);
                 case PartyPlayerSwitchedServerEvent switchEvent -> PartyCache.handlePlayerSwitchedServer(switchEvent);
                 case PartyChatMessageEvent chatEvent -> PartyCache.handleChatMessage(chatEvent);
+                case PartyPlayerDisconnectEvent disconnectEvent -> PartyCache.handlePlayerDisconnect(disconnectEvent);
+                case PartyPlayerRejoinEvent rejoinEvent -> PartyCache.handlePlayerRejoin(rejoinEvent);
                 default -> Logger.warn("Unknown party event type: " + event.getClass().getSimpleName());
             }
 

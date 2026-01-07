@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "e",
         description = "Open the E menu",
         usage = "/e",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class ItemListCommand extends HypixelCommand {
     @Override
