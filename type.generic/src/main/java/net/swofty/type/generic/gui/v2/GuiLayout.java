@@ -1,6 +1,7 @@
 package net.swofty.type.generic.gui.v2;
 
 import net.minestom.server.item.ItemStack;
+import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.GuiContext;
 
 import java.util.Collection;

@@ -10,6 +10,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.trait.InventoryEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.GuiContext;
 import net.swofty.type.generic.user.HypixelPlayer;
 
@@ -34,7 +35,8 @@ public final class GuiSession<S> {
     private S previousState;
     private GuiLayout<S> cachedLayout;
     private Consumer<CloseReason> onCloseHandler;
-    private boolean closed;
+    @Getter
+	private boolean closed;
 
     private GuiSession(View<S> view, HypixelPlayer player, S initialState) {
         this.view = view;
@@ -132,11 +134,7 @@ public final class GuiSession<S> {
         if (reason != CloseReason.PLAYER_EXITED) player.closeInventory();
     }
 
-    public boolean isClosed() {
-        return closed;
-    }
-
-    public enum CloseReason {
+	public enum CloseReason {
         PLAYER_EXITED,
         SERVER_EXITED,
         REPLACED

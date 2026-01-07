@@ -20,11 +20,15 @@ import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
+import net.swofty.type.generic.gui.v2.GuiSession;
+import net.swofty.type.generic.gui.v2.StatefulView;
+import net.swofty.type.generic.gui.v2.View;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class HypixelPlayer extends Player {
@@ -77,6 +81,18 @@ public class HypixelPlayer extends Player {
 
 	public DatapointChatType.ChatType getChatType() {
 		return getDataHandler().get(HypixelDataHandler.Data.CHAT_TYPE, DatapointChatType.class).getValue();
+	}
+
+	public <S> GuiSession<S> openView(View<S> view, S state) {
+		return GuiSession.open(view, this, state);
+	}
+
+	public <S> GuiSession<S> openView(View<S> view) {
+		Objects.requireNonNull(view, "View is null");
+		if (!(view instanceof StatefulView<S> state)) {
+			throw new IllegalArgumentException("View is not a StatefulView");
+		}
+		return GuiSession.open(view, this, state.initialState());
 	}
 
 	public ProxyPlayer asProxyPlayer() {
