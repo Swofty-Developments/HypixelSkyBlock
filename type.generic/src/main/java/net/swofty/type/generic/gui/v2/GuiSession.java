@@ -11,12 +11,13 @@ import net.minestom.server.event.trait.InventoryEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
-import net.swofty.type.generic.gui.v2.context.GuiContext;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.time.Duration;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public final class GuiSession<S> {
@@ -28,9 +29,11 @@ public final class GuiSession<S> {
 	@Getter
 	@Accessors(fluent = true)
     private final Inventory inventory;
-    private final GuiContext context;
+    private final ViewContext context;
     private final EventNode<InventoryEvent> eventNode;
 
+    @Getter
+    @Accessors(fluent = true)
     private S state;
     private S previousState;
     private GuiLayout<S> cachedLayout;
@@ -43,7 +46,7 @@ public final class GuiSession<S> {
         this.player = player;
         this.state = initialState;
         this.inventory = new Inventory(view.size(), "");
-        this.context = new GuiContext(player, inventory, this);
+        this.context = new ViewContext(player, inventory, this);
         this.eventNode = EventNode.type("gui-" + System.identityHashCode(this), EventFilter.INVENTORY);
 
         wireEvents();
@@ -66,7 +69,7 @@ public final class GuiSession<S> {
         if (event.getInventory() != inventory || closed) return;
         event.setCancelled(true);
 
-        GuiComponent<S> component = cachedLayout.components().get(event.getSlot());
+        ViewComponent<S> component = cachedLayout.components().get(event.getSlot());
         if (component == null) return;
 
         ClickContext<S> click = new ClickContext<>(event.getSlot(), event.getClick(), player, state);
@@ -81,7 +84,7 @@ public final class GuiSession<S> {
     public void render() {
         if (closed) return;
 
-        cachedLayout = new GuiLayout<>();
+        cachedLayout = new GuiLayout<>(view.size());
         view.layout(cachedLayout, state, context);
 
         if (!Objects.equals(state, previousState)) {
@@ -90,15 +93,11 @@ public final class GuiSession<S> {
         }
 
         cachedLayout.components().forEach((slot, component) -> {
-            var item = component.render().apply(state, context);
+            var item = component.render().apply(state, context).build();
             if (!inventory.getItemStack(slot).equals(item)) {
                 inventory.setItemStack(slot, item);
             }
         });
-    }
-
-    public S state() {
-        return state;
     }
 
     public void setState(S newState) {
@@ -109,6 +108,11 @@ public final class GuiSession<S> {
 
     public void update(UnaryOperator<S> transform) {
         setState(transform.apply(state));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> void updateUnchecked(Function<T, T> transform) {
+        setState(((Function<S, S>) transform).apply(state));
     }
 
     public GuiSession<S> onClose(Consumer<CloseReason> handler) {

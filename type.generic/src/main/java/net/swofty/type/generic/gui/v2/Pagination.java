@@ -2,7 +2,7 @@ package net.swofty.type.generic.gui.v2;
 
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
-import net.swofty.type.generic.gui.v2.context.GuiContext;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -26,7 +26,7 @@ public final class Pagination {
         GuiLayout<S> layout,
         List<Integer> slots,
         List<T> items,
-        BiFunction<T, Integer, ItemStack> renderer,
+        BiFunction<T, Integer, ItemStack.Builder> renderer,
         ClickHandler<S, T> onClick
     ) {
         for (int i = 0; i < slots.size(); i++) {
@@ -37,14 +37,14 @@ public final class Pagination {
                 layout.slot(slot, (_, _) -> renderer.apply(item, index),
                     (click, ctx) -> onClick.handle(click, ctx, item, index));
             } else {
-                layout.slot(slot, (_, _) -> ItemStack.AIR);
+                layout.slot(slot, (_, _) -> ItemStack.AIR.builder());
             }
         }
     }
 
     @FunctionalInterface
     public interface ClickHandler<S, T> {
-        void handle(ClickContext<S> click, GuiContext ctx, T item, int index);
+        void handle(ClickContext<S> click, ViewContext ctx, T item, int index);
     }
 }
 
