@@ -38,7 +38,7 @@ dependencies {
 
     implementation("com.viaversion:vialoader:4.0.2")
     implementation("com.viaversion:viabackwards-common:5.3.2")
-    implementation("com.viaversion:viarewind-common:4.0.7")
+    implementation("com.viaversion:viarewind-common:4.0.13")
     implementation("com.viaversion:viaversion:5.3.2")
 
     implementation(platform("io.netty:netty-bom:4.1.110.Final"))
