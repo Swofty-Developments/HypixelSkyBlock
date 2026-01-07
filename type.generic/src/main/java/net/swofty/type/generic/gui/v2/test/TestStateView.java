@@ -30,7 +30,7 @@ public final class TestStateView implements StatefulView<TestStateView.State> {
     }
 
     @Override
-    public void layout(GuiLayout<State> layout, State state, ViewContext ctx) {
+    public void layout(ViewLayout<State> layout, State state, ViewContext ctx) {
         layout.filler(Layouts.border(0, 26), Components.FILLER);
         layout.slot(11, ItemStackCreator.createNamedItemStack(Material.RED_WOOL, "§c-1"), State::decrement);
         layout.slot(13, (s, _) -> ItemStackCreator.createNamedItemStack(Material.PAPER, "§eCounter: " + s.counter()));

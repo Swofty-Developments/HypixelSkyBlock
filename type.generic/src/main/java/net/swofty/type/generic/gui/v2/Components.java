@@ -19,18 +19,18 @@ public final class Components {
 	public static final ItemStack.Builder BACK_BUTTON = ItemStack.builder(Material.ARROW)
 			.set(DataComponents.CUSTOM_NAME, Component.text("§aGo Back"));
 
-	public static <S> void close(GuiLayout<S> layout, int slot) {
+	public static <S> void close(ViewLayout<S> layout, int slot) {
 		layout.slot(slot, (_, _) -> CLOSE_BUTTON, (_, ctx) -> ctx.player().closeInventory());
 	}
 
-	public static <S> void back(GuiLayout<S> layout, int slot, View<?> target, Object targetState) {
+	public static <S> void back(ViewLayout<S> layout, int slot, View<?> target, Object targetState) {
 		layout.slot(slot, (_, _) -> BACK_BUTTON,
 				(_, ctx) -> open(ctx, target, targetState));
 	}
 
 	@SuppressWarnings("unchecked")
 	public static <T> void open(ViewContext ctx, View<T> view, Object state) {
-		GuiSession.open(view, ctx.player(), (T) state);
+		ViewSession.open(view, ctx.player(), (T) state);
 	}
 
 }

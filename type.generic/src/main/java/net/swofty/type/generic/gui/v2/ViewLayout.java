@@ -15,7 +15,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-public final class GuiLayout<S> {
+public final class ViewLayout<S> {
 
     @Getter
     @Accessors(fluent = true)
@@ -25,7 +25,7 @@ public final class GuiLayout<S> {
     @Accessors(fluent = true)
     private final InventoryType inventoryType;
 
-    public GuiLayout(InventoryType inventoryType) {
+    public ViewLayout(InventoryType inventoryType) {
         this.inventoryType = inventoryType;
     }
 

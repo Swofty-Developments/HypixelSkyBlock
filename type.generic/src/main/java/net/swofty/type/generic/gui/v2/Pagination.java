@@ -23,7 +23,7 @@ public final class Pagination {
     }
 
     public static <S, T> void items(
-        GuiLayout<S> layout,
+        ViewLayout<S> layout,
         List<Integer> slots,
         List<T> items,
         BiFunction<T, Integer, ItemStack.Builder> renderer,

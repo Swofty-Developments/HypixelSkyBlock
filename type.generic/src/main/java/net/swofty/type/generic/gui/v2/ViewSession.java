@@ -20,7 +20,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-public final class GuiSession<S> {
+public final class ViewSession<S> {
 
     private final View<S> view;
 	@Getter
@@ -36,12 +36,12 @@ public final class GuiSession<S> {
     @Accessors(fluent = true)
     private S state;
     private S previousState;
-    private GuiLayout<S> cachedLayout;
+    private ViewLayout<S> cachedLayout;
     private Consumer<CloseReason> onCloseHandler;
     @Getter
 	private boolean closed;
 
-    private GuiSession(View<S> view, HypixelPlayer player, S initialState) {
+    private ViewSession(View<S> view, HypixelPlayer player, S initialState) {
         this.view = view;
         this.player = player;
         this.state = initialState;
@@ -52,8 +52,8 @@ public final class GuiSession<S> {
         wireEvents();
     }
 
-    public static <S> GuiSession<S> open(View<S> view, HypixelPlayer player, S initialState) {
-        GuiSession<S> session = new GuiSession<>(view, player, initialState);
+    public static <S> ViewSession<S> open(View<S> view, HypixelPlayer player, S initialState) {
+        ViewSession<S> session = new ViewSession<>(view, player, initialState);
         session.render();
         player.openInventory(session.inventory);
         return session;
@@ -84,7 +84,7 @@ public final class GuiSession<S> {
     public void render() {
         if (closed) return;
 
-        cachedLayout = new GuiLayout<>(view.size());
+        cachedLayout = new ViewLayout<>(view.size());
         view.layout(cachedLayout, state, context);
 
         if (!Objects.equals(state, previousState)) {
@@ -115,12 +115,12 @@ public final class GuiSession<S> {
         setState(((Function<S, S>) transform).apply(state));
     }
 
-    public GuiSession<S> onClose(Consumer<CloseReason> handler) {
+    public ViewSession<S> onClose(Consumer<CloseReason> handler) {
         this.onCloseHandler = handler;
         return this;
     }
 
-    public GuiSession<S> refreshEvery(Duration interval) {
+    public ViewSession<S> refreshEvery(Duration interval) {
         MinecraftServer.getSchedulerManager().submitTask(() -> {
             if (closed) return TaskSchedule.stop();
             render();

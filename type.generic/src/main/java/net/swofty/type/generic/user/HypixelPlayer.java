@@ -3,7 +3,6 @@ package net.swofty.type.generic.user;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.player.GameProfile;
@@ -20,7 +19,7 @@ import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
-import net.swofty.type.generic.gui.v2.GuiSession;
+import net.swofty.type.generic.gui.v2.ViewSession;
 import net.swofty.type.generic.gui.v2.StatefulView;
 import net.swofty.type.generic.gui.v2.View;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
@@ -83,16 +82,16 @@ public class HypixelPlayer extends Player {
 		return getDataHandler().get(HypixelDataHandler.Data.CHAT_TYPE, DatapointChatType.class).getValue();
 	}
 
-	public <S> GuiSession<S> openView(View<S> view, S state) {
-		return GuiSession.open(view, this, state);
+	public <S> ViewSession<S> openView(View<S> view, S state) {
+		return ViewSession.open(view, this, state);
 	}
 
-	public <S> GuiSession<S> openView(View<S> view) {
+	public <S> ViewSession<S> openView(View<S> view) {
 		Objects.requireNonNull(view, "View is null");
 		if (!(view instanceof StatefulView<S> state)) {
 			throw new IllegalArgumentException("View is not a StatefulView");
 		}
-		return GuiSession.open(view, this, state.initialState());
+		return ViewSession.open(view, this, state.initialState());
 	}
 
 	public ProxyPlayer asProxyPlayer() {
