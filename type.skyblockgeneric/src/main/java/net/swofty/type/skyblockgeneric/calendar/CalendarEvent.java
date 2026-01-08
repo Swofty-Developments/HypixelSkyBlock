@@ -26,7 +26,7 @@ public record CalendarEvent(
         boolean tracksYear,
         BiConsumer<Long, Integer> action
 ) {
-    private static final long THREE_DAYS = 20 * 60 * 3; // 3 SkyBlock days in ticks
+    private static final long THREE_DAYS = 3 * 20 * 60 * 24; // 3 SkyBlock days in ticks
     private static final long YEAR = 20 * 60 * 24 * 31 * 12; // Full SkyBlock year in ticks
     private static final Map<Long, List<CalendarEvent>> eventCache = new HashMap<>();
     private static final List<CalendarEvent> allEvents = new ArrayList<>();
@@ -58,7 +58,7 @@ public record CalendarEvent(
                     "§7special items are sold."
             ),
             calculateDarkAuctionTimes(),
-            5 * 60L, // 5 minutes duration
+            20 * 5 * 60L,
             false,
             (time, year) -> {
                 ProxyService darkAuctionService = new ProxyService(ServiceType.DARK_AUCTION);
