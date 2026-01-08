@@ -23,14 +23,27 @@ public class ParkourCommand extends HypixelCommand {
 			manager = null;
 		}
 
+		command.setDefaultExecutor(((sender, context) -> {
+			sender.sendMessage("§c/parkour start");
+			sender.sendMessage("§c/parkour reset");
+			sender.sendMessage("§c/parkour checkpoint");
+			sender.sendMessage("§c/parkour cancel");
+		}));
+
 		// start
 		command.addSyntax((sender, context) -> {
 			if (manager == null) {
 				sender.sendMessage("§cThis command is unavailable here.");
 				return;
 			}
-			if (!(sender instanceof Player player)) return;
+			if (!(sender instanceof HypixelPlayer player)) return;
+			if (manager.getPerPlayerStartTime().containsKey(player.getUuid())) {
+				sender.sendMessage("§cYou are currently in a parkour race. Use /parkour reset");
+				return;
+			}
+
 			player.teleport(manager.getParkour().getStartLocation());
+			manager.startParkour(player);
 		}, new ArgumentLiteral("start"));
 
 		// cancel
@@ -52,5 +65,26 @@ public class ParkourCommand extends HypixelCommand {
 			if (!(sender instanceof HypixelPlayer player)) return;
 			manager.resetPlayer(player);
 		}, new ArgumentLiteral("reset"));
+
+		// checkpoint
+		command.addSyntax((sender, context) -> {
+			if (manager == null) {
+				sender.sendMessage("§cThis command is unavailable here.");
+				return;
+			}
+			if (!(sender instanceof HypixelPlayer player)) return;
+			Parkour parkour = manager.getParkour();
+			if (!manager.getPerPlayerStartTime().containsKey(player.getUuid())) {
+				sender.sendMessage("§cYou haven't started the parkour challenge yet! Use §e/parkour start §cto start!");
+				return;
+			}
+			int checkpointIndex = manager.getPerPlayerStartTime().get(player.getUuid()).lastCheckpointIndex();
+			if (checkpointIndex == 0) {
+				player.teleport(parkour.getStartLocation());
+			} else {
+				player.teleport(parkour.getCheckpoints().get(checkpointIndex - 1).asPos());
+			}
+		}, new ArgumentLiteral("checkpoint"));
 	}
+
 }
