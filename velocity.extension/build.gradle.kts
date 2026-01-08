@@ -37,9 +37,9 @@ dependencies {
     implementation("org.mongodb:mongodb-driver-sync:4.11.2")
 
     implementation("com.viaversion:vialoader:4.0.6")
-    implementation("com.viaversion:viabackwards-common:5.3.2")
+    implementation("com.viaversion:viabackwards-common:5.7.0")
     implementation("com.viaversion:viarewind-common:4.0.13")
-    implementation("com.viaversion:viaversion:5.3.2")
+    implementation("com.viaversion:viaversion:5.7.0")
 
     implementation(platform("io.netty:netty-bom:4.1.110.Final"))
     implementation("io.netty:netty-buffer")
