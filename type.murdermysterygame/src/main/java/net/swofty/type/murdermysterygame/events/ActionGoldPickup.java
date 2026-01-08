@@ -56,14 +56,23 @@ public class ActionGoldPickup implements HypixelEventClass {
 
         // Handle gold pickup
         if (material == Material.GOLD_INGOT) {
-            // Cancel the default pickup behavior
-            event.setCancelled(true);
+            // Check if this is spawned gold (managed by GoldManager)
+            if (game.getGoldManager().getSpawnedGold().contains(itemEntity)) {
+                // Cancel default pickup, use our collection system
+                event.setCancelled(true);
+                game.getGoldManager().collectGold(player, itemEntity);
+                player.sendMessage(Component.text("+1 Gold", NamedTextColor.GOLD));
+                return;
+            }
 
-            // Use our gold collection system
-            game.getGoldManager().collectGold(player, itemEntity);
+            // This is dropped gold from another player - allow normal pickup
+            // Track achievement for picked up gold
+            int amount = meta.getItem().amount();
+            player.addGoldCollectedThisGame(amount);
+            player.sendMessage(Component.text("+" + amount + " Gold", NamedTextColor.GOLD));
 
-            // Send chat message
-            player.sendMessage(Component.text("+1 Gold", NamedTextColor.GOLD));
+            // Check if player now has enough gold for bow
+            game.getGoldManager().checkPlayerGoldForBow(player);
         }
     }
 }

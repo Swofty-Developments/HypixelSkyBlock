@@ -18,10 +18,8 @@ public class ActionCraftingTableClick implements HypixelEventClass {
         if (Material.fromKey(event.getBlock().key()) != Material.CRAFTING_TABLE) {
             return;
         }
-        if (!HypixelConst.isIslandServer()) return;
 
         event.setBlockingItemUse(true);
-
         new GUICrafting().open(player);
     }
 }

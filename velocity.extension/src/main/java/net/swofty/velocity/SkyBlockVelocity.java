@@ -50,6 +50,7 @@ import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.velocity.redis.listeners.ListenerStaffChat;
 import net.swofty.velocity.testflow.TestFlowManager;
 import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
 import net.swofty.velocity.viaversion.loader.SkyBlockVLLoader;
@@ -119,6 +120,10 @@ public class SkyBlockVelocity {
 					injectPlayer(postLoginEvent.getPlayer());
 					TestFlowManager.handlePlayerJoin(postLoginEvent.getPlayer().getUsername());
 					PresencePublisher.publish(postLoginEvent.getPlayer(), true, (String) null, null);
+
+					// Broadcast staff join notification (servers will check if player is staff)
+					ListenerStaffChat.broadcastStaffJoin(postLoginEvent.getPlayer().getUniqueId());
+
 					continuation.resume();
 				}));
 		server.getEventManager().register(this, PermissionsSetupEvent.class,
@@ -131,6 +136,9 @@ public class SkyBlockVelocity {
 						disconnectEvent.getLoginStatus() == DisconnectEvent.LoginStatus.CONFLICTING_LOGIN
 								? null
 								: EventTask.async(() -> {
+							// Broadcast staff leave notification (servers will check if player is staff)
+							ListenerStaffChat.broadcastStaffLeave(disconnectEvent.getPlayer().getUniqueId());
+
 							// Handle test flow player leave
 							TestFlowManager.handlePlayerLeave(disconnectEvent.getPlayer().getUsername());
 							PresencePublisher.publish(disconnectEvent.getPlayer(), false, (String) null, null);

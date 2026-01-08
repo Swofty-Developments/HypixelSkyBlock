@@ -1,34 +1,4 @@
 items:
-  - id: FARM_SUIT_BOOTS
-    rarity: COMMON
-    default_statistics:
-      defense: 15.0
-      farming_fortune: 5.0
-    components:
-      - id: STANDARD_ITEM
-        standard_item_type: BOOTS
-      - id: LEATHER_COLOR
-        r: '255'
-        g: '255'
-        b: '0'
-      - id: SELLABLE
-        value: 20.0
-      - id: NOT_FINISHED_YET
-  - id: FARM_SUIT_CHESTPLATE
-    rarity: COMMON
-    default_statistics:
-      defense: 40.0
-      farming_fortune: 5.0
-    components:
-      - id: STANDARD_ITEM
-        standard_item_type: CHESTPLATE
-      - id: LEATHER_COLOR
-        r: '255'
-        g: '255'
-        b: '0'
-      - id: SELLABLE
-        value: 40.0
-      - id: NOT_FINISHED_YET
   - id: FARM_SUIT_HELMET
     rarity: COMMON
     default_statistics:
@@ -44,6 +14,60 @@ items:
       - id: SELLABLE
         value: 25.0
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - AOA
+            ingredients:
+              A:
+                type: HAY_BALE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: FARM_SUIT_HELMET
+              amount: 1
+
+  - id: FARM_SUIT_CHESTPLATE
+    rarity: COMMON
+    default_statistics:
+      defense: 40.0
+      farming_fortune: 5.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+      - id: LEATHER_COLOR
+        r: '255'
+        g: '255'
+        b: '0'
+      - id: SELLABLE
+        value: 40.0
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AOA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: HAY_BALE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: FARM_SUIT_CHESTPLATE
+              amount: 1
+
   - id: FARM_SUIT_LEGGINGS
     rarity: COMMON
     default_statistics:
@@ -59,3 +83,56 @@ items:
       - id: SELLABLE
         value: 32.0
       - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AAA
+              - AOA
+              - AOA
+            ingredients:
+              A:
+                type: HAY_BALE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: FARM_SUIT_LEGGINGS
+              amount: 1
+
+  - id: FARM_SUIT_BOOTS
+    rarity: COMMON
+    default_statistics:
+      defense: 15.0
+      farming_fortune: 5.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
+      - id: LEATHER_COLOR
+        r: '255'
+        g: '255'
+        b: '0'
+      - id: SELLABLE
+        value: 20.0
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AOA
+              - AOA
+            ingredients:
+              A:
+                type: HAY_BALE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: FARM_SUIT_BOOTS
+              amount: 1

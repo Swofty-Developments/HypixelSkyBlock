@@ -16,7 +16,7 @@ import net.swofty.type.generic.user.categories.Rank;
         aliases = "tree",
         description = "Generates a tree at your location",
         usage = "/generatetree <type> [minHeight maxHeight] [minWidth maxWidth]",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false
 )
 public class GenerateTreeCommand extends HypixelCommand {

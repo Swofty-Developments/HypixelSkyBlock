@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(description = "Sets your bits balance",
         aliases = "bit",
         usage = "/bits <amount>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class BitsCommand extends HypixelCommand {
     @Override

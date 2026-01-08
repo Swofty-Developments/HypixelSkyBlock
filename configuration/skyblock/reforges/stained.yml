@@ -10,7 +10,7 @@ statistics:
   DEFENSE:
     expression: "{level} + 2"
 
-  CRIT_CHANCE:
+  CRITICAL_CHANCE:
     common: 1
     uncommon: 1
     rare: 2

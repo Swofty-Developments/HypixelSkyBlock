@@ -6,6 +6,29 @@ items:
         percentage: 50.0
       - id: SELLABLE
         value: 1200.0
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AOA
+              - ABA
+              - OAO
+            ingredients:
+              A:
+                type: ENCHANTED_IRON_INGOT
+                amount: 1
+              B:
+                type: CHEST
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: BUDGET_HOPPER
+              amount: 1
+
   - id: ENCHANTED_HOPPER
     rarity: COMMON
     components:
@@ -14,3 +37,25 @@ items:
         percentage: 90.0
       - id: SELLABLE
         value: 192000.0
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AOA
+              - ABA
+              - OAO
+            ingredients:
+              A:
+                type: ENCHANTED_IRON_BLOCK
+                amount: 1
+              B:
+                type: CHEST
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: ENCHANTED_HOPPER
+              amount: 1

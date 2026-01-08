@@ -19,8 +19,7 @@ public class EnchantmentCritical implements Ench, EnchFromTable {
 
     @Override
     public String getDescription(int level) {
-        return "Increases " + ItemStatistic.CRIT_DAMAGE.getDisplayColor() + ItemStatistic.CRIT_DAMAGE.getSymbol() + " "
-                + ItemStatistic.CRIT_DAMAGE.getDisplayName() + " §7by §a" + MULTIPLIERS[level - 1] + "%§7.";
+        return "Increases " + ItemStatistic.CRITICAL_DAMAGE.getFullDisplayName() + " §7by §a" + MULTIPLIERS[level - 1] + "%§7.";
     }
 
     @Override
@@ -48,7 +47,7 @@ public class EnchantmentCritical implements Ench, EnchFromTable {
     @Override
     public ItemStatistics getStatistics(int level) {
         double increase = MULTIPLIERS[level - 1];
-        return ItemStatistics.builder().withBase(ItemStatistic.CRIT_DAMAGE, increase).build();
+        return ItemStatistics.builder().withBase(ItemStatistic.CRITICAL_DAMAGE, increase).build();
     }
 
     @Override

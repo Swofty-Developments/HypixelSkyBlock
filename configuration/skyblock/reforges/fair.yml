@@ -13,7 +13,7 @@ statistics:
     legendary: 10
     mythic: 12
 
-  CRIT_CHANCE:
+  CRITICAL_CHANCE:
     common: 2
     uncommon: 3
     rare: 4
@@ -21,7 +21,7 @@ statistics:
     legendary: 10
     mythic: 12
 
-  CRIT_DAMAGE:
+  CRITICAL_DAMAGE:
     common: 2
     uncommon: 3
     rare: 4

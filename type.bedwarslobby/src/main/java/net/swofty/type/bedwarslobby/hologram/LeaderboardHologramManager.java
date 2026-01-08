@@ -61,7 +61,7 @@ public class LeaderboardHologramManager {
 				new net.swofty.type.bedwarslobby.gui.GUILeaderboardSettings().open(hypixelPlayer);
 			}
 		});
-		clickZone.setInstance(instance, SETTINGS_HOLOGRAM_POS.add(0, 1.5, 0));
+		clickZone.setInstance(instance, SETTINGS_HOLOGRAM_POS.add(0, 0, 0));
 		clickZones.add(clickZone);
 	}
 

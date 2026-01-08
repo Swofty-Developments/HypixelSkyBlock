@@ -15,7 +15,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "spawncrystal",
         description = "Spawns in a crystal at the player's location.",
         usage = "/addcrystal",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class AddCrystalCommand extends HypixelCommand {
     @Override

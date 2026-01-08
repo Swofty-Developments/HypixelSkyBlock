@@ -150,13 +150,24 @@ public abstract class HypixelNPC {
 				boolean needsFullUpdate = false;
 				if (entity instanceof NPCEntityImpl playerEntity && config instanceof HumanConfiguration humanConfig) {
 					needsFullUpdate = !Arrays.equals(playerEntity.getHolograms(), npcHolograms) ||
-							!playerEntity.getSkinTexture().equals(humanConfig.texture(player)) ||
-							!playerEntity.getSkinSignature().equals(humanConfig.signature(player));
+                                    !playerEntity.getSkinTexture().equals(humanConfig.texture(player)) ||
+                                    !playerEntity.getSkinSignature().equals(humanConfig.signature(player));
 				}
 
 				if (needsUpdate && !needsFullUpdate) {
+					boolean onlyViewChanged = entity.getPosition().x() == npcPosition.x() && entity.getPosition().z() == npcPosition.z() && entity.getPosition().y() == npcPosition.y();
 					entity.setView(npcPosition.yaw(), npcPosition.pitch());
 					entity.setInstance(config.instance(), npcPosition);
+					if (!onlyViewChanged) {
+						boolean overflowing = npcHolograms[npcHolograms.length - 1].length() > 16;
+						float yOffset = overflowing ? -0.2f : 0.0f;
+						if (config instanceof VillagerConfiguration) {
+							yOffset = 0.2f;
+						} else if (config instanceof AnimalConfiguration animalConfig) {
+							yOffset = animalConfig.hologramYOffset();
+						}
+						PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, 1.1f + yOffset, 0));
+					}
 					return;
 				}
 				if (needsFullUpdate) {
@@ -237,9 +248,13 @@ public abstract class HypixelNPC {
 		registeredNPCs.remove(this);
 	}
 
-	public void sendNPCMessage(HypixelPlayer player, String message) {
+    public void sendNPCMessage(HypixelPlayer player, String message) {
+        sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
+    }
+
+	public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
 		player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
-		player.playSound(Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
+		player.playSound(sound);
 	}
 
 	protected DialogueController dialogue() {
@@ -305,8 +320,8 @@ public abstract class HypixelNPC {
 		}
 	}
 
-	@Builder
-	public record DialogueSet(String key, String[] lines) {
-		public static final DialogueSet[] EMPTY = new DialogueSet[0];
-	}
+    @Builder
+    public record DialogueSet(String key, String[] lines, Sound sound) {
+        public static final DialogueSet[] EMPTY = new DialogueSet[0];
+    }
 }

@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "speed",
         description = "Sets a players speed",
         usage = "/speed <speed>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class FlySpeedCommand extends HypixelCommand {
     private static final float MIN_SPEED = 0.0f;

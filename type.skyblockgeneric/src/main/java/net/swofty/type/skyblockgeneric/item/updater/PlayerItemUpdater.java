@@ -137,19 +137,29 @@ public class PlayerItemUpdater {
             int index = 0;
             ItemAttributeGemData.GemData gemData = item.getAttributeHandler().getGemData();
             for (GemstoneComponent.GemstoneSlot slot : gemstoneComponent.getSlots()) {
-                if (slot.unlockPrice() == 0) {
+                if (slot.unlockPrice() == 0 && slot.itemRequirements().isEmpty()) {
                     // Slot should be unlocked by default
                     if (gemData.hasGem(index)) continue;
                     gemData.putGem(
                             new ItemAttributeGemData.GemData.GemSlots(
                                     index,
-                                    null
+                                    null,
+                                    true
+                            )
+                    );
+                } else {
+                    if (gemData.hasGem(index)) continue;
+                    gemData.putGem(
+                            new ItemAttributeGemData.GemData.GemSlots(
+                                    index,
+                                    null,
+                                    false
                             )
                     );
                 }
                 index++;
             }
-            handler.setGemData(gemData);
+            item.getAttributeHandler().setGemData(gemData);
         }
 
         for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {

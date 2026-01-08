@@ -1,0 +1,75 @@
+items:
+  - id: MASTER_SKULL_TIER_1
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Master Skull - Tier 1
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 246d0d3d1069165a4523a858058a090c70b7429929abc869009cb6ebfcde7506
+      - id: NOT_FINISHED_YET
+
+  - id: MASTER_SKULL_TIER_2
+    material: PLAYER_HEAD
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Master Skull - Tier 2
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 246d0d3d1069165a4523a858058a090c70b7429929abc869009cb6ebfcde7506
+      - id: NOT_FINISHED_YET
+
+  - id: MASTER_SKULL_TIER_3
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Master Skull - Tier 3
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: ba153afeda1f80cb382b5cc317175102a1d9fbd1d6c26c925433979a63565014
+      - id: NOT_FINISHED_YET
+
+  - id: MASTER_SKULL_TIER_4
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Master Skull - Tier 4
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: ba153afeda1f80cb382b5cc317175102a1d9fbd1d6c26c925433979a63565014
+      - id: NOT_FINISHED_YET
+
+  - id: MASTER_SKULL_TIER_5
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Master Skull - Tier 5
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 910f9f1085d407141eb77617a4abdaaa08d8af33b960200fe8c126c1d1445682
+      - id: NOT_FINISHED_YET
+
+  - id: MASTER_SKULL_TIER_6
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Master Skull - Tier 6
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a1ab5e3f875b101e929e88956d01835682d39db56780adeea37014d8ee476a65
+      - id: NOT_FINISHED_YET
+
+  - id: MASTER_SKULL_TIER_7
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Master Skull - Tier 7
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a04e47c43576f8d72ebabb458764affb588fc018262732e85149df9bbaab7767
+      - id: NOT_FINISHED_YET

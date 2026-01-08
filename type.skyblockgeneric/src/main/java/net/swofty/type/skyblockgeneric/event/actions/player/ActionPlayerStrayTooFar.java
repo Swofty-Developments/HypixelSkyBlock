@@ -22,7 +22,7 @@ public class ActionPlayerStrayTooFar implements HypixelEventClass {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockRegion region = player.getRegion();
 
-        if (player.getRank().isEqualOrHigherThan(Rank.DEVELOPER)) return;
+        if (player.getRank().isEqualOrHigherThan(Rank.STAFF)) return;
 
         if (region != null) {
             startedStray.remove(player.getUuid());

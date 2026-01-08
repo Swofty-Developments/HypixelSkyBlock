@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Clears your missions",
         usage = "/missionempty",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         aliases = "clearmission",
         allowsConsole = false)
 public class ClearMissionCommand extends HypixelCommand {

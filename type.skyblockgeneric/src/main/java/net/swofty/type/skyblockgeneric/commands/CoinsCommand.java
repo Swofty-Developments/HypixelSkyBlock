@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Sets your purse balance",
         usage = "/coins <amount>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class CoinsCommand extends HypixelCommand {
     @Override

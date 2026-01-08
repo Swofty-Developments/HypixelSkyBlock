@@ -1,0 +1,45 @@
+items:
+  - id: BAT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      health: 1
+      intelligence: 1
+      speed: 1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bat Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4f89fc5137631f6b543931bf7af1dde0aef8c69cbe5b8bafe2166f3b1c7e1a69
+      - id: NOT_FINISHED_YET
+
+  - id: BAT_RING
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      health: 3
+      intelligence: 2
+      speed: 2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bat Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: bc78314255d8864a753fe95622564046f0dee2a82c6e4e2e7f452fcb95af318c
+      - id: NOT_FINISHED_YET
+
+  - id: BAT_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      health: 5
+      intelligence: 3
+      speed: 3
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bat Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 377ade8afb257086fb1861da43c8ae468b8eb0578fada84303858517ba17217e
+      - id: NOT_FINISHED_YET

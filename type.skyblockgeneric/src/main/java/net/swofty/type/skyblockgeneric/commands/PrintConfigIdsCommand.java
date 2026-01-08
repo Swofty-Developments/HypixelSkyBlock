@@ -9,7 +9,7 @@ import org.tinylog.Logger;
 @CommandParameters(aliases = "displayconfigids",
         description = "Prints out the item IDs from the config into the console",
         usage = "/displayconfigids",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class PrintConfigIdsCommand extends HypixelCommand {
 

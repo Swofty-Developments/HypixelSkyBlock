@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 @CommandParameters(aliases = "itemtrackedinformation",
         description = "Gets the information of a tracked item in the players hand",
         usage = "/itemtrackedinformation",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class GetTrackedItemInformationCommand extends HypixelCommand {
     @Override

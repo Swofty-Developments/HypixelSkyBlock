@@ -15,10 +15,9 @@ import java.util.List;
 
 public class BuildersWandAbility extends RegisteredAbility {
 
-    @SuppressWarnings("preview")
     public BuildersWandAbility() {
         super("GRAND_ARCHITECT", "Grand Architect",
-                "Right-click the face of a block to extend all connected block faces.",
+                (player, item) -> "Right-click the face of a block to extend all connected block faces.",
                 AbilityActivation.RIGHT_CLICK_BLOCK, 0, new RegisteredAbility.NoAbilityCost(),
                 (player, item, origin, face) -> {
                     fillConnectedFaces(player, new Pos(origin), face);

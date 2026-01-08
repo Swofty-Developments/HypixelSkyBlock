@@ -31,6 +31,8 @@ import net.swofty.type.skyblockgeneric.entity.TextDisplayEntity;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle.*;
+import net.swofty.type.skyblockgeneric.race.RaceInstance;
+import net.swofty.type.skyblockgeneric.race.RaceManager;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -44,9 +46,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TypeTheParkLoader implements SkyBlockTypeLoader {
+public class TypeTheParkLoader implements SkyBlockTypeLoader, RaceInstance {
 
 	public static List<LivingEntity> entities = new ArrayList<>();
+	private static final RaceManager raceManager = new RaceManager(new WoodsRacing());
 
 	@Override
 	public ServerType getType() {
@@ -100,13 +103,18 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 				if (shouldRenderTraps(p)) {
 					return true;
 				}
+				if (p.getMissionData().isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class)) {
+					return finalIndex == 1;
+				}
+				if (p.getMissionData().isCurrentlyActive(MissionHelpMolbert.class)) {
+					return finalIndex == 1;
+				}
 				if(!p.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {
 					return false;
 				}
 
 				MissionData.ActiveMission activeMission = p.getMissionData().getMission(MissionPlaceTraps.class).getKey();
 				List<Integer> placedTraps = (List<Integer>) activeMission.getCustomData().getOrDefault("placedTraps", new ArrayList<Integer>());
-				Logger.info("Placed traps for player {}: {}", p.getUsername(), placedTraps);
 				return !placedTraps.contains(finalIndex);
 			});
 			entities.add(text);
@@ -135,6 +143,9 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 						return true;
 					}
 					if (player.getMissionData().isCurrentlyActive(MissionTalkToMolbertAgainAgainAgain.class)) {
+						return finalIndex == 1;
+					}
+					if (player.getMissionData().isCurrentlyActive(MissionHelpMolbert.class)) {
 						return finalIndex == 1;
 					}
 					if(!player.getMissionData().isCurrentlyActive(MissionPlaceTraps.class)) {
@@ -171,10 +182,11 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 					i++;
 				}
 			}
-			return TaskSchedule.millis(400);
+			return TaskSchedule.millis(800);
 		}, ExecutionType.TICK_START);
 
 		TrialOfFire.init();
+		RyanScene.init();
 	}
 
 	private boolean shouldRenderTraps(SkyBlockPlayer player) {
@@ -203,6 +215,11 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader {
 		return new float[]{
 				q.x, q.y, q.z, q.w
 		};
+	}
+
+	@Override
+	public RaceManager getRace() {
+		return raceManager;
 	}
 
 	record TrapdoorSide(float x, float y, float z, float rotY, float tiltX, float tiltZ) {

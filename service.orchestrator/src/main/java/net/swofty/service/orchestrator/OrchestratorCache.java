@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class OrchestratorCache {
 	private static final Map<String, GameServerState> serversByShortName = new ConcurrentHashMap<>();
 	private static final Map<UUID, GameWithServer> gamesByGameId = new ConcurrentHashMap<>();
-	private static final long HEARTBEAT_TTL_MS = 20000; // 20s
+	private static final long HEARTBEAT_TTL_MS = 10000; // 10s
 
 	public static void handleHeartbeat(UUID uuid,
 									   String shortName,
@@ -43,21 +43,44 @@ public class OrchestratorCache {
 	 * Finds an existing joinable game for the specified game type and map (Bedwars-specific)
 	 */
 	public static GameWithServer findExisting(BedwarsGameType gameType, String map) {
-		return findExisting(ServerType.BEDWARS_GAME, gameType.maxPlayers(), map);
+		return findExisting(ServerType.BEDWARS_GAME, gameType.maxPlayers(), map, 1);
+	}
+
+	/**
+	 * Finds an existing joinable game for the specified game type and map with needed slots (Bedwars-specific)
+	 */
+	public static GameWithServer findExisting(BedwarsGameType gameType, String map, int neededSlots) {
+		return findExisting(ServerType.BEDWARS_GAME, gameType.maxPlayers(), map, neededSlots);
 	}
 
 	/**
 	 * Generic version - finds an existing joinable game for any server type
 	 */
 	public static GameWithServer findExisting(ServerType serverType, int maxPlayers, String map) {
+		return findExisting(serverType, maxPlayers, map, 1);
+	}
+
+	/**
+	 * Finds an existing joinable game with at least neededSlots available slots
+	 */
+	public static GameWithServer findExisting(ServerType serverType, int maxPlayers, String map, int neededSlots) {
+		return findExisting(serverType, maxPlayers, map, neededSlots, null);
+	}
+
+	/**
+	 * Finds an existing joinable game with at least neededSlots available slots, filtered by game type name
+	 */
+	public static GameWithServer findExisting(ServerType serverType, int maxPlayers, String map, int neededSlots, String gameTypeName) {
 		cleanup();
 
 		List<GameWithServer> candidates = new ArrayList<>();
 		for (GameWithServer gameWithServer : gamesByGameId.values()) {
 			Game game = gameWithServer.game();
+			int availableSlots = maxPlayers - game.getInvolvedPlayers().size();
 			if (game.getType() == serverType &&
-					game.getInvolvedPlayers().size() < maxPlayers &&
-					(map == null || game.getMap().equals(map))) {
+					availableSlots >= neededSlots &&
+					(map == null || game.getMap().equals(map)) &&
+					(gameTypeName == null || gameTypeName.equals(game.getGameTypeName()))) {
 				candidates.add(gameWithServer);
 			}
 		}
@@ -147,7 +170,7 @@ public class OrchestratorCache {
 		return null;
 	}
 
-	private static void cleanup() {
+	public static void cleanup() {
 		long now = Instant.now().toEpochMilli();
 
 		// Remove stale servers
@@ -191,6 +214,7 @@ public class OrchestratorCache {
 	}
 
 	public static GameServerState getServerByUuid(UUID serverUuid) {
+		cleanup();
 		return serversByShortName.values().stream()
 				.filter(server -> server.uuid().equals(serverUuid))
 				.findFirst()

@@ -1,0 +1,1172 @@
+# SkyWars Level Progression Configuration
+# Levels 1-75 with cumulative XP requirements and rewards
+
+levels:
+  - level: 1
+    requirement: 0
+    isPrestige: true
+    prestigeName: "Stone"
+    prestigeColor: "7"
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: PRESTIGE_SCHEME
+        data:
+          name: "Stone"
+
+  - level: 2
+    requirement: 10
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 1500
+      - type: HYPIXEL_XP
+        data:
+          amount: 3000
+
+  - level: 3
+    requirement: 25
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 3000
+      - type: HYPIXEL_XP
+        data:
+          amount: 6000
+
+  - level: 4
+    requirement: 50
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 4500
+      - type: HYPIXEL_XP
+        data:
+          amount: 9000
+
+  - level: 5
+    requirement: 75
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 6000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 12000
+
+  - level: 6
+    requirement: 100
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 7500
+      - type: HYPIXEL_XP
+        data:
+          amount: 15000
+
+  - level: 7
+    requirement: 250
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 9000
+      - type: HYPIXEL_XP
+        data:
+          amount: 18000
+
+  - level: 8
+    requirement: 500
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 10500
+      - type: HYPIXEL_XP
+        data:
+          amount: 21000
+
+  - level: 9
+    requirement: 750
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 12000
+      - type: HYPIXEL_XP
+        data:
+          amount: 24000
+
+  - level: 10
+    requirement: 1000
+    isPrestige: true
+    prestigeName: "Iron"
+    prestigeColor: "f"
+    material: "IRON_INGOT"
+    rewards:
+      - type: PRESTIGE_SCHEME
+        data:
+          name: "Iron"
+      - type: COINS
+        data:
+          amount: 13500
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 27000
+
+  - level: 11
+    requirement: 1250
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 12
+    requirement: 1500
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 13
+    requirement: 1750
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 14
+    requirement: 2000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 15
+    requirement: 2500
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: FEATURE_UNLOCK
+        data:
+          feature: "ANGELS_DESCENT"
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 16
+    requirement: 3000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 17
+    requirement: 3500
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 18
+    requirement: 4000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 19
+    requirement: 4500
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 20
+    requirement: 5000
+    isPrestige: true
+    prestigeName: "Gold"
+    prestigeColor: "6"
+    material: "GOLD_INGOT"
+    rewards:
+      - type: PRESTIGE_SCHEME
+        data:
+          name: "Gold"
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 21
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 22
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 23
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 24
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 25
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: FEATURE_UNLOCK
+        data:
+          feature: "ANGELS_BREWERY"
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 26
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 27
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 28
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 29
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 30
+    requirement: 5000
+    isPrestige: true
+    prestigeName: "Diamond"
+    prestigeColor: "b"
+    material: "DIAMOND"
+    rewards:
+      - type: PRESTIGE_SCHEME
+        data:
+          name: "Diamond"
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 31
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 32
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 33
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 34
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 35
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 36
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 37
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 38
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 39
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 40
+    requirement: 5000
+    isPrestige: true
+    prestigeName: "Ruby"
+    prestigeColor: "c"
+    material: "RED_DYE"
+    rewards:
+      - type: PRESTIGE_SCHEME
+        data:
+          name: "Ruby"
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 41
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 42
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 43
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 44
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 45
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 46
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 47
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 48
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 49
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 50
+    requirement: 5000
+    isPrestige: true
+    prestigeName: "Crystal"
+    prestigeColor: "d"
+    material: "QUARTZ"
+    rewards:
+      - type: PRESTIGE_SCHEME
+        data:
+          name: "Crystal"
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 51
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 52
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 53
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 54
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 55
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 56
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 57
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 58
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 59
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 60
+    requirement: 5000
+    isPrestige: true
+    prestigeName: "Amethyst"
+    prestigeColor: "5"
+    material: "PURPLE_DYE"
+    rewards:
+      - type: PRESTIGE_SCHEME
+        data:
+          name: "Amethyst"
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 61
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 62
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 63
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 64
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 65
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 66
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 67
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 68
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 69
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 70
+    requirement: 5000
+    isPrestige: true
+    prestigeName: "Opal"
+    prestigeColor: "9"
+    material: "PLAYER_HEAD"
+    headTexture: "2255a7851b4786192a41f88dc2d28d4e9b7723b06e5ce2f6a418bde61326bc12"
+    rewards:
+      - type: PRESTIGE_SCHEME
+        data:
+          name: "Opal"
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 71
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 72
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 73
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 74
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000
+
+  - level: 75
+    requirement: 5000
+    isPrestige: false
+    material: "LIME_STAINED_GLASS_PANE"
+    rewards:
+      - type: OPAL
+        data:
+          amount: 1
+      - type: COINS
+        data:
+          amount: 15000
+      - type: TOKENS
+        data:
+          amount: 10000
+      - type: HYPIXEL_XP
+        data:
+          amount: 30000

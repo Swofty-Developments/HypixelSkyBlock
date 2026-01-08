@@ -1,0 +1,55 @@
+items:
+  - id: WHITE_GIFT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: White Gift Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: e47b37e67a89159bf4acc4a44d4328f4efc0181605142288e5eed1ab8aed913c
+      - id: NOT_FINISHED_YET
+
+  - id: GREEN_GIFT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Green Gift Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 28dc3c84491c4ff103de6ea01880e2d83432cd4878b84d6b43253cc51fd978e7
+      - id: NOT_FINISHED_YET
+
+  - id: BLUE_GIFT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Blue Gift Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 5b85e29f29ec9a90e482ea5b8391bcb4560bbae0dcd15d7ce1d86016b4356e98
+      - id: NOT_FINISHED_YET
+
+  - id: PURPLE_GIFT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Purple Gift Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: e9e39d91c04c30cc1f530fee798eed279dde60f95c2e1d155c0fdd361d0962ed
+      - id: NOT_FINISHED_YET
+
+  - id: GOLD_GIFT_TALISMAN
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Gold Gift Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: abd98792dd92d9719894341ac9012a584c4428558fd2c712f78e5f0d4da85470
+      - id: NOT_FINISHED_YET

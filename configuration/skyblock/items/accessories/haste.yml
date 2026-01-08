@@ -1,0 +1,66 @@
+items:
+  - id: HASTE_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      mining_speed: 10
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Haste Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 174b0c35491b660fc9138868bbcb5f02b539cb56b7ab63d6c53a9af2f63d061a
+      - id: SELLABLE
+        value: 20500
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_COBBLESTONE
+                amount: 16
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: HASTE_RING
+              amount: 1
+
+  - id: HASTE_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    default_statistics:
+      mining_speed: 25
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Haste Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 2fe7a882ffe0d0dd245d91bd8e6dcc1ed450ae13880b12276fbaf66d4a4164c9
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_COBBLESTONE
+                amount: 32
+              B:
+                type: HASTE_RING
+                amount: 1
+            result:
+              type: HASTE_ARTIFACT
+              amount: 1

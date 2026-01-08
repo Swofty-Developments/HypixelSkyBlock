@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "experience",
         description = "Sets your experience levels",
         usage = "/xp <level>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class XpCommand extends HypixelCommand {
     @Override

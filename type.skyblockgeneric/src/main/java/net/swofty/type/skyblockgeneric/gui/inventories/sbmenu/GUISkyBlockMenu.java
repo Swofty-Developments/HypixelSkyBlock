@@ -59,8 +59,7 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
                 ));
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                     if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
-                        lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
-                                StringUtility.toNormalCase(statistic.name()) + " §f" +
+                        lore.add(" " + statistic.getFullDisplayName() + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
                     }
                 });

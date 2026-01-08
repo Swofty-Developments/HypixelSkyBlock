@@ -80,7 +80,7 @@ public class GUICombatStats extends HypixelInventoryGUI {
                 }
         ),
 
-        CRIT_CHANCE(14, ItemStatistic.CRIT_CHANCE, new GUIMaterial("3e4f49535a276aacc4dc84133bfe81be5f2a4799a4c04d9a4ddb72d819ec2b2b"),
+        CRIT_CHANCE(14, ItemStatistic.CRITICAL_CHANCE, new GUIMaterial("3e4f49535a276aacc4dc84133bfe81be5f2a4799a4c04d9a4ddb72d819ec2b2b"),
                 player -> List.of(
                         "§7Critical Chance is the percent",
                         "§7chance that you land a Critical Hit",
@@ -89,18 +89,18 @@ public class GUICombatStats extends HypixelInventoryGUI {
                 )
         ),
 
-        CRIT_DAMAGE(15, ItemStatistic.CRIT_DAMAGE, new GUIMaterial("ddafb23efc57f251878e5328d11cb0eef87b79c87b254a7ec72296f9363ef7c"),
+        CRIT_DAMAGE(15, ItemStatistic.CRITICAL_DAMAGE, new GUIMaterial("ddafb23efc57f251878e5328d11cb0eef87b79c87b254a7ec72296f9363ef7c"),
                 player -> {
-                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.CRIT_DAMAGE);
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.CRITICAL_DAMAGE);
                     double damageMultiplier = 1D + value / 100D;
-                    double critChance = player.getStatistics().allStatistics().getOverall(ItemStatistic.CRIT_CHANCE);
+                    double critChance = player.getStatistics().allStatistics().getOverall(ItemStatistic.CRITICAL_CHANCE);
                     return List.of(
                             "§7Critical Damage multiplies the damage ",
                             "§7that you deal when you land a ",
                             "§7Critical Hit.",
                             " ",
-                            "§7Damage Multiplier: " + ItemStatistic.CRIT_DAMAGE.getDisplayColor() + StringUtility.decimalify(damageMultiplier, 1) + "x",
-                            "§7Critical Chance: " + ItemStatistic.CRIT_DAMAGE.getDisplayColor() + StringUtility.decimalify(critChance, 1) + "%",
+                            "§7Damage Multiplier: " + ItemStatistic.CRITICAL_DAMAGE.getDisplayColor() + StringUtility.decimalify(damageMultiplier, 1) + "x",
+                            "§7Critical Chance: " + ItemStatistic.CRITICAL_DAMAGE.getDisplayColor() + StringUtility.decimalify(critChance, 1) + "%",
                             " "
                     );
                 }
@@ -177,9 +177,9 @@ public class GUICombatStats extends HypixelInventoryGUI {
                 }
         ),
 
-        HEALTH_REGEN(22, ItemStatistic.HEALTH_REGEN, new GUIMaterial(Material.POTION),
+        HEALTH_REGEN(22, ItemStatistic.HEALTH_REGENERATION, new GUIMaterial(Material.POTION),
                 player -> {
-                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.HEALTH_REGEN);
+                    double value = player.getStatistics().allStatistics().getOverall(ItemStatistic.HEALTH_REGENERATION);
                     double maxHealth = player.getStatistics().allStatistics().getOverall(ItemStatistic.HEALTH);
                     double healthRegen = value / 100D;
                     double avgHpPerSecond = (1.5D + maxHealth / 100D) * (value / 100D) / 2D;
@@ -294,7 +294,7 @@ public class GUICombatStats extends HypixelInventoryGUI {
 
         public ItemStack.Builder buildItemStack(SkyBlockPlayer player) {
             double value = player.getStatistics().allStatistics().getOverall(statistic);
-            String title = StringUtility.getFormatedStatistic(statistic) + " §f" +
+            String title = statistic.getFullDisplayName() + " §f" +
                     StringUtility.decimalify(value, 1);
             List<String> lore = buildLore(player);
 
@@ -319,12 +319,12 @@ public class GUICombatStats extends HypixelInventoryGUI {
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7Gives you a better chance at", "§7fighting strong monsters. ", " "));
                 List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.HEALTH, ItemStatistic.DEFENSE, ItemStatistic.STRENGTH, ItemStatistic.INTELLIGENCE,
-                        ItemStatistic.CRIT_CHANCE, ItemStatistic.CRIT_DAMAGE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.TRUE_DEFENSE,
-                        ItemStatistic.FEROCITY, ItemStatistic.HEALTH_REGEN, ItemStatistic.VITALITY, ItemStatistic.MENDING, ItemStatistic.SWING_RANGE));
+                        ItemStatistic.CRITICAL_CHANCE, ItemStatistic.CRITICAL_DAMAGE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.TRUE_DEFENSE,
+                        ItemStatistic.FEROCITY, ItemStatistic.HEALTH_REGENERATION, ItemStatistic.VITALITY, ItemStatistic.MENDING, ItemStatistic.SWING_RANGE));
 
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                     if (stats.contains(statistic)) {
-                        lore.add(" " + StringUtility.getFormatedStatistic(statistic) + " §f" +
+                        lore.add(" " + statistic.getFullDisplayName() + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
                     }
                 });

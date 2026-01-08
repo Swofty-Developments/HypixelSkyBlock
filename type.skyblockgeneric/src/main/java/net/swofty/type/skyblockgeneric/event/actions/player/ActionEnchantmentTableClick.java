@@ -20,7 +20,6 @@ public class ActionEnchantmentTableClick implements HypixelEventClass {
         }
 
         event.setBlockingItemUse(true);
-
         new GUIEnchantmentTable(player.getInstance(), Pos.fromPoint(event.getBlockPosition())).open(player);
     }
 }

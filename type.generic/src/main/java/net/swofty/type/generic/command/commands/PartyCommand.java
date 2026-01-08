@@ -10,7 +10,6 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.ArrayList;
@@ -197,7 +196,7 @@ public class PartyCommand extends HypixelCommand {
         player.sendMessage("§e/p promote <player> §8- §7§oPromote a player to moderator");
         player.sendMessage("§e/p demote <player> §8- §7§oDemote a player from moderator");
         player.sendMessage("§e/p chat §8- §7§oSends a chat message to the entire party");
-        if (player.getRank().isEqualOrHigherThan(Rank.ADMIN)) {
+        if (player.getRank().isEqualOrHigherThan(Rank.STAFF)) {
             player.sendMessage("§e/p hijack <player> §8- §7§oHijacks a party (Admin only)");
         }
         player.sendMessage("§9§m-----------------------------------------------------");

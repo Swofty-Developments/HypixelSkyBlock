@@ -6,12 +6,81 @@ items:
         speed_increase: 0.1
       - id: NOT_FINISHED_YET
       - id: TRACKED_UNIQUE
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 8
+              B:
+                type: COAL
+                amount: 1
+            result:
+              type: AUTO_SMELTER
+              amount: 1
+
   - id: COMPACTOR
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
       - id: TRACKED_UNIQUE
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: ENCHANTED_COBBLESTONE
+                amount: 1
+              B:
+                type: ENCHANTED_REDSTONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: COMPACTOR
+              amount: 1
+
+  - id: HYPER_FURNACE
+    rarity: UNCOMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+      - id: TRACKED_UNIQUE
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_COBBLESTONE
+                amount: 8
+              B:
+                type: ENCHANTED_COAL
+                amount: 8
+            result:
+              type: HYPER_FURNACE
+              amount: 1
+
   - id: DIAMOND_SPREADING
     rarity: COMMON
     components:
@@ -21,6 +90,26 @@ items:
       - id: SELLABLE
         value: 640.0
       - id: TRACKED_UNIQUE
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: VINES
+                amount: 1
+              B:
+                type: ENCHANTED_DIAMOND
+                amount: 1
+            result:
+              type: DIAMOND_SPREADING
+              amount: 1
+
   - id: FLY_CATCHER
     rarity: COMMON
     components:
@@ -28,6 +117,7 @@ items:
         speed_increase: 0.1
       - id: ENCHANTED
       - id: TRACKED_UNIQUE
+
   - id: MINION_EXPANDER
     rarity: COMMON
     components:
@@ -35,12 +125,36 @@ items:
         speed_increase: 0.1
       - id: ENCHANTED
       - id: TRACKED_UNIQUE
+
   - id: SUPER_COMPACTOR_3000
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
       - id: TRACKED_UNIQUE
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: ENCHANTED_COBBLESTONE
+                amount: 64
+              B:
+                type: ENCHANTED_REDSTONE_BLOCK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: SUPER_COMPACTOR_3000
+              amount: 1
+
   - id: MITHRIL_INFUSION
     rarity: COMMON
     components:

@@ -1,0 +1,39 @@
+items:
+  - id: EMPEROR_TALISMAN
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Emperor's Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 4038b3fabec7e8bb9ee83f03d9284af72abe3d4a204f6220673292086b5619af
+      - id: SELLABLE
+        value: 100
+      - id: NOT_FINISHED_YET
+
+  - id: EMPEROR_RING
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Emperor's Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 7d6dd941ce3917d757fbd6ab288c87a236602fd94d4920f6ec3ac344c5faac33
+      - id: SELLABLE
+        value: 900
+      - id: NOT_FINISHED_YET
+
+  - id: EMPEROR_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Emperor's Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: e9b1d718e24a8cdd52252102cc7c7a94c73a15d3faf3bc3a8315daa2b947c539
+      - id: SELLABLE
+        value: 8100
+      - id: NOT_FINISHED_YET

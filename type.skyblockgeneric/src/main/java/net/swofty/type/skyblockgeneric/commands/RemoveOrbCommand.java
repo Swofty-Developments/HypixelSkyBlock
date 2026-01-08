@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "deleteorb",
         description = "Deletes orbs at the player's location.",
         usage = "/removeorb",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class RemoveOrbCommand extends HypixelCommand {
     @Override

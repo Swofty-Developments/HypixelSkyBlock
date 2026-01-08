@@ -8,6 +8,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MushroomSet implements ArmorSet, SetEvents {
     @Override
@@ -17,7 +18,7 @@ public class MushroomSet implements ArmorSet, SetEvents {
 
     @Override
     public ArrayList<String> getDescription() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<>(List.of(
                 "§7Grants the wearer permanent §aNight",
                 "§aVision §7while worn. During the night,",
                 "the stats of the armor pieces are",

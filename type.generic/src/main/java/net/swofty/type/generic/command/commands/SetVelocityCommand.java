@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "setvelocity",
 		description = "Sets the velocity of a player",
 		usage = "/velocity <player> <x> <y> <z>",
-		permission = Rank.ADMIN,
+		permission = Rank.STAFF,
 		allowsConsole = false)
 public class SetVelocityCommand extends HypixelCommand {
 

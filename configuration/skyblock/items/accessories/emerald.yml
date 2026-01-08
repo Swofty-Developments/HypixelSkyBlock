@@ -1,0 +1,45 @@
+items:
+  - id: EMERALD_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Emerald Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a8e50d027da90dbea8a66088aba6f978eac8a7beb6561020f0289fcd43d89c68
+      - id: SELLABLE
+        value: 7600
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_EMERALD
+                amount: 4
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: EMERALD_RING
+              amount: 1
+
+  - id: EMERALD_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Emerald Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: fd88161a7da12461e260dc7678b94b9c5e62fcd38213d1f808e36b4335808094
+      - id: SELLABLE
+        value: 7600
+      - id: NOT_FINISHED_YET

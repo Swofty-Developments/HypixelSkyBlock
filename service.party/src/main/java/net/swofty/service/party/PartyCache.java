@@ -5,11 +5,17 @@ import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.party.PendingParty;
 import net.swofty.commons.party.events.*;
 import net.swofty.commons.party.events.response.*;
+import net.swofty.commons.party.events.PartyPlayerDisconnectEvent;
+import net.swofty.commons.party.events.PartyPlayerRejoinEvent;
+import net.swofty.commons.party.events.response.PartyMemberDisconnectedResponseEvent;
+import net.swofty.commons.party.events.response.PartyMemberRejoinedResponseEvent;
+import net.swofty.commons.party.events.response.PartyMemberDisconnectTimeoutResponseEvent;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -22,6 +28,8 @@ public class PartyCache {
     private static final Map<UUID, UUID> playerToParty = new ConcurrentHashMap<>();
     private static final Map<UUID, PendingParty> pendingInvites = new ConcurrentHashMap<>();
     private static final List<UUID> partyWarpCooldown = new ArrayList<>();
+    private static final Map<UUID, UUID> disconnectTimers = new ConcurrentHashMap<>(); // playerUUID -> timerUUID (for cancellation tracking)
+    private static final long DISCONNECT_TIMEOUT_MS = 300000; // 5 minutes
 
     public static boolean isInParty(UUID playerUUID) {
         return playerToParty.containsKey(playerUUID);
@@ -102,6 +110,9 @@ public class PartyCache {
             sendErrorToPlayer(playerUUID, "§cYou are not in a party.");
             return;
         }
+
+        // Cancel any pending disconnect timer for this player
+        cancelDisconnectTimer(playerUUID);
 
         FullParty.Member member = getMember(party, playerUUID);
         if (member.getRole() == FullParty.Role.LEADER) {
@@ -190,6 +201,9 @@ public class PartyCache {
             return;
         }
 
+        // Cancel any pending disconnect timer for the kicked player
+        cancelDisconnectTimer(targetUUID);
+
         party.getMembers().remove(target);
         playerToParty.remove(targetUUID);
 
@@ -276,10 +290,22 @@ public class PartyCache {
         List<UUID> intendedToWarp = party.getParticipants().stream().filter(uuid -> !uuid.equals(warperUUID)).toList();
         Map<UUID, JSONObject> responses = ServiceToServerManager.sendToAllServers(FromServiceChannels.PROPAGATE_PARTY_EVENT, message, 3000).join();
         List<UUID> actualWarped = new ArrayList<>();
+        Map<UUID, String> failureReasons = new HashMap<>();
+
         for (JSONObject response : responses.values()) {
             boolean success = response.getBoolean("success");
 
-            if (!success) continue;
+            // Check if the warp was blocked (e.g., game already started)
+            if (!success) {
+                if (response.optBoolean("blocked", false)) {
+                    String blockReason = response.optString("blockReason", "Unable to warp");
+                    // Apply block reason to all intended warp targets
+                    for (UUID uuid : intendedToWarp) {
+                        failureReasons.put(uuid, blockReason);
+                    }
+                }
+                continue;
+            }
 
             List<UUID> playersHandledUuids = response.getJSONArray("playersHandledUUIDs")
                     .toList().stream().map(object -> {
@@ -295,6 +321,18 @@ public class PartyCache {
                     actualWarped.add(uuid);
                 }
             }
+
+            // Collect rejection reasons from server response
+            if (response.has("rejectedPlayers")) {
+                JSONObject rejectedPlayers = response.getJSONObject("rejectedPlayers");
+                for (String key : rejectedPlayers.keySet()) {
+                    try {
+                        UUID rejectedUuid = UUID.fromString(key);
+                        String reason = rejectedPlayers.getString(key);
+                        failureReasons.put(rejectedUuid, reason);
+                    } catch (Exception ignored) {}
+                }
+            }
         }
 
         List<UUID> didNotWarp = new ArrayList<>();
@@ -304,7 +342,7 @@ public class PartyCache {
             }
         });
 
-        PartyWarpOverviewResponseEvent warpOverviewResponse = new PartyWarpOverviewResponseEvent(party, warperUUID, actualWarped, didNotWarp);
+        PartyWarpOverviewResponseEvent warpOverviewResponse = new PartyWarpOverviewResponseEvent(party, warperUUID, actualWarped, didNotWarp, failureReasons);
         sendEvent(warpOverviewResponse);
     }
 
@@ -341,8 +379,115 @@ public class PartyCache {
         playerToParty.put(hijackerUUID, targetParty.getUuid());
     }
 
-    private static void disbandParty(FullParty party, UUID disbander) {
+    public static void handlePlayerDisconnect(PartyPlayerDisconnectEvent event) {
+        UUID playerUUID = event.getDisconnectedPlayer();
+
+        FullParty party = getPlayerParty(playerUUID);
+        if (party == null) {
+            return; // Player not in a party, nothing to do
+        }
+
+        // Check if player already has an active disconnect timer (prevent duplicates)
+        if (disconnectTimers.containsKey(playerUUID)) {
+            return;
+        }
+
+        // Create a unique timer ID for this disconnect event
+        UUID timerId = UUID.randomUUID();
+        disconnectTimers.put(playerUUID, timerId);
+
+        // Schedule the timeout
+        CompletableFuture.delayedExecutor(DISCONNECT_TIMEOUT_MS, TimeUnit.MILLISECONDS)
+                .execute(() -> {
+                    // Race condition check 1: Timer was cancelled (player rejoined or was removed)
+                    UUID currentTimerId = disconnectTimers.get(playerUUID);
+                    if (currentTimerId == null || !currentTimerId.equals(timerId)) {
+                        return;
+                    }
+
+                    // Race condition check 2: Party still exists
+                    FullParty currentParty = getPlayerParty(playerUUID);
+                    if (currentParty == null) {
+                        disconnectTimers.remove(playerUUID);
+                        return;
+                    }
+
+                    // Race condition check 3: Player still in party
+                    FullParty.Member member = getMember(currentParty, playerUUID);
+                    if (member == null) {
+                        disconnectTimers.remove(playerUUID);
+                        return;
+                    }
+
+                    // Remove the timer
+                    disconnectTimers.remove(playerUUID);
+
+                    // Handle timeout based on role
+                    boolean isLeader = member.getRole() == FullParty.Role.LEADER;
+
+                    if (isLeader) {
+                        // Leader timed out - disband the party
+                        disbandPartyDueToTimeout(currentParty, playerUUID);
+                    } else {
+                        // Regular member timed out - kick them
+                        currentParty.getMembers().remove(member);
+                        playerToParty.remove(playerUUID);
+
+                        PartyMemberDisconnectTimeoutResponseEvent responseEvent =
+                                new PartyMemberDisconnectTimeoutResponseEvent(currentParty, playerUUID, false);
+                        sendEvent(responseEvent);
+                    }
+                });
+
+        // Notify all party members about the disconnect
+        PartyMemberDisconnectedResponseEvent responseEvent =
+                new PartyMemberDisconnectedResponseEvent(party, playerUUID, DISCONNECT_TIMEOUT_MS / 1000);
+        sendEvent(responseEvent);
+    }
+
+    public static void handlePlayerRejoin(PartyPlayerRejoinEvent event) {
+        UUID playerUUID = event.getRejoinedPlayer();
+
+        // Check if player has a pending disconnect timer
+        UUID timerId = disconnectTimers.remove(playerUUID);
+        if (timerId == null) {
+            return; // No pending timer, nothing to do
+        }
+
+        // Verify player is still in a party
+        FullParty party = getPlayerParty(playerUUID);
+        if (party == null) {
+            return; // Party was disbanded while they were disconnected
+        }
+
+        // Notify party members about the rejoin
+        PartyMemberRejoinedResponseEvent responseEvent =
+                new PartyMemberRejoinedResponseEvent(party, playerUUID);
+        sendEvent(responseEvent);
+    }
+
+    private static void disbandPartyDueToTimeout(FullParty party, UUID timedOutLeader) {
+        // Cancel all disconnect timers for party members
         for (FullParty.Member member : party.getMembers()) {
+            disconnectTimers.remove(member.getUuid());
+            playerToParty.remove(member.getUuid());
+        }
+        activeParties.remove(party.getUuid());
+
+        // Send timeout response event (indicating leader timed out)
+        PartyMemberDisconnectTimeoutResponseEvent responseEvent =
+                new PartyMemberDisconnectTimeoutResponseEvent(party, timedOutLeader, true);
+        sendEvent(responseEvent);
+    }
+
+    private static void cancelDisconnectTimer(UUID playerUUID) {
+        disconnectTimers.remove(playerUUID);
+    }
+
+    private static void disbandParty(FullParty party, UUID disbander) {
+        // Cancel all disconnect timers for party members
+        for (FullParty.Member member : party.getMembers()) {
+            cancelDisconnectTimer(member.getUuid());
             playerToParty.remove(member.getUuid());
         }
         activeParties.remove(party.getUuid());

@@ -17,6 +17,7 @@ public enum CustomWorlds {
 	PROTOTYPE_LOBBY("hypixel_prototype_lobby"),
 	BEDWARS_LOBBY("hypixel_bedwars_lobby"),
 	MURDER_MYSTERY_LOBBY("hypixel_murder_mystery_lobby"),
+	SKYWARS_LOBBY("hypixel_skywars_lobby"),
 	;
 
 	private final String folderName;

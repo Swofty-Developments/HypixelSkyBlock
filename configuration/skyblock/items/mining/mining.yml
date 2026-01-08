@@ -6,6 +6,7 @@ items:
       breaking_power: 1.0
     components:
       - id: PICKAXE
+
   - id: ROOKIE_PICKAXE
     rarity: COMMON
     default_statistics:
@@ -14,3 +15,22 @@ items:
       damage: 15.0
     components:
       - id: PICKAXE
+
+  - id: LANTERN
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lantern
+      - id: SKULL_HEAD
+        texture: 16e5682b4a0e5af5237fb9960983c623eab04ec01b90147c4df4c90a7be664d5
+      - id: NOT_FINISHED_YET
+
+  - id: INFINI_TORCH
+    material: TORCH
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: InfiniTorch™
+      - id: NOT_FINISHED_YET
+      - id: ENCHANTED

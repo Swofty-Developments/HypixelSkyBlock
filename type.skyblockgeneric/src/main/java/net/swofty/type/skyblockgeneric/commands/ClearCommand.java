@@ -13,7 +13,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "cl",
         description = "Rid your inventory of useless items",
         usage = "/clear",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class ClearCommand extends HypixelCommand {
     @Override

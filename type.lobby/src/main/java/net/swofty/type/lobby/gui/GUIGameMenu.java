@@ -83,7 +83,7 @@ public class GUIGameMenu extends HypixelInventoryGUI implements RefreshingGUI {
                 lore.add("");
                 if (game.isImplemented()) {
                     if (cycleIndex % 2 == 0) {
-                        lore.add("§a   Click to Connect!");
+                        lore.add("§a  Click to Connect!");
                     } else {
                         lore.add("§a► Click to Connect!");
                     }

@@ -27,6 +27,7 @@ import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.ItemPriceCalculator;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,6 +160,9 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
     public PaginationList<ArmorSetRegistry> fillPaged(HypixelPlayer player, PaginationList<ArmorSetRegistry> paged) {
         MuseumableItemCategory.ARMOR_SETS.getItems().forEach(item -> {
             ArmorSetRegistry armorSet = ArmorSetRegistry.getArmorSet(item);
+            if (armorSet == null) {
+                Logger.error("ArmorSetRegistry is null! Add the armor set of " + item.getDisplayName() + " to the registry!");
+            }
             if (paged.contains(armorSet))
                 return;
             paged.add(armorSet);

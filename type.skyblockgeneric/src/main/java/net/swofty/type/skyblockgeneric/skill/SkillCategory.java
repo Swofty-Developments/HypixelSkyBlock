@@ -58,13 +58,12 @@ public abstract class SkillCategory {
                     case STATS_BASE -> {
                         ItemStatistic statistic = ((BaseStatisticReward) unlock).getStatistic();
                         lore.add("§7  §8+§a" + StringUtility.decimalify(((BaseStatisticReward) unlock).amountAdded(), 1) +
-                                statistic.getSuffix() + " " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
-                                statistic.getDisplayName());
+                                statistic.getSuffix() + " " + statistic.getFullDisplayName());
                     }
                     case STATS_ADDITIVE_PERCENTAGE -> {
                         ItemStatistic statistic = ((AdditivePercentageStatisticReward) unlock).getStatistic();
                         lore.add("§7  §8+§a" + StringUtility.decimalify(((AdditivePercentageStatisticReward) unlock).amountAdded() * 100, 1) +
-                                "% " + statistic.getDisplayColor() + statistic.getSymbol() + " " + statistic.getDisplayName());
+                                "% " + statistic.getFullDisplayName());
                     }
                     case RUNE -> lore.add("§7  Access to Level §d" + ((RuneReward) unlock).getRuneLevel() + " §7Runes");
                 }

@@ -490,7 +490,7 @@ public class GUIQuestsChallenges extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                player.closeInventory();
+                new GUIMyProfile().open(player);
             }
         });
 

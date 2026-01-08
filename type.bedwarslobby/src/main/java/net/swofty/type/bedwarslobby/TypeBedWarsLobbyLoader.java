@@ -13,6 +13,7 @@ import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.bedwarslobby.item.impl.BedWarsMenu;
 import net.swofty.type.bedwarslobby.item.impl.Collectibles;
 import net.swofty.type.bedwarslobby.launchpad.BedWarsLaunchPads;
+import net.swofty.type.bedwarslobby.parkour.BedWarsLobbyParkour;
 import net.swofty.type.bedwarslobby.util.BedWarsLobbyMap;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -27,10 +28,7 @@ import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.bedwarslobby.tab.BedWarsPlayersOnlineModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.LobbyBlockBreak;
-import net.swofty.type.lobby.events.LobbyItemEvents;
-import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
-import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
+import net.swofty.type.lobby.events.*;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
 import net.swofty.type.lobby.item.impl.HidePlayers;
@@ -40,6 +38,7 @@ import net.swofty.type.lobby.item.impl.ProfileItem;
 import net.swofty.type.lobby.launchpad.LaunchPad;
 import net.swofty.type.lobby.launchpad.LaunchPadHandler;
 import net.swofty.type.lobby.parkour.LobbyParkourManager;
+import net.swofty.type.lobby.parkour.Parkour;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -50,6 +49,7 @@ import java.util.Map;
 
 public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
     public static BedWarsLobbyMap bedWarsLobbyMap = new BedWarsLobbyMap();
+    public static LobbyParkourManager parkourManager;
 
     @Getter
     private final LobbyItemHandler itemHandler = new LobbyItemHandler();
@@ -57,6 +57,11 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
     @Override
     public ServerType getType() {
         return ServerType.BEDWARS_LOBBY;
+    }
+
+    @Override
+    public Parkour getParkour() {
+        return new BedWarsLobbyParkour();
     }
 
     @Override
@@ -93,11 +98,20 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
         MinecraftServer.getSchedulerManager().buildTask(PlayerHolograms::updateExternalHolograms).delay(TaskSchedule.seconds(5))
           .repeat(TaskSchedule.seconds(2))
           .schedule();
+
+        parkourManager = new LobbyParkourManager(getParkour());
+
+        LobbyTypeLoader.registerLobbyCommands();
     }
 
     @Override
     public List<LaunchPad> getLaunchPads() {
         return Arrays.asList(BedWarsLaunchPads.values());
+    }
+
+    @Override
+    public @Nullable LobbyParkourManager getParkourManager() {
+        return parkourManager;
     }
 
     @Override
@@ -110,11 +124,6 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
                 7, new HidePlayers(),
                 8, new LobbySelector()
         );
-    }
-
-    @Override
-    public LobbyParkourManager getParkourManager() {
-        return null;
     }
 
     @Override
@@ -153,6 +162,7 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
         ).toList());
         // Add lobby base events
         events.add(new LobbyItemEvents());
+        events.add(new LobbyParkourEvents());
         events.add(new LobbyLaunchPadEvents());
         events.add(new LobbyPlayerJoinEvents());
         events.add(new LobbyBlockBreak());

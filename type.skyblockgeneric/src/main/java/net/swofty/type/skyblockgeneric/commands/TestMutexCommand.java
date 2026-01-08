@@ -16,7 +16,7 @@ import java.util.UUID;
 @CommandParameters(aliases = "testmutex",
         description = "Test the data mutex service",
         usage = "/testmutex <global_key> [operation]",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class TestMutexCommand extends HypixelCommand {
     @Override

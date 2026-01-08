@@ -1,6 +1,6 @@
 items:
-  - id: FINE_AMBER_GEMSTONE
-    rarity: FINE
+  - id: FINE_AMBER_GEM
+    rarity: RARE
     components:
       - id: GEMSTONE_IMPL
         rarity: FINE
@@ -8,8 +8,22 @@ items:
         skull_texture: 4b1cce22de19ed6727abc5e6c2d57864c871a44c956bbe2eb3960269b686b8b3
       - id: SELLABLE
         value: 19200.0
-  - id: FINE_AMETHYST_GEMSTONE
-    rarity: FINE
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Amber Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_AMBER_GEM
+                amount: 80
+            result:
+              type: FINE_AMBER_GEM
+              amount: 1
+
+  - id: FINE_AMETHYST_GEM
+    rarity: RARE
     components:
       - id: GEMSTONE_IMPL
         rarity: FINE
@@ -17,8 +31,22 @@ items:
         skull_texture: 7a1ee5ffce04eb7da592d42414ff35e1bf38194d6b82e310dbc6261b47fb9c91
       - id: SELLABLE
         value: 19200.0
-  - id: FINE_JADE_GEMSTONE
-    rarity: FINE
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Amethyst Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_AMETHYST_GEM
+                amount: 80
+            result:
+              type: FINE_AMETHYST_GEM
+              amount: 1
+
+  - id: FINE_JADE_GEM
+    rarity: RARE
     components:
       - id: GEMSTONE_IMPL
         rarity: FINE
@@ -26,8 +54,22 @@ items:
         skull_texture: b28f1c0c5092e12d33770df45c5845a9610886039b34abe93a16c5e942dfc8e4
       - id: SELLABLE
         value: 19200.0
-  - id: FINE_JASPER_GEMSTONE
-    rarity: FINE
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Jade Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_JADE_GEM
+                amount: 80
+            result:
+              type: FINE_JADE_GEM
+              amount: 1
+
+  - id: FINE_JASPER_GEM
+    rarity: RARE
     components:
       - id: GEMSTONE_IMPL
         rarity: FINE
@@ -35,8 +77,22 @@ items:
         skull_texture: aac15f6fcf2ce963ef4ca71f1a8685adb97eb769e1d11194cbbd2e964a88978c
       - id: SELLABLE
         value: 19200.0
-  - id: FINE_RUBY_GEMSTONE
-    rarity: FINE
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Jasper Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_JASPER_GEM
+                amount: 80
+            result:
+              type: FINE_JASPER_GEM
+              amount: 1
+
+  - id: FINE_RUBY_GEM
+    rarity: RARE
     components:
       - id: GEMSTONE_IMPL
         rarity: FINE
@@ -44,8 +100,22 @@ items:
         skull_texture: e672959028f274b379d430f068f0f15a4f793eac12afb94ae0b4e50cf895df0f
       - id: SELLABLE
         value: 19200.0
-  - id: FINE_SAPPHIRE_GEMSTONE
-    rarity: FINE
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Ruby Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_RUBY_GEM
+                amount: 80
+            result:
+              type: FINE_RUBY_GEM
+              amount: 1
+
+  - id: FINE_SAPPHIRE_GEM
+    rarity: RARE
     components:
       - id: GEMSTONE_IMPL
         rarity: FINE
@@ -53,8 +123,22 @@ items:
         skull_texture: 36161daa3589ec9c8187459ac36fd4dd2646c040678d3bfacb72a2210c6c801c
       - id: SELLABLE
         value: 19200.0
-  - id: FINE_TOPAZ_GEMSTONE
-    rarity: FINE
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Sapphire Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_SAPPHIRE_GEM
+                amount: 80
+            result:
+              type: FINE_SAPPHIRE_GEM
+              amount: 1
+
+  - id: FINE_TOPAZ_GEM
+    rarity: RARE
     components:
       - id: GEMSTONE_IMPL
         rarity: FINE
@@ -62,3 +146,131 @@ items:
         skull_texture: 92cb6e51c461e7359526bea5e06209cddde7c6469a819f3405cf0a038c159502
       - id: SELLABLE
         value: 19200.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Topaz Gemstone
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_TOPAZ_GEM
+                amount: 80
+            result:
+              type: FINE_TOPAZ_GEM
+              amount: 1
+
+  - id: FINE_OPAL_GEM
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Opal Gemstone
+      - id: SELLABLE
+        value: 19200
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: OPAL
+        skull_texture: ad798e20a47d251a9e33d40332973c7189ac1550760ba25c4b956c9159364568
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_OPAL_GEM
+                amount: 80
+            result:
+              type: FINE_OPAL_GEM
+              amount: 1
+
+  - id: FINE_AQUAMARINE_GEM
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Aquamarine Gemstone
+      - id: SELLABLE
+        value: 25600
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: AQUAMARINE
+        skull_texture: 2b822b9dc70b9ca20008c332f481cbebb52bd50669ca98a89fd33d1345fa10f2
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_AQUAMARINE_GEM
+                amount: 80
+            result:
+              type: FINE_AQUAMARINE_GEM
+              amount: 1
+
+  - id: FINE_CITRINE_GEM
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Citrine Gemstone
+      - id: SELLABLE
+        value: 25600
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: CITRINE
+        skull_texture: ec0ab9c9f35a1bf44de18a0db2aa0ed2ebe8b9faa820307da3638f36a8306536
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_CITRINE_GEM
+                amount: 80
+            result:
+              type: FINE_CITRINE_GEM
+              amount: 1
+
+  - id: FINE_ONYX_GEM
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Onyx Gemstone
+      - id: SELLABLE
+        value: 25600
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: ONYX
+        skull_texture: 787a326331fe27f7ee074f97727604c495f95c378121302e879e1f40ba4d20a8
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_ONYX_GEM
+                amount: 80
+            result:
+              type: FINE_ONYX_GEM
+              amount: 1
+
+  - id: FINE_PERIDOT_GEM
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Fine Peridot Gemstone
+      - id: SELLABLE
+        value: 25600
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: PERIDOT
+        skull_texture: fcba7aefc1c4f412868739e2f2c2e651edeb1be25d3c7175e68a05b67506a1ed
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPELESS
+            recipe-type: MINING
+            ingredients:
+              - type: FLAWED_PERIDOT_GEM
+                amount: 80
+            result:
+              type: FINE_PERIDOT_GEM
+              amount: 1

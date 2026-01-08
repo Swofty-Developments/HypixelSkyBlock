@@ -13,7 +13,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "i",
         description = "Gives an item to the player",
         usage = "/item <item> [amount]",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class ItemCommand extends HypixelCommand {
     @Override

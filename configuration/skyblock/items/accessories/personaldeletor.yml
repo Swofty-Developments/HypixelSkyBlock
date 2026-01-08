@@ -1,0 +1,124 @@
+items:
+  - id: PERSONAL_DELETOR_4000
+    material: DISPENSER
+    rarity: UNCOMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Deletor 4000
+      - id: ACCESSORY
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - ACA
+            ingredients:
+              A:
+                type: ENCHANTED_IRON_INGOT
+                amount: 16
+              B:
+                type: ENCHANTED_LAVA_BUCKET
+                amount: 1
+              C:
+                type: ENCHANTED_REDSTONE_BLOCK
+                amount: 1
+            result:
+              type: PERSONAL_DELETOR_4000
+              amount: 1
+
+  - id: PERSONAL_DELETOR_5000
+    material: DISPENSER
+    rarity: RARE
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Deletor 5000
+      - id: ACCESSORY
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: ENCHANTED_IRON_INGOT
+                amount: 32
+              B:
+                type: PERSONAL_DELETOR_4000
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PERSONAL_DELETOR_5000
+              amount: 1
+
+  - id: PERSONAL_DELETOR_6000
+    material: DISPENSER
+    rarity: EPIC
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Deletor 6000
+      - id: ACCESSORY
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: ENCHANTED_IRON_INGOT
+                amount: 64
+              B:
+                type: PERSONAL_DELETOR_5000
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PERSONAL_DELETOR_6000
+              amount: 1
+
+  - id: PERSONAL_DELETOR_7000
+    material: DISPENSER
+    rarity: LEGENDARY
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Personal Deletor 7000
+      - id: ACCESSORY
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: ENCHANTED_IRON_BLOCK
+                amount: 1
+              B:
+                type: PERSONAL_DELETOR_6000
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PERSONAL_DELETOR_7000
+              amount: 1

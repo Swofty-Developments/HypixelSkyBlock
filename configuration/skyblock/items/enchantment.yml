@@ -8,6 +8,7 @@ items:
         handler_id: ENCHANTED_BOOK
       - id: TRACKED_UNIQUE
       - id: ENCHANTED
+
   - id: HOT_POTATO_BOOK
     rarity: EPIC
     lore:
@@ -23,6 +24,25 @@ items:
         value: 38400
       - id: TRACKED_UNIQUE
       - id: ENCHANTED
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FARMING
+            pattern:
+              - AA
+              - AB
+            ingredients:
+              A:
+                type: PAPER
+                amount: 1
+              B:
+                type: ENCHANTED_BAKED_POTATO
+                amount: 1
+            result:
+              type: HOT_POTATO_BOOK
+              amount: 1
+
   - id: FUMING_POTATO_BOOK
     rarity: EPIC
     lore:

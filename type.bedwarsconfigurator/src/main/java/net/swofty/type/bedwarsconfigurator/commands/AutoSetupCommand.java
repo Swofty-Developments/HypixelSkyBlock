@@ -36,7 +36,7 @@ import java.util.List;
         aliases = "setup mapsetup",
         description = "Automatic BedWars map configuration tool",
         usage = "/autosetup <subcommand>",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false
 )
 public class AutoSetupCommand extends HypixelCommand {

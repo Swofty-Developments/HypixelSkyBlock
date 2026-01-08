@@ -3,10 +3,10 @@ package net.swofty.type.murdermysterylobby.hologram;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.murdermystery.*;
+import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.murdermysterylobby.hologram.LeaderboardHologramManager.PlayerLeaderboardState;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.leaderboard.LeaderboardService;
-import net.swofty.type.generic.leaderboard.PlayerNameCache;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.NumberFormat;
@@ -53,7 +53,7 @@ public enum MurderMysteryLeaderboardHologram {
         int maxNameWidth = 0;
         if (alignment == MurderMysteryTextAlignment.BLOCK && !entries.isEmpty()) {
             for (LeaderboardService.LeaderboardEntry entry : entries) {
-                String name = PlayerNameCache.getUsername(entry.playerUuid());
+                String name = HypixelPlayer.getDisplayName(entry.playerUuid());
                 maxNameWidth = Math.max(maxNameWidth, getMinecraftStringWidth(name));
             }
         }
@@ -63,7 +63,7 @@ public enum MurderMysteryLeaderboardHologram {
         } else {
             int displayRank = 1;
             for (LeaderboardService.LeaderboardEntry entry : entries) {
-                String playerName = PlayerNameCache.getUsername(entry.playerUuid());
+                String playerName = HypixelPlayer.getDisplayName(entry.playerUuid());
                 String formattedScore = formatScore(entry.scoreAsLong());
 
                 String paddedName = playerName;

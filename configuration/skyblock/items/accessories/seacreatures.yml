@@ -1,0 +1,101 @@
+items:
+  - id: SEA_CREATURE_TALISMAN
+    material: PLAYER_HEAD
+    default_statistics:
+      sea_creature_chance: 0.1
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Sea Creature Talisman
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: eb7ae4dd0384543b31623ef19c1b3f886629424efae004b6ea75194ee9b9aa32
+      - id: SELLABLE
+        value: 180
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FISHING
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: SPONGE
+                amount: 2
+            result:
+              type: SEA_CREATURE_TALISMAN
+              amount: 1
+
+  - id: SEA_CREATURE_RING
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      sea_creature_chance: 0.2
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Sea Creature Ring
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: 7ac01f28133c16b73567a77444e29a1475202d974ace29624cb688d2491b0b58
+      - id: SELLABLE
+        value: 1000
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FISHING
+            pattern:
+              - ABA
+              - ACA
+              - ABA
+            ingredients:
+              A:
+                type: SPONGE
+                amount: 1
+              B:
+                type: ENCHANTED_SPONGE
+                amount: 1
+              c:
+                type: SEA_CREATURE_TALISMAN
+                amount: 1
+            result:
+              type: SEA_CREATURE_RING
+              amount: 1
+
+  - id: SEA_CREATURE_ARTIFACT
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      sea_creature_chance: 0.3
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Sea Creature Artifact
+      - id: ACCESSORY
+      - id: SKULL_HEAD
+        texture: a4270c3655178afe44597b6394708828c292455365bddef971a381f41e47d5d0
+      - id: SELLABLE
+        value: 25000
+      - id: NOT_FINISHED_YET
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FISHING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_SPONGE
+                amount: 8
+              B:
+                type: SEA_CREATURE_RING
+                amount: 1
+            result:
+              type: SEA_CREATURE_ARTIFACT
+              amount: 1

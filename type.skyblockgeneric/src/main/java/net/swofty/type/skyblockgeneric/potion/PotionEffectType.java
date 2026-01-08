@@ -33,8 +33,8 @@ public enum PotionEffectType {
 
     CRITICAL("Critical", PotionEffectCategory.BUFF, 4, 180,
             level -> ItemStatistics.builder()
-                    .withBase(ItemStatistic.CRIT_CHANCE, 10.0 + (level - 1) * 5.0) // +10 to +25% Crit Chance
-                    .withBase(ItemStatistic.CRIT_DAMAGE, 10.0 + (level - 1) * 10.0) // +10 to +40% Crit Damage
+                    .withBase(ItemStatistic.CRITICAL_CHANCE, 10.0 + (level - 1) * 5.0) // +10 to +25% Crit Chance
+                    .withBase(ItemStatistic.CRITICAL_DAMAGE, 10.0 + (level - 1) * 10.0) // +10 to +40% Crit Damage
                     .build(),
             null),
 
@@ -46,7 +46,7 @@ public enum PotionEffectType {
 
     REGENERATION("Regeneration", PotionEffectCategory.BUFF, 9, 45,
             level -> ItemStatistics.builder()
-                    .withBase(ItemStatistic.HEALTH_REGEN, 5.0 + (level - 1) * 5.0) // +5 to +45 Health Regen
+                    .withBase(ItemStatistic.HEALTH_REGENERATION, 5.0 + (level - 1) * 5.0) // +5 to +45 Health Regen
                     .build(),
             PotionEffect.REGENERATION),
 
@@ -105,7 +105,7 @@ public enum PotionEffectType {
     SPIRIT("Spirit", PotionEffectCategory.BUFF, 4, 180,
             level -> ItemStatistics.builder()
                     .withBase(ItemStatistic.SPEED, 10.0 * level) // +10 to +40 Speed
-                    .withBase(ItemStatistic.CRIT_DAMAGE, 10.0 * level) // +10 to +40 Crit Damage
+                    .withBase(ItemStatistic.CRITICAL_DAMAGE, 10.0 * level) // +10 to +40 Crit Damage
                     .build(),
             null),
 
@@ -191,7 +191,7 @@ public enum PotionEffectType {
 
     WOUNDED("Wounded", PotionEffectCategory.DEBUFF, 4, 45,
             level -> ItemStatistics.builder()
-                    .withBase(ItemStatistic.HEALTH_REGEN, -25.0 * level) // -25 to -100% healing
+                    .withBase(ItemStatistic.HEALTH_REGENERATION, -25.0 * level) // -25 to -100% healing
                     .build(),
             null),
 
@@ -342,9 +342,9 @@ public enum PotionEffectType {
         return switch (this) {
             case SPEED -> "Increases §aSpeed §7by §a" + stats.getOverall(ItemStatistic.SPEED).intValue() + "§7.";
             case STRENGTH -> "Increases §cStrength §7by §c" + stats.getOverall(ItemStatistic.STRENGTH).intValue() + "§7.";
-            case CRITICAL -> "Grants §9+" + stats.getOverall(ItemStatistic.CRIT_CHANCE).intValue() + "% Crit Chance §7and §9+" + stats.getOverall(ItemStatistic.CRIT_DAMAGE).intValue() + "% Crit Damage§7.";
+            case CRITICAL -> "Grants §9+" + stats.getOverall(ItemStatistic.CRITICAL_CHANCE).intValue() + "% Crit Chance §7and §9+" + stats.getOverall(ItemStatistic.CRITICAL_DAMAGE).intValue() + "% Crit Damage§7.";
             case HASTE -> "Increases §6Mining Speed §7by §6" + stats.getOverall(ItemStatistic.MINING_SPEED).intValue() + "§7.";
-            case REGENERATION -> "Increases §cHealth Regen §7by §c" + stats.getOverall(ItemStatistic.HEALTH_REGEN).intValue() + "§7.";
+            case REGENERATION -> "Increases §cHealth Regen §7by §c" + stats.getOverall(ItemStatistic.HEALTH_REGENERATION).intValue() + "§7.";
             case RESISTANCE -> "Increases §aDefense §7by §a" + stats.getOverall(ItemStatistic.DEFENSE).intValue() + "§7.";
             case MANA -> "Regenerate §b" + level + " Mana §7per second.";
             case ABSORPTION -> "Grants §6" + stats.getOverall(ItemStatistic.HEALTH).intValue() + " Absorption Hearts§7.";
@@ -364,7 +364,7 @@ public enum PotionEffectType {
             case WATER_BREATHING -> "Allows you to breathe underwater.";
             case JUMP_BOOST -> "Increases jump height.";
             case INVISIBILITY -> "Makes you invisible to mobs.";
-            case SPIRIT -> "Increases §cCrit Damage §7by §c" + stats.getOverall(ItemStatistic.CRIT_DAMAGE).intValue() + "§7.";
+            case SPIRIT -> "Increases §cCrit Damage §7by §c" + stats.getOverall(ItemStatistic.CRITICAL_DAMAGE).intValue() + "§7.";
             case DODGE, AGILITY -> "Grants §a" + (int) getDodgeChance(level) + "% §7chance to dodge attacks.";
             case STUN -> "Grants §e" + (int) getStunChance(level) + "% §7chance to stun enemies.";
             case AWKWARD, THICK, MUNDANE, WATER -> "No effect.";

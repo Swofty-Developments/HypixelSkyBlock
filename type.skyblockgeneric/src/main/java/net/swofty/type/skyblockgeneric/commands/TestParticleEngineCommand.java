@@ -13,7 +13,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 import java.time.Duration;
 
-@CommandParameters(aliases = "testpe", permission = Rank.ADMIN, description =
+@CommandParameters(aliases = "testpe", permission = Rank.STAFF, description =
         "Literally just gives me admin", usage = "/testpe <radius> <intensity> <duration>", allowsConsole = false)
 public class TestParticleEngineCommand extends HypixelCommand
 {

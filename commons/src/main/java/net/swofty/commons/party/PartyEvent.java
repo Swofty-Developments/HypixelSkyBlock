@@ -164,6 +164,29 @@ public abstract class PartyEvent {
                 var constructor = clazz.getDeclaredConstructor(net.swofty.commons.party.PendingParty.class);
                 return (PartyEvent) constructor.newInstance(pendingParty);
             }
+            case "PartyPlayerDisconnectEvent" -> {
+                var constructor = clazz.getDeclaredConstructor(UUID.class);
+                return (PartyEvent) constructor.newInstance(UUID.randomUUID());
+            }
+            case "PartyPlayerRejoinEvent" -> {
+                var constructor = clazz.getDeclaredConstructor(UUID.class);
+                return (PartyEvent) constructor.newInstance(UUID.randomUUID());
+            }
+            case "PartyMemberDisconnectedResponseEvent" -> {
+                var fullParty = FullParty.create(UUID.randomUUID(), UUID.randomUUID());
+                var constructor = clazz.getDeclaredConstructor(FullParty.class, UUID.class, long.class);
+                return (PartyEvent) constructor.newInstance(fullParty, UUID.randomUUID(), 300L);
+            }
+            case "PartyMemberRejoinedResponseEvent" -> {
+                var fullParty = FullParty.create(UUID.randomUUID(), UUID.randomUUID());
+                var constructor = clazz.getDeclaredConstructor(FullParty.class, UUID.class);
+                return (PartyEvent) constructor.newInstance(fullParty, UUID.randomUUID());
+            }
+            case "PartyMemberDisconnectTimeoutResponseEvent" -> {
+                var fullParty = FullParty.create(UUID.randomUUID(), UUID.randomUUID());
+                var constructor = clazz.getDeclaredConstructor(FullParty.class, UUID.class, boolean.class);
+                return (PartyEvent) constructor.newInstance(fullParty, UUID.randomUUID(), false);
+            }
             default -> throw new IllegalArgumentException("Unknown party event class: " + className);
         }
     }

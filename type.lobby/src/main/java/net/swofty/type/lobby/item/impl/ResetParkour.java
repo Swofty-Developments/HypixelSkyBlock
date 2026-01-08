@@ -6,6 +6,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.lobby.LobbyTypeLoader;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.parkour.LobbyParkourManager;
@@ -27,7 +28,7 @@ public class ResetParkour extends LobbyItem {
 		if (HypixelConst.getTypeLoader() instanceof LobbyTypeLoader lobbyLoader) {
 			LobbyParkourManager parkourManager = lobbyLoader.getParkourManager();
 			if (parkourManager == null) return;
-			event.getPlayer().teleport(parkourManager.getParkour().getStartLocation());
+			parkourManager.resetPlayer((HypixelPlayer) event.getPlayer());
 		}
 	}
 }

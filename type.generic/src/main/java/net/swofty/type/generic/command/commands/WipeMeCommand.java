@@ -11,7 +11,7 @@ import net.swofty.type.generic.utility.MathUtility;
 
 @CommandParameters(description = "Allows the player to wipe themselves",
         usage = "/wipeme",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         aliases = "deletemyprofiles",
         allowsConsole = false)
 public class WipeMeCommand extends HypixelCommand {

@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(aliases = "recomb",
         description = "Recombobulates the item in the players hand",
         usage = "/recombobulate",
-        permission = Rank.ADMIN,
+        permission = Rank.STAFF,
         allowsConsole = false)
 public class RecombobulateCommand extends HypixelCommand {
     @Override
