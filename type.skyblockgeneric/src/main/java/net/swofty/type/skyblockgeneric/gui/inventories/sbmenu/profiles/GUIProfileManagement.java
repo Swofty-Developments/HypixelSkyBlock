@@ -39,7 +39,16 @@ public class GUIProfileManagement extends HypixelInventoryGUI {
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(31));
-        set(GUIClickableItem.getGoBackItem(30, new GUISkyBlockMenu()));
+        set(new GUIClickableItem(30) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                player.openView(new GUISkyBlockMenu());
+            }
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer player) {
+                return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, "§7To SkyBlock Menu");
+            }
+        });
     }
 
     @SneakyThrows

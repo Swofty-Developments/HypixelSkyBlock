@@ -68,6 +68,19 @@ public final class ViewLayout<S> {
 		components.put(slot, ViewComponent.editable(slot, initialItem, onChange));
 	}
 
+	public void autoUpdating(int slot,
+							   BiFunction<S, ViewContext, ItemStack.Builder> render,
+							   java.time.Duration updateInterval) {
+		components.put(slot, ViewComponent.autoUpdating(slot, render, updateInterval));
+	}
+
+	public void autoUpdating(int slot,
+							   BiFunction<S, ViewContext, ItemStack.Builder> render,
+							   BiConsumer<ClickContext<S>, ViewContext> onClick,
+							   java.time.Duration updateInterval) {
+		components.put(slot, ViewComponent.autoUpdating(slot, render, onClick, updateInterval));
+	}
+
 	public void editable(int slot, SlotChangeHandler<S> onChange) {
 		components.put(slot, ViewComponent.editable(slot, onChange));
 	}

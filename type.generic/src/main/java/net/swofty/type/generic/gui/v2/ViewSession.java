@@ -11,23 +11,17 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.trait.InventoryEvent;
 import net.minestom.server.inventory.Inventory;
-import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.event.inventory.InventoryOpenEvent;
-import net.minestom.server.network.packet.server.play.OpenWindowPacket;
+import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.tinylog.Logger;
 
-import java.lang.reflect.Field;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -58,6 +52,8 @@ public final class ViewSession<S> {
 	private final SharedContext<S> sharedContext;
 	private final Map<Integer, ItemStack> trackedSlotItems = new HashMap<>();
 	private final Set<Integer> recentlyModifiedSlots = new HashSet<>();
+	private final Map<Integer, Task> autoUpdateTasks = new HashMap<>();
+	private final Map<UUID, Set<Integer>> componentSlots = new HashMap<>();
 
 	private ViewSession(View<S> view, HypixelPlayer player, S initialState, SharedContext<S> sharedContext) {
 		this.view = view;
@@ -194,6 +190,9 @@ public final class ViewSession<S> {
 		cachedLayout = new ViewLayout<>(config.getInventoryType());
 		view.layout(cachedLayout, state, context);
 
+		Set<UUID> previousComponents = new HashSet<>(componentSlots.keySet());
+		componentSlots.clear();
+
 		@SuppressWarnings("unchecked")
 		BiFunction<S, ViewContext, Component> titleFunction = (BiFunction<S, ViewContext, Component>) config.getTitleFunction();
 		inventory.setTitle(titleFunction.apply(state, context));
@@ -214,13 +213,38 @@ public final class ViewSession<S> {
 				return;
 			}
 
-			var item = component.render().apply(state, context).build();
-			if (!inventory.getItemStack(slot).equals(item)) {
-				inventory.setItemStack(slot, item);
+			renderSlot(slot, component);
+			if (component.updateInterval() != null) {
+				scheduleAutoUpdate(slot, component);
+			}
+			if (component.id() != null) {
+				previousComponents.remove(component.id());
 			}
 		});
 
 		view.onRefresh(state, context);
+	}
+
+	private void renderSlot(int slot, ViewComponent<S> component) {
+		var item = component.render().apply(state, context).build();
+		if (!inventory.getItemStack(slot).equals(item)) {
+			inventory.setItemStack(slot, item);
+		}
+
+		if (component.id() != null) {
+			componentSlots.computeIfAbsent(component.id(), k -> new HashSet<>()).add(slot);
+		}
+	}
+
+	private void scheduleAutoUpdate(int slot, ViewComponent<S> component) {
+		if (autoUpdateTasks.containsKey(slot)) return;
+
+		Task task = MinecraftServer.getSchedulerManager().submitTask(() -> {
+			if (closed) return TaskSchedule.stop();
+			renderSlot(slot, component);
+			return TaskSchedule.duration(component.updateInterval());
+		});
+		autoUpdateTasks.put(slot, task);
 	}
 
 	public void setState(S newState) {
@@ -277,6 +301,9 @@ public final class ViewSession<S> {
 	public void close(CloseReason reason) {
 		if (closed) return;
 		closed = true;
+
+		autoUpdateTasks.values().forEach(Task::cancel);
+		autoUpdateTasks.clear();
 
 		MinecraftServer.getGlobalEventHandler().removeChild(eventNode);
 		if (sharedContext != null) {

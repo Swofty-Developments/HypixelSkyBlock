@@ -36,7 +36,17 @@ public class GUIRecipeBook extends HypixelInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
+        set(new GUIClickableItem(48) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                player.openView(new GUISkyBlockMenu());
+            }
+
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer player) {
+                return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, "§7To SkyBlock Menu");
+            }
+        });
 
         ArrayList<SkyBlockRecipe> allRecipes = new ArrayList<>();
         allRecipes.addAll(ShapedRecipe.CACHED_RECIPES);

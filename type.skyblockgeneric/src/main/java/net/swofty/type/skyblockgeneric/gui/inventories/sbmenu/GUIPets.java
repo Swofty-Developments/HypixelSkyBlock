@@ -108,8 +108,18 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
     public void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
         set(GUIClickableItem.getCloseItem(49));
-        set(createSearchItem(this, 50, query));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
+        set(new GUIClickableItem(48) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                p.openView(new GUISkyBlockMenu());
+            }
+
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                return ItemStackCreator.getStack("§aGo Back",
+                        Material.ARROW, 1, "§7To SkyBlock Menu");
+            }
+        });
         set(new GUIClickableItem(47) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {

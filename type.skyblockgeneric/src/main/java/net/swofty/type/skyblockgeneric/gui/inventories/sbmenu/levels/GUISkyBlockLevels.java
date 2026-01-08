@@ -31,7 +31,18 @@ public class GUISkyBlockLevels extends HypixelInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
+        set(new GUIClickableItem(48) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                player.openView(new GUISkyBlockMenu());
+            }
+
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer player) {
+                return ItemStackCreator.getStack("§aGo Back",
+                        Material.ARROW, 1, "§7To SkyBlock Menu");
+            }
+        });
 
         set(new GUIClickableItem(50) {
             @Override
@@ -105,7 +116,7 @@ public class GUISkyBlockLevels extends HypixelInventoryGUI {
                         "§7Your level: " + level.getColor() + level,
                         "§7You have: §b" + Math.round(player.getSkyBlockExperience().getTotalXP()) + " XP",
                         " ",
-                        "§7You have completed §3" + (new DecimalFormat("##.##").format((double) completedChallenges / totalChallenges * 100)) + "% §7of the total",
+                        "§7You have completed §3" + (new java.text.DecimalFormat("##.##").format((double) completedChallenges / totalChallenges * 100)) + "% §7of the total",
                         "§7SkyBlock XP Tasks.");
             }
         });
@@ -256,7 +267,7 @@ public class GUISkyBlockLevels extends HypixelInventoryGUI {
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
+    public void onBottomClick(net.minestom.server.event.inventory.InventoryPreClickEvent e) {
         e.setCancelled(true);
     }
 }

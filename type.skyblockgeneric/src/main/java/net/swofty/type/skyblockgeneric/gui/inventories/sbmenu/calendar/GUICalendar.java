@@ -5,8 +5,10 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -60,7 +62,17 @@ public class GUICalendar extends HypixelInventoryGUI {
 		}
 
 
-		set(GUIClickableItem.getGoBackItem(39, new GUISkyBlockMenu()));
+		set(new GUIClickableItem(39) {
+			@Override
+			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+				player.openView(new GUISkyBlockMenu());
+			}
+
+			@Override
+			public ItemStack.Builder getItem(HypixelPlayer player) {
+				return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, "§7To SkyBlock Menu");
+			}
+		});
 		set(GUIClickableItem.getCloseItem(40));
 		updateItemStacks(getInventory(), getPlayer());
 	}
