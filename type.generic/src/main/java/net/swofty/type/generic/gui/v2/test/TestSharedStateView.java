@@ -30,13 +30,8 @@ public final class TestSharedStateView implements StatefulView<TestSharedStateVi
     }
 
     @Override
-    public InventoryType size() {
-        return InventoryType.CHEST_3_ROW;
-    }
-
-    @Override
-    public Component title(State state, ViewContext ctx) {
-        return Component.text("§9Shared Counter: §e" + state.counter());
+    public ViewConfiguration<State> configuration() {
+        return ViewConfiguration.withString((state, ctx) -> "§9Shared Counter: §e" + state.counter(), InventoryType.CHEST_3_ROW);
     }
 
     @Override

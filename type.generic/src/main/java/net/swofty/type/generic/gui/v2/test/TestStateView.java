@@ -20,13 +20,8 @@ public final class TestStateView implements StatefulView<TestStateView.State> {
     }
 
     @Override
-    public InventoryType size() {
-        return InventoryType.CHEST_3_ROW;
-    }
-
-    @Override
-    public Component title(State state, ViewContext ctx) {
-        return Component.text("Counter: " + state.counter());
+    public ViewConfiguration<State> configuration() {
+        return ViewConfiguration.withString((view, ctx) -> "Counter: " + view.counter(), InventoryType.CHEST_3_ROW);
     }
 
     @Override

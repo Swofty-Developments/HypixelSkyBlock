@@ -6,6 +6,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 
 import java.util.HashMap;
@@ -37,13 +38,8 @@ public final class TestContainerView implements StatefulView<TestContainerView.S
     }
 
     @Override
-    public InventoryType size() {
-        return InventoryType.CHEST_3_ROW;
-    }
-
-    @Override
-    public Component title(State state, ViewContext ctx) {
-        return Component.text("§8Personal Storage §7(§e" + state.itemCount() + " items§7)");
+    public ViewConfiguration<State> configuration() {
+        return new ViewConfiguration<>("§8Personal Storage", InventoryType.CHEST_3_ROW);
     }
 
     @Override
@@ -68,5 +64,10 @@ public final class TestContainerView implements StatefulView<TestContainerView.S
 
         Components.close(layout, 22);
         layout.allowHotkey(true);
+    }
+
+    @Override
+    public boolean onBottomClick(ClickContext<State> click, ViewContext ctx) {
+        return true;
     }
 }

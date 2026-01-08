@@ -25,13 +25,8 @@ public class ClaimRewardView implements View<ClaimRewardView.State> {
 	}
 
 	@Override
-	public InventoryType size() {
-		return InventoryType.CHEST_6_ROW;
-	}
-
-	@Override
-	public Component title(State state, ViewContext ctx) {
-		return Component.text("Claim Reward");
+	public ViewConfiguration<State> configuration() {
+		return new ViewConfiguration<>("Claim Reward", InventoryType.CHEST_6_ROW);
 	}
 
 	@Override

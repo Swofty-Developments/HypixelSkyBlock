@@ -1,11 +1,11 @@
 package net.swofty.type.generic.gui.v2.test;
 
-import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
 
@@ -48,13 +48,8 @@ public final class TestMixedView implements StatefulView<TestMixedView.State> {
     }
 
     @Override
-    public InventoryType size() {
-        return InventoryType.CHEST_5_ROW;
-    }
-
-    @Override
-    public Component title(State state, ViewContext ctx) {
-        return Component.text("§5Crafting Station");
+    public ViewConfiguration<State> configuration() {
+        return new ViewConfiguration<>("§5Crafting Station", InventoryType.CHEST_5_ROW);
     }
 
     @Override
@@ -117,6 +112,11 @@ public final class TestMixedView implements StatefulView<TestMixedView.State> {
 
         Components.close(layout, 44);
         layout.allowHotkey(true);
+    }
+
+    @Override
+    public boolean onBottomClick(ClickContext<State> click, ViewContext ctx) {
+        return true;
     }
 
     public static void open(HypixelPlayer player) {
