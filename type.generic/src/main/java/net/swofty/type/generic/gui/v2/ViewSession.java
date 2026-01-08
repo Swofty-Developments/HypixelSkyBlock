@@ -186,7 +186,7 @@ public final class ViewSession<S> {
 
         cachedLayout = new ViewLayout<>(view.size());
         view.layout(cachedLayout, state, context);
-        inventory.setTitle(view.title(state, context));
+        inventory.setTitle(view.getTitle(state, context));
 
         cachedLayout.components().forEach((slot, component) -> {
             if (component.behavior() == SlotBehavior.EDITABLE) {

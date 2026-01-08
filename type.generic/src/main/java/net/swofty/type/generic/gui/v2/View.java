@@ -8,7 +8,17 @@ import net.swofty.type.generic.gui.v2.context.ViewContext;
 public interface View<S> {
 	InventoryType size();
 
-	Component title(S state, ViewContext ctx);
+	Object title(S state, ViewContext ctx);
+
+	default Component getTitle(S state, ViewContext ctx) {
+		Object title = title(state, ctx);
+		if (title instanceof Component component) {
+			return component;
+		} else if (title instanceof String str) {
+			return Component.text(str);
+		}
+		throw new IllegalStateException("Title must be a Component or String");
+	}
 
 	void layout(ViewLayout<S> layout, S state, ViewContext ctx);
 
