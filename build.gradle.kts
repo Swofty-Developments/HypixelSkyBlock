@@ -37,7 +37,7 @@ subprojects {
         }
 
         dependencies {
-            "testImplementation"("org.junit.jupiter:junit-jupiter:5.8.2")
+            "testImplementation"("org.junit.jupiter:junit-jupiter:6.0.2")
 
             "implementation"("org.reflections:reflections:0.10.2")
             "implementation"("com.fasterxml.jackson.core:jackson-databind:2.17.0")
