@@ -146,7 +146,7 @@ public abstract class HypixelNPC {
 				Pos npcPosition = config.position(player);
 				String[] npcHolograms = config.holograms(player);
 
-				boolean needsUpdate = !entity.getPosition().equals(npcPosition);
+				boolean needsUpdate = !entity.getPosition().asVec().equals(npcPosition.asVec());
 				boolean needsFullUpdate = false;
 				if (entity instanceof NPCEntityImpl playerEntity && config instanceof HumanConfiguration humanConfig) {
 					needsFullUpdate = !Arrays.equals(playerEntity.getHolograms(), npcHolograms) ||
@@ -201,25 +201,15 @@ public abstract class HypixelNPC {
 						double pitchRad = Math.atan2(diffY, distanceXZ);
 						double pitch = -Math.toDegrees(pitchRad);
 
-						player.sendPackets(
-								new EntityRotationPacket(entity.getEntityId(), (float) yaw, (float) pitch, true),
-								new EntityHeadLookPacket(entity.getEntityId(), (float) yaw)
-						);
+						entity.setView((float) yaw, (float) pitch);
 					} else if (isLookingNPC) {
-						player.sendPackets(
-								new EntityRotationPacket(entity.getEntityId(), npcPosition.yaw(), npcPosition.pitch(), true),
-								new EntityHeadLookPacket(entity.getEntityId(), npcPosition.yaw())
-						);
+						entity.setView(npcPosition.yaw(), npcPosition.pitch());
 					}
 				} else {
 					if (inRange.contains(player)) {
 						inRange.remove(player);
 						entity.updateOldViewer(player);
-
-						player.sendPackets(
-								new EntityRotationPacket(entity.getEntityId(), npcPosition.yaw(), npcPosition.pitch(), true),
-								new EntityHeadLookPacket(entity.getEntityId(), npcPosition.yaw())
-						);
+						entity.setView(npcPosition.yaw(), npcPosition.pitch());
 					}
 				}
 			});
