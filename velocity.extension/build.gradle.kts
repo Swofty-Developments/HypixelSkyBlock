@@ -4,7 +4,7 @@ plugins {
     java
     application
     `maven-publish`
-    id("com.gradleup.shadow") version "9.3.0"
+    id("com.gradleup.shadow") version "9.3.1"
     id("org.jetbrains.gradle.plugin.idea-ext") version "1.3"
 }
 
@@ -36,10 +36,10 @@ dependencies {
     implementation("org.mongodb:bson:4.11.2")
     implementation("org.mongodb:mongodb-driver-sync:4.11.2")
 
-    implementation("com.viaversion:vialoader:4.0.2")
-    implementation("com.viaversion:viabackwards-common:5.3.2")
-    implementation("com.viaversion:viarewind-common:4.0.7")
-    implementation("com.viaversion:viaversion:5.3.2")
+    implementation("com.viaversion:vialoader:4.0.6")
+    implementation("com.viaversion:viabackwards-common:5.7.0")
+    implementation("com.viaversion:viarewind-common:4.0.13")
+    implementation("com.viaversion:viaversion:5.7.0")
 
     implementation(platform("io.netty:netty-bom:4.1.110.Final"))
     implementation("io.netty:netty-buffer")
