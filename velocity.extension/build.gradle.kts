@@ -36,7 +36,7 @@ dependencies {
     implementation("org.mongodb:bson:4.11.2")
     implementation("org.mongodb:mongodb-driver-sync:4.11.2")
 
-    implementation("com.viaversion:vialoader:4.0.2")
+    implementation("com.viaversion:vialoader:4.0.6")
     implementation("com.viaversion:viabackwards-common:5.3.2")
     implementation("com.viaversion:viarewind-common:4.0.13")
     implementation("com.viaversion:viaversion:5.3.2")
