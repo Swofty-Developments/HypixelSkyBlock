@@ -8,14 +8,5 @@ public record ClickContext<S>(
     Click click,
     HypixelPlayer player,
     S state
-) {
-    public boolean isLeftClick() {
-        return click instanceof Click.Left;
-    }
-
-    public boolean isRightClick() {
-        return click instanceof Click.Right;
-    }
-
-}
+) {}
 
