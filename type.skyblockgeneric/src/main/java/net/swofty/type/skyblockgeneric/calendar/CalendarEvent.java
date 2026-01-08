@@ -9,6 +9,7 @@ import net.swofty.commons.protocol.objects.darkauction.TriggerDarkAuctionProtoco
 import net.swofty.proxyapi.ProxyService;
 import org.tinylog.Logger;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ public record CalendarEvent(
         Function<Integer, String> displayName,
         List<String> description,
         List<Long> times,
-        long duration,
+        Duration duration,
         boolean tracksYear,
         BiConsumer<Long, Integer> action
 ) {
@@ -40,7 +41,7 @@ public record CalendarEvent(
                     "§7the Baker is giving out free Cake!"
             ),
             List.of(10L),
-            20 * 60 * 60L, // 1 hour
+            Duration.ofHours(1),
             true,
             (time, year) -> {
                 // New Year's actions
@@ -58,7 +59,7 @@ public record CalendarEvent(
                     "§7special items are sold."
             ),
             calculateDarkAuctionTimes(),
-            20 * 5 * 60L,
+            Duration.ofMinutes(5),
             false,
             (time, year) -> {
                 ProxyService darkAuctionService = new ProxyService(ServiceType.DARK_AUCTION);
@@ -108,7 +109,11 @@ public record CalendarEvent(
         List<CalendarEvent> activeEvents = new ArrayList<>();
         for (CalendarEvent event : allEvents) {
             for (Long eventStartTime : event.times()) {
-                if (time >= eventStartTime && time < eventStartTime + event.duration()) {
+                // convert ticks to milliseconds
+                Duration timeSinceEventStart = Duration.ofMillis((time - eventStartTime) * 50);
+
+                // checks if the event is currently active
+                if (!timeSinceEventStart.isNegative() && timeSinceEventStart.compareTo(event.duration()) < 0) {
                     activeEvents.add(event);
                     break;
                 }
