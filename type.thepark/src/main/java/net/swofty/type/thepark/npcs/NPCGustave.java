@@ -7,7 +7,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.swofty.type.skyblockgeneric.gui.inventories.ClaimRewardView;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.race.*;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -80,9 +80,9 @@ public class NPCGustave extends HypixelNPC {
 		}
 		if (missionData.isCurrentlyActive(MissionTalkToGustaveAgainAgain.class)) {
 			setDialogue(player, "completed-2").thenRun(() -> {
-				new GUIClaimReward(ItemType.HUNTER_KNIFE, () -> {
+				player.openView(new ClaimRewardView(), new ClaimRewardView.State(ItemType.HUNTER_KNIFE, () -> {
 					missionData.endMission(MissionTalkToGustaveAgainAgain.class);
-				}).open(player);
+				}));
 			});
 			return;
 		}

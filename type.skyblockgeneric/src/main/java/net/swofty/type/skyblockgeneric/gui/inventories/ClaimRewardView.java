@@ -1,0 +1,69 @@
+package net.swofty.type.skyblockgeneric.gui.inventories;
+
+import net.kyori.adventure.text.Component;
+import net.minestom.server.inventory.InventoryType;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.List;
+
+public class ClaimRewardView implements View<ClaimRewardView.State> {
+
+	public record State(ItemType rewardItem, Runnable onClaim, boolean claimed) {
+		public State(ItemType rewardItem, Runnable onClaim) {
+			this(rewardItem, onClaim, false);
+		}
+
+		public State claim() {
+			return new State(rewardItem, onClaim, true);
+		}
+	}
+
+	@Override
+	public InventoryType size() {
+		return InventoryType.CHEST_6_ROW;
+	}
+
+	@Override
+	public Component title(State state, ViewContext ctx) {
+		return Component.text("Claim Reward");
+	}
+
+	@Override
+	public void layout(ViewLayout<ClaimRewardView.State> layout, ClaimRewardView.State state, ViewContext ctx) {
+		Components.fill(layout);
+		layout.slot(22,
+				(_, _) -> ItemStackCreator.appendLore(
+						new NonPlayerItemUpdater(new SkyBlockItem(state.rewardItem())).getUpdatedItem(),
+						List.of(
+								"",
+								"§eClick to claim!"
+						)
+				),
+				(_, viewContext) -> {
+					SkyBlockPlayer player = (SkyBlockPlayer) viewContext.player();
+					viewContext.session(State.class).update(State::claim);
+					SkyBlockItem item = new SkyBlockItem(state.rewardItem());
+					player.addAndUpdateItem(item);
+					player.sendMessage("§aYou claimed §f" + item.getDisplayName() + "§a!");
+					player.closeInventory();
+				}
+		);
+		Components.close(layout, 49);
+	}
+
+	@Override
+	public void onClose(State state, ViewContext ctx, ViewSession.CloseReason reason) {
+		if (state.claimed()) return;
+		SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
+		state.claim();
+		player.sendMessage("§aYou claimed §f" + state.rewardItem().getDisplayName() + "§a!");
+		player.addAndUpdateItem(state.rewardItem());
+	}
+
+}

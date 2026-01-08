@@ -8,7 +8,7 @@ import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.swofty.type.skyblockgeneric.gui.inventories.ClaimRewardView;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.MissionCollectSpruceLogs;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.MissionFindKelly;
@@ -93,9 +93,9 @@ public class NPCKelly extends HypixelNPC {
 				return;
 			}
 			setDialogue(player, "after-collecting").thenRun(() -> {
-				new GUIClaimReward(ItemType.KELLY_TSHIRT, () -> {
+				player.openView(new ClaimRewardView(), new ClaimRewardView.State(ItemType.KELLY_TSHIRT, () -> {
 					data.endMission(MissionGiveKellySpruceLogs.class);
-				}).open(player);
+				}));
 			});
 			return;
 		}

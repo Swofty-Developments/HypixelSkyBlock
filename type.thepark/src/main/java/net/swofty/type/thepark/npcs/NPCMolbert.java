@@ -10,7 +10,7 @@ import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.swofty.type.skyblockgeneric.gui.inventories.ClaimRewardView;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.jungle.*;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -171,9 +171,9 @@ public class NPCMolbert extends HypixelNPC {
 								"I know that you are a mole",
 								(p) -> {
 									setDialogue(player, "option-iknow").thenRun(() -> {
-										new GUIClaimReward(ItemType.MOLE_HAT, () -> {
+										player.openView(new ClaimRewardView(), new ClaimRewardView.State(ItemType.MOLE_HAT, () -> {
 											data.endMission(MissionTalkToMolbertFourth.class);
-										}).open(player);
+										}));
 									});
 								}
 						)

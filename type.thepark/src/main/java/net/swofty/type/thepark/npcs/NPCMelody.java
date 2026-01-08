@@ -8,9 +8,8 @@ import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.swofty.type.skyblockgeneric.gui.inventories.ClaimRewardView;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionClaimTheTrousers;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna.MissionCheckOnMelody;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna.MissionCollectAcaciaLogs;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna.MissionGiveMelodyAcaciaLogs;
@@ -82,9 +81,9 @@ public class NPCMelody extends HypixelNPC {
 				sendNPCMessage(player, "It seems like you don't have enough §aAcacia Logs§f with you. Please come back when you have collected enough!");
 				return;
 			}
-			new GUIClaimReward(ItemType.MELODY_SHOES, () -> {
+			player.openView(new ClaimRewardView(), new ClaimRewardView.State(ItemType.MELODY_SHOES, () -> {
 				player.getMissionData().endMission(MissionGiveMelodyAcaciaLogs.class);
-			}).open(player);
+			}));
 		}
 	}
 
