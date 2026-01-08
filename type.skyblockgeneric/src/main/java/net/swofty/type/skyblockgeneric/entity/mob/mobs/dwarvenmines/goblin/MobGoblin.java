@@ -5,7 +5,6 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
-import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
@@ -14,11 +13,11 @@ import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
+import net.swofty.type.skyblockgeneric.entity.mob.ai.GroundNodeLockedPitchFollower;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.MobPlayerSkin;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
 import net.swofty.type.skyblockgeneric.region.RegionType;
@@ -26,7 +25,6 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.tinylog.Logger;
 
 import java.util.List;
 
@@ -67,13 +65,28 @@ public class MobGoblin extends BestiaryMob implements RegionPopulator, MobPlayer
 	}
 
 	@Override
+	public void onInit() {
+		getNavigator().setNodeFollower(() -> new GroundNodeLockedPitchFollower(this, 90));
+	}
+
+	@Override
+	public void onSpawn() {
+		setView(getPosition().yaw(), 90, getPosition().yaw());
+	}
+
+	@Override
+	public float getNameDisplayHeightOffset() {
+		return 0.1f;
+	}
+
+	@Override
 	public List<GoalSelector> getGoalSelectors() {
 		return List.of(
 				new MeleeAttackWithinRegionGoal(this,
 						1.6,
 						20,
 						TimeUnit.SERVER_TICK,
-						RegionType.GOBLIN_BURROWS),
+						RegionType.GOBLIN_BURROWS, false),
 				new RandomRegionStrollGoal(this, 5, RegionType.GOBLIN_BURROWS)
 		);
 	}

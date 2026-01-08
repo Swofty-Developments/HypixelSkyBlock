@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 
 public class TextDisplayEntity extends LivingEntity {
 
-
 	public TextDisplayEntity(Component text, Consumer<TextDisplayMeta> metaConsumer) {
 		super(EntityType.TEXT_DISPLAY);
 
@@ -22,4 +21,5 @@ public class TextDisplayEntity extends LivingEntity {
 			metaConsumer.accept(meta);
 		});
 	}
+
 }
