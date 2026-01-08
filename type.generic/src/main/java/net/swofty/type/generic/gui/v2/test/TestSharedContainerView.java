@@ -76,9 +76,6 @@ public final class TestSharedContainerView implements View<TestSharedContainerVi
 		}
 
 		SharedContext<State> ctx = SharedContext.create(contextId, new State(teamName));
-		ctx.onPersist(context ->
-				System.out.println("Persisting team chest " + teamId + " with " + context.getAllSlotItems().size() + " items")
-		);
 		ctx.onSlotChange(change ->
 				System.out.println("Slot " + change.slot() + " changed: " + change.oldItem().material() + " -> " + change.newItem().material())
 		);

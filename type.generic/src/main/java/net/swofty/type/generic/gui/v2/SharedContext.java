@@ -21,18 +21,14 @@ public final class SharedContext<S> {
     private volatile S state;
     private final Map<Integer, ItemStack> slotItems;
     private final Set<ViewSession<S>> sessions;
-    private final List<Consumer<SharedContext<S>>> persistenceHandlers;
     private final List<Consumer<SlotChange>> slotChangeListeners;
-    private PersistenceMode persistenceMode;
 
     private SharedContext(String id, S initialState) {
         this.id = id;
         this.state = initialState;
         this.slotItems = new ConcurrentHashMap<>();
         this.sessions = new CopyOnWriteArraySet<>();
-        this.persistenceHandlers = new CopyOnWriteArrayList<>();
         this.slotChangeListeners = new CopyOnWriteArrayList<>();
-        this.persistenceMode = PersistenceMode.ON_CLOSE;
     }
 
     @SuppressWarnings("unchecked")
@@ -57,7 +53,6 @@ public final class SharedContext<S> {
     public void setState(S newState) {
         this.state = newState;
         broadcast();
-        if (persistenceMode == PersistenceMode.IMMEDIATE) persist();
     }
 
     public ItemStack getSlotItem(int slot) {
@@ -78,7 +73,6 @@ public final class SharedContext<S> {
         }
 
         broadcastRender();
-        if (persistenceMode == PersistenceMode.IMMEDIATE) persist();
     }
 
     public Map<Integer, ItemStack> getAllSlotItems() {
@@ -111,7 +105,6 @@ public final class SharedContext<S> {
     void unregisterSession(ViewSession<S> session) {
         sessions.remove(session);
         if (sessions.isEmpty()) {
-            if (persistenceMode == PersistenceMode.ON_CLOSE) persist();
             CONTEXTS.remove(id);
         } else {
             broadcastRender();
@@ -134,23 +127,9 @@ public final class SharedContext<S> {
         }
     }
 
-    public SharedContext<S> onPersist(Consumer<SharedContext<S>> handler) {
-        persistenceHandlers.add(handler);
-        return this;
-    }
-
     public SharedContext<S> onSlotChange(Consumer<SlotChange> listener) {
         slotChangeListeners.add(listener);
         return this;
-    }
-
-    public SharedContext<S> persistenceMode(PersistenceMode mode) {
-        this.persistenceMode = mode;
-        return this;
-    }
-
-    public void persist() {
-        persistenceHandlers.forEach(h -> h.accept(this));
     }
 
     public void closeAll() {
@@ -176,10 +155,4 @@ public final class SharedContext<S> {
     }
 
     public record SlotChange(int slot, ItemStack oldItem, ItemStack newItem) {}
-
-    public enum PersistenceMode {
-        IMMEDIATE,
-        ON_CLOSE,
-        MANUAL
-    }
 }
