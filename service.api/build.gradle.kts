@@ -33,7 +33,7 @@ dependencies {
     implementation("org.mongodb:mongodb-driver-sync:4.11.2")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
-    compileOnly("org.jetbrains:annotations:24.1.0")
+    compileOnly("org.jetbrains:annotations:26.0.2-1")
 }
 
 application {
