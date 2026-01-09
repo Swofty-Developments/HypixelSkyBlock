@@ -1,5 +1,7 @@
 package net.swofty.loader;
 
+import io.sentry.ProfileLifecycle;
+import io.sentry.Sentry;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -56,6 +58,15 @@ public class Hypixel {
             System.exit(0);
             return;
         }
+
+        Sentry.init(options -> {
+            options.setDsn(ConfigProvider.settings().getIntegrations().getSentryDsn());
+            options.setSendDefaultPii(true);
+            options.setTracesSampleRate(1.0);
+            options.setProfileSessionSampleRate(1.0);
+            options.setProfileLifecycle(ProfileLifecycle.TRACE);
+            options.getLogs().setEnabled(true);
+        });
 
         ServerType serverType = ServerType.valueOf(args[0].toUpperCase());
         long startTime = System.currentTimeMillis();

@@ -27,7 +27,11 @@ public class ConfigProvider {
 					.build();
 
 			CommentedConfigurationNode node = loader.load();
-			Settings config = new Settings();
+			Settings existingSettings = node.get(Settings.class);
+			if (existingSettings == null) {
+				existingSettings = new Settings();
+			}
+			Settings config = existingSettings;
 			node.set(Settings.class, config);
 			loader.save(node);
 

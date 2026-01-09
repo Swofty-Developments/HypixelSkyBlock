@@ -54,6 +54,8 @@ public class Settings {
 
 		@Comment("Whether to enable ViaVersion for supporting multiple Minecraft versions. This may cause issues of any kind")
 		private boolean viaVersion = false;
+
+		private String sentryDsn = "";
 	}
 
 }
