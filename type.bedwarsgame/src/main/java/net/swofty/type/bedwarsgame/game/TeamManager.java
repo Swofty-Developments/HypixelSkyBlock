@@ -177,7 +177,7 @@ public final class TeamManager {
 
 	public List<BedWarsPlayer> getPlayersOnTeam(TeamKey teamKey) {
 		return game.getPlayers().stream()
-				.filter(player -> teamKey.getName().equals(player.getTag(Tag.String("team")))
+				.filter(player -> teamKey.equals(player.getTeamKey())
 						&& player.isOnline()
 						&& !Boolean.TRUE.equals(player.getTag(Game.ELIMINATED_TAG)))
 				.collect(Collectors.toList());
@@ -185,7 +185,7 @@ public final class TeamManager {
 
 	public int countActivePlayersOnTeam(TeamKey teamKey) {
 		return (int) game.getPlayers().stream()
-				.filter(player -> teamKey.getName().equals(player.getTag(Tag.String("team")))
+				.filter(player -> teamKey.equals(player.getTeamKey())
 						&& player.isOnline()
 						&& !Boolean.TRUE.equals(player.getTag(Game.ELIMINATED_TAG)))
 				.count();

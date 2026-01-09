@@ -5,36 +5,37 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.events.ActionGamePlayerEvent;
 import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.gui.inventory.SharedInventory;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GUITeamChest extends SharedInventory {
 
-	private final String teamName;
+	private final BedWarsMapsConfig.TeamKey teamKey;
 
-	public GUITeamChest(String teamName) {
-		super(teamName.toUpperCase() + "'s Team Chest", InventoryType.CHEST_3_ROW);
-		this.teamName = teamName;
+	public GUITeamChest(BedWarsMapsConfig.TeamKey teamName) {
+		super(teamName.getName() + "'s Team Chest", InventoryType.CHEST_3_ROW);
+		this.teamKey = teamName;
 	}
 
 	@Override
 	public void setItems(InventoryGUIOpenEvent e) {
 		if (sharedContext == null) return;
 
-		HypixelPlayer player = e.player();
-		String gameId = player.getTag(Tag.String("gameId"));
-		if (gameId == null) return;
+		BedWarsPlayer player = (BedWarsPlayer) e.player();
 
-		Game game = TypeBedWarsGameLoader.getGameById(gameId);
+		Game game = player.getGame();
 		if (game == null) return;
 
-		Map<Integer, ItemStack> teamChest = game.getChests().get(teamName);
+		Map<Integer, ItemStack> teamChest = game.getChests().get(teamKey);
 		if (teamChest != null) {
 			setSharedItems(teamChest);
 		}
@@ -176,7 +177,7 @@ public class GUITeamChest extends SharedInventory {
 
 	@Override
 	protected void onContextClosed(SharedInventoryContext context) {
-		ActionGamePlayerEvent.ACTIVE_TEAM_CHESTS.remove(teamName);
+		ActionGamePlayerEvent.ACTIVE_TEAM_CHESTS.remove(teamKey);
 	}
 
 	@Override
@@ -196,7 +197,7 @@ public class GUITeamChest extends SharedInventory {
 				continue;
 			}
 
-			Map<Integer, ItemStack> teamChest = game.getChests().computeIfAbsent(teamName, k -> new java.util.concurrent.ConcurrentHashMap<>());
+			Map<Integer, ItemStack> teamChest = game.getChests().computeIfAbsent(teamKey, k -> new ConcurrentHashMap<>());
 			if (newItem.isAir()) {
 				teamChest.remove(slot);
 			} else {

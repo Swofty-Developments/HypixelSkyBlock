@@ -113,12 +113,6 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 				.orElse(null);
 	}
 
-	public static Game getPlayerGame(@NotNull Player player) {
-		String gameId = player.getTag(Tag.String("gameId"));
-		if (gameId == null) return null;
-		return getGameById(gameId);
-	}
-
 	@SneakyThrows
 	public static Game createGame(BedWarsMapsConfig.MapEntry entry) {
 		if (games.size() >= MAX_GAMES) {
@@ -145,7 +139,8 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 
 	private static Component footer(HypixelPlayer player) {
 		Component start = Component.empty();
-		if (TypeBedWarsGameLoader.getPlayerGame(player) != null) {
+		BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
+		if (bwPlayer.getGame() != null) {
 			start = start.append(MiniMessage.miniMessage().deserialize("<aqua>Kills: <yellow>0 <aqua>Final Kills: <yellow>0 <aqua>Beds Broken: <yellow>0")).appendNewline();
 		}
 		return start

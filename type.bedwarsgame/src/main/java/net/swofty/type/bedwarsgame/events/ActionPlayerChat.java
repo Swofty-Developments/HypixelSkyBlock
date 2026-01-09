@@ -27,7 +27,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 		final BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		event.setCancelled(true);
 
-		Game game = TypeBedWarsGameLoader.getPlayerGame(player);
+		Game game = player.getGame();
 		if (game == null) return;
 
 		BedWarsDataHandler bedWarsDataHandler = BedWarsDataHandler.getUser(player);

@@ -22,7 +22,7 @@ public class LeaveGameBed extends SimpleInteractableItem {
 
 	@Override
 	public void onItemUse(PlayerUseItemEvent event) {
-		Game game = TypeBedWarsGameLoader.getPlayerGame(event.getPlayer());
+		Game game = ((BedWarsPlayer) event.getPlayer()).getGame();
 		if (game != null) {
 			game.leave((BedWarsPlayer) event.getPlayer());
 		}
