@@ -36,7 +36,7 @@ public class GUIQuiver extends HypixelInventoryGUI {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(40));
-        set(GUIClickableItem.getGoBackItem(39, new GUIYourBags()));
+        //set(GUIClickableItem.getGoBackItem(39, new GUIYourBags()));
 
         int amountOfSlots = 0;
         int rawAmountOfSlots = 0;

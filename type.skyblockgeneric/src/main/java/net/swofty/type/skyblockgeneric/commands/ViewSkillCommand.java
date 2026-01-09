@@ -23,7 +23,7 @@ public class ViewSkillCommand extends HypixelCommand {
             if (!permissionCheck(sender)) return;
 
             final SkillCategories skillCategory = context.get(skillArgument);
-            new GUISkillCategory(skillCategory, 0).open((SkyBlockPlayer) sender);
+            ((SkyBlockPlayer) sender).openView(new GUISkillCategory(skillCategory, 0));
         }, skillArgument);
     }
 }

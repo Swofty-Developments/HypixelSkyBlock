@@ -47,7 +47,7 @@ public class GUISackOfSacks extends HypixelInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(40));
-        set(GUIClickableItem.getGoBackItem(39, new GUIYourBags()));
+        //set(GUIClickableItem.getGoBackItem(39, new GUIYourBags()));
 
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
 

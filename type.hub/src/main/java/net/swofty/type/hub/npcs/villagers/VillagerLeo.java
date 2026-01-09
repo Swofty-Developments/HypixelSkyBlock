@@ -53,7 +53,7 @@ public class VillagerLeo extends HypixelNPC {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
                     setDialogue(player, "quest-hello").thenRun(() -> {
-                        new GUIRecipe(ItemType.LEAFLET_CHESTPLATE, null).open(player);
+                        //new GUIRecipe(ItemType.LEAFLET_CHESTPLATE, null).open(player);
                     });
                     return;
                 }

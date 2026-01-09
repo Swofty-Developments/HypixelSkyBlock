@@ -29,6 +29,8 @@ import java.util.function.UnaryOperator;
 
 public final class ViewSession<S> {
 
+	@Getter
+	@Accessors(fluent = true)
 	private final View<S> view;
 	@Getter
 	@Accessors(fluent = true)
@@ -46,6 +48,7 @@ public final class ViewSession<S> {
 	private Consumer<CloseReason> onCloseHandler;
 	@Getter
 	private boolean closed;
+	private boolean suppressCloseEvent;
 
 	@Getter
 	@Accessors(fluent = true)
@@ -179,7 +182,10 @@ public final class ViewSession<S> {
 	}
 
 	private void onCloseEvent(InventoryCloseEvent event) {
-		if (event.getInventory() != inventory) return;
+		if (event.getInventory() != inventory || suppressCloseEvent) {
+			suppressCloseEvent = false;
+			return;
+		}
 		close(CloseReason.PLAYER_EXITED);
 	}
 
@@ -189,8 +195,6 @@ public final class ViewSession<S> {
 		ViewConfiguration<?> config = view.configuration();
 		cachedLayout = new ViewLayout<>(config.getInventoryType());
 		view.layout(cachedLayout, state, context);
-
-		Set<UUID> previousComponents = new HashSet<>(componentSlots.keySet());
 		componentSlots.clear();
 
 		@SuppressWarnings("unchecked")
@@ -216,9 +220,6 @@ public final class ViewSession<S> {
 			renderSlot(slot, component);
 			if (component.updateInterval() != null) {
 				scheduleAutoUpdate(slot, component);
-			}
-			if (component.id() != null) {
-				previousComponents.remove(component.id());
 			}
 		});
 
@@ -300,6 +301,9 @@ public final class ViewSession<S> {
 
 	public void close(CloseReason reason) {
 		if (closed) return;
+		if (reason == CloseReason.REPLACED) {
+			suppressCloseEvent = true;
+		}
 		closed = true;
 
 		autoUpdateTasks.values().forEach(Task::cancel);

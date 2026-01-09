@@ -500,7 +500,7 @@ public class GUIGatheringStats extends HypixelInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockProfile()));
+        //set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockProfile()));
         set(GUIClickableItem.getCloseItem(49));
 
         set(new GUIItem(4) {

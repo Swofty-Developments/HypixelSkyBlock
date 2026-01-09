@@ -18,6 +18,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.fasttravel.GUIFast
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.profiles.GUIProfileManagement;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.questlog.GUIMissionLog;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipeBook;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.skills.GUISkills;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.storage.GUIStorage;
@@ -67,7 +68,7 @@ public class GUISkyBlockMenu extends StatelessView {
             );
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
-            new GUISkyBlockProfile().open(player);
+            player.openView(new GUISkyBlockProfile());
         });
 
         layout.slot(22, (s, c) -> {
@@ -95,7 +96,9 @@ public class GUISkyBlockMenu extends StatelessView {
                 "§7many different items inside!",
                 " ",
                 "§eClick to view!"
-        ), (click, c) -> new GUIYourBags().open((SkyBlockPlayer) c.player()));
+        ), (click, c) -> {
+            c.player().openView(new GUIYourBags());
+        });
 
         layout.slot(30, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -128,7 +131,9 @@ public class GUISkyBlockMenu extends StatelessView {
             lore.add(" ");
             lore.add("§eClick to view!");
             return ItemStackCreator.getStack("§aRecipe Book", Material.BOOK, 1, lore);
-        }, (click, c) -> new GUIRecipeBook().open((SkyBlockPlayer) c.player()));
+        }, (click, c) -> {
+            c.player().openView(new GUIRecipeBook());
+        });
 
         layout.slot(25, (s, c) -> ItemStackCreator.getStack("§aStorage", Material.CHEST, 1,
                 "§7Store global items that you",
@@ -151,17 +156,17 @@ public class GUISkyBlockMenu extends StatelessView {
                 "§7be obtained through Quests.",
                 " ",
                 "§eClick to view!"
-        ), (click, c) -> new GUIMissionLog().open((SkyBlockPlayer) c.player()));
+        ), (click, c) -> c.player().openView(new GUIMissionLog()));
 
         layout.autoUpdating(24, (s, c) -> ItemStackCreator.getStack("§aCalendar and Events", Material.CLOCK, 1, getCalendarLore()),
-                (click, c) -> new GUICalendar().open((SkyBlockPlayer) c.player()), Duration.ofSeconds(1));
+                (click, c) -> c.push(new GUICalendar()), Duration.ofSeconds(1));
 
         layout.slot(19, (s, c) -> ItemStackCreator.getStack("§aYour Skills", Material.DIAMOND_SWORD, 1,
                 "§7View your Skill progression and",
                 "§7rewards.",
                 " ",
                 "§eClick to view!"
-        ), (click, c) -> new GUISkills().open((SkyBlockPlayer) c.player()));
+        ), (click, c) -> c.player().openView(new GUISkills()));
 
         layout.slot(20, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -178,7 +183,10 @@ public class GUISkyBlockMenu extends StatelessView {
             lore.add(" ");
             lore.add("§eClick to view!");
             return ItemStackCreator.getStack("§aCollections", Material.PAINTING, 1, lore.toArray(new String[0]));
-        }, (click, c) -> new GUICollections().open((SkyBlockPlayer) c.player()));
+        }, (click, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            player.openView(new GUICollections());
+        });
 
         layout.slot(31, (s, c) -> ItemStackCreator.getStack("§aCrafting Table", Material.CRAFTING_TABLE, 1,
                 "§7Opens the crafting grid.",
@@ -199,7 +207,7 @@ public class GUISkyBlockMenu extends StatelessView {
                 player.sendTo(ServerType.SKYBLOCK_ISLAND);
                 return;
             }
-            new GUIFastTravel().open(player);
+            player.openView(new GUIFastTravel());
         });
 
         layout.slot(48, (s, c) -> {
@@ -266,15 +274,16 @@ public class GUISkyBlockMenu extends StatelessView {
         return lore;
     }
 
-    private static long getTicksRemaining(CalendarEvent currentEvent) {
-        long currentElapsedInYear = SkyBlockCalendar.getElapsed() % SkyBlockCalendar.YEAR;
-        long eventEndTime = 0;
-        for (Long eventStartTime : currentEvent.times()) {
-            if (currentElapsedInYear >= eventStartTime && currentElapsedInYear < eventStartTime + currentEvent.duration()) {
-                eventEndTime = eventStartTime + currentEvent.duration();
-                break;
-            }
-        }
-        return eventEndTime - currentElapsedInYear;
-    }
+	private static long getTicksRemaining(CalendarEvent currentEvent) {
+		long currentElapsedInYear = SkyBlockCalendar.getElapsed() % SkyBlockCalendar.YEAR;
+		long eventEndTime = 0;
+		for (Long eventStartTime : currentEvent.times()) {
+			if (currentElapsedInYear >= eventStartTime && currentElapsedInYear < eventStartTime + currentEvent.duration().toMillis() / 50) {
+				eventEndTime = eventStartTime + currentEvent.duration().toMillis() / 50;
+				break;
+			}
+		}
+		return eventEndTime - currentElapsedInYear;
+	}
+
 }

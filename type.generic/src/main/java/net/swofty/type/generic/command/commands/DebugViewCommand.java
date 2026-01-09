@@ -7,6 +7,9 @@ import net.swofty.type.generic.gui.v2.test.*;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 @CommandParameters(aliases = "debugview", usage = "/debugview", description = "opens a debug view", permission = Rank.STAFF, allowsConsole = false)
 public class DebugViewCommand extends HypixelCommand {
 	@Override
@@ -49,5 +52,12 @@ public class DebugViewCommand extends HypixelCommand {
 			HypixelPlayer player = (HypixelPlayer) sender; // safe cast
 			player.openView(new TestNoStateView());
 		}), new ArgumentLiteral("noState"));
+
+		// paginated
+		command.addSyntax(((sender, context) -> {
+			HypixelPlayer player = (HypixelPlayer) sender; // safe cast
+			List<Integer> oneTo100 = IntStream.rangeClosed(1, 100).boxed().toList();
+			player.openView(new TestPaginatedView(), new TestPaginatedView.State(oneTo100, 1, ""));
+		}), new ArgumentLiteral("paginated"));
 	}
 }

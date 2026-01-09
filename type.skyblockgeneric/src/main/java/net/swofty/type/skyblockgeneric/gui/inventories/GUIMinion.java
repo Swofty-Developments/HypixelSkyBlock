@@ -176,7 +176,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                new GUIMinionRecipes(minion.getMinion(), GUIMinion.this).open(player);
+                // player.openView(new )
             }
 
             @Override

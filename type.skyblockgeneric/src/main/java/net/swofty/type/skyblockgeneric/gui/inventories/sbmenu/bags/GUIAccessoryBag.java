@@ -52,7 +52,7 @@ public class GUIAccessoryBag extends HypixelInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUIYourBags()));
+        //set(GUIClickableItem.getGoBackItem(48, new GUIYourBags()));
 
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
 

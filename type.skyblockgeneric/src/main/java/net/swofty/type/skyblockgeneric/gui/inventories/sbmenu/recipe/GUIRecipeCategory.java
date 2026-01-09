@@ -181,9 +181,9 @@ public class GUIRecipeCategory extends HypixelPaginatedGUI<SkyBlockRecipe> {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    new GUIRecipe(
-                            item.getResult().getAttributeHandler().getPotentialType(),
-                            GUIRecipeCategory.this).open(player);
+                    //new GUIRecipe(
+                    //       item.getResult().getAttributeHandler().getPotentialType(),
+                    //        GUIRecipeCategory.this).open(player);
                 }
 
                 @Override

@@ -19,10 +19,7 @@ import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
-import net.swofty.type.generic.gui.v2.StatelessView;
-import net.swofty.type.generic.gui.v2.ViewSession;
-import net.swofty.type.generic.gui.v2.StatefulView;
-import net.swofty.type.generic.gui.v2.View;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.NotNull;
@@ -81,15 +78,15 @@ public class HypixelPlayer extends Player {
 	}
 
 	public <S> ViewSession<S> openView(View<S> view, S state) {
-		return ViewSession.open(view, this, state);
+		return ViewNavigator.get(this).push(view, state);
 	}
 
 	public <S> ViewSession<S> openView(View<S> view) {
 		Objects.requireNonNull(view, "View is null");
 		if (view instanceof StatefulView<S> state) {
-			return ViewSession.open(view, this, state.initialState());
+			return ViewNavigator.get(this).push(view, state.initialState());
 		} else if (view instanceof StatelessView state) {
-			return ViewSession.open(view, this, null);
+			return ViewNavigator.get(this).push(view, null);
 		} else {
 			throw new IllegalArgumentException("View must be either StatefulView or StatelessView");
 		}

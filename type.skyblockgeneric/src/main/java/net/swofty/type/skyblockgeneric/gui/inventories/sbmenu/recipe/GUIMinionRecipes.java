@@ -1,15 +1,12 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe;
 
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeMinionData;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
 import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
@@ -20,66 +17,48 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GUIMinionRecipes extends HypixelInventoryGUI {
+public class GUIMinionRecipes extends StatelessView {
     private static final Map<Integer, int[]> SLOTS = new HashMap<>(Map.of(
             10, new int[]{11, 12, 13, 14, 15, 20, 21, 22, 23, 24},
             11, new int[]{11, 12, 13, 14, 15, 21, 22, 23, 30, 31, 32}
     ));
 
-    HypixelInventoryGUI previousGUI;
-    MinionRegistry minionRegistry;
+    private final MinionRegistry minionRegistry;
+    private final StatelessView previousView;
 
-    public GUIMinionRecipes(MinionRegistry minionRegistry, HypixelInventoryGUI previousGUI) {
-        super(StringUtility.toNormalCase(minionRegistry.toString()) + " Minion Recipes", InventoryType.CHEST_6_ROW);
-        this.previousGUI = previousGUI;
+    public GUIMinionRecipes(MinionRegistry minionRegistry, StatelessView previousView) {
         this.minionRegistry = minionRegistry;
+        this.previousView = previousView;
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, previousGUI));
+    public ViewConfiguration<DefaultState> configuration() {
+        return new ViewConfiguration<>(StringUtility.toNormalCase(minionRegistry.toString()) + " Minion Recipes",
+                InventoryType.CHEST_6_ROW);
+    }
+
+    @Override
+    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+        Components.fill(layout);
+        Components.close(layout, 49);
+        Components.back(layout, 48, ctx);
 
         List<SkyBlockMinion.MinionTier> craftableMinionTiers = new ArrayList<>();
-
         for (SkyBlockMinion.MinionTier minionTier : minionRegistry.asSkyBlockMinion().getTiers()) {
             if (minionTier.craftable()) craftableMinionTiers.add(minionTier);
         }
 
-        int[] slots = SLOTS.get(craftableMinionTiers.size());
-        int i = 0;
-        for (SkyBlockMinion.MinionTier minionTier : craftableMinionTiers) {
+        int[] slots = SLOTS.getOrDefault(craftableMinionTiers.size(), new int[]{});
+        for (int i = 0; i < craftableMinionTiers.size() && i < slots.length; i++) {
+            SkyBlockMinion.MinionTier minionTier = craftableMinionTiers.get(i);
             int slot = slots[i];
-            i++;
+
             SkyBlockItem minion = new SkyBlockItem(minionRegistry.getItemType());
             minion.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(minionTier.tier(), 0));
 
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    new GUIRecipe(minion, new GUIMinionRecipes(minionRegistry, previousGUI), minionTier.tier() - 1).open(player);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    return ItemStackCreator.getStackHead(minion.getDisplayName(), minionTier.texture(), 1,
-                            minion.getLore());
-                }
-            });
+            layout.slot(slot, (s, c) -> ItemStackCreator.getStackHead(minion.getDisplayName(),
+                            minionTier.texture(), 1, minion.getLore()),
+                    (click, c) -> c.player().openView(new GUIRecipe(minion, this, minionTier.tier() - 1)));
         }
-
-        updateItemStacks(getInventory(), getPlayer());
-    }
-
-    @Override
-    public boolean allowHotkeying() {
-        return false;
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
     }
 }

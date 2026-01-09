@@ -33,7 +33,7 @@ public class GUIRecipeSlayers extends HypixelInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUIRecipeBook()));
+        //set(GUIClickableItem.getGoBackItem(48, new GUIRecipeBook()));
 
         ArrayList<SkyBlockRecipe> allRecipes = new ArrayList<>();
         allRecipes.addAll(ShapedRecipe.CACHED_RECIPES);

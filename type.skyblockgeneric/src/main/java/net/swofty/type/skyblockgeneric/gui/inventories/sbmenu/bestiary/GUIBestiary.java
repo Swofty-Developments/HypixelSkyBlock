@@ -72,7 +72,7 @@ public class GUIBestiary extends HypixelInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkillCategory(SkillCategories.COMBAT, 0)));
+        //set(GUIClickableItem.getGoBackItem(48, new GUISkillCategory(SkillCategories.COMBAT, 0)));
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {

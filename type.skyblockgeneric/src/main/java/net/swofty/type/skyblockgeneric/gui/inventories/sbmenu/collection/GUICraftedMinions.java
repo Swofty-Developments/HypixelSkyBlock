@@ -82,7 +82,7 @@ public class GUICraftedMinions extends HypixelPaginatedGUI<SkyBlockItem> {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (e.getClickedItem().material() != Material.GRAY_DYE) {
-                    new GUIMinionRecipes(item.getAttributeHandler().getMinionType(), new GUICraftedMinions(new GUICollections())).open(player);
+                    //new GUIMinionRecipes(item.getAttributeHandler().getMinionType(), new GUICraftedMinions(new GUICollections())).open(player);
                 }
             }
 

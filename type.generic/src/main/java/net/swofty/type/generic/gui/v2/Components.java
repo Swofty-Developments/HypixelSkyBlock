@@ -6,6 +6,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.TooltipDisplay;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import org.tinylog.Logger;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,6 +22,8 @@ public final class Components {
             .set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of()));
     public static final ItemStack.Builder CLOSE_BUTTON = ItemStack.builder(Material.BARRIER)
             .set(DataComponents.CUSTOM_NAME, Component.text("§cClose"));
+
+    // TODO: show the name of the previous view
     public static final ItemStack.Builder BACK_BUTTON = ItemStack.builder(Material.ARROW)
             .set(DataComponents.CUSTOM_NAME, Component.text("§aGo Back"));
 
@@ -32,13 +35,59 @@ public final class Components {
         layout.slot(slot, (s, c) -> CLOSE_BUTTON, (click, ctx) -> ctx.player().closeInventory());
     }
 
+    public static <S> boolean back(ViewLayout<S> layout, int slot, ViewContext context) {
+        ViewNavigator navigator = ViewNavigator.get(context.player());
+        if (!navigator.hasStack()) {
+            Logger.info(
+                    "Tried to add back button to view layout for player {} but there is no view to go back to! Navigator information: {}",
+                    context.player().getUsername(), navigator
+            );
+            return false;
+        }
+        layout.slot(slot, (s, c) -> BACK_BUTTON, (click, ctx) -> {
+            ViewNavigator.get(ctx.player()).pop();
+        });
+        return true;
+    }
+
+    public static <S> boolean back(ViewLayout<S> layout, int slot, ViewContext context, ItemStack.Builder customButton) {
+        ViewNavigator navigator = ViewNavigator.get(context.player());
+        if (!navigator.hasStack()) {
+            return false;
+        }
+        layout.slot(slot, (s, c) -> customButton, (click, ctx) -> {
+            ViewNavigator.get(ctx.player()).pop();
+        });
+        return true;
+    }
+
+    public static <S> void backAlways(ViewLayout<S> layout, int slot) {
+        layout.slot(slot, (s, c) -> BACK_BUTTON, (click, ctx) -> {
+            ViewNavigator navigator = ViewNavigator.get(ctx.player());
+            if (!navigator.pop()) {
+                ctx.player().closeInventory();
+            }
+        });
+    }
+
+    public static <S> void backOrClose(ViewLayout<S> layout, int slot, ViewContext context) {
+        ViewNavigator navigator = ViewNavigator.get(context.player());
+        if (navigator.hasStack()) {
+            layout.slot(slot, (s, c) -> BACK_BUTTON, (click, ctx) -> {
+                ViewNavigator.get(ctx.player()).pop();
+            });
+        } else {
+            layout.slot(slot, (s, c) -> CLOSE_BUTTON, (click, ctx) -> ctx.player().closeInventory());
+        }
+    }
+
     public static <S> void back(ViewLayout<S> layout, int slot, View<?> target, Object targetState) {
         layout.slot(slot, (s, c) -> BACK_BUTTON, (click, ctx) -> open(ctx, target, targetState));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> void open(ViewContext ctx, View<T> view, Object state) {
-        ViewSession.open(view, ctx.player(), (T) state);
+        ViewNavigator.get(ctx.player()).push(view, (T) state);
     }
 
     public static <S> void editableSlot(ViewLayout<S> layout, int slot, Function<S, ItemStack> itemGetter, SlotChangeHandler<S> onChange) {

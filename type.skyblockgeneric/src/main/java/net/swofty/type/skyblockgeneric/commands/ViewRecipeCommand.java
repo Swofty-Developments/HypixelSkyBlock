@@ -5,6 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockProfile;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
@@ -23,7 +24,7 @@ public class ViewRecipeCommand extends HypixelCommand {
             if (!permissionCheck(sender)) return;
 
             final ItemType item = context.get(itemArgument);
-            new GUIRecipe(item, null).open((SkyBlockPlayer) sender);
+            ((SkyBlockPlayer) sender).openView(new GUIRecipe(item, null));
         }, itemArgument);
     }
 }
