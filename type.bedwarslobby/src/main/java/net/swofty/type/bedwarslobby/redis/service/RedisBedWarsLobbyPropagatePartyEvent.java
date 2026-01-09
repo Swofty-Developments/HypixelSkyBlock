@@ -284,7 +284,7 @@ public class RedisBedWarsLobbyPropagatePartyEvent implements ServiceToClient {
                 throw new RuntimeException("Couldn't find a proxy for " + warperName);
             }
 
-            if (warperServer.uuid() == HypixelConst.getServerUUID()) {
+            if (warperServer.uuid().equals(HypixelConst.getServerUUID())) {
                 return;
             }
 

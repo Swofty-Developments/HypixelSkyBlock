@@ -36,9 +36,6 @@ public class HypixelPlayer extends Player {
 	@Setter
 	@Getter
 	private ServerType originServer = ServerType.SKYBLOCK_HUB;
-	@Setter
-	@Getter
-	private MinecraftVersion version = MinecraftVersion.MINECRAFT_1_20_3;
 	@Getter
 	private boolean readyForEvents = false;
 	@Getter

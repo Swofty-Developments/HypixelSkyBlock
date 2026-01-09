@@ -7,7 +7,7 @@
   "pterodactyl-mode": false,
   "spark": false,
   "require-authentication": false,
-  "cross-version-support": true,
+  "cross-version-support": false,
   "host-name": "0.0.0.0",
   "transfer-timeout": "800",
   "sandbox-mode": true,

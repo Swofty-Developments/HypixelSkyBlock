@@ -24,34 +24,43 @@ public class ActionPlayerJoin implements HypixelEventClass {
         event.setSpawningInstance(HypixelConst.getEmptyInstance());
         player.setRespawnPoint(new Pos(0, 100, 0));
 
-        MathUtility.delay(() -> {
-            String assignedGameId = RedisGameMessage.game.remove(player.getUuid());
-            if (assignedGameId == null) {
-                player.sendMessage("§cNo game assignment found! Returning to lobby...");
-                player.sendTo(ServerType.SKYWARS_LOBBY);
+        MathUtility.delay(() -> tryJoinGame(player, false), 15);
+    }
+
+    private void tryJoinGame(SkywarsPlayer player, boolean isRetry) {
+        if (!player.isOnline()) return;
+
+        String assignedGameId = RedisGameMessage.game.remove(player.getUuid());
+        if (assignedGameId == null) {
+            if (!isRetry) {
+                Logger.info("No game assignment found for " + player.getUsername() + ", retrying in 1 second...");
+                MathUtility.delay(() -> tryJoinGame(player, true), 20);
                 return;
             }
+            player.sendMessage("§cNo game assignment found! Returning to lobby...");
+            player.sendTo(ServerType.SKYWARS_LOBBY);
+            return;
+        }
 
-            SkywarsGame assignedGame = TypeSkywarsGameLoader.getGameById(assignedGameId);
-            if (assignedGame == null) {
-                player.sendMessage("§cThe assigned game no longer exists! Returning to lobby...");
-                player.sendTo(ServerType.SKYWARS_LOBBY);
-                return;
-            }
+        SkywarsGame assignedGame = TypeSkywarsGameLoader.getGameById(assignedGameId);
+        if (assignedGame == null) {
+            player.sendMessage("§cThe assigned game no longer exists! Returning to lobby...");
+            player.sendTo(ServerType.SKYWARS_LOBBY);
+            return;
+        }
 
-            if (assignedGame.getGameStatus() != SkywarsGameStatus.WAITING) {
-                player.sendMessage("§cThe game has already started! Returning to lobby...");
-                player.sendTo(ServerType.SKYWARS_LOBBY);
-                return;
-            }
+        if (assignedGame.getGameStatus() != SkywarsGameStatus.WAITING) {
+            player.sendMessage("§cThe game has already started! Returning to lobby...");
+            player.sendTo(ServerType.SKYWARS_LOBBY);
+            return;
+        }
 
-            if (assignedGame.getPlayers().size() >= assignedGame.getGameType().getMaxPlayers()) {
-                player.sendMessage("§cThe game is full! Returning to lobby...");
-                player.sendTo(ServerType.SKYWARS_LOBBY);
-                return;
-            }
+        if (assignedGame.getPlayers().size() >= assignedGame.getGameType().getMaxPlayers()) {
+            player.sendMessage("§cThe game is full! Returning to lobby...");
+            player.sendTo(ServerType.SKYWARS_LOBBY);
+            return;
+        }
 
-            assignedGame.join(player);
-        }, 15);
+        assignedGame.join(player);
     }
 }

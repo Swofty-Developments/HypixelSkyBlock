@@ -16,7 +16,7 @@ public class ActionPlayerDisconnect implements HypixelEventClass {
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerDisconnectEvent event) {
 		final BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
-		Game game = TypeBedWarsGameLoader.getPlayerGame(player);
+		Game game = player.getGame();
 		if (game != null) {
 			if (game.getGameStatus() == GameStatus.IN_PROGRESS) {
 				// Use handleDisconnect for active games to enable rejoin

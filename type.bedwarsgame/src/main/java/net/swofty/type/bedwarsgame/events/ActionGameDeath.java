@@ -45,12 +45,7 @@ public class ActionGameDeath implements HypixelEventClass {
     public void run(PlayerDeathEvent event) {
         BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 
-        if (!player.hasTag(Tag.String("gameId"))) {
-            return;
-        }
-        String gameId = player.getTag(Tag.String("gameId"));
-        Game game = TypeBedWarsGameLoader.getGameById(gameId);
-
+        Game game = player.getGame();
         if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
             return;
         }
