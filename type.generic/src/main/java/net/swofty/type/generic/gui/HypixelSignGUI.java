@@ -12,7 +12,6 @@ import net.minestom.server.network.packet.server.play.BlockEntityDataPacket;
 import net.minestom.server.network.packet.server.play.OpenSignEditorPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.List;
