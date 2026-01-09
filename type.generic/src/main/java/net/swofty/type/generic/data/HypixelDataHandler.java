@@ -47,7 +47,7 @@ public class HypixelDataHandler extends DataHandler {
         for (Data data : Data.values()) {
             String key = data.getKey();
             if (!document.containsKey(key)) {
-                this.datapoints.put(key, data.getDefaultDatapoint().setUser(this).setData(data));
+                this.datapoints.put(key, data.getDefaultDatapoint().deepClone().setUser(this).setData(data));
                 continue;
             }
             String jsonValue = document.getString(key);
@@ -57,7 +57,7 @@ public class HypixelDataHandler extends DataHandler {
                 dp.deserializeValue(jsonValue);
                 this.datapoints.put(key, dp.setUser(this).setData(data));
             } catch (Exception e) {
-                this.datapoints.put(key, data.getDefaultDatapoint().setUser(this).setData(data));
+                this.datapoints.put(key, data.getDefaultDatapoint().deepClone().setUser(this).setData(data));
                 Logger.error(e, "Issue with datapoint {} for user {} - defaulting to default value", key, this.uuid);
             }
         }
