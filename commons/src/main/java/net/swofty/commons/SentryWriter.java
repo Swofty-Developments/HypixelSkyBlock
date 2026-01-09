@@ -67,7 +67,13 @@ public final class SentryWriter extends AbstractFormatPatternWriter {
 
     @Override
     public void write(final LogEntry logEntry) {
-        SentryLogLevel sentryLevel = SentryLogLevel.valueOf(logEntry.getLevel().toString());
+        SentryLogLevel sentryLevel;
+        try {
+            sentryLevel = SentryLogLevel.valueOf(logEntry.getLevel().name());
+        } catch (IllegalArgumentException e) {
+            sentryLevel = SentryLogLevel.INFO;
+        }
+
         Sentry.logger().log(sentryLevel, render(logEntry));
         if (logEntry.getLevel().ordinal() < errorLevel.ordinal()) {
             System.out.print(render(logEntry));
