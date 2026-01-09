@@ -108,7 +108,7 @@ public class SkyBlockVelocity {
 	public void onProxyInitialization(ProxyInitializeEvent event) {
 		server = proxy;
 		shouldAuthenticate = ConfigProvider.settings().isRequireAuth();
-		supportCrossVersion = ConfigProvider.settings().isViaversion();
+		supportCrossVersion = ConfigProvider.settings().getIntegrations().isViaVersion();
 
 		// Initialize ViaVersion for cross-version support
 		if (supportCrossVersion) {
@@ -183,17 +183,13 @@ public class SkyBlockVelocity {
 		commandManager.register(protocolVersionMeta, new ProtocolVersionCommand());
 
 
-		/**
-		 * Handle database
-		 */
-		new ProfilesDatabase("_placeHolder").connect(Configuration.get("mongodb"));
-		UserDatabase.connect(Configuration.get("mongodb"));
-		CoopDatabase.connect(Configuration.get("mongodb"));
+		// Handle database
+		new ProfilesDatabase("_placeHolder").connect(ConfigProvider.settings().getMongodb());
+		UserDatabase.connect(ConfigProvider.settings().getMongodb());
+		CoopDatabase.connect(ConfigProvider.settings().getMongodb());
 
-		/**
-		 * Setup Redis
-		 */
-		RedisAPI.generateInstance(Configuration.get("redis-uri"));
+		// Setup Redis
+		RedisAPI.generateInstance(ConfigProvider.settings().getRedisUri());
 		RedisAPI.getInstance().setFilterID("proxy");
 		loopThroughPackage("net.swofty.velocity.redis.listeners", RedisListener.class)
 				.forEach(listener -> {

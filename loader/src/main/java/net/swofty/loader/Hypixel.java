@@ -46,7 +46,7 @@ public class Hypixel {
     @Setter
     private static UUID serverUUID;
 
-    private static final boolean ENABLE_SPARK = ConfigProvider.settings().isSpark();
+    private static final boolean ENABLE_SPARK = ConfigProvider.settings().getIntegrations().isSpark();
 
     @SneakyThrows
     static void main(String[] args) {
@@ -193,7 +193,7 @@ public class Hypixel {
             checkProxyConnected(MinecraftServer.getSchedulerManager());
 
             // Initialize anticheat
-            if (ConfigProvider.settings().isAnticheat()) {
+            if (ConfigProvider.settings().getIntegrations().isAnticheat()) {
                 Thread.startVirtualThread(() -> {
                     Logger.info("Initializing anticheat...");
 
