@@ -38,6 +38,33 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
             }
         }
 
+         // Handle cross-server teleport from /tpto command
+        if (player.getHookManager().getHook("tpto_target") != null) {
+            String targetUUIDStr = (String) player.getHookManager().getHook("tpto_target");
+            player.getHookManager().removeHook("tpto_target");
+
+            try {
+                UUID targetUUID = UUID.fromString(targetUUIDStr);
+
+                // Schedule teleport after a short delay to ensure player is fully loaded
+                player.scheduler().buildTask(() -> {
+                    HypixelPlayer targetPlayer = (HypixelPlayer) player.getInstance().getPlayers().stream()
+                            .filter(p -> p.getUuid().equals(targetUUID))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (targetPlayer != null) {
+                        player.teleport(targetPlayer.getPosition());
+                        player.sendMessage("§2Teleported to " + HypixelPlayer.getColouredDisplayName(targetUUID) + "§2.");
+                    } else {
+                        player.sendMessage("§cTarget player is no longer on this server.");
+                    }
+                }).delay(java.time.Duration.ofMillis(500)).schedule();
+            } catch (Exception e) {
+                player.sendMessage("§cFailed to teleport to target player.");
+            }
+        }
+
         HypixelNPC.updateForPlayer(player);
         if (HypixelConst.isIslandServer()) return;
         PlayerHolograms.spawnAll(player);

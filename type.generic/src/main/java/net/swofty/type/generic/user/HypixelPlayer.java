@@ -55,6 +55,23 @@ public class HypixelPlayer extends Player {
 		}
 	}
 
+	public static String getColouredDisplayName(UUID uuid) {
+		if (HypixelGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
+			return HypixelGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getColouredDisplayName();
+		} else {
+			// Fallback for offline name display: use rank color + ign (no prefix)
+			HypixelDataHandler account = HypixelDataHandler.getOfOfflinePlayer(uuid);
+			Rank rank = account.get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
+			String colorCode = switch (rank) {
+				case STAFF, YOUTUBE -> "§c";
+				case MVP_PLUS, MVP -> "§b";
+				case VIP_PLUS, VIP -> "§a";
+				case DEFAULT -> "§7";
+			};
+			return colorCode + account.get(HypixelDataHandler.Data.IGN, DatapointString.class).getValue();
+		}
+	}
+
 	public static String getRawName(UUID uuid) {
 		if (HypixelGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
 			return HypixelGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getUsername();
@@ -102,6 +119,19 @@ public class HypixelPlayer extends Player {
 		return Component.text(getUsername(), rank.getTextColor());
 	}
 
+	public String getColouredDisplayName() {
+		Rank rank = getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
+		// Extract the last color code from the rank prefix (e.g., "§c[§6ዞ§c] " -> "§c")
+		// or use textColor mapping
+		String colorCode = switch (rank) {
+			case STAFF, YOUTUBE -> "§c";
+			case MVP_PLUS, MVP -> "§b";
+			case VIP_PLUS, VIP -> "§a";
+			case DEFAULT -> "§7";
+		};
+		return colorCode + getUsername();
+	}
+
 	public AntiCheatHandler getAntiCheatHandler() {
 		return new AntiCheatHandler(this);
 	}
@@ -124,27 +154,37 @@ public class HypixelPlayer extends Player {
 		return new PlayerSkin(texture, signature);
 	}
 
-	public void sendTo(ServerType type) {
-		sendTo(type, false);
-	}
+    public void sendTo(ServerType type) {
+        sendTo(type, false);
+    }
 
-	public void sendTo(ServerType type, boolean force) {
-		ProxyPlayer player = asProxyPlayer();
+    public void sendTo(ServerType type, boolean force) {
+        ProxyPlayer player = asProxyPlayer();
 
-		if (type == HypixelConst.getTypeLoader().getType() && !force) {
-			this.teleport(HypixelConst.getTypeLoader().getLoaderValues().spawnPosition().apply(this.getOriginServer()));
-			return;
-		}
+        if (type == HypixelConst.getTypeLoader().getType() && !force) {
+            this.teleport(HypixelConst.getTypeLoader().getLoaderValues().spawnPosition().apply(this.getOriginServer()));
+            return;
+        }
 
-		HypixelConst.getTypeLoader().getTablistManager().nullifyCache(this);
+        HypixelConst.getTypeLoader().getTablistManager().nullifyCache(this);
 
-        /*showTitle(Title.title(
-                Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
-                Component.empty(),
-                Title.Times.times(Duration.ofSeconds(1), Duration.ofMillis(300), Duration.ZERO)
-        ));*/
+        player.transferTo(type);
+    }
 
-		player.transferTo(type);
-	}
+    // --- NEW: UUID transfer (for m1A / mini2B etc) ---
+    public void sendTo(UUID serverUuid) {
+        sendTo(serverUuid, false);
+    }
+
+    public void sendTo(UUID serverUuid, boolean force) {
+        ProxyPlayer player = asProxyPlayer();
+
+        // you can ignore 'force' for now unless you want extra logic;
+        // keeping signature consistent with ServerType sendTo.
+        HypixelConst.getTypeLoader().getTablistManager().nullifyCache(this);
+
+        // This exists in ProxyPlayer
+        player.transferToWithIndication(serverUuid);
+    }
 
 }

@@ -181,12 +181,12 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
 
     private void handleJoinNotification(HypixelPlayer player, FriendJoinNotificationEvent event) {
         String displayName = HypixelPlayer.getDisplayName(event.getFriend());
-        player.sendMessage("§aFriend > " + displayName + " §7joined.");
+        player.sendMessage("§aFriend > " + displayName + " §ejoined.");
     }
 
     private void handleLeaveNotification(HypixelPlayer player, FriendLeaveNotificationEvent event) {
         String displayName = HypixelPlayer.getDisplayName(event.getFriend());
-        player.sendMessage("§aFriend > " + displayName + " §7left.");
+        player.sendMessage("§aFriend > " + displayName + " §eleft.");
     }
 
     private void handleRequestExpired(HypixelPlayer player, FriendRequestExpiredResponseEvent event) {
@@ -228,7 +228,7 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
                 // Name (rank-colored, matches tablist). Fallback to plain name if unavailable or failure.
                 String displayName;
                 try {
-                    displayName = HypixelPlayer.getDisplayName(friend.getUuid());
+                    displayName = HypixelPlayer.getColouredDisplayName(friend.getUuid());
                 } catch (Exception e) {
                     displayName = "§e" + friend.getName();
                 }
@@ -245,7 +245,7 @@ public class RedisPropagateFriendEvent implements ServiceToClient {
 
                 // Server info (when online)
                 if (friend.isOnline() && friend.getServer() != null && !friend.getServer().isEmpty()) {
-                    sb.append(" §7- §e").append(StringUtility.toNormalCase(friend.getServer()));
+                    sb.append(" §eis in a ").append(StringUtility.toNormalCase(friend.getServer()));
                 }
 
                 TextComponent line = LegacyComponentSerializer.legacySection().deserialize(sb.toString());
