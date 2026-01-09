@@ -29,7 +29,7 @@ public class SkyBlockVersionProvider implements VersionProvider {
     }
 
     private ProtocolVersion getBackProtocol(UserConnection user) {
-        return ProtocolVersion.v1_21_4; // backend server version
+        return ProtocolVersion.v1_21_11; // backend server version
     }
 
     private ProtocolVersion getFrontProtocol(UserConnection user) throws Exception {

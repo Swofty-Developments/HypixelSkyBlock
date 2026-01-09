@@ -48,6 +48,14 @@ public enum MinecraftVersion {
     MINECRAFT_1_20_5(766, new String[]{"1.20.5", "1.20.6"}),
     MINECRAFT_1_21(767, new String[]{"1.21", "1.21.1"}),
     MINECRAFT_1_21_2(768, new String[]{"1.21.2", "1.21.3"}),
+    MINECRAFT_1_21_4(769, new String[]{"1.21.4"}),
+    MINECRAFT_1_21_5(770, new String[]{"1.21.5"}),
+    MINECRAFT_1_21_6(771, new String[]{"1.21.6"}),
+    MINECRAFT_1_21_7(772, new String[]{"1.21.7"}),
+    MINECRAFT_1_21_8(772, new String[]{"1.21.8"}),
+    MINECRAFT_1_21_9(773, new String[]{"1.21.9"}),
+    MINECRAFT_1_21_10(773, new String[]{"1.21.10"}),
+    MINECRAFT_1_21_11(774, new String[]{"1.21.11"}),
     ;
 
     private final int protocol;
@@ -64,7 +72,5 @@ public enum MinecraftVersion {
                 .findFirst()
                 .orElse(null);
     }
-    public boolean isMoreRecentThan(MinecraftVersion version) {
-        return this.protocol > version.protocol;
-    }
+
 }

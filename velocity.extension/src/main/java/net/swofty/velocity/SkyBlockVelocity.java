@@ -13,8 +13,10 @@ import com.velocitypowered.api.event.permission.PermissionsSetupEvent;
 import com.velocitypowered.api.event.player.KickedFromServerEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
+import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
+import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.permission.PermissionFunction;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
@@ -37,6 +39,7 @@ import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.redisapi.api.RedisAPI;
+import net.swofty.velocity.command.ProtocolVersionCommand;
 import net.swofty.velocity.command.ServerStatusCommand;
 import net.swofty.velocity.data.CoopDatabase;
 import net.swofty.velocity.data.ProfilesDatabase;
@@ -173,6 +176,13 @@ public class SkyBlockVelocity {
 				.build();
 
 		commandManager.register(statusCommandMeta, new ServerStatusCommand());
+
+		CommandMeta protocolVersionMeta = commandManager.metaBuilder("protocolversion")
+				.aliases("protocol")
+				.plugin(this)
+				.build();
+
+		commandManager.register(protocolVersionMeta, new ProtocolVersionCommand());
 
 
 		/**
@@ -338,6 +348,22 @@ public class SkyBlockVelocity {
                 event.getPing().getFavicon().orElse(null)
         ));
     }
+
+	@Subscribe
+	public void onPlayerConnect(ServerPostConnectEvent event) {
+		if (!(event.getPlayer().getProtocolVersion().getProtocol() >= ProtocolVersion.MAXIMUM_VERSION.getProtocol())) {
+			StringBuilder message = new StringBuilder();
+
+			message.append("\n");
+			message.append("§6§l----------- §cServer Notice §6§l-----------\n");
+			message.append("§cAlthough we do support versions prior to §6" + ProtocolVersion.MAXIMUM_VERSION.getVersionIntroducedIn() + "§c, the experience may be buggy.\n");
+			message.append("§cIf you experience a bug, please test if it also occurs on §6" + ProtocolVersion.MAXIMUM_VERSION.getVersionIntroducedIn() + "§c before reporting it.\n");
+			message.append("§6§l---------------------------------\n");
+			message.append("\n");
+
+			event.getPlayer().sendMessage(Component.text(message.toString()));
+		}
+	}
 
 	public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {
 		Reflections reflections = new Reflections(packageName);
