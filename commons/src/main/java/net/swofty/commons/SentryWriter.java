@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import io.sentry.Sentry;
+import io.sentry.SentryLogLevel;
 import org.tinylog.Level;
 import org.tinylog.core.ConfigurationParser;
 import org.tinylog.core.LogEntry;
@@ -66,12 +67,12 @@ public final class SentryWriter extends AbstractFormatPatternWriter {
 
     @Override
     public void write(final LogEntry logEntry) {
+        SentryLogLevel sentryLevel = SentryLogLevel.valueOf(logEntry.getLevel().toString());
+        Sentry.logger().log(sentryLevel, render(logEntry));
         if (logEntry.getLevel().ordinal() < errorLevel.ordinal()) {
-            Sentry.logger().info(render(logEntry));
             System.out.print(render(logEntry));
         } else {
             System.err.print(render(logEntry));
-            Sentry.logger().error(render(logEntry));
         }
     }
 
