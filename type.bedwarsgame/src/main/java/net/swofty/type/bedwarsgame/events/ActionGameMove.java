@@ -27,13 +27,11 @@ public class ActionGameMove implements HypixelEventClass {
 	public void run(PlayerMoveEvent event) {
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 
-		if (!player.isOnline() || !player.hasTag(Tag.String("gameId"))) {
+		if (!player.isOnline()) {
 			return;
 		}
 
-		String gameId = player.getTag(Tag.String("gameId"));
-		Game game = TypeBedWarsGameLoader.getGameById(gameId);
-
+		Game game = player.getGame();
 		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
 			return;
 		}
@@ -48,8 +46,8 @@ public class ActionGameMove implements HypixelEventClass {
 			return;
 		}
 
-		String playerTeamName = player.getTag(Tag.String("team"));
-		if (playerTeamName == null) {
+		TeamKey playerTeamKey = player.getTeamKey();
+		if (playerTeamKey == null) {
 			return;
 		}
 
@@ -61,7 +59,7 @@ public class ActionGameMove implements HypixelEventClass {
 			MapTeam team = entry.getValue();
 
 			// Don't trigger own team's traps
-			if (teamKey.getName().equals(playerTeamName)) {
+			if (teamKey.equals(playerTeamKey)) {
 				continue;
 			}
 
