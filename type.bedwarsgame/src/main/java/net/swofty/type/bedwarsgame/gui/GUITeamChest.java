@@ -15,6 +15,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GUITeamChest extends SharedInventory {
 
@@ -196,7 +197,7 @@ public class GUITeamChest extends SharedInventory {
 				continue;
 			}
 
-			Map<Integer, ItemStack> teamChest = game.getChests().computeIfAbsent(teamKey, k -> new java.util.concurrent.ConcurrentHashMap<>());
+			Map<Integer, ItemStack> teamChest = game.getChests().computeIfAbsent(teamKey, k -> new ConcurrentHashMap<>());
 			if (newItem.isAir()) {
 				teamChest.remove(slot);
 			} else {
