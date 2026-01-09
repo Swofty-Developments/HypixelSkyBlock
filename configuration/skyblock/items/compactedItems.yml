@@ -1310,13 +1310,13 @@ items:
         value: 320
 
   - id: ENCHANTED_SEEDS
-    material: WHEAT_SEEDS
+    material: SEEDS
     rarity: UNCOMMON
     default_statistics: {}
     components:
       - id: ENCHANTED
         recipe_type: FARMING
-        item_id: WHEAT_SEEDS
+        item_id: SEEDS
       - id: SELLABLE
         value: 480
 
@@ -1610,3 +1610,69 @@ items:
         value: 256000.0
       - id: SKULL_HEAD
         texture: 8db711ff52eedda59c434bb03169763d7c40b5b89127778feacd63aa94dfc
+
+  - id: ENCHANTED_MOONFLOWER
+    material: BLUE_ORCHID
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: MOONFLOWER
+      - id: SELLABLE
+        value: 640
+
+  - id: ENCHANTED_SUNFLOWER
+    material: SUNFLOWER
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: SUNFLOWER
+      - id: SELLABLE
+        value: 640
+
+  - id: ENCHANTED_WILD_ROSE
+    material: ROSE_BUSH
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: WILD_ROSE
+      - id: SELLABLE
+        value: 640
+
+  - id: COMPACTED_MOONFLOWER
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_MOONFLOWER
+      - id: SELLABLE
+        value: 256000.0
+      - id: SKULL_HEAD
+        texture: 469b3bac406b51ba0e76c2c218aa4d45fde9ea7c101c85fbd8106c92c4aa36dd
+
+  - id: COMPACTED_SUNFLOWER
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_SUNFLOWER
+      - id: SELLABLE
+        value: 256000.0
+      - id: SKULL_HEAD
+        texture: c4989d846862952f8ac844abbd4c1f77bf85e924c2bf98236f8d9253624d879f
+
+  - id: ENCHANTED_WILD_ROSE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_PUMPKIN
+      - id: SELLABLE
+        value: 256000.0
+      - id: SKULL_HEAD
+        texture: a33051b7c69f51085cc43f0575139cd58afe2b83f33d2a203a5afc266c21019
