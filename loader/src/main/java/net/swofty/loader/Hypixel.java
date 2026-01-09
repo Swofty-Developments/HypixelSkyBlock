@@ -13,9 +13,9 @@ import net.swofty.anticheat.loader.PunishmentHandler;
 import net.swofty.anticheat.loader.SwoftyAnticheat;
 import net.swofty.anticheat.loader.SwoftyValues;
 import net.swofty.anticheat.loader.minestom.MinestomLoader;
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.TestFlow;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.proxyapi.ProxyAPI;
@@ -33,7 +33,6 @@ import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -47,10 +46,10 @@ public class Hypixel {
     @Setter
     private static UUID serverUUID;
 
-    private static final boolean ENABLE_SPARK = Configuration.getOrDefault("spark", false);
+    private static final boolean ENABLE_SPARK = ConfigProvider.settings().isSpark();
 
     @SneakyThrows
-    public static void main(String[] args) {
+    static void main(String[] args) {
         if (args.length == 0 || !ServerType.isServerType(args[0])) {
             Logger.error("Please specify a server type.");
             Arrays.stream(ServerType.values()).forEach(serverType -> Logger.error(serverType.name()));
@@ -83,17 +82,13 @@ public class Hypixel {
             Logger.info("Server index: " + testFlowIndex + " of " + testFlowTotal);
         }
 
-        /**
-         * Initialize the server
-         */
-        MinecraftServer minecraftServer = MinecraftServer.init(
-                new Auth.Velocity(Configuration.get("velocity-secret"))
+        // Initialize Minecraft server
+		MinecraftServer minecraftServer = MinecraftServer.init(
+                new Auth.Velocity(ConfigProvider.settings().getVelocitySecret())
         );
         serverUUID = UUID.randomUUID();
 
-        /**
-         * Initialize GenericLoader
-         */
+        // Initialize GenericLoader
         Reflections reflections = new Reflections("net.swofty.type");
         Set<Class<? extends HypixelTypeLoader>> subTypes = reflections.getSubTypesOf(HypixelTypeLoader.class);
         if (subTypes.isEmpty()) {
@@ -115,24 +110,16 @@ public class Hypixel {
 
         new HypixelGenericLoader(typeLoader).initialize(minecraftServer);
 
-        /**
-         * Initialize TypeLoader
-         */
+        // Initialize TypeLoader
         if (typeLoader instanceof SkyBlockTypeLoader) {
             new SkyBlockGenericLoader(typeLoader).initialize(minecraftServer);
         }
 
-        /**
-         * Initialize the server
-         */
+        // Initialize the server
         typeLoader.onInitialize(minecraftServer);
 
-        /**
-         * Initialize Proxy support
-         */
-        Logger.info("Initializing proxy support...");
-
-        ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID);
+        // Initialize proxy support
+        ProxyAPI proxyAPI = new ProxyAPI(ConfigProvider.settings().getRedisUri(), serverUUID);
         SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis", ProxyToClient.class)
                 .forEach(proxyAPI::registerFromProxyHandler);
         SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", ServiceToClient.class)
@@ -153,16 +140,12 @@ public class Hypixel {
         protocolObjects.forEach(ServerOutboundMessage::registerFromProtocolObject);
         proxyAPI.start();
 
-        /**
-         * Start spark if enabled
-         */
+        // Start spark if enabled
         if (ENABLE_SPARK) {
-            // Spark.enable(Files.createTempDirectory("spark"));
+            //Spark.enable(Files.createTempDirectory("spark"));
         }
 
-        /**
-         * Ensure all services are running
-         */
+        // Ensure all services are running
         typeLoader.getRequiredServices().forEach(serviceType -> {
             new ProxyService(serviceType).isOnline().thenAccept(online -> {
                 if (!online) {
@@ -172,13 +155,11 @@ public class Hypixel {
         });
         typeLoader.afterInitialize(minecraftServer);
 
-        /**
-         * Start the server
-         */
+        // Start the server
         MinecraftServer.setBrandName("Hypixel");
         CompletableFuture<Integer> startServer = new CompletableFuture<>();
         startServer.whenComplete((port, throwable) -> {
-            minecraftServer.start(Configuration.get("host-name"), port);
+            minecraftServer.start(ConfigProvider.settings().getHostName(), port);
 
             long endTime = System.currentTimeMillis();
             Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
@@ -211,10 +192,8 @@ public class Hypixel {
                     });
             checkProxyConnected(MinecraftServer.getSchedulerManager());
 
-            /**
-             * Initialize the anticheat
-             */
-            if (Configuration.getOrDefault("anticheat", true)) {
+            // Initialize anticheat
+            if (ConfigProvider.settings().isAnticheat()) {
                 Thread.startVirtualThread(() -> {
                     Logger.info("Initializing anticheat...");
 

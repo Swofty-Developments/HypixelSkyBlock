@@ -1,8 +1,8 @@
 package net.swofty.velocity.redis.listeners;
 
 import net.swofty.commons.ServerType;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.proxy.ToProxyChannels;
-import net.swofty.commons.Configuration;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
@@ -22,7 +22,7 @@ public class ListenerServerInitialized extends RedisListener {
 
         String host = message.has("host")
                 ? message.getString("host")
-                : Configuration.get("host-name"); // fallback to config if not present
+                : ConfigProvider.settings().getHostName(); // fallback to config if not present
 
         int maxPlayers = message.getInt("max_players");
 

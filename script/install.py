@@ -22,16 +22,17 @@ from rich.status import Status
 import json
 from rich.markdown import Markdown
 from rich.syntax import Syntax
+import yaml # this is from pyyaml
 
 console = Console()
 
 SPLASH_ART = """[bold cyan]
-    __  __            _           __   _____ __        ____  __         __  
+    __  __            _           __   _____ __        ____  __         __
    / / / /_  ______  (_)  _____  / /  / ___// /____  _/ / / / /__  ____/ /__
   / /_/ / / / / __ \/ / |/_/ _ \/ /   \__ \/ //_/ / / / / / / _ \/ __  / _ \\
  / __  / /_/ / /_/ / />  </  __/ /   ___/ / ,< / /_/ / /_/ /  __/ /_/ /  __/
-/_/ /_/\__, / .___/_/_/|_|\___/_/   /____/_/|_|\__, /\____/\___/\__,_/\___/ 
-      /____/_/                                 /____/                         
+/_/ /_/\__, / .___/_/_/|_|\___/_/   /____/_/|_|\__, /\____/\___/\__,_/\___/
+      /____/_/                                 /____/
 [/bold cyan]"""
 
 DIRECTORY_ART = """[yellow]
@@ -50,7 +51,7 @@ DIRECTORY_ART = """[yellow]
    ├── 📄 SkyBlockCore.jar
    ├── 📄 NanoLimbo.jar
    ├── 📄 velocity.toml
-   └── 📄 resources.json[/yellow]"""
+   └── 📄 config.yml[/yellow]"""
 
 LOADING_FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
 CHECKMARK = "[green]✓[/green]"
@@ -339,22 +340,34 @@ def main():
     console.print("Server Configuration")
 
     config = {
-        "mongodb": questionary.text("MongoDB URI:", default="mongodb://localhost").ask(),
-        "redis-uri": questionary.text("Redis URI:", default="redis://localhost:6379").ask(),
-        "velocity-secret": questionary.text("Velocity Secret (leave empty to auto-generate):").ask() or os.urandom(8).hex(),
         "host-name": questionary.text("Hostname:", default="0.0.0.0").ask(),
-        "anticheat": questionary.confirm("Enable anticheat?", default=False).ask(),
-        "limbo-port": "65535",
-        "pterodactyl-mode": False,
+        "transfer-timeout": 800,
+        "mongodb": questionary.text(
+            "MongoDB URI:", default="mongodb://localhost"
+        ).ask(),
+        "redis-url": questionary.text(
+            "Redis URI:", default="redis://localhost:6379"
+        ).ask(),
+        "velocity-secret": (
+            questionary.text(
+                "Velocity Secret (leave empty to auto-generate):"
+            ).ask() or os.urandom(8).hex()
+        ),
+        "require-auth": False,
+        "sandbox": False,
         "spark": False,
-        "require-authentication": False,
-        "transfer-timeout": "800",
-        "sandbox-mode": True
+        "anticheat": questionary.confirm(
+            "Enable anticheat?", default=False
+        ).ask(),
+        "limbo": {
+            "host-name": "127.0.0.1",
+            "port": 65535
+        }
     }
 
     # Save configuration
-    with open(install_path / 'configuration' / 'resources.json', 'w') as f:
-        json.dump(config, f, indent=2)
+    with open(install_path / "configuration" / "config.yml", "w") as f:
+       yaml.safe_dump(config, f, sort_keys=False, default_flow_style=False)
 
     progress.advance()
 

@@ -35,8 +35,9 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.config.ConfigProvider;
+import net.swofty.commons.config.Settings;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.command.ProtocolVersionCommand;
@@ -99,25 +100,22 @@ public class SkyBlockVelocity {
 		plugin = this;
 		server = tempServer;
 
-		limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(Configuration.get("limbo-host-name"),
-				Integer.parseInt(Configuration.get("limbo-port")))));
+		Settings.LimboSettings limbo = ConfigProvider.settings().getLimbo();
+		limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(limbo.getHostName(), limbo.getPort())));
 	}
 
 	@Subscribe
 	public void onProxyInitialization(ProxyInitializeEvent event) {
 		server = proxy;
-		shouldAuthenticate = Configuration.getOrDefault("require-authentication", false);
-		supportCrossVersion = Configuration.getOrDefault("cross-version-support", false);
+		shouldAuthenticate = ConfigProvider.settings().isRequireAuth();
+		supportCrossVersion = ConfigProvider.settings().isViaversion();
 
-		/**
-		 * initialize cross version support
-		 */
+		// Initialize ViaVersion for cross-version support
 		if (supportCrossVersion) {
 			ViaLoader.init(null, new SkyBlockVLLoader(), new SkyBlockViaInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new);
 		}
-		/**
-		 * Register packets
-		 */
+
+		// Register packets
 		server.getEventManager().register(this, PostLoginEvent.class,
 				(AwaitingEventExecutor<PostLoginEvent>) postLoginEvent -> EventTask.withContinuation(continuation -> {
 					injectPlayer(postLoginEvent.getPlayer());
