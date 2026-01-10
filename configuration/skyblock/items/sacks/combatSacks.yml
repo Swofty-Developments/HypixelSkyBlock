@@ -1,0 +1,216 @@
+items:
+  - id: SMALL_COMBAT_SACK
+    rarity: COMMON
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7Items: §aBlaze Rod§7, §aBone§7, §aChili Pepper§7, §aEnder Pearl§7, §aGhast'
+      - '§aTear§7, §aGunpowder§7, §aMagma Cream§7, §aRotten Flesh§7, §aSlimeball§7,'
+      - '§aSpider Eye§7, §aString'
+      - ''
+      - '§7Capacity: §e2,240 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 9b8f452c9d6b6254b5478569a60b0b6fb031c7ad2f06ea3dacf2ce874ca7083
+      - id: SACK
+        valid_items:
+          - BLAZE_ROD
+          - BONE
+          - CHILI_PEPPER
+          - ENDER_PEARL
+          - GHAST_TEAR
+          - GUNPOWDER
+          - MAGMA_CREAM
+          - ROTTEN_FLESH
+          - SLIME_BALL
+          - SPIDER_EYE
+          - STRING
+        max_capacity: 2240
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_ROTTEN_FLESH
+                amount: 2
+              B:
+                type: ENCHANTED_LEATHER
+                amount: 1
+            result:
+              type: SMALL_COMBAT_SACK
+              amount: 1
+
+  - id: MEDIUM_COMBAT_SACK
+    rarity: RARE
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7Items: §aBlaze Rod§7, §aBone§7, §aChili Pepper§7, §aEnder Pearl§7, §aGhast'
+      - '§aTear§7, §aGunpowder§7, §aMagma Cream§7, §aRotten Flesh§7, §aSlimeball§7,'
+      - '§aSpider Eye§7, §aString'
+      - ''
+      - '§7Capacity: §e6,720 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: e4b2b79a4e060abb00aa88e7c4cd5c0039f5e5cad2d45c1cff5676cb83a1815e
+      - id: SACK
+        valid_items:
+          - BLAZE_ROD
+          - BONE
+          - CHILI_PEPPER
+          - ENDER_PEARL
+          - GHAST_TEAR
+          - GUNPOWDER
+          - MAGMA_CREAM
+          - ROTTEN_FLESH
+          - SLIME_BALL
+          - SPIDER_EYE
+          - STRING
+        max_capacity: 6720
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_ROTTEN_FLESH
+                amount: 4
+              B:
+                type: SMALL_COMBAT_SACK
+                amount: 1
+            result:
+              type: MEDIUM_COMBAT_SACK
+              amount: 1
+
+  - id: LARGE_COMBAT_SACK
+    rarity: EPIC
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7Items: §aBlaze Rod§7, §aBone§7, §aChili Pepper§7, §aEnder Pearl§7, §aGhast'
+      - '§aTear§7, §aGunpowder§7, §aMagma Cream§7, §aRotten Flesh§7, §aSlimeball§7,'
+      - '§aSpider Eye§7, §aString'
+      - ''
+      - '§7Capacity: §e20,160 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 1c13c4774c82c07071e6d1408717b1e3eac56186042a5803fc174452e32a254a
+      - id: SACK
+        valid_items:
+          - BLAZE_ROD
+          - BONE
+          - CHILI_PEPPER
+          - ENDER_PEARL
+          - GHAST_TEAR
+          - GUNPOWDER
+          - MAGMA_CREAM
+          - ROTTEN_FLESH
+          - SLIME_BALL
+          - SPIDER_EYE
+          - STRING
+        max_capacity: 20160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_ROTTEN_FLESH
+                amount: 8
+              B:
+                type: MEDIUM_COMBAT_SACK
+                amount: 1
+            result:
+              type: LARGE_COMBAT_SACK
+              amount: 1
+
+  - id: LARGE_ENCHANTED_COMBAT_SACK
+    rarity: EPIC
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7This sack can contain all enchanted versions'
+      - '§7of these materials:'
+      - '§aBlaze Rod§7, §aBone§7, §aChili Pepper§7, §aEnder Pearl§7,'
+      - '§aGhast Tear§7, §aGunpowder§7, §aMagma Cream§7, §aRotten'
+      - '§aFlesh§7, §aSlimeball§7, §aSpider Eye§7, §aString'
+      - ''
+      - '§7Capacity: §e20,160 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: c2a3420697256517d5361b3463019647c0689725b3489f9dd24a22ddd40bd41f
+      - id: SACK
+        valid_items:
+          - ABSOLUTE_ENDER_PEARL
+          - ENCHANTED_BLAZE_POWDER
+          - ENCHANTED_BLAZE_ROD
+          - ENCHANTED_BONE
+          - ENCHANTED_BONE_BLOCK
+          - ENCHANTED_ENDER_PEARL
+          - ENCHANTED_EYE_OF_ENDER
+          - ENCHANTED_GHAST_TEAR
+          - ENCHANTED_GUNPOWDER
+          - ENCHANTED_MAGMA_CREAM
+          - ENCHANTED_ROTTEN_FLESH
+          - ENCHANTED_SLIME_BLOCK
+          - ENCHANTED_SLIME_BALL
+          - ENCHANTED_SPIDER_EYE
+          - ENCHANTED_STRING
+          - SILVER_FANG
+          - STUFFED_CHILI_PEPPER
+          - WHIPPED_MAGMA_CREAM
+        max_capacity: 20160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - ABA
+              - ACA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_ROTTEN_FLESH
+                amount: 16
+              B:
+                type: ENCHANTED_STRING
+                amount: 16
+              C:
+                type: ENCHANTED_LEATHER
+                amount: 12
+            result:
+              type: LARGE_ENCHANTED_COMBAT_SACK
+              amount: 1

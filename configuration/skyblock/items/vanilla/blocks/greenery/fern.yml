@@ -13,7 +13,7 @@ items:
                 amount: 1
           - conditions:
             drops:
-              - item: WHEAT_SEEDS
+              - item: SEEDS
                 chance: 0.125
                 amount: 1
       - id: PLACEABLE
@@ -34,7 +34,7 @@ items:
                 amount: 2
           - conditions:
             drops:
-              - item: WHEAT_SEEDS
+              - item: SEEDS
                 chance: 0.125
                 amount: 1
       - id: PLACEABLE
