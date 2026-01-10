@@ -263,7 +263,7 @@ items:
       - id: SELLABLE
         value: 320
 
-  - id: ENCHANTED_CLAY
+  - id: ENCHANTED_CLAY_BALL
     material: CLAY_BALL
     rarity: UNCOMMON
     default_statistics: {}
@@ -273,6 +273,17 @@ items:
         item_id: CLAY_BALL
       - id: SELLABLE
         value: 480
+
+  - id: ENCHANTED_CLAY_BLOCK
+    material: CLAY_BLOCK
+    rarity: RARE
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: ENCHANTED_CLAY_BALL
+      - id: SELLABLE
+        value: 76800
 
   - id: ENCHANTED_TROPICAL_FISH
     material: TROPICAL_FISH
@@ -1177,7 +1188,7 @@ items:
     components:
       - id: ENCHANTED
         recipe_type: FISHING
-        item_id: COD
+        item_id: RAW_FISH
       - id: SELLABLE
         value: 960
 
@@ -1199,7 +1210,7 @@ items:
     components:
       - id: ENCHANTED
         recipe_type: FISHING
-        item_id: SALMON
+        item_id: RAW_SALMON
       - id: SELLABLE
         value: 1600
 
@@ -1666,12 +1677,12 @@ items:
       - id: SKULL_HEAD
         texture: c4989d846862952f8ac844abbd4c1f77bf85e924c2bf98236f8d9253624d879f
 
-  - id: ENCHANTED_WILD_ROSE
+  - id: COMPACTED_WILD_ROSE
     rarity: COMMON
     components:
       - id: ENCHANTED
         recipe_type: FARMING
-        item_id: ENCHANTED_PUMPKIN
+        item_id: ENCHANTED_WILD_ROSE
       - id: SELLABLE
         value: 256000.0
       - id: SKULL_HEAD

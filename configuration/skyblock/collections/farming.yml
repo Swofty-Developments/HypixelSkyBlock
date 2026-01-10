@@ -1128,3 +1128,147 @@ collections:
     - type: XP
       data:
         xp: 4
+- itemType: MOONFLOWER
+  rewards:
+    - amount: 1000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: ENCHANTED_MOONFLOWER
+    - amount: 5000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 10000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 25000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: COMPACTED_MOONFLOWER
+    - amount: 100000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 250000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 500000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 1000000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+- itemType: SUNFLOWER
+  rewards:
+    - amount: 1000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: ENCHANTED_SUNFLOWER
+    - amount: 5000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 10000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 25000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: COMPACTED_SUNFLOWER
+    - amount: 100000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 250000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 500000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 1000000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+- itemType: WILD_ROSE
+  rewards:
+    - amount: 1000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: ENCHANTED_WILD_ROSE
+    - amount: 5000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 10000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 25000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: COMPACTED_WILD_ROSE
+    - amount: 100000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 250000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 500000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
+    - amount: 1000000
+      rewards:
+        - type: XP
+          data:
+            xp: 4
