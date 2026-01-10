@@ -12,8 +12,6 @@ import net.swofty.type.murdermysterygame.game.GameStatus;
 import net.swofty.type.murdermysterygame.role.GameRole;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.HypixelGenericLoader;
-import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,10 +35,6 @@ public class MurderMysteryGameScoreboard {
             for (Game game : TypeMurderMysteryGameLoader.getGames()) {
                 for (MurderMysteryPlayer player : game.getPlayers()) {
                     if (player.getInstance() == null) continue;
-
-                if (sidebarCache.containsKey(player.getUuid())) {
-                    sidebarCache.get(player.getUuid()).removeViewer(player);
-                }
 
                 Sidebar sidebar = new Sidebar(Component.text(getSidebarName(animationFrame)));
 
@@ -159,10 +153,28 @@ public class MurderMysteryGameScoreboard {
                 addLine("§ewww.hypixel.net", sidebar);
 
                 sidebar.addViewer(player);
+
+                Sidebar oldSidebar = sidebarCache.get(player.getUuid());
+                
+                sidebar.addViewer(player);
+                
                 sidebarCache.put(player.getUuid(), sidebar);
+
+
+                if (oldSidebar != null && oldSidebar != sidebar) {
+                    final Sidebar finalOldSidebar = oldSidebar;
+                    scheduler.scheduleNextTick(() -> {
+                        if (sidebarCache.get(player.getUuid()) == sidebar) {
+                            try {
+                                finalOldSidebar.removeViewer(player);
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+                }
                 }
             }
-            return TaskSchedule.tick(5);
+            return TaskSchedule.tick(10); 
         });
     }
 
@@ -193,10 +205,9 @@ public class MurderMysteryGameScoreboard {
     }
 
     private static void addLine(String text, Sidebar sidebar) {
-        for (Sidebar.ScoreboardLine existingLine : sidebar.getLines()) {
-            sidebar.updateLineScore(existingLine.getId(), existingLine.getLine() + 1);
-        }
-        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
+
+        int score = sidebar.getLines().size();
+        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), score));
     }
 
     private static String getSidebarName(int counter) {

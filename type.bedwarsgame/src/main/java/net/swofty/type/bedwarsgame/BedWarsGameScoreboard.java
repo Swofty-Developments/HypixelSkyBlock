@@ -48,10 +48,6 @@ public class BedWarsGameScoreboard {
 					continue;
 				}
 
-				if (sidebarCache.containsKey(player.getUuid())) {
-					sidebarCache.get(player.getUuid()).removeViewer(player);
-				}
-
 				Sidebar sidebar = new Sidebar(Component.text(getSidebarName(prototypeName)));
 
 				addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
@@ -86,11 +82,26 @@ public class BedWarsGameScoreboard {
 				addLine("§7 ", sidebar);
 				addLine("§ewww.hypixel.net", sidebar);
 
+				Sidebar oldSidebar = sidebarCache.get(player.getUuid());
+				
 				sidebar.addViewer(player);
-
+				
 				sidebarCache.put(player.getUuid(), sidebar);
+
+				if (oldSidebar != null && oldSidebar != sidebar) {
+					final Sidebar finalOldSidebar = oldSidebar;
+					scheduler.scheduleNextTick(() -> {
+						if (sidebarCache.get(player.getUuid()) == sidebar) {
+							try {
+								finalOldSidebar.removeViewer(player);
+							} catch (Exception e) {
+								
+							}
+						}
+					});
+				}
 			}
-			return TaskSchedule.tick(5);
+			return TaskSchedule.tick(10); 
 		});
 	}
 
@@ -99,19 +110,15 @@ public class BedWarsGameScoreboard {
 	}
 
 	private static void addLine(String text, Sidebar sidebar) {
-		for (Sidebar.ScoreboardLine existingLine : sidebar.getLines()) {
-			sidebar.updateLineScore(existingLine.getId(), existingLine.getLine() + 1);
-		}
 
-		sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
+		int score = sidebar.getLines().size();
+		sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), score));
 	}
 
 	private static void addLine(Component text, Sidebar sidebar) {
-		for (Sidebar.ScoreboardLine existingLine : sidebar.getLines()) {
-			sidebar.updateLineScore(existingLine.getId(), existingLine.getLine() + 1);
-		}
 
-		sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), text, 0));
+		int score = sidebar.getLines().size();
+		sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), text, score));
 	}
 
 	private static String getSidebarName(int counter) {
