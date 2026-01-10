@@ -7,6 +7,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredAbility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -64,8 +65,7 @@ public class BuildersWandAbility extends RegisteredAbility {
                 }
             }
             Pos fillBlock = l.add(translate);
-            // TODO: make sure player is on island
-            if (player.isOnIsland()) {
+            if (!HypixelConst.isIslandServer()) {
                 blocks.removeIf(blocks.getFirst()::equals);
                 if (!player.getInstance().getBlock(fillBlock).key().equals(fillMaterial.key())) {
                     player.getInstance().setBlock(fillBlock, Block.fromKey(fillMaterial.key()));
