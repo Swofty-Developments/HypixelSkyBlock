@@ -1,17 +1,15 @@
 package net.swofty.type.generic.gui.v2;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.TooltipDisplay;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
-import org.tinylog.Logger;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -23,7 +21,6 @@ public final class Components {
     public static final ItemStack.Builder CLOSE_BUTTON = ItemStack.builder(Material.BARRIER)
             .set(DataComponents.CUSTOM_NAME, Component.text("§cClose"));
 
-    // TODO: show the name of the previous view
     public static final ItemStack.Builder BACK_BUTTON = ItemStack.builder(Material.ARROW)
             .set(DataComponents.CUSTOM_NAME, Component.text("§aGo Back"));
 
@@ -38,13 +35,16 @@ public final class Components {
     public static <S> boolean back(ViewLayout<S> layout, int slot, ViewContext context) {
         ViewNavigator navigator = ViewNavigator.get(context.player());
         if (!navigator.hasStack()) {
-            Logger.info(
-                    "Tried to add back button to view layout for player {} but there is no view to go back to! Navigator information: {}",
-                    context.player().getUsername(), navigator
-            );
             return false;
         }
-        layout.slot(slot, (s, c) -> BACK_BUTTON, (click, ctx) -> {
+        Optional<ViewNavigator.NavigationEntry<Object>> prev = context.navigator().peekPrevious();
+        Component prevTitle = prev
+                .map(entry -> entry.view().configuration().getTitleFunction().apply(entry.view(), context))
+                .orElse(Component.text("§r§7previous page"));
+        layout.slot(slot, (s, c) -> BACK_BUTTON.lore(
+                Component.text("§7To ").append(prevTitle)
+                        .color(NamedTextColor.GRAY).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+        ), (_, ctx) -> {
             ViewNavigator.get(ctx.player()).pop();
         });
         return true;
