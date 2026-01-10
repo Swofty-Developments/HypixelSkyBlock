@@ -124,7 +124,7 @@ public class NPCRyan extends HypixelNPC {
 		}
 
 		if (data.isCurrentlyActive(MissionGiveRyanDarkOakLogs.class)) {
-			if (!player.removeItemFromPlayer(ItemType.DARK_OAK_LOG, 512)) {
+			if (!player.removeItemFromPlayer(ItemType.DARK_OAK_LOG, 256)) {
 				sendNPCMessage(player, "Grab me §a256 Dark Oak Logs §fand I'll make you a badge! You don't have enough yet!");
 				return;
 			}
