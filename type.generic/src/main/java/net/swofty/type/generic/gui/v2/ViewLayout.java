@@ -59,6 +59,17 @@ public final class ViewLayout<S> {
         components.put(slot, ViewComponent.staticItem(slot, builder));
     }
 
+    public void slots(Collection<Integer> slots,
+                      BiFunction<S, ViewContext, ItemStack.Builder> render,
+                      BiConsumer<ClickContext<S>, ViewContext> onClick) {
+        slots.forEach(slot -> slot(slot, render, onClick));
+    }
+
+    public void slots(Collection<Integer> slots,
+                      BiFunction<S, ViewContext, ItemStack.Builder> render) {
+        slots.forEach(slot -> slot(slot, render));
+    }
+
     public void editable(int slot, BiFunction<S, ViewContext, ItemStack.Builder> initialRender,
                          SlotChangeHandler<S> onChange) {
         components.put(slot, ViewComponent.editable(slot, initialRender, onChange));
