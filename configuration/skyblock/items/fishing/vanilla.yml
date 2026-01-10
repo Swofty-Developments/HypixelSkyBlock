@@ -4,7 +4,7 @@ items:
     components:
       - id: SELLABLE
         value: 3.0
-  - id: COD
+  - id: RAW_FISH
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -47,7 +47,7 @@ items:
         effect_duration: 180
         effect_amplifier: 0
         alchemy_xp: 12
-  - id: SALMON
+  - id: RAW_SALMON
     rarity: COMMON
     components:
       - id: SELLABLE

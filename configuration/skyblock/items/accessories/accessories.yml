@@ -30,7 +30,7 @@ items:
                 type: WHEAT
                 amount: 8
               B:
-                type: WHEAT_SEEDS
+                type: SEEDS
                 amount: 1
             result:
               type: FARMING_TALISMAN

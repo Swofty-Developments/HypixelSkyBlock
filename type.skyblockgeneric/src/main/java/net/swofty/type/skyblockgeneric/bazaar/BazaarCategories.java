@@ -13,7 +13,7 @@ import java.util.Set;
 public enum BazaarCategories {
     FARMING(Material.GOLDEN_HOE, Material.YELLOW_STAINED_GLASS_PANE, "§e",
             new BazaarItemSet(ItemType.WHEAT, "Wheat & Seeds",
-                    ItemType.WHEAT, ItemType.ENCHANTED_BREAD, ItemType.HAY_BALE, ItemType.ENCHANTED_HAY_BALE, ItemType.WHEAT_SEEDS, ItemType.ENCHANTED_SEEDS),
+                    ItemType.WHEAT, ItemType.ENCHANTED_BREAD, ItemType.HAY_BALE, ItemType.ENCHANTED_HAY_BALE, ItemType.SEEDS, ItemType.ENCHANTED_SEEDS),
             new BazaarItemSet(ItemType.CARROT, "Carrot",
                     ItemType.CARROT, ItemType.ENCHANTED_CARROT, ItemType.ENCHANTED_GOLDEN_CARROT),
             new BazaarItemSet(ItemType.POTATO, "Potato",

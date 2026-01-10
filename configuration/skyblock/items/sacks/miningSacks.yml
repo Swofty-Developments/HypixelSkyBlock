@@ -1,0 +1,328 @@
+items:
+  - id: SMALL_MINING_SACK
+    rarity: COMMON
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7§7Items: §aCoal§7, §aCobblestone§7, §aDiamond§7, §aEmerald§7, §aEnd Stone§7,'
+      - '§7§aFlint§7, §aGlacite§7, §aGlossy Gemstone§7, §aGlowstone Dust§7, §aGold'
+      - '§aIngot§7, §aGravel§7, §aHard Stone§7, §aIce§7, §aIron Ingot§7, §aLapis Lazuli§7,'
+      - '§7§aMithril§7, §aMycelium§7, §aNether Quartz§7, §aNetherrack§7, §aObsidian§7, §aOil'
+      - '§aBarrel§7, §aPlasma§7, §aRed Sand§7, §aRedstone Dust§7, §aRefined'
+      - '§aMineral§7, §aSand§7, §aSnow Block§7, §aStarfall§7, §aStone§7, §aSulphur§7,'
+      - '§7§aTitanium§7, §aTreasurite§7, §aTungsten§7, §aUmber§7, §aVolta'
+      - ''
+      - '§7Capacity: §e2,240 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: f07dff657d61f302c7d2e725265d17b64aa73642391964fb48fc15be950831d8
+      - id: SACK
+        valid_items:
+          - COAL
+          - COBBLESTONE
+          - DIAMOND
+          - EMERALD
+          - END_STONE
+          - FLINT
+          - GLACITE
+          - GLACITE_JEWEL
+          - GLOSSY_GEMSTONE
+          - GLOWSTONE_DUST
+          - GOLD_INGOT
+          - GRAVEL
+          - HARD_STONE
+          - ICE
+          - IRON_INGOT
+          - LAPIS_LAZULI
+          - MITHRIL
+          - MYCELIUM
+          - QUARTZ
+          - NETHERRACK
+          - OBSIDIAN
+          - OIL_BARREL
+          - PLASMA
+          - RED_SAND
+          - REDSTONE
+          - REFINED_MINERAL
+          - SAND
+          - SNOW_BLOCK
+          - STARFALL
+          - STONE
+          - SULPHUR
+          - TITANIUM
+          - TREASURITE
+          - TUNGSTEN
+          - UMBER
+          - VOLTA
+        max_capacity: 2240
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_COAL
+                amount: 2
+              B:
+                type: ENCHANTED_LEATHER
+                amount: 1
+            result:
+              type: SMALL_MINING_SACK
+              amount: 1
+
+  - id: MEDIUM_MINING_SACK
+    rarity: COMMON
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7§7Items: §aCoal§7, §aCobblestone§7, §aDiamond§7, §aEmerald§7, §aEnd Stone§7,'
+      - '§7§aFlint§7, §aGlacite§7, §aGlossy Gemstone§7, §aGlowstone Dust§7, §aGold'
+      - '§aIngot§7, §aGravel§7, §aHard Stone§7, §aIce§7, §aIron Ingot§7, §aLapis Lazuli§7,'
+      - '§7§aMithril§7, §aMycelium§7, §aNether Quartz§7, §aNetherrack§7, §aObsidian§7, §aOil'
+      - '§aBarrel§7, §aPlasma§7, §aRed Sand§7, §aRedstone Dust§7, §aRefined'
+      - '§aMineral§7, §aSand§7, §aSnow Block§7, §aStarfall§7, §aStone§7, §aSulphur§7,'
+      - '§7§aTitanium§7, §aTreasurite§7, §aTungsten§7, §aUmber§7, §aVolta'
+      - ''
+      - '§7Capacity: §e6,720 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 100b1bf8554985f3decf54886922ad20d144438564ef7a5b52ced71bc9dd04bb
+      - id: SACK
+        valid_items:
+          - COAL
+          - COBBLESTONE
+          - DIAMOND
+          - EMERALD
+          - END_STONE
+          - FLINT
+          - GLACITE
+          - GLACITE_JEWEL
+          - GLOSSY_GEMSTONE
+          - GLOWSTONE_DUST
+          - GOLD_INGOT
+          - GRAVEL
+          - HARD_STONE
+          - ICE
+          - IRON_INGOT
+          - LAPIS_LAZULI
+          - MITHRIL
+          - MYCELIUM
+          - QUARTZ
+          - NETHERRACK
+          - OBSIDIAN
+          - OIL_BARREL
+          - PLASMA
+          - RED_SAND
+          - REDSTONE
+          - REFINED_MINERAL
+          - SAND
+          - SNOW_BLOCK
+          - STARFALL
+          - STONE
+          - SULPHUR
+          - TITANIUM
+          - TREASURITE
+          - TUNGSTEN
+          - UMBER
+          - VOLTA
+        max_capacity: 6720
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_COAL
+                amount: 4
+              B:
+                type: SMALL_MINING_SACK
+                amount: 1
+            result:
+              type: MEDIUM_MINING_SACK
+              amount: 1
+
+  - id: LARGE_MINING_SACK
+    rarity: COMMON
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7§7Items: §aCoal§7, §aCobblestone§7, §aDiamond§7, §aEmerald§7, §aEnd Stone§7,'
+      - '§7§aFlint§7, §aGlacite§7, §aGlossy Gemstone§7, §aGlowstone Dust§7, §aGold'
+      - '§aIngot§7, §aGravel§7, §aHard Stone§7, §aIce§7, §aIron Ingot§7, §aLapis Lazuli§7,'
+      - '§7§aMithril§7, §aMycelium§7, §aNether Quartz§7, §aNetherrack§7, §aObsidian§7, §aOil'
+      - '§aBarrel§7, §aPlasma§7, §aRed Sand§7, §aRedstone Dust§7, §aRefined'
+      - '§aMineral§7, §aSand§7, §aSnow Block§7, §aStarfall§7, §aStone§7, §aSulphur§7,'
+      - '§7§aTitanium§7, §aTreasurite§7, §aTungsten§7, §aUmber§7, §aVolta'
+      - ''
+      - '§7Capacity: §e20,160 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 915fcebbbe02fdb72acd2095d9edfcea095e604b3682db88963b5b83b2939b67
+      - id: SACK
+        valid_items:
+          - COAL
+          - COBBLESTONE
+          - DIAMOND
+          - EMERALD
+          - END_STONE
+          - FLINT
+          - GLACITE
+          - GLACITE_JEWEL
+          - GLOSSY_GEMSTONE
+          - GLOWSTONE_DUST
+          - GOLD_INGOT
+          - GRAVEL
+          - HARD_STONE
+          - ICE
+          - IRON_INGOT
+          - LAPIS_LAZULI
+          - MITHRIL
+          - MYCELIUM
+          - QUARTZ
+          - NETHERRACK
+          - OBSIDIAN
+          - OIL_BARREL
+          - PLASMA
+          - RED_SAND
+          - REDSTONE
+          - REFINED_MINERAL
+          - SAND
+          - SNOW_BLOCK
+          - STARFALL
+          - STONE
+          - SULPHUR
+          - TITANIUM
+          - TREASURITE
+          - TUNGSTEN
+          - UMBER
+          - VOLTA
+        max_capacity: 20160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_COAL
+                amount: 8
+              B:
+                type: MEDIUM_MINING_SACK
+                amount: 1
+            result:
+              type: LARGE_MINING_SACK
+              amount: 1
+
+  - id: LARGE_ENCHANTED_MINING_SACK
+    rarity: EPIC
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7This sack can contain all enchanted versions'
+      - '§7of these materials:'
+      - '§7§aCoal§7, §aCobblestone§7, §aDiamond§7, §aEmerald§7, §aEnd Stone§7,'
+      - '§7§aFlint§7, §aGlacite§7, §aGlowstone Dust§7, §aGold Ingot§7, §aHard'
+      - '§aStone§7, §aIron Ingot§7, §aLapis Lazuli§7, §aMithril§7, §aMycelium§7,'
+      - '§7§aNether Quartz§7, §aNetherrack§7, §aObsidian§7, §aRed Sand§7,'
+      - '§7§aRedstone Dust§7, §aSand§7, §aSulphur§7, §aTitanium§7,'
+      - '§7§aTungsten§7, §aUmber'
+      - ''
+      - '§7Capacity: §e20,160 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: eedc69fefad184ee8c9186928da982addfd783bed98d95083408bf419e0cccd0
+      - id: SACK
+        valid_items:
+          - CONCENTRATED_STONE
+          - ENCHANTED_COAL
+          - ENCHANTED_COAL_BLOCK
+          - ENCHANTED_COBBLESTONE
+          - ENCHANTED_DIAMOND
+          - ENCHANTED_DIAMOND_BLOCK
+          - ENCHANTED_EMERALD
+          - ENCHANTED_EMERALD_BLOCK
+          - ENCHANTED_END_STONE
+          - ENCHANTED_FLINT
+          - ENCHANTED_GLACITE
+          - ENCHANTED_GLOWSTONE
+          - ENCHANTED_GLOWSTONE_DUST
+          - ENCHANTED_GOLD_BLOCK
+          - ENCHANTED_GOLD_INGOT
+          - ENCHANTED_HARD_STONE
+          - ENCHANTED_ICE
+          - ENCHANTED_IRON_BLOCK
+          - ENCHANTED_IRON_INGOT
+          - ENCHANTED_LAPIS_LAZULI
+          - ENCHANTED_LAPIS_LAZULI_BLOCK
+          - ENCHANTED_MITHRIL
+          - ENCHANTED_MYCELIUM
+          - ENCHANTED_MYCELIUM_CUBE
+          - ENCHANTED_QUARTZ
+          - ENCHANTED_NETHERRACK
+          - ENCHANTED_OBSIDIAN
+          - ENCHANTED_PACKED_ICE
+          - ENCHANTED_QUARTZ_BLOCK
+          - ENCHANTED_RED_SAND
+          - ENCHANTED_RED_SAND_CUBE
+          - ENCHANTED_REDSTONE_BLOCK
+          - ENCHANTED_REDSTONE
+          - ENCHANTED_SAND
+          - ENCHANTED_SNOW_BLOCK
+          - ENCHANTED_SULPHUR
+          - ENCHANTED_SULPHUR_CUBE
+          - ENCHANTED_TITANIUM
+          - ENCHANTED_TUNGSTEN
+          - ENCHANTED_UMBER
+        max_capacity: 20160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - ABA
+              - ACA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_COAL
+                amount: 16
+              B:
+                type: ENCHANTED_STRING
+                amount: 16
+              C:
+                type: ENCHANTED_LEATHER
+                amount: 12
+            result:
+              type: LARGE_ENCHANTED_MINING_SACK
+              amount: 1

@@ -113,6 +113,9 @@ collections:
     - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_CHARCOAL
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: SMALL_MINING_SACK
   - amount: 5000
     rewards:
     - type: XP
@@ -126,6 +129,9 @@ collections:
     - type: RECIPE_UNLOCK
       data:
         unlockedItemType: ENCHANTED_COAL_BLOCK
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MEDIUM_MINING_SACK
   - amount: 25000
     rewards:
     - type: XP
@@ -139,11 +145,17 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: LARGE_MINING_SACK
   - amount: 100000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: LARGE_ENCHANTED_MINING_SACK
 - itemType: GOLD_INGOT
   rewards:
   - amount: 50

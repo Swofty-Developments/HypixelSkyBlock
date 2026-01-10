@@ -1,0 +1,274 @@
+items:
+  - id: SMALL_FORAGING_SACK
+    rarity: COMMON
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7Items: §aAcacia Log§7, §aAcacia Sapling§7, §aApple§7, §aBamboo§7, §aBirch'
+      - '§aLog§7, §aBirch Sapling§7, §aDark Oak Log§7, §aDark Oak Sapling§7, §aDeep'
+      - '§aRoot§7, §aFig Log§7, §aFlexbone§7, §aGill Membrane§7, §aJungle Log§7,'
+      - '§aJungle Sapling§7, §aLushlilac§7, §aMangrove Log§7, §aOak Log§7, §aOak'
+      - '§aSapling§7, §aSea Lumies§7, §aSpruce Log§7, §aSpruce Sapling§7, §aStarlyn'
+      - '§aPrize§7, §aStick§7, §aStretching Sticks§7, §aSturdy Bone§7, §aTender'
+      - '§aWood§7, §aVinesap§7, §aWet Water'
+      - ''
+      - '§7Capacity: §e2,240 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 4f960c639d4004d1882575aeba69f456fb3c744077935714947e19c1306d2733
+      - id: SACK
+        valid_items:
+          - ACACIA_LOG
+          - ACACIA_SAPLING
+          - APPLE
+          - BAMBOO
+          - BIRCH_LOG
+          - BIRCH_SAPLING
+          - DARK_OAK_LOG
+          - DARK_OAK_SAPLING
+          - DEEP_ROOT
+          - FIG_LOG
+          - FLEXBONE
+          - GILL_MEMBRANE
+          - JUNGLE_LOG
+          - JUNGLE_SAPLING
+          - LUSHLILAC
+          - MANGROVE_LOG
+          - OAK_LOG
+          - OAK_SAPLING
+          - SEA_LUMIES
+          - SPRUCE_LOG
+          - SPRUCE_SAPLING
+          - STARLYN_PRIZE
+          - STICK
+          - STRETCHING_STICKS
+          - STURDY_BONE
+          - TENDER_WOOD
+          - VINESAP
+          - WET_WATER
+        max_capacity: 2240
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_BIRCH_LOG
+                amount: 2
+              B:
+                type: ENCHANTED_LEATHER
+                amount: 1
+            result:
+              type: SMALL_FORAGING_SACK
+              amount: 1
+
+  - id: MEDIUM_FORAGING_SACK
+    rarity: RARE
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7Items: §aAcacia Log§7, §aAcacia Sapling§7, §aApple§7, §aBamboo§7, §aBirch'
+      - '§aLog§7, §aBirch Sapling§7, §aDark Oak Log§7, §aDark Oak Sapling§7, §aDeep'
+      - '§aRoot§7, §aFig Log§7, §aFlexbone§7, §aGill Membrane§7, §aJungle Log§7,'
+      - '§aJungle Sapling§7, §aLushlilac§7, §aMangrove Log§7, §aOak Log§7, §aOak'
+      - '§aSapling§7, §aSea Lumies§7, §aSpruce Log§7, §aSpruce Sapling§7, §aStarlyn'
+      - '§aPrize§7, §aStick§7, §aStretching Sticks§7, §aSturdy Bone§7, §aTender'
+      - '§aWood§7, §aVinesap§7, §aWet Water'
+      - ''
+      - '§7Capacity: §e2,240 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 2c14105c7b629cfdeb866a560bab59734aa5cbbe880ed9f50f9044c42afd599d
+      - id: SACK
+        valid_items:
+          - ACACIA_LOG
+          - ACACIA_SAPLING
+          - APPLE
+          - BAMBOO
+          - BIRCH_LOG
+          - BIRCH_SAPLING
+          - DARK_OAK_LOG
+          - DARK_OAK_SAPLING
+          - DEEP_ROOT
+          - FIG_LOG
+          - FLEXBONE
+          - GILL_MEMBRANE
+          - JUNGLE_LOG
+          - JUNGLE_SAPLING
+          - LUSHLILAC
+          - MANGROVE_LOG
+          - OAK_LOG
+          - OAK_SAPLING
+          - SEA_LUMIES
+          - SPRUCE_LOG
+          - SPRUCE_SAPLING
+          - STARLYN_PRIZE
+          - STICK
+          - STRETCHING_STICKS
+          - STURDY_BONE
+          - TENDER_WOOD
+          - VINESAP
+          - WET_WATER
+        max_capacity: 6720
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_BIRCH_LOG
+                amount: 4
+              B:
+                type: SMALL_FORAGING_SACK
+                amount: 1
+            result:
+              type: MEDIUM_FORAGING_SACK
+              amount: 1
+
+  - id: LARGE_FORAGING_SACK
+    rarity: EPIC
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7Items: §aAcacia Log§7, §aAcacia Sapling§7, §aApple§7, §aBamboo§7, §aBirch'
+      - '§aLog§7, §aBirch Sapling§7, §aDark Oak Log§7, §aDark Oak Sapling§7, §aDeep'
+      - '§aRoot§7, §aFig Log§7, §aFlexbone§7, §aGill Membrane§7, §aJungle Log§7,'
+      - '§aJungle Sapling§7, §aLushlilac§7, §aMangrove Log§7, §aOak Log§7, §aOak'
+      - '§aSapling§7, §aSea Lumies§7, §aSpruce Log§7, §aSpruce Sapling§7, §aStarlyn'
+      - '§aPrize§7, §aStick§7, §aStretching Sticks§7, §aSturdy Bone§7, §aTender'
+      - '§aWood§7, §aVinesap§7, §aWet Water'
+      - ''
+      - '§7Capacity: §e2,240 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 2c6e24df498ba4a589c259d9fc0d3db348f93cdf26a5fe461571c1da706efaf3
+      - id: SACK
+        valid_items:
+          - ACACIA_LOG
+          - ACACIA_SAPLING
+          - APPLE
+          - BAMBOO
+          - BIRCH_LOG
+          - BIRCH_SAPLING
+          - DARK_OAK_LOG
+          - DARK_OAK_SAPLING
+          - DEEP_ROOT
+          - FIG_LOG
+          - FLEXBONE
+          - GILL_MEMBRANE
+          - JUNGLE_LOG
+          - JUNGLE_SAPLING
+          - LUSHLILAC
+          - MANGROVE_LOG
+          - OAK_LOG
+          - OAK_SAPLING
+          - SEA_LUMIES
+          - SPRUCE_LOG
+          - SPRUCE_SAPLING
+          - STARLYN_PRIZE
+          - STICK
+          - STRETCHING_STICKS
+          - STURDY_BONE
+          - TENDER_WOOD
+          - VINESAP
+          - WET_WATER
+        max_capacity: 20160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_BIRCH_LOG
+                amount: 8
+              B:
+                type: MEDIUM_FORAGING_SACK
+                amount: 1
+            result:
+              type: LARGE_FORAGING_SACK
+              amount: 1
+
+  - id: LARGE_ENCHANTED_FORAGING_SACK
+    rarity: EPIC
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7This sack can contain all enchanted versions'
+      - '§7of these materials:'
+      - '§aAcacia Log§7, §aBirch Log§7, §aDark Oak Log§7, §aFig Log§7,'
+      - '§aFigstone§7, §aJungle Log§7, §aMangcore§7, §aMangrove Log§7,'
+      - '§aOak Log§7, §aSpruce Log'
+      - ''
+      - '§7Capacity: §e20,160 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 35326464c6a79362730d79fe4611b911353c1b3c5144177773591357f1cd5ca1
+      - id: SACK
+        valid_items:
+          - ENCHANTED_ACACIA_LOG
+          - ENCHANTED_BIRCH_LOG
+          - ENCHANTED_DARK_OAK_LOG
+          - ENCHANTED_FIG_LOG
+          - ENCHANTED_JUNGLE_LOG
+          - ENCHANTED_MANGROVE_LOG
+          - ENCHANTED_OAK_LOG
+          - ENCHANTED_SPRUCE_LOG
+          - ENCHANTED_SEA_LUMIES
+          - ENCHANTED_TENDER_WOOD
+          - ENCHANTED_VINESAP
+          - FIGSTONE
+          - MANGCORE
+        max_capacity: 20160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - ABA
+              - ACA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_BIRCH_LOG
+                amount: 16
+              B:
+                type: ENCHANTED_STRING
+                amount: 16
+              C:
+                type: ENCHANTED_LEATHER
+                amount: 12
+            result:
+              type: LARGE_ENCHANTED_FORAGING_SACK
+              amount: 1
