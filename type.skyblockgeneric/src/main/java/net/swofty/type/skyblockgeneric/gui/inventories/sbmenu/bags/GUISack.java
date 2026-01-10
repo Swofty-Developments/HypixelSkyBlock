@@ -65,11 +65,23 @@ public class GUISack extends HypixelInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         if (!closeGUIButton) {
-            switch (GUISack.super.size) {
-                case InventoryType.CHEST_4_ROW -> set(GUIClickableItem.getGoBackItem(31, new GUISackOfSacks()));
-                case InventoryType.CHEST_5_ROW -> set(GUIClickableItem.getGoBackItem(40, new GUISackOfSacks()));
-                case InventoryType.CHEST_6_ROW -> set(GUIClickableItem.getGoBackItem(49, new GUISackOfSacks()));
-            }
+            int backSlot = switch (GUISack.super.size) {
+                case InventoryType.CHEST_4_ROW -> 31;
+                case InventoryType.CHEST_5_ROW -> 40;
+                case InventoryType.CHEST_6_ROW -> 49;
+                default -> 31;
+            };
+            set(new GUIClickableItem(backSlot) {
+                @Override
+                public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                    player.openView(new GUISackOfSacks());
+                }
+
+                @Override
+                public ItemStack.Builder getItem(HypixelPlayer player) {
+                    return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, "§7To Sack of Sacks");
+                }
+            });
         } else {
             switch (GUISack.super.size) {
                 case InventoryType.CHEST_4_ROW -> set(GUIClickableItem.getCloseItem(31));

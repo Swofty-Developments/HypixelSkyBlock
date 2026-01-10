@@ -47,7 +47,6 @@ public class GUIStorage extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aEnder Chest", Material.ENDER_CHEST, 1,
                         "§7Store global items you can",
                         "§7access anywhere in your ender",
@@ -57,7 +56,6 @@ public class GUIStorage extends HypixelInventoryGUI {
         set(new GUIItem(22) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aBackpacks", Material.CHEST, 1,
                         "§7Place backpack items in these slots",
                         "§7to use them as additional storage",
@@ -96,7 +94,6 @@ public class GUIStorage extends HypixelInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!storage.hasPage(page))
                         return ItemStackCreator.getStack("§cLocked Page", Material.RED_STAINED_GLASS_PANE, 1,
                                 "§7Unlock more Ender Chest pages in",
@@ -125,7 +122,6 @@ public class GUIStorage extends HypixelInventoryGUI {
                 set(new GUIItem(backpack_slot) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return ItemStackCreator.getStack("§cLocked Backpack Slot " + slot,
                                 Material.GRAY_DYE, 1,
                                 "§7Talk to Tia the Fairy to unlock more",

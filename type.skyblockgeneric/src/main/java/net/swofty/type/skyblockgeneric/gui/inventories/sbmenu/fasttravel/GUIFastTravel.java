@@ -50,7 +50,7 @@ public class GUIFastTravel extends StatelessView {
         }, (click, c) -> {
             SkyBlockPlayer p = (SkyBlockPlayer) c.player();
             p.getToggles().inverse(DatapointToggles.Toggles.ToggleType.PAPER_ICONS);
-            //new GUIFastTravel().open(p);
+            c.replace(new GUIFastTravel());
         });
 
         TravelScrollIslands[] values = TravelScrollIslands.values();
@@ -129,7 +129,7 @@ public class GUIFastTravel extends StatelessView {
                         p.asProxyPlayer().sendMessage("§7You have been warped to " + island.getDescriptiveName() + "§7!");
                     });
                 } else {
-                    //new GUIFastTravelSubMenu(island).open(p);
+                    c.push(new GUIFastTravelSubMenu(island));
                 }
             });
         }

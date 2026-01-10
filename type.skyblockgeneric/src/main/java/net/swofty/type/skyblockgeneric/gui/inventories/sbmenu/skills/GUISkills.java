@@ -78,7 +78,7 @@ public class GUISkills extends StatelessView {
             }, (click, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
                 if (category == SkillCategories.CARPENTRY && !player.getMissionData().hasCompleted("give_wool_to_carpenter")) return;
-                //new GUISkillCategory(category, 0).open(player);
+                c.push(new GUISkillCategory(category, 0));
             });
         }
     }

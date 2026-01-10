@@ -103,7 +103,7 @@ public class GUICollectionCategory extends StatelessView {
                     player.sendMessage("§cYou haven't found this item yet!");
                     return;
                 }
-                //new GUICollectionItem(item.type()).open(player);
+                player.openView(new GUICollectionItem(item.type()));
             });
         }
     }

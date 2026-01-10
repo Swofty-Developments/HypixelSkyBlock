@@ -1,8 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
-import lombok.Setter;
 import net.minestom.server.component.DataComponents;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
@@ -10,12 +8,11 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePetData;
-import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ClickContext;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.PaginationList;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -25,41 +22,40 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
-    @Setter
-    private SortType sortType = SortType.LEVEL;
-    @Setter
-    private boolean convertToItem = false;
+public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
+    private static final int[] PAGINATED_SLOTS = {
+            10, 11, 12, 13, 14, 15, 16,
+            19, 20, 21, 22, 23, 24, 25,
+            28, 29, 30, 31, 32, 33, 34,
+            37, 38, 39, 40, 41, 42, 43
+    };
 
-    public GUIPets() {
-        super(InventoryType.CHEST_6_ROW);
+    @Override
+    public ViewConfiguration<PetsState> configuration() {
+        return ViewConfiguration.withString(
+                (state, ctx) -> "(" + (state.page() + 1) + "/" + Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length)) + ") Pets",
+                InventoryType.CHEST_6_ROW
+        );
     }
 
     @Override
-    public boolean allowHotkeying() {
-        return false;
+    protected int[] getPaginatedSlots() {
+        return PAGINATED_SLOTS;
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
+    protected List<SkyBlockItem> getFilteredItems(PetsState state) {
+        List<SkyBlockItem> pets = new ArrayList<>(state.items());
+        String query = state.query();
 
-    @Override
-    public int[] getPaginatedSlots() {
-        return new int[]{
-                10, 11, 12, 13, 14, 15, 16,
-                19, 20, 21, 22, 23, 24, 25,
-                28, 29, 30, 31, 32, 33, 34,
-                37, 38, 39, 40, 41, 42, 43
-        };
-    }
+        // Apply search filter first
+        if (query != null && !query.isEmpty()) {
+            pets = pets.stream().filter(item -> !shouldFilterFromSearch(query, item)).toList();
+        }
 
-    @Override
-    public PaginationList<SkyBlockItem> fillPaged(HypixelPlayer player, PaginationList<SkyBlockItem> paged) {
-        List<SkyBlockItem> pets = new ArrayList<>(((SkyBlockPlayer) player).getPetData().getPetsMap().keySet().stream().toList());
-
-        switch (sortType) {
+        // Apply sorting
+        pets = new ArrayList<>(pets);
+        switch (state.sortType()) {
             case LEVEL:
                 pets.sort((pet1, pet2) -> {
                     ItemAttributePetData.PetData data1 = pet1.getAttributeHandler().getPetData();
@@ -94,197 +90,185 @@ public class GUIPets extends HypixelPaginatedGUI<SkyBlockItem> {
                 break;
         }
 
-        paged.addAll(pets);
-
-        return paged;
+        return pets;
     }
 
     @Override
-    public boolean shouldFilterFromSearch(String query, SkyBlockItem item) {
-        return !item.getDisplayName().toLowerCase().contains(query.toLowerCase());
-    }
-
-    @Override
-    public void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
-        set(GUIClickableItem.getCloseItem(49));
-        set(new GUIClickableItem(48) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                p.openView(new GUISkyBlockMenu());
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack("§aGo Back",
-                        Material.ARROW, 1, "§7To SkyBlock Menu");
-            }
-        });
-        set(new GUIClickableItem(47) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                player.sendMessage("§aPet conversion to item is now " + (!convertToItem ? "§aENABLED" : "§cDISABLED") + "§a!");
-
-                convertToItem = !convertToItem;
-                GUIPets guiPets = new GUIPets();
-                guiPets.setSortType(sortType);
-                guiPets.setConvertToItem(convertToItem);
-                guiPets.open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStack.Builder itemStack = ItemStackCreator.getStack("§aConvert to item", Material.DIAMOND, 1,
-                        "§7Toggle between converting your pets to an item",
-                        "§7so you can pick it up and",
-                        "§7place it in your inventory!",
-                        " ",
-                        "§7Currently: " + (convertToItem ? "§aEnabled" : "§cDisabled"),
-                        " ",
-                        "§eClick to convert!");
-                if (convertToItem)
-                    ItemStackCreator.enchant(itemStack);
-                return itemStack;
-            }
-        });
-
-        set(new GUIClickableItem(51) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                boolean isRightClick = e.getClick() instanceof Click.Right;
-
-                int ordinal = sortType.ordinal();
-                if (isRightClick) {
-                    ordinal--;
-                    if (ordinal < 0) ordinal = SortType.values().length - 1;
-                } else {
-                    ordinal++;
-                    if (ordinal >= SortType.values().length) ordinal = 0;
-                }
-
-                sortType = SortType.values()[ordinal];
-
-                GUIPets guiPets = new GUIPets();
-                guiPets.setSortType(sortType);
-                guiPets.setConvertToItem(convertToItem);
-                guiPets.open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                List<String> lore = new ArrayList<>();
-                lore.add(" ");
-
-                for (SortType randomSortType : SortType.values()) {
-                    lore.add(randomSortType == sortType ?
-                            "§e> " + StringUtility.toNormalCase(randomSortType.name())
-                            : "§7> " + StringUtility.toNormalCase(randomSortType.name()));
-                }
-
-                lore.add(" ");
-                lore.add("§bRight-Click to go backwards!");
-                lore.add("§eClick to switch sort!");
-
-                return ItemStackCreator.getStack("§aSort", Material.HOPPER, 1, lore);
-            }
-        });
-
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aPets", Material.BONE, 1,
-                        "§7View and manage all of your",
-                        "§7Pets.",
-                        " ",
-                        "§7Level up your pets faster by",
-                        "§7gaining XP in their favourite",
-                        "§7skill!",
-                        " ",
-                        "§7Selected pet: " + (player.getPetData().getEnabledPet() == null ? "§cNone" : player.getPetData().getEnabledPet().getDisplayName()),
-                        " ",
-                        "§eClick to view!");
-            }
-        });
-
-        if (page > 1) {
-            set(createNavigationButton(this, 45, query, page, false));
-        }
-        if (page < maxPage) {
-            set(createNavigationButton(this, 53, query, page, true));
-        }
-    }
-
-    @Override
-    public String getTitle(HypixelPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
-        return "(" + page + "/" + paged.getPageCount() + ") Pets";
-    }
-
-    @Override
-    public GUIClickableItem createItemFor(SkyBlockItem item, int slot, HypixelPlayer p) {
-        SkyBlockPlayer player = (SkyBlockPlayer) p;
-        boolean isPetEnabled = player.getPetData().getEnabledPet() == item;
+    protected ItemStack.Builder renderItem(SkyBlockItem item, int index, HypixelPlayer player) {
+        SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+        boolean isPetEnabled = skyBlockPlayer.getPetData().getEnabledPet() == item;
 
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(item).getUpdatedItem();
         List<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
         lore.add(" ");
         if (isPetEnabled) {
             ItemStackCreator.enchant(itemStack);
-
             lore.add("§aCurrently Active!");
             lore.add("§eClick to deselect!");
         } else {
-            lore.add(convertToItem ? "§eClick to pick up!" : "§eClick to summon!");
+            lore.add("§eClick to summon!");
         }
-        itemStack = ItemStackCreator.updateLore(itemStack, lore);
+        return ItemStackCreator.updateLore(itemStack, lore);
+    }
 
-        ItemStack.Builder finalItemStack = itemStack;
-        return new GUIClickableItem(slot) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                boolean selected = player.getPetData().getEnabledPet() == item;
-                if (selected) {
-                    player.getPetData().deselectCurrent();
-                    player.getPetData().updatePetEntityImpl(player);
-                    GUIPets guiPets = new GUIPets();
-                    guiPets.setSortType(sortType);
-                    guiPets.setConvertToItem(convertToItem);
-                    guiPets.open(player);
-                    player.sendMessage("§cDeselected pet " + item.getDisplayName() + "§c!");
-                    return;
-                }
+    @Override
+    protected void onItemClick(ClickContext<PetsState> click, ViewContext ctx, SkyBlockItem item, int index) {
+        SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
+        PetsState state = click.state();
+        boolean selected = player.getPetData().getEnabledPet() == item;
 
-                if (convertToItem) {
-                    player.addAndUpdateItem(item);
-                    player.getPetData().removePet(item.getAttributeHandler().getPotentialType());
-                    GUIPets guiPets = new GUIPets();
-                    guiPets.setSortType(sortType);
-                    guiPets.setConvertToItem(convertToItem);
-                    guiPets.open(player);
-                    player.sendMessage("§aYou have picked up your pet!");
-                    return;
-                }
+        if (selected) {
+            player.getPetData().deselectCurrent();
+            player.getPetData().updatePetEntityImpl(player);
+            ctx.session(PetsState.class).update(s -> (PetsState) s.withItems(getPetsFromPlayer(player)));
+            player.sendMessage("§cDeselected pet " + item.getDisplayName() + "§c!");
+            return;
+        }
 
-                player.getPetData().setEnabled(item.getAttributeHandler().getPotentialType(), true);
-                player.getPetData().updatePetEntityImpl(player);
-                player.sendMessage("§aSelected pet " + item.getDisplayName() + "§a!");
-                GUIPets guiPets = new GUIPets();
-                guiPets.setSortType(sortType);
-                guiPets.setConvertToItem(convertToItem);
-                guiPets.open(player);
+        if (state.convertToItem()) {
+            player.addAndUpdateItem(item);
+            player.getPetData().removePet(item.getAttributeHandler().getPotentialType());
+            ctx.session(PetsState.class).update(s -> (PetsState) s.withItems(getPetsFromPlayer(player)));
+            player.sendMessage("§aYou have picked up your pet!");
+            return;
+        }
+
+        player.getPetData().setEnabled(item.getAttributeHandler().getPotentialType(), true);
+        player.getPetData().updatePetEntityImpl(player);
+        player.sendMessage("§aSelected pet " + item.getDisplayName() + "§a!");
+        ctx.session(PetsState.class).update(s -> (PetsState) s.withItems(getPetsFromPlayer(player)));
+    }
+
+    @Override
+    protected boolean shouldFilterFromSearch(String query, SkyBlockItem item) {
+        return !item.getDisplayName().toLowerCase().contains(query.toLowerCase());
+    }
+
+    @Override
+    protected void layoutCustom(ViewLayout<PetsState> layout, PetsState state, ViewContext ctx) {
+        Components.close(layout, 49);
+        Components.back(layout, 48, ctx);
+
+        // Info item
+        layout.slot(4, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            return ItemStackCreator.getStack("§aPets", Material.BONE, 1,
+                    "§7View and manage all of your",
+                    "§7Pets.",
+                    " ",
+                    "§7Level up your pets faster by",
+                    "§7gaining XP in their favourite",
+                    "§7skill!",
+                    " ",
+                    "§7Selected pet: " + (player.getPetData().getEnabledPet() == null ? "§cNone" : player.getPetData().getEnabledPet().getDisplayName()),
+                    " ",
+                    "§eClick to view!");
+        });
+
+        // Convert to item button
+        layout.slot(47, (s, c) -> {
+            ItemStack.Builder itemStack = ItemStackCreator.getStack("§aConvert to item", Material.DIAMOND, 1,
+                    "§7Toggle between converting your pets to an item",
+                    "§7so you can pick it up and",
+                    "§7place it in your inventory!",
+                    " ",
+                    "§7Currently: " + (s.convertToItem() ? "§aEnabled" : "§cDisabled"),
+                    " ",
+                    "§eClick to convert!");
+            if (s.convertToItem())
+                ItemStackCreator.enchant(itemStack);
+            return itemStack;
+        }, (click, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            player.sendMessage("§aPet conversion to item is now " + (!click.state().convertToItem() ? "§aENABLED" : "§cDISABLED") + "§a!");
+            c.session(PetsState.class).update(s -> s.withConvertToItem(!s.convertToItem()));
+        });
+
+        // Sort button
+        layout.slot(51, (s, c) -> {
+            List<String> lore = new ArrayList<>();
+            lore.add(" ");
+
+            for (SortType randomSortType : SortType.values()) {
+                lore.add(randomSortType == s.sortType() ?
+                        "§e> " + StringUtility.toNormalCase(randomSortType.name())
+                        : "§7> " + StringUtility.toNormalCase(randomSortType.name()));
             }
 
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return finalItemStack;
+            lore.add(" ");
+            lore.add("§bRight-Click to go backwards!");
+            lore.add("§eClick to switch sort!");
+
+            return ItemStackCreator.getStack("§aSort", Material.HOPPER, 1, lore);
+        }, (click, c) -> {
+            boolean isRightClick = click.click() instanceof Click.Right;
+
+            int ordinal = click.state().sortType().ordinal();
+            if (isRightClick) {
+                ordinal--;
+                if (ordinal < 0) ordinal = SortType.values().length - 1;
+            } else {
+                ordinal++;
+                if (ordinal >= SortType.values().length) ordinal = 0;
             }
-        };
+
+            SortType newSort = SortType.values()[ordinal];
+            c.session(PetsState.class).update(s -> s.withSortType(newSort));
+        });
+    }
+
+    @Override
+    protected int getPreviousPageSlot() {
+        return 45;
+    }
+
+    @Override
+    protected int getNextPageSlot() {
+        return 53;
+    }
+
+    @Override
+    protected int getSearchSlot() {
+        return -1;
+    }
+
+    private static List<SkyBlockItem> getPetsFromPlayer(SkyBlockPlayer player) {
+        return new ArrayList<>(player.getPetData().getPetsMap().keySet().stream().toList());
+    }
+
+    public static PetsState createInitialState(SkyBlockPlayer player) {
+        return new PetsState(getPetsFromPlayer(player), 0, "", SortType.LEVEL, false);
+    }
+
+    public record PetsState(
+            List<SkyBlockItem> items,
+            int page,
+            String query,
+            SortType sortType,
+            boolean convertToItem
+    ) implements PaginatedState<SkyBlockItem> {
+        @Override
+        public PaginatedState<SkyBlockItem> withPage(int page) {
+            return new PetsState(items, page, query, sortType, convertToItem);
+        }
+
+        @Override
+        public PaginatedState<SkyBlockItem> withQuery(String query) {
+            return new PetsState(items, 0, query, sortType, convertToItem);
+        }
+
+        @Override
+        public PaginatedState<SkyBlockItem> withItems(List<SkyBlockItem> items) {
+            return new PetsState(items, page, query, sortType, convertToItem);
+        }
+
+        public PetsState withSortType(SortType sortType) {
+            return new PetsState(items, page, query, sortType, convertToItem);
+        }
+
+        public PetsState withConvertToItem(boolean convertToItem) {
+            return new PetsState(items, page, query, sortType, convertToItem);
+        }
     }
 
     public enum SortType {

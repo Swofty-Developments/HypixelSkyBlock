@@ -1,20 +1,13 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats;
 
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockProfile;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 
@@ -22,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class GUICombatStats extends HypixelInventoryGUI {
+public class GUICombatStats extends StatelessView {
 
     private enum CombatStat {
         HEALTH(10, ItemStatistic.HEALTH, new GUIMaterial(Material.GOLDEN_APPLE),
@@ -282,90 +275,57 @@ public class GUICombatStats extends HypixelInventoryGUI {
 
         public List<String> buildLore(SkyBlockPlayer player) {
             List<String> lore = new ArrayList<>(baseLoreProvider.apply(player));
-
             double value = player.getStatistics().allStatistics().getOverall(statistic);
             if (value == 0D) {
                 lore.add("§8You have none of this stat!");
             }
             lore.add("§eClick to view!");
-
             return lore;
         }
-
-        public ItemStack.Builder buildItemStack(SkyBlockPlayer player) {
-            double value = player.getStatistics().allStatistics().getOverall(statistic);
-            String title = statistic.getFullDisplayName() + " §f" +
-                    StringUtility.decimalify(value, 1);
-            List<String> lore = buildLore(player);
-
-            return ItemStackCreator.getUsingGUIMaterial(title, guiMaterial, 1, lore);
-        }
-    }
-
-    public GUICombatStats() {
-        super("Your Stats Breakdown", InventoryType.CHEST_6_ROW);
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        //set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockProfile()));
-        set(GUIClickableItem.getCloseItem(49));
+    public ViewConfiguration<DefaultState> configuration() {
+        return new ViewConfiguration<>("Your Stats Breakdown", InventoryType.CHEST_6_ROW);
+    }
 
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                PlayerStatistics statistics = player.getStatistics();
-                List<String> lore = new ArrayList<>(List.of("§7Gives you a better chance at", "§7fighting strong monsters. ", " "));
-                List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.HEALTH, ItemStatistic.DEFENSE, ItemStatistic.STRENGTH, ItemStatistic.INTELLIGENCE,
-                        ItemStatistic.CRITICAL_CHANCE, ItemStatistic.CRITICAL_DAMAGE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.TRUE_DEFENSE,
-                        ItemStatistic.FEROCITY, ItemStatistic.HEALTH_REGENERATION, ItemStatistic.VITALITY, ItemStatistic.MENDING, ItemStatistic.SWING_RANGE));
+    @Override
+    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+        Components.fill(layout);
+        Components.close(layout, 49);
+        Components.back(layout, 48, ctx);
 
-                statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (stats.contains(statistic)) {
-                        lore.add(" " + statistic.getFullDisplayName() + " §f" +
-                                StringUtility.decimalify(value, 2) + statistic.getSuffix());
-                    }
-                });
+        // Title item
+        layout.slot(4, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            PlayerStatistics statistics = player.getStatistics();
+            List<String> lore = new ArrayList<>(List.of("§7Gives you a better chance at", "§7fighting strong monsters. ", " "));
+            List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.HEALTH, ItemStatistic.DEFENSE, ItemStatistic.STRENGTH, ItemStatistic.INTELLIGENCE,
+                    ItemStatistic.CRITICAL_CHANCE, ItemStatistic.CRITICAL_DAMAGE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.TRUE_DEFENSE,
+                    ItemStatistic.FEROCITY, ItemStatistic.HEALTH_REGENERATION, ItemStatistic.VITALITY, ItemStatistic.MENDING, ItemStatistic.SWING_RANGE));
 
-                return ItemStackCreator.getStack("§cCombat Stats", Material.DIAMOND_SWORD, 1, lore);
-            }
-        });
-
-        for (CombatStat stat : CombatStat.values()) {
-            set(new GUIClickableItem(stat.slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    player.sendMessage("§aUnder construction!");
-                }
-
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    return stat.buildItemStack((SkyBlockPlayer) p);
+            statistics.allStatistics().getOverall().forEach((statistic, value) -> {
+                if (stats.contains(statistic)) {
+                    lore.add(" " + statistic.getFullDisplayName() + " §f" +
+                            StringUtility.decimalify(value, 2) + statistic.getSuffix());
                 }
             });
+
+            return ItemStackCreator.getStack("§cCombat Stats", Material.DIAMOND_SWORD, 1, lore);
+        });
+
+        // Combat stat items
+        for (CombatStat stat : CombatStat.values()) {
+            layout.slot(stat.slot, (s, c) -> {
+                SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+                double value = player.getStatistics().allStatistics().getOverall(stat.statistic);
+                String title = stat.statistic.getFullDisplayName() + " §f" + StringUtility.decimalify(value, 1);
+                List<String> lore = stat.buildLore(player);
+                return ItemStackCreator.getUsingGUIMaterial(title, stat.guiMaterial, 1, lore);
+            }, (click, c) -> {
+                SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+                player.sendMessage("§aUnder construction!");
+            });
         }
-
-        updateItemStacks(getInventory(), getPlayer());
-    }
-
-    @Override
-    public boolean allowHotkeying() {
-        return false;
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(false);
     }
 }

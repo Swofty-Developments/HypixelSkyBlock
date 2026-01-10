@@ -54,7 +54,7 @@ public class GUISkillCategory extends StatelessView {
                 lore.add("");
                 lore.add("§eClick to view!");
                 return ItemStackCreator.getStack("§3Bestiary", Material.WRITTEN_BOOK, 1, lore);
-            }, (click, c) -> new GUIBestiary().open((SkyBlockPlayer) c.player()));
+            }, (click, c) -> c.push(new GUIBestiary()));
         }
 
         // Skill info
@@ -86,18 +86,14 @@ public class GUISkillCategory extends StatelessView {
         if (rewards.size() > (page + 1) * DISPLAY_SLOTS.length) {
             layout.slot(50, (s, c) -> ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1,
                             "§7Click to view the next page of rewards."),
-                    (click, c) -> {
-                        //new GUISkillCategory(category, page + 1).open((SkyBlockPlayer) c.player())
-                    });
+                    (click, c) -> c.replace(new GUISkillCategory(category, page + 1)));
         }
 
         // Previous page button
         if (page > 0) {
             layout.slot(48, (s, c) -> ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1,
                             "§7Click to view the previous page of rewards."),
-                    (click, c) -> {
-                        //new GUISkillCategory(category, page - 1).open((SkyBlockPlayer) c.player())
-                    });
+                    (click, c) -> c.replace(new GUISkillCategory(category, page - 1)));
         }
 
         // Rewards

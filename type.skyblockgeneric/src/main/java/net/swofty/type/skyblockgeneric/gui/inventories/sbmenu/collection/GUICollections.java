@@ -53,7 +53,7 @@ public class GUICollections extends StatelessView {
                         "",
                         "§eClick to view!"),
                 (click, c) -> {
-                    //new GUICraftedMinions(new GUICollections()).open((SkyBlockPlayer) c.player())
+                    c.player().openView(new GUICraftedMinions(), GUICraftedMinions.createInitialState());
                 });
 
         ArrayList<CollectionCategory> allCategories = CollectionCategories.getCategories();
@@ -79,6 +79,7 @@ public class GUICollections extends StatelessView {
                 ArrayList<String> display = new ArrayList<>();
                 player.getCollection().getDisplay(display, category);
                 //new GUICollectionCategory(category, display).open(player);
+                player.openView(new GUICollectionCategory(category, display));
             });
         }
     }

@@ -33,7 +33,7 @@ public class GUIYourBags extends StatelessView {
                             "§7Sackception!",
                             "",
                             "§eClick to open!"),
-                    (click, c) -> new GUISackOfSacks().open((SkyBlockPlayer) c.player()));
+                    (click, c) -> c.player().openView(new GUISackOfSacks()));
         } else {
             layout.slot(20, (s, c) -> ItemStackCreator.getStack("§cSack of Sacks", Material.GRAY_DYE, 1,
                     "§7A sack which contains other sacks.",
@@ -83,7 +83,7 @@ public class GUIYourBags extends StatelessView {
                             "§7think of!",
                             " ",
                             "§eClick to open!"),
-                    (click, c) -> new GUIQuiver().open((SkyBlockPlayer) c.player()));
+                    (click, c) -> c.player().openView(new GUIQuiver()));
         } else {
             layout.slot(23, (s, c) -> ItemStackCreator.getStack("§cQuiver", Material.GRAY_DYE, 1,
                     "§7A masterfully crafted Quiver which",
@@ -107,7 +107,7 @@ public class GUIYourBags extends StatelessView {
                         "§7Magical Power: §6" + StringUtility.commaify(p.getMagicalPower()),
                         " ",
                         "§eClick to open!");
-            }, (click, c) -> new GUIAccessoryBag().open((SkyBlockPlayer) c.player()));
+            }, (click, c) -> c.player().openView(new GUIAccessoryBag()));
         } else {
             layout.slot(24, (s, c) -> ItemStackCreator.getStack("§cAccessory Bag", Material.GRAY_DYE, 1,
                     "§7A special bag which can hold",

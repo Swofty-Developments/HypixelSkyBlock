@@ -75,9 +75,7 @@ public class GUIMissionLog extends StatelessView {
                             "§7working towards.",
                             "§7 ",
                             "§eClick to view!"),
-                    (click, c) -> {
-                        //new GUIMissionLog(false).open((SkyBlockPlayer) c.player())
-                    });
+                    (click, c) -> c.replace(new GUIMissionLog(false)));
         } else {
             layout.slot(50, (s, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -89,9 +87,7 @@ public class GUIMissionLog extends StatelessView {
                         "§7Completed: §a" + player.getMissionData().getCompletedMissions().size(),
                         "§7 ",
                         "§eClick to view!");
-            }, (click, c) -> {
-                //new GUIMissionLog(true).open((SkyBlockPlayer) c.player())
-            });
+            }, (click, c) -> c.replace(new GUIMissionLog(true)));
         }
 
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
