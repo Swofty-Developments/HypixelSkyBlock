@@ -45,9 +45,10 @@ public class RegisteredAbility {
             cost.onFail(player);
             return;
         }
-
+        if (!action.execute(player, item, targetedBlock, blockFace)){
+            return;
+        }
         cost.onUse(player, this);
-        action.execute(player, item, targetedBlock, blockFace);
     }
 
     @FunctionalInterface
@@ -57,7 +58,7 @@ public class RegisteredAbility {
 
     @FunctionalInterface
     public interface AbilityAction {
-        void execute(SkyBlockPlayer player, SkyBlockItem item, Point targetedBlock, BlockFace blockFace);
+        boolean execute(SkyBlockPlayer player, SkyBlockItem item, Point targetedBlock, BlockFace blockFace);
     }
 
     @Getter

@@ -20,11 +20,11 @@ public class BuildersWandAbility extends RegisteredAbility {
                 (player, item) -> "Right-click the face of a block to extend all connected block faces.",
                 AbilityActivation.RIGHT_CLICK_BLOCK, 0, new RegisteredAbility.NoAbilityCost(),
                 (player, item, origin, face) -> {
-                    fillConnectedFaces(player, new Pos(origin), face);
+                    return fillConnectedFaces(player, new Pos(origin), face);
                 });
     }
 
-    private static void fillConnectedFaces(SkyBlockPlayer player, Pos origin, BlockFace face) {
+    private static boolean fillConnectedFaces(SkyBlockPlayer player, Pos origin, BlockFace face) {
         Material fillMaterial = Material.fromKey(player.getInstance().getBlock(origin).key());
         int blocksInInventory = player.countItem(ItemType.fromMaterial(fillMaterial));
         int blockLimit = 164;
@@ -83,10 +83,10 @@ public class BuildersWandAbility extends RegisteredAbility {
         }
         if (blocksPlaced == 0) {
             player.sendMessage("§cYou cannot place any blocks! You do not have enough blocks to place with your Builder's wand!");
+            return false;
         }
-        if (blocksPlaced != 0) {
-            player.takeItem(ItemType.fromMaterial(fillMaterial), blocksPlaced);
-            player.sendMessage("&eYou built &a" + blocksPlaced + "&e blocks!");
-        }
+        player.takeItem(ItemType.fromMaterial(fillMaterial), blocksPlaced);
+        player.sendMessage("&eYou built &a" + blocksPlaced + "&e blocks!");
+        return true;
     }
 }
