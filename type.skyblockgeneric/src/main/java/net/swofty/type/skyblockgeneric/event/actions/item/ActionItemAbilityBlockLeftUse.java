@@ -40,7 +40,9 @@ public class ActionItemAbilityBlockLeftUse implements HypixelEventClass {
                 }
 
                 abilityHandler.startAbilityCooldown(item);
-                ability.execute(player, item, event.getBlockPosition(), event.getBlockFace());
+                if(ability.execute(player, item, event.getBlockPosition(), event.getBlockFace())){
+                    abilityHandler.startAbilityCooldown(item);
+                };
             }
         }
     }
