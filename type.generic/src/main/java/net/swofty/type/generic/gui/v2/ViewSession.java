@@ -312,7 +312,7 @@ public final class ViewSession<S> {
 
         view.onClose(state, context, reason);
         if (onCloseHandler != null) onCloseHandler.accept(reason);
-        if (reason != CloseReason.PLAYER_EXITED) player.closeInventory();
+        if (reason == CloseReason.SERVER_EXITED) player.closeInventory();
     }
 
     public boolean isShared() {
