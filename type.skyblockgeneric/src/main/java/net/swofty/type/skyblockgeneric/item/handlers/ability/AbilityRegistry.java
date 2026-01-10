@@ -29,7 +29,9 @@ public class AbilityRegistry {
 				50,
 				new RegisteredAbility.AbilityManaCost(25),
 				(player, item, ignored, ignored2) -> {
-					player.teleport(player.getPosition().add(player.getPosition().direction().mul(10)));
+					BlockVec tpPos = player.getPosition().add(player.getPosition().direction().mul(10)).asBlockVec();
+					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return;
+					player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
 					// TODO: damage nearby mobs
 				}
 		));
@@ -42,7 +44,9 @@ public class AbilityRegistry {
 				5,
 				new RegisteredAbility.AbilityManaCost(50),
 				(player, item, ignored, ignored2) -> {
-					player.teleport(player.getPosition().add(player.getPosition().direction().mul(8)));
+					BlockVec tpPos = player.getPosition().add(player.getPosition().direction().mul(8)).asBlockVec();
+					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return;
+					player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
 					ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 50.0).build();
 					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(3000).withDisplayName("Instant Transmission").build();
 					player.getStatistics().boostStatistic(speedBoost);
