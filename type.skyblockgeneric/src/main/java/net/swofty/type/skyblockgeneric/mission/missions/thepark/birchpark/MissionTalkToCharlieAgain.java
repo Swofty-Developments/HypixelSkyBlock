@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.swofty.type.skyblockgeneric.gui.inventories.ClaimRewardView;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
@@ -33,9 +33,9 @@ public class MissionTalkToCharlieAgain extends SkyBlockMission implements Locati
 
 	@Override
 	public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-		new GUIClaimReward(ItemType.FORAGING_1_TRAVEL_SCROLL, () -> {
+		player.openView(new ClaimRewardView(), new ClaimRewardView.State(ItemType.FORAGING_1_TRAVEL_SCROLL, () -> {
 			player.getMissionData().startMission(MissionTravelToTheSpruceWoods.class);
-		}).open(player);
+		}));
 	}
 
 	@Override
