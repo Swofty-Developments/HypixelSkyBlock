@@ -183,6 +183,7 @@ items:
     material: FISHING_ROD
     rarity: COMMON
     components:
+      - id: FISHING_ROD
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
