@@ -37,6 +37,11 @@ public final class SharedContext<S> {
     }
 
     @SuppressWarnings("unchecked")
+    public static <S> SharedContext<S> getOrCreate(String id, S initialState) {
+        return (SharedContext<S>) CONTEXTS.computeIfAbsent(id, k -> new SharedContext<>(id, initialState));
+    }
+
+    @SuppressWarnings("unchecked")
     public static <S> Optional<SharedContext<S>> get(String id) {
         return Optional.ofNullable((SharedContext<S>) CONTEXTS.get(id));
     }
@@ -154,5 +159,6 @@ public final class SharedContext<S> {
         viewers().forEach(p -> p.sendMessage(message));
     }
 
-    public record SlotChange(int slot, ItemStack oldItem, ItemStack newItem) {}
+    public record SlotChange(int slot, ItemStack oldItem, ItemStack newItem) {
+    }
 }

@@ -12,7 +12,7 @@ public class RightClickRecipeComponent extends SkyBlockItemComponent {
     public RightClickRecipeComponent(String recipeItem) {
         this.recipeItem = ItemType.valueOf(recipeItem);
         addInheritedComponent(new InteractableComponent(
-                (player, item) -> player.openView(new GUIRecipe(this.recipeItem, null)),
+                (player, item) -> player.openView(new GUIRecipe(this.recipeItem)),
                 null,
                 null
         ));

@@ -1,23 +1,24 @@
 package net.swofty.type.generic.gui.v2;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+@ToString
+@RequiredArgsConstructor
 public final class ViewNavigator {
 
     private static final Map<HypixelPlayer, ViewNavigator> NAVIGATORS = new ConcurrentHashMap<>();
 
     private final HypixelPlayer player;
     private final Deque<NavigationEntry<?>> stack = new ArrayDeque<>();
+
     @Getter
     private ViewSession<?> currentSession;
-
-    private ViewNavigator(HypixelPlayer player) {
-        this.player = player;
-    }
 
     public static ViewNavigator get(HypixelPlayer player) {
         return NAVIGATORS.computeIfAbsent(player, ViewNavigator::new);
@@ -40,23 +41,53 @@ public final class ViewNavigator {
             currentSession.close(ViewSession.CloseReason.REPLACED);
         }
 
-        ViewSession<S> session = ViewSession.open(view, player, state);
+        var session = ViewSession.open(view, player, state);
         this.currentSession = session;
-
-        session.onClose(reason -> {
-            if (reason == ViewSession.CloseReason.PLAYER_EXITED) {
-                clear();
-            }
-        });
-
+        registerCloseHandler(session);
         return session;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    private void pushCurrentToStack() {
-        if (currentSession == null) return;
-        ViewSession<?> session = currentSession;
-        stack.push(new NavigationEntry(session.view(), session.state()));
+    public <S> ViewSession<S> push(View<S> view) {
+        S state = resolveInitialState(view);
+        return push(view, state);
+    }
+
+    public <S> ViewSession<S> pushShared(View<S> view, String contextId, S initialState) {
+        if (currentSession != null && !currentSession.isClosed()) {
+            pushCurrentToStack();
+            currentSession.close(ViewSession.CloseReason.REPLACED);
+        }
+
+        SharedContext<S> ctx = SharedContext.getOrCreate(contextId, initialState);
+        var session = ViewSession.openShared(view, player, ctx);
+        this.currentSession = session;
+        registerCloseHandler(session);
+        return session;
+    }
+
+    public <S> ViewSession<S> joinShared(View<S> view, String contextId) {
+        return SharedContext.<S>get(contextId).map(ctx -> {
+            if (currentSession != null && !currentSession.isClosed()) {
+                pushCurrentToStack();
+                currentSession.close(ViewSession.CloseReason.REPLACED);
+            }
+            var session = ViewSession.openShared(view, player, ctx);
+            this.currentSession = session;
+            registerCloseHandler(session);
+            return session;
+        }).orElseThrow(() -> new IllegalArgumentException("Shared context not found: " + contextId));
+    }
+
+    public <S> ViewSession<S> pushShared(View<S> view, SharedContext<S> sharedContext) {
+        if (currentSession != null && !currentSession.isClosed()) {
+            pushCurrentToStack();
+            currentSession.close(ViewSession.CloseReason.REPLACED);
+        }
+
+        var session = ViewSession.openShared(view, player, sharedContext);
+        this.currentSession = session;
+        registerCloseHandler(session);
+        return session;
     }
 
     public <S> ViewSession<S> replace(View<S> view, S state) {
@@ -64,16 +95,15 @@ public final class ViewNavigator {
             currentSession.close(ViewSession.CloseReason.REPLACED);
         }
 
-        ViewSession<S> session = ViewSession.open(view, player, state);
+        var session = ViewSession.open(view, player, state);
         this.currentSession = session;
-
-        session.onClose(reason -> {
-            if (reason == ViewSession.CloseReason.PLAYER_EXITED) {
-                clear();
-            }
-        });
-
+        registerCloseHandler(session);
         return session;
+    }
+
+    public <S> ViewSession<S> replace(View<S> view) {
+        S state = resolveInitialState(view);
+        return replace(view, state);
     }
 
     public boolean pop() {
@@ -90,20 +120,10 @@ public final class ViewNavigator {
         }
 
         NavigationEntry<?> entry = stack.pop();
-        ViewSession<?> session = openEntry(entry);
+        var session = openEntry(entry);
         this.currentSession = session;
-
-        session.onClose(reason -> {
-            if (reason == ViewSession.CloseReason.PLAYER_EXITED) {
-                clear();
-            }
-        });
-
+        registerCloseHandler(session);
         return true;
-    }
-
-    private <S> ViewSession<S> openEntry(NavigationEntry<S> entry) {
-        return ViewSession.open(entry.view(), player, entry.state());
     }
 
     public void popTo(int levels) {
@@ -136,14 +156,41 @@ public final class ViewNavigator {
         return stack.size();
     }
 
+    @SuppressWarnings("unchecked")
     public <S> Optional<NavigationEntry<S>> peekPrevious() {
         return Optional.ofNullable((NavigationEntry<S>) stack.peek());
     }
 
-    record NavigationEntry<S>(View<S> view, S state) {}
+    public HypixelPlayer player() {
+        return player;
+    }
 
-    private static <S> View<S> getView(ViewSession<S> session) {
-        return session.view();
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private void pushCurrentToStack() {
+        if (currentSession == null) return;
+        ViewSession<?> session = currentSession;
+        stack.push(new NavigationEntry(session.view(), session.state()));
+    }
+
+    private <S> ViewSession<S> openEntry(NavigationEntry<S> entry) {
+        return ViewSession.open(entry.view(), player, entry.state());
+    }
+
+    private void registerCloseHandler(ViewSession<?> session) {
+        session.onClose(reason -> {
+            if (reason == ViewSession.CloseReason.PLAYER_EXITED) {
+                clear();
+            }
+        });
+    }
+
+    private <S> S resolveInitialState(View<S> view) {
+        if (view instanceof StatefulView<S> stateful) {
+            return stateful.initialState();
+        }
+        return null;
+    }
+
+    public record NavigationEntry<S>(View<S> view, S state) {
     }
 }
-

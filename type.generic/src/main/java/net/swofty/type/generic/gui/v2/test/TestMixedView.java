@@ -57,27 +57,27 @@ public final class TestMixedView implements StatefulView<TestMixedView.State> {
         layout.filler(Components.FILLER);
 
         layout.slot(4, ItemStackCreator.getStack(
-            "§5Crafting Station",
-            Material.CRAFTING_TABLE,
-            1,
-            "§7Place items in the grid",
-            "§7to create new items!",
-            "",
-            "§7Input items: §e" + state.inputCount()
+                "§5Crafting Station",
+                Material.CRAFTING_TABLE,
+                1,
+                "§7Place items in the grid",
+                "§7to create new items!",
+                "",
+                "§7Input items: §e" + state.inputCount()
         ));
 
         for (int slot : INPUT_SLOTS) {
             layout.editable(slot, (s, c) -> s.inputs().getOrDefault(slot, ItemStack.AIR).builder(),
-                (changedSlot, oldItem, newItem, s) ->
-                    ctx.session(State.class).updateQuiet(current -> current.withInput(changedSlot, newItem))
+                    (changedSlot, oldItem, newItem, s) ->
+                            ctx.session(State.class).updateQuiet(current -> current.withInput(changedSlot, newItem))
             );
         }
 
         layout.slot(22, (s, c) -> ItemStackCreator.getStack(
-            s.hasOutput() ? "§a→ Ready!" : "§7→",
-            Material.ARROW,
-            1,
-            s.hasOutput() ? "§aClick output to craft!" : "§7Place an item in the center"
+                s.hasOutput() ? "§a→ Ready!" : "§7→",
+                Material.ARROW,
+                1,
+                s.hasOutput() ? "§aClick output to craft!" : "§7Place an item in the center"
         ));
 
         layout.slot(OUTPUT_SLOT, (s, c) -> {
@@ -98,10 +98,10 @@ public final class TestMixedView implements StatefulView<TestMixedView.State> {
         });
 
         layout.slot(40, (s, c) -> ItemStackCreator.getStack(
-            "§cClear Grid",
-            Material.BARRIER,
-            1,
-            "§7Clears all input slots"
+                "§cClear Grid",
+                Material.BARRIER,
+                1,
+                "§7Clears all input slots"
         ), (click, context) -> {
             context.session(State.class).setState(state.clearInputs());
             for (int slot : INPUT_SLOTS) {
@@ -120,6 +120,6 @@ public final class TestMixedView implements StatefulView<TestMixedView.State> {
     }
 
     public static void open(HypixelPlayer player) {
-        ViewSession.open(new TestMixedView(), player, new State(new HashMap<>()));
+        ViewNavigator.get(player).push(new TestMixedView(), new State(new HashMap<>()));
     }
 }

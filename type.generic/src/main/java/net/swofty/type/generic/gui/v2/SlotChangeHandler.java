@@ -4,5 +4,5 @@ import net.minestom.server.item.ItemStack;
 
 @FunctionalInterface
 public interface SlotChangeHandler<S> {
-	void onChange(int slot, ItemStack oldItem, ItemStack newItem, S state);
+    void onChange(int slot, ItemStack oldItem, ItemStack newItem, S state);
 }

@@ -51,7 +51,7 @@ public final class GUIContactManagementView implements View<GUIContactManagement
 
         if (!Components.back(layout, 48, ctx)) {
             layout.slot(48, (s, c) -> Components.BACK_BUTTON, (click, viewCtx) -> {
-                ViewSession.open(new AbiphoneView(), viewCtx.player(), new AbiphoneView.State(state.abiphone()));
+                viewCtx.push(new AbiphoneView(), new AbiphoneView.State(state.abiphone()));
             });
         }
 

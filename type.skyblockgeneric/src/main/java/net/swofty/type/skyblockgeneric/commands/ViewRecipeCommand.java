@@ -24,7 +24,7 @@ public class ViewRecipeCommand extends HypixelCommand {
             if (!permissionCheck(sender)) return;
 
             final ItemType item = context.get(itemArgument);
-            ((SkyBlockPlayer) sender).openView(new GUIRecipe(item, null));
+            ((SkyBlockPlayer) sender).openView(new GUIRecipe(item));
         }, itemArgument);
     }
 }

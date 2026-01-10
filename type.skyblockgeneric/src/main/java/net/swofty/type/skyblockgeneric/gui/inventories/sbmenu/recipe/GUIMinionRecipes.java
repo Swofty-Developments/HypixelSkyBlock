@@ -58,7 +58,7 @@ public class GUIMinionRecipes extends StatelessView {
 
             layout.slot(slot, (s, c) -> ItemStackCreator.getStackHead(minion.getDisplayName(),
                             minionTier.texture(), 1, minion.getLore()),
-                    (click, c) -> c.player().openView(new GUIRecipe(minion, this, minionTier.tier() - 1)));
+                    (click, c) -> c.player().openView(new GUIRecipe(minion, minionTier.tier() - 1)));
         }
     }
 }

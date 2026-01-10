@@ -14,22 +14,22 @@ import java.util.Set;
 
 public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>> implements View<S> {
 
-    protected static final ItemStack.Builder PREV_ARROW = ItemStack.builder(Material.ARROW)
-            .set(DataComponents.CUSTOM_NAME, Component.text("§aPrevious Page"));
-    protected static final ItemStack.Builder NEXT_ARROW = ItemStack.builder(Material.ARROW)
-            .set(DataComponents.CUSTOM_NAME, Component.text("§aNext Page"));
-    protected static final ItemStack.Builder SEARCH_ICON = ItemStack.builder(Material.BIRCH_SIGN)
-            .set(DataComponents.CUSTOM_NAME, Component.text("§aSearch"));
-    protected static final ItemStack.Builder FILLER = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE)
-            .set(DataComponents.CUSTOM_NAME, Component.text(" "))
-            .set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of()));
+    protected static final ItemStack.Builder PREV_ARROW = ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aPrevious Page"));
+    protected static final ItemStack.Builder NEXT_ARROW = ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aNext Page"));
+    protected static final ItemStack.Builder SEARCH_ICON = ItemStack.builder(Material.BIRCH_SIGN).set(DataComponents.CUSTOM_NAME, Component.text("§aSearch"));
+    protected static final ItemStack.Builder FILLER = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE).set(DataComponents.CUSTOM_NAME, Component.text(" ")).set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of()));
 
     public interface PaginatedState<T> {
         List<T> items();
+
         int page();
+
         String query();
+
         PaginatedState<T> withPage(int page);
+
         PaginatedState<T> withQuery(String query);
+
         PaginatedState<T> withItems(List<T> items);
     }
 
@@ -45,9 +45,7 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
         // Calculate page boundaries
         int startIndex = currentPage * itemsPerPage;
         int endIndex = Math.min(startIndex + itemsPerPage, filteredItems.size());
-        List<T> pageItems = startIndex < filteredItems.size()
-                ? filteredItems.subList(startIndex, endIndex)
-                : List.of();
+        List<T> pageItems = startIndex < filteredItems.size() ? filteredItems.subList(startIndex, endIndex) : List.of();
 
         // Render paginated items
         for (int i = 0; i < slots.length; i++) {
@@ -55,9 +53,7 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
             if (i < pageItems.size()) {
                 T item = pageItems.get(i);
                 int itemIndex = startIndex + i;
-                layout.slot(slot,
-                        (s, c) -> renderItem(item, itemIndex, ctx.player()),
-                        (click, viewCtx) -> onItemClick(click, viewCtx, item, itemIndex));
+                layout.slot(slot, (s, c) -> renderItem(item, itemIndex, ctx.player()), (click, viewCtx) -> onItemClick(click, viewCtx, item, itemIndex));
             } else {
                 layout.slot(slot, (s, c) -> ItemStack.AIR.builder());
             }
@@ -72,9 +68,7 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
         if (query == null || query.isEmpty()) {
             return state.items();
         }
-        return state.items().stream()
-                .filter(item -> !shouldFilterFromSearch(query, item))
-                .toList();
+        return state.items().stream().filter(item -> !shouldFilterFromSearch(query, item)).toList();
     }
 
     protected void layoutBackground(ViewLayout<S> layout, S state, ViewContext ctx) {
@@ -88,12 +82,10 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
 
         if (prevSlot >= 0) {
             if (currentPage > 0) {
-                layout.slot(prevSlot, (s, c) -> createPrevPageItem(currentPage, totalPages),
-                        (click, viewCtx) -> viewCtx.session(Object.class).updateUnchecked(s -> {
-                            @SuppressWarnings("unchecked")
-                            S typedState = (S) s;
-                            return typedState.withPage(currentPage - 1);
-                        }));
+                layout.slot(prevSlot, (s, c) -> createPrevPageItem(currentPage, totalPages), (click, viewCtx) -> viewCtx.session(Object.class).updateUnchecked(s -> {
+                    @SuppressWarnings("unchecked") S typedState = (S) s;
+                    return typedState.withPage(currentPage - 1);
+                }));
             } else {
                 layout.slot(prevSlot, FILLER);
             }
@@ -101,20 +93,17 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
 
         if (nextSlot >= 0) {
             if (currentPage < totalPages - 1) {
-                layout.slot(nextSlot, (s, c) -> createNextPageItem(currentPage, totalPages),
-                        (click, viewCtx) -> viewCtx.session(Object.class).updateUnchecked(s -> {
-                            @SuppressWarnings("unchecked")
-                            S typedState = (S) s;
-                            return typedState.withPage(currentPage + 1);
-                        }));
+                layout.slot(nextSlot, (s, c) -> createNextPageItem(currentPage, totalPages), (click, viewCtx) -> viewCtx.session(Object.class).updateUnchecked(s -> {
+                    @SuppressWarnings("unchecked") S typedState = (S) s;
+                    return typedState.withPage(currentPage + 1);
+                }));
             } else {
                 layout.slot(nextSlot, FILLER);
             }
         }
 
         if (searchSlot >= 0) {
-            layout.slot(searchSlot, (s, c) -> createSearchItem(state.query()),
-					this::onSearchClick);
+            layout.slot(searchSlot, (s, c) -> createSearchItem(state.query()), this::onSearchClick);
         }
     }
 
@@ -128,30 +117,16 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
     }
 
     protected ItemStack.Builder createPrevPageItem(int currentPage, int totalPages) {
-        return ItemStack.builder(Material.ARROW)
-                .set(DataComponents.CUSTOM_NAME, Component.text("§aPrevious Page"))
-                .set(DataComponents.LORE, List.of(
-                        Component.text("§7Page " + currentPage + " of " + totalPages)
-                ));
+        return ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aPrevious Page")).set(DataComponents.LORE, List.of(Component.text("§7Page " + currentPage + " of " + totalPages)));
     }
 
     protected ItemStack.Builder createNextPageItem(int currentPage, int totalPages) {
-        return ItemStack.builder(Material.ARROW)
-                .set(DataComponents.CUSTOM_NAME, Component.text("§aNext Page"))
-                .set(DataComponents.LORE, List.of(
-                        Component.text("§7Page " + (currentPage + 2) + " of " + totalPages)
-                ));
+        return ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aNext Page")).set(DataComponents.LORE, List.of(Component.text("§7Page " + (currentPage + 2) + " of " + totalPages)));
     }
 
     protected ItemStack.Builder createSearchItem(String currentQuery) {
         String queryDisplay = currentQuery.isEmpty() ? "None" : currentQuery;
-        return ItemStack.builder(Material.BIRCH_SIGN)
-                .set(DataComponents.CUSTOM_NAME, Component.text("§aSearch"))
-                .set(DataComponents.LORE, List.of(
-                        Component.text("§7Query: §e" + queryDisplay),
-                        Component.text(""),
-                        Component.text("§eClick to search!")
-                ));
+        return ItemStack.builder(Material.BIRCH_SIGN).set(DataComponents.CUSTOM_NAME, Component.text("§aSearch")).set(DataComponents.LORE, List.of(Component.text("§7Query: §e" + queryDisplay), Component.text(""), Component.text("§eClick to search!")));
     }
 
     protected void onSearchClick(ClickContext<S> click, ViewContext ctx) {
@@ -170,5 +145,3 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
     }
 
 }
-
-

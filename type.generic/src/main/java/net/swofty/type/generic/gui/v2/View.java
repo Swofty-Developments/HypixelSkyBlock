@@ -5,24 +5,24 @@ import net.swofty.type.generic.gui.v2.context.ViewContext;
 
 public interface View<S> {
 
-	ViewConfiguration<S> configuration();
+    ViewConfiguration<S> configuration();
 
-	void layout(ViewLayout<S> layout, S state, ViewContext ctx);
+    void layout(ViewLayout<S> layout, S state, ViewContext ctx);
 
-	default void onOpen(S state, ViewContext ctx) {
-	}
+    default void onOpen(S state, ViewContext ctx) {
+    }
 
-	default void onClose(S state, ViewContext ctx, ViewSession.CloseReason reason) {
-	}
+    default void onClose(S state, ViewContext ctx, ViewSession.CloseReason reason) {
+    }
 
-	default boolean onClick(ClickContext<S> click, ViewContext ctx) {
-		return false;
-	}
+    default boolean onClick(ClickContext<S> click, ViewContext ctx) {
+        return false;
+    }
 
-	default void onRefresh(S state, ViewContext ctx) {
-	}
+    default void onRefresh(S state, ViewContext ctx) {
+    }
 
-	default boolean onBottomClick(ClickContext<S> click, ViewContext ctx) {
-		return false;
-	}
+    default boolean onBottomClick(ClickContext<S> click, ViewContext ctx) {
+        return false;
+    }
 }
