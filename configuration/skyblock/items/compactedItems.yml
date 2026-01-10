@@ -1687,3 +1687,60 @@ items:
         value: 256000.0
       - id: SKULL_HEAD
         texture: a33051b7c69f51085cc43f0575139cd58afe2b83f33d2a203a5afc266c21019
+
+  - id: ENCHANTED_FIG_LOG
+    material: STRIPPED_SPRUCE_LOG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: FIG_LOG
+      - id: SELLABLE
+        value: 576
+
+  - id: ENCHANTED_MANGROVE_LOG
+    material: MANGROVE_LOG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: MANGROVE_LOG
+      - id: SELLABLE
+        value: 576
+
+  - id: ENCHANTED_SEA_LUMIES
+    material: SEA_PICKLE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: SEA_LUMIES
+      - id: SELLABLE
+        value: 576
+
+  - id: ENCHANTED_TENDER_WOOD
+    rarity: RARE
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: TENDER_WOOD
+      - id: SELLABLE
+        value: 576
+      - id: SKULL_HEAD
+        texture: 455affb78f594ca7b6ec39216151304ce1bf18b788cce13b14f345d808a44126
+
+  - id: ENCHANTED_VINESAP
+    rarity: RARE
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: VINESAP
+      - id: SELLABLE
+        value: 576
+      - id: SKULL_HEAD
+        texture: 3be8db48a63f09bb85044d9dbd325cfc3881c00912e9edc33bf22fda320bea66
