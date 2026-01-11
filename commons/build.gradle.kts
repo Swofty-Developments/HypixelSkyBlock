@@ -24,4 +24,6 @@ dependencies {
     compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
+
+    implementation("org.spongepowered:configurate-yaml:4.2.0")
 }

@@ -22,8 +22,8 @@ COPY ./configuration /app/configuration_files
 # Create configuration folder
 RUN mkdir -p configuration
 
-# Copy resources.json
-RUN cp configuration_files/resources.json ./configuration/resources.json
+# Copy config.yml
+RUN cp configuration_files/config.yml ./configuration/config.yml
 
 # Make required folders
 RUN mkdir -p ./configuration/skyblock/islands

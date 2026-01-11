@@ -42,15 +42,19 @@ build/
 ### Mac OS ###
 .DS_Store
 
-### Islands ###
+
+### Worlds ###
 /configuration/skyblock/islands/hypixel_skyblock_island_template/
 /configuration/skyblock/islands/hypixel_skyblock_hub/
 /configuration/skyblock/islands/hypixel_skyblock_gold_mine/
 /configuration/skyblock/islands/*
+/configuration/logs/configuration/murdermystery/*
 /configuration/hypixel_prototype_lobby/
-.gradle/
 /configuration/bedwars/*.polar
+
+.gradle/
 /server/proxy/logs/
 /server/proxy/lang/
 /server/forwarding.secret
-/configuration/logs/configuration/murdermystery/aquarium.polar
+/configuration/config.yml
+/server/proxy/configuration/config.yml

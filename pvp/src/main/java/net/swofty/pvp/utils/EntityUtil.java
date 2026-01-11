@@ -1,5 +1,6 @@
 package net.swofty.pvp.utils;
 
+import io.sentry.Sentry;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.minestom.server.component.DataComponents;
@@ -46,6 +47,7 @@ public class EntityUtil {
 			field.set(livingEntity, lastDamage);
 		} catch (NoSuchFieldException | IllegalAccessException e) {
 			e.printStackTrace();
+			Sentry.captureException(e);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package net.swofty.type.prototypelobby;
 
+import io.sentry.Sentry;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;

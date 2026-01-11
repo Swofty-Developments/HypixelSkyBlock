@@ -4,8 +4,8 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
 import lombok.Getter;
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
@@ -25,7 +25,7 @@ public class GameManager {
 
     public static GameServer addServer(ServerType type, UUID serverID, String host, int port, int maxPlayers) {
         port = port == -1 ? getNextAvailablePort() : port;    // if port is -1 then get next available port
-        host = (host == null || host.isEmpty()) ? Configuration.get("host-name") : host; // if host is null then get from config
+        host = (host == null || host.isEmpty()) ? ConfigProvider.settings().getHostName() : host; // if host is null then get from config
         RegisteredServer registeredServer = SkyBlockVelocity.getServer().registerServer(
                 new ServerInfo(serverID.toString(), new InetSocketAddress(host, port))
         );

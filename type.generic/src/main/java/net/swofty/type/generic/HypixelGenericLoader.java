@@ -18,9 +18,9 @@ import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
-import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.type.generic.block.PlayerHeadBlockHandler;
 import net.swofty.type.generic.block.SignBlockHandler;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -178,7 +178,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         /**
          * Register databases
          */
-        ConnectionString cs = new ConnectionString(Configuration.get("mongodb"));
+        ConnectionString cs = new ConnectionString(ConfigProvider.settings().getMongodb());
         MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
         MongoClient mongoClient = MongoClients.create(settings);
 
@@ -189,7 +189,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         BedWarsStatsDatabase.connect(mongoClient);
 
         // Initialize leaderboard service (uses Redis for O(log N) leaderboard operations)
-        LeaderboardService.connect(Configuration.get("redis-uri"));
+        LeaderboardService.connect(ConfigProvider.settings().getRedisUri());
 
         // Load achievement and quest registries from YAML configuration
         AchievementRegistry.loadFromConfiguration();

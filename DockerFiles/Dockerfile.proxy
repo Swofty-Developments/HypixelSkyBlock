@@ -30,16 +30,15 @@ RUN rm velocity.toml
 # Add back our velocity.toml
 RUN cp configuration_files/velocity.toml velocity.toml
 
-# Download resources.json
+# Download config.yml
 RUN mkdir -p configuration
 
-RUN cp configuration_files/resources.json ./configuration/resources.json
+RUN cp configuration_files/config.example.yml ./configuration/config.yml
 
 
-# Get Contents of the forwarding secret and add it to resources.json
+# Get Contents of the forwarding secret and add it to config.yml
 RUN secret=$(cat forwarding.secret) && \
-    jq --arg secret "$secret" '.["velocity-secret"] = $secret' ./configuration/resources.json > ./configuration/resources.json.tmp && \
-    mv ./configuration/resources.json.tmp ./configuration/resources.json
+    sed -i "s/velocity-secret: .*/velocity-secret: '$secret'/" ./configuration/config.yml
 
 # Expose the required port
 EXPOSE 25565

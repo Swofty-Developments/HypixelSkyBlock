@@ -1,6 +1,7 @@
 package net.swofty.type.generic.data.handlers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.sentry.Sentry;
 import lombok.Getter;
 import net.swofty.commons.skywars.SkywarsModeStats;
 import net.swofty.type.generic.data.DataHandler;
@@ -110,6 +111,7 @@ public class SkywarsDataHandler extends DataHandler implements GameDataHandler {
                 this.datapoints.put(key, data.getDefaultDatapoint().deepClone().setUser(this).setData(data));
                 Logger.info("Issue with datapoint " + key + " for user " + this.uuid + " - defaulting");
                 e.printStackTrace();
+                Sentry.captureException(e);
             }
         }
         return this;

@@ -4,10 +4,10 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.commons.proxy.requirements.to.PlayerHandlerRequirements;
@@ -98,7 +98,7 @@ public class ListenerPlayerHandler extends RedisListener {
                 // Trick the packet blocker into thinking player is in normal transfer process
                 TransferHandler.playersGoalServerType.put(player, ServerType.SKYBLOCK_HUB);
 
-				CompletableFuture.delayedExecutor(Long.parseLong(Configuration.get("transfer-timeout")), TimeUnit.MILLISECONDS)
+				CompletableFuture.delayedExecutor(ConfigProvider.settings().getTransferTimeout(), TimeUnit.MILLISECONDS)
 						.execute(() -> {
 							TransferHandler.playersGoalServerType.remove(player);
 							transferHandler.noLimboTransferTo(serverInfo.registeredServer());

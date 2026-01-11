@@ -34,7 +34,7 @@ services/
 ├── ServiceDarkAuction.jar
 ├── ServiceOrchestrator.jar
 └── configuration/
-    └── resources.json    # Same as game servers
+    └── config.yml    # Same as game servers
 ```
 
 ## Starting Services

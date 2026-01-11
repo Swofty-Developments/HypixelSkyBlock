@@ -1,6 +1,7 @@
 package net.swofty.type.generic.data.handlers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.sentry.Sentry;
 import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
@@ -121,6 +122,7 @@ public class MurderMysteryDataHandler extends DataHandler implements GameDataHan
             try {
                 document.put(data.getKey(), getDatapoint(data.getKey()).getSerializedValue());
             } catch (JsonProcessingException e) {
+                Sentry.captureException(e);
                 e.printStackTrace();
             }
         }

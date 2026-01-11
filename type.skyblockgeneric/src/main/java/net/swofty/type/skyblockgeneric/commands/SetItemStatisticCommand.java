@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.number.ArgumentDouble;
-import net.swofty.commons.Configuration;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeSandboxItem;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
@@ -28,7 +28,7 @@ public class SetItemStatisticCommand extends HypixelCommand {
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
-            if (Configuration.get("sandbox-mode").equals("false")) {
+            if (!ConfigProvider.settings().isSandbox()) {
                 sender.sendMessage("§cThis command is disabled on this server.");
                 return;
             }

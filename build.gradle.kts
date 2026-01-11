@@ -1,6 +1,7 @@
 plugins {
     base
     id("io.freefair.lombok") version "9.1.0"
+    id("io.sentry.jvm.gradle") version "5.12.2"
 }
 
 buildscript {
@@ -44,6 +45,7 @@ subprojects {
             "implementation"("com.fasterxml.jackson.core:jackson-annotations:2.17.0")
             "implementation"("com.fasterxml.jackson.core:jackson-core:2.17.0")
             "implementation"("org.json:json:20240303")
+            "implementation"("io.sentry:sentry-async-profiler:8.29.0")
             "compileOnly"("org.projectlombok:lombok:1.18.42")
         }
 

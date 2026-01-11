@@ -10,7 +10,7 @@ Common issues and their solutions.
 
 **Solutions**:
 1. Verify Redis/Memurai is running
-2. Check the `redis-uri` in `resources.json`
+2. Check the `redis-uri` in `config.yml`
 3. On Windows, try [this Redis port](https://github.com/tporadowski/redis/releases) instead of Memurai
 
 ### Can't Connect to Server
@@ -23,14 +23,14 @@ Common issues and their solutions.
 3. Is NanoLimbo running?
 4. Check if the `velocity-secret` matches everywhere:
    - `forwarding.secret` (Velocity)
-   - `resources.json` (game servers)
+   - `config.yml` (game servers)
    - `settings.yml` (NanoLimbo)
 
 ### MongoDB Connection Failed
 
 **Solutions**:
 1. Verify MongoDB is running on port 27017
-2. Check `mongodb-uri` in `resources.json`
+2. Check `mongodb-uri` in `config.yml`
 3. If using authentication, include credentials in URI:
    ```
    mongodb://username:password@localhost:27017
@@ -118,7 +118,7 @@ docker-compose logs -f <container_name>
 
 Common causes:
 - Missing configuration files
-- Invalid `resources.json`
+- Invalid `config.yml`
 - Database connection failures
 
 ## Performance Issues
@@ -149,7 +149,7 @@ If you're still having issues:
 3. **Join Discord** at [discord.gg/ZaGW5wzUJ3](https://discord.gg/ZaGW5wzUJ3)
 4. **Ask in #code-help** with:
    - Screenshots of all console outputs
-   - Your `resources.json` (remove secrets)
+   - Your `config.yml` (remove secrets)
    - Steps you've already tried
 
 :::alert warning
