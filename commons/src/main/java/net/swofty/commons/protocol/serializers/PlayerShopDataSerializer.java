@@ -1,10 +1,10 @@
 package net.swofty.commons.protocol.serializers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import net.swofty.commons.skyblock.PlayerShopData;
 import net.swofty.commons.protocol.Serializer;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 

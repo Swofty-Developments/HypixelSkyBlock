@@ -1,15 +1,14 @@
 package net.swofty.commons.protocol.serializers;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import net.minestom.server.item.Material;
+import java.lang.reflect.Type;
 
-import java.io.IOException;
-
-public class MaterialSerializer extends JsonSerializer<Material> {
+public class MaterialSerializer implements JsonSerializer<Material> {
     @Override
-    public void serialize(Material value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        gen.writeString(value.key().asString());
+    public JsonElement serialize(Material src, Type typeOfSrc, JsonSerializationContext context) {
+        return context.serialize(src.key().asString());
     }
 }

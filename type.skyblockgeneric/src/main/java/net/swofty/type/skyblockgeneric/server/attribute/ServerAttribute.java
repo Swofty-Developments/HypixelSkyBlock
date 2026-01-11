@@ -1,12 +1,15 @@
 package net.swofty.type.skyblockgeneric.server.attribute;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
+import lombok.Setter;
 import net.swofty.commons.protocol.Serializer;
+import tools.jackson.core.JacksonException;
 
 public abstract class ServerAttribute<T> {
-    private final String key;
     @Getter
+	private final String key;
+    @Setter
+	@Getter
     private T value;
     protected Serializer<T> serializer;
 
@@ -16,11 +19,7 @@ public abstract class ServerAttribute<T> {
         this.serializer = serializer;
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public String getSerializedValue() throws JsonProcessingException {
+	public String getSerializedValue() throws JacksonException {
         return serializer.serialize(value);
     }
 
@@ -28,7 +27,4 @@ public abstract class ServerAttribute<T> {
         this.value = serializer.deserialize(json);
     }
 
-    public void setValue(T value) {
-        this.value = value;
-    }
 }

@@ -1,6 +1,5 @@
 package net.swofty.type.generic.data.handlers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
@@ -10,6 +9,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
+import tools.jackson.core.JacksonException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -113,7 +113,7 @@ public class PrototypeLobbyDataHandler extends DataHandler implements GameDataHa
         for (Data data : Data.values()) {
             try {
                 document.put(data.getKey(), getDatapoint(data.getKey()).getSerializedValue());
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 Logger.error(e, "Failed to serialize datapoint {} for user {}", data.getKey(), this.uuid);
             }
         }

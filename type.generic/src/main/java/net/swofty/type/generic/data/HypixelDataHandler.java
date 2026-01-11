@@ -1,6 +1,5 @@
 package net.swofty.type.generic.data;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
@@ -20,6 +19,7 @@ import org.bson.Document;
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
+import tools.jackson.core.JacksonException;
 
 import java.util.UUID;
 import java.util.function.BiConsumer;
@@ -76,7 +76,7 @@ public class HypixelDataHandler extends DataHandler {
         for (Data data : Data.values()) {
             try {
                 document.put(data.getKey(), getDatapoint(data.getKey()).getSerializedValue());
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 Logger.error(e, "Failed to serialize datapoint {} for user {}", data.getKey(), this.uuid);
             }
         }
