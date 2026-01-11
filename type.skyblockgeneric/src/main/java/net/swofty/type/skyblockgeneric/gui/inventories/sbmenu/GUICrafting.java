@@ -19,10 +19,11 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
@@ -43,7 +44,12 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
     @Override
     public void layout(ViewLayout<CraftingState> layout, CraftingState state, ViewContext ctx) {
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
-        SkyBlockRecipe<?> recipe = parseCurrentRecipe(ctx);
+
+        int currentHash = computeGridHash(ctx);
+        SkyBlockRecipe<?> recipe = (state.lastParsedRecipe() != null && state.lastGridHash() == currentHash)
+                ? state.lastParsedRecipe()
+                : parseCurrentRecipe(ctx);
+
         boolean hasValidRecipe = recipe != null;
         SkyBlockRecipe.CraftingResult result = hasValidRecipe ? recipe.getCanCraft().apply(player) : null;
         boolean canCraft = hasValidRecipe && result != null && result.allowed();
@@ -56,7 +62,17 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
         Components.containerGrid(
                 layout,
                 10,
-                30, (slot, oldItem, newItem, state1) -> {}
+                30, (slot, oldItem, newItem, state1) -> {
+                    Logger.info("Container grid changed at slot " + slot);
+                    Logger.info("Old Item: " + oldItem);
+                    Logger.info("New Item: " + newItem);
+                    int newHash = computeGridHash(ctx);
+                    SkyBlockRecipe<?> newRecipe = SkyBlockRecipe.parseRecipe(getCurrentRecipeStacks(ctx));
+                    if (state1.lastGridHash() == newHash && Objects.equals(state1.lastParsedRecipe(), newRecipe)) {
+                        return;
+                    }
+                    ctx.session(CraftingState.class).setState(new CraftingState(newHash, newRecipe));
+                }
         );
 
         if (!hasValidRecipe) {
@@ -88,55 +104,106 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
         }
     }
 
-    private SkyBlockRecipe<?> parseCurrentRecipe(ViewContext ctx) {
+    private ItemStack[] getCurrentRecipeStacks(ViewContext ctx) {
         ItemStack[] stacks = new ItemStack[9];
         for (int i = 0; i < CRAFT_SLOTS.length; i++) {
             stacks[i] = ctx.inventory().getItemStack(CRAFT_SLOTS[i]);
         }
-        return SkyBlockRecipe.parseRecipe(stacks);
+        return stacks;
+    }
+
+    private int computeGridHash(ViewContext ctx) {
+        // Stable & cheap hash: material id + amount per slot (no streams/allocations beyond the 9 reads).
+        int hash = 1;
+        for (int slot : CRAFT_SLOTS) {
+            ItemStack item = ctx.inventory().getItemStack(slot);
+            int mat = item.material().id();
+            hash = 31 * hash + (mat * 37 + item.amount());
+        }
+        return hash;
+    }
+
+    private SkyBlockRecipe<?> parseCurrentRecipe(ViewContext ctx) {
+        return SkyBlockRecipe.parseRecipe(getCurrentRecipeStacks(ctx));
     }
 
     private void handleCraft(ClickContext<CraftingState> click, ViewContext ctx, SkyBlockRecipe<?> recipe, int amount) {
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
-        SkyBlockItem cursorItem = new SkyBlockItem(player.getInventory().getCursorItem());
+        ItemStack cursorItemStack = player.getInventory().getCursorItem();
+        SkyBlockItem cursorItem = new SkyBlockItem(cursorItemStack);
         ItemType cursorItemType = cursorItem.getAttributeHandler().getPotentialType();
         ItemType resultItemType = recipe.getResult().getAttributeHandler().getPotentialType();
         boolean isShift = click.click() instanceof Click.LeftShift || click.click() instanceof Click.RightShift;
 
-        if (!player.getInventory().getCursorItem().isAir() &&
-                (cursorItemType == null || !cursorItemType.equals(resultItemType))) {
-            player.sendMessage("§cYou must empty your cursor first!");
+        if (!cursorItemStack.isAir() && (cursorItemType == null || !cursorItemType.equals(resultItemType))) {
             return;
         }
 
-        ItemStack craftedItem = PlayerItemUpdater.playerUpdate(
-                player,
-                recipe.getResult().getItemStack()).amount(amount).build();
+        ItemStack craftedItem = PlayerItemUpdater.playerUpdate(player, recipe.getResult().getItemStack())
+                .amount(amount)
+                .build();
+        int maxStackSize = craftedItem.material().maxStackSize();
 
         if (isShift) {
-            player.addAndUpdateItem(craftedItem);
-        } else {
-            player.getInventory().setCursorItem(craftedItem);
-        }
-        HypixelEventHandler.callCustomEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), recipe));
+            int expectedGridHash = computeGridHash(ctx);
 
-        SkyBlockItem[] currentItems = getCurrentRecipeAsItems(ctx);
-        SkyBlockItem[] toReplace = recipe.consume(currentItems);
-        for (int i = 0; i < CRAFT_SLOTS.length; i++) {
-            if (toReplace[i] == null || toReplace[i].getItemStack().material() == Material.BEDROCK) {
-                ctx.inventory().setItemStack(CRAFT_SLOTS[i], ItemStack.builder(Material.AIR).build());
-            } else {
-                ctx.inventory().setItemStack(CRAFT_SLOTS[i], PlayerItemUpdater.playerUpdate(
-                        player,
-                        toReplace[i].getItemStack()).build());
+            while (true) {
+                if (computeGridHash(ctx) != expectedGridHash) {
+                    break;
+                }
+
+                SkyBlockRecipe.CraftingResult craftResult = recipe.getCanCraft().apply(player);
+                if (craftResult == null || !craftResult.allowed()) {
+                    break;
+                }
+                if (!player.canFitItem(craftedItem)) {
+                    break;
+                }
+
+                SkyBlockItem[] currentItems = getCurrentRecipeAsItems(ctx);
+                SkyBlockItem[] toReplace;
+                try {
+                    toReplace = recipe.consume(currentItems);
+                } catch (Exception e) {
+                    break;
+                }
+
+                applyConsumedGrid(player, ctx, toReplace);
+                expectedGridHash = computeGridHash(ctx);
+
+                player.addAndUpdateItem(craftedItem);
+                HypixelEventHandler.callCustomEvent(
+                        new ItemCraftEvent(player, new SkyBlockItem(craftedItem), recipe));
             }
-        }
+        } else {
+            int currentCursorAmount = cursorItemStack.isAir() ? 0 : cursorItemStack.amount();
+            int newAmount = currentCursorAmount + amount;
+            if (newAmount > maxStackSize) {
+                return;
+            }
+            ItemStack newCursorItem = craftedItem.withAmount(newAmount);
+            player.getInventory().setCursorItem(newCursorItem);
 
-        if (cursorItemType != null && cursorItemType.equals(resultItemType) && !isShift) {
-            player.addAndUpdateItem(cursorItem);
+            HypixelEventHandler.callCustomEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), recipe));
+            SkyBlockItem[] currentItems = getCurrentRecipeAsItems(ctx);
+            SkyBlockItem[] toReplace = recipe.consume(currentItems);
+            applyConsumedGrid(player, ctx, toReplace);
         }
 
         player.getInventory().update();
+    }
+
+    private void applyConsumedGrid(SkyBlockPlayer player, ViewContext ctx, SkyBlockItem[] toReplace) {
+        for (int i = 0; i < CRAFT_SLOTS.length; i++) {
+            if (toReplace[i] == null || toReplace[i].getItemStack().material() == Material.BEDROCK) {
+                ctx.inventory().setItemStack(CRAFT_SLOTS[i], ItemStack.AIR);
+            } else {
+                ctx.inventory().setItemStack(
+                        CRAFT_SLOTS[i],
+                        PlayerItemUpdater.playerUpdate(player, toReplace[i].getItemStack()).build()
+                );
+            }
+        }
     }
 
     private SkyBlockItem[] getCurrentRecipeAsItems(ViewContext ctx) {
@@ -163,5 +230,7 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
         return true;
     }
 
-    public record CraftingState(int lastGridHash, SkyBlockRecipe<?> lastParsedRecipe) {}
+    public record CraftingState(int lastGridHash, SkyBlockRecipe<?> lastParsedRecipe) {
+    }
 }
+

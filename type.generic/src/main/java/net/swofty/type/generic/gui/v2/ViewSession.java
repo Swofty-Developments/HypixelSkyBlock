@@ -1,5 +1,7 @@
 package net.swofty.type.generic.gui.v2;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.kyori.adventure.text.Component;
@@ -12,6 +14,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.trait.InventoryEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.PlayerInventory;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.event.inventory.InventoryOpenEvent;
 import net.minestom.server.timer.Task;
@@ -19,6 +22,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
+import org.jspecify.annotations.NonNull;
 
 import java.time.Duration;
 import java.util.*;
@@ -54,16 +58,21 @@ public final class ViewSession<S> {
     private S state;
 
     private ViewLayout<S> cachedLayout;
+    private boolean layoutDirty = true;
     private Consumer<CloseReason> onCloseHandler;
 
     @Getter
     private boolean closed;
     private boolean suppressCloseEvent;
 
-    private final Map<Integer, ItemStack> trackedSlotItems = new HashMap<>();
+    private final Int2ObjectOpenHashMap<ItemStack> trackedSlotItems = new Int2ObjectOpenHashMap<>();
     private final Set<Integer> recentlyModifiedSlots = new HashSet<>();
     private final Map<Integer, Task> autoUpdateTasks = new HashMap<>();
     private final Map<UUID, Set<Integer>> componentSlots = new HashMap<>();
+
+    private final Int2ObjectOpenHashMap<ItemStack> pendingOldItems = new Int2ObjectOpenHashMap<>();
+    private final Int2ObjectOpenHashMap<ItemStack> pendingNewItems = new Int2ObjectOpenHashMap<>();
+    private boolean flushScheduled;
 
     private ViewSession(View<S> view, HypixelPlayer player, S initialState, SharedContext<S> sharedContext) {
         this.view = view;
@@ -123,8 +132,31 @@ public final class ViewSession<S> {
         int slot = event.getSlot();
         SlotBehavior behavior = cachedLayout != null ? cachedLayout.getBehavior(slot) : SlotBehavior.UI;
 
+
         if (behavior == SlotBehavior.EDITABLE) {
+            if (event.getClick() instanceof Click.LeftShift) {
+                ItemStack oldItem = inventory.getItemStack(slot);
+
+                MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
+                    ItemStack newItem = inventory.getItemStack(slot);
+
+                    if (!oldItem.equals(newItem)) {
+                        queueSlotChange(slot, oldItem, newItem);
+                    }
+                });
+            }
             trackedSlotItems.put(slot, inventory.getItemStack(slot));
+            return;
+        }
+
+        if (event.getClick() instanceof Click.LeftDrag(List<Integer> slots)) {
+            for (int dragSlot : slots) {
+                if (cachedLayout == null || !cachedLayout.isEditable(dragSlot)) {
+                    event.setCancelled(true);
+                    return;
+                }
+                trackedSlotItems.put(dragSlot, inventory.getItemStack(dragSlot));
+            }
             return;
         }
 
@@ -139,40 +171,73 @@ public final class ViewSession<S> {
         }
     }
 
-    private void onPostClickEvent(InventoryClickEvent event) {
+    private void onPostClickEvent(@NonNull InventoryClickEvent event) {
         if (event.getInventory() != inventory || closed) return;
+        if (cachedLayout == null) return;
 
-        int slot = event.getSlot();
-        if (cachedLayout == null || !cachedLayout.isEditable(slot)) return;
+        for (Int2ObjectMap.Entry<ItemStack> entry : trackedSlotItems.int2ObjectEntrySet()) {
+            int trackedSlot = entry.getIntKey();
+            if (!cachedLayout.isEditable(trackedSlot)) continue;
 
-        MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
-            if (closed) return;
-
-            ItemStack oldItem = trackedSlotItems.getOrDefault(slot, ItemStack.AIR);
-            ItemStack newItem = inventory.getItemStack(slot);
-
+            ItemStack oldItem = entry.getValue();
+            ItemStack newItem = inventory.getItemStack(trackedSlot);
             if (!oldItem.equals(newItem)) {
-                handleSlotChange(slot, oldItem, newItem);
+                queueSlotChange(trackedSlot, oldItem, newItem);
             }
-        });
+        }
     }
 
-    private void handleSlotChange(int slot, ItemStack oldItem, ItemStack newItem) {
+    private void queueSlotChange(int slot, ItemStack oldItem, ItemStack newItem) {
+        if (!pendingOldItems.containsKey(slot)) {
+            pendingOldItems.put(slot, oldItem);
+        }
+        pendingNewItems.put(slot, newItem);
         trackedSlotItems.put(slot, newItem);
-        recentlyModifiedSlots.add(slot);
 
-        ViewComponent<S> component = cachedLayout.components().get(slot);
-        if (component != null && component.changeHandler() != null) {
-            component.changeHandler().onChange(slot, oldItem, newItem, state);
+        if (!flushScheduled) {
+            flushScheduled = true;
+            MinecraftServer.getSchedulerManager().submitTask(() -> {
+                flushPendingSlotChanges();
+                return TaskSchedule.stop();
+            });
+        }
+    }
+
+    private void flushPendingSlotChanges() {
+        if (closed) return;
+        flushScheduled = false;
+        if (pendingNewItems.isEmpty()) return;
+
+        recentlyModifiedSlots.addAll(pendingNewItems.keySet());
+
+        boolean anyChanged = false;
+        for (Int2ObjectMap.Entry<ItemStack> entry : pendingNewItems.int2ObjectEntrySet()) {
+            int slot = entry.getIntKey();
+            ItemStack newItem = entry.getValue();
+            ItemStack oldItem = pendingOldItems.getOrDefault(slot, ItemStack.AIR);
+
+            ViewComponent<S> component = cachedLayout != null ? cachedLayout.components().get(slot) : null;
+            if (component != null && component.changeHandler() != null) {
+                component.changeHandler().onChange(slot, oldItem, newItem, state);
+            }
+            anyChanged = true;
+
+            if (sharedContext != null) {
+                sharedContext.setSlotItem(slot, newItem);
+            }
         }
 
+        pendingOldItems.clear();
+        pendingNewItems.clear();
+        recentlyModifiedSlots.clear();
+
+        if (!anyChanged) return;
+
         if (sharedContext != null) {
-            sharedContext.setSlotItem(slot, newItem);
+            sharedContext.broadcastRender();
         } else {
             render();
         }
-
-        recentlyModifiedSlots.remove(slot);
     }
 
     private void onCloseEvent(InventoryCloseEvent event) {
@@ -187,8 +252,32 @@ public final class ViewSession<S> {
         if (closed) return;
 
         ViewConfiguration<?> config = view.configuration();
-        cachedLayout = new ViewLayout<>(config.getInventoryType());
-        view.layout(cachedLayout, state, context);
+
+        if (cachedLayout == null || layoutDirty) {
+            cachedLayout = new ViewLayout<>(config.getInventoryType());
+            view.layout(cachedLayout, state, context);
+            layoutDirty = false;
+            componentSlots.clear();
+
+            @SuppressWarnings("unchecked") BiFunction<S, ViewContext, Component> titleFunction = (BiFunction<S, ViewContext, Component>) config.getTitleFunction();
+            inventory.setTitle(titleFunction.apply(state, context));
+
+            cachedLayout.components().forEach((slot, component) -> {
+                if (component.behavior() == SlotBehavior.EDITABLE) {
+                    renderEditableSlot(slot);
+                    return;
+                }
+
+                renderSlot(slot, component);
+                if (component.updateInterval() != null) {
+                    scheduleAutoUpdate(slot, component);
+                }
+            });
+
+            view.onRefresh(state, context);
+            return;
+        }
+
         componentSlots.clear();
 
         @SuppressWarnings("unchecked") BiFunction<S, ViewContext, Component> titleFunction = (BiFunction<S, ViewContext, Component>) config.getTitleFunction();
@@ -199,11 +288,7 @@ public final class ViewSession<S> {
                 renderEditableSlot(slot);
                 return;
             }
-
             renderSlot(slot, component);
-            if (component.updateInterval() != null) {
-                scheduleAutoUpdate(slot, component);
-            }
         });
 
         view.onRefresh(state, context);
@@ -246,6 +331,7 @@ public final class ViewSession<S> {
 
     public void setState(S newState) {
         this.state = newState;
+        layoutDirty = true;
 
         if (sharedContext != null) {
             sharedContext.setState(newState);
@@ -256,29 +342,31 @@ public final class ViewSession<S> {
 
     public void setStateQuiet(S newState) {
         this.state = newState;
+        layoutDirty = true;
         render();
-    }
-
-    public void update(UnaryOperator<S> transform) {
-        setState(transform.apply(state));
-    }
-
-    public void updateQuiet(UnaryOperator<S> transform) {
-        setStateQuiet(transform.apply(state));
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T> void updateUnchecked(java.util.function.Function<T, T> transform) {
-        setState((S) transform.apply((T) state));
     }
 
     void setStateFromShared(S newState) {
         this.state = newState;
+        layoutDirty = true;
         render();
     }
 
     void renderFromShared() {
         render();
+    }
+
+    public void update(UnaryOperator<S> updater) {
+        setState(updater.apply(state));
+    }
+
+    public void updateQuiet(UnaryOperator<S> updater) {
+        setStateQuiet(updater.apply(state));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> void updateUnchecked(java.util.function.Function<T, T> updater) {
+        setState((S) updater.apply((T) state));
     }
 
     public ViewSession<S> onClose(Consumer<CloseReason> handler) {
@@ -310,15 +398,12 @@ public final class ViewSession<S> {
             sharedContext.unregisterSession(this);
         }
 
+        flushPendingSlotChanges();
+
         view.onClose(state, context, reason);
         if (onCloseHandler != null) onCloseHandler.accept(reason);
         if (reason == CloseReason.SERVER_EXITED) player.closeInventory();
     }
-
-    public boolean isShared() {
-        return sharedContext != null;
-    }
-
 
     public enum CloseReason {
         PLAYER_EXITED,
