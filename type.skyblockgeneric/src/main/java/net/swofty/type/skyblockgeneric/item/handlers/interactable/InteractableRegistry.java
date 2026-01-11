@@ -58,6 +58,7 @@ public class InteractableRegistry {
 
                     ServerHolograms.addExternalHologram(hologram);
                     jerryInformation.setHologram(hologram);
+                    skyBlockItem.setAmount(0);
                 })
         ).build());
     }

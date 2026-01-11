@@ -29,7 +29,10 @@ public class AbilityRegistry {
 				50,
 				new RegisteredAbility.AbilityManaCost(25),
 				(player, item, ignored, ignored2) -> {
-					player.teleport(player.getPosition().add(player.getPosition().direction().mul(10)));
+					BlockVec tpPos = player.getPosition().add(player.getPosition().direction().mul(10)).asBlockVec();
+					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return false;
+					player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
+					return true;
 					// TODO: damage nearby mobs
 				}
 		));
@@ -42,10 +45,13 @@ public class AbilityRegistry {
 				5,
 				new RegisteredAbility.AbilityManaCost(50),
 				(player, item, ignored, ignored2) -> {
-					player.teleport(player.getPosition().add(player.getPosition().direction().mul(8)));
+					BlockVec tpPos = player.getPosition().add(player.getPosition().direction().mul(8)).asBlockVec();
+					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return false; // TODO: Make it so you can't go through walls
+					player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
 					ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 50.0).build();
 					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(3000).withDisplayName("Instant Transmission").build();
 					player.getStatistics().boostStatistic(speedBoost);
+					return true;
 				}
 		));
 
@@ -58,10 +64,11 @@ public class AbilityRegistry {
 				new RegisteredAbility.AbilityManaSoulflowCost(180, 1),
 				(player, item, ignored, ignored2) -> {
 					Point targetedBlock = player.getTargetBlockPosition(57);
-					if (targetedBlock == null) return;
+					if (targetedBlock == null) return false;
 					BlockVec tpPos = targetedBlock.asBlockVec();
-					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return; // TODO: don't consume mana/soulflow if teleport fails
+					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return false;
 					player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
+					return true;
 				}
 		));
 
@@ -75,6 +82,7 @@ public class AbilityRegistry {
 				(player, item, targetedBlock, blockFace) -> {
 					player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
 							.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+					return false;
 				}
 		));
 
@@ -89,6 +97,7 @@ public class AbilityRegistry {
 					ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 100.0).build();
 					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(30000).withDisplayName("Speed Boost").build();
 					player.getStatistics().boostStatistic(speedBoost);
+					return true;
 				}
 		));
 
@@ -121,12 +130,14 @@ public class AbilityRegistry {
 				))
 		));
 
-//		register(new RegisteredAbility( // TODO: Figure out how to implement passive abilities
+//		register(new RegisteredPassiveAbility(
 //				"BEJEWELED_BLADE",
 //				"Bejeweled Blade",
 //				"§7Deals §a+150% §7damage to mobs on §bMining Islands.",
-//				RegisteredAbility.AbilityActivation.
-//		))
+//				List.of(new RegisteredPassiveAbility.Action<>(
+//
+//				))
+//		));
 
 		register(new BuildersWandAbility());
 	}

@@ -21,7 +21,9 @@ public class RegisteredPassiveAbility extends RegisteredAbility {
 	private final List<Action<?>> passiveAction;
 
 	public RegisteredPassiveAbility(String id, String name, BiFunction<SkyBlockPlayer, SkyBlockItem, String> description, List<Action<?>> action) {
-		super(id, name, description, AbilityActivation.NEVER, 0, new NoAbilityCost(), ((_, _, _, _) -> {}));
+		super(id, name, description, AbilityActivation.NEVER, 0, new NoAbilityCost(), ((_, _, _, _) -> {
+            return false;
+        }));
 		this.passiveAction = action;
 	}
 

@@ -36,18 +36,20 @@ public class RegisteredAbility {
         this.action = action;
     }
 
-    public void execute(SkyBlockPlayer player, SkyBlockItem item) {
-        execute(player, item, null, null);
+    public boolean execute(SkyBlockPlayer player, SkyBlockItem item) {
+        return execute(player, item, null, null);
     }
 
-    public void execute(SkyBlockPlayer player, SkyBlockItem item, Point targetedBlock, BlockFace blockFace) {
+    public boolean execute(SkyBlockPlayer player, SkyBlockItem item, Point targetedBlock, BlockFace blockFace) {
         if (!cost.canUse(player)) {
             cost.onFail(player);
-            return;
+            return false;
         }
-
+        if (!action.execute(player, item, targetedBlock, blockFace)){
+            return false;
+        }
         cost.onUse(player, this);
-        action.execute(player, item, targetedBlock, blockFace);
+        return true;
     }
 
     @FunctionalInterface
@@ -57,7 +59,7 @@ public class RegisteredAbility {
 
     @FunctionalInterface
     public interface AbilityAction {
-        void execute(SkyBlockPlayer player, SkyBlockItem item, Point targetedBlock, BlockFace blockFace);
+        boolean execute(SkyBlockPlayer player, SkyBlockItem item, Point targetedBlock, BlockFace blockFace);
     }
 
     @Getter
