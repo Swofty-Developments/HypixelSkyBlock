@@ -40,9 +40,9 @@ subprojects {
             "testImplementation"("org.junit.jupiter:junit-jupiter:6.0.2")
 
             "implementation"("org.reflections:reflections:0.10.2")
-            "implementation"("com.fasterxml.jackson.core:jackson-databind:2.17.0")
-            "implementation"("com.fasterxml.jackson.core:jackson-annotations:2.17.0")
-            "implementation"("com.fasterxml.jackson.core:jackson-core:2.17.0")
+            "implementation"("com.fasterxml.jackson.core:jackson-databind:2.20.1")
+            "implementation"("com.fasterxml.jackson.core:jackson-annotations:2.20.1")
+            "implementation"("com.fasterxml.jackson.core:jackson-core:2.20.1")
             "implementation"("org.json:json:20240303")
             "compileOnly"("org.projectlombok:lombok:1.18.42")
         }
