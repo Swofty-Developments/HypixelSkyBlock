@@ -1,6 +1,5 @@
 package net.swofty.type.generic.data;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
@@ -9,6 +8,7 @@ import net.swofty.commons.protocol.Serializer;
 import net.swofty.type.generic.leaderboard.LeaderboardService;
 import net.swofty.type.generic.leaderboard.LeaderboardTracked;
 import net.swofty.type.generic.leaderboard.MapLeaderboardTracked;
+import tools.jackson.core.JacksonException;
 
 import java.util.Map;
 import java.util.Objects;
@@ -42,7 +42,7 @@ public abstract class Datapoint<T> {
     public Datapoint<T> setUser(DataHandler dataHandler) { this.dataHandler = dataHandler; return this; }
     public Datapoint<T> setData(Enum<?> data) { this.data = data; return this; }
 
-    public String getSerializedValue() throws JsonProcessingException { return serializer.serialize(value); }
+    public String getSerializedValue() throws JacksonException { return serializer.serialize(value); }
     public void deserializeValue(String json) { this.value = serializer.deserialize(json); }
 
     /** Copy value from another datapoint without triggering onChange. */
