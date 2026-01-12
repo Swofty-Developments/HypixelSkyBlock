@@ -59,14 +59,16 @@ public class Hypixel {
             return;
         }
 
-        Sentry.init(options -> {
-            options.setDsn(ConfigProvider.settings().getIntegrations().getSentryDsn());
-            options.setSendDefaultPii(true);
-            options.setTracesSampleRate(1.0);
-            options.setProfileSessionSampleRate(1.0);
-            options.setProfileLifecycle(ProfileLifecycle.TRACE);
-            options.getLogs().setEnabled(true);
-        });
+        if (!Objects.equals(ConfigProvider.settings().getIntegrations().getSentryDsn(), "")) {
+            Sentry.init(options -> {
+                options.setDsn(ConfigProvider.settings().getIntegrations().getSentryDsn());
+                options.setSendDefaultPii(true);
+                options.setTracesSampleRate(1.0);
+                options.setProfileSessionSampleRate(1.0);
+                options.setProfileLifecycle(ProfileLifecycle.TRACE);
+                options.getLogs().setEnabled(true);
+            });
+        }
 
         ServerType serverType = ServerType.valueOf(args[0].toUpperCase());
         long startTime = System.currentTimeMillis();
