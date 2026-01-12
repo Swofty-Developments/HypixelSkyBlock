@@ -333,6 +333,8 @@ public class Game {
         player.setGameMode(GameMode.ADVENTURE);
         player.setEliminated(false);
         player.resetGold();
+        player.setFood(20);
+        player.setFoodSaturation(20.0f);
     }
 
     private Pos getWaitingPosition() {
@@ -350,6 +352,9 @@ public class Game {
 
         Pos spawnPos = getRandomSpawnPosition();
         player.teleport(spawnPos);
+
+        player.setFood(20);
+        player.setFoodSaturation(20.0f);
 
         if (role == GameRole.DETECTIVE) {
             weaponManager.giveDetectiveBow(player);
@@ -374,6 +379,8 @@ public class Game {
 
         player.setAllowFlying(true);
         player.setFlying(true);
+        player.setFood(20);
+        player.setFoodSaturation(20.0f);
     }
 
     private void setupHiddenNametags() {

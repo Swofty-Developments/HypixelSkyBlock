@@ -15,6 +15,7 @@ import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
+import net.swofty.type.lobby.events.*;
 import net.swofty.type.murdermysterylobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -23,10 +24,6 @@ import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.murdermysterylobby.tab.MurderMysteryPlayersOnlineModule;
 import net.swofty.type.murdermysterylobby.util.MurderMysteryLobbyMap;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.LobbyBlockBreak;
-import net.swofty.type.lobby.events.LobbyItemEvents;
-import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
-import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
 import net.swofty.type.lobby.item.impl.HidePlayers;
@@ -34,7 +31,6 @@ import net.swofty.type.lobby.item.impl.LobbySelector;
 import net.swofty.type.lobby.item.impl.PlayCompass;
 import net.swofty.type.lobby.item.impl.ProfileItem;
 import net.swofty.type.lobby.launchpad.LaunchPad;
-import net.swofty.type.lobby.events.LobbyParkourEvents;
 import net.swofty.type.lobby.parkour.LobbyParkourManager;
 import net.swofty.type.lobby.parkour.Parkour;
 import net.swofty.type.murdermysterylobby.parkour.MurderMysteryLobbyParkour;
@@ -47,6 +43,7 @@ import java.util.Map;
 
 public class TypeMurderMysteryLobbyLoader implements LobbyTypeLoader {
     public static MurderMysteryLobbyMap lobbyMap = new MurderMysteryLobbyMap();
+    private final Pos spawnPoint = new Pos(1.5, 72, 0.5, -90, 0);
 
     @Getter
     private final LobbyItemHandler itemHandler = new LobbyItemHandler();
@@ -132,7 +129,7 @@ public class TypeMurderMysteryLobbyLoader implements LobbyTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> new Pos(1.5, 72, 0.5, -90, 0),
+                (type) -> spawnPoint,
                 false
         );
     }
@@ -149,6 +146,7 @@ public class TypeMurderMysteryLobbyLoader implements LobbyTypeLoader {
         events.add(new LobbyPlayerJoinEvents());
         events.add(new LobbyBlockBreak());
         events.add(new LobbyParkourEvents());
+        events.add(new LobbyPlayerMove(spawnPoint));
         return events;
     }
 

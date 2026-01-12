@@ -1,12 +1,12 @@
 package net.swofty.type.generic.achievement;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import org.bson.Document;
 import org.tinylog.Logger;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -110,7 +110,7 @@ public class AchievementStatisticsService {
 
             if (achievements == null || !achievements.isObject()) return;
 
-            achievements.fields().forEachRemaining(entry -> {
+            achievements.properties().forEach(entry -> {
                 String achievementId = entry.getKey();
                 JsonNode progress = entry.getValue();
 
@@ -131,7 +131,8 @@ public class AchievementStatisticsService {
                     }
                 }
             });
-        } catch (Exception e) {
+        } catch (Exception _) {
+            Logger.warn("Error parsing achievement data JSON");
         }
     }
 

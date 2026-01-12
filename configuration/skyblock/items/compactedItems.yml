@@ -263,7 +263,7 @@ items:
       - id: SELLABLE
         value: 320
 
-  - id: ENCHANTED_CLAY
+  - id: ENCHANTED_CLAY_BALL
     material: CLAY_BALL
     rarity: UNCOMMON
     default_statistics: {}
@@ -273,6 +273,17 @@ items:
         item_id: CLAY_BALL
       - id: SELLABLE
         value: 480
+
+  - id: ENCHANTED_CLAY_BLOCK
+    material: CLAY_BLOCK
+    rarity: RARE
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FISHING
+        item_id: ENCHANTED_CLAY_BALL
+      - id: SELLABLE
+        value: 76800
 
   - id: ENCHANTED_TROPICAL_FISH
     material: TROPICAL_FISH
@@ -1177,7 +1188,7 @@ items:
     components:
       - id: ENCHANTED
         recipe_type: FISHING
-        item_id: COD
+        item_id: RAW_FISH
       - id: SELLABLE
         value: 960
 
@@ -1199,7 +1210,7 @@ items:
     components:
       - id: ENCHANTED
         recipe_type: FISHING
-        item_id: SALMON
+        item_id: RAW_SALMON
       - id: SELLABLE
         value: 1600
 
@@ -1310,13 +1321,13 @@ items:
         value: 320
 
   - id: ENCHANTED_SEEDS
-    material: WHEAT_SEEDS
+    material: SEEDS
     rarity: UNCOMMON
     default_statistics: {}
     components:
       - id: ENCHANTED
         recipe_type: FARMING
-        item_id: WHEAT_SEEDS
+        item_id: SEEDS
       - id: SELLABLE
         value: 480
 
@@ -1610,3 +1621,126 @@ items:
         value: 256000.0
       - id: SKULL_HEAD
         texture: 8db711ff52eedda59c434bb03169763d7c40b5b89127778feacd63aa94dfc
+
+  - id: ENCHANTED_MOONFLOWER
+    material: BLUE_ORCHID
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: MOONFLOWER
+      - id: SELLABLE
+        value: 640
+
+  - id: ENCHANTED_SUNFLOWER
+    material: SUNFLOWER
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: SUNFLOWER
+      - id: SELLABLE
+        value: 640
+
+  - id: ENCHANTED_WILD_ROSE
+    material: ROSE_BUSH
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: WILD_ROSE
+      - id: SELLABLE
+        value: 640
+
+  - id: COMPACTED_MOONFLOWER
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_MOONFLOWER
+      - id: SELLABLE
+        value: 256000.0
+      - id: SKULL_HEAD
+        texture: 469b3bac406b51ba0e76c2c218aa4d45fde9ea7c101c85fbd8106c92c4aa36dd
+
+  - id: COMPACTED_SUNFLOWER
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_SUNFLOWER
+      - id: SELLABLE
+        value: 256000.0
+      - id: SKULL_HEAD
+        texture: c4989d846862952f8ac844abbd4c1f77bf85e924c2bf98236f8d9253624d879f
+
+  - id: COMPACTED_WILD_ROSE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+        recipe_type: FARMING
+        item_id: ENCHANTED_WILD_ROSE
+      - id: SELLABLE
+        value: 256000.0
+      - id: SKULL_HEAD
+        texture: a33051b7c69f51085cc43f0575139cd58afe2b83f33d2a203a5afc266c21019
+
+  - id: ENCHANTED_FIG_LOG
+    material: STRIPPED_SPRUCE_LOG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: FIG_LOG
+      - id: SELLABLE
+        value: 576
+
+  - id: ENCHANTED_MANGROVE_LOG
+    material: MANGROVE_LOG
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: MANGROVE_LOG
+      - id: SELLABLE
+        value: 576
+
+  - id: ENCHANTED_SEA_LUMIES
+    material: SEA_PICKLE
+    rarity: UNCOMMON
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: SEA_LUMIES
+      - id: SELLABLE
+        value: 576
+
+  - id: ENCHANTED_TENDER_WOOD
+    rarity: RARE
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: TENDER_WOOD
+      - id: SELLABLE
+        value: 576
+      - id: SKULL_HEAD
+        texture: 455affb78f594ca7b6ec39216151304ce1bf18b788cce13b14f345d808a44126
+
+  - id: ENCHANTED_VINESAP
+    rarity: RARE
+    default_statistics: {}
+    components:
+      - id: ENCHANTED
+        recipe_type: FORAGING
+        item_id: VINESAP
+      - id: SELLABLE
+        value: 576
+      - id: SKULL_HEAD
+        texture: 3be8db48a63f09bb85044d9dbd325cfc3881c00912e9edc33bf22fda320bea66

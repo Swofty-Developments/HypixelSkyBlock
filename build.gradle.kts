@@ -1,70 +1,47 @@
 plugins {
     base
+    java
     id("io.freefair.lombok") version "9.1.0"
     id("io.sentry.jvm.gradle") version "5.12.2"
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-        maven("https://plugins.gradle.org/m2/")
-    }
-}
-
-allprojects {
-    group = "net.swofty"
-    version = "1.0"
-
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-}
+group = "net.swofty"
+version = "1.0"
 
 subprojects {
-    apply(plugin = "io.freefair.lombok")
     apply(plugin = "java")
     apply(plugin = "java-library")
-    apply(plugin = "application")
+    apply(plugin = "io.freefair.lombok")
 
-    plugins.withType<JavaPlugin> {
-        repositories {
-            mavenLocal()
-            mavenCentral()
-            gradlePluginPortal()
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven("https://repo.viaversion.com")
+        maven("https://jitpack.io")
+    }
 
-            maven("https://repo.viaversion.com")
-            maven("https://jitpack.io")
-        }
-
-        dependencies {
-            "testImplementation"("org.junit.jupiter:junit-jupiter:6.0.2")
-
-            "implementation"("org.reflections:reflections:0.10.2")
-            "implementation"("com.fasterxml.jackson.core:jackson-databind:2.17.0")
-            "implementation"("com.fasterxml.jackson.core:jackson-annotations:2.17.0")
-            "implementation"("com.fasterxml.jackson.core:jackson-core:2.17.0")
-            "implementation"("org.json:json:20240303")
-            "implementation"("io.sentry:sentry-async-profiler:8.29.0")
-            "compileOnly"("org.projectlombok:lombok:1.18.42")
-        }
-
-        tasks.withType<JavaCompile> {
-            sourceCompatibility = JavaVersion.VERSION_25.toString()
-            targetCompatibility = JavaVersion.VERSION_25.toString()
-            options.encoding = "UTF-8"
-        }
-
-        tasks.withType<Test> {
-            useJUnitPlatform()
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(25))
         }
     }
 
-    tasks.named<Zip>("distZip") {
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    dependencies {
+        testImplementation("org.junit.jupiter:junit-jupiter:6.0.2")
+
+        implementation("org.reflections:reflections:0.10.2")
+        implementation("org.json:json:20240303")
+        implementation("io.sentry:sentry-async-profiler:8.29.0")
+
+        compileOnly("org.projectlombok:lombok:1.18.42")
+
+        implementation(platform("tools.jackson:jackson-bom:3.0.3"))
+        implementation("tools.jackson.core:jackson-core")
+        implementation("tools.jackson.core:jackson-databind")
+        implementation("com.fasterxml.jackson.core:jackson-annotations:2.20")
     }
 
-    tasks.named<Tar>("distTar") {
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    tasks.test {
+        useJUnitPlatform()
     }
 }

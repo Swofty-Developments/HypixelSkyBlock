@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.darkauction;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.timer.TaskSchedule;
@@ -43,15 +44,13 @@ public class DarkAuctionHandler {
     @Getter
     private static boolean biddingOpen = false;
     private static boolean serviceHealthCheckRunning = false;
-    private static Runnable onStateChangeCallback = null;
-
     /**
-     * Sets a callback to be invoked when the Dark Auction state changes.
-     * Used to refresh NPCs when the auction phase changes.
+     * -- SETTER --
+     *  Sets a callback to be invoked when the Dark Auction state changes.
+     *  Used to refresh NPCs when the auction phase changes.
      */
-    public static void setOnStateChangeCallback(Runnable callback) {
-        onStateChangeCallback = callback;
-    }
+    @Setter
+    private static Runnable onStateChangeCallback = null;
 
     private static void notifyStateChange() {
         if (onStateChangeCallback != null) {

@@ -1,6 +1,5 @@
 package net.swofty.type.generic.data.handlers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.sentry.Sentry;
 import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
@@ -15,6 +14,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
+import tools.jackson.core.JacksonException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -133,7 +133,7 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
         for (Data data : Data.values()) {
             try {
                 document.put(data.getKey(), getDatapoint(data.getKey()).getSerializedValue());
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 e.printStackTrace();
             }
         }

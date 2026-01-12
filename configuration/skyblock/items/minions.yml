@@ -512,13 +512,13 @@ items:
           - CLAY_BALL:20
           - CLAY_BALL:40
           - CLAY_BALL:64
-          - ENCHANTED_CLAY:1
-          - ENCHANTED_CLAY:2
-          - ENCHANTED_CLAY:4
-          - ENCHANTED_CLAY:8
-          - ENCHANTED_CLAY:16
-          - ENCHANTED_CLAY:32
-          - ENCHANTED_CLAY:64
+          - ENCHANTED_CLAY_BALL:1
+          - ENCHANTED_CLAY_BALL:2
+          - ENCHANTED_CLAY_BALL:4
+          - ENCHANTED_CLAY_BALL:8
+          - ENCHANTED_CLAY_BALL:16
+          - ENCHANTED_CLAY_BALL:32
+          - ENCHANTED_CLAY_BALL:64
   - id: FISHING_MINION
     material: PLAYER_HEAD
     rarity: COMMON
@@ -528,17 +528,17 @@ items:
         base_item: FISHING_ROD
         default_craftable: false
         ingredients:
-          - COD:8
-          - COD:16
-          - COD:32
-          - COD:64
-          - ENCHANTED_COD:1
-          - ENCHANTED_COD:3
-          - ENCHANTED_COD:8
-          - ENCHANTED_COD:16
-          - ENCHANTED_COD:32
-          - ENCHANTED_COD:64
-          - ENCHANTED_COOKED_COD:1
+          - RAW_FISH:8
+          - RAW_FISH:16
+          - RAW_FISH:32
+          - RAW_FISH:64
+          - ENCHANTED_RAW_FISH:1
+          - ENCHANTED_RAW_FISH:3
+          - ENCHANTED_RAW_FISH:8
+          - ENCHANTED_RAW_FISH:16
+          - ENCHANTED_RAW_FISH:32
+          - ENCHANTED_RAW_FISH:64
+          - ENCHANTED_COOKED_FISH:1
   - id: ACACIA_MINION
     material: PLAYER_HEAD
     rarity: COMMON
