@@ -283,8 +283,8 @@ public class GUISkyBlockMenu extends HypixelInventoryGUI {
                 long currentElapsedInYear = SkyBlockCalendar.getElapsed() % SkyBlockCalendar.YEAR;
                 long eventEndTime = 0;
                 for (Long eventStartTime : currentEvent.times()) {
-                    if (currentElapsedInYear >= eventStartTime && currentElapsedInYear < eventStartTime + currentEvent.duration()) {
-                        eventEndTime = eventStartTime + currentEvent.duration();
+                    if (currentElapsedInYear >= eventStartTime && currentElapsedInYear < eventStartTime + currentEvent.duration().toMillis() / 50) {
+                        eventEndTime = eventStartTime + currentEvent.duration().toMillis() / 50;
                         break;
                     }
                 }

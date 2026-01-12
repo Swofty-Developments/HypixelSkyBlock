@@ -38,46 +38,47 @@ public class MurderMysteryLobbyScoreboard {
                     continue;
                 }
 
-                if (sidebarCache.containsKey(player.getUuid())) {
-                    sidebarCache.get(player.getUuid()).removeViewer(player);
+                Sidebar sidebar = sidebarCache.get(player.getUuid());
+                
+                if (sidebar == null) {
+                    sidebar = new Sidebar(Component.text(getSidebarName(animationFrame)));
+
+                    // Get player stats
+                    MurderMysteryDataHandler handler = MurderMysteryDataHandler.getUser(player);
+                    long totalKills = 0;
+                    long totalWins = 0;
+                    long detectiveWins = 0;
+                    long murdererWins = 0;
+                    long tokens = 0;
+
+                    if (handler != null) {
+                        DatapointMurderMysteryModeStats statsDP = handler.get(
+                                MurderMysteryDataHandler.Data.MODE_STATS,
+                                DatapointMurderMysteryModeStats.class);
+                        MurderMysteryModeStats stats = statsDP.getValue();
+                        totalKills = stats.getTotalKills(MurderMysteryLeaderboardPeriod.LIFETIME);
+                        totalWins = stats.getTotalWins(MurderMysteryLeaderboardPeriod.LIFETIME);
+                        detectiveWins = stats.getTotalDetectiveWins(MurderMysteryLeaderboardPeriod.LIFETIME);
+                        murdererWins = stats.getTotalMurdererWins(MurderMysteryLeaderboardPeriod.LIFETIME);
+                        tokens = stats.getTotalTokens(MurderMysteryLeaderboardPeriod.LIFETIME);
+                    }
+
+                    addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
+                    addLine("§7 ", sidebar);
+                    addLine("§fTotal Kills: §a" + totalKills, sidebar);
+                    addLine("§fTotal Wins: §a" + totalWins, sidebar);
+                    addLine("§7 ", sidebar);
+                    addLine("§fWins as Detective: §a" + detectiveWins, sidebar);
+                    addLine("§fWins as Murderer: §a" + murdererWins, sidebar);
+                    addLine("§7 ", sidebar);
+                    addLine("§fTokens: §2" + tokens, sidebar);
+                    addLine("§7 ", sidebar);
+                    addLine("§ewww.hypixel.net", sidebar);
+
+                    sidebar.addViewer(player);
+                    sidebarCache.put(player.getUuid(), sidebar);
                 }
 
-                Sidebar sidebar = new Sidebar(Component.text(getSidebarName(animationFrame)));
-
-                // Get player stats
-                MurderMysteryDataHandler handler = MurderMysteryDataHandler.getUser(player);
-                long totalKills = 0;
-                long totalWins = 0;
-                long detectiveWins = 0;
-                long murdererWins = 0;
-                long tokens = 0;
-
-                if (handler != null) {
-                    DatapointMurderMysteryModeStats statsDP = handler.get(
-                            MurderMysteryDataHandler.Data.MODE_STATS,
-                            DatapointMurderMysteryModeStats.class);
-                    MurderMysteryModeStats stats = statsDP.getValue();
-                    totalKills = stats.getTotalKills(MurderMysteryLeaderboardPeriod.LIFETIME);
-                    totalWins = stats.getTotalWins(MurderMysteryLeaderboardPeriod.LIFETIME);
-                    detectiveWins = stats.getTotalDetectiveWins(MurderMysteryLeaderboardPeriod.LIFETIME);
-                    murdererWins = stats.getTotalMurdererWins(MurderMysteryLeaderboardPeriod.LIFETIME);
-                    tokens = stats.getTotalTokens(MurderMysteryLeaderboardPeriod.LIFETIME);
-                }
-
-                addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
-                addLine("§7 ", sidebar);
-                addLine("§fTotal Kills: §a" + totalKills, sidebar);
-                addLine("§fTotal Wins: §a" + totalWins, sidebar);
-                addLine("§7 ", sidebar);
-                addLine("§fWins as Detective: §a" + detectiveWins, sidebar);
-                addLine("§fWins as Murderer: §a" + murdererWins, sidebar);
-                addLine("§7 ", sidebar);
-                addLine("§fTokens: §2" + tokens, sidebar);
-                addLine("§7 ", sidebar);
-                addLine("§ewww.hypixel.net", sidebar);
-
-                sidebar.addViewer(player);
-                sidebarCache.put(player.getUuid(), sidebar);
             }
             return TaskSchedule.tick(5);
         });
@@ -88,10 +89,9 @@ public class MurderMysteryLobbyScoreboard {
     }
 
     private static void addLine(String text, Sidebar sidebar) {
-        for (Sidebar.ScoreboardLine existingLine : sidebar.getLines()) {
-            sidebar.updateLineScore(existingLine.getId(), existingLine.getLine() + 1);
-        }
-        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
+
+        int score = sidebar.getLines().size();
+        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), score));
     }
 
     private static String getSidebarName(int counter) {

@@ -33,49 +33,49 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ActionGamePlayerEvent implements HypixelEventClass {
 
-	public static final ConcurrentHashMap<String, String> ACTIVE_TEAM_CHESTS = new ConcurrentHashMap<>();
+	public static final ConcurrentHashMap<TeamKey, String> ACTIVE_TEAM_CHESTS = new ConcurrentHashMap<>();
 
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(InventoryPreClickEvent event) {
 		if (!(event.getInventory() instanceof PlayerInventory)) {
 			return;
 		}
-		Player player = event.getPlayer();
-		if (player.hasTag(Tag.String("gameId"))) {
-			if (event.getClickedItem().material().isArmor()) {
-				event.setCancelled(true);
-				return;
-			}
-			String gameId = player.getTag(Tag.String("gameId"));
-			Game game = TypeBedWarsGameLoader.getGameById(gameId);
-			if (game.getGameStatus() == GameStatus.WAITING) {
-				event.setCancelled(true);
-			}
+		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
+		if (event.getClickedItem().material().isArmor()) {
+			event.setCancelled(true);
+			return;
+		}
+		Game game = player.getGame();
+		if (game == null) {
+			event.setCancelled(true);
+			return;
+		}
+		;
+		if (game.getGameStatus() == GameStatus.WAITING) {
+			event.setCancelled(true);
 		}
 	}
 
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(ItemDropEvent event) {
-		ItemEntity itemEntity = new ItemEntity(event.getItemStack());
-		itemEntity.setInstance(event.getPlayer().getInstance(), event.getPlayer().getPosition().add(0, event.getPlayer().getEyeHeight(), 0));
-		itemEntity.setVelocity(event.getPlayer().getPosition().add(0, 0.3, 0).direction().mul(6));
-		itemEntity.setPickupDelay(Duration.ofMillis(500));
-		if (event.getPlayer().hasTag(Tag.String("gameId"))) {
-			switch (event.getItemStack().material().name()) {
-				case "wooden_sword":
-				case "wooden_pickaxe":
-				case "wooden_axe":
-				case "stone_axe":
-				case "iron_pickaxe":
-				case "iron_axe":
-				case "diamond_pickaxe":
-				case "diamond_axe":
-					event.setCancelled(true);
-					event.getPlayer().sendMessage("§cYou cannot drop your tools!");
-					break;
-				default:
-					break;
-			}
+		switch (event.getItemStack().material().name()) {
+			case "wooden_sword":
+			case "wooden_pickaxe":
+			case "wooden_axe":
+			case "stone_axe":
+			case "iron_pickaxe":
+			case "iron_axe":
+			case "diamond_pickaxe":
+			case "diamond_axe":
+				event.setCancelled(true);
+				event.getPlayer().sendMessage("§cYou cannot drop your tools!");
+				break;
+			default:
+				ItemEntity itemEntity = new ItemEntity(event.getItemStack());
+				itemEntity.setInstance(event.getPlayer().getInstance(), event.getPlayer().getPosition().add(0, event.getPlayer().getEyeHeight(), 0));
+				itemEntity.setVelocity(event.getPlayer().getPosition().add(0, 0.3, 0).direction().mul(6));
+				itemEntity.setPickupDelay(Duration.ofMillis(500));
+				break;
 		}
 	}
 
@@ -83,7 +83,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 	public void run(PlayerBlockInteractEvent event) {
 		Block block = event.getBlock();
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
-		if (!player.hasTag(Tag.String("gameId"))) {
+		if (player.getGame() == null) {
 			event.setCancelled(true);
 			return;
 		}
@@ -94,21 +94,20 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 		if (block.registry().material() != Material.CHEST) return;
 
-		String gameId = player.getTag(Tag.String("gameId"));
-		Game game = TypeBedWarsGameLoader.getGameById(gameId);
+		Game game = player.getGame();
 		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
 			event.setCancelled(true);
 			return;
 		}
 
-		String teamName = player.getTag(Tag.String("team"));
-		if (teamName == null) {
+		TeamKey playerTeamKey = player.getTeamKey();
+		if (playerTeamKey == null) {
 			event.setCancelled(true);
 			return;
 		}
 
-		String chestTeamName = null;
 		double closestDistance = Double.MAX_VALUE;
+		TeamKey chestTeamKey = null;
 
 		for (java.util.Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
 			TeamKey teamKey = entry.getKey();
@@ -124,29 +123,29 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 			if (distance < 10.0 && distance < closestDistance) {
 				closestDistance = distance;
-				chestTeamName = teamKey.getName();
+				chestTeamKey = teamKey;
 			}
 		}
 
-		if (chestTeamName == null) {
+		if (chestTeamKey == null) {
 			return;
 		}
 
-		boolean sameTeam = chestTeamName.equals(teamName);
-		if (!sameTeam && game.getTeamManager().getTeamBedStatus().getOrDefault(chestTeamName, false)) {
+		boolean sameTeam = chestTeamKey.equals(playerTeamKey);
+		if (!sameTeam && game.getTeamManager().getTeamBedStatus().getOrDefault(chestTeamKey, false)) {
 			event.setCancelled(true);
 			player.sendMessage("§cYou can only access enemy team chests if their bed is destroyed!");
 			return;
 		}
 
-		String existingContextId = ACTIVE_TEAM_CHESTS.get(chestTeamName);
-		GUITeamChest teamChest = new GUITeamChest(chestTeamName);
+		String existingContextId = ACTIVE_TEAM_CHESTS.get(chestTeamKey);
+		GUITeamChest teamChest = new GUITeamChest(chestTeamKey);
 
 		if (existingContextId != null) {
 			teamChest.joinSharedContext(player, existingContextId);
 		} else {
 			String contextId = teamChest.createSharedContext(player);
-			ACTIVE_TEAM_CHESTS.put(chestTeamName, contextId);
+			ACTIVE_TEAM_CHESTS.put(chestTeamKey, contextId);
 		}
 	}
 
@@ -156,12 +155,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		ItemStack itemInHand = player.getItemInMainHand();
 
-		if (!player.hasTag(Tag.String("gameId"))) {
-			return;
-		}
-
-		String gameId = player.getTag(Tag.String("gameId"));
-		Game game = TypeBedWarsGameLoader.getGameById(gameId);
+		Game game = player.getGame();
 		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
 			return;
 		}
@@ -217,15 +211,16 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 		if (block.registry().material() == Material.CHEST) {
 			event.setCancelled(true);
-			String playerTeamName = player.getTag(Tag.String("team"));
+
+			TeamKey playerTeamName = player.getTeamKey();
 			if (playerTeamName == null) {
 				return;
 			}
 
-			String chestTeamName = null;
+			TeamKey chestTeamName = null;
 			double closestDistance = Double.MAX_VALUE;
 
-			for (java.util.Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
+			for (Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
 				TeamKey teamKey = entry.getKey();
 				MapTeam team = entry.getValue();
 				BedWarsMapsConfig.PitchYawPosition teamSpawn = team.getSpawn();
@@ -239,7 +234,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 				if (distance < 10.0 && distance < closestDistance) {
 					closestDistance = distance;
-					chestTeamName = teamKey.getName();
+					chestTeamName = teamKey;
 				}
 			}
 

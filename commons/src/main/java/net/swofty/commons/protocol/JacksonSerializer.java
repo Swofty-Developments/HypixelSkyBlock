@@ -1,18 +1,19 @@
 package net.swofty.commons.protocol;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.SneakyThrows;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.SerializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 
 public class JacksonSerializer<T> implements Serializer<T> {
-    private final ObjectMapper mapper;
+    private final JsonMapper mapper;
     private final Class<T> clazz;
 
     public JacksonSerializer(Class<T> clazz) {
-        this.mapper = new ObjectMapper()
+        this.mapper = JsonMapper.builder()
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .build();
         this.clazz = clazz;
     }
 

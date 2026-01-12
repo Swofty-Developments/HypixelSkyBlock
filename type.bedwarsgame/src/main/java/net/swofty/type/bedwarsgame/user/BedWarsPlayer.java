@@ -24,6 +24,7 @@ import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
@@ -47,10 +48,12 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
 		return BedWarsDataHandler.getUser(this.getUuid());
 	}
 
+	@Nullable
 	public String getTeamName() {
 		return getTag(Tag.String("team"));
 	}
 
+	@Nullable
 	public BedWarsMapsConfig.TeamKey getTeamKey() {
 		return BedWarsMapsConfig.TeamKey.valueOf(getTeamName());
 	}

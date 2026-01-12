@@ -1,0 +1,283 @@
+items:
+  - id: SMALL_FISHING_SACK
+    rarity: COMMON
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7Items: §aAgarimoo Tongue§7, §aAlligator Skin§7, §aBlue Ring§7, §aBlue'
+      - '§aShark Tooth§7, §aBroken Radar§7, §aBronze Bowl§7, §aBusted Belt'
+      - "§aBuckle§7, §aCan of Worms§7, §aChum§7, §aClay Ball§7, §aEmperor's Skull§7,"
+      - '§aGlowing Mushroom§7, §aHalf-Eaten Mushroom§7, §aInk Sac§7, §aLily'
+      - '§aPad§7, §aNurse Shark Tooth§7, §aOld Leather Boot§7, §aPrismarine'
+      - '§aCrystals§7, §aPrismarine Shard§7, §aPufferfish§7, §aRaw Cod§7, §aRaw'
+      - '§aSalmon§7, §aRusty Coin§7, §aShark Fin§7, §aSponge§7, §aTiger Shark'
+      - '§aTooth§7, §aTorn Cloth§7, §aTropical Fish§7, §aWorm Membrane'
+      - ''
+      - '§7Capacity: §e2,240 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: c4fbc77d27dab10de5abf9d0bcc47198f923b0e6c179a3c3983e77f12f7c033e
+      - id: SACK
+        valid_items:
+          - AGARIMOO_TONGUE
+          - ALLIGATOR_SKIN
+          - BLUE_RING
+          - BLUE_SHARK_TOOTH
+          - BROKEN_RADAR
+          - BRONZE_BOWL
+          - BUSTED_BELT_BUCKLE
+          - CAN_OF_WORMS
+          - CHUM
+          - CLAY_BALL
+          - EMPERORS_SKULL
+          - GLOWING_MUSHROOM
+          - HALF_EATEN_MUSHROOM
+          - INK_SAC
+          - LILY_PAD
+          - NURSE_SHARK_TOOTH
+          - OLD_LEATHER_BOOT
+          - PRISMARINE_CRYSTALS
+          - PRISMARINE_SHARD
+          - PUFFERFISH
+          - RAW_FISH
+          - RAW_SALMON
+          - RUSTY_COIN
+          - SHARK_FIN
+          - SPONGE
+          - TIGER_SHARK_TOOTH
+          - TORN_CLOTH
+          - TROPICAL_FISH
+          - WORM_MEMBRANE
+        max_capacity: 2240
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_PUFFERFISH
+                amount: 2
+              B:
+                type: ENCHANTED_LEATHER
+                amount: 1
+            result:
+              type: SMALL_FISHING_SACK
+              amount: 1
+
+  - id: MEDIUM_FISHING_SACK
+    rarity: RARE
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7Items: §aAgarimoo Tongue§7, §aAlligator Skin§7, §aBlue Ring§7, §aBlue'
+      - '§aShark Tooth§7, §aBroken Radar§7, §aBronze Bowl§7, §aBusted Belt'
+      - "§aBuckle§7, §aCan of Worms§7, §aChum§7, §aClay Ball§7, §aEmperor's Skull§7,"
+      - '§aGlowing Mushroom§7, §aHalf-Eaten Mushroom§7, §aInk Sac§7, §aLily'
+      - '§aPad§7, §aNurse Shark Tooth§7, §aOld Leather Boot§7, §aPrismarine'
+      - '§aCrystals§7, §aPrismarine Shard§7, §aPufferfish§7, §aRaw Cod§7, §aRaw'
+      - '§aSalmon§7, §aRusty Coin§7, §aShark Fin§7, §aSponge§7, §aTiger Shark'
+      - '§aTooth§7, §aTorn Cloth§7, §aTropical Fish§7, §aWorm Membrane'
+      - ''
+      - '§7Capacity: §e6,720 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: ff75871c90b94f4fbc167e351d36e8aeae1cc2fec03b16629007f74c989de648
+      - id: SACK
+        valid_items:
+          - AGARIMOO_TONGUE
+          - ALLIGATOR_SKIN
+          - BLUE_RING
+          - BLUE_SHARK_TOOTH
+          - BROKEN_RADAR
+          - BRONZE_BOWL
+          - BUSTED_BELT_BUCKLE
+          - CAN_OF_WORMS
+          - CHUM
+          - CLAY_BALL
+          - EMPERORS_SKULL
+          - GLOWING_MUSHROOM
+          - HALF_EATEN_MUSHROOM
+          - INK_SAC
+          - LILY_PAD
+          - NURSE_SHARK_TOOTH
+          - OLD_LEATHER_BOOT
+          - PRISMARINE_CRYSTALS
+          - PRISMARINE_SHARD
+          - PUFFERFISH
+          - RAW_FISH
+          - RAW_SALMON
+          - RUSTY_COIN
+          - SHARK_FIN
+          - SPONGE
+          - TIGER_SHARK_TOOTH
+          - TORN_CLOTH
+          - TROPICAL_FISH
+          - WORM_MEMBRANE
+        max_capacity: 6720
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_PUFFERFISH
+                amount: 4
+              B:
+                type: SMALL_FISHING_SACK
+                amount: 1
+            result:
+              type: MEDIUM_FISHING_SACK
+              amount: 1
+
+  - id: LARGE_FISHING_SACK
+    rarity: EPIC
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7Items: §aAgarimoo Tongue§7, §aAlligator Skin§7, §aBlue Ring§7, §aBlue'
+      - '§aShark Tooth§7, §aBroken Radar§7, §aBronze Bowl§7, §aBusted Belt'
+      - "§aBuckle§7, §aCan of Worms§7, §aChum§7, §aClay Ball§7, §aEmperor's Skull§7,"
+      - '§aGlowing Mushroom§7, §aHalf-Eaten Mushroom§7, §aInk Sac§7, §aLily'
+      - '§aPad§7, §aNurse Shark Tooth§7, §aOld Leather Boot§7, §aPrismarine'
+      - '§aCrystals§7, §aPrismarine Shard§7, §aPufferfish§7, §aRaw Cod§7, §aRaw'
+      - '§aSalmon§7, §aRusty Coin§7, §aShark Fin§7, §aSponge§7, §aTiger Shark'
+      - '§aTooth§7, §aTorn Cloth§7, §aTropical Fish§7, §aWorm Membrane'
+      - ''
+      - '§7Capacity: §e20,160 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: f8f68669351a6fc7156ecfe3300ba94efe0766e24bed8785cf64a9f95435134b
+      - id: SACK
+        valid_items:
+          - AGARIMOO_TONGUE
+          - ALLIGATOR_SKIN
+          - BLUE_RING
+          - BLUE_SHARK_TOOTH
+          - BROKEN_RADAR
+          - BRONZE_BOWL
+          - BUSTED_BELT_BUCKLE
+          - CAN_OF_WORMS
+          - CHUM
+          - CLAY_BALL
+          - EMPERORS_SKULL
+          - GLOWING_MUSHROOM
+          - HALF_EATEN_MUSHROOM
+          - INK_SAC
+          - LILY_PAD
+          - NURSE_SHARK_TOOTH
+          - OLD_LEATHER_BOOT
+          - PRISMARINE_CRYSTALS
+          - PRISMARINE_SHARD
+          - PUFFERFISH
+          - RAW_FISH
+          - RAW_SALMON
+          - RUSTY_COIN
+          - SHARK_FIN
+          - SPONGE
+          - TIGER_SHARK_TOOTH
+          - TORN_CLOTH
+          - TROPICAL_FISH
+          - WORM_MEMBRANE
+        max_capacity: 20160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_PUFFERFISH
+                amount: 8
+              B:
+                type: MEDIUM_FISHING_SACK
+                amount: 1
+            result:
+              type: LARGE_FISHING_SACK
+              amount: 1
+
+  - id: LARGE_ENCHANTED_FISHING_SACK
+    rarity: EPIC
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7This sack can contain all enchanted versions'
+      - '§7of these materials:'
+      - '§aClay Ball§7, §aCooked Fish§7, §aCooked Salmon§7, §aInk Sac§7,'
+      - '§aLily Pad§7, §aPrismarine Crystals§7, §aPrismarine'
+      - '§aShard§7, §aPufferfish§7, §aRaw Cod§7, §aRaw Salmon§7, §aShark'
+      - '§aFin§7, §aSponge§7, §aTropical Fish§7, §aWet Sponge'
+      - ''
+      - '§7Capacity: §e20,160 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: ee2469de7f75d2e0a8b3b0c734a2b470782b604d1feb0172b4a72a77cb5bbda2
+      - id: SACK
+        valid_items:
+          - ENCHANTED_CLAY_BALL
+          - ENCHANTED_CLAY_BLOCK
+          - ENCHANTED_COOKED_FISH
+          - ENCHANTED_COOKED_SALMON
+          - ENCHANTED_INK_SAC
+          - ENCHANTED_LILY_PAD
+          - ENCHANTED_PRISMARINE_CRYSTALS
+          - ENCHANTED_PRISMARINE_SHARD
+          - ENCHANTED_PUFFERFISH
+          - ENCHANTED_RAW_FISH
+          - ENCHANTED_RAW_SALMON
+          - ENCHANTED_SHARK_FIN
+          - ENCHANTED_SPONGE
+          - ENCHANTED_TROPICAL_FISH
+          - ENCHANTED_WET_SPONGE
+        max_capacity: 20160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - ABA
+              - ACA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_PUFFERFISH
+                amount: 16
+              B:
+                type: ENCHANTED_STRING
+                amount: 16
+              C:
+                type: ENCHANTED_LEATHER
+                amount: 12
+            result:
+              type: LARGE_ENCHANTED_FISHING_SACK
+              amount: 1

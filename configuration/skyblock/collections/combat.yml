@@ -491,6 +491,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: SMALL_COMBAT_SACK
   - amount: 5000
     rewards:
     - type: XP
@@ -504,6 +507,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MEDIUM_COMBAT_SACK
   - amount: 25000
     rewards:
     - type: XP
@@ -514,11 +520,17 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: LARGE_COMBAT_SACK
   - amount: 100000
     rewards:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: LARGE_ENCHANTED_COMBAT_SACK
 - itemType: SLIME_BALL
   rewards:
   - amount: 50

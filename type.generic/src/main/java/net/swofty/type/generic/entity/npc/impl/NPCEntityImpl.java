@@ -39,6 +39,7 @@ public class NPCEntityImpl extends Entity {
         }
 
         setNoGravity(true);
+        setAutoViewable(false);
     }
 
     @Override

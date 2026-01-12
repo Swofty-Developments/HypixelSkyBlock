@@ -26,8 +26,7 @@ public class ShoutCommand extends HypixelCommand {
 			if (!permissionCheck(sender)) return;
 
 			BedWarsPlayer player = (BedWarsPlayer) sender;
-			Game game = TypeBedWarsGameLoader.getPlayerGame(player);
-
+			Game game = player.getGame();
 			if (game == null) {
 				player.sendMessage("§cYou are not in a game.");
 				return;

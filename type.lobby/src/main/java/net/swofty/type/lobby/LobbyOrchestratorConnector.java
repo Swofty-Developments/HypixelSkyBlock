@@ -12,10 +12,13 @@ import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
 
+import org.tinylog.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public record LobbyOrchestratorConnector(HypixelPlayer player) {
     private static final ProxyService PROXY_SERVICE = new ProxyService(ServiceType.ORCHESTRATOR);
@@ -104,30 +107,37 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
                 UnderstandableProxyServer server = pair.first();
                 String gameId = pair.second();
 
-                // Register all party members for this game
                 List<UUID> partyMemberUuids = party.getMembers().stream()
                         .map(FullParty.Member::getUuid)
                         .toList();
 
-                int registeredCount = 0;
+                List<CompletableFuture<Void>> registrationFutures = new ArrayList<>();
                 for (UUID memberUuid : partyMemberUuids) {
                     ChooseGameProtocolObject.ChooseGameMessage message =
                             new ChooseGameProtocolObject.ChooseGameMessage(memberUuid, server, gameId);
 
-                    PROXY_SERVICE.handleRequest(message)
-                            .exceptionally(throwable -> {
-                                // Log error but continue
-                                return null;
-                            });
-                    registeredCount++;
+                    registrationFutures.add(
+                            PROXY_SERVICE.handleRequest(message)
+                                    .thenAccept(response -> {})
+                                    .exceptionally(throwable -> {
+                                        Logger.error("Failed to register party member " + memberUuid + " for game: " + throwable.getMessage());
+                                        return null;
+                                    })
+                    );
+                }
+
+                try {
+                    CompletableFuture.allOf(registrationFutures.toArray(new CompletableFuture[0]))
+                            .orTimeout(3, TimeUnit.SECONDS)
+                            .join();
+                } catch (Exception e) {
+                    Logger.warn("Some party member registrations timed out, proceeding with transfer anyway");
                 }
 
                 player.sendMessage("§aSending your party to " + server.shortName() + "!");
 
-                // Transfer leader first
                 player.asProxyPlayer().transferToWithIndication(server.uuid());
 
-                // Transfer all other party members
                 for (UUID memberUuid : partyMemberUuids) {
                     if (!memberUuid.equals(player.getUuid())) {
                         ProxyPlayer memberProxy = new ProxyPlayer(memberUuid);
