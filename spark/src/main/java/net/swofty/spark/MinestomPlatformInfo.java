@@ -16,6 +16,11 @@ public final class MinestomPlatformInfo implements PlatformInfo {
         return "Minestom";
     }
 
+    @Override
+    public String getBrand() {
+        return "Hypixel";
+    }
+
     public String getVersion() {
         return getMinecraftVersion() + "-" + MinecraftServer.getBrandName();
     }
