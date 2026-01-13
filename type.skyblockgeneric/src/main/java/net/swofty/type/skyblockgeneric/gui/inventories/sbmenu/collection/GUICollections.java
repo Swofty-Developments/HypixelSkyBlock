@@ -74,11 +74,11 @@ public class GUICollections extends StatelessView {
 
                 return ItemStackCreator.getStack("§a" + category.getName() + " Collections",
                         category.getDisplayIcon(), 1, lore);
-            }, (click, c) -> {
+            }, (_, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
                 ArrayList<String> display = new ArrayList<>();
                 player.getCollection().getDisplay(display, category);
-                //new GUICollectionCategory(category, display).open(player);
+
                 player.openView(new GUICollectionCategory(category, display));
             });
         }

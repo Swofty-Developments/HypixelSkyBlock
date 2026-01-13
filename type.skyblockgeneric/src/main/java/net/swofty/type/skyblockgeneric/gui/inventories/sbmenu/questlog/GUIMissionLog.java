@@ -64,8 +64,8 @@ public class GUIMissionLog extends StatelessView {
                     "§7Forever ongoing quest...",
                     "",
                     "§eClick to view details!");
-        }, (click, c) -> {
-            //new GUIFairySoulsGuide().open((SkyBlockPlayer) c.player())
+        }, (_, c) -> {
+            c.push(new GUIFairySoulsGuide());
         });
 
         // Toggle completed/ongoing
@@ -87,7 +87,7 @@ public class GUIMissionLog extends StatelessView {
                         "§7Completed: §a" + player.getMissionData().getCompletedMissions().size(),
                         "§7 ",
                         "§eClick to view!");
-            }, (click, c) -> c.replace(new GUIMissionLog(true)));
+            }, (_, c) -> c.replace(new GUIMissionLog(true)));
         }
 
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
