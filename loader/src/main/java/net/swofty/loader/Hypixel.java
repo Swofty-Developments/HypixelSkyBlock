@@ -23,6 +23,7 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.spark.Spark;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
@@ -33,7 +34,7 @@ import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
-import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -157,7 +158,7 @@ public class Hypixel {
          * Start spark if enabled
          */
         if (ENABLE_SPARK) {
-            // Spark.enable(Files.createTempDirectory("spark"));
+            Spark.enable(Files.createTempDirectory("spark"));
         }
 
         /**
