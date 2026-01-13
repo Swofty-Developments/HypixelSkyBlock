@@ -1,0 +1,264 @@
+items:
+  - id: SMALL_AGRONOMY_SACK
+    rarity: UNCOMMON
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7§7Items: §aBrown Mushroom§7, §aCactus§7, §aCactus Green§7, §aCarrot§7,'
+      - "§7§aCocoa Beans§7, §aGolden Carrot§7, §aHay Bale§7, §aJack o' Lantern§7,"
+      - '§7§aMelon Slice§7, §aMoonflower§7, §aNether Wart§7, §aPoisonous Potato§7,'
+      - '§7§aPotato§7, §aPumpkin§7, §aRed Mushroom§7, §aSeeds§7, §aSugar Cane§7,'
+      - '§7§aSunflower§7, §aWheat§7, §aWild Rose'
+      - ''
+      - '§7Capacity: §e2,240 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 2ab879e1e590041146bc78c018af5877d39e5475eb7db368fcaf2acda373833d
+      - id: SACK
+        valid_items:
+          - BROWN_MUSHROOM
+          - CACTUS
+          - CACTUS_GREEN
+          - CARROT
+          - COCOA_BEANS
+          - GOLDEN_CARROT
+          - HAY_BALE
+          - JACK_O_LANTERN
+          - MELON_SLICE
+          - MOONFLOWER
+          - NETHER_WART
+          - POISONOUS_POTATO
+          - POTATO
+          - PUMPKIN
+          - RED_MUSHROOM
+          - SEEDS
+          - SUGAR_CANE
+          - SUNFLOWER
+          - WHEAT
+          - WILD_ROSE
+        max_capacity: 2240
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_WHEAT
+                amount: 16
+              B:
+                type: ENCHANTED_LEATHER
+                amount: 1
+            result:
+              type: SMALL_AGRONOMY_SACK
+              amount: 1
+
+  - id: MEDIUM_AGRONOMY_SACK
+    rarity: RARE
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7§7Items: §aBrown Mushroom§7, §aCactus§7, §aCactus Green§7, §aCarrot§7,'
+      - "§7§aCocoa Beans§7, §aGolden Carrot§7, §aHay Bale§7, §aJack o' Lantern§7,"
+      - '§7§aMelon Slice§7, §aMoonflower§7, §aNether Wart§7, §aPoisonous Potato§7,'
+      - '§7§aPotato§7, §aPumpkin§7, §aRed Mushroom§7, §aSeeds§7, §aSugar Cane§7,'
+      - '§7§aSunflower§7, §aWheat§7, §aWild Rose'
+      - ''
+      - '§7Capacity: §e6,720 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 294c8341a535f80b3f43c5c243d03006bd325c9e96ff3ab957ccc37062830ac6
+      - id: SACK
+        valid_items:
+          - BROWN_MUSHROOM
+          - CACTUS
+          - CACTUS_GREEN
+          - CARROT
+          - COCOA_BEANS
+          - GOLDEN_CARROT
+          - HAY_BALE
+          - JACK_O_LANTERN
+          - MELON_SLICE
+          - MOONFLOWER
+          - NETHER_WART
+          - POISONOUS_POTATO
+          - POTATO
+          - PUMPKIN
+          - RED_MUSHROOM
+          - SEEDS
+          - SUGAR_CANE
+          - SUNFLOWER
+          - WHEAT
+          - WILD_ROSE
+        max_capacity: 6720
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_WHEAT
+                amount: 32
+              B:
+                type: SMALL_AGRONOMY_SACK
+                amount: 1
+            result:
+              type: MEDIUM_AGRONOMY_SACK
+              amount: 1
+
+  - id: LARGE_AGRONOMY_SACK
+    rarity: EPIC
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7§7Items: §aBrown Mushroom§7, §aCactus§7, §aCactus Green§7, §aCarrot§7,'
+      - "§7§aCocoa Beans§7, §aGolden Carrot§7, §aHay Bale§7, §aJack o' Lantern§7,"
+      - '§7§aMelon Slice§7, §aMoonflower§7, §aNether Wart§7, §aPoisonous Potato§7,'
+      - '§7§aPotato§7, §aPumpkin§7, §aRed Mushroom§7, §aSeeds§7, §aSugar Cane§7,'
+      - '§7§aSunflower§7, §aWheat§7, §aWild Rose'
+      - ''
+      - '§7Capacity: §e20,160 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: ef835b8941fe319931749b87fe8e84c5d1f4a271b5fbce5e700a60004d881f79
+      - id: SACK
+        valid_items:
+          - BROWN_MUSHROOM
+          - CACTUS
+          - CACTUS_GREEN
+          - CARROT
+          - COCOA_BEANS
+          - GOLDEN_CARROT
+          - HAY_BALE
+          - JACK_O_LANTERN
+          - MELON_SLICE
+          - MOONFLOWER
+          - NETHER_WART
+          - POISONOUS_POTATO
+          - POTATO
+          - PUMPKIN
+          - RED_MUSHROOM
+          - SEEDS
+          - SUGAR_CANE
+          - SUNFLOWER
+          - WHEAT
+          - WILD_ROSE
+        max_capacity: 20160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_WHEAT
+                amount: 64
+              B:
+                type: MEDIUM_AGRONOMY_SACK
+                amount: 1
+            result:
+              type: LARGE_AGRONOMY_SACK
+              amount: 1
+
+  - id: LARGE_ENCHANTED_AGRONOMY_SACK
+    rarity: EPIC
+    lore:
+      - '§7Item pickups go directly into your'
+      - '§7sacks.'
+      - ''
+      - '§7This sack can contain all enchanted versions'
+      - '§7of these materials:'
+      - '§7§aBrown Mushroom§7, §aCactus§7, §aCarrot§7, §aCocoa Beans§7,'
+      - '§7§aMelon Slice§7, §aMoonflower§7, §aNether Wart§7, §aPotato§7,'
+      - '§7§aPumpkin§7, §aRed Mushroom§7, §aSeeds§7, §aSugar Cane§7,'
+      - '§7§aWheat'
+      - ''
+      - '§7Capacity: §e20,160 per item'
+      - '§8Sacks sum their capacity.'
+      - ''
+      - '§eRight Click to open sack!'
+    components:
+      - id: SKULL_HEAD
+        texture: 184d2ff1e177357574f9f71e19397fff3a210a94e78c0d2a4360cc5df1eb807b
+      - id: SACK
+        valid_items:
+          - BOX_OF_SEEDS
+          - COMPACTED_MOONFLOWER
+          - COMPACTED_SUNFLOWER
+          - COMPACTED_WILD_ROSE
+          - ENCHANTED_BAKED_POTATO
+          - ENCHANTED_BREAD
+          - ENCHANTED_BROWN_MUSHROOM
+          - ENCHANTED_BROWN_MUSHROOM_BLOCK
+          - ENCHANTED_CACTUS
+          - ENCHANTED_CACTUS_GREEN
+          - ENCHANTED_CARROT
+          - ENCHANTED_COCOA_BEANS
+          - ENCHANTED_COOKIE
+          - ENCHANTED_GOLDEN_CARROT
+          - ENCHANTED_HAY_BALE
+          - ENCHANTED_MELON_BLOCK
+          - ENCHANTED_MELON
+          - ENCHANTED_MOONFLOWER
+          - ENCHANTED_NETHER_WART
+          - ENCHANTED_POISONOUS_POTATO
+          - ENCHANTED_POTATO
+          - ENCHANTED_PUMPKIN
+          - ENCHANTED_RED_MUSHROOM
+          - ENCHANTED_RED_MUSHROOM_BLOCK
+          - ENCHANTED_SEEDS
+          - ENCHANTED_SUGAR
+          - ENCHANTED_SUGAR_CANE
+          - ENCHANTED_SUNFLOWER
+          - ENCHANTED_WHEAT
+          - ENCHANTED_WILD_ROSE
+          - MUTANT_NETHER_WART
+          - POLISHED_PUMPKIN
+        max_capacity: 20160
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - ABA
+              - ACA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_HAY_BALE
+                amount: 3
+              B:
+                type: ENCHANTED_STRING
+                amount: 16
+              C:
+                type: ENCHANTED_LEATHER
+                amount: 12
+            result:
+              type: LARGE_ENCHANTED_AGRONOMY_SACK
+              amount: 1

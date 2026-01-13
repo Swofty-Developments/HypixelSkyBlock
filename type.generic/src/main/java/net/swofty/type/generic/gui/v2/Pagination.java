@@ -10,8 +10,13 @@ import java.util.function.BiFunction;
 public final class Pagination {
 
     public record Page<T>(List<T> items, int current, int total) {
-        public boolean hasNext() { return current < total - 1; }
-        public boolean hasPrev() { return current > 0; }
+        public boolean hasNext() {
+            return current < total - 1;
+        }
+
+        public boolean hasPrev() {
+            return current > 0;
+        }
     }
 
     public static <T> Page<T> paginate(List<T> all, int page, int perPage) {
@@ -23,11 +28,11 @@ public final class Pagination {
     }
 
     public static <S, T> void items(
-        ViewLayout<S> layout,
-        List<Integer> slots,
-        List<T> items,
-        BiFunction<T, Integer, ItemStack.Builder> renderer,
-        ClickHandler<S, T> onClick
+            ViewLayout<S> layout,
+            List<Integer> slots,
+            List<T> items,
+            BiFunction<T, Integer, ItemStack.Builder> renderer,
+            ClickHandler<S, T> onClick
     ) {
         for (int i = 0; i < slots.size(); i++) {
             int slot = slots.get(i);
@@ -35,7 +40,7 @@ public final class Pagination {
                 T item = items.get(i);
                 int index = i;
                 layout.slot(slot, (_, _) -> renderer.apply(item, index),
-                    (click, ctx) -> onClick.handle(click, ctx, item, index));
+                        (click, ctx) -> onClick.handle(click, ctx, item, index));
             } else {
                 layout.slot(slot, (_, _) -> ItemStack.AIR.builder());
             }

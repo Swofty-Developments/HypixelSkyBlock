@@ -59,7 +59,7 @@ public final class Game {
 	private final GameCountdown countdown;
 	private final GameEventManager eventManager;
 
-	private final Map<String, Map<Integer, ItemStack>> chests = new HashMap<>();
+	private final Map<TeamKey, Map<Integer, ItemStack>> chests = new HashMap<>();
 	private final Map<Player, Map<Integer, ItemStack>> enderchests = new HashMap<>();
 
 	// Track players who disconnected during an active game for rejoin
@@ -118,8 +118,8 @@ public final class Game {
 		}
 	}
 
-	public void leave(HypixelPlayer player) {
-		String teamName = player.getTag(Tag.String("team"));
+	public void leave(BedWarsPlayer player) {
+		TeamKey teamName = player.getTeamKey();
 		players.remove(player);
 
 		player.removeTag(Tag.String("gameId"));
@@ -143,9 +143,7 @@ public final class Game {
 			return;
 		}
 
-		String teamName = player.getTag(Tag.String("team"));
-		TeamKey teamKey = teamManager.getTeamKeyByName(teamName);
-
+		TeamKey teamKey = player.getTeamKey();
 		boolean bedAlive = teamKey != null && teamManager.isBedAlive(teamKey);
 
 		// Get current upgrade levels
@@ -175,7 +173,7 @@ public final class Game {
 		);
 
 		Logger.info("Player {} disconnected from game {} (team: {}, bed alive: {})",
-				player.getUsername(), gameId, teamName, bedAlive);
+				player.getUsername(), gameId, teamKey, bedAlive);
 
 		// Clear player tags and send to lobby
 		player.removeTag(Tag.String("gameId"));
@@ -234,11 +232,8 @@ public final class Game {
 
 		Logger.info("Player {} rejoined game {} (team: {})", player.getUsername(), gameId, info.getTeamKey().getName());
 
-		// Check if bed is currently destroyed (may have been destroyed while disconnected)
-		boolean bedCurrentlyAlive = teamManager.isBedAlive(info.getTeamKey());
-
-		if (info.shouldRejoinAsSpectator() || !bedCurrentlyAlive) {
-			// Rejoin as spectator - bed was broken when they left or is now broken
+		// check if bed is alive, if not, set up as spectator
+		if (!teamManager.isBedAlive(info.getTeamKey())) {
 			setupAsSpectator(player);
 		} else {
 			// Normal rejoin with respawn timer
@@ -419,9 +414,9 @@ public final class Game {
 		checkForWinCondition();
 	}
 
-	public void playerEliminated(Player player) {
+	public void playerEliminated(BedWarsPlayer player) {
 		player.setTag(ELIMINATED_TAG, true);
-		String teamName = player.getTag(Tag.String("team"));
+		TeamKey teamName = player.getTeamKey();
 		Logger.info("Player {} from team {} eliminated", player.getUsername(), teamName != null ? teamName : "N/A");
 		checkForWinCondition();
 	}
@@ -430,7 +425,7 @@ public final class Game {
 		if (gameStatus != GameStatus.IN_PROGRESS) return;
 
 		List<TeamKey> viableTeams = mapEntry.getConfiguration().getTeams().keySet().stream()
-				.filter(teamKey -> hasPlayersOnTeam(teamKey) && isTeamViable(teamKey))
+				.filter(this::isTeamViable)
 				.toList();
 
 		if (viableTeams.size() <= 1) {
@@ -439,24 +434,15 @@ public final class Game {
 		}
 	}
 
-	private boolean hasPlayersOnTeam(TeamKey teamKey) {
-		// Check active players
-		boolean hasActivePlayers = players.stream().anyMatch(p -> teamKey.getName().equals(p.getTag(Tag.String("team"))));
-		if (hasActivePlayers) return true;
-
-		// Check disconnected players who can still rejoin (bed was alive when they left)
-		return disconnectedPlayers.values().stream()
-				.anyMatch(info -> info.getTeamKey() == teamKey && info.isBedWasAliveOnDisconnect());
-	}
-
 	private boolean isTeamViable(TeamKey teamKey) {
 		// A team is viable if:
 		// 1. Bed is alive, OR
 		// 2. Has active (non-eliminated) players online, OR
-		// 3. Has disconnected players who can still rejoin (bed was alive when they left)
+		// 3. Has disconnected players who can still rejoin
+		// 4. Has not been vibecoded by Swofty
 		boolean hasActivePlayers = teamManager.countActivePlayersOnTeam(teamKey) > 0;
 		boolean hasRejoinablePlayers = disconnectedPlayers.values().stream()
-				.anyMatch(info -> info.getTeamKey() == teamKey && info.isBedWasAliveOnDisconnect());
+				.anyMatch(info -> info.getTeamKey() == teamKey && teamManager.isBedAlive(info.getTeamKey()));
 
 		return teamManager.isBedAlive(teamKey) || hasActivePlayers || hasRejoinablePlayers;
 	}

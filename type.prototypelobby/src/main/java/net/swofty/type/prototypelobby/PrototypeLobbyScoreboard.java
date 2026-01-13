@@ -41,33 +41,33 @@ public class PrototypeLobbyScoreboard {
                     continue;
                 }
 
-                if (sidebarCache.containsKey(player.getUuid())) {
-                    sidebarCache.get(player.getUuid()).removeViewer(player);
+
+                Sidebar sidebar = sidebarCache.get(player.getUuid());
+                
+                if (sidebar == null) {
+                    sidebar = new Sidebar(Component.text(getSidebarName(prototypeName)));
+                    
+                    addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
+                    addLine("§7 ", sidebar);
+                    addLine("§fGames in this lobby are", sidebar);
+                    addLine("§funder heavy development!", sidebar);
+                    addLine("§7 ", sidebar);
+                    addLine("§fReport bugs and leave", sidebar);
+                    addLine("§ffeedback at", sidebar);
+                    addLine("§ehypixel.net/ptl", sidebar);
+                    addLine("§7 ", sidebar);
+                    addLine("§fHype: §b" +
+                            prototypeDataHandler.get(PrototypeLobbyDataHandler.Data.HYPE, DatapointLeaderboardLong.class).getValue()
+                            + "§7/200", sidebar);
+                    addLine("§7 ", sidebar);
+                    addLine("§ewww.hypixel.net", sidebar);
+                    
+                    sidebar.addViewer(player);
+                    sidebarCache.put(player.getUuid(), sidebar);
                 }
 
-                Sidebar sidebar = new Sidebar(Component.text(getSidebarName(prototypeName)));
-
-                addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
-                addLine("§7 ", sidebar);
-                addLine("§fGames in this lobby are", sidebar);
-                addLine("§funder heavy development!", sidebar);
-                addLine("§7 ", sidebar);
-                addLine("§fReport bugs and leave", sidebar);
-                addLine("§ffeedback at", sidebar);
-                addLine("§ehypixel.net/ptl", sidebar);
-                addLine("§7 ", sidebar);
-                addLine("§fHype: §b" +
-                        prototypeDataHandler.get(PrototypeLobbyDataHandler.Data.HYPE, DatapointLeaderboardLong.class).getValue()
-                        + "§7/200", sidebar);
-                addLine("§7 ", sidebar);
-
-                addLine("§ewww.hypixel.net", sidebar);
-
-                sidebar.addViewer(player);
-
-                sidebarCache.put(player.getUuid(), sidebar);
             }
-            return TaskSchedule.tick(2);
+            return TaskSchedule.tick(100);
         });
     }
 
@@ -76,11 +76,9 @@ public class PrototypeLobbyScoreboard {
     }
 
     private static void addLine(String text, Sidebar sidebar) {
-        for (Sidebar.ScoreboardLine existingLine : sidebar.getLines()) {
-            sidebar.updateLineScore(existingLine.getId(), existingLine.getLine() + 1);
-        }
 
-        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
+        int score = sidebar.getLines().size();
+        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), score));
     }
 
     private static String getSidebarName(int counter) {

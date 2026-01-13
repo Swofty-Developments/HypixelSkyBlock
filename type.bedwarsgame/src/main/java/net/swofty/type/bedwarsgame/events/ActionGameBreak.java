@@ -30,19 +30,14 @@ public class ActionGameBreak implements HypixelEventClass {
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		Block blockBeingBroken = event.getBlock();
 
-		if (!player.hasTag(Tag.String("gameId"))) {
-			event.setCancelled(true);
-			return;
-		}
-		String gameId = player.getTag(Tag.String("gameId"));
-		Game game = TypeBedWarsGameLoader.getGameById(gameId);
+		Game game = player.getGame();
 		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
 			event.setCancelled(true);
 			return;
 		}
 
 		boolean isTeamBedPart = false;
-		String playerTeamName = player.getTag(Tag.String("team"));
+		TeamKey playerTeamKey = player.getTeamKey();
 		Point brokenBlockPosition = event.getBlockPosition();
 
 		// Check if it's a part of any team's bed first
@@ -57,7 +52,7 @@ public class ActionGameBreak implements HypixelEventClass {
 
 			if (brokenBlockPosition.sameBlock(feetPoint) || brokenBlockPosition.sameBlock(headPoint)) {
 				// This is team X's bed
-				if (teamKey.getName().equalsIgnoreCase(playerTeamName)) {
+				if (teamKey.equals(playerTeamKey)) {
 					player.getAchievementHandler().completeAchievement("bedwars.you_cant_do_that");
 					player.sendMessage("§cYou cannot break your own team's bed!");
 					event.setCancelled(true);

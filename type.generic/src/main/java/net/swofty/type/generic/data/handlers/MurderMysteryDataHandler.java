@@ -1,16 +1,15 @@
 package net.swofty.type.generic.data.handlers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.GameDataHandler;
-import net.swofty.commons.murdermystery.MurderMysteryModeStats;
 import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
+import tools.jackson.core.JacksonException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -120,7 +119,7 @@ public class MurderMysteryDataHandler extends DataHandler implements GameDataHan
         for (Data data : Data.values()) {
             try {
                 document.put(data.getKey(), getDatapoint(data.getKey()).getSerializedValue());
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 e.printStackTrace();
             }
         }
@@ -132,7 +131,6 @@ public class MurderMysteryDataHandler extends DataHandler implements GameDataHan
         return dp != null ? dp : datapoint.defaultDatapoint;
     }
 
-    @SuppressWarnings("unchecked")
     public <R extends Datapoint<?>> R get(Data datapoint, Class<R> type) {
         Datapoint<?> dp = this.datapoints.get(datapoint.key);
         return (R) (dp != null ? type.cast(dp) : type.cast(datapoint.defaultDatapoint));

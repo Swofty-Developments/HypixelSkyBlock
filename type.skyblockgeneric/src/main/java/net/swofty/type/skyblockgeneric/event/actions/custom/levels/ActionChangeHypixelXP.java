@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.event.actions.custom.levels;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.skyblockgeneric.event.actions.player.ActionAddSkyBlockXPToNametag;
 import net.swofty.type.skyblockgeneric.event.custom.SkyBlockXPModificationEvent;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
@@ -26,6 +27,7 @@ public class ActionChangeHypixelXP implements HypixelEventClass {
             if (event.getCause().shouldDisplayMessage(player))
                 player.sendMessage("§b+§3" + (event.getNewXP() - event.getOldXP()) + " §bSkyBlock XP");
         } else {
+            ActionAddSkyBlockXPToNametag.updatePlayerNametag(player);
             if (!(event.getCause() instanceof LevelCause)) {
                 player.getSkyBlockExperience().addExperience(
                         SkyBlockLevelCause.getLevelCause(newLevel.asInt())

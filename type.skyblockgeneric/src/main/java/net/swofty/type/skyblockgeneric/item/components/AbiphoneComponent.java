@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.item.components;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.skyblockgeneric.gui.inventories.abiphone.AbiphoneView;
 import net.swofty.type.skyblockgeneric.gui.inventories.abiphone.GUIAbiphone;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 
@@ -37,7 +38,7 @@ public class AbiphoneComponent extends SkyBlockItemComponent {
 		addInheritedComponent(new LoreUpdateComponent(lore, false));
 		addInheritedComponent(new InteractableComponent(
 				(player, item) -> {
-					new GUIAbiphone(item).open(player);
+					player.openView(new AbiphoneView(), new AbiphoneView.State(item));
 				},
 				null,
 				null

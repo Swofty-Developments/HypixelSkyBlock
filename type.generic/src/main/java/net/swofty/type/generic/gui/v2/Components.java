@@ -1,16 +1,15 @@
 package net.swofty.type.generic.gui.v2;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.TooltipDisplay;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -21,6 +20,7 @@ public final class Components {
             .set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of()));
     public static final ItemStack.Builder CLOSE_BUTTON = ItemStack.builder(Material.BARRIER)
             .set(DataComponents.CUSTOM_NAME, Component.text("§cClose"));
+
     public static final ItemStack.Builder BACK_BUTTON = ItemStack.builder(Material.ARROW)
             .set(DataComponents.CUSTOM_NAME, Component.text("§aGo Back"));
 
@@ -32,13 +32,62 @@ public final class Components {
         layout.slot(slot, (s, c) -> CLOSE_BUTTON, (click, ctx) -> ctx.player().closeInventory());
     }
 
+    public static <S> boolean back(ViewLayout<S> layout, int slot, ViewContext context) {
+        ViewNavigator navigator = ViewNavigator.get(context.player());
+        if (!navigator.hasStack()) {
+            return false;
+        }
+        Optional<ViewNavigator.NavigationEntry<Object>> prev = context.navigator().peekPrevious();
+        Component prevTitle = prev
+                .map(entry -> entry.view().configuration().getTitleFunction().apply(entry.state(), context))
+                .orElse(Component.text("§r§7previous page"));
+        layout.slot(slot, (s, c) -> BACK_BUTTON.lore(
+                Component.text("§7To ").append(prevTitle)
+                        .color(NamedTextColor.GRAY).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+        ), (_, ctx) -> {
+            ViewNavigator.get(ctx.player()).pop();
+        });
+        return true;
+    }
+
+    public static <S> boolean back(ViewLayout<S> layout, int slot, ViewContext context, ItemStack.Builder customButton) {
+        ViewNavigator navigator = ViewNavigator.get(context.player());
+        if (!navigator.hasStack()) {
+            return false;
+        }
+        layout.slot(slot, (s, c) -> customButton, (click, ctx) -> {
+            ViewNavigator.get(ctx.player()).pop();
+        });
+        return true;
+    }
+
+    public static <S> void backAlways(ViewLayout<S> layout, int slot) {
+        layout.slot(slot, (s, c) -> BACK_BUTTON, (click, ctx) -> {
+            ViewNavigator navigator = ViewNavigator.get(ctx.player());
+            if (!navigator.pop()) {
+                ctx.player().closeInventory();
+            }
+        });
+    }
+
+    public static <S> void backOrClose(ViewLayout<S> layout, int slot, ViewContext context) {
+        ViewNavigator navigator = ViewNavigator.get(context.player());
+        if (navigator.hasStack()) {
+            layout.slot(slot, (s, c) -> BACK_BUTTON, (click, ctx) -> {
+                ViewNavigator.get(ctx.player()).pop();
+            });
+        } else {
+            layout.slot(slot, (s, c) -> CLOSE_BUTTON, (click, ctx) -> ctx.player().closeInventory());
+        }
+    }
+
     public static <S> void back(ViewLayout<S> layout, int slot, View<?> target, Object targetState) {
         layout.slot(slot, (s, c) -> BACK_BUTTON, (click, ctx) -> open(ctx, target, targetState));
     }
 
     @SuppressWarnings("unchecked")
     public static <T> void open(ViewContext ctx, View<T> view, Object state) {
-        ViewSession.open(view, ctx.player(), (T) state);
+        ViewNavigator.get(ctx.player()).push(view, (T) state);
     }
 
     public static <S> void editableSlot(ViewLayout<S> layout, int slot, Function<S, ItemStack> itemGetter, SlotChangeHandler<S> onChange) {

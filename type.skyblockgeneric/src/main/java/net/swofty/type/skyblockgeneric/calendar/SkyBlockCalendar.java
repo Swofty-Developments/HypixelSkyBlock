@@ -6,6 +6,7 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.skyblockgeneric.commands.MinionGenerationCommand;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -97,10 +98,10 @@ public final class SkyBlockCalendar {
     /**
      * A record to hold information about upcoming events.
      * @param timeUntilBegin <b>ticks</b> until the event begins
-     * @param duration <b>ticks</b> duration of the event
+     * @param duration duration of the event
      * @param year the year the event will occur
      */
-    public record EventInfo(long timeUntilBegin, long duration, int year) {}
+    public record EventInfo(long timeUntilBegin, Duration duration, int year) {}
 
     public static Map<EventInfo, CalendarEvent> getEventsWithDurationUntil(int amount) {
         Map<EventInfo, CalendarEvent> result = new LinkedHashMap<>();

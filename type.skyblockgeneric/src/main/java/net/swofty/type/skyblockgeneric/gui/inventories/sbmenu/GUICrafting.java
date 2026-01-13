@@ -3,9 +3,6 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.component.DataComponents;
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
@@ -13,207 +10,227 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.RefreshingGUI;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ClickContext;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class GUICrafting extends HypixelInventoryGUI implements RefreshingGUI {
+public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
     private static final ItemStack.Builder RECIPE_REQUIRED = ItemStackCreator.getStack("§cRecipe Required", Material.BARRIER, 1, "§7Add the items for a valid", "§7recipe in the crafting grid", "§7to the left!");
     private static final int[] CRAFT_SLOTS = new int[]{10, 11, 12, 19, 20, 21, 28, 29, 30};
     private static final int RESULT_SLOT = 23;
-    private int lastGridHash = 0;
-    private SkyBlockRecipe<?> lastParsedRecipe = null;
-
-    public GUICrafting() {
-        super("Craft Item", InventoryType.CHEST_6_ROW);
-    }
-
-    private int computeGridHash(Inventory inv) { // TODO: Account for metadata
-        int h = 1;
-        for (int slot : CRAFT_SLOTS) {
-            ItemStack it = inv.getItemStack(slot);
-            h = 31 * h + it.material().id();
-            h = 31 * h + it.amount();
-        }
-        return h;
-    }
-
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 13, 34);
-        border(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE));
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 0, 44);
-        set(GUIClickableItem.getCloseItem(49));
-
-        set(RESULT_SLOT, RECIPE_REQUIRED);
+    public ViewConfiguration<CraftingState> configuration() {
+        return new ViewConfiguration<>("Craft Item", InventoryType.CHEST_6_ROW);
     }
 
     @Override
-    public boolean allowHotkeying() {
-        return true;
+    public CraftingState initialState() {
+        return new CraftingState(0, null);
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        Arrays.stream(CRAFT_SLOTS).forEach(slot -> {
-            ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(slot)));
-        });
-    }
+    public void layout(ViewLayout<CraftingState> layout, CraftingState state, ViewContext ctx) {
+        SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
 
-    @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer p) {
-        SkyBlockPlayer player = (SkyBlockPlayer) p;
-        Arrays.stream(CRAFT_SLOTS).forEach(slot -> {
-            player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(slot)));
-        });
-    }
+        int currentHash = computeGridHash(ctx);
+        SkyBlockRecipe<?> recipe = (state.lastParsedRecipe() != null && state.lastGridHash() == currentHash)
+                ? state.lastParsedRecipe()
+                : parseCurrentRecipe(ctx);
 
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
-        if (clickedItem.isNA() || clickedItem.getMaterial().equals(Material.AIR)) return;
-    }
+        boolean hasValidRecipe = recipe != null;
+        SkyBlockRecipe.CraftingResult result = hasValidRecipe ? recipe.getCanCraft().apply(player) : null;
+        boolean canCraft = hasValidRecipe && result != null && result.allowed();
 
-    @Override
-    public void refreshItems(HypixelPlayer player) {
-        Inventory inventory = getInventory();
-        int gridHash = computeGridHash(inventory);
-        SkyBlockRecipe<?> recipe;
+        Material borderMaterial = canCraft ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE;
+        Components.fill(layout);
+        layout.slots(Layouts.row(5), (s, c) -> ItemStackCreator.createNamedItemStack(borderMaterial));
+        Components.close(layout, 49);
 
-        if (gridHash == lastGridHash) {
-            recipe = lastParsedRecipe;
-        } else {
-            lastGridHash = gridHash;
-            recipe = SkyBlockRecipe.parseRecipe(getCurrentRecipe(inventory));
-            lastParsedRecipe = recipe;
-        }
-
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 13, 34);
-        border(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE));
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 0, 44);
-        set(GUIClickableItem.getCloseItem(49));
-
-        if (recipe == null) {
-            set(RESULT_SLOT, RECIPE_REQUIRED);
-            return;
-        }
-
-        recipe = recipe.clone();
-
-        SkyBlockRecipe.CraftingResult result = recipe.getCanCraft().apply((SkyBlockPlayer) player);
-        if (!result.allowed()) {
-            set(RESULT_SLOT, ItemStackCreator.getStack(result.errorMessage()[0],
-                    Material.BEDROCK,
-                    1,
-                    Arrays.copyOfRange(result.errorMessage(), 1, result.errorMessage().length)));
-            return;
-        }
-
-        int amount = recipe.getAmount();
-
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 13, 34);
-        border(ItemStackCreator.createNamedItemStack(Material.LIME_STAINED_GLASS_PANE));
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 0, 44);
-
-        SkyBlockRecipe<?> finalRecipe = recipe;
-        set(new GUIClickableItem(RESULT_SLOT) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                SkyBlockItem cursorItem = new SkyBlockItem(p.getInventory().getCursorItem());
-                ItemType cursorItemType = cursorItem.getAttributeHandler().getPotentialType();
-                ItemType resultItemType = finalRecipe.getResult().getAttributeHandler().getPotentialType();
-                boolean isShift = e.getClick() instanceof Click.LeftShift || e.getClick() instanceof Click.RightShift;
-
-                if (!p.getInventory().getCursorItem().isAir() &&
-                        (cursorItemType == null || !cursorItemType.equals(resultItemType))) {
-                    e.setCancelled(true);
-                    e.getPlayer().sendMessage("§cYou must empty your cursor first!");
-                    return;
-                }
-
-                ItemStack craftedItem = PlayerItemUpdater.playerUpdate(
-                        player,
-                        finalRecipe.getResult().getItemStack()).amount(amount).build();
-
-                e.setCancelled(true);
-                if (isShift) {
-                    player.addAndUpdateItem(craftedItem);
-                } else {
-                    p.getInventory().setCursorItem(craftedItem);
-                }
-                HypixelEventHandler.callCustomEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), finalRecipe));
-
-                SkyBlockItem[] toReplace = finalRecipe.consume(getCurrentRecipeAsItems(inventory));
-                for (int i = 0; i < CRAFT_SLOTS.length; i++) {
-                    if (toReplace[i] == null || toReplace[i].getItemStack().material() == Material.BEDROCK) {
-                        inventory.setItemStack(CRAFT_SLOTS[i], ItemStack.builder(Material.AIR).build());
-                    } else {
-                        inventory.setItemStack(CRAFT_SLOTS[i], PlayerItemUpdater.playerUpdate(
-                                player,
-                                toReplace[i].getItemStack()).build());
+        Components.containerGrid(
+                layout,
+                10,
+                30, (slot, oldItem, newItem, state1) -> {
+                    Logger.info("Container grid changed at slot " + slot);
+                    Logger.info("Old Item: " + oldItem);
+                    Logger.info("New Item: " + newItem);
+                    int newHash = computeGridHash(ctx);
+                    SkyBlockRecipe<?> newRecipe = SkyBlockRecipe.parseRecipe(getCurrentRecipeStacks(ctx));
+                    if (state1.lastGridHash() == newHash && Objects.equals(state1.lastParsedRecipe(), newRecipe)) {
+                        return;
                     }
+                    ctx.session(CraftingState.class).setState(new CraftingState(newHash, newRecipe));
                 }
+        );
 
-                if (cursorItemType != null && cursorItemType.equals(resultItemType) && !isShift) {
-                    e.setCancelled(true);
-                    player.addAndUpdateItem(cursorItem);
-                }
+        if (!hasValidRecipe) {
+            layout.slot(RESULT_SLOT, (s, c) -> RECIPE_REQUIRED);
+        } else if (!canCraft) {
+            layout.slot(RESULT_SLOT, (s, c) -> ItemStackCreator.getStack(result.errorMessage()[0],
+                    Material.BEDROCK, 1,
+                    Arrays.copyOfRange(result.errorMessage(), 1, result.errorMessage().length)));
+        } else {
+            int amount = recipe.getAmount();
+            SkyBlockRecipe<?> finalRecipe = recipe;
 
-                player.getInventory().update();
-                refreshItems(player);
-            }
-
-            @Override
-            public boolean canPickup() {
-                return true;
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, finalRecipe.getResult().getItemStack()).amount(amount);
+            layout.slot(RESULT_SLOT, (s, c) -> {
+                SkyBlockPlayer p = (SkyBlockPlayer) c.player();
+                ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(p, finalRecipe.getResult().getItemStack()).amount(amount);
 
                 ArrayList<String> lore = new ArrayList<>();
-                builder.build().get(DataComponents.LORE).stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);
+                var existingLore = builder.build().get(DataComponents.LORE);
+                if (existingLore != null) {
+                    existingLore.stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);
+                }
                 lore.add("§8§m------------------");
                 lore.add("§7This is the item you are crafting.");
                 builder.set(DataComponents.LORE, lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()));
 
                 return builder;
+            }, (click, c) -> handleCraft(click, c, finalRecipe, amount));
+        }
+    }
+
+    private ItemStack[] getCurrentRecipeStacks(ViewContext ctx) {
+        ItemStack[] stacks = new ItemStack[9];
+        for (int i = 0; i < CRAFT_SLOTS.length; i++) {
+            stacks[i] = ctx.inventory().getItemStack(CRAFT_SLOTS[i]);
+        }
+        return stacks;
+    }
+
+    private int computeGridHash(ViewContext ctx) {
+        // Stable & cheap hash: material id + amount per slot (no streams/allocations beyond the 9 reads).
+        int hash = 1;
+        for (int slot : CRAFT_SLOTS) {
+            ItemStack item = ctx.inventory().getItemStack(slot);
+            int mat = item.material().id();
+            hash = 31 * hash + (mat * 37 + item.amount());
+        }
+        return hash;
+    }
+
+    private SkyBlockRecipe<?> parseCurrentRecipe(ViewContext ctx) {
+        return SkyBlockRecipe.parseRecipe(getCurrentRecipeStacks(ctx));
+    }
+
+    private void handleCraft(ClickContext<CraftingState> click, ViewContext ctx, SkyBlockRecipe<?> recipe, int amount) {
+        SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
+        ItemStack cursorItemStack = player.getInventory().getCursorItem();
+        SkyBlockItem cursorItem = new SkyBlockItem(cursorItemStack);
+        ItemType cursorItemType = cursorItem.getAttributeHandler().getPotentialType();
+        ItemType resultItemType = recipe.getResult().getAttributeHandler().getPotentialType();
+        boolean isShift = click.click() instanceof Click.LeftShift || click.click() instanceof Click.RightShift;
+
+        if (!cursorItemStack.isAir() && (cursorItemType == null || !cursorItemType.equals(resultItemType))) {
+            return;
+        }
+
+        ItemStack craftedItem = PlayerItemUpdater.playerUpdate(player, recipe.getResult().getItemStack())
+                .amount(amount)
+                .build();
+        int maxStackSize = craftedItem.material().maxStackSize();
+
+        if (isShift) {
+            int expectedGridHash = computeGridHash(ctx);
+
+            while (true) {
+                if (computeGridHash(ctx) != expectedGridHash) {
+                    break;
+                }
+
+                SkyBlockRecipe.CraftingResult craftResult = recipe.getCanCraft().apply(player);
+                if (craftResult == null || !craftResult.allowed()) {
+                    break;
+                }
+                if (!player.canFitItem(craftedItem)) {
+                    break;
+                }
+
+                SkyBlockItem[] currentItems = getCurrentRecipeAsItems(ctx);
+                SkyBlockItem[] toReplace;
+                try {
+                    toReplace = recipe.consume(currentItems);
+                } catch (Exception e) {
+                    break;
+                }
+
+                applyConsumedGrid(player, ctx, toReplace);
+                expectedGridHash = computeGridHash(ctx);
+
+                player.addAndUpdateItem(craftedItem);
+                HypixelEventHandler.callCustomEvent(
+                        new ItemCraftEvent(player, new SkyBlockItem(craftedItem), recipe));
+            }
+        } else {
+            int currentCursorAmount = cursorItemStack.isAir() ? 0 : cursorItemStack.amount();
+            int newAmount = currentCursorAmount + amount;
+            if (newAmount > maxStackSize) {
+                return;
+            }
+            ItemStack newCursorItem = craftedItem.withAmount(newAmount);
+            player.getInventory().setCursorItem(newCursorItem);
+
+            HypixelEventHandler.callCustomEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), recipe));
+            SkyBlockItem[] currentItems = getCurrentRecipeAsItems(ctx);
+            SkyBlockItem[] toReplace = recipe.consume(currentItems);
+            applyConsumedGrid(player, ctx, toReplace);
+        }
+
+        player.getInventory().update();
+    }
+
+    private void applyConsumedGrid(SkyBlockPlayer player, ViewContext ctx, SkyBlockItem[] toReplace) {
+        for (int i = 0; i < CRAFT_SLOTS.length; i++) {
+            if (toReplace[i] == null || toReplace[i].getItemStack().material() == Material.BEDROCK) {
+                ctx.inventory().setItemStack(CRAFT_SLOTS[i], ItemStack.AIR);
+            } else {
+                ctx.inventory().setItemStack(
+                        CRAFT_SLOTS[i],
+                        PlayerItemUpdater.playerUpdate(player, toReplace[i].getItemStack()).build()
+                );
+            }
+        }
+    }
+
+    private SkyBlockItem[] getCurrentRecipeAsItems(ViewContext ctx) {
+        SkyBlockItem[] stacks = new SkyBlockItem[9];
+        for (int i = 0; i < CRAFT_SLOTS.length; i++) {
+            stacks[i] = new SkyBlockItem(ctx.inventory().getItemStack(CRAFT_SLOTS[i]));
+        }
+        return stacks;
+    }
+
+    @Override
+    public void onClose(CraftingState state, ViewContext ctx, ViewSession.CloseReason reason) {
+        SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
+        Arrays.stream(CRAFT_SLOTS).forEach(slot -> {
+            ItemStack item = ctx.inventory().getItemStack(slot);
+            if (!item.isAir()) {
+                player.addAndUpdateItem(new SkyBlockItem(item));
             }
         });
     }
 
     @Override
-    public int refreshRate() {
-        return 5;
+    public boolean onBottomClick(ClickContext<CraftingState> click, ViewContext ctx) {
+        return true;
     }
 
-    private ItemStack[] getCurrentRecipe(Inventory inventory) {
-        ItemStack[] stacks = new ItemStack[9];
-        for (int i = 0; i < CRAFT_SLOTS.length; i++)
-            stacks[i] = inventory.getItemStack(CRAFT_SLOTS[i]);
-        return stacks;
-    }
-
-    private SkyBlockItem[] getCurrentRecipeAsItems(Inventory inventory) {
-        SkyBlockItem[] stacks = new SkyBlockItem[9];
-        for (int i = 0; i < CRAFT_SLOTS.length; i++)
-            stacks[i] = new SkyBlockItem(inventory.getItemStack(CRAFT_SLOTS[i]));
-        return stacks;
+    public record CraftingState(int lastGridHash, SkyBlockRecipe<?> lastParsedRecipe) {
     }
 }
+

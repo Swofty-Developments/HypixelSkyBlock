@@ -4,9 +4,10 @@ import net.minestom.server.inventory.click.Click;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public record ClickContext<S>(
-    int slot,
-    Click click,
-    HypixelPlayer player,
-    S state
-) {}
+        int slot,
+        Click click,
+        HypixelPlayer player,
+        S state
+) {
+}
 

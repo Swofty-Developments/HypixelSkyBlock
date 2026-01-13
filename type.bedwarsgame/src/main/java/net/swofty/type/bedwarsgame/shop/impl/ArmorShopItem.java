@@ -30,9 +30,11 @@ public class ArmorShopItem extends ShopItem {
 		player.setTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG, armorLevel);
 
 		if (player.hasTag(Tag.Integer("upgrade_reinforced_armor"))) {
-			String gameId = player.getTag(Tag.String("gameId"));
-
-			TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("reinforced_armor").applyEffect(TypeBedWarsGameLoader.getGameById(gameId), player.getTeamKey(), player.getTag(Tag.Integer("upgrade_reinforced_armor")));
+			TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("reinforced_armor").applyEffect(
+					player.getGame(),
+					player.getTeamKey(),
+					player.getTag(Tag.Integer("upgrade_reinforced_armor"))
+			);
 		}
 	}
 

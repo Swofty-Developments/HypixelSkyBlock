@@ -1,5 +1,7 @@
 package net.swofty.type.generic.gui.v2;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.kyori.adventure.text.Component;
@@ -11,290 +13,431 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.trait.InventoryEvent;
 import net.minestom.server.inventory.Inventory;
-import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.PlayerInventory;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.event.inventory.InventoryOpenEvent;
-import net.minestom.server.network.packet.server.play.OpenWindowPacket;
+import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.tinylog.Logger;
+import org.jspecify.annotations.NonNull;
 
-import java.lang.reflect.Field;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public final class ViewSession<S> {
 
-	private final View<S> view;
-	@Getter
-	@Accessors(fluent = true)
-	private final HypixelPlayer player;
-	@Getter
-	@Accessors(fluent = true)
-	private final Inventory inventory;
-	private final ViewContext context;
-	private final EventNode<InventoryEvent> eventNode;
+    @Getter
+    @Accessors(fluent = true)
+    private final View<S> view;
 
-	@Getter
-	@Accessors(fluent = true)
-	private S state;
-	private ViewLayout<S> cachedLayout;
-	private Consumer<CloseReason> onCloseHandler;
-	@Getter
-	private boolean closed;
+    @Getter
+    @Accessors(fluent = true)
+    private final HypixelPlayer player;
 
-	@Getter
-	@Accessors(fluent = true)
-	private final SharedContext<S> sharedContext;
-	private final Map<Integer, ItemStack> trackedSlotItems = new HashMap<>();
-	private final Set<Integer> recentlyModifiedSlots = new HashSet<>();
+    @Getter
+    @Accessors(fluent = true)
+    private final Inventory inventory;
 
-	private ViewSession(View<S> view, HypixelPlayer player, S initialState, SharedContext<S> sharedContext) {
-		this.view = view;
-		this.player = player;
-		this.state = sharedContext != null ? sharedContext.state() : initialState;
-		this.sharedContext = sharedContext;
-		this.inventory = new Inventory(view.configuration().getInventoryType(), "");
-		this.context = new ViewContext(player, inventory, this);
-		this.eventNode = EventNode.type("gui-" + System.identityHashCode(this), EventFilter.INVENTORY);
+    @Getter
+    @Accessors(fluent = true)
+    private final SharedContext<S> sharedContext;
 
-		wireEvents();
+    @Getter
+    @Accessors(fluent = true)
+    private final ViewContext context;
+    private final EventNode<InventoryEvent> eventNode;
 
-		if (sharedContext != null) {
-			sharedContext.registerSession(this);
-		}
-	}
+    @Getter
+    @Accessors(fluent = true)
+    private S state;
 
-	public static <S> ViewSession<S> open(View<S> view, HypixelPlayer player, S initialState) {
-		ViewSession<S> session = new ViewSession<>(view, player, initialState, null);
-		session.render();
-		player.openInventory(session.inventory);
-		return session;
-	}
+    private ViewLayout<S> cachedLayout;
+    private boolean layoutDirty = true;
+    private Consumer<CloseReason> onCloseHandler;
 
-	public static <S> ViewSession<S> openShared(View<S> view, HypixelPlayer player, SharedContext<S> sharedContext) {
-		ViewSession<S> session = new ViewSession<>(view, player, sharedContext.state(), sharedContext);
-		session.render();
-		player.openInventory(session.inventory);
-		return session;
-	}
+    @Getter
+    private boolean closed;
+    private boolean suppressCloseEvent;
 
-	public static <S> ViewSession<S> openShared(View<S> view, HypixelPlayer player, String contextId, S initialState) {
-		SharedContext<S> ctx = SharedContext.create(contextId, initialState);
-		return openShared(view, player, ctx);
-	}
+    private final Int2ObjectOpenHashMap<ItemStack> trackedSlotItems = new Int2ObjectOpenHashMap<>();
+    private final Set<Integer> recentlyModifiedSlots = new HashSet<>();
+    private final Set<Integer> initializedEditableSlots = new HashSet<>();
+    private final Map<Integer, Task> autoUpdateTasks = new HashMap<>();
+    private final Map<UUID, Set<Integer>> componentSlots = new HashMap<>();
 
-	public static <S> ViewSession<S> joinShared(View<S> view, HypixelPlayer player, String contextId) {
-		return SharedContext.<S>get(contextId)
-				.map(ctx -> openShared(view, player, ctx))
-				.orElseThrow(() -> new IllegalArgumentException("Shared context not found: " + contextId));
-	}
+    private final Int2ObjectOpenHashMap<ItemStack> pendingOldItems = new Int2ObjectOpenHashMap<>();
+    private final Int2ObjectOpenHashMap<ItemStack> pendingNewItems = new Int2ObjectOpenHashMap<>();
+    private boolean flushScheduled;
 
-	private void wireEvents() {
-		eventNode.addListener(InventoryPreClickEvent.class, this::onPreClickEvent);
-		eventNode.addListener(InventoryClickEvent.class, this::onPostClickEvent);
-		eventNode.addListener(InventoryCloseEvent.class, this::onCloseEvent);
-		eventNode.addListener(InventoryOpenEvent.class, this::onOpenEvent);
-		MinecraftServer.getGlobalEventHandler().addChild(eventNode);
-	}
+    private ViewSession(View<S> view, HypixelPlayer player, S initialState, SharedContext<S> sharedContext) {
+        this.view = view;
+        this.player = player;
+        this.state = sharedContext != null ? sharedContext.state() : initialState;
+        this.sharedContext = sharedContext;
+        this.inventory = new Inventory(view.configuration().getInventoryType(), "");
+        this.context = new ViewContext(player, inventory, this);
+        this.eventNode = EventNode.type("gui-" + System.identityHashCode(this), EventFilter.INVENTORY);
 
-	private void onOpenEvent(InventoryOpenEvent event) {
-		if (event.getInventory() != inventory || closed) return;
-		view.onOpen(state, context);
-	}
+        wireEvents();
 
-	private void onPreClickEvent(InventoryPreClickEvent event) {
-		if (event.getInventory() instanceof PlayerInventory) {
-			// if the current open inventory is this inventory
-			if (player.getOpenInventory() == inventory) {
-				ClickContext<S> click = new ClickContext<>(event.getSlot(), event.getClick(), player, state);
-				if (!view.onBottomClick(click, context)) {
-					event.setCancelled(true);
-				}
-			}
-			return;
-		}
-		if (event.getInventory() != inventory || closed) return;
+        if (sharedContext != null) {
+            sharedContext.registerSession(this);
+        }
+    }
 
-		int slot = event.getSlot();
-		SlotBehavior behavior = cachedLayout != null ? cachedLayout.getBehavior(slot) : SlotBehavior.UI;
+    static <S> ViewSession<S> open(View<S> view, HypixelPlayer player, S initialState) {
+        var session = new ViewSession<>(view, player, initialState, null);
+        session.render();
+        player.openInventory(session.inventory);
+        return session;
+    }
 
-		if (behavior == SlotBehavior.EDITABLE) {
-			trackedSlotItems.put(slot, inventory.getItemStack(slot));
-			return;
-		}
+    static <S> ViewSession<S> openShared(View<S> view, HypixelPlayer player, SharedContext<S> sharedContext) {
+        var session = new ViewSession<>(view, player, sharedContext.state(), sharedContext);
+        session.render();
+        player.openInventory(session.inventory);
+        return session;
+    }
 
-		event.setCancelled(true);
-		ViewComponent<S> component = cachedLayout != null ? cachedLayout.components().get(slot) : null;
-		if (component == null) {
-			ClickContext<S> click = new ClickContext<>(slot, event.getClick(), player, state);
-			view.onClick(click, context);
-			return;
-		}
+    private void wireEvents() {
+        eventNode.addListener(InventoryPreClickEvent.class, this::onPreClickEvent);
+        eventNode.addListener(InventoryClickEvent.class, this::onPostClickEvent);
+        eventNode.addListener(InventoryCloseEvent.class, this::onCloseEvent);
+        eventNode.addListener(InventoryOpenEvent.class, this::onOpenEvent);
+        MinecraftServer.getGlobalEventHandler().addChild(eventNode);
+    }
 
-		ClickContext<S> click = new ClickContext<>(slot, event.getClick(), player, state);
-		component.onClick().accept(click, context);
-	}
+    private void onOpenEvent(InventoryOpenEvent event) {
+        if (event.getInventory() != inventory || closed) return;
+        view.onOpen(state, context);
+    }
 
-	private void onPostClickEvent(InventoryClickEvent event) {
-		if (event.getInventory() != inventory || closed) return;
+    private void onPreClickEvent(InventoryPreClickEvent event) {
+        if (event.getInventory() instanceof PlayerInventory) {
+            if (player.getOpenInventory() == inventory) {
+                var click = new ClickContext<>(event.getSlot(), event.getClick(), player, state);
+                if (!view.onBottomClick(click, context)) {
+                    event.setCancelled(true);
+                }
+            }
+            return;
+        }
+        if (event.getInventory() != inventory || closed) return;
 
-		int slot = event.getSlot();
-		if (cachedLayout == null || !cachedLayout.isEditable(slot)) return;
+        int slot = event.getSlot();
+        SlotBehavior behavior = cachedLayout != null ? cachedLayout.getBehavior(slot) : SlotBehavior.UI;
 
-		MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
-			if (closed) return;
 
-			ItemStack oldItem = trackedSlotItems.getOrDefault(slot, ItemStack.AIR);
-			ItemStack newItem = inventory.getItemStack(slot);
+        if (behavior == SlotBehavior.EDITABLE) {
+            if (event.getClick() instanceof Click.LeftShift) {
+                ItemStack oldItem = inventory.getItemStack(slot);
 
-			if (!oldItem.equals(newItem)) {
-				handleSlotChange(slot, oldItem, newItem);
-			}
-		});
-	}
+                MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
+                    ItemStack newItem = inventory.getItemStack(slot);
 
-	private void handleSlotChange(int slot, ItemStack oldItem, ItemStack newItem) {
-		trackedSlotItems.put(slot, newItem);
-		recentlyModifiedSlots.add(slot);
+                    if (!oldItem.equals(newItem)) {
+                        queueSlotChange(slot, oldItem, newItem);
+                    }
+                });
+            }
+            trackedSlotItems.put(slot, inventory.getItemStack(slot));
+            return;
+        }
 
-		ViewComponent<S> component = cachedLayout.components().get(slot);
-		if (component != null && component.changeHandler() != null) {
-			component.changeHandler().onChange(slot, oldItem, newItem, state);
-		}
+        if (event.getClick() instanceof Click.LeftDrag(List<Integer> slots)) {
+            for (int dragSlot : slots) {
+                if (cachedLayout == null || !cachedLayout.isEditable(dragSlot)) {
+                    event.setCancelled(true);
+                    return;
+                }
+                trackedSlotItems.put(dragSlot, inventory.getItemStack(dragSlot));
+            }
+            return;
+        }
 
-		if (sharedContext != null) {
-			sharedContext.setSlotItem(slot, newItem);
-		} else {
-			render();
-		}
+        event.setCancelled(true);
+        ViewComponent<S> component = cachedLayout != null ? cachedLayout.components().get(slot) : null;
+        var click = new ClickContext<>(slot, event.getClick(), player, state);
 
-		recentlyModifiedSlots.remove(slot);
-	}
+        if (component == null) {
+            view.onClick(click, context);
+        } else {
+            component.onClick().accept(click, context);
+        }
+    }
 
-	private void onCloseEvent(InventoryCloseEvent event) {
-		if (event.getInventory() != inventory) return;
-		close(CloseReason.PLAYER_EXITED);
-	}
+    private void onPostClickEvent(@NonNull InventoryClickEvent event) {
+        if (event.getInventory() != inventory || closed) return;
+        if (cachedLayout == null) return;
 
-	public void render() {
-		if (closed) return;
+        for (Int2ObjectMap.Entry<ItemStack> entry : trackedSlotItems.int2ObjectEntrySet()) {
+            int trackedSlot = entry.getIntKey();
+            if (!cachedLayout.isEditable(trackedSlot)) continue;
 
-		ViewConfiguration<?> config = view.configuration();
-		cachedLayout = new ViewLayout<>(config.getInventoryType());
-		view.layout(cachedLayout, state, context);
+            ItemStack oldItem = entry.getValue();
+            ItemStack newItem = inventory.getItemStack(trackedSlot);
+            if (!oldItem.equals(newItem)) {
+                queueSlotChange(trackedSlot, oldItem, newItem);
+            }
+        }
+    }
 
-		@SuppressWarnings("unchecked")
-		BiFunction<S, ViewContext, Component> titleFunction = (BiFunction<S, ViewContext, Component>) config.getTitleFunction();
-		inventory.setTitle(titleFunction.apply(state, context));
+    private void queueSlotChange(int slot, ItemStack oldItem, ItemStack newItem) {
+        if (!pendingOldItems.containsKey(slot)) {
+            pendingOldItems.put(slot, oldItem);
+        }
+        pendingNewItems.put(slot, newItem);
+        trackedSlotItems.put(slot, newItem);
 
-		cachedLayout.components().forEach((slot, component) -> {
-			if (component.behavior() == SlotBehavior.EDITABLE) {
-				if (sharedContext != null) {
-					ItemStack contextItem = sharedContext.getSlotItem(slot);
-					if (!inventory.getItemStack(slot).equals(contextItem)) {
-						inventory.setItemStack(slot, contextItem);
-					}
-					trackedSlotItems.put(slot, contextItem);
-					return;
-				} else if (!recentlyModifiedSlots.contains(slot)) {
-					ItemStack currentItem = inventory.getItemStack(slot);
-					trackedSlotItems.put(slot, currentItem);
-				}
-				return;
-			}
+        if (!flushScheduled) {
+            flushScheduled = true;
+            MinecraftServer.getSchedulerManager().submitTask(() -> {
+                flushPendingSlotChanges();
+                return TaskSchedule.stop();
+            });
+        }
+    }
 
-			var item = component.render().apply(state, context).build();
-			if (!inventory.getItemStack(slot).equals(item)) {
-				inventory.setItemStack(slot, item);
-			}
-		});
+    private void flushPendingSlotChanges() {
+        if (closed) return;
+        flushScheduled = false;
+        if (pendingNewItems.isEmpty()) return;
 
-		view.onRefresh(state, context);
-	}
+        recentlyModifiedSlots.addAll(pendingNewItems.keySet());
 
-	public void setState(S newState) {
-		this.state = newState;
+        boolean anyChanged = false;
+        for (Int2ObjectMap.Entry<ItemStack> entry : pendingNewItems.int2ObjectEntrySet()) {
+            int slot = entry.getIntKey();
+            ItemStack newItem = entry.getValue();
+            ItemStack oldItem = pendingOldItems.getOrDefault(slot, ItemStack.AIR);
 
-		if (sharedContext != null) {
-			sharedContext.setState(newState);
-		} else {
-			render();
-		}
-	}
+            ViewComponent<S> component = cachedLayout != null ? cachedLayout.components().get(slot) : null;
+            if (component != null && component.changeHandler() != null) {
+                component.changeHandler().onChange(slot, oldItem, newItem, state);
+            }
+            anyChanged = true;
 
-	public void setStateQuiet(S newState) {
-		this.state = newState;
-		render();
-	}
+            if (sharedContext != null) {
+                sharedContext.setSlotItem(slot, newItem);
+            }
+        }
 
-	void setStateFromShared(S newState) {
-		this.state = newState;
-		render();
-	}
+        pendingOldItems.clear();
+        pendingNewItems.clear();
+        recentlyModifiedSlots.clear();
 
-	void renderFromShared() {
-		render();
-	}
+        if (!anyChanged) return;
 
-	public void update(UnaryOperator<S> transform) {
-		setState(transform.apply(state));
-	}
+        if (sharedContext != null) {
+            sharedContext.broadcastRender();
+        } else {
+            render();
+        }
+    }
 
-	public void updateQuiet(UnaryOperator<S> transform) {
-		setStateQuiet(transform.apply(state));
-	}
+    private void onCloseEvent(InventoryCloseEvent event) {
+        if (event.getInventory() != inventory || suppressCloseEvent) {
+            suppressCloseEvent = false;
+            return;
+        }
+        close(CloseReason.PLAYER_EXITED);
+    }
 
-	@SuppressWarnings("unchecked")
-	public <T> void updateUnchecked(Function<T, T> transform) {
-		setState(((Function<S, S>) transform).apply(state));
-	}
+    public void refresh() {
+        layoutDirty = true;
+        render();
+    }
 
-	public ViewSession<S> onClose(Consumer<CloseReason> handler) {
-		this.onCloseHandler = handler;
-		return this;
-	}
+    public void render() {
+        if (closed) return;
 
-	public ViewSession<S> refreshEvery(Duration interval) {
-		MinecraftServer.getSchedulerManager().submitTask(() -> {
-			if (closed) return TaskSchedule.stop();
-			render();
-			return TaskSchedule.millis(interval.toMillis());
-		});
-		return this;
-	}
+        ViewConfiguration<?> config = view.configuration();
 
-	public void close(CloseReason reason) {
-		if (closed) return;
-		closed = true;
+        if (cachedLayout == null || layoutDirty) {
+            cachedLayout = new ViewLayout<>(config.getInventoryType());
+            view.layout(cachedLayout, state, context);
+            layoutDirty = false;
+            componentSlots.clear();
 
-		MinecraftServer.getGlobalEventHandler().removeChild(eventNode);
-		if (sharedContext != null) {
-			sharedContext.unregisterSession(this);
-		}
+            @SuppressWarnings("unchecked") BiFunction<S, ViewContext, Component> titleFunction = (BiFunction<S, ViewContext, Component>) config.getTitleFunction();
+            inventory.setTitle(titleFunction.apply(state, context));
 
-		view.onClose(state, context, reason);
-		if (onCloseHandler != null) onCloseHandler.accept(reason);
-		if (reason != CloseReason.PLAYER_EXITED) player.closeInventory();
-	}
+            cachedLayout.components().forEach((slot, component) -> {
+                if (component.behavior() == SlotBehavior.EDITABLE) {
+                    renderEditableSlot(slot, component);
+                    return;
+                }
 
-	public boolean isShared() {
-		return sharedContext != null;
-	}
+                renderSlot(slot, component);
+                if (component.updateInterval() != null) {
+                    scheduleAutoUpdate(slot, component);
+                }
+            });
 
-	public enum CloseReason {
-		PLAYER_EXITED,
-		SERVER_EXITED,
-		REPLACED
-	}
+            view.onRefresh(state, context);
+            return;
+        }
+
+        componentSlots.clear();
+
+        @SuppressWarnings("unchecked") BiFunction<S, ViewContext, Component> titleFunction = (BiFunction<S, ViewContext, Component>) config.getTitleFunction();
+        inventory.setTitle(titleFunction.apply(state, context));
+
+        cachedLayout.components().forEach((slot, component) -> {
+            if (component.behavior() == SlotBehavior.EDITABLE) {
+                renderEditableSlot(slot, component);
+                return;
+            }
+            renderSlot(slot, component);
+        });
+
+        view.onRefresh(state, context);
+    }
+
+    private void renderEditableSlot(int slot, ViewComponent<S> component) {
+        if (sharedContext != null) {
+            ItemStack contextItem = sharedContext.getSlotItem(slot);
+            if (!initializedEditableSlots.contains(slot)) {
+                if (contextItem.isAir()) {
+                    ItemStack initialItem = component.render().apply(state, context).build();
+                    if (!initialItem.isAir()) {
+                        inventory.setItemStack(slot, initialItem);
+                        sharedContext.setSlotItem(slot, initialItem);
+                        contextItem = initialItem;
+                    }
+                }
+                initializedEditableSlots.add(slot);
+            }
+            if (!inventory.getItemStack(slot).equals(contextItem)) {
+                inventory.setItemStack(slot, contextItem);
+            }
+            trackedSlotItems.put(slot, contextItem);
+        } else {
+            if (!initializedEditableSlots.contains(slot)) {
+                ItemStack currentItem = inventory.getItemStack(slot);
+                if (currentItem.isAir()) {
+                    ItemStack initialItem = component.render().apply(state, context).build();
+                    if (!initialItem.isAir()) {
+                        inventory.setItemStack(slot, initialItem);
+                        currentItem = initialItem;
+                    }
+                }
+                initializedEditableSlots.add(slot);
+                trackedSlotItems.put(slot, currentItem);
+            } else if (!recentlyModifiedSlots.contains(slot)) {
+                ItemStack currentItem = inventory.getItemStack(slot);
+                trackedSlotItems.put(slot, currentItem);
+            }
+        }
+    }
+
+    private void renderSlot(int slot, ViewComponent<S> component) {
+        var item = component.render().apply(state, context).build();
+        if (!inventory.getItemStack(slot).equals(item)) {
+            inventory.setItemStack(slot, item);
+        }
+
+        if (component.id() != null) {
+            componentSlots.computeIfAbsent(component.id(), _ -> new HashSet<>()).add(slot);
+        }
+    }
+
+    private void scheduleAutoUpdate(int slot, ViewComponent<S> component) {
+        if (autoUpdateTasks.containsKey(slot)) return;
+
+        Task task = MinecraftServer.getSchedulerManager().submitTask(() -> {
+            if (closed) return TaskSchedule.stop();
+            renderSlot(slot, component);
+            return TaskSchedule.duration(component.updateInterval());
+        });
+        autoUpdateTasks.put(slot, task);
+    }
+
+    public void setState(S newState) {
+        this.state = newState;
+        layoutDirty = true;
+
+        if (sharedContext != null) {
+            sharedContext.setState(newState);
+        } else {
+            render();
+        }
+    }
+
+    public void setStateQuiet(S newState) {
+        this.state = newState;
+        layoutDirty = true;
+        render();
+    }
+
+    void setStateFromShared(S newState) {
+        this.state = newState;
+        layoutDirty = true;
+        render();
+    }
+
+    void renderFromShared() {
+        render();
+    }
+
+    public void update(UnaryOperator<S> updater) {
+        setState(updater.apply(state));
+    }
+
+    public void updateQuiet(UnaryOperator<S> updater) {
+        setStateQuiet(updater.apply(state));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> void updateUnchecked(java.util.function.Function<T, T> updater) {
+        setState((S) updater.apply((T) state));
+    }
+
+    public ViewSession<S> onClose(Consumer<CloseReason> handler) {
+        this.onCloseHandler = handler;
+        return this;
+    }
+
+    public ViewSession<S> refreshEvery(Duration interval) {
+        MinecraftServer.getSchedulerManager().submitTask(() -> {
+            if (closed) return TaskSchedule.stop();
+            render();
+            return TaskSchedule.millis(interval.toMillis());
+        });
+        return this;
+    }
+
+    public void close(CloseReason reason) {
+        if (closed) return;
+        if (reason == CloseReason.REPLACED) {
+            suppressCloseEvent = true;
+        }
+        closed = true;
+
+        autoUpdateTasks.values().forEach(Task::cancel);
+        autoUpdateTasks.clear();
+
+        MinecraftServer.getGlobalEventHandler().removeChild(eventNode);
+        if (sharedContext != null) {
+            sharedContext.unregisterSession(this);
+        }
+
+        flushPendingSlotChanges();
+
+        view.onClose(state, context, reason);
+        if (onCloseHandler != null) onCloseHandler.accept(reason);
+        if (reason == CloseReason.SERVER_EXITED) player.closeInventory();
+    }
+
+    public enum CloseReason {
+        PLAYER_EXITED,
+        SERVER_EXITED,
+        REPLACED
+    }
 }

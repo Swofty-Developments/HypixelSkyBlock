@@ -39,54 +39,54 @@ public final class TestSharedStateView implements StatefulView<TestSharedStateVi
         layout.filler(Components.FILLER);
 
         layout.slot(11, (s, c) -> ItemStackCreator.getStack(
-            "§c-1",
-            Material.RED_WOOL,
-            1,
-            "§7Click to decrement",
-            "",
-            "§7Current: §f" + s.counter()
-        ), (click, context) ->
-            context.session(State.class).update(s -> s.decrement(click.player().getUsername()))
+                        "§c-1",
+                        Material.RED_WOOL,
+                        1,
+                        "§7Click to decrement",
+                        "",
+                        "§7Current: §f" + s.counter()
+                ), (click, context) ->
+                        context.session(State.class).update(s -> s.decrement(click.player().getUsername()))
         );
 
         layout.slot(13, (s, c) -> ItemStackCreator.getStack(
-            "§eCounter: " + s.counter(),
-            Material.PAPER,
-            Math.max(1, Math.min(64, Math.abs(s.counter()))),
-            "§7Last modified by: §f" + s.lastModifiedBy(),
-            "",
-            "§7This view is shared!",
-            "§7All players see the same counter."
+                "§eCounter: " + s.counter(),
+                Material.PAPER,
+                Math.max(1, Math.min(64, Math.abs(s.counter()))),
+                "§7Last modified by: §f" + s.lastModifiedBy(),
+                "",
+                "§7This view is shared!",
+                "§7All players see the same counter."
         ));
 
         layout.slot(15, (s, c) -> ItemStackCreator.getStack(
-            "§a+1",
-            Material.GREEN_WOOL,
-            1,
-            "§7Click to increment",
-            "",
-            "§7Current: §f" + s.counter()
-        ), (click, context) ->
-            context.session(State.class).update(s -> s.increment(click.player().getUsername()))
+                        "§a+1",
+                        Material.GREEN_WOOL,
+                        1,
+                        "§7Click to increment",
+                        "",
+                        "§7Current: §f" + s.counter()
+                ), (click, context) ->
+                        context.session(State.class).update(s -> s.increment(click.player().getUsername()))
         );
 
         layout.slot(22, (s, c) -> ItemStackCreator.getStack(
-            "§6Reset",
-            Material.SUNFLOWER,
-            1,
-            "§7Reset counter to 0"
-        ), (click, context) ->
-            context.session(State.class).update(s -> s.reset(click.player().getUsername()))
+                        "§6Reset",
+                        Material.SUNFLOWER,
+                        1,
+                        "§7Reset counter to 0"
+                ), (click, context) ->
+                        context.session(State.class).update(s -> s.reset(click.player().getUsername()))
         );
 
         Components.close(layout, 26);
     }
 
     public static void openNew(HypixelPlayer player, String contextId) {
-        ViewSession.openShared(new TestSharedStateView(), player, contextId, new State(0, player.getUsername()));
+        ViewNavigator.get(player).pushShared(new TestSharedStateView(), contextId, new State(0, player.getUsername()));
     }
 
     public static void join(HypixelPlayer player, String contextId) {
-        ViewSession.joinShared(new TestSharedStateView(), player, contextId);
+        ViewNavigator.get(player).joinShared(new TestSharedStateView(), contextId);
     }
 }

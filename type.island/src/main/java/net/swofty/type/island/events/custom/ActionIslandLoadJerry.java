@@ -34,9 +34,14 @@ public class ActionIslandLoadJerry implements HypixelEventClass {
                             MathUtility.fromDouble(document.getDouble("jerry_position_pitch"))
                     )
             );
+        } else {
+            jerryInformation.setJerryPosition(
+                    new Pos(2.5, 100, 24.5, 145, 0)
+            );
         }
 
         Entity jerry = new Entity(EntityType.VILLAGER);
+        jerry.setAutoViewable(true);
         jerry.setInstance(
                 event.getIsland().getIslandInstance(),
                 jerryInformation.getJerryPosition()
@@ -56,10 +61,5 @@ public class ActionIslandLoadJerry implements HypixelEventClass {
         jerryInformation.setHologram(hologram);
 
         event.getIsland().setJerryInformation(jerryInformation);
-
-        event.getMembersOnline().forEach(player -> {
-            jerry.addViewer(player);
-            jerry.updateNewViewer(player);
-        });
     }
 }

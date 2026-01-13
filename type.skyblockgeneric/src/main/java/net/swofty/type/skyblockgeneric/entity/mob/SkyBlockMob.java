@@ -14,7 +14,7 @@ import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.entity.damage.Damage;
-import net.minestom.server.entity.metadata.avatar.PlayerMeta;
+import net.minestom.server.entity.metadata.display.TextDisplayMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
 import net.minestom.server.network.packet.server.play.EntityMetaDataPacket;
@@ -29,6 +29,7 @@ import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
+import net.swofty.type.skyblockgeneric.entity.TextDisplayEntity;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.MobPlayerSkin;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
@@ -59,6 +60,7 @@ public abstract class SkyBlockMob extends EntityCreature {
     private boolean hasBeenDamaged = false;
 
     private Component customName;
+    private TextDisplayEntity nameDisplayEntity;
 
     public SkyBlockMob(EntityType entityType) {
         super(entityType);
@@ -82,7 +84,8 @@ public abstract class SkyBlockMob extends EntityCreature {
                         + "§f/§a"
                         + Math.round(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue())
         );
-        this.set(DataComponents.CUSTOM_NAME, customName);
+        this.set(DataComponents.CUSTOM_NAME, customName); // ARI - could be removed
+        nameDisplayEntity = new TextDisplayEntity(customName, meta -> meta.setTranslation(new Pos(0, getNameDisplayHeightOffset(), 0)));
 
         setAutoViewable(true);
         setAutoViewEntities(true);
@@ -107,7 +110,7 @@ public abstract class SkyBlockMob extends EntityCreature {
                                     false,
                                     0,
                                     GameMode.SURVIVAL,
-                                    customName,
+                                    customName, // ARI - this is only used in tab for some reason
                                     null,
                                     1, true)),
                     new SpawnEntityPacket(this.getEntityId(), this.getUuid(), EntityType.PLAYER,
@@ -128,6 +131,8 @@ public abstract class SkyBlockMob extends EntityCreature {
     public void spawn() {
         super.spawn();
         mobs.add(this);
+        addPassenger(nameDisplayEntity);
+        updateCustomName(customName);
         onSpawn();
     }
 
@@ -137,6 +142,10 @@ public abstract class SkyBlockMob extends EntityCreature {
 
     public void onSpawn() {
         // override this
+    }
+
+    public float getNameDisplayHeightOffset() {
+        return 0.3f;
     }
 
     public abstract String getDisplayName();
@@ -180,7 +189,7 @@ public abstract class SkyBlockMob extends EntityCreature {
                     -Math.cos(sourcePoint.getPosition().yaw() * Math.PI / 180));
         }
 
-        this.set(DataComponents.CUSTOM_NAME, Component.text(
+        updateCustomName(Component.text(
                 "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
                         + " §a" + Math.round(getHealth())
                         + "§f/§a"
@@ -248,6 +257,14 @@ public abstract class SkyBlockMob extends EntityCreature {
                 DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
                 droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
             }
+        }
+    }
+
+    public void updateCustomName(Component newName) {
+        this.customName = newName;
+        this.set(DataComponents.CUSTOM_NAME, customName);
+        if (nameDisplayEntity != null) {
+            nameDisplayEntity.editEntityMeta(TextDisplayMeta.class, meta -> meta.setTranslation(new Pos(0, getNameDisplayHeightOffset(), 0)));
         }
     }
 

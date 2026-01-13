@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
 import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags.GUISack;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -20,10 +21,10 @@ public class SackComponent extends SkyBlockItemComponent {
                 .toList();
         this.maxCapacity = maxCapacity;
         addInheritedComponent(new TrackedUniqueComponent());
-        addInheritedComponent(new InteractableComponent(this::onInteract, this::onInteract, null));
+        addInheritedComponent(new InteractableComponent(this::onInteract, null, null));
     }
 
     private void onInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        // TODO
+        player.openView(new GUISack(item.getItemType(), false));
     }
 }

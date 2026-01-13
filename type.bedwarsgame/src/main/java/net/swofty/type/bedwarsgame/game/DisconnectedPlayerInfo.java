@@ -5,10 +5,6 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 
 import java.util.UUID;
 
-/**
- * Holds information about a player who disconnected from an active game.
- * Used to restore state when they rejoin.
- */
 @Getter
 public class DisconnectedPlayerInfo {
     private final UUID playerUuid;
@@ -17,7 +13,6 @@ public class DisconnectedPlayerInfo {
     private final long disconnectTime;
     private final boolean bedWasAliveOnDisconnect;
 
-    // Saved player state for restoration
     private final int armorLevel;
     private final int pickaxeLevel;
     private final int axeLevel;
@@ -35,11 +30,4 @@ public class DisconnectedPlayerInfo {
         this.axeLevel = axeLevel;
     }
 
-    /**
-     * Determines if player should rejoin as spectator.
-     * True if bed was already broken when they disconnected.
-     */
-    public boolean shouldRejoinAsSpectator() {
-        return !bedWasAliveOnDisconnect;
-    }
 }
