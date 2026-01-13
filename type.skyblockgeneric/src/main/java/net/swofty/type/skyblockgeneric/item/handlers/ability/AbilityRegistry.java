@@ -5,13 +5,17 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.abilities.BuildersWandAbility;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.TemporaryStatistic;
+import net.swofty.type.skyblockgeneric.utility.groups.Groups;
 
 import java.util.HashMap;
 import java.util.List;
@@ -130,14 +134,23 @@ public class AbilityRegistry {
 				))
 		));
 
-//		register(new RegisteredPassiveAbility(
-//				"BEJEWELED_BLADE",
-//				"Bejeweled Blade",
-//				"§7Deals §a+150% §7damage to mobs on §bMining Islands.",
-//				List.of(new RegisteredPassiveAbility.Action<>(
-//
-//				))
-//		));
+		register(new RegisteredPassiveAbility(
+				"BEJEWELED_BLADE",
+				"Bejeweled Blade",
+				"§7Deals §a+150% §7damage to mobs on §bMining Islands.",
+				List.of(new RegisteredPassiveAbility.Action<>(
+						PlayerMoveEvent.class,
+						EventNodes.PLAYER,
+						event -> {
+							SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+							RegionType region = player.getRegion().getType();
+							if (Groups.MINING_REGIONS.contains(region)) {
+
+							}
+						},
+						RegisteredPassiveAbility.Action.createDefaultCondition("BEJEWELED_BLADE")
+				))
+		));
 
 		register(new BuildersWandAbility());
 	}
