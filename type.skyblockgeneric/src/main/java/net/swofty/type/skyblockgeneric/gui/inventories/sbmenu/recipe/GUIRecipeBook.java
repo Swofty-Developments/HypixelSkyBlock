@@ -112,7 +112,7 @@ public class GUIRecipeBook extends StatelessView {
 
                 return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
                         type.getMaterial(), 1, lore);
-            }, (click, c) -> c.push(new GUIRecipeCategory(type), GUIRecipeCategory.createInitialState(type)));
+            }, (_, c) -> c.push(new GUIRecipeCategory(type), GUIRecipeCategory.createInitialState((SkyBlockPlayer) c.player(), type)));
         }
 
         // Slayer recipes

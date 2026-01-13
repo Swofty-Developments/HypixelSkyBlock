@@ -160,7 +160,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
         return 53;
     }
 
-    public static RecipeCategoryState createInitialState(SkyBlockRecipe.RecipeType type) {
+    public static RecipeCategoryState createInitialState(SkyBlockPlayer player, SkyBlockRecipe.RecipeType type) {
         List<SkyBlockRecipe<?>> recipes = new ArrayList<>();
         recipes.addAll(ShapedRecipe.CACHED_RECIPES);
         recipes.addAll(ShapelessRecipe.CACHED_RECIPES);
@@ -174,11 +174,12 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
                 return true;
             } else {
                 shownItems.add(itemType);
-                return false;
+                SkyBlockRecipe.CraftingResult result = recipe.getCanCraft().apply(player);
+                return !result.allowed();
             }
         });
 
-        return new RecipeCategoryState(recipes, 0, "");
+        return new RecipeCategoryState(List.of(), 0, "");
     }
 
     public record RecipeCategoryState(

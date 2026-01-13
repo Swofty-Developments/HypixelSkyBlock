@@ -7,12 +7,15 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
+import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -122,7 +125,25 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
     }
 
     public static SearchState createInitialState(String query) {
-        return new SearchState(List.of(), 0, query);
+        List<SkyBlockRecipe<?>> recipes = new ArrayList<>();
+        recipes.addAll(ShapedRecipe.CACHED_RECIPES);
+        recipes.addAll(ShapelessRecipe.CACHED_RECIPES);
+
+        recipes.removeIf(recipe -> recipe.getResult().getCleanName().toLowerCase().startsWith(query.toLowerCase()));
+
+        List<ItemType> shownItems = new ArrayList<>();
+        recipes.removeIf(recipe -> {
+            ItemType itemType = recipe.getResult().getAttributeHandler().getPotentialType();
+            if (shownItems.contains(itemType)) {
+                return true;
+            } else {
+                shownItems.add(itemType);
+                return false;
+            }
+        });
+
+
+        return new SearchState(recipes, 0, query);
     }
 
     public record SearchState(List<SkyBlockRecipe<?>> items, int page, String query) implements PaginatedState<SkyBlockRecipe<?>> {
