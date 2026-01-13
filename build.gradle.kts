@@ -17,6 +17,7 @@ subprojects {
         mavenLocal()
         maven("https://repo.viaversion.com")
         maven("https://jitpack.io")
+        maven("https://repo.lucko.me/")
     }
 
     java {
