@@ -106,11 +106,11 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
     }
 
     protected ItemStack.Builder createPrevPageItem(int currentPage, int totalPages) {
-        return ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aPrevious Page")).set(DataComponents.LORE, List.of(Component.text("§7Page " + currentPage + " of " + totalPages)));
+        return ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aPrevious Page")).set(DataComponents.LORE, List.of(Component.text("§ePage " + currentPage)));
     }
 
     protected ItemStack.Builder createNextPageItem(int currentPage, int totalPages) {
-        return ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aNext Page")).set(DataComponents.LORE, List.of(Component.text("§7Page " + (currentPage + 2) + " of " + totalPages)));
+        return ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aNext Page")).set(DataComponents.LORE, List.of(Component.text("§ePage " + (currentPage + 2))));
     }
 
     protected abstract int[] getPaginatedSlots();
