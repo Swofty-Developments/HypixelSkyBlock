@@ -25,7 +25,7 @@ public final class TestPaginatedView extends PaginatedView<Integer, TestPaginate
     @Override
     public ViewConfiguration<State> configuration() {
         return ViewConfiguration.withString(
-                (state, ctx) -> "Test Paginated View - Page " + (state.page() + 1),
+                (state, _) -> "Test Paginated View - Page " + (state.page() + 1),
                 InventoryType.CHEST_6_ROW
         );
     }
@@ -52,8 +52,8 @@ public final class TestPaginatedView extends PaginatedView<Integer, TestPaginate
     }
 
     @Override
-    protected boolean shouldFilterFromSearch(String query, Integer item) {
-        return !String.valueOf(item).contains(query);
+    protected boolean shouldFilterFromSearch(State state, Integer item) {
+        return !String.valueOf(item).contains(state.query);
     }
 
     @Override
@@ -74,28 +74,14 @@ public final class TestPaginatedView extends PaginatedView<Integer, TestPaginate
         return 53;
     }
 
-    @Override
-    protected int getSearchSlot() {
-        return -1;
-    }
-
     public record State(List<Integer> items, int page, String query) implements PaginatedState<Integer> {
         public State(List<Integer> items) {
             this(items, 0, "");
         }
 
-        public static State withItems(int count) {
-            return new State(IntStream.rangeClosed(1, count).boxed().toList());
-        }
-
         @Override
         public PaginatedState<Integer> withPage(int page) {
             return new State(items, page, query);
-        }
-
-        @Override
-        public PaginatedState<Integer> withQuery(String query) {
-            return new State(items, 0, query);
         }
 
         @Override

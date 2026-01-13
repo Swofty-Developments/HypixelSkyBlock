@@ -78,8 +78,8 @@ public final class AbiphoneView extends PaginatedView<AbiphoneNPC, AbiphoneView.
     }
 
     @Override
-    protected boolean shouldFilterFromSearch(String query, AbiphoneNPC item) {
-        return !item.getName().toLowerCase().contains(query.toLowerCase());
+    protected boolean shouldFilterFromSearch(State state, AbiphoneNPC item) {
+        return !item.getName().toLowerCase().contains(state.query.toLowerCase());
     }
 
     @Override
@@ -129,11 +129,6 @@ public final class AbiphoneView extends PaginatedView<AbiphoneNPC, AbiphoneView.
         return 53;
     }
 
-    @Override
-    protected int getSearchSlot() {
-        return -1;
-    }
-
     public record State(
             SkyBlockItem abiphone,
             List<AbiphoneNPC> items,
@@ -149,11 +144,6 @@ public final class AbiphoneView extends PaginatedView<AbiphoneNPC, AbiphoneView.
         @Override
         public PaginatedState<AbiphoneNPC> withPage(int page) {
             return new State(abiphone, items, page, query, sortType);
-        }
-
-        @Override
-        public PaginatedState<AbiphoneNPC> withQuery(String query) {
-            return new State(abiphone, items, 0, query, sortType);
         }
 
         @Override

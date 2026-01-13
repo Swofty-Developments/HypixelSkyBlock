@@ -3,10 +3,10 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
@@ -36,6 +36,24 @@ public class GUIRecipeBook extends StatelessView {
         ArrayList<SkyBlockRecipe> allRecipes = new ArrayList<>();
         allRecipes.addAll(ShapedRecipe.CACHED_RECIPES);
         allRecipes.addAll(ShapelessRecipe.CACHED_RECIPES);
+
+        layout.slot(51, (_, _) -> ItemStackCreator.getStack("§aSearch Recipes", Material.OAK_SIGN, 1, List.of(
+                "§8/recipe <query>",
+                "",
+                "§7Search all recipes in SkyBlock. May",
+                "§7include recipes with aren't in the",
+                "§7recipe book.",
+                "",
+                "§eClick to search!"
+        )), (_, c) -> {
+            new HypixelSignGUI(c.player()).open(new String[]{"Enter query", ""}).thenAccept(line -> {
+                if (line == null) {
+                    return;
+                }
+
+                c.push(new GUISearchRecipe(), GUISearchRecipe.createInitialState(line));
+            });
+        });
 
         layout.slot(4, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();

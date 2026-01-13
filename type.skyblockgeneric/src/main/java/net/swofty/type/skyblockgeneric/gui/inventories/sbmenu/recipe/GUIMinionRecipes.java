@@ -24,11 +24,9 @@ public class GUIMinionRecipes extends StatelessView {
     ));
 
     private final MinionRegistry minionRegistry;
-    private final StatelessView previousView;
 
-    public GUIMinionRecipes(MinionRegistry minionRegistry, StatelessView previousView) {
+    public GUIMinionRecipes(MinionRegistry minionRegistry) {
         this.minionRegistry = minionRegistry;
-        this.previousView = previousView;
     }
 
     @Override

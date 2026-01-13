@@ -84,7 +84,7 @@ public class GUICollectionItem extends StatelessView {
                         colour + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1),
                         material, 1, lore);
             }, (click, c) -> {
-                //new GUICollectionReward(item, reward).open((SkyBlockPlayer) c.player())
+                ctx.push(new GUICollectionReward(item, reward));
             });
         }
     }

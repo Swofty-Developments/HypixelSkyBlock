@@ -44,11 +44,6 @@ public class GUIEmblem extends PaginatedView<SkyBlockEmblems.SkyBlockEmblem, GUI
     }
 
     @Override
-    protected int getSearchSlot() {
-        return -1; // No search
-    }
-
-    @Override
     protected int getNextPageSlot() {
         return 44;
     }
@@ -100,8 +95,8 @@ public class GUIEmblem extends PaginatedView<SkyBlockEmblems.SkyBlockEmblem, GUI
     }
 
     @Override
-    protected boolean shouldFilterFromSearch(String query, SkyBlockEmblems.SkyBlockEmblem item) {
-        return !item.displayName().toLowerCase().contains(query.toLowerCase());
+    protected boolean shouldFilterFromSearch(EmblemState state, SkyBlockEmblems.SkyBlockEmblem item) {
+        return !item.displayName().toLowerCase().contains(state.query.toLowerCase());
     }
 
     @Override
@@ -113,11 +108,6 @@ public class GUIEmblem extends PaginatedView<SkyBlockEmblems.SkyBlockEmblem, GUI
     public record EmblemState(List<SkyBlockEmblems.SkyBlockEmblem> items, int page, String query) implements PaginatedState<SkyBlockEmblems.SkyBlockEmblem> {
         @Override
         public PaginatedState<SkyBlockEmblems.SkyBlockEmblem> withPage(int page) {
-            return new EmblemState(items, page, query);
-        }
-
-        @Override
-        public PaginatedState<SkyBlockEmblems.SkyBlockEmblem> withQuery(String query) {
             return new EmblemState(items, page, query);
         }
 

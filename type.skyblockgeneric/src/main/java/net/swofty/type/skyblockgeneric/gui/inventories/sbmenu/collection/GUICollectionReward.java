@@ -80,9 +80,9 @@ public class GUICollectionReward extends StatelessView {
                     try {
                         SkyBlockItem skyBlockItem = ((CollectionCategory.UnlockRecipe) unlock).getRecipes().getFirst().getResult();
                         if (skyBlockItem.hasComponent(MinionComponent.class)) {
-                            c.player().openView(new GUIMinionRecipes(skyBlockItem.getAttributeHandler().getMinionType(), new GUICollectionReward(item, reward)));
+                            c.push(new GUIMinionRecipes(skyBlockItem.getAttributeHandler().getMinionType()));
                         } else {
-                            c.player().openView(new GUIRecipe(skyBlockItem.getAttributeHandler().getPotentialType()));
+                            c.push(new GUIRecipe(skyBlockItem.getAttributeHandler().getPotentialType()));
                         }
                     } catch (NullPointerException exception) {
                         player.sendMessage("There is no recipe available for this item!");

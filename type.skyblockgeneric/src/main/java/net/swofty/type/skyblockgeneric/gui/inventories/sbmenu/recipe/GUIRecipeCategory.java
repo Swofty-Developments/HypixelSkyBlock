@@ -23,9 +23,10 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe, GUIRecipeCategory.RecipeCategoryState> {
+public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecipeCategory.RecipeCategoryState> {
 
     private static final int[] PAGINATED_SLOTS = {
             10, 11, 12, 13, 14, 15, 16,
@@ -54,27 +55,16 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe, GUIRecipeCa
     }
 
     @Override
-    protected List<SkyBlockRecipe> getFilteredItems(RecipeCategoryState state) {
-        List<SkyBlockRecipe> recipes = new ArrayList<>(state.items());
-        String query = state.query();
-
-        if (query != null && !query.isEmpty()) {
-            recipes = recipes.stream().filter(item -> !shouldFilterFromSearch(query, item)).toList();
-        }
-
-        return recipes;
-    }
-
-    @Override
-    protected ItemStack.Builder renderItem(SkyBlockRecipe item, int index, HypixelPlayer player) {
-        SkyBlockRecipe.CraftingResult result = (SkyBlockRecipe.CraftingResult) item.getCanCraft().apply(player);
+    protected ItemStack.Builder renderItem(SkyBlockRecipe<?> item, int index, HypixelPlayer p) {
+        SkyBlockPlayer player = (SkyBlockPlayer) p;
+        SkyBlockRecipe.CraftingResult result = item.getCanCraft().apply(player);
         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
-                (SkyBlockPlayer) player, item.getResult().getItemStack()
+                player, item.getResult().getItemStack()
         );
 
         if (result.allowed()) {
             ArrayList<String> lore = new ArrayList<>(
-                    itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList()
+                    Objects.requireNonNull(itemStack.build().get(DataComponents.LORE)).stream().map(StringUtility::getTextFromComponent).toList()
             );
             lore.add("§e ");
             lore.add("§eClick to view recipe!");
@@ -90,9 +80,9 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe, GUIRecipeCa
     }
 
     @Override
-    protected void onItemClick(ClickContext<RecipeCategoryState> click, ViewContext ctx, SkyBlockRecipe item, int index) {
+    protected void onItemClick(ClickContext<RecipeCategoryState> click, ViewContext ctx, SkyBlockRecipe<?> item, int index) {
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
-        SkyBlockRecipe.CraftingResult result = (SkyBlockRecipe.CraftingResult) item.getCanCraft().apply(player);
+        SkyBlockRecipe.CraftingResult result = item.getCanCraft().apply(player);
 
         if (result.allowed()) {
             ctx.push(new GUIRecipe(item.getResult().getAttributeHandler().getPotentialType()));
@@ -102,10 +92,8 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe, GUIRecipeCa
     }
 
     @Override
-    protected boolean shouldFilterFromSearch(String query, SkyBlockRecipe item) {
-        return !StringUtility.getTextFromComponent(new NonPlayerItemUpdater(
-                item.getResult()
-        ).getUpdatedItem().build().get(DataComponents.CUSTOM_NAME)).toLowerCase().contains(query.toLowerCase());
+    protected boolean shouldFilterFromSearch(RecipeCategoryState query, SkyBlockRecipe<?> item) {
+        return false;
     }
 
     @Override
@@ -113,7 +101,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe, GUIRecipeCa
         Components.close(layout, 49);
         Components.back(layout, 48, ctx);
 
-        ArrayList<SkyBlockRecipe> allRecipes = new ArrayList<>();
+        ArrayList<SkyBlockRecipe<?>> allRecipes = new ArrayList<>();
         allRecipes.addAll(ShapedRecipe.CACHED_RECIPES);
         allRecipes.addAll(ShapelessRecipe.CACHED_RECIPES);
 
@@ -121,8 +109,8 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe, GUIRecipeCa
         layout.slot(4, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
 
-            ArrayList<SkyBlockRecipe> typeRecipes = new ArrayList<>();
-            ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
+            ArrayList<SkyBlockRecipe<?>> typeRecipes = new ArrayList<>();
+            ArrayList<SkyBlockRecipe<?>> allowedRecipes = new ArrayList<>();
             allRecipes.forEach(recipe -> {
                 if (recipe.getRecipeType() == type) {
                     typeRecipes.add(recipe);
@@ -134,8 +122,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe, GUIRecipeCa
                     "§7that you have unlocked!", " "));
 
             typeRecipes.forEach(recipe -> {
-                SkyBlockRecipe.CraftingResult result =
-                        (SkyBlockRecipe.CraftingResult) recipe.getCanCraft().apply(player);
+                SkyBlockRecipe.CraftingResult result = recipe.getCanCraft().apply(player);
 
                 if (result.allowed()) {
                     allowedRecipes.add(recipe);
@@ -173,13 +160,8 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe, GUIRecipeCa
         return 53;
     }
 
-    @Override
-    protected int getSearchSlot() {
-        return 50;
-    }
-
     public static RecipeCategoryState createInitialState(SkyBlockRecipe.RecipeType type) {
-        List<SkyBlockRecipe> recipes = new ArrayList<>();
+        List<SkyBlockRecipe<?>> recipes = new ArrayList<>();
         recipes.addAll(ShapedRecipe.CACHED_RECIPES);
         recipes.addAll(ShapelessRecipe.CACHED_RECIPES);
 
@@ -200,22 +182,17 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe, GUIRecipeCa
     }
 
     public record RecipeCategoryState(
-            List<SkyBlockRecipe> items,
+            List<SkyBlockRecipe<?>> items,
             int page,
             String query
-    ) implements PaginatedState<SkyBlockRecipe> {
+    ) implements PaginatedState<SkyBlockRecipe<?>> {
         @Override
-        public PaginatedState<SkyBlockRecipe> withPage(int page) {
+        public PaginatedState<SkyBlockRecipe<?>> withPage(int page) {
             return new RecipeCategoryState(items, page, query);
         }
 
         @Override
-        public PaginatedState<SkyBlockRecipe> withQuery(String query) {
-            return new RecipeCategoryState(items, 0, query);
-        }
-
-        @Override
-        public PaginatedState<SkyBlockRecipe> withItems(List<SkyBlockRecipe> items) {
+        public PaginatedState<SkyBlockRecipe<?>> withItems(List<SkyBlockRecipe<?>> items) {
             return new RecipeCategoryState(items, page, query);
         }
     }

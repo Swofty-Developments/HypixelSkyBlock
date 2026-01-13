@@ -12,6 +12,7 @@ import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIMinionRecipes;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
 import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
@@ -44,11 +45,6 @@ public class GUICraftedMinions extends PaginatedView<SkyBlockItem, GUICraftedMin
                 28, 29, 30, 31, 32, 33, 34,
                 37, 38, 39, 40, 41, 42, 43
         };
-    }
-
-    @Override
-    protected int getSearchSlot() {
-        return -1; // No search
     }
 
     @Override
@@ -102,13 +98,11 @@ public class GUICraftedMinions extends PaginatedView<SkyBlockItem, GUICraftedMin
 
     @Override
     protected void onItemClick(ClickContext<MinionsState> click, ViewContext ctx, SkyBlockItem item, int index) {
-        // TODO: Open minion recipes GUI when ported
-        // SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
-        // new GUIMinionRecipes(item.getAttributeHandler().getMinionType(), ...).open(player);
+        ctx.push(new GUIMinionRecipes(item.getAttributeHandler().getMinionType()));
     }
 
     @Override
-    protected boolean shouldFilterFromSearch(String query, SkyBlockItem item) {
+    protected boolean shouldFilterFromSearch(MinionsState state, SkyBlockItem item) {
         return false;
     }
 
@@ -121,11 +115,6 @@ public class GUICraftedMinions extends PaginatedView<SkyBlockItem, GUICraftedMin
     public record MinionsState(List<SkyBlockItem> items, int page, String query) implements PaginatedState<SkyBlockItem> {
         @Override
         public PaginatedState<SkyBlockItem> withPage(int page) {
-            return new MinionsState(items, page, query);
-        }
-
-        @Override
-        public PaginatedState<SkyBlockItem> withQuery(String query) {
             return new MinionsState(items, page, query);
         }
 

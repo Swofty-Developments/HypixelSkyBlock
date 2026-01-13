@@ -46,12 +46,7 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
     @Override
     protected List<SkyBlockItem> getFilteredItems(PetsState state) {
         List<SkyBlockItem> pets = new ArrayList<>(state.items());
-        String query = state.query();
-
-        // Apply search filter first
-        if (query != null && !query.isEmpty()) {
-            pets = pets.stream().filter(item -> !shouldFilterFromSearch(query, item)).toList();
-        }
+        pets = pets.stream().filter(item -> !shouldFilterFromSearch(state, item)).toList();
 
         // Apply sorting
         pets = new ArrayList<>(pets);
@@ -140,8 +135,8 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
     }
 
     @Override
-    protected boolean shouldFilterFromSearch(String query, SkyBlockItem item) {
-        return !item.getDisplayName().toLowerCase().contains(query.toLowerCase());
+    protected boolean shouldFilterFromSearch(PetsState state, SkyBlockItem item) {
+        return !item.getDisplayName().toLowerCase().contains(state.query.toLowerCase());
     }
 
     @Override
@@ -227,11 +222,6 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
         return 53;
     }
 
-    @Override
-    protected int getSearchSlot() {
-        return -1;
-    }
-
     private static List<SkyBlockItem> getPetsFromPlayer(SkyBlockPlayer player) {
         return new ArrayList<>(player.getPetData().getPetsMap().keySet().stream().toList());
     }
@@ -250,11 +240,6 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
         @Override
         public PaginatedState<SkyBlockItem> withPage(int page) {
             return new PetsState(items, page, query, sortType, convertToItem);
-        }
-
-        @Override
-        public PaginatedState<SkyBlockItem> withQuery(String query) {
-            return new PetsState(items, 0, query, sortType, convertToItem);
         }
 
         @Override

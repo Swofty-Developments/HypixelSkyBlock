@@ -14,9 +14,13 @@ import java.util.Set;
 
 public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>> implements View<S> {
 
-    protected static final ItemStack.Builder PREV_ARROW = ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aPrevious Page"));
-    protected static final ItemStack.Builder NEXT_ARROW = ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aNext Page"));
-    protected static final ItemStack.Builder SEARCH_ICON = ItemStack.builder(Material.BIRCH_SIGN).set(DataComponents.CUSTOM_NAME, Component.text("§aSearch"));
+    protected static final int[] DEFAULT_SLOTS = {
+            10, 11, 12, 13, 14, 15, 16,
+            19, 20, 21, 22, 23, 24, 25,
+            28, 29, 30, 31, 32, 33, 34,
+            37, 38, 39, 40, 41, 42, 43
+    };
+
     protected static final ItemStack.Builder FILLER = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE).set(DataComponents.CUSTOM_NAME, Component.text(" ")).set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of()));
 
     public interface PaginatedState<T> {
@@ -24,11 +28,7 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
 
         int page();
 
-        String query();
-
         PaginatedState<T> withPage(int page);
-
-        PaginatedState<T> withQuery(String query);
 
         PaginatedState<T> withItems(List<T> items);
     }
@@ -64,11 +64,7 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
     }
 
     protected List<T> getFilteredItems(S state) {
-        String query = state.query();
-        if (query == null || query.isEmpty()) {
-            return state.items();
-        }
-        return state.items().stream().filter(item -> !shouldFilterFromSearch(query, item)).toList();
+        return state.items().stream().filter(item -> !shouldFilterFromSearch(state, item)).toList();
     }
 
     protected void layoutBackground(ViewLayout<S> layout, S state, ViewContext ctx) {
@@ -78,7 +74,6 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
     protected void layoutNavigation(ViewLayout<S> layout, S state, ViewContext ctx, int currentPage, int totalPages) {
         int prevSlot = getPreviousPageSlot();
         int nextSlot = getNextPageSlot();
-        int searchSlot = getSearchSlot();
 
         if (prevSlot >= 0) {
             if (currentPage > 0) {
@@ -101,13 +96,7 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
                 layout.slot(nextSlot, FILLER);
             }
         }
-
-        if (searchSlot >= 0) {
-            layout.slot(searchSlot, (s, c) -> createSearchItem(state.query()), this::onSearchClick);
-        }
     }
-
-    protected abstract int getSearchSlot();
 
     protected abstract int getNextPageSlot();
 
@@ -124,21 +113,13 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
         return ItemStack.builder(Material.ARROW).set(DataComponents.CUSTOM_NAME, Component.text("§aNext Page")).set(DataComponents.LORE, List.of(Component.text("§7Page " + (currentPage + 2) + " of " + totalPages)));
     }
 
-    protected ItemStack.Builder createSearchItem(String currentQuery) {
-        String queryDisplay = currentQuery.isEmpty() ? "None" : currentQuery;
-        return ItemStack.builder(Material.BIRCH_SIGN).set(DataComponents.CUSTOM_NAME, Component.text("§aSearch")).set(DataComponents.LORE, List.of(Component.text("§7Query: §e" + queryDisplay), Component.text(""), Component.text("§eClick to search!")));
-    }
-
-    protected void onSearchClick(ClickContext<S> click, ViewContext ctx) {
-    }
-
     protected abstract int[] getPaginatedSlots();
 
     protected abstract ItemStack.Builder renderItem(T item, int index, HypixelPlayer player);
 
     protected abstract void onItemClick(ClickContext<S> click, ViewContext ctx, T item, int index);
 
-    protected abstract boolean shouldFilterFromSearch(String query, T item);
+    protected abstract boolean shouldFilterFromSearch(S state, T item);
 
     public static int[] createGrid(int startSlot, int endSlot) {
         return Layouts.rectangle(startSlot, endSlot).stream().mapToInt(Integer::intValue).toArray();
