@@ -1,20 +1,13 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats;
 
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockProfile;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 
@@ -22,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class GUIMiscStats extends HypixelInventoryGUI {
+public class GUIMiscStats extends StatelessView {
 
     private enum MiscStat {
         SPEED(10, ItemStatistic.SPEED, new GUIMaterial(Material.SUGAR),
@@ -171,7 +164,7 @@ public class GUIMiscStats extends HypixelInventoryGUI {
             return lore;
         }
 
-        public ItemStack.Builder buildItemStack(SkyBlockPlayer player) {
+        public net.minestom.server.item.ItemStack.Builder buildItemStack(SkyBlockPlayer player) {
             double value = player.getStatistics().allStatistics().getOverall(statistic);
             String title = statistic.getFullDisplayName() + " §f" +
                     StringUtility.decimalify(value, 1);
@@ -181,73 +174,46 @@ public class GUIMiscStats extends HypixelInventoryGUI {
         }
     }
 
-    public GUIMiscStats() {
-        super("Your Stats Breakdown", InventoryType.CHEST_6_ROW);
+    @Override
+    public ViewConfiguration<DefaultState> configuration() {
+        return new ViewConfiguration<>("Your Stats Breakdown", InventoryType.CHEST_6_ROW);
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        //set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockProfile()));
-        set(GUIClickableItem.getCloseItem(49));
+    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+        Components.fill(layout);
+        Components.back(layout, 48, ctx);
+        Components.close(layout, 49);
 
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                PlayerStatistics statistics = player.getStatistics();
-                List<String> lore = new ArrayList<>(List.of("§7Augments various aspects of your", "§7gameplay! ", " "));
-                List<ItemStatistic> stats = new ArrayList<>(List.of(
-                        ItemStatistic.SPEED, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK,
-                        ItemStatistic.COLD_RESISTANCE, ItemStatistic.BONUS_PEST_CHANCE,
-                        ItemStatistic.HEAT_RESISTANCE, ItemStatistic.FEAR, ItemStatistic.PULL,
-                        ItemStatistic.RESPIRATION, ItemStatistic.PRESSURE_RESISTANCE
-                ));
+        layout.slot(4, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            PlayerStatistics statistics = player.getStatistics();
+            List<String> lore = new ArrayList<>(List.of("§7Augments various aspects of your", "§7gameplay! ", " "));
+            List<ItemStatistic> stats = new ArrayList<>(List.of(
+                    ItemStatistic.SPEED, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK,
+                    ItemStatistic.COLD_RESISTANCE, ItemStatistic.BONUS_PEST_CHANCE,
+                    ItemStatistic.HEAT_RESISTANCE, ItemStatistic.FEAR, ItemStatistic.PULL,
+                    ItemStatistic.RESPIRATION, ItemStatistic.PRESSURE_RESISTANCE
+            ));
 
-                statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (stats.contains(statistic)) {
-                        lore.add(" " + statistic.getFullDisplayName() + " §f" +
-                                StringUtility.decimalify(value, 2) + statistic.getSuffix());
-                    }
-                });
+            statistics.allStatistics().getOverall().forEach((statistic, value) -> {
+                if (stats.contains(statistic)) {
+                    lore.add(" " + statistic.getFullDisplayName() + " §f" +
+                            StringUtility.decimalify(value, 2) + statistic.getSuffix());
+                }
+            });
 
-                return ItemStackCreator.getStack("§dMisc Stats", Material.CLOCK, 1, lore);
-            }
+            return ItemStackCreator.getStack("§dMisc Stats", Material.CLOCK, 1, lore);
         });
 
         for (MiscStat stat : MiscStat.values()) {
-            set(new GUIClickableItem(stat.slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    player.sendMessage("§aUnder construction!");
-                }
-
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    return stat.buildItemStack((SkyBlockPlayer) p);
-                }
-            });
+            layout.slot(stat.slot, (s, c) -> stat.buildItemStack((SkyBlockPlayer) c.player()),
+                    (click, c) -> ((SkyBlockPlayer) c.player()).sendMessage("§aUnder construction!"));
         }
-
-        updateItemStacks(getInventory(), getPlayer());
     }
 
     @Override
-    public boolean allowHotkeying() {
-        return false;
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(false);
+    public boolean onBottomClick(net.swofty.type.generic.gui.v2.context.ClickContext<DefaultState> click, ViewContext ctx) {
+        return true;
     }
 }

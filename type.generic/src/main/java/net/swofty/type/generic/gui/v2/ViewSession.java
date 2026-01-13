@@ -67,6 +67,7 @@ public final class ViewSession<S> {
 
     private final Int2ObjectOpenHashMap<ItemStack> trackedSlotItems = new Int2ObjectOpenHashMap<>();
     private final Set<Integer> recentlyModifiedSlots = new HashSet<>();
+    private final Set<Integer> initializedEditableSlots = new HashSet<>();
     private final Map<Integer, Task> autoUpdateTasks = new HashMap<>();
     private final Map<UUID, Set<Integer>> componentSlots = new HashMap<>();
 
@@ -248,6 +249,11 @@ public final class ViewSession<S> {
         close(CloseReason.PLAYER_EXITED);
     }
 
+    public void refresh() {
+        layoutDirty = true;
+        render();
+    }
+
     public void render() {
         if (closed) return;
 
@@ -264,7 +270,7 @@ public final class ViewSession<S> {
 
             cachedLayout.components().forEach((slot, component) -> {
                 if (component.behavior() == SlotBehavior.EDITABLE) {
-                    renderEditableSlot(slot);
+                    renderEditableSlot(slot, component);
                     return;
                 }
 
@@ -285,7 +291,7 @@ public final class ViewSession<S> {
 
         cachedLayout.components().forEach((slot, component) -> {
             if (component.behavior() == SlotBehavior.EDITABLE) {
-                renderEditableSlot(slot);
+                renderEditableSlot(slot, component);
                 return;
             }
             renderSlot(slot, component);
@@ -294,16 +300,40 @@ public final class ViewSession<S> {
         view.onRefresh(state, context);
     }
 
-    private void renderEditableSlot(int slot) {
+    private void renderEditableSlot(int slot, ViewComponent<S> component) {
         if (sharedContext != null) {
             ItemStack contextItem = sharedContext.getSlotItem(slot);
+            if (!initializedEditableSlots.contains(slot)) {
+                if (contextItem.isAir()) {
+                    ItemStack initialItem = component.render().apply(state, context).build();
+                    if (!initialItem.isAir()) {
+                        inventory.setItemStack(slot, initialItem);
+                        sharedContext.setSlotItem(slot, initialItem);
+                        contextItem = initialItem;
+                    }
+                }
+                initializedEditableSlots.add(slot);
+            }
             if (!inventory.getItemStack(slot).equals(contextItem)) {
                 inventory.setItemStack(slot, contextItem);
             }
             trackedSlotItems.put(slot, contextItem);
-        } else if (!recentlyModifiedSlots.contains(slot)) {
-            ItemStack currentItem = inventory.getItemStack(slot);
-            trackedSlotItems.put(slot, currentItem);
+        } else {
+            if (!initializedEditableSlots.contains(slot)) {
+                ItemStack currentItem = inventory.getItemStack(slot);
+                if (currentItem.isAir()) {
+                    ItemStack initialItem = component.render().apply(state, context).build();
+                    if (!initialItem.isAir()) {
+                        inventory.setItemStack(slot, initialItem);
+                        currentItem = initialItem;
+                    }
+                }
+                initializedEditableSlots.add(slot);
+                trackedSlotItems.put(slot, currentItem);
+            } else if (!recentlyModifiedSlots.contains(slot)) {
+                ItemStack currentItem = inventory.getItemStack(slot);
+                trackedSlotItems.put(slot, currentItem);
+            }
         }
     }
 

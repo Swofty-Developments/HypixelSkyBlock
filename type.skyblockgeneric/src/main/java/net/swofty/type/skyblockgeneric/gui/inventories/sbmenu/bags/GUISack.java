@@ -1,18 +1,15 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags;
 
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ClickContext;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.SackComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
@@ -22,9 +19,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class GUISack extends HypixelInventoryGUI {
-    ItemType itemTypeLinker;
-    Boolean closeGUIButton;
+public class GUISack implements StatefulView<GUISack.SackState> {
+    private final ItemType itemTypeLinker;
+    private final boolean closeGUIButton;
+    private final SackSize sackSize;
 
     private static final List<SackSize> SACK_SIZES = List.of(
             new SackSize(14, InventoryType.CHEST_4_ROW, List.of(
@@ -54,40 +52,38 @@ public class GUISack extends HypixelInventoryGUI {
                 .orElse(SACK_SIZES.getLast());
     }
 
-    public GUISack(ItemType sack, Boolean closeGUIButton) {
-        super(StringUtility.toNormalCase(sack.name()), getSackSize(sack).getInventoryType());
+    public GUISack(ItemType sack, boolean closeGUIButton) {
         this.itemTypeLinker = sack;
         this.closeGUIButton = closeGUIButton;
+        this.sackSize = getSackSize(sack);
     }
 
+    @Override
+    public ViewConfiguration<SackState> configuration() {
+        return new ViewConfiguration<>(StringUtility.toNormalCase(itemTypeLinker.name()), sackSize.getInventoryType());
+    }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        if (!closeGUIButton) {
-            int backSlot = switch (GUISack.super.size) {
-                case InventoryType.CHEST_4_ROW -> 31;
-                case InventoryType.CHEST_5_ROW -> 40;
-                case InventoryType.CHEST_6_ROW -> 49;
-                default -> 31;
-            };
-            set(new GUIClickableItem(backSlot) {
-                @Override
-                public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                    player.openView(new GUISackOfSacks());
-                }
+    public SackState initialState() {
+        return new SackState();
+    }
 
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer player) {
-                    return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, "§7To Sack of Sacks");
-                }
-            });
+    @Override
+    public void layout(ViewLayout<SackState> layout, SackState state, ViewContext ctx) {
+        Components.fill(layout);
+
+        int backSlot = switch (sackSize.getInventoryType()) {
+            case InventoryType.CHEST_4_ROW -> 31;
+            case InventoryType.CHEST_5_ROW -> 40;
+            case InventoryType.CHEST_6_ROW -> 49;
+            default -> 31;
+        };
+
+        if (!closeGUIButton) {
+            layout.slot(backSlot, (s, c) -> ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, "§7To Sack of Sacks"),
+                    (click, c) -> c.player().openView(new GUISackOfSacks()));
         } else {
-            switch (GUISack.super.size) {
-                case InventoryType.CHEST_4_ROW -> set(GUIClickableItem.getCloseItem(31));
-                case InventoryType.CHEST_5_ROW -> set(GUIClickableItem.getCloseItem(40));
-                case InventoryType.CHEST_6_ROW -> set(GUIClickableItem.getCloseItem(49));
-            }
+            Components.close(layout, backSlot);
         }
 
         List<SkyBlockItem> sackItems = new ArrayList<>();
@@ -100,99 +96,78 @@ public class GUISack extends HypixelInventoryGUI {
             }
         }
 
-        int index = 0;
-        for (Integer slot : getSackSize(itemTypeLinker).getSlots()) {
-            int finalMaxStorage = ((SkyBlockPlayer) e.player()).getMaxSackStorage(itemTypeLinker);
-            int finalIndex = index;
+        SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
+        int finalMaxStorage = player.getMaxSackStorage(itemTypeLinker);
 
-            if (finalIndex < sackItems.size()) {
+        int index = 0;
+        for (Integer slot : sackSize.getSlots()) {
+            if (index < sackItems.size()) {
                 SkyBlockItem skyBlockItem = sackItems.get(index);
                 ItemType linker = skyBlockItem.getAttributeHandler().getPotentialType();
-                set(new GUIClickableItem(slot) {
-                    @Override
-                    public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                        SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        Integer amount = player.getSackItems().getAmount(linker);
-                        if (e.getClick() instanceof Click.Right) {
-                            if (amount == 0) return;
-                            if (amount >= 64) {
-                                player.getSackItems().decrease(linker, 64);
-                                SkyBlockItem itemAdded = new SkyBlockItem(linker);
-                                itemAdded.setAmount(64);
-                                player.addAndUpdateItem(itemAdded);
-                                new GUISack(itemTypeLinker, closeGUIButton).open(player);
-                            } else {
-                                player.getSackItems().decrease(linker, amount);
-                                SkyBlockItem itemAdded = new SkyBlockItem(linker);
-                                itemAdded.setAmount(amount);
-                                player.addAndUpdateItem(itemAdded);
-                                new GUISack(itemTypeLinker, closeGUIButton).open(player);
-                            }
-                        } else if (e.getClick() instanceof Click.Left) {
-                            int airSlots = 0;
-                            for (ItemStack itemStack : player.getInventory().getItemStacks()) {
-                                if (itemStack.isAir()) airSlots++;
-                            }
-                            int maxSpace = 64 * airSlots;
-                            if (amount >= maxSpace) {
-                                player.getSackItems().decrease(linker, maxSpace);
-                                SkyBlockItem itemAdded = new SkyBlockItem(linker);
-                                itemAdded.setAmount(64);
-                                for (int i = 0; i < airSlots; i++) {
-                                    player.addAndUpdateItem(itemAdded);
-                                }
-                                new GUISack(itemTypeLinker, closeGUIButton).open(player);
-                            } else {
-                                player.getSackItems().decrease(linker, amount);
-                                SkyBlockItem itemAdded = new SkyBlockItem(linker);
-                                itemAdded.setAmount(amount);
-                                player.addAndUpdateItem(itemAdded);
-                                new GUISack(itemTypeLinker, closeGUIButton).open(player);
-                            }
-                        }
-                    }
+                int finalIndex = index;
 
-                    @Override
-                    public ItemStack.Builder getItem(HypixelPlayer p) {
-                        SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack());
-                        ArrayList<String> lore = new ArrayList<>();
-                        Integer amount = player.getSackItems().getAmount(linker);
-                        String color = (amount == finalMaxStorage) ? "§a" : "§e";
-                        lore.add("");
-                        lore.add("§7Stored: " + color + amount + "§7/" + StringUtility.shortenNumber(StringUtility.roundTo(finalMaxStorage, 0)));
-                        lore.add("");
-                        if (amount != 0) {
-                            lore.add("§bRight-Click for stack!");
-                            lore.add("§eClick to pickup!");
-                        } else {
-                            lore.add("§8Empty sack!");
-                        }
-                        return ItemStackCreator.updateLore(builder, lore);
+                layout.slot(slot, (s, c) -> {
+                    SkyBlockPlayer p = (SkyBlockPlayer) c.player();
+                    ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(p, skyBlockItem.getItemStack());
+                    ArrayList<String> lore = new ArrayList<>();
+                    Integer amount = p.getSackItems().getAmount(linker);
+                    String color = (amount == finalMaxStorage) ? "§a" : "§e";
+                    lore.add("");
+                    lore.add("§7Stored: " + color + amount + "§7/" + StringUtility.shortenNumber(StringUtility.roundTo(finalMaxStorage, 0)));
+                    lore.add("");
+                    if (amount != 0) {
+                        lore.add("§bRight-Click for stack!");
+                        lore.add("§eClick to pickup!");
+                    } else {
+                        lore.add("§8Empty sack!");
                     }
-                });
+                    return ItemStackCreator.updateLore(builder, lore);
+                }, (click, c) -> handleSackItemClick(click, c, linker));
             }
             index++;
         }
-        updateItemStacks(getInventory(), getPlayer());
     }
 
-    @Override
-    public boolean allowHotkeying() {
-        return false;
+    private void handleSackItemClick(ClickContext<SackState> click, ViewContext ctx, ItemType linker) {
+        SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
+        Integer amount = player.getSackItems().getAmount(linker);
+
+        if (click.click() instanceof Click.Right) {
+            if (amount == 0) return;
+            if (amount >= 64) {
+                player.getSackItems().decrease(linker, 64);
+                SkyBlockItem itemAdded = new SkyBlockItem(linker);
+                itemAdded.setAmount(64);
+                player.addAndUpdateItem(itemAdded);
+            } else {
+                player.getSackItems().decrease(linker, amount);
+                SkyBlockItem itemAdded = new SkyBlockItem(linker);
+                itemAdded.setAmount(amount);
+                player.addAndUpdateItem(itemAdded);
+            }
+            ctx.session(SackState.class).refresh();
+        } else if (click.click() instanceof Click.Left) {
+            int airSlots = 0;
+            for (ItemStack itemStack : player.getInventory().getItemStacks()) {
+                if (itemStack.isAir()) airSlots++;
+            }
+            int maxSpace = 64 * airSlots;
+            if (amount >= maxSpace) {
+                player.getSackItems().decrease(linker, maxSpace);
+                SkyBlockItem itemAdded = new SkyBlockItem(linker);
+                itemAdded.setAmount(64);
+                for (int i = 0; i < airSlots; i++) {
+                    player.addAndUpdateItem(itemAdded);
+                }
+            } else {
+                player.getSackItems().decrease(linker, amount);
+                SkyBlockItem itemAdded = new SkyBlockItem(linker);
+                itemAdded.setAmount(amount);
+                player.addAndUpdateItem(itemAdded);
+            }
+            ctx.session(SackState.class).refresh();
+        }
     }
 
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
-
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
+    public record SackState() {}
 }

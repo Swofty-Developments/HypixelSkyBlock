@@ -68,7 +68,7 @@ public class GUISackOfSacks implements StatefulView<GUISackOfSacks.SackOfSacksSt
                 if (click.click() instanceof Click.Right) {
                     SkyBlockItem skyBlockItem = new SkyBlockItem(c.inventory().getItemStack(slotIndex));
                     if (skyBlockItem.isNA() || skyBlockItem.isAir()) return;
-                    new GUISack(skyBlockItem.getAttributeHandler().getPotentialType(), false).open(p);
+                    c.push(new GUISack(skyBlockItem.getAttributeHandler().getPotentialType(), true));
                 }
             });
 

@@ -141,7 +141,7 @@ public class GUISkyBlockMenu extends StatelessView {
                 "§7from anywhere here.",
                 " ",
                 "§eClick to view!"
-        ), (click, c) -> new GUIStorage().open((SkyBlockPlayer) c.player()));
+        ), (click, c) -> c.push(new GUIStorage()));
 
         layout.slot(23, (s, c) -> ItemStackCreator.getStack("§aQuests & Chapters", Material.WRITABLE_BOOK, 1,
                 "§7Each island has its own series of",

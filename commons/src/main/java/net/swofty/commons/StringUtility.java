@@ -167,8 +167,10 @@ public class StringUtility {
 	}
 
 	public static String getTextFromComponent(Component component) {
+		if (component == null)
+			throw new IllegalArgumentException("Component cannot be null");
 		if (!(component instanceof TextComponent))
-			throw new IllegalArgumentException("Component must be a TextComponent");
+			throw new IllegalArgumentException("Component must be a TextComponent, but got: " + component.getClass().getSimpleName());
 		return PlainTextComponentSerializer.plainText().serialize(component);
 	}
 
