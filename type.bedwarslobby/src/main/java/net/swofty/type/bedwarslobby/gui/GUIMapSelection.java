@@ -1,5 +1,6 @@
 package net.swofty.type.bedwarslobby.gui;
 
+import io.sentry.Sentry;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
@@ -83,6 +84,7 @@ public class GUIMapSelection extends HypixelInventoryGUI {
 					}
 				})
 				.exceptionally(throwable -> {
+					Sentry.captureException(throwable);
 					throwable.printStackTrace();
 					player.sendMessage("§cFailed to load maps: " + throwable.getMessage());
 					player.closeInventory();

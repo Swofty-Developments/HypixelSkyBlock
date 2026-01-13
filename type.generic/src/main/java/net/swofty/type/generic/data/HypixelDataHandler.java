@@ -1,5 +1,6 @@
 package net.swofty.type.generic.data;
 
+import io.sentry.Sentry;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
@@ -59,6 +60,7 @@ public class HypixelDataHandler extends DataHandler {
             } catch (Exception e) {
                 this.datapoints.put(key, data.getDefaultDatapoint().deepClone().setUser(this).setData(data));
                 Logger.error(e, "Issue with datapoint {} for user {} - defaulting to default value", key, this.uuid);
+                Sentry.captureException(e);
             }
         }
         return this;

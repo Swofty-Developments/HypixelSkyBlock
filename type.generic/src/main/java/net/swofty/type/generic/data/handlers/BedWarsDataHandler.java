@@ -1,5 +1,6 @@
 package net.swofty.type.generic.data.handlers;
 
+import io.sentry.Sentry;
 import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
@@ -113,6 +114,7 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
             } catch (Exception e) {
                 this.datapoints.put(key, data.getDefaultDatapoint().deepClone().setUser(this).setData(data));
                 Logger.info("Issue with datapoint " + key + " for user " + this.uuid + " - defaulting");
+                Sentry.captureException(e);
                 e.printStackTrace();
             }
         }
@@ -182,6 +184,7 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
             } catch (Exception e) {
                 Logger.error("Issue with datapoint " + data.getKey() + " for user " + uuid + " - fix");
                 e.printStackTrace();
+                Sentry.captureException(e);
             }
         }
         return handler;
