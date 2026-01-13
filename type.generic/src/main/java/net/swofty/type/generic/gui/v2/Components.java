@@ -39,7 +39,7 @@ public final class Components {
         }
         Optional<ViewNavigator.NavigationEntry<Object>> prev = context.navigator().peekPrevious();
         Component prevTitle = prev
-                .map(entry -> entry.view().configuration().getTitleFunction().apply(entry.view(), context))
+                .map(entry -> entry.view().configuration().getTitleFunction().apply(entry.state(), context))
                 .orElse(Component.text("§r§7previous page"));
         layout.slot(slot, (s, c) -> BACK_BUTTON.lore(
                 Component.text("§7To ").append(prevTitle)
