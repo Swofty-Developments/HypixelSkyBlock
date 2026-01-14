@@ -11,6 +11,8 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.minestom.server.entity.Player;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -38,9 +40,10 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
             }
         }
 
-         // Handle cross-server teleport from /tpto command
-        if (player.getHookManager().getHook("tpto_target") != null) {
-            String targetUUIDStr = (String) player.getHookManager().getHook("tpto_target");
+        // Handle cross-server teleport from /tpto command
+        Object hook = player.getHookManager().getHook("tpto_target");
+        if (hook != null) {
+            String targetUUIDStr = (String) hook;
             player.getHookManager().removeHook("tpto_target");
 
             try {
@@ -48,18 +51,24 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
 
                 // Schedule teleport after a short delay to ensure player is fully loaded
                 player.scheduler().buildTask(() -> {
-                    HypixelPlayer targetPlayer = (HypixelPlayer) player.getInstance().getPlayers().stream()
+                    if (player.getInstance() == null) {
+                        player.sendMessage("§cFailed to teleport (instance not ready).");
+                        return;
+                    }
+
+                    Player rawTarget = player.getInstance().getPlayers().stream()
                             .filter(p -> p.getUuid().equals(targetUUID))
                             .findFirst()
                             .orElse(null);
 
-                    if (targetPlayer != null) {
-                        player.teleport(targetPlayer.getPosition());
+                    if (rawTarget != null) {
+                        player.teleport(rawTarget.getPosition());
                         player.sendMessage("§2Teleported to " + HypixelPlayer.getColouredDisplayName(targetUUID) + "§2.");
                     } else {
                         player.sendMessage("§cTarget player is no longer on this server.");
                     }
                 }).delay(java.time.Duration.ofMillis(500)).schedule();
+
             } catch (Exception e) {
                 player.sendMessage("§cFailed to teleport to target player.");
             }
