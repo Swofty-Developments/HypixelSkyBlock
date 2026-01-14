@@ -1,9 +1,7 @@
 package net.swofty.type.prototypelobby;
 
-import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
-import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
@@ -11,22 +9,21 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
+import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
 
 public class PrototypeLobbyScoreboard {
-    private static final Map<UUID, Sidebar> sidebarCache = new HashMap<>();
+    private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
     private static Integer prototypeName = 0;
 
     public static void start() {
         Scheduler scheduler = MinecraftServer.getSchedulerManager();
 
-        // Scoreboard Updater
         scheduler.submitTask(() -> {
             prototypeName++;
             if (prototypeName > 50) {
@@ -41,44 +38,35 @@ public class PrototypeLobbyScoreboard {
                     continue;
                 }
 
+                long hype = prototypeDataHandler.get(PrototypeLobbyDataHandler.Data.HYPE, DatapointLeaderboardLong.class).getValue();
 
-                Sidebar sidebar = sidebarCache.get(player.getUuid());
-                
-                if (sidebar == null) {
-                    sidebar = new Sidebar(Component.text(getSidebarName(prototypeName)));
-                    
-                    addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
-                    addLine("§7 ", sidebar);
-                    addLine("§fGames in this lobby are", sidebar);
-                    addLine("§funder heavy development!", sidebar);
-                    addLine("§7 ", sidebar);
-                    addLine("§fReport bugs and leave", sidebar);
-                    addLine("§ffeedback at", sidebar);
-                    addLine("§ehypixel.net/ptl", sidebar);
-                    addLine("§7 ", sidebar);
-                    addLine("§fHype: §b" +
-                            prototypeDataHandler.get(PrototypeLobbyDataHandler.Data.HYPE, DatapointLeaderboardLong.class).getValue()
-                            + "§7/200", sidebar);
-                    addLine("§7 ", sidebar);
-                    addLine("§ewww.hypixel.net", sidebar);
-                    
-                    sidebar.addViewer(player);
-                    sidebarCache.put(player.getUuid(), sidebar);
+                List<String> lines = new ArrayList<>();
+                lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
+                lines.add("§7 ");
+                lines.add("§fGames in this lobby are");
+                lines.add("§funder heavy development!");
+                lines.add("§7 ");
+                lines.add("§fReport bugs and leave");
+                lines.add("§ffeedback at");
+                lines.add("§ehypixel.net/ptl");
+                lines.add("§7 ");
+                lines.add("§fHype: §b" + hype + "§7/200");
+                lines.add("§7 ");
+                lines.add("§ewww.hypixel.net");
+
+                if (!scoreboard.hasScoreboard(player)) {
+                    scoreboard.createScoreboard(player, getSidebarName(prototypeName));
                 }
 
+                scoreboard.updateLines(player, lines);
+                scoreboard.updateTitle(player, getSidebarName(prototypeName));
             }
             return TaskSchedule.tick(100);
         });
     }
 
     public static void removeCache(Player player) {
-        sidebarCache.remove(player.getUuid());
-    }
-
-    private static void addLine(String text, Sidebar sidebar) {
-
-        int score = sidebar.getLines().size();
-        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), score));
+        scoreboard.removeScoreboard(player);
     }
 
     private static String getSidebarName(int counter) {
