@@ -5,6 +5,7 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIShopFarmMerchant;
 import net.swofty.type.hub.gui.GUIShopFishMerchant;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -53,7 +54,7 @@ public class NPCFishMerchant extends HypixelNPC {
             return;
         }
 
-        new GUIShopFishMerchant().open(player);
+        player.openView(new GUIShopFishMerchant());
     }
 
     @Override

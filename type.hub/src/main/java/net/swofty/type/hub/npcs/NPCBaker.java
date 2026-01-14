@@ -7,6 +7,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIBakerShop;
+import net.swofty.type.hub.gui.GUIShopLumberMerchant;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -69,7 +70,7 @@ public class NPCBaker extends HypixelNPC {
         if (isInDialogue(player)) return;
         SkyBlockDataHandler dataHandler = player.getSkyblockDataHandler();
         if (dataHandler.get(SkyBlockDataHandler.Data.LATEST_NEW_YEAR_CAKE_YEAR, DatapointInteger.class).getValue() >= SkyBlockCalendar.getYear()) {
-            new GUIBakerShop().open(player);
+            player.openView(new GUIBakerShop());
             return;
         }
         setDialogue(player, "initial-hello").thenRun(() -> {

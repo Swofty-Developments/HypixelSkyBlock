@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.hub.gui.GUIShopMineMerchant;
 import net.swofty.type.hub.gui.GUIShopPat;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
@@ -41,7 +42,7 @@ public class NPCPat extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        new GUIShopPat().open(e.player());
+        e.player().openView(new GUIShopPat());
     }
 
 }

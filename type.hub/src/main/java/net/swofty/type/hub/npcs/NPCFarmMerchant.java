@@ -54,7 +54,7 @@ public class NPCFarmMerchant extends HypixelNPC {
             return;
         }
 
-        new GUIShopFarmMerchant().open(player);
+        player.openView(new GUIShopFarmMerchant());
     }
 
     @Override

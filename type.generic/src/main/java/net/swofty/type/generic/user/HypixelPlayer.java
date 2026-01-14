@@ -83,13 +83,20 @@ public class HypixelPlayer extends Player {
 
 	public <S> ViewSession<S> openView(View<S> view) {
 		Objects.requireNonNull(view, "View is null");
-		if (view instanceof StatefulView<S> state) {
-			return ViewNavigator.get(this).push(view, state.initialState());
-		} else if (view instanceof StatelessView state) {
-			return ViewNavigator.get(this).push(view, null);
-		} else {
-			throw new IllegalArgumentException("View must be either StatefulView or StatelessView");
-		}
+        switch (view) {
+            case StatefulView<S> state -> {
+                return ViewNavigator.get(this).push(view, state.initialState());
+            }
+            case StatelessView _ -> {
+                return ViewNavigator.get(this).push(view, null);
+            }
+            case StatefulPaginatedView<?, ?> state -> {
+                @SuppressWarnings("unchecked")
+                S initialState = (S) state.initialState();
+                return ViewNavigator.get(this).push(view, initialState);
+            }
+            default -> throw new IllegalArgumentException("View must be either StatefulView or StatelessView");
+        }
 	}
 
 	public ProxyPlayer asProxyPlayer() {

@@ -5,6 +5,7 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIShopBartender;
 import net.swofty.type.hub.gui.GUIShopBea;
 
 import java.util.stream.Stream;
@@ -53,7 +54,7 @@ public class NPCBea extends HypixelNPC {
             return;
         }
 
-        new GUIShopBea().open(e.player());
+        e.player().openView(new GUIShopBea());
     }
 
     @Override
