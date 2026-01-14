@@ -26,10 +26,7 @@ import net.swofty.type.generic.block.SignBlockHandler;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
-import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
-import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
-import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
+import net.swofty.type.generic.data.handlers.*;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
 import net.swofty.type.generic.data.mongodb.AuthenticationDatabase;
 import net.swofty.type.generic.data.mongodb.BedWarsStatsDatabase;
@@ -187,6 +184,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         AttributeDatabase.connect(mongoClient);
         UserDatabase.connect(mongoClient);
         BedWarsStatsDatabase.connect(mongoClient);
+        PunishmentsDatabase.connect(mongoClient);
 
         // Initialize leaderboard service (uses Redis for O(log N) leaderboard operations)
         LeaderboardService.connect(ConfigProvider.settings().getRedisUri());
