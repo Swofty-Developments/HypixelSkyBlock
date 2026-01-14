@@ -52,7 +52,7 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
                 // Schedule teleport after a short delay to ensure player is fully loaded
                 player.scheduler().buildTask(() -> {
                     if (player.getInstance() == null) {
-                        player.sendMessage("§cFailed to teleport (instance not ready).");
+                        player.sendMessage("§cFailed to tunnel (instance not ready).");
                         return;
                     }
 
@@ -70,7 +70,7 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
                 }).delay(java.time.Duration.ofMillis(500)).schedule();
 
             } catch (Exception e) {
-                player.sendMessage("§cFailed to teleport to target player.");
+                player.sendMessage("§cFailed to tunnel to target player.");
             }
         }
 

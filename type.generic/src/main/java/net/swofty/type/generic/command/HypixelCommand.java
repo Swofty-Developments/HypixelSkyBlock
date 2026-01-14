@@ -46,7 +46,7 @@ public abstract class HypixelCommand {
         boolean passes = dataHandler.get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(params.permission());
 
         if (!passes) {
-            player.sendMessage("§cYou do not have permission to use this command.");
+            player.sendMessage("§cYou do not have permission to use this command!");
         }
 
         return passes;
