@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
         description = "Changes chat mode",
         usage = "/chat <channel>",
         permission = Rank.DEFAULT,
+        aliases = "chatmode",
         allowsConsole = false
 )
 public class ChatCommand extends HypixelCommand {
@@ -26,6 +27,7 @@ public class ChatCommand extends HypixelCommand {
     public void registerUsage(MinestomCommand command) {
         ArgumentWord channelArg = ArgumentType.Word("channel");
 
+
         channelArg.setSuggestionCallback((sender, context, suggestion) -> {
             if (!(sender instanceof HypixelPlayer player)) return;
 
@@ -33,12 +35,14 @@ public class ChatCommand extends HypixelCommand {
                 suggestion.addEntry(new SuggestionEntry(channel));
             }
 
-            // staff-only toggle (not a channel)
+            // staff-only toggles (not chat channels)
             if (player.getRank().isStaff()) {
                 suggestion.addEntry(new SuggestionEntry("staffview"));
                 suggestion.addEntry(new SuggestionEntry("sv"));
             }
         });
+
+
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
@@ -46,7 +50,7 @@ public class ChatCommand extends HypixelCommand {
             HypixelPlayer player = (HypixelPlayer) sender;
             String raw = context.get(channelArg).toLowerCase(Locale.ROOT);
 
-            // staffview toggle
+            /* staffview toggle */
             if (raw.equals("staffview") || raw.equals("sv")) {
                 if (!player.getRank().isStaff()) {
                     sendInvalidUsage(player);
@@ -67,6 +71,11 @@ public class ChatCommand extends HypixelCommand {
                 return;
             }
 
+            // Auto-enable staff view when entering staff chat
+            if (type.chatType == DatapointChatType.Chats.STAFF) {
+                staffView.put(player.getUuid(), true);
+            }
+
             player.getChatType().switchTo(type.chatType);
             sender.sendMessage("§aYou are now in the §6" +
                     type.chatType.name().toLowerCase(Locale.ROOT) +
@@ -74,11 +83,11 @@ public class ChatCommand extends HypixelCommand {
         }, channelArg);
     }
 
-    /* ---------------- helpers ---------------- */
 
     private static void sendInvalidUsage(HypixelPlayer player) {
         player.sendMessage("§cInvalid usage! Correct usage: §e/chat <channel>");
-        player.sendMessage("§cValid channels: §e" + String.join(", ", getValidChannels(player)));
+        player.sendMessage("§cValid channels: §e" +
+                String.join(", ", getValidChannels(player)));
     }
 
     private static List<String> getValidChannels(HypixelPlayer player) {
@@ -94,13 +103,11 @@ public class ChatCommand extends HypixelCommand {
     }
 
     private static boolean isAllowed(HypixelPlayer player, PickerChatType type) {
-        if (type.chatType == DatapointChatType.Chats.STAFF) {
-            return player.getRank().isStaff();
-        }
-        return true;
+        return type.chatType != DatapointChatType.Chats.STAFF
+                || player.getRank().isStaff();
     }
 
-    /* ---------------- picker ---------------- */
+
 
     enum PickerChatType {
         a(DatapointChatType.Chats.ALL),
@@ -125,6 +132,7 @@ public class ChatCommand extends HypixelCommand {
             return null;
         }
     }
+
 
     public static boolean isStaffViewEnabled(UUID uuid) {
         return staffView.getOrDefault(uuid, true);
