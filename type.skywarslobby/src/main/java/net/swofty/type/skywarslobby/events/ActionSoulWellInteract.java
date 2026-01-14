@@ -30,7 +30,7 @@ public class ActionSoulWellInteract implements HypixelEventClass {
             Block block = event.getBlock();
             if (block.compare(Block.END_PORTAL_FRAME)) {
                 event.setCancelled(true);
-                new GUISoulWell().open(player);
+                player.openView(new GUISoulWell());
             }
         }
     }
