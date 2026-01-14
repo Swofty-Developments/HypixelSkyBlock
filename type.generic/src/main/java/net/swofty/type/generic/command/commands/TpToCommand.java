@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.UUID;
 
 @CommandParameters(
-        aliases = "tpto teleportto",
+        aliases = "teleportto",
         description = "Teleport to a player across servers",
-        usage = "/tunnel <player>",
+        usage = "/tpto <player>",
         permission = Rank.STAFF,
         allowsConsole = false
 )
-public class TunnelCommand extends HypixelCommand {
+public class TpToCommand extends HypixelCommand {
 
     @Override
     public void registerUsage(MinestomCommand command) {

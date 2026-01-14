@@ -14,7 +14,7 @@ import net.swofty.type.generic.utility.ProxyServersCache;
 import java.util.UUID;
 
 @CommandParameters(
-        aliases = "transfer",
+        aliases = "transfer tunnel",
         description = "Transfers a player to another server",
         usage = "/sendto <server_type|server_id>",
         permission = Rank.STAFF,
