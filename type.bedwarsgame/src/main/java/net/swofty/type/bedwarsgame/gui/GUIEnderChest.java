@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 
@@ -22,11 +23,8 @@ public class GUIEnderChest extends HypixelInventoryGUI {
 
     @Override
     public void setItems(InventoryGUIOpenEvent event) {
-        HypixelPlayer player = event.player();
-        String gameId = player.getTag(Tag.String("gameId"));
-        if (gameId == null) return;
-
-        Game game = TypeBedWarsGameLoader.getGameById(gameId);
+        BedWarsPlayer player = (BedWarsPlayer) event.player();
+        Game game = player.getGame();
         if (game == null) return;
 
         Map<Integer, ItemStack> enderChest = game.getEnderchests().get(player);
@@ -53,11 +51,9 @@ public class GUIEnderChest extends HypixelInventoryGUI {
 		closeSave(player);
 	}
 
-	private void closeSave(HypixelPlayer player) {
-		String gameId = player.getTag(Tag.String("gameId"));
-		if (gameId == null) return;
-
-		Game game = TypeBedWarsGameLoader.getGameById(gameId);
+	private void closeSave(HypixelPlayer p) {
+		BedWarsPlayer player = (BedWarsPlayer) p;
+		Game game = player.getGame();
 		if (game == null) return;
 
 		Map<Integer, ItemStack> enderChest = new ConcurrentHashMap<>();

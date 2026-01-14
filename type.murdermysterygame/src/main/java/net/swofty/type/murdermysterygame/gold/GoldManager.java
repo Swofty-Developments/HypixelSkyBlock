@@ -72,7 +72,7 @@ public class GoldManager {
 
                         player.sendPacket(new CollectItemPacket(goldEntity.getEntityId(), player.getEntityId(), 1));
 
-                        player.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, 1));
+                        addGoldToSlot(player, 1);
 
                         player.sendMessage(Component.text("+1 Gold", NamedTextColor.GOLD));
 
@@ -119,7 +119,7 @@ public class GoldManager {
         spawnedGold.remove(goldEntity);
         goldEntity.remove();
 
-        player.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, 1));
+        addGoldToSlot(player, 1);
 
         trackGoldAchievements(player, 1);
 
@@ -160,21 +160,22 @@ public class GoldManager {
     }
 
     public int countGoldInInventory(MurderMysteryPlayer player) {
-        return Arrays.stream(player.getInventory().getItemStacks())
-                .filter(stack -> stack.material() == Material.GOLD_INGOT)
-                .mapToInt(ItemStack::amount)
-                .sum();
+        ItemStack slot8Item = player.getInventory().getItemStack(8);
+        if (slot8Item.material() == Material.GOLD_INGOT) {
+            return slot8Item.amount();
+        }
+        return 0;
     }
 
     public void removeGoldFromInventory(MurderMysteryPlayer player, int amount) {
         PlayerInventory inventory = player.getInventory();
-        int remaining = amount;
-        for (int i = 0; i < inventory.getSize() && remaining > 0; i++) {
-            ItemStack stack = inventory.getItemStack(i);
-            if (stack.material() == Material.GOLD_INGOT) {
-                int remove = Math.min(stack.amount(), remaining);
-                inventory.setItemStack(i, stack.amount() > remove ? stack.withAmount(stack.amount() - remove) : ItemStack.AIR);
-                remaining -= remove;
+        ItemStack slot8Item = inventory.getItemStack(8);
+        if (slot8Item.material() == Material.GOLD_INGOT) {
+            int remove = Math.min(slot8Item.amount(), amount);
+            if (slot8Item.amount() > remove) {
+                inventory.setItemStack(8, slot8Item.withAmount(slot8Item.amount() - remove));
+            } else {
+                inventory.setItemStack(8, ItemStack.AIR);
             }
         }
     }
@@ -184,6 +185,17 @@ public class GoldManager {
         if (goldInInventory >= GOLD_FOR_BOW) {
             removeGoldFromInventory(player, GOLD_FOR_BOW);
             game.getWeaponManager().giveInnocentBow(player);
+        }
+    }
+
+    private void addGoldToSlot(MurderMysteryPlayer player, int amount) {
+        PlayerInventory inventory = player.getInventory();
+        ItemStack slot8Item = inventory.getItemStack(8);
+        
+        if (slot8Item.material() == Material.GOLD_INGOT) {
+            inventory.setItemStack(8, slot8Item.withAmount(slot8Item.amount() + amount));
+        } else {
+            inventory.setItemStack(8, ItemStack.of(Material.GOLD_INGOT, amount));
         }
     }
 }

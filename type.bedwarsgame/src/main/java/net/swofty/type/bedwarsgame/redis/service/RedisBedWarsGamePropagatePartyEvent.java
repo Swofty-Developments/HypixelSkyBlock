@@ -75,7 +75,7 @@ public class RedisBedWarsGamePropagatePartyEvent implements ServiceToClient {
         }
 
         // Warper IS on this game server - check if they're in a game
-        Game warperGame = TypeBedWarsGameLoader.getPlayerGame(warper);
+        Game warperGame = warper.getGame();
 
         if (warperGame == null) {
             // Warper is on this server but not in a game - handle normally

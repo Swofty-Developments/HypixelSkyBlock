@@ -1,24 +1,20 @@
 package net.swofty.type.generic.data.handlers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import io.sentry.Sentry;
 import lombok.Getter;
-import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.GameDataHandler;
-import net.swofty.commons.bedwars.BedWarsModeStats;
-import net.swofty.commons.bedwars.LeaderboardPreferences;
-import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsModeStats;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsQuickBuy;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardPreferences;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
-import net.swofty.type.generic.leaderboard.LeaderboardService;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
+import tools.jackson.core.JacksonException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -118,6 +114,7 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
             } catch (Exception e) {
                 this.datapoints.put(key, data.getDefaultDatapoint().deepClone().setUser(this).setData(data));
                 Logger.info("Issue with datapoint " + key + " for user " + this.uuid + " - defaulting");
+                Sentry.captureException(e);
                 e.printStackTrace();
             }
         }
@@ -136,7 +133,7 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
         for (Data data : Data.values()) {
             try {
                 document.put(data.getKey(), getDatapoint(data.getKey()).getSerializedValue());
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 e.printStackTrace();
             }
         }
@@ -187,6 +184,7 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
             } catch (Exception e) {
                 Logger.error("Issue with datapoint " + data.getKey() + " for user " + uuid + " - fix");
                 e.printStackTrace();
+                Sentry.captureException(e);
             }
         }
         return handler;

@@ -4,8 +4,8 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.api.http.APIResponse;
 import net.swofty.service.api.http.SkyBlockEndpoint;
 import net.swofty.service.generic.SkyBlockService;
@@ -44,14 +44,14 @@ public class APIService implements SkyBlockService {
 
         System.out.println("Connecting to databases...");
 
-        ConnectionString cs = new ConnectionString(Configuration.get("mongodb"));
+        ConnectionString cs = new ConnectionString(ConfigProvider.settings().getMongodb());
         MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
         MongoClient mongoClient = MongoClients.create(settings);
 
         UserDatabase.connect(mongoClient);
         ProfilesDatabase.connect(mongoClient);
-        new APIAdminDatabase().connect(Configuration.get("mongodb"));
-        new APIKeyDatabase("_placeHolder").connect(Configuration.get("mongodb"));
+        new APIAdminDatabase().connect(ConfigProvider.settings().getMongodb());
+        new APIKeyDatabase("_placeHolder").connect(ConfigProvider.settings().getMongodb());
 
         System.out.println("API Service initializing...");
         Spark.port(port);

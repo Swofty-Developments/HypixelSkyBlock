@@ -1,6 +1,6 @@
 package net.swofty.type.generic.data;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import io.sentry.Sentry;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
@@ -20,6 +20,7 @@ import org.bson.Document;
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
+import tools.jackson.core.JacksonException;
 
 import java.util.UUID;
 import java.util.function.BiConsumer;
@@ -47,7 +48,7 @@ public class HypixelDataHandler extends DataHandler {
         for (Data data : Data.values()) {
             String key = data.getKey();
             if (!document.containsKey(key)) {
-                this.datapoints.put(key, data.getDefaultDatapoint().setUser(this).setData(data));
+                this.datapoints.put(key, data.getDefaultDatapoint().deepClone().setUser(this).setData(data));
                 continue;
             }
             String jsonValue = document.getString(key);
@@ -57,8 +58,9 @@ public class HypixelDataHandler extends DataHandler {
                 dp.deserializeValue(jsonValue);
                 this.datapoints.put(key, dp.setUser(this).setData(data));
             } catch (Exception e) {
-                this.datapoints.put(key, data.getDefaultDatapoint().setUser(this).setData(data));
+                this.datapoints.put(key, data.getDefaultDatapoint().deepClone().setUser(this).setData(data));
                 Logger.error(e, "Issue with datapoint {} for user {} - defaulting to default value", key, this.uuid);
+                Sentry.captureException(e);
             }
         }
         return this;
@@ -76,7 +78,7 @@ public class HypixelDataHandler extends DataHandler {
         for (Data data : Data.values()) {
             try {
                 document.put(data.getKey(), getDatapoint(data.getKey()).getSerializedValue());
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 Logger.error(e, "Failed to serialize datapoint {} for user {}", data.getKey(), this.uuid);
             }
         }
@@ -174,9 +176,10 @@ public class HypixelDataHandler extends DataHandler {
             // Delay this as player needs to be loaded
             MathUtility.delay(() -> {
                 if (!player.isOnline()) return;
+                if (HypixelConst.getTypeLoader().getType().isSkyBlock()) return;
 
-                String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + "_" + player.getUsername(), 16);
-                Team team = new TeamBuilder("ZZZZZ" + teamName, MinecraftServer.getTeamManager())
+                String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
+                Team team = new TeamBuilder("Z" + teamName, MinecraftServer.getTeamManager())
                         .prefix(Component.text(rank.getPrefix()))
                         .teamColor(rank.getTextColor())
                         .build();
@@ -185,8 +188,11 @@ public class HypixelDataHandler extends DataHandler {
             }, 5);
         }, (player, datapoint) -> {
             player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
+            if (HypixelConst.getTypeLoader().getType().isSkyBlock()) return;
+
             Rank rank = (Rank) datapoint.getValue();
-            player.setTeam(new TeamBuilder("ZZZZZ" + rank.getPriorityCharacter() + "_" + player.getUsername(), MinecraftServer.getTeamManager())
+            String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
+            player.setTeam(new TeamBuilder("Z" + teamName, MinecraftServer.getTeamManager())
                     .prefix(Component.text(rank.getPrefix()))
                     .teamColor(rank.getTextColor())
                     .build());

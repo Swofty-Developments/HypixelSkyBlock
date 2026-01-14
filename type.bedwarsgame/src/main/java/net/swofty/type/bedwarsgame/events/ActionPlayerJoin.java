@@ -3,6 +3,7 @@ package net.swofty.type.bedwarsgame.events;
 import lombok.SneakyThrows;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
+import net.swofty.commons.ServerType;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -24,32 +25,40 @@ public class ActionPlayerJoin implements HypixelEventClass {
 		event.setSpawningInstance(HypixelConst.getEmptyInstance());
 		player.setRespawnPoint(new Pos(10, 10, 10));
 
-		MathUtility.delay(
-				() -> {
-					String preferredGameId;
-					if (RedisGameMessage.game.containsKey(player.getUuid())) {
-						preferredGameId = RedisGameMessage.game.get(player.getUuid());
-						RedisGameMessage.game.remove(player.getUuid());
-					} else {
-						Logger.error("Failed to create a new game for player " + player.getUsername());
-						return;
-					}
+		MathUtility.delay(() -> tryJoinGame(player, false), 15);
+	}
 
-					Game preferred = TypeBedWarsGameLoader.getGameById(preferredGameId);
-					if (preferred != null) {
-						MathUtility.delay(
-								() -> {
-									// Check if this is a rejoin (player was disconnected from this game)
-									if (preferred.hasDisconnectedPlayer(player.getUuid())) {
-										preferred.rejoin(player);
-									} else {
-										preferred.join(player);
-									}
-								},
-								15
-						);
-					}
-				}, 15);
+	private void tryJoinGame(BedWarsPlayer player, boolean isRetry) {
+		if (!player.isOnline()) return;
+
+		String preferredGameId = RedisGameMessage.game.remove(player.getUuid());
+		if (preferredGameId == null) {
+			if (!isRetry) {
+				Logger.info("No game assignment found for " + player.getUsername() + ", retrying in 1 second...");
+				MathUtility.delay(() -> tryJoinGame(player, true), 20);
+				return;
+			}
+			Logger.error("Failed to find game assignment for player " + player.getUsername());
+			player.sendMessage("§cNo game assignment found! Returning to lobby...");
+			player.sendTo(ServerType.BEDWARS_LOBBY);
+			return;
+		}
+
+		Game preferred = TypeBedWarsGameLoader.getGameById(preferredGameId);
+		if (preferred == null) {
+			player.sendMessage("§cThe assigned game no longer exists! Returning to lobby...");
+			player.sendTo(ServerType.BEDWARS_LOBBY);
+			return;
+		}
+
+		MathUtility.delay(() -> {
+			if (!player.isOnline()) return;
+			if (preferred.hasDisconnectedPlayer(player.getUuid())) {
+				preferred.rejoin(player);
+			} else {
+				preferred.join(player);
+			}
+		}, 15);
 	}
 }
 

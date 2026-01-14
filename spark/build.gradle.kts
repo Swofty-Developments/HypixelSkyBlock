@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     application
-    id("com.gradleup.shadow") version "9.3.0"
+    id("com.gradleup.shadow") version "9.3.1"
 }
 
 group = "net.swofty"
@@ -17,16 +17,13 @@ java {
     }
 }
 
-repositories {
-    maven("https://jitpack.io")
-}
-
 dependencies {
     implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation(files("dependencies/spark-1.10.1.10-minestom.jar"))
     implementation(project(":type.generic"))
+    implementation("com.google.guava:guava:33.5.0-jre")
+    api("me.lucko:spark-common:1.10.158-20260110.094844-1")
 }
 
 application {

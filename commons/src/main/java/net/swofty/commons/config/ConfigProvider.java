@@ -1,0 +1,43 @@
+package net.swofty.commons.config;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.yaml.NodeStyle;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
+import org.tinylog.Logger;
+
+import java.io.IOException;
+import java.nio.file.Path;
+
+public class ConfigProvider {
+
+	@Getter
+	@Setter
+	@Accessors(fluent = true)
+	private static Settings settings;
+
+	static {
+		try {
+			Logger.info("Loading config...");
+			YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+					.path(Path.of("./configuration/config.yml"))
+					.nodeStyle(NodeStyle.BLOCK)
+					.build();
+
+			CommentedConfigurationNode node = loader.load();
+			Settings existingSettings = node.get(Settings.class);
+			if (existingSettings == null) {
+				existingSettings = new Settings();
+			}
+			Settings config = existingSettings;
+			node.set(Settings.class, config);
+			loader.save(node);
+
+			settings(config);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to load configuration", e);
+		}
+	}
+}

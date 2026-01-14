@@ -18,7 +18,7 @@ collections:
         xp: 4
     - type: RECIPE_UNLOCK
       data:
-        unlockedItemType: ENCHANTED_CLAY
+        unlockedItemType: ENCHANTED_CLAY_BALL
   - amount: 250
     rewards:
     - type: XP
@@ -39,6 +39,14 @@ collections:
     - type: XP
       data:
         xp: 4
+  - amount: 5000
+    rewards:
+      - type: XP
+        data:
+          xp: 4
+      - type: RECIPE_UNLOCK
+        data:
+          unlockedItemType: ENCHANTED_CLAY_BLOCK
 - itemType: TROPICAL_FISH
   rewards:
   - amount: 10
@@ -388,6 +396,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: SMALL_FISHING_SACK
   - amount: 800
     rewards:
     - type: XP
@@ -398,6 +409,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: MEDIUM_FISHING_SACK
   - amount: 4800
     rewards:
     - type: XP
@@ -408,12 +422,18 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: LARGE_FISHING_SACK
   - amount: 18000
     rewards:
     - type: XP
       data:
         xp: 4
-- itemType: COD
+    - type: RECIPE_UNLOCK
+      data:
+        unlockedItemType: LARGE_ENCHANTED_FISHING_SACK
+- itemType: RAW_FISH
   rewards:
   - amount: 20
     rewards:
@@ -494,7 +514,7 @@ collections:
     - type: CUSTOM_AWARD
       data:
         customAward: FISHING_BAG_UPGRADE_4
-- itemType: SALMON
+- itemType: RAW_SALMON
   rewards:
   - amount: 20
     rewards:

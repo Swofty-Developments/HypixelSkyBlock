@@ -14,10 +14,12 @@ import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.tag.Tag;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.pvp.projectile.entities.FireballProjectile;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -33,14 +35,13 @@ public class ActionGameCustomItems implements HypixelEventClass {
 			return;
 		}
 
-		final Player shooter = (Player) fireball.getShooter();
+		final BedWarsPlayer shooter = (BedWarsPlayer) fireball.getShooter();
 		if (shooter == null) {
 			fireball.remove();
 			return;
 		}
 
-		String gameId = shooter.getTag(Tag.String("gameId"));
-		Game game = TypeBedWarsGameLoader.getGameById(gameId);
+		Game game = shooter.getGame();
 		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
 			fireball.remove();
 			return;
@@ -84,11 +85,11 @@ public class ActionGameCustomItems implements HypixelEventClass {
 			return; // Don't explode on self
 		}
 
-		if (target instanceof Player targetPlayer) {
-			final Player shooter = (Player) fireball.getShooter();
+		if (target instanceof BedWarsPlayer targetPlayer) {
+			final BedWarsPlayer shooter = (BedWarsPlayer) fireball.getShooter();
 			if (shooter != null) {
-				String shooterTeam = shooter.getTag(Tag.String("team"));
-				String targetTeam = targetPlayer.getTag(Tag.String("team"));
+				BedWarsMapsConfig.TeamKey shooterTeam = shooter.getTeamKey();
+				BedWarsMapsConfig.TeamKey targetTeam = targetPlayer.getTeamKey();
 				if (shooterTeam != null && shooterTeam.equals(targetTeam)) {
 					return;
 				}

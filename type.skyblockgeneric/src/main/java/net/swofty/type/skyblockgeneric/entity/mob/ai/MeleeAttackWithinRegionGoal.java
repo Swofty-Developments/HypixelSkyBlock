@@ -26,8 +26,15 @@ public class MeleeAttackWithinRegionGoal extends GoalSelector {
     private boolean stop;
     private Entity cachedTarget;
 
+    private boolean lookAt = true;
+
     public MeleeAttackWithinRegionGoal(@NotNull EntityCreature entityCreature, double range, int delay, @NotNull TemporalUnit timeUnit, RegionType type) {
         this(entityCreature, range, Duration.of(delay, timeUnit), type);
+    }
+
+    public MeleeAttackWithinRegionGoal(@NotNull EntityCreature entityCreature, double range, int delay, @NotNull TemporalUnit timeUnit, RegionType type, boolean lookAt) {
+        this(entityCreature, range, Duration.of(delay, timeUnit), type);
+        this.lookAt = lookAt;
     }
 
     public MeleeAttackWithinRegionGoal(@NotNull EntityCreature entityCreature, double range, Duration delay, RegionType type) {
@@ -64,7 +71,9 @@ public class MeleeAttackWithinRegionGoal extends GoalSelector {
         if (!stop) {
             // Attack the target entity
             if (entityCreature.getDistanceSquared(target) <= range * range) {
-                entityCreature.lookAt(target);
+                if (lookAt) {
+                    entityCreature.lookAt(target);
+                }
                 if (!Cooldown.hasCooldown(time, lastHit, delay) && !entityCreature.isDead()) {
                     entityCreature.attack(target, true);
                     this.lastHit = time;

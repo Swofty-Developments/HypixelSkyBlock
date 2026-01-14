@@ -50,6 +50,7 @@ import java.util.Map;
 public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
     public static BedWarsLobbyMap bedWarsLobbyMap = new BedWarsLobbyMap();
     public static LobbyParkourManager parkourManager;
+    private final Pos spawnPoint = new Pos(-39.5, 72, 0, -90, 0);
 
     @Getter
     private final LobbyItemHandler itemHandler = new LobbyItemHandler();
@@ -100,6 +101,8 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
           .schedule();
 
         parkourManager = new LobbyParkourManager(getParkour());
+
+        LobbyTypeLoader.registerLobbyCommands();
     }
 
     @Override
@@ -147,7 +150,7 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> new Pos(-39.5, 72, 0, -90, 0),
+                (type) -> spawnPoint,
                 false
         );
     }
@@ -164,6 +167,7 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
         events.add(new LobbyLaunchPadEvents());
         events.add(new LobbyPlayerJoinEvents());
         events.add(new LobbyBlockBreak());
+        events.add(new LobbyPlayerMove(spawnPoint));
         return events;
     }
 

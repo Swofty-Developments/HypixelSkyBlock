@@ -20,12 +20,12 @@ cd HypixelSkyBlock
 
 Download the [world files](https://files.catbox.moe/of7snu.zip) and extract them directly into the `configuration/` folder. The zip already contains the correct folder structure.
 
-### 3. Configure resources.json
+### 3. Configure config.yml
 
 In your `configuration` folder:
 
-1. Remove the default `resources.json`
-2. Rename `resources.json.docker` to `resources.json`
+1. Remove the default `config.yml`
+2. Rename `config.docker.yml` to `config.yml`
 
 ### 4. Build and Run
 

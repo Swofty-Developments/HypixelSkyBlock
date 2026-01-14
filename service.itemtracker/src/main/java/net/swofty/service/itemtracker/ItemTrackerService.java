@@ -1,17 +1,17 @@
 package net.swofty.service.itemtracker;
 
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.generic.SkyBlockService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 
 import java.util.List;
 
 public class ItemTrackerService implements SkyBlockService {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SkyBlockService.init(new ItemTrackerService());
 
-        TrackedItemsDatabase.connect(Configuration.get("mongodb"));
+        TrackedItemsDatabase.connect(ConfigProvider.settings().getMongodb());
     }
 
     @Override

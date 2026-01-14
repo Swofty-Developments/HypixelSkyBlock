@@ -20,10 +20,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.LobbyBlockBreak;
-import net.swofty.type.lobby.events.LobbyItemEvents;
-import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
-import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
+import net.swofty.type.lobby.events.*;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
 import net.swofty.type.lobby.item.impl.HidePlayers;
@@ -56,6 +53,7 @@ public class TypeSkywarsLobbyLoader implements LobbyTypeLoader {
     @Getter
     private static LeaderboardHologramManager leaderboardManager;
     private LobbyParkourManager parkourManager;
+    private final Pos spawnPont = new Pos(-3.5, 66, 0.5, -90, 0);
 
     @Override
     public ServerType getType() {
@@ -110,6 +108,8 @@ public class TypeSkywarsLobbyLoader implements LobbyTypeLoader {
                 .delay(TaskSchedule.seconds(5))
                 .repeat(TaskSchedule.seconds(2))
                 .schedule();
+
+        LobbyTypeLoader.registerLobbyCommands();
     }
 
     @Override
@@ -156,7 +156,7 @@ public class TypeSkywarsLobbyLoader implements LobbyTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> new Pos(-3.5, 66, 0.5, -90, 0),
+                (type) -> spawnPont,
                 false
         );
     }
@@ -172,6 +172,7 @@ public class TypeSkywarsLobbyLoader implements LobbyTypeLoader {
         events.add(new LobbyLaunchPadEvents());
         events.add(new LobbyPlayerJoinEvents());
         events.add(new LobbyBlockBreak());
+        events.add(new LobbyPlayerMove(spawnPont));
         return events;
     }
 

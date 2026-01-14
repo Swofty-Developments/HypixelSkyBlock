@@ -45,8 +45,9 @@ public class ActionItemAbilityLeftUse implements HypixelEventClass {
                     return;
                 }
 
-                abilityHandler.startAbilityCooldown(item);
-                ability.execute(player, item);
+                if(ability.execute(player, item)){
+                    abilityHandler.startAbilityCooldown(item);
+                }
             }
         }
     }
