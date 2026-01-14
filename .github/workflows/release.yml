@@ -25,18 +25,22 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
-      - name: Build with Gradle
-        run: ./gradlew shadowJar
+
+      - name: Free disk space
+        run: rm -rf ~/.gradle/caches/build-cache-1
 
       - name: Cache Gradle packages
         uses: actions/cache@v4
         with:
           path: |
-            ~/.gradle/caches
+            ~/.gradle/caches/modules-2
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: Build with Gradle
+        run: ./gradlew shadowJar --no-build-cache
 
       - name: Add Jar to GitHub releases
         uses: marvinpinto/action-automatic-releases@latest
