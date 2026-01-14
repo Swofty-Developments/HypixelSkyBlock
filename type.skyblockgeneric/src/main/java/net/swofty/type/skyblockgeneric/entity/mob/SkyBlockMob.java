@@ -203,6 +203,7 @@ public abstract class SkyBlockMob extends EntityCreature {
     public void kill() {
         super.kill();
         mobs.remove(this);
+        nameDisplayEntity.kill();
 
         if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer player)) return;
 

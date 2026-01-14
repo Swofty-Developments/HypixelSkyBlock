@@ -2,6 +2,7 @@ plugins {
     base
     java
     id("io.freefair.lombok") version "9.1.0"
+    id("io.sentry.jvm.gradle") version "5.12.2"
 }
 
 group = "net.swofty"
@@ -17,6 +18,7 @@ subprojects {
         mavenLocal()
         maven("https://repo.viaversion.com")
         maven("https://jitpack.io")
+        maven("https://repo.lucko.me/")
     }
 
     java {
@@ -30,6 +32,7 @@ subprojects {
 
         implementation("org.reflections:reflections:0.10.2")
         implementation("org.json:json:20240303")
+        implementation("io.sentry:sentry-async-profiler:8.29.0")
 
         compileOnly("org.projectlombok:lombok:1.18.42")
 

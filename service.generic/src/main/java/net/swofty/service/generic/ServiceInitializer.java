@@ -1,7 +1,7 @@
 package net.swofty.service.generic;
 
 import lombok.RequiredArgsConstructor;
-import net.swofty.commons.Configuration;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.protocol.ProtocolObject;
@@ -27,7 +27,7 @@ public class ServiceInitializer {
         /**
          * Register Redis
          */
-        ServiceRedisManager.connect(Configuration.get("redis-uri"), service.getType());
+        ServiceRedisManager.connect(ConfigProvider.settings().getRedisUri(), service.getType());
         // Initialize service-to-server communication
         ServiceToServerManager.initialize(service.getType());
 

@@ -3,8 +3,8 @@ package net.swofty.velocity.gamemanager;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.Component;
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
@@ -126,7 +126,7 @@ public record TransferHandler(Player player) {
 			playersGoalServerType.remove(player);
 
 			try {
-				Thread.sleep(Long.parseLong(Configuration.get("transfer-timeout")));
+				Thread.sleep(ConfigProvider.settings().getTransferTimeout());
 			} catch (InterruptedException e) {
 				throw new RuntimeException(e);
 			}

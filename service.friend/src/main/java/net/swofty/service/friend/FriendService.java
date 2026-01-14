@@ -1,7 +1,7 @@
 package net.swofty.service.friend;
 
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.generic.SkyBlockService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 
@@ -9,8 +9,8 @@ import java.util.List;
 
 public class FriendService implements SkyBlockService {
 
-    public static void main(String[] args) {
-        String mongoUri = Configuration.get("mongodb");
+    static void main(String[] args) {
+        String mongoUri = ConfigProvider.settings().getMongodb();
         new FriendDatabase(null).connect(mongoUri);
 
         FriendCache.startExpirationChecker();

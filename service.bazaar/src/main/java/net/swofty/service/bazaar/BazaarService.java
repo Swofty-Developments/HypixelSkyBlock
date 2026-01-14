@@ -1,7 +1,7 @@
 package net.swofty.service.bazaar;
 
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.generic.SkyBlockService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 
@@ -13,7 +13,7 @@ public class BazaarService implements SkyBlockService {
         SkyBlockService.init(new BazaarService());
 
         // Connect to MongoDB for orders
-        OrderDatabase.connect(Configuration.get("mongodb"));
+        OrderDatabase.connect(ConfigProvider.settings().getMongodb());
 
         // Initialize the bazaar market (loads existing orders)
         BazaarMarket.get();

@@ -43,17 +43,15 @@ After generation:
 
 1. The resource pack will be in your output directory
 2. Apply it in Minecraft under Options → Resource Packs
-3. For server-side distribution, host the pack and configure in `resources.json`
+3. For server-side distribution, host the pack and configure in `config.yml`
 
 ## Server-Side Distribution
 
-To automatically send the pack to players, add to your `resources.json`:
+To automatically send the pack to players, add to your `config.yml`:
 
-```json
-{
-  "resource-pack-url": "https://your-host.com/pack.zip",
-  "resource-pack-hash": "SHA1_HASH_HERE"
-}
+```yaml
+resource-pack-url: "https://your-host.com/pack.zip"
+resource-pack-hash: "SHA1_HASH_HERE"
 ```
 
 Generate the SHA1 hash:
