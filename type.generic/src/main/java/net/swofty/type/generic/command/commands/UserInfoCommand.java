@@ -48,7 +48,7 @@ public class UserInfoCommand extends HypixelCommand {
                 return;
             }
 
-            sender.sendMessage("§7Fetching information for §e" + targetName + "§7...");
+            //sender.sendMessage("§7Fetching information for §e" + targetName + "§7...");
             fetchAndDisplayUserInfo(sender, targetName);
         }, flagArgument, playerArgument);
 
