@@ -1,9 +1,7 @@
 package net.swofty.type.bedwarslobby;
 
-import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
-import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.BedwarsLevelColor;
@@ -13,24 +11,23 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
 
 import static net.swofty.commons.bedwars.BedwarsLevelUtil.suffix;
 
 public class BedWarsLobbyScoreboard {
-	private static final Map<UUID, Sidebar> sidebarCache = new HashMap<>();
+	private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
 	private static Integer prototypeName = 0;
 
 	public static void start() {
 		Scheduler scheduler = MinecraftServer.getSchedulerManager();
 
-		// Scoreboard Updater
 		scheduler.submitTask(() -> {
 			prototypeName++;
 			if (prototypeName > 50) {
@@ -61,45 +58,38 @@ public class BedWarsLobbyScoreboard {
 				}
 				progressBar.append("§8]");
 
+				long tokens = bwDataHandler.get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class).getValue();
+				long tickets = bwDataHandler.get(BedWarsDataHandler.Data.SLUMBER_TICKETS, DatapointLeaderboardLong.class).getValue();
 
-				Sidebar sidebar = sidebarCache.get(player.getUuid());
-				
+				List<String> lines = new ArrayList<>();
+				lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
+				lines.add("§7 ");
+				lines.add("§fLevel: §7" + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)));
+				lines.add("§7 ");
+				lines.add("§fProgress: §b" + suffix(progress) + "§7/§a" + suffix(maxExperience));
+				lines.add(progressBar.toString());
+				lines.add("§7 ");
+				lines.add("§fTokens: §2" + tokens);
+				lines.add("§fTickets: §b" + tickets + "§7/75");
+				lines.add("§7 ");
+				lines.add("§fTotal Kills: §a0");
+				lines.add("§fTotal Wins: §a0");
+				lines.add("§7 ");
+				lines.add("§ewww.hypixel.net");
 
-				if (sidebar == null) {
-					sidebar = new Sidebar(Component.text(getSidebarName(prototypeName)));
-
-					addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
-					addLine("§7 ", sidebar);
-					addLine("§fLevel: §7" + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)), sidebar);
-					addLine("§7 ", sidebar);
-					addLine("§fProgress: §b" + suffix(progress) + "§7/§a" + suffix(maxExperience), sidebar);
-					addLine(progressBar.toString(), sidebar);
-					addLine("§7 ", sidebar);
-					addLine("§fTokens: §2" + bwDataHandler.get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class).getValue(), sidebar);
-					addLine("§fTickets: §b" + bwDataHandler.get(BedWarsDataHandler.Data.SLUMBER_TICKETS, DatapointLeaderboardLong.class).getValue() + "§7/75", sidebar);
-					addLine("§7 ", sidebar);
-					addLine("§fTotal Kills: §a0", sidebar);
-					addLine("§fTotal Wins: §a0", sidebar);
-					addLine("§7 ", sidebar);
-
-					addLine("§ewww.hypixel.net", sidebar);
-
-					sidebar.addViewer(player);
-					sidebarCache.put(player.getUuid(), sidebar);
+				if (!scoreboard.hasScoreboard(player)) {
+					scoreboard.createScoreboard(player, getSidebarName(prototypeName));
 				}
 
+				scoreboard.updateLines(player, lines);
+				scoreboard.updateTitle(player, getSidebarName(prototypeName));
 			}
-			return TaskSchedule.tick(5); 
+			return TaskSchedule.tick(5);
 		});
 	}
 
 	public static void removeCache(Player player) {
-		sidebarCache.remove(player.getUuid());
-	}
-
-	private static void addLine(String text, Sidebar sidebar) {
-		int score = sidebar.getLines().size();
-		sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), score));
+		scoreboard.removeScoreboard(player);
 	}
 
 	private static String getSidebarName(int counter) {
@@ -119,5 +109,4 @@ public class BedWarsLobbyScoreboard {
 			return colors[2] + baseText + endColor;
 		}
 	}
-
 }
