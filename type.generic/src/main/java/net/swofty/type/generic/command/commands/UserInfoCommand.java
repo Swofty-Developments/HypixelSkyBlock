@@ -23,7 +23,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @CommandParameters(
-        aliases = "userinfo|uinfo",
+        aliases = "userinfo, uinfo",
         description = "Display detailed information about a player",
         usage = "/userinfo <player>",
         permission = Rank.STAFF,

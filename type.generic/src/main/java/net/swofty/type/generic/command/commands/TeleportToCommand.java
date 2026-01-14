@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @CommandParameters(
-        aliases = "tpto|tunnel",
+        aliases = "tpto, tunnel",
         description = "Teleport to a player across servers",
         usage = "/teleportto <player>",
         permission = Rank.STAFF,
@@ -34,7 +34,6 @@ public class TeleportToCommand extends HypixelCommand {
 
             sender.sendMessage("§2Searching for player §e" + targetName + "§2...");
 
-            // Search for the target player across all servers
             Thread.startVirtualThread(() -> {
                 try {
                     ProxyInformation proxyInfo = new ProxyInformation();
@@ -64,37 +63,29 @@ public class TeleportToCommand extends HypixelCommand {
                     UUID finalTargetUUID = targetUUID;
                     UnderstandableProxyServer finalTargetServer = targetServer;
 
-                    // Check if player is on the same server
-                    UUID currentServerUUID = proxyInfo.getServerUUID().join();
+                    // SAME SERVER CHECK
+                    Player localTarget = HypixelGenericLoader.getLoadedPlayers().stream()
+                            .filter(p -> p.getUuid().equals(finalTargetUUID))
+                            .findFirst()
+                            .orElse(null);
 
-                    if (currentServerUUID.equals(finalTargetServer.uuid())) {
-                        // Same server - just teleport directly
-                        Player targetPlayer = HypixelGenericLoader.getLoadedPlayers().stream()
-                                .filter(p -> p.getUuid().equals(finalTargetUUID))
-                                .findFirst()
-                                .orElse(null);
-
-                        if (targetPlayer != null) {
-                            player.teleport(targetPlayer.getPosition());
-                            sender.sendMessage("§2Teleported to " + HypixelPlayer.getColouredDisplayName(finalTargetUUID) + "§2.");
-                        } else {
-                            sender.sendMessage("§cCould not find player on this server.");
-                        }
-                    } else {
-                        // Different server - transfer and note that teleport will happen on join
-                        String serverDisplay = finalTargetServer.shortName() != null && !finalTargetServer.shortName().isEmpty()
-                                ? finalTargetServer.shortName()
-                                : finalTargetServer.name();
-
-                        sender.sendMessage("§aSending you to §e" + serverDisplay + " §awith " +
-                                HypixelPlayer.getColouredDisplayName(finalTargetUUID) + "§a.");
-
-                        // Store target UUID in hook manager for cross-server teleport
-                        player.getHookManager().setHook("tpto_target", finalTargetUUID.toString());
-
-                        // Transfer to target server
-                        player.sendTo(finalTargetServer.uuid(), true);
+                    if (localTarget != null) {
+                        player.teleport(localTarget.getPosition());
+                        sender.sendMessage("§2Teleported to " + HypixelPlayer.getColouredDisplayName(finalTargetUUID) + "§2.");
+                        return;
                     }
+
+                    // Different server - transfer and note teleport will happen on join
+                    String serverDisplay = finalTargetServer.shortName() != null && !finalTargetServer.shortName().isEmpty()
+                            ? finalTargetServer.shortName()
+                            : finalTargetServer.name();
+
+                    sender.sendMessage("§aSending you to §e" + serverDisplay + " §awith " +
+                            HypixelPlayer.getColouredDisplayName(finalTargetUUID) + "§a.");
+
+                    player.getHookManager().setHook("tpto_target", finalTargetUUID.toString());
+                    player.sendTo(finalTargetServer.uuid(), true);
+
                 } catch (Exception e) {
                     sender.sendMessage("§cAn error occurred while searching for the player.");
                     e.printStackTrace();
