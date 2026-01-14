@@ -13,31 +13,34 @@ import java.nio.file.Path;
 
 public class ConfigProvider {
 
-	@Getter
-	@Setter
-	@Accessors(fluent = true)
-	private static Settings settings;
+    @Getter
+    @Setter
+    @Accessors(fluent = true)
+    private static Settings settings;
 
-	static {
-		try {
-			Logger.info("Loading config...");
-			YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-					.path(Path.of("./configuration/config.yml"))
-					.nodeStyle(NodeStyle.BLOCK)
-					.build();
+    static {
+        try {
+            Logger.info("Loading config...");
 
-			CommentedConfigurationNode node = loader.load();
-			Settings existingSettings = node.get(Settings.class);
-			if (existingSettings == null) {
-				existingSettings = new Settings();
-			}
-			Settings config = existingSettings;
-			node.set(Settings.class, config);
-			loader.save(node);
+            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                    .path(Path.of("./configuration/config.yml"))
+                    .nodeStyle(NodeStyle.BLOCK)
+                    .build();
 
-			settings(config);
-		} catch (IOException e) {
-			throw new RuntimeException("Failed to load configuration", e);
-		}
-	}
+            CommentedConfigurationNode root = loader.load();
+            CommentedConfigurationNode defaults = loader.createNode();
+            defaults.set(Settings.class, new Settings());
+            root.mergeFrom(defaults);
+
+            Settings loaded = root.get(Settings.class);
+            if (loaded == null) {
+                loaded = new Settings();
+            }
+
+            loader.save(root);
+            settings(loaded);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load configuration", e);
+        }
+    }
 }
