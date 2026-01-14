@@ -18,7 +18,7 @@ public class ActionPlayerDisconnect implements HypixelEventClass {
         if (game != null) {
             game.disconnect(player);
         }
-
+        // git is wierd with this file idk
         SkywarsGameScoreboard.removeCache(player);
     }
 }
