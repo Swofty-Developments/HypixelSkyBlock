@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 @CommandParameters(
-        aliases = { "boop" },
+        aliases = "boop",
         description = "Fun useless commands",
         usage = "/boop <player>",
         permission = Rank.DEFAULT,
@@ -24,7 +24,7 @@ public class FunCommands extends HypixelCommand {
     @Override
     public void registerUsage(MinestomCommand command) {
 
-        /* ---------------- /boop <player> ---------------- */
+
 
         ArgumentString playerArgument = ArgumentType.String("player");
 
