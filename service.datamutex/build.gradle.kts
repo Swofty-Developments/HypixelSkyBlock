@@ -24,7 +24,7 @@ repositories {
 dependencies {
     implementation(project(":service.generic"))
     implementation(project(":commons"))
-    implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
 }
