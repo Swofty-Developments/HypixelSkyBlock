@@ -23,13 +23,13 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":packer"))
     implementation(project(":proxy.api"))
-    implementation("org.mongodb:bson:4.11.2")
-    implementation("org.mongodb:mongodb-driver-sync:4.11.2")
+    implementation("org.mongodb:bson:5.6.2")
+    implementation("org.mongodb:mongodb-driver-sync:5.6.2")
     // Must match AtlasRedisAPI's Jedis version to avoid conflicts
-    implementation("redis.clients:jedis:4.2.3")
+    implementation("redis.clients:jedis:7.2.0")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.0")
     compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
