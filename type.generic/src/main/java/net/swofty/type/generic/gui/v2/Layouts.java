@@ -1,5 +1,6 @@
 package net.swofty.type.generic.gui.v2;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -11,7 +12,7 @@ public final class Layouts {
         int startCol = from % 9;
         int endCol = to % 9;
 
-        List<Integer> slots = new java.util.ArrayList<>();
+        List<Integer> slots = new ArrayList<>();
 
         for (int row = startRow; row <= endRow; row++) {
             for (int col = startCol; col <= endCol; col++) {
@@ -28,7 +29,7 @@ public final class Layouts {
         int startCol = from % 9;
         int endCol = to % 9;
 
-        List<Integer> slots = new java.util.ArrayList<>();
+        List<Integer> slots = new ArrayList<>();
 
         for (int row = startRow; row <= endRow; row++) {
             for (int col = startCol; col <= endCol; col++) {

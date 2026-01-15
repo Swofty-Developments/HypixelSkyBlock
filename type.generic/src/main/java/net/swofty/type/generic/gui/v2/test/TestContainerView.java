@@ -1,6 +1,5 @@
 package net.swofty.type.generic.gui.v2.test;
 
-import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
