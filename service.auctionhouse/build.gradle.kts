@@ -28,8 +28,8 @@ dependencies {
     implementation(project(":type.skyblockgeneric"))
     implementation(project(":commons"))
     implementation("com.google.code.gson:gson:2.11.0")
-    implementation("org.mongodb:bson:4.11.2")
-    implementation("org.mongodb:mongodb-driver-sync:4.11.2")
+    implementation("org.mongodb:bson:5.6.2")
+    implementation("org.mongodb:mongodb-driver-sync:5.6.2")
 }
 
 application {
