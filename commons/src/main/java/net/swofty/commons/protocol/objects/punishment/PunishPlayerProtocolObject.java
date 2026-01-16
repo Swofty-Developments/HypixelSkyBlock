@@ -82,7 +82,6 @@ public class PunishPlayerProtocolObject
         };
     }
 
-    // do NOT change this to use Punishment - friendly note from Ari
     public record PunishPlayerMessage(
             @NotNull
             UUID target,
