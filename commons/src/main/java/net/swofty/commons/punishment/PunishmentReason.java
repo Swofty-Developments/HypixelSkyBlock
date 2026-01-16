@@ -15,8 +15,6 @@ public class PunishmentReason {
     private BanType banType;
     @Nullable
     private MuteType muteType;
-    @Nullable
-    private UnpunishReason unpunishReason;
 
     public PunishmentReason(@NonNull BanType banType) {
         this.banType = banType;
@@ -24,10 +22,6 @@ public class PunishmentReason {
 
     public PunishmentReason(@NonNull MuteType muteType) {
         this.muteType = muteType;
-    }
-
-    public PunishmentReason(@NonNull UnpunishReason unpunishReason) {
-        this.unpunishReason = unpunishReason;
     }
 
     public PunishmentReason(@NonNull String custom) {
@@ -39,8 +33,6 @@ public class PunishmentReason {
             return banType.getReason();
         } else if (muteType != null) {
             return muteType.getReason();
-        } else if (unpunishReason != null) {
-            return unpunishReason.getReason();
         } else {
             return custom;
         }
