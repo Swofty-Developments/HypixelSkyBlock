@@ -17,6 +17,7 @@ public enum ToProxyChannels {
     REGISTER_TEST_FLOW("register-test-flow", new RegisterTestFlowRequirements()),
     TEST_FLOW_SERVER_READY("test-flow-server-ready", new TestFlowServerReadyRequirements()),
     STAFF_CHAT("staff-chat", new StaffChatRequirements()),
+    PUNISH_PLAYER("punish-player", new KickPlayerRequirements())
     ;
 
     @Getter

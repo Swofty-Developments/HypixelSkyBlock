@@ -25,8 +25,10 @@ dependencies {
     implementation(project(":proxy.api"))
     implementation("org.mongodb:bson:5.6.2")
     implementation("org.mongodb:mongodb-driver-sync:5.6.2")
+    implementation("org.jline:jline-terminal:3.30.6")
+    implementation("org.jline:jline-reader:3.30.6")
     // Must match AtlasRedisAPI's Jedis version to avoid conflicts
-    implementation("redis.clients:jedis:7.2.0")
+    implementation("redis.clients:jedis:4.2.3")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.0")

@@ -28,6 +28,7 @@ public class PlayerHandlerRequirements extends ProxyChannelRequirements {
 		REFRESH_COOP_DATA,
 		MESSAGE,
 		TRANSFER_WITH_UUID,
-		GET_SERVER
+		GET_SERVER,
+		LIMBO,
 	}
 }
