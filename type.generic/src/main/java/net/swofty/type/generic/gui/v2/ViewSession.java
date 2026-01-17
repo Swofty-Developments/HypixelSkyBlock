@@ -3,15 +3,12 @@ package net.swofty.type.generic.gui.v2;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.event.EventFilter;
-import net.minestom.server.event.EventNode;
 import net.minestom.server.event.inventory.InventoryClickEvent;
-import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.event.trait.InventoryEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.inventory.click.Click;
@@ -28,6 +25,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public final class ViewSession<S> {
@@ -51,7 +49,6 @@ public final class ViewSession<S> {
     @Getter
     @Accessors(fluent = true)
     private final ViewContext context;
-    private final EventNode<InventoryEvent> eventNode;
 
     @Getter
     @Accessors(fluent = true)
@@ -63,6 +60,9 @@ public final class ViewSession<S> {
 
     @Getter
     private boolean closed;
+
+    @Getter
+    @Setter
     private boolean suppressCloseEvent;
 
     private final Int2ObjectOpenHashMap<ItemStack> trackedSlotItems = new Int2ObjectOpenHashMap<>();
@@ -82,9 +82,6 @@ public final class ViewSession<S> {
         this.sharedContext = sharedContext;
         this.inventory = new Inventory(view.configuration().getInventoryType(), "");
         this.context = new ViewContext(player, inventory, this);
-        this.eventNode = EventNode.type("gui-" + System.identityHashCode(this), EventFilter.INVENTORY);
-
-        wireEvents();
 
         if (sharedContext != null) {
             sharedContext.registerSession(this);
@@ -105,20 +102,12 @@ public final class ViewSession<S> {
         return session;
     }
 
-    private void wireEvents() {
-        eventNode.addListener(InventoryPreClickEvent.class, this::onPreClickEvent);
-        eventNode.addListener(InventoryClickEvent.class, this::onPostClickEvent);
-        eventNode.addListener(InventoryCloseEvent.class, this::onCloseEvent);
-        eventNode.addListener(InventoryOpenEvent.class, this::onOpenEvent);
-        inventory.eventNode().addChild(eventNode);
-    }
-
-    private void onOpenEvent(InventoryOpenEvent event) {
+    public void onOpenEvent(@NonNull InventoryOpenEvent event) {
         if (event.getInventory() != inventory || closed) return;
         view.onOpen(state, context);
     }
 
-    private void onPreClickEvent(InventoryPreClickEvent event) {
+    public void onPreClickEvent(@NonNull InventoryPreClickEvent event) {
         if (event.getInventory() instanceof PlayerInventory) {
             if (player.getOpenInventory() == inventory) {
                 var click = new ClickContext<>(event.getSlot(), event.getClick(), player, state);
@@ -132,7 +121,6 @@ public final class ViewSession<S> {
 
         int slot = event.getSlot();
         SlotBehavior behavior = cachedLayout != null ? cachedLayout.getBehavior(slot) : SlotBehavior.UI;
-
 
         if (behavior == SlotBehavior.EDITABLE) {
             if (event.getClick() instanceof Click.LeftShift) {
@@ -172,7 +160,7 @@ public final class ViewSession<S> {
         }
     }
 
-    private void onPostClickEvent(@NonNull InventoryClickEvent event) {
+    public void onPostClickEvent(@NonNull InventoryClickEvent event) {
         if (event.getInventory() != inventory || closed) return;
         if (cachedLayout == null) return;
 
@@ -239,14 +227,6 @@ public final class ViewSession<S> {
         } else {
             render();
         }
-    }
-
-    private void onCloseEvent(InventoryCloseEvent event) {
-        if (event.getInventory() != inventory || suppressCloseEvent) {
-            suppressCloseEvent = false;
-            return;
-        }
-        close(CloseReason.PLAYER_EXITED);
     }
 
     public void refresh() {
@@ -395,7 +375,7 @@ public final class ViewSession<S> {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> void updateUnchecked(java.util.function.Function<T, T> updater) {
+    public <T> void updateUnchecked(Function<T, T> updater) {
         setState((S) updater.apply((T) state));
     }
 
@@ -423,7 +403,6 @@ public final class ViewSession<S> {
         autoUpdateTasks.values().forEach(Task::cancel);
         autoUpdateTasks.clear();
 
-        MinecraftServer.getGlobalEventHandler().removeChild(eventNode);
         if (sharedContext != null) {
             sharedContext.unregisterSession(this);
         }
