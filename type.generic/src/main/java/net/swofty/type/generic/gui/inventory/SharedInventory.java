@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.Consumer;
 
+@Deprecated
 public abstract class SharedInventory extends HypixelInventoryGUI {
 
 	private static final Map<String, SharedInventoryContext> SHARED_CONTEXTS = new ConcurrentHashMap<>();
