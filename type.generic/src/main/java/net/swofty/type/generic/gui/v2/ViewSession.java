@@ -110,7 +110,7 @@ public final class ViewSession<S> {
         eventNode.addListener(InventoryClickEvent.class, this::onPostClickEvent);
         eventNode.addListener(InventoryCloseEvent.class, this::onCloseEvent);
         eventNode.addListener(InventoryOpenEvent.class, this::onOpenEvent);
-        MinecraftServer.getGlobalEventHandler().addChild(eventNode);
+        inventory.eventNode().addChild(eventNode);
     }
 
     private void onOpenEvent(InventoryOpenEvent event) {
