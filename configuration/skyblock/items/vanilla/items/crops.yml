@@ -180,7 +180,18 @@ items:
         value: 10.0
 
   - id: MUSHROOM
+    material: BROWN_MUSHROOM
     rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 6.0
+      - id: SELLABLE
+        value: 10.0
+
+  - id: RED_MUSHROOM
+    rarity: COMMON
+    material: RED_MUSHROOM
     components:
       - id: SKILLABLE_MINE
         category: FARMING

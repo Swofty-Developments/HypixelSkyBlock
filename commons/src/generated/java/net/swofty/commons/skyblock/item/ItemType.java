@@ -1970,7 +1970,7 @@ public enum ItemType {
 
   MOVE_JERRY(Material.BARRIER, Rarity.COMMON),
 
-  MUSHROOM(Material.BARRIER, Rarity.COMMON),
+  MUSHROOM(Material.BROWN_MUSHROOM, Rarity.COMMON),
 
   MUSHROOM_BOOTS(Material.BARRIER, Rarity.COMMON),
 
@@ -2423,6 +2423,8 @@ public enum ItemType {
   RED_GLAZED_TERRACOTTA(Material.RED_GLAZED_TERRACOTTA, Rarity.COMMON),
 
   RED_GOBLIN_EGG(Material.BARRIER, Rarity.COMMON),
+
+  RED_MUSHROOM(Material.RED_MUSHROOM, Rarity.COMMON),
 
   RED_SAND(Material.BARRIER, Rarity.COMMON),
 

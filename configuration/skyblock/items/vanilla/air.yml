@@ -1,0 +1,5 @@
+# This file just adds AIR for ItemType generation
+items:
+  - id: AIR
+    rarity: COMMON
+    material: AIR
