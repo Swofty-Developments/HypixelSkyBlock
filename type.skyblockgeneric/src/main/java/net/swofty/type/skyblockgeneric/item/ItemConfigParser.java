@@ -160,6 +160,7 @@ public class ItemConfigParser {
 							showLores
 					);
 				}
+				case "FISHING_ROD" -> new FishingRodComponent();
 				case "ENCHANTED" -> {
 					if (safeConfig.containsKey("recipes")) {
 						List<Map<String, Object>> recipeConfigs = safeConfig.getMapList("recipes");
