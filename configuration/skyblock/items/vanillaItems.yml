@@ -1,6 +1,6 @@
 items:
   - id: CHAIN
-    material: CHAIN
+    material: IRON_CHAIN
     rarity: COMMON
     components:
       - id: PLACEABLE
