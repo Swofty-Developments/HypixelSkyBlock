@@ -120,6 +120,9 @@ public class ListenerPlayerHandler extends RedisListener {
 						type
 				);
 			}
+			case LIMBO -> {
+				new TransferHandler(player).sendToLimbo().join();
+			}
 			case TELEPORT -> {
 				if (potentialServer.isEmpty()) {
 					return new JSONObject();
