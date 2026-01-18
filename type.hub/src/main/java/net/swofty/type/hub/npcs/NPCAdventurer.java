@@ -8,6 +8,7 @@ import net.swofty.type.hub.gui.GUIShopAdventurer;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.hub.gui.GUIShopLibrarian;
 
 public class NPCAdventurer extends HypixelNPC {
     public NPCAdventurer() {
@@ -52,7 +53,7 @@ public class NPCAdventurer extends HypixelNPC {
             return;
         }
 
-        new GUIShopAdventurer().open(player);
+        player.openView(new GUIShopAdventurer());
     }
 
     @Override

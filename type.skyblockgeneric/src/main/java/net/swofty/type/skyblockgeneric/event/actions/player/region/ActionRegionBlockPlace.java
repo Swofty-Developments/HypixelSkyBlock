@@ -24,7 +24,6 @@ public class ActionRegionBlockPlace implements HypixelEventClass {
 
         if (!HypixelConst.isIslandServer()) {
             event.setCancelled(true);
-            player.sendMessage("§cYou can't build here!");
             return;
         }
 

@@ -9,11 +9,10 @@ import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.swofty.type.skyblockgeneric.gui.inventories.ClaimRewardView;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.*;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -130,9 +129,9 @@ public class NPCRyan extends HypixelNPC {
 				return;
 			}
 			setDialogue(player, "give_logs").thenRun(() -> {
-				new GUIClaimReward(ItemType.CAMPFIRE_TALISMAN_1, () -> {
+				player.openView(new ClaimRewardView(), new ClaimRewardView.State(ItemType.CAMPFIRE_TALISMAN_1, () -> {
 					player.getMissionData().endMission(MissionGiveRyanDarkOakLogs.class);
-				}).open(player);
+				}));
 			});
 			return;
 		}

@@ -54,7 +54,7 @@ public class NPCWoolWeaver extends HypixelNPC {
             return;
         }
 
-        new GUIShopWoolWeaverVibrant().open(player);
+        player.openView(new GUIShopWoolWeaverVibrant());
     }
 
     @Override

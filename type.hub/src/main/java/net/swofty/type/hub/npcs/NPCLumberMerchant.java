@@ -5,6 +5,7 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIJax;
 import net.swofty.type.hub.gui.GUIShopLumberMerchant;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -53,7 +54,7 @@ public class NPCLumberMerchant extends HypixelNPC {
             return;
         }
 
-        new GUIShopLumberMerchant().open(player);
+        player.openView(new GUIShopLumberMerchant());
     }
 
     @Override

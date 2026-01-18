@@ -46,6 +46,6 @@ public class NPCLumina extends HypixelNPC {
     public void onClick(NPCInteractEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        new GUIShopLumina().open(player);
+        player.openView(new GUIShopLumina());
     }
 }

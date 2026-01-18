@@ -20,6 +20,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
+@Deprecated
 public abstract class HypixelInventoryGUI {
     public static final Map<UUID, HypixelInventoryGUI> GUI_MAP = new ConcurrentHashMap<>();
     public static final ItemStack.Builder FILLER_ITEM = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE)

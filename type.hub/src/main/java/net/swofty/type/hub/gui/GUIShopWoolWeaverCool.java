@@ -1,36 +1,31 @@
 package net.swofty.type.hub.gui;
 
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUIShopWoolWeaverCool extends SkyBlockShopGUI {
+public class GUIShopWoolWeaverCool extends ShopView {
     public GUIShopWoolWeaverCool() {
-        super("Wool Weaver (Cool)", 1, WOOLWEAVER_COOL);
+        super("Wool Weaver (Cool)", WOOLWEAVER_COOL);
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        set(new GUIClickableItem(45) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                new GUIShopWoolWeaverVibrant().open(player);
-            }
+    public void onOpen(State state, ViewContext ctx) {
+        super.onOpen(state, ctx);
+    }
 
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
-                return ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1, "§ePage 1");
-            }
-        });
+    @Override
+    protected void layoutCustom(ViewLayout<State> layout, State state, ViewContext ctx) {
+        super.layoutCustom(layout, state, ctx);
+        layout.slot(45, (s, c) -> {
+            return ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1, "§ePage 1");
+        }, ((stateClickContext, context) -> {
+            context.pop();
+        }));
     }
 
     @Override

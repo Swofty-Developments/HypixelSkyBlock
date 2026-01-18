@@ -3,6 +3,7 @@ package net.swofty.type.hub.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.hub.gui.GUIShopWeaponsmith;
 import net.swofty.type.hub.gui.GUIShopZog;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -54,7 +55,7 @@ public class NPCZog extends HypixelNPC {
             return;
         }
 
-        new GUIShopZog().open(player);
+        player.openView(new GUIShopZog());
     }
 
     @Override

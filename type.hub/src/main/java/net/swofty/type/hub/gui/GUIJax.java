@@ -2,14 +2,14 @@ package net.swofty.type.hub.gui;
 
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
-public class GUIJax extends SkyBlockShopGUI {
+public class GUIJax extends ShopView {
 
     public GUIJax() {
-        super("Adventurer", 1, DEFAULT);
+        super("Adventurer", DEFAULT);
     }
 
     @Override

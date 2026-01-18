@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.hub.gui.GUIShopAlchemist;
 import net.swofty.type.hub.gui.GUIShopBartender;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionKillZombies;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToBartender;
@@ -63,7 +64,8 @@ public class NPCBartender extends HypixelNPC {
                 player.getMissionData().endMission(MissionTalkToBartender.class);
             });
         }
-        new GUIShopBartender().open(player);
+
+        player.openView(new GUIShopBartender());
     }
 
     @Override

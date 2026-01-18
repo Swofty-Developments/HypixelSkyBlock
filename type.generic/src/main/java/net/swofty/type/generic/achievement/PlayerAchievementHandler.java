@@ -157,6 +157,7 @@ public class PlayerAchievementHandler {
             tierText = " " + toRoman(progress.getCurrentTier());
         }
 
+        // TODO: make this actually clickable to open the achievements menu
         Component tierHover = Component.text(def.getName() + tierText, NamedTextColor.GREEN).appendNewline()
                 .append(Component.text(def.getDescription(), NamedTextColor.GRAY))
                 .appendNewline().appendNewline()

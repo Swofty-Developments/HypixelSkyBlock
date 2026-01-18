@@ -5,6 +5,7 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIBakerShop;
 import net.swofty.type.hub.gui.GUIShopMadRedstoneEngineer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -54,7 +55,7 @@ public class NPCMadRedstoneEngineer extends HypixelNPC {
             return;
         }
 
-        new GUIShopMadRedstoneEngineer().open(player);
+        player.openView(new GUIShopMadRedstoneEngineer());
     }
 
     @Override

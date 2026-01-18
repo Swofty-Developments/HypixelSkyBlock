@@ -7,7 +7,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.swofty.type.skyblockgeneric.gui.inventories.ClaimRewardView;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionBreakOaklog;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
@@ -88,9 +88,9 @@ public class NPCLumberJack extends HypixelNPC {
         }
         if (!data.hasCompleted(MissionTalkToLumberjackAgain.class)) {
             setDialogue(player, "spoke-again").thenRun(() -> {
-				new GUIClaimReward(ItemType.PROMISING_AXE, () -> {
+				player.openView(new ClaimRewardView(), new ClaimRewardView.State(ItemType.PROMISING_AXE, () -> {
 					data.endMission(MissionTalkToLumberjackAgain.class);
-				}).open(player);
+				}));
             });
             return;
         }

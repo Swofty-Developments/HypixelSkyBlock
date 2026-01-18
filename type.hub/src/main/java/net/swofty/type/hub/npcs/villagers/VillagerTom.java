@@ -53,7 +53,7 @@ public class VillagerTom extends HypixelNPC {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
                     setDialogue(player, "quest-hello").thenRun(() -> {
-                        new GUIRecipe(ItemType.PROMISING_AXE, null).open(player);
+                        player.openView(new GUIRecipe(ItemType.PROMISING_AXE));
                     });
                 }
             }

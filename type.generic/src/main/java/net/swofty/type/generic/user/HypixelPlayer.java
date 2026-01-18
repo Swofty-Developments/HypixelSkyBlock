@@ -3,7 +3,6 @@ package net.swofty.type.generic.user;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.player.GameProfile;
@@ -20,11 +19,13 @@ import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class HypixelPlayer extends Player {
@@ -74,6 +75,28 @@ public class HypixelPlayer extends Player {
 
 	public DatapointChatType.ChatType getChatType() {
 		return getDataHandler().get(HypixelDataHandler.Data.CHAT_TYPE, DatapointChatType.class).getValue();
+	}
+
+	public <S> ViewSession<S> openView(View<S> view, S state) {
+		return ViewNavigator.get(this).push(view, state);
+	}
+
+	public <S> ViewSession<S> openView(View<S> view) {
+		Objects.requireNonNull(view, "View is null");
+        switch (view) {
+            case StatefulView<S> state -> {
+                return ViewNavigator.get(this).push(view, state.initialState());
+            }
+            case StatelessView _ -> {
+                return ViewNavigator.get(this).push(view, null);
+            }
+            case StatefulPaginatedView<?, ?> state -> {
+                @SuppressWarnings("unchecked")
+                S initialState = (S) state.initialState();
+                return ViewNavigator.get(this).push(view, initialState);
+            }
+            default -> throw new IllegalArgumentException("View must be either StatefulView or StatelessView");
+        }
 	}
 
 	public ProxyPlayer asProxyPlayer() {
