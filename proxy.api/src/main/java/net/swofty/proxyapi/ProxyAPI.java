@@ -16,7 +16,7 @@ public class ProxyAPI {
         this.serverUUID = serverUUID;
 
         RedisAPI.generateInstance(URI);
-        RedisAPI.getInstance().setFilterID(serverUUID.toString());
+        RedisAPI.getInstance().setFilterId(serverUUID.toString());
     }
 
     public void registerFromProxyHandler(ProxyToClient handler) {
