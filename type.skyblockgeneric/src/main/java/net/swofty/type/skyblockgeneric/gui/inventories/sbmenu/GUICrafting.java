@@ -62,10 +62,7 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
         Components.containerGrid(
                 layout,
                 10,
-                30, (slot, oldItem, newItem, state1) -> {
-                    Logger.info("Container grid changed at slot " + slot);
-                    Logger.info("Old Item: " + oldItem);
-                    Logger.info("New Item: " + newItem);
+                30, (_, _, _, state1) -> {
                     int newHash = computeGridHash(ctx);
                     SkyBlockRecipe<?> newRecipe = SkyBlockRecipe.parseRecipe(getCurrentRecipeStacks(ctx));
                     if (state1.lastGridHash() == newHash && Objects.equals(state1.lastParsedRecipe(), newRecipe)) {
@@ -83,11 +80,9 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
                     Arrays.copyOfRange(result.errorMessage(), 1, result.errorMessage().length)));
         } else {
             int amount = recipe.getAmount();
-            SkyBlockRecipe<?> finalRecipe = recipe;
-
             layout.slot(RESULT_SLOT, (s, c) -> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
-                ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(p, finalRecipe.getResult().getItemStack()).amount(amount);
+                ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(p, recipe.getResult().getItemStack()).amount(amount);
 
                 ArrayList<String> lore = new ArrayList<>();
                 var existingLore = builder.build().get(DataComponents.LORE);
@@ -100,7 +95,7 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
                         .collect(Collectors.toList()));
 
                 return builder;
-            }, (click, c) -> handleCraft(click, c, finalRecipe, amount));
+            }, (click, c) -> handleCraft(click, c, recipe, amount));
         }
     }
 
