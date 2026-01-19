@@ -4,10 +4,12 @@ import com.google.gson.Gson;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.punishment.PunishmentReason;
+import net.swofty.commons.punishment.PunishmentTag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.UUID;
 
 public class PunishPlayerProtocolObject
@@ -25,6 +27,7 @@ public class PunishPlayerProtocolObject
                 json.put("type", value.type());
                 json.put("reason", new Gson().toJson(value.reason()));
                 json.put("expiresAt", value.expiresAt());
+                json.put("tags", new Gson().toJson(value.tags()));
                 json.put("staff", value.staff().toString());
                 return json.toString();
             }
@@ -38,6 +41,7 @@ public class PunishPlayerProtocolObject
                         obj.getString("type"),
                         new Gson().fromJson(obj.getString("reason"), PunishmentReason.class),
                         UUID.fromString(obj.getString("staff")),
+                        List.of(new Gson().fromJson(obj.getString("tags"), PunishmentTag[].class)),
                         obj.getLong("expiresAt")
                 );
             }
@@ -91,6 +95,7 @@ public class PunishPlayerProtocolObject
             PunishmentReason reason,
             @NotNull
             UUID staff,
+            List<PunishmentTag> tags,
             long expiresAt
     ) {
     }

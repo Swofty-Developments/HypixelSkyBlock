@@ -1,6 +1,7 @@
 package net.swofty.velocity.redis.listeners;
 
 import com.velocitypowered.api.proxy.ProxyServer;
+import io.sentry.Sentry;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.commons.punishment.PunishmentId;
@@ -40,11 +41,12 @@ public class ListenerPlayerPunished extends RedisListener {
             } else if (muteString != null) {
                 reason = new PunishmentReason(MuteType.valueOf(muteString));
             } else {
-                reason = new PunishmentReason(message.getString("reason_custom"));
+                throw new JSONException("Missing reason ban, mute or reason_mute");
             }
         } catch (IllegalArgumentException | JSONException e) {
-            reason = new PunishmentReason("Unknown Reason - Report Error");
             Logger.error("Failed to parse punishment reason from message: " + message, e);
+            Sentry.captureException(e);
+            return null;
         }
 
 

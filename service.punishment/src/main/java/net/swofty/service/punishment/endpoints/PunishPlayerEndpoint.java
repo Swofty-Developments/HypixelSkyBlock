@@ -52,7 +52,6 @@ public class PunishPlayerEndpoint implements ServiceEndpoint
                 .put("target", messageObject.target())
                 .put("type", messageObject.type())
                 .put("id", id.id())
-                .put("reason_custom", reason.getCustom() != null ? reason.getCustom() : null)
                 .put("reason_ban", reason.getBanType() != null ? reason.getBanType().name() : null)
                 .put("reason_mute", reason.getMuteType() != null ? reason.getMuteType().name() : null)
                 .put("staff", messageObject.staff())

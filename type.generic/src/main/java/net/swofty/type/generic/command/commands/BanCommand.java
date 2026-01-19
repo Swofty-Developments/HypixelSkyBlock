@@ -10,6 +10,8 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.objects.punishment.PunishPlayerProtocolObject;
 import net.swofty.commons.punishment.PunishmentReason;
+import net.swofty.commons.punishment.PunishmentRedis;
+import net.swofty.commons.punishment.PunishmentTag;
 import net.swofty.commons.punishment.PunishmentType;
 import net.swofty.commons.punishment.template.BanType;
 import net.swofty.proxyapi.ProxyPlayer;
@@ -17,11 +19,16 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @CommandParameters(
         aliases = "ban tempban banip tempbanip",
@@ -41,6 +48,11 @@ public class BanCommand extends HypixelCommand {
                 suggestion.addEntry(new SuggestionEntry(type.name(), Component.text("§c" + type.getReason() + " §7| Wipe: " + type.isWipe())));
             }
         });
+        Argument<String[]> extraArg = ArgumentType.StringArray("extra").setSuggestionCallback((sender, context, suggestion) -> {
+            for (PunishmentTag tag : PunishmentTag.values()) {
+                suggestion.addEntry(new SuggestionEntry("-" + tag.getShortCode(), Component.text("§e" + tag.getShortCode() + " §7| " + (tag.getDescription() != null ? tag.getDescription() : "No description"))));
+            }
+        }); // can be -O -U etc.
 
         command.addSyntax((sender, context) -> {
             String playerName = context.get(playerArg);
@@ -68,7 +80,7 @@ public class BanCommand extends HypixelCommand {
             long expiryTime = System.currentTimeMillis() + actualTime;
 
             CompletableFuture.runAsync(() -> {
-                banPlayer(sender, targetUuid, type, senderUuid, actualTime, expiryTime, playerName);
+                banPlayer(sender, targetUuid, type, senderUuid, actualTime, expiryTime, playerName, null);
             });
         }, playerArg, durationArg, reasonArg);
 
@@ -85,23 +97,78 @@ public class BanCommand extends HypixelCommand {
                             sender instanceof Player player ? player.getUuid() : UUID.fromString("00000000-0000-0000-0000-000000000000"),
                             0,
                             -1,
-                            playerName);
+                            playerName, null);
                 } catch (IOException e) {
                     sender.sendMessage("§cCould not find player: " + playerName);
                     return;
                 }
             });
         }, playerArg, reasonArg);
+
+        command.addSyntax((sender, context) -> {
+            String playerName = context.get(playerArg);
+            BanType reason = BanType.valueOf(context.get(reasonArg));
+            List<PunishmentTag> tags = parseTags(List.of(context.get(extraArg)));
+
+            CompletableFuture.runAsync(() -> {
+                try {
+                    banPlayer(sender,
+                            MojangUtils.getUUID(playerName),
+                            reason,
+                            sender instanceof Player player ? player.getUuid() : UUID.fromString("00000000-0000-0000-0000-000000000000"),
+                            0,
+                            -1,
+                            playerName, tags);
+                } catch (IOException e) {
+                    sender.sendMessage("§cCould not find player: " + playerName);
+                }
+            });
+        }, playerArg, reasonArg, extraArg);
     }
 
-    private void banPlayer(CommandSender sender, UUID targetUuid, BanType type, UUID senderUuid, long actualTime, long expiryTime, String playerName) {
+    private List<PunishmentTag> parseTags(List<String> rawTags) {
+        List<PunishmentTag> tags = new ArrayList<>();
+
+        for (String rawTag : rawTags) {
+            if (rawTag.startsWith("-")) {
+                String tagCode = rawTag.substring(1).toUpperCase();
+                for (PunishmentTag tag : PunishmentTag.values()) {
+                    if (tag.getShortCode().equalsIgnoreCase(tagCode)) {
+                        tags.add(tag);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return tags;
+    }
+
+    private void banPlayer(CommandSender sender, UUID targetUuid, BanType type, UUID senderUuid, long actualTime, long expiryTime, String playerName, @Nullable List<PunishmentTag> tags) {
+        if (tags != null && !tags.contains(PunishmentTag.OVERWRITE)) {
+            Optional<PunishmentRedis.ActivePunishment> activePunishment = PunishmentRedis.getActive(targetUuid);
+            AtomicBoolean alreadyBanned = new AtomicBoolean(false);
+            activePunishment.ifPresent(punishment -> {
+                PunishmentType t = PunishmentType.valueOf(punishment.type());
+                if (t == PunishmentType.BAN) {
+                    sender.sendMessage("§cThis player is already banned. If you want to replace this ban use the tag -O, Punishment ID: §7" + punishment.banId());
+                    alreadyBanned.set(true);
+                }
+            });
+            if (alreadyBanned.get()) {
+                return;
+            }
+        }
+
         ProxyService punishmentService = new ProxyService(ServiceType.PUNISHMENT);
         PunishmentReason reason = new PunishmentReason(type);
+        ArrayList<PunishmentTag> tagList = (tags != null) ? new ArrayList<>(tags) : new ArrayList<>();
         PunishPlayerProtocolObject.PunishPlayerMessage message = new PunishPlayerProtocolObject.PunishPlayerMessage(
                 targetUuid,
                 PunishmentType.BAN.name(),
                 reason,
                 senderUuid,
+                tagList,
                 actualTime > 0 ? expiryTime : -1
         );
 

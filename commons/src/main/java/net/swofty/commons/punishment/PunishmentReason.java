@@ -10,8 +10,6 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 public class PunishmentReason {
     @Nullable
-    private String custom;
-    @Nullable
     private BanType banType;
     @Nullable
     private MuteType muteType;
@@ -24,17 +22,13 @@ public class PunishmentReason {
         this.muteType = muteType;
     }
 
-    public PunishmentReason(@NonNull String custom) {
-        this.custom = custom;
-    }
-
     public String getReasonString() {
         if (banType != null) {
             return banType.getReason();
         } else if (muteType != null) {
             return muteType.getReason();
         } else {
-            return custom;
+            return "Could not resolve reason.";
         }
     }
 }
