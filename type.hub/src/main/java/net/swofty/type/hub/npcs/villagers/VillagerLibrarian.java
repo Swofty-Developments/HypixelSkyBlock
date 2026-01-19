@@ -6,6 +6,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopLibrarian;
+import net.swofty.type.hub.gui.rosetta.GUIStarlightArmor;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -52,7 +53,7 @@ public class VillagerLibrarian extends HypixelNPC {
             return;
         }
 
-        new GUIShopLibrarian().open(player);
+        player.openView(new GUIShopLibrarian());
     }
 
     @Override

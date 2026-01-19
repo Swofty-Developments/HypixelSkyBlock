@@ -6,6 +6,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIJax;
+import net.swofty.type.hub.gui.GUIShopFishMerchant;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointArcheryPractice;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -64,7 +65,7 @@ public class NPCJax extends HypixelNPC {
             return;
         }
 
-        new GUIJax().open(player);
+        player.openView(new GUIJax());
     }
 
     @Override

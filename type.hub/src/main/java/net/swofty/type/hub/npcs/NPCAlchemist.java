@@ -6,6 +6,7 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIShopAdventurer;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -55,7 +56,7 @@ public class NPCAlchemist extends HypixelNPC {
             return;
         }
 
-        new GUIShopAlchemist().open(player);
+        player.openView(new GUIShopAlchemist());
     }
 
     @Override

@@ -140,7 +140,7 @@ public class GUISkyWarsMenu extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                new GUISoulWell().open(player);
+                player.openView(new GUISoulWell());
             }
         });
 

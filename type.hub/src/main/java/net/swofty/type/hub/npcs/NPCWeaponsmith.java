@@ -53,7 +53,7 @@ public class NPCWeaponsmith extends HypixelNPC {
             return;
         }
 
-        new GUIShopWeaponsmith().open(player);
+        player.openView(new GUIShopWeaponsmith());
     }
 
     @Override

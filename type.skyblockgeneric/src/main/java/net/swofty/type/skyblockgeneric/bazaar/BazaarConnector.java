@@ -7,6 +7,7 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -261,8 +262,8 @@ public class BazaarConnector {
             player.sendMessage("§6[Bazaar] §7Processing " + transactions.size() + " pending transaction" +
                     (transactions.size() == 1 ? "" : "s") + "...");
 
-            List<String> successfulIds = new java.util.ArrayList<>();
-            List<String> failedIds = new java.util.ArrayList<>();
+            List<String> successfulIds = new ArrayList<>();
+            List<String> failedIds = new ArrayList<>();
 
             for (PendingTransaction tx : transactions) {
                 try {

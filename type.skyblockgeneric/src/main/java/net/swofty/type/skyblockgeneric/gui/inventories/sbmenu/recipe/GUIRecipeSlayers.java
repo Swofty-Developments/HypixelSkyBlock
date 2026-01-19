@@ -1,17 +1,11 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe;
 
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
@@ -19,161 +13,132 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class GUIRecipeSlayers extends HypixelInventoryGUI {
-    public GUIRecipeSlayers() {
-        super("Slayer Recipes", InventoryType.CHEST_6_ROW);
-    }
+public class GUIRecipeSlayers extends StatelessView {
 
-    private static final int[] categorySlots = {
-            20, 21, 22, 23, 24
-    };
+    private static final int[] CATEGORY_SLOTS = {20, 21, 22, 23, 24};
+
+    private static final List<SkyBlockRecipe.RecipeType> SLAYER_TYPES = List.of(
+            SkyBlockRecipe.RecipeType.REVENANT_HORROR,
+            SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER,
+            SkyBlockRecipe.RecipeType.SVEN_PACKMASTER,
+            SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH,
+            SkyBlockRecipe.RecipeType.INFERNO_DEMONLORD
+    );
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUIRecipeBook()));
+    public ViewConfiguration<DefaultState> configuration() {
+        return new ViewConfiguration<>("Slayer Recipes", InventoryType.CHEST_6_ROW);
+    }
+
+    @Override
+    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+        Components.fill(layout);
+        Components.close(layout, 49);
+        Components.back(layout, 48, ctx);
 
         ArrayList<SkyBlockRecipe> allRecipes = new ArrayList<>();
         allRecipes.addAll(ShapedRecipe.CACHED_RECIPES);
         allRecipes.addAll(ShapelessRecipe.CACHED_RECIPES);
 
-        ArrayList<SkyBlockRecipe.RecipeType> recipeTypes = new ArrayList<>();
-        recipeTypes.add(SkyBlockRecipe.RecipeType.REVENANT_HORROR);
-        recipeTypes.add(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER);
-        recipeTypes.add(SkyBlockRecipe.RecipeType.SVEN_PACKMASTER);
-        recipeTypes.add(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH);
-        recipeTypes.add(SkyBlockRecipe.RecipeType.INFERNO_DEMONLORD);
+        // Title item
+        layout.slot(4, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
 
-        int index = 0;
-        for (int slot : categorySlots) {
-
-            SkyBlockRecipe.RecipeType type = recipeTypes.get(index++);
+            SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.SLAYER;
 
             ArrayList<SkyBlockRecipe> typeRecipes = new ArrayList<>();
             ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
             allRecipes.forEach(recipe -> {
-                if (recipe.getRecipeType() == type) {
+                if (SLAYER_TYPES.contains(recipe.getRecipeType())) {
                     typeRecipes.add(recipe);
                 }
             });
 
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    new GUIRecipeCategory(type, new GUIRecipeSlayers()).open(player);
-                }
+            ArrayList<String> lore = new ArrayList<>(Arrays.asList(
+                    "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
+                    "§7that you have unlocked!", " "));
 
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    ArrayList<String> lore = new ArrayList<>(Arrays.asList(
-                            "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
-                            "§7that you have unlocked!", " "));
+            typeRecipes.forEach(recipe -> {
+                SkyBlockRecipe.CraftingResult result =
+                        (SkyBlockRecipe.CraftingResult) recipe.getCanCraft().apply(player);
 
-                    typeRecipes.forEach(recipe -> {
-                        SkyBlockRecipe.CraftingResult result =
-                                (SkyBlockRecipe.CraftingResult) recipe.getCanCraft().apply(player);
-
-                        if (result.allowed()) {
-                            allowedRecipes.add(recipe);
-                        }
-                    });
-
-                    String unlockedPercentage = String.format("%.2f", (allowedRecipes.size() / (double) typeRecipes.size()) * 100);
-                    lore.add("§7Recipes Unlocked: §e" + unlockedPercentage + "§6%");
-
-                    String baseLoadingBar = "─────────────────";
-                    int maxBarLength = baseLoadingBar.length();
-                    int completedLength = (int) ((allowedRecipes.size() / (double) typeRecipes.size()) * maxBarLength);
-
-                    String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
-                    int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
-                    String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                            completedLoadingBar.length() - formattingCodeLength, // Adjust for added formatting codes
-                            maxBarLength
-                    ));
-
-                    lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size());
-                    lore.add(" ");
-                    lore.add("§eClick to view!");
-
-                    return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
-                            type.getMaterial(), 1, lore);
+                if (result.allowed()) {
+                    allowedRecipes.add(recipe);
                 }
             });
-            set(new GUIItem(4) {
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
 
-                    SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.SLAYER;
+            String unlockedPercentage = String.format("%.2f", (allowedRecipes.size() / (double) typeRecipes.size()) * 100);
+            lore.add("§7Slayer Recipes Unlocked: §e" + unlockedPercentage + "§6%");
 
-                    ArrayList<SkyBlockRecipe> typeRecipes = new ArrayList<>();
-                    ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
-                    allRecipes.forEach(recipe -> {
-                        if (recipeTypes.contains(recipe.getRecipeType())) {
-                            typeRecipes.add(recipe);
-                        }
-                    });
+            String baseLoadingBar = "─────────────────";
+            int maxBarLength = baseLoadingBar.length();
+            int completedLength = (int) ((allowedRecipes.size() / (double) typeRecipes.size()) * maxBarLength);
 
-                    ArrayList<String> lore = new ArrayList<>(Arrays.asList(
-                            "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
-                            "§7that you have unlocked!", " "));
+            String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
+            int formattingCodeLength = 4;
+            String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
+                    completedLoadingBar.length() - formattingCodeLength,
+                    maxBarLength
+            ));
 
-                    typeRecipes.forEach(recipe -> {
-                        SkyBlockRecipe.CraftingResult result =
-                                (SkyBlockRecipe.CraftingResult) recipe.getCanCraft().apply(player);
+            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size());
 
-                        if (result.allowed()) {
-                            allowedRecipes.add(recipe);
-                        }
-                    });
+            return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
+                    type.getMaterial(), 1, lore);
+        });
 
-                    String unlockedPercentage = String.format("%.2f", (allowedRecipes.size() / (double) typeRecipes.size()) * 100);
-                    lore.add("§7Slayer Recipes Unlocked: §e" + unlockedPercentage + "§6%");
+        // Category items
+        for (int i = 0; i < CATEGORY_SLOTS.length && i < SLAYER_TYPES.size(); i++) {
+            SkyBlockRecipe.RecipeType type = SLAYER_TYPES.get(i);
+            int slot = CATEGORY_SLOTS[i];
 
-                    String baseLoadingBar = "─────────────────";
-                    int maxBarLength = baseLoadingBar.length();
-                    int completedLength = (int) ((allowedRecipes.size() / (double) typeRecipes.size()) * maxBarLength);
+            layout.slot(slot, (s, c) -> {
+                SkyBlockPlayer player = (SkyBlockPlayer) c.player();
 
-                    String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
-                    int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
-                    String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                            completedLoadingBar.length() - formattingCodeLength, // Adjust for added formatting codes
-                            maxBarLength
-                    ));
+                ArrayList<SkyBlockRecipe> typeRecipes = new ArrayList<>();
+                ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
+                allRecipes.forEach(recipe -> {
+                    if (recipe.getRecipeType() == type) {
+                        typeRecipes.add(recipe);
+                    }
+                });
 
-                    lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size());
+                ArrayList<String> lore = new ArrayList<>(Arrays.asList(
+                        "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
+                        "§7that you have unlocked!", " "));
 
-                    return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
-                            type.getMaterial(), 1, lore);
-                }
-            });
+                typeRecipes.forEach(recipe -> {
+                    SkyBlockRecipe.CraftingResult result =
+                            (SkyBlockRecipe.CraftingResult) recipe.getCanCraft().apply(player);
+
+                    if (result.allowed()) {
+                        allowedRecipes.add(recipe);
+                    }
+                });
+
+                String unlockedPercentage = String.format("%.2f", (allowedRecipes.size() / (double) typeRecipes.size()) * 100);
+                lore.add("§7Recipes Unlocked: §e" + unlockedPercentage + "§6%");
+
+                String baseLoadingBar = "─────────────────";
+                int maxBarLength = baseLoadingBar.length();
+                int completedLength = (int) ((allowedRecipes.size() / (double) typeRecipes.size()) * maxBarLength);
+
+                String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
+                int formattingCodeLength = 4;
+                String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
+                        completedLoadingBar.length() - formattingCodeLength,
+                        maxBarLength
+                ));
+
+                lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size());
+                lore.add(" ");
+                lore.add("§eClick to view!");
+
+                return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
+                        type.getMaterial(), 1, lore);
+            }, (_, c) -> c.push(new GUIRecipeCategory(type), GUIRecipeCategory.createInitialState((SkyBlockPlayer) c.player(), type)));
         }
-        updateItemStacks(getInventory(), getPlayer());
-
-    }
-
-    @Override
-    public boolean allowHotkeying() {
-        return false;
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
-
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
     }
 }

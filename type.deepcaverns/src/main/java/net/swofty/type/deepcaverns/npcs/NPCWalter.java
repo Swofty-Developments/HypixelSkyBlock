@@ -50,7 +50,7 @@ public class NPCWalter extends HypixelNPC implements NPCAbiphoneTrait {
 		if (isInDialogue(player)) return;
 
 		setDialogue(player, "none").thenRun(() -> {
-			MathUtility.delay(() -> new GUIShopWalter().open(player), 20);
+			MathUtility.delay(() -> player.openView(new GUIShopWalter()), 20);
 		});
 	}
 

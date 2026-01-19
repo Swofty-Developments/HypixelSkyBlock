@@ -4,33 +4,28 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-public class GUIShopWoolWeaverVibrant extends SkyBlockShopGUI {
+public class GUIShopWoolWeaverVibrant extends ShopView {
     public GUIShopWoolWeaverVibrant() {
-        super("Wool Weaver (Vibrant)", 1, WOOLWEAVER_VIBRANT);
+        super("Wool Weaver (Vibrant)", WOOLWEAVER_VIBRANT);
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        set(new GUIClickableItem(53) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                new GUIShopWoolWeaverCool().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1, "§ePage 2");
-            }
-        });
+    protected void layoutCustom(ViewLayout<State> layout, State state, ViewContext ctx) {
+        super.layoutCustom(layout, state, ctx);
+        layout.slot(
+                53,
+                (_, _) -> ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1, "§ePage 2"),
+                ((_, context) -> context.push(new GUIShopWoolWeaverCool()))
+        );
     }
 
     @Override

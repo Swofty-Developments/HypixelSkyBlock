@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary;
 
-import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 

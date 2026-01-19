@@ -2,7 +2,6 @@ package net.swofty.type.skyblockgeneric.event.actions.player;
 
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -20,7 +19,7 @@ public class ActionCraftingTableClick implements HypixelEventClass {
         }
 
         event.setBlockingItemUse(true);
-        new GUICrafting().open(player);
+        player.openView(new GUICrafting());
     }
 }
 

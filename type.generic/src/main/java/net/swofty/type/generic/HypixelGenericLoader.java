@@ -110,6 +110,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         loader.getTraditionalEvents().forEach(HypixelEventHandler::registerEventMethods);
         loader.getCustomEvents().forEach(HypixelEventHandler::registerEventMethods);
         loopThroughPackage("net.swofty.type.generic.event.actions", HypixelEventClass.class).forEach(HypixelEventHandler::registerEventMethods);
+        loopThroughPackage("net.swofty.type.generic.gui.v2.event", HypixelEventClass.class).forEach(HypixelEventHandler::registerEventMethods);
         // SkyBlockGenericLoader always runs after the generic loader, so if we are a SkyBlock server,
         // we will let that loader register the events
         if (!loader.getType().isSkyBlock()) {

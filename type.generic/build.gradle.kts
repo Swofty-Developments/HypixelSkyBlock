@@ -37,6 +37,7 @@ dependencies {
     }
     implementation("dev.hollowcube:polar:1.15.0")
     implementation("org.yaml:snakeyaml:2.2")
+    implementation("it.unimi.dsi:fastutil:8.5.18")
 }
 
 tasks.test {

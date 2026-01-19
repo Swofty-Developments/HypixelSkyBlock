@@ -1,13 +1,13 @@
 package net.swofty.type.hub.gui;
 
 import net.minestom.server.item.Material;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
-public class GUIShopMadRedstoneEngineer extends SkyBlockShopGUI {
+public class GUIShopMadRedstoneEngineer extends ShopView {
     public GUIShopMadRedstoneEngineer() {
-        super("Mad Redstone Engineer", 1, DEFAULT);
+        super("Mad Redstone Engineer", DEFAULT);
     }
 
     @Override

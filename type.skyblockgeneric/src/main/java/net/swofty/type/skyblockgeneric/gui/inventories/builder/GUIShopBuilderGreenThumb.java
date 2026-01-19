@@ -1,13 +1,13 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.builder;
 
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
-public class GUIShopBuilderGreenThumb extends SkyBlockShopGUI {
+public class GUIShopBuilderGreenThumb extends ShopView {
     public GUIShopBuilderGreenThumb() {
-        super("Green Thumb", 1, GREENTHUMB);
+        super("Green Thumb", GREENTHUMB);
     }
 
     @Override

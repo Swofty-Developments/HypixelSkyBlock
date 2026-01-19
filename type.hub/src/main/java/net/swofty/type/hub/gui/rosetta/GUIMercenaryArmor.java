@@ -1,13 +1,13 @@
 package net.swofty.type.hub.gui.rosetta;
 
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
-public class GUIMercenaryArmor extends SkyBlockShopGUI {
+public class GUIMercenaryArmor extends ShopView {
     public GUIMercenaryArmor() {
-        super("Mercenary Armor", 1, DEFAULT);
+        super("Mercenary Armor", DEFAULT);
     }
 
     @Override

@@ -1,13 +1,13 @@
 package net.swofty.type.deepcaverns.gui;
 
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
-public class GUIShopWalter extends SkyBlockShopGUI {
+public class GUIShopWalter extends ShopView {
 	public GUIShopWalter() {
-		super("Walter", 1, SINGLE_SLOT);
+		super("Walter", SINGLE_SLOT);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.shop.GUIShopAlda;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCAlda extends HypixelNPC implements NPCAbiphoneTrait {
 
@@ -41,7 +42,8 @@ public class NPCAlda extends HypixelNPC implements NPCAbiphoneTrait {
 
 	@Override
 	public void onClick(NPCInteractEvent event) {
-		new GUIShopAlda().open(event.player());
+		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
+		player.openView(new GUIShopAlda());
 	}
 
 	@Override
