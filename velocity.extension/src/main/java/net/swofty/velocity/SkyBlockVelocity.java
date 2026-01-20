@@ -190,7 +190,7 @@ public class SkyBlockVelocity {
 
 		// Setup Redis
 		RedisAPI.generateInstance(ConfigProvider.settings().getRedisUri());
-		RedisAPI.getInstance().setFilterID("proxy");
+		RedisAPI.getInstance().setFilterId("proxy");
 		loopThroughPackage("net.swofty.velocity.redis.listeners", RedisListener.class)
 				.forEach(listener -> {
 					RedisAPI.getInstance().registerChannel(
