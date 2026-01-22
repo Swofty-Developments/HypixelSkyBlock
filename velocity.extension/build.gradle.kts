@@ -40,7 +40,7 @@ dependencies {
     implementation("com.viaversion:viarewind-common:4.0.13")
     implementation("com.viaversion:viaversion:5.7.0")
 
-    implementation(platform("io.netty:netty-bom:4.1.110.Final"))
+    implementation(platform("io.netty:netty-bom:4.2.9.Final"))
     implementation("io.netty:netty-buffer")
     implementation("io.netty:netty-codec")
     implementation("io.netty:netty-codec-http")
