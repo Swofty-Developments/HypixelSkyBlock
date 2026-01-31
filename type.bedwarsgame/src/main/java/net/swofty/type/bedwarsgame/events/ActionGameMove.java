@@ -6,13 +6,12 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.player.PlayerMoveEvent;
-import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.game.GameState;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -31,8 +30,8 @@ public class ActionGameMove implements HypixelEventClass {
 			return;
 		}
 
-		Game game = player.getGame();
-		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
+		BedWarsGame game = player.getGame();
+		if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
 			return;
 		}
 
@@ -70,7 +69,7 @@ public class ActionGameMove implements HypixelEventClass {
 
 			Point bedLocation = new Pos(bedPos.feet().x(), bedPos.feet().y(), bedPos.feet().z());
 			if (playerPos.distance(bedLocation) <= 10) {
-				List<String> teamTraps = game.getTeamManager().getTeamTraps(teamKey);
+				List<String> teamTraps = game.getTeamTraps(teamKey);
 				if (teamTraps.isEmpty()) {
 					continue;
 				}

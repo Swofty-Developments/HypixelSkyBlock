@@ -5,7 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
@@ -44,7 +44,7 @@ public class ActionPlayerJoin implements HypixelEventClass {
 			return;
 		}
 
-		Game preferred = TypeBedWarsGameLoader.getGameById(preferredGameId);
+		BedWarsGame preferred = TypeBedWarsGameLoader.getGameById(preferredGameId);
 		if (preferred == null) {
 			player.sendMessage("§cThe assigned game no longer exists! Returning to lobby...");
 			player.sendTo(ServerType.BEDWARS_LOBBY);

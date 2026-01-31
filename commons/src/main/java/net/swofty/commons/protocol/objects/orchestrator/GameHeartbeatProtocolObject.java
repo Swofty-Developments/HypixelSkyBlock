@@ -1,13 +1,15 @@
 package net.swofty.commons.protocol.objects.orchestrator;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.game.Game;
+import net.swofty.commons.game.GameObject;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class GameHeartbeatProtocolObject extends ProtocolObject
         <GameHeartbeatProtocolObject.HeartbeatMessage,
@@ -25,7 +27,7 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
                 json.put("maxPlayers", value.maxPlayers);
                 json.put("onlinePlayers", value.onlinePlayers);
                 JSONArray games = new JSONArray();
-                for (Game game : value.games) {
+                for (GameObject game : value.games) {
                     games.put(game.toJSON());
                 }
                 json.put("games", games);
@@ -38,11 +40,11 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
                 UUID uuid = UUID.fromString(obj.getString("uuid"));
                 String shortName = obj.getString("shortName");
                 ServerType type = ServerType.valueOf(obj.getString("type"));
-                List<Game> games = new ArrayList<>();
+                List<GameObject> games = new ArrayList<>();
                 JSONArray gamesArray = obj.getJSONArray("games");
                 for (int i = 0; i < gamesArray.length(); i++) {
                     JSONObject game = gamesArray.getJSONObject(i);
-                    games.add(Game.fromJSON(game));
+                    games.add(GameObject.fromJSON(game));
                 }
                 int max = obj.getInt("maxPlayers");
                 int online = obj.getInt("onlinePlayers");
@@ -79,7 +81,7 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
         };
     }
 
-    public record HeartbeatMessage(UUID uuid, String shortName, ServerType type, int maxPlayers, int onlinePlayers, List<Game> games) { }
+    public record HeartbeatMessage(UUID uuid, String shortName, ServerType type, int maxPlayers, int onlinePlayers, List<GameObject> games) { }
 
     public record HeartbeatResponse(boolean ok) { }
 }

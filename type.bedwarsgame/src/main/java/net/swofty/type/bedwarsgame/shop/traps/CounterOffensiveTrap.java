@@ -5,7 +5,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.Trap;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -23,7 +23,7 @@ public class CounterOffensiveTrap extends Trap {
 	}
 
 	@Override
-	public void onTrigger(Game game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer triggerer) {
+	public void onTrigger(BedWarsGame game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer triggerer) {
 		game.getPlayers().stream()
 				.filter(p -> teamName.equals(p.getTeamKey()))
 				.forEach(p -> p.addEffect(new Potion(PotionEffect.SPEED, (byte) 1, 200)));

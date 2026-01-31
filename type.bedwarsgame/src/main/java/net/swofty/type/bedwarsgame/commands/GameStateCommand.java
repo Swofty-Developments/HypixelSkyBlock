@@ -3,7 +3,7 @@ package net.swofty.type.bedwarsgame.commands;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -22,7 +22,7 @@ public class GameStateCommand extends HypixelCommand {
             if (!permissionCheck(sender)) return;
             if (!(sender instanceof BedWarsPlayer player)) return;
             String team = context.get("team");
-            Game game = player.getGame();
+            BedWarsGame game = player.getGame();
 
             if (game == null) {
                 player.sendMessage("§cYou are not in a game.");

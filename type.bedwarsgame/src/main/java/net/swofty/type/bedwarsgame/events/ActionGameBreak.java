@@ -7,13 +7,12 @@ import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.potion.PotionEffect;
-import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.game.GameState;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
@@ -30,8 +29,8 @@ public class ActionGameBreak implements HypixelEventClass {
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		Block blockBeingBroken = event.getBlock();
 
-		Game game = player.getGame();
-		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
+		BedWarsGame game = player.getGame();
+		if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
 			event.setCancelled(true);
 			return;
 		}
@@ -58,7 +57,7 @@ public class ActionGameBreak implements HypixelEventClass {
 					event.setCancelled(true);
 					return;
 				}
-				if (!game.getTeamManager().isBedAlive(teamKey)) {
+				if (!game.isBedAlive(teamKey)) {
 					// Bed already destroyed logically; block might linger if not cleared perfectly
 					event.setCancelled(true);
 					return;
@@ -67,6 +66,9 @@ public class ActionGameBreak implements HypixelEventClass {
 				BedWarsStatsRecorder.recordBedBroken(player, game.getBedwarsGameType());
 				player.getInstance().setBlock(feetPoint, Block.AIR);
 				player.getInstance().setBlock(headPoint, Block.AIR);
+
+				// Record bed destruction to replay (via replay manager)
+				game.getReplayManager().recordBedDestroyed(teamKey, player);
 
 				if (player.hasEffect(PotionEffect.INVISIBILITY)) {
 					player.getAchievementHandler().completeAchievement("bedwars.sneaky_rusher"); // break an bed while invisible
@@ -86,6 +88,17 @@ public class ActionGameBreak implements HypixelEventClass {
 			if (Boolean.TRUE.equals(blockBeingBroken.getTag(TypeBedWarsGameLoader.PLAYER_PLACED_TAG))) {
 				new ItemEntity(ItemStack.of(Objects.requireNonNull(blockBeingBroken.registry().material()))).setInstance(player.getInstance(), event.getBlockPosition());
 				event.setCancelled(false);
+
+				// Record block break to replay
+				net.swofty.commons.replay.dispatcher.BlockChangeDispatcher blockDispatcher =
+					game.getReplayManager().getBlockChangeDispatcher();
+				if (blockDispatcher != null) {
+					blockDispatcher.recordBlockChange(
+						event.getBlockPosition(),
+						blockBeingBroken,
+						Block.AIR
+					);
+				}
 			} else {
 				// Not a team bed and not a player-placed block
 				player.sendMessage("§cYou can only break blocks placed by players!");

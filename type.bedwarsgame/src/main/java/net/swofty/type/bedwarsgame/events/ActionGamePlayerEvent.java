@@ -2,7 +2,6 @@ package net.swofty.type.bedwarsgame.events;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.entity.ItemEntity;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
@@ -11,13 +10,11 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.commons.game.GameState;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.gui.GUIEnderChest;
 import net.swofty.type.bedwarsgame.gui.GUITeamChest;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -45,13 +42,13 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			event.setCancelled(true);
 			return;
 		}
-		Game game = player.getGame();
+		BedWarsGame game = player.getGame();
 		if (game == null) {
 			event.setCancelled(true);
 			return;
 		}
 		;
-		if (game.getGameStatus() == GameStatus.WAITING) {
+		if (game.getGameStatus() == GameState.WAITING) {
 			event.setCancelled(true);
 		}
 	}
@@ -94,8 +91,8 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 		if (block.registry().material() != Material.CHEST) return;
 
-		Game game = player.getGame();
-		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
+		BedWarsGame game = player.getGame();
+		if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
 			event.setCancelled(true);
 			return;
 		}
@@ -132,7 +129,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		}
 
 		boolean sameTeam = chestTeamKey.equals(playerTeamKey);
-		if (!sameTeam && game.getTeamManager().getTeamBedStatus().getOrDefault(chestTeamKey, false)) {
+		if (!sameTeam && game.getTeamBedStatus().getOrDefault(chestTeamKey, false)) {
 			event.setCancelled(true);
 			player.sendMessage("§cYou can only access enemy team chests if their bed is destroyed!");
 			return;
@@ -155,8 +152,8 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		ItemStack itemInHand = player.getItemInMainHand();
 
-		Game game = player.getGame();
-		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
+		BedWarsGame game = player.getGame();
+		if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
 			return;
 		}
 
@@ -182,7 +179,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		if (block.registry().material() == Material.ENDER_CHEST) {
 			event.setCancelled(true);
 			try {
-				Map<Integer, ItemStack> playerEnderChest = game.getEnderchests().computeIfAbsent(player, k -> new ConcurrentHashMap<>());
+				Map<Integer, ItemStack> playerEnderChest = game.getEnderChests().computeIfAbsent(player.getUuid(), k -> new ConcurrentHashMap<>());
 				boolean itemAdded = false;
 				for (int i = 0; i < 27; i++) { // Standard ender chest size
 					if (playerEnderChest.get(i) == null || playerEnderChest.get(i).isAir()) {
@@ -244,7 +241,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			}
 
 			boolean sameTeam = chestTeamName.equals(playerTeamName);
-			if (!sameTeam && game.getTeamManager().getTeamBedStatus().getOrDefault(chestTeamName, false)) {
+			if (!sameTeam && game.getTeamBedStatus().getOrDefault(chestTeamName, false)) {
 				player.sendMessage(MiniMessage.miniMessage().deserialize("§cYou can only access enemy team chests if their bed is destroyed!"));
 				return;
 			}

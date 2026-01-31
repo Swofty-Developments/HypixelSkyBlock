@@ -1,52 +1,95 @@
 package net.swofty.commons.game;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import net.swofty.commons.ServerType;
-import org.json.JSONObject;
+import net.minestom.server.instance.InstanceContainer;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Game {
-    private List<UUID> involvedPlayers;
-    private List<UUID> disconnectedPlayers;
-    private UUID gameId;
-    private ServerType type;
-    private String map;
-    private String gameTypeName; // e.g., "CLASSIC", "SOLO", "DOUBLE_UP"
+public interface Game<P extends GameParticipant> {
 
-    public JSONObject toJSON() {
-        JSONObject json = new JSONObject();
-        json.put("gameId", gameId.toString());
-        json.put("type", type.name());
-        json.put("map", map);
-        json.put("gameTypeName", gameTypeName != null ? gameTypeName : "");
-        List<String> players = involvedPlayers.stream().map(UUID::toString).toList();
-        json.put("players", players);
-        List<String> disconnected = disconnectedPlayers != null
-                ? disconnectedPlayers.stream().map(UUID::toString).toList()
-                : List.of();
-        json.put("disconnectedPlayers", disconnected);
-        return json;
+    String getGameId();
+
+    GameState getState();
+
+    InstanceContainer getInstance();
+
+    Collection<P> getPlayers();
+
+    /**
+     * @return The maximum number of players this game can hold
+     */
+    int getMaxPlayers();
+
+    /**
+     * @return The minimum number of players required to start
+     */
+    int getMinPlayers();
+
+    /**
+     * @return Number of available slots
+     */
+    default int getAvailableSlots() {
+        return Math.max(0, getMaxPlayers() - getPlayers().size());
     }
 
-    public static Game fromJSON(JSONObject json) {
-        Game game = new Game();
-        game.gameId = UUID.fromString(json.getString("gameId"));
-        game.type = ServerType.valueOf(json.getString("type"));
-        game.map = json.getString("map");
-        game.gameTypeName = json.optString("gameTypeName", null);
-        game.involvedPlayers = json.getJSONArray("players").toList().stream().map(obj -> UUID.fromString(obj.toString())).toList();
-        game.disconnectedPlayers = json.has("disconnectedPlayers")
-                ? json.getJSONArray("disconnectedPlayers").toList().stream().map(obj -> UUID.fromString(obj.toString())).toList()
-                : List.of();
-        return game;
+    /**
+     * @return Whether new players can join this game
+     */
+    default boolean canAcceptPlayers() {
+        return getState() == GameState.WAITING && getAvailableSlots() > 0;
+    }
+
+    /**
+     * @return Whether the game has minimum players to start
+     */
+    default boolean hasMinimumPlayers() {
+        return getPlayers().size() >= getMinPlayers();
+    }
+
+    /**
+     * Attempts to add a player to the game.
+     * @param player The player to add
+     * @return Result of the join attempt
+     */
+    JoinResult join(P player);
+
+    /**
+     * Removes a player from the game.
+     * @param player The player to remove
+     */
+    void leave(P player);
+
+    /**
+     * Gets a player by their UUID.
+     * @param uuid The player's UUID
+     * @return The player, if present
+     */
+    Optional<P> getPlayer(UUID uuid);
+
+    /**
+     * Starts the game. Called when countdown finishes.
+     */
+    void start();
+
+    /**
+     * Ends the game.
+     */
+    void end();
+
+    /**
+     * Cleans up resources when the game is disposed.
+     */
+    void dispose();
+
+    /**
+     * @return The countdown controller for this game
+     */
+    GameCountdownController getCountdown();
+
+    sealed interface JoinResult {
+        record Success() implements JoinResult {}
+        record Denied(String reason) implements JoinResult {}
+        record Redirect(String targetServer) implements JoinResult {}
     }
 }

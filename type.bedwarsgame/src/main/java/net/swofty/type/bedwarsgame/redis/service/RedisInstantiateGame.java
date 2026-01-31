@@ -1,11 +1,11 @@
 package net.swofty.type.bedwarsgame.redis.service;
 
 import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import org.json.JSONObject;
 
 public class RedisInstantiateGame implements ServiceToClient {
@@ -48,7 +48,7 @@ public class RedisInstantiateGame implements ServiceToClient {
             }
 
             // Create the game
-            Game game = TypeBedWarsGameLoader.createGame(mapEntry);
+            BedWarsGame game = TypeBedWarsGameLoader.createGame(mapEntry);
             if (game == null) {
                 return new JSONObject()
                         .put("success", false)

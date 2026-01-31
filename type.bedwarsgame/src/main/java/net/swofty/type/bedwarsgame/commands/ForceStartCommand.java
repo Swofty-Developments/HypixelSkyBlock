@@ -1,8 +1,7 @@
 package net.swofty.type.bedwarsgame.commands;
 
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.commons.game.GameState;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -20,12 +19,12 @@ public class ForceStartCommand extends HypixelCommand {
 		command.addSyntax((sender, context) -> {
 			if (!permissionCheck(sender)) return;
 			BedWarsPlayer player = (BedWarsPlayer) sender;
-			Game game = player.getGame();
+			BedWarsGame game = player.getGame();
 			if (game == null) {
 				player.sendMessage("§cYou are not in a game.");
 				return;
 			}
-			if (game.getGameStatus() != GameStatus.WAITING) {
+			if (game.getGameStatus() != GameState.WAITING) {
 				player.sendMessage("§cYou can only force start a game that is waiting.");
 				return;
 			}

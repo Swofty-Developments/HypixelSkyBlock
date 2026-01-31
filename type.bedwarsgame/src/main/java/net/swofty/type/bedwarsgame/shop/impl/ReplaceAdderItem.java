@@ -4,7 +4,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -43,7 +43,7 @@ public class ReplaceAdderItem extends ShopItem {
 
 		inventory.addItemStack(getDisplay());
 		if (player.hasTag(Tag.Integer("upgrade_sharpness"))) {
-			Game game = player.getGame();
+			BedWarsGame game = player.getGame();
 			TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("sharpness").applyEffect(game, player.getTeamKey(), player.getTag(Tag.Integer("upgrade_sharpness")));
 		}
 	}

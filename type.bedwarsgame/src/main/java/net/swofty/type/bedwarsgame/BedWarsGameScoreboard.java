@@ -4,9 +4,10 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.game.GameState;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
@@ -18,11 +19,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+// TODO: fix scoreboard
 public class BedWarsGameScoreboard {
 	private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
 	private static Integer prototypeName = 0;
 
-	public static void start(Game game) {
+	public static void start(BedWarsGame game) {
 		Scheduler scheduler = MinecraftServer.getSchedulerManager();
 		scheduler.submitTask(() -> {
 			if (game == null) {
@@ -49,7 +51,7 @@ public class BedWarsGameScoreboard {
 				lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
 				lines.add("§7 ");
 
-				if (game.getGameStatus() == GameStatus.WAITING) {
+				if (game.getGameStatus() == GameState.WAITING) {
 					lines.add("§fMap: §a" + game.getMapEntry().getName());
 					lines.add("§fPlayers: §a" + game.getPlayers().size() + "/" + game.getMapEntry().getConfiguration().getTeams().size());
 					lines.add("§7 ");
@@ -58,21 +60,37 @@ public class BedWarsGameScoreboard {
 					lines.add("§fMode: §a" + game.getBedwarsGameType().getDisplayName());
 					lines.add("§fVersion: §7v1.9");
 				} else {
-					String eventName = game.getEventManager().getNextEvent() != null
-							? game.getEventManager().getNextEvent().getDisplayName()
-							: game.getEventManager().getCurrentEvent().getDisplayName();
-					long seconds = game.getEventManager().getSecondsUntilNextEvent();
+					String eventName = game.getGameEventManager().getNextEvent() != null
+							? game.getGameEventManager().getNextEvent().getDisplayName()
+							: game.getGameEventManager().getCurrentEvent().getDisplayName();
+					long seconds = game.getGameEventManager().getSecondsUntilNextEvent();
 					long minutesPart = seconds / 60;
 					long secondsPart = seconds % 60;
 					String timeLeft = String.format("%d:%02d", minutesPart, secondsPart);
 					lines.add("§f" + eventName + " in §a" + timeLeft);
 					lines.add("§7 ");
-					for (java.util.Map.Entry<TeamKey, net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
-						TeamKey teamKey = entry.getKey();
+
+					for (BedWarsTeam team : game.getTeams()) {
+						TeamKey teamKey = team.getTeamKey();
 						String teamName = teamKey.getName();
 						String teamInitial = teamName.substring(0, 1).toUpperCase();
 
-						String bedStatus = game.getTeamManager().isBedAlive(teamKey) ? "§a✔" : "§c✖";
+						String bedStatus;
+						if (!team.hasPlayers()) {
+							bedStatus = "§c✖";
+						} else if (team.isBedAlive()) {
+							bedStatus = "§a✔";
+						} else {
+							int alivePlayers = game.getPlayersOnTeam(teamKey).stream()
+									.filter(p -> !Boolean.TRUE.equals(p.getTag(BedWarsGame.ELIMINATED_TAG)))
+									.toList()
+									.size();
+							if (alivePlayers > 0) {
+								bedStatus = "§c" + alivePlayers;
+							} else {
+								bedStatus = "§c✖";
+							}
+						}
 						lines.add(String.format("%s%s §f%s %s", teamKey.chatColor(), teamInitial, teamName, bedStatus));
 					}
 				}

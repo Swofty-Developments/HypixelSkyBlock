@@ -8,7 +8,7 @@ import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.events.ActionGamePlayerEvent;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.gui.inventory.SharedInventory;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -32,7 +32,7 @@ public class GUITeamChest extends SharedInventory {
 
 		BedWarsPlayer player = (BedWarsPlayer) e.player();
 
-		Game game = player.getGame();
+		BedWarsGame game = player.getGame();
 		if (game == null) return;
 
 		Map<Integer, ItemStack> teamChest = game.getChests().get(teamKey);
@@ -192,7 +192,7 @@ public class GUITeamChest extends SharedInventory {
 				continue;
 			}
 
-			Game game = TypeBedWarsGameLoader.getGameById(gameId);
+			BedWarsGame game = TypeBedWarsGameLoader.getGameById(gameId);
 			if (game == null) {
 				continue;
 			}

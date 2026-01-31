@@ -4,7 +4,6 @@ import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithBlockEvent;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
@@ -13,12 +12,11 @@ import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.game.GameState;
 import net.swofty.pvp.projectile.entities.FireballProjectile;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -41,8 +39,8 @@ public class ActionGameCustomItems implements HypixelEventClass {
 			return;
 		}
 
-		Game game = shooter.getGame();
-		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
+		BedWarsGame game = shooter.getGame();
+		if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
 			fireball.remove();
 			return;
 		}

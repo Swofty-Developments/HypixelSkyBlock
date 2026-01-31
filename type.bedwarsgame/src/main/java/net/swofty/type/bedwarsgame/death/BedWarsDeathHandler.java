@@ -8,7 +8,7 @@ import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,9 +16,9 @@ import org.jetbrains.annotations.Nullable;
 public class BedWarsDeathHandler {
 
     private static final int VOID_Y_THRESHOLD = 1;
-    public static BedWarsDeathResult calculateDeath(@NotNull BedWarsPlayer victim, @NotNull Game game) {
+    public static BedWarsDeathResult calculateDeath(@NotNull BedWarsPlayer victim, @NotNull BedWarsGame game) {
         TeamKey teamKey = victim.getTeamKey();
-        boolean isFinalKill = teamKey != null && !game.getTeamManager().isBedAlive(teamKey);
+        boolean isFinalKill = teamKey != null && !game.isBedAlive(teamKey);
 
         Damage lastDamage = victim.getLastDamageSource();
         BedWarsPlayer recentAttacker = BedWarsCombatTracker.getRecentAttacker(victim);

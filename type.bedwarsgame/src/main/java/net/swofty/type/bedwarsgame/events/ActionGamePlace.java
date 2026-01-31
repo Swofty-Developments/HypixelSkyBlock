@@ -7,14 +7,13 @@ import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.minestom.server.sound.SoundEvent;
-import net.minestom.server.tag.Tag;
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.entity.TntEntity;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
-import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.game.GameState;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.entity.TntEntity;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -26,7 +25,7 @@ public class ActionGamePlace implements HypixelEventClass {
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerBlockPlaceEvent event) {
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
-		Game game = player.getGame();
+		BedWarsGame game = player.getGame();
 		if (game == null) {
 			Logger.info("Player {} tried to place a block but is not in a game!", player.getUsername());
 			event.setCancelled(true); // Prevent placing if not in a game
@@ -39,7 +38,7 @@ public class ActionGamePlace implements HypixelEventClass {
 			return;
 		}
 
-		if (game.getGameStatus() != GameStatus.IN_PROGRESS) {
+		if (game.getGameStatus() != GameState.IN_PROGRESS) {
 			event.setCancelled(true);
 			return;
 		}
@@ -74,6 +73,17 @@ public class ActionGamePlace implements HypixelEventClass {
 
 		event.setBlock(event.getBlock().withTag(TypeBedWarsGameLoader.PLAYER_PLACED_TAG, true));
 		player.getAchievementHandler().addProgressByTrigger("bedwars.blocks_placed", 1);
+
+		// Record block place to replay
+		net.swofty.commons.replay.dispatcher.BlockChangeDispatcher blockDispatcher =
+			game.getReplayManager().getBlockChangeDispatcher();
+		if (blockDispatcher != null) {
+			blockDispatcher.recordBlockChange(
+				event.getBlockPosition(),
+				Block.AIR,
+				event.getBlock()
+			);
+		}
 	}
 
 }

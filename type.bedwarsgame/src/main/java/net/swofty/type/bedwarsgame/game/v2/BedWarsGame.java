@@ -1,0 +1,637 @@
+package net.swofty.type.bedwarsgame.game.v2;
+
+import lombok.Getter;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.title.TitlePart;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.event.Event;
+import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
+import net.minestom.server.tag.Tag;
+import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.ChatUtility;
+import net.swofty.commons.ServerType;
+import net.swofty.commons.ServiceType;
+import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.game.AbstractTeamGame;
+import net.swofty.commons.game.CountdownConfig;
+import net.swofty.commons.game.GameState;
+import net.swofty.commons.game.event.GameEndEvent;
+import net.swofty.proxyapi.ProxyService;
+import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.events.custom.BedDestroyedEvent;
+import net.swofty.type.bedwarsgame.replay.BedWarsReplayManager;
+import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.bedwarsgame.user.ExperienceCause;
+import net.swofty.type.generic.event.HypixelEventHandler;
+import org.tinylog.Logger;
+
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
+
+@Getter
+public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
+    public static final Tag<Boolean> ELIMINATED_TAG = Tag.Boolean("eliminated");
+
+    private final BedWarsMapsConfig.MapEntry mapEntry;
+    private final BedwarsGameType gameType;
+
+    private final BedWarsGeneratorManager generatorManager;
+    private final BedWarsWorldManager worldManager;
+    private final BedWarsRespawnHandler respawnHandler;
+    private final BedWarsGameEventManager gameEventManager;
+    private final BedWarsReplayManager replayManager;
+
+    private final Map<TeamKey, Map<Integer, ItemStack>> teamChests = new EnumMap<>(TeamKey.class);
+    private final Map<UUID, Map<Integer, ItemStack>> enderChests = new HashMap<>();
+
+    public BedWarsGame(
+            BedWarsMapsConfig.MapEntry mapEntry,
+            InstanceContainer instance,
+            BedwarsGameType gameType
+    ) {
+        // these need to happen before super() is called
+        this.mapEntry = mapEntry;
+        this.gameType = gameType;
+
+        super(instance, event -> HypixelEventHandler.callCustomEvent((Event) event));
+
+
+        // Initialize teams from map config
+        mapEntry.getConfiguration().getTeams().keySet()
+                .forEach(teamKey -> registerTeam(new BedWarsTeam(teamKey)));
+
+        // Initialize managers
+        this.generatorManager = new BedWarsGeneratorManager(this);
+        this.worldManager = new BedWarsWorldManager(this);
+        this.respawnHandler = new BedWarsRespawnHandler(this);
+        this.gameEventManager = new BedWarsGameEventManager(this);
+
+        // Initialize replay with service connection
+        ProxyService replayService = new ProxyService(ServiceType.REPLAY);
+        this.replayManager = new BedWarsReplayManager(this, replayService);
+
+        // Start scoreboard
+        BedWarsGameScoreboard.start(this);
+    }
+
+    @Override
+    protected CountdownConfig getCountdownConfig() {
+        return CountdownConfig.withAcceleration(30, 10, getMaxPlayers());
+    }
+
+    @Override
+    public int getMaxPlayers() {
+        return mapEntry.getConfiguration().getTeams().size() * getTeamSize();
+    }
+
+    @Override
+    public int getMinPlayers() {
+        return getTeamSize() * Math.min(2, mapEntry.getConfiguration().getTeams().size());
+    }
+
+    @Override
+    protected int getTeamSize() {
+        return Math.max(1, gameType.getTeamSize());
+    }
+
+    /**
+     * @deprecated Use getState() instead
+     */
+    @Deprecated
+    public GameState getGameStatus() {
+        return getState();
+    }
+
+    /**
+     * @deprecated Use start() instead
+     */
+    @Deprecated
+    public void startGame() {
+        start();
+    }
+
+    /**
+     * @deprecated Use getGameType() instead
+     */
+    @Deprecated
+    public BedwarsGameType getBedwarsGameType() {
+        return gameType;
+    }
+
+    public boolean isBedAlive(TeamKey teamKey) {
+        return getTeam(teamKey.name())
+                .map(BedWarsTeam::isBedAlive)
+                .orElse(false);
+    }
+
+    /**
+     * Gets the team that a player is on.
+     */
+    @Deprecated
+    public Optional<BedWarsTeam> getPlayerTeamByKey(TeamKey teamKey) {
+        return getTeam(teamKey.name());
+    }
+
+    @Deprecated
+    public void recordBedDestroyed(TeamKey teamKey) {
+        onBedDestroyed(teamKey, null);
+    }
+
+    @Deprecated
+    public Map<TeamKey, Map<Integer, ItemStack>> getChests() {
+        return teamChests;
+    }
+
+    /**
+     * Gets players on a specific team.
+     */
+    public List<BedWarsPlayer> getPlayersOnTeam(TeamKey teamKey) {
+        return getPlayers().stream()
+                .filter(p -> teamKey.equals(p.getTeamKey()))
+                .toList();
+    }
+
+    /**
+     * Gets team traps for a team.
+     */
+    public List<String> getTeamTraps(TeamKey teamKey) {
+        return getTeam(teamKey.name())
+                .map(BedWarsTeam::getTraps)
+                .orElse(List.of());
+    }
+
+
+    @Deprecated
+    public Map<TeamKey, Boolean> getTeamBedStatus() {
+        Map<TeamKey, Boolean> status = new EnumMap<>(TeamKey.class);
+        for (BedWarsTeam team : getTeams()) {
+            status.put(team.getTeamKey(), team.isBedAlive());
+        }
+        return status;
+    }
+
+    /**
+     * Equips team armor to a player.
+     */
+    public void equipTeamArmor(BedWarsPlayer player, TeamKey teamKey) {
+        respawnHandler.equipTeamArmor(player, teamKey);
+    }
+
+    @Deprecated
+    public void playerEliminated(BedWarsPlayer player) {
+        onPlayerEliminated(player);
+    }
+
+    /**
+     * Adds a trap to a team.
+     */
+    public void addTeamTrap(TeamKey teamKey, String trapKey) {
+        getTeam(teamKey.name()).ifPresent(team -> team.addTrap(trapKey));
+    }
+
+    /**
+     * Gets a team's upgrade level.
+     */
+    public int getTeamUpgradeLevel(TeamKey teamKey, String upgradeName) {
+        return getTeam(teamKey.name())
+                .map(team -> team.getUpgradeLevel(upgradeName))
+                .orElse(0);
+    }
+
+    /**
+     * Checks if the game can accept a party warp.
+     */
+    public String canAcceptPartyWarp() {
+        if (state == GameState.IN_PROGRESS) {
+            return "Cannot warp - game has already started";
+        }
+        if (state == GameState.ENDING) {
+            return "Cannot warp - game is ending";
+        }
+        return null;
+    }
+
+    /**
+     * Checks if the game can accept new players.
+     */
+    public boolean canAcceptNewPlayers() {
+        return state == GameState.WAITING;
+    }
+
+    /**
+     * Handles player rejoining.
+     */
+    public void rejoin(BedWarsPlayer player) {
+        // Check if player has disconnected data
+        DisconnectedPlayerData data = disconnectedPlayers.remove(player.getUuid());
+        if (data != null) {
+            // Re-add to players map
+            players.put(player.getUuid(), player);
+
+            // Restore player data
+            restorePlayerData(player, data.savedData());
+
+            // Call the rejoin handler
+            onPlayerRejoin(player, data);
+        }
+    }
+
+    @Override
+    public boolean assignToTeam(BedWarsPlayer player, BedWarsTeam team) {
+        boolean assigned = super.assignToTeam(player, team);
+        if (assigned) {
+            // Set team tag for compatibility
+            player.setTag(Tag.String("team"), team.getTeamKey().name());
+        }
+        return assigned;
+    }
+
+    @Override
+    protected void onPlayerJoin(BedWarsPlayer player) {
+        BedWarsMapsConfig.Position waiting = mapEntry.getConfiguration().getLocations().getWaiting();
+
+        if (player.getInstance() == null || player.getInstance().getUuid() != instance.getUuid()) {
+            player.setInstance(instance, new Pos(waiting.x(), waiting.y(), waiting.z()));
+        }
+
+        player.setFlying(false);
+        player.setGameMode(GameMode.ADVENTURE);
+        player.getInventory().setItemStack(8,
+                TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack());
+
+        // Set game ID tag
+        player.setTag(Tag.String("gameId"), gameId);
+
+        String randomLetters = UUID.randomUUID().toString().replaceAll("-", "")
+                .substring(0, new Random().nextInt(10) + 4);
+        player.setDisplayName(Component.text(randomLetters, NamedTextColor.WHITE, TextDecoration.OBFUSCATED));
+
+        for (BedWarsPlayer p : getPlayers()) {
+            String name = p.getUuid().compareTo(player.getUuid()) == 0 ? player.getUsername() : "§k" + randomLetters;
+            p.sendMessage(name + " §ehas joined (§b" + players.size() + "§e/§b" + getMaxPlayers() + "§e)");
+        }
+    }
+
+    @Override
+    protected void onPlayerLeave(BedWarsPlayer player) {
+        super.onPlayerLeave(player); // Handles team removal
+        player.sendTo(ServerType.BEDWARS_LOBBY);
+    }
+
+    @Override
+    protected void onPlayerDisconnect(BedWarsPlayer player) {
+        String teamColor = getPlayerTeam(player.getUuid())
+                .map(BedWarsTeam::getColorCode)
+                .orElse("§7");
+
+        broadcastMessage(Component.text(teamColor + player.getUsername() + " §7disconnected."));
+    }
+
+    @Override
+    protected void onPlayerRejoin(BedWarsPlayer player, DisconnectedPlayerData data) {
+        player.setInstance(instance);
+
+        Optional<BedWarsTeam> teamOpt = getPlayerTeam(player.getUuid());
+        if (teamOpt.isEmpty()) {
+            player.sendTo(ServerType.BEDWARS_LOBBY);
+            return;
+        }
+
+        BedWarsTeam team = teamOpt.get();
+        String teamColor = team.getColorCode();
+
+        broadcastMessage(Component.text(teamColor + player.getUsername() + " §7reconnected."));
+
+        if (!team.isBedAlive()) {
+            setupAsSpectator(player);
+        } else {
+            respawnHandler.startRespawn(player);
+        }
+    }
+
+    @Override
+    protected boolean canPlayerRejoin(BedWarsPlayer player) {
+        return getPlayerTeam(player.getUuid())
+                .map(BedWarsTeam::isBedAlive)
+                .orElse(false);
+    }
+
+    @Override
+    protected Map<String, Object> savePlayerData(BedWarsPlayer player) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("armorLevel", player.getTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG));
+        return data;
+    }
+
+    @Override
+    protected void restorePlayerData(BedWarsPlayer player, Map<String, Object> savedData) {
+        Integer armorLevel = (Integer) savedData.get("armorLevel");
+        if (armorLevel != null) {
+            player.setTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG, armorLevel);
+        }
+    }
+
+    @Override
+    protected void onGameStart() {
+        Logger.info("Starting BedWars game {}", gameId);
+
+        // Start replay recording
+        replayManager.startRecording();
+
+        // Prepare world
+        worldManager.clearExistingBeds();
+
+        // Assign players to teams
+        autoAssignTeams();
+
+        // Get active teams and set up their areas
+        Map<TeamKey, MapTeam> activeTeamConfigs = getActiveTeamConfigs();
+
+        worldManager.placeBeds(activeTeamConfigs);
+        worldManager.spawnShopNPCs(activeTeamConfigs);
+
+        // Start generators
+        generatorManager.startTeamGenerators(activeTeamConfigs);
+        generatorManager.startGlobalGenerators();
+
+        // Start game event progression
+        gameEventManager.start();
+
+        // Teleport players to their spawn points
+        teleportPlayersToSpawns();
+
+        // Start time-played XP task
+        startTimePlayedRewards();
+
+        // Send game start message
+        sendGameStartMessage();
+
+        Logger.info("BedWars game {} started with {} active teams", gameId, activeTeamConfigs.size());
+    }
+
+    @Override
+    protected void onGameEnd() {
+        Logger.info("Ending BedWars game {}", gameId);
+
+        // Stop replay recording
+        String winnerId = null;
+        String winnerType = null;
+        Optional<BedWarsTeam> winningTeam = getTeams().stream()
+                .filter(this::isTeamViable)
+                .findFirst();
+        if (winningTeam.isPresent()) {
+            winnerId = winningTeam.get().getTeamKey().name();
+            winnerType = "TEAM";
+        }
+        replayManager.stopRecording(winnerId, winnerType);
+
+        generatorManager.stopAllGenerators();
+        gameEventManager.stop();
+
+        // Clean up after delay
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            getPlayers().forEach(p -> p.sendTo(ServerType.BEDWARS_LOBBY));
+            dispose();
+        }).delay(TaskSchedule.seconds(10)).schedule();
+    }
+
+    @Override
+    public void handleGameWin(BedWarsTeam winningTeam) {
+        String titleMessage;
+        String subtitleMessage;
+
+        if (winningTeam != null) {
+            titleMessage = winningTeam.getColorCode() + "Team " + winningTeam.getName() + " has won!";
+            subtitleMessage = "Congratulations!";
+
+            // Fire victory event
+            eventDispatcher.accept(new GameEndEvent(
+                    gameId,
+                    new GameEndEvent.GameResult.Victory(
+                            winningTeam.getId(),
+                            winningTeam.getName(),
+                            GameEndEvent.GameResult.Victory.WinnerType.TEAM
+                    )
+            ));
+        } else {
+            titleMessage = "§cGame Over!";
+            subtitleMessage = "It's a draw!";
+
+            eventDispatcher.accept(new GameEndEvent(
+                    gameId,
+                    new GameEndEvent.GameResult.Draw("No teams remaining")
+            ));
+        }
+
+        // Show results to all players
+        for (BedWarsPlayer player : getPlayers()) {
+            player.sendTitlePart(TitlePart.TITLE, Component.text(titleMessage));
+            player.sendTitlePart(TitlePart.SUBTITLE, Component.text(subtitleMessage));
+            player.playSound(Sound.sound(Key.key("minecraft:ui.toast.challenge_complete"),
+                    Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
+
+            // Record win
+            if (winningTeam != null && winningTeam.hasPlayer(player.getUuid())) {
+                BedWarsStatsRecorder.recordWin(player, gameType);
+                player.getAchievementHandler().addProgressByTrigger("bedwars.wins", 1);
+            }
+
+            player.setGameMode(GameMode.SPECTATOR);
+        }
+
+        end();
+    }
+
+    @Override
+    protected boolean isTeamViable(BedWarsTeam team) {
+        // Team is viable if bed is alive OR has active players OR has rejoinable disconnected players
+        if (team.isBedAlive()) return true;
+
+        boolean hasActivePlayers = getPlayers().stream()
+                .anyMatch(p -> team.hasPlayer(p.getUuid()) && !Boolean.TRUE.equals(p.getTag(ELIMINATED_TAG)));
+
+        boolean hasRejoinablePlayers = disconnectedPlayers.values().stream()
+                .anyMatch(info -> {
+                    Optional<BedWarsTeam> t = getPlayerTeam(info.uuid());
+                    return t.isPresent() && t.get().getId().equals(team.getId()) && team.isBedAlive();
+                });
+
+        return hasActivePlayers || hasRejoinablePlayers;
+    }
+
+    /**
+     * Called when a bed is destroyed.
+     */
+    public void onBedDestroyed(TeamKey teamKey, BedWarsPlayer destroyer) {
+        getTeam(teamKey.name()).ifPresent(team -> {
+            team.destroyBed();
+
+            eventDispatcher.accept(new BedDestroyedEvent(
+                    gameId,
+                    teamKey,
+                    destroyer != null ? destroyer.getUuid() : null,
+                    destroyer != null ? destroyer.getUsername() : null
+            ));
+
+            // Record to replay
+            if (replayManager.isRecording()) {
+                replayManager.recordBedDestroyed(teamKey, destroyer);
+            }
+
+            // Announce to all players
+            broadcastMessage(Component.text(teamKey.chatColor() + "Team " + teamKey.getName() + "'s §cbed has been destroyed!"));
+
+            for (BedWarsPlayer player : getPlayers()) {
+                player.playSound(Sound.sound(Key.key("minecraft:entity.wither.death"),
+                        Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
+            }
+
+            checkWinConditions();
+        });
+    }
+
+    /**
+     * Respawns a team's bed (admin action).
+     */
+    public void respawnBed(TeamKey teamKey) {
+        getTeam(teamKey.name()).ifPresent(team -> {
+            team.setBedAlive(true);
+
+            // Place the bed blocks back
+            worldManager.placeBedForTeam(teamKey, mapEntry.getConfiguration().getTeams().get(teamKey));
+
+            // Record to replay
+            if (replayManager.isRecording()) {
+                replayManager.recordBedRespawned(teamKey);
+            }
+
+            broadcastMessage(Component.text(teamKey.chatColor() + "Team " + teamKey.getName() + "'s §abed has been respawned!"));
+        });
+    }
+
+    /**
+     * Broadcasts an admin message to all players.
+     */
+    public void broadcastAdminMessage(String message) {
+        broadcastMessage(Component.text("§c[ADMIN] §f" + message));
+    }
+
+    /**
+     * Called when a player is eliminated (died without bed).
+     */
+    public void onPlayerEliminated(BedWarsPlayer player) {
+        player.setTag(ELIMINATED_TAG, true);
+        setupAsSpectator(player);
+        checkWinConditions();
+    }
+
+    private void setupAsSpectator(BedWarsPlayer player) {
+        player.setGameMode(GameMode.SPECTATOR);
+        player.setInvisible(true);
+        player.setFlying(true);
+
+        BedWarsMapsConfig.Position spectatorPos = mapEntry.getConfiguration().getLocations().getSpectator();
+        if (spectatorPos != null) {
+            player.teleport(new Pos(spectatorPos.x(), spectatorPos.y(), spectatorPos.z()));
+        }
+
+        player.sendTitlePart(TitlePart.TITLE, Component.text("SPECTATING", NamedTextColor.GRAY));
+        player.sendTitlePart(TitlePart.SUBTITLE, Component.text("Your bed was destroyed.", NamedTextColor.RED));
+    }
+
+    private Map<TeamKey, MapTeam> getActiveTeamConfigs() {
+        Map<TeamKey, MapTeam> configs = new EnumMap<>(TeamKey.class);
+        Map<TeamKey, MapTeam> allTeamConfigs = mapEntry.getConfiguration().getTeams();
+
+        for (BedWarsTeam team : getActiveTeams()) {
+            TeamKey key = team.getTeamKey();
+            if (allTeamConfigs.containsKey(key)) {
+                configs.put(key, allTeamConfigs.get(key));
+            }
+        }
+
+        return configs;
+    }
+
+    private void teleportPlayersToSpawns() {
+        Map<TeamKey, MapTeam> teamConfigs = mapEntry.getConfiguration().getTeams();
+
+        for (BedWarsPlayer player : getPlayers()) {
+            getPlayerTeam(player.getUuid()).ifPresent(team -> {
+                MapTeam config = teamConfigs.get(team.getTeamKey());
+                if (config != null) {
+                    BedWarsMapsConfig.PitchYawPosition spawn = config.getSpawn();
+                    player.teleport(new Pos(spawn.x(), spawn.y(), spawn.z(), spawn.yaw(), spawn.pitch()));
+                    player.setGameMode(GameMode.SURVIVAL);
+                    player.getInventory().clear();
+                    player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
+                    player.setDisplayName(Component.text(
+                            team.getColorCode() + "§l" + team.getName() + " §r" + team.getColorCode() + player.getUsername()
+                    ));
+                }
+            });
+        }
+    }
+
+    private void startTimePlayedRewards() {
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            if (state != GameState.IN_PROGRESS) return;
+            for (BedWarsPlayer player : getPlayers()) {
+                player.xp(ExperienceCause.TIME_PLAYED);
+            }
+        }).delay(TaskSchedule.minutes(1)).repeat(TaskSchedule.minutes(1)).schedule();
+    }
+
+    private void sendGameStartMessage() {
+        String line = "■".repeat(50);
+        Component[] messages = {
+                Component.text(line, NamedTextColor.GREEN),
+                Component.text(ChatUtility.FontInfo.center("Bed Wars"), NamedTextColor.WHITE, TextDecoration.BOLD),
+                Component.space(),
+                Component.text(ChatUtility.FontInfo.center("Protect your bed and destroy the enemy beds."), NamedTextColor.YELLOW),
+                Component.text(ChatUtility.FontInfo.center("Upgrade yourself and your team by collecting"), NamedTextColor.YELLOW),
+                Component.text(ChatUtility.FontInfo.center("Iron, Gold, Emerald and Diamond from generators"), NamedTextColor.YELLOW),
+                Component.text(ChatUtility.FontInfo.center("to access powerful upgrades."), NamedTextColor.YELLOW),
+                Component.space(),
+                Component.text(line, NamedTextColor.GREEN)
+        };
+
+        Audience audience = Audience.audience(getPlayers());
+        for (Component msg : messages) {
+            audience.sendMessage(msg);
+        }
+    }
+
+    private void broadcastMessage(Component message) {
+        Audience.audience(getPlayers()).sendMessage(message);
+    }
+
+    public List<UUID> getDisconnectedPlayerUuids() {
+        return new ArrayList<>(disconnectedPlayers.keySet());
+    }
+
+    @Override
+    protected void onDispose() {
+        TypeBedWarsGameLoader.getGames().remove(this);
+    }
+}

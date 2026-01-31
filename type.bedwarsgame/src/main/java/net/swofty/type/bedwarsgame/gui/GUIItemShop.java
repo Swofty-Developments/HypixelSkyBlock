@@ -15,7 +15,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
 import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.UpgradeableItemTier;
@@ -78,9 +78,9 @@ public class GUIItemShop extends HypixelInventoryGUI {
     );
     private final ShopManager shopService = TypeBedWarsGameLoader.shopManager;
     private int currentPage = 0;
-    private final Game game;
+    private final BedWarsGame game;
 
-    public GUIItemShop(Game game) {
+    public GUIItemShop(BedWarsGame game) {
         super("Item Shop", InventoryType.CHEST_6_ROW);
         this.game = game;
     }
@@ -243,7 +243,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
         return builder;
     }
 
-    public static void populateShopItems(HypixelInventoryGUI gui, ShopManager shopService, Game game, @Nullable Integer currentPage, @Nullable ShopItem quickBuyEditor, Consumer<HypixelPlayer> update) {
+    public static void populateShopItems(HypixelInventoryGUI gui, ShopManager shopService, BedWarsGame game, @Nullable Integer currentPage, @Nullable ShopItem quickBuyEditor, Consumer<HypixelPlayer> update) {
         int[] shopSlots = {
                 19, 20, 21, 22, 23, 24, 25,
                 28, 29, 30, 31, 32, 33, 34,
@@ -476,7 +476,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
         }
     }
 
-    private static boolean hasPlayerEnoughCurrency(Game game, HypixelPlayer player, ShopItem shopItem) {
+    private static boolean hasPlayerEnoughCurrency(BedWarsGame game, HypixelPlayer player, ShopItem shopItem) {
         int requiredAmount = shopItem.getPrice().apply(game.getBedwarsGameType());
         Material currencyMaterial = shopItem.getCurrency().getMaterial();
 
@@ -490,7 +490,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
         return playerAmount >= requiredAmount;
     }
 
-    private static boolean hasPlayerEnoughCurrencyForTier(Game game, HypixelPlayer player, UpgradeableItemTier tier) {
+    private static boolean hasPlayerEnoughCurrencyForTier(BedWarsGame game, HypixelPlayer player, UpgradeableItemTier tier) {
         int required = tier.price().apply(game.getBedwarsGameType());
         Material cur = tier.currency().getMaterial();
         int have = 0;
