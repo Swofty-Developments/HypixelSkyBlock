@@ -26,16 +26,11 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Replay Viewer Server Type.
- * Players are sent here to watch replays.
- */
 public class TypeReplayViewerLoader implements HypixelTypeLoader {
 
     @Getter
 	private static InstanceManager instanceManager;
 
-	// Active replay sessions per player
     @Getter
     private static final Map<UUID, ReplaySession> activeSessions = new ConcurrentHashMap<>();
 
@@ -61,7 +56,9 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
 
     @Override
     public TablistManager getTablistManager() {
-        return new ReplayTablistManager();
+        return TablistManager.create(
+            List.of(new ReplayTablistModule())
+        );
     }
 
     @Override
@@ -119,21 +116,11 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
         return getSession(player.getUuid());
     }
 
-    /**
-     * Registers a new replay session for a player.
-     */
     public static void registerSession(UUID playerId, ReplaySession session) {
-        // Clean up any existing session
-        ReplaySession existing = activeSessions.remove(playerId);
-        if (existing != null) {
-            existing.stop();
-        }
+		removeSession(playerId);
         activeSessions.put(playerId, session);
     }
 
-    /**
-     * Removes a player's replay session.
-     */
     public static void removeSession(UUID playerId) {
         ReplaySession session = activeSessions.remove(playerId);
         if (session != null) {

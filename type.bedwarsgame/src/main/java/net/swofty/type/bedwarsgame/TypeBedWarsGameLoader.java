@@ -64,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static net.swofty.pvp.feature.CombatFeatures.*;
 import static net.swofty.type.generic.HypixelGenericLoader.getLoadedPlayers;
@@ -298,25 +299,28 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 
 	@Override
 	public List<HypixelEventClass> getTraditionalEvents() {
-		return HypixelGenericLoader.loopThroughPackage(
-			"net.swofty.type.bedwarsgame.events",
-			HypixelEventClass.class
+		return Stream.concat(
+			HypixelGenericLoader.loopThroughPackage(
+				"net.swofty.type.bedwarsgame.events",
+				HypixelEventClass.class
+			),
+			HypixelGenericLoader.loopThroughPackage(
+				"net.swofty.type.bedwarsgame.game.v2.listener",
+				HypixelEventClass.class
+			)
 		).toList();
 	}
 
 	@Override
 	public List<HypixelEventClass> getCustomEvents() {
-		List<HypixelEventClass> custom = HypixelGenericLoader.loopThroughPackage(
-			"net.swofty.type.bedwarsgame.events.custom",
-			HypixelEventClass.class
-		).toList();
-		custom.addAll(
+		return Stream.concat(HypixelGenericLoader.loopThroughPackage(
+				"net.swofty.type.bedwarsgame.events.custom",
+				HypixelEventClass.class
+			),
 			HypixelGenericLoader.loopThroughPackage(
 				"net.swofty.commons.game.event",
 				HypixelEventClass.class
-			).toList()
-		);
-		return custom;
+			)).toList();
 	}
 
 	@Override
