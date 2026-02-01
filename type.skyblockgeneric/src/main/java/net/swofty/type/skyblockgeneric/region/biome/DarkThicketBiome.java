@@ -8,21 +8,21 @@ import net.swofty.type.skyblockgeneric.region.SkyBlockBiomeConfiguration;
 
 public class DarkThicketBiome extends SkyBlockBiomeConfiguration {
 
-	public DarkThicketBiome() {
-		super(Key.key("skyblock:dark_thicket"));
-	}
+    public DarkThicketBiome() {
+        super(Key.key("skyblock:dark_thicket"));
+    }
 
-	@Override
-	public Biome getBiome() {
-		return Biome.builder()
-				.effects(
-						BiomeEffects.builder()
-								.grassColor(TextColor.color(4742700))
-								.foliageColor(TextColor.color(1206296))
-								.waterColor(TextColor.color(2910286))
-								.build()
-				)
-				.build();
-	}
+    @Override
+    public Biome getBiome() {
+        return Biome.builder()
+            .effects(
+                BiomeEffects.builder()
+                    .grassColor(TextColor.color(4742700))
+                    .foliageColor(TextColor.color(1206296))
+                    .waterColor(TextColor.color(2910286))
+                    .build()
+            )
+            .build();
+    }
 
 }

@@ -29,11 +29,11 @@ public class GUIBiblio extends HypixelInventoryGUI {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
 				player.sendMessage(Component.text("§7Click §e§lHERE §7to visit the §6Official SkyBlock Wiki§7!§r")
 						.clickEvent(ClickEvent.openUrl("https://wiki.hypixel.net")));
+				player.getAchievementHandler().completeAchievement("skyblock.wow_thats_useful");
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				SkyBlockPlayer player = (SkyBlockPlayer) p;
 				return ItemStackCreator.getStack("§dWiki Command", Material.PAINTING, 1,
 						"§7Visit the Wiki using §a/wiki §7and browse", "§7the many pages and utilities.",
 						"", "§7You can also specify an extra", "§7argument when using §6/wiki <id> §7to",
