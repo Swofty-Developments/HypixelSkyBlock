@@ -114,52 +114,10 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         return Math.max(1, gameType.getTeamSize());
     }
 
-    /**
-     * @deprecated Use getState() instead
-     */
-    @Deprecated
-    public GameState getGameStatus() {
-        return getState();
-    }
-
-    /**
-     * @deprecated Use start() instead
-     */
-    @Deprecated
-    public void startGame() {
-        start();
-    }
-
-    /**
-     * @deprecated Use getGameType() instead
-     */
-    @Deprecated
-    public BedwarsGameType getBedwarsGameType() {
-        return gameType;
-    }
-
     public boolean isBedAlive(TeamKey teamKey) {
         return getTeam(teamKey.name())
                 .map(BedWarsTeam::isBedAlive)
                 .orElse(false);
-    }
-
-    /**
-     * Gets the team that a player is on.
-     */
-    @Deprecated
-    public Optional<BedWarsTeam> getPlayerTeamByKey(TeamKey teamKey) {
-        return getTeam(teamKey.name());
-    }
-
-    @Deprecated
-    public void recordBedDestroyed(TeamKey teamKey) {
-        onBedDestroyed(teamKey, null);
-    }
-
-    @Deprecated
-    public Map<TeamKey, Map<Integer, ItemStack>> getChests() {
-        return teamChests;
     }
 
     /**
@@ -181,15 +139,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
 
-    @Deprecated
-    public Map<TeamKey, Boolean> getTeamBedStatus() {
-        Map<TeamKey, Boolean> status = new EnumMap<>(TeamKey.class);
-        for (BedWarsTeam team : getTeams()) {
-            status.put(team.getTeamKey(), team.isBedAlive());
-        }
-        return status;
-    }
-
     /**
      * Equips team armor to a player.
      */
@@ -197,10 +146,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         respawnHandler.equipTeamArmor(player, teamKey);
     }
 
-    @Deprecated
-    public void playerEliminated(BedWarsPlayer player) {
-        onPlayerEliminated(player);
-    }
 
     /**
      * Adds a trap to a team.
@@ -232,13 +177,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     /**
-     * Checks if the game can accept new players.
-     */
-    public boolean canAcceptNewPlayers() {
-        return state == GameState.WAITING;
-    }
-
-    /**
      * Handles player rejoining.
      */
     public void rejoin(BedWarsPlayer player) {
@@ -260,7 +198,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     public boolean assignToTeam(BedWarsPlayer player, BedWarsTeam team) {
         boolean assigned = super.assignToTeam(player, team);
         if (assigned) {
-            // Set team tag for compatibility
             player.setTag(Tag.String("team"), team.getTeamKey().name());
         }
         return assigned;
@@ -486,25 +423,17 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         getTeam(teamKey.name()).ifPresent(team -> {
             team.destroyBed();
 
-            eventDispatcher.accept(new BedDestroyedEvent(
-                    gameId,
-                    teamKey,
-                    destroyer != null ? destroyer.getUuid() : null,
-                    destroyer != null ? destroyer.getUsername() : null
-            ));
-
             // Record to replay
             if (replayManager.isRecording()) {
                 replayManager.recordBedDestroyed(teamKey, destroyer);
             }
 
-            // Announce to all players
-            broadcastMessage(Component.text(teamKey.chatColor() + "Team " + teamKey.getName() + "'s §cbed has been destroyed!"));
-
-            for (BedWarsPlayer player : getPlayers()) {
-                player.playSound(Sound.sound(Key.key("minecraft:entity.wither.death"),
-                        Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
-            }
+            // Fire event for listeners to handle announcements, sounds, etc.
+            eventDispatcher.accept(new BedDestroyedEvent(
+                    gameId,
+                    teamKey,
+                    destroyer
+            ));
 
             checkWinConditions();
         });
@@ -622,7 +551,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         }
     }
 
-    private void broadcastMessage(Component message) {
+    public void broadcastMessage(Component message) {
         Audience.audience(getPlayers()).sendMessage(message);
     }
 
@@ -633,5 +562,10 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     @Override
     protected void onDispose() {
         TypeBedWarsGameLoader.getGames().remove(this);
+    }
+
+    @Override
+    public void checkWinConditions() {
+        super.checkWinConditions();
     }
 }

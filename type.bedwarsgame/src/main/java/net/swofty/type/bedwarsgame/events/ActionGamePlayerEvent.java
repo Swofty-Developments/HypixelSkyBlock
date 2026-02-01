@@ -48,7 +48,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			return;
 		}
 		;
-		if (game.getGameStatus() == GameState.WAITING) {
+		if (game.getState() == GameState.WAITING) {
 			event.setCancelled(true);
 		}
 	}
@@ -92,7 +92,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		if (block.registry().material() != Material.CHEST) return;
 
 		BedWarsGame game = player.getGame();
-		if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
+		if (game == null || game.getState() != GameState.IN_PROGRESS) {
 			event.setCancelled(true);
 			return;
 		}
@@ -129,7 +129,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		}
 
 		boolean sameTeam = chestTeamKey.equals(playerTeamKey);
-		if (!sameTeam && game.getTeamBedStatus().getOrDefault(chestTeamKey, false)) {
+		if (!sameTeam && game.isBedAlive(chestTeamKey)) {
 			event.setCancelled(true);
 			player.sendMessage("§cYou can only access enemy team chests if their bed is destroyed!");
 			return;
@@ -153,7 +153,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		ItemStack itemInHand = player.getItemInMainHand();
 
 		BedWarsGame game = player.getGame();
-		if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
+		if (game == null || game.getState() != GameState.IN_PROGRESS) {
 			return;
 		}
 
@@ -241,13 +241,13 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			}
 
 			boolean sameTeam = chestTeamName.equals(playerTeamName);
-			if (!sameTeam && game.getTeamBedStatus().getOrDefault(chestTeamName, false)) {
+			if (!sameTeam && game.isBedAlive(chestTeamName)) {
 				player.sendMessage(MiniMessage.miniMessage().deserialize("§cYou can only access enemy team chests if their bed is destroyed!"));
 				return;
 			}
 
 			try {
-				Map<Integer, ItemStack> teamChest = game.getChests().computeIfAbsent(chestTeamName, k -> new ConcurrentHashMap<>());
+				Map<Integer, ItemStack> teamChest = game.getTeamChests().computeIfAbsent(chestTeamName, k -> new ConcurrentHashMap<>());
 				boolean itemAdded = false;
 				for (int i = 0; i < 27; i++) {
 					if (teamChest.get(i) == null || teamChest.get(i).isAir()) {

@@ -40,7 +40,7 @@ public class ActionGameCustomItems implements HypixelEventClass {
 		}
 
 		BedWarsGame game = shooter.getGame();
-		if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
+		if (game == null || game.getState() != GameState.IN_PROGRESS) {
 			fireball.remove();
 			return;
 		}

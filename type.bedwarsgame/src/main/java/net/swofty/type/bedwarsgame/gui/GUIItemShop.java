@@ -321,11 +321,11 @@ public class GUIItemShop extends HypixelInventoryGUI {
                                     .filter(s -> s.material() == nextTier.currency().getMaterial())
                                     .mapToInt(ItemStack::amount)
                                     .sum();
-                            int needed = nextTier.price().apply(game.getBedwarsGameType()) - owned;
+                            int needed = nextTier.price().apply(game.getGameType()) - owned;
                             player.sendMessage(noItalic(Component.text("You don't have enough " + nextTier.currency().getName() + "! Need " + needed + " more!").color(NamedTextColor.RED)));
                             return;
                         }
-                        upgradeableShopItem.handlePurchase(player, game.getBedwarsGameType());
+                        upgradeableShopItem.handlePurchase(player, game.getGameType());
                         player.sendMessage(noItalic(Component.text("You purchased " + nextTier.name() + "!").color(NamedTextColor.GREEN)));
                         playBuySound(player);
                         update.accept(player);
@@ -346,7 +346,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
                         player.sendMessage("§cYou already have a better item!");
                         return;
                     }
-                    shopItem.handlePurchase(player, game.getBedwarsGameType());
+                    shopItem.handlePurchase(player, game.getGameType());
                     playBuySound(player);
                     update.accept(player);
                 }
@@ -391,7 +391,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
                             lore.add("§eClick to replace!");
                         } else {
                             lore.add(
-                                    "§7Cost: " + nextTier.currency().getColor() + nextTier.price().apply(game.getBedwarsGameType()) + " " + nextTier.currency().getName()
+                                    "§7Cost: " + nextTier.currency().getColor() + nextTier.price().apply(game.getGameType()) + " " + nextTier.currency().getName()
                             );
                             lore.add(" ");
                             if (upgradeableShopItem.getDescription() != null && !upgradeableShopItem.getDescription().isEmpty()) {
@@ -435,7 +435,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
                         lore.add("§eClick to replace!");
                     } else {
                         lore.add(
-                                "§7Cost: " + shopItem.getCurrency().getColor() + shopItem.getPrice().apply(game.getBedwarsGameType()) + " " + shopItem.getCurrency().getName()
+                                "§7Cost: " + shopItem.getCurrency().getColor() + shopItem.getPrice().apply(game.getGameType()) + " " + shopItem.getCurrency().getName()
                         );
                         lore.add(" ");
                         if (shopItem.getDescription() != null && !shopItem.getDescription().isEmpty()) {
@@ -477,7 +477,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
     }
 
     private static boolean hasPlayerEnoughCurrency(BedWarsGame game, HypixelPlayer player, ShopItem shopItem) {
-        int requiredAmount = shopItem.getPrice().apply(game.getBedwarsGameType());
+        int requiredAmount = shopItem.getPrice().apply(game.getGameType());
         Material currencyMaterial = shopItem.getCurrency().getMaterial();
 
         int playerAmount = 0;
@@ -491,7 +491,7 @@ public class GUIItemShop extends HypixelInventoryGUI {
     }
 
     private static boolean hasPlayerEnoughCurrencyForTier(BedWarsGame game, HypixelPlayer player, UpgradeableItemTier tier) {
-        int required = tier.price().apply(game.getBedwarsGameType());
+        int required = tier.price().apply(game.getGameType());
         Material cur = tier.currency().getMaterial();
         int have = 0;
         for (ItemStack it : player.getInventory().getItemStacks()) {

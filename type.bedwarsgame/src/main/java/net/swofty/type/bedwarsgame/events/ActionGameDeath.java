@@ -46,7 +46,7 @@ public class ActionGameDeath implements HypixelEventClass {
         BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 
         BedWarsGame game = player.getGame();
-        if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
+        if (game == null || game.getState() != GameState.IN_PROGRESS) {
             return;
         }
 
@@ -83,7 +83,7 @@ public class ActionGameDeath implements HypixelEventClass {
             player.getAchievementHandler().completeAchievement("bedwars.its_dark_down_there");
         }
         if (deathResult.isFinalKill()) {
-            BedWarsStatsRecorder.recordFinalDeath(player, game.getBedwarsGameType());
+            BedWarsStatsRecorder.recordFinalDeath(player, game.getGameType());
         }
 
         BedWarsPlayer itemRecipient = deathResult.getKillCreditPlayer();
@@ -113,7 +113,7 @@ public class ActionGameDeath implements HypixelEventClass {
         handleDeathTypeActions(deathResult, game);
 
         if (!bedExists && deathResult.getKillCreditPlayer() != null) {
-            BedWarsStatsRecorder.recordFinalKill(deathResult.getKillCreditPlayer(), game.getBedwarsGameType());
+            BedWarsStatsRecorder.recordFinalKill(deathResult.getKillCreditPlayer(), game.getGameType());
         }
 
         event.setChatMessage(deathMessage);
@@ -212,7 +212,7 @@ public class ActionGameDeath implements HypixelEventClass {
             player.setFlying(true);
 
             if (game != null) {
-                game.playerEliminated(player);
+                game.onPlayerEliminated(player);
             }
         }
     }
@@ -223,12 +223,12 @@ public class ActionGameDeath implements HypixelEventClass {
         BedWarsPlayer assistPlayer = result.assistPlayer();
 
         if (killer != null) {
-            BedWarsStatsRecorder.recordKill(killer, game.getBedwarsGameType());
+            BedWarsStatsRecorder.recordKill(killer, game.getGameType());
         } else if (assistPlayer != null) {
-            BedWarsStatsRecorder.recordKill(assistPlayer, game.getBedwarsGameType());
+            BedWarsStatsRecorder.recordKill(assistPlayer, game.getGameType());
         }
 
-        BedWarsStatsRecorder.recordDeath(victim, game.getBedwarsGameType());
+        BedWarsStatsRecorder.recordDeath(victim, game.getGameType());
 
         // Record kill/final kill to replay
         if (killer != null || assistPlayer != null) {

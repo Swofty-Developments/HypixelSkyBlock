@@ -51,13 +51,13 @@ public class BedWarsGameScoreboard {
 				lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
 				lines.add("§7 ");
 
-				if (game.getGameStatus() == GameState.WAITING) {
+				if (game.getState() == GameState.WAITING) {
 					lines.add("§fMap: §a" + game.getMapEntry().getName());
 					lines.add("§fPlayers: §a" + game.getPlayers().size() + "/" + game.getMapEntry().getConfiguration().getTeams().size());
 					lines.add("§7 ");
-					lines.add("§fStarting in §a" + game.getCountdown().getRemainingSeconds() + "s");
+					lines.add("§fWaiting for players...");
 					lines.add("§7 ");
-					lines.add("§fMode: §a" + game.getBedwarsGameType().getDisplayName());
+					lines.add("§fMode: §a" + game.getGameType().getDisplayName());
 					lines.add("§fVersion: §7v1.9");
 				} else {
 					String eventName = game.getGameEventManager().getNextEvent() != null

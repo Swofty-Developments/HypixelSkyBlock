@@ -29,7 +29,7 @@ public class GameStateCommand extends HypixelCommand {
                 return;
             }
 
-            game.recordBedDestroyed(BedWarsMapsConfig.TeamKey.valueOf(team));
+            game.onBedDestroyed(BedWarsMapsConfig.TeamKey.valueOf(team), null);
         }, ArgumentType.Literal("breakBed"), teamArg);
     }
 }

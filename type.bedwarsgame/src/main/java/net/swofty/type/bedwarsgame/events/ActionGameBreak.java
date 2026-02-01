@@ -30,7 +30,7 @@ public class ActionGameBreak implements HypixelEventClass {
 		Block blockBeingBroken = event.getBlock();
 
 		BedWarsGame game = player.getGame();
-		if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
+		if (game == null || game.getState() != GameState.IN_PROGRESS) {
 			event.setCancelled(true);
 			return;
 		}
@@ -62,13 +62,12 @@ public class ActionGameBreak implements HypixelEventClass {
 					event.setCancelled(true);
 					return;
 				}
-				game.recordBedDestroyed(teamKey);
-				BedWarsStatsRecorder.recordBedBroken(player, game.getBedwarsGameType());
+				game.onBedDestroyed(teamKey, player);
+				BedWarsStatsRecorder.recordBedBroken(player, game.getGameType());
 				player.getInstance().setBlock(feetPoint, Block.AIR);
 				player.getInstance().setBlock(headPoint, Block.AIR);
 
-				// Record bed destruction to replay (via replay manager)
-				game.getReplayManager().recordBedDestroyed(teamKey, player);
+				// Replay recording is done inside onBedDestroyed now
 
 				if (player.hasEffect(PotionEffect.INVISIBILITY)) {
 					player.getAchievementHandler().completeAchievement("bedwars.sneaky_rusher"); // break an bed while invisible

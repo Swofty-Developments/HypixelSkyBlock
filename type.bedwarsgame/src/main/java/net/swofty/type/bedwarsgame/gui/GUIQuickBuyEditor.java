@@ -36,7 +36,7 @@ public class GUIQuickBuyEditor extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 List<String> lore = new ArrayList<>();
                 lore.add(
-                        "§7Cost: " + shopItem.getCurrency().getColor() + shopItem.getPrice().apply(game.getBedwarsGameType()) + " " + shopItem.getCurrency().getName()
+                        "§7Cost: " + shopItem.getCurrency().getColor() + shopItem.getPrice().apply(game.getGameType()) + " " + shopItem.getCurrency().getName()
                 );
                 lore.add(" ");
                 if (shopItem.getDescription() != null && !shopItem.getDescription().isEmpty()) {

@@ -18,7 +18,7 @@ public class ActionPlayerDisconnect implements HypixelEventClass {
 		final BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		BedWarsGame game = player.getGame();
 		if (game != null) {
-			if (game.getGameStatus() == GameState.IN_PROGRESS) {
+			if (game.getState() == GameState.IN_PROGRESS) {
 				game.handleDisconnect(player);
 			} else {
 				game.leave(player);

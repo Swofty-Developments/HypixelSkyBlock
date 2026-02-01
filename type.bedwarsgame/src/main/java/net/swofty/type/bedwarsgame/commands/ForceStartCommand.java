@@ -24,11 +24,11 @@ public class ForceStartCommand extends HypixelCommand {
 				player.sendMessage("§cYou are not in a game.");
 				return;
 			}
-			if (game.getGameStatus() != GameState.WAITING) {
+			if (game.getState() != GameState.WAITING) {
 				player.sendMessage("§cYou can only force start a game that is waiting.");
 				return;
 			}
-			game.startGame();
+			game.start();
 		});
 	}
 

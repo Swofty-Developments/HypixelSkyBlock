@@ -105,7 +105,6 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 
 	@Override
 	public JoinResult join(P player) {
-		// Fire cancellable event
 		PlayerJoinGameEvent event = new PlayerJoinGameEvent(gameId, player.getUuid(), player.getUsername());
 		eventDispatcher.accept(event);
 
@@ -276,16 +275,16 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 		eventDispatcher.accept(new GameStateChangeEvent(gameId, oldState, newState));
 	}
 
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	protected abstract void onPlayerJoin(P player);
 
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	protected abstract void onPlayerLeave(P player);
 
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	protected abstract void onGameStart();
 
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	protected abstract void onGameEnd();
 
 	/**
@@ -293,11 +292,11 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 	 */
 	protected abstract void checkWinConditions();
 
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	protected void onPlayerDisconnect(P player) {
 	}
 
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	protected void onPlayerRejoin(P player, DisconnectedPlayerData data) {
 	}
 
@@ -317,12 +316,12 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 		return new HashMap<>();
 	}
 
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	protected void restorePlayerData(P player, Map<String, Object> savedData) {
 		// Default: no restoration
 	}
 
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	protected void onDispose() {
 		// Default: no special cleanup
 	}

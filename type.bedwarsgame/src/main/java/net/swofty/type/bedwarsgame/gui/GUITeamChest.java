@@ -35,7 +35,7 @@ public class GUITeamChest extends SharedInventory {
 		BedWarsGame game = player.getGame();
 		if (game == null) return;
 
-		Map<Integer, ItemStack> teamChest = game.getChests().get(teamKey);
+		Map<Integer, ItemStack> teamChest = game.getTeamChests().get(teamKey);
 		if (teamChest != null) {
 			setSharedItems(teamChest);
 		}
@@ -197,7 +197,7 @@ public class GUITeamChest extends SharedInventory {
 				continue;
 			}
 
-			Map<Integer, ItemStack> teamChest = game.getChests().computeIfAbsent(teamKey, k -> new ConcurrentHashMap<>());
+			Map<Integer, ItemStack> teamChest = game.getTeamChests().computeIfAbsent(teamKey, k -> new ConcurrentHashMap<>());
 			if (newItem.isAir()) {
 				teamChest.remove(slot);
 			} else {

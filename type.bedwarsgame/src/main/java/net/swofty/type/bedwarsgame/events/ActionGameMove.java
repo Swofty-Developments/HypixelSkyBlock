@@ -31,7 +31,7 @@ public class ActionGameMove implements HypixelEventClass {
 		}
 
 		BedWarsGame game = player.getGame();
-		if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
+		if (game == null || game.getState() != GameState.IN_PROGRESS) {
 			return;
 		}
 

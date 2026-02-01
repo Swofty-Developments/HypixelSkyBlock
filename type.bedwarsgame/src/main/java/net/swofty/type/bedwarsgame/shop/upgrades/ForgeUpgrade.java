@@ -60,7 +60,7 @@ public class ForgeUpgrade extends TeamUpgrade {
 		final int emeraldBaseAmount = 1;
 
 		var emeraldTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
-			if (game.getGameStatus() != GameState.IN_PROGRESS) return;
+			if (game.getState() != GameState.IN_PROGRESS) return;
 
 			int currentForgeLevel = game.getTeamUpgradeLevel(teamKey, "forge");
 			double multiplier = 1.0;

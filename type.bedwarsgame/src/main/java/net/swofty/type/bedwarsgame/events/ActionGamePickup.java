@@ -19,8 +19,8 @@ public class ActionGamePickup implements HypixelEventClass {
 	public void run(PickupItemEvent event) {
 		ItemStack itemStack = event.getItemEntity().getItemStack();
 		if (event.getLivingEntity() instanceof BedWarsPlayer player) {
-			// Only allow players on survival mode to pickup items
-			if (player.getGameMode() != GameMode.SURVIVAL) {
+			// disallow spectator mode from picking up items
+			if (player.getGameMode() == GameMode.SPECTATOR) {
 				event.setCancelled(true);
 				return;
 			}

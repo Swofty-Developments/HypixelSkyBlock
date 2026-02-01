@@ -107,6 +107,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	private static List<BedWarsMapsConfig.MapEntry> filteredMaps = new ArrayList<>();
 	private Gson gson;
 
+	@Nullable
 	public static BedWarsGame getGameById(@NotNull String gameId) {
 		return games.stream()
 			.filter(game -> game.getGameId().equals(gameId))

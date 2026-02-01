@@ -19,7 +19,7 @@ public class ActionGameCombatTrack implements HypixelEventClass {
         }
 
         BedWarsGame game = victim.getGame();
-        if (game == null || game.getGameStatus() != GameState.IN_PROGRESS) {
+        if (game == null || game.getState() != GameState.IN_PROGRESS) {
             return;
         }
 

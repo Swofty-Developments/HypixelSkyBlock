@@ -38,7 +38,7 @@ public class ActionGamePlace implements HypixelEventClass {
 			return;
 		}
 
-		if (game.getGameStatus() != GameState.IN_PROGRESS) {
+		if (game.getState() != GameState.IN_PROGRESS) {
 			event.setCancelled(true);
 			return;
 		}

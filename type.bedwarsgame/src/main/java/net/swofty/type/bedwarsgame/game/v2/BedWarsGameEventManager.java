@@ -20,9 +20,6 @@ public class BedWarsGameEventManager {
 
     private Task ticker;
 
-    /**
-     * Game phases with their timing and effects.
-     */
     public enum GamePhase {
         DIAMOND_I("Diamond I", 360, 30, 60),
         EMERALD_I("Emerald I", 540, 30, 60),
@@ -130,7 +127,7 @@ public class BedWarsGameEventManager {
         return currentPhase.getEmeraldSpawnSeconds();
     }
 
-    // Compatibility methods for old API
+    @Deprecated(forRemoval = true)
     public GamePhase getNextEvent() {
         GamePhase next = currentPhase.next();
         return next != currentPhase ? next : null;

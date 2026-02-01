@@ -30,11 +30,11 @@ public class ShoutCommand extends HypixelCommand {
 				player.sendMessage("§cYou are not in a game.");
 				return;
 			}
-			if (game.getBedwarsGameType() == BedwarsGameType.SOLO) {
+			if (game.getGameType() == BedwarsGameType.SOLO) {
 				player.sendMessage("§cThis command is unavailable.");
 				return;
 			}
-			if (game.getGameStatus() != GameState.IN_PROGRESS) {
+			if (game.getState() != GameState.IN_PROGRESS) {
 				player.sendMessage("§cYou can only shout messages during an active game.");
 				return;
 			}

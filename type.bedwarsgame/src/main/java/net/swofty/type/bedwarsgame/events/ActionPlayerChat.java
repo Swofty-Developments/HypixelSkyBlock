@@ -66,7 +66,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 			return;
 		}
 
-		if (game.getGameStatus() == GameState.WAITING) {
+		if (game.getState() == GameState.WAITING) {
 			String textColor = rank.equals(Rank.DEFAULT) ? "§7" : "§f";
 
 			game.getPlayers().forEach(onlinePlayer -> {
@@ -76,7 +76,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 		}
 
 		List<BedWarsPlayer> receivers;
-		if (game.getBedwarsGameType() == BedwarsGameType.SOLO) {
+		if (game.getGameType() == BedwarsGameType.SOLO) {
 			receivers = new java.util.ArrayList<>(game.getPlayers());
 		} else {
 			receivers = game.getPlayersOnTeam(player.getTeamKey());

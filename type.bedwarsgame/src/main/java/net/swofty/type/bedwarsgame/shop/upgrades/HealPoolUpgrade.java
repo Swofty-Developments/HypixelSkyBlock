@@ -46,7 +46,7 @@ public class HealPoolUpgrade extends TeamUpgrade {
 		Pos teamSpawn = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw());
 
 		MinecraftServer.getSchedulerManager().buildTask(() -> {
-			if (game.getGameStatus() != GameState.IN_PROGRESS) {
+			if (game.getState() != GameState.IN_PROGRESS) {
 				return;
 			}
 
