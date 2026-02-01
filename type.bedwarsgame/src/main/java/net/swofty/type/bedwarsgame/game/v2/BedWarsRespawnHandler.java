@@ -128,22 +128,20 @@ public class BedWarsRespawnHandler implements RespawnHandler<BedWarsPlayer> {
     private void completeRespawn(BedWarsPlayer player) {
         player.clearTitle();
 
+        // TODO: do this behavior inside of an EventListener
         game.getPlayerTeam(player.getUuid()).ifPresent(team -> {
             BedWarsMapsConfig.MapTeam teamConfig = game.getMapEntry()
                 .getConfiguration().getTeams().get(team.getTeamKey());
 
             if (teamConfig != null) {
-                // Teleport to spawn
+                // TODO: restore upgrades
                 BedWarsMapsConfig.PitchYawPosition spawn = teamConfig.getSpawn();
                 player.teleport(new Pos(spawn.x(), spawn.y(), spawn.z(), spawn.yaw(), spawn.pitch()));
 
-                // Set up player
                 player.setGameMode(GameMode.SURVIVAL);
                 player.setInvisible(false);
                 player.setFlying(false);
                 player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
-
-                // Restore upgrades - would call team-specific upgrade application here
             }
         });
 

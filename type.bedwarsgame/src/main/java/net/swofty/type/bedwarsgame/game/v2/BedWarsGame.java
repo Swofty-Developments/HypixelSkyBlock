@@ -211,6 +211,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             player.setInstance(instance, new Pos(waiting.x(), waiting.y(), waiting.z()));
         }
 
+        player.setEnableRespawnScreen(true);
         player.setFlying(false);
         player.setGameMode(GameMode.ADVENTURE);
         player.getInventory().setItemStack(8,
