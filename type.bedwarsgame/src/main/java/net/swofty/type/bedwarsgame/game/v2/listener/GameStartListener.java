@@ -1,0 +1,55 @@
+package net.swofty.type.bedwarsgame.game.v2.listener;
+
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.game.event.GameStartEvent;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
+import org.tinylog.Logger;
+
+import java.util.Map;
+
+public class GameStartListener implements HypixelEventClass {
+
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onGameStart(GameStartEvent event) {
+        BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.getGameId());
+        Logger.info("Starting BedWars game {}", event.gameId());
+
+        // Start replay recording
+        game.getReplayManager().startRecording();
+
+        // Prepare world
+        game.getWorldManager().clearExistingBeds();
+
+        // Assign players to teams
+        game.autoAssignTeams();
+
+        // Get active teams and set up their areas
+        Map<BedWarsMapsConfig.TeamKey, BedWarsMapsConfig.MapTeam> activeTeamConfigs = game.getActiveTeamConfigs();
+
+        game.getWorldManager().placeBeds(activeTeamConfigs);
+        game.getWorldManager().spawnShopNPCs(activeTeamConfigs);
+
+        // Start generators
+        game.getGeneratorManager().startTeamGenerators(activeTeamConfigs);
+        game.getGeneratorManager().startGlobalGenerators();
+
+        // Start game event progression
+        game.getGameEventManager().start();
+
+        // Teleport players to their spawn points
+        game.teleportPlayersToSpawns();
+
+        // Start time-played XP task
+        game.startTimePlayedRewards();
+
+        // Send game start message
+        game.sendGameStartMessage();
+
+        Logger.info("BedWars game {} started with {} active teams", event.gameId(), activeTeamConfigs.size());
+    }
+
+}

@@ -290,44 +290,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     @Override
-    protected void onGameStart() {
-        Logger.info("Starting BedWars game {}", gameId);
-
-        // Start replay recording
-        replayManager.startRecording();
-
-        // Prepare world
-        worldManager.clearExistingBeds();
-
-        // Assign players to teams
-        autoAssignTeams();
-
-        // Get active teams and set up their areas
-        Map<TeamKey, MapTeam> activeTeamConfigs = getActiveTeamConfigs();
-
-        worldManager.placeBeds(activeTeamConfigs);
-        worldManager.spawnShopNPCs(activeTeamConfigs);
-
-        // Start generators
-        generatorManager.startTeamGenerators(activeTeamConfigs);
-        generatorManager.startGlobalGenerators();
-
-        // Start game event progression
-        gameEventManager.start();
-
-        // Teleport players to their spawn points
-        teleportPlayersToSpawns();
-
-        // Start time-played XP task
-        startTimePlayedRewards();
-
-        // Send game start message
-        sendGameStartMessage();
-
-        Logger.info("BedWars game {} started with {} active teams", gameId, activeTeamConfigs.size());
-    }
-
-    @Override
     protected void onGameEnd() {
         Logger.info("Ending BedWars game {}", gameId);
 
@@ -489,7 +451,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         player.sendTitlePart(TitlePart.SUBTITLE, Component.text("Your bed was destroyed.", NamedTextColor.RED));
     }
 
-    private Map<TeamKey, MapTeam> getActiveTeamConfigs() {
+    public Map<TeamKey, MapTeam> getActiveTeamConfigs() {
         Map<TeamKey, MapTeam> configs = new EnumMap<>(TeamKey.class);
         Map<TeamKey, MapTeam> allTeamConfigs = mapEntry.getConfiguration().getTeams();
 
@@ -503,7 +465,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         return configs;
     }
 
-    private void teleportPlayersToSpawns() {
+    public void teleportPlayersToSpawns() {
         Map<TeamKey, MapTeam> teamConfigs = mapEntry.getConfiguration().getTeams();
 
         for (BedWarsPlayer player : getPlayers()) {
@@ -523,7 +485,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         }
     }
 
-    private void startTimePlayedRewards() {
+    public void startTimePlayedRewards() {
         MinecraftServer.getSchedulerManager().buildTask(() -> {
             if (state != GameState.IN_PROGRESS) return;
             for (BedWarsPlayer player : getPlayers()) {
@@ -532,7 +494,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         }).delay(TaskSchedule.minutes(1)).repeat(TaskSchedule.minutes(1)).schedule();
     }
 
-    private void sendGameStartMessage() {
+    public void sendGameStartMessage() {
         String line = "■".repeat(50);
         Component[] messages = {
             Component.text(line, NamedTextColor.GREEN),

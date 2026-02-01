@@ -121,7 +121,7 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
      * Auto-assigns all unassigned players to teams.
      * Override for custom assignment logic.
      */
-    protected void autoAssignTeams() {
+    public void autoAssignTeams() {
         List<P> unassignedPlayers = players.values().stream()
                 .filter(p -> !playerTeams.containsKey(p.getUuid()))
                 .collect(Collectors.toList());
