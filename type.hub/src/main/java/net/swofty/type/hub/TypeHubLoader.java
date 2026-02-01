@@ -104,15 +104,14 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 			HypixelConst.getInstanceContainer().loadChunk(displayPosition).join();
 		});
 
-		GlassDisplay.create(new SkyBlockItem(ItemType.ABIPHONE_CONTACTS_TRIO), HypixelConst.getInstanceContainer(), new Pos(69, 72, -60), (player, event) -> {
+		GlassDisplay.create(new SkyBlockItem(ItemType.ABIPHONE_CONTACTS_TRIO), HypixelConst.getInstanceContainer(), new Pos(70, 81, -63), (player, _) -> {
 			player.sendMessage("§eTalk to §dElizabeth §ein the §bCommunity Center §eto purchase!");
 		});
-		GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(62, 72, -60), (player, event) -> {
-			player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-					.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+		GlassDisplay.create(new SkyBlockItem(ItemType.ABIPHONE_BASIC), HypixelConst.getInstanceContainer(), new Pos(70, 81, -56), (player, _) -> {
+			player.sendMessage(Component.text("§eTalk to §6Alda §eto purchase!"));
 		});
 		for (int j = 1; j <= 3; j++) {
-			GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(16 + j * 3, 72, -41), (player, event) -> {
+			GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(16 + j * 3, 72, -41), (player, _) -> {
 				player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
 						.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
 			});
@@ -125,7 +124,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 		DarkAuctionHandler.setOnStateChangeCallback(darkAuctionDisplay::update);
 
         // Place forest trees
-        //ForestTreePlacement.placeTrees(HypixelConst.getInstanceContainer());
+        //ForestTreePlacement.placeTrees(HypixelConst.getInstanceContainer()); TODO: fix this on new map
 
 		HubMap hubMap = new HubMap();
 		hubMap.placeItemFrames(HypixelConst.getInstanceContainer());
