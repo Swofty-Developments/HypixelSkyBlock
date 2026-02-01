@@ -33,6 +33,7 @@ public class BedWarsTeam extends SimpleGameTeam {
 
     /**
      * Gets the level of an upgrade.
+     *
      * @return The upgrade level, or 0 if not purchased
      */
     public int getUpgradeLevel(String upgradeName) {

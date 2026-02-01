@@ -5,9 +5,9 @@ import net.swofty.commons.game.event.GameEvent;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
 public record BedDestroyedEvent(
-        String gameId,
-        TeamKey teamKey,
-        BedWarsPlayer destroyer
+    String gameId,
+    TeamKey teamKey,
+    BedWarsPlayer destroyer
 ) implements GameEvent {
     @Override
     public String getGameId() {

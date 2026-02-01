@@ -30,14 +30,14 @@ public class BedWarsGameEventListener implements HypixelEventClass {
         Component message;
         if (destroyer != null) {
             message = Component.text("BED DESTRUCTION > ", NamedTextColor.GRAY)
-                    .append(Component.text(teamColor + teamName + "'s ", NamedTextColor.WHITE))
-                    .append(Component.text("bed was destroyed by ", NamedTextColor.GRAY))
-                    .append(Component.text(destroyer.getUsername(), NamedTextColor.WHITE))
-                    .append(Component.text("!", NamedTextColor.GRAY));
+                .append(Component.text(teamColor + teamName + "'s ", NamedTextColor.WHITE))
+                .append(Component.text("bed was destroyed by ", NamedTextColor.GRAY))
+                .append(Component.text(destroyer.getUsername(), NamedTextColor.WHITE))
+                .append(Component.text("!", NamedTextColor.GRAY));
         } else {
             message = Component.text("BED DESTRUCTION > ", NamedTextColor.GRAY)
-                    .append(Component.text(teamColor + teamName + "'s ", NamedTextColor.WHITE))
-                    .append(Component.text("bed was destroyed!", NamedTextColor.GRAY));
+                .append(Component.text(teamColor + teamName + "'s ", NamedTextColor.WHITE))
+                .append(Component.text("bed was destroyed!", NamedTextColor.GRAY));
         }
 
         Audience audience = Audience.audience(game.getPlayers());
@@ -46,7 +46,7 @@ public class BedWarsGameEventListener implements HypixelEventClass {
         // Play wither death sound for all players
         for (BedWarsPlayer player : game.getPlayers()) {
             player.playSound(Sound.sound(Key.key("minecraft:entity.wither.death"),
-                    Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
+                Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
         }
     }
 
@@ -57,7 +57,7 @@ public class BedWarsGameEventListener implements HypixelEventClass {
 
         // TODO: make this look like Hypixel
         Component message = Component.text(event.currentEvent(), NamedTextColor.GREEN)
-                .append(Component.text(" has started!", NamedTextColor.YELLOW));
+            .append(Component.text(" has started!", NamedTextColor.YELLOW));
 
         Audience.audience(game.getPlayers()).sendMessage(message);
 

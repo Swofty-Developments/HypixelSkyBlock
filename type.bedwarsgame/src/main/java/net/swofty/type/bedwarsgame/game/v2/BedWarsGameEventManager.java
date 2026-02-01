@@ -21,15 +21,15 @@ public class BedWarsGameEventManager {
     private Task ticker;
 
     public enum GamePhase {
-        DIAMOND_I("Diamond I", 360, 30, 60),
-        EMERALD_I("Emerald I", 540, 30, 60),
-        DIAMOND_II("Diamond II", 720, 20, 60),
-        EMERALD_II("Emerald II", 900, 20, 45),
-        DIAMOND_III("Diamond III", 1080, 15, 45),
-        EMERALD_III("Emerald III", 1260, 15, 30),
-        BED_DESTRUCTION("Bed Destruction", 1500, 15, 30),
-        SUDDEN_DEATH("Sudden Death", 1800, 10, 20),
-        GAME_END("Game End", Integer.MAX_VALUE, 10, 20);
+        DIAMOND_I("Diamond I", 6 * 60, 30, 60),
+        EMERALD_I("Emerald I", 2 * 6 * 60, 30, 60),
+        DIAMOND_II("Diamond II", 3 * 6 * 60, 30, 60),
+        EMERALD_II("Emerald II", 4 * 6 * 60, 30, 60),
+        DIAMOND_III("Diamond III", 5 * 6 * 60, 30, 60),
+        EMERALD_III("Emerald III", 6 * 6 * 60, 30, 60),
+        BED_DESTRUCTION("Bed Destruction", 7 * 6 * 60, 30, 60),
+        SUDDEN_DEATH("Sudden Death", 7 * 6 * 60 + 10 * 60, 30, 60),
+        GAME_END("Game End", 3720, 30, 60);
 
         @Getter
         private final String displayName;
@@ -61,9 +61,9 @@ public class BedWarsGameEventManager {
         secondsUntilNextPhase = currentPhase.next().getTriggerTimeSeconds();
 
         ticker = MinecraftServer.getSchedulerManager().buildTask(this::tick)
-                .delay(TaskSchedule.seconds(1))
-                .repeat(TaskSchedule.seconds(1))
-                .schedule();
+            .delay(TaskSchedule.seconds(1))
+            .repeat(TaskSchedule.seconds(1))
+            .schedule();
     }
 
     public void stop() {
@@ -92,15 +92,15 @@ public class BedWarsGameEventManager {
 
         if (currentPhase != previous) {
             secondsUntilNextPhase = currentPhase.next() != currentPhase
-                    ? currentPhase.next().getTriggerTimeSeconds() - currentPhase.getTriggerTimeSeconds()
-                    : Integer.MAX_VALUE;
+                ? currentPhase.next().getTriggerTimeSeconds() - currentPhase.getTriggerTimeSeconds()
+                : Integer.MAX_VALUE;
 
             // Fire event
             HypixelEventHandler.callCustomEvent(new BedWarsGameEventAdvanceEvent(
-                    game.getGameId(),
-                    previous.getDisplayName(),
-                    currentPhase.getDisplayName(),
-                    secondsUntilNextPhase
+                game.getGameId(),
+                previous.getDisplayName(),
+                currentPhase.getDisplayName(),
+                secondsUntilNextPhase
             ));
 
             // Handle special phases

@@ -65,9 +65,9 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     private final Map<UUID, Map<Integer, ItemStack>> enderChests = new HashMap<>();
 
     public BedWarsGame(
-            BedWarsMapsConfig.MapEntry mapEntry,
-            InstanceContainer instance,
-            BedwarsGameType gameType
+        BedWarsMapsConfig.MapEntry mapEntry,
+        InstanceContainer instance,
+        BedwarsGameType gameType
     ) {
         // these need to happen before super() is called
         this.mapEntry = mapEntry;
@@ -78,7 +78,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
         // Initialize teams from map config
         mapEntry.getConfiguration().getTeams().keySet()
-                .forEach(teamKey -> registerTeam(new BedWarsTeam(teamKey)));
+            .forEach(teamKey -> registerTeam(new BedWarsTeam(teamKey)));
 
         // Initialize managers
         this.generatorManager = new BedWarsGeneratorManager(this);
@@ -116,8 +116,8 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     public boolean isBedAlive(TeamKey teamKey) {
         return getTeam(teamKey.name())
-                .map(BedWarsTeam::isBedAlive)
-                .orElse(false);
+            .map(BedWarsTeam::isBedAlive)
+            .orElse(false);
     }
 
     /**
@@ -125,8 +125,8 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
      */
     public List<BedWarsPlayer> getPlayersOnTeam(TeamKey teamKey) {
         return getPlayers().stream()
-                .filter(p -> teamKey.equals(p.getTeamKey()))
-                .toList();
+            .filter(p -> teamKey.equals(p.getTeamKey()))
+            .toList();
     }
 
     /**
@@ -134,8 +134,8 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
      */
     public List<String> getTeamTraps(TeamKey teamKey) {
         return getTeam(teamKey.name())
-                .map(BedWarsTeam::getTraps)
-                .orElse(List.of());
+            .map(BedWarsTeam::getTraps)
+            .orElse(List.of());
     }
 
 
@@ -159,8 +159,8 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
      */
     public int getTeamUpgradeLevel(TeamKey teamKey, String upgradeName) {
         return getTeam(teamKey.name())
-                .map(team -> team.getUpgradeLevel(upgradeName))
-                .orElse(0);
+            .map(team -> team.getUpgradeLevel(upgradeName))
+            .orElse(0);
     }
 
     /**
@@ -214,13 +214,13 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         player.setFlying(false);
         player.setGameMode(GameMode.ADVENTURE);
         player.getInventory().setItemStack(8,
-                TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack());
+            TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack());
 
         // Set game ID tag
         player.setTag(Tag.String("gameId"), gameId);
 
         String randomLetters = UUID.randomUUID().toString().replaceAll("-", "")
-                .substring(0, new Random().nextInt(10) + 4);
+            .substring(0, new Random().nextInt(10) + 4);
         player.setDisplayName(Component.text(randomLetters, NamedTextColor.WHITE, TextDecoration.OBFUSCATED));
 
         for (BedWarsPlayer p : getPlayers()) {
@@ -238,8 +238,8 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     @Override
     protected void onPlayerDisconnect(BedWarsPlayer player) {
         String teamColor = getPlayerTeam(player.getUuid())
-                .map(BedWarsTeam::getColorCode)
-                .orElse("§7");
+            .map(BedWarsTeam::getColorCode)
+            .orElse("§7");
 
         broadcastMessage(Component.text(teamColor + player.getUsername() + " §7disconnected."));
     }
@@ -269,8 +269,8 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     @Override
     protected boolean canPlayerRejoin(BedWarsPlayer player) {
         return getPlayerTeam(player.getUuid())
-                .map(BedWarsTeam::isBedAlive)
-                .orElse(false);
+            .map(BedWarsTeam::isBedAlive)
+            .orElse(false);
     }
 
     @Override
@@ -334,8 +334,8 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         String winnerId = null;
         String winnerType = null;
         Optional<BedWarsTeam> winningTeam = getTeams().stream()
-                .filter(this::isTeamViable)
-                .findFirst();
+            .filter(this::isTeamViable)
+            .findFirst();
         if (winningTeam.isPresent()) {
             winnerId = winningTeam.get().getTeamKey().name();
             winnerType = "TEAM";
@@ -363,20 +363,20 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
             // Fire victory event
             eventDispatcher.accept(new GameEndEvent(
-                    gameId,
-                    new GameEndEvent.GameResult.Victory(
-                            winningTeam.getId(),
-                            winningTeam.getName(),
-                            GameEndEvent.GameResult.Victory.WinnerType.TEAM
-                    )
+                gameId,
+                new GameEndEvent.GameResult.Victory(
+                    winningTeam.getId(),
+                    winningTeam.getName(),
+                    GameEndEvent.GameResult.Victory.WinnerType.TEAM
+                )
             ));
         } else {
             titleMessage = "§cGame Over!";
             subtitleMessage = "It's a draw!";
 
             eventDispatcher.accept(new GameEndEvent(
-                    gameId,
-                    new GameEndEvent.GameResult.Draw("No teams remaining")
+                gameId,
+                new GameEndEvent.GameResult.Draw("No teams remaining")
             ));
         }
 
@@ -385,7 +385,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             player.sendTitlePart(TitlePart.TITLE, Component.text(titleMessage));
             player.sendTitlePart(TitlePart.SUBTITLE, Component.text(subtitleMessage));
             player.playSound(Sound.sound(Key.key("minecraft:ui.toast.challenge_complete"),
-                    Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
+                Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
 
             // Record win
             if (winningTeam != null && winningTeam.hasPlayer(player.getUuid())) {
@@ -405,13 +405,13 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         if (team.isBedAlive()) return true;
 
         boolean hasActivePlayers = getPlayers().stream()
-                .anyMatch(p -> team.hasPlayer(p.getUuid()) && !Boolean.TRUE.equals(p.getTag(ELIMINATED_TAG)));
+            .anyMatch(p -> team.hasPlayer(p.getUuid()) && !Boolean.TRUE.equals(p.getTag(ELIMINATED_TAG)));
 
         boolean hasRejoinablePlayers = disconnectedPlayers.values().stream()
-                .anyMatch(info -> {
-                    Optional<BedWarsTeam> t = getPlayerTeam(info.uuid());
-                    return t.isPresent() && t.get().getId().equals(team.getId()) && team.isBedAlive();
-                });
+            .anyMatch(info -> {
+                Optional<BedWarsTeam> t = getPlayerTeam(info.uuid());
+                return t.isPresent() && t.get().getId().equals(team.getId()) && team.isBedAlive();
+            });
 
         return hasActivePlayers || hasRejoinablePlayers;
     }
@@ -430,9 +430,9 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
             // Fire event for listeners to handle announcements, sounds, etc.
             eventDispatcher.accept(new BedDestroyedEvent(
-                    gameId,
-                    teamKey,
-                    destroyer
+                gameId,
+                teamKey,
+                destroyer
             ));
 
             checkWinConditions();
@@ -515,7 +515,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
                     player.getInventory().clear();
                     player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
                     player.setDisplayName(Component.text(
-                            team.getColorCode() + "§l" + team.getName() + " §r" + team.getColorCode() + player.getUsername()
+                        team.getColorCode() + "§l" + team.getName() + " §r" + team.getColorCode() + player.getUsername()
                     ));
                 }
             });
@@ -534,15 +534,15 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     private void sendGameStartMessage() {
         String line = "■".repeat(50);
         Component[] messages = {
-                Component.text(line, NamedTextColor.GREEN),
-                Component.text(ChatUtility.FontInfo.center("Bed Wars"), NamedTextColor.WHITE, TextDecoration.BOLD),
-                Component.space(),
-                Component.text(ChatUtility.FontInfo.center("Protect your bed and destroy the enemy beds."), NamedTextColor.YELLOW),
-                Component.text(ChatUtility.FontInfo.center("Upgrade yourself and your team by collecting"), NamedTextColor.YELLOW),
-                Component.text(ChatUtility.FontInfo.center("Iron, Gold, Emerald and Diamond from generators"), NamedTextColor.YELLOW),
-                Component.text(ChatUtility.FontInfo.center("to access powerful upgrades."), NamedTextColor.YELLOW),
-                Component.space(),
-                Component.text(line, NamedTextColor.GREEN)
+            Component.text(line, NamedTextColor.GREEN),
+            Component.text(ChatUtility.FontInfo.center("Bed Wars"), NamedTextColor.WHITE, TextDecoration.BOLD),
+            Component.space(),
+            Component.text(ChatUtility.FontInfo.center("Protect your bed and destroy the enemy beds."), NamedTextColor.YELLOW),
+            Component.text(ChatUtility.FontInfo.center("Upgrade yourself and your team by collecting"), NamedTextColor.YELLOW),
+            Component.text(ChatUtility.FontInfo.center("Iron, Gold, Emerald and Diamond from generators"), NamedTextColor.YELLOW),
+            Component.text(ChatUtility.FontInfo.center("to access powerful upgrades."), NamedTextColor.YELLOW),
+            Component.space(),
+            Component.text(line, NamedTextColor.GREEN)
         };
 
         Audience audience = Audience.audience(getPlayers());

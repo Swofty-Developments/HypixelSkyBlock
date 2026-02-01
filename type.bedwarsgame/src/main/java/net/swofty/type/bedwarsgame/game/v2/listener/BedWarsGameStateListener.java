@@ -17,7 +17,7 @@ public class BedWarsGameStateListener implements HypixelEventClass {
         if (game == null) return;
 
         Logger.info("BedWars game {} state changed: {} -> {}",
-                event.gameId(), event.previousState(), event.newState());
+            event.gameId(), event.previousState(), event.newState());
 
         if (event.isCountdownStart()) {
             onCountdownStarted(game);
@@ -34,7 +34,7 @@ public class BedWarsGameStateListener implements HypixelEventClass {
 
     private void onGameStarted(BedWarsGame game) {
         Logger.info("BedWars game {} has officially started with {} players",
-                game.getGameId(), game.getPlayers().size());
+            game.getGameId(), game.getPlayers().size());
     }
 
     private void onGameEnded(BedWarsGame game) {

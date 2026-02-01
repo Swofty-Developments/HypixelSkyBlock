@@ -56,11 +56,11 @@ public class BedWarsGeneratorManager {
 
             // Start iron generator
             startTeamGenerator(teamKey, "iron", generatorSpeed.getIronAmount(),
-                    generatorSpeed.getIronDelaySeconds(), spawnPosition);
+                generatorSpeed.getIronDelaySeconds(), spawnPosition);
 
             // Start gold generator
             startTeamGenerator(teamKey, "gold", generatorSpeed.getGoldAmount(),
-                    generatorSpeed.getGoldDelaySeconds(), spawnPosition);
+                generatorSpeed.getGoldDelaySeconds(), spawnPosition);
         });
     }
 
@@ -116,12 +116,12 @@ public class BedWarsGeneratorManager {
 
         if (generatorType.equals("diamond") || generatorType.equals("emerald")) {
             int delaySeconds = generatorType.equals("diamond")
-                    ? game.getGameEventManager().getCurrentPhase().getDiamondSpawnSeconds()
-                    : game.getGameEventManager().getCurrentPhase().getEmeraldSpawnSeconds();
+                ? game.getGameEventManager().getCurrentPhase().getDiamondSpawnSeconds()
+                : game.getGameEventManager().getCurrentPhase().getEmeraldSpawnSeconds();
 
             setupGlobalGeneratorDisplays(generatorType, locations, delaySeconds);
             generatorLimits.put(generatorType, new GeneratorLimits(
-                    itemMaterial, config.getAmount(), config.getMax(), locations));
+                itemMaterial, config.getAmount(), config.getMax(), locations));
         }
     }
 
@@ -133,21 +133,21 @@ public class BedWarsGeneratorManager {
             double locY = location.y() + 4.0;
 
             TextDisplayEntity tierDisplay = new TextDisplayEntity(
-                    Component.text("Tier I").color(NamedTextColor.YELLOW));
+                Component.text("Tier I").color(NamedTextColor.YELLOW));
             tierDisplay.setInstance(game.getInstance(), new Pos(location.x(), locY, location.z()));
 
             locY -= 0.3;
             TextDisplayEntity titleDisplay = new TextDisplayEntity(
-                    Component.text(capitalizedType).color(color).decorate(TextDecoration.BOLD));
+                Component.text(capitalizedType).color(color).decorate(TextDecoration.BOLD));
             titleDisplay.setInstance(game.getInstance(), new Pos(location.x(), locY, location.z()));
 
             locY -= 0.3;
             TextDisplayEntity spawnDisplay = new TextDisplayEntity(
-                    MiniMessage.miniMessage().deserialize("<yellow>Spawns in <red>" + delaySeconds + "</red> seconds!</yellow>"));
+                MiniMessage.miniMessage().deserialize("<yellow>Spawns in <red>" + delaySeconds + "</red> seconds!</yellow>"));
             spawnDisplay.setInstance(game.getInstance(), new Pos(location.x(), locY, location.z()));
 
             generatorDisplays.computeIfAbsent(generatorType, k -> new ArrayList<>())
-                    .add(new GeneratorDisplay(tierDisplay, titleDisplay, spawnDisplay, delaySeconds));
+                .add(new GeneratorDisplay(tierDisplay, titleDisplay, spawnDisplay, delaySeconds));
         }
     }
 
@@ -168,12 +168,12 @@ public class BedWarsGeneratorManager {
                 if (display.countdown <= 0) {
                     Pos spawnPos = new Pos(location.x(), location.y(), location.z());
                     long currentItemCount = game.getInstance().getNearbyEntities(spawnPos, 1.5)
-                            .stream()
-                            .filter(ItemEntity.class::isInstance)
-                            .map(ItemEntity.class::cast)
-                            .filter(entity -> entity.getItemStack().material() == limits.material)
-                            .mapToLong(entity -> entity.getItemStack().amount())
-                            .sum();
+                        .stream()
+                        .filter(ItemEntity.class::isInstance)
+                        .map(ItemEntity.class::cast)
+                        .filter(entity -> entity.getItemStack().material() == limits.material)
+                        .mapToLong(entity -> entity.getItemStack().amount())
+                        .sum();
 
                     if (currentItemCount < limits.maxAmount) {
                         spawnItem(limits.material, limits.amount, spawnPos, Duration.ofSeconds(1));
@@ -191,7 +191,7 @@ public class BedWarsGeneratorManager {
                 if (display.countdown <= 0) display.countdown = display.maxCountdown;
 
                 display.spawnDisplay.setText(MiniMessage.miniMessage().deserialize(
-                        "<yellow>Spawns in <red>" + display.countdown + "</red> seconds!</yellow>"));
+                    "<yellow>Spawns in <red>" + display.countdown + "</red> seconds!</yellow>"));
             }
         }
     }

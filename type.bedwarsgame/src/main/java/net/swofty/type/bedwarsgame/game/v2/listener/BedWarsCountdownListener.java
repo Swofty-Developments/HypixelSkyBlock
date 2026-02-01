@@ -32,12 +32,12 @@ public class BedWarsCountdownListener implements HypixelEventClass {
     private Component createCountdownMessage(int seconds) {
         if (seconds > 1) {
             return Component.text("Game starting in ", NamedTextColor.YELLOW)
-                    .append(Component.text(seconds, NamedTextColor.RED))
-                    .append(Component.text(" seconds!", NamedTextColor.YELLOW));
+                .append(Component.text(seconds, NamedTextColor.RED))
+                .append(Component.text(" seconds!", NamedTextColor.YELLOW));
         } else if (seconds == 1) {
             return Component.text("Game starting in ", NamedTextColor.YELLOW)
-                    .append(Component.text("1", NamedTextColor.RED))
-                    .append(Component.text(" second!", NamedTextColor.YELLOW));
+                .append(Component.text("1", NamedTextColor.RED))
+                .append(Component.text(" second!", NamedTextColor.YELLOW));
         } else {
             return Component.text("Game starting now!", NamedTextColor.GREEN);
         }
