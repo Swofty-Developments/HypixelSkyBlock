@@ -10,6 +10,7 @@ import net.minestom.server.instance.LightingChunk;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.objects.replay.ReplayLoadProtocolObject;
+import net.swofty.commons.protocol.objects.replay.ReplayMapLoadProtocolObject;
 import net.swofty.commons.replay.ReplayMetadata;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.HypixelConst;
@@ -19,6 +20,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.replayviewer.TypeReplayViewerLoader;
+import net.swofty.type.replayviewer.playback.MapDeserializer;
 import net.swofty.type.replayviewer.playback.ReplayData;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 import net.swofty.type.replayviewer.redis.service.RedisChosenMap;
@@ -122,6 +124,13 @@ public class PlayerJoinEvent implements HypixelEventClass {
                 replayData.loadFromChunks(chunks);
             }
 
+            // Load map data
+            loadMapData(metadata.getMapHash(), instance, player);
+
+            // Teleport player to map center
+            Pos spawnPos = new Pos(metadata.getMapCenterX(), 100, metadata.getMapCenterZ());
+            player.teleport(spawnPos);
+
             ReplaySession session = new ReplaySession(player, metadata, instance, replayData);
             TypeReplayViewerLoader.registerSession(player.getUuid(), session);
 
@@ -133,6 +142,41 @@ public class PlayerJoinEvent implements HypixelEventClass {
         } catch (Exception e) {
             Logger.error(e, "Failed to load replay {}", replayId);
             //player.sendMessage("§cFailed to load replay: " + e.getMessage());
+        }
+    }
+
+    private void loadMapData(String mapHash, InstanceContainer instance, Player player) {
+        if (mapHash == null || mapHash.isEmpty()) {
+            Logger.warn("No map hash provided, skipping map load");
+            return;
+        }
+
+        try {
+            ProxyService replayService = new ProxyService(ServiceType.REPLAY);
+            var request = new ReplayMapLoadProtocolObject.MapLoadRequest(mapHash);
+
+            ReplayMapLoadProtocolObject.MapLoadResponse response = replayService
+                .<ReplayMapLoadProtocolObject.MapLoadRequest, ReplayMapLoadProtocolObject.MapLoadResponse>handleRequest(request)
+                .join();
+
+            if (!response.success() || !response.found()) {
+                Logger.warn("Map {} not found in replay service", mapHash);
+                player.sendMessage("§eMap data not available, using empty world.");
+                return;
+            }
+
+            if (response.compressedData() == null || response.compressedData().length == 0) {
+                Logger.warn("Map {} has no data", mapHash);
+                return;
+            }
+
+            // Deserialize and apply map
+            MapDeserializer.loadMap(instance, response.compressedData());
+            Logger.info("Loaded map {} ({} bytes)", mapHash, response.compressedData().length);
+
+        } catch (Exception e) {
+            Logger.error(e, "Failed to load map {}", mapHash);
+            player.sendMessage("§eFailed to load map: " + e.getMessage());
         }
     }
 }

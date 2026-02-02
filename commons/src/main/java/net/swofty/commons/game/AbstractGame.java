@@ -277,12 +277,21 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         eventDispatcher.accept(new GameStateChangeEvent(gameId, oldState, newState));
     }
 
+    /**
+     * @deprecated use the Event system instead
+     */
     @Deprecated(forRemoval = true)
     protected abstract void onPlayerJoin(P player);
 
+    /**
+     * @deprecated use the Event system instead
+     */
     @Deprecated(forRemoval = true)
     protected abstract void onPlayerLeave(P player);
 
+    /**
+     * @deprecated use the Event system instead
+     */
     @Deprecated(forRemoval = true)
     protected abstract void onGameEnd();
 
@@ -291,10 +300,16 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
      */
     protected abstract void checkWinConditions();
 
+    /**
+     * @deprecated use the Event system instead
+     */
     @Deprecated(forRemoval = true)
     protected void onPlayerDisconnect(P player) {
     }
 
+    /**
+     * @deprecated use the Event system instead
+     */
     @Deprecated(forRemoval = true)
     protected void onPlayerRejoin(P player, DisconnectedPlayerData data) {
     }
@@ -315,11 +330,17 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         return new HashMap<>();
     }
 
+    /**
+     * @deprecated use the Event system instead
+     */
     @Deprecated(forRemoval = true)
     protected void restorePlayerData(P player, Map<String, Object> savedData) {
         // Default: no restoration
     }
 
+    /**
+     * @deprecated use the Event system instead
+     */
     @Deprecated(forRemoval = true)
     protected void onDispose() {
         // Default: no special cleanup

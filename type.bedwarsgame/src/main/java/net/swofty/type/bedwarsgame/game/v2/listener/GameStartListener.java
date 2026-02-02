@@ -18,8 +18,6 @@ public class GameStartListener implements HypixelEventClass {
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.getGameId());
         Logger.info("Starting BedWars game {}", event.gameId());
 
-        // Start replay recording
-        game.getReplayManager().startRecording();
 
         // Prepare world
         game.getWorldManager().clearExistingBeds();
@@ -45,6 +43,9 @@ public class GameStartListener implements HypixelEventClass {
 
         // Start time-played XP task
         game.startTimePlayedRewards();
+
+        // Start replay recording
+        game.getReplayManager().startRecording();
 
         // Send game start message
         game.sendGameStartMessage();

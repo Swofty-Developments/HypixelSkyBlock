@@ -123,11 +123,66 @@ public class ReplayCommand extends HypixelCommand {
                         player.sendMessage("§7Speed: §e" + session.getPlaybackSpeed() + "x");
                         player.sendMessage("§7Status: " + (session.isPlaying() ? "§aPlaying" : "§ePaused"));
                         player.sendMessage("§7Players: §f" + session.getMetadata().getPlayers().size());
+                        player.sendMessage("§7Progress: §e" + String.format("%.1f%%", session.getProgress()));
                         player.sendMessage("§6§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                     },
                     () -> player.sendMessage("§cNo active replay session.")
             );
         }, ArgumentType.Literal("info"));
+
+        // /replay follow [player]
+        command.addSyntax((sender, context) -> {
+            HypixelPlayer player = (HypixelPlayer) sender;
+            TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
+                    ReplaySession::followNextPlayer,
+                    () -> player.sendMessage("§cNo active replay session.")
+            );
+        }, ArgumentType.Literal("follow"));
+
+        // /replay follow next
+        command.addSyntax((sender, context) -> {
+            HypixelPlayer player = (HypixelPlayer) sender;
+            TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
+                    ReplaySession::followNextPlayer,
+                    () -> player.sendMessage("§cNo active replay session.")
+            );
+        }, ArgumentType.Literal("follow"), ArgumentType.Literal("next"));
+
+        // /replay follow prev
+        command.addSyntax((sender, context) -> {
+            HypixelPlayer player = (HypixelPlayer) sender;
+            TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
+                    ReplaySession::followPreviousPlayer,
+                    () -> player.sendMessage("§cNo active replay session.")
+            );
+        }, ArgumentType.Literal("follow"), ArgumentType.Literal("prev"));
+
+        // /replay free (stop following)
+        command.addSyntax((sender, context) -> {
+            HypixelPlayer player = (HypixelPlayer) sender;
+            TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
+                    ReplaySession::stopFollowing,
+                    () -> player.sendMessage("§cNo active replay session.")
+            );
+        }, ArgumentType.Literal("free"));
+
+        // /replay faster
+        command.addSyntax((sender, context) -> {
+            HypixelPlayer player = (HypixelPlayer) sender;
+            TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
+                    ReplaySession::cycleSpeedUp,
+                    () -> player.sendMessage("§cNo active replay session.")
+            );
+        }, ArgumentType.Literal("faster"));
+
+        // /replay slower
+        command.addSyntax((sender, context) -> {
+            HypixelPlayer player = (HypixelPlayer) sender;
+            TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
+                    ReplaySession::cycleSpeedDown,
+                    () -> player.sendMessage("§cNo active replay session.")
+            );
+        }, ArgumentType.Literal("slower"));
 
         // Default - toggle play/pause
         command.setDefaultExecutor((sender, context) -> {

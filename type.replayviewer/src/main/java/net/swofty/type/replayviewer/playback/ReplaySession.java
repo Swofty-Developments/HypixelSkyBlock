@@ -1,6 +1,7 @@
 package net.swofty.type.replayviewer.playback;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
@@ -8,6 +9,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.replay.ReplayMetadata;
@@ -40,6 +42,10 @@ public class ReplaySession {
 
     // Spectating
     private Integer spectatingEntityId = null;
+
+    // Scoreboard
+    @Setter
+    private Sidebar currentSidebar = null;
 
     public ReplaySession(
             Player viewer,
@@ -250,6 +256,97 @@ public class ReplaySession {
                 Component.text("Use /replay restart to watch again", NamedTextColor.GRAY),
                 Title.Times.times(Duration.ofMillis(200), Duration.ofSeconds(3), Duration.ofMillis(500))
         ));
+    }
+
+    public void followEntity(int entityId) {
+        this.spectatingEntityId = entityId;
+        net.minestom.server.entity.Entity entity = entityManager.getEntity(entityId);
+        if (entity != null) {
+            viewer.spectate(entity);
+
+            String name = getEntityDisplayName(entityId);
+            viewer.sendMessage(Component.text("Now following: ", NamedTextColor.GRAY)
+                .append(Component.text(name, NamedTextColor.YELLOW)));
+        }
+    }
+
+    public void stopFollowing() {
+        this.spectatingEntityId = null;
+        viewer.stopSpectating();
+        viewer.sendMessage(Component.text("Free camera mode", NamedTextColor.GRAY));
+    }
+
+    public void followNextPlayer() {
+        List<Integer> playerEntityIds = getPlayerEntityIds();
+        if (playerEntityIds.isEmpty()) return;
+
+        int currentIndex = spectatingEntityId != null ? playerEntityIds.indexOf(spectatingEntityId) : -1;
+        int nextIndex = (currentIndex + 1) % playerEntityIds.size();
+        followEntity(playerEntityIds.get(nextIndex));
+    }
+
+    public void followPreviousPlayer() {
+        List<Integer> playerEntityIds = getPlayerEntityIds();
+        if (playerEntityIds.isEmpty()) return;
+
+        int currentIndex = spectatingEntityId != null ? playerEntityIds.indexOf(spectatingEntityId) : 0;
+        int prevIndex = (currentIndex - 1 + playerEntityIds.size()) % playerEntityIds.size();
+        followEntity(playerEntityIds.get(prevIndex));
+    }
+
+    private List<Integer> getPlayerEntityIds() {
+        List<Integer> ids = new java.util.ArrayList<>();
+        for (int entityId : entityManager.getEntityIds()) {
+            net.minestom.server.entity.Entity entity = entityManager.getEntity(entityId);
+            // Check if it's a player entity type
+            if (entity != null && entity.getEntityType() == net.minestom.server.entity.EntityType.PLAYER) {
+                ids.add(entityId);
+            }
+        }
+        return ids;
+    }
+
+    private String getEntityDisplayName(int entityId) {
+        net.minestom.server.entity.Entity entity = entityManager.getEntity(entityId);
+        if (entity instanceof net.swofty.type.replayviewer.entity.ReplayEntity replayEntity) {
+            UUID uuid = replayEntity.getRecordedUuid();
+            String name = metadata.getPlayers().get(uuid);
+            if (name != null) return name;
+        }
+        return "Entity #" + entityId;
+    }
+
+    // TODO: use in inventory
+    private static final float[] SPEED_PRESETS = {0.25f, 0.5f, 1.0f, 2.0f, 4.0f};
+
+    public void cycleSpeedUp() {
+        for (float preset : SPEED_PRESETS) {
+            if (preset > playbackSpeed) {
+                setSpeed(preset);
+                return;
+            }
+        }
+        setSpeed(SPEED_PRESETS[SPEED_PRESETS.length - 1]);
+    }
+
+    public void cycleSpeedDown() {
+        for (int i = SPEED_PRESETS.length - 1; i >= 0; i--) {
+            if (SPEED_PRESETS[i] < playbackSpeed) {
+                setSpeed(SPEED_PRESETS[i]);
+                return;
+            }
+        }
+        setSpeed(SPEED_PRESETS[0]);
+    }
+
+    public float getProgress() {
+        if (getTotalTicks() == 0) return 0;
+        return (float) currentTick / getTotalTicks() * 100;
+    }
+
+    public void seekToPercent(float percent) {
+        int targetTick = (int) (getTotalTicks() * (percent / 100f));
+        seekTo(targetTick);
     }
 
 }

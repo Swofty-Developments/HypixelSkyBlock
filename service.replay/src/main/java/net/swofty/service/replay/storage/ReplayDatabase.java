@@ -45,9 +45,9 @@ public class ReplayDatabase {
 
     public void saveReplayMetadata(Document metadata) {
         replays.replaceOne(
-                Filters.eq("replayId", metadata.getString("replayId")),
-                metadata,
-                new ReplaceOptions().upsert(true)
+            Filters.eq("replayId", metadata.getString("replayId")),
+            metadata,
+            new ReplaceOptions().upsert(true)
         );
     }
 
@@ -57,46 +57,46 @@ public class ReplayDatabase {
 
     public List<Document> getReplaysByPlayer(UUID playerId, int limit) {
         return replays.find(Filters.eq("players", playerId.toString()))
-                .sort(new Document("startTime", -1))
-                .limit(limit)
-                .into(new ArrayList<>());
+            .sort(new Document("startTime", -1))
+            .limit(limit)
+            .into(new ArrayList<>());
     }
 
     public List<Document> getReplaysByGame(String gameId) {
         return replays.find(Filters.eq("gameId", gameId))
-                .into(new ArrayList<>());
+            .into(new ArrayList<>());
     }
 
 
     public void saveReplayDataChunk(UUID replayId, int chunkIndex, byte[] compressedData, int startTick, int endTick) {
         Document doc = new Document()
-                .append("replayId", replayId.toString())
-                .append("chunkIndex", chunkIndex)
-                .append("startTick", startTick)
-                .append("endTick", endTick)
-                .append("data", compressedData)
-                .append("size", compressedData.length);
+            .append("replayId", replayId.toString())
+            .append("chunkIndex", chunkIndex)
+            .append("startTick", startTick)
+            .append("endTick", endTick)
+            .append("data", compressedData)
+            .append("size", compressedData.length);
 
         replayData.replaceOne(
-                Filters.and(
-                        Filters.eq("replayId", replayId.toString()),
-                        Filters.eq("chunkIndex", chunkIndex)
-                ),
-                doc,
-                new ReplaceOptions().upsert(true)
+            Filters.and(
+                Filters.eq("replayId", replayId.toString()),
+                Filters.eq("chunkIndex", chunkIndex)
+            ),
+            doc,
+            new ReplaceOptions().upsert(true)
         );
     }
 
     public List<Document> getReplayDataChunks(UUID replayId) {
         return replayData.find(Filters.eq("replayId", replayId.toString()))
-                .sort(new Document("chunkIndex", 1))
-                .into(new ArrayList<>());
+            .sort(new Document("chunkIndex", 1))
+            .into(new ArrayList<>());
     }
 
     public Document getReplayDataChunk(UUID replayId, int chunkIndex) {
         return replayData.find(Filters.and(
-                Filters.eq("replayId", replayId.toString()),
-                Filters.eq("chunkIndex", chunkIndex)
+            Filters.eq("replayId", replayId.toString()),
+            Filters.eq("chunkIndex", chunkIndex)
         )).first();
     }
 
@@ -106,16 +106,16 @@ public class ReplayDatabase {
 
     public void saveMap(String mapHash, String mapName, byte[] compressedData) {
         Document doc = new Document()
-                .append("hash", mapHash)
-                .append("name", mapName)
-                .append("data", compressedData)
-                .append("size", compressedData.length)
-                .append("uploadedAt", System.currentTimeMillis());
+            .append("hash", mapHash)
+            .append("name", mapName)
+            .append("data", compressedData)
+            .append("size", compressedData.length)
+            .append("uploadedAt", System.currentTimeMillis());
 
         maps.replaceOne(
-                Filters.eq("hash", mapHash),
-                doc,
-                new ReplaceOptions().upsert(true)
+            Filters.eq("hash", mapHash),
+            doc,
+            new ReplaceOptions().upsert(true)
         );
     }
 
@@ -123,6 +123,10 @@ public class ReplayDatabase {
         Document doc = maps.find(Filters.eq("hash", mapHash)).first();
         if (doc == null) return null;
         return doc.get("data", org.bson.types.Binary.class).getData();
+    }
+
+    public Document getMapMetadata(String mapHash) {
+        return maps.find(Filters.eq("hash", mapHash)).first();
     }
 
     public long getTotalReplays() {

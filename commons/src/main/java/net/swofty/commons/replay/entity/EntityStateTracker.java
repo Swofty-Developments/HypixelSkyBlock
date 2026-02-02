@@ -44,8 +44,8 @@ public class EntityStateTracker {
 
     public void recordState(int entityId, StateType stateType, int tick, Recordable recordable) {
         states.computeIfAbsent(entityId, k -> new EnumMap<>(StateType.class))
-                .computeIfAbsent(stateType, k -> new TreeMap<>())
-                .put(tick, recordable);
+            .computeIfAbsent(stateType, k -> new TreeMap<>())
+            .put(tick, recordable);
     }
 
     /**
@@ -123,13 +123,64 @@ public class EntityStateTracker {
 
     public void removeEntity(int entityId) {
         states.remove(entityId);
+        skinData.remove(entityId);
+        healthData.remove(entityId);
     }
 
     public void clear() {
         states.clear();
+        skinData.clear();
+        healthData.clear();
     }
 
     public Set<Integer> getTrackedEntities() {
         return new HashSet<>(states.keySet());
+    }
+
+    private final Map<Integer, SkinData> skinData = new HashMap<>();
+
+    public void trackSkin(int entityId, String textureValue, String textureSignature) {
+        skinData.put(entityId, new SkinData(textureValue, textureSignature));
+    }
+
+    public SkinData getSkin(int entityId) {
+        return skinData.get(entityId);
+    }
+
+    public record SkinData(String textureValue, String textureSignature) {
+    }
+
+    private final Map<Integer, HealthData> healthData = new HashMap<>();
+
+    public void trackHealth(int entityId, float health, float maxHealth) {
+        healthData.put(entityId, new HealthData(health, maxHealth));
+    }
+
+    public HealthData getHealth(int entityId) {
+        return healthData.get(entityId);
+    }
+
+    public record HealthData(float health, float maxHealth) {
+    }
+
+    public void track(Recordable recordable) {
+        if (!recordable.isEntityState() || recordable.getEntityId() < 0) return;
+
+        StateType stateType = mapRecordableToStateType(recordable);
+        if (stateType != null) {
+            recordState(recordable.getEntityId(), stateType, 0, recordable);
+        }
+    }
+
+    private StateType mapRecordableToStateType(Recordable recordable) {
+        return switch (recordable.getType()) {
+            case ENTITY_LOCATIONS -> StateType.LOCATION;
+            case PLAYER_SNEAK -> StateType.SNEAKING;
+            case PLAYER_SPRINT -> StateType.SPRINTING;
+            case PLAYER_GAMEMODE -> StateType.GAMEMODE;
+            case ENTITY_MOUNT -> StateType.MOUNT;
+            case ENTITY_METADATA -> StateType.METADATA;
+            default -> null;
+        };
     }
 }

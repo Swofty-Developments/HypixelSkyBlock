@@ -1,0 +1,87 @@
+package net.swofty.type.replayviewer.entity;
+
+import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.Metadata;
+import net.minestom.server.entity.MetadataDef;
+import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerSkin;
+import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
+import net.minestom.server.network.packet.server.play.EntityMetaDataPacket;
+import net.minestom.server.network.packet.server.play.PlayerInfoRemovePacket;
+import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
+import net.minestom.server.network.packet.server.play.SpawnEntityPacket;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+@Getter
+public class ReplayPlayerEntity extends Entity {
+    private final String playerName;
+    private final PlayerSkin skin;
+
+    public ReplayPlayerEntity(String playerName,
+                              String textureValue, String textureSignature) {
+        super(EntityType.PLAYER, UUID.randomUUID());
+        this.playerName = playerName;
+
+        if (textureValue != null && !textureValue.isEmpty()) {
+            this.skin = new PlayerSkin(textureValue, textureSignature);
+        } else {
+            this.skin = null;
+        }
+
+        // Set custom name
+        setCustomName(Component.text(playerName));
+        setNoGravity(true);
+        setAutoViewable(true);
+        setCustomNameVisible(true);
+    }
+
+    @Override
+    public void updateNewViewer(@NotNull Player player) {
+        super.updateNewViewer(player);
+
+        List<PlayerInfoUpdatePacket.Property> properties = skin != null ?
+            List.of(new PlayerInfoUpdatePacket.Property("textures", skin.textures(), skin.signature())) :
+            List.of();
+
+        player.sendPackets(
+            new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER,
+                new PlayerInfoUpdatePacket.Entry(
+                    getUuid(),
+                    playerName,
+                    properties,
+                    false,
+                    0,
+                    GameMode.CREATIVE,
+                    Component.text(playerName),
+                    null,
+                    1, true)),
+            new SpawnEntityPacket(this.getEntityId(), this.getUuid(), EntityType.PLAYER,
+                getPosition(),
+                (float) 0,
+                0,
+                Vec.ZERO),
+            new EntityHeadLookPacket(getEntityId(), getPosition().yaw()),
+            new EntityMetaDataPacket(getEntityId(), Map.of(
+                MetadataDef.Avatar.DISPLAYED_MODEL_PARTS_FLAGS.index(),
+                Metadata.Byte((byte) 127) // 127 is all parts
+            ))
+        );
+    }
+
+    @Override
+    public void updateOldViewer(Player player) {
+        super.updateOldViewer(player);
+
+        // Remove from player list
+        player.sendPacket(new PlayerInfoRemovePacket(this.getUuid()));
+    }
+}

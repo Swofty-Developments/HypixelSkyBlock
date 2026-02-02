@@ -15,7 +15,15 @@ import net.swofty.commons.replay.dispatcher.BlockChangeDispatcher;
 import net.swofty.commons.replay.dispatcher.DispatcherManager;
 import net.swofty.commons.replay.dispatcher.EntityLocationDispatcher;
 import net.swofty.commons.replay.recordable.RecordableBlockChange;
-import net.swofty.commons.replay.recordable.RecordableCustomEvent;
+import net.swofty.commons.replay.recordable.RecordablePlayerDisplayName;
+import net.swofty.commons.replay.recordable.RecordablePlayerHealth;
+import net.swofty.commons.replay.recordable.RecordablePlayerSkin;
+import net.swofty.commons.replay.recordable.RecordableScoreboard;
+import net.swofty.commons.replay.recordable.bedwars.RecordableBedDestruction;
+import net.swofty.commons.replay.recordable.bedwars.RecordableFinalKill;
+import net.swofty.commons.replay.recordable.bedwars.RecordableGeneratorUpgrade;
+import net.swofty.commons.replay.recordable.bedwars.RecordableTeamElimination;
+import net.swofty.commons.scoreboard.ScoreboardData;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
@@ -29,7 +37,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-// TODO: everything about this file is slop
 public class BedWarsReplayManager {
     private static final int BATCH_INTERVAL_SECONDS = 10;
 
@@ -44,6 +51,8 @@ public class BedWarsReplayManager {
     private Task tickTask;
     private Task batchTask;
     private int batchIndex = 0;
+
+    private ScoreboardData lastScoreboardState;
 
     @Getter
     private boolean recording = false;
@@ -85,8 +94,11 @@ public class BedWarsReplayManager {
 
         // Set map center for coordinate optimization
         var locations = game.getMapEntry().getConfiguration().getLocations();
+        int centerChunkX = 0, centerChunkZ = 0;
         if (locations.getWaiting() != null) {
             recorder.setMapCenter(locations.getWaiting().x(), locations.getWaiting().z());
+            centerChunkX = (int) locations.getWaiting().x() >> 4;
+            centerChunkZ = (int) locations.getWaiting().z() >> 4;
         }
 
         // Collect player info
@@ -109,9 +121,10 @@ public class BedWarsReplayManager {
             ));
         }
 
-        // Generate map hash based on map name and modification time
+        // Serialize and upload map, get the hash
         String mapName = game.getMapEntry().getName();
-        String mapHash = generateMapHash(mapName);
+        InstanceContainer instance = game.getInstance();
+        String mapHash = serializeAndUploadMap(instance, mapName, centerChunkX, centerChunkZ);
 
         // Start recording session
         recorder.start(
@@ -124,10 +137,13 @@ public class BedWarsReplayManager {
         );
 
         // Register dispatchers
-        InstanceContainer instance = game.getInstance();
+        dispatchers.register(new EntityLifecycleDispatcher(instance));
         dispatchers.register(new EntityLocationDispatcher(instance));
         dispatchers.register(new BlockChangeDispatcher(instance));
         dispatchers.register(new BedWarsEventDispatcher(game, recorder));
+
+        // Record initial player appearances
+        recordInitialPlayerStates();
 
         // Start tick task (every tick for accurate timing)
         tickTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
@@ -147,9 +163,101 @@ public class BedWarsReplayManager {
         Logger.info("Started replay recording for game {} (map: {})", game.getGameId(), mapName);
     }
 
+    private void recordInitialPlayerStates() {
+        for (BedWarsPlayer player : game.getPlayers()) {
+            recordPlayerAppearance(player);
+        }
+    }
+
     /**
-     * Sends the current batch of recorded data to the service.
+     * Records a player's appearance (skin, display name, health).
      */
+    public void recordPlayerAppearance(BedWarsPlayer player) {
+        if (!recording) return;
+
+        int entityId = player.getEntityId();
+        UUID uuid = player.getUuid();
+
+        // Record skin
+        var skin = player.getSkin();
+        if (skin != null) {
+            recorder.record(new RecordablePlayerSkin(
+                entityId, uuid, skin.textures(), skin.signature()
+            ));
+        }
+
+        // Record display name with team prefix
+        BedWarsTeam team = game.getTeam(player.getTeamKey().name()).orElse(null);
+        String prefix = team != null ? team.getColorCode() + "[" + team.getTeamKey().name().charAt(0) + "] " : "";
+        int nameColor = team != null ? team.getTeamKey().rgb() : -1;
+
+        recorder.record(new RecordablePlayerDisplayName(
+            entityId, player.getUsername(), prefix, "", nameColor
+        ));
+
+        // Record initial health (use 20 as default max health)
+        recorder.record(new RecordablePlayerHealth(
+            entityId, player.getHealth(), 20.0f
+        ));
+    }
+
+    public void recordPlayerHealth(BedWarsPlayer player) {
+        if (!recording) return;
+        recorder.record(new RecordablePlayerHealth(
+            player.getEntityId(), player.getHealth(), 20.0f
+        ));
+    }
+
+    public void recordBedRespawned(TeamKey teamKey) {
+        if (!recording) return;
+        // Record the block placement for the bed
+        var team = game.getMapEntry().getConfiguration().getTeams().get(teamKey);
+        if (team != null && team.getBed() != null) {
+            var bedPos = team.getBed();
+            if (bedPos.feet() != null) {
+                recorder.record(new RecordableBlockChange(
+                    (int) bedPos.feet().x(), (int) bedPos.feet().y(), (int) bedPos.feet().z(),
+                    Block.RED_BED.stateId(), Block.AIR.stateId()
+                ));
+            }
+            if (bedPos.head() != null) {
+                recorder.record(new RecordableBlockChange(
+                    (int) bedPos.head().x(), (int) bedPos.head().y(), (int) bedPos.head().z(),
+                    Block.RED_BED.stateId(), Block.AIR.stateId()
+                ));
+            }
+        }
+    }
+
+    public void recordKill(BedWarsPlayer killer, BedWarsPlayer victim, boolean isFinalKill) {
+        if (!recording) return;
+
+        if (isFinalKill) {
+            byte deathCause = 0; // Player kill
+            recordFinalKill(victim, killer, deathCause);
+        }
+        // Regular kills are implicitly recorded through player death recordables
+    }
+
+    // TODO: remove this
+    public void recordScoreboard(ScoreboardData scoreboard) {
+        if (!recording) return;
+        if (scoreboard == null) return;
+
+        // Only record if changed
+        if (lastScoreboardState != null && !scoreboard.differs(lastScoreboardState)) {
+            return;
+        }
+        lastScoreboardState = scoreboard;
+
+        List<RecordableScoreboard.ScoreboardLine> lines = new ArrayList<>();
+        scoreboard.forEachLine(line ->
+            lines.add(new RecordableScoreboard.ScoreboardLine(line.text(), line.score()))
+        );
+
+        recorder.record(new RecordableScoreboard(scoreboard.getTitle(), lines));
+    }
+
     private void sendCurrentBatch() {
         byte[] batchData = recorder.flushBatch();
         if (batchData == null || batchData.length == 0) return;
@@ -196,69 +304,65 @@ public class BedWarsReplayManager {
     public void recordBedDestroyed(TeamKey teamKey, BedWarsPlayer destroyer) {
         if (!recording) return;
 
-        // Record as custom event
-        Map<String, String> eventData = new HashMap<>();
-        eventData.put("type", "BED_DESTROYED");
-        eventData.put("team", teamKey.name());
-        eventData.put("destroyer", destroyer != null ? destroyer.getUuid().toString() : "ADMIN");
-        eventData.put("destroyerName", destroyer != null ? destroyer.getUsername() : "Administrator");
+        byte teamId = (byte) teamKey.ordinal();
+        int destroyerEntityId = destroyer != null ? destroyer.getEntityId() : -1;
+        UUID destroyerUuid = destroyer != null ? destroyer.getUuid() : null;
 
-        recorder.record(new RecordableCustomEvent("bed_destroyed", eventData));
-
-        // Also record block changes for the bed location
+        // Get bed position
         var team = game.getMapEntry().getConfiguration().getTeams().get(teamKey);
+        int bedX = 0, bedY = 0, bedZ = 0;
+        if (team != null && team.getBed() != null && team.getBed().feet() != null) {
+            bedX = (int) team.getBed().feet().x();
+            bedY = (int) team.getBed().feet().y();
+            bedZ = (int) team.getBed().feet().z();
+        }
+
+        recorder.record(new RecordableBedDestruction(
+            teamId, destroyerEntityId, destroyerUuid, bedX, bedY, bedZ
+        ));
+
+        // Also record the block change
         if (team != null && team.getBed() != null) {
             var bedPos = team.getBed();
             if (bedPos.feet() != null) {
                 recorder.record(new RecordableBlockChange(
-                        (int) bedPos.feet().x(), (int) bedPos.feet().y(), (int) bedPos.feet().z(),
-                        Block.AIR.stateId(), Block.RED_BED.stateId()
+                    (int) bedPos.feet().x(), (int) bedPos.feet().y(), (int) bedPos.feet().z(),
+                    Block.AIR.stateId(), Block.RED_BED.stateId()
                 ));
             }
             if (bedPos.head() != null) {
                 recorder.record(new RecordableBlockChange(
-                        (int) bedPos.head().x(), (int) bedPos.head().y(), (int) bedPos.head().z(),
-                        Block.AIR.stateId(), Block.RED_BED.stateId()
+                    (int) bedPos.head().x(), (int) bedPos.head().y(), (int) bedPos.head().z(),
+                    Block.AIR.stateId(), Block.RED_BED.stateId()
                 ));
             }
         }
     }
 
-    public void recordBedRespawned(TeamKey teamKey) {
+    public void recordFinalKill(BedWarsPlayer victim, BedWarsPlayer killer, byte deathCause) {
         if (!recording) return;
 
-        Map<String, String> eventData = new HashMap<>();
-        eventData.put("type", "BED_RESPAWNED");
-        eventData.put("team", teamKey.name());
+        byte victimTeamId = (byte) victim.getTeamKey().ordinal();
 
-        recorder.record(new RecordableCustomEvent("bed_respawned", eventData));
+        recorder.record(new RecordableFinalKill(
+            victim.getEntityId(),
+            victim.getUuid(),
+            killer != null ? killer.getEntityId() : -1,
+            killer != null ? killer.getUuid() : null,
+            victimTeamId,
+            deathCause
+        ));
     }
 
-    public void recordAdminAction(String adminName, String action, String details) {
+    public void recordTeamElimination(TeamKey teamKey) {
         if (!recording) return;
-
-        Map<String, String> eventData = new HashMap<>();
-        eventData.put("type", "ADMIN_ACTION");
-        eventData.put("admin", adminName);
-        eventData.put("action", action);
-        eventData.put("details", details);
-
-        recorder.record(new RecordableCustomEvent("admin_action", eventData));
+        recorder.record(new RecordableTeamElimination((byte) teamKey.ordinal()));
     }
 
-    public void recordKill(BedWarsPlayer killer, BedWarsPlayer victim, boolean isFinalKill) {
+    public void recordGeneratorUpgrade(byte generatorType, byte tier) {
         if (!recording) return;
-
-        Map<String, String> eventData = new HashMap<>();
-        eventData.put("type", isFinalKill ? "FINAL_KILL" : "KILL");
-        eventData.put("killer", killer.getUuid().toString());
-        eventData.put("killerName", killer.getUsername());
-        eventData.put("victim", victim.getUuid().toString());
-        eventData.put("victimName", victim.getUsername());
-
-        recorder.record(new RecordableCustomEvent(isFinalKill ? "final_kill" : "kill", eventData));
+        recorder.record(new RecordableGeneratorUpgrade(generatorType, tier));
     }
-
     public BlockChangeDispatcher getBlockChangeDispatcher() {
         return dispatchers.getDispatcher(BlockChangeDispatcher.class);
     }
@@ -267,8 +371,41 @@ public class BedWarsReplayManager {
         return dispatchers.getDispatcher(BedWarsEventDispatcher.class);
     }
 
-    private String generateMapHash(String mapName) {
-        // TODO: hash
-        return mapName.toLowerCase().replace(" ", "_");
+    public EntityLifecycleDispatcher getEntityLifecycleDispatcher() {
+        return dispatchers.getDispatcher(EntityLifecycleDispatcher.class);
+    }
+
+    private static final int MAP_CHUNK_RADIUS = 8; // this is a max limit.
+
+
+    private String serializeAndUploadMap(InstanceContainer instance, String mapName, int centerChunkX, int centerChunkZ) {
+        try {
+            MapSerializer.SerializedMap serializedMap = MapSerializer.serializeRegion(
+                instance, centerChunkX, centerChunkZ, MAP_CHUNK_RADIUS
+            );
+
+            String mapHash = serializedMap.hash();
+
+            CompletableFuture.runAsync(() -> {
+                try {
+                    var uploadMsg = new net.swofty.commons.protocol.objects.replay.ReplayMapUploadProtocolObject.MapUploadMessage(
+                        mapHash, mapName, serializedMap.compressedData()
+                    );
+                    sendToService(uploadMsg);
+
+                    Logger.info("Map {} uploaded: {} -> {} bytes ({}% compression)",
+                        mapName, serializedMap.uncompressedSize(), serializedMap.compressedSize(),
+                        100 - (serializedMap.compressedSize() * 100 / Math.max(1, serializedMap.uncompressedSize())));
+                } catch (Exception e) {
+                    Logger.error(e, "Failed to upload map {}", mapName);
+                }
+            });
+
+            return mapHash;
+
+        } catch (Exception e) {
+            Logger.error(e, "Failed to serialize map {}", mapName);
+            return mapName.toLowerCase().replace(" ", "_");
+        }
     }
 }

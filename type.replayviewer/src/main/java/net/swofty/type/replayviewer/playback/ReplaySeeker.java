@@ -20,7 +20,7 @@ public class ReplaySeeker {
     public static void seekForward(ReplaySession session, int currentTick, int targetTick) {
         ReplayData data = session.getReplayData();
 
-        // 1. Collect all block changes and apply them
+        // 1. Apply all block changes
         List<ReplayData.BlockChangeEntry> blockChanges = data.getBlockChangesBetween(currentTick + 1, targetTick);
         for (var bc : blockChanges) {
             Block block = Block.fromStateId(bc.newStateId());
@@ -29,7 +29,7 @@ public class ReplaySeeker {
             }
         }
 
-        // 2. Collect entity spawns and despawns
+        // 2. Handle entity spawns and despawns
         Set<Integer> spawnedEntities = new HashSet<>();
         Set<Integer> despawnedEntities = new HashSet<>();
 
@@ -49,9 +49,8 @@ public class ReplaySeeker {
             session.getEntityManager().despawnEntity(entityId);
         }
 
-        // Spawn entities that appeared (with latest state)
+        // Spawn entities that appeared
         for (int entityId : spawnedEntities) {
-            // Find the spawn recordable and apply it
             for (Recordable rec : recordables) {
                 if (rec instanceof RecordableEntitySpawn spawn && spawn.getEntityId() == entityId) {
                     RecordablePlayer.play(spawn, session);
@@ -61,7 +60,7 @@ public class ReplaySeeker {
         }
 
         // 3. Apply latest entity states
-        applyLatestEntityStates(session, recordables, targetTick);
+        applyLatestEntityStates(session, recordables);
 
         Logger.debug("Seeked forward from {} to {} ({} recordables)", currentTick, targetTick, recordables.size());
     }
@@ -107,7 +106,6 @@ public class ReplaySeeker {
         }
 
         // Respawn entities that were despawned after target tick
-        // Need to find their spawn state from before
         for (int entityId : toSpawn) {
             respawnEntityAtTick(session, entityId, targetTick);
         }
@@ -118,13 +116,13 @@ public class ReplaySeeker {
         Logger.debug("Seeked backward from {} to {}", currentTick, targetTick);
     }
 
-    private static void applyLatestEntityStates(ReplaySession session, List<Recordable> recordables, int targetTick) {
+    private static void applyLatestEntityStates(ReplaySession session, List<Recordable> recordables) {
         // Group entity states by entity and type, keeping only the latest
         Map<Integer, Map<RecordableType, Recordable>> latestStates = new HashMap<>();
 
         for (Recordable rec : recordables) {
             if (rec.isEntityState() && rec.getEntityId() >= 0) {
-                latestStates.computeIfAbsent(rec.getEntityId(), k -> new EnumMap<>(RecordableType.class))
+                latestStates.computeIfAbsent(rec.getEntityId(), _ -> new EnumMap<>(RecordableType.class))
                         .put(rec.getType(), rec);
             }
         }
@@ -147,7 +145,7 @@ public class ReplaySeeker {
 
         for (Recordable rec : allRecordables) {
             if (rec.isEntityState() && rec.getEntityId() >= 0) {
-                states.computeIfAbsent(rec.getEntityId(), k -> new EnumMap<>(RecordableType.class))
+                states.computeIfAbsent(rec.getEntityId(), _ -> new EnumMap<>(RecordableType.class))
                         .put(rec.getType(), rec);
             }
         }

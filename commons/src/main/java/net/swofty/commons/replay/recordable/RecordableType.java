@@ -2,6 +2,10 @@ package net.swofty.commons.replay.recordable;
 
 import lombok.Getter;
 import net.swofty.commons.replay.protocol.ReplayDataReader;
+import net.swofty.commons.replay.recordable.bedwars.RecordableBedDestruction;
+import net.swofty.commons.replay.recordable.bedwars.RecordableFinalKill;
+import net.swofty.commons.replay.recordable.bedwars.RecordableGeneratorUpgrade;
+import net.swofty.commons.replay.recordable.bedwars.RecordableTeamElimination;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -36,15 +40,26 @@ public enum RecordableType {
 	PLAYER_RESPAWN(55, RecordablePlayerRespawn::new),
 	PLAYER_GAMEMODE(56, RecordablePlayerGamemode::new),
 	PLAYER_HAND_ITEM(57, RecordablePlayerHandItem::new),
+	PLAYER_SKIN(58, RecordablePlayerSkin::new),
+	PLAYER_DISPLAY_NAME(59, RecordablePlayerDisplayName::new),
+	PLAYER_HEALTH(60, RecordablePlayerHealth::new),
 
 	// World events (80-99)
 	PARTICLE(80, RecordableParticle::new),
 	SOUND(81, RecordableSound::new),
 	EXPLOSION(82, RecordableExplosion::new),
 
-	// Composite events
-	BATCH(150, RecordableBatch::new),
-	CUSTOM_EVENT(151, RecordableCustomEvent::new)
+	// UI events (100-119) remove these tbh
+	SCOREBOARD(100, RecordableScoreboard::new),
+
+	// BedWars
+	BEDWARS_BED_DESTRUCTION(120, RecordableBedDestruction::new),
+	BEDWARS_FINAL_KILL(121, RecordableFinalKill::new),
+	BEDWARS_TEAM_ELIMINATION(122, RecordableTeamElimination::new),
+	BEDWARS_GENERATOR_UPGRADE(123, RecordableGeneratorUpgrade::new),
+
+	// Composite events (150+)
+	BATCH(150, RecordableBatch::new)
 
 	;
 
