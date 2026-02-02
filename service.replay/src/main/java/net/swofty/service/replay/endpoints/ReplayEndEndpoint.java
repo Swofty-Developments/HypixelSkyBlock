@@ -25,15 +25,11 @@ public class ReplayEndEndpoint implements ServiceEndpoint<
 
         try {
             Logger.info("Ending replay session {} (duration: {} ticks)", msg.replayId(), msg.durationTicks());
-
-            // End session asynchronously but wait for result
             ReplaySessionManager.EndResult result = ReplayService.getSessionManager()
                     .endSession(
                             msg.replayId(),
                             msg.endTime(),
-                            msg.durationTicks(),
-                            msg.winnerId(),
-                            msg.winnerType()
+                            msg.durationTicks()
                     )
                     .get(30, TimeUnit.SECONDS); // Wait up to 30 seconds
 

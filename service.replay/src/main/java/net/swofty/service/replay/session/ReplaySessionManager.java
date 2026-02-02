@@ -81,10 +81,7 @@ public class ReplaySessionManager {
 		session.addBatch(batchIndex, startTick, endTick, recordableCount, data);
 	}
 
-	/**
-	 * Ends a recording session and finalizes storage.
-	 */
-	public CompletableFuture<EndResult> endSession(UUID replayId, long endTime, int durationTicks, String winnerId, String winnerType) {
+	public CompletableFuture<EndResult> endSession(UUID replayId, long endTime, int durationTicks) {
 		RecordingSession session = activeSessions.remove(replayId);
 		if (session == null) {
 			return CompletableFuture.completedFuture(new EndResult(false, 0, 0));
@@ -92,8 +89,6 @@ public class ReplaySessionManager {
 
 		session.setEndTime(endTime);
 		session.setDurationTicks(durationTicks);
-		session.setWinnerId(winnerId);
-		session.setWinnerType(winnerType);
 
 		return CompletableFuture.supplyAsync(() -> {
 			try {
@@ -105,9 +100,6 @@ public class ReplaySessionManager {
 		}, compressionExecutor);
 	}
 
-	/**
-	 * Finalizes a session: compresses data and stores in database.
-	 */
 	private EndResult finalizeSession(RecordingSession session) throws IOException {
 		Logger.info("Finalizing replay session {}", session.getReplayId());
 

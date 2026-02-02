@@ -12,6 +12,7 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
+import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
@@ -47,6 +48,14 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
+        HypixelGenericLoader.loopThroughPackage("net.swofty.type.replayviewer.command", HypixelCommand.class).forEach(command -> {
+            try {
+                MinecraftServer.getCommandManager().register(command.getCommand());
+            } catch (Exception e) {
+                Logger.error(e, "Failed to register command {} in class {}",
+                    command.getCommand().getName(), command.getClass().getSimpleName());
+            }
+        });
     }
 
     @Override
@@ -89,7 +98,10 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
 
     @Override
     public List<ServiceToClient> getServiceRedisListeners() {
-        return List.of();
+        return HypixelGenericLoader.loopThroughPackage(
+            "net.swofty.type.replayviewer.redis.service",
+            ServiceToClient.class
+        ).toList();
     }
 
     @Override

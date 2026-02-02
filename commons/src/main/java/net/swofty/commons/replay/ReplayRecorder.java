@@ -114,24 +114,17 @@ public class ReplayRecorder {
 		}
 	}
 
-	/**
-	 * Records a recordable event.
-	 */
 	public void record(Recordable recordable) {
 		if (!recording || finished) return;
 
 		recordable.setTick(currentTick);
 		buffer.offer(recordable);
 
-		// Check if we've hit the batch size limit
 		if (buffer.size() >= BATCH_SIZE) {
 			sendBatch();
 		}
 	}
 
-	/**
-	 * Records multiple recordables at once.
-	 */
 	public void recordAll(Collection<? extends Recordable> recordables) {
 		if (!recording || finished) return;
 
@@ -160,8 +153,8 @@ public class ReplayRecorder {
 
 		if (toSend.isEmpty()) return;
 
-		int startTick = toSend.get(0).getTick();
-		int endTick = toSend.get(toSend.size() - 1).getTick();
+		int startTick = toSend.getFirst().getTick();
+		int endTick = toSend.getLast().getTick();
 
 		try {
 			byte[] data = serializeRecordables(toSend);
@@ -196,32 +189,23 @@ public class ReplayRecorder {
 		return writer.toByteArray();
 	}
 
-	/**
-	 * Finishes the recording and sends the end message.
-	 */
-	public void finish(String winnerId, String winnerType) {
+	public void finish() {
 		if (finished) return;
 		finished = true;
 		recording = false;
 
-		// Send any remaining data
 		sendBatch();
 
 		var endMessage = new ReplayEndProtocolObject.EndMessage(
 			replayId,
 			System.currentTimeMillis(),
-			currentTick,
-			winnerId,
-			winnerType
+			currentTick
 		);
 
 		serviceSender.accept(endMessage);
 		Logger.info("Finished replay recording {} ({} ticks)", replayId, currentTick);
 	}
 
-	/**
-	 * Uploads map data if it doesn't already exist on the service.
-	 */
 	public void uploadMapIfNeeded(String mapHash, String mapName, byte[] compressedData) {
 		var uploadMessage = new ReplayMapUploadProtocolObject.MapUploadMessage(
 			mapHash,

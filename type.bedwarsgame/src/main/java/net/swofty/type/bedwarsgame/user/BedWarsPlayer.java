@@ -45,8 +45,6 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 		getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(1.0);
 	}
 
-	// ============ GameParticipant Implementation ============
-
 	@Override
 	public String getGameId() {
 		return getTag(Tag.String("gameId"));
@@ -60,8 +58,6 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 			setTag(Tag.String("gameId"), gameId);
 		}
 	}
-
-	// ============ BedWars-Specific Methods ============
 
 	public BedWarsDataHandler getBedWarsDataHandler() {
 		return BedWarsDataHandler.getUser(this.getUuid());

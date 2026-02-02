@@ -4,18 +4,14 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.type.bedwarsgame.events.custom.BedWarsAdminActionEvent;
+import net.swofty.commons.game.GameState;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.user.categories.Rank;
 
-/**
- * Admin commands for BedWars game management.
- */
 @CommandParameters(aliases = "bwadmin",
         description = "Admin commands for BedWars game management.",
         usage = "/bwadmin <breakbed|respawnbed|endgame|info> [team]",
@@ -51,13 +47,7 @@ public class BedWarsAdminCommand extends HypixelCommand {
                 return;
             }
 
-            HypixelEventHandler.callCustomEvent(new BedWarsAdminActionEvent(
-                    game, player.getUsername(), BedWarsAdminActionEvent.ActionType.DESTROY_BED, teamKey
-            ));
-
             game.onBedDestroyed(teamKey, null);
-            game.broadcastAdminMessage(player.getUsername() + " destroyed " + teamKey.getName() + "'s bed");
-
         }, ArgumentType.Literal("breakbed"), ArgumentType.String("team"));
 
         // /bwadmin respawnbed <team>
@@ -86,12 +76,7 @@ public class BedWarsAdminCommand extends HypixelCommand {
                 return;
             }
 
-            HypixelEventHandler.callCustomEvent(new BedWarsAdminActionEvent(
-                    game, player.getUsername(), BedWarsAdminActionEvent.ActionType.RESPAWN_BED, teamKey
-            ));
-
             game.respawnBed(teamKey);
-            game.broadcastAdminMessage(player.getUsername() + " respawned " + teamKey.getName() + "'s bed");
 
         }, ArgumentType.Literal("respawnbed"), ArgumentType.String("team"));
 
@@ -119,12 +104,6 @@ public class BedWarsAdminCommand extends HypixelCommand {
                 }
             }
 
-            HypixelEventHandler.callCustomEvent(new BedWarsAdminActionEvent(
-                    game, player.getUsername(), BedWarsAdminActionEvent.ActionType.FORCE_END_GAME, winnerKey
-            ));
-
-            game.broadcastAdminMessage(player.getUsername() + " ended the game");
-
             if (winnerKey != null) {
                 BedWarsTeam team = game.getTeam(winnerKey.name()).orElse(null);
                 game.handleGameWin(team);
@@ -135,7 +114,7 @@ public class BedWarsAdminCommand extends HypixelCommand {
         }, ArgumentType.Literal("endgame"), ArgumentType.String("winner").setDefaultValue(""));
 
         // /bwadmin endgame (no args version)
-        command.addSyntax((sender, context) -> {
+        command.addSyntax((sender, _) -> {
             if (!permissionCheck(sender)) return;
             if (!(sender instanceof BedWarsPlayer player)) return;
 
@@ -146,13 +125,7 @@ public class BedWarsAdminCommand extends HypixelCommand {
                 return;
             }
 
-            HypixelEventHandler.callCustomEvent(new BedWarsAdminActionEvent(
-                    game, player.getUsername(), BedWarsAdminActionEvent.ActionType.FORCE_END_GAME, null
-            ));
-
-            game.broadcastAdminMessage(player.getUsername() + " ended the game (no winner)");
             game.handleGameWin(null);
-
         }, ArgumentType.Literal("endgame"));
 
         // /bwadmin info
@@ -180,7 +153,33 @@ public class BedWarsAdminCommand extends HypixelCommand {
                 player.sendMessage(Component.text(team.getColorCode() + team.getName() + " " + bedStatus +
                         " §7(" + team.getPlayerCount() + " players)", NamedTextColor.WHITE));
             }
-
         }, ArgumentType.Literal("info"));
+
+        command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+            BedWarsPlayer player = (BedWarsPlayer) sender;
+            BedWarsGame game = player.getGame();
+            if (game == null) {
+                player.sendMessage("§cYou are not in a game.");
+                return;
+            }
+
+            game.getReplayManager().stopRecording();
+        });
+
+        command.addSyntax((sender, _) -> {
+                if (!permissionCheck(sender)) return;
+                BedWarsPlayer player = (BedWarsPlayer) sender;
+                BedWarsGame game = player.getGame();
+                if (game == null) {
+                    player.sendMessage("§cYou are not in a game.");
+                    return;
+                }
+                if (game.getState() != GameState.WAITING) {
+                    player.sendMessage("§cYou can only force start a game that is waiting.");
+                    return;
+                }
+                game.start();
+        }, ArgumentType.Literal("forcestart"));
     }
 }

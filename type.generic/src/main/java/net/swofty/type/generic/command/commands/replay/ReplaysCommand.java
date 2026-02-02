@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.protocol.objects.replay.ChooseReplayProtocolObject;
 import net.swofty.commons.protocol.objects.replay.ReplayListProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
@@ -14,8 +15,6 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,7 @@ public class ReplaysCommand extends HypixelCommand {
 
 	@Override
 	public void registerUsage(MinestomCommand command) {
-		command.setDefaultExecutor((sender, context) -> {
+		command.setDefaultExecutor((sender, _) -> {
 			HypixelPlayer player = (HypixelPlayer) sender;
 
 			player.sendMessage(Component.text("Loading replays...", NamedTextColor.GRAY));
@@ -77,24 +76,21 @@ public class ReplaysCommand extends HypixelCommand {
 			});
 	}
 
-	// Map to store pending replay IDs for players joining the replay viewer
-	// This is used to pass the replay ID from the lobby to the replay viewer server
-	private static final Map<UUID, UUID> pendingReplayIds = new java.util.concurrent.ConcurrentHashMap<>();
-
-	/**
-	 * Gets and removes the pending replay ID for a player.
-	 * Called by the replay viewer when a player joins.
-	 */
-	public static UUID getAndRemovePendingReplayId(UUID playerId) {
-		return pendingReplayIds.remove(playerId);
-	}
-
 	private void sendToReplayViewer(HypixelPlayer player, ReplayEntry replay) {
 		player.sendMessage(Component.text("Loading replay...", NamedTextColor.GREEN));
 
-		// Store the replay ID for the player before transferring
-		pendingReplayIds.put(player.getUuid(), replay.replayId());
-
-		player.sendTo(ServerType.REPLAY_VIEWER);
+		ProxyService replayService = new ProxyService(ServiceType.REPLAY);
+		var request = new ChooseReplayProtocolObject.ChooseReplayMessage(player.getUuid(), replay.replayId().toString());
+		replayService.<ChooseReplayProtocolObject.ChooseReplayMessage, ChooseReplayProtocolObject.ChooseReplayResponse>handleRequest(request).thenAccept(response -> {;
+			if (!response.error()) {
+				player.sendMessage(Component.text("Sending you to the Replay Viewer...", NamedTextColor.GRAY));
+				player.sendTo(ServerType.REPLAY_VIEWER);
+			} else {
+				player.sendMessage(Component.text("Failed to send you to a replay viewer.", NamedTextColor.RED));
+			}
+		}).exceptionally(e -> {
+			player.sendMessage(Component.text("Failed to load replay: " + e.getMessage(), NamedTextColor.RED));
+			return null;
+		});
 	}
 }

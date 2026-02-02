@@ -19,22 +19,16 @@ public class ReplayEndProtocolObject extends ProtocolObject<
                 json.put("replayId", value.replayId.toString());
                 json.put("endTime", value.endTime);
                 json.put("durationTicks", value.durationTicks);
-                json.put("winnerId", value.winnerId != null ? value.winnerId : "");
-                json.put("winnerType", value.winnerType != null ? value.winnerType : "");
                 return json.toString();
             }
 
             @Override
             public EndMessage deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
-                String winnerId = obj.optString("winnerId", null);
-                String winnerType = obj.optString("winnerType", null);
                 return new EndMessage(
                         UUID.fromString(obj.getString("replayId")),
                         obj.getLong("endTime"),
-                        obj.getInt("durationTicks"),
-                        winnerId != null && !winnerId.isEmpty() ? winnerId : null,
-                        winnerType != null && !winnerType.isEmpty() ? winnerType : null
+                        obj.getInt("durationTicks")
                 );
             }
 
@@ -79,15 +73,13 @@ public class ReplayEndProtocolObject extends ProtocolObject<
     public record EndMessage(
             UUID replayId,
             long endTime,
-            int durationTicks,
-            String winnerId,    // Team ID or player UUID
-            String winnerType   // "TEAM" or "PLAYER"
+            int durationTicks
     ) {}
 
     public record EndResponse(
             boolean success,
             long totalBytes,
             long compressedBytes,
-            boolean available   // Whether the replay is ready for viewing
+            boolean available
     ) {}
 }

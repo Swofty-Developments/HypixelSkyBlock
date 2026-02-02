@@ -13,14 +13,12 @@ import net.swofty.type.replayviewer.playback.ReplaySession;
         usage = "/replay <play|pause|speed|skip|goto|restart|leave>",
         permission = Rank.DEFAULT,
         allowsConsole = false,
-        aliases = "r"
+        aliases = "replay"
 )
 public class ReplayCommand extends HypixelCommand {
 
     @Override
     public void registerUsage(MinestomCommand command) {
-        var actionArg = ArgumentType.Word("action")
-                .from("play", "pause", "speed", "skip", "goto", "restart", "leave", "info");
         var valueArg = ArgumentType.String("value");
 
         // /replay play

@@ -292,23 +292,11 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     @Override
     protected void onGameEnd() {
         Logger.info("Ending BedWars game {}", gameId);
-
-        // Stop replay recording
-        String winnerId = null;
-        String winnerType = null;
-        Optional<BedWarsTeam> winningTeam = getTeams().stream()
-            .filter(this::isTeamViable)
-            .findFirst();
-        if (winningTeam.isPresent()) {
-            winnerId = winningTeam.get().getTeamKey().name();
-            winnerType = "TEAM";
-        }
-        replayManager.stopRecording(winnerId, winnerType);
+        replayManager.stopRecording();
 
         generatorManager.stopAllGenerators();
         gameEventManager.stop();
 
-        // Clean up after delay
         MinecraftServer.getSchedulerManager().buildTask(() -> {
             getPlayers().forEach(p -> p.sendTo(ServerType.BEDWARS_LOBBY));
             dispose();
@@ -419,13 +407,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
             broadcastMessage(Component.text(teamKey.chatColor() + "Team " + teamKey.getName() + "'s §abed has been respawned!"));
         });
-    }
-
-    /**
-     * Broadcasts an admin message to all players.
-     */
-    public void broadcastAdminMessage(String message) {
-        broadcastMessage(Component.text("§c[ADMIN] §f" + message));
     }
 
     /**

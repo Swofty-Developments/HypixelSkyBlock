@@ -170,7 +170,7 @@ public class BedWarsReplayManager {
     /**
      * Stops recording and finalizes the replay.
      */
-    public void stopRecording(String winnerId, String winnerType) {
+    public void stopRecording() {
         if (!recording) return;
         recording = false;
 
@@ -188,9 +188,9 @@ public class BedWarsReplayManager {
         sendCurrentBatch();
 
         dispatchers.cleanup();
-        recorder.finish(winnerId, winnerType);
+        recorder.finish();
 
-        Logger.info("Stopped replay recording for game {} (winner: {})", game.getGameId(), winnerId);
+        Logger.info("Stopped replay recording for game {}", game.getGameId());
     }
 
     public void recordBedDestroyed(TeamKey teamKey, BedWarsPlayer destroyer) {

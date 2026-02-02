@@ -25,11 +25,11 @@ public class ReplayDatabase {
     public void connect(String mongoUri) {
         Logger.info("Connecting to MongoDB...");
         client = MongoClients.create(mongoUri);
-        database = client.getDatabase("replays");
+        database = client.getDatabase("Minestom");
 
         replays = database.getCollection("replays");
         replayData = database.getCollection("replay_data");
-        maps = database.getCollection("maps");
+        maps = database.getCollection("replay_maps");
 
         replays.createIndex(Indexes.ascending("replayId"), new IndexOptions().unique(true));
         replays.createIndex(Indexes.ascending("gameId"));
@@ -42,8 +42,6 @@ public class ReplayDatabase {
 
         Logger.info("Connected to MongoDB, collections initialized");
     }
-
-    // ============ Replay Metadata ============
 
     public void saveReplayMetadata(Document metadata) {
         replays.replaceOne(

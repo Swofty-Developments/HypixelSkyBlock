@@ -47,7 +47,7 @@ public class ShoutCommand extends HypixelCommand {
 			}
 		}, messageArg);
 
-		command.setDefaultExecutor((sender, context) -> {
+		command.setDefaultExecutor((sender, _) -> {
 			sender.sendMessage("§cPlease provide a message to shout.");
 		});
 	}

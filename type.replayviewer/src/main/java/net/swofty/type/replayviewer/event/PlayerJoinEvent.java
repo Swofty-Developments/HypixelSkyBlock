@@ -7,17 +7,21 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.LightingChunk;
+import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.objects.replay.ReplayLoadProtocolObject;
 import net.swofty.commons.replay.ReplayMetadata;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.generic.command.commands.replay.ReplaysCommand;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 import net.swofty.type.replayviewer.playback.ReplayData;
 import net.swofty.type.replayviewer.playback.ReplaySession;
+import net.swofty.type.replayviewer.redis.service.RedisChosenMap;
 import org.tinylog.Logger;
 
 import java.util.HashMap;
@@ -31,13 +35,29 @@ public class PlayerJoinEvent implements HypixelEventClass {
     @SneakyThrows
     @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
     public void run(AsyncPlayerConfigurationEvent event) {
-        Player player = event.getPlayer();
+        HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
-        // TODO: utter slop
-        UUID replayId = ReplaysCommand.getAndRemovePendingReplayId(player.getUuid());
+        tryGame(player, false, event);
+    }
 
-        if (replayId == null) {
-            player.sendMessage("§cNo replay specified. Use /replays to browse available replays.");
+    private void tryGame(HypixelPlayer player, boolean isRetry, AsyncPlayerConfigurationEvent event) {
+        String replayStr = RedisChosenMap.replay.remove(player.getUuid());
+        if (replayStr == null) {
+            if (!isRetry) {
+                MathUtility.delay(() -> tryGame(player, true, event), 20);
+                return;
+            }
+            event.setSpawningInstance(HypixelConst.getEmptyInstance());
+            player.sendTo(ServerType.PROTOTYPE_LOBBY);
+            return;
+        }
+
+        UUID replayId;
+        try {
+            replayId = UUID.fromString(replayStr);
+        } catch (IllegalArgumentException e) {
+            event.setSpawningInstance(HypixelConst.getEmptyInstance());
+            player.sendTo(ServerType.PROTOTYPE_LOBBY);
             return;
         }
 
@@ -47,14 +67,13 @@ public class PlayerJoinEvent implements HypixelEventClass {
         event.setSpawningInstance(instance);
         event.getPlayer().setRespawnPoint(new Pos(0, 100, 0));
 
-        CompletableFuture.runAsync(() -> loadReplay(player, replayId, instance));
+        CompletableFuture.runAsync(() -> {
+            MathUtility.delay(() -> loadReplay(player, replayId, instance), 20);
+        });
     }
 
     private void loadReplay(Player player, UUID replayId, InstanceContainer instance) {
         try {
-            player.sendMessage("§7Fetching replay data...");
-
-            // Fetch replay data from the replay service
             ProxyService replayService = new ProxyService(ServiceType.REPLAY);
             var request = new ReplayLoadProtocolObject.LoadRequest(replayId);
 
@@ -63,17 +82,13 @@ public class PlayerJoinEvent implements HypixelEventClass {
                     .join();
 
             if (!response.success()) {
-                player.sendMessage("§cFailed to load replay: " +
-                        (response.errorMessage() != null ? response.errorMessage() : "Unknown error"));
                 return;
             }
 
             if (response.metadata() == null) {
-                player.sendMessage("§cReplay metadata is missing.");
                 return;
             }
 
-            // Convert protocol metadata to commons ReplayMetadata
             ReplayLoadProtocolObject.ReplayMetadata protoMetadata = response.metadata();
             Map<String, ReplayMetadata.TeamInfo> teamInfo = new HashMap<>();
             protoMetadata.teamInfo().forEach((teamId, info) ->
@@ -99,7 +114,6 @@ public class PlayerJoinEvent implements HypixelEventClass {
                     .mapCenterZ(protoMetadata.mapCenterZ())
                     .build();
 
-            // Load replay data chunks
             ReplayData replayData = new ReplayData();
             if (response.dataChunks() != null && !response.dataChunks().isEmpty()) {
                 List<byte[]> chunks = response.dataChunks().stream()
@@ -108,19 +122,17 @@ public class PlayerJoinEvent implements HypixelEventClass {
                 replayData.loadFromChunks(chunks);
             }
 
-            // Create session
             ReplaySession session = new ReplaySession(player, metadata, instance, replayData);
             TypeReplayViewerLoader.registerSession(player.getUuid(), session);
 
-            player.sendMessage("§aReplay loaded! Use §e/replay play §ato start.");
-            player.sendMessage("§7Commands: /replay play|pause|speed|skip|goto|info|leave");
+            //player.sendMessage("§aReplay loaded! Use §e/replay play §ato start.");
+            //player.sendMessage("§7Commands: /replay play|pause|speed|skip|goto|info|leave");
 
-            // Auto-start playback
             session.play();
 
         } catch (Exception e) {
             Logger.error(e, "Failed to load replay {}", replayId);
-            player.sendMessage("§cFailed to load replay: " + e.getMessage());
+            //player.sendMessage("§cFailed to load replay: " + e.getMessage());
         }
     }
 }
