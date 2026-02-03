@@ -18,7 +18,6 @@ import net.swofty.commons.replay.recordable.RecordableBlockChange;
 import net.swofty.commons.replay.recordable.RecordablePlayerDisplayName;
 import net.swofty.commons.replay.recordable.RecordablePlayerHealth;
 import net.swofty.commons.replay.recordable.RecordablePlayerSkin;
-import net.swofty.commons.replay.recordable.RecordableScoreboard;
 import net.swofty.commons.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.commons.replay.recordable.bedwars.RecordableFinalKill;
 import net.swofty.commons.replay.recordable.bedwars.RecordableGeneratorUpgrade;
@@ -139,8 +138,7 @@ public class BedWarsReplayManager {
         // Register dispatchers
         dispatchers.register(new EntityLifecycleDispatcher(instance));
         dispatchers.register(new EntityLocationDispatcher(instance));
-        dispatchers.register(new BlockChangeDispatcher(instance));
-        dispatchers.register(new BedWarsEventDispatcher(game, recorder));
+        dispatchers.register(new BlockChangeDispatcher());
 
         // Record initial player appearances
         recordInitialPlayerStates();
@@ -237,25 +235,6 @@ public class BedWarsReplayManager {
             recordFinalKill(victim, killer, deathCause);
         }
         // Regular kills are implicitly recorded through player death recordables
-    }
-
-    // TODO: remove this
-    public void recordScoreboard(ScoreboardData scoreboard) {
-        if (!recording) return;
-        if (scoreboard == null) return;
-
-        // Only record if changed
-        if (lastScoreboardState != null && !scoreboard.differs(lastScoreboardState)) {
-            return;
-        }
-        lastScoreboardState = scoreboard;
-
-        List<RecordableScoreboard.ScoreboardLine> lines = new ArrayList<>();
-        scoreboard.forEachLine(line ->
-            lines.add(new RecordableScoreboard.ScoreboardLine(line.text(), line.score()))
-        );
-
-        recorder.record(new RecordableScoreboard(scoreboard.getTitle(), lines));
     }
 
     private void sendCurrentBatch() {
@@ -365,10 +344,6 @@ public class BedWarsReplayManager {
     }
     public BlockChangeDispatcher getBlockChangeDispatcher() {
         return dispatchers.getDispatcher(BlockChangeDispatcher.class);
-    }
-
-    public BedWarsEventDispatcher getBedWarsEventDispatcher() {
-        return dispatchers.getDispatcher(BedWarsEventDispatcher.class);
     }
 
     public EntityLifecycleDispatcher getEntityLifecycleDispatcher() {

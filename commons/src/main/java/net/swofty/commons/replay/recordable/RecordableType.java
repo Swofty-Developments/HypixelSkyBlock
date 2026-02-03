@@ -17,7 +17,7 @@ public enum RecordableType {
 	BLOCK_CHANGE(0, RecordableBlockChange::new),
 	BLOCK_BREAK_ANIMATION(1, RecordableBlockBreakAnimation::new),
 
-	// Entity events (20-49)
+	// Entity events (20-49),
 	ENTITY_SPAWN(20, RecordableEntitySpawn::new),
 	ENTITY_DESPAWN(21, RecordableEntityDespawn::new),
 	ENTITY_LOCATIONS(22, RecordableEntityLocations::new),
@@ -43,24 +43,21 @@ public enum RecordableType {
 	PLAYER_SKIN(58, RecordablePlayerSkin::new),
 	PLAYER_DISPLAY_NAME(59, RecordablePlayerDisplayName::new),
 	PLAYER_HEALTH(60, RecordablePlayerHealth::new),
+	PLAYER_BLOCK_CHANGE(61, RecordablePlayerBlockChange::new),
 
 	// World events (80-99)
 	PARTICLE(80, RecordableParticle::new),
 	SOUND(81, RecordableSound::new),
 	EXPLOSION(82, RecordableExplosion::new),
 
-	// UI events (100-119) remove these tbh
-	SCOREBOARD(100, RecordableScoreboard::new),
-
 	// BedWars
 	BEDWARS_BED_DESTRUCTION(120, RecordableBedDestruction::new),
 	BEDWARS_FINAL_KILL(121, RecordableFinalKill::new),
 	BEDWARS_TEAM_ELIMINATION(122, RecordableTeamElimination::new),
-	BEDWARS_GENERATOR_UPGRADE(123, RecordableGeneratorUpgrade::new),
+	BEDWARS_EVENT_CONTINUE(123, RecordableGeneratorUpgrade::new),
 
 	// Composite events (150+)
 	BATCH(150, RecordableBatch::new)
-
 	;
 
 	private static final Map<Integer, RecordableType> BY_ID = new HashMap<>();

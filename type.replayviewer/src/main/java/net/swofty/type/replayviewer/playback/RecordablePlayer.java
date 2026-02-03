@@ -1,10 +1,15 @@
 package net.swofty.type.replayviewer.playback;
 
+import net.kyori.adventure.nbt.BinaryTagIO;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.ItemStack;
 import net.swofty.commons.replay.recordable.*;
 import net.swofty.commons.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.commons.replay.recordable.bedwars.RecordableFinalKill;
@@ -12,6 +17,11 @@ import net.swofty.commons.replay.recordable.bedwars.RecordableGeneratorUpgrade;
 import net.swofty.commons.replay.recordable.bedwars.RecordableTeamElimination;
 import net.swofty.type.replayviewer.entity.ReplayEntity;
 import net.swofty.type.replayviewer.entity.ReplayPlayerEntity;
+import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 public class RecordablePlayer {
 
@@ -24,6 +34,7 @@ public class RecordablePlayer {
             case ENTITY_VELOCITY -> playEntityVelocity((RecordableEntityVelocity) recordable, session);
             case ENTITY_ANIMATION -> playEntityAnimation((RecordableEntityAnimation) recordable, session);
             case ENTITY_EQUIPMENT -> playEntityEquipment((RecordableEntityEquipment) recordable, session);
+            case PLAYER_BLOCK_CHANGE -> playPlayerBlockChange((RecordablePlayerBlockChange) recordable, session);
             case PLAYER_SNEAK -> playPlayerSneak((RecordablePlayerSneak) recordable, session);
             case PLAYER_SPRINT -> playPlayerSprint((RecordablePlayerSprint) recordable, session);
             case PLAYER_ARM_SWING -> playPlayerArmSwing((RecordablePlayerArmSwing) recordable, session);
@@ -32,7 +43,6 @@ public class RecordablePlayer {
             case PLAYER_SKIN -> playPlayerSkin((RecordablePlayerSkin) recordable, session);
             case PLAYER_DISPLAY_NAME -> playPlayerDisplayName((RecordablePlayerDisplayName) recordable, session);
             case PLAYER_HEALTH -> playPlayerHealth((RecordablePlayerHealth) recordable, session);
-            case SCOREBOARD -> playScoreboard((RecordableScoreboard) recordable, session);
             case PARTICLE -> playParticle((RecordableParticle) recordable, session);
             case SOUND -> playSound((RecordableSound) recordable, session);
             case EXPLOSION -> playExplosion((RecordableExplosion) recordable, session);
@@ -41,7 +51,7 @@ public class RecordablePlayer {
             case BEDWARS_BED_DESTRUCTION -> playBedDestruction((RecordableBedDestruction) recordable, session);
             case BEDWARS_FINAL_KILL -> playFinalKill((RecordableFinalKill) recordable, session);
             case BEDWARS_TEAM_ELIMINATION -> playTeamElimination((RecordableTeamElimination) recordable, session);
-            case BEDWARS_GENERATOR_UPGRADE -> playGeneratorUpgrade((RecordableGeneratorUpgrade) recordable, session);
+            case BEDWARS_EVENT_CONTINUE -> playGeneratorUpgrade((RecordableGeneratorUpgrade) recordable, session);
             default -> {} // Ignore unhandled types
         }
 
@@ -104,19 +114,56 @@ public class RecordablePlayer {
 
     private static void playEntityAnimation(RecordableEntityAnimation rec, ReplaySession session) {
         Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
-        if (entity instanceof net.minestom.server.entity.LivingEntity livingEntity) {
+        if (entity instanceof ReplayPlayerEntity livingEntity) {
             switch (rec.getAnimation()) {
                 case SWING_MAIN_HAND -> livingEntity.swingMainHand();
                 case SWING_OFFHAND -> livingEntity.swingOffHand();
-                case TAKE_DAMAGE -> {
-                    // todo: play animations
-                }
+                case TAKE_DAMAGE -> livingEntity.takeVisualDamage();
             }
         }
     }
 
+    private static void playPlayerBlockChange(RecordablePlayerBlockChange rec, ReplaySession session) {
+        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.swingMainHand();
+        }
+    }
+
+    private static ItemStack nbtBytesToItem(byte[] bytes) throws IOException {
+        CompoundBinaryTag tag = BinaryTagIO.reader()
+            .readNameless(new ByteArrayInputStream(bytes));
+
+        return ItemStack.fromItemNBT(tag);
+    }
+
+    @Nullable
+    private static EquipmentSlot convertSlot(int slotId) {
+        return switch (slotId) {
+            case 0 -> EquipmentSlot.MAIN_HAND;
+            case 1 -> EquipmentSlot.OFF_HAND;
+            case 2 -> EquipmentSlot.BOOTS;
+            case 3 -> EquipmentSlot.LEGGINGS;
+            case 4 -> EquipmentSlot.CHESTPLATE;
+            case 5 -> EquipmentSlot.HELMET;
+            default -> null;
+        };
+    }
+
     private static void playEntityEquipment(RecordableEntityEquipment rec, ReplaySession session) {
-        // TODO: aplpy equipment
+        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
+        if (entity instanceof LivingEntity livingEntity) {
+            try {
+                EquipmentSlot slot = convertSlot(rec.getSlotId());
+                if (slot != null) {
+                    livingEntity.setEquipment(slot, nbtBytesToItem(rec.getItemBytes()));
+                } else {
+                    Logger.warn("Unknown equipment slot id: " + rec.getSlotId());
+                }
+            } catch (IOException e) {
+                Logger.error(e);
+            }
+        }
     }
 
     private static void playPlayerSneak(RecordablePlayerSneak rec, ReplaySession session) {
@@ -183,30 +230,6 @@ public class RecordablePlayer {
 
     private static void playPlayerHealth(RecordablePlayerHealth rec, ReplaySession session) {
         session.getStateTracker().trackHealth(rec.getEntityId(), rec.getHealth(), rec.getMaxHealth());
-    }
-
-    private static void playScoreboard(RecordableScoreboard rec, ReplaySession session) {
-        // Remove old sidebar if exists
-        net.minestom.server.scoreboard.Sidebar oldSidebar = session.getCurrentSidebar();
-        if (oldSidebar != null) {
-            oldSidebar.removeViewer(session.getViewer());
-        }
-
-        // Create new sidebar
-        net.minestom.server.scoreboard.Sidebar sidebar = new net.minestom.server.scoreboard.Sidebar(
-            Component.text(rec.getTitle())
-        );
-
-        for (var line : rec.getLines()) {
-            sidebar.createLine(new net.minestom.server.scoreboard.Sidebar.ScoreboardLine(
-                "line_" + line.score(),
-                Component.text(line.text()),
-                line.score()
-            ));
-        }
-
-        sidebar.addViewer(session.getViewer());
-        session.setCurrentSidebar(sidebar);
     }
 
     private static void playBedDestruction(RecordableBedDestruction rec, ReplaySession session) {

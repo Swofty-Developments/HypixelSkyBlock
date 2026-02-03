@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.registry.RegistryKey;
@@ -111,6 +112,14 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 	public static BedWarsGame getGameById(@NotNull String gameId) {
 		return games.stream()
 			.filter(game -> game.getGameId().equals(gameId))
+			.findFirst()
+			.orElse(null);
+	}
+
+	@Nullable
+	public static BedWarsGame getGameByInstance(@NotNull Instance instance) {
+		return games.stream()
+			.filter(game -> game.getInstance().equals(instance))
 			.findFirst()
 			.orElse(null);
 	}

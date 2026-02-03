@@ -3,9 +3,13 @@ package net.swofty.commons.replay.recordable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.kyori.adventure.nbt.BinaryTagIO;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
+import net.minestom.server.item.ItemStack;
 import net.swofty.commons.replay.protocol.ReplayDataReader;
 import net.swofty.commons.replay.protocol.ReplayDataWriter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 @Getter
@@ -13,12 +17,12 @@ import java.io.IOException;
 @NoArgsConstructor
 public class RecordableEntityEquipment extends AbstractRecordable {
     private int entityId;
-    private EquipmentSlot slot;
+    private int slotId;
     private byte[] itemBytes; // Serialized item
 
-    public RecordableEntityEquipment(int entityId, EquipmentSlot slot, byte[] itemBytes) {
+    public RecordableEntityEquipment(int entityId, int slotId, byte[] itemBytes) {
         this.entityId = entityId;
-        this.slot = slot;
+        this.slotId = slotId;
         this.itemBytes = itemBytes;
     }
 
@@ -30,15 +34,24 @@ public class RecordableEntityEquipment extends AbstractRecordable {
     @Override
     public void write(ReplayDataWriter writer) throws IOException {
         writer.writeVarInt(entityId);
-        writer.writeByte(slot.ordinal());
+        writer.writeByte(slotId);
         writer.writeBytes(itemBytes != null ? itemBytes : new byte[0]);
     }
 
     @Override
     public void read(ReplayDataReader reader) throws IOException {
         entityId = reader.readVarInt();
-        slot = EquipmentSlot.values()[reader.readUnsignedByte()];
+        slotId = reader.readByte();
         itemBytes = reader.readBytes();
+    }
+
+    public static byte[] itemToNBTBytes(ItemStack item) throws IOException {
+        CompoundBinaryTag nbt = item.toItemNBT();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        BinaryTagIO.writer().writeNameless(nbt, out);
+
+        return out.toByteArray();
     }
 
     @Override
@@ -56,12 +69,4 @@ public class RecordableEntityEquipment extends AbstractRecordable {
         return 6 + (itemBytes != null ? itemBytes.length : 0);
     }
 
-    public enum EquipmentSlot {
-        MAIN_HAND,
-        OFF_HAND,
-        BOOTS,
-        LEGGINGS,
-        CHESTPLATE,
-        HELMET
-    }
 }

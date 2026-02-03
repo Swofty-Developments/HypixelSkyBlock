@@ -1,6 +1,7 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.kyori.adventure.sound.Sound;
+import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
@@ -13,6 +14,7 @@ import net.swofty.commons.game.GameState;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.entity.TntEntity;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.replay.EntityLifecycleDispatcher;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -75,13 +77,17 @@ public class ActionGamePlace implements HypixelEventClass {
 		player.getAchievementHandler().addProgressByTrigger("bedwars.blocks_placed", 1);
 
 		// Record block place to replay
-		net.swofty.commons.replay.dispatcher.BlockChangeDispatcher blockDispatcher =
-			game.getReplayManager().getBlockChangeDispatcher();
+		EntityLifecycleDispatcher blockDispatcher =
+			game.getReplayManager().getEntityLifecycleDispatcher();
 		if (blockDispatcher != null) {
-			blockDispatcher.recordBlockChange(
-				event.getBlockPosition(),
-				Block.AIR,
-				event.getBlock()
+			BlockVec placedPos = event.getBlockPosition();
+			blockDispatcher.recordPlayerBlockChange(
+				player.getEntityId(),
+				placedPos.blockX(),
+				placedPos.blockY(),
+				placedPos.blockZ(),
+				event.getBlock().stateId(),
+				Block.AIR.stateId()
 			);
 		}
 	}

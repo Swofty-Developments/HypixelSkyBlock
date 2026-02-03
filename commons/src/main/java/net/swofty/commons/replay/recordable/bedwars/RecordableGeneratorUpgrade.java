@@ -25,7 +25,7 @@ public class RecordableGeneratorUpgrade extends AbstractRecordable {
 
     @Override
     public RecordableType getType() {
-        return RecordableType.BEDWARS_GENERATOR_UPGRADE;
+        return RecordableType.BEDWARS_EVENT_CONTINUE;
     }
 
     @Override

@@ -8,6 +8,7 @@ import net.swofty.commons.replay.dispatcher.ReplayDispatcher;
 import net.swofty.commons.replay.recordable.RecordableEntityDespawn;
 import net.swofty.commons.replay.recordable.RecordableEntitySpawn;
 import net.swofty.commons.replay.recordable.RecordablePlayerArmSwing;
+import net.swofty.commons.replay.recordable.RecordablePlayerBlockChange;
 import net.swofty.commons.replay.recordable.RecordablePlayerSneak;
 import net.swofty.commons.replay.recordable.RecordablePlayerSprint;
 
@@ -129,6 +130,13 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
 
     public void recordArmSwing(int entityId, boolean mainHand) {
         recorder.record(new RecordablePlayerArmSwing(entityId, mainHand));
+    }
+
+    // this is a dumb order of arguments
+    public void recordPlayerBlockChange(int entityId, int x, int y, int z, int newBlockStateId, int previousBlockStateId) {
+        recorder.record(new RecordablePlayerBlockChange(
+            entityId, x, y, z, newBlockStateId, previousBlockStateId
+        ));
     }
 
     @Override

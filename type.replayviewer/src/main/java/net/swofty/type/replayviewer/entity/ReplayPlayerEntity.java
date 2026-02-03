@@ -2,27 +2,35 @@ package net.swofty.type.replayviewer.entity;
 
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Metadata;
 import net.minestom.server.entity.MetadataDef;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
+import net.minestom.server.entity.damage.DamageType;
+import net.minestom.server.network.packet.server.play.DamageEventPacket;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
 import net.minestom.server.network.packet.server.play.EntityMetaDataPacket;
 import net.minestom.server.network.packet.server.play.PlayerInfoRemovePacket;
 import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
 import net.minestom.server.network.packet.server.play.SpawnEntityPacket;
+import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Getter
-public class ReplayPlayerEntity extends Entity {
+public class ReplayPlayerEntity extends LivingEntity {
     private final String playerName;
     private final PlayerSkin skin;
 
@@ -83,5 +91,26 @@ public class ReplayPlayerEntity extends Entity {
 
         // Remove from player list
         player.sendPacket(new PlayerInfoRemovePacket(this.getUuid()));
+    }
+
+
+    @Override
+    public @NonNull CompletableFuture<Void> teleport(@NonNull Pos position, @NonNull Vec velocity, long @Nullable [] chunks, int flags, boolean shouldConfirm) {
+        Check.stateCondition(instance == null, "You need to use Entity#setInstance before teleporting an entity!");
+        getViewers().forEach(player -> {
+            player.sendPacket(
+                new EntityHeadLookPacket(getEntityId(), position.yaw()
+                ));
+        });
+        return super.teleport(position, velocity, chunks, flags, shouldConfirm);
+    }
+
+    public void takeVisualDamage() {
+        sendPacketToViewersAndSelf(new DamageEventPacket(
+            getEntityId(), MinecraftServer.getDamageTypeRegistry().getId(DamageType.PLAYER_ATTACK.asKey()),
+            0,
+            0,
+            getPosition()
+        ));
     }
 }
