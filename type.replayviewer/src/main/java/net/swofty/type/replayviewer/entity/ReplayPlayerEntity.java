@@ -3,6 +3,7 @@ package net.swofty.type.replayviewer.entity;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
@@ -12,6 +13,7 @@ import net.minestom.server.entity.Metadata;
 import net.minestom.server.entity.MetadataDef;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
+import net.minestom.server.entity.RelativeFlags;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.network.packet.server.play.DamageEventPacket;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
@@ -20,6 +22,7 @@ import net.minestom.server.network.packet.server.play.PlayerInfoRemovePacket;
 import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
 import net.minestom.server.network.packet.server.play.SpawnEntityPacket;
 import net.minestom.server.utils.validate.Check;
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
@@ -45,8 +48,7 @@ public class ReplayPlayerEntity extends LivingEntity {
             this.skin = null;
         }
 
-        // Set custom name
-        setCustomName(Component.text(playerName));
+        set(DataComponents.CUSTOM_NAME, Component.text(playerName));
         setNoGravity(true);
         setAutoViewable(true);
         setCustomNameVisible(true);
@@ -95,13 +97,11 @@ public class ReplayPlayerEntity extends LivingEntity {
 
 
     @Override
-    public @NonNull CompletableFuture<Void> teleport(@NonNull Pos position, @NonNull Vec velocity, long @Nullable [] chunks, int flags, boolean shouldConfirm) {
+    public @NonNull CompletableFuture<Void> teleport(@NonNull Pos position, @NonNull Vec velocity, long @Nullable [] chunks, @MagicConstant(flagsFromClass = RelativeFlags.class) int flags, boolean shouldConfirm) {
         Check.stateCondition(instance == null, "You need to use Entity#setInstance before teleporting an entity!");
-        getViewers().forEach(player -> {
-            player.sendPacket(
-                new EntityHeadLookPacket(getEntityId(), position.yaw()
-                ));
-        });
+        sendPacketToViewersAndSelf(
+            new EntityHeadLookPacket(getEntityId(), position.yaw())
+        );
         return super.teleport(position, velocity, chunks, flags, shouldConfirm);
     }
 
