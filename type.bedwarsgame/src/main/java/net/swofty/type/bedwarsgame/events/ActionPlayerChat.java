@@ -75,6 +75,10 @@ public class ActionPlayerChat implements HypixelEventClass {
 			return;
 		}
 
+		if (game.getReplayManager().isRecording()) {
+			game.getReplayManager().recordPlayerChat(player, finalMessage, false);
+		}
+
 		List<BedWarsPlayer> receivers;
 		if (game.getGameType() == BedwarsGameType.SOLO) {
 			receivers = new java.util.ArrayList<>(game.getPlayers());

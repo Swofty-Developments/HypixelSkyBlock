@@ -10,18 +10,24 @@ import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.utils.inventory.PlayerInventoryUtils;
 import net.swofty.commons.replay.recordable.*;
 import net.swofty.commons.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.commons.replay.recordable.bedwars.RecordableFinalKill;
 import net.swofty.commons.replay.recordable.bedwars.RecordableGeneratorUpgrade;
+import net.swofty.commons.replay.recordable.bedwars.RecordableScoreboardState;
 import net.swofty.commons.replay.recordable.bedwars.RecordableTeamElimination;
+import net.swofty.type.replayviewer.entity.ReplayDroppedItemEntity;
 import net.swofty.type.replayviewer.entity.ReplayEntity;
 import net.swofty.type.replayviewer.entity.ReplayPlayerEntity;
+import net.swofty.type.replayviewer.playback.scoreboard.BedWarsReplayScoreboard;
+import net.swofty.type.replayviewer.playback.scoreboard.ReplayScoreboard;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Map;
 
 public class RecordablePlayer {
 
@@ -43,16 +49,33 @@ public class RecordablePlayer {
             case PLAYER_SKIN -> playPlayerSkin((RecordablePlayerSkin) recordable, session);
             case PLAYER_DISPLAY_NAME -> playPlayerDisplayName((RecordablePlayerDisplayName) recordable, session);
             case PLAYER_HEALTH -> playPlayerHealth((RecordablePlayerHealth) recordable, session);
+            case PLAYER_CHAT -> playPlayerChat((RecordablePlayerChat) recordable, session);
             case PARTICLE -> playParticle((RecordableParticle) recordable, session);
             case SOUND -> playSound((RecordableSound) recordable, session);
             case EXPLOSION -> playExplosion((RecordableExplosion) recordable, session);
+            case PLAYER_HAND_ITEM -> playHandItem((RecordablePlayerHandItem) recordable, session);
 
             // bw
             case BEDWARS_BED_DESTRUCTION -> playBedDestruction((RecordableBedDestruction) recordable, session);
             case BEDWARS_FINAL_KILL -> playFinalKill((RecordableFinalKill) recordable, session);
             case BEDWARS_TEAM_ELIMINATION -> playTeamElimination((RecordableTeamElimination) recordable, session);
             case BEDWARS_EVENT_CONTINUE -> playGeneratorUpgrade((RecordableGeneratorUpgrade) recordable, session);
-            default -> {} // Ignore unhandled types
+            case BEDWARS_SCOREBOARD_STATE -> playScoreboardState((RecordableScoreboardState) recordable, session);
+
+            // Dropped items
+            case DROPPED_ITEM -> playDroppedItem((RecordableDroppedItem) recordable, session);
+            case ITEM_PICKUP -> playItemPickup((RecordableItemPickup) recordable, session);
+
+            // Dynamic text displays
+            case DYNAMIC_TEXT_DISPLAY -> playDynamicTextDisplay((RecordableDynamicTextDisplay) recordable, session);
+            case TEXT_DISPLAY_UPDATE -> playTextDisplayUpdate((RecordableTextDisplayUpdate) recordable, session);
+
+            // NPC enhancements
+            case NPC_DISPLAY_NAME -> playNpcDisplayName((RecordableNpcDisplayName) recordable, session);
+            case NPC_TEXT_LINE -> playNpcTextLine((RecordableNpcTextLine) recordable, session);
+
+            default -> {
+            }
         }
 
         if (recordable.isEntityState() && recordable.getEntityId() >= 0) {
@@ -96,6 +119,18 @@ public class RecordablePlayer {
         session.getEntityManager().despawnEntity(rec.getEntityId());
     }
 
+    private static void playHandItem(RecordablePlayerHandItem rec, ReplaySession session) {
+        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
+        if (entity instanceof LivingEntity livingEntity) {
+            try {
+                ItemStack item = nbtBytesToItem(rec.getItemBytes());
+                livingEntity.setItemInMainHand(item);
+            } catch (IOException e) {
+                Logger.error(e);
+            }
+        }
+    }
+
     private static void playEntityLocations(RecordableEntityLocations rec, ReplaySession session) {
         for (var entry : rec.getEntries()) {
             Pos pos = new Pos(entry.x(), entry.y(), entry.z(), entry.yaw(), entry.pitch());
@@ -107,7 +142,7 @@ public class RecordablePlayer {
         Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
         if (entity != null) {
             entity.setVelocity(new net.minestom.server.coordinate.Vec(
-                    rec.getVelocityX(), rec.getVelocityY(), rec.getVelocityZ()
+                rec.getVelocityX(), rec.getVelocityY(), rec.getVelocityZ()
             ));
         }
     }
@@ -140,12 +175,10 @@ public class RecordablePlayer {
     @Nullable
     private static EquipmentSlot convertSlot(int slotId) {
         return switch (slotId) {
-            case 0 -> EquipmentSlot.MAIN_HAND;
-            case 1 -> EquipmentSlot.OFF_HAND;
-            case 2 -> EquipmentSlot.BOOTS;
-            case 3 -> EquipmentSlot.LEGGINGS;
-            case 4 -> EquipmentSlot.CHESTPLATE;
-            case 5 -> EquipmentSlot.HELMET;
+            case PlayerInventoryUtils.BOOTS_SLOT -> EquipmentSlot.BOOTS;
+            case PlayerInventoryUtils.LEGGINGS_SLOT -> EquipmentSlot.LEGGINGS;
+            case PlayerInventoryUtils.CHESTPLATE_SLOT -> EquipmentSlot.CHESTPLATE;
+            case PlayerInventoryUtils.HELMET_SLOT -> EquipmentSlot.HELMET;
             default -> null;
         };
     }
@@ -217,6 +250,11 @@ public class RecordablePlayer {
 
     private static void playPlayerSkin(RecordablePlayerSkin rec, ReplaySession session) {
         session.getStateTracker().trackSkin(rec.getEntityId(), rec.getTextureValue(), rec.getTextureSignature());
+
+        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
+        if (entity instanceof ReplayPlayerEntity playerEntity) {
+            playerEntity.updateSkin(rec.getTextureValue(), rec.getTextureSignature());
+        }
     }
 
     private static void playPlayerDisplayName(RecordablePlayerDisplayName rec, ReplaySession session) {
@@ -228,6 +266,15 @@ public class RecordablePlayer {
         }
     }
 
+    private static void playPlayerChat(RecordablePlayerChat rec, ReplaySession session) {
+        String playerName = session.getEntityDisplayName(rec.getEntityId());
+        String prefix = rec.isShout() ? "§6[SHOUT] " : "§7[0star] ";
+
+        session.getViewer().sendMessage(Component.text(
+            prefix + playerName + " §f" + rec.getMessage()
+        ));
+    }
+
     private static void playPlayerHealth(RecordablePlayerHealth rec, ReplaySession session) {
         session.getStateTracker().trackHealth(rec.getEntityId(), rec.getHealth(), rec.getMaxHealth());
     }
@@ -237,6 +284,12 @@ public class RecordablePlayer {
         session.getViewer().sendMessage(Component.text(
             "§c§lBED DESTROYED! §7" + teamName + "'s bed was destroyed!"
         ));
+
+        // Update scoreboard
+        ReplayScoreboard scoreboard = session.getScoreboard();
+        if (scoreboard instanceof BedWarsReplayScoreboard bwScoreboard) {
+            bwScoreboard.onBedDestroyed(String.valueOf(rec.getTeamId()));
+        }
     }
 
     private static void playFinalKill(RecordableFinalKill rec, ReplaySession session) {
@@ -249,6 +302,15 @@ public class RecordablePlayer {
             "§c§lFINAL KILL! §f" + victimName + " §7was eliminated";
 
         session.getViewer().sendMessage(Component.text(message));
+
+        // Update scoreboard - this is a player elimination
+        ReplayScoreboard scoreboard = session.getScoreboard();
+        if (scoreboard instanceof BedWarsReplayScoreboard bwScoreboard) {
+            // Note: Would need team info from metadata to properly update
+            bwScoreboard.onGameEvent("player_eliminated", Map.of(
+                "victimUuid", rec.getVictimUuid().toString()
+            ));
+        }
     }
 
     private static void playTeamElimination(RecordableTeamElimination rec, ReplaySession session) {
@@ -256,6 +318,12 @@ public class RecordablePlayer {
         session.getViewer().sendMessage(Component.text(
             "§c§lTEAM ELIMINATED! §7" + teamName + " has been eliminated!"
         ));
+
+        // Update scoreboard
+        ReplayScoreboard scoreboard = session.getScoreboard();
+        if (scoreboard instanceof BedWarsReplayScoreboard bwScoreboard) {
+            bwScoreboard.onTeamEliminated(String.valueOf(rec.getTeamId()));
+        }
     }
 
     private static void playGeneratorUpgrade(RecordableGeneratorUpgrade rec, ReplaySession session) {
@@ -263,6 +331,100 @@ public class RecordablePlayer {
         session.getViewer().sendMessage(Component.text(
             "§6§lGENERATOR UPGRADE! §e" + genType + " generators upgraded to tier " + rec.getTier()
         ));
+
+        // Update scoreboard if BedWars
+        ReplayScoreboard scoreboard = session.getScoreboard();
+        if (scoreboard instanceof BedWarsReplayScoreboard bwScoreboard) {
+            bwScoreboard.onGameEvent("generator_upgrade", Map.of(
+                "type", genType,
+                "tier", (int) rec.getTier()
+            ));
+        }
+    }
+
+    private static void playScoreboardState(RecordableScoreboardState rec, ReplaySession session) {
+        ReplayScoreboard scoreboard = session.getScoreboard();
+        if (scoreboard instanceof BedWarsReplayScoreboard bwScoreboard) {
+            // Update event timer
+            bwScoreboard.updateEventTimer(rec.getNextEventName(), rec.getNextEventSeconds());
+
+            // Update each team's state
+            for (var teamState : rec.getTeamStates()) {
+                if (!teamState.bedAlive()) {
+                    bwScoreboard.onBedDestroyed(teamState.teamId());
+                }
+                bwScoreboard.updateTeamAlivePlayers(teamState.teamId(), teamState.alivePlayers());
+            }
+        }
+    }
+
+    private static void playDroppedItem(RecordableDroppedItem rec, ReplaySession session) {
+        Pos pos = new Pos(rec.getX(), rec.getY(), rec.getZ());
+
+        ReplayDroppedItemEntity itemEntity = new ReplayDroppedItemEntity(
+            rec.getEntityId(),
+            rec.getEntityUuid(),
+            rec.getItemNbt(),
+            rec.getDespawnTick()
+        );
+
+        itemEntity.setItemVelocity(rec.getVelocityX(), rec.getVelocityY(), rec.getVelocityZ());
+        session.getEntityManager().spawnEntity(rec.getEntityId(), itemEntity, pos);
+
+        // Track for auto-despawn
+        session.getDroppedItemManager().trackItem(rec.getEntityId(), rec.getDespawnTick());
+    }
+
+    private static void playItemPickup(RecordableItemPickup rec, ReplaySession session) {
+        // Remove the item entity (it was picked up)
+        session.getEntityManager().despawnEntity(rec.getItemEntityId());
+        session.getDroppedItemManager().untrackItem(rec.getItemEntityId());
+    }
+
+// ========== Dynamic Text Displays ==========
+
+    private static void playDynamicTextDisplay(RecordableDynamicTextDisplay rec, ReplaySession session) {
+        Pos pos = new Pos(rec.getX(), rec.getY(), rec.getZ());
+
+        session.getDynamicTextManager().createDisplay(
+            rec.getEntityId(),
+            rec.getEntityUuid(),
+            pos,
+            rec.getTextLines(),
+            rec.getDisplayType(),
+            rec.getDisplayIdentifier()
+        );
+    }
+
+    private static void playTextDisplayUpdate(RecordableTextDisplayUpdate rec, ReplaySession session) {
+        session.getDynamicTextManager().updateDisplayText(
+            rec.getEntityId(),
+            rec.getNewTextLines(),
+            rec.isReplaceAll(),
+            rec.getStartLineIndex()
+        );
+    }
+
+// ========== NPC Enhancements ==========
+
+    private static void playNpcDisplayName(RecordableNpcDisplayName rec, ReplaySession session) {
+        session.getNpcManager().updateNpcDisplayName(
+            rec.getEntityId(),
+            rec.getDisplayName(),
+            rec.getPrefix(),
+            rec.getSuffix(),
+            rec.getNameColor(),
+            rec.isVisible()
+        );
+    }
+
+    private static void playNpcTextLine(RecordableNpcTextLine rec, ReplaySession session) {
+        session.getNpcManager().updateNpcTextLines(
+            rec.getEntityId(),
+            rec.getTextLines(),
+            rec.getYOffset(),
+            rec.getDisplayDurationTicks()
+        );
     }
 
     private static String getTeamName(byte teamId) {

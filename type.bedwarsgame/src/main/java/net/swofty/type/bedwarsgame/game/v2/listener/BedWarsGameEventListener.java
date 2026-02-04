@@ -63,5 +63,22 @@ public class BedWarsGameEventListener implements HypixelEventClass {
 
         // update displays
         game.getGeneratorManager().updateDisplaysForEventChange();
+
+        // Record to replay
+        if (game.getReplayManager().isRecording()) {
+            // Determine generator type and tier from event name
+            String eventName = event.currentEvent().toLowerCase();
+            if (eventName.contains("diamond")) {
+                byte tier = 1;
+                if (eventName.contains("ii")) tier = 2;
+                else if (eventName.contains("iii")) tier = 3;
+                game.getReplayManager().recordGeneratorUpgrade((byte) 0, tier);
+            } else if (eventName.contains("emerald")) {
+                byte tier = 1;
+                if (eventName.contains("ii")) tier = 2;
+                else if (eventName.contains("iii")) tier = 3;
+                game.getReplayManager().recordGeneratorUpgrade((byte) 1, tier);
+            }
+        }
     }
 }

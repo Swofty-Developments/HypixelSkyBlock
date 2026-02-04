@@ -3,13 +3,9 @@ package net.swofty.commons.replay.recordable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.kyori.adventure.nbt.BinaryTagIO;
-import net.kyori.adventure.nbt.CompoundBinaryTag;
-import net.minestom.server.item.ItemStack;
 import net.swofty.commons.replay.protocol.ReplayDataReader;
 import net.swofty.commons.replay.protocol.ReplayDataWriter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 @Getter
@@ -43,15 +39,6 @@ public class RecordableEntityEquipment extends AbstractRecordable {
         entityId = reader.readVarInt();
         slotId = reader.readByte();
         itemBytes = reader.readBytes();
-    }
-
-    public static byte[] itemToNBTBytes(ItemStack item) throws IOException {
-        CompoundBinaryTag nbt = item.toItemNBT();
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        BinaryTagIO.writer().writeNameless(nbt, out);
-
-        return out.toByteArray();
     }
 
     @Override

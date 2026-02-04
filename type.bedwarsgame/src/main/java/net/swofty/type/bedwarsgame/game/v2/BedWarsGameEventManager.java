@@ -58,7 +58,7 @@ public class BedWarsGameEventManager {
         if (ticker != null) return;
 
         currentPhase = GamePhase.DIAMOND_I;
-        secondsUntilNextPhase = currentPhase.next().getTriggerTimeSeconds();
+        secondsUntilNextPhase = currentPhase.getTriggerTimeSeconds();
 
         ticker = MinecraftServer.getSchedulerManager().buildTask(this::tick)
             .delay(TaskSchedule.seconds(1))
@@ -92,7 +92,7 @@ public class BedWarsGameEventManager {
 
         if (currentPhase != previous) {
             secondsUntilNextPhase = currentPhase.next() != currentPhase
-                ? currentPhase.next().getTriggerTimeSeconds() - currentPhase.getTriggerTimeSeconds()
+                ? currentPhase.getTriggerTimeSeconds()
                 : Integer.MAX_VALUE;
 
             // Fire event

@@ -1,9 +1,15 @@
 package net.swofty.type.bedwarsgame.replay;
 
 import lombok.Getter;
+import net.kyori.adventure.nbt.BinaryTagIO;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
@@ -15,12 +21,16 @@ import net.swofty.commons.replay.dispatcher.BlockChangeDispatcher;
 import net.swofty.commons.replay.dispatcher.DispatcherManager;
 import net.swofty.commons.replay.dispatcher.EntityLocationDispatcher;
 import net.swofty.commons.replay.recordable.RecordableBlockChange;
+import net.swofty.commons.replay.recordable.RecordableDroppedItem;
+import net.swofty.commons.replay.recordable.RecordableItemPickup;
+import net.swofty.commons.replay.recordable.RecordablePlayerChat;
 import net.swofty.commons.replay.recordable.RecordablePlayerDisplayName;
 import net.swofty.commons.replay.recordable.RecordablePlayerHealth;
 import net.swofty.commons.replay.recordable.RecordablePlayerSkin;
 import net.swofty.commons.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.commons.replay.recordable.bedwars.RecordableFinalKill;
 import net.swofty.commons.replay.recordable.bedwars.RecordableGeneratorUpgrade;
+import net.swofty.commons.replay.recordable.bedwars.RecordableScoreboardState;
 import net.swofty.commons.replay.recordable.bedwars.RecordableTeamElimination;
 import net.swofty.commons.scoreboard.ScoreboardData;
 import net.swofty.proxyapi.ProxyService;
@@ -29,6 +39,7 @@ import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import org.tinylog.Logger;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +60,7 @@ public class BedWarsReplayManager {
 
     private Task tickTask;
     private Task batchTask;
+    private Task scoreboardTask;
     private int batchIndex = 0;
 
     private ScoreboardData lastScoreboardState;
@@ -156,6 +168,14 @@ public class BedWarsReplayManager {
             sendCurrentBatch();
         }).delay(TaskSchedule.seconds(BATCH_INTERVAL_SECONDS))
           .repeat(TaskSchedule.seconds(BATCH_INTERVAL_SECONDS))
+          .schedule();
+
+        // Start scoreboard state recording task (every 5 seconds for accurate seek)
+        scoreboardTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
+            if (!recording) return;
+            recordScoreboardState();
+        }).delay(TaskSchedule.seconds(5))
+          .repeat(TaskSchedule.seconds(5))
           .schedule();
 
         Logger.info("Started replay recording for game {} (map: {})", game.getGameId(), mapName);
@@ -271,6 +291,11 @@ public class BedWarsReplayManager {
             batchTask = null;
         }
 
+        if (scoreboardTask != null) {
+            scoreboardTask.cancel();
+            scoreboardTask = null;
+        }
+
         // Send final batch
         sendCurrentBatch();
 
@@ -342,6 +367,109 @@ public class BedWarsReplayManager {
         if (!recording) return;
         recorder.record(new RecordableGeneratorUpgrade(generatorType, tier));
     }
+
+    public void recordDroppedItem(ItemEntity itemEntity) {
+        if (!recording) return;
+
+        try {
+            Pos pos = itemEntity.getPosition();
+            Vec velocity = itemEntity.getVelocity();
+            ItemStack itemStack = itemEntity.getItemStack();
+
+            // Serialize item to NBT bytes
+            byte[] itemNbt = serializeItemStack(itemStack);
+
+            // Calculate despawn tick
+            int despawnTick = recorder.getCurrentTick() + 6000;
+
+            recorder.record(new RecordableDroppedItem(
+                itemEntity.getEntityId(),
+                itemEntity.getUuid(),
+                pos.x(), pos.y(), pos.z(),
+                (float) velocity.x(), (float) velocity.y(), (float) velocity.z(),
+                itemNbt,
+                10, // pickup delay in ticks
+                despawnTick
+            ));
+        } catch (Exception e) {
+            Logger.error(e, "Failed to record dropped item");
+        }
+    }
+
+    /**
+     * Records an item pickup event.
+     */
+    public void recordItemPickup(int itemEntityId, int collectorEntityId) {
+        if (!recording) return;
+        recorder.record(new RecordableItemPickup(itemEntityId, collectorEntityId));
+    }
+
+    /**
+     * Records a player chat message.
+     */
+    public void recordPlayerChat(BedWarsPlayer player, String message, boolean isShout) {
+        if (!recording) return;
+        recorder.record(new RecordablePlayerChat(
+            player.getEntityId(),
+            message,
+            isShout
+        ));
+    }
+
+    /**
+     * Records a periodic scoreboard state snapshot.
+     * Should be called periodically (e.g., every 5 seconds) for accurate seek reconstruction.
+     */
+    public void recordScoreboardState() {
+        if (!recording) return;
+
+        String nextEventName = "";
+        int nextEventSeconds = 0;
+
+        var eventManager = game.getGameEventManager();
+        if (eventManager != null) {
+            var currentEvent = eventManager.getCurrentEvent();
+            if (currentEvent != null) {
+                var nextPhase = currentEvent.next();
+                if (nextPhase != currentEvent) {
+                    nextEventName = nextPhase.getDisplayName();
+                } else {
+                    nextEventName = currentEvent.getDisplayName();
+                }
+                nextEventSeconds = (int) eventManager.getSecondsUntilNextEvent();
+            }
+        }
+
+        List<RecordableScoreboardState.TeamScoreboardState> teamStates = new ArrayList<>();
+        for (BedWarsTeam team : game.getTeams()) {
+            int alivePlayers = (int) game.getPlayersOnTeam(team.getTeamKey()).stream()
+                .filter(p -> !Boolean.TRUE.equals(p.getTag(BedWarsGame.ELIMINATED_TAG)))
+                .count();
+
+            teamStates.add(new RecordableScoreboardState.TeamScoreboardState(
+                team.getTeamKey().name(),
+                team.isBedAlive(),
+                alivePlayers
+            ));
+        }
+
+        recorder.record(new RecordableScoreboardState(nextEventName, nextEventSeconds, teamStates));
+    }
+
+    public static byte[] serializeItemStack(ItemStack itemStack) {
+        try {
+            CompoundBinaryTag nbt = itemStack.toItemNBT();
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            BinaryTagIO.writer().writeNameless(nbt, out);
+
+            return out.toByteArray();
+        } catch (Exception e) {
+            Logger.error(e, "Failed to serialize item stack");
+            return new byte[0];
+        }
+    }
+
     public BlockChangeDispatcher getBlockChangeDispatcher() {
         return dispatchers.getDispatcher(BlockChangeDispatcher.class);
     }

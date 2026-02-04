@@ -13,11 +13,11 @@ import java.io.IOException;
 @NoArgsConstructor
 public class RecordablePlayerHandItem extends AbstractRecordable {
 	private int entityId;
-	private byte slot; // 0-8 hotbar slot
+	private byte[] itemBytes;
 
-	public RecordablePlayerHandItem(int entityId, byte slot) {
+	public RecordablePlayerHandItem(int entityId, byte[] itemBytes) {
 		this.entityId = entityId;
-		this.slot = slot;
+		this.itemBytes = itemBytes;
 	}
 
 	@Override
@@ -28,13 +28,13 @@ public class RecordablePlayerHandItem extends AbstractRecordable {
 	@Override
 	public void write(ReplayDataWriter writer) throws IOException {
 		writer.writeVarInt(entityId);
-		writer.writeByte(slot);
+		writer.writeBytes(itemBytes != null ? itemBytes : new byte[0]);
 	}
 
 	@Override
 	public void read(ReplayDataReader reader) throws IOException {
 		entityId = reader.readVarInt();
-		slot = (byte) reader.readByte();
+		itemBytes = reader.readBytes();
 	}
 
 	@Override

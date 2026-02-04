@@ -14,10 +14,12 @@ import java.io.IOException;
 public class RecordablePlayerChat extends AbstractRecordable {
 	private int entityId;
 	private String message;
+	private boolean shout;
 
-	public RecordablePlayerChat(int entityId, String message) {
+	public RecordablePlayerChat(int entityId, String message, boolean shout) {
 		this.entityId = entityId;
 		this.message = message;
+		this.shout = shout;
 	}
 
 	@Override
@@ -29,12 +31,14 @@ public class RecordablePlayerChat extends AbstractRecordable {
 	public void write(ReplayDataWriter writer) throws IOException {
 		writer.writeVarInt(entityId);
 		writer.writeString(message);
+		writer.writeBoolean(shout);
 	}
 
 	@Override
 	public void read(ReplayDataReader reader) throws IOException {
 		entityId = reader.readVarInt();
 		message = reader.readString();
+		shout = reader.readBoolean();
 	}
 
 	@Override
@@ -44,6 +48,6 @@ public class RecordablePlayerChat extends AbstractRecordable {
 
 	@Override
 	public int estimatedSize() {
-		return 8 + message.length();
+		return 5 + message.length();
 	}
 }

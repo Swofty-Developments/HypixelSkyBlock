@@ -3,12 +3,15 @@ package net.swofty.type.bedwarsgame.replay;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.item.ItemStack;
 import net.swofty.commons.replay.ReplayRecorder;
 import net.swofty.commons.replay.dispatcher.ReplayDispatcher;
 import net.swofty.commons.replay.recordable.RecordableEntityDespawn;
+import net.swofty.commons.replay.recordable.RecordableEntityEquipment;
 import net.swofty.commons.replay.recordable.RecordableEntitySpawn;
 import net.swofty.commons.replay.recordable.RecordablePlayerArmSwing;
 import net.swofty.commons.replay.recordable.RecordablePlayerBlockChange;
+import net.swofty.commons.replay.recordable.RecordablePlayerHandItem;
 import net.swofty.commons.replay.recordable.RecordablePlayerSneak;
 import net.swofty.commons.replay.recordable.RecordablePlayerSprint;
 
@@ -36,7 +39,6 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
     public void initialize(ReplayRecorder recorder) {
         this.recorder = recorder;
 
-        // Record initial entities
         for (Entity entity : instance.getEntities()) {
             recordEntitySpawn(entity);
             trackedEntities.add(entity.getEntityId());
@@ -59,7 +61,6 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
             currentEntities.add(entityId);
 
             if (!trackedEntities.contains(entityId)) {
-                // New entity spawned
                 recordEntitySpawn(entity);
                 trackedEntities.add(entityId);
 
@@ -103,6 +104,9 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
         );
 
         recorder.record(spawn);
+        if (entity instanceof Player player) {
+            recordHeldItem(entity.getEntityId(), player.getItemInMainHand());
+        }
     }
 
     private void checkPlayerStateChanges(Player player) {
@@ -130,6 +134,25 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
 
     public void recordArmSwing(int entityId, boolean mainHand) {
         recorder.record(new RecordablePlayerArmSwing(entityId, mainHand));
+    }
+
+    public void recordHeldItem(int entityId, ItemStack item) {
+        recorder.record(
+            new RecordablePlayerHandItem(
+                entityId,
+                BedWarsReplayManager.serializeItemStack(item)
+            )
+        );
+    }
+
+    public void recordEquipment(int entityId, int slot, ItemStack itemStack) {
+        recorder.record(
+            new RecordableEntityEquipment(
+                entityId,
+                slot,
+                BedWarsReplayManager.serializeItemStack(itemStack)
+            )
+        );
     }
 
     // this is a dumb order of arguments

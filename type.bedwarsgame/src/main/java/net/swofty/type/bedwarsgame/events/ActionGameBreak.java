@@ -21,15 +21,15 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import org.tinylog.Logger;
 
 import java.util.Map;
 import java.util.Objects;
 
 public class ActionGameBreak implements HypixelEventClass {
 
-
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
-    public void globalBlockBroken(InstanceBlockUpdateEvent event) {
+    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    public void globalBlockChange(InstanceBlockUpdateEvent event) {
         BedWarsGame game = TypeBedWarsGameLoader.getGameByInstance(event.getInstance());
         if (game == null || game.getState() != GameState.IN_PROGRESS) {
             return;
@@ -38,6 +38,12 @@ public class ActionGameBreak implements HypixelEventClass {
         BlockChangeDispatcher blockDispatcher =
             game.getReplayManager().getBlockChangeDispatcher();
         if (blockDispatcher != null) {
+            Logger.info("Recording global block change at {}, {}, {} from {} to {}",
+                event.getBlockPosition().blockX(),
+                event.getBlockPosition().blockY(),
+                event.getBlockPosition().blockZ(),
+                event.getBlock().name()
+            );
             blockDispatcher.recordBlockChange(
                 event.getBlockPosition().blockX(),
                 event.getBlockPosition().blockY(),
@@ -49,7 +55,7 @@ public class ActionGameBreak implements HypixelEventClass {
     }
 
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
-    public void run(PlayerBlockBreakEvent event) {
+    public void blockBreak(PlayerBlockBreakEvent event) {
         BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
         Block blockBeingBroken = event.getBlock();
 
@@ -88,12 +94,8 @@ public class ActionGameBreak implements HypixelEventClass {
                 }
                 game.onBedDestroyed(teamKey, player);
                 BedWarsStatsRecorder.recordBedBroken(player, game.getGameType());
-                player.getInstance().setBlock(feetPoint, Block.AIR);
-                player.getInstance().setBlock(headPoint, Block.AIR);
 
-                // Replay recording is done inside onBedDestroyed now
-
-                if (player.hasEffect(PotionEffect.INVISIBILITY)) {
+                if (player.hasEffect(PotionEffect.INVISIBILITY) && player.isInvisible()) {
                     player.getAchievementHandler().completeAchievement("bedwars.sneaky_rusher"); // break an bed while invisible
                 }
 

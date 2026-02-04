@@ -9,10 +9,12 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.Event;
 import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
@@ -351,6 +353,16 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     @Override
+    protected void onTeamEliminated(BedWarsTeam team) {
+        super.onTeamEliminated(team);
+
+        // Record to replay
+        if (replayManager.isRecording()) {
+            replayManager.recordTeamElimination(team.getTeamKey());
+        }
+    }
+
+    @Override
     protected boolean isTeamViable(BedWarsTeam team) {
         // Team is viable if bed is alive OR has active players OR has rejoinable disconnected players
         if (team.isBedAlive()) return true;
@@ -373,6 +385,21 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     public void onBedDestroyed(TeamKey teamKey, BedWarsPlayer destroyer) {
         getTeam(teamKey.name()).ifPresent(team -> {
             team.destroyBed();
+            MapTeam mapTeam = mapEntry.getConfiguration().getTeams().get(teamKey);
+            if (mapTeam == null) {
+                Logger.error("No map team configuration found for team {}", teamKey.name());
+                return;
+            }
+            BedWarsMapsConfig.TwoBlockPosition bedPos = mapTeam.getBed();
+            if (bedPos == null || bedPos.feet() == null || bedPos.head() == null) {
+                Logger.error("No bed position found for team {}", teamKey.name());
+                return;
+            }
+
+            Point feetPoint = new Pos(bedPos.feet().x(), bedPos.feet().y(), bedPos.feet().z());
+            Point headPoint = new Pos(bedPos.head().x(), bedPos.head().y(), bedPos.head().z());
+            destroyer.getInstance().setBlock(feetPoint, Block.AIR);
+            destroyer.getInstance().setBlock(headPoint, Block.AIR);
 
             // Record to replay
             if (replayManager.isRecording()) {

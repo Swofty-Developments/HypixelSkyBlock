@@ -5,6 +5,7 @@ import net.swofty.commons.replay.protocol.ReplayDataReader;
 import net.swofty.commons.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.commons.replay.recordable.bedwars.RecordableFinalKill;
 import net.swofty.commons.replay.recordable.bedwars.RecordableGeneratorUpgrade;
+import net.swofty.commons.replay.recordable.bedwars.RecordableScoreboardState;
 import net.swofty.commons.replay.recordable.bedwars.RecordableTeamElimination;
 
 import java.io.IOException;
@@ -26,8 +27,6 @@ public enum RecordableType {
 	ENTITY_EQUIPMENT(25, RecordableEntityEquipment::new),
 	ENTITY_MOUNT(26, RecordableEntityMount::new),
 	ENTITY_ANIMATION(27, RecordableEntityAnimation::new),
-	ENTITY_STATUS(28, RecordableEntityStatus::new),
-	ENTITY_HEAD_ROTATION(29, RecordableEntityHeadRotation::new),
 	ENTITY_EFFECT(30, RecordableEntityEffect::new),
 	ENTITY_EFFECT_REMOVE(31, RecordableEntityEffectRemove::new),
 
@@ -50,11 +49,24 @@ public enum RecordableType {
 	SOUND(81, RecordableSound::new),
 	EXPLOSION(82, RecordableExplosion::new),
 
+	// Item events (100-109)
+	DROPPED_ITEM(100, RecordableDroppedItem::new),
+	ITEM_PICKUP(101, RecordableItemPickup::new),
+
+	// Display events (110-119)
+	DYNAMIC_TEXT_DISPLAY(110, RecordableDynamicTextDisplay::new),
+	TEXT_DISPLAY_UPDATE(111, RecordableTextDisplayUpdate::new),
+
 	// BedWars
 	BEDWARS_BED_DESTRUCTION(120, RecordableBedDestruction::new),
 	BEDWARS_FINAL_KILL(121, RecordableFinalKill::new),
 	BEDWARS_TEAM_ELIMINATION(122, RecordableTeamElimination::new),
 	BEDWARS_EVENT_CONTINUE(123, RecordableGeneratorUpgrade::new),
+	BEDWARS_SCOREBOARD_STATE(124, RecordableScoreboardState::new),
+
+	// NPC events (140-149)
+	NPC_DISPLAY_NAME(140, RecordableNpcDisplayName::new),
+	NPC_TEXT_LINE(141, RecordableNpcTextLine::new),
 
 	// Composite events (150+)
 	BATCH(150, RecordableBatch::new)

@@ -35,7 +35,7 @@ import java.util.concurrent.CompletableFuture;
 @Getter
 public class ReplayPlayerEntity extends LivingEntity {
     private final String playerName;
-    private final PlayerSkin skin;
+    private PlayerSkin skin;
 
     public ReplayPlayerEntity(String playerName,
                               String textureValue, String textureSignature) {
@@ -112,5 +112,24 @@ public class ReplayPlayerEntity extends LivingEntity {
             0,
             getPosition()
         ));
+    }
+
+    public void updateSkin(String textureValue, String textureSignature) {
+        PlayerSkin newSkin = new PlayerSkin(textureValue, textureSignature);
+        if (this.skin != null && this.skin.equals(newSkin)) return;
+
+        this.skin = newSkin;
+
+        sendPacketToViewersAndSelf(new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER,
+            new PlayerInfoUpdatePacket.Entry(
+                getUuid(),
+                playerName,
+                List.of(new PlayerInfoUpdatePacket.Property("textures", skin.textures(), skin.signature())),
+                false,
+                0,
+                GameMode.CREATIVE,
+                Component.text(playerName),
+                null,
+                1, true)));
     }
 }

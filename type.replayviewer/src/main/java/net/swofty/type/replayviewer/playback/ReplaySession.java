@@ -1,7 +1,6 @@
 package net.swofty.type.replayviewer.playback;
 
 import lombok.Getter;
-import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
@@ -9,13 +8,16 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
-import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.replay.ReplayMetadata;
 import net.swofty.commons.replay.entity.EntityStateTracker;
 import net.swofty.commons.replay.recordable.Recordable;
 import net.swofty.type.replayviewer.entity.ReplayEntityManager;
+import net.swofty.type.replayviewer.playback.display.DynamicTextManager;
+import net.swofty.type.replayviewer.playback.npc.NpcReplayManager;
+import net.swofty.type.replayviewer.playback.scoreboard.ReplayScoreboard;
+import net.swofty.type.replayviewer.playback.scoreboard.ReplayScoreboardFactory;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -25,33 +27,31 @@ import java.util.UUID;
 @Getter
 public class ReplaySession {
     private final UUID viewerId;
-	private final Player viewer;
-	private final ReplayMetadata metadata;
-	private final InstanceContainer instance;
+    private final Player viewer;
+    private final ReplayMetadata metadata;
+    private final InstanceContainer instance;
 
     private final ReplayEntityManager entityManager;
     private final EntityStateTracker stateTracker;
     private final ReplayData replayData;
 
-    // Playback state
+    private final DroppedItemManager droppedItemManager;
+    private final DynamicTextManager dynamicTextManager;
+    private final NpcReplayManager npcManager;
+    private final ReplayScoreboard scoreboard;
+
     private volatile int currentTick = 0;
     private volatile boolean playing = false;
     private volatile float playbackSpeed = 1.0f;
 
     private Task playbackTask;
-
-    // Spectating
     private Integer spectatingEntityId = null;
 
-    // Scoreboard
-    @Setter
-    private Sidebar currentSidebar = null;
-
     public ReplaySession(
-            Player viewer,
-            ReplayMetadata metadata,
-            InstanceContainer instance,
-            ReplayData replayData
+        Player viewer,
+        ReplayMetadata metadata,
+        InstanceContainer instance,
+        ReplayData replayData
     ) {
         this.viewerId = viewer.getUuid();
         this.viewer = viewer;
@@ -61,10 +61,17 @@ public class ReplaySession {
         this.entityManager = new ReplayEntityManager(instance);
         this.stateTracker = new EntityStateTracker();
 
-        // Setup viewer
-        viewer.setGameMode(GameMode.SPECTATOR);
+        this.droppedItemManager = new DroppedItemManager(this);
+        this.dynamicTextManager = new DynamicTextManager(this);
+        this.npcManager = new NpcReplayManager(this);
+
+        this.scoreboard = ReplayScoreboardFactory.create(this);
+        this.scoreboard.create(viewer);
+
+        viewer.setGameMode(GameMode.SURVIVAL);
         viewer.setFlying(true);
         viewer.setAllowFlying(true);
+        viewer.setInvisible(true);
     }
 
     /**
@@ -125,14 +132,15 @@ public class ReplaySession {
         }
     }
 
-    /**
-     * Stops the session and cleans up.
-     */
     public void stop() {
         pause();
         entityManager.cleanup();
 
-        // Unregister instance after delay
+        droppedItemManager.clear();
+        dynamicTextManager.cleanup();
+        npcManager.cleanup();
+        scoreboard.remove(viewer);
+
         MinecraftServer.getSchedulerManager().buildTask(() -> {
             if (instance.getPlayers().isEmpty()) {
                 MinecraftServer.getInstanceManager().unregisterInstance(instance);
@@ -158,6 +166,10 @@ public class ReplaySession {
         }
 
         currentTick = targetTick;
+
+        droppedItemManager.seekTo(targetTick);
+        dynamicTextManager.seekTo(targetTick);
+        scoreboard.update(this);
 
         if (wasPlaying) {
             play();
@@ -228,6 +240,16 @@ public class ReplaySession {
                 Logger.error(e, "Failed to play recordable at tick {}", tick);
             }
         }
+
+        // Tick managers
+        droppedItemManager.tick(tick);
+        dynamicTextManager.tick(tick);
+        npcManager.tick();
+
+        // Update scoreboard periodically (every 10 ticks)
+        if (tick % 10 == 0) {
+            scoreboard.update(this);
+        }
     }
 
     private void seekForward(int targetTick) {
@@ -242,9 +264,9 @@ public class ReplaySession {
 
     private void showSeekTitle(int tick) {
         Title title = Title.title(
-                Component.text(getFormattedTime(), NamedTextColor.GREEN),
-                Component.text("/" + getFormattedTotalTime(), NamedTextColor.GRAY),
-                Title.Times.times(Duration.ZERO, Duration.ofMillis(500), Duration.ofMillis(200))
+            Component.text(getFormattedTime(), NamedTextColor.GREEN),
+            Component.text("/" + getFormattedTotalTime(), NamedTextColor.GRAY),
+            Title.Times.times(Duration.ZERO, Duration.ofMillis(500), Duration.ofMillis(200))
         );
         viewer.showTitle(title);
     }
@@ -252,9 +274,9 @@ public class ReplaySession {
     private void onReplayEnd() {
         pause();
         viewer.showTitle(Title.title(
-                Component.text("Replay Ended", NamedTextColor.GOLD),
-                Component.text("Use /replay restart to watch again", NamedTextColor.GRAY),
-                Title.Times.times(Duration.ofMillis(200), Duration.ofSeconds(3), Duration.ofMillis(500))
+            Component.text("Replay Ended", NamedTextColor.GOLD),
+            Component.text("Use /replay restart to watch again", NamedTextColor.GRAY),
+            Title.Times.times(Duration.ofMillis(200), Duration.ofSeconds(3), Duration.ofMillis(500))
         ));
     }
 
@@ -306,7 +328,7 @@ public class ReplaySession {
         return ids;
     }
 
-    private String getEntityDisplayName(int entityId) {
+    public String getEntityDisplayName(int entityId) {
         net.minestom.server.entity.Entity entity = entityManager.getEntity(entityId);
         if (entity instanceof net.swofty.type.replayviewer.entity.ReplayEntity replayEntity) {
             UUID uuid = replayEntity.getRecordedUuid();

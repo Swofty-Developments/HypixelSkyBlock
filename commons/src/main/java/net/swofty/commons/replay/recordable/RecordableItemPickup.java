@@ -11,39 +11,39 @@ import java.io.IOException;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RecordableEntityStatus extends AbstractRecordable {
-    private int entityId;
-    private byte status;
+public class RecordableItemPickup extends AbstractRecordable {
+    private int itemEntityId;
+    private int collectorEntityId;
 
-    public RecordableEntityStatus(int entityId, byte status) {
-        this.entityId = entityId;
-        this.status = status;
+    public RecordableItemPickup(int itemEntityId, int collectorEntityId) {
+        this.itemEntityId = itemEntityId;
+        this.collectorEntityId = collectorEntityId;
     }
 
     @Override
     public RecordableType getType() {
-        return RecordableType.ENTITY_STATUS;
+        return RecordableType.ITEM_PICKUP;
     }
 
     @Override
     public void write(ReplayDataWriter writer) throws IOException {
-        writer.writeVarInt(entityId);
-        writer.writeByte(status);
+        writer.writeVarInt(itemEntityId);
+        writer.writeVarInt(collectorEntityId);
     }
 
     @Override
     public void read(ReplayDataReader reader) throws IOException {
-        entityId = reader.readVarInt();
-        status = (byte) reader.readByte();
+        itemEntityId = reader.readVarInt();
+        collectorEntityId = reader.readVarInt();
     }
 
     @Override
     public int getEntityId() {
-        return entityId;
+        return itemEntityId;
     }
 
     @Override
     public int estimatedSize() {
-        return 5;
+        return 4;
     }
 }
