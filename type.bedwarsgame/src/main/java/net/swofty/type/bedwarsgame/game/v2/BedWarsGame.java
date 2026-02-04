@@ -506,7 +506,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         String line = "■".repeat(50);
         Component[] messages = {
             Component.text(line, NamedTextColor.GREEN),
-            Component.text(ChatUtility.FontInfo.center("Bed Wars"), NamedTextColor.WHITE, TextDecoration.BOLD),
+            Component.text(ChatUtility.FontInfo.center("§lBed Wars"), NamedTextColor.WHITE),
             Component.space(),
             Component.text(ChatUtility.FontInfo.center("Protect your bed and destroy the enemy beds."), NamedTextColor.YELLOW),
             Component.text(ChatUtility.FontInfo.center("Upgrade yourself and your team by collecting"), NamedTextColor.YELLOW),

@@ -15,7 +15,6 @@ import net.swofty.commons.game.GameState;
 import net.swofty.commons.replay.dispatcher.BlockChangeDispatcher;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
-import net.swofty.type.bedwarsgame.replay.EntityLifecycleDispatcher;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
@@ -113,20 +112,6 @@ public class ActionGameBreak implements HypixelEventClass {
             if (Boolean.TRUE.equals(blockBeingBroken.getTag(TypeBedWarsGameLoader.PLAYER_PLACED_TAG))) {
                 new ItemEntity(ItemStack.of(Objects.requireNonNull(blockBeingBroken.registry().material()))).setInstance(player.getInstance(), event.getBlockPosition());
                 event.setCancelled(false);
-
-                EntityLifecycleDispatcher blockDispatcher =
-                    game.getReplayManager().getEntityLifecycleDispatcher();
-                if (blockDispatcher != null) {
-                    Point blockPos = event.getBlockPosition();
-                    blockDispatcher.recordPlayerBlockChange(
-                        player.getEntityId(),
-                        blockPos.blockX(),
-                        blockPos.blockY(),
-                        blockPos.blockZ(),
-                        Block.AIR.stateId(),
-                        blockBeingBroken.id()
-                    );
-                }
             } else {
                 // Not a team bed and not a player-placed block
                 player.sendMessage("§cYou can only break blocks placed by players!");

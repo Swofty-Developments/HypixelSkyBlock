@@ -40,7 +40,6 @@ public class RecordablePlayer {
             case ENTITY_VELOCITY -> playEntityVelocity((RecordableEntityVelocity) recordable, session);
             case ENTITY_ANIMATION -> playEntityAnimation((RecordableEntityAnimation) recordable, session);
             case ENTITY_EQUIPMENT -> playEntityEquipment((RecordableEntityEquipment) recordable, session);
-            case PLAYER_BLOCK_CHANGE -> playPlayerBlockChange((RecordablePlayerBlockChange) recordable, session);
             case PLAYER_SNEAK -> playPlayerSneak((RecordablePlayerSneak) recordable, session);
             case PLAYER_SPRINT -> playPlayerSprint((RecordablePlayerSprint) recordable, session);
             case PLAYER_ARM_SWING -> playPlayerArmSwing((RecordablePlayerArmSwing) recordable, session);
@@ -155,13 +154,6 @@ public class RecordablePlayer {
                 case SWING_OFFHAND -> livingEntity.swingOffHand();
                 case TAKE_DAMAGE -> livingEntity.takeVisualDamage();
             }
-        }
-    }
-
-    private static void playPlayerBlockChange(RecordablePlayerBlockChange rec, ReplaySession session) {
-        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
-        if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.swingMainHand();
         }
     }
 

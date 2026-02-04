@@ -42,7 +42,6 @@ public enum RecordableType {
 	PLAYER_SKIN(58, RecordablePlayerSkin::new),
 	PLAYER_DISPLAY_NAME(59, RecordablePlayerDisplayName::new),
 	PLAYER_HEALTH(60, RecordablePlayerHealth::new),
-	PLAYER_BLOCK_CHANGE(61, RecordablePlayerBlockChange::new),
 
 	// World events (80-99)
 	PARTICLE(80, RecordableParticle::new),
