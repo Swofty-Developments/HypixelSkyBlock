@@ -38,6 +38,7 @@ include(":type.murdermysteryconfigurator")
 include(":type.skywarslobby")
 include(":type.skywarsgame")
 include(":type.skywarsconfigurator")
+include(":type.arcadelobby")
 
 include(":service.auctionhouse")
 include(":service.bazaar")

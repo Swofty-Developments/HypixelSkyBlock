@@ -56,6 +56,14 @@ public enum GameType {
             "§7Death, Soul Well, and §cINSANE MODE§7!",
             "§7Play on your own or in teams."
             ),
+
+    ARCADE_GAMES("Arcade Games §c§lDISASTERS 1.0 RELEASE!",
+            Material.SLIME_BALL,
+            Category.CASUAL_GAMES,
+            ServerType.ARCADE_LOBBY,
+            "§7Crazy fun minigames to play with",
+            "§7friends!",
+            " §f• Zombies"),
     ;
 
     private final String displayName;
@@ -108,6 +116,7 @@ public enum GameType {
         SURVIVAL,
         TEAM_SURVIVAL,
         COMPETITIVE,
+        SHOOTER,
         CASUAL_GAMES,
     }
 }

@@ -54,6 +54,8 @@ dependencies {
     implementation(project(":type.skywarsgame"))
     implementation(project(":type.skywarsconfigurator"))
 
+    implementation(project(":type.arcadelobby"))
+
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
