@@ -68,7 +68,7 @@ public class ReplaySession {
         this.scoreboard = ReplayScoreboardFactory.create(this);
         this.scoreboard.create(viewer);
 
-        viewer.setGameMode(GameMode.SURVIVAL);
+        viewer.setGameMode(GameMode.ADVENTURE);
         viewer.setFlying(true);
         viewer.setAllowFlying(true);
         viewer.setInvisible(true);

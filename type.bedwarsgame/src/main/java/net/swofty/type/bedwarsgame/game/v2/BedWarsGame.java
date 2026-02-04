@@ -7,6 +7,7 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Point;
@@ -227,8 +228,10 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         player.setDisplayName(Component.text(randomLetters, NamedTextColor.WHITE, TextDecoration.OBFUSCATED));
 
         for (BedWarsPlayer p : getPlayers()) {
-            String name = p.getUuid().compareTo(player.getUuid()) == 0 ? player.getUsername() : "§k" + randomLetters;
-            p.sendMessage(name + " §ehas joined (§b" + players.size() + "§e/§b" + getMaxPlayers() + "§e)");
+            String name = p.getUuid().compareTo(player.getUuid()) == 0
+                ? LegacyComponentSerializer.legacySection().serialize(player.getColouredName())
+                : "§k" + randomLetters;
+            p.sendMessage(name + " §ehas joined (§b" + players.size() + "§e/§b" + getMaxPlayers() + "§e)!");
         }
     }
 

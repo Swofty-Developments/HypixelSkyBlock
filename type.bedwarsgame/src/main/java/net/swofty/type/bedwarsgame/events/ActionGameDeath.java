@@ -40,7 +40,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ActionGameDeath implements HypixelEventClass {
 
-
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerDeathEvent event) {
         BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
@@ -50,6 +49,7 @@ public class ActionGameDeath implements HypixelEventClass {
             return;
         }
 
+        // TODO: move all this to a death event so this can be ran on different places.
         Integer pickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
         if (pickaxeLevel != null && pickaxeLevel > 1) {
             player.setTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG, pickaxeLevel - 1);

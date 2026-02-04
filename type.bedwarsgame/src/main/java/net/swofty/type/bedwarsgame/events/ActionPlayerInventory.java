@@ -11,7 +11,7 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
-public class ActionPlayerHoldItem implements HypixelEventClass {
+public class ActionPlayerInventory implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void changeHeldSlot(PlayerChangeHeldSlotEvent event) {
