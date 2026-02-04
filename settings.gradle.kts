@@ -39,6 +39,7 @@ include(":type.skywarslobby")
 include(":type.skywarsgame")
 include(":type.skywarsconfigurator")
 include(":type.arcadelobby")
+include(":type.zombiesconfigurator")
 
 include(":service.auctionhouse")
 include(":service.bazaar")

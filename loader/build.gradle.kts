@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":type.skywarsconfigurator"))
 
     implementation(project(":type.arcadelobby"))
+    implementation(project(":type.zombiesconfigurator"))
 
     implementation(project(":type.generic"))
     implementation(project(":commons"))
