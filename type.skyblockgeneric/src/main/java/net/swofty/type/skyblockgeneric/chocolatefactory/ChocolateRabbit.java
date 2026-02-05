@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.chocolatefactory;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -7,6 +8,7 @@ import lombok.Getter;
  * Total: 513 rabbits across all rarities.
  */
 @Getter
+@AllArgsConstructor
 public enum ChocolateRabbit {
     // ==================== COMMON RABBITS (223) ====================
     AARON("Aaron", Rarity.COMMON, null, null, null),
@@ -540,14 +542,6 @@ public enum ChocolateRabbit {
     private final String location;
     private final String requirement;
 
-    ChocolateRabbit(String displayName, Rarity rarity, String obtainMethod, String location, String requirement) {
-        this.displayName = displayName;
-        this.rarity = rarity;
-        this.obtainMethod = obtainMethod;
-        this.location = location;
-        this.requirement = requirement;
-    }
-
     public int getChocolateBonus() {
         return rarity.getChocolateBonus();
     }
@@ -623,6 +617,7 @@ public enum ChocolateRabbit {
     }
 
     @Getter
+    @AllArgsConstructor
     public enum Rarity {
         COMMON("f", "COMMON", 1, 0.002),
         UNCOMMON("a", "UNCOMMON", 2, 0.003),
@@ -636,13 +631,6 @@ public enum ChocolateRabbit {
         private final String displayName;
         private final int chocolateBonus;
         private final double multiplierBonus;
-
-        Rarity(String colorCode, String displayName, int chocolateBonus, double multiplierBonus) {
-            this.colorCode = colorCode;
-            this.displayName = displayName;
-            this.chocolateBonus = chocolateBonus;
-            this.multiplierBonus = multiplierBonus;
-        }
 
         public String getFormattedName() {
             return "§" + colorCode + "§l" + displayName + " RABBIT";

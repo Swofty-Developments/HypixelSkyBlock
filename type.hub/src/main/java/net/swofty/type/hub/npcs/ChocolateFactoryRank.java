@@ -1,35 +1,27 @@
 package net.swofty.type.hub.npcs;
 
+import lombok.Getter;
+import net.swofty.commons.ChatColor;
+
+@Getter
 public enum ChocolateFactoryRank {
-    UNEMPLOYED(0, "Unemployed", "§c"),
-    INTERN(1, "Intern", "§7"),
-    EMPLOYEE(20, "Employee", "§a"),
-    ASSISTANT(120, "Assistant", "§9"),
-    MANAGER(140, "Manager", "§5"),
-    DIRECTOR(180, "Director", "§6"),
-    EXECUTIVE(200, "Executive", "§d"),
-    BOARD_MEMBER(220, "Board Member", "§b");
+    UNEMPLOYED(0, "Unemployed", ChatColor.RED),
+    INTERN(1, "Intern", ChatColor.GRAY),
+    EMPLOYEE(20, "Employee", ChatColor.GREEN),
+    ASSISTANT(120, "Assistant", ChatColor.BLUE),
+    MANAGER(140, "Manager", ChatColor.DARK_PURPLE),
+    DIRECTOR(180, "Director", ChatColor.GOLD),
+    EXECUTIVE(200, "Executive", ChatColor.LIGHT_PURPLE),
+    BOARD_MEMBER(220, "Board Member", ChatColor.AQUA);
 
     private final int level;
     private final String name;
-    private final String color;
+    private final ChatColor color;
 
-    ChocolateFactoryRank(int level, String name, String color) {
+    ChocolateFactoryRank(int level, String name, ChatColor color) {
         this.level = level;
         this.name = name;
         this.color = color;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getColor() {
-        return color;
     }
 
     /**
@@ -50,7 +42,7 @@ public enum ChocolateFactoryRank {
         if (this == UNEMPLOYED) {
             return color + name;
         }
-        return "§7[" + actualLevel + "] " + color + name;
+        return ChatColor.GRAY + "[" + actualLevel + "] " + color + name;
     }
 
     /**

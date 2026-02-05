@@ -191,7 +191,7 @@ public class GUIChocolateShop extends HypixelInventoryGUI {
                 if (data.getChocolate() >= cost) {
                     data.removeChocolate(cost);
                     data.addChocolateSpent(cost);
-                    ChocolateFactoryHelper.getDatapoint(player).setValue(data);
+                    player.getChocolateFactoryDatapoint().setValue(data);
                     player.sendMessage("§aPurchased " + name + " §afor §6" + ChocolateFactoryHelper.formatChocolate(cost) + " Chocolate§a!");
 
                     // Refresh the GUI

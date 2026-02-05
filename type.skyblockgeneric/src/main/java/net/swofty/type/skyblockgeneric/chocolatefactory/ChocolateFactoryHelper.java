@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.chocolatefactory;
 
-import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointChocolateFactory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -20,24 +19,14 @@ public class ChocolateFactoryHelper {
      * Gets the chocolate factory data for a player
      */
     public static DatapointChocolateFactory.ChocolateFactoryData getData(SkyBlockPlayer player) {
-        return player.getSkyblockDataHandler()
-                .get(SkyBlockDataHandler.Data.CHOCOLATE_FACTORY, DatapointChocolateFactory.class)
-                .getValue();
-    }
-
-    /**
-     * Gets the chocolate factory datapoint for a player
-     */
-    public static DatapointChocolateFactory getDatapoint(SkyBlockPlayer player) {
-        return player.getSkyblockDataHandler()
-                .get(SkyBlockDataHandler.Data.CHOCOLATE_FACTORY, DatapointChocolateFactory.class);
+        return player.getChocolateFactoryData();
     }
 
     /**
      * Updates chocolate production for the player based on time elapsed
      */
     public static void updateProduction(SkyBlockPlayer player) {
-        DatapointChocolateFactory datapoint = getDatapoint(player);
+        DatapointChocolateFactory datapoint = player.getChocolateFactoryDatapoint();
         DatapointChocolateFactory.ChocolateFactoryData data = datapoint.getValue();
         data.updateChocolateFromProduction();
         datapoint.setValue(data);
@@ -47,7 +36,7 @@ public class ChocolateFactoryHelper {
      * Handles a click on the chocolate cookie
      */
     public static void handleClick(SkyBlockPlayer player) {
-        DatapointChocolateFactory datapoint = getDatapoint(player);
+        DatapointChocolateFactory datapoint = player.getChocolateFactoryDatapoint();
         DatapointChocolateFactory.ChocolateFactoryData data = datapoint.getValue();
         data.click();
         datapoint.setValue(data);
@@ -413,32 +402,66 @@ public class ChocolateFactoryHelper {
      * Gets the prestige rank name based on level
      */
     public static String getPrestigeRankName(int level) {
-        return switch (level) {
-            case 0 -> "Newcomer";
-            case 1 -> "Apprentice";
-            case 2 -> "Worker";
-            case 3 -> "Journeyman";
-            case 4 -> "Expert";
-            case 5 -> "Master";
-            case 6 -> "Grandmaster";
-            default -> "Unknown";
-        };
+        return Prestige.fromLevel(level).getName();
     }
 
     /**
      * Gets the prestige rank color based on level
      */
     public static String getPrestigeRankColor(int level) {
-        return switch (level) {
-            case 0 -> "§7";
-            case 1 -> "§a";
-            case 2 -> "§9";
-            case 3 -> "§5";
-            case 4 -> "§6";
-            case 5 -> "§d";
-            case 6 -> "§b";
-            default -> "§f";
-        };
+        return Prestige.fromLevel(level).getColor();
+    }
+
+    /**
+     * Gets the Prestige enum based on level
+     */
+    public static Prestige getPrestige(int level) {
+        return Prestige.fromLevel(level);
+    }
+
+    public enum Prestige {
+        NEWCOMER(0, "Newcomer", "§7"),
+        APPRENTICE(1, "Apprentice", "§a"),
+        WORKER(2, "Worker", "§9"),
+        JOURNEYMAN(3, "Journeyman", "§5"),
+        EXPERT(4, "Expert", "§6"),
+        MASTER(5, "Master", "§d"),
+        GRANDMASTER(6, "Grandmaster", "§b");
+
+        private final int level;
+        private final String name;
+        private final String color;
+
+        Prestige(int level, String name, String color) {
+            this.level = level;
+            this.name = name;
+            this.color = color;
+        }
+
+        public int getLevel() {
+            return level;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public String getFormattedName() {
+            return color + name;
+        }
+
+        public static Prestige fromLevel(int level) {
+            for (Prestige prestige : values()) {
+                if (prestige.level == level) {
+                    return prestige;
+                }
+            }
+            return NEWCOMER;
+        }
     }
 
     public enum UpgradeType {
