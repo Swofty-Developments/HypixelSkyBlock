@@ -15,12 +15,9 @@ public class ActionInventoryOpen implements HypixelEventClass {
     public void onPlayerInventoryOpen(InventoryOpenEvent event) {
         MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
             HypixelPlayer player = (HypixelPlayer) event.getPlayer();
-            ViewNavigator.find(player).ifPresent(navigator -> {
-                ViewSession<?> session = navigator.getCurrentSession();
-                if (session != null) {
-                    session.onOpenEvent(event);
-                }
-            });
+            ViewNavigator.find(player)
+                    .map(ViewNavigator::getCurrentSession)
+                    .ifPresent(session -> session.onOpenEvent(event));
         });
 
     }

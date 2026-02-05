@@ -1,11 +1,15 @@
 package net.swofty.type.skyblockgeneric.chocolatefactory;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.minestom.server.item.Material;
 
 /**
  * Represents chocolate shop milestones.
  * Each milestone unlocks a special rabbit when spending a certain amount of chocolate in the shop.
  */
+@Getter
+@AllArgsConstructor
 public enum ChocolateShopMilestone {
     // Common milestones (White)
     MILESTONE_1(1, 1_000L, "Alpha Rabbit", "f", 1, 0.002,
@@ -73,50 +77,6 @@ public enum ChocolateShopMilestone {
     private final double multiplierBonus;
     private final String textureId;
     private final Material glassPaneMaterial;
-
-    ChocolateShopMilestone(int number, long requiredSpent, String rabbitName, String colorCode,
-                           int chocolateBonus, double multiplierBonus, String textureId, Material glassPaneMaterial) {
-        this.number = number;
-        this.requiredSpent = requiredSpent;
-        this.rabbitName = rabbitName;
-        this.colorCode = colorCode;
-        this.chocolateBonus = chocolateBonus;
-        this.multiplierBonus = multiplierBonus;
-        this.textureId = textureId;
-        this.glassPaneMaterial = glassPaneMaterial;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public long getRequiredSpent() {
-        return requiredSpent;
-    }
-
-    public String getRabbitName() {
-        return rabbitName;
-    }
-
-    public String getColorCode() {
-        return colorCode;
-    }
-
-    public int getChocolateBonus() {
-        return chocolateBonus;
-    }
-
-    public double getMultiplierBonus() {
-        return multiplierBonus;
-    }
-
-    public String getTextureId() {
-        return textureId;
-    }
-
-    public Material getGlassPaneMaterial() {
-        return glassPaneMaterial;
-    }
 
     public String getRomanNumeral() {
         return toRoman(number);

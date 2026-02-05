@@ -1,9 +1,12 @@
 package net.swofty.type.skyblockgeneric.chocolatefactory;
 
+import lombok.Getter;
+
 /**
  * Represents all chocolate rabbits that can be collected in Hoppity's Collection.
  * Total: 513 rabbits across all rarities.
  */
+@Getter
 public enum ChocolateRabbit {
     // ==================== COMMON RABBITS (223) ====================
     AARON("Aaron", Rarity.COMMON, null, null, null),
@@ -545,26 +548,6 @@ public enum ChocolateRabbit {
         this.requirement = requirement;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public Rarity getRarity() {
-        return rarity;
-    }
-
-    public String getObtainMethod() {
-        return obtainMethod;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getRequirement() {
-        return requirement;
-    }
-
     public int getChocolateBonus() {
         return rarity.getChocolateBonus();
     }
@@ -639,6 +622,7 @@ public enum ChocolateRabbit {
         return count;
     }
 
+    @Getter
     public enum Rarity {
         COMMON("f", "COMMON", 1, 0.002),
         UNCOMMON("a", "UNCOMMON", 2, 0.003),
@@ -658,22 +642,6 @@ public enum ChocolateRabbit {
             this.displayName = displayName;
             this.chocolateBonus = chocolateBonus;
             this.multiplierBonus = multiplierBonus;
-        }
-
-        public String getColorCode() {
-            return colorCode;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-
-        public int getChocolateBonus() {
-            return chocolateBonus;
-        }
-
-        public double getMultiplierBonus() {
-            return multiplierBonus;
         }
 
         public String getFormattedName() {

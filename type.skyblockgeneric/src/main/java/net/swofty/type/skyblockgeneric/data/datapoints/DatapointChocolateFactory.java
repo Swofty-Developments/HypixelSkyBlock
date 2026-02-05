@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.data.datapoints;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
@@ -152,12 +153,13 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
     }
 
     @AllArgsConstructor
+    @NoArgsConstructor
     @Getter
     @Setter
     public static class ChocolateFactoryData {
         private long chocolate;
         private long chocolateAllTime;
-        private long lastUpdated;
+        private long lastUpdated = System.currentTimeMillis();
         private double partialChocolate; // Accumulates fractional chocolate production
 
         // Upgrades
@@ -171,37 +173,17 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
         private int coachJackrabbitLevel;
 
         // Employees (rabbit name -> employee data)
-        private Map<String, EmployeeData> employees;
+        private Map<String, EmployeeData> employees = new HashMap<>();
 
         // Statistics
         private long totalClicks;
         private int totalTimeTowerUsages;
 
         // Collection
-        private Set<String> foundRabbits;
+        private Set<String> foundRabbits = new HashSet<>();
 
         // Shop stats
         private long totalChocolateSpent;
-
-        public ChocolateFactoryData() {
-            this.chocolate = 0L;
-            this.chocolateAllTime = 0L;
-            this.lastUpdated = System.currentTimeMillis();
-            this.partialChocolate = 0.0;
-            this.timeTowerLevel = 0;
-            this.timeTowerCharges = 0;
-            this.timeTowerLastUsed = 0L;
-            this.timeTowerActiveUntil = 0L;
-            this.rabbitBarnLevel = 0;
-            this.handBakedChocolateLevel = 0;
-            this.rabbitShrineLevel = 0;
-            this.coachJackrabbitLevel = 0;
-            this.employees = new HashMap<>();
-            this.totalClicks = 0L;
-            this.totalTimeTowerUsages = 0;
-            this.foundRabbits = new HashSet<>();
-            this.totalChocolateSpent = 0L;
-        }
 
         /**
          * Adds chocolate and updates all-time total
