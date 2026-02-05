@@ -3,7 +3,7 @@ package net.swofty.service.replay.session;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.ServerType;
-import net.swofty.commons.replay.ReplayMetadata;
+import net.swofty.type.game.replay.ReplayMetadata;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,13 +1,13 @@
 package net.swofty.service.replay.session;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.replay.ReplayMetadata;
 import net.swofty.service.replay.storage.ReplayDatabase;
+import net.swofty.type.game.replay.ReplayMetadata;
+import net.swofty.type.game.replay.ReplayVersion;
 import org.bson.Document;
 import org.tinylog.Logger;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +33,6 @@ public class ReplaySessionManager {
 		this.database = database;
 	}
 
-	/**
-	 * Starts a new recording session.
-	 */
 	public RecordingSession startSession(
 		UUID replayId,
 		String gameId,
@@ -61,16 +58,10 @@ public class ReplaySessionManager {
 		return session;
 	}
 
-	/**
-	 * Gets an active recording session.
-	 */
 	public RecordingSession getSession(UUID replayId) {
 		return activeSessions.get(replayId);
 	}
 
-	/**
-	 * Receives a batch of replay data.
-	 */
 	public void receiveBatch(UUID replayId, int batchIndex, int startTick, int endTick, int recordableCount, byte[] data) {
 		RecordingSession session = activeSessions.get(replayId);
 		if (session == null) {
@@ -100,7 +91,7 @@ public class ReplaySessionManager {
 		}, compressionExecutor);
 	}
 
-	private EndResult finalizeSession(RecordingSession session) throws IOException {
+	private EndResult finalizeSession(RecordingSession session) {
 		Logger.info("Finalizing replay session {}", session.getReplayId());
 
 		long totalBytes = 0;
@@ -140,7 +131,7 @@ public class ReplaySessionManager {
 			.append("gameTypeName", session.getGameTypeName())
 			.append("mapName", session.getMapName())
 			.append("mapHash", session.getMapHash())
-			.append("version", net.swofty.commons.replay.ReplayVersion.CURRENT_VERSION)
+			.append("version", ReplayVersion.CURRENT_VERSION)
 			.append("startTime", session.getStartTime())
 			.append("endTime", session.getEndTime())
 			.append("durationTicks", session.getDurationTicks())
@@ -186,7 +177,7 @@ public class ReplaySessionManager {
 		return doc;
 	}
 
-	private byte[] compressData(byte[] data) throws IOException {
+	private byte[] compressData(byte[] data) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		Deflater deflater = new Deflater(Deflater.BEST_COMPRESSION);
 		deflater.setInput(data);
@@ -202,9 +193,6 @@ public class ReplaySessionManager {
 		return out.toByteArray();
 	}
 
-	/**
-	 * Starts the cleanup task for stale sessions.
-	 */
 	public void startCleanupTask() {
 		cleanupExecutor.scheduleAtFixedRate(() -> {
 			long now = System.currentTimeMillis();
