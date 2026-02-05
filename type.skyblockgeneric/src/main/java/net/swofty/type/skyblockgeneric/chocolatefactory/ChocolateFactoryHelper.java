@@ -25,6 +25,13 @@ public class ChocolateFactoryHelper {
     }
 
     /**
+     * Gets the chocolate factory datapoint for a player
+     */
+    public static DatapointChocolateFactory getDatapoint(SkyBlockPlayer player) {
+        return player.getChocolateFactoryDatapoint();
+    }
+
+    /**
      * Updates chocolate production for the player based on time elapsed
      */
     public static void updateProduction(SkyBlockPlayer player) {
