@@ -4,14 +4,17 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.data.datapoints.DatapointSoulWellUpgrades;
 import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.DefaultState;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
-import net.swofty.type.skywarslobby.soulwell.SoulWellMessages;
 import net.swofty.type.skywarslobby.soulwell.SoulWellUpgrade;
 import net.swofty.type.skywarslobby.soulwell.SoulWellUpgradeRegistry;
 
@@ -170,7 +173,7 @@ public class GUISoulWell extends StatelessView {
                         lore.add("§aMAXED OUT!");
 
                         return ItemStackCreator.getStack(
-                                "§" + colorCode + upgrade.name() + " " + SoulWellMessages.toRoman(currentLevel),
+                                "§" + colorCode + upgrade.name() + " " + StringUtility.getAsRomanNumeral(currentLevel),
                                 upgrade.material(),
                                 1,
                                 lore
@@ -194,8 +197,8 @@ public class GUISoulWell extends StatelessView {
                         if (currentLevel == 0) {
                             displayName = "§" + colorCode + upgrade.name();
                         } else {
-                            displayName = "§" + colorCode + upgrade.name() + " " + SoulWellMessages.toRoman(currentLevel)
-                                    + " §l→ §" + colorCode + SoulWellMessages.toRoman(currentLevel + 1);
+                            displayName = "§" + colorCode + upgrade.name() + " " + StringUtility.getAsRomanNumeral(currentLevel)
+                                    + " §l→ §" + colorCode + StringUtility.getAsRomanNumeral(currentLevel + 1);
                         }
 
                         return ItemStackCreator.getStack(displayName, upgrade.material(), 1, lore);
