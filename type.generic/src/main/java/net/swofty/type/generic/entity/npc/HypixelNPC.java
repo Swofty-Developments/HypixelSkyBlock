@@ -42,7 +42,8 @@ public abstract class HypixelNPC {
     public HypixelNPC(NPCConfiguration configuration) {
         this.parameters = configuration;
         String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
-        this.name = className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+        String defaultName = className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+        this.name = parameters.chatName() != null ? parameters.chatName() : defaultName;
         this.dialogueController = new DialogueController(this);
     }
 
