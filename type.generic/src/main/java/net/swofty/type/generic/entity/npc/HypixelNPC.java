@@ -257,10 +257,20 @@ public abstract class HypixelNPC {
         sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
     }
 
-	public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
-		player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
-		player.playSound(sound);
-	}
+    public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
+        String displayName = getDisplayName(player);
+        player.sendMessage("§e[NPC] " + displayName + "§f: " + message);
+        player.playSound(sound);
+    }
+
+    /**
+     * Gets the display name for this NPC for a specific player.
+     * Uses per-player chatName if available, otherwise falls back to default name.
+     */
+    public String getDisplayName(HypixelPlayer player) {
+        String perPlayerName = parameters.chatName(player);
+        return perPlayerName != null ? perPlayerName : getName();
+    }
 
     protected DialogueController dialogue() {
         return dialogueController;

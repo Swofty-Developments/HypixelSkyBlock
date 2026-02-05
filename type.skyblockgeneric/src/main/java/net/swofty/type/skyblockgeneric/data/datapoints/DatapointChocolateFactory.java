@@ -7,8 +7,12 @@ import net.swofty.commons.protocol.Serializer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import org.json.JSONObject;
 
+import org.json.JSONArray;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocolateFactory.ChocolateFactoryData> {
     private static final Serializer<ChocolateFactoryData> serializer = new Serializer<>() {
@@ -45,6 +49,16 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
             json.put("totalClicks", value.totalClicks);
             json.put("totalTimeTowerUsages", value.totalTimeTowerUsages);
 
+            // Found rabbits
+            JSONArray foundRabbitsArray = new JSONArray();
+            for (String rabbit : value.foundRabbits) {
+                foundRabbitsArray.put(rabbit);
+            }
+            json.put("foundRabbits", foundRabbitsArray);
+
+            // Shop stats
+            json.put("totalChocolateSpent", value.totalChocolateSpent);
+
             return json.toString();
         }
 
@@ -64,6 +78,14 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
                 }
             }
 
+            Set<String> foundRabbits = new HashSet<>();
+            if (jsonObject.has("foundRabbits")) {
+                JSONArray foundRabbitsArray = jsonObject.getJSONArray("foundRabbits");
+                for (int i = 0; i < foundRabbitsArray.length(); i++) {
+                    foundRabbits.add(foundRabbitsArray.getString(i));
+                }
+            }
+
             return new ChocolateFactoryData(
                     jsonObject.optLong("chocolate", 0L),
                     jsonObject.optLong("chocolateAllTime", 0L),
@@ -79,7 +101,9 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
                     jsonObject.optInt("coachJackrabbitLevel", 0),
                     employees,
                     jsonObject.optLong("totalClicks", 0L),
-                    jsonObject.optInt("totalTimeTowerUsages", 0)
+                    jsonObject.optInt("totalTimeTowerUsages", 0),
+                    foundRabbits,
+                    jsonObject.optLong("totalChocolateSpent", 0L)
             );
         }
 
@@ -108,7 +132,9 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
                     value.coachJackrabbitLevel,
                     clonedEmployees,
                     value.totalClicks,
-                    value.totalTimeTowerUsages
+                    value.totalTimeTowerUsages,
+                    new HashSet<>(value.foundRabbits),
+                    value.totalChocolateSpent
             );
         }
     };
@@ -151,6 +177,12 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
         private long totalClicks;
         private int totalTimeTowerUsages;
 
+        // Collection
+        private Set<String> foundRabbits;
+
+        // Shop stats
+        private long totalChocolateSpent;
+
         public ChocolateFactoryData() {
             this.chocolate = 0L;
             this.chocolateAllTime = 0L;
@@ -167,6 +199,8 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
             this.employees = new HashMap<>();
             this.totalClicks = 0L;
             this.totalTimeTowerUsages = 0;
+            this.foundRabbits = new HashSet<>();
+            this.totalChocolateSpent = 0L;
         }
 
         /**
@@ -327,6 +361,34 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
             if (chocolateAllTime >= 10_000_000L) return 2;        // 10M
             if (chocolateAllTime >= 1_000_000L) return 1;         // 1M
             return 0;
+        }
+
+        /**
+         * Adds a rabbit to the found collection
+         */
+        public void addFoundRabbit(String rabbitName) {
+            foundRabbits.add(rabbitName);
+        }
+
+        /**
+         * Checks if a rabbit has been found
+         */
+        public boolean hasFoundRabbit(String rabbitName) {
+            return foundRabbits.contains(rabbitName);
+        }
+
+        /**
+         * Gets the count of found rabbits
+         */
+        public int getFoundRabbitCount() {
+            return foundRabbits.size();
+        }
+
+        /**
+         * Adds to total chocolate spent (for shop milestones tracking)
+         */
+        public void addChocolateSpent(long amount) {
+            this.totalChocolateSpent += amount;
         }
     }
 

@@ -33,20 +33,29 @@ public enum ChocolateFactoryRank {
     }
 
     /**
-     * Gets the formatted hologram line for this rank.
+     * Gets the formatted hologram line for this rank using the rank's base level.
      * Format: §7[Lvl X] §{color}RankName
      * For UNEMPLOYED: §cUnemployed (no level)
      */
     public String getHologramLine() {
+        return getHologramLine(level);
+    }
+
+    /**
+     * Gets the formatted hologram line for this rank with a specific level.
+     * Format: §7[Lvl X] §{color}RankName
+     * For UNEMPLOYED: §cUnemployed (no level)
+     */
+    public String getHologramLine(int actualLevel) {
         if (this == UNEMPLOYED) {
             return color + name;
         }
-        return "§7[Lvl " + level + "] " + color + name;
+        return "§7[" + actualLevel + "] " + color + name;
     }
 
     /**
      * Gets the formatted chat name for this rank.
-     * Format: §{color}RankName
+     * Format: §{color}NpcName
      */
     public String getChatName(String npcName) {
         return color + npcName;

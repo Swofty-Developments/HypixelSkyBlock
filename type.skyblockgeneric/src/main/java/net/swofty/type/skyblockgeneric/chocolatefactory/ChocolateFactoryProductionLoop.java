@@ -1,30 +1,39 @@
 package net.swofty.type.skyblockgeneric.chocolatefactory;
 
-import net.minestom.server.MinecraftServer;
-import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-
 /**
- * Handles periodic chocolate production updates for all online players.
- * This runs every second to update chocolate amounts based on production rates.
+ * @deprecated Production is now calculated on-demand based on time elapsed since last update.
+ * This approach:
+ * - Works for offline production (calculates when player logs in or opens GUI)
+ * - Is more efficient (no constant ticking for all players)
+ * - Matches how Hypixel handles chocolate production
+ *
+ * Production is calculated in:
+ * - GUIChocolateFactory.setItems() - when GUI opens
+ * - GUIChocolateFactory.refreshItems() - while GUI is open
+ * - Any purchase/interaction that needs current chocolate amount
+ *
+ * The calculation uses lastUpdated timestamp to compute elapsed time and apply production rate.
  */
+@Deprecated
 public class ChocolateFactoryProductionLoop {
 
     /**
-     * Starts the chocolate factory production loop.
-     * Should be called during server initialization.
+     * @deprecated No longer needed. Production is calculated on-demand.
+     * This method is kept for backwards compatibility but does nothing.
      */
+    @Deprecated
     public static void start() {
-        MinecraftServer.getSchedulerManager().submitTask(() -> {
-            // Update chocolate production for all online players
-            SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
-                try {
-                    ChocolateFactoryHelper.updateProduction(player);
-                } catch (Exception e) {
-                    // Silently ignore errors to prevent loop from stopping
-                }
-            });
-            return TaskSchedule.seconds(1);
-        });
+        // Production is now calculated on-demand when:
+        // 1. Player opens Chocolate Factory GUI
+        // 2. GUI refreshes while open
+        // 3. Any chocolate-related action occurs
+        //
+        // This is handled by ChocolateFactoryHelper.updateProduction()
+        // which uses time-based calculation from lastUpdated timestamp.
+        //
+        // Benefits:
+        // - Works offline (production accumulates based on time)
+        // - More efficient (no server tick overhead)
+        // - Matches Hypixel's implementation
     }
 }

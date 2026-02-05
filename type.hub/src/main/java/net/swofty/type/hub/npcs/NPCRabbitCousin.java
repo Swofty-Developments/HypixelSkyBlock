@@ -33,7 +33,7 @@ public class NPCRabbitCousin extends HypixelNPC {
                     DatapointChocolateFactory.EmployeeData employee = data.getEmployees().get(NPC_NAME);
                     if (employee != null) {
                         ChocolateFactoryRank rank = ChocolateFactoryRank.fromLevel(employee.getLevel());
-                        return new String[]{rank.getHologramLine(), rank.getChatName(NPC_NAME), "§e§lCLICK"};
+                        return new String[]{rank.getHologramLine(employee.getLevel()), rank.getChatName(NPC_NAME), "§e§lCLICK"};
                     }
                 }
                 return new String[]{RANK.getHologramLine(), RANK.getChatName(NPC_NAME), "§e§lCLICK"};
@@ -61,6 +61,19 @@ public class NPCRabbitCousin extends HypixelNPC {
 
             @Override
             public String chatName() {
+                return RANK.getChatName(NPC_NAME);
+            }
+
+            @Override
+            public String chatName(HypixelPlayer player) {
+                if (player instanceof SkyBlockPlayer skyBlockPlayer) {
+                    DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(skyBlockPlayer);
+                    DatapointChocolateFactory.EmployeeData employee = data.getEmployees().get(NPC_NAME);
+                    if (employee != null) {
+                        ChocolateFactoryRank rank = ChocolateFactoryRank.fromLevel(employee.getLevel());
+                        return rank.getChatName(NPC_NAME);
+                    }
+                }
                 return RANK.getChatName(NPC_NAME);
             }
         });
