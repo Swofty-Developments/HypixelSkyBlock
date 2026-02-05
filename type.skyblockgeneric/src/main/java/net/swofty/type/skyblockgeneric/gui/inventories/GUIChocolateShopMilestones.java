@@ -1,16 +1,11 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.chocolatefactory.ChocolateFactoryHelper;
 import net.swofty.type.skyblockgeneric.chocolatefactory.ChocolateShopMilestone;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointChocolateFactory;
@@ -19,96 +14,53 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIChocolateShopMilestones extends HypixelInventoryGUI {
-    // Slot mapping for milestones (milestone number -> slot)
-    // Layout based on the original design (spiral pattern)
+public class GUIChocolateShopMilestones implements StatefulView<GUIChocolateShopMilestones.State> {
     private static final int[] MILESTONE_SLOTS = {
-            27, // 1
-            18, // 2
-            9,  // 3
-            0,  // 4
-            1,  // 5
-            2,  // 6
-            11, // 7
-            20, // 8
-            29, // 9
-            30, // 10
-            31, // 11
-            22, // 12
-            13, // 13
-            4,  // 14
-            5,  // 15
-            6,  // 16
-            15, // 17
-            24, // 18
-            33, // 19
-            34, // 20
-            35, // 21
-            26, // 22
-            17, // 23
-            8   // 24
+            27, 18, 9, 0, 1, 2, 11, 20, 29, 30, 31, 22,
+            13, 4, 5, 6, 15, 24, 33, 34, 35, 26, 17, 8
     };
 
-    public GUIChocolateShopMilestones() {
-        super("Chocolate Shop Milestones", InventoryType.CHEST_6_ROW);
+    public record State() {}
+
+    @Override
+    public State initialState() {
+        return new State();
     }
 
     @Override
-    public void setItems(InventoryGUIOpenEvent e) {
-        // Fill with black glass panes
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
+    public ViewConfiguration<State> configuration() {
+        return ViewConfiguration.withString((state, ctx) -> "Chocolate Shop Milestones", InventoryType.CHEST_6_ROW);
+    }
 
-        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
-        DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
-        long totalSpent = data.getTotalChocolateSpent();
+    @Override
+    public void layout(ViewLayout<State> layout, State state, ViewContext ctx) {
+        Components.fill(layout);
 
         // Set milestone items
         for (ChocolateShopMilestone milestone : ChocolateShopMilestone.values()) {
             int slot = MILESTONE_SLOTS[milestone.getNumber() - 1];
-            set(createMilestoneItem(slot, milestone, totalSpent));
+            layout.slot(slot, (s, c) -> {
+                SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+                DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+                long totalSpent = data.getTotalChocolateSpent();
+
+                if (milestone.isUnlocked(totalSpent)) {
+                    return createUnlockedMilestoneItem(milestone);
+                } else {
+                    return createLockedMilestoneItem(milestone, totalSpent);
+                }
+            });
         }
 
         // Go Back button (slot 48)
-        set(new GUIClickableItem(48) {
-            @Override
-            public void run(InventoryPreClickEvent event, HypixelPlayer p) {
-                new GUIChocolateShop().open((SkyBlockPlayer) p);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                List<String> lore = new ArrayList<>();
-                lore.add("§7To Chocolate Shop");
-                return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, lore);
-            }
-        });
+        layout.slot(48, (s, c) -> {
+            List<String> lore = new ArrayList<>();
+            lore.add("§7To Chocolate Shop");
+            return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, lore);
+        }, (click, c) -> GUIChocolateShop.open((SkyBlockPlayer) c.player()));
 
         // Close button (slot 49)
-        set(GUIClickableItem.getCloseItem(49));
-    }
-
-    private GUIItem createMilestoneItem(int slot, ChocolateShopMilestone milestone, long totalSpent) {
-        boolean unlocked = milestone.isUnlocked(totalSpent);
-
-        if (unlocked) {
-            // Show player head when unlocked
-            return new GUIItem(slot) {
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    return createUnlockedMilestoneItem(milestone);
-                }
-            };
-        } else {
-            // Show colored glass pane when locked
-            return new GUIItem(slot) {
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
-                    return createLockedMilestoneItem(milestone, data.getTotalChocolateSpent());
-                }
-            };
-        }
+        Components.close(layout, 49);
     }
 
     private ItemStack.Builder createUnlockedMilestoneItem(ChocolateShopMilestone milestone) {
@@ -179,7 +131,7 @@ public class GUIChocolateShopMilestones extends HypixelInventoryGUI {
     }
 
     private String createProgressBar(double progress) {
-        int filled = (int) (progress / 4); // 25 characters total, each represents 4%
+        int filled = (int) (progress / 4);
         int empty = 25 - filled;
 
         StringBuilder bar = new StringBuilder("§3§l§m");
@@ -220,21 +172,7 @@ public class GUIChocolateShopMilestones extends HypixelInventoryGUI {
         return number + suffixes[number % 10];
     }
 
-    @Override
-    public boolean allowHotkeying() {
-        return false;
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
+    public static void open(SkyBlockPlayer player) {
+        ViewNavigator.get(player).push(new GUIChocolateShopMilestones());
     }
 }

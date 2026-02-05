@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.chocolatefactory;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minestom.server.item.Material;
 
@@ -8,6 +9,7 @@ import net.minestom.server.item.Material;
  * Each milestone unlocks a special rabbit when reaching a certain all-time chocolate threshold.
  */
 @Getter
+@AllArgsConstructor
 public enum ChocolateMilestone {
     // Common milestones (White)
     MILESTONE_1(1, 1_000L, "Almond Amaretto Rabbit", "f", 1, 0.002,
@@ -75,18 +77,6 @@ public enum ChocolateMilestone {
     private final double multiplierBonus;
     private final String textureId;
     private final Material glassPaneMaterial;
-
-    ChocolateMilestone(int number, long requiredChocolate, String rabbitName, String colorCode,
-                       int chocolateBonus, double multiplierBonus, String textureId, Material glassPaneMaterial) {
-        this.number = number;
-        this.requiredChocolate = requiredChocolate;
-        this.rabbitName = rabbitName;
-        this.colorCode = colorCode;
-        this.chocolateBonus = chocolateBonus;
-        this.multiplierBonus = multiplierBonus;
-        this.textureId = textureId;
-        this.glassPaneMaterial = glassPaneMaterial;
-    }
 
     public String getRomanNumeral() {
         return toRoman(number);

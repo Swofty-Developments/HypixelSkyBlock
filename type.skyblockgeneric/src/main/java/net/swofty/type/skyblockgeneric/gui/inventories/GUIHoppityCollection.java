@@ -1,17 +1,13 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.click.Click;
-import net.minestom.server.inventory.Inventory;
+import lombok.Getter;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.chocolatefactory.ChocolateFactoryHelper;
 import net.swofty.type.skyblockgeneric.chocolatefactory.ChocolateRabbit;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointChocolateFactory;
@@ -20,11 +16,10 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class GUIHoppityCollection extends HypixelInventoryGUI {
+public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.State> {
     private static final String HOPPITY_TEXTURE = "b79e7f3341b672d9de6564cbaca052a6a723ea466a2e66af35ba1ba855f0d692";
     private static final String LOCATION_TEXTURE = "d7cc6687423d0570d556ac53e0676cb563bbdd9717cd8269bdebed6f6d4e7bf8";
 
-    // Rabbit display slots (7 per row, 4 rows)
     private static final int[] RABBIT_SLOTS = {
             10, 11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 25,
@@ -33,225 +28,156 @@ public class GUIHoppityCollection extends HypixelInventoryGUI {
     };
 
     private static final int RABBITS_PER_PAGE = RABBIT_SLOTS.length;
-    private static final int TOTAL_RABBITS = 512; // Total rabbits in Hypixel
+    private static final int TOTAL_RABBITS = 512;
 
-    private int currentPage;
-    private SortType sortType;
-    private FilterType filterType;
-
-    public GUIHoppityCollection() {
-        this(1, SortType.A_TO_Z, FilterType.NONE);
-    }
-
-    public GUIHoppityCollection(int page, SortType sortType, FilterType filterType) {
-        super(buildTitle(page, sortType, filterType), InventoryType.CHEST_6_ROW);
-        this.currentPage = page;
-        this.sortType = sortType;
-        this.filterType = filterType;
-    }
-
-    private static String buildTitle(int page, SortType sortType, FilterType filterType) {
-        // Calculate total pages based on filtered rabbits (approximation for title)
-        int totalRabbits = ChocolateRabbit.values().length;
-        int totalPages = Math.max(1, (int) Math.ceil(totalRabbits / (double) RABBITS_PER_PAGE));
-        return "(" + page + "/" + totalPages + ") Hoppity's Collection";
-    }
-
-    // Border slots (top row, bottom row, and left/right edges)
     private static final int[] BORDER_SLOTS = {
-            0, 1, 2, 3, 4, 5, 6, 7, 8,  // Top row
-            9, 17,                       // Row 2 edges
-            18, 26,                      // Row 3 edges
-            27, 35,                      // Row 4 edges
-            36, 44,                      // Row 5 edges
-            45, 46, 47, 48, 49, 50, 51, 52, 53  // Bottom row
+            0, 1, 2, 3, 4, 5, 6, 7, 8,
+            9, 17, 18, 26, 27, 35, 36, 44,
+            45, 46, 47, 48, 49, 50, 51, 52, 53
     };
 
+    public record State(int page, SortType sortType, FilterType filterType) {}
+
     @Override
-    public void setItems(InventoryGUIOpenEvent e) {
-        SkyBlockPlayer player = (SkyBlockPlayer) e.player();
+    public State initialState() {
+        return new State(1, SortType.A_TO_Z, FilterType.NONE);
+    }
+
+    @Override
+    public ViewConfiguration<State> configuration() {
+        return ViewConfiguration.withString((state, ctx) -> {
+            int totalRabbits = ChocolateRabbit.values().length;
+            int totalPages = Math.max(1, (int) Math.ceil(totalRabbits / (double) RABBITS_PER_PAGE));
+            return "(" + state.page() + "/" + totalPages + ") Hoppity's Collection";
+        }, InventoryType.CHEST_6_ROW);
+    }
+
+    @Override
+    public void layout(ViewLayout<State> layout, State state, ViewContext ctx) {
+        SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
         DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
         Set<String> foundRabbits = data.getFoundRabbits();
 
-        // Get and filter rabbits
-        List<ChocolateRabbit> rabbits = getFilteredAndSortedRabbits(foundRabbits);
+        List<ChocolateRabbit> rabbits = getFilteredAndSortedRabbits(foundRabbits, state.sortType(), state.filterType());
         int totalPages = Math.max(1, (int) Math.ceil(rabbits.size() / (double) RABBITS_PER_PAGE));
 
-        // Only fill border with black glass panes
+        // Fill border
         for (int slot : BORDER_SLOTS) {
-            set(new GUIItem(slot) {
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    return ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " ");
-                }
-            });
+            layout.slot(slot, (s, c) -> ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
         }
 
-        // Slot 4: Hoppity's Collection info
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                return createCollectionInfoItem((SkyBlockPlayer) p);
-            }
-        });
+        // Slot 4: Collection info
+        layout.slot(4, (s, c) -> createCollectionInfoItem((SkyBlockPlayer) c.player()));
 
-        // Set rabbit items for current page (empty slots will be AIR by default)
-        int startIndex = (currentPage - 1) * RABBITS_PER_PAGE;
+        // Rabbit items
+        int startIndex = (state.page() - 1) * RABBITS_PER_PAGE;
         for (int i = 0; i < RABBIT_SLOTS.length; i++) {
             int rabbitIndex = startIndex + i;
             int slot = RABBIT_SLOTS[i];
 
             if (rabbitIndex < rabbits.size()) {
                 ChocolateRabbit rabbit = rabbits.get(rabbitIndex);
-                boolean found = foundRabbits.contains(rabbit.name());
-                set(createRabbitItem(slot, rabbit, found));
+                layout.slot(slot, (s, c) -> {
+                    SkyBlockPlayer p = (SkyBlockPlayer) c.player();
+                    boolean found = ChocolateFactoryHelper.getData(p).getFoundRabbits().contains(rabbit.name());
+                    return createRabbitItem(rabbit, found);
+                });
             }
-            // Empty slots are left as AIR (no item)
         }
 
         // Slot 47: Rabbit Locations
-        set(new GUIClickableItem(47) {
-            @Override
-            public void run(InventoryPreClickEvent event, HypixelPlayer p) {
-                // TODO: Cycle through location filters
-                p.sendMessage("§7Rabbit Locations filter coming soon!");
-            }
+        layout.slot(47, (s, c) -> {
+            List<String> lore = new ArrayList<>();
+            lore.add("§7Each rabbit has a specific location");
+            lore.add("§7on a specific island where it can be");
+            lore.add("§7found, just for fun.");
+            lore.add("");
+            lore.add("§7The §9Hotspot §7of a Rabbit means that");
+            lore.add("§7this season they have a §a50% §7higher");
+            lore.add("§7chance to be found on this specific");
+            lore.add("§7island.");
+            lore.add("");
+            lore.add("§6Resident §7rabbits however, can §cONLY");
+            lore.add("§7be found on their respective islands.");
+            lore.add("");
+            lore.add("§7Currently selected: §aAll Rabbits");
+            lore.add("");
+            lore.add("§bRight-click to go backwards!");
+            lore.add("§eClick to cycle!");
 
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                List<String> lore = new ArrayList<>();
-                lore.add("§7Each rabbit has a specific location");
-                lore.add("§7on a specific island where it can be");
-                lore.add("§7found, just for fun.");
-                lore.add("");
-                lore.add("§7The §9Hotspot §7of a Rabbit means that");
-                lore.add("§7this season they have a §a50% §7higher");
-                lore.add("§7chance to be found on this specific");
-                lore.add("§7island.");
-                lore.add("");
-                lore.add("§6Resident §7rabbits however, can §cONLY");
-                lore.add("§7be found on their respective islands.");
-                lore.add("");
-                lore.add("§7Currently selected: §aAll Rabbits");
-                lore.add("");
-                lore.add("§bRight-click to go backwards!");
-                lore.add("§eClick to cycle!");
-
-                return ItemStackCreator.getStackHead("§9Rabbit Locations", LOCATION_TEXTURE, 1, lore);
-            }
-        });
+            return ItemStackCreator.getStackHead("§9Rabbit Locations", LOCATION_TEXTURE, 1, lore);
+        }, (click, c) -> c.player().sendMessage("§7Rabbit Locations filter coming soon!"));
 
         // Slot 48: Go Back
-        set(new GUIClickableItem(48) {
-            @Override
-            public void run(InventoryPreClickEvent event, HypixelPlayer p) {
-                GUIChocolateFactory.open((SkyBlockPlayer) p);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                List<String> lore = new ArrayList<>();
-                lore.add("§7To Chocolate Factory");
-                return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, lore);
-            }
-        });
+        layout.slot(48, (s, c) -> {
+            List<String> lore = new ArrayList<>();
+            lore.add("§7To Chocolate Factory");
+            return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, lore);
+        }, (click, c) -> GUIChocolateFactory.open((SkyBlockPlayer) c.player()));
 
         // Slot 49: Close
-        set(GUIClickableItem.getCloseItem(49));
+        Components.close(layout, 49);
 
         // Slot 50: Sort
-        int finalTotalPages = totalPages;
-        set(new GUIClickableItem(50) {
-            @Override
-            public void run(InventoryPreClickEvent event, HypixelPlayer p) {
-                boolean isRightClick = event.getClick() instanceof Click.Right;
-                SortType newSort = isRightClick
-                        ? sortType.previous()
-                        : sortType.next();
-                new GUIHoppityCollection(1, newSort, filterType).open((SkyBlockPlayer) p);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                List<String> lore = new ArrayList<>();
-                lore.add("");
-                for (SortType type : SortType.values()) {
-                    if (type == sortType) {
-                        lore.add("§b▶ " + type.getDisplayName());
-                    } else {
-                        lore.add("§7  " + type.getDisplayName());
-                    }
+        layout.slot(50, (s, c) -> {
+            List<String> lore = new ArrayList<>();
+            lore.add("");
+            for (SortType type : SortType.values()) {
+                if (type == s.sortType()) {
+                    lore.add("§b▶ " + type.getDisplayName());
+                } else {
+                    lore.add("§7  " + type.getDisplayName());
                 }
-                lore.add("");
-                lore.add("§bRight-click to go backwards!");
-                lore.add("§eClick to switch sort!");
-
-                return ItemStackCreator.getStack("§aSort", Material.HOPPER, 1, lore);
             }
+            lore.add("");
+            lore.add("§bRight-click to go backwards!");
+            lore.add("§eClick to switch sort!");
+
+            return ItemStackCreator.getStack("§aSort", Material.HOPPER, 1, lore);
+        }, (click, c) -> {
+            boolean isRightClick = click.click() instanceof Click.Right;
+            SortType newSort = isRightClick ? state.sortType().previous() : state.sortType().next();
+            c.session(State.class).setState(new State(1, newSort, state.filterType()));
         });
 
         // Slot 51: Filter
-        set(new GUIClickableItem(51) {
-            @Override
-            public void run(InventoryPreClickEvent event, HypixelPlayer p) {
-                boolean isRightClick = event.getClick() instanceof Click.Right;
-                FilterType newFilter = isRightClick
-                        ? filterType.previous()
-                        : filterType.next();
-                new GUIHoppityCollection(1, sortType, newFilter).open((SkyBlockPlayer) p);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                List<String> lore = new ArrayList<>();
-                lore.add("");
-                for (FilterType type : FilterType.values()) {
-                    if (type == filterType) {
-                        lore.add("§a▶ " + type.getDisplayName());
-                    } else {
-                        lore.add("§7  " + type.getDisplayName());
-                    }
+        layout.slot(51, (s, c) -> {
+            List<String> lore = new ArrayList<>();
+            lore.add("");
+            for (FilterType type : FilterType.values()) {
+                if (type == s.filterType()) {
+                    lore.add("§a▶ " + type.getDisplayName());
+                } else {
+                    lore.add("§7  " + type.getDisplayName());
                 }
-                lore.add("");
-                lore.add("§bRight-click to go backwards!");
-                lore.add("§eClick to switch!");
-
-                return ItemStackCreator.getStack("§aFilter", Material.ENDER_EYE, 1, lore);
             }
+            lore.add("");
+            lore.add("§bRight-click to go backwards!");
+            lore.add("§eClick to switch!");
+
+            return ItemStackCreator.getStack("§aFilter", Material.ENDER_EYE, 1, lore);
+        }, (click, c) -> {
+            boolean isRightClick = click.click() instanceof Click.Right;
+            FilterType newFilter = isRightClick ? state.filterType().previous() : state.filterType().next();
+            c.session(State.class).setState(new State(1, state.sortType(), newFilter));
         });
 
-        // Slot 53: Next Page (if applicable)
-        if (currentPage < totalPages) {
-            set(new GUIClickableItem(53) {
-                @Override
-                public void run(InventoryPreClickEvent event, HypixelPlayer p) {
-                    new GUIHoppityCollection(currentPage + 1, sortType, filterType).open((SkyBlockPlayer) p);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    List<String> lore = new ArrayList<>();
-                    lore.add("§ePage " + (currentPage + 1));
-                    return ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1, lore);
-                }
-            });
+        // Slot 53: Next Page
+        if (state.page() < totalPages) {
+            layout.slot(53, (s, c) -> {
+                List<String> lore = new ArrayList<>();
+                lore.add("§ePage " + (s.page() + 1));
+                return ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1, lore);
+            }, (click, c) -> c.session(State.class).setState(new State(state.page() + 1, state.sortType(), state.filterType())));
         }
 
-        // Slot 45: Previous Page (if applicable)
-        if (currentPage > 1) {
-            set(new GUIClickableItem(45) {
-                @Override
-                public void run(InventoryPreClickEvent event, HypixelPlayer p) {
-                    new GUIHoppityCollection(currentPage - 1, sortType, filterType).open((SkyBlockPlayer) p);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    List<String> lore = new ArrayList<>();
-                    lore.add("§ePage " + (currentPage - 1));
-                    return ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1, lore);
-                }
-            });
+        // Slot 45: Previous Page
+        if (state.page() > 1) {
+            layout.slot(45, (s, c) -> {
+                List<String> lore = new ArrayList<>();
+                lore.add("§ePage " + (s.page() - 1));
+                return ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1, lore);
+            }, (click, c) -> c.session(State.class).setState(new State(state.page() - 1, state.sortType(), state.filterType())));
         }
     }
 
@@ -261,7 +187,6 @@ public class GUIHoppityCollection extends HypixelInventoryGUI {
         int found = foundRabbits.size();
         double percentage = (found / (double) TOTAL_RABBITS) * 100;
 
-        // Calculate bonuses
         int totalChocolate = 0;
         double totalMultiplier = 0;
         for (String rabbitName : foundRabbits) {
@@ -299,72 +224,59 @@ public class GUIHoppityCollection extends HypixelInventoryGUI {
         return ItemStackCreator.getStackHead("§aHoppity's Collection", HOPPITY_TEXTURE, 1, lore);
     }
 
-    private GUIItem createRabbitItem(int slot, ChocolateRabbit rabbit, boolean found) {
-        return new GUIItem(slot) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                List<String> lore = new ArrayList<>();
+    private ItemStack.Builder createRabbitItem(ChocolateRabbit rabbit, boolean found) {
+        List<String> lore = new ArrayList<>();
 
-                // Bonus info
-                if (rabbit.getRarity() == ChocolateRabbit.Rarity.LEGENDARY ||
-                        rabbit.getRarity() == ChocolateRabbit.Rarity.DIVINE ||
-                        rabbit.getRarity() == ChocolateRabbit.Rarity.MYTHIC) {
-                    lore.add("§7Grants §6+" + String.format("%.2fx", rabbit.getMultiplierBonus()) + " Chocolate §7per second");
-                    lore.add("§7to your §6Chocolate Factory§7.");
-                } else {
-                    lore.add("§7Grants §6+" + rabbit.getChocolateBonus() + " Chocolate §7and §6" +
-                            String.format("%.3fx", rabbit.getMultiplierBonus()));
-                    lore.add("§6Chocolate §7per second to your");
-                    lore.add("§6Chocolate Factory§7.");
-                }
+        if (rabbit.getRarity() == ChocolateRabbit.Rarity.LEGENDARY ||
+                rabbit.getRarity() == ChocolateRabbit.Rarity.DIVINE ||
+                rabbit.getRarity() == ChocolateRabbit.Rarity.MYTHIC) {
+            lore.add("§7Grants §6+" + String.format("%.2fx", rabbit.getMultiplierBonus()) + " Chocolate §7per second");
+            lore.add("§7to your §6Chocolate Factory§7.");
+        } else {
+            lore.add("§7Grants §6+" + rabbit.getChocolateBonus() + " Chocolate §7and §6" +
+                    String.format("%.3fx", rabbit.getMultiplierBonus()));
+            lore.add("§6Chocolate §7per second to your");
+            lore.add("§6Chocolate Factory§7.");
+        }
+        lore.add("");
+
+        if (rabbit.getObtainMethod() != null) {
+            lore.add("§7" + rabbit.getObtainMethod());
+            lore.add("");
+        }
+
+        if (rabbit.getRequirement() != null) {
+            lore.add("§c✖ §7Requirement");
+            lore.add("§7" + rabbit.getRequirement());
+            lore.add("");
+            if (!found) {
+                lore.add("§8You cannot find this rabbit until you");
+                lore.add("§8meet the requirement!");
                 lore.add("");
-
-                // Obtain method if exists
-                if (rabbit.getObtainMethod() != null) {
-                    lore.add("§7" + rabbit.getObtainMethod());
-                    lore.add("");
-                }
-
-                // Requirement if exists
-                if (rabbit.getRequirement() != null) {
-                    lore.add("§c✖ §7Requirement");
-                    lore.add("§7" + rabbit.getRequirement());
-                    lore.add("");
-                    if (!found) {
-                        lore.add("§8You cannot find this rabbit until you");
-                        lore.add("§8meet the requirement!");
-                        lore.add("");
-                    }
-                }
-
-                // Found status
-                if (found) {
-                    lore.add("§a§lFOUND");
-                } else {
-                    lore.add("§8You have not found this rabbit yet!");
-                }
-
-                // Location if exists (show as Resident label after found status)
-                if (rabbit.getLocation() != null) {
-                    lore.add(rabbit.getResidentLabel());
-                }
-                lore.add("");
-
-                // Rarity
-                lore.add(rabbit.getRarity().getFormattedName());
-
-                if (found) {
-                    // Use a default rabbit head texture for found rabbits
-                    return ItemStackCreator.getStackHead(rabbit.getFormattedName(),
-                            "b79e7f3341b672d9de6564cbaca052a6a723ea466a2e66af35ba1ba855f0d692", 1, lore);
-                } else {
-                    return ItemStackCreator.getStack(rabbit.getFormattedName(), Material.GRAY_DYE, 1, lore);
-                }
             }
-        };
+        }
+
+        if (found) {
+            lore.add("§a§lFOUND");
+        } else {
+            lore.add("§8You have not found this rabbit yet!");
+        }
+
+        if (rabbit.getLocation() != null) {
+            lore.add(rabbit.getResidentLabel());
+        }
+        lore.add("");
+        lore.add(rabbit.getRarity().getFormattedName());
+
+        if (found) {
+            return ItemStackCreator.getStackHead(rabbit.getFormattedName(),
+                    "b79e7f3341b672d9de6564cbaca052a6a723ea466a2e66af35ba1ba855f0d692", 1, lore);
+        } else {
+            return ItemStackCreator.getStack(rabbit.getFormattedName(), Material.GRAY_DYE, 1, lore);
+        }
     }
 
-    private List<ChocolateRabbit> getFilteredAndSortedRabbits(Set<String> foundRabbits) {
+    private List<ChocolateRabbit> getFilteredAndSortedRabbits(Set<String> foundRabbits, SortType sortType, FilterType filterType) {
         List<ChocolateRabbit> rabbits = Arrays.stream(ChocolateRabbit.values())
                 .filter(rabbit -> {
                     boolean found = foundRabbits.contains(rabbit.name());
@@ -378,7 +290,6 @@ public class GUIHoppityCollection extends HypixelInventoryGUI {
                 })
                 .collect(Collectors.toList());
 
-        // Sort
         switch (sortType) {
             case A_TO_Z -> rabbits.sort(Comparator.comparing(ChocolateRabbit::getDisplayName));
             case Z_TO_A -> rabbits.sort(Comparator.comparing(ChocolateRabbit::getDisplayName).reversed());
@@ -406,24 +317,11 @@ public class GUIHoppityCollection extends HypixelInventoryGUI {
         return bar.toString();
     }
 
-    @Override
-    public boolean allowHotkeying() {
-        return false;
+    public static void open(SkyBlockPlayer player) {
+        ViewNavigator.get(player).push(new GUIHoppityCollection());
     }
 
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
-
+    @Getter
     public enum SortType {
         A_TO_Z("A to Z"),
         Z_TO_A("Z to A"),
@@ -434,10 +332,6 @@ public class GUIHoppityCollection extends HypixelInventoryGUI {
 
         SortType(String displayName) {
             this.displayName = displayName;
-        }
-
-        public String getDisplayName() {
-            return displayName;
         }
 
         public SortType next() {
@@ -451,6 +345,7 @@ public class GUIHoppityCollection extends HypixelInventoryGUI {
         }
     }
 
+    @Getter
     public enum FilterType {
         NONE("None"),
         FOUND("Rabbits Found"),
@@ -462,10 +357,6 @@ public class GUIHoppityCollection extends HypixelInventoryGUI {
 
         FilterType(String displayName) {
             this.displayName = displayName;
-        }
-
-        public String getDisplayName() {
-            return displayName;
         }
 
         public FilterType next() {

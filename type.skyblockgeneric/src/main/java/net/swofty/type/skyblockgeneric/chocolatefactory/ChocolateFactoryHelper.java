@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.chocolatefactory;
 
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointChocolateFactory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import lombok.experimental.UtilityClass;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -11,6 +12,7 @@ import java.util.Locale;
  * Helper class for Chocolate Factory operations.
  * Provides utility methods for production calculation, formatting, and player interactions.
  */
+@UtilityClass
 public class ChocolateFactoryHelper {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance(Locale.US);
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0.0");
