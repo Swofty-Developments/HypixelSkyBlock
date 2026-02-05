@@ -5,6 +5,9 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.skyblockgeneric.chocolatefactory.ChocolateFactoryHelper;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointChocolateFactory;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
@@ -15,20 +18,35 @@ public class NPCRabbitSis extends HypixelNPC {
     public NPCRabbitSis() {
         super(new HumanConfiguration() {
             @Override
+            public boolean visible(HypixelPlayer player) {
+                if (player instanceof SkyBlockPlayer skyBlockPlayer) {
+                    DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(skyBlockPlayer);
+                    return data.getEmployees().containsKey(NPC_NAME);
+                }
+                return false;
+            }
+
+            @Override
             public String[] holograms(HypixelPlayer player) {
+                if (player instanceof SkyBlockPlayer skyBlockPlayer) {
+                    DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(skyBlockPlayer);
+                    DatapointChocolateFactory.EmployeeData employee = data.getEmployees().get(NPC_NAME);
+                    if (employee != null) {
+                        ChocolateFactoryRank rank = ChocolateFactoryRank.fromLevel(employee.getLevel());
+                        return new String[]{rank.getHologramLine(), rank.getChatName(NPC_NAME), "§e§lCLICK"};
+                    }
+                }
                 return new String[]{RANK.getHologramLine(), RANK.getChatName(NPC_NAME), "§e§lCLICK"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                // TODO: Add skin signature
                 return "";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                // TODO: Add skin texture
-                return "";
+                return "ewogICJ0aW1lc3RhbXAiIDogMTcxMjg0NzA5MzAxMSwKICAicHJvZmlsZUlkIiA6ICIyMWNjMzkxZmNkMjc0NzY5OTg5Y2M3M2VjYWRiNTE3YiIsCiAgInByb2ZpbGVOYW1lIiA6ICJHT1NUTFk5NyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9mZDA3NmUwZTNkNDA3MmQwZmZmZWUwYTg3YTVkNzI2ZmMzNGIyYmNlYzM4YzI2NGZiOWI2Nzg3MWE4ZWFkNjMzIgogICAgfQogIH0KfQ==";
             }
 
             @Override

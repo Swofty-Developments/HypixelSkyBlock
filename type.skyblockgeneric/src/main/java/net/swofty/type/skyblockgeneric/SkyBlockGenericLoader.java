@@ -80,6 +80,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockScoreboard;
 import net.swofty.type.skyblockgeneric.user.StashReminder;
+import net.swofty.type.skyblockgeneric.chocolatefactory.ChocolateFactoryProductionLoop;
 import net.swofty.type.generic.user.categories.CustomGroups;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
@@ -326,6 +327,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         // Start repeaters
         SkyBlockScoreboard.start();
         StashReminder.start(MinecraftServer.getSchedulerManager());
+        ChocolateFactoryProductionLoop.start();
         PlayerHolograms.updateAll(MinecraftServer.getSchedulerManager());
 
         /**

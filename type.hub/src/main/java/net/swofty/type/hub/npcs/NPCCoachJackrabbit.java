@@ -5,6 +5,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.skyblockgeneric.gui.inventories.GUIChocolateFactory;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCCoachJackrabbit extends HypixelNPC {
 
@@ -17,14 +19,12 @@ public class NPCCoachJackrabbit extends HypixelNPC {
 
             @Override
             public String signature(HypixelPlayer player) {
-                // TODO: Add skin signature
                 return "";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                // TODO: Add skin texture
-                return "";
+                return "ewogICJ0aW1lc3RhbXAiIDogMTcxMzAyMjkyOTYwNCwKICAicHJvZmlsZUlkIiA6ICI2NGY0MGFiNzFmM2E0NGZiYjg0N2I5ZWFhOWZjNDRlNSIsCiAgInByb2ZpbGVOYW1lIiA6ICJvZGF2aWRjZXNhciIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9iYzBjYzY3ZTc5YzIyOGU1NDFlNjhhZWIxZDgxZWQ3YWY1MTE2NjYyMmFkNGRiOTQxN2Q3YTI5ZDFiODlhZjk1IgogICAgfQogIH0KfQ==";
             }
 
             @Override
@@ -47,7 +47,7 @@ public class NPCCoachJackrabbit extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
-        // TODO: Add interaction logic
+        new GUIChocolateFactory().open((SkyBlockPlayer) e.player());
     }
 
     @Override

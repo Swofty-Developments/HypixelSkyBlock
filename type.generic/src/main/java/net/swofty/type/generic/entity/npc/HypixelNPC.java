@@ -85,9 +85,22 @@ public abstract class HypixelNPC {
 			HypixelNPC.getRegisteredNPCs().forEach((npc) -> {
 				// If the main username can't be used (over 16 chars), use a blank space instead and use holograms for all lines
 				boolean playerHasNPC = cache.getEntityImpls().containsKey(npc);
+				NPCConfiguration config = npc.getParameters();
+
+				// Check visibility - if not visible, skip creation or remove existing
+				if (!config.visible(player)) {
+					if (playerHasNPC) {
+						// Remove NPC that is no longer visible
+						Entity entity = cache.get(npc).getValue();
+						PlayerHolograms.ExternalPlayerHologram holo = cache.get(npc).getKey();
+						entity.remove();
+						PlayerHolograms.removeExternalPlayerHologram(holo);
+						cache.remove(npc);
+					}
+					return;
+				}
 
 				if (!playerHasNPC) {
-					NPCConfiguration config = npc.getParameters();
 					String[] holograms = config.holograms(player);
 					Pos position = config.position(player);
 
@@ -141,7 +154,6 @@ public abstract class HypixelNPC {
 				Entity entity = cache.get(npc).getValue();
 				PlayerHolograms.ExternalPlayerHologram holo = cache.get(npc).getKey();
 
-				NPCConfiguration config = npc.getParameters();
 				Pos npcPosition = config.position(player);
 				String[] npcHolograms = config.holograms(player);
 

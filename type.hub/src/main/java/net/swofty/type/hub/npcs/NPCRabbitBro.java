@@ -5,6 +5,9 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.skyblockgeneric.chocolatefactory.ChocolateFactoryHelper;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointChocolateFactory;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
@@ -15,20 +18,32 @@ public class NPCRabbitBro extends HypixelNPC {
     public NPCRabbitBro() {
         super(new HumanConfiguration() {
             @Override
+            public boolean visible(HypixelPlayer player) {
+                // Rabbit Bro is always visible (unlocked by default)
+                return true;
+            }
+
+            @Override
             public String[] holograms(HypixelPlayer player) {
+                if (player instanceof SkyBlockPlayer skyBlockPlayer) {
+                    DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(skyBlockPlayer);
+                    DatapointChocolateFactory.EmployeeData employee = data.getEmployees().get(NPC_NAME);
+                    if (employee != null) {
+                        ChocolateFactoryRank rank = ChocolateFactoryRank.fromLevel(employee.getLevel());
+                        return new String[]{rank.getHologramLine(), rank.getChatName(NPC_NAME), "§e§lCLICK"};
+                    }
+                }
                 return new String[]{RANK.getHologramLine(), RANK.getChatName(NPC_NAME), "§e§lCLICK"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                // TODO: Add skin signature
                 return "";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                // TODO: Add skin texture
-                return "";
+                return "ewogICJ0aW1lc3RhbXAiIDogMTcxMjU5NDI0NjM2MywKICAicHJvZmlsZUlkIiA6ICJjZjc4YzFkZjE3ZTI0Y2Q5YTIxYmU4NWQ0NDk5ZWE4ZiIsCiAgInByb2ZpbGVOYW1lIiA6ICJNYXR0c0FybW9yU3RhbmRzIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzI4NzkzNGJkZDlkZjI3MDViMjUxYmI5OTdlMDI5YjE4YzFlOTRkZjEyOTkyYjgxMDdlNzQ0OTdiMjA1Y2E3ZTgiCiAgICB9CiAgfQp9";
             }
 
             @Override

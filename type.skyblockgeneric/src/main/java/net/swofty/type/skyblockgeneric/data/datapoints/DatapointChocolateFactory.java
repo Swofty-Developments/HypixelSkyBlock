@@ -19,6 +19,7 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
             json.put("chocolate", value.chocolate);
             json.put("chocolateAllTime", value.chocolateAllTime);
             json.put("lastUpdated", value.lastUpdated);
+            json.put("partialChocolate", value.partialChocolate);
 
             // Upgrades
             json.put("timeTowerLevel", value.timeTowerLevel);
@@ -67,6 +68,7 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
                     jsonObject.optLong("chocolate", 0L),
                     jsonObject.optLong("chocolateAllTime", 0L),
                     jsonObject.optLong("lastUpdated", System.currentTimeMillis()),
+                    jsonObject.optDouble("partialChocolate", 0.0),
                     jsonObject.optInt("timeTowerLevel", 0),
                     jsonObject.optInt("timeTowerCharges", 0),
                     jsonObject.optLong("timeTowerLastUsed", 0L),
@@ -95,6 +97,7 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
                     value.chocolate,
                     value.chocolateAllTime,
                     value.lastUpdated,
+                    value.partialChocolate,
                     value.timeTowerLevel,
                     value.timeTowerCharges,
                     value.timeTowerLastUsed,
@@ -129,6 +132,7 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
         private long chocolate;
         private long chocolateAllTime;
         private long lastUpdated;
+        private double partialChocolate; // Accumulates fractional chocolate production
 
         // Upgrades
         private int timeTowerLevel;
@@ -151,6 +155,7 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
             this.chocolate = 0L;
             this.chocolateAllTime = 0L;
             this.lastUpdated = System.currentTimeMillis();
+            this.partialChocolate = 0.0;
             this.timeTowerLevel = 0;
             this.timeTowerCharges = 0;
             this.timeTowerLastUsed = 0L;
@@ -275,8 +280,16 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
             double secondsPassed = (now - lastUpdated) / 1000.0;
 
             if (secondsPassed > 0) {
-                long produced = (long) (getChocolatePerSecond() * secondsPassed);
-                addChocolate(produced);
+                // Accumulate fractional production
+                partialChocolate += getChocolatePerSecond() * secondsPassed;
+
+                // Only add whole chocolate
+                long wholeChocolate = (long) partialChocolate;
+                if (wholeChocolate > 0) {
+                    addChocolate(wholeChocolate);
+                    partialChocolate -= wholeChocolate; // Keep the fractional part
+                }
+
                 lastUpdated = now;
             }
         }
@@ -326,10 +339,10 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
 
         /**
          * Gets production per second for this employee
-         * Production scales with level
+         * Production = baseProduction * level
          */
         public double getProductionPerSecond() {
-            return baseProduction * (1 + (level - 1) * 0.5);
+            return baseProduction * level;
         }
     }
 }

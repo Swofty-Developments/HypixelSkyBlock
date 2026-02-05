@@ -457,6 +457,9 @@ public class SkyBlockDataHandler extends DataHandler {
 
         COLLECTED_MOB_TYPE_REWARDS("collected_mob_type_rewards", false, false, false,
                 DatapointCollectedMobTypeRewards.class, new DatapointCollectedMobTypeRewards("collected_mob_type_rewards")),
+
+        CHOCOLATE_FACTORY("chocolate_factory", false, false, false,
+                DatapointChocolateFactory.class, new DatapointChocolateFactory("chocolate_factory")),
         ;
 
         @Getter private final String key;
