@@ -88,30 +88,127 @@ public class ChocolateFactoryHelper {
 
     /**
      * Gets the upgrade cost for Rabbit Barn
+     * Level 1 is unlocked by default (free)
+     * Level 2 costs 5,000 Chocolate
+     * Subsequent levels: floor(5000 × 1.05^(L-2)) where L is target level
      */
     public static long getRabbitBarnCost(int currentLevel) {
-        return (long) (500 * Math.pow(2.5, currentLevel));
+        // Level 1 is free (unlocked by default)
+        if (currentLevel == 0) {
+            return 0;
+        }
+        // Cost formula: 5000 × 1.05^(currentLevel-1), rounded
+        return Math.round(5000 * Math.pow(1.05, currentLevel - 1));
     }
 
     /**
      * Gets the upgrade cost for Rabbit Shrine
+     * Max level is 20, providing 40% extra chance for higher rarity rabbits
      */
     public static long getRabbitShrineCost(int currentLevel) {
-        return (long) (1000 * Math.pow(3, currentLevel));
+        // Cost to upgrade TO level (currentLevel + 1)
+        return switch (currentLevel) {
+            case 0 -> 10_000_000L;   // To level 1
+            case 1 -> 20_000_000L;   // To level 2
+            case 2 -> 30_000_000L;   // To level 3
+            case 3 -> 40_000_000L;   // To level 4
+            case 4 -> 60_000_000L;   // To level 5
+            case 5 -> 80_000_000L;   // To level 6
+            case 6 -> 100_000_000L;  // To level 7
+            case 7 -> 120_000_000L;  // To level 8
+            case 8 -> 150_000_000L;  // To level 9
+            case 9 -> 200_000_000L;  // To level 10
+            case 10 -> 250_000_000L; // To level 11
+            case 11 -> 300_000_000L; // To level 12
+            case 12 -> 350_000_000L; // To level 13
+            case 13 -> 400_000_000L; // To level 14
+            case 14 -> 450_000_000L; // To level 15
+            case 15 -> 500_000_000L; // To level 16
+            case 16 -> 550_000_000L; // To level 17
+            case 17 -> 600_000_000L; // To level 18
+            case 18 -> 650_000_000L; // To level 19
+            case 19 -> 700_000_000L; // To level 20
+            default -> 0L;           // Already maxed
+        };
     }
 
     /**
-     * Gets the upgrade cost for Time Tower
+     * Gets the upgrade cost for Time Tower based on prestige level
+     * Level 1 is unlocked by default (free)
+     */
+    public static long getTimeTowerCost(int currentLevel, int prestigeLevel) {
+        // Level 1 is free (unlocked by default)
+        if (currentLevel == 0) {
+            return 0;
+        }
+
+        // Base cost depends on prestige (Factory II = prestige 1, Factory III = prestige 2, etc.)
+        long baseCost = switch (prestigeLevel) {
+            case 1 -> 5_500_000L;  // Factory II
+            case 2 -> 6_000_000L;  // Factory III
+            case 3 -> 6_500_000L;  // Factory IV
+            case 4 -> 7_000_000L;  // Factory V
+            default -> 7_500_000L; // Factory VI+
+        };
+
+        // Multiplier for each level (upgrading TO level currentLevel+1)
+        int multiplier = switch (currentLevel) {
+            case 1 -> 1;   // To level 2
+            case 2 -> 2;   // To level 3
+            case 3 -> 3;   // To level 4
+            case 4 -> 4;   // To level 5
+            case 5 -> 6;   // To level 6
+            case 6 -> 8;   // To level 7
+            case 7 -> 10;  // To level 8
+            case 8 -> 12;  // To level 9
+            case 9 -> 14;  // To level 10
+            case 10 -> 16; // To level 11
+            case 11 -> 20; // To level 12
+            case 12 -> 24; // To level 13
+            case 13 -> 30; // To level 14
+            case 14 -> 40; // To level 15
+            default -> 40;
+        };
+
+        return baseCost * multiplier;
+    }
+
+    /**
+     * Gets the upgrade cost for Time Tower (legacy, uses minimum prestige)
      */
     public static long getTimeTowerCost(int currentLevel) {
-        return (long) (2500 * Math.pow(2, currentLevel));
+        return getTimeTowerCost(currentLevel, 1);
     }
 
     /**
      * Gets the upgrade cost for Coach Jackrabbit
+     * Max level is 20, providing +0.2x CpS multiplier
      */
     public static long getCoachJackrabbitCost(int currentLevel) {
-        return (long) (5000 * Math.pow(1.5, currentLevel));
+        // Cost to upgrade TO level (currentLevel + 1)
+        return switch (currentLevel) {
+            case 0 -> 2_200_000L;    // To level 1
+            case 1 -> 3_900_000L;    // To level 2
+            case 2 -> 5_300_000L;    // To level 3
+            case 3 -> 7_200_000L;    // To level 4
+            case 4 -> 9_700_000L;    // To level 5
+            case 5 -> 13_000_000L;   // To level 6
+            case 6 -> 18_000_000L;   // To level 7
+            case 7 -> 24_000_000L;   // To level 8
+            case 8 -> 32_000_000L;   // To level 9
+            case 9 -> 43_000_000L;   // To level 10
+            case 10 -> 59_000_000L;  // To level 11
+            case 11 -> 79_000_000L;  // To level 12
+            case 12 -> 110_000_000L; // To level 13
+            case 13 -> 140_000_000L; // To level 14
+            case 14 -> 190_000_000L; // To level 15
+            case 15 -> 260_000_000L; // To level 16
+            case 16 -> 350_000_000L; // To level 17
+            case 17 -> 480_000_000L; // To level 18
+            case 18 -> 650_000_000L; // To level 19
+            case 19 -> 870_000_000L; // To level 20
+            default -> 0L;           // Already maxed
+        };
     }
 
     /**
@@ -242,7 +339,7 @@ public class ChocolateFactoryHelper {
             case HAND_BAKED_CHOCOLATE -> getHandBakedChocolateCost(data.getHandBakedChocolateLevel());
             case RABBIT_BARN -> getRabbitBarnCost(data.getRabbitBarnLevel());
             case RABBIT_SHRINE -> getRabbitShrineCost(data.getRabbitShrineLevel());
-            case TIME_TOWER -> getTimeTowerCost(data.getTimeTowerLevel());
+            case TIME_TOWER -> getTimeTowerCost(data.getTimeTowerLevel(), data.getPrestigeLevel());
             case COACH_JACKRABBIT -> getCoachJackrabbitCost(data.getCoachJackrabbitLevel());
         };
 

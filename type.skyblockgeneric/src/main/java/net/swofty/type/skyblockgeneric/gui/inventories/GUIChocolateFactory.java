@@ -141,10 +141,19 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
             @Override
             public void run(InventoryPreClickEvent event, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+
+                // Check max level (247)
+                if (data.getRabbitBarnLevel() >= 247) {
+                    player.sendMessage("§cYour Rabbit Barn is already at maximum capacity!");
+                    player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                    return;
+                }
+
                 if (ChocolateFactoryHelper.purchaseUpgrade(player, ChocolateFactoryHelper.UpgradeType.RABBIT_BARN)) {
-                    DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+                    data = ChocolateFactoryHelper.getData(player);
                     player.sendMessage("§7Your §aRabbit Barn §7capacity has been increased to §a" + (data.getMaxRabbitSlots() + 2) + " Rabbits§7!");
-                    player.playSound(Sound.sound(Key.key("entity.player.levelup"), Sound.Source.PLAYER, 1.0f, 1.0f));
+                    player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 8.0f, 4.05f));
                 } else {
                     player.sendMessage("§cYou don't have enough Chocolate!");
                     player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
@@ -168,14 +177,19 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
                 lore.add("§7they will be §ccrushed§7.");
                 lore.add("");
                 lore.add("§7Your Barn: §a" + data.getEmployeeCount() + "§7/§a" + (data.getMaxRabbitSlots() + 2) + " Rabbits");
-                lore.add("§8§m-----------------");
-                lore.add("§a§lUPGRADE §8➜ §aRabbit Barn " + toRoman(level + 2));
-                lore.add("  §a+2 Capacity");
-                lore.add("");
-                lore.add("§7Cost");
-                lore.add("§6" + ChocolateFactoryHelper.formatChocolate(cost) + " Chocolate");
-                lore.add("");
-                lore.add(canAfford ? "§eClick to upgrade!" : "§cNot enough chocolate!");
+                if (level >= 247) {
+                    lore.add("");
+                    lore.add("§aYour Rabbit Barn is at maximum capacity!");
+                } else {
+                    lore.add("§8§m-----------------");
+                    lore.add("§a§lUPGRADE §8➜ §aRabbit Barn " + toRoman(level + 2));
+                    lore.add("  §a+2 Capacity");
+                    lore.add("");
+                    lore.add("§7Cost");
+                    lore.add("§6" + ChocolateFactoryHelper.formatChocolate(cost) + " Chocolate");
+                    lore.add("");
+                    lore.add(canAfford ? "§eClick to upgrade!" : "§cNot enough chocolate!");
+                }
 
                 return ItemStackCreator.getStack("§aRabbit Barn " + toRoman(level + 1), Material.OAK_FENCE, 1, lore);
             }
@@ -186,8 +200,17 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
             @Override
             public void run(InventoryPreClickEvent event, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+
+                // Check max level
+                if (data.getHandBakedChocolateLevel() >= 10) {
+                    player.sendMessage("§cYou only have so many fingers! You can't click any faster!");
+                    player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                    return;
+                }
+
                 if (ChocolateFactoryHelper.purchaseUpgrade(player, ChocolateFactoryHelper.UpgradeType.HAND_BAKED_CHOCOLATE)) {
-                    DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+                    data = ChocolateFactoryHelper.getData(player);
                     player.sendMessage("§7You will now produce §6+" + data.getClickPower() + " Chocolate §7per click!");
                     player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 8.0f, 4.05f));
                 } else {
@@ -214,7 +237,7 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
                 lore.add("");
                 lore.add("§7Chocolate Per Click: §6+" + data.getClickPower() + " Chocolate");
                 lore.add("");
-                if (level >= 9) {
+                if (level >= 10) {
                     lore.add("§aYou have reached the maximum");
                     lore.add("§aamount of upgrades!");
                 } else {
@@ -232,12 +255,19 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
             }
         });
 
-        // Slot 39: Time Tower (clock)
+        // Slot 39: Time Tower (clock) - Requires Prestige 2
         set(new GUIClickableItem(39) {
             @Override
             public void run(InventoryPreClickEvent event, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+
+                // Check prestige requirement
+                if (data.getPrestigeLevel() < 1) {
+                    player.sendMessage("§cThis requires Chocolate Factory II!");
+                    player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                    return;
+                }
 
                 // Right-click to activate
                 if (event.getClick() instanceof Click.Right && data.getTimeTowerLevel() > 0 && data.getTimeTowerCharges() > 0 && !data.isTimeTowerActive()) {
@@ -249,11 +279,12 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
                 }
 
                 // Left-click to upgrade
-                if (ChocolateFactoryHelper.purchaseUpgrade(player, ChocolateFactoryHelper.UpgradeType.TIME_TOWER)) {
-                    player.sendMessage("§7You upgraded to §dTime Tower " + toRoman(data.getTimeTowerLevel() + 1) + "§7!");
-                    player.playSound(Sound.sound(Key.key("entity.player.levelup"), Sound.Source.PLAYER, 1.0f, 1.0f));
-                } else if (data.getTimeTowerLevel() >= 15) {
+                if (data.getTimeTowerLevel() >= 15) {
                     player.sendMessage("§cThe Time Tower is already at its maximum level!");
+                    player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                } else if (ChocolateFactoryHelper.purchaseUpgrade(player, ChocolateFactoryHelper.UpgradeType.TIME_TOWER)) {
+                    player.sendMessage("§7You upgraded to §dTime Tower " + toRoman(data.getTimeTowerLevel() + 1) + "§7!");
+                    player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 8.0f, 4.05f));
                 } else {
                     player.sendMessage("§cYou don't have enough Chocolate!");
                     player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
@@ -264,8 +295,18 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+
+                // Check prestige requirement - requires Prestige 2 (index 1)
+                if (data.getPrestigeLevel() < 1) {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§7What does it do? Nobody knows...");
+                    lore.add("");
+                    lore.add("§cChocolate Factory II");
+                    return ItemStackCreator.getStack("§c???", Material.GRAY_DYE, 1, lore);
+                }
+
                 int level = data.getTimeTowerLevel();
-                long cost = ChocolateFactoryHelper.getTimeTowerCost(level);
+                long cost = ChocolateFactoryHelper.getTimeTowerCost(level, data.getPrestigeLevel());
                 boolean canAfford = data.getChocolate() >= cost;
                 boolean isActive = data.isTimeTowerActive();
 
@@ -306,14 +347,30 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
             }
         });
 
-        // Slot 41: Rabbit Shrine (rabbit foot)
+        // Slot 41: Rabbit Shrine (rabbit foot) - Requires Prestige 3
         set(new GUIClickableItem(41) {
             @Override
             public void run(InventoryPreClickEvent event, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+
+                // Check prestige requirement
+                if (data.getPrestigeLevel() < 2) {
+                    player.sendMessage("§cThis requires Chocolate Factory III!");
+                    player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                    return;
+                }
+
+                // Check max level
+                if (data.getRabbitShrineLevel() >= 20) {
+                    player.sendMessage("§cYour Rabbit Shrine is already at its maximum level!");
+                    player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                    return;
+                }
+
                 if (ChocolateFactoryHelper.purchaseUpgrade(player, ChocolateFactoryHelper.UpgradeType.RABBIT_SHRINE)) {
                     player.sendMessage("§aUpgraded Rabbit Shrine!");
-                    player.playSound(Sound.sound(Key.key("entity.player.levelup"), Sound.Source.PLAYER, 1.0f, 1.0f));
+                    player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 8.0f, 4.05f));
                 } else {
                     player.sendMessage("§cYou don't have enough Chocolate!");
                     player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
@@ -324,6 +381,16 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+
+                // Check prestige requirement - requires Prestige 3 (index 2)
+                if (data.getPrestigeLevel() < 2) {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§7What does it do? Nobody knows...");
+                    lore.add("");
+                    lore.add("§cChocolate Factory III");
+                    return ItemStackCreator.getStack("§c???", Material.GRAY_DYE, 1, lore);
+                }
+
                 int level = data.getRabbitShrineLevel();
                 long cost = ChocolateFactoryHelper.getRabbitShrineCost(level);
                 boolean canAfford = data.getChocolate() >= cost;
@@ -353,14 +420,30 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
             }
         });
 
-        // Slot 42: Coach Jackrabbit (player head)
+        // Slot 42: Coach Jackrabbit (player head) - Requires Prestige 4
         set(new GUIClickableItem(42) {
             @Override
             public void run(InventoryPreClickEvent event, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+
+                // Check prestige requirement
+                if (data.getPrestigeLevel() < 3) {
+                    player.sendMessage("§cThis requires Chocolate Factory IV!");
+                    player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                    return;
+                }
+
+                // Check max level
+                if (data.getCoachJackrabbitLevel() >= 20) {
+                    player.sendMessage("§cCoach Jackrabbit has already taught you all that he can teach!");
+                    player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                    return;
+                }
+
                 if (ChocolateFactoryHelper.purchaseUpgrade(player, ChocolateFactoryHelper.UpgradeType.COACH_JACKRABBIT)) {
                     player.sendMessage("§aUpgraded Coach Jackrabbit!");
-                    player.playSound(Sound.sound(Key.key("entity.player.levelup"), Sound.Source.PLAYER, 1.0f, 1.0f));
+                    player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 8.0f, 4.05f));
                 } else {
                     player.sendMessage("§cYou don't have enough Chocolate!");
                     player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
@@ -371,6 +454,16 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
+
+                // Check prestige requirement - requires Prestige 4 (index 3)
+                if (data.getPrestigeLevel() < 3) {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§7What does it do? Nobody knows...");
+                    lore.add("");
+                    lore.add("§cChocolate Factory IV");
+                    return ItemStackCreator.getStack("§c???", Material.GRAY_DYE, 1, lore);
+                }
+
                 int level = data.getCoachJackrabbitLevel();
                 long cost = ChocolateFactoryHelper.getCoachJackrabbitCost(level);
                 boolean canAfford = data.getChocolate() >= cost;
@@ -381,7 +474,7 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
                 lore.add("");
                 lore.add("§7§dCoach Jackrabbit §7is a motivational");
                 lore.add("§7speaker that is helping you reach");
-                lore.add("§7your full potential by granting §6+" + String.format("%.1fx", multiplierBonus));
+                lore.add("§7your full potential by granting §6+" + String.format("%.2fx", multiplierBonus));
                 lore.add("§6Chocolate §7per second!");
                 lore.add("");
                 if (level >= 20) {
@@ -602,6 +695,13 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
 
                     DatapointChocolateFactory.EmployeeData existingEmployee = data.getEmployees().get(employeeName);
 
+                    // Check if employee is already at max level (220)
+                    if (existingEmployee != null && existingEmployee.getLevel() >= 220) {
+                        player.sendMessage("§b" + employeeName + " §ccannot ascend the corporate ladder any further!");
+                        player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                        return;
+                    }
+
                     // Check if employee is not hired yet - show special message
                     if (existingEmployee == null) {
                         long cost = ChocolateFactoryHelper.getEmployeeCost(employeeName, 1);
@@ -621,7 +721,7 @@ public class GUIChocolateFactory extends HypixelInventoryGUI implements Refreshi
                         String rankColor = "§" + getEmployeeRankColor(level);
 
                         player.sendMessage(rankColor + employeeName + " §7has been promoted to §7[" + level + "§7] " + rankColor + rank + "§7!");
-                        player.playSound(Sound.sound(Key.key("entity.player.levelup"), Sound.Source.PLAYER, 1.0f, 1.0f));
+                        player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 8.0f, 4.05f));
                     } else {
                         player.sendMessage("§cYou don't have enough Chocolate!");
                         player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
