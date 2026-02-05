@@ -82,6 +82,8 @@ public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.S
                     boolean found = ChocolateFactoryHelper.getData(p).getFoundRabbits().contains(rabbit.name());
                     return createRabbitItem(rabbit, found);
                 });
+            } else {
+                layout.slot(slot, (s, c) -> ItemStack.AIR.builder());
             }
         }
 
@@ -252,13 +254,12 @@ public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.S
             }
         }
 
-        if (found) {
-            lore.add("§a§lFOUND");
-        } else {
+        if (!found) {
             lore.add("§8You have not found this rabbit yet!");
         }
 
         if (rabbit.getLocation() != null) {
+            lore.add("");
             lore.add(rabbit.getResidentLabel());
         }
         lore.add("");

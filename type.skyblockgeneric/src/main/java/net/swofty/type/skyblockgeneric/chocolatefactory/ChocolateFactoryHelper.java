@@ -2,6 +2,8 @@ package net.swofty.type.skyblockgeneric.chocolatefactory;
 
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointChocolateFactory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 import java.text.DecimalFormat;
@@ -428,6 +430,8 @@ public class ChocolateFactoryHelper {
         return Prestige.fromLevel(level);
     }
 
+    @Getter
+    @AllArgsConstructor
     public enum Prestige {
         NEWCOMER(0, "Newcomer", "§7"),
         APPRENTICE(1, "Apprentice", "§a"),
@@ -440,24 +444,6 @@ public class ChocolateFactoryHelper {
         private final int level;
         private final String name;
         private final String color;
-
-        Prestige(int level, String name, String color) {
-            this.level = level;
-            this.name = name;
-            this.color = color;
-        }
-
-        public int getLevel() {
-            return level;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getColor() {
-            return color;
-        }
 
         public String getFormattedName() {
             return color + name;

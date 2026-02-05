@@ -1,9 +1,11 @@
 package net.swofty.type.hub.npcs;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.swofty.commons.ChatColor;
 
 @Getter
+@AllArgsConstructor
 public enum ChocolateFactoryRank {
     UNEMPLOYED(0, "Unemployed", ChatColor.RED),
     INTERN(1, "Intern", ChatColor.GRAY),
@@ -17,12 +19,6 @@ public enum ChocolateFactoryRank {
     private final int level;
     private final String name;
     private final ChatColor color;
-
-    ChocolateFactoryRank(int level, String name, ChatColor color) {
-        this.level = level;
-        this.name = name;
-        this.color = color;
-    }
 
     /**
      * Gets the formatted hologram line for this rank using the rank's base level.

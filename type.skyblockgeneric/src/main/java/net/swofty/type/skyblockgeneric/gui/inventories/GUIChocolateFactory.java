@@ -71,6 +71,11 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
     }
 
     @Override
+    public void onRefresh(State state, ViewContext ctx) {
+        ChocolateFactoryHelper.updateProduction((SkyBlockPlayer) ctx.player());
+    }
+
+    @Override
     public void layout(ViewLayout<State> layout, State state, ViewContext ctx) {
         Components.fill(layout);
 
@@ -735,6 +740,6 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
      * Opens the Chocolate Factory GUI for a player with auto-refresh every second.
      */
     public static void open(SkyBlockPlayer player) {
-        ViewNavigator.get(player).push(new GUIChocolateFactory()).refreshEvery(Duration.ofSeconds(1));
+        player.openView(new GUIChocolateFactory()).refreshEvery(Duration.ofSeconds(1));
     }
 }

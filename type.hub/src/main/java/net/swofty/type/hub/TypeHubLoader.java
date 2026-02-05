@@ -24,6 +24,8 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.hub.darkauction.DarkAuctionDisplay;
+import net.swofty.type.hub.hoppity.HoppityHuntEntityManager;
+import net.swofty.type.skyblockgeneric.chocolatefactory.HoppityHuntManager;
 import net.swofty.type.hub.runes.RuneEntityImpl;
 import net.swofty.type.hub.tab.HubServerModule;
 import net.swofty.type.hub.util.HubMap;
@@ -124,6 +126,11 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
         // Place forest trees
         ForestTreePlacement.placeTrees(HypixelConst.getInstanceContainer());
+
+		// Register Hoppity Hunt entity manager
+		HoppityHuntEntityManager hoppityEntityManager = new HoppityHuntEntityManager();
+		HoppityHuntManager.setOnHuntStartCallback(hoppityEntityManager::spawnAllEggs);
+		HoppityHuntManager.setOnHuntStopCallback(hoppityEntityManager::despawnAllEggs);
 
 		HubMap hubMap = new HubMap();
 		hubMap.placeItemFrames(HypixelConst.getInstanceContainer());

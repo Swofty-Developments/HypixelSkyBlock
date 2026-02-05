@@ -60,6 +60,14 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
             // Shop stats
             json.put("totalChocolateSpent", value.totalChocolateSpent);
 
+            // Hoppity Hunt
+            JSONArray claimedEggsArray = new JSONArray();
+            for (String egg : value.claimedEggs) {
+                claimedEggsArray.put(egg);
+            }
+            json.put("claimedEggs", claimedEggsArray);
+            json.put("totalEggsFound", value.totalEggsFound);
+
             return json.toString();
         }
 
@@ -87,6 +95,14 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
                 }
             }
 
+            Set<String> claimedEggs = new HashSet<>();
+            if (jsonObject.has("claimedEggs")) {
+                JSONArray claimedEggsArray = jsonObject.getJSONArray("claimedEggs");
+                for (int i = 0; i < claimedEggsArray.length(); i++) {
+                    claimedEggs.add(claimedEggsArray.getString(i));
+                }
+            }
+
             return new ChocolateFactoryData(
                     jsonObject.optLong("chocolate", 0L),
                     jsonObject.optLong("chocolateAllTime", 0L),
@@ -104,7 +120,9 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
                     jsonObject.optLong("totalClicks", 0L),
                     jsonObject.optInt("totalTimeTowerUsages", 0),
                     foundRabbits,
-                    jsonObject.optLong("totalChocolateSpent", 0L)
+                    jsonObject.optLong("totalChocolateSpent", 0L),
+                    claimedEggs,
+                    jsonObject.optInt("totalEggsFound", 0)
             );
         }
 
@@ -135,7 +153,9 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
                     value.totalClicks,
                     value.totalTimeTowerUsages,
                     new HashSet<>(value.foundRabbits),
-                    value.totalChocolateSpent
+                    value.totalChocolateSpent,
+                    new HashSet<>(value.claimedEggs),
+                    value.totalEggsFound
             );
         }
     };
@@ -184,6 +204,10 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
 
         // Shop stats
         private long totalChocolateSpent;
+
+        // Hoppity Hunt
+        private Set<String> claimedEggs = new HashSet<>();
+        private int totalEggsFound;
 
         /**
          * Adds chocolate and updates all-time total
@@ -371,6 +395,28 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
          */
         public void addChocolateSpent(long amount) {
             this.totalChocolateSpent += amount;
+        }
+
+        /**
+         * Claims an egg location for the current hunt
+         */
+        public void claimEgg(String eggLocationId) {
+            claimedEggs.add(eggLocationId);
+            totalEggsFound++;
+        }
+
+        /**
+         * Checks if an egg location has been claimed in the current hunt
+         */
+        public boolean hasClaimedEgg(String eggLocationId) {
+            return claimedEggs.contains(eggLocationId);
+        }
+
+        /**
+         * Resets claimed eggs for a new hunt
+         */
+        public void resetClaimedEggs() {
+            claimedEggs.clear();
         }
     }
 
