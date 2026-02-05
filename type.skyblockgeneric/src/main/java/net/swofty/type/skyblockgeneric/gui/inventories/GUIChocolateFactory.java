@@ -75,6 +75,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         Components.fill(layout);
 
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
+        ChocolateFactoryHelper.updateProduction(player);
         DatapointChocolateFactory.ChocolateFactoryData data = ChocolateFactoryHelper.getData(player);
 
         // Slot 13: Chocolate cookie (clickable)
