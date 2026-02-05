@@ -5,7 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
-import net.swofty.commons.replay.ReplayMetadata;
+import net.swofty.type.game.replay.ReplayMetadata;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 
 import java.text.SimpleDateFormat;

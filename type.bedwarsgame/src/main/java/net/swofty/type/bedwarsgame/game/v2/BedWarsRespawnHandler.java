@@ -12,10 +12,10 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.game.event.PlayerRespawnCompleteEvent;
-import net.swofty.commons.game.event.PlayerRespawnStartEvent;
-import net.swofty.commons.game.respawn.RespawnHandler;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.event.PlayerRespawnCompleteEvent;
+import net.swofty.type.game.game.event.PlayerRespawnStartEvent;
+import net.swofty.type.game.game.respawn.RespawnHandler;
 import net.swofty.type.generic.event.HypixelEventHandler;
 
 import java.time.Duration;

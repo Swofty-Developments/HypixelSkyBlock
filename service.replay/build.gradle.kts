@@ -33,7 +33,7 @@ dependencies {
     implementation("org.mongodb:mongodb-driver-sync:5.6.2")
 
     // Compression libraries
-    implementation("org.lz4:lz4-java:1.8.0")
+    implementation("at.yawk.lz4:lz4-java:1.10.3")
     implementation("com.github.luben:zstd-jni:1.5.7-3")
 }
 

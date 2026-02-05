@@ -2,9 +2,9 @@ package net.swofty.type.bedwarsgame.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.commons.bedwars.BedwarsGameType;
-import net.swofty.commons.game.GameState;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;

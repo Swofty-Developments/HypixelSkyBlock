@@ -1,8 +1,8 @@
 package net.swofty.type.bedwarsgame.events.custom;
 
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.commons.game.event.GameEvent;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.event.GameEvent;
 
 public record BedDestroyedEvent(
     String gameId,

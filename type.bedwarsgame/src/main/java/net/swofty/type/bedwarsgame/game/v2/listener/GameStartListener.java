@@ -1,9 +1,9 @@
 package net.swofty.type.bedwarsgame.game.v2.listener;
 
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.game.event.GameStartEvent;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.game.game.event.GameStartEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

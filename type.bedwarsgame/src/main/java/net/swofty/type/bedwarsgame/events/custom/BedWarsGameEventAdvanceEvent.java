@@ -1,6 +1,6 @@
 package net.swofty.type.bedwarsgame.events.custom;
 
-import net.swofty.commons.game.event.GameEvent;
+import net.swofty.type.game.game.event.GameEvent;
 
 public record BedWarsGameEventAdvanceEvent(
     String gameId,

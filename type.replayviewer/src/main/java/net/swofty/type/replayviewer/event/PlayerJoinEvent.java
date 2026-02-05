@@ -11,14 +11,14 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.objects.replay.ReplayLoadProtocolObject;
 import net.swofty.commons.protocol.objects.replay.ReplayMapLoadProtocolObject;
-import net.swofty.commons.replay.ReplayMetadata;
 import net.swofty.proxyapi.ProxyService;
+import net.swofty.type.game.replay.ReplayMetadata;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 import net.swofty.type.replayviewer.playback.MapDeserializer;
 import net.swofty.type.replayviewer.playback.ReplayData;
@@ -46,7 +46,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
         String replayStr = RedisChosenMap.replay.remove(player.getUuid());
         if (replayStr == null) {
             if (!isRetry) {
-                MathUtility.delay(() -> tryGame(player, true, event), 20);
+                ScheduleUtility.delay(() -> tryGame(player, true, event), 20);
                 return;
             }
             event.setSpawningInstance(HypixelConst.getEmptyInstance());
@@ -70,7 +70,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
         event.getPlayer().setRespawnPoint(new Pos(0, 100, 0));
 
         CompletableFuture.runAsync(() -> {
-            MathUtility.delay(() -> loadReplay(player, replayId, instance), 20);
+            ScheduleUtility.delay(() -> loadReplay(player, replayId, instance), 20);
         });
     }
 

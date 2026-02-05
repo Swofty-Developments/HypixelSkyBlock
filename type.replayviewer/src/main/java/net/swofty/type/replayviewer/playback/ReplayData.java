@@ -1,8 +1,9 @@
 package net.swofty.type.replayviewer.playback;
 
 import net.swofty.commons.replay.protocol.ReplayDataReader;
-import net.swofty.commons.replay.recordable.Recordable;
-import net.swofty.commons.replay.recordable.RecordableType;
+import net.swofty.type.game.replay.recordable.Recordable;
+import net.swofty.type.game.replay.recordable.RecordableBlockChange;
+import net.swofty.type.game.replay.recordable.RecordableType;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class ReplayData {
 
             // Track block changes for reverting
             if (type == RecordableType.BLOCK_CHANGE) {
-                var bc = (net.swofty.commons.replay.recordable.RecordableBlockChange) recordable;
+                var bc = (RecordableBlockChange) recordable;
                 blockChanges.computeIfAbsent(tick, k -> new ArrayList<>())
                         .add(new BlockChangeEntry(bc.getX(), bc.getY(), bc.getZ(),
                                 bc.getPreviousBlockStateId(), bc.getBlockStateId()));

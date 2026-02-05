@@ -17,7 +17,7 @@ import net.swofty.pvp.utils.ViewUtil;
 import net.swofty.type.bedwarsgame.entity.ThrownBridgeEgg;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
@@ -78,7 +78,7 @@ public class BridgeEgg extends SimpleInteractableItem {
 			player.setItemInHand(event.getHand(), stack.withAmount(stack.amount() - 1));
 		}
 
-		MathUtility.delay(
+		ScheduleUtility.delay(
 				() -> {
 					if (projectile.isActive() && !projectile.isRemoved()) {
 						projectile.remove();

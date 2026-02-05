@@ -27,10 +27,6 @@ import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.commons.game.AbstractTeamGame;
-import net.swofty.commons.game.CountdownConfig;
-import net.swofty.commons.game.GameState;
-import net.swofty.commons.game.event.GameEndEvent;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
@@ -39,6 +35,11 @@ import net.swofty.type.bedwarsgame.replay.BedWarsReplayManager;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
+import net.swofty.type.game.game.AbstractGame;
+import net.swofty.type.game.game.AbstractTeamGame;
+import net.swofty.type.game.game.CountdownConfig;
+import net.swofty.type.game.game.GameState;
+import net.swofty.type.game.game.event.GameEndEvent;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import org.tinylog.Logger;
 
@@ -184,7 +185,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
      */
     public void rejoin(BedWarsPlayer player) {
         // Check if player has disconnected data
-        DisconnectedPlayerData data = disconnectedPlayers.remove(player.getUuid());
+        AbstractGame.DisconnectedPlayerData data = disconnectedPlayers.remove(player.getUuid());
         if (data != null) {
             // Re-add to players map
             players.put(player.getUuid(), player);

@@ -18,7 +18,7 @@ import net.swofty.type.generic.leaderboard.LeaderboardService;
 import net.swofty.type.generic.leaderboard.LeaderboardTracked;
 import net.swofty.type.generic.leaderboard.MapLeaderboardTracked;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
@@ -80,7 +80,7 @@ public class ActionPlayerDataSave implements HypixelEventClass {
         );
 
         // Clean up tablist entries
-        MathUtility.delay(() -> {
+        ScheduleUtility.delay(() -> {
             HypixelConst.getTypeLoader().getTablistManager().deleteTablistEntries(player);
         }, 5);
 

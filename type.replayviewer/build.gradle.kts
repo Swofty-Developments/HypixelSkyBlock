@@ -23,6 +23,8 @@ dependencies {
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
+    implementation(project(":type.game"))
+
     implementation("org.mongodb:bson:4.11.2")
     implementation("net.kyori:adventure-text-minimessage:4.25.0")
     compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
@@ -32,5 +34,5 @@ dependencies {
     implementation("org.tinylog:tinylog-impl:2.7.0")
 
     // Compression for replay data
-    implementation("org.lz4:lz4-java:1.8.0")
+    implementation("at.yawk.lz4:lz4-java:1.10.3")
 }

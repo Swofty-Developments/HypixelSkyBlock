@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.game.GameState;
 import net.swofty.type.bedwarsgame.events.custom.BedWarsGameEventAdvanceEvent;
+import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.HypixelEventHandler;
 
 @RequiredArgsConstructor

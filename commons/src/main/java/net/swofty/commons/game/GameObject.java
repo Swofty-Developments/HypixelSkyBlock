@@ -1,4 +1,4 @@
-package net.swofty.commons.game;
+package net.swofty.type.game.game;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,9 +1,9 @@
 package net.swofty.commons.protocol.objects.orchestrator;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.game.GameObject;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import net.swofty.type.game.game.GameObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

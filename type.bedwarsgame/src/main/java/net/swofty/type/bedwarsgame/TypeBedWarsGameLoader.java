@@ -22,7 +22,6 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.game.GameObject;
 import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
@@ -39,6 +38,7 @@ import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.GameObject;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
@@ -328,7 +328,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 				HypixelEventClass.class
 			),
 			HypixelGenericLoader.loopThroughPackage(
-				"net.swofty.commons.game.event",
+				"net.swofty.type.game.game.event",
 				HypixelEventClass.class
 			)).toList();
 	}

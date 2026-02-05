@@ -1,10 +1,10 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.entity.Entity;
-import net.swofty.commons.game.GameState;
 import net.swofty.pvp.events.PrepareAttackEvent;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;

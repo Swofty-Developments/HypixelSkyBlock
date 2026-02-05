@@ -7,7 +7,7 @@ import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.Trap;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 
 public class RevealTrap extends Trap {
 
@@ -24,7 +24,7 @@ public class RevealTrap extends Trap {
 	@Override
 	public void onTrigger(BedWarsGame game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer triggerer) {
 		triggerer.setGlowing(true);
-		MathUtility.delay(
+		ScheduleUtility.delay(
 				() -> triggerer.setGlowing(false),
 				10 * 20
 		);

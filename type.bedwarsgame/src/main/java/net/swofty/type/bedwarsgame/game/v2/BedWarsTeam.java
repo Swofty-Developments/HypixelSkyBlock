@@ -3,7 +3,7 @@ package net.swofty.type.bedwarsgame.game.v2;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.commons.game.team.SimpleGameTeam;
+import net.swofty.type.game.game.team.SimpleGameTeam;
 
 import java.util.ArrayList;
 import java.util.HashMap;

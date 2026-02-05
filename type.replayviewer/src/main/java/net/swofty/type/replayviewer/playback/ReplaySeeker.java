@@ -1,10 +1,10 @@
 package net.swofty.type.replayviewer.playback;
 
 import net.minestom.server.instance.block.Block;
-import net.swofty.commons.replay.recordable.Recordable;
-import net.swofty.commons.replay.recordable.RecordableEntityDespawn;
-import net.swofty.commons.replay.recordable.RecordableEntitySpawn;
-import net.swofty.commons.replay.recordable.RecordableType;
+import net.swofty.type.game.replay.recordable.Recordable;
+import net.swofty.type.game.replay.recordable.RecordableEntityDespawn;
+import net.swofty.type.game.replay.recordable.RecordableEntitySpawn;
+import net.swofty.type.game.replay.recordable.RecordableType;
 import org.tinylog.Logger;
 
 import java.util.Collections;

@@ -16,27 +16,27 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.commons.protocol.objects.replay.ReplayDataBatchProtocolObject;
 import net.swofty.commons.protocol.objects.replay.ReplayStartProtocolObject;
-import net.swofty.commons.replay.ReplayRecorder;
-import net.swofty.commons.replay.dispatcher.BlockChangeDispatcher;
-import net.swofty.commons.replay.dispatcher.DispatcherManager;
-import net.swofty.commons.replay.dispatcher.EntityLocationDispatcher;
-import net.swofty.commons.replay.recordable.RecordableBlockChange;
-import net.swofty.commons.replay.recordable.RecordableDroppedItem;
-import net.swofty.commons.replay.recordable.RecordableItemPickup;
-import net.swofty.commons.replay.recordable.RecordablePlayerChat;
-import net.swofty.commons.replay.recordable.RecordablePlayerDisplayName;
-import net.swofty.commons.replay.recordable.RecordablePlayerHealth;
-import net.swofty.commons.replay.recordable.RecordablePlayerSkin;
-import net.swofty.commons.replay.recordable.bedwars.RecordableBedDestruction;
-import net.swofty.commons.replay.recordable.bedwars.RecordableFinalKill;
-import net.swofty.commons.replay.recordable.bedwars.RecordableGeneratorUpgrade;
-import net.swofty.commons.replay.recordable.bedwars.RecordableScoreboardState;
-import net.swofty.commons.replay.recordable.bedwars.RecordableTeamElimination;
 import net.swofty.commons.scoreboard.ScoreboardData;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.replay.ReplayRecorder;
+import net.swofty.type.game.replay.dispatcher.BlockChangeDispatcher;
+import net.swofty.type.game.replay.dispatcher.DispatcherManager;
+import net.swofty.type.game.replay.dispatcher.EntityLocationDispatcher;
+import net.swofty.type.game.replay.recordable.RecordableBlockChange;
+import net.swofty.type.game.replay.recordable.RecordableDroppedItem;
+import net.swofty.type.game.replay.recordable.RecordableItemPickup;
+import net.swofty.type.game.replay.recordable.RecordablePlayerChat;
+import net.swofty.type.game.replay.recordable.RecordablePlayerDisplayName;
+import net.swofty.type.game.replay.recordable.RecordablePlayerHealth;
+import net.swofty.type.game.replay.recordable.RecordablePlayerSkin;
+import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
+import net.swofty.type.game.replay.recordable.bedwars.RecordableFinalKill;
+import net.swofty.type.game.replay.recordable.bedwars.RecordableGeneratorUpgrade;
+import net.swofty.type.game.replay.recordable.bedwars.RecordableScoreboardState;
+import net.swofty.type.game.replay.recordable.bedwars.RecordableTeamElimination;
 import org.tinylog.Logger;
 
 import java.io.ByteArrayOutputStream;
@@ -396,17 +396,11 @@ public class BedWarsReplayManager {
         }
     }
 
-    /**
-     * Records an item pickup event.
-     */
     public void recordItemPickup(int itemEntityId, int collectorEntityId) {
         if (!recording) return;
         recorder.record(new RecordableItemPickup(itemEntityId, collectorEntityId));
     }
 
-    /**
-     * Records a player chat message.
-     */
     public void recordPlayerChat(BedWarsPlayer player, String message, boolean isShout) {
         if (!recording) return;
         recorder.record(new RecordablePlayerChat(
