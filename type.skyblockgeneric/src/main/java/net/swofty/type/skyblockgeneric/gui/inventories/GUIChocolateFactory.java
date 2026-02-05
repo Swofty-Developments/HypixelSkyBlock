@@ -15,6 +15,8 @@ import net.swofty.type.skyblockgeneric.chocolatefactory.ChocolateRabbit;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointChocolateFactory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import net.swofty.commons.StringUtility;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +122,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add("");
             lore.add(prestigeLevel >= 6 ? "§aYou have reached max prestige!" : "§eClick to prestige!");
 
-            return ItemStackCreator.getStack(prestigeColor + "Chocolate Factory " + toRoman(prestigeLevel + 1), Material.DROPPER, 1, lore);
+            return ItemStackCreator.getStack(prestigeColor + "Chocolate Factory " + StringUtility.getAsRomanNumeral(prestigeLevel + 1), Material.DROPPER, 1, lore);
         });
 
         // Employee slots (28-34)
@@ -196,7 +198,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
                 p.sendMessage("§cThe Time Tower is already at its maximum level!");
                 p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
             } else if (ChocolateFactoryHelper.purchaseUpgrade(p, ChocolateFactoryHelper.UpgradeType.TIME_TOWER)) {
-                p.sendMessage("§7You upgraded to §dTime Tower " + toRoman(d.getTimeTowerLevel() + 1) + "§7!");
+                p.sendMessage("§7You upgraded to §dTime Tower " + StringUtility.getAsRomanNumeral(d.getTimeTowerLevel() + 1) + "§7!");
                 p.playSound(UPGRADE_SOUND);
             } else {
                 p.sendMessage("§cYou don't have enough Chocolate!");
@@ -289,7 +291,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add("§eClick to view!");
 
             return ItemStackCreator.getStackHead("§aHoppity's Collection", HOPPITY_TEXTURE, 1, lore);
-        }, (click, c) -> new GUIHoppityCollection().open((SkyBlockPlayer) c.player()));
+        }, (click, c) -> ((SkyBlockPlayer) c.player()).openView(new GUIHoppityCollection()));
 
         // Slot 51: Rabbit Hitman
         layout.slot(51, (s, c) -> {
@@ -323,7 +325,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add("");
             lore.add("§eClick to view!");
             return ItemStackCreator.getStack("§6Chocolate Factory Milestones", Material.LADDER, 1, lore);
-        }, (click, c) -> new GUIChocolateFactoryMilestones().open((SkyBlockPlayer) c.player()));
+        }, (click, c) -> ((SkyBlockPlayer) c.player()).openView(new GUIChocolateFactoryMilestones()));
     }
 
     private void setupEmployeeSlots(ViewLayout<State> layout, ViewContext ctx) {
@@ -479,7 +481,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add("§aYour Rabbit Barn is at maximum capacity!");
         } else {
             lore.add("§8§m-----------------");
-            lore.add("§a§lUPGRADE §8➜ §aRabbit Barn " + toRoman(level + 2));
+            lore.add("§a§lUPGRADE §8➜ §aRabbit Barn " + StringUtility.getAsRomanNumeral(level + 2));
             lore.add("  §a+2 Capacity");
             lore.add("");
             lore.add("§7Cost");
@@ -488,7 +490,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add(canAfford ? "§eClick to upgrade!" : "§cNot enough chocolate!");
         }
 
-        return ItemStackCreator.getStack("§aRabbit Barn " + toRoman(level + 1), Material.OAK_FENCE, 1, lore);
+        return ItemStackCreator.getStack("§aRabbit Barn " + StringUtility.getAsRomanNumeral(level + 1), Material.OAK_FENCE, 1, lore);
     }
 
     private ItemStack.Builder createHandBakedChocolateItem(SkyBlockPlayer player) {
@@ -512,7 +514,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add("§aamount of upgrades!");
         } else {
             lore.add("§8§m-----------------");
-            lore.add("§a§lUPGRADE §8➜ §dHand-Baked Chocolate " + toRoman(level + 2));
+            lore.add("§a§lUPGRADE §8➜ §dHand-Baked Chocolate " + StringUtility.getAsRomanNumeral(level + 2));
             lore.add("  §6+1 Chocolate Per Click");
             lore.add("");
             lore.add("§7Cost");
@@ -521,7 +523,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add(canAfford ? "§eClick to upgrade!" : "§cNot enough chocolate!");
         }
 
-        return ItemStackCreator.getStack("§dHand-Baked Chocolate " + toRoman(level + 1), Material.COOKIE, 1, lore);
+        return ItemStackCreator.getStack("§dHand-Baked Chocolate " + StringUtility.getAsRomanNumeral(level + 1), Material.COOKIE, 1, lore);
     }
 
     private ItemStack.Builder createTimeTowerItem(SkyBlockPlayer player) {
@@ -561,7 +563,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add("§aThe Time Tower is maxed out!");
         } else {
             lore.add("§8§m-----------------");
-            lore.add("§a§lUPGRADE §8➜ §dTime Tower " + toRoman(level + 2));
+            lore.add("§a§lUPGRADE §8➜ §dTime Tower " + StringUtility.getAsRomanNumeral(level + 2));
             lore.add("  §6+0.1x Production Multiplier");
             lore.add("");
             lore.add("§7Cost");
@@ -573,7 +575,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add("§dRight-click to activate!");
         }
 
-        return ItemStackCreator.getStack("§dTime Tower " + toRoman(level + 1), Material.CLOCK, 1, lore);
+        return ItemStackCreator.getStack("§dTime Tower " + StringUtility.getAsRomanNumeral(level + 1), Material.CLOCK, 1, lore);
     }
 
     private ItemStack.Builder createRabbitShrineItem(SkyBlockPlayer player) {
@@ -603,7 +605,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add("§alevel!");
         } else {
             lore.add("§8§m-----------------");
-            lore.add("§a§lUPGRADE §8➜ §dRabbit Shrine " + toRoman(level + 2));
+            lore.add("§a§lUPGRADE §8➜ §dRabbit Shrine " + StringUtility.getAsRomanNumeral(level + 2));
             lore.add("  §a+2% Rare Rabbit Odds");
             lore.add("");
             lore.add("§7Cost");
@@ -612,7 +614,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add(canAfford ? "§eClick to upgrade!" : "§cNot enough chocolate!");
         }
 
-        return ItemStackCreator.getStack("§dRabbit Shrine " + toRoman(level + 1), Material.RABBIT_FOOT, 1, lore);
+        return ItemStackCreator.getStack("§dRabbit Shrine " + StringUtility.getAsRomanNumeral(level + 1), Material.RABBIT_FOOT, 1, lore);
     }
 
     private ItemStack.Builder createCoachJackrabbitItem(SkyBlockPlayer player) {
@@ -644,7 +646,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add("§ayou all that he can teach!");
         } else {
             lore.add("§8§m-----------------");
-            lore.add("§a§lUPGRADE §8➜ §dCoach Jackrabbit " + toRoman(level + 2));
+            lore.add("§a§lUPGRADE §8➜ §dCoach Jackrabbit " + StringUtility.getAsRomanNumeral(level + 2));
             lore.add("  §6+0.01x Production Multiplier");
             lore.add("");
             lore.add("§7Cost");
@@ -653,7 +655,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add(canAfford ? "§eClick to upgrade!" : "§cNot enough chocolate!");
         }
 
-        return ItemStackCreator.getStackHead("§dCoach Jackrabbit " + toRoman(level + 1), COACH_JACKRABBIT_TEXTURE, 1, lore);
+        return ItemStackCreator.getStackHead("§dCoach Jackrabbit " + StringUtility.getAsRomanNumeral(level + 1), COACH_JACKRABBIT_TEXTURE, 1, lore);
     }
 
     private ItemStack.Builder createProductionInfoItem(SkyBlockPlayer player) {
@@ -726,19 +728,6 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         if (level >= 20) return "a";
         if (level >= 1) return "f";
         return "c";
-    }
-
-    private String toRoman(int number) {
-        if (number <= 0) return "I";
-        String[] thousands = {"", "M", "MM", "MMM"};
-        String[] hundreds = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
-        String[] tens = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
-        String[] ones = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
-
-        return thousands[number / 1000] +
-                hundreds[(number % 1000) / 100] +
-                tens[(number % 100) / 10] +
-                ones[number % 10];
     }
 
     /**

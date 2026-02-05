@@ -121,14 +121,10 @@ public class GUIChocolateShop implements StatefulView<GUIChocolateShop.State> {
             lore.add("§eClick to view milestones!");
 
             return ItemStackCreator.getStack("§6Chocolate Shop Milestones", Material.LADDER, 1, lore);
-        }, (click, c) -> GUIChocolateShopMilestones.open((SkyBlockPlayer) c.player()));
+        }, (click, c) -> ((SkyBlockPlayer) c.player()).openView(new GUIChocolateShopMilestones()));
 
         // Slot 48: Go Back
-        layout.slot(48, (s, c) -> {
-            List<String> lore = new ArrayList<>();
-            lore.add("§7To Chocolate Factory");
-            return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, lore);
-        }, (click, c) -> GUIChocolateFactory.open((SkyBlockPlayer) c.player()));
+        Components.back(layout, 48, ctx);
 
         // Slot 49: Close
         Components.close(layout, 49);

@@ -53,11 +53,7 @@ public class GUIChocolateFactoryMilestones implements StatefulView<GUIChocolateF
         }
 
         // Go Back button (slot 48)
-        layout.slot(48, (s, c) -> {
-            List<String> lore = new ArrayList<>();
-            lore.add("§7To Chocolate Factory");
-            return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, lore);
-        }, (click, c) -> GUIChocolateFactory.open((SkyBlockPlayer) c.player()));
+        Components.back(layout, 48, ctx);
 
         // Close button (slot 49)
         Components.close(layout, 49);
@@ -170,9 +166,5 @@ public class GUIChocolateFactoryMilestones implements StatefulView<GUIChocolateF
             return number + "th";
         }
         return number + suffixes[number % 10];
-    }
-
-    public static void open(SkyBlockPlayer player) {
-        ViewNavigator.get(player).push(new GUIChocolateFactoryMilestones());
     }
 }

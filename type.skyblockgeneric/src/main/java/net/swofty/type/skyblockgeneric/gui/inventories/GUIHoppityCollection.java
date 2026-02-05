@@ -109,11 +109,7 @@ public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.S
         }, (click, c) -> c.player().sendMessage("§7Rabbit Locations filter coming soon!"));
 
         // Slot 48: Go Back
-        layout.slot(48, (s, c) -> {
-            List<String> lore = new ArrayList<>();
-            lore.add("§7To Chocolate Factory");
-            return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, lore);
-        }, (click, c) -> GUIChocolateFactory.open((SkyBlockPlayer) c.player()));
+        Components.back(layout, 48, ctx);
 
         // Slot 49: Close
         Components.close(layout, 49);
@@ -315,10 +311,6 @@ public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.S
         bar.append("§r");
 
         return bar.toString();
-    }
-
-    public static void open(SkyBlockPlayer player) {
-        ViewNavigator.get(player).push(new GUIHoppityCollection());
     }
 
     @Getter
