@@ -968,8 +968,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
         if (HypixelConst.isIslandServer()) return;
 
-        boolean isVoidDeath = this.lastDamage != null && "minecraft:out_of_world".equals(this.lastDamage.getType().name());
-        if (isVoidDeath || !isBoosterCookieActive()) {
+        if (!isBoosterCookieActive()) {
             sendMessage("§cYou died and lost " + StringUtility.decimalify(getCoins() / 2, 1) + " coins!");
             setCoins(getCoins() / 2);
         }
