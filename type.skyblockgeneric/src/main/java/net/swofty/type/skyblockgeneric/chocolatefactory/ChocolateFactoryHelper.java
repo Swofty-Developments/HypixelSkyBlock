@@ -9,6 +9,7 @@ import lombok.experimental.UtilityClass;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 /**
  * Helper class for Chocolate Factory operations.
@@ -16,6 +17,22 @@ import java.util.Locale;
  */
 @UtilityClass
 public class ChocolateFactoryHelper {
+    private static final int SECONDS_PER_HOUR = 3600;
+
+    private static final int HAND_BAKED_MAX_INTERNAL_LEVEL = 9;
+    private static final long HAND_BAKED_COST_STEP = 500L;
+
+    private static final long RABBIT_BARN_BASE_COST = 5000L;
+    private static final double RABBIT_BARN_COST_GROWTH = 1.05;
+
+    private static final String RABBIT_BRO_NAME = "Rabbit Bro";
+    private static final int RABBIT_BRO_SPECIAL_MAX_LEVEL = 10;
+    private static final int RABBIT_BRO_BASE_COST = 30;
+    private static final int RABBIT_BRO_CF_SCALING = 20;
+    private static final int EMPLOYEE_BASE_COST = 216;
+    private static final double EMPLOYEE_CF_SCALING = 144.0;
+    private static final double EMPLOYEE_COST_GROWTH = 1.05;
+
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance(Locale.US);
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0.0");
 
@@ -37,20 +54,14 @@ public class ChocolateFactoryHelper {
      * Updates chocolate production for the player based on time elapsed
      */
     public static void updateProduction(SkyBlockPlayer player) {
-        DatapointChocolateFactory datapoint = player.getChocolateFactoryDatapoint();
-        DatapointChocolateFactory.ChocolateFactoryData data = datapoint.getValue();
-        data.updateChocolateFromProduction();
-        datapoint.setValue(data);
+        mutateData(player, DatapointChocolateFactory.ChocolateFactoryData::updateChocolateFromProduction);
     }
 
     /**
      * Handles a click on the chocolate cookie
      */
     public static void handleClick(SkyBlockPlayer player) {
-        DatapointChocolateFactory datapoint = player.getChocolateFactoryDatapoint();
-        DatapointChocolateFactory.ChocolateFactoryData data = datapoint.getValue();
-        data.click();
-        datapoint.setValue(data);
+        mutateData(player, DatapointChocolateFactory.ChocolateFactoryData::click);
     }
 
     /**
@@ -71,7 +82,7 @@ public class ChocolateFactoryHelper {
      * Formats production per hour for display
      */
     public static String formatProductionPerHour(double productionPerSecond) {
-        double perHour = productionPerSecond * 3600;
+        double perHour = productionPerSecond * SECONDS_PER_HOUR;
         return formatChocolate((long) perHour) + "/h";
     }
 
@@ -82,8 +93,8 @@ public class ChocolateFactoryHelper {
      * Max internal level is 9 (display level 10)
      */
     public static long getHandBakedChocolateCost(int currentLevel) {
-        if (currentLevel >= 9) return 0; // Already maxed at level 10
-        return 500L * (currentLevel + 1);
+        if (currentLevel >= HAND_BAKED_MAX_INTERNAL_LEVEL) return 0; // Already maxed at level 10
+        return HAND_BAKED_COST_STEP * (currentLevel + 1);
     }
 
     /**
@@ -98,7 +109,7 @@ public class ChocolateFactoryHelper {
             return 0;
         }
         // Cost formula: 5000 × 1.05^(currentLevel-1), rounded
-        return Math.round(5000 * Math.pow(1.05, currentLevel - 1));
+        return Math.round(RABBIT_BARN_BASE_COST * Math.pow(RABBIT_BARN_COST_GROWTH, currentLevel - 1));
     }
 
     /**
@@ -215,16 +226,7 @@ public class ChocolateFactoryHelper {
      * Gets the employee index (1-7) for cost calculation
      */
     public static int getEmployeeIndex(String employeeName) {
-        return switch (employeeName) {
-            case "Rabbit Bro" -> 1;
-            case "Rabbit Cousin" -> 2;
-            case "Rabbit Sis" -> 3;
-            case "Rabbit Daddy" -> 4;
-            case "Rabbit Granny" -> 5;
-            case "Rabbit Uncle" -> 6;
-            case "Rabbit Dog" -> 7;
-            default -> 1;
-        };
+        return getEmployeeType(employeeName).getIndex();
     }
 
     /**
@@ -233,18 +235,19 @@ public class ChocolateFactoryHelper {
      * For all other cases: base_cost × 1.05^L where base_cost = (216 + 144 × CF) × i²
      */
     public static long getEmployeeCost(String employeeName, int targetLevel, int chocolateFactoryLevel) {
-        int employeeIndex = getEmployeeIndex(employeeName);
+        EmployeeType employeeType = getEmployeeType(employeeName);
+        int employeeIndex = employeeType.getIndex();
         int cf = chocolateFactoryLevel; // CF level 1-6
 
         // Rabbit Bro's first 10 levels use special formula
-        if (employeeName.equals("Rabbit Bro") && targetLevel <= 10) {
+        if (RABBIT_BRO_NAME.equals(employeeName) && targetLevel <= RABBIT_BRO_SPECIAL_MAX_LEVEL) {
             double multiplier = getRabbitBroMultiplier(targetLevel);
-            return (long) ((30 + 20 * cf) * multiplier);
+            return (long) ((RABBIT_BRO_BASE_COST + RABBIT_BRO_CF_SCALING * cf) * multiplier);
         }
 
         // All other cases: base_cost × 1.05^L
-        double baseCost = (216 + 144.0 * cf) * (employeeIndex * employeeIndex);
-        return (long) (baseCost * Math.pow(1.05, targetLevel));
+        double baseCost = (EMPLOYEE_BASE_COST + EMPLOYEE_CF_SCALING * cf) * (employeeIndex * employeeIndex);
+        return (long) (baseCost * Math.pow(EMPLOYEE_COST_GROWTH, targetLevel));
     }
 
     /**
@@ -286,16 +289,7 @@ public class ChocolateFactoryHelper {
      * This is the chocolate per second gained per employee level
      */
     public static double getEmployeeBaseProduction(String employeeName) {
-        return switch (employeeName) {
-            case "Rabbit Bro" -> 1.0;      // +1/level
-            case "Rabbit Cousin" -> 2.0;   // +2/level
-            case "Rabbit Sis" -> 3.0;      // +3/level
-            case "Rabbit Daddy" -> 4.0;    // +4/level
-            case "Rabbit Granny" -> 5.0;   // +5/level
-            case "Rabbit Uncle" -> 6.0;    // +6/level
-            case "Rabbit Dog" -> 7.0;      // +7/level
-            default -> 1.0;
-        };
+        return getEmployeeType(employeeName).getBaseProductionPerLevel();
     }
 
     /**
@@ -303,16 +297,7 @@ public class ChocolateFactoryHelper {
      * Returns null if no prerequisite (Rabbit Bro)
      */
     public static String getEmployeePrerequisite(String employeeName) {
-        return switch (employeeName) {
-            case "Rabbit Bro" -> null;           // No prerequisite
-            case "Rabbit Cousin" -> "Rabbit Bro";
-            case "Rabbit Sis" -> "Rabbit Cousin";
-            case "Rabbit Daddy" -> "Rabbit Sis";
-            case "Rabbit Granny" -> "Rabbit Daddy";
-            case "Rabbit Uncle" -> "Rabbit Granny";
-            case "Rabbit Dog" -> "Rabbit Uncle";
-            default -> null;
-        };
+        return getEmployeeType(employeeName).getPrerequisiteEmployee();
     }
 
     /**
@@ -403,10 +388,7 @@ public class ChocolateFactoryHelper {
      * Adds a Time Tower charge to the player
      */
     public static void addTimeTowerCharge(SkyBlockPlayer player) {
-        DatapointChocolateFactory datapoint = getDatapoint(player);
-        DatapointChocolateFactory.ChocolateFactoryData data = datapoint.getValue();
-        data.setTimeTowerCharges(data.getTimeTowerCharges() + 1);
-        datapoint.setValue(data);
+        mutateData(player, data -> data.setTimeTowerCharges(data.getTimeTowerCharges() + 1));
     }
 
     /**
@@ -428,6 +410,42 @@ public class ChocolateFactoryHelper {
      */
     public static Prestige getPrestige(int level) {
         return Prestige.fromLevel(level);
+    }
+
+    private static void mutateData(SkyBlockPlayer player, Consumer<DatapointChocolateFactory.ChocolateFactoryData> mutator) {
+        DatapointChocolateFactory datapoint = getDatapoint(player);
+        DatapointChocolateFactory.ChocolateFactoryData data = datapoint.getValue();
+        mutator.accept(data);
+        datapoint.setValue(data);
+    }
+
+    private static EmployeeType getEmployeeType(String employeeName) {
+        return switch (employeeName) {
+            case "Rabbit Bro" -> EmployeeType.RABBIT_BRO;
+            case "Rabbit Cousin" -> EmployeeType.RABBIT_COUSIN;
+            case "Rabbit Sis" -> EmployeeType.RABBIT_SIS;
+            case "Rabbit Daddy" -> EmployeeType.RABBIT_DADDY;
+            case "Rabbit Granny" -> EmployeeType.RABBIT_GRANNY;
+            case "Rabbit Uncle" -> EmployeeType.RABBIT_UNCLE;
+            case "Rabbit Dog" -> EmployeeType.RABBIT_DOG;
+            default -> EmployeeType.RABBIT_BRO;
+        };
+    }
+
+    @Getter
+    @AllArgsConstructor
+    private enum EmployeeType {
+        RABBIT_BRO(1, 1.0, null),
+        RABBIT_COUSIN(2, 2.0, RABBIT_BRO_NAME),
+        RABBIT_SIS(3, 3.0, "Rabbit Cousin"),
+        RABBIT_DADDY(4, 4.0, "Rabbit Sis"),
+        RABBIT_GRANNY(5, 5.0, "Rabbit Daddy"),
+        RABBIT_UNCLE(6, 6.0, "Rabbit Granny"),
+        RABBIT_DOG(7, 7.0, "Rabbit Uncle");
+
+        private final int index;
+        private final double baseProductionPerLevel;
+        private final String prerequisiteEmployee;
     }
 
     @Getter

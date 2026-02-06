@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.State> {
     private static final String HOPPITY_TEXTURE = "b79e7f3341b672d9de6564cbaca052a6a723ea466a2e66af35ba1ba855f0d692";
     private static final String LOCATION_TEXTURE = "d7cc6687423d0570d556ac53e0676cb563bbdd9717cd8269bdebed6f6d4e7bf8";
+    private static final String FOUND_RABBIT_TEXTURE = HOPPITY_TEXTURE;
 
     private static final int[] RABBIT_SLOTS = {
             10, 11, 12, 13, 14, 15, 16,
@@ -28,7 +29,9 @@ public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.S
     };
 
     private static final int RABBITS_PER_PAGE = RABBIT_SLOTS.length;
-    private static final int TOTAL_RABBITS = 512;
+    private static final int TOTAL_RABBITS = ChocolateRabbit.values().length;
+    private static final int PROGRESS_BAR_SEGMENTS = 25;
+    private static final double PERCENT_PER_PROGRESS_SEGMENT = 100.0 / PROGRESS_BAR_SEGMENTS;
 
     private static final int[] BORDER_SLOTS = {
             0, 1, 2, 3, 4, 5, 6, 7, 8,
@@ -78,8 +81,7 @@ public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.S
             if (rabbitIndex < rabbits.size()) {
                 ChocolateRabbit rabbit = rabbits.get(rabbitIndex);
                 layout.slot(slot, (s, c) -> {
-                    SkyBlockPlayer p = (SkyBlockPlayer) c.player();
-                    boolean found = ChocolateFactoryHelper.getData(p).getFoundRabbits().contains(rabbit.name());
+                    boolean found = foundRabbits.contains(rabbit.name());
                     return createRabbitItem(rabbit, found);
                 });
             } else {
@@ -267,7 +269,7 @@ public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.S
 
         if (found) {
             return ItemStackCreator.getStackHead(rabbit.getFormattedName(),
-                    "b79e7f3341b672d9de6564cbaca052a6a723ea466a2e66af35ba1ba855f0d692", 1, lore);
+                    FOUND_RABBIT_TEXTURE, 1, lore);
         } else {
             return ItemStackCreator.getStack(rabbit.getFormattedName(), Material.GRAY_DYE, 1, lore);
         }
@@ -298,8 +300,8 @@ public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.S
     }
 
     private String createProgressBar(double progress) {
-        int filled = (int) (progress / 4);
-        int empty = 25 - filled;
+        int filled = (int) (progress / PERCENT_PER_PROGRESS_SEGMENT);
+        int empty = PROGRESS_BAR_SEGMENTS - filled;
 
         StringBuilder bar = new StringBuilder("§2§l§m");
         for (int i = 0; i < filled; i++) {
@@ -328,13 +330,13 @@ public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.S
         }
 
         public SortType next() {
-            SortType[] values = values();
-            return values[(ordinal() + 1) % values.length];
+            SortType[] all = values();
+            return all[(ordinal() + 1) % all.length];
         }
 
         public SortType previous() {
-            SortType[] values = values();
-            return values[(ordinal() - 1 + values.length) % values.length];
+            SortType[] all = values();
+            return all[(ordinal() - 1 + all.length) % all.length];
         }
     }
 
@@ -353,13 +355,13 @@ public class GUIHoppityCollection implements StatefulView<GUIHoppityCollection.S
         }
 
         public FilterType next() {
-            FilterType[] values = values();
-            return values[(ordinal() + 1) % values.length];
+            FilterType[] all = values();
+            return all[(ordinal() + 1) % all.length];
         }
 
         public FilterType previous() {
-            FilterType[] values = values();
-            return values[(ordinal() - 1 + values.length) % values.length];
+            FilterType[] all = values();
+            return all[(ordinal() - 1 + all.length) % all.length];
         }
     }
 }

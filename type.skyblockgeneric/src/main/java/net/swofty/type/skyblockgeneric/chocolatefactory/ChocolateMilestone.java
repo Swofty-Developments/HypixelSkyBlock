@@ -3,6 +3,10 @@ package net.swofty.type.skyblockgeneric.chocolatefactory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents chocolate factory milestones.
@@ -78,8 +82,10 @@ public enum ChocolateMilestone {
     private final String textureId;
     private final Material glassPaneMaterial;
 
+    private static final Map<Integer, ChocolateMilestone> MILESTONES_BY_NUMBER = createMilestonesByNumber();
+
     public String getRomanNumeral() {
-        return toRoman(number);
+        return StringUtility.getAsRomanNumeral(number);
     }
 
     public String getFormattedRequirement() {
@@ -96,24 +102,14 @@ public enum ChocolateMilestone {
     }
 
     public static ChocolateMilestone fromNumber(int number) {
-        for (ChocolateMilestone milestone : values()) {
-            if (milestone.number == number) {
-                return milestone;
-            }
-        }
-        return null;
+        return MILESTONES_BY_NUMBER.get(number);
     }
 
-    private static String toRoman(int number) {
-        if (number <= 0) return "I";
-        String[] thousands = {"", "M", "MM", "MMM"};
-        String[] hundreds = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
-        String[] tens = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
-        String[] ones = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
-
-        return thousands[number / 1000] +
-                hundreds[(number % 1000) / 100] +
-                tens[(number % 100) / 10] +
-                ones[number % 10];
+    private static Map<Integer, ChocolateMilestone> createMilestonesByNumber() {
+        Map<Integer, ChocolateMilestone> milestonesByNumber = new HashMap<>();
+        for (ChocolateMilestone milestone : values()) {
+            milestonesByNumber.put(milestone.number, milestone);
+        }
+        return milestonesByNumber;
     }
 }

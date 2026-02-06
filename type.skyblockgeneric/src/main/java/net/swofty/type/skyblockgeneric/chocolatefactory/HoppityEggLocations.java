@@ -27,4 +27,8 @@ public enum HoppityEggLocations {
 
     private final Pos position;
     private final String locationMessage;
+
+    public static int totalLocations() {
+        return values().length;
+    }
 }

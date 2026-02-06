@@ -6,6 +6,8 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIChocolateFactory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.time.Duration;
+
 @CommandParameters(aliases = "cf factory",
         description = "Opens the Chocolate Factory menu",
         usage = "/chocolatefactory",
@@ -18,7 +20,7 @@ public class ChocolateFactoryCommand extends HypixelCommand {
             if (!permissionCheck(sender)) return;
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
-            new GUIChocolateFactory().open(player);
+            player.openView(new GUIChocolateFactory()).refreshEvery(Duration.ofSeconds(1));
         });
     }
 }

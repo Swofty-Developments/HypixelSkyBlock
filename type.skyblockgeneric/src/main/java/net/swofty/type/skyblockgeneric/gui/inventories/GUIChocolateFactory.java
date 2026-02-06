@@ -6,22 +6,32 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
-import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.chocolatefactory.ChocolateFactoryHelper;
 import net.swofty.type.skyblockgeneric.chocolatefactory.ChocolateRabbit;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointChocolateFactory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import net.swofty.commons.StringUtility;
-
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.State> {
+    private static final int RABBIT_BARN_MAX_LEVEL = 247;
+    private static final int RABBIT_BARN_EXTRA_CAPACITY = 2;
+    private static final int HAND_BAKED_MAX_LEVEL = 10;
+    private static final int TIME_TOWER_MAX_LEVEL = 15;
+    private static final int RABBIT_SHRINE_MAX_LEVEL = 20;
+    private static final int COACH_JACKRABBIT_MAX_LEVEL = 20;
+    private static final int EMPLOYEE_MAX_LEVEL = 220;
+    private static final int TOTAL_RABBITS = ChocolateRabbit.values().length;
+    private static final long MILLIS_PER_MINUTE = 60_000L;
+    private static final long MILLIS_PER_SECOND = 1_000L;
+
+    private static final String NOT_ENOUGH_CHOCOLATE_MESSAGE = "§cYou don't have enough Chocolate!";
+
     // Texture IDs
     private static final String CHOCOLATE_TEXTURE = "9a815398e7da89b1bc08f646cafc8e7b813da0be0eec0cce6d3eff5207801026";
     private static final String HOPPITY_TEXTURE = "b79e7f3341b672d9de6564cbaca052a6a723ea466a2e66af35ba1ba855f0d692";
@@ -132,14 +142,14 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         });
 
         // Employee slots (28-34)
-        setupEmployeeSlots(layout, ctx);
+        setupEmployeeSlots(layout);
 
         // Slot 35: Rabbit Barn
         layout.slot(35, (s, c) -> createRabbitBarnItem((SkyBlockPlayer) c.player()), (click, c) -> {
             SkyBlockPlayer p = (SkyBlockPlayer) c.player();
             DatapointChocolateFactory.ChocolateFactoryData d = ChocolateFactoryHelper.getData(p);
 
-            if (d.getRabbitBarnLevel() >= 247) {
+            if (d.getRabbitBarnLevel() >= RABBIT_BARN_MAX_LEVEL) {
                 p.sendMessage("§cYour Rabbit Barn is already at maximum capacity!");
                 p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
                 return;
@@ -147,11 +157,10 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
 
             if (ChocolateFactoryHelper.purchaseUpgrade(p, ChocolateFactoryHelper.UpgradeType.RABBIT_BARN)) {
                 d = ChocolateFactoryHelper.getData(p);
-                p.sendMessage("§7Your §aRabbit Barn §7capacity has been increased to §a" + (d.getMaxRabbitSlots() + 2) + " Rabbits§7!");
+                p.sendMessage("§7Your §aRabbit Barn §7capacity has been increased to §a" + (d.getMaxRabbitSlots() + RABBIT_BARN_EXTRA_CAPACITY) + " Rabbits§7!");
                 p.playSound(UPGRADE_SOUND);
             } else {
-                p.sendMessage("§cYou don't have enough Chocolate!");
-                p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                sendNotEnoughChocolateFeedback(p);
             }
             c.session(State.class).refresh();
         });
@@ -161,7 +170,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             SkyBlockPlayer p = (SkyBlockPlayer) c.player();
             DatapointChocolateFactory.ChocolateFactoryData d = ChocolateFactoryHelper.getData(p);
 
-            if (d.getHandBakedChocolateLevel() >= 10) {
+            if (d.getHandBakedChocolateLevel() >= HAND_BAKED_MAX_LEVEL) {
                 p.sendMessage("§cYou only have so many fingers! You can't click any faster!");
                 p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
                 return;
@@ -172,8 +181,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
                 p.sendMessage("§7You will now produce §6+" + d.getClickPower() + " Chocolate §7per click!");
                 p.playSound(UPGRADE_SOUND);
             } else {
-                p.sendMessage("§cYou don't have enough Chocolate!");
-                p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                sendNotEnoughChocolateFeedback(p);
             }
             c.session(State.class).refresh();
         });
@@ -200,15 +208,14 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             }
 
             // Left-click to upgrade
-            if (d.getTimeTowerLevel() >= 15) {
+            if (d.getTimeTowerLevel() >= TIME_TOWER_MAX_LEVEL) {
                 p.sendMessage("§cThe Time Tower is already at its maximum level!");
                 p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
             } else if (ChocolateFactoryHelper.purchaseUpgrade(p, ChocolateFactoryHelper.UpgradeType.TIME_TOWER)) {
                 p.sendMessage("§7You upgraded to §dTime Tower " + StringUtility.getAsRomanNumeral(d.getTimeTowerLevel() + 1) + "§7!");
                 p.playSound(UPGRADE_SOUND);
             } else {
-                p.sendMessage("§cYou don't have enough Chocolate!");
-                p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                sendNotEnoughChocolateFeedback(p);
             }
             c.session(State.class).refresh();
         });
@@ -224,7 +231,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
                 return;
             }
 
-            if (d.getRabbitShrineLevel() >= 20) {
+            if (d.getRabbitShrineLevel() >= RABBIT_SHRINE_MAX_LEVEL) {
                 p.sendMessage("§cYour Rabbit Shrine is already at its maximum level!");
                 p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
                 return;
@@ -234,8 +241,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
                 p.sendMessage("§aUpgraded Rabbit Shrine!");
                 p.playSound(UPGRADE_SOUND);
             } else {
-                p.sendMessage("§cYou don't have enough Chocolate!");
-                p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                sendNotEnoughChocolateFeedback(p);
             }
             c.session(State.class).refresh();
         });
@@ -251,7 +257,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
                 return;
             }
 
-            if (d.getCoachJackrabbitLevel() >= 20) {
+            if (d.getCoachJackrabbitLevel() >= COACH_JACKRABBIT_MAX_LEVEL) {
                 p.sendMessage("§cCoach Jackrabbit has already taught you all that he can teach!");
                 p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
                 return;
@@ -261,8 +267,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
                 p.sendMessage("§aUpgraded Coach Jackrabbit!");
                 p.playSound(UPGRADE_SOUND);
             } else {
-                p.sendMessage("§cYou don't have enough Chocolate!");
-                p.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+                sendNotEnoughChocolateFeedback(p);
             }
             c.session(State.class).refresh();
         });
@@ -279,8 +284,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             DatapointChocolateFactory.ChocolateFactoryData d = ChocolateFactoryHelper.getData(p);
 
             int rabbitsFound = d.getFoundRabbitCount();
-            int totalRabbits = 512;
-            double percentage = (rabbitsFound / (double) totalRabbits) * 100;
+            double percentage = (rabbitsFound / (double) TOTAL_RABBITS) * 100;
 
             List<String> lore = new ArrayList<>();
             lore.add("§7Help §aHoppity §7find all of his §aChocolate");
@@ -292,7 +296,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             lore.add("§7§6Chocolate Factory §7will produce!");
             lore.add("");
             lore.add("§7Rabbits Found: §e" + String.format("%.1f", percentage) + "§6%");
-            lore.add("§2§l§m    §f§l§m                     §r §e" + rabbitsFound + "§6/§e" + totalRabbits);
+            lore.add("§2§l§m    §f§l§m                     §r §e" + rabbitsFound + "§6/§e" + TOTAL_RABBITS);
             lore.add("");
             lore.add("§eClick to view!");
 
@@ -334,7 +338,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         }, (click, c) -> ((SkyBlockPlayer) c.player()).openView(new GUIChocolateFactoryMilestones()));
     }
 
-    private void setupEmployeeSlots(ViewLayout<State> layout, ViewContext ctx) {
+    private void setupEmployeeSlots(ViewLayout<State> layout) {
         for (int i = 0; i < EMPLOYEE_SLOTS.length; i++) {
             int slot = EMPLOYEE_SLOTS[i];
             String employeeName = EMPLOYEE_NAMES[i];
@@ -361,7 +365,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
 
         DatapointChocolateFactory.EmployeeData existingEmployee = data.getEmployees().get(employeeName);
 
-        if (existingEmployee != null && existingEmployee.getLevel() >= 220) {
+        if (existingEmployee != null && existingEmployee.getLevel() >= EMPLOYEE_MAX_LEVEL) {
             player.sendMessage("§b" + employeeName + " §ccannot ascend the corporate ladder any further!");
             player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
             return;
@@ -386,8 +390,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
             player.sendMessage(rankColor + employeeName + " §7has been promoted to §7[" + level + "§7] " + rankColor + rank + "§7!");
             player.playSound(UPGRADE_SOUND);
         } else {
-            player.sendMessage("§cYou don't have enough Chocolate!");
-            player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
+            sendNotEnoughChocolateFeedback(player);
         }
     }
 
@@ -445,7 +448,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         lore.add("§7produce §6+" + String.format("%.0f", currentProduction) + " Chocolate §7per second!");
         lore.add("");
 
-        if (level >= 220) {
+        if (level >= EMPLOYEE_MAX_LEVEL) {
             lore.add("§7§" + rankColor + employeeName + " §ahas climbed as far as the");
             lore.add("§acorporate ladder will allow!");
         } else {
@@ -481,8 +484,8 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         lore.add("§7rabbits than your barn can hold,");
         lore.add("§7they will be §ccrushed§7.");
         lore.add("");
-        lore.add("§7Your Barn: §a" + data.getEmployeeCount() + "§7/§a" + (data.getMaxRabbitSlots() + 2) + " Rabbits");
-        if (level >= 247) {
+        lore.add("§7Your Barn: §a" + data.getEmployeeCount() + "§7/§a" + (data.getMaxRabbitSlots() + RABBIT_BARN_EXTRA_CAPACITY) + " Rabbits");
+        if (level >= RABBIT_BARN_MAX_LEVEL) {
             lore.add("");
             lore.add("§aYour Rabbit Barn is at maximum capacity!");
         } else {
@@ -515,7 +518,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         lore.add("");
         lore.add("§7Chocolate Per Click: §6+" + data.getClickPower() + " Chocolate");
         lore.add("");
-        if (level >= 10) {
+        if (level >= HAND_BAKED_MAX_LEVEL) {
             lore.add("§aYou have reached the maximum");
             lore.add("§aamount of upgrades!");
         } else {
@@ -555,8 +558,8 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         lore.add("");
         if (isActive) {
             long remaining = data.getTimeTowerActiveUntil() - System.currentTimeMillis();
-            long minutes = remaining / 60000;
-            long seconds = (remaining % 60000) / 1000;
+            long minutes = remaining / MILLIS_PER_MINUTE;
+            long seconds = (remaining % MILLIS_PER_MINUTE) / MILLIS_PER_SECOND;
             lore.add("§7Status: §a§lACTIVE");
             lore.add("§7Time Remaining: §a" + minutes + "m " + seconds + "s");
         } else {
@@ -565,7 +568,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         lore.add("");
         lore.add("§7Charges: §a" + data.getTimeTowerCharges() + "§7/§a3");
         lore.add("");
-        if (level >= 15) {
+        if (level >= TIME_TOWER_MAX_LEVEL) {
             lore.add("§aThe Time Tower is maxed out!");
         } else {
             lore.add("§8§m-----------------");
@@ -606,7 +609,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         lore.add("§7higher rarity during §dHoppity's Hunt");
         lore.add("§d§7by §a" + oddsBonus + "%§7.");
         lore.add("");
-        if (level >= 20) {
+        if (level >= RABBIT_SHRINE_MAX_LEVEL) {
             lore.add("§aYour Rabbit Shrine is at its maximum");
             lore.add("§alevel!");
         } else {
@@ -647,7 +650,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         lore.add("§7your full potential by granting §6+" + String.format("%.2fx", multiplierBonus));
         lore.add("§6Chocolate §7per second!");
         lore.add("");
-        if (level >= 20) {
+        if (level >= COACH_JACKRABBIT_MAX_LEVEL) {
             lore.add("§aCoach Jackrabbit has already taught");
             lore.add("§ayou all that he can teach!");
         } else {
@@ -715,7 +718,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
     }
 
     private String getEmployeeRank(int level) {
-        if (level >= 220) return "Board Member";
+        if (level >= EMPLOYEE_MAX_LEVEL) return "Board Member";
         if (level >= 200) return "Executive";
         if (level >= 180) return "Director";
         if (level >= 140) return "Manager";
@@ -726,7 +729,7 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
     }
 
     private String getEmployeeRankColor(int level) {
-        if (level >= 220) return "b";
+        if (level >= EMPLOYEE_MAX_LEVEL) return "b";
         if (level >= 200) return "d";
         if (level >= 180) return "6";
         if (level >= 140) return "5";
@@ -736,10 +739,9 @@ public class GUIChocolateFactory implements StatefulView<GUIChocolateFactory.Sta
         return "c";
     }
 
-    /**
-     * Opens the Chocolate Factory GUI for a player with auto-refresh every second.
-     */
-    public static void open(SkyBlockPlayer player) {
-        player.openView(new GUIChocolateFactory()).refreshEvery(Duration.ofSeconds(1));
+    private void sendNotEnoughChocolateFeedback(SkyBlockPlayer player) {
+        player.sendMessage(NOT_ENOUGH_CHOCOLATE_MESSAGE);
+        player.playSound(NOT_ENOUGH_CHOCOLATE_SOUND);
     }
+
 }

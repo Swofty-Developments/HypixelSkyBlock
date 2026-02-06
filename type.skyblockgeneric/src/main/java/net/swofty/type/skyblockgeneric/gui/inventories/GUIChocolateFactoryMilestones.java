@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GUIChocolateFactoryMilestones implements StatefulView<GUIChocolateFactoryMilestones.State> {
+    private static final int PROGRESS_BAR_SEGMENTS = 25;
+    private static final double PERCENT_PER_SEGMENT = 100.0 / PROGRESS_BAR_SEGMENTS;
+
     private static final int[] MILESTONE_SLOTS = {
             27, 18, 9, 0, 1, 2, 11, 20, 29, 30, 31, 22,
             13, 4, 5, 6, 15, 24, 33, 34, 35, 26, 17, 8
@@ -69,21 +72,12 @@ public class GUIChocolateFactoryMilestones implements StatefulView<GUIChocolateF
         lore.add("§7Milestone " + milestone.getRomanNumeral() + " Reward");
         lore.add("§" + milestone.getColorCode() + milestone.getRabbitName());
         lore.add("");
-
-        if (milestone.getChocolateBonus() > 0) {
-            lore.add("§7Grants §6+" + milestone.getChocolateBonus() + " Chocolate §7and §6" +
-                    String.format("%.3fx", milestone.getMultiplierBonus()));
-            lore.add("§6Chocolate §7per second to your");
-            lore.add("§7§6Chocolate Factory§7.");
-        } else {
-            lore.add("§7Grants §6+" + String.format("%.2fx", milestone.getMultiplierBonus()) + " Chocolate §7per second");
-            lore.add("§7to your §6Chocolate Factory§7.");
-        }
+        addRewardLore(lore, milestone);
         lore.add("");
         lore.add("§a§lUNLOCKED");
 
         return ItemStackCreator.getStackHead(
-                "§" + milestone.getColorCode() + getOrdinal(milestone.getNumber()) + " Chocolate Milestone",
+                getMilestoneName(milestone),
                 milestone.getTextureId(),
                 1,
                 lore
@@ -105,21 +99,12 @@ public class GUIChocolateFactoryMilestones implements StatefulView<GUIChocolateF
         lore.add("§7Milestone " + milestone.getRomanNumeral() + " Reward");
         lore.add("§" + milestone.getColorCode() + milestone.getRabbitName());
         lore.add("");
-
-        if (milestone.getChocolateBonus() > 0) {
-            lore.add("§7Grants §6+" + milestone.getChocolateBonus() + " Chocolate §7and §6" +
-                    String.format("%.3fx", milestone.getMultiplierBonus()));
-            lore.add("§6Chocolate §7per second to your");
-            lore.add("§7§6Chocolate Factory§7.");
-        } else {
-            lore.add("§7Grants §6+" + String.format("%.2fx", milestone.getMultiplierBonus()) + " Chocolate §7per second");
-            lore.add("§7to your §6Chocolate Factory§7.");
-        }
+        addRewardLore(lore, milestone);
         lore.add("");
         lore.add("§cRequires " + formattedReq + " all-time Chocolate!");
 
         return ItemStackCreator.getStack(
-                "§" + milestone.getColorCode() + getOrdinal(milestone.getNumber()) + " Chocolate Milestone",
+                getMilestoneName(milestone),
                 milestone.getGlassPaneMaterial(),
                 1,
                 lore
@@ -127,8 +112,8 @@ public class GUIChocolateFactoryMilestones implements StatefulView<GUIChocolateF
     }
 
     private String createProgressBar(double progress) {
-        int filled = (int) (progress / 4);
-        int empty = 25 - filled;
+        int filled = (int) (progress / PERCENT_PER_SEGMENT);
+        int empty = PROGRESS_BAR_SEGMENTS - filled;
 
         StringBuilder bar = new StringBuilder("§3§l§m");
         for (int i = 0; i < filled; i++) {
@@ -166,5 +151,22 @@ public class GUIChocolateFactoryMilestones implements StatefulView<GUIChocolateF
             return number + "th";
         }
         return number + suffixes[number % 10];
+    }
+
+    private String getMilestoneName(ChocolateMilestone milestone) {
+        return "§" + milestone.getColorCode() + getOrdinal(milestone.getNumber()) + " Chocolate Milestone";
+    }
+
+    private void addRewardLore(List<String> lore, ChocolateMilestone milestone) {
+        if (milestone.getChocolateBonus() > 0) {
+            lore.add("§7Grants §6+" + milestone.getChocolateBonus() + " Chocolate §7and §6" +
+                    String.format("%.3fx", milestone.getMultiplierBonus()));
+            lore.add("§6Chocolate §7per second to your");
+            lore.add("§7§6Chocolate Factory§7.");
+            return;
+        }
+
+        lore.add("§7Grants §6+" + String.format("%.2fx", milestone.getMultiplierBonus()) + " Chocolate §7per second");
+        lore.add("§7to your §6Chocolate Factory§7.");
     }
 }

@@ -13,10 +13,15 @@ import net.swofty.type.skyblockgeneric.chocolatefactory.HoppityEggLocations;
 import net.swofty.type.skyblockgeneric.chocolatefactory.HoppityEggType;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class HoppityEggEntity extends EntityCreature {
+    private static final float MAX_YAW = 360f;
+    private static final double Y_SPAWN_OFFSET = 1.46875;
+    private static final String TEXTURE_URL_PREFIX = "http://textures.minecraft.net/texture/";
+
 
     private final HoppityEggLocations location;
     private final HoppityEggType eggType;
@@ -41,14 +46,14 @@ public class HoppityEggEntity extends EntityCreature {
     }
 
     public void spawn(Instance instance) {
-        float randomYaw = ThreadLocalRandom.current().nextFloat() * 360f;
-        setInstance(instance, location.getPosition().sub(0, 1.46875, 0).withYaw(randomYaw));
+        float randomYaw = ThreadLocalRandom.current().nextFloat() * MAX_YAW;
+        setInstance(instance, location.getPosition().sub(0, Y_SPAWN_OFFSET, 0).withYaw(randomYaw));
     }
 
     private static String encodeTexture(String textureHash) {
         JSONObject json = new JSONObject();
         json.put("textures", new JSONObject().put("SKIN",
-                new JSONObject().put("url", "http://textures.minecraft.net/texture/" + textureHash)));
-        return Base64.getEncoder().encodeToString(json.toString().getBytes());
+                new JSONObject().put("url", TEXTURE_URL_PREFIX + textureHash)));
+        return Base64.getEncoder().encodeToString(json.toString().getBytes(StandardCharsets.UTF_8));
     }
 }

@@ -8,6 +8,8 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIChocolateFactory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.time.Duration;
+
 public class NPCCoachJackrabbit extends HypixelNPC {
 
     public NPCCoachJackrabbit() {
@@ -47,7 +49,7 @@ public class NPCCoachJackrabbit extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
-        new GUIChocolateFactory().open((SkyBlockPlayer) e.player());
+        ((SkyBlockPlayer) e.player()).openView(new GUIChocolateFactory()).refreshEvery(Duration.ofSeconds(1));
     }
 
     @Override

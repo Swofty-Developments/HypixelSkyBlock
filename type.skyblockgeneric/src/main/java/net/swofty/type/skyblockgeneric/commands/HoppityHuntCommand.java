@@ -11,6 +11,11 @@ import net.swofty.type.skyblockgeneric.chocolatefactory.HoppityHuntManager;
         permission = Rank.STAFF,
         allowsConsole = false)
 public class HoppityHuntCommand extends HypixelCommand {
+    private static final String HUNT_ALREADY_ACTIVE_MESSAGE = "§cHoppity's Hunt is already active!";
+    private static final String HUNT_NOT_ACTIVE_MESSAGE = "§cHoppity's Hunt is not currently active!";
+    private static final String HUNT_STARTED_MESSAGE = "§aHoppity's Hunt has been started! §e17 eggs §ahave been spawned.";
+    private static final String HUNT_STOPPED_MESSAGE = "§aHoppity's Hunt has been stopped! All eggs have been removed.";
+
     @Override
     public void registerUsage(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
@@ -18,12 +23,12 @@ public class HoppityHuntCommand extends HypixelCommand {
 
             HoppityHuntManager manager = HoppityHuntManager.getInstance();
             if (manager.isActive()) {
-                sender.sendMessage("§cHoppity's Hunt is already active!");
+                sender.sendMessage(HUNT_ALREADY_ACTIVE_MESSAGE);
                 return;
             }
 
             manager.startHunt();
-            sender.sendMessage("§aHoppity's Hunt has been started! §e17 eggs §ahave been spawned.");
+            sender.sendMessage(HUNT_STARTED_MESSAGE);
         }, ArgumentType.Literal("start"));
 
         command.addSyntax((sender, context) -> {
@@ -31,12 +36,12 @@ public class HoppityHuntCommand extends HypixelCommand {
 
             HoppityHuntManager manager = HoppityHuntManager.getInstance();
             if (!manager.isActive()) {
-                sender.sendMessage("§cHoppity's Hunt is not currently active!");
+                sender.sendMessage(HUNT_NOT_ACTIVE_MESSAGE);
                 return;
             }
 
             manager.stopHunt();
-            sender.sendMessage("§aHoppity's Hunt has been stopped! All eggs have been removed.");
+            sender.sendMessage(HUNT_STOPPED_MESSAGE);
         }, ArgumentType.Literal("stop"));
     }
 }

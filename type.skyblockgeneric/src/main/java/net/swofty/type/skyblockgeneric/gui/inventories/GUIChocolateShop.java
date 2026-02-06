@@ -548,7 +548,4 @@ public class GUIChocolateShop implements StatefulView<GUIChocolateShop.State> {
         }
     }
 
-    public static void open(SkyBlockPlayer player) {
-        player.openView(new GUIChocolateShop());
-    }
 }

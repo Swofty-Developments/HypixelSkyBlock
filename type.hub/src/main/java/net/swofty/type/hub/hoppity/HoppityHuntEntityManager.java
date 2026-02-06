@@ -12,12 +12,15 @@ import java.util.List;
 import java.util.Map;
 
 public class HoppityHuntEntityManager {
+    private static final float EGG_INTERACTION_WIDTH = 1.0f;
+    private static final float EGG_INTERACTION_HEIGHT = 1.0f;
 
     private final List<HoppityEggEntity> spawnedEggs = new ArrayList<>();
     private final List<InteractionEntity> spawnedInteractions = new ArrayList<>();
 
     public void spawnAllEggs() {
-        Map<HoppityEggLocations, HoppityEggType> locationEggTypes = HoppityHuntManager.getInstance().getLocationEggTypes();
+        HoppityHuntManager huntManager = HoppityHuntManager.getInstance();
+        Map<HoppityEggLocations, HoppityEggType> locationEggTypes = huntManager.getLocationEggTypes();
 
         for (Map.Entry<HoppityEggLocations, HoppityEggType> entry : locationEggTypes.entrySet()) {
             HoppityEggLocations location = entry.getKey();
@@ -27,9 +30,9 @@ public class HoppityHuntEntityManager {
             eggEntity.spawn(HypixelConst.getInstanceContainer());
             spawnedEggs.add(eggEntity);
 
-            InteractionEntity interaction = new InteractionEntity(1.0f, 1.0f, (player, event) -> {
+            InteractionEntity interaction = new InteractionEntity(EGG_INTERACTION_WIDTH, EGG_INTERACTION_HEIGHT, (player, event) -> {
                 if (player instanceof SkyBlockPlayer skyBlockPlayer) {
-                    HoppityHuntManager.getInstance().claimEgg(skyBlockPlayer, location);
+                    huntManager.claimEgg(skyBlockPlayer, location);
                 }
             });
             interaction.setInstance(HypixelConst.getInstanceContainer(), location.getPosition());

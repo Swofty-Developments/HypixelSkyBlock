@@ -6,9 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
-import org.json.JSONObject;
-
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,87 +20,47 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
         public String serialize(ChocolateFactoryData value) {
             JSONObject json = new JSONObject();
 
-            json.put("chocolate", value.chocolate);
-            json.put("chocolateAllTime", value.chocolateAllTime);
-            json.put("lastUpdated", value.lastUpdated);
-            json.put("partialChocolate", value.partialChocolate);
+            json.put("chocolate", value.getChocolate());
+            json.put("chocolateAllTime", value.getChocolateAllTime());
+            json.put("lastUpdated", value.getLastUpdated());
+            json.put("partialChocolate", value.getPartialChocolate());
 
             // Upgrades
-            json.put("timeTowerLevel", value.timeTowerLevel);
-            json.put("timeTowerCharges", value.timeTowerCharges);
-            json.put("timeTowerLastUsed", value.timeTowerLastUsed);
-            json.put("timeTowerActiveUntil", value.timeTowerActiveUntil);
-            json.put("rabbitBarnLevel", value.rabbitBarnLevel);
-            json.put("handBakedChocolateLevel", value.handBakedChocolateLevel);
-            json.put("rabbitShrineLevel", value.rabbitShrineLevel);
-            json.put("coachJackrabbitLevel", value.coachJackrabbitLevel);
-
-            // Employees - store as JSON object
-            JSONObject employeesJson = new JSONObject();
-            for (Map.Entry<String, EmployeeData> entry : value.employees.entrySet()) {
-                JSONObject employeeJson = new JSONObject();
-                employeeJson.put("level", entry.getValue().level);
-                employeeJson.put("baseProduction", entry.getValue().baseProduction);
-                employeesJson.put(entry.getKey(), employeeJson);
-            }
-            json.put("employees", employeesJson);
+            json.put("timeTowerLevel", value.getTimeTowerLevel());
+            json.put("timeTowerCharges", value.getTimeTowerCharges());
+            json.put("timeTowerLastUsed", value.getTimeTowerLastUsed());
+            json.put("timeTowerActiveUntil", value.getTimeTowerActiveUntil());
+            json.put("rabbitBarnLevel", value.getRabbitBarnLevel());
+            json.put("handBakedChocolateLevel", value.getHandBakedChocolateLevel());
+            json.put("rabbitShrineLevel", value.getRabbitShrineLevel());
+            json.put("coachJackrabbitLevel", value.getCoachJackrabbitLevel());
+            json.put("employees", serializeEmployees(value.getEmployees()));
 
             // Production stats
-            json.put("totalClicks", value.totalClicks);
-            json.put("totalTimeTowerUsages", value.totalTimeTowerUsages);
-
-            // Found rabbits
-            JSONArray foundRabbitsArray = new JSONArray();
-            for (String rabbit : value.foundRabbits) {
-                foundRabbitsArray.put(rabbit);
-            }
-            json.put("foundRabbits", foundRabbitsArray);
+            json.put("totalClicks", value.getTotalClicks());
+            json.put("totalTimeTowerUsages", value.getTotalTimeTowerUsages());
+            json.put("foundRabbits", serializeStringSet(value.getFoundRabbits()));
 
             // Shop stats
-            json.put("totalChocolateSpent", value.totalChocolateSpent);
+            json.put("totalChocolateSpent", value.getTotalChocolateSpent());
 
             // Hoppity Hunt
-            JSONArray claimedEggsArray = new JSONArray();
-            for (String egg : value.claimedEggs) {
-                claimedEggsArray.put(egg);
-            }
-            json.put("claimedEggs", claimedEggsArray);
-            json.put("totalEggsFound", value.totalEggsFound);
+            json.put("claimedEggs", serializeStringSet(value.getClaimedEggs()));
+            json.put("totalEggsFound", value.getTotalEggsFound());
 
             return json.toString();
         }
 
         @Override
         public ChocolateFactoryData deserialize(String json) {
+            if (json == null || json.isEmpty()) {
+                return new ChocolateFactoryData();
+            }
+
             JSONObject jsonObject = new JSONObject(json);
-
-            Map<String, EmployeeData> employees = new HashMap<>();
-            if (jsonObject.has("employees")) {
-                JSONObject employeesJson = jsonObject.getJSONObject("employees");
-                for (String key : employeesJson.keySet()) {
-                    JSONObject employeeJson = employeesJson.getJSONObject(key);
-                    employees.put(key, new EmployeeData(
-                            employeeJson.getInt("level"),
-                            employeeJson.getDouble("baseProduction")
-                    ));
-                }
-            }
-
-            Set<String> foundRabbits = new HashSet<>();
-            if (jsonObject.has("foundRabbits")) {
-                JSONArray foundRabbitsArray = jsonObject.getJSONArray("foundRabbits");
-                for (int i = 0; i < foundRabbitsArray.length(); i++) {
-                    foundRabbits.add(foundRabbitsArray.getString(i));
-                }
-            }
-
-            Set<String> claimedEggs = new HashSet<>();
-            if (jsonObject.has("claimedEggs")) {
-                JSONArray claimedEggsArray = jsonObject.getJSONArray("claimedEggs");
-                for (int i = 0; i < claimedEggsArray.length(); i++) {
-                    claimedEggs.add(claimedEggsArray.getString(i));
-                }
-            }
+            Map<String, EmployeeData> employees = deserializeEmployees(jsonObject.optJSONObject("employees"));
+            Set<String> foundRabbits = deserializeStringSet(jsonObject.optJSONArray("foundRabbits"));
+            Set<String> claimedEggs = deserializeStringSet(jsonObject.optJSONArray("claimedEggs"));
 
             return new ChocolateFactoryData(
                     jsonObject.optLong("chocolate", 0L),
@@ -128,35 +87,89 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
 
         @Override
         public ChocolateFactoryData clone(ChocolateFactoryData value) {
-            Map<String, EmployeeData> clonedEmployees = new HashMap<>();
-            for (Map.Entry<String, EmployeeData> entry : value.employees.entrySet()) {
-                clonedEmployees.put(entry.getKey(), new EmployeeData(
-                        entry.getValue().level,
-                        entry.getValue().baseProduction
-                ));
-            }
+            Map<String, EmployeeData> clonedEmployees = cloneEmployees(value.getEmployees());
 
             return new ChocolateFactoryData(
-                    value.chocolate,
-                    value.chocolateAllTime,
-                    value.lastUpdated,
-                    value.partialChocolate,
-                    value.timeTowerLevel,
-                    value.timeTowerCharges,
-                    value.timeTowerLastUsed,
-                    value.timeTowerActiveUntil,
-                    value.rabbitBarnLevel,
-                    value.handBakedChocolateLevel,
-                    value.rabbitShrineLevel,
-                    value.coachJackrabbitLevel,
+                    value.getChocolate(),
+                    value.getChocolateAllTime(),
+                    value.getLastUpdated(),
+                    value.getPartialChocolate(),
+                    value.getTimeTowerLevel(),
+                    value.getTimeTowerCharges(),
+                    value.getTimeTowerLastUsed(),
+                    value.getTimeTowerActiveUntil(),
+                    value.getRabbitBarnLevel(),
+                    value.getHandBakedChocolateLevel(),
+                    value.getRabbitShrineLevel(),
+                    value.getCoachJackrabbitLevel(),
                     clonedEmployees,
-                    value.totalClicks,
-                    value.totalTimeTowerUsages,
-                    new HashSet<>(value.foundRabbits),
-                    value.totalChocolateSpent,
-                    new HashSet<>(value.claimedEggs),
-                    value.totalEggsFound
+                    value.getTotalClicks(),
+                    value.getTotalTimeTowerUsages(),
+                    new HashSet<>(value.getFoundRabbits()),
+                    value.getTotalChocolateSpent(),
+                    new HashSet<>(value.getClaimedEggs()),
+                    value.getTotalEggsFound()
             );
+        }
+
+        private JSONObject serializeEmployees(Map<String, EmployeeData> employees) {
+            JSONObject employeesJson = new JSONObject();
+            for (Map.Entry<String, EmployeeData> entry : employees.entrySet()) {
+                JSONObject employeeJson = new JSONObject();
+                EmployeeData employee = entry.getValue();
+                employeeJson.put("level", employee.getLevel());
+                employeeJson.put("baseProduction", employee.getBaseProduction());
+                employeesJson.put(entry.getKey(), employeeJson);
+            }
+            return employeesJson;
+        }
+
+        private Map<String, EmployeeData> deserializeEmployees(JSONObject employeesJson) {
+            Map<String, EmployeeData> employees = new HashMap<>();
+            if (employeesJson == null) {
+                return employees;
+            }
+
+            for (String key : employeesJson.keySet()) {
+                JSONObject employeeJson = employeesJson.getJSONObject(key);
+                employees.put(key, new EmployeeData(
+                        employeeJson.optInt("level", 0),
+                        employeeJson.optDouble("baseProduction", 0.0)
+                ));
+            }
+            return employees;
+        }
+
+        private JSONArray serializeStringSet(Set<String> values) {
+            JSONArray array = new JSONArray();
+            for (String value : values) {
+                array.put(value);
+            }
+            return array;
+        }
+
+        private Set<String> deserializeStringSet(JSONArray array) {
+            Set<String> values = new HashSet<>();
+            if (array == null) {
+                return values;
+            }
+
+            for (int i = 0; i < array.length(); i++) {
+                values.add(array.getString(i));
+            }
+            return values;
+        }
+
+        private Map<String, EmployeeData> cloneEmployees(Map<String, EmployeeData> employees) {
+            Map<String, EmployeeData> clonedEmployees = new HashMap<>();
+            for (Map.Entry<String, EmployeeData> entry : employees.entrySet()) {
+                EmployeeData employee = entry.getValue();
+                clonedEmployees.put(entry.getKey(), new EmployeeData(
+                        employee.getLevel(),
+                        employee.getBaseProduction()
+                ));
+            }
+            return clonedEmployees;
         }
     };
 
@@ -177,6 +190,15 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
     @Getter
     @Setter
     public static class ChocolateFactoryData {
+        private static final int BASE_CLICK_POWER = 1;
+        private static final int BASE_RABBIT_SLOTS = 3;
+        private static final double BASE_MULTIPLIER = 1.0;
+        private static final double SHRINE_MULTIPLIER_PER_LEVEL = 0.1;
+        private static final double TIME_TOWER_MULTIPLIER_PER_LEVEL = 0.1;
+        private static final double COACH_MULTIPLIER_PER_LEVEL = 0.01;
+        private static final long TIME_TOWER_DURATION_MS = 60L * 60L * 1000L;
+        private static final double MILLIS_PER_SECOND = 1000.0;
+
         private long chocolate;
         private long chocolateAllTime;
         private long lastUpdated = System.currentTimeMillis();
@@ -235,14 +257,14 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
          * Base is 1, increases with Hand-Baked Chocolate upgrade
          */
         public int getClickPower() {
-            return 1 + handBakedChocolateLevel;
+            return BASE_CLICK_POWER + handBakedChocolateLevel;
         }
 
         /**
          * Gets the maximum number of rabbit slots based on Rabbit Barn level
          */
         public int getMaxRabbitSlots() {
-            return 3 + rabbitBarnLevel;
+            return BASE_RABBIT_SLOTS + rabbitBarnLevel;
         }
 
         /**
@@ -250,7 +272,7 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
          * Base is 1.0, increases by 0.1 per level
          */
         public double getShrineMultiplier() {
-            return 1.0 + (rabbitShrineLevel * 0.1);
+            return BASE_MULTIPLIER + (rabbitShrineLevel * SHRINE_MULTIPLIER_PER_LEVEL);
         }
 
         /**
@@ -259,9 +281,9 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
          */
         public double getTimeTowerMultiplier() {
             if (System.currentTimeMillis() < timeTowerActiveUntil) {
-                return 1.0 + (timeTowerLevel * 0.1);
+                return BASE_MULTIPLIER + (timeTowerLevel * TIME_TOWER_MULTIPLIER_PER_LEVEL);
             }
-            return 1.0;
+            return BASE_MULTIPLIER;
         }
 
         /**
@@ -276,9 +298,10 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
          */
         public boolean activateTimeTower() {
             if (timeTowerCharges > 0 && !isTimeTowerActive()) {
+                long now = System.currentTimeMillis();
                 timeTowerCharges--;
-                timeTowerLastUsed = System.currentTimeMillis();
-                timeTowerActiveUntil = System.currentTimeMillis() + (60 * 60 * 1000); // 1 hour
+                timeTowerLastUsed = now;
+                timeTowerActiveUntil = now + TIME_TOWER_DURATION_MS; // 1 hour
                 totalTimeTowerUsages++;
                 return true;
             }
@@ -290,7 +313,7 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
          * Base is 1.0, increases by 0.01 per level
          */
         public double getCoachMultiplier() {
-            return 1.0 + (coachJackrabbitLevel * 0.01);
+            return BASE_MULTIPLIER + (coachJackrabbitLevel * COACH_MULTIPLIER_PER_LEVEL);
         }
 
         /**
@@ -317,7 +340,7 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
          */
         public void updateChocolateFromProduction() {
             long now = System.currentTimeMillis();
-            double secondsPassed = (now - lastUpdated) / 1000.0;
+            double secondsPassed = (now - lastUpdated) / MILLIS_PER_SECOND;
 
             if (secondsPassed > 0) {
                 // Accumulate fractional production
@@ -421,6 +444,7 @@ public class DatapointChocolateFactory extends SkyBlockDatapoint<DatapointChocol
     }
 
     @AllArgsConstructor
+    @NoArgsConstructor
     @Getter
     @Setter
     public static class EmployeeData {

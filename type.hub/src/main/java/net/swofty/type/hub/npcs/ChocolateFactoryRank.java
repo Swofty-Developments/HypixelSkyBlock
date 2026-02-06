@@ -19,6 +19,7 @@ public enum ChocolateFactoryRank {
     private final int level;
     private final String name;
     private final ChatColor color;
+    private static final ChocolateFactoryRank[] RANKS = values();
 
     /**
      * Gets the formatted hologram line for this rank using the rank's base level.
@@ -55,7 +56,7 @@ public enum ChocolateFactoryRank {
      */
     public static ChocolateFactoryRank fromLevel(int level) {
         ChocolateFactoryRank result = UNEMPLOYED;
-        for (ChocolateFactoryRank rank : values()) {
+        for (ChocolateFactoryRank rank : RANKS) {
             if (level >= rank.level) {
                 result = rank;
             }
