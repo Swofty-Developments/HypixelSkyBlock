@@ -36,7 +36,9 @@ public class PlayerActionDamagedAttacked implements HypixelEventClass {
                     (SkyBlockPlayer) event.getTarget(), damageDealt.getKey().floatValue(), mob);
             SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
 
-            ((SkyBlockPlayer) event.getTarget()).damage(new EntityDamage(mob, (float) valueEvent.getValue()));
+            SkyBlockPlayer damagedPlayer = (SkyBlockPlayer) event.getTarget();
+            damagedPlayer.markMobHit();
+            damagedPlayer.damage(new EntityDamage(mob, (float) valueEvent.getValue()));
 
             new DamageIndicator()
                     .damage((float) valueEvent.getValue())

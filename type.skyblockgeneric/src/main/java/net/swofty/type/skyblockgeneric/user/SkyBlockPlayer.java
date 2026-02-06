@@ -71,6 +71,7 @@ import java.util.stream.Stream;
 
 @Getter
 public class SkyBlockPlayer extends HypixelPlayer {
+    private static final long VOID_MOB_HIT_WINDOW_MS = 8000;
     private final PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
     @Getter
     private final PlayerStatistics statistics = new PlayerStatistics(this);
@@ -89,6 +90,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     public boolean speedManaged = false;
     @Setter
     private SkyBlockIsland skyBlockIsland;
+    private long lastMobHitAt = 0L;
 
     private static final Pattern SACK_PATTERN = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$");
 
@@ -146,6 +148,14 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
     public DatapointArcheryPractice.ArcheryPracticeData getArcheryPracticeData() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.ARCHERY_PRACTICE, DatapointArcheryPractice.class).getValue();
+    }
+
+    public DatapointChocolateFactory.ChocolateFactoryData getChocolateFactoryData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.CHOCOLATE_FACTORY, DatapointChocolateFactory.class).getValue();
+    }
+
+    public DatapointChocolateFactory getChocolateFactoryDatapoint() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.CHOCOLATE_FACTORY, DatapointChocolateFactory.class);
     }
 
     public String getFullDisplayName(SkyBlockEmblems.SkyBlockEmblem displayEmblem, String levelColor) {
@@ -932,6 +942,14 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.DEATHS, DatapointDeaths.class).getValue();
     }
 
+    public void markMobHit() {
+        this.lastMobHitAt = System.currentTimeMillis();
+    }
+
+    public boolean wasRecentlyHitByMobForVoidDeath() {
+        return System.currentTimeMillis() - this.lastMobHitAt <= VOID_MOB_HIT_WINDOW_MS;
+    }
+
     public DatapointCollectedMobTypeRewards.PlayerCollectedMobTypeRewards getCollectedMobTypesData() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COLLECTED_MOB_TYPE_REWARDS, DatapointCollectedMobTypeRewards.class).getValue();
     }
@@ -950,7 +968,10 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
         if (HypixelConst.isIslandServer()) return;
 
-        if (!isBoosterCookieActive()) {
+        boolean isVoidDeath = this.lastDamage != null && "minecraft:out_of_world".equals(this.lastDamage.getType().name());
+        boolean shouldApplyCoinLoss = !isVoidDeath || wasRecentlyHitByMobForVoidDeath();
+
+        if (!isBoosterCookieActive() && shouldApplyCoinLoss) {
             sendMessage("§cYou died and lost " + StringUtility.decimalify(getCoins() / 2, 1) + " coins!");
             setCoins(getCoins() / 2);
         }

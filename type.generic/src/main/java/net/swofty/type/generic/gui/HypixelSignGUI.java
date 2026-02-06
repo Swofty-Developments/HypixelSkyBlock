@@ -27,6 +27,10 @@ public class HypixelSignGUI {
     }
 
     public CompletableFuture<String> open(String[] text) {
+        return open(text, "^^^^^^^^");
+    }
+
+    public CompletableFuture<String> open(String[] text, String arrowLine) {
         Pos pos = player.getPosition().add(0, 6, 0);
 
         CompoundBinaryTag compound = CompoundBinaryTag.builder()
@@ -46,7 +50,7 @@ public class HypixelSignGUI {
                         .put("color", StringBinaryTag.stringBinaryTag("black"))
                         .put("messages", ListBinaryTag.from(List.of(
                                 StringBinaryTag.stringBinaryTag(""),
-                                StringBinaryTag.stringBinaryTag("^^^^^^^^"),
+                                StringBinaryTag.stringBinaryTag(arrowLine),
                                 StringBinaryTag.stringBinaryTag(text[0]),
                                 StringBinaryTag.stringBinaryTag(text[1])
                         )))

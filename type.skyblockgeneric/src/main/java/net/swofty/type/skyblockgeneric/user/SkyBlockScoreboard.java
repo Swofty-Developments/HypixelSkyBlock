@@ -74,7 +74,10 @@ public class SkyBlockScoreboard {
                     }
                     lines.add("§7 ");
                     lines.add("§fPurse: §6" + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()));
-                    lines.add("§fBits: §b" + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()));
+                    int bits = dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue();
+                    if (bits >= 1) {
+                        lines.add("§fBits: §b" + StringUtility.commaify(bits));
+                    }
 
                     // Dark Auction section
                     if (DarkAuctionHandler.isPlayerInAuction(player.getUuid())

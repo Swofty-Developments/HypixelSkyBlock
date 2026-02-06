@@ -87,7 +87,7 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
 							false
 					), HypixelInventoryGUI.CloseReason.SIGN_OPENED);
 
-					new HypixelSignGUI(player).open(query.lines()).thenAccept(string -> {
+					new HypixelSignGUI(player).open(query.lines(), query.arrowLine()).thenAccept(string -> {
 						HypixelInventoryGUI nextGui = query.onQueryFinish(string, player);
 						if (nextGui != null && string != null)
 							nextGui.open(player);
