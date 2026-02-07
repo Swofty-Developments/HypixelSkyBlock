@@ -16,6 +16,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.replayviewer.item.ReplayItemHandler;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TypeReplayViewerLoader implements HypixelTypeLoader {
 
     @Getter
-	private static InstanceManager instanceManager;
+    private static InstanceManager instanceManager;
 
     @Getter
     private static ReplayItemHandler itemHandler = new ReplayItemHandler();
@@ -62,6 +63,21 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
         });
     }
 
+    private static void setItem(HypixelPlayer player, String key, int slot) {
+        itemHandler.getItem(key).ifPresent(item -> player.getInventory().setItemStack(slot, item.getItemStack(player)));
+    }
+
+    public static void populateInventory(HypixelPlayer player) {
+        setItem(player, "teleporter", 0);
+        setItem(player, "slower", 2);
+        setItem(player, "backward", 3);
+        setItem(player, "playback", 4);
+        setItem(player, "faster", 5);
+        setItem(player, "forward", 6);
+        setItem(player, "menu", 8);
+    }
+
+
     @Override
     public List<ServiceType> getRequiredServices() {
         return List.of(ServiceType.REPLAY);
@@ -77,8 +93,8 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                serverType -> new Pos(0, 100, 0),
-                false
+            serverType -> new Pos(0, 100, 0),
+            false
         );
     }
 
@@ -118,22 +134,16 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
         return null; // Each replay creates its own instance
     }
 
-    /**
-     * Gets a player's active replay session.
-     */
     public static Optional<ReplaySession> getSession(UUID playerId) {
         return Optional.ofNullable(activeSessions.get(playerId));
     }
 
-    /**
-     * Gets a player's active replay session.
-     */
     public static Optional<ReplaySession> getSession(Player player) {
         return getSession(player.getUuid());
     }
 
     public static void registerSession(UUID playerId, ReplaySession session) {
-		removeSession(playerId);
+        removeSession(playerId);
         activeSessions.put(playerId, session);
     }
 

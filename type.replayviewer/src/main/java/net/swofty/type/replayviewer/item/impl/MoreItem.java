@@ -7,19 +7,20 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.replayviewer.item.ReplayItem;
 
-public class TeleporterItem extends ReplayItem {
+public class MoreItem extends ReplayItem {
 
-	public TeleporterItem() {
-		super("teleporter");
+	public MoreItem() {
+		super("more");
 	}
 
 	@Override
 	public ItemStack getBlandItem() {
-		return ItemStackCreator.createNamedItemStack(Material.COMPASS, "§aTeleport to Player").build();
+		return ItemStackCreator.createNamedItemStack(Material.NETHER_STAR, "§eMore").build();
 	}
 
 	@Override
 	public void onItemInteract(PlayerInstanceEvent event) {
 		((CancellableEvent) event).setCancelled(true);
+
 	}
 }

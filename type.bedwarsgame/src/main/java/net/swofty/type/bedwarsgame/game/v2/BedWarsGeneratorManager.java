@@ -9,6 +9,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.ItemEntity;
+import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.Task;
@@ -18,6 +19,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
 import net.swofty.type.game.game.GameState;
+import net.swofty.type.generic.entity.BlockDisplayEntity;
 import org.intellij.lang.annotations.Subst;
 import org.tinylog.Logger;
 
@@ -27,13 +29,16 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BedWarsGeneratorManager {
     private final BedWarsGame game;
     private final Map<TeamKey, List<Task>> teamGeneratorTasks = new EnumMap<>(TeamKey.class);
     private final Map<String, List<GeneratorDisplay>> generatorDisplays = new HashMap<>();
     private final Map<String, GeneratorLimits> generatorLimits = new HashMap<>();
+    private final Map<GeneratorDisplay, Pos> basePositions = new ConcurrentHashMap<>();
     private Task globalTicker;
+    private Task blockDisplayRotation;
 
     public BedWarsGeneratorManager(BedWarsGame game) {
         this.game = game;
@@ -98,10 +103,43 @@ public class BedWarsGeneratorManager {
 
         if (globalTicker != null) globalTicker.cancel();
         globalTicker = MinecraftServer.getSchedulerManager().buildTask(() -> {
-            if (game.getState() != GameState.IN_PROGRESS) return;
             updateGeneratorDisplays();
             tickGlobalGenerators();
         }).delay(TaskSchedule.seconds(1)).repeat(TaskSchedule.seconds(1)).schedule();
+
+        // Hypixel does not have this on Replay Viewer. Only the default position. Only here in the actual game.
+        if (blockDisplayRotation != null) blockDisplayRotation.cancel();
+        blockDisplayRotation = MinecraftServer.getSchedulerManager().buildTask(() -> {
+                final float BOB_AMPLITUDE = 0.25f;
+                final float BOB_PERIOD_SECONDS = 4.0f;
+                final float ROTATE_DEG_PER_SEC = 180f;
+
+                double timeSeconds = System.currentTimeMillis() / 1000.0;
+                double phase = (timeSeconds / BOB_PERIOD_SECONDS) * Math.PI * 2.0;
+                float bobOffset = (float) (Math.sin(phase) * BOB_AMPLITUDE);
+                boolean goingDown = Math.cos(phase) < 0;
+                float rotation = (float) ((timeSeconds * ROTATE_DEG_PER_SEC) % 360.0);
+                rotation = goingDown ? rotation : -rotation;
+
+                for (List<GeneratorDisplay> displays : generatorDisplays.values()) {
+                    for (GeneratorDisplay display : displays) {
+                        Pos base = basePositions.computeIfAbsent(
+                            display,
+                            d -> d.blockDisplay.getPosition()
+                        );
+
+                        display.blockDisplay.teleport(new Pos(
+                            base.x(),
+                            base.y() + bobOffset,
+                            base.z(),
+                            rotation,
+                            0f
+                        ));
+                    }
+                }
+            }).delay(TaskSchedule.seconds(1))
+            .repeat(TaskSchedule.tick(1))
+            .schedule();
     }
 
     private void setupGlobalGenerator(String generatorType, BedWarsMapsConfig.MapEntry.MapConfiguration.GlobalGenerator config) {
@@ -126,11 +164,12 @@ public class BedWarsGeneratorManager {
     }
 
     private void setupGlobalGeneratorDisplays(String generatorType, List<BedWarsMapsConfig.Position> locations, int delaySeconds) {
-        NamedTextColor color = generatorType.equals("diamond") ? NamedTextColor.AQUA : NamedTextColor.GREEN;
+        boolean isDiamond = generatorType.equalsIgnoreCase("diamond");
+        NamedTextColor color = isDiamond ? NamedTextColor.AQUA : NamedTextColor.DARK_GREEN;
         String capitalizedType = Character.toUpperCase(generatorType.charAt(0)) + generatorType.substring(1);
 
         for (BedWarsMapsConfig.Position location : locations) {
-            double locY = location.y() + 4.0;
+            double locY = location.y() + 5.0;
 
             TextDisplayEntity tierDisplay = new TextDisplayEntity(
                 Component.text("Tier I").color(NamedTextColor.YELLOW));
@@ -146,8 +185,17 @@ public class BedWarsGeneratorManager {
                 MiniMessage.miniMessage().deserialize("<yellow>Spawns in <red>" + delaySeconds + "</red> seconds!</yellow>"));
             spawnDisplay.setInstance(game.getInstance(), new Pos(location.x(), locY, location.z()));
 
-            generatorDisplays.computeIfAbsent(generatorType, k -> new ArrayList<>())
-                .add(new GeneratorDisplay(tierDisplay, titleDisplay, spawnDisplay, delaySeconds));
+            var size = 0.7;
+            locY -= size + 0.1 + 0.25;
+            BlockDisplayEntity blockDisplay = new BlockDisplayEntity(getBlockFromType(generatorType), (meta) -> {
+                meta.setScale(new Vec(size, size, size));
+                meta.setTranslation(new Vec(-size / 2, 0, -size / 2));
+                meta.setPosRotInterpolationDuration(1);
+            });
+            blockDisplay.setInstance(game.getInstance(), new Pos(location.x(), locY, location.z()));
+
+            generatorDisplays.computeIfAbsent(generatorType, _ -> new ArrayList<>())
+                .add(new GeneratorDisplay(tierDisplay, titleDisplay, spawnDisplay, blockDisplay, delaySeconds));
         }
     }
 
@@ -247,6 +295,11 @@ public class BedWarsGeneratorManager {
             globalTicker.cancel();
             globalTicker = null;
         }
+
+        if (blockDisplayRotation != null) {
+            blockDisplayRotation.cancel();
+            blockDisplayRotation = null;
+        }
     }
 
     private void spawnItem(Material material, int amount, Pos position, Duration pickupDelay) {
@@ -271,6 +324,17 @@ public class BedWarsGeneratorManager {
         };
     }
 
+    private Block getBlockFromType(String materialType) {
+        @Subst("iron") String type = materialType.toLowerCase();
+        return switch (type) {
+            case "iron" -> Block.IRON_BLOCK;
+            case "gold" -> Block.GOLD_BLOCK;
+            case "diamond" -> Block.DIAMOND_BLOCK;
+            case "emerald" -> Block.EMERALD_BLOCK;
+            default -> Block.fromKey(Key.key(Key.MINECRAFT_NAMESPACE, type));
+        };
+    }
+
     private double calculateForgeMultiplier(Material material, int forgeLevel) {
         if (material != Material.IRON_INGOT && material != Material.GOLD_INGOT) return 1.0;
 
@@ -290,14 +354,16 @@ public class BedWarsGeneratorManager {
         private final TextDisplayEntity tierDisplay;
         private final TextDisplayEntity titleDisplay;
         private final TextDisplayEntity spawnDisplay;
+        private final BlockDisplayEntity blockDisplay;
         private int maxCountdown;
         private int countdown;
 
         public GeneratorDisplay(TextDisplayEntity tierDisplay, TextDisplayEntity titleDisplay,
-                                TextDisplayEntity spawnDisplay, int delay) {
+                                TextDisplayEntity spawnDisplay, BlockDisplayEntity blockDisplay, int delay) {
             this.tierDisplay = tierDisplay;
             this.titleDisplay = titleDisplay;
             this.spawnDisplay = spawnDisplay;
+            this.blockDisplay = blockDisplay;
             this.maxCountdown = delay;
             this.countdown = delay;
         }

@@ -46,7 +46,7 @@ public class ReplayCommand extends HypixelCommand {
             try {
                 float speed = Float.parseFloat(value);
                 TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
-                        session -> session.setSpeed(speed),
+                        session -> session.setPlaybackSpeed(speed),
                         () -> player.sendMessage("§cNo active replay session.")
                 );
             } catch (NumberFormatException e) {

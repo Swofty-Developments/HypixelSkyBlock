@@ -58,7 +58,7 @@ public class BedWarsGameScoreboard {
                     lines.add("§fWaiting for players...");
                     lines.add("§7 ");
                     lines.add("§fMode: §a" + game.getGameType().getDisplayName());
-                    lines.add("§fVersion: §7v1.9");
+                    lines.add("§fVersion: §7v1.10");
                 } else {
                     BedWarsGameEventManager.GamePhase nextGamePhase = game.getGameEventManager().getCurrentPhase().next();
                     String eventName = nextGamePhase != null

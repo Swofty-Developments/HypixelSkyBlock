@@ -2,7 +2,6 @@ package net.swofty.type.replayviewer.event;
 
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
-import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.swofty.type.generic.event.EventNodes;
@@ -45,11 +44,4 @@ public class ReplayItemEvents implements HypixelEventClass {
         }
     }
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
-    public void onBlockPlace(PlayerBlockPlaceEvent event) {
-        ReplayItemHandler handler = TypeReplayViewerLoader.getItemHandler();
-        if (handler != null) {
-            handler.onBlockPlace(event);
-        }
-    }
 }

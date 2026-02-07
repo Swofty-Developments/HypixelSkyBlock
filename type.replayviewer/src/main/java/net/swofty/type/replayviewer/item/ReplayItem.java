@@ -5,7 +5,7 @@ import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
-import net.minestom.server.event.player.PlayerBlockPlaceEvent;
+import net.minestom.server.event.player.PlayerStartDiggingEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
@@ -49,7 +49,8 @@ public abstract class ReplayItem {
         // stub
     }
 
-    public void onBlockPlace(PlayerBlockPlaceEvent event) {
+    public void onItemDigging(PlayerStartDiggingEvent event) {
         // stub
     }
+
 }

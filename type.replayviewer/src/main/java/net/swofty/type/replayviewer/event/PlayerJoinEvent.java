@@ -132,17 +132,15 @@ public class PlayerJoinEvent implements HypixelEventClass {
             Pos spawnPos = new Pos(metadata.getMapCenterX(), 100, metadata.getMapCenterZ());
             player.teleport(spawnPos);
 
+            // give inventory controls
+            TypeReplayViewerLoader.populateInventory((HypixelPlayer) player);
+
             ReplaySession session = new ReplaySession(player, metadata, instance, replayData);
             TypeReplayViewerLoader.registerSession(player.getUuid(), session);
 
-            //player.sendMessage("§aReplay loaded! Use §e/replay play §ato start.");
-            //player.sendMessage("§7Commands: /replay play|pause|speed|skip|goto|info|leave");
-
             session.play();
-
         } catch (Exception e) {
             Logger.error(e, "Failed to load replay {}", replayId);
-            //player.sendMessage("§cFailed to load replay: " + e.getMessage());
         }
     }
 
@@ -174,7 +172,6 @@ public class PlayerJoinEvent implements HypixelEventClass {
             // Deserialize and apply map
             MapDeserializer.loadMap(instance, response.compressedData());
             Logger.info("Loaded map {} ({} bytes)", mapHash, response.compressedData().length);
-
         } catch (Exception e) {
             Logger.error(e, "Failed to load map {}", mapHash);
             player.sendMessage("§eFailed to load map: " + e.getMessage());

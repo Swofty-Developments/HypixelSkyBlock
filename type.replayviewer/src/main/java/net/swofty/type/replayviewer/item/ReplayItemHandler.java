@@ -3,7 +3,7 @@ package net.swofty.type.replayviewer.item;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
-import net.minestom.server.event.player.PlayerBlockPlaceEvent;
+import net.minestom.server.event.player.PlayerStartDiggingEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.item.ItemStack;
@@ -53,6 +53,15 @@ public class ReplayItemHandler {
         }
     }
 
+    public void onItemDigging(PlayerStartDiggingEvent event) {
+        for (ReplayItem item : items) {
+            ItemStack itemStack = event.getPlayer().getItemInMainHand();
+            if (isItem(item, itemStack)) {
+                item.onItemDigging(event);
+            }
+        }
+    }
+
     public void onItemUse(PlayerUseItemEvent event) {
         for (ReplayItem item : items) {
             ItemStack itemStack = event.getItemStack();
@@ -68,16 +77,6 @@ public class ReplayItemHandler {
             ItemStack itemStack = event.getItemStack();
             if (isItem(item, itemStack)) {
                 item.onItemDrop(event);
-            }
-        }
-    }
-
-    public void onBlockPlace(PlayerBlockPlaceEvent event) {
-        for (ReplayItem item : items) {
-            ItemStack itemStack = event.getPlayer().getItemInMainHand();
-            if (isItem(item, itemStack)) {
-                item.onBlockPlace(event);
-                item.onItemInteract(event);
             }
         }
     }

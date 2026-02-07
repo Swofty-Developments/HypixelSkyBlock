@@ -28,7 +28,7 @@ public class GotoCommand extends HypixelCommand {
                         int tick = parseTime(time);
                         if (tick >= 0) {
                             session.seekTo(tick);
-                            player.sendMessage("§aSeeking to " + formatTick(tick) + "...");
+                            player.sendMessage("§aGoing to " + tick / 20 * 50 + " seconds into the replay!");
                         } else {
                             player.sendMessage("§cInvalid time format. Use mm:ss or tick number.");
                         }
@@ -37,7 +37,6 @@ public class GotoCommand extends HypixelCommand {
             );
         }, timeArg);
 
-        // Shortcuts
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
@@ -74,12 +73,5 @@ public class GotoCommand extends HypixelCommand {
         } catch (NumberFormatException e) {
             return -1;
         }
-    }
-
-    private String formatTick(int tick) {
-        int seconds = tick / 20;
-        int minutes = seconds / 60;
-        int secs = seconds % 60;
-        return String.format("%d:%02d", minutes, secs);
     }
 }

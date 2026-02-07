@@ -5,6 +5,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
@@ -13,6 +15,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.game.replay.ReplayMetadata;
 import net.swofty.type.game.replay.entity.EntityStateTracker;
 import net.swofty.type.game.replay.recordable.Recordable;
+import net.swofty.type.replayviewer.entity.ReplayEntity;
 import net.swofty.type.replayviewer.entity.ReplayEntityManager;
 import net.swofty.type.replayviewer.playback.display.DynamicTextManager;
 import net.swofty.type.replayviewer.playback.npc.NpcReplayManager;
@@ -43,9 +46,13 @@ public class ReplaySession {
     private volatile int currentTick = 0;
     private volatile boolean playing = false;
     private volatile float playbackSpeed = 1.0f;
+    private volatile int skipSeconds = 30;
 
     private Task playbackTask;
     private Integer spectatingEntityId = null;
+
+    public static final float[] SPEED_PRESETS = {0.25f, 0.5f, 1.0f, 2.0f, 4.0f};
+    public static final short[] SKIP_PRESETS = {1, 5, 10, 30, 60};
 
     public ReplaySession(
         Player viewer,
@@ -74,9 +81,6 @@ public class ReplaySession {
         viewer.setInvisible(true);
     }
 
-    /**
-     * Starts playback.
-     */
     public void play() {
         if (playing) return;
         playing = true;
@@ -106,9 +110,6 @@ public class ReplaySession {
         viewer.sendMessage(Component.text("▶ Playing replay", NamedTextColor.GREEN));
     }
 
-    /**
-     * Pauses playback.
-     */
     public void pause() {
         if (!playing) return;
         playing = false;
@@ -121,9 +122,6 @@ public class ReplaySession {
         viewer.sendMessage(Component.text("⏸ Paused", NamedTextColor.YELLOW));
     }
 
-    /**
-     * Toggles play/pause.
-     */
     public void togglePlayPause() {
         if (playing) {
             pause();
@@ -150,9 +148,6 @@ public class ReplaySession {
         Logger.info("Replay session stopped for {}", viewerId);
     }
 
-    /**
-     * Seeks to a specific tick.
-     */
     public void seekTo(int targetTick) {
         boolean wasPlaying = playing;
         pause();
@@ -178,24 +173,15 @@ public class ReplaySession {
         showSeekTitle(targetTick);
     }
 
-    /**
-     * Skips forward by seconds.
-     */
     public void skipForward(int seconds) {
         seekTo(currentTick + seconds * 20);
     }
 
-    /**
-     * Skips backward by seconds.
-     */
     public void skipBackward(int seconds) {
         seekTo(currentTick - seconds * 20);
     }
 
-    /**
-     * Sets playback speed.
-     */
-    public void setSpeed(float speed) {
+    public void setPlaybackSpeed(float speed) {
         this.playbackSpeed = Math.max(0.25f, Math.min(4.0f, speed));
         if (playing) {
             pause();
@@ -204,16 +190,10 @@ public class ReplaySession {
         viewer.sendMessage(Component.text("Speed: " + playbackSpeed + "x", NamedTextColor.AQUA));
     }
 
-    /**
-     * Gets total ticks in this replay.
-     */
     public int getTotalTicks() {
         return metadata.getDurationTicks();
     }
 
-    /**
-     * Gets formatted current time.
-     */
     public String getFormattedTime() {
         int seconds = currentTick / 20;
         int minutes = seconds / 60;
@@ -221,9 +201,6 @@ public class ReplaySession {
         return String.format("%d:%02d", minutes, secs);
     }
 
-    /**
-     * Gets formatted total time.
-     */
     public String getFormattedTotalTime() {
         int seconds = getTotalTicks() / 20;
         int minutes = seconds / 60;
@@ -313,9 +290,9 @@ public class ReplaySession {
     private List<Integer> getPlayerEntityIds() {
         List<Integer> ids = new java.util.ArrayList<>();
         for (int entityId : entityManager.getEntityIds()) {
-            net.minestom.server.entity.Entity entity = entityManager.getEntity(entityId);
+            Entity entity = entityManager.getEntity(entityId);
             // Check if it's a player entity type
-            if (entity != null && entity.getEntityType() == net.minestom.server.entity.EntityType.PLAYER) {
+            if (entity != null && entity.getEntityType() == EntityType.PLAYER) {
                 ids.add(entityId);
             }
         }
@@ -323,36 +300,44 @@ public class ReplaySession {
     }
 
     public String getEntityDisplayName(int entityId) {
-        net.minestom.server.entity.Entity entity = entityManager.getEntity(entityId);
-        if (entity instanceof net.swofty.type.replayviewer.entity.ReplayEntity replayEntity) {
+        Entity entity = entityManager.getEntity(entityId);
+        if (entity instanceof ReplayEntity replayEntity) {
             UUID uuid = replayEntity.getRecordedUuid();
             String name = metadata.getPlayers().get(uuid);
             if (name != null) return name;
         }
-        return "Entity #" + entityId;
+        // TODO: throw error
+        return String.valueOf(entityId);
     }
 
-    // TODO: use in inventory
-    private static final float[] SPEED_PRESETS = {0.25f, 0.5f, 1.0f, 2.0f, 4.0f};
+    public short cycleSkip(int previous) {
+        for (short preset : SKIP_PRESETS) {
+            if (preset > previous) {
+                return preset;
+            }
+        }
+        return SKIP_PRESETS[0];
+    }
 
     public void cycleSpeedUp() {
         for (float preset : SPEED_PRESETS) {
             if (preset > playbackSpeed) {
-                setSpeed(preset);
+                setPlaybackSpeed(preset);
                 return;
             }
         }
-        setSpeed(SPEED_PRESETS[SPEED_PRESETS.length - 1]);
+        int speed = (int) SPEED_PRESETS[SPEED_PRESETS.length - 1];
+        setPlaybackSpeed(speed);
     }
 
     public void cycleSpeedDown() {
         for (int i = SPEED_PRESETS.length - 1; i >= 0; i--) {
             if (SPEED_PRESETS[i] < playbackSpeed) {
-                setSpeed(SPEED_PRESETS[i]);
+                setPlaybackSpeed(SPEED_PRESETS[i]);
                 return;
             }
         }
-        setSpeed(SPEED_PRESETS[0]);
+        setPlaybackSpeed(SPEED_PRESETS[0]);
     }
 
     public float getProgress() {
