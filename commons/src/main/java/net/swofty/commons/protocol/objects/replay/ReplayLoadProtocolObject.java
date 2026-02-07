@@ -56,6 +56,7 @@ public class ReplayLoadProtocolObject extends ProtocolObject<
                     metadata.put("replayId", value.metadata.replayId.toString());
                     metadata.put("gameId", value.metadata.gameId);
                     metadata.put("serverType", value.metadata.serverType.name());
+                    metadata.put("serverId", value.metadata.serverId);
                     metadata.put("gameTypeName", value.metadata.gameTypeName);
                     metadata.put("mapName", value.metadata.mapName);
                     metadata.put("mapHash", value.metadata.mapHash != null ? value.metadata.mapHash : "");
@@ -158,6 +159,7 @@ public class ReplayLoadProtocolObject extends ProtocolObject<
                             UUID.fromString(metaObj.getString("replayId")),
                             metaObj.getString("gameId"),
                             ServerType.valueOf(metaObj.getString("serverType")),
+                            metaObj.getString("serverId"),
                             metaObj.getString("gameTypeName"),
                             metaObj.getString("mapName"),
                             mapHash != null && !mapHash.isEmpty() ? mapHash : null,
@@ -213,6 +215,7 @@ public class ReplayLoadProtocolObject extends ProtocolObject<
             UUID replayId,
             String gameId,
             ServerType serverType,
+            String serverId,
             String gameTypeName,
             String mapName,
             String mapHash,

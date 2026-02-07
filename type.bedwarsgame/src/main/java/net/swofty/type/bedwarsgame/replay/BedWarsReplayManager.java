@@ -35,8 +35,8 @@ import net.swofty.type.game.replay.recordable.RecordablePlayerSkin;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableFinalKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableGeneratorUpgrade;
-import net.swofty.type.game.replay.recordable.bedwars.RecordableScoreboardState;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableTeamElimination;
+import net.swofty.type.generic.HypixelConst;
 import org.tinylog.Logger;
 
 import java.io.ByteArrayOutputStream;
@@ -96,9 +96,6 @@ public class BedWarsReplayManager {
         });
     }
 
-    /**
-     * Starts recording the game.
-     */
     public void startRecording() {
         if (recording) return;
         recording = true;
@@ -126,9 +123,9 @@ public class BedWarsReplayManager {
             teams.put(teamId, teamPlayers);
 
             teamInfo.put(teamId, new ReplayStartProtocolObject.TeamInfo(
-                    team.getName(),
-                    team.getColorCode(),
-                    team.getTeamKey().rgb()
+                team.getName(),
+                team.getColorCode(),
+                team.getTeamKey().rgb()
             ));
         }
 
@@ -139,12 +136,13 @@ public class BedWarsReplayManager {
 
         // Start recording session
         recorder.start(
-                game.getGameType().name(),
-                mapName,
-                mapHash,
-                players,
-                teams,
-                teamInfo
+            game.getGameType().name(),
+            HypixelConst.getServerName(),
+            mapName,
+            mapHash,
+            players,
+            teams,
+            teamInfo
         );
 
         // Register dispatchers
@@ -164,19 +162,11 @@ public class BedWarsReplayManager {
 
         // Start batch sending task (every 10 seconds)
         batchTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
-            if (!recording) return;
-            sendCurrentBatch();
-        }).delay(TaskSchedule.seconds(BATCH_INTERVAL_SECONDS))
-          .repeat(TaskSchedule.seconds(BATCH_INTERVAL_SECONDS))
-          .schedule();
-
-        // Start scoreboard state recording task (every 5 seconds for accurate seek)
-        scoreboardTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
-            if (!recording) return;
-            recordScoreboardState();
-        }).delay(TaskSchedule.seconds(5))
-          .repeat(TaskSchedule.seconds(5))
-          .schedule();
+                if (!recording) return;
+                sendCurrentBatch();
+            }).delay(TaskSchedule.seconds(BATCH_INTERVAL_SECONDS))
+            .repeat(TaskSchedule.seconds(BATCH_INTERVAL_SECONDS))
+            .schedule();
 
         Logger.info("Started replay recording for game {} (map: {})", game.getGameId(), mapName);
     }
@@ -262,12 +252,12 @@ public class BedWarsReplayManager {
         if (batchData == null || batchData.length == 0) return;
 
         ReplayDataBatchProtocolObject.BatchMessage batch = new ReplayDataBatchProtocolObject.BatchMessage(
-                UUID.fromString(game.getGameId()),
-                batchIndex++,
-                recorder.getStartTick(),
-                recorder.getCurrentTick(),
-                recorder.getRecordableCount(),
-                batchData
+            UUID.fromString(game.getGameId()),
+            batchIndex++,
+            recorder.getStartTick(),
+            recorder.getCurrentTick(),
+            recorder.getRecordableCount(),
+            batchData
         );
 
         sendToService(batch);
@@ -408,46 +398,6 @@ public class BedWarsReplayManager {
             message,
             isShout
         ));
-    }
-
-    /**
-     * Records a periodic scoreboard state snapshot.
-     * Should be called periodically (e.g., every 5 seconds) for accurate seek reconstruction.
-     */
-    public void recordScoreboardState() {
-        if (!recording) return;
-
-        String nextEventName = "";
-        int nextEventSeconds = 0;
-
-        var eventManager = game.getGameEventManager();
-        if (eventManager != null) {
-            var currentEvent = eventManager.getCurrentEvent();
-            if (currentEvent != null) {
-                var nextPhase = currentEvent.next();
-                if (nextPhase != currentEvent) {
-                    nextEventName = nextPhase.getDisplayName();
-                } else {
-                    nextEventName = currentEvent.getDisplayName();
-                }
-                nextEventSeconds = (int) eventManager.getSecondsUntilNextEvent();
-            }
-        }
-
-        List<RecordableScoreboardState.TeamScoreboardState> teamStates = new ArrayList<>();
-        for (BedWarsTeam team : game.getTeams()) {
-            int alivePlayers = (int) game.getPlayersOnTeam(team.getTeamKey()).stream()
-                .filter(p -> !Boolean.TRUE.equals(p.getTag(BedWarsGame.ELIMINATED_TAG)))
-                .count();
-
-            teamStates.add(new RecordableScoreboardState.TeamScoreboardState(
-                team.getTeamKey().name(),
-                team.isBedAlive(),
-                alivePlayers
-            ));
-        }
-
-        recorder.record(new RecordableScoreboardState(nextEventName, nextEventSeconds, teamStates));
     }
 
     public static byte[] serializeItemStack(ItemStack itemStack) {

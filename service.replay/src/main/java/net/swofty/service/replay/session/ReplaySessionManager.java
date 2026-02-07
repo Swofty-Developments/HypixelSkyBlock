@@ -37,6 +37,7 @@ public class ReplaySessionManager {
 		UUID replayId,
 		String gameId,
 		ServerType serverType,
+		String serverId,
 		String gameTypeName,
 		String mapName,
 		String mapHash,
@@ -48,7 +49,7 @@ public class ReplaySessionManager {
 		Map<String, ReplayMetadata.TeamInfo> teamInfo
 	) {
 		RecordingSession session = new RecordingSession(
-			replayId, gameId, serverType, gameTypeName, mapName, mapHash,
+			replayId, gameId, serverType, serverId, gameTypeName, mapName, mapHash,
 			startTime, mapCenterX, mapCenterZ, players, teams, teamInfo
 		);
 

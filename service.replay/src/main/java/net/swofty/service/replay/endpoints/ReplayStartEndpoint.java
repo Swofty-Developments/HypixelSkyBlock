@@ -36,6 +36,7 @@ public class ReplayStartEndpoint implements ServiceEndpoint<
                     msg.replayId(),
                     msg.gameId(),
                     msg.serverType(),
+                    msg.serverId(),
                     msg.gameTypeName(),
                     msg.mapName(),
                     msg.mapHash(),

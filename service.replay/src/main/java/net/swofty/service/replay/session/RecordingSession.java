@@ -17,6 +17,7 @@ public class RecordingSession {
 	private final UUID replayId;
 	private final String gameId;
 	private final ServerType serverType;
+	private final String serverId;
 	private final String gameTypeName;
 	private final String mapName;
 	private final String mapHash;
@@ -41,10 +42,12 @@ public class RecordingSession {
 	private volatile long lastDataTime;
 	private volatile int highestTick = 0;
 
+	// this is so large, so maybe a builder that requires all fields could be cleaner?
 	public RecordingSession(
 		UUID replayId,
 		String gameId,
 		ServerType serverType,
+		String serverId,
 		String gameTypeName,
 		String mapName,
 		String mapHash,
@@ -58,6 +61,7 @@ public class RecordingSession {
 		this.replayId = replayId;
 		this.gameId = gameId;
 		this.serverType = serverType;
+		this.serverId = serverId;
 		this.gameTypeName = gameTypeName;
 		this.mapName = mapName;
 		this.mapHash = mapHash;

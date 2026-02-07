@@ -80,8 +80,8 @@ public class PlayerJoinEvent implements HypixelEventClass {
             var request = new ReplayLoadProtocolObject.LoadRequest(replayId);
 
             ReplayLoadProtocolObject.LoadResponse response = replayService
-                    .<ReplayLoadProtocolObject.LoadRequest, ReplayLoadProtocolObject.LoadResponse>handleRequest(request)
-                    .join();
+                .<ReplayLoadProtocolObject.LoadRequest, ReplayLoadProtocolObject.LoadResponse>handleRequest(request)
+                .join();
 
             if (!response.success()) {
                 return;
@@ -94,33 +94,34 @@ public class PlayerJoinEvent implements HypixelEventClass {
             ReplayLoadProtocolObject.ReplayMetadata protoMetadata = response.metadata();
             Map<String, ReplayMetadata.TeamInfo> teamInfo = new HashMap<>();
             protoMetadata.teamInfo().forEach((teamId, info) ->
-                    teamInfo.put(teamId, new ReplayMetadata.TeamInfo(info.name(), info.colorCode(), info.color())));
+                teamInfo.put(teamId, new ReplayMetadata.TeamInfo(info.name(), info.colorCode(), info.color())));
 
             ReplayMetadata metadata = ReplayMetadata.builder()
-                    .replayId(protoMetadata.replayId())
-                    .gameId(protoMetadata.gameId())
-                    .serverType(protoMetadata.serverType())
-                    .gameTypeName(protoMetadata.gameTypeName())
-                    .mapName(protoMetadata.mapName())
-                    .mapHash(protoMetadata.mapHash())
-                    .version(protoMetadata.version())
-                    .startTime(protoMetadata.startTime())
-                    .endTime(protoMetadata.endTime())
-                    .durationTicks(protoMetadata.durationTicks())
-                    .players(protoMetadata.players())
-                    .teams(protoMetadata.teams())
-                    .teamInfo(teamInfo)
-                    .winnerId(protoMetadata.winnerId())
-                    .dataSize(protoMetadata.dataSize())
-                    .mapCenterX(protoMetadata.mapCenterX())
-                    .mapCenterZ(protoMetadata.mapCenterZ())
-                    .build();
+                .replayId(protoMetadata.replayId())
+                .gameId(protoMetadata.gameId())
+                .serverType(protoMetadata.serverType())
+                .serverId(protoMetadata.serverId())
+                .gameTypeName(protoMetadata.gameTypeName())
+                .mapName(protoMetadata.mapName())
+                .mapHash(protoMetadata.mapHash())
+                .version(protoMetadata.version())
+                .startTime(protoMetadata.startTime())
+                .endTime(protoMetadata.endTime())
+                .durationTicks(protoMetadata.durationTicks())
+                .players(protoMetadata.players())
+                .teams(protoMetadata.teams())
+                .teamInfo(teamInfo)
+                .winnerId(protoMetadata.winnerId())
+                .dataSize(protoMetadata.dataSize())
+                .mapCenterX(protoMetadata.mapCenterX())
+                .mapCenterZ(protoMetadata.mapCenterZ())
+                .build();
 
             ReplayData replayData = new ReplayData();
             if (response.dataChunks() != null && !response.dataChunks().isEmpty()) {
                 List<byte[]> chunks = response.dataChunks().stream()
-                        .map(ReplayLoadProtocolObject.DataChunk::data)
-                        .toList();
+                    .map(ReplayLoadProtocolObject.DataChunk::data)
+                    .toList();
                 replayData.loadFromChunks(chunks);
             }
 

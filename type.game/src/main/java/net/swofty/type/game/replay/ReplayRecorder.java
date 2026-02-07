@@ -64,11 +64,9 @@ public class ReplayRecorder {
 		this.serviceSender = serviceSender;
 	}
 
-	/**
-	 * Starts the recording session.
-	 */
 	public void start(
 		String gameTypeName,
+		String serverId,
 		String mapName,
 		String mapHash,
 		Map<UUID, String> players,
@@ -83,6 +81,7 @@ public class ReplayRecorder {
 			replayId,
 			gameId,
 			serverType,
+			serverId,
 			gameTypeName,
 			mapName,
 			mapHash,

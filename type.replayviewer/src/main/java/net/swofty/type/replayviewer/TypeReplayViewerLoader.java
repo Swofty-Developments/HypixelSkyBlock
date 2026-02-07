@@ -16,6 +16,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
+import net.swofty.type.replayviewer.item.ReplayItemHandler;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -31,6 +32,9 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
 
     @Getter
 	private static InstanceManager instanceManager;
+
+    @Getter
+    private static ReplayItemHandler itemHandler = new ReplayItemHandler();
 
     @Getter
     private static final Map<UUID, ReplaySession> activeSessions = new ConcurrentHashMap<>();

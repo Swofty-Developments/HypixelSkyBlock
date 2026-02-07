@@ -25,6 +25,7 @@ public class ReplayStartProtocolObject extends ProtocolObject<
                 json.put("replayId", value.replayId.toString());
                 json.put("gameId", value.gameId);
                 json.put("serverType", value.serverType.name());
+                json.put("serverId", value.serverId);
                 json.put("gameTypeName", value.gameTypeName);
                 json.put("mapName", value.mapName);
                 json.put("mapHash", value.mapHash);
@@ -91,6 +92,7 @@ public class ReplayStartProtocolObject extends ProtocolObject<
                         UUID.fromString(obj.getString("replayId")),
                         obj.getString("gameId"),
                         ServerType.valueOf(obj.getString("serverType")),
+                        obj.getString("serverId"),
                         obj.getString("gameTypeName"),
                         obj.getString("mapName"),
                         obj.getString("mapHash"),
@@ -138,6 +140,7 @@ public class ReplayStartProtocolObject extends ProtocolObject<
             UUID replayId,
             String gameId,
             ServerType serverType,
+            String serverId,
             String gameTypeName,
             String mapName,
             String mapHash,

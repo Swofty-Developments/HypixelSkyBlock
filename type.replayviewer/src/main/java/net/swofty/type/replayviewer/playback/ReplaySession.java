@@ -16,8 +16,8 @@ import net.swofty.type.game.replay.recordable.Recordable;
 import net.swofty.type.replayviewer.entity.ReplayEntityManager;
 import net.swofty.type.replayviewer.playback.display.DynamicTextManager;
 import net.swofty.type.replayviewer.playback.npc.NpcReplayManager;
+import net.swofty.type.replayviewer.playback.scoreboard.GenericReplayScoreboard;
 import net.swofty.type.replayviewer.playback.scoreboard.ReplayScoreboard;
-import net.swofty.type.replayviewer.playback.scoreboard.ReplayScoreboardFactory;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -65,7 +65,7 @@ public class ReplaySession {
         this.dynamicTextManager = new DynamicTextManager(this);
         this.npcManager = new NpcReplayManager(this);
 
-        this.scoreboard = ReplayScoreboardFactory.create(this);
+        this.scoreboard = new GenericReplayScoreboard(this);
         this.scoreboard.create(viewer);
 
         viewer.setGameMode(GameMode.ADVENTURE);
@@ -241,15 +241,9 @@ public class ReplaySession {
             }
         }
 
-        // Tick managers
         droppedItemManager.tick(tick);
         dynamicTextManager.tick(tick);
         npcManager.tick();
-
-        // Update scoreboard periodically (every 10 ticks)
-        if (tick % 10 == 0) {
-            scoreboard.update(this);
-        }
     }
 
     private void seekForward(int targetTick) {

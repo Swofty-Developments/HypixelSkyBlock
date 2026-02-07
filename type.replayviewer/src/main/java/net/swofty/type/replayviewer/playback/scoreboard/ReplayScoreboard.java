@@ -43,14 +43,4 @@ public interface ReplayScoreboard {
      */
     List<String> getLines(ReplaySession session);
 
-    /**
-     * Called when a game-specific event occurs during replay.
-     * Implementations can use this to update cached state.
-     *
-     * @param eventType the type of event
-     * @param data      event-specific data
-     */
-    default void onGameEvent(String eventType, Object data) {
-
-    }
 }

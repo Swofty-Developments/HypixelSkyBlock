@@ -121,6 +121,7 @@ public class ReplayLoadEndpoint implements ServiceEndpoint<
                 UUID.fromString(doc.getString("replayId")),
                 doc.getString("gameId"),
                 net.swofty.commons.ServerType.valueOf(doc.getString("serverType")),
+                doc.getString("serverId"),
                 doc.getString("gameTypeName"),
                 doc.getString("mapName"),
                 mapHash,

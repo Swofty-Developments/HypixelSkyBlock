@@ -16,6 +16,7 @@ public class ReplayMetadata {
 	private UUID replayId;
 	private String gameId;
 	private ServerType serverType;
+	private String serverId;
 	private String gameTypeName;
 	private String mapName;
 	private String mapHash;

@@ -15,19 +15,15 @@ import net.swofty.type.game.replay.recordable.*;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableFinalKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableGeneratorUpgrade;
-import net.swofty.type.game.replay.recordable.bedwars.RecordableScoreboardState;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableTeamElimination;
 import net.swofty.type.replayviewer.entity.ReplayDroppedItemEntity;
 import net.swofty.type.replayviewer.entity.ReplayEntity;
 import net.swofty.type.replayviewer.entity.ReplayPlayerEntity;
-import net.swofty.type.replayviewer.playback.scoreboard.BedWarsReplayScoreboard;
-import net.swofty.type.replayviewer.playback.scoreboard.ReplayScoreboard;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Map;
 
 public class RecordablePlayer {
 
@@ -59,7 +55,6 @@ public class RecordablePlayer {
             case BEDWARS_FINAL_KILL -> playFinalKill((RecordableFinalKill) recordable, session);
             case BEDWARS_TEAM_ELIMINATION -> playTeamElimination((RecordableTeamElimination) recordable, session);
             case BEDWARS_EVENT_CONTINUE -> playGeneratorUpgrade((RecordableGeneratorUpgrade) recordable, session);
-            case BEDWARS_SCOREBOARD_STATE -> playScoreboardState((RecordableScoreboardState) recordable, session);
 
             // Dropped items
             case DROPPED_ITEM -> playDroppedItem((RecordableDroppedItem) recordable, session);
@@ -276,12 +271,6 @@ public class RecordablePlayer {
         session.getViewer().sendMessage(Component.text(
             "§c§lBED DESTROYED! §7" + teamName + "'s bed was destroyed!"
         ));
-
-        // Update scoreboard
-        ReplayScoreboard scoreboard = session.getScoreboard();
-        if (scoreboard instanceof BedWarsReplayScoreboard bwScoreboard) {
-            bwScoreboard.onBedDestroyed(String.valueOf(rec.getTeamId()));
-        }
     }
 
     private static void playFinalKill(RecordableFinalKill rec, ReplaySession session) {
@@ -294,15 +283,6 @@ public class RecordablePlayer {
             "§c§lFINAL KILL! §f" + victimName + " §7was eliminated";
 
         session.getViewer().sendMessage(Component.text(message));
-
-        // Update scoreboard - this is a player elimination
-        ReplayScoreboard scoreboard = session.getScoreboard();
-        if (scoreboard instanceof BedWarsReplayScoreboard bwScoreboard) {
-            // Note: Would need team info from metadata to properly update
-            bwScoreboard.onGameEvent("player_eliminated", Map.of(
-                "victimUuid", rec.getVictimUuid().toString()
-            ));
-        }
     }
 
     private static void playTeamElimination(RecordableTeamElimination rec, ReplaySession session) {
@@ -310,12 +290,6 @@ public class RecordablePlayer {
         session.getViewer().sendMessage(Component.text(
             "§c§lTEAM ELIMINATED! §7" + teamName + " has been eliminated!"
         ));
-
-        // Update scoreboard
-        ReplayScoreboard scoreboard = session.getScoreboard();
-        if (scoreboard instanceof BedWarsReplayScoreboard bwScoreboard) {
-            bwScoreboard.onTeamEliminated(String.valueOf(rec.getTeamId()));
-        }
     }
 
     private static void playGeneratorUpgrade(RecordableGeneratorUpgrade rec, ReplaySession session) {
@@ -323,31 +297,6 @@ public class RecordablePlayer {
         session.getViewer().sendMessage(Component.text(
             "§6§lGENERATOR UPGRADE! §e" + genType + " generators upgraded to tier " + rec.getTier()
         ));
-
-        // Update scoreboard if BedWars
-        ReplayScoreboard scoreboard = session.getScoreboard();
-        if (scoreboard instanceof BedWarsReplayScoreboard bwScoreboard) {
-            bwScoreboard.onGameEvent("generator_upgrade", Map.of(
-                "type", genType,
-                "tier", (int) rec.getTier()
-            ));
-        }
-    }
-
-    private static void playScoreboardState(RecordableScoreboardState rec, ReplaySession session) {
-        ReplayScoreboard scoreboard = session.getScoreboard();
-        if (scoreboard instanceof BedWarsReplayScoreboard bwScoreboard) {
-            // Update event timer
-            bwScoreboard.updateEventTimer(rec.getNextEventName(), rec.getNextEventSeconds());
-
-            // Update each team's state
-            for (var teamState : rec.getTeamStates()) {
-                if (!teamState.bedAlive()) {
-                    bwScoreboard.onBedDestroyed(teamState.teamId());
-                }
-                bwScoreboard.updateTeamAlivePlayers(teamState.teamId(), teamState.alivePlayers());
-            }
-        }
     }
 
     private static void playDroppedItem(RecordableDroppedItem rec, ReplaySession session) {

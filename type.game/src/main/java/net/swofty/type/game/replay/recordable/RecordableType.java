@@ -5,7 +5,6 @@ import net.swofty.commons.replay.protocol.ReplayDataReader;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableFinalKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableGeneratorUpgrade;
-import net.swofty.type.game.replay.recordable.bedwars.RecordableScoreboardState;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableTeamElimination;
 
 import java.io.IOException;
@@ -61,7 +60,6 @@ public enum RecordableType {
 	BEDWARS_FINAL_KILL(121, RecordableFinalKill::new),
 	BEDWARS_TEAM_ELIMINATION(122, RecordableTeamElimination::new),
 	BEDWARS_EVENT_CONTINUE(123, RecordableGeneratorUpgrade::new),
-	BEDWARS_SCOREBOARD_STATE(124, RecordableScoreboardState::new),
 
 	// NPC events (140-149)
 	NPC_DISPLAY_NAME(140, RecordableNpcDisplayName::new),

@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
+import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 
 import java.text.SimpleDateFormat;
@@ -32,13 +33,10 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
         if (sidebar == null) return;
 
         List<String> lines = getLines(session);
-
-        // Clear existing lines
         for (int i = 0; i < 15; i++) {
             sidebar.removeLine("line_" + i);
         }
 
-        // Add new lines
         for (int i = 0; i < lines.size() && i < 15; i++) {
             sidebar.createLine(new Sidebar.ScoreboardLine(
                 "line_" + i,
@@ -67,53 +65,27 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
     @Override
     public List<String> getLines(ReplaySession session) {
         List<String> lines = new ArrayList<>();
-
-        // Date line
-        lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date(session.getMetadata().getStartTime())));
+        lines.add("§7" + new SimpleDateFormat("MM/dd/yyyy").format(new Date()) + "  §8" + HypixelConst.getServerName());
+        lines.add("§7Replay from " + session.getMetadata().getServerId());
         lines.add("§7 ");
 
-        // Map info
+        lines.add("§fDate: " + new SimpleDateFormat("MM/dd/yy").format(new Date(session.getMetadata().getStartTime())));
+        lines.add("§7 ");
+
+        lines.add("§fDate: §a" + new SimpleDateFormat("MM/dd/yyyy").format(new Date(session.getMetadata().getStartTime())));
+        lines.add("§fTime: §a" + new SimpleDateFormat("HH:mm").format(new Date(session.getMetadata().getStartTime())) + " (EST)");
+        lines.add("§7 ");
+
+        lines.add("§fGame: §aBedWars");
+        lines.add("§fMode: §a" + session.getMetadata().getGameTypeName());
+
         String mapName = session.getMetadata().getMapName();
         if (mapName != null && !mapName.isEmpty()) {
             lines.add("§fMap: §a" + mapName);
         }
-
-        // Player count
-        int playerCount = session.getMetadata().getPlayers().size();
-        lines.add("§fPlayers: §a" + playerCount);
-        lines.add("§7 ");
-
-        // Playback info
-        lines.add("§fTime: §e" + session.getFormattedTime() + " §7/ " + session.getFormattedTotalTime());
-        lines.add("§fSpeed: §a" + session.getPlaybackSpeed() + "x");
-
-        String status = session.isPlaying() ? "§a▶ Playing" : "§e⏸ Paused";
-        lines.add("§fStatus: " + status);
-        lines.add("§7 ");
-
-        // Progress bar
-        float progress = session.getProgress();
-        lines.add(createProgressBar(progress));
-        lines.add("§7 ");
-
-        // Footer
         lines.add("§ewww.hypixel.net");
 
         return lines;
     }
 
-    private String createProgressBar(float percent) {
-        int filled = (int) (percent / 10);
-        StringBuilder bar = new StringBuilder("§a");
-        for (int i = 0; i < 10; i++) {
-            if (i < filled) {
-                bar.append("■");
-            } else if (i == filled) {
-                bar.append("§e■§7");
-            } else {
-                bar.append("□");
-            }
-        }
-        return bar.toString();
-    }
 }
