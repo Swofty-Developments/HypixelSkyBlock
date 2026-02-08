@@ -71,6 +71,8 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
     public void initialize(MinecraftServer server) {
         HypixelGenericLoader.server = server;
         HypixelConst.setTypeLoader(loader);
+        final boolean isSkyBlockType = loader.getType().isSkyBlock();
+        final boolean isRavengardType = loader instanceof RavengardTypeLoader;
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
 
         // Handle instances
@@ -114,7 +116,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         loopThroughPackage("net.swofty.type.generic.gui.v2.event", HypixelEventClass.class).forEach(HypixelEventHandler::registerEventMethods);
         // SkyBlockGenericLoader always runs after the generic loader, so if we are a SkyBlock server,
         // we will let that loader register the events
-        if (!loader.getType().isSkyBlock()) {
+        if (!isSkyBlockType && !isRavengardType) {
             HypixelEventHandler.register(HypixelConst.getEventHandler());
         }
 
@@ -126,7 +128,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                 .forEach(HypixelPacketClientListener::cacheListener);
         loopThroughPackage("net.swofty.type.generic.packet.packets.server", HypixelPacketServerListener.class)
                 .forEach(HypixelPacketServerListener::cacheListener);
-        if (!loader.getType().isSkyBlock()) {
+        if (!isSkyBlockType && !isRavengardType) {
             HypixelPacketClientListener.register(HypixelConst.getEventHandler());
             HypixelPacketServerListener.register(HypixelConst.getEventHandler());
         }
@@ -135,7 +137,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
          * Start generic tablist
          * SkyBlock has its own format so let SkyBlockGenericLoader handle it
          */
-        if (!loader.getType().isSkyBlock() && !(loader.getType() == ServerType.BEDWARS_GAME)) {
+        if (!isSkyBlockType && !(loader.getType() == ServerType.BEDWARS_GAME)) {
             MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
                     LAST_TICK.set(event.getTickMonitor()));
             BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
@@ -227,7 +229,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
 
         // Register player provider given we aren't a SkyBlock server
         // If we are a SkyBlock server, we will handle the player provider in the SkyBlockGenericLoader
-        if (!loader.getType().isSkyBlock()) {
+        if (!isSkyBlockType && !isRavengardType) {
             // Handle ConnectionManager
             MinecraftServer.getConnectionManager().setPlayerProvider((playerConnection, gameProfile) -> {
                 HypixelPlayer player = new HypixelPlayer(playerConnection, gameProfile);

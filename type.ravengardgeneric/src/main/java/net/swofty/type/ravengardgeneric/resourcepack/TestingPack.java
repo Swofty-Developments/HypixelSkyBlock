@@ -1,4 +1,4 @@
-package net.swofty.type.prototypelobby.resourcepack;
+package net.swofty.type.ravengardgeneric.resourcepack;
 
 import lombok.Getter;
 import net.swofty.commons.config.Settings;
@@ -6,7 +6,7 @@ import net.swofty.packer.HypixelPackBuilder;
 import net.swofty.packer.packs.TestingPackDefinition;
 import net.swofty.type.generic.resourcepack.HypixelResourcePack;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.prototypelobby.minimap.MinimapManager;
+import net.swofty.type.ravengardgeneric.texturepack.TexturePackManager;
 import org.tinylog.Logger;
 import team.unnamed.creative.BuiltResourcePack;
 
@@ -14,7 +14,7 @@ public class TestingPack implements HypixelResourcePack {
     private static final TestingPackDefinition DEFINITION = TestingPackDefinition.INSTANCE;
 
     @Getter
-    private final MinimapManager minimapManager = new MinimapManager();
+    private final TexturePackManager texturePackManager = new TexturePackManager();
 
     private final String packUrl;
     private final String packHash;
@@ -57,15 +57,16 @@ public class TestingPack implements HypixelResourcePack {
 
     @Override
     public void initialize() {
-        minimapManager.start();
+        texturePackManager.start();
     }
 
     @Override
     public void onPlayerJoin(HypixelPlayer player) {
+        texturePackManager.enableFor(player);
     }
 
     @Override
     public void onPlayerQuit(HypixelPlayer player) {
-        minimapManager.disableFor(player);
+        texturePackManager.disableFor(player);
     }
 }

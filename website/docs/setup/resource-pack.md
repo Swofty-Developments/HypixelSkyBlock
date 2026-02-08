@@ -1,60 +1,74 @@
 # Resource Pack Setup
 
-The resource pack system provides custom textures and models for items.
+The current packer flow is server-hosted. It builds the pack in memory and serves it over HTTP.
 
-## Download Required Files
+## Current Pack Source Paths
 
-1. Download `SkyBlockPacker.jar` from the [releases page](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
-2. Download [`pack_textures`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock) folder
-3. Download [`SkyBlockPack`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock) folder
+The active testing pack definition uses:
 
-## Directory Structure
+- `configuration/resourcepacks/testingpack` (base pack files)
+- `configuration/resourcepacks/testingpack_textures` (optional custom texture PNGs)
 
-```
-packer/
-├── SkyBlockPacker.jar
-├── SkyBlockPack/
-│   └── ... (pack source files)
-├── pack_textures/
-│   └── ... (texture files)
-└── output/
-    └── ... (generated pack)
+Example shader override path:
+
+```text
+configuration/resourcepacks/testingpack/assets/minecraft/shaders/core/rendertype_text.vsh
 ```
 
-## Building the Pack
+## Build the Packer
 
-Run the packer with the following command:
+From the repository root:
 
 ```bash
-java -jar SkyBlockPacker.jar \
-  -v /path/to/SkyBlockPack \
-  -o /path/to/output \
-  -t /path/to/pack_textures
+./gradlew :packer:shadowJar
 ```
 
-**Arguments**:
-- `-v` - Path to SkyBlockPack folder (pack source)
-- `-o` - Output directory for the generated pack
-- `-t` - Path to pack_textures folder
+This produces:
 
-## Using the Pack
+```text
+packer/build/libs/net.swofty.packer.HypixelPackServer.jar
+```
 
-After generation:
+## Run the Pack Server
 
-1. The resource pack will be in your output directory
-2. Apply it in Minecraft under Options → Resource Packs
-3. For server-side distribution, host the pack and configure in `config.yml`
+From the repository root:
 
-## Server-Side Distribution
+```bash
+java -jar packer/build/libs/net.swofty.packer.HypixelPackServer.jar \
+  --host 127.0.0.1 \
+  --port 7270
+```
 
-To automatically send the pack to players, add to your `config.yml`:
+Supported args:
+
+- `--host` (or `-h`)
+- `--port` (or `-p`)
+
+On startup, the server logs:
+
+- `Resource pack built. Hash: ...`
+- `Pack URL: http://<host>:<port>/<hash>.zip`
+
+## Configure the Game Server
+
+Set the pack server URL in `configuration/config.yml`:
 
 ```yaml
-resource-pack-url: "https://your-host.com/pack.zip"
-resource-pack-hash: "SHA1_HASH_HERE"
+resource-packs:
+  testingpack:
+    server-url: "http://127.0.0.1:7270"
 ```
 
-Generate the SHA1 hash:
-```bash
-sha1sum output/resourcepack.zip
-```
+Notes:
+
+- Hash is generated automatically at runtime by the pack builder.
+- You do not manually set a `resource-pack-hash` field.
+
+## Verify In-Game
+
+1. Join a Ravengard server (for example `RAVENGARD_LOBBY`).
+2. Wait for the resource pack prompt/application.
+3. If testing visually, use `/minimap` to toggle the minimap item.
+4. Reload packs with `F3 + T` after pack changes.
+
+If Minecraft keeps an old pack cached, remove the cached server-resource-pack directory and reconnect.
