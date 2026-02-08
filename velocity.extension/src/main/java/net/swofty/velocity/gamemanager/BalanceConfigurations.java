@@ -90,7 +90,7 @@ public class BalanceConfigurations {
 			Map.entry(ServerType.MURDER_MYSTERY_CONFIGURATOR, List.of(
 					new LowestPlayerCount()
 			)),
-			Map.entry(ServerType.RAVENGAARD_LOBBY, List.of(
+			Map.entry(ServerType.RAVENGARD_LOBBY, List.of(
 					new LowestPlayerCount()
 			))
 	));

@@ -29,9 +29,9 @@ import net.swofty.spark.Spark;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
-import net.swofty.type.generic.RavengaardTypeLoader;
+import net.swofty.type.generic.RavengardTypeLoader;
 import net.swofty.type.generic.SkyBlockTypeLoader;
-import net.swofty.type.ravengaardgeneric.RavengaardGenericLoader;
+import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -131,8 +131,8 @@ public class Hypixel {
         if (typeLoader instanceof SkyBlockTypeLoader) {
             new SkyBlockGenericLoader(typeLoader).initialize(minecraftServer);
         }
-        if (typeLoader instanceof RavengaardTypeLoader) {
-            new RavengaardGenericLoader(typeLoader).initialize(minecraftServer);
+        if (typeLoader instanceof RavengardTypeLoader) {
+            new RavengardGenericLoader(typeLoader).initialize(minecraftServer);
         }
 
         // Initialize the server
@@ -151,10 +151,10 @@ public class Hypixel {
                     .forEach(proxyAPI::registerFromProxyHandler);
             SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", ServiceToClient.class)
                     .forEach(proxyAPI::registerFromServiceHandler);
-        } else if (typeLoader instanceof RavengaardTypeLoader) {
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengaardgeneric.redis", ProxyToClient.class)
+        } else if (typeLoader instanceof RavengardTypeLoader) {
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", ProxyToClient.class)
                     .forEach(proxyAPI::registerFromProxyHandler);
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengaardgeneric.redis.service", ServiceToClient.class)
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis.service", ServiceToClient.class)
                     .forEach(proxyAPI::registerFromServiceHandler);
         }
         Arrays.stream(ToProxyChannels.values()).forEach(

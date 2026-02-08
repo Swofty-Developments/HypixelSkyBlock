@@ -69,7 +69,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         HypixelGenericLoader.server = server;
         HypixelConst.setTypeLoader(loader);
         final boolean isSkyBlockType = loader.getType().isSkyBlock();
-        final boolean isRavengaardType = loader instanceof RavengaardTypeLoader;
+        final boolean isRavengardType = loader instanceof RavengardTypeLoader;
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
 
         // Handle instances
@@ -113,7 +113,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         loopThroughPackage("net.swofty.type.generic.gui.v2.event", HypixelEventClass.class).forEach(HypixelEventHandler::registerEventMethods);
         // SkyBlockGenericLoader always runs after the generic loader, so if we are a SkyBlock server,
         // we will let that loader register the events
-        if (!isSkyBlockType && !isRavengaardType) {
+        if (!isSkyBlockType && !isRavengardType) {
             HypixelEventHandler.register(HypixelConst.getEventHandler());
         }
 
@@ -125,7 +125,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                 .forEach(HypixelPacketClientListener::cacheListener);
         loopThroughPackage("net.swofty.type.generic.packet.packets.server", HypixelPacketServerListener.class)
                 .forEach(HypixelPacketServerListener::cacheListener);
-        if (!isSkyBlockType && !isRavengaardType) {
+        if (!isSkyBlockType && !isRavengardType) {
             HypixelPacketClientListener.register(HypixelConst.getEventHandler());
             HypixelPacketServerListener.register(HypixelConst.getEventHandler());
         }
@@ -225,7 +225,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
 
         // Register player provider given we aren't a SkyBlock server
         // If we are a SkyBlock server, we will handle the player provider in the SkyBlockGenericLoader
-        if (!isSkyBlockType && !isRavengaardType) {
+        if (!isSkyBlockType && !isRavengardType) {
             // Handle ConnectionManager
             MinecraftServer.getConnectionManager().setPlayerProvider((playerConnection, gameProfile) -> {
                 HypixelPlayer player = new HypixelPlayer(playerConnection, gameProfile);

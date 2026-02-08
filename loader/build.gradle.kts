@@ -53,8 +53,8 @@ dependencies {
     implementation(project(":type.skywarslobby"))
     implementation(project(":type.skywarsgame"))
     implementation(project(":type.skywarsconfigurator"))
-    implementation(project(":type.ravengaardgeneric"))
-    implementation(project(":type.ravengaardlobby"))
+    implementation(project(":type.ravengardgeneric"))
+    implementation(project(":type.ravengardlobby"))
 
     implementation(project(":type.generic"))
     implementation(project(":commons"))

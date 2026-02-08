@@ -66,7 +66,7 @@ Notes:
 
 ## Verify In-Game
 
-1. Join a Ravengaard server (for example `RAVENGAARD_LOBBY`).
+1. Join a Ravengard server (for example `RAVENGARD_LOBBY`).
 2. Wait for the resource pack prompt/application.
 3. If testing visually, use `/minimap` to toggle the minimap item.
 4. Reload packs with `F3 + T` after pack changes.

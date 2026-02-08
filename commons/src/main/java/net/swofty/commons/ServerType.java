@@ -28,7 +28,7 @@ public enum ServerType {
 	SKYWARS_LOBBY(false),
 	SKYWARS_GAME(false),
 	SKYWARS_CONFIGURATOR(false),
-	RAVENGAARD_LOBBY(false)
+	RAVENGARD_LOBBY(false)
 	;
 
 	private final boolean isSkyBlock;
