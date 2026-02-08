@@ -205,12 +205,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     @Override
-    protected void onPlayerLeave(BedWarsPlayer player) {
-        super.onPlayerLeave(player); // Handles team removal
-        player.sendTo(ServerType.BEDWARS_LOBBY);
-    }
-
-    @Override
     protected void onPlayerDisconnect(BedWarsPlayer player) {
         String teamColor = getPlayerTeam(player.getUuid())
             .map(BedWarsTeam::getColorCode)

@@ -156,11 +156,6 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
     protected abstract int getTeamSize();
 
     @Override
-    protected void onPlayerLeave(P player) {
-        removeFromTeam(player);
-    }
-
-    @Override
     protected void checkWinConditions() {
         if (state != GameState.IN_PROGRESS) return;
 

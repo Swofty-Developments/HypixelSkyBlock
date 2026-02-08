@@ -1,14 +1,10 @@
 package net.swofty.type.game.game.event;
 
-import java.util.UUID;
+import net.minestom.server.entity.Player;
 
-/**
- * Event fired when a player leaves a game (voluntarily).
- */
 public record PlayerLeaveGameEvent(
         String gameId,
-        UUID playerId,
-        String playerName,
+        Player player,
         LeaveReason reason
 ) implements GameEvent {
     @Override
@@ -17,24 +13,9 @@ public record PlayerLeaveGameEvent(
     }
 
     public enum LeaveReason {
-        /**
-         * Player chose to leave voluntarily.
-         */
         VOLUNTARY,
-
-        /**
-         * Player was kicked from the game.
-         */
         KICKED,
-
-        /**
-         * Player was eliminated from the game.
-         */
         ELIMINATED,
-
-        /**
-         * Game ended.
-         */
         GAME_END
     }
 }

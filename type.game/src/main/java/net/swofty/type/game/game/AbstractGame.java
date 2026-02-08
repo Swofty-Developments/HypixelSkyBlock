@@ -151,12 +151,13 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         players.remove(player.getUuid());
         player.setGameId(null);
 
-        onPlayerLeave(player);
+        if (this instanceof AbstractTeamGame<P,?> teamGame) {
+            teamGame.removeFromTeam(player);
+        }
 
         eventDispatcher.accept(new PlayerLeaveGameEvent(
             gameId,
-            player.getUuid(),
-            player.getServerPlayer().getUsername(),
+            player.getServerPlayer(),
             PlayerLeaveGameEvent.LeaveReason.VOLUNTARY
         ));
 
