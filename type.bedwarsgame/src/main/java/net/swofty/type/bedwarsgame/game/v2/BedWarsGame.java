@@ -39,6 +39,7 @@ import net.swofty.type.game.game.CountdownConfig;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.game.game.event.GameEndEvent;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -164,22 +165,14 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             .orElse(0);
     }
 
-    /**
-     * Checks if the game can accept a party warp.
-     */
+    @Nullable
     public String canAcceptPartyWarp() {
-        if (state == GameState.IN_PROGRESS) {
-            return "Cannot warp - game has already started";
-        }
-        if (state == GameState.ENDING) {
-            return "Cannot warp - game is ending";
+        if (state != GameState.WAITING) {
+            return "Cannot warp as the game has already started";
         }
         return null;
     }
 
-    /**
-     * Handles player rejoining.
-     */
     public void rejoin(BedWarsPlayer player) {
         // Check if player has disconnected data
         AbstractGame.DisconnectedPlayerData data = disconnectedPlayers.remove(player.getUuid());

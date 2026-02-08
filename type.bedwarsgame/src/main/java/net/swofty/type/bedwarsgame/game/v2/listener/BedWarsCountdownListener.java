@@ -1,7 +1,6 @@
 package net.swofty.type.bedwarsgame.game.v2.listener;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -10,7 +9,6 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
-// todo: look like hypixel
 public class BedWarsCountdownListener implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
@@ -30,16 +28,14 @@ public class BedWarsCountdownListener implements HypixelEventClass {
     }
 
     private Component createCountdownMessage(int seconds) {
-        if (seconds > 1) {
-            return Component.text("Game starting in ", NamedTextColor.YELLOW)
-                .append(Component.text(seconds, NamedTextColor.RED))
-                .append(Component.text(" seconds!", NamedTextColor.YELLOW));
-        } else if (seconds == 1) {
-            return Component.text("Game starting in ", NamedTextColor.YELLOW)
-                .append(Component.text("1", NamedTextColor.RED))
-                .append(Component.text(" second!", NamedTextColor.YELLOW));
+        if (seconds > 10) {
+            return Component.text("§eThe game starts in " + seconds + " seconds!");
+        } else if (seconds == 10) {
+            return Component.text("§eThe game starts in §610§e seconds!");
+        } else if (seconds > 1) {
+            return Component.text("§eGThe game starts in §c" + seconds + " §eseconds!");
         } else {
-            return Component.text("Game starting now!", NamedTextColor.GREEN);
+            return Component.text("§cMessage missing");
         }
     }
 }

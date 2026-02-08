@@ -13,7 +13,6 @@ import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.tinylog.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysL
 
     @Override
     public ViewConfiguration<State> configuration() {
-        return ViewConfiguration.withString((_, _) -> "Replays", InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.withString((_, _) -> "Recent Games", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -67,7 +66,6 @@ public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysL
 
     @Override
     protected void layoutBackground(ViewLayout<State> layout, State state, ViewContext ctx) {
-        Logger.info("ReplaysListView layout background");
         layout.slot(49, (s, c) -> ItemStack.builder(Material.BARRIER)
                         .set(DataComponents.CUSTOM_NAME, Component.text("Close", NamedTextColor.RED)),
                 (_, viewCtx) -> viewCtx.player().closeInventory());
@@ -106,7 +104,7 @@ public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysL
         }
 
         lore.add(Component.empty());
-        lore.add(Component.text("Click to watch!", NamedTextColor.YELLOW));
+        lore.add(Component.text("§eClick to view replay!"));
 
         return ItemStack.builder(material)
                 .set(DataComponents.CUSTOM_NAME, Component.text(item.displayName(), NamedTextColor.GREEN))
