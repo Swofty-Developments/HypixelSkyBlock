@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    java
+    `java-library`
     application
     id("com.gradleup.shadow") version "9.3.1"
 }
@@ -17,13 +17,19 @@ java {
     }
 }
 
+dependencies {
+    api("team.unnamed:creative-api:1.7.3")
+    api("team.unnamed:creative-serializer-minecraft:1.7.3")
+    api("team.unnamed:creative-server:1.7.3")
+}
+
 application {
-    mainClass.set("net.swofty.packer.SkyBlockPacker")
+    mainClass.set("net.swofty.packer.HypixelPackServer")
 }
 
 tasks {
     named<ShadowJar>("shadowJar") {
-        archiveBaseName.set("net.swofty.packer.SkyBlockPacker")
+        archiveBaseName.set("net.swofty.packer.HypixelPackServer")
         archiveClassifier.set("")
         archiveVersion.set("")
     }
