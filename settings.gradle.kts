@@ -38,6 +38,8 @@ include(":type.murdermysteryconfigurator")
 include(":type.skywarslobby")
 include(":type.skywarsgame")
 include(":type.skywarsconfigurator")
+include(":type.ravengaardgeneric")
+include(":type.ravengaardlobby")
 
 include(":service.auctionhouse")
 include(":service.bazaar")
