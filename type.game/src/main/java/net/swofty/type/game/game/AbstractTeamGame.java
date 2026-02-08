@@ -60,26 +60,6 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
     }
 
     @Override
-    public boolean assignToTeam(P player, T team) {
-        // Remove from current team if any
-        removeFromTeam(player);
-
-        // Add to new team
-        team.addPlayer(player.getUuid());
-        playerTeams.put(player.getUuid(), team.getId());
-
-        eventDispatcher.accept(new PlayerAssignedTeamEvent(
-                gameId,
-                player.getUuid(),
-                player.getServerPlayer().getUsername(),
-                team.getId(),
-                team.getName()
-        ));
-
-        return true;
-    }
-
-    @Override
     public void removeFromTeam(P player) {
         String currentTeamId = playerTeams.remove(player.getUuid());
         if (currentTeamId != null) {
@@ -145,7 +125,18 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
             }
 
             if (targetTeam != null) {
-                assignToTeam(player, targetTeam);
+                // Remove from current team if any
+                removeFromTeam(player);
+
+                // Add to new team
+                targetTeam.addPlayer(player.getUuid());
+                playerTeams.put(player.getUuid(), targetTeam.getId());
+
+                eventDispatcher.accept(new PlayerAssignedTeamEvent<T>(
+                    gameId,
+                    player.getServerPlayer(),
+                    targetTeam
+                ));
             }
         }
     }

@@ -196,24 +196,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     @Override
-    public boolean assignToTeam(BedWarsPlayer player, BedWarsTeam team) {
-        boolean assigned = super.assignToTeam(player, team);
-        if (assigned) {
-            player.setTag(Tag.String("team"), team.getTeamKey().name());
-        }
-        return assigned;
-    }
-
-    @Override
-    protected void onPlayerDisconnect(BedWarsPlayer player) {
-        String teamColor = getPlayerTeam(player.getUuid())
-            .map(BedWarsTeam::getColorCode)
-            .orElse("§7");
-
-        broadcastMessage(Component.text(teamColor + player.getUsername() + " §7disconnected."));
-    }
-
-    @Override
     protected void onPlayerRejoin(BedWarsPlayer player, DisconnectedPlayerData data) {
         player.setInstance(instance);
 
@@ -494,11 +476,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     public List<UUID> getDisconnectedPlayerUuids() {
         return new ArrayList<>(disconnectedPlayers.keySet());
-    }
-
-    @Override
-    protected void onDispose() {
-        TypeBedWarsGameLoader.getGames().remove(this);
     }
 
     @Override

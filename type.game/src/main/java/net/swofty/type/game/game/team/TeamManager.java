@@ -24,13 +24,6 @@ public interface TeamManager<T extends GameTeam, P> {
 	Optional<T> getPlayerTeam(UUID playerId);
 
 	/**
-	 * Assigns a player to a team.
-	 *
-	 * @return true if assignment was successful
-	 */
-	boolean assignToTeam(P player, T team);
-
-	/**
 	 * Removes a player from their team.
 	 */
 	void removeFromTeam(P player);

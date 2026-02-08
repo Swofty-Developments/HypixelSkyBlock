@@ -1,13 +1,11 @@
 package net.swofty.type.game.game.event;
 
-import java.util.UUID;
+import net.minestom.server.entity.Player;
 
-public record PlayerAssignedTeamEvent(
+public record PlayerAssignedTeamEvent<T>(
         String gameId,
-        UUID playerId,
-        String playerName,
-        String teamId,
-        String teamName
+        Player player,
+        T team
 ) implements GameEvent {
     @Override
     public String getGameId() {

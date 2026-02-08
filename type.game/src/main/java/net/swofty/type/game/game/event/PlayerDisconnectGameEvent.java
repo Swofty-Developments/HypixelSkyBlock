@@ -1,6 +1,6 @@
 package net.swofty.type.game.game.event;
 
-import java.util.UUID;
+import net.minestom.server.entity.Player;
 
 /**
  * Event fired when a player disconnects during an active game.
@@ -8,8 +8,7 @@ import java.util.UUID;
  */
 public record PlayerDisconnectGameEvent(
         String gameId,
-        UUID playerId,
-        String playerName,
+        Player player,
         boolean canRejoin
 ) implements GameEvent {
     @Override

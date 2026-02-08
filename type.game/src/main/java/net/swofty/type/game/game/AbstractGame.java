@@ -1,6 +1,7 @@
 package net.swofty.type.game.game;
 
 import net.minestom.server.instance.InstanceContainer;
+import net.swofty.type.game.game.event.GameDisposeEvent;
 import net.swofty.type.game.game.event.GameStartEvent;
 import net.swofty.type.game.game.event.GameStateChangeEvent;
 import net.swofty.type.game.game.event.PlayerDisconnectGameEvent;
@@ -197,12 +198,9 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 
         players.remove(uuid);
 
-        onPlayerDisconnect(player);
-
         eventDispatcher.accept(new PlayerDisconnectGameEvent(
             gameId,
-            uuid,
-            player.getServerPlayer().getUsername(),
+            player.getServerPlayer(),
             canRejoin
         ));
 
@@ -260,7 +258,9 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         countdown.stop();
         players.clear();
         disconnectedPlayers.clear();
-        onDispose();
+        eventDispatcher.accept(new GameDisposeEvent(
+            gameId
+        ));
     }
 
     /**
@@ -279,25 +279,12 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
      * @deprecated use the Event system instead
      */
     @Deprecated(forRemoval = true)
-    protected abstract void onPlayerLeave(P player);
-
-    /**
-     * @deprecated use the Event system instead
-     */
-    @Deprecated(forRemoval = true)
     protected abstract void onGameEnd();
 
     /**
      * Check if win conditions are met and end the game if so.
      */
     protected abstract void checkWinConditions();
-
-    /**
-     * @deprecated use the Event system instead
-     */
-    @Deprecated(forRemoval = true)
-    protected void onPlayerDisconnect(P player) {
-    }
 
     /**
      * @deprecated use the Event system instead
@@ -328,13 +315,5 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
     @Deprecated(forRemoval = true)
     protected void restorePlayerData(P player, Map<String, Object> savedData) {
         // Default: no restoration
-    }
-
-    /**
-     * @deprecated use the Event system instead
-     */
-    @Deprecated(forRemoval = true)
-    protected void onDispose() {
-        // Default: no special cleanup
     }
 }
