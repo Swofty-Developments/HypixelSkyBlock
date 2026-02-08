@@ -1,0 +1,5 @@
+language.current: "§a当前选择语言: §6%s §7(%s)"
+language.available: "§7可用语言: §f%s"
+language.hint.use_command: "§e使用 /language <code> §7来切换语言。"
+language.error.unknown: "§cInvalid language '%s'! Valid languages: %s"
+language.updated: "§a语言已切换为 §6%s §7(%s)"

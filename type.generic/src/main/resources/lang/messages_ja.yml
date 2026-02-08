@@ -1,0 +1,5 @@
+language.current: "§a選択中の言語: §6%s §7(%s)"
+language.available: "§7使用可能な言語: §f%s"
+language.hint.use_command: "§e/language <code> §7で言語を変更できます。"
+language.error.unknown: "§cInvalid language '%s'! Valid languages: %s"
+language.updated: "§a言語を §6%s §7(%s) §aに変更しました。"
