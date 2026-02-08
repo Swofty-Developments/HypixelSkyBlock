@@ -62,4 +62,3 @@ build/
 /server/proxy/configuration/config.yml
 
 ### Resource pack build output ###
-/configuration/resourcepacks/
