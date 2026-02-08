@@ -28,6 +28,9 @@ public class Settings {
 	@Comment("Whether to enable sandbox features (such as editing items)")
 	private boolean sandbox = false;
 
+	@Comment("Whether to enable the terminal for Minestom backend servers")
+	private boolean terminal = false;
+
 	@Comment("Integrations with services")
 	private IntegrationSettings integrations = new IntegrationSettings();
 

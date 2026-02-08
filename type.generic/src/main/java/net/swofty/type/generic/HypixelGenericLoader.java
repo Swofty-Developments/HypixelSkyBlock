@@ -21,6 +21,7 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
+import net.swofty.commons.punishment.PunishmentRedis;
 import net.swofty.type.generic.block.PlayerHeadBlockHandler;
 import net.swofty.type.generic.block.SignBlockHandler;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -47,6 +48,7 @@ import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.quest.QuestRegistry;
 import net.swofty.type.generic.redis.RedisOriginServer;
+import net.swofty.type.generic.terminal.MinestomTerminal;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
@@ -192,6 +194,9 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         // Initialize leaderboard service (uses Redis for O(log N) leaderboard operations)
         LeaderboardService.connect(ConfigProvider.settings().getRedisUri());
 
+        // Initialize punishment Redis connection
+        PunishmentRedis.connect(ConfigProvider.settings().getRedisUri());
+
         // Load achievement and quest registries from YAML configuration
         AchievementRegistry.loadFromConfiguration();
         QuestRegistry.loadFromConfiguration();
@@ -239,6 +244,14 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                 Logger.info("Received new player: " + username + " (" + uuid + ")");
                 return player;
             });
+        }
+
+        if (ConfigProvider.settings().isTerminal()) {
+            try (MinestomTerminal terminal = new MinestomTerminal(MinecraftServer.getCommandManager())) {
+                terminal.start();
+            } catch (Exception e) {
+                Logger.warn(e, "Failed to start Minestom terminal.");
+            }
         }
     }
 
