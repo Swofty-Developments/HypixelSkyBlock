@@ -89,6 +89,16 @@ public class BalanceConfigurations {
 			)),
 			Map.entry(ServerType.MURDER_MYSTERY_CONFIGURATOR, List.of(
 					new LowestPlayerCount()
+			)),
+
+			Map.entry(ServerType.ARCADE_LOBBY, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.ZOMBIES_GAME, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.ZOMBIES_CONFIGURATOR, List.of(
+					new LowestPlayerCount()
 			))
 	));
 
