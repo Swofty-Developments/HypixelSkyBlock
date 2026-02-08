@@ -110,7 +110,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
             public HypixelInventoryGUI onQueryFinish(String query, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 try {
-                    double amount = Double.parseDouble(query);
+                    double amount = parseAmountInput(query);
                     if (amount > bankBalance) {
                         player.sendMessage("§cYou do not have that many coins to withdraw!");
                         return null;
@@ -126,6 +126,16 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                     player.sendMessage("§cThat is not a valid number!");
                 }
                 return null;
+            }
+
+            @Override
+            public String[] lines() {
+                return new String[]{"Enter the amount", "to withdraw"};
+            }
+
+            @Override
+            public String arrowLine() {
+                return "^^^^^^^^^^^^^^^^^";
             }
 
             @Override
@@ -225,5 +235,26 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
         e.setCancelled(true);
+    }
+
+    private double parseAmountInput(String input) {
+        if (input == null) throw new NumberFormatException("null input");
+        String cleaned = input.trim().toLowerCase();
+        if (cleaned.isEmpty()) throw new NumberFormatException("empty input");
+
+        double multiplier = 1D;
+        char suffix = cleaned.charAt(cleaned.length() - 1);
+        if (suffix == 'k' || suffix == 'm' || suffix == 'b') {
+            cleaned = cleaned.substring(0, cleaned.length() - 1).trim();
+            multiplier = switch (suffix) {
+                case 'k' -> 1_000D;
+                case 'm' -> 1_000_000D;
+                case 'b' -> 1_000_000_000D;
+                default -> 1D;
+            };
+        }
+
+        double base = Double.parseDouble(cleaned);
+        return base * multiplier;
     }
 }

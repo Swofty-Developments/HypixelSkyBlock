@@ -37,10 +37,10 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
                 return ItemStackCreator.getStack("§aYour whole purse", Material.CHEST, 64,
                         "§8Bank deposit",
                         " ",
-                        "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
+                        "§7Current balance: §6" + formatCoinAmount(
+                                player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
                         ),
-                        "§7Amount to deposit: §6" + StringUtility.decimalify(player.getCoins(), 1),
+                        "§7Amount to deposit: §6" + formatCoinAmount(player.getCoins()),
                         " ",
                         "§eClick to deposit coins!"
                 );
@@ -61,10 +61,10 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
                 return ItemStackCreator.getStack("§aHalf of your purse", Material.CHEST, 32,
                         "§8Bank deposit",
                         " ",
-                        "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
+                        "§7Current balance: §6" + formatCoinAmount(
+                                player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
                         ),
-                        "§7Amount to deposit: §6" + StringUtility.decimalify(player.getCoins() / 2, 1),
+                        "§7Amount to deposit: §6" + formatCoinAmount(player.getCoins() / 2),
                         " ",
                         "§eClick to deposit coins!"
                 );
@@ -107,8 +107,8 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
                 return ItemStackCreator.getStack("§aCustom amount", Material.OAK_SIGN, 1,
                         "§8Bank deposit",
                         " ",
-                        "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
+                        "§7Current balance: §6" + formatCoinAmount(
+                                player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
                         ),
                         "§7Amount to deposit: §6Custom",
                         " ",
@@ -151,8 +151,8 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
                     player.getUsername()
             ));
 
-            player.sendMessage("§aYou have deposited §6" + StringUtility.decimalify(amount, 1) + " coins§a! You now have §6" +
-                    StringUtility.decimalify(bankData.getAmount(), 1)
+            player.sendMessage("§aYou have deposited §6" + formatCoinAmount(amount) + " coins§a! You now have §6" +
+                    formatCoinAmount(bankData.getAmount())
                     + " coins§a in your account.");
             return;
         }
@@ -178,8 +178,8 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
                     latestBankData.addTransaction(new DatapointBankData.Transaction(
                             System.currentTimeMillis(), amount, player.getUsername()));
 
-                    player.sendMessage("§aYou have deposited §6" + StringUtility.decimalify(amount, 1) +
-                            " coins§a! You now have §6" + StringUtility.decimalify(latestBankData.getAmount(), 1) +
+                    player.sendMessage("§aYou have deposited §6" + formatCoinAmount(amount) +
+                            " coins§a! You now have §6" + formatCoinAmount(latestBankData.getAmount()) +
                             " coins§a in your account.");
 
                     return latestBankData; // Return modified data to be propagated to all servers
@@ -198,5 +198,12 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
         e.setCancelled(true);
+    }
+
+    private String formatCoinAmount(double amount) {
+        if (amount >= 1000) {
+            return StringUtility.shortenNumber(amount).replace("K", "k");
+        }
+        return StringUtility.decimalify(amount, 1);
     }
 }

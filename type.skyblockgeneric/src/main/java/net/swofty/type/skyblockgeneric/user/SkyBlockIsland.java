@@ -42,6 +42,9 @@ import java.util.concurrent.CompletableFuture;
 public class SkyBlockIsland {
     private static final String ISLAND_TEMPLATE_NAME = CustomWorlds.SKYBLOCK_ISLAND_TEMPLATE.getFolderName();
     private static final Map<UUID, SkyBlockIsland> loadedIslands = new HashMap<>();
+    private static final long ISLAND_INITIAL_TIME = 1000L;
+    private static final int ISLAND_TIME_RATE = 1;
+    private static final int ISLAND_TIME_SYNC_TICKS = 20;
 
     // Internal Island Data
     private final IslandDatabase database;
@@ -83,6 +86,9 @@ public class SkyBlockIsland {
             );
             InstanceContainer temporaryInstance = manager.createInstanceContainer(dimensionTypeKey);
             islandInstance = manager.createSharedInstance(temporaryInstance);
+            islandInstance.setTime(ISLAND_INITIAL_TIME);
+            islandInstance.setTimeRate(ISLAND_TIME_RATE);
+            islandInstance.setTimeSynchronizationTicks(ISLAND_TIME_SYNC_TICKS);
 
             List<SkyBlockPlayer> onlinePlayers;
             if (coop != null) {

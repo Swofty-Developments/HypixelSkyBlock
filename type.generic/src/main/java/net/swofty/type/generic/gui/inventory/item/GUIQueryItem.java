@@ -31,4 +31,8 @@ public abstract class GUIQueryItem extends GUIClickableItem {
     public String[] lines() {
         return new String[]{"Enter your", "input"};
     }
+
+    public String arrowLine() {
+        return "^^^^^^^^";
+    }
 }
