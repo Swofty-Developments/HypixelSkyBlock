@@ -4,15 +4,7 @@ target/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/workspace.xml
-.idea/hotswap_agent.xml
-.idea/runConfigurations.xml
-.idea/gradle.xml
-.idea/misc.xml
-.idea/libraries/
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -44,17 +36,30 @@ build/
 
 
 ### Worlds ###
-/configuration/skyblock/islands/hypixel_skyblock_island_template/
-/configuration/skyblock/islands/hypixel_skyblock_hub/
-/configuration/skyblock/islands/hypixel_skyblock_gold_mine/
-/configuration/skyblock/islands/*
-/configuration/logs/configuration/murdermystery/*
+/configuration/skyblock/islands/
 /configuration/hypixel_prototype_lobby/
+/configuration/hypixel_bedwars_lobby/
+/configuration/hypixel_murder_mystery_lobby/
+/configuration/hypixel_skywars_lobby/
 /configuration/bedwars/*.polar
 
+### Logs ###
+/configuration/logs/
+*.log
+
+### Server runtime ###
 .gradle/
 /server/proxy/logs/
 /server/proxy/lang/
+/server/proxy/ViaLoader/
+/server/proxy/plugins/
+/server/proxy/forwarding.secret
+/server/proxy/velocity.toml
+/server/proxy/hs_err_pid*.log
+/server/proxy/replay_pid*.log
 /server/forwarding.secret
 /configuration/config.yml
 /server/proxy/configuration/config.yml
+
+### Resource pack build output ###
+/configuration/resourcepacks/
