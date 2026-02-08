@@ -39,7 +39,7 @@ subprojects {
         implementation(platform("tools.jackson:jackson-bom:3.0.4"))
         implementation("tools.jackson.core:jackson-core")
         implementation("tools.jackson.core:jackson-databind")
-        implementation("com.fasterxml.jackson.core:jackson-annotations:2.20")
+        implementation("com.fasterxml.jackson.core:jackson-annotations:2.21")
     }
 
     tasks.test {
