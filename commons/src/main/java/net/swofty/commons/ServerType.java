@@ -27,7 +27,8 @@ public enum ServerType {
 	MURDER_MYSTERY_CONFIGURATOR(false),
 	SKYWARS_LOBBY(false),
 	SKYWARS_GAME(false),
-	SKYWARS_CONFIGURATOR(false)
+	SKYWARS_CONFIGURATOR(false),
+	RAVENGARD_LOBBY(false)
 	;
 
 	private final boolean isSkyBlock;

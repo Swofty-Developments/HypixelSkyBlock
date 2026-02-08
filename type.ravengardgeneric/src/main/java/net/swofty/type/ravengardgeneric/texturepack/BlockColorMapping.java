@@ -1,12 +1,20 @@
-package net.swofty.type.prototypelobby.minimap;
+package net.swofty.type.ravengardgeneric.texturepack;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minestom.server.instance.block.Block;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BlockColorMapping {
     private static final Map<String, Byte> BLOCK_COLORS = new HashMap<>();
+    private static final Map<String, Byte> AUTO_STATE_COLORS = new HashMap<>();
+    private static final Map<String, Byte> AUTO_DEFAULT_COLORS = new HashMap<>();
 
     static {
         color("minecraft:grass_block", 1, 2);
@@ -122,6 +130,8 @@ public class BlockColorMapping {
         color("minecraft:exposed_copper", 50, 1);
         color("minecraft:weathered_copper", 50, 0);
         color("minecraft:oxidized_copper", 51, 2);
+
+        loadAutoMappingsFromMinestomData();
     }
 
     private static void color(String block, int baseColor, int shade) {
@@ -129,6 +139,78 @@ public class BlockColorMapping {
     }
 
     public static byte getMapColor(Block block) {
-        return BLOCK_COLORS.getOrDefault(block.key().toString(), (byte) 0);
+        String key = block.key().toString();
+
+        Byte manual = BLOCK_COLORS.get(key);
+        if (manual != null) {
+            return manual;
+        }
+
+        Byte autoState = AUTO_STATE_COLORS.get(key + block.state());
+        if (autoState != null) {
+            return autoState;
+        }
+
+        Byte autoDefault = AUTO_DEFAULT_COLORS.get(key);
+        if (autoDefault != null) {
+            return autoDefault;
+        }
+
+        return 0;
+    }
+
+    private static void loadAutoMappingsFromMinestomData() {
+        try (InputStream input = BlockColorMapping.class.getClassLoader().getResourceAsStream("block.json")) {
+            if (input == null) {
+                return;
+            }
+
+            JsonObject root = JsonParser.parseReader(new InputStreamReader(input, StandardCharsets.UTF_8)).getAsJsonObject();
+            for (Map.Entry<String, JsonElement> blockEntry : root.entrySet()) {
+                if (!blockEntry.getValue().isJsonObject()) {
+                    continue;
+                }
+
+                String blockKey = blockEntry.getKey();
+                JsonObject blockObject = blockEntry.getValue().getAsJsonObject();
+                int defaultMapColorId = getOptionalInt(blockObject, "mapColorId", -1);
+                if (defaultMapColorId >= 0) {
+                    AUTO_DEFAULT_COLORS.put(blockKey, toMapByte(defaultMapColorId));
+                }
+
+                if (!blockObject.has("states") || !blockObject.get("states").isJsonObject()) {
+                    continue;
+                }
+
+                JsonObject states = blockObject.getAsJsonObject("states");
+                for (Map.Entry<String, JsonElement> stateEntry : states.entrySet()) {
+                    if (!stateEntry.getValue().isJsonObject()) {
+                        continue;
+                    }
+
+                    JsonObject stateObject = stateEntry.getValue().getAsJsonObject();
+                    int stateMapColorId = getOptionalInt(stateObject, "mapColorId", defaultMapColorId);
+                    if (stateMapColorId >= 0) {
+                        AUTO_STATE_COLORS.put(blockKey + stateEntry.getKey(), toMapByte(stateMapColorId));
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+    private static int getOptionalInt(JsonObject object, String key, int fallback) {
+        if (!object.has(key) || !object.get(key).isJsonPrimitive()) {
+            return fallback;
+        }
+        try {
+            return object.get(key).getAsInt();
+        } catch (Exception ignored) {
+            return fallback;
+        }
+    }
+
+    private static byte toMapByte(int mapColorId) {
+        return (byte) (mapColorId * 4 + 2);
     }
 }

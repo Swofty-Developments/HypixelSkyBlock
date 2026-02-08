@@ -1,9 +1,9 @@
 plugins {
-    id("java")
+    java
 }
 
 group = "net.swofty"
-version = "1.0"
+version = "3.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_25
@@ -13,21 +13,16 @@ java {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    implementation(project(":type.lobby"))
-    implementation(project(":commons"))
-    implementation(project(":proxy.api"))
     implementation(project(":type.generic"))
-
+    implementation(project(":commons"))
+    implementation(project(":packer"))
+    implementation(project(":proxy.api"))
     implementation("org.mongodb:bson:5.6.2")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.2")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
+    compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.tinylog:tinylog-api:2.7.0")
+    implementation("org.tinylog:tinylog-impl:2.7.0")
 }

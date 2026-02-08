@@ -29,12 +29,8 @@ import net.swofty.type.lobby.launchpad.LaunchPad;
 import net.swofty.type.lobby.parkour.LobbyParkourManager;
 import net.swofty.type.lobby.parkour.Parkour;
 import net.swofty.type.prototypelobby.parkour.PrototypeLobbyParkour;
-import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.resourcepack.ResourcePackManager;
-import net.swofty.type.prototypelobby.resourcepack.TestingPack;
 import net.swofty.type.prototypelobby.util.PrototypeLobbyMap;
 import org.jetbrains.annotations.Nullable;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,22 +63,6 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         parkourManager = new LobbyParkourManager(getParkour());
 
         LobbyTypeLoader.registerLobbyCommands();
-
-        TestingPack testingPack = TestingPack.fromConfig();
-        ResourcePackManager packManager = new ResourcePackManager(testingPack);
-        HypixelConst.setResourcePackManager(packManager);
-        packManager.initialize();
-
-        HypixelGenericLoader.loopThroughPackage(
-                "net.swofty.type.prototypelobby.commands", HypixelCommand.class
-        ).forEach(command -> {
-            try {
-                MinecraftServer.getCommandManager().register(command.getCommand());
-            } catch (Exception e) {
-                Logger.error(e, "Failed to register command {} in class {}",
-                        command.getCommand().getName(), command.getClass().getSimpleName());
-            }
-        });
     }
 
     @Override
