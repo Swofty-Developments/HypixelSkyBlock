@@ -168,7 +168,7 @@ items:
         alchemy_xp: 500
 
   - id: ENCHANTED_CACTUS_GREEN
-    material: CACTUS_GREEN
+    material: GREEN_DYE
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -275,7 +275,7 @@ items:
         value: 480
 
   - id: ENCHANTED_CLAY_BLOCK
-    material: CLAY_BLOCK
+    material: CLAY
     rarity: RARE
     default_statistics: {}
     components:
@@ -520,7 +520,7 @@ items:
         value: 320
 
   - id: ENCHANTED_EYE_OF_ENDER
-    material: EYE_OF_ENDER
+    material: ENDER_EYE
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -616,7 +616,7 @@ items:
         alchemy_xp: 100
 
   - id: ENCHANTED_GLISTERING_MELON
-    material: GLISTERING_MELON
+    material: GLISTERING_MELON_SLICE
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -667,7 +667,7 @@ items:
         alchemy_xp: 10
 
   - id: ENCHANTED_GOLD_INGOT
-    material: GOLD
+    material: GOLD_INGOT
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -740,7 +740,7 @@ items:
         alchemy_xp: 10
 
   - id: ENCHANTED_HARD_STONE
-    material: HARD_STONE
+    material: STONE
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -795,7 +795,7 @@ items:
         value: 160
 
   - id: ENCHANTED_IRON_INGOT
-    material: IRON
+    material: IRON_INGOT
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -839,7 +839,7 @@ items:
         value: 160
 
   - id: ENCHANTED_LAPIS_LAZULI_BLOCK
-    material: LAPIS_LAZULI_BLOCK
+    material: LAPIS_BLOCK
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -900,7 +900,7 @@ items:
         alchemy_xp: 250
 
   - id: ENCHANTED_MELON_BLOCK
-    material: MELON_BLOCK
+    material: MELON
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -911,7 +911,7 @@ items:
         value: 51200
 
   - id: ENCHANTED_MITHRIL
-    material: MITHRIL
+    material: PRISMARINE_CRYSTALS
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1160,7 +1160,7 @@ items:
         value: 2880
 
   - id: ENCHANTED_RAW_BEEF
-    material: RAW_BEEF
+    material: BEEF
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1171,7 +1171,7 @@ items:
         value: 640
 
   - id: ENCHANTED_RAW_CHICKEN
-    material: RAW_CHICKEN
+    material: CHICKEN
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1321,7 +1321,7 @@ items:
         value: 320
 
   - id: ENCHANTED_SEEDS
-    material: SEEDS
+    material: WHEAT_SEEDS
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1332,7 +1332,7 @@ items:
         value: 480
 
   - id: ENCHANTED_SHARK_FIN
-    material: SHARK_FIN
+    material: PRISMARINE_SHARD
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1458,7 +1458,7 @@ items:
         alchemy_xp: 15000
 
   - id: ENCHANTED_SULPHUR
-    material: SULPHUR
+    material: GLOWSTONE_DUST
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1493,7 +1493,7 @@ items:
         value: 80000
 
   - id: ENCHANTED_WOOL
-    material: WOOL
+    material: WHITE_WOOL
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1547,6 +1547,7 @@ items:
 
   - id: ABSOLUTE_ENDER_PEARL
     rarity: COMMON
+    material: PLAYER_HEAD
     components:
       - id: ENCHANTED
         recipe_type: COMBAT
