@@ -1,0 +1,5 @@
+language.current: "§aSelected language: §6%s §7(%s)"
+language.available: "§7Available languages: §f%s"
+language.hint.use_command: "§eUse /language <code> §7to change your language."
+language.error.unknown: "§cInvalid language '%s'! Valid languages: %s"
+language.updated: "§aLanguage changed to §6%s §7(%s)"

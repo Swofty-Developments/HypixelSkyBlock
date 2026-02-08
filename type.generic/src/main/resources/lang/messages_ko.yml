@@ -1,0 +1,5 @@
+language.current: "§a선택된 언어: §6%s §7(%s)"
+language.available: "§7사용 가능한 언어: §f%s"
+language.hint.use_command: "§e/language <code> §7명령어로 언어를 변경할 수 있습니다."
+language.error.unknown: "§cInvalid language '%s'! Valid languages: %s"
+language.updated: "§a언어가 §6%s §7(%s) §a(으)로 변경되었습니다."
