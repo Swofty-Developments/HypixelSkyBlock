@@ -17,6 +17,7 @@ import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.language.PlayerLanguage;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
 import net.swofty.type.generic.gui.v2.*;
@@ -75,6 +76,12 @@ public class HypixelPlayer extends Player {
 
 	public DatapointChatType.ChatType getChatType() {
 		return getDataHandler().get(HypixelDataHandler.Data.CHAT_TYPE, DatapointChatType.class).getValue();
+	}
+
+	public PlayerLanguage getLanguage() {
+		String stored = getDataHandler().get(HypixelDataHandler.Data.LANGUAGE, DatapointString.class).getValue();
+		PlayerLanguage language = PlayerLanguage.fromInput(stored);
+		return language == null ? PlayerLanguage.ENGLISH : language;
 	}
 
 	public <S> ViewSession<S> openView(View<S> view, S state) {
