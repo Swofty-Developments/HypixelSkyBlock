@@ -106,7 +106,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 
     @Override
     public JoinResult join(P player) {
-        PlayerJoinGameEvent event = new PlayerJoinGameEvent(gameId, player.getUuid(), player.getUsername());
+        PlayerJoinGameEvent event = new PlayerJoinGameEvent(gameId, player.getServerPlayer());
         eventDispatcher.accept(event);
 
         if (event.isCancelled()) {
@@ -126,14 +126,11 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         players.put(player.getUuid(), player);
         player.setGameId(gameId);
 
-        // Setup player for waiting
-        onPlayerJoin(player);
-
         // Fire joined event
         eventDispatcher.accept(new PlayerJoinedGameEvent(
             gameId,
             player.getUuid(),
-            player.getUsername(),
+            player.getServerPlayer().getUsername(),
             players.size(),
             getMaxPlayers()
         ));
@@ -159,7 +156,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         eventDispatcher.accept(new PlayerLeaveGameEvent(
             gameId,
             player.getUuid(),
-            player.getUsername(),
+            player.getServerPlayer().getUsername(),
             PlayerLeaveGameEvent.LeaveReason.VOLUNTARY
         ));
 
@@ -192,7 +189,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         // Store disconnect data
         disconnectedPlayers.put(uuid, new DisconnectedPlayerData(
             uuid,
-            player.getUsername(),
+            player.getServerPlayer().getUsername(),
             System.currentTimeMillis(),
             savePlayerData(player)
         ));
@@ -204,7 +201,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         eventDispatcher.accept(new PlayerDisconnectGameEvent(
             gameId,
             uuid,
-            player.getUsername(),
+            player.getServerPlayer().getUsername(),
             canRejoin
         ));
 
@@ -226,7 +223,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         eventDispatcher.accept(new PlayerRejoinGameEvent(
             gameId,
             player.getUuid(),
-            player.getUsername()
+            player.getServerPlayer().getUsername()
         ));
 
         return true;
@@ -276,12 +273,6 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 
         eventDispatcher.accept(new GameStateChangeEvent(gameId, oldState, newState));
     }
-
-    /**
-     * @deprecated use the Event system instead
-     */
-    @Deprecated(forRemoval = true)
-    protected abstract void onPlayerJoin(P player);
 
     /**
      * @deprecated use the Event system instead

@@ -99,7 +99,7 @@ public class ReplaySessionManager {
 		long compressedBytes = 0;
 
 		// Process and store each batch
-		List<RecordingSession.DataBatch> batches = session.getBatches();
+		List<RecordingSession.DataBatch> batches = session.getOrderedBatches();
 		for (RecordingSession.DataBatch batch : batches) {
 			byte[] compressed = compressData(batch.data());
 			database.saveReplayDataChunk(
@@ -129,6 +129,7 @@ public class ReplaySessionManager {
 			.append("replayId", session.getReplayId().toString())
 			.append("gameId", session.getGameId())
 			.append("serverType", session.getServerType().name())
+			.append("serverId", session.getServerId())
 			.append("gameTypeName", session.getGameTypeName())
 			.append("mapName", session.getMapName())
 			.append("mapHash", session.getMapHash())

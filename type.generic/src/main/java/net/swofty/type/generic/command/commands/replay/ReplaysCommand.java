@@ -18,9 +18,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-/**
- * Opens the replay browser GUI.
- */
 @CommandParameters(
 	description = "View your game replays",
 	usage = "/replays",
@@ -41,7 +38,7 @@ public class ReplaysCommand extends HypixelCommand {
 					sendToReplayViewer(player, replay);
 				}), new ReplaysListView.State(replays, 0));
 			}).exceptionally(e -> {
-				player.sendMessage(Component.text("Failed to load replays: " + e.getMessage(), NamedTextColor.RED));
+				player.sendMessage(Component.text("Failed to load replays.", NamedTextColor.RED));
 				return null;
 			});
 		});

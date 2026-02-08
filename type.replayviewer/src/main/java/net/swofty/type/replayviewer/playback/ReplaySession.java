@@ -30,6 +30,9 @@ import java.util.UUID;
 @Getter
 public class ReplaySession {
     private final UUID viewerId;
+
+    // TODO: support multiple viewers in the same session on initial join
+    //  and those who join the same session later, for example from a /party warp
     private final Player viewer;
     private final ReplayMetadata metadata;
     private final InstanceContainer instance;
@@ -106,8 +109,6 @@ public class ReplaySession {
             }
 
         }).repeat(TaskSchedule.tick(tickInterval)).schedule();
-
-        viewer.sendMessage(Component.text("▶ Playing replay", NamedTextColor.GREEN));
     }
 
     public void pause() {
@@ -118,8 +119,6 @@ public class ReplaySession {
             playbackTask.cancel();
             playbackTask = null;
         }
-
-        viewer.sendMessage(Component.text("⏸ Paused", NamedTextColor.YELLOW));
     }
 
     public void togglePlayPause() {
@@ -221,6 +220,19 @@ public class ReplaySession {
         droppedItemManager.tick(tick);
         dynamicTextManager.tick(tick);
         npcManager.tick();
+        updateActionBar();
+    }
+
+    private void updateActionBar() {
+        // looks like §cPaused    §e00:00 / 01:00    §61.0x
+        Component actionBar = Component.text()
+            .append(Component.text(playing ? "§aPlaying" : "§cPaused"))
+            .append(Component.text("    "))
+            .append(Component.text(getFormattedTime() + " / " + getFormattedTotalTime(), NamedTextColor.YELLOW))
+            .append(Component.text("    "))
+            .append(Component.text(String.format("%.1fx", playbackSpeed), NamedTextColor.GOLD))
+            .build();
+        viewer.sendActionBar(actionBar);
     }
 
     private void seekForward(int targetTick) {

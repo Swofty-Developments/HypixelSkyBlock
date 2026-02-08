@@ -21,7 +21,6 @@ public enum RecordableType {
 	ENTITY_SPAWN(20, RecordableEntitySpawn::new),
 	ENTITY_DESPAWN(21, RecordableEntityDespawn::new),
 	ENTITY_LOCATIONS(22, RecordableEntityLocations::new),
-	ENTITY_VELOCITY(23, RecordableEntityVelocity::new),
 	ENTITY_METADATA(24, RecordableEntityMetadata::new),
 	ENTITY_EQUIPMENT(25, RecordableEntityEquipment::new),
 	ENTITY_MOUNT(26, RecordableEntityMount::new),

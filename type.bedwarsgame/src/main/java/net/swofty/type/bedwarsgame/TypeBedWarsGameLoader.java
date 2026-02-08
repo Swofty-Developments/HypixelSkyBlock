@@ -5,13 +5,18 @@ import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.hollowcube.polar.PolarLoader;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.Viewable;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
+import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
@@ -72,298 +77,350 @@ import static net.swofty.type.generic.HypixelGenericLoader.getLoadedPlayers;
 
 public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 
-	public static final int MAX_GAMES = 8;
+    public static final int MAX_GAMES = 8;
 
-	@Getter
-	public static final List<BedWarsGame> games = new ArrayList<>();
+    @Getter
+    public static final List<BedWarsGame> games = new ArrayList<>();
 
-	@Getter
-	public static final ShopManager shopManager = new ShopManager();
-	@Getter
-	public static final TeamShopManager teamShopManager = new TeamShopManager();
-	@Getter
-	public static final TrapManager trapManager = new TrapManager();
-	@Getter
-	public static final SimpleInteractableItemHandler itemHandler = new SimpleInteractableItemHandler();
+    @Getter
+    public static final ShopManager shopManager = new ShopManager();
+    @Getter
+    public static final TeamShopManager teamShopManager = new TeamShopManager();
+    @Getter
+    public static final TrapManager trapManager = new TrapManager();
+    @Getter
+    public static final SimpleInteractableItemHandler itemHandler = new SimpleInteractableItemHandler();
 
-	public static final Tag<@NotNull Boolean> PLAYER_PLACED_TAG = Tag.Boolean("player_placed");
-	public static final Tag<@NotNull Integer> ARMOR_LEVEL_TAG = Tag.Integer("armor_level");
+    public static final Tag<@NotNull Boolean> PLAYER_PLACED_TAG = Tag.Boolean("player_placed");
+    public static final Tag<@NotNull Integer> ARMOR_LEVEL_TAG = Tag.Integer("armor_level");
 
-	static CombatFeatureSet combatFeatures = CombatFeatures.empty().version(CombatVersion.LEGACY).addAll(List.of(
-		VANILLA_ARMOR, VANILLA_ATTACK, VANILLA_CRITICAL, //VANILLA_SWEEPING,
-		VANILLA_EQUIPMENT, VANILLA_BLOCK, VANILLA_ATTACK_COOLDOWN, VANILLA_ITEM_COOLDOWN,
-		VANILLA_DAMAGE, VANILLA_EFFECT, VANILLA_ENCHANTMENT, VANILLA_EXPLOSION,
-		VANILLA_EXPLOSIVE, VANILLA_FALL, VANILLA_FOOD, LEGACY_VANILLA_BLOCK,
-		VANILLA_REGENERATION, VANILLA_KNOCKBACK, VANILLA_POTION, //VANILLA_BOW,
-		VANILLA_CROSSBOW, VANILLA_FISHING_ROD, VANILLA_MISC_PROJECTILE,
-		VANILLA_PROJECTILE_ITEM, VANILLA_TRIDENT, VANILLA_SPECTATE,
-		VANILLA_PLAYER_STATE, VANILLA_TOTEM//, VANILLA_DEATH_MESSAGE
-	)).build();
+    static CombatFeatureSet combatFeatures = CombatFeatures.empty().version(CombatVersion.LEGACY).addAll(List.of(
+        VANILLA_ARMOR, VANILLA_ATTACK, VANILLA_CRITICAL, //VANILLA_SWEEPING,
+        VANILLA_EQUIPMENT, VANILLA_BLOCK, VANILLA_ATTACK_COOLDOWN, VANILLA_ITEM_COOLDOWN,
+        VANILLA_DAMAGE, VANILLA_EFFECT, VANILLA_ENCHANTMENT, VANILLA_EXPLOSION,
+        VANILLA_EXPLOSIVE, VANILLA_FALL, VANILLA_FOOD, LEGACY_VANILLA_BLOCK,
+        VANILLA_REGENERATION, VANILLA_KNOCKBACK, VANILLA_POTION, VANILLA_BOW,
+        VANILLA_CROSSBOW, VANILLA_FISHING_ROD, VANILLA_MISC_PROJECTILE,
+        VANILLA_PROJECTILE_ITEM, VANILLA_TRIDENT, VANILLA_SPECTATE,
+        VANILLA_PLAYER_STATE, VANILLA_TOTEM//, VANILLA_DEATH_MESSAGE
+    )).soundProvider((audience, original, x, y, z) -> {
+        audience.playSound(original, x, y, z);
+        Logger.info("Playing sound via sound provider...");
+        if (audience instanceof BedWarsPlayer player) {
+            BedWarsGame game = player.getGame();
+            if (game == null) {
+                Logger.error("Game not found for player " + player.getUsername());
+                return;
+            }
+            game.getReplayManager().recordSound(original, x, y, z);
+        }
+    }).packetProvider((viewable, packet) -> {
+        viewable.sendPacketToViewersAndSelf(packet);
+        if (viewable instanceof BedWarsPlayer bwPlayer) {
+            BedWarsGame game = bwPlayer.getGame();
+            if (game == null) {
+                Logger.error("Game not found for player " + bwPlayer.getUsername());
+                return;
+            }
+            if (packet instanceof ParticlePacket particlePacket) {
+                game.getReplayManager().recordParticle(particlePacket);
+            } else {
+                Logger.info("Packet is not a known packet, skipping recording.");
+            }
+        }
+    }).build();
 
-	@Getter
-	private static BedWarsMapsConfig mapsConfig;
-	private static InstanceManager instanceManager;
-	private static RegistryKey<@NotNull DimensionType> fullbrightDimension;
-	private static int nextMapIndex = 0;
-	private static List<BedWarsMapsConfig.MapEntry> filteredMaps = new ArrayList<>();
-	private Gson gson;
+    @Getter
+    private static BedWarsMapsConfig mapsConfig;
+    private static InstanceManager instanceManager;
+    private static RegistryKey<@NotNull DimensionType> fullbrightDimension;
+    private static int nextMapIndex = 0;
+    private static List<BedWarsMapsConfig.MapEntry> filteredMaps = new ArrayList<>();
+    private Gson gson;
 
-	@Nullable
-	public static BedWarsGame getGameById(@NotNull String gameId) {
-		return games.stream()
-			.filter(game -> game.getGameId().equals(gameId))
-			.findFirst()
-			.orElse(null);
-	}
+    public static @Nullable BedWarsGame getGameFromAudience(Audience audience) {
+        if (audience instanceof ForwardingAudience forwardingAudience) {
+            for (Audience a : forwardingAudience.audiences()) {
+                if (a instanceof BedWarsPlayer player) {
+                    BedWarsGame game = player.getGame();
+                    if (game != null) return game;
+                }
+            }
+        }
 
-	@Nullable
-	public static BedWarsGame getGameByInstance(@NotNull Instance instance) {
-		return games.stream()
-			.filter(game -> game.getInstance().equals(instance))
-			.findFirst()
-			.orElse(null);
-	}
+        if (audience instanceof BedWarsPlayer player) {
+            BedWarsGame game = player.getGame();
+            if (game != null) return game;
+        }
 
-	@SneakyThrows
-	public static BedWarsGame createGame(@NotNull BedWarsMapsConfig.MapEntry entry) {
-		if (games.size() >= MAX_GAMES) {
-			return null;
-		}
-		InstanceContainer mapInstance = instanceManager.createInstanceContainer(fullbrightDimension);
-		mapInstance.setChunkLoader(new PolarLoader(new File("./configuration/bedwars/" + entry.getId() + ".polar").toPath()));
-		mapInstance.setExplosionSupplier(combatFeatures.get(FeatureType.EXPLOSION).getExplosionSupplier());
+        if (audience instanceof Viewable viewable) {
+            for (Player player : viewable.getViewers()) {
+                if (player instanceof BedWarsPlayer bwPlayer) {
+                    BedWarsGame game = bwPlayer.getGame();
+                    if (game != null) return game;
+                }
+            }
+        }
 
-		BedWarsGame game = new BedWarsGame(entry, mapInstance, BedwarsGameType.SOLO);
-		games.add(game);
-		return game;
-	}
+        return null;
+    }
 
-	private static synchronized BedWarsMapsConfig.MapEntry nextMapEntry() {
-		if (filteredMaps == null || filteredMaps.isEmpty()) return null;
-		if (nextMapIndex >= filteredMaps.size()) nextMapIndex = 0;
-		return filteredMaps.get(nextMapIndex++);
-	}
+    @Nullable
+    public static BedWarsGame getGameById(@NotNull String gameId) {
+        return games.stream()
+            .filter(game -> game.getGameId().equals(gameId))
+            .findFirst()
+            .orElse(null);
+    }
 
-	private static Component header() {
-		return MiniMessage.miniMessage().deserialize("<aqua>You are playing on <bold><yellow>MC.HYPIXEL.NET</yellow></bold>");
-	}
+    @Nullable
+    public static BedWarsGame getGameByInstance(@NotNull Instance instance) {
+        return games.stream()
+            .filter(game -> game.getInstance().equals(instance))
+            .findFirst()
+            .orElse(null);
+    }
 
-	private static Component footer(HypixelPlayer player) {
-		Component start = Component.empty();
-		BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
-		if (bwPlayer.getGame() != null) {
-			start = start.append(MiniMessage.miniMessage().deserialize("<aqua>Kills: <yellow>0 <aqua>Final Kills: <yellow>0 <aqua>Beds Broken: <yellow>0")).appendNewline();
-		}
-		return start
-			.append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
-	}
+    @SneakyThrows
+    public static BedWarsGame createGame(@NotNull BedWarsMapsConfig.MapEntry entry) {
+        if (games.size() >= MAX_GAMES) {
+            return null;
+        }
+        InstanceContainer mapInstance = instanceManager.createInstanceContainer(fullbrightDimension);
+        mapInstance.setChunkLoader(new PolarLoader(new File("./configuration/bedwars/" + entry.getId() + ".polar").toPath()));
+        mapInstance.setExplosionSupplier(combatFeatures.get(FeatureType.EXPLOSION).getExplosionSupplier());
 
-	@Override
-	public ServerType getType() {
-		return ServerType.BEDWARS_GAME;
-	}
+        BedWarsGame game = new BedWarsGame(entry, mapInstance, BedwarsGameType.SOLO);
+        games.add(game);
+        return game;
+    }
 
-	@Override
-	public void onInitialize(MinecraftServer server) {
-		gson = new GsonBuilder().create();
-		instanceManager = MinecraftServer.getInstanceManager();
-		fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register("fullbright", DimensionType.builder().ambientLight(0.9f).build());
-		MinecraftServer.getGlobalEventHandler().addChild(combatFeatures.createNode());
+    private static synchronized BedWarsMapsConfig.MapEntry nextMapEntry() {
+        if (filteredMaps == null || filteredMaps.isEmpty()) return null;
+        if (nextMapIndex >= filteredMaps.size()) nextMapIndex = 0;
+        return filteredMaps.get(nextMapIndex++);
+    }
 
-		Path mapsPath = Path.of("./configuration/bedwars/maps.json");
-		if (!Files.exists(mapsPath)) {
-			Logger.error("maps.json not found at {}", mapsPath.toAbsolutePath());
-			return;
-		}
-		try (InputStream in = Files.newInputStream(mapsPath)) {
-			byte[] bytes = in.readAllBytes();
-			String json = new String(bytes, StandardCharsets.UTF_8);
-			mapsConfig = gson.fromJson(json, BedWarsMapsConfig.class);
-			filteredMaps = new ArrayList<>();
-			if (mapsConfig != null && mapsConfig.getMaps() != null) {
-				for (BedWarsMapsConfig.MapEntry e : mapsConfig.getMaps()) {
-					BedWarsMapsConfig.MapEntry.MapConfiguration cfg = e.getConfiguration();
-					List<BedwarsGameType> types = (cfg != null) ? cfg.getTypes() : null;
-					boolean allowed;
-					if (types == null || types.isEmpty()) {
-						allowed = true;
-					} else {
-						allowed = types.contains(BedwarsGameType.SOLO);
-					}
-					if (allowed) filteredMaps.add(e);
-					createGame(e);
-				}
-			}
-		} catch (Exception e) {
-			Logger.error("Failed to load maps.json");
-			e.printStackTrace();
-			return;
-		}
+    private static Component header() {
+        return MiniMessage.miniMessage().deserialize("<aqua>You are playing on <bold><yellow>MC.HYPIXEL.NET</yellow></bold>");
+    }
 
-		MinecraftServer.getConnectionManager().setPlayerProvider((gameProfile, playerConnection) -> {
-			BedWarsPlayer player = new BedWarsPlayer(gameProfile, playerConnection);
+    private static Component footer(HypixelPlayer player) {
+        Component start = Component.empty();
+        BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
+        if (bwPlayer.getGame() != null) {
+            start = start.append(MiniMessage.miniMessage().deserialize("<aqua>Kills: <yellow>0 <aqua>Final Kills: <yellow>0 <aqua>Beds Broken: <yellow>0")).appendNewline();
+        }
+        return start
+            .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
+    }
 
-			UUID uuid = gameProfile.getPlayer().getUuid();
-			String username = gameProfile.getPlayer().getUsername();
+    @Override
+    public ServerType getType() {
+        return ServerType.BEDWARS_GAME;
+    }
 
-			if (RedisOriginServer.origin.containsKey(uuid)) {
-				player.setOriginServer(RedisOriginServer.origin.get(uuid));
-				RedisOriginServer.origin.remove(uuid);
-			}
+    @Override
+    public void onInitialize(MinecraftServer server) {
+        gson = new GsonBuilder().create();
+        instanceManager = MinecraftServer.getInstanceManager();
+        fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register("fullbright", DimensionType.builder().ambientLight(0.9f).build());
+        MinecraftServer.getGlobalEventHandler().addChild(combatFeatures.createNode());
 
-			Logger.info("Received new player: " + username + " (" + uuid + ")");
+        Path mapsPath = Path.of("./configuration/bedwars/maps.json");
+        if (!Files.exists(mapsPath)) {
+            Logger.error("maps.json not found at {}", mapsPath.toAbsolutePath());
+            return;
+        }
+        try (InputStream in = Files.newInputStream(mapsPath)) {
+            byte[] bytes = in.readAllBytes();
+            String json = new String(bytes, StandardCharsets.UTF_8);
+            mapsConfig = gson.fromJson(json, BedWarsMapsConfig.class);
+            filteredMaps = new ArrayList<>();
+            if (mapsConfig != null && mapsConfig.getMaps() != null) {
+                for (BedWarsMapsConfig.MapEntry e : mapsConfig.getMaps()) {
+                    BedWarsMapsConfig.MapEntry.MapConfiguration cfg = e.getConfiguration();
+                    List<BedwarsGameType> types = (cfg != null) ? cfg.getTypes() : null;
+                    boolean allowed;
+                    if (types == null || types.isEmpty()) {
+                        allowed = true;
+                    } else {
+                        allowed = types.contains(BedwarsGameType.SOLO);
+                    }
+                    if (allowed) filteredMaps.add(e);
+                    createGame(e);
+                }
+            }
+        } catch (Exception e) {
+            Logger.error("Failed to load maps.json");
+            e.printStackTrace();
+            return;
+        }
 
-			return player;
-		});
-	}
+        MinecraftServer.getConnectionManager().setPlayerProvider((gameProfile, playerConnection) -> {
+            BedWarsPlayer player = new BedWarsPlayer(gameProfile, playerConnection);
 
-	@Override
-	public void afterInitialize(MinecraftServer server) {
-		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsgame.commands", HypixelCommand.class).forEach(command -> {
-			try {
-				MinecraftServer.getCommandManager().register(command.getCommand());
-			} catch (Exception e) {
-				Logger.error(e, "Failed to register command " + command.getCommand().getName() + " in class " + command.getClass().getSimpleName());
-			}
-		});
-		HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsgame.item.impl", SimpleInteractableItem.class).forEach(itemHandler::add);
-		MinestomPvP.init();
+            UUID uuid = gameProfile.getPlayer().getUuid();
+            String username = gameProfile.getPlayer().getUsername();
 
-		// heartbeat to orchestrator with supported maps and current load
-		MinecraftServer.getSchedulerManager().buildTask(() -> {
-			UUID uuid = HypixelConst.getServerUUID();
-			String shortName = HypixelConst.getShortenedServerName();
-			int maxPlayers = HypixelConst.getMaxPlayers();
-			int onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers().size();
+            if (RedisOriginServer.origin.containsKey(uuid)) {
+                player.setOriginServer(RedisOriginServer.origin.get(uuid));
+                RedisOriginServer.origin.remove(uuid);
+            }
 
-			// Convert BedWarsGame objects to commons Game objects
-			List<GameObject> commonsGames = new ArrayList<>();
-			for (BedWarsGame game : TypeBedWarsGameLoader.getGames()) {
-				GameObject commonsGame = new GameObject();
-				commonsGame.setGameId(UUID.fromString(game.getGameId()));
-				commonsGame.setType(ServerType.BEDWARS_GAME);
-				commonsGame.setMap(game.getMapEntry().getName());
-				commonsGame.setGameTypeName(game.getGameType().name());
+            Logger.info("Received new player: " + username + " (" + uuid + ")");
 
-				// Get involved players from the game
-				List<UUID> playerUuids = new ArrayList<>();
-				for (BedWarsPlayer player : game.getPlayers()) {
-					playerUuids.add(player.getUuid());
-				}
-				commonsGame.setInvolvedPlayers(playerUuids);
+            return player;
+        });
+    }
 
-				// Add disconnected players for rejoin system
-				commonsGame.setDisconnectedPlayers(game.getDisconnectedPlayerUuids());
+    @Override
+    public void afterInitialize(MinecraftServer server) {
+        HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsgame.commands", HypixelCommand.class).forEach(command -> {
+            try {
+                MinecraftServer.getCommandManager().register(command.getCommand());
+            } catch (Exception e) {
+                Logger.error(e, "Failed to register command " + command.getCommand().getName() + " in class " + command.getClass().getSimpleName());
+            }
+        });
+        HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsgame.item.impl", SimpleInteractableItem.class).forEach(itemHandler::add);
+        MinestomPvP.init();
 
-				commonsGames.add(commonsGame);
-			}
+        // heartbeat to orchestrator with supported maps and current load
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            UUID uuid = HypixelConst.getServerUUID();
+            String shortName = HypixelConst.getShortenedServerName();
+            int maxPlayers = HypixelConst.getMaxPlayers();
+            int onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers().size();
 
-			var heartbeat = new GameHeartbeatProtocolObject.HeartbeatMessage(
-				uuid,
-				shortName,
-				getType(),
-				maxPlayers,
-				onlinePlayers,
-				commonsGames
-			);
-			new ProxyService(ServiceType.ORCHESTRATOR).handleRequest(heartbeat);
-		}).delay(TaskSchedule.seconds(5)).repeat(TaskSchedule.seconds(1)).schedule();
+            // Convert BedWarsGame objects to commons Game objects
+            List<GameObject> commonsGames = new ArrayList<>();
+            for (BedWarsGame game : TypeBedWarsGameLoader.getGames()) {
+                GameObject commonsGame = new GameObject();
+                commonsGame.setGameId(UUID.fromString(game.getGameId()));
+                commonsGame.setType(ServerType.BEDWARS_GAME);
+                commonsGame.setMap(game.getMapEntry().getName());
+                commonsGame.setGameTypeName(game.getGameType().name());
 
-		MinecraftServer.getSchedulerManager().buildTask(() -> {
-			Collection<HypixelPlayer> players = getLoadedPlayers();
-			if (players.isEmpty())
-				return;
-			for (HypixelPlayer player : players) {
-				player.sendPlayerListHeaderAndFooter(header(), footer(player));
-			}
-		}).repeat(10, TimeUnit.SERVER_TICK).schedule();
-	}
+                // Get involved players from the game
+                List<UUID> playerUuids = new ArrayList<>();
+                for (BedWarsPlayer player : game.getPlayers()) {
+                    playerUuids.add(player.getUuid());
+                }
+                commonsGame.setInvolvedPlayers(playerUuids);
 
-	@Override
-	public List<ServiceType> getRequiredServices() {
-		return List.of(ServiceType.ORCHESTRATOR);
-	}
+                // Add disconnected players for rejoin system
+                commonsGame.setDisconnectedPlayers(game.getDisconnectedPlayerUuids());
 
-	@Override
-	public TablistManager getTablistManager() {
-		return new TablistManager() {
-			@Override
-			public List<TablistModule> getModules() {
-				return List.of(
-					new EmptyTabModule(),
-					new EmptyTabModule(),
-					new EmptyTabModule(),
-					new EmptyTabModule()
-				);
-			}
-		};
-	}
+                commonsGames.add(commonsGame);
+            }
 
-	@Override
-	public LoaderValues getLoaderValues() {
-		return new LoaderValues(
-			(_) -> new Pos(-39.5, 72, 0, -90, 0), // Spawn position
-			false // Announce death messages
-		);
-	}
+            var heartbeat = new GameHeartbeatProtocolObject.HeartbeatMessage(
+                uuid,
+                shortName,
+                getType(),
+                maxPlayers,
+                onlinePlayers,
+                commonsGames
+            );
+            new ProxyService(ServiceType.ORCHESTRATOR).handleRequest(heartbeat);
+        }).delay(TaskSchedule.seconds(5)).repeat(TaskSchedule.seconds(1)).schedule();
 
-	@Override
-	public List<HypixelEventClass> getTraditionalEvents() {
-		return Stream.concat(
-			HypixelGenericLoader.loopThroughPackage(
-				"net.swofty.type.bedwarsgame.events",
-				HypixelEventClass.class
-			),
-			HypixelGenericLoader.loopThroughPackage(
-				"net.swofty.type.bedwarsgame.game.v2.listener",
-				HypixelEventClass.class
-			)
-		).toList();
-	}
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            Collection<HypixelPlayer> players = getLoadedPlayers();
+            if (players.isEmpty())
+                return;
+            for (HypixelPlayer player : players) {
+                player.sendPlayerListHeaderAndFooter(header(), footer(player));
+            }
+        }).repeat(10, TimeUnit.SERVER_TICK).schedule();
+    }
 
-	@Override
-	public List<HypixelEventClass> getCustomEvents() {
-		return Stream.concat(HypixelGenericLoader.loopThroughPackage(
-				"net.swofty.type.bedwarsgame.events.custom",
-				HypixelEventClass.class
-			),
-			HypixelGenericLoader.loopThroughPackage(
-				"net.swofty.type.game.game.event",
-				HypixelEventClass.class
-			)).toList();
-	}
+    @Override
+    public List<ServiceType> getRequiredServices() {
+        return List.of(ServiceType.ORCHESTRATOR);
+    }
 
-	@Override
-	public List<HypixelNPC> getNPCs() {
-		return HypixelGenericLoader.loopThroughPackage(
-			"net.swofty.type.bedwarsgame.npcs",
-			HypixelNPC.class
-		).toList();
-	}
+    @Override
+    public TablistManager getTablistManager() {
+        return new TablistManager() {
+            @Override
+            public List<TablistModule> getModules() {
+                return List.of(
+                    new EmptyTabModule(),
+                    new EmptyTabModule(),
+                    new EmptyTabModule(),
+                    new EmptyTabModule()
+                );
+            }
+        };
+    }
 
-	@Override
-	public List<ServiceToClient> getServiceRedisListeners() {
-		return HypixelGenericLoader.loopThroughPackage(
-			"net.swofty.type.bedwarsgame.redis.service",
-			ServiceToClient.class
-		).toList();
-	}
+    @Override
+    public LoaderValues getLoaderValues() {
+        return new LoaderValues(
+            (_) -> new Pos(-39.5, 72, 0, -90, 0), // Spawn position
+            false // Announce death messages
+        );
+    }
 
-	@Override
-	public List<ProxyToClient> getProxyRedisListeners() {
-		return HypixelGenericLoader.loopThroughPackage(
-			"net.swofty.type.bedwarsgame.redis",
-			ProxyToClient.class
-		).toList();
-	}
+    @Override
+    public List<HypixelEventClass> getTraditionalEvents() {
+        return Stream.concat(
+            HypixelGenericLoader.loopThroughPackage(
+                "net.swofty.type.bedwarsgame.events",
+                HypixelEventClass.class
+            ),
+            HypixelGenericLoader.loopThroughPackage(
+                "net.swofty.type.bedwarsgame.game.v2.listener",
+                HypixelEventClass.class
+            )
+        ).toList();
+    }
 
-	@Override
-	public @Nullable CustomWorlds getMainInstance() {
-		return null;
-	}
+    @Override
+    public List<HypixelEventClass> getCustomEvents() {
+        return Stream.concat(HypixelGenericLoader.loopThroughPackage(
+                "net.swofty.type.bedwarsgame.events.custom",
+                HypixelEventClass.class
+            ),
+            HypixelGenericLoader.loopThroughPackage(
+                "net.swofty.type.game.game.event",
+                HypixelEventClass.class
+            )).toList();
+    }
 
-	@Override
-	public List<Class<? extends GameDataHandler>> getAdditionalDataHandlers() {
-		return List.of(BedWarsDataHandler.class);
-	}
+    @Override
+    public List<HypixelNPC> getNPCs() {
+        return HypixelGenericLoader.loopThroughPackage(
+            "net.swofty.type.bedwarsgame.npcs",
+            HypixelNPC.class
+        ).toList();
+    }
+
+    @Override
+    public List<ServiceToClient> getServiceRedisListeners() {
+        return HypixelGenericLoader.loopThroughPackage(
+            "net.swofty.type.bedwarsgame.redis.service",
+            ServiceToClient.class
+        ).toList();
+    }
+
+    @Override
+    public List<ProxyToClient> getProxyRedisListeners() {
+        return HypixelGenericLoader.loopThroughPackage(
+            "net.swofty.type.bedwarsgame.redis",
+            ProxyToClient.class
+        ).toList();
+    }
+
+    @Override
+    public @Nullable CustomWorlds getMainInstance() {
+        return null;
+    }
+
+    @Override
+    public List<Class<? extends GameDataHandler>> getAdditionalDataHandlers() {
+        return List.of(BedWarsDataHandler.class);
+    }
 }

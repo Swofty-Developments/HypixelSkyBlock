@@ -41,7 +41,8 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
             sidebar.createLine(new Sidebar.ScoreboardLine(
                 "line_" + i,
                 Component.text(lines.get(i)),
-                lines.size() - i
+                lines.size() - i,
+                Sidebar.NumberFormat.blank()
             ));
         }
     }
@@ -69,15 +70,21 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
         lines.add("§7Replay from " + session.getMetadata().getServerId());
         lines.add("§7 ");
 
-        lines.add("§fDate: " + new SimpleDateFormat("MM/dd/yy").format(new Date(session.getMetadata().getStartTime())));
-        lines.add("§7 ");
-
         lines.add("§fDate: §a" + new SimpleDateFormat("MM/dd/yyyy").format(new Date(session.getMetadata().getStartTime())));
         lines.add("§fTime: §a" + new SimpleDateFormat("HH:mm").format(new Date(session.getMetadata().getStartTime())) + " (EST)");
         lines.add("§7 ");
 
+        // capitalize gameType
+        String gameType = session.getMetadata().getGameTypeName();
+        if (gameType != null && !gameType.isEmpty()) {
+            gameType = gameType.substring(0, 1).toUpperCase() + gameType.substring(1).toLowerCase();
+        } else {
+            gameType = "Unknown";
+        }
+
         lines.add("§fGame: §aBedWars");
-        lines.add("§fMode: §a" + session.getMetadata().getGameTypeName());
+        lines.add("§fMode: §a" + gameType);
+        lines.add("§7 ");
 
         String mapName = session.getMetadata().getMapName();
         if (mapName != null && !mapName.isEmpty()) {

@@ -71,7 +71,7 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
         eventDispatcher.accept(new PlayerAssignedTeamEvent(
                 gameId,
                 player.getUuid(),
-                player.getUsername(),
+                player.getServerPlayer().getUsername(),
                 team.getId(),
                 team.getName()
         ));

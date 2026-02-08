@@ -4,7 +4,6 @@ import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.replay.ReplayStartProtocolObject;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.replay.ReplayService;
-import net.swofty.service.replay.session.RecordingSession;
 import net.swofty.type.game.replay.ReplayMetadata;
 import org.tinylog.Logger;
 
@@ -31,8 +30,7 @@ public class ReplayStartEndpoint implements ServiceEndpoint<
                     teamInfo.put(teamId, new ReplayMetadata.TeamInfo(info.name(), info.colorCode(), info.color()))
             );
 
-            // TODO: Start session - REPLAYTODO
-            RecordingSession session = ReplayService.getSessionManager().startSession(
+            ReplayService.getSessionManager().startSession(
                     msg.replayId(),
                     msg.gameId(),
                     msg.serverType(),

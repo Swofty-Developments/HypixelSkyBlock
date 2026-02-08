@@ -1,5 +1,6 @@
 package net.swofty.service.replay.endpoints;
 
+import net.swofty.commons.ServerType;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.replay.ReplayListProtocolObject;
 import net.swofty.service.generic.redis.ServiceEndpoint;
@@ -41,7 +42,8 @@ public class ReplayListEndpoint implements ServiceEndpoint<
                 replays.add(new ReplayListProtocolObject.ReplaySummary(
                         UUID.fromString(doc.getString("replayId")),
                         doc.getString("gameId"),
-                        net.swofty.commons.ServerType.valueOf(doc.getString("serverType")),
+                        ServerType.valueOf(doc.getString("serverType")),
+                        doc.getString("serverId"),
                         doc.getString("gameTypeName"),
                         doc.getString("mapName"),
                         doc.getLong("startTime"),

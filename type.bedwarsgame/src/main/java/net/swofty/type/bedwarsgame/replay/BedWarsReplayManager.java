@@ -3,6 +3,7 @@ package net.swofty.type.bedwarsgame.replay;
 import lombok.Getter;
 import net.kyori.adventure.nbt.BinaryTagIO;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
+import net.kyori.adventure.sound.Sound;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -10,6 +11,8 @@ import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.network.NetworkBuffer;
+import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
@@ -28,10 +31,12 @@ import net.swofty.type.game.replay.dispatcher.EntityLocationDispatcher;
 import net.swofty.type.game.replay.recordable.RecordableBlockChange;
 import net.swofty.type.game.replay.recordable.RecordableDroppedItem;
 import net.swofty.type.game.replay.recordable.RecordableItemPickup;
+import net.swofty.type.game.replay.recordable.RecordableParticle;
 import net.swofty.type.game.replay.recordable.RecordablePlayerChat;
 import net.swofty.type.game.replay.recordable.RecordablePlayerDisplayName;
 import net.swofty.type.game.replay.recordable.RecordablePlayerHealth;
 import net.swofty.type.game.replay.recordable.RecordablePlayerSkin;
+import net.swofty.type.game.replay.recordable.RecordableSound;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableFinalKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableGeneratorUpgrade;
@@ -397,6 +402,23 @@ public class BedWarsReplayManager {
             player.getEntityId(),
             message,
             isShout
+        ));
+    }
+
+    public void recordParticle(ParticlePacket particlePacket) {
+        if (!recording) return;
+        byte[] data = NetworkBuffer.makeArray(networkBuffer -> ParticlePacket.SERIALIZER.write(networkBuffer, particlePacket));
+        recorder.record(new RecordableParticle(data));
+    }
+
+    public void recordSound(Sound sound, double x, double y, double z) {
+        if (!recording) return;
+        recorder.record(new RecordableSound(
+            sound.name().asString(),
+            (byte) sound.source().ordinal(),
+            x, y, z,
+            sound.volume(),
+            sound.pitch()
         ));
     }
 

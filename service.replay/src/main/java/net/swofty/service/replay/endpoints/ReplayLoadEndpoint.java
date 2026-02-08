@@ -1,5 +1,6 @@
 package net.swofty.service.replay.endpoints;
 
+import net.swofty.commons.ServerType;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.replay.ReplayLoadProtocolObject;
 import net.swofty.service.generic.redis.ServiceEndpoint;
@@ -14,8 +15,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ReplayLoadEndpoint implements ServiceEndpoint<
-        ReplayLoadProtocolObject.LoadRequest,
-        ReplayLoadProtocolObject.LoadResponse> {
+    ReplayLoadProtocolObject.LoadRequest,
+    ReplayLoadProtocolObject.LoadResponse> {
 
     @Override
     public ReplayLoadProtocolObject associatedProtocolObject() {
@@ -24,21 +25,19 @@ public class ReplayLoadEndpoint implements ServiceEndpoint<
 
     @Override
     public ReplayLoadProtocolObject.LoadResponse onMessage(
-            ServiceProxyRequest message,
-            ReplayLoadProtocolObject.LoadRequest msg) {
+        ServiceProxyRequest message,
+        ReplayLoadProtocolObject.LoadRequest msg) {
 
         try {
             UUID replayId = msg.replayId();
-
-            // Fetch metadata
             Document metadataDoc = ReplayService.getDatabase().getReplayMetadata(replayId);
             if (metadataDoc == null) {
                 Logger.warn("Replay not found: {}", replayId);
                 return new ReplayLoadProtocolObject.LoadResponse(
-                        false,
-                        "Replay not found",
-                        null,
-                        null
+                    false,
+                    "Replay not found",
+                    null,
+                    null
                 );
             }
 
@@ -52,29 +51,29 @@ public class ReplayLoadEndpoint implements ServiceEndpoint<
             for (Document chunkDoc : chunkDocs) {
                 byte[] data = chunkDoc.get("data", org.bson.types.Binary.class).getData();
                 dataChunks.add(new ReplayLoadProtocolObject.DataChunk(
-                        chunkDoc.getInteger("chunkIndex"),
-                        chunkDoc.getInteger("startTick"),
-                        chunkDoc.getInteger("endTick"),
-                        data
+                    chunkDoc.getInteger("chunkIndex"),
+                    chunkDoc.getInteger("startTick"),
+                    chunkDoc.getInteger("endTick"),
+                    data
                 ));
             }
 
             Logger.debug("Loaded replay {} with {} chunks", replayId, dataChunks.size());
 
             return new ReplayLoadProtocolObject.LoadResponse(
-                    true,
-                    null,
-                    metadata,
-                    dataChunks
+                true,
+                null,
+                metadata,
+                dataChunks
             );
 
         } catch (Exception e) {
             Logger.error(e, "Failed to load replay {}", msg.replayId());
             return new ReplayLoadProtocolObject.LoadResponse(
-                    false,
-                    "Failed to load replay: " + e.getMessage(),
-                    null,
-                    null
+                false,
+                "Failed to load replay: " + e.getMessage(),
+                null,
+                null
             );
         }
     }
@@ -106,9 +105,9 @@ public class ReplayLoadEndpoint implements ServiceEndpoint<
             teamInfoDoc.forEach((teamId, value) -> {
                 Document infoDoc = (Document) value;
                 teamInfo.put(teamId, new ReplayLoadProtocolObject.TeamInfo(
-                        infoDoc.getString("name"),
-                        infoDoc.getString("colorCode"),
-                        infoDoc.getInteger("color")
+                    infoDoc.getString("name"),
+                    infoDoc.getString("colorCode"),
+                    infoDoc.getInteger("color")
                 ));
             });
         }
@@ -118,25 +117,25 @@ public class ReplayLoadEndpoint implements ServiceEndpoint<
         String winnerType = doc.getString("winnerType");
 
         return new ReplayLoadProtocolObject.ReplayMetadata(
-                UUID.fromString(doc.getString("replayId")),
-                doc.getString("gameId"),
-                net.swofty.commons.ServerType.valueOf(doc.getString("serverType")),
-                doc.getString("serverId"),
-                doc.getString("gameTypeName"),
-                doc.getString("mapName"),
-                mapHash,
-                doc.getInteger("version", 1),
-                doc.getLong("startTime"),
-                doc.getLong("endTime"),
-                doc.getInteger("durationTicks"),
-                players,
-                teams,
-                teamInfo,
-                winnerId,
-                winnerType,
-                doc.getLong("dataSize"),
-                doc.getDouble("mapCenterX"),
-                doc.getDouble("mapCenterZ")
+            UUID.fromString(doc.getString("replayId")),
+            doc.getString("gameId"),
+            ServerType.valueOf(doc.getString("serverType")),
+            doc.getString("serverId"),
+            doc.getString("gameTypeName"),
+            doc.getString("mapName"),
+            mapHash,
+            doc.getInteger("version", 1),
+            doc.getLong("startTime"),
+            doc.getLong("endTime"),
+            doc.getInteger("durationTicks"),
+            players,
+            teams,
+            teamInfo,
+            winnerId,
+            winnerType,
+            doc.getLong("dataSize"),
+            doc.getDouble("mapCenterX"),
+            doc.getDouble("mapCenterZ")
         );
     }
 }

@@ -18,7 +18,6 @@ public class GameStartListener implements HypixelEventClass {
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.getGameId());
         Logger.info("Starting BedWars game {}", event.gameId());
 
-
         // Prepare world
         game.getWorldManager().clearExistingBeds();
 

@@ -62,6 +62,7 @@ public class ReplayListProtocolObject extends ProtocolObject<
                     s.put("replayId", summary.replayId.toString());
                     s.put("gameId", summary.gameId);
                     s.put("serverType", summary.serverType.name());
+                    s.put("serverId", summary.serverId);
                     s.put("gameTypeName", summary.gameTypeName);
                     s.put("mapName", summary.mapName);
                     s.put("startTime", summary.startTime);
@@ -101,6 +102,7 @@ public class ReplayListProtocolObject extends ProtocolObject<
                             UUID.fromString(s.getString("replayId")),
                             s.getString("gameId"),
                             ServerType.valueOf(s.getString("serverType")),
+                            s.getString("serverId"),
                             s.getString("gameTypeName"),
                             s.getString("mapName"),
                             s.getLong("startTime"),
@@ -131,6 +133,7 @@ public class ReplayListProtocolObject extends ProtocolObject<
             UUID replayId,
             String gameId,
             ServerType serverType,
+            String serverId,
             String gameTypeName,
             String mapName,
             long startTime,

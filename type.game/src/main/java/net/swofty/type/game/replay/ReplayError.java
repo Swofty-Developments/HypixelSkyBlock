@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum ReplayError {
     UNSUPPORTED_CODEC(3, "UNSUPPORTED CODEC {}"),
-    REPLAY_NOT_FOUND(404, "REPLAY NOT FOUND")
+    REPLAY_NOT_FOUND(404, "REPLAY NOT FOUND"),
+    JAVA_EXCEPTION(500, "UNKNOWN EXCEPTION")
     ;
 
     private final int code;

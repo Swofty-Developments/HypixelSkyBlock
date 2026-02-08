@@ -12,8 +12,8 @@ import java.io.IOException;
 @Setter
 @NoArgsConstructor
 public class RecordableSound extends AbstractRecordable {
-	private String soundId; // e.g. "minecraft:entity.player.hurt"
-	private byte category; // Sound category
+	private String soundId; // namespace:sound
+	private byte category; // master
 	private double x, y, z;
 	private float volume;
 	private float pitch;

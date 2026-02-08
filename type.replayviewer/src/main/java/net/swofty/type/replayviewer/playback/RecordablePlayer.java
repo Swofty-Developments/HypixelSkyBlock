@@ -1,7 +1,9 @@
 package net.swofty.type.replayviewer.playback;
 
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.nbt.BinaryTagIO;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
@@ -10,6 +12,8 @@ import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.network.NetworkBuffer;
+import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.utils.inventory.PlayerInventoryUtils;
 import net.swofty.type.game.replay.recordable.*;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
@@ -19,6 +23,7 @@ import net.swofty.type.game.replay.recordable.bedwars.RecordableTeamElimination;
 import net.swofty.type.replayviewer.entity.ReplayDroppedItemEntity;
 import net.swofty.type.replayviewer.entity.ReplayEntity;
 import net.swofty.type.replayviewer.entity.ReplayPlayerEntity;
+import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -33,7 +38,6 @@ public class RecordablePlayer {
             case ENTITY_SPAWN -> playEntitySpawn((RecordableEntitySpawn) recordable, session);
             case ENTITY_DESPAWN -> playEntityDespawn((RecordableEntityDespawn) recordable, session);
             case ENTITY_LOCATIONS -> playEntityLocations((RecordableEntityLocations) recordable, session);
-            case ENTITY_VELOCITY -> playEntityVelocity((RecordableEntityVelocity) recordable, session);
             case ENTITY_ANIMATION -> playEntityAnimation((RecordableEntityAnimation) recordable, session);
             case ENTITY_EQUIPMENT -> playEntityEquipment((RecordableEntityEquipment) recordable, session);
             case PLAYER_SNEAK -> playPlayerSneak((RecordablePlayerSneak) recordable, session);
@@ -82,6 +86,14 @@ public class RecordablePlayer {
         if (block != null) {
             session.getInstance().setBlock(rec.getX(), rec.getY(), rec.getZ(), block);
         }
+        // play sound
+        session.getViewer().playSound(
+            Sound.sound(
+                Key.key("minecraft:block." + block.key().value() + ".break"),
+                Sound.Source.BLOCK, 1.0f, 1.0f
+            ),
+            rec.getX(), rec.getY(), rec.getZ()
+        );
     }
 
     private static void playEntitySpawn(RecordableEntitySpawn rec, ReplaySession session) {
@@ -129,15 +141,6 @@ public class RecordablePlayer {
         for (var entry : rec.getEntries()) {
             Pos pos = new Pos(entry.x(), entry.y(), entry.z(), entry.yaw(), entry.pitch());
             session.getEntityManager().updateEntityPosition(entry.entityId(), pos);
-        }
-    }
-
-    private static void playEntityVelocity(RecordableEntityVelocity rec, ReplaySession session) {
-        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
-        if (entity != null) {
-            entity.setVelocity(new net.minestom.server.coordinate.Vec(
-                rec.getVelocityX(), rec.getVelocityY(), rec.getVelocityZ()
-            ));
         }
     }
 
@@ -221,11 +224,22 @@ public class RecordablePlayer {
     }
 
     private static void playParticle(RecordableParticle rec, ReplaySession session) {
-        // TODO: Would spawn particles for the viewer
+        byte[] packetByteArray = rec.getData();
+        ParticlePacket packet = ParticlePacket.SERIALIZER.read(NetworkBuffer.wrap(packetByteArray, 0, packetByteArray.length));
+
+        session.getViewer().sendPacket(packet);
     }
 
     private static void playSound(RecordableSound rec, ReplaySession session) {
-        // TODO:Would play sounds for the viewer
+        @Subst("minecraft:block.note_block.pling") String soundId = rec.getSoundId();
+        session.getViewer().playSound(
+            Sound.sound(
+                Key.key(soundId),
+                Sound.Source.values()[rec.getCategory()],
+                    rec.getVolume(), rec.getPitch()
+            ),
+            rec.getX(), rec.getY(), rec.getZ()
+        );
     }
 
     private static void playExplosion(RecordableExplosion rec, ReplaySession session) {

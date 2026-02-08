@@ -6,6 +6,7 @@ import net.minestom.server.collision.PhysicsResult;
 import net.minestom.server.collision.PhysicsUtils;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.Player;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.event.entity.EntityVelocityEvent;
@@ -57,6 +58,11 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 		} else {
 			setTag(Tag.String("gameId"), gameId);
 		}
+	}
+
+	@Override
+	public Player getServerPlayer() {
+		return this;
 	}
 
 	public BedWarsDataHandler getBedWarsDataHandler() {

@@ -1,28 +1,26 @@
 package net.swofty.type.game.game.event;
 
 import lombok.Getter;
+import net.minestom.server.entity.Player;
 import net.minestom.server.event.trait.CancellableEvent;
-
-import java.util.UUID;
+import net.minestom.server.event.trait.PlayerEvent;
 
 /**
  * Event fired when a player attempts to join a game.
  * Can be cancelled to prevent the join.
  */
-public class PlayerJoinGameEvent implements GameEvent, CancellableEvent {
+public class PlayerJoinGameEvent implements GameEvent, PlayerEvent, CancellableEvent {
     private final String gameId;
     @Getter
-	private final UUID playerId;
-    @Getter
-	private final String playerName;
+    private final Player player;
+
     private boolean cancelled = false;
     @Getter
-	private String cancelReason = null;
+    private String cancelReason = null;
 
-    public PlayerJoinGameEvent(String gameId, UUID playerId, String playerName) {
+    public PlayerJoinGameEvent(String gameId, Player player) {
         this.gameId = gameId;
-        this.playerId = playerId;
-        this.playerName = playerName;
+        this.player = player;
     }
 
     @Override
@@ -30,7 +28,7 @@ public class PlayerJoinGameEvent implements GameEvent, CancellableEvent {
         return gameId;
     }
 
-	@Override
+    @Override
     public boolean isCancelled() {
         return cancelled;
     }

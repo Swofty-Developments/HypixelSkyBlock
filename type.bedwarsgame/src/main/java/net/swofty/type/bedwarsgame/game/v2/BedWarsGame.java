@@ -6,8 +6,6 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Point;
@@ -49,7 +47,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
 
 @Getter
@@ -205,35 +202,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             player.setTag(Tag.String("team"), team.getTeamKey().name());
         }
         return assigned;
-    }
-
-    @Override
-    protected void onPlayerJoin(BedWarsPlayer player) {
-        BedWarsMapsConfig.Position waiting = mapEntry.getConfiguration().getLocations().getWaiting();
-
-        if (player.getInstance() == null || player.getInstance().getUuid() != instance.getUuid()) {
-            player.setInstance(instance, new Pos(waiting.x(), waiting.y(), waiting.z()));
-        }
-
-        player.setEnableRespawnScreen(true);
-        player.setFlying(false);
-        player.setGameMode(GameMode.ADVENTURE);
-        player.getInventory().setItemStack(8,
-            TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack());
-
-        // Set game ID tag
-        player.setTag(Tag.String("gameId"), gameId);
-
-        String randomLetters = UUID.randomUUID().toString().replaceAll("-", "")
-            .substring(0, new Random().nextInt(10) + 4);
-        player.setDisplayName(Component.text(randomLetters, NamedTextColor.WHITE, TextDecoration.OBFUSCATED));
-
-        for (BedWarsPlayer p : getPlayers()) {
-            String name = p.getUuid().compareTo(player.getUuid()) == 0
-                ? LegacyComponentSerializer.legacySection().serialize(player.getColouredName())
-                : "§k" + randomLetters;
-            p.sendMessage(name + " §ehas joined (§b" + players.size() + "§e/§b" + getMaxPlayers() + "§e)!");
-        }
     }
 
     @Override

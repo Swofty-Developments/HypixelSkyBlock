@@ -74,9 +74,6 @@ public class RecordingSession {
 		this.lastDataTime = System.currentTimeMillis();
 	}
 
-	/**
-	 * Adds a batch of data to this session.
-	 */
 	public void addBatch(int index, int startTick, int endTick, int recordableCount, byte[] data) {
 		batches.put(index, new DataBatch(index, startTick, endTick, recordableCount, data));
 		lastDataTime = System.currentTimeMillis();
@@ -85,25 +82,16 @@ public class RecordingSession {
 		}
 	}
 
-	/**
-	 * Gets all batches in order.
-	 */
-	public List<DataBatch> getBatches() {
+	public List<DataBatch> getOrderedBatches() {
 		return new ArrayList<>(batches.values());
 	}
 
-	/**
-	 * Gets total bytes received.
-	 */
 	public long getTotalBytesReceived() {
 		return batches.values().stream()
 			.mapToLong(b -> b.data.length)
 			.sum();
 	}
 
-	/**
-	 * Gets total recordable count.
-	 */
 	public int getTotalRecordableCount() {
 		return batches.values().stream()
 			.mapToInt(DataBatch::recordableCount)
