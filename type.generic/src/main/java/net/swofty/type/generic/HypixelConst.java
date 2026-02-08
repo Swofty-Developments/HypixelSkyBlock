@@ -5,10 +5,14 @@ import lombok.Setter;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.instance.SharedInstance;
 import net.swofty.commons.ServerType;
+import net.swofty.type.generic.resourcepack.ResourcePackManager;
 
 import java.util.UUID;
 
 public class HypixelConst {
+    @Getter
+    @Setter
+    private static ResourcePackManager resourcePackManager;
     @Getter
     @Setter
     private static SharedInstance instanceContainer;

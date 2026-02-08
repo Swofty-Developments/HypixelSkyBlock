@@ -162,7 +162,7 @@ public class HypixelPlayer extends Player {
 		HypixelConst.getTypeLoader().getTablistManager().nullifyCache(this);
 
         /*showTitle(Title.title(
-                Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
+                Component.text(HypixelTexture.FULL_SCREEN_BLACK.toString()),
                 Component.empty(),
                 Title.Times.times(Duration.ofSeconds(1), Duration.ofMillis(300), Duration.ZERO)
         ));*/

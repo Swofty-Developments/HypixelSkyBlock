@@ -34,12 +34,23 @@ public class Settings {
 	@Comment("Settings related to configuration of Limbo server connections")
 	private LimboSettings limbo = new LimboSettings();
 
+	@Comment("Resource pack settings keyed by pack name (e.g. testingpack, bedwarspack)")
+	private java.util.Map<String, ResourcePackSettings> resourcePacks = new java.util.HashMap<>();
+
 	@Getter
 	@ConfigSerializable
 	@NoArgsConstructor(access = AccessLevel.PRIVATE)
 	public static class LimboSettings {
 		private String hostName = "127.0.0.1";
 		private int port = 65535;
+	}
+
+	@Getter
+	@ConfigSerializable
+	@NoArgsConstructor
+	public static class ResourcePackSettings {
+		@Comment("Base URL of the pack server (e.g. http://0.0.0.0:7270)")
+		private String serverUrl = "http://127.0.0.1:7270";
 	}
 
 	@Getter
