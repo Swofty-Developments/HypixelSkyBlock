@@ -35,13 +35,13 @@ build/
 .DS_Store
 
 
-### Worlds ###
+### Worlds / Maps ###
 /configuration/skyblock/islands/
 /configuration/hypixel_prototype_lobby/
 /configuration/hypixel_bedwars_lobby/
 /configuration/hypixel_murder_mystery_lobby/
 /configuration/hypixel_skywars_lobby/
-/configuration/bedwars/*.polar
+*.polar
 
 ### Logs ###
 /configuration/logs/
