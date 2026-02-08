@@ -1,7 +1,6 @@
 package net.swofty.type.skyblockgeneric.block.placement;
 
 import net.minestom.server.coordinate.Point;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.swofty.type.skyblockgeneric.block.placement.states.BlockState;
@@ -18,7 +17,8 @@ public class BlockUtils {
 
     public BlockUtils(Instance instance, Point position) {
         this.instance = instance;
-        this.position = Pos.fromPoint(position);
+        this.position = position.asPos();
+        instance.loadChunk(this.position);
         this.blockState = BlockStateManager.get(instance.getBlock(this.position));
     }
 
