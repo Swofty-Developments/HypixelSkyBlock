@@ -132,8 +132,6 @@ public class PlayerJoinEvent implements HypixelEventClass {
             Pos spawnPos = new Pos(metadata.getMapCenterX(), 100, metadata.getMapCenterZ());
             player.teleport(spawnPos);
 
-            // give inventory controls
-            TypeReplayViewerLoader.populateInventory((HypixelPlayer) player);
 
             ReplaySession session = new ReplaySession(player, metadata, instance, replayData);
             TypeReplayViewerLoader.registerSession(player.getUuid(), session);

@@ -1,6 +1,5 @@
 package net.swofty.type.replayviewer.item.impl;
 
-import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -20,6 +19,6 @@ public class TeleporterItem extends ReplayItem {
 
 	@Override
 	public void onItemInteract(PlayerInstanceEvent event) {
-		((CancellableEvent) event).setCancelled(true);
+
 	}
 }

@@ -32,11 +32,11 @@ public class PlaybackControlItem extends ReplayItem {
             () -> player.sendMessage("§cNo active replay session.")
         );
         if (isPlaying.get()) {
-            return ItemStackCreator.createNamedItemStack(Material.MAGENTA_DYE, "§aClick to Pause").build();
+            return appendData(ItemStackCreator.createNamedItemStack(Material.MAGENTA_DYE, "§aClick to Pause")).build();
         }
-        return ItemStackCreator.getStack("§aClick to Resume", Material.GRAY_DYE, 1, List.of(
+        return appendData(ItemStackCreator.getStack("§aClick to Resume", Material.GRAY_DYE, 1, List.of(
             "§7The replay is currently paused."
-        )).build();
+        ))).build();
     }
 
     @Override

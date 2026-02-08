@@ -15,6 +15,8 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.game.replay.ReplayMetadata;
 import net.swofty.type.game.replay.entity.EntityStateTracker;
 import net.swofty.type.game.replay.recordable.Recordable;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 import net.swofty.type.replayviewer.entity.ReplayEntity;
 import net.swofty.type.replayviewer.entity.ReplayEntityManager;
 import net.swofty.type.replayviewer.playback.display.DynamicTextManager;
@@ -87,6 +89,9 @@ public class ReplaySession {
     public void play() {
         if (playing) return;
         playing = true;
+
+        // give inventory controls
+        TypeReplayViewerLoader.populateInventory((HypixelPlayer) getViewer());
 
         int tickInterval = Math.max(1, (int) (1 / playbackSpeed));
 

@@ -3,13 +3,18 @@ package net.swofty.type.replayviewer.item;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
-import net.minestom.server.event.player.PlayerStartDiggingEvent;
+import net.minestom.server.event.player.PlayerHandAnimationEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.CustomData;
 import net.minestom.server.tag.Tag;
+import net.swofty.type.replayviewer.item.impl.BackwardItem;
+import net.swofty.type.replayviewer.item.impl.FasterItem;
+import net.swofty.type.replayviewer.item.impl.ForwardItem;
+import net.swofty.type.replayviewer.item.impl.MoreItem;
 import net.swofty.type.replayviewer.item.impl.PlaybackControlItem;
+import net.swofty.type.replayviewer.item.impl.SlowerItem;
 import net.swofty.type.replayviewer.item.impl.TeleporterItem;
 
 import java.util.ArrayList;
@@ -18,10 +23,15 @@ import java.util.Optional;
 
 public class ReplayItemHandler {
     private final List<ReplayItem> items = new ArrayList<>(
-            List.of(
-                    new PlaybackControlItem(),
-                    new TeleporterItem()
-            )
+        List.of(
+            new PlaybackControlItem(),
+            new TeleporterItem(),
+            new ForwardItem(),
+            new SlowerItem(),
+            new MoreItem(),
+            new BackwardItem(),
+            new FasterItem()
+        )
     );
 
     public void add(ReplayItem item) {
@@ -30,8 +40,8 @@ public class ReplayItemHandler {
 
     public Optional<ReplayItem> getItem(String name) {
         return items.stream()
-                .filter(p -> p.getId().equalsIgnoreCase(name))
-                .findFirst();
+            .filter(p -> p.getId().equalsIgnoreCase(name))
+            .findFirst();
     }
 
     public void onItemFinishUse(PlayerFinishItemUseEvent event) {
@@ -53,11 +63,11 @@ public class ReplayItemHandler {
         }
     }
 
-    public void onItemDigging(PlayerStartDiggingEvent event) {
+    public void onHandAnimation(PlayerHandAnimationEvent event) {
         for (ReplayItem item : items) {
-            ItemStack itemStack = event.getPlayer().getItemInMainHand();
+            ItemStack itemStack = event.getPlayer().getItemInHand(event.getHand());
             if (isItem(item, itemStack)) {
-                item.onItemDigging(event);
+                item.onHandAnimation(event);
             }
         }
     }

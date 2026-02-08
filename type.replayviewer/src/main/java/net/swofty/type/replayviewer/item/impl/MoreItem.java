@@ -1,6 +1,5 @@
 package net.swofty.type.replayviewer.item.impl;
 
-import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -10,7 +9,7 @@ import net.swofty.type.replayviewer.item.ReplayItem;
 public class MoreItem extends ReplayItem {
 
 	public MoreItem() {
-		super("more");
+		super("menu");
 	}
 
 	@Override
@@ -20,7 +19,6 @@ public class MoreItem extends ReplayItem {
 
 	@Override
 	public void onItemInteract(PlayerInstanceEvent event) {
-		((CancellableEvent) event).setCancelled(true);
 
 	}
 }

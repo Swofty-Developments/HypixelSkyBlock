@@ -21,8 +21,13 @@ import java.util.function.Function;
 public class ReplayDataHandler extends DataHandler implements GameDataHandler {
     public static final Map<UUID, ReplayDataHandler> replayViewerCache = new HashMap<>();
 
-    public ReplayDataHandler() { super(); }
-    public ReplayDataHandler(UUID uuid) { super(uuid); }
+    public ReplayDataHandler() {
+        super();
+    }
+
+    public ReplayDataHandler(UUID uuid) {
+        super(uuid);
+    }
 
     @Override
     public String getHandlerId() {
@@ -77,7 +82,12 @@ public class ReplayDataHandler extends DataHandler implements GameDataHandler {
     }
 
     public static @Nullable ReplayDataHandler getUser(HypixelPlayer player) {
-        try { return getUser(player.getUuid()); } catch (Exception e) { return null; }
+        try {
+            return getUser(player.getUuid());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -157,8 +167,8 @@ public class ReplayDataHandler extends DataHandler implements GameDataHandler {
         for (Data data : Data.values()) {
             try {
                 handler.datapoints.put(
-                        data.getKey(),
-                        data.getDefaultDatapoint().deepClone().setUser(handler).setData(data)
+                    data.getKey(),
+                    data.getDefaultDatapoint().deepClone().setUser(handler).setData(data)
                 );
             } catch (Exception e) {
                 Logger.error("Issue with datapoint " + data.getKey() + " for user " + uuid + " - fix");
@@ -172,8 +182,10 @@ public class ReplayDataHandler extends DataHandler implements GameDataHandler {
 
         @Getter
         private final String key;
-        @Getter private final Class<? extends Datapoint<?>> type;
-        @Getter private final Datapoint<?> defaultDatapoint;
+        @Getter
+        private final Class<? extends Datapoint<?>> type;
+        @Getter
+        private final Datapoint<?> defaultDatapoint;
         public final BiConsumer<HypixelPlayer, Datapoint<?>> onChange;
         public final BiConsumer<HypixelPlayer, Datapoint<?>> onLoad;
         public final Function<HypixelPlayer, Datapoint<?>> onQuit;
@@ -184,8 +196,12 @@ public class ReplayDataHandler extends DataHandler implements GameDataHandler {
              BiConsumer<HypixelPlayer, Datapoint<?>> onChange,
              BiConsumer<HypixelPlayer, Datapoint<?>> onLoad,
              Function<HypixelPlayer, Datapoint<?>> onQuit) {
-            this.key = key; this.type = type; this.defaultDatapoint = defaultDatapoint;
-            this.onChange = onChange; this.onLoad = onLoad; this.onQuit = onQuit;
+            this.key = key;
+            this.type = type;
+            this.defaultDatapoint = defaultDatapoint;
+            this.onChange = onChange;
+            this.onLoad = onLoad;
+            this.onQuit = onQuit;
         }
 
         Data(String key, Class<? extends Datapoint<?>> type, Datapoint<?> defaultDatapoint) {

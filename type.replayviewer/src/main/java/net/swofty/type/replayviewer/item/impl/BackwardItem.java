@@ -1,6 +1,6 @@
 package net.swofty.type.replayviewer.item.impl;
 
-import net.minestom.server.event.player.PlayerStartDiggingEvent;
+import net.minestom.server.event.player.PlayerHandAnimationEvent;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
@@ -10,6 +10,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 import net.swofty.type.replayviewer.item.ReplayItem;
+import org.tinylog.Logger;
 
 import java.util.List;
 
@@ -31,15 +32,15 @@ public class BackwardItem extends ReplayItem {
         ReplayDataHandler handler = ReplayDataHandler.getUser(player);
         if (handler == null) {
             duration = 30;
-            player.sendMessage("§cSomething went wrong while trying to access player data.");
+            Logger.error("§cSomething went wrong while trying to access player data.");
         } else {
             DatapointReplaySettings.ReplaySettings settings = handler.get(ReplayDataHandler.Data.REPLAY_SETTINGS, DatapointReplaySettings.class)
                 .getValue();
             duration = settings.getSkipIntervals();
         }
-        return ItemStackCreator.getStackHead("§a" + duration + "s Backwards", "a6e1cd0067855b67e0fd5b7eb7457281c41d13bd5bc9158c4a82f518198a1d22", 1, List.of(
+        return appendData(ItemStackCreator.getStackHead("§a" + duration + "s Backwards", "a6e1cd0067855b67e0fd5b7eb7457281c41d13bd5bc9158c4a82f518198a1d22", 1, List.of(
             "§7Left click to change the duration."
-        )).build();
+        ))).build();
     }
 
     @Override
@@ -50,7 +51,7 @@ public class BackwardItem extends ReplayItem {
         ReplayDataHandler handler = ReplayDataHandler.getUser(player);
         if (handler == null) {
             duration = 30;
-            player.sendMessage("§cSomething went wrong while trying to access player data.");
+            Logger.error("§cSomething went wrong while trying to access player data.");
         } else {
             DatapointReplaySettings.ReplaySettings settings = handler.get(ReplayDataHandler.Data.REPLAY_SETTINGS, DatapointReplaySettings.class)
                 .getValue();
@@ -60,16 +61,17 @@ public class BackwardItem extends ReplayItem {
             (session) -> session.skipBackward(duration),
             () -> player.sendMessage("§cError: no active replay session.")
         );
+        Logger.info("Player {} set skip backward duration to {} seconds", player.getUsername(), duration);
     }
 
     @Override
-    public void onItemDigging(PlayerStartDiggingEvent event) {
+    public void onHandAnimation(PlayerHandAnimationEvent event) {
         HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
             (session) -> {
                 ReplayDataHandler handler = ReplayDataHandler.getUser(player);
                 if (handler == null) {
-                    player.sendMessage("§cSomething went wrong while trying to access player data.");
+                    Logger.error("§cSomething went wrong while trying to access player data.");
                     return;
                 }
                 DatapointReplaySettings.ReplaySettings settings = handler.get(ReplayDataHandler.Data.REPLAY_SETTINGS, DatapointReplaySettings.class)

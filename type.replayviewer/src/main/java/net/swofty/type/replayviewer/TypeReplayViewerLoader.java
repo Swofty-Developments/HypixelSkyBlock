@@ -13,6 +13,8 @@ import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.data.GameDataHandler;
+import net.swofty.type.generic.data.handlers.ReplayDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
@@ -72,8 +74,8 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
         setItem(player, "slower", 2);
         setItem(player, "backward", 3);
         setItem(player, "playback", 4);
-        setItem(player, "faster", 5);
-        setItem(player, "forward", 6);
+        setItem(player, "forward", 5);
+        setItem(player, "faster", 6);
         setItem(player, "menu", 8);
     }
 
@@ -88,6 +90,11 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
         return TablistManager.create(
             List.of(new ReplayTablistModule())
         );
+    }
+
+    @Override
+    public List<Class<? extends GameDataHandler>> getAdditionalDataHandlers() {
+        return List.of(ReplayDataHandler.class);
     }
 
     @Override
