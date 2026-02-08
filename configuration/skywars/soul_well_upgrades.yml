@@ -1,0 +1,78 @@
+# Soul Well Upgrades Configuration
+# Defines all purchasable upgrades with their tiers and costs
+
+upgrades:
+  xezbeth_luck:
+    name: "Xezbeth Luck"
+    material: "GOLD_INGOT"
+    baseDescription: "Wins grant additional Souls"
+    color: "a"  # Green
+    tiers:
+      - level: 1
+        cost: 2500
+        previousEffect: "0"
+        newEffect: "+1"
+        effectDescription: "Souls per win"
+        effectValue: 1
+      - level: 2
+        cost: 5000
+        previousEffect: "1"
+        newEffect: "+2"
+        effectDescription: "Souls per win"
+        effectValue: 2
+      - level: 3
+        cost: 7500
+        previousEffect: "2"
+        newEffect: "+3"
+        effectDescription: "Souls per win"
+        effectValue: 3
+
+  harvesting_season:
+    name: "Harvesting Season"
+    material: "GHAST_TEAR"
+    baseDescription: "Chance to earn x2 Souls from a kill or win"
+    color: "a"  # Green
+    tiers:
+      - level: 1
+        cost: 50000
+        previousEffect: "0%"
+        newEffect: "2%"
+        effectDescription: "chance to earn x2 Souls"
+        effectValue: 2
+      - level: 2
+        cost: 100000
+        previousEffect: "2%"
+        newEffect: "4%"
+        effectDescription: "chance to earn x2 Souls"
+        effectValue: 4
+      - level: 3
+        cost: 200000
+        previousEffect: "4%"
+        newEffect: "6%"
+        effectDescription: "chance to earn x2 Souls"
+        effectValue: 6
+
+  angel_of_death:
+    name: "Angel of Death"
+    material: "WITHER_SKELETON_SKULL"
+    baseDescription: "Corruption Chance - Kills drop player Heads"
+    color: "5"  # Purple
+    tiers:
+      - level: 1
+        cost: 50000
+        previousEffect: "0%"
+        newEffect: "1%"
+        effectDescription: "Corruption Chance"
+        effectValue: 1
+      - level: 2
+        cost: 200000
+        previousEffect: "1%"
+        newEffect: "2%"
+        effectDescription: "Corruption Chance"
+        effectValue: 2
+      - level: 3
+        cost: 500000
+        previousEffect: "2%"
+        newEffect: "3%"
+        effectDescription: "Corruption Chance"
+        effectValue: 3

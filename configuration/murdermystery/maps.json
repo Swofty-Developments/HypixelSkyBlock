@@ -3,10 +3,11 @@
     {
       "id": "aquarium",
       "name": "Aquarium",
-    "configuration": {
+      "configuration": {
         "types": [
           "CLASSIC",
-          "DOUBLE_UP"
+          "DOUBLE_UP",
+          "ASSASSINS"
         ],
         "locations": {
           "waiting": {

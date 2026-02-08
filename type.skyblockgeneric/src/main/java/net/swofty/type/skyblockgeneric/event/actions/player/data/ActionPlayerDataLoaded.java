@@ -7,7 +7,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
-import net.swofty.packer.SkyBlockTexture;
+import net.swofty.packer.packs.TestingTexture;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointString;
@@ -95,7 +95,7 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
 
         Thread.startVirtualThread(() -> {
             player.showTitle(Title.title(
-                    Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
+                    Component.text(TestingTexture.FULL_SCREEN_BLACK.toString()),
                     Component.empty(),
                     Title.Times.times(Duration.ZERO, Duration.ofMillis(300), Duration.ofSeconds(1))
             ));
