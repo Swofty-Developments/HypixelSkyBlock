@@ -43,6 +43,7 @@ public class ResourcePackManager {
 
         ResourcePackRequest request = ResourcePackRequest.resourcePackRequest()
                 .packs(info)
+                .replace(true)
                 .required(activePack.isRequired())
                 .prompt(Component.text("§aThis resource pack is required to play on Hypixel."))
                 .build();
