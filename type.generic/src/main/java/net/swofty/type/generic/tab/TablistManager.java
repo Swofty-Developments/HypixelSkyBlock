@@ -12,13 +12,28 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class TablistManager {
     private static Map<HypixelPlayer, List<UUID>> tablistEntries = new HashMap<>();
 
     public abstract List<TablistModule> getModules();
+
+    public static TablistManager create(List<TablistModule> modules) {
+        return new TablistManager() {
+            @Override
+            public List<TablistModule> getModules() {
+                return modules;
+            }
+        };
+    }
 
     public void deleteTablistEntries(HypixelPlayer player) {
         tablistEntries.remove(player);

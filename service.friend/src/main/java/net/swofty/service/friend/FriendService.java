@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FriendService implements SkyBlockService {
 
-    static void main(String[] args) {
+    static void main() {
         String mongoUri = ConfigProvider.settings().getMongodb();
         new FriendDatabase(null).connect(mongoUri);
 

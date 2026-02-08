@@ -7,7 +7,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
 import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -21,9 +21,9 @@ import java.util.List;
 public class GUIQuickBuyEditor extends HypixelInventoryGUI {
     private final ShopManager shopService = TypeBedWarsGameLoader.shopManager;
     private final ShopItem shopItem;
-    private final Game game;
+    private final BedWarsGame game;
 
-    public GUIQuickBuyEditor(Game game, ShopItem shopItem) {
+    public GUIQuickBuyEditor(BedWarsGame game, ShopItem shopItem) {
         super("Adding to Quick Buy...", InventoryType.CHEST_6_ROW);
         this.shopItem = shopItem;
         this.game = game;
@@ -36,7 +36,7 @@ public class GUIQuickBuyEditor extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 List<String> lore = new ArrayList<>();
                 lore.add(
-                        "§7Cost: " + shopItem.getCurrency().getColor() + shopItem.getPrice().apply(game.getBedwarsGameType()) + " " + shopItem.getCurrency().getName()
+                        "§7Cost: " + shopItem.getCurrency().getColor() + shopItem.getPrice().apply(game.getGameType()) + " " + shopItem.getCurrency().getName()
                 );
                 lore.add(" ");
                 if (shopItem.getDescription() != null && !shopItem.getDescription().isEmpty()) {

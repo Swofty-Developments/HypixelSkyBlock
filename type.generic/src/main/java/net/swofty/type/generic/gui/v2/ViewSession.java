@@ -1,19 +1,19 @@
 package net.swofty.type.generic.gui.v2;
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryClickEvent;
+import net.minestom.server.event.inventory.InventoryOpenEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.event.inventory.InventoryOpenEvent;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
@@ -22,7 +22,12 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import org.jspecify.annotations.NonNull;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -89,14 +94,14 @@ public final class ViewSession<S> {
     }
 
     static <S> ViewSession<S> open(View<S> view, HypixelPlayer player, S initialState) {
-        var session = new ViewSession<>(view, player, initialState, null);
+        ViewSession<S> session = new ViewSession<>(view, player, initialState, null);
         session.render();
         player.openInventory(session.inventory);
         return session;
     }
 
     static <S> ViewSession<S> openShared(View<S> view, HypixelPlayer player, SharedContext<S> sharedContext) {
-        var session = new ViewSession<>(view, player, sharedContext.state(), sharedContext);
+        ViewSession<S> session = new ViewSession<>(view, player, sharedContext.state(), sharedContext);
         session.render();
         player.openInventory(session.inventory);
         return session;
@@ -237,7 +242,7 @@ public final class ViewSession<S> {
     public void render() {
         if (closed) return;
 
-        ViewConfiguration<?> config = view.configuration();
+        ViewConfiguration<S> config = view.configuration();
 
         if (cachedLayout == null || layoutDirty) {
             cachedLayout = new ViewLayout<>(config.getInventoryType());
@@ -245,7 +250,7 @@ public final class ViewSession<S> {
             layoutDirty = false;
             componentSlots.clear();
 
-            @SuppressWarnings("unchecked") BiFunction<S, ViewContext, Component> titleFunction = (BiFunction<S, ViewContext, Component>) config.getTitleFunction();
+            BiFunction<S, ViewContext, Component> titleFunction = config.getTitleFunction();
             inventory.setTitle(titleFunction.apply(state, context));
 
             cachedLayout.components().forEach((slot, component) -> {
@@ -266,7 +271,7 @@ public final class ViewSession<S> {
 
         componentSlots.clear();
 
-        @SuppressWarnings("unchecked") BiFunction<S, ViewContext, Component> titleFunction = (BiFunction<S, ViewContext, Component>) config.getTitleFunction();
+        BiFunction<S, ViewContext, Component> titleFunction = config.getTitleFunction();
         inventory.setTitle(titleFunction.apply(state, context));
 
         cachedLayout.components().forEach((slot, component) -> {
@@ -318,7 +323,7 @@ public final class ViewSession<S> {
     }
 
     private void renderSlot(int slot, ViewComponent<S> component) {
-        var item = component.render().apply(state, context).build();
+        ItemStack item = component.render().apply(state, context).build();
         if (!inventory.getItemStack(slot).equals(item)) {
             inventory.setItemStack(slot, item);
         }

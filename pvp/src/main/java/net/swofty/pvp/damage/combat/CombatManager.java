@@ -1,5 +1,6 @@
 package net.swofty.pvp.damage.combat;
 
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -24,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class CombatManager {
 	private static final Component BAD_RESPAWN_POINT_MESSAGE = Component.text("[")
 			.append(Component.translatable("death.attack.badRespawnPoint.link")
@@ -31,14 +33,15 @@ public class CombatManager {
 					.hoverEvent(HoverEvent.showText(Component.text("MCPE-28723"))))
 			.append(Component.text("]"));
 
+
 	private final List<CombatEntry> entries = new ArrayList<>();
-	private final Player player;
+    private final Player player;
 	private int lastDamagedBy = -1;
-	private long lastDamageTime;
-	private long combatStartTime;
-	private long combatEndTime;
-	private boolean inCombat;
-	private boolean takingDamage;
+    private long lastDamageTime;
+    private long combatStartTime;
+    private long combatEndTime;
+    private boolean inCombat;
+    private boolean takingDamage;
 
 	public CombatManager(Player player) {
 		this.player = player;
@@ -104,7 +107,7 @@ public class CombatManager {
 		}
 
 		CombatEntry heaviestFall = null;
-		CombatEntry lastEntry = entries.get(entries.size() - 1);
+		CombatEntry lastEntry = entries.getLast();
 		DamageTypeInfo lastInfo = DamageTypeInfo.of(lastEntry.damage().getType());
 
 		boolean fall = false;
@@ -298,31 +301,4 @@ public class CombatManager {
 		player.getPlayerConnection().sendPacket(new EndCombatEventPacket(duration));
 	}
 
-	public List<CombatEntry> getEntries() {
-		return entries;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public long getLastDamageTime() {
-		return lastDamageTime;
-	}
-
-	public long getCombatStartTime() {
-		return combatStartTime;
-	}
-
-	public long getCombatEndTime() {
-		return combatEndTime;
-	}
-
-	public boolean isInCombat() {
-		return inCombat;
-	}
-
-	public boolean isTakingDamage() {
-		return takingDamage;
-	}
 }

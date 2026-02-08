@@ -6,6 +6,7 @@ import net.minestom.server.collision.PhysicsResult;
 import net.minestom.server.collision.PhysicsUtils;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.Player;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.event.entity.EntityVelocityEvent;
@@ -19,7 +20,8 @@ import net.minestom.server.utils.chunk.ChunkUtils;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.pvp.player.CombatPlayer;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.game.game.GameParticipant;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -34,7 +36,7 @@ import java.util.function.Function;
  * CombatPlayer implementation based on <a href="https://github.com/TogAr2/MinestomPvP/blob/master/src/main/java/io/github/togar2/pvp/player/CombatPlayerImpl.java">CombatPlayerImpl</a>
  */
 @SuppressWarnings("UnstableApiUsage")
-public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
+public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GameParticipant {
 
 	private boolean velocityUpdate = false;
 	private PhysicsResult previousPhysicsResult = null;
@@ -42,6 +44,25 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
 	public BedWarsPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
 		super(playerConnection, gameProfile);
 		getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(1.0);
+	}
+
+	@Override
+	public String getGameId() {
+		return getTag(Tag.String("gameId"));
+	}
+
+	@Override
+	public void setGameId(String gameId) {
+		if (gameId == null) {
+			removeTag(Tag.String("gameId"));
+		} else {
+			setTag(Tag.String("gameId"), gameId);
+		}
+	}
+
+	@Override
+	public Player getServerPlayer() {
+		return this;
 	}
 
 	public BedWarsDataHandler getBedWarsDataHandler() {
@@ -58,7 +79,7 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
 		return BedWarsMapsConfig.TeamKey.valueOf(getTeamName());
 	}
 
-	public Game getGame() {
+	public BedWarsGame getGame() {
 		String gameId = getTag(Tag.String("gameId"));
 		return TypeBedWarsGameLoader.getGameById(gameId);
 	}

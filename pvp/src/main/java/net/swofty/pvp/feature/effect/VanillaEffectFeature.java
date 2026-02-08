@@ -1,19 +1,5 @@
 package net.swofty.pvp.feature.effect;
 
-import net.swofty.pvp.entity.projectile.Arrow;
-import net.swofty.pvp.events.PotionVisibilityEvent;
-import net.swofty.pvp.feature.FeatureType;
-import net.swofty.pvp.feature.RegistrableFeature;
-import net.swofty.pvp.feature.config.DefinedFeature;
-import net.swofty.pvp.feature.config.FeatureConfiguration;
-import net.swofty.pvp.feature.food.ExhaustionFeature;
-import net.swofty.pvp.feature.food.FoodFeature;
-import net.swofty.pvp.potion.effect.CombatPotionEffect;
-import net.swofty.pvp.potion.effect.CombatPotionEffects;
-import net.swofty.pvp.potion.item.CombatPotionType;
-import net.swofty.pvp.potion.item.CombatPotionTypes;
-import net.swofty.pvp.utils.CombatVersion;
-import net.swofty.pvp.utils.PotionFlags;
 import net.kyori.adventure.util.RGBLike;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Entity;
@@ -36,9 +22,27 @@ import net.minestom.server.potion.PotionType;
 import net.minestom.server.potion.TimedPotion;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.time.TimeUnit;
+import net.swofty.pvp.entity.projectile.Arrow;
+import net.swofty.pvp.events.PotionVisibilityEvent;
+import net.swofty.pvp.feature.FeatureType;
+import net.swofty.pvp.feature.RegistrableFeature;
+import net.swofty.pvp.feature.config.DefinedFeature;
+import net.swofty.pvp.feature.config.FeatureConfiguration;
+import net.swofty.pvp.feature.food.ExhaustionFeature;
+import net.swofty.pvp.feature.food.FoodFeature;
+import net.swofty.pvp.potion.effect.CombatPotionEffect;
+import net.swofty.pvp.potion.effect.CombatPotionEffects;
+import net.swofty.pvp.potion.item.CombatPotionType;
+import net.swofty.pvp.potion.item.CombatPotionTypes;
+import net.swofty.pvp.utils.CombatVersion;
+import net.swofty.pvp.utils.PotionFlags;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -49,80 +53,80 @@ public class VanillaEffectFeature implements EffectFeature, RegistrableFeature {
 			FeatureType.EFFECT, VanillaEffectFeature::new,
 			FeatureType.EXHAUSTION, FeatureType.FOOD, FeatureType.VERSION
 	);
-	
+
 	public static final Tag<Map<PotionEffect, Integer>> DURATION_LEFT = Tag.Transient("effectDurationLeft");
 	public static final int DEFAULT_POTION_COLOR = 0xff385dc6;
-	
+
 	private final FeatureConfiguration configuration;
-	
+
 	private ExhaustionFeature exhaustionFeature;
 	private FoodFeature foodFeature;
 	private CombatVersion version;
-	
+
 	public VanillaEffectFeature(FeatureConfiguration configuration) {
 		this.configuration = configuration;
 	}
-	
+
 	@Override
 	public void initDependencies() {
 		this.exhaustionFeature = configuration.get(FeatureType.EXHAUSTION);
 		this.foodFeature = configuration.get(FeatureType.FOOD);
 		this.version = configuration.get(FeatureType.VERSION);
 	}
-	
+
 	@Override
 	public void init(EventNode<EntityInstanceEvent> node) {
 		node.addListener(EntityDeathEvent.class, event ->
 				event.getEntity().clearEffects());
-		
+
 		node.addListener(EntityTickEvent.class, event -> {
 			if (!(event.getEntity() instanceof LivingEntity entity)) return;
 			Map<PotionEffect, Integer> potionMap = getDurationLeftMap(entity);
-			
+
 			for (TimedPotion potion : entity.getActiveEffects()) {
 				potionMap.putIfAbsent(potion.potion().effect(), potion.potion().duration() - 1);
 				int durationLeft = potionMap.get(potion.potion().effect());
-				
+
 				if (durationLeft > 0) {
 					CombatPotionEffect combatPotionEffect = CombatPotionEffects.get(potion.potion().effect());
 					int amplifier = potion.potion().amplifier();
-					
+
 					if (combatPotionEffect.canApplyUpdateEffect(durationLeft, amplifier)) {
 						combatPotionEffect.applyUpdateEffect(entity, amplifier, exhaustionFeature, foodFeature);
 					}
-					
+
 					potionMap.put(potion.potion().effect(), durationLeft - 1);
 				}
 			}
-			
+
 			if (entity instanceof Player player && player.hasEffect(PotionEffect.ABSORPTION) && player.getAdditionalHearts() <= 0) {
 				player.removeEffect(PotionEffect.ABSORPTION);
 			}
-			
+
 			//TODO keep track of underlying potions with longer duration
 			if (potionMap.size() != entity.getActiveEffects().size()) {
 				potionMap.keySet().removeIf(effect -> !entity.hasEffect(effect));
 			}
 		});
-		
+
 		node.addListener(EntityPotionAddEvent.class, event -> {
 			if (!(event.getEntity() instanceof LivingEntity entity)) return;
 			Map<PotionEffect, Integer> potionMap = getDurationLeftMap(entity);
 			boolean infinite = event.getPotion().duration() == Potion.INFINITE_DURATION;
 			potionMap.put(event.getPotion().effect(), infinite ? Integer.MAX_VALUE : event.getPotion().duration());
-			
+
 			CombatPotionEffect combatPotionEffect = CombatPotionEffects.get(event.getPotion().effect());
 			combatPotionEffect.onApplied(entity, event.getPotion().amplifier(), version);
-			
+
 			updatePotionVisibility(entity);
 		});
-		
+
 		node.addListener(EntityPotionRemoveEvent.class, event -> {
 			if (!(event.getEntity() instanceof LivingEntity entity)) return;
-			
+
 			CombatPotionEffect combatPotionEffect = CombatPotionEffects.get(event.getPotion().effect());
 			combatPotionEffect.onRemoved(entity, event.getPotion().amplifier(), version);
-			
+
 			//Delay update 1 tick because we need to have the removing effect removed
 			MinecraftServer.getSchedulerManager()
 					.buildTask(() -> updatePotionVisibility(entity))
@@ -130,7 +134,7 @@ public class VanillaEffectFeature implements EffectFeature, RegistrableFeature {
 					.schedule();
 		});
 	}
-	
+
 	private Map<PotionEffect, Integer> getDurationLeftMap(Entity entity) {
 		Map<PotionEffect, Integer> potionMap = entity.getTag(DURATION_LEFT);
 		if (potionMap == null) {
@@ -139,7 +143,7 @@ public class VanillaEffectFeature implements EffectFeature, RegistrableFeature {
 		}
 		return potionMap;
 	}
-	
+
 	@Override
 	public int getPotionColor(PotionContents contents) {
 		if (contents.customColor() != null) {
@@ -153,16 +157,16 @@ public class VanillaEffectFeature implements EffectFeature, RegistrableFeature {
 			return color == -1 ? DEFAULT_POTION_COLOR : color;
 		}
 	}
-	
+
 	@Override
 	public List<Potion> getAllPotions(PotionType potionType,
 	                                  Collection<net.minestom.server.potion.CustomPotionEffect> customEffects) {
 		// PotionType effects plus custom effects
 		List<Potion> potions = new ArrayList<>();
-		
+
 		CombatPotionType combatPotionType = CombatPotionTypes.get(potionType);
 		if (combatPotionType != null) potions.addAll(combatPotionType.getEffects(version));
-		
+
 		potions.addAll(customEffects.stream().map((customPotion) ->
 				new Potion(Objects.requireNonNull(customPotion.id()),
 						(byte)customPotion.amplifier(), customPotion.duration(),
@@ -171,16 +175,16 @@ public class VanillaEffectFeature implements EffectFeature, RegistrableFeature {
 								customPotion.showParticles(),
 								customPotion.showIcon()
 						))).toList());
-		
+
 		return potions;
 	}
-	
+
 	@Override
 	public void updatePotionVisibility(LivingEntity entity) {
 		boolean ambient;
 		List<Particle> particles;
 		boolean invisible;
-		
+
 		if (entity instanceof Player player && player.getGameMode() == GameMode.SPECTATOR) {
 			ambient = false;
 			particles = List.of();
@@ -194,36 +198,36 @@ public class VanillaEffectFeature implements EffectFeature, RegistrableFeature {
 			} else {
 				ambient = true;
 				particles = new ArrayList<>();
-				
+
 				for (TimedPotion potion : effects) {
 					if (!potion.potion().isAmbient()) {
 						ambient = false;
 					}
-					
+
 					if (potion.potion().hasParticles()) {
 						CombatPotionEffect effect = CombatPotionEffects.get(potion.potion().effect());
 						particles.add(effect.getParticle(potion.potion()));
 					}
 				}
-				
+
 				invisible = entity.hasEffect(PotionEffect.INVISIBILITY);
 			}
 		}
-		
+
 		PotionVisibilityEvent potionVisibilityEvent = new PotionVisibilityEvent(entity, ambient, particles, invisible);
 		EventDispatcher.callCancellable(potionVisibilityEvent, () -> {
 			LivingEntityMeta meta = (LivingEntityMeta) entity.getEntityMeta();
-			
+
 			meta.setPotionEffectAmbient(potionVisibilityEvent.isAmbient());
 			meta.setEffectParticles(potionVisibilityEvent.getParticles());
 			meta.setInvisible(potionVisibilityEvent.isInvisible());
 		});
 	}
-	
+
 	@Override
 	public void addArrowEffects(LivingEntity entity, Arrow arrow) {
 		PotionContents potionContents = arrow.getPotion();
-		
+
 		CombatPotionType combatPotionType = CombatPotionTypes.get(potionContents.potion());
 		if (combatPotionType != null) {
 			for (Potion potion : combatPotionType.getEffects(version)) {
@@ -237,9 +241,9 @@ public class VanillaEffectFeature implements EffectFeature, RegistrableFeature {
 				}
 			}
 		}
-		
+
 		if (potionContents.customEffects().isEmpty()) return;
-		
+
 		potionContents.customEffects().stream().map(customPotion ->
 						new Potion(Objects.requireNonNull(customPotion.id()),
 								(byte)customPotion.amplifier(), customPotion.duration(),
@@ -259,7 +263,7 @@ public class VanillaEffectFeature implements EffectFeature, RegistrableFeature {
 					}
 				});
 	}
-	
+
 	@Override
 	public void addSplashPotionEffects(LivingEntity entity, PotionContents potionContents, double proximity,
 	                                   @Nullable Entity source, @Nullable Entity attacker) {
@@ -272,7 +276,7 @@ public class VanillaEffectFeature implements EffectFeature, RegistrableFeature {
 				int duration = potion.duration();
 				if (version.legacy()) duration = (int) Math.floor(duration * 0.75);
 				duration = (int) (proximity * (double) duration + 0.5);
-				
+
 				if (duration > 20) {
 					entity.addEffect(new Potion(potion.effect(), potion.amplifier(), duration, potion.flags()));
 				}

@@ -23,12 +23,12 @@ import net.swofty.type.bedwarsgame.death.BedWarsCombatTracker;
 import net.swofty.type.bedwarsgame.death.BedWarsDeathHandler;
 import net.swofty.type.bedwarsgame.death.BedWarsDeathResult;
 import net.swofty.type.bedwarsgame.death.BedWarsDeathType;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.impl.AxeShopItem;
 import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -40,16 +40,16 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ActionGameDeath implements HypixelEventClass {
 
-
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerDeathEvent event) {
         BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 
-        Game game = player.getGame();
-        if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
+        BedWarsGame game = player.getGame();
+        if (game == null || game.getState() != GameState.IN_PROGRESS) {
             return;
         }
 
+        // TODO: move all this to a death event so this can be ran on different places.
         Integer pickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
         if (pickaxeLevel != null && pickaxeLevel > 1) {
             player.setTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG, pickaxeLevel - 1);
@@ -83,7 +83,7 @@ public class ActionGameDeath implements HypixelEventClass {
             player.getAchievementHandler().completeAchievement("bedwars.its_dark_down_there");
         }
         if (deathResult.isFinalKill()) {
-            BedWarsStatsRecorder.recordFinalDeath(player, game.getBedwarsGameType());
+            BedWarsStatsRecorder.recordFinalDeath(player, game.getGameType());
         }
 
         BedWarsPlayer itemRecipient = deathResult.getKillCreditPlayer();
@@ -107,13 +107,13 @@ public class ActionGameDeath implements HypixelEventClass {
         }
 
         TeamKey teamKey = player.getTeamKey();
-        boolean bedExists = teamKey != null && game.getTeamManager().isBedAlive(teamKey);
+        boolean bedExists = teamKey != null && game.isBedAlive(teamKey);
 
         Component deathMessage = BedWarsDeathHandler.createDeathMessage(deathResult);
         handleDeathTypeActions(deathResult, game);
 
         if (!bedExists && deathResult.getKillCreditPlayer() != null) {
-            BedWarsStatsRecorder.recordFinalKill(deathResult.getKillCreditPlayer(), game.getBedwarsGameType());
+            BedWarsStatsRecorder.recordFinalKill(deathResult.getKillCreditPlayer(), game.getGameType());
         }
 
         event.setChatMessage(deathMessage);
@@ -167,7 +167,7 @@ public class ActionGameDeath implements HypixelEventClass {
                         }
 
                         // equip the player with team armor
-                        game.getTeamManager().equipTeamArmor(player, teamKey);
+                        game.equipTeamArmor(player, teamKey);
 
                         Integer protectionLevel = player.getTag(Tag.Integer("upgrade_reinforced_armor"));
                         if (protectionLevel != null) {
@@ -212,23 +212,29 @@ public class ActionGameDeath implements HypixelEventClass {
             player.setFlying(true);
 
             if (game != null) {
-                game.playerEliminated(player);
+                game.onPlayerEliminated(player);
             }
         }
     }
 
-    private void handleDeathTypeActions(BedWarsDeathResult result, Game game) {
+    private void handleDeathTypeActions(BedWarsDeathResult result, BedWarsGame game) {
         BedWarsPlayer victim = result.victim();
         BedWarsPlayer killer = result.killer();
         BedWarsPlayer assistPlayer = result.assistPlayer();
 
         if (killer != null) {
-            BedWarsStatsRecorder.recordKill(killer, game.getBedwarsGameType());
+            BedWarsStatsRecorder.recordKill(killer, game.getGameType());
         } else if (assistPlayer != null) {
-            BedWarsStatsRecorder.recordKill(assistPlayer, game.getBedwarsGameType());
+            BedWarsStatsRecorder.recordKill(assistPlayer, game.getGameType());
         }
 
-        BedWarsStatsRecorder.recordDeath(victim, game.getBedwarsGameType());
+        BedWarsStatsRecorder.recordDeath(victim, game.getGameType());
+
+        // Record kill/final kill to replay
+        if (killer != null || assistPlayer != null) {
+            BedWarsPlayer killCredit = killer != null ? killer : assistPlayer;
+            game.getReplayManager().recordKill(killCredit, victim, result.isFinalKill());
+        }
 
         if (result.isFinalKill()) {
             if (killer != null) killer.getAchievementHandler().addProgress("bedwars.bed_wars_killer", 1);

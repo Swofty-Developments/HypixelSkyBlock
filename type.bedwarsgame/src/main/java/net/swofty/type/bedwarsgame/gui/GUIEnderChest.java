@@ -5,9 +5,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.tag.Tag;
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -24,10 +22,10 @@ public class GUIEnderChest extends HypixelInventoryGUI {
     @Override
     public void setItems(InventoryGUIOpenEvent event) {
         BedWarsPlayer player = (BedWarsPlayer) event.player();
-        Game game = player.getGame();
+        BedWarsGame game = player.getGame();
         if (game == null) return;
 
-        Map<Integer, ItemStack> enderChest = game.getEnderchests().get(player);
+        Map<Integer, ItemStack> enderChest = game.getEnderChests().get(player.getUuid());
         if (enderChest != null) {
             for (Map.Entry<Integer, ItemStack> entry : enderChest.entrySet()) {
                 if (entry.getKey() < size.getSize()) {
@@ -53,7 +51,7 @@ public class GUIEnderChest extends HypixelInventoryGUI {
 
 	private void closeSave(HypixelPlayer p) {
 		BedWarsPlayer player = (BedWarsPlayer) p;
-		Game game = player.getGame();
+		BedWarsGame game = player.getGame();
 		if (game == null) return;
 
 		Map<Integer, ItemStack> enderChest = new ConcurrentHashMap<>();
@@ -64,7 +62,7 @@ public class GUIEnderChest extends HypixelInventoryGUI {
 			}
 		}
 
-		game.getEnderchests().put(player, enderChest);
+		game.getEnderChests().put(player.getUuid(), enderChest);
 	}
 
     @Override

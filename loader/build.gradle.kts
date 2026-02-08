@@ -56,6 +56,8 @@ dependencies {
     implementation(project(":type.ravengardgeneric"))
     implementation(project(":type.ravengardlobby"))
 
+    implementation(project(":type.replayviewer"))
+
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))

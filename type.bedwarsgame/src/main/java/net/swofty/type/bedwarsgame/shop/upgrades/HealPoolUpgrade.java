@@ -9,12 +9,12 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.GameState;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class HealPoolUpgrade extends TeamUpgrade {
 	}
 
 	@Override
-	public void applyEffect(Game game, TeamKey teamKey, int level) {
+	public void applyEffect(BedWarsGame game, TeamKey teamKey, int level) {
 		MapTeam team = teamKey != null
 				? game.getMapEntry().getConfiguration().getTeams().get(teamKey)
 				: null;
@@ -46,7 +46,7 @@ public class HealPoolUpgrade extends TeamUpgrade {
 		Pos teamSpawn = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw());
 
 		MinecraftServer.getSchedulerManager().buildTask(() -> {
-			if (game.getGameStatus() != GameStatus.IN_PROGRESS) {
+			if (game.getState() != GameState.IN_PROGRESS) {
 				return;
 			}
 

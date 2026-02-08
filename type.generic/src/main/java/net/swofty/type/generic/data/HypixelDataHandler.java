@@ -15,7 +15,7 @@ import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import org.bson.Document;
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.Nullable;
@@ -174,7 +174,7 @@ public class HypixelDataHandler extends DataHandler {
             Rank rank = (Rank) datapoint.getValue();
 
             // Delay this as player needs to be loaded
-            MathUtility.delay(() -> {
+            ScheduleUtility.delay(() -> {
                 if (!player.isOnline()) return;
                 if (HypixelConst.getTypeLoader().getType().isSkyBlock()) return;
 

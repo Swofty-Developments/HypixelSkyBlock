@@ -10,11 +10,14 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.shop.*;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.shop.TeamShopManager;
+import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
+import net.swofty.type.bedwarsgame.shop.Trap;
+import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -62,7 +65,7 @@ public class GUITeamShop extends HypixelInventoryGUI {
 					.customName(noItalic(Component.text(" "))));
 		}
 
-		Game game = player.getGame();
+		BedWarsGame game = player.getGame();
 		BedWarsMapsConfig.TeamKey teamKey = player.getTeamKey();
 		if (game == null || teamKey == null) {
 			// Show error placeholders
@@ -85,7 +88,7 @@ public class GUITeamShop extends HypixelInventoryGUI {
 				public void run(InventoryPreClickEvent event, HypixelPlayer p) {
 					if (index >= upgrades.size()) return;
 					BedWarsPlayer player = (BedWarsPlayer) p;
-					Game playerGame = player.getGame();
+					BedWarsGame playerGame = player.getGame();
 					if (playerGame == null) return;
 					TeamUpgrade upgrade = upgrades.get(index);
 					TeamUpgradeTier nextTier = upgrade.getNextTier(playerGame, player.getTeamKey());
@@ -108,7 +111,7 @@ public class GUITeamShop extends HypixelInventoryGUI {
 				public ItemStack.Builder getItem(HypixelPlayer p) {
 					if (index >= upgrades.size()) return ItemStack.builder(Material.AIR);
 					BedWarsPlayer player = (BedWarsPlayer) p;
-					Game playerGame = player.getGame();
+					BedWarsGame playerGame = player.getGame();
 					BedWarsMapsConfig.TeamKey tag = player.getTeamKey();
 					if (playerGame == null || tag == null) return ItemStack.builder(Material.BARRIER)
 							.customName(noItalic(Component.text("No Game").color(NamedTextColor.RED)));
@@ -160,9 +163,9 @@ public class GUITeamShop extends HypixelInventoryGUI {
 					BedWarsPlayer player = (BedWarsPlayer) p;
 					BedWarsMapsConfig.TeamKey tag = player.getTeamKey();
 
-					Game playerGame = player.getGame();
+					BedWarsGame playerGame = player.getGame();
 					if (playerGame == null || tag == null) return;
-					int trapSize = playerGame.getTeamManager().getTeamTraps(tag).size();
+					int trapSize = playerGame.getTeamTraps(tag).size();
 					if (trapSize >= 3) {
 						player.sendMessage("§cYou can't have more traps than 3");
 						playClickSound(player);
@@ -180,12 +183,12 @@ public class GUITeamShop extends HypixelInventoryGUI {
 					}
 
 					BedWarsInventoryManipulator.removeItems(player, trap.getCurrency().getMaterial(), price);
-					playerGame.getTeamManager().addTeamTrap(tag, trap.getKey());
+					playerGame.addTeamTrap(tag, trap.getKey());
 					broadcastTeamPurchase(playerGame, tag, player, trap.getName());
 					playBuySound(player);
 					updateGUI(player);
 					if (trapSize == 2) {
-						for (BedWarsPlayer teamPlayer : game.getTeamManager().getPlayersOnTeam(player.getTeamKey())) {
+						for (BedWarsPlayer teamPlayer : game.getPlayersOnTeam(player.getTeamKey())) {
 							teamPlayer.getAchievementHandler().completeAchievement("bedwars.minefield");
 						}
 					}
@@ -196,7 +199,7 @@ public class GUITeamShop extends HypixelInventoryGUI {
 					if (index >= traps.size()) return ItemStack.builder(Material.AIR);
 					BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
 					BedWarsMapsConfig.TeamKey t = bwPlayer.getTeamKey();
-					Game playerGame = bwPlayer.getGame();
+					BedWarsGame playerGame = bwPlayer.getGame();
 					if (playerGame == null || t == null) return ItemStack.builder(Material.BARRIER)
 							.customName(noItalic(Component.text("No Game").color(NamedTextColor.RED)));
 					Trap trap = traps.get(index);
@@ -235,11 +238,11 @@ public class GUITeamShop extends HypixelInventoryGUI {
 				@Override
 				public ItemStack.Builder getItem(HypixelPlayer player) {
 					BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
-					Game g = bwPlayer.getGame();
+					BedWarsGame g = bwPlayer.getGame();
 					BedWarsMapsConfig.TeamKey t = bwPlayer.getTeamKey();
 					if (g == null || t == null) return ItemStack.builder(Material.BARRIER)
 							.customName(noItalic(Component.text("No Game").color(NamedTextColor.RED)));
-					List<String> queued = g.getTeamManager().getTeamTraps(t);
+					List<String> queued = g.getTeamTraps(t);
 					if (index < queued.size()) {
 						Trap trap = traps.stream().filter(tr -> tr.getKey().equals(queued.get(index))).findFirst().orElse(null);
 						if (trap != null) {
@@ -272,7 +275,7 @@ public class GUITeamShop extends HypixelInventoryGUI {
 		updateItemStacks(getInventory(), getPlayer());
 	}
 
-	private void broadcastTeamPurchase(Game game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer buyer, String name) {
+	private void broadcastTeamPurchase(BedWarsGame game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer buyer, String name) {
 		for (BedWarsPlayer pl : game.getPlayers()) {
 			if (teamName.equals(pl.getTeamKey())) {
 				pl.sendMessage(buyer.getTeamKey().chatColor() + " §apurchased §6" + name + "!");

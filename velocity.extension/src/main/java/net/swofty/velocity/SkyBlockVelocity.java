@@ -49,8 +49,8 @@ import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
-import net.swofty.velocity.presence.PresencePublisher;
 import net.swofty.velocity.packet.PlayerChannelHandler;
+import net.swofty.velocity.presence.PresencePublisher;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
@@ -289,7 +289,7 @@ public class SkyBlockVelocity {
 		));
 
 		TransferHandler transferHandler = new TransferHandler(event.getPlayer());
-		transferHandler.standardTransferTo(originalServer, serverType);
+		transferHandler.noLimboTransferTo(serverType);
 
 		CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
 				.execute(() -> {

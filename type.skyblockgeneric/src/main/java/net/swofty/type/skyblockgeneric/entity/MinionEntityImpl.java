@@ -9,12 +9,12 @@ import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionSkinComponent;
 import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
 import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
 import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionSkinExtension;
-import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -102,11 +102,11 @@ public class MinionEntityImpl extends LivingEntity {
             int inverseDelay = 11 - delay;
 
             int finalRotation = rotation;
-            MathUtility.delay(() -> {
+            ScheduleUtility.delay(() -> {
                 meta.setRightArmRotation(new Vec(360 - finalRotation,0, 0));
             }, delay + 1);
 
-            MathUtility.delay(() -> {
+            ScheduleUtility.delay(() -> {
                 meta.setRightArmRotation(new Vec(360 - finalRotation,0, 0));
             }, 10 + inverseDelay);
         }
@@ -120,12 +120,12 @@ public class MinionEntityImpl extends LivingEntity {
             int inverseDelay = 11 - delay;
 
             int finalRotation = rotation;
-            MathUtility.delay(() -> {
+            ScheduleUtility.delay(() -> {
                 meta.setRightArmRotation(new Vec(360 - finalRotation,0, 0));
                 meta.setLeftArmRotation(new Vec(360 - finalRotation,0, 0));
             }, delay + 1);
 
-            MathUtility.delay(() -> {
+            ScheduleUtility.delay(() -> {
                 meta.setRightArmRotation(new Vec(360 - finalRotation,0, 0));
                 meta.setLeftArmRotation(new Vec(360 - finalRotation,0, 0));
             }, 10 + inverseDelay);
