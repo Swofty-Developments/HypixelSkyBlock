@@ -33,7 +33,7 @@ public class BedWarsDeathHandler {
         Damage lastDamage = victim.getLastDamageSource();
         if (lastDamage == null) {
             if (isVoidKill) {
-                return handleEnvironmentalDeath(builder, victim, DamageType.OUT_OF_WORLD.asValue(), recentAttacker);
+                return handleEnvironmentalDeath(builder, victim, true, recentAttacker);
             }
             return builder.deathType(BedWarsDeathType.GENERIC).build();
         }
@@ -42,22 +42,23 @@ public class BedWarsDeathHandler {
         DamageType damageType = lastDamage.getType().asValue();
 
         if (attacker instanceof BedWarsPlayer killer) {
-            return handlePlayerKill(builder, killer, damageType);
+            return handlePlayerKill(builder, killer, damageType, isVoidKill);
         }
 
         if (attacker != null) {
             return handleMobKill(builder, attacker);
         }
 
-        return handleEnvironmentalDeath(builder, victim, damageType, recentAttacker);
+        return handleEnvironmentalDeath(builder, victim, false, recentAttacker);
     }
 
     private static BedWarsDeathResult handlePlayerKill(BedWarsDeathResult.Builder builder,
                                                        BedWarsPlayer killer,
-                                                       DamageType damageType) {
+                                                       DamageType damageType,
+                                                       boolean isVoidKill) {
         BedWarsDeathType deathType;
 
-        if (damageType == DamageType.OUT_OF_WORLD.asValue()) {
+        if (isVoidKill) {
             deathType = BedWarsDeathType.VOID_ASSISTED;
         } else if (damageType == DamageType.ARROW.asValue() || damageType == DamageType.TRIDENT.asValue()) {
             deathType = BedWarsDeathType.BOW;
@@ -87,10 +88,10 @@ public class BedWarsDeathHandler {
 
     private static BedWarsDeathResult handleEnvironmentalDeath(BedWarsDeathResult.Builder builder,
                                                                BedWarsPlayer victim,
-                                                               DamageType damageType,
+                                                               boolean isVoid,
                                                                @Nullable BedWarsPlayer recentAttacker) {
 
-        if (damageType == DamageType.OUT_OF_WORLD.asValue()) {
+        if (isVoid) {
             if (recentAttacker != null) {
                 return builder
                     .deathType(BedWarsDeathType.VOID_ASSISTED)
@@ -122,10 +123,10 @@ public class BedWarsDeathHandler {
         Component message = switch (deathType) {
             case VOID -> Component.translatable("bedwars.kill.void.default", placeholders);
             case VOID_ASSISTED -> Component.translatable("bedwars.kill.void_by.default", placeholders);
-            case GENERIC -> Component.translatable("bedwars.kill.generic.default", placeholders);
-            case GENERIC_ASSISTED -> Component.translatable("bedwars.kill.generic_by.default", placeholders);
-            case BOW -> Component.translatable("bedwars.kill.bow.default", placeholders);
-            case ENTITY -> Component.translatable("bedwars.kill.entity.default", placeholders);
+            case GENERIC -> Component.translatable("bedwars.kill.died.default", placeholders);
+            case GENERIC_ASSISTED -> Component.translatable("bedwars.kill.died_by.default", placeholders);
+            case BOW -> Component.translatable("bedwars.kill.projectile.default", placeholders);
+            case ENTITY -> Component.translatable("bedwars.kill.assist.default", placeholders);
         };
 
         if (result.isFinalKill()) {

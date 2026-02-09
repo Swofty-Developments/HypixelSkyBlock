@@ -58,7 +58,7 @@ public class BedWarsGameScoreboard {
                     lines.add("§7 ");
                     if (game.getState() == GameState.STARTING) {
                         long seconds = game.getCountdown().getRemainingSeconds();
-                        lines.add("§fStarting in §a" + seconds);
+                        lines.add("§fStarting in §a" + seconds + "s");
                     } else {
                         lines.add("§fWaiting...");
                     }
