@@ -87,7 +87,6 @@ public class ActionGameBreak implements HypixelEventClass {
                     return;
                 }
                 if (!game.isBedAlive(teamKey)) {
-                    // Bed already destroyed logically; block might linger if not cleared perfectly
                     event.setCancelled(true);
                     return;
                 }
@@ -96,11 +95,6 @@ public class ActionGameBreak implements HypixelEventClass {
 
                 if (player.hasEffect(PotionEffect.INVISIBILITY) && player.isInvisible()) {
                     player.getAchievementHandler().completeAchievement("bedwars.sneaky_rusher"); // break an bed while invisible
-                }
-
-                for (BedWarsPlayer p : game.getPlayers()) {
-                    p.sendMessage(String.format("§c§lBED DESTRUCTION §r§cTeam %s's bed was destroyed by %s%s!",
-                        teamKey.getName(), teamKey.chatColor(), player.getUsername()));
                 }
                 event.setCancelled(true); // handled the bed destruction and block removal
                 return;

@@ -23,7 +23,13 @@ public class BedBrokenListener implements HypixelEventClass {
             game.getReplayManager().recordBedDestroyed(teamKey, event.destroyer());
         }
 
-        game.broadcastMessage(Component.text(teamKey.chatColor() + "Team " + teamKey.getName() + "'s §cbed has been destroyed!"));
+        BedWarsPlayer destroyer = event.destroyer();
+        BedWarsMapsConfig.TeamKey destroyerTeamKey = destroyer.getTeamKey();
+        if (destroyerTeamKey == null) {
+            throw new IllegalStateException("Destroyer team key is null for player " + destroyer.getUsername());
+        }
+
+        game.broadcastMessage(Component.newline().append(Component.text("§f§lBED DESTRUCTION > " + teamKey.chatColor() + teamKey.getName() + " Bed §7has been destroyed by " + destroyerTeamKey.chatColor() + event.destroyer().getUsername() + "§7!")).appendNewline());
 
         for (BedWarsPlayer player : game.getPlayers()) {
             player.playSound(Sound.sound(Key.key("minecraft:entity.wither.death"),

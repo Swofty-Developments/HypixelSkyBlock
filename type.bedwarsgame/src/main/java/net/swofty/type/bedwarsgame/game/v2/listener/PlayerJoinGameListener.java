@@ -6,7 +6,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
-import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
@@ -32,15 +31,16 @@ public class PlayerJoinGameListener implements HypixelEventClass {
             player.setInstance(game.getInstance(), new Pos(waiting.x(), waiting.y(), waiting.z()));
         }
 
-        player.setEnableRespawnScreen(true);
+        player.setEnableRespawnScreen(false);
         player.setFlying(false);
         player.setGameMode(GameMode.ADVENTURE);
         player.getInventory().setItemStack(8,
             TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack());
 
-        // Set game ID tag
-        player.setTag(Tag.String("gameId"), event.getGameId());
+        BedWarsMapsConfig.Position spec = game.getMapEntry().getConfiguration().getLocations().getSpectator();
+        player.setRespawnPoint(new Pos(spec.x(), spec.y(), spec.z()));
 
+        player.setGameId(event.getGameId());
         String randomLetters = UUID.randomUUID().toString().replaceAll("-", "")
             .substring(0, new Random().nextInt(10) + 4);
         player.setDisplayName(Component.text(randomLetters, NamedTextColor.WHITE, TextDecoration.OBFUSCATED));

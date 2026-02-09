@@ -282,8 +282,9 @@ public class RecordablePlayer {
 
     private static void playBedDestruction(RecordableBedDestruction rec, ReplaySession session) {
         String teamName = getTeamName(rec.getTeamId());
+        // TODO: make proper
         session.getViewer().sendMessage(Component.text(
-            "§c§lBED DESTROYED! §7" + teamName + "'s bed was destroyed!"
+            "§f§lBED DESTRUCTION > §7" + teamName + "'s bed was destroyed by " + rec.getDestroyerUuid() + "!"
         ));
     }
 

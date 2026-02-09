@@ -302,9 +302,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         return hasActivePlayers || hasRejoinablePlayers;
     }
 
-    /**
-     * Called when a bed is destroyed.
-     */
     public void onBedDestroyed(TeamKey teamKey, BedWarsPlayer destroyer) {
         getTeam(teamKey.name()).ifPresent(team -> {
             team.destroyBed();
@@ -329,7 +326,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
                 replayManager.recordBedDestroyed(teamKey, destroyer);
             }
 
-            // Fire event for listeners to handle announcements, sounds, etc.
             eventDispatcher.accept(new BedDestroyedEvent(
                 gameId,
                 teamKey,
@@ -420,6 +416,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         MinecraftServer.getSchedulerManager().buildTask(() -> {
             if (state != GameState.IN_PROGRESS) return;
             for (BedWarsPlayer player : getPlayers()) {
+                if (Boolean.TRUE.equals(player.getTag(ELIMINATED_TAG))) continue; // Skip eliminated spectators
                 player.xp(ExperienceCause.TIME_PLAYED);
             }
         }).delay(TaskSchedule.minutes(1)).repeat(TaskSchedule.minutes(1)).schedule();

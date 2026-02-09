@@ -55,7 +55,7 @@ public class BedWarsGameScoreboard {
                     lines.add("§fMap: §a" + game.getMapEntry().getName());
                     lines.add("§fPlayers: §a" + game.getPlayers().size() + "/" + game.getMapEntry().getConfiguration().getTeams().size());
                     lines.add("§7 ");
-                    lines.add("§fWaiting for players...");
+                    lines.add("§fWaiting...");
                     lines.add("§7 ");
                     lines.add("§fMode: §a" + game.getGameType().getDisplayName());
                     lines.add("§fVersion: §7v1.10");
