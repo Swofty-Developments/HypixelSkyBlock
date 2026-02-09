@@ -16,7 +16,10 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.StatefulPaginatedView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -104,6 +107,9 @@ public abstract class ShopView extends StatefulPaginatedView<ShopView.ShopItem, 
     public ViewConfiguration<State> configuration() {
         return ViewConfiguration.withString((state, _) -> {
             int totalPages = Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / interiorSlots.length));
+            if (totalPages == 1) {
+                return title;
+            }
             return title + " | Page " + (state.page() + 1) + "/" + totalPages;
         }, InventoryType.CHEST_6_ROW);
     }

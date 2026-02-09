@@ -1,5 +1,6 @@
 package net.swofty.type.hub;
 
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.MinecraftServer;
@@ -7,7 +8,11 @@ import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
+import net.minestom.server.registry.RegistryKey;
+import net.minestom.server.registry.TagKey;
 import net.minestom.server.timer.TaskSchedule;
+import net.minestom.server.world.DimensionType;
+import net.minestom.server.world.attribute.EnvironmentAttribute;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
@@ -17,9 +22,7 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
-
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
@@ -34,7 +37,6 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -102,15 +104,14 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 			HypixelConst.getInstanceContainer().loadChunk(displayPosition).join();
 		});
 
-		GlassDisplay.create(new SkyBlockItem(ItemType.ABIPHONE_CONTACTS_TRIO), HypixelConst.getInstanceContainer(), new Pos(69, 72, -60), (player, event) -> {
+		GlassDisplay.create(new SkyBlockItem(ItemType.ABIPHONE_CONTACTS_TRIO), HypixelConst.getInstanceContainer(), new Pos(70, 81, -63), (player, _) -> {
 			player.sendMessage("§eTalk to §dElizabeth §ein the §bCommunity Center §eto purchase!");
 		});
-		GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(62, 72, -60), (player, event) -> {
-			player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-					.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+		GlassDisplay.create(new SkyBlockItem(ItemType.ABIPHONE_BASIC), HypixelConst.getInstanceContainer(), new Pos(70, 81, -56), (player, _) -> {
+			player.sendMessage(Component.text("§eTalk to §6Alda §eto purchase!"));
 		});
 		for (int j = 1; j <= 3; j++) {
-			GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(16 + j * 3, 72, -41), (player, event) -> {
+			GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(16 + j * 3, 72, -41), (player, _) -> {
 				player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
 						.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
 			});
@@ -123,7 +124,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 		DarkAuctionHandler.setOnStateChangeCallback(darkAuctionDisplay::update);
 
         // Place forest trees
-        ForestTreePlacement.placeTrees(HypixelConst.getInstanceContainer());
+        //ForestTreePlacement.placeTrees(HypixelConst.getInstanceContainer()); TODO: fix this on new map
 
 		HubMap hubMap = new HubMap();
 		hubMap.placeItemFrames(HypixelConst.getInstanceContainer());
@@ -137,7 +138,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 					case SKYBLOCK_SPIDERS_DEN -> new Pos(-159.5, 73, -158.5, -45, 0);
                     case SKYBLOCK_GOLD_MINE -> new Pos(-9.5, 64, -228.5, 0, 0);
                     case SKYBLOCK_DUNGEON_HUB -> new Pos(-44, 88, 11.5, 0, 0);
-                    default -> new Pos(-2.5, 70, -69.5, 180, 0);
+                    default -> new Pos(0.5, 77, -0.5, -180, 0);
                 }, // Spawn position
                 true // Announce death messages
         );
@@ -155,6 +156,23 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 				));
 			}
 		};
+	}
+
+	@Override
+	public @Nullable RegistryKey<DimensionType> getDimensionType() {
+		return MinecraftServer.getDimensionTypeRegistry().register(
+			Key.key("skyblock:hub"),
+			DimensionType.builder()
+				.setAttribute(EnvironmentAttribute.CLOUD_HEIGHT, 192.33f)
+				.ambientLight(1f)
+				.skybox(DimensionType.Skybox.OVERWORLD)
+				.setAttribute(EnvironmentAttribute.FOG_START_DISTANCE, 50f)
+				.setAttribute(EnvironmentAttribute.FOG_END_DISTANCE, 1000f)
+				.setAttribute(EnvironmentAttribute.FOG_COLOR, new Color(0xc0d8ff))
+				.setAttribute(EnvironmentAttribute.SKY_COLOR, new Color(0x78a7ff))
+				.timelines(MinecraftServer.getTimelineRegistry().getTag(TagKey.ofHash("#minecraft:in_overworld")))
+				.skylight(true)
+				.build());
 	}
 
 	@Override
