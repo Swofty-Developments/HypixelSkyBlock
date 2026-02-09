@@ -22,6 +22,7 @@ items:
 
   - id: ALLIUM
     rarity: COMMON
+    material: ALLIUM
     components:
       - id: SELLABLE
         value: 1.0
