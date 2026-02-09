@@ -1,13 +1,68 @@
 # Docker Setup
 
-Docker provides an automated way to deploy the entire stack with minimal configuration.
+## Quick Install (Linux)
 
-## Prerequisites
+The fastest way to get running. A single command launches an interactive installer that handles everything:
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed
-- Git installed
+```bash
+curl -fsSL skyblock-installer.swofty.net | bash
+```
 
-## Quick Start
+The installer will:
+1. Check and install dependencies (Docker, `gum`, `figlet`)
+2. Run a system requirements check
+3. Let you pick which server types and services to run
+4. Generate all configuration and Docker Compose files
+5. Build and start everything in the correct order
+6. Drop you into a management dashboard
+
+:::alert note
+Requires **Linux** with **Docker** installed. The installer will guide you through Docker setup if it's missing.
+:::
+
+### What You'll See
+
+The installer walks you through:
+
+| Step | What It Does |
+|------|-------------|
+| System Check | Validates RAM, CPU, disk space, Docker version |
+| Configuration | Pick install directory, bind IP, online mode |
+| Server Selection | Choose from 14 SkyBlock servers and 10 minigame servers |
+| Service Selection | Pick which microservices to run (DataMutex and Party are required) |
+| Build & Launch | Builds Docker images, starts containers in order, waits for health checks |
+
+### Management Dashboard
+
+After installation, manage your server anytime:
+
+```bash
+~/.hypixel-skyblock/install.sh --manage
+```
+
+The dashboard provides:
+
+- **Start/Stop All** - Control all containers at once
+- **Restart Container** - Restart individual containers
+- **View Logs** - Tail logs from any container
+- **Make Admin** - Promote a player to staff rank via the database
+- **Check for Updates** - Pull latest JARs and rebuild
+- **Watch Mode** - Live health monitoring with auto-refresh
+
+You can also run the health monitor directly:
+
+```bash
+~/.hypixel-skyblock/install.sh --watch
+```
+
+## Manual Setup
+
+If you prefer to set things up manually or aren't on Linux, you can use Docker Compose directly.
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/engine/install/) with Docker Compose v2
+- Git
 
 ### 1. Clone the Repository
 
@@ -16,83 +71,69 @@ git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git
 cd HypixelSkyBlock
 ```
 
-### 2. Add World Files
-
-Download the [world files](https://files.catbox.moe/of7snu.zip) and extract them directly into the `configuration/` folder. The zip already contains the correct folder structure.
-
-### 3. Configure config.yml
+### 2. Configure
 
 In your `configuration` folder:
 
 1. Remove the default `config.yml`
 2. Rename `config.docker.yml` to `config.yml`
 
-### 4. Build and Run
+### 3. Build and Run
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
-For detached mode (background):
+For detached mode:
 
 ```bash
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
-:::alert note
-After the first build, you can skip `--build` for faster startup:
-```bash
-docker-compose up
-```
-:::
-
-### 5. Stop Containers
+### 4. Stop Containers
 
 ```bash
-docker-compose down
+docker compose down
 ```
-
-Or use the stop button in Docker Desktop.
 
 ## What Gets Started
 
 The Docker Compose setup starts:
 
-| Container      | Purpose             |
-|----------------|---------------------|
-| MongoDB        | Database            |
-| Redis          | Caching & messaging |
-| Velocity Proxy | Player connections  |
-| NanoLimbo      | Connection queue    |
-| Game Servers   | Gameplay instances  |
-| Services       | Microservices       |
+| Container | Purpose |
+|-----------|---------|
+| MongoDB | Database |
+| Redis | Caching & messaging |
+| Velocity Proxy | Player connections |
+| NanoLimbo | Connection queue |
+| Game Servers | Gameplay instances |
+| Services | Microservices (API, Auctions, Bazaar, etc.) |
+
+## Connecting
+
+Once everything is running, connect with your Minecraft client to:
+
+```
+localhost:25565
+```
 
 ## Logs and Debugging
 
 View logs for all containers:
 ```bash
-docker-compose logs -f
+docker compose logs -f
 ```
 
 View logs for a specific container:
 ```bash
-docker-compose logs -f proxy
-docker-compose logs -f hypixelcore_island
+docker compose logs -f hypixel_proxy
+docker compose logs -f hypixelcore_skyblock_hub
 ```
 
 ## Data Persistence
 
 Docker volumes persist data between restarts:
 
-- MongoDB data
+- MongoDB data (player profiles, auctions, etc.)
 - Configuration files
 - World saves
-
-## Rebuilding
-
-If you make changes to the codebase:
-
-```bash
-docker-compose down
-docker-compose up --build
-```
