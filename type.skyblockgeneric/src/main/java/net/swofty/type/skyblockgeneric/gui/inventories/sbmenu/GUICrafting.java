@@ -23,6 +23,7 @@ import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -57,7 +58,16 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
         Material borderMaterial = canCraft ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE;
         Components.fill(layout);
         layout.slots(Layouts.row(5), (s, c) -> ItemStackCreator.createNamedItemStack(borderMaterial));
-        Components.close(layout, 49);
+        layout.slot(49, (s, c) -> ItemStack.builder(Material.ARROW)
+                .set(DataComponents.CUSTOM_NAME, Component.text("§aGo Back"))
+                .set(DataComponents.LORE, List.of(Component.text("§7To SkyBlock Menu")
+                        .decoration(TextDecoration.ITALIC, false))),
+                (click, c) -> {
+                    ViewNavigator navigator = ViewNavigator.get(c.player());
+                    if (!navigator.pop()) {
+                        c.player().closeInventory();
+                    }
+                });
 
         Components.containerGrid(
                 layout,
@@ -228,4 +238,3 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
     public record CraftingState(int lastGridHash, SkyBlockRecipe<?> lastParsedRecipe) {
     }
 }
-

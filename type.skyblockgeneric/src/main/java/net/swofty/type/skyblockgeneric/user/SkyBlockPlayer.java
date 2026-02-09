@@ -71,6 +71,7 @@ import java.util.stream.Stream;
 
 @Getter
 public class SkyBlockPlayer extends HypixelPlayer {
+    private static final long VOID_MOB_HIT_WINDOW_MS = 8000;
     private final PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
     @Getter
     private final PlayerStatistics statistics = new PlayerStatistics(this);
@@ -89,6 +90,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     public boolean speedManaged = false;
     @Setter
     private SkyBlockIsland skyBlockIsland;
+    private long lastMobHitAt = 0L;
 
     private static final Pattern SACK_PATTERN = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$");
 
@@ -930,6 +932,14 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
     public DatapointDeaths.PlayerDeaths getDeathData() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.DEATHS, DatapointDeaths.class).getValue();
+    }
+
+    public void markMobHit() {
+        this.lastMobHitAt = System.currentTimeMillis();
+    }
+
+    public boolean wasRecentlyHitByMobForVoidDeath() {
+        return System.currentTimeMillis() - this.lastMobHitAt <= VOID_MOB_HIT_WINDOW_MS;
     }
 
     public DatapointCollectedMobTypeRewards.PlayerCollectedMobTypeRewards getCollectedMobTypesData() {
