@@ -59,6 +59,7 @@ public class ReplaysCommand extends HypixelCommand {
 						.replayId(summary.replayId())
 						.gameId(summary.gameId())
 						.serverType(summary.serverType())
+						.serverId(summary.serverId())
 						.gameTypeName(summary.gameTypeName())
 						.mapName(summary.mapName())
 						.startTime(summary.startTime())

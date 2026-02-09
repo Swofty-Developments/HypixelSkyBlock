@@ -5,7 +5,6 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.commons.skyblock.statistics.ItemStatistic;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -299,5 +298,17 @@ public class StringUtility {
 				default -> i + "th";
 			};
 		};
+	}
+
+	/**
+	 * Capitalizes the first letter of the input string and lowercases the rest.
+	 * @param input The string to capitalize.
+	 * @return The input string with the first letter capitalized and the rest lowercased. If the input is null or empty, it returns the input as is.
+	 */
+	public static String capitalize(String input) {
+		if (input == null || input.isEmpty()) {
+			return input;
+		}
+		return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
 	}
 }

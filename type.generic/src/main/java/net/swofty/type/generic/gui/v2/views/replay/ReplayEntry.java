@@ -7,12 +7,14 @@ import net.swofty.commons.ServerType;
 import java.util.Map;
 import java.util.UUID;
 
+// this has to be the 5th Replay data record in this project. I'm a bad developer
 @Builder
 @With
 public record ReplayEntry(
         UUID replayId,
         String gameId,
         ServerType serverType,
+        String serverId,
         String gameTypeName,
         String mapName,
         long startTime,
@@ -35,12 +37,11 @@ public record ReplayEntry(
     }
 
     public String displayName() {
-        String serverName = switch (serverType) {
-            case BEDWARS_GAME -> "BedWars";
+        return switch (serverType) {
+            case BEDWARS_GAME -> "Bed Wars";
             case MURDER_MYSTERY_GAME -> "Murder Mystery";
             case SKYWARS_GAME -> "SkyWars";
             default -> serverType.formatName();
         };
-        return serverName + " - " + gameTypeName;
     }
 }

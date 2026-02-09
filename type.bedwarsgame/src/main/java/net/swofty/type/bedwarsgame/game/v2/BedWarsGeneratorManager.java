@@ -14,6 +14,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
@@ -166,7 +167,7 @@ public class BedWarsGeneratorManager {
     private void setupGlobalGeneratorDisplays(String generatorType, List<BedWarsMapsConfig.Position> locations, int delaySeconds) {
         boolean isDiamond = generatorType.equalsIgnoreCase("diamond");
         NamedTextColor color = isDiamond ? NamedTextColor.AQUA : NamedTextColor.DARK_GREEN;
-        String capitalizedType = Character.toUpperCase(generatorType.charAt(0)) + generatorType.substring(1);
+        String capitalizedType = StringUtility.capitalize(generatorType);
 
         for (BedWarsMapsConfig.Position location : locations) {
             double locY = location.y() + 5.0;

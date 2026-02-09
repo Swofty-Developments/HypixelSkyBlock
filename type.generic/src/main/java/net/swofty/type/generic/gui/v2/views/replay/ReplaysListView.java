@@ -1,12 +1,13 @@
 package net.swofty.type.generic.gui.v2.views.replay;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.StatefulPaginatedView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
@@ -23,7 +24,7 @@ import java.util.function.Consumer;
 
 public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysListView.State> {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     private final Consumer<ReplayEntry> onReplaySelect;
 
@@ -66,10 +67,24 @@ public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysL
 
     @Override
     protected void layoutBackground(ViewLayout<State> layout, State state, ViewContext ctx) {
-        layout.slot(49, (s, c) -> ItemStack.builder(Material.BARRIER)
-                        .set(DataComponents.CUSTOM_NAME, Component.text("Close", NamedTextColor.RED)),
-                (_, viewCtx) -> viewCtx.player().closeInventory());
+        Components.close(layout, 48);
 
+        layout.slot(47, (_, _) -> ItemStackCreator.getStack("§aHypixel Replays", Material.BOOK, 1, List.of(
+            "§7The Hypixel Replay System allows",
+            "§7players to watch back their recently",
+            "§7played games.",
+            "§7",
+            "§7Replays are currently supported in the following games:",
+            "§f - Bed Wars"
+        )));
+
+        layout.slot(49, (_, _) -> ItemStackCreator.getStack("§aShow Replays Only", Material.BOOK, 1, List.of(
+            "§7Toggle whether all your recently",
+            "§7played games should be displayed or",
+            "§7only games with replays attached.",
+            "§7",
+            "§eClick to toggle!"
+        )));
     }
 
     @Override
@@ -81,33 +96,32 @@ public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysL
             default -> Material.PAPER;
         };
 
+
         List<Component> lore = new ArrayList<>();
+        lore.add(Component.text("§7" + DATE_FORMAT.format(new Date(item.startTime()))));
+        lore.add(Component.text("§7Duration: " + item.formattedDuration()));
         lore.add(Component.empty());
-        lore.add(Component.text("Map: ", NamedTextColor.GRAY)
-                .append(Component.text(item.mapName(), NamedTextColor.WHITE)));
-        lore.add(Component.text("Duration: ", NamedTextColor.GRAY)
-                .append(Component.text(item.formattedDuration(), NamedTextColor.WHITE)));
-        lore.add(Component.text("Date: ", NamedTextColor.GRAY)
-                .append(Component.text(DATE_FORMAT.format(new Date(item.startTime())), NamedTextColor.WHITE)));
-        lore.add(Component.text("Players: ", NamedTextColor.GRAY)
-                .append(Component.text(item.players().size(), NamedTextColor.WHITE)));
+        lore.add(Component.text("§7Mode: §a" + StringUtility.capitalize(item.gameTypeName())));
+        lore.add(Component.text("§7Map: §a" + item.mapName()));
+        lore.add(Component.empty());
+        lore.add(Component.text("§7Server: §a" + item.serverId()));
+        lore.add(Component.text("§7Players: §a" + item.players().size()));
         lore.add(Component.empty());
 
-        // Show result
-        if (item.winnerId() != null) {
+        // add this properly on Duels
+        /*if (item.winnerId() != null) {
             boolean won = item.players().containsKey(player.getUuid()) &&
                     (item.winnerId().equals(player.getUuid().toString()) ||
 						item.players().keySet().stream()
 								.anyMatch(uuid -> item.winnerId().contains(uuid.toString())));
             lore.add(won ? Component.text("VICTORY!", NamedTextColor.GREEN, TextDecoration.BOLD) :
                     Component.text("DEFEAT", NamedTextColor.RED));
-        }
+        }*/
 
-        lore.add(Component.empty());
         lore.add(Component.text("§eClick to view replay!"));
 
         return ItemStack.builder(material)
-                .set(DataComponents.CUSTOM_NAME, Component.text(item.displayName(), NamedTextColor.GREEN))
+                .set(DataComponents.CUSTOM_NAME, Component.text("§a" + item.displayName()))
                 .set(DataComponents.LORE, lore)
                 //.set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(false, Set.of()))
                 ;
