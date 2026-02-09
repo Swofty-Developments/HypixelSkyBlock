@@ -115,6 +115,22 @@ public class LanguageCommand extends HypixelCommand {
             super("Select Language", InventoryType.CHEST_4_ROW);
         }
 
+        @Override
+        public void onOpen(InventoryGUIOpenEvent e) {
+            render(e.player());
+        }
+
+        @Override
+        public boolean allowHotkeying() {
+            return false;
+        }
+
+        @Override
+        public void onBottomClick(InventoryPreClickEvent e) {
+        }
+
+        protected abstract void render(HypixelPlayer player);
+
         void setDecor(int slot, Material material) {
             set(slot, ItemStackCreator.createNamedItemStack(material, "§f"), false);
         }
@@ -183,7 +199,7 @@ public class LanguageCommand extends HypixelCommand {
 
     private static class LanguageSelectionMenuPage1 extends BaseLanguageMenu {
         @Override
-        public void onOpen(HypixelPlayer player, int slot) {
+        protected void render(HypixelPlayer player) {
             fill(FILLER_ITEM);
             setLanguageItem(10, PlayerLanguage.ENGLISH, Material.RED_CONCRETE);
             setLanguageItem(11, PlayerLanguage.JAPANESE, Material.GREEN_CONCRETE);
@@ -223,7 +239,7 @@ public class LanguageCommand extends HypixelCommand {
 
     private static class LanguageSelectionMenuPage2 extends BaseLanguageMenu {
         @Override
-        public void onOpen(HypixelPlayer player, int slot) {
+        protected void render(HypixelPlayer player) {
             fill(FILLER_ITEM);
             setDecor(10, Material.CYAN_CONCRETE);
             setDecor(11, Material.ORANGE_CONCRETE);
