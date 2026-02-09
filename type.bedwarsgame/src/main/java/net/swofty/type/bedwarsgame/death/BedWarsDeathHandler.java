@@ -1,7 +1,8 @@
 package net.swofty.type.bedwarsgame.death;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.ComponentLike;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
@@ -12,80 +13,56 @@ import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
+import java.util.List;
+
+// While this file is somewhat sloppy and definitely is in need of a refactor
+// it also works pretty well. I haven't refactored it completely yet as I don't want
+// to risk breaking the functionality completely.
 public class BedWarsDeathHandler {
-
-    private static final int VOID_Y_THRESHOLD = 1;
-    public static BedWarsDeathResult calculateDeath(@NotNull BedWarsPlayer victim, @NotNull BedWarsGame game) {
+    public static BedWarsDeathResult calculateDeath(@NotNull BedWarsPlayer victim, @NotNull BedWarsGame game, boolean isVoidKill) {
         TeamKey teamKey = victim.getTeamKey();
         boolean isFinalKill = teamKey != null && !game.isBedAlive(teamKey);
 
-        Damage lastDamage = victim.getLastDamageSource();
         BedWarsPlayer recentAttacker = BedWarsCombatTracker.getRecentAttacker(victim);
-
         BedWarsDeathResult.Builder builder = BedWarsDeathResult.builder()
-                .victim(victim)
-                .isFinalKill(isFinalKill);
+            .victim(victim)
+            .isFinalKill(isFinalKill);
 
-        // No damage source at all
+        Damage lastDamage = victim.getLastDamageSource();
         if (lastDamage == null) {
-            return handleNoDamageSource(builder, victim, recentAttacker);
+            if (isVoidKill) {
+                return handleEnvironmentalDeath(builder, victim, DamageType.OUT_OF_WORLD.asValue(), recentAttacker);
+            }
+            return builder.deathType(BedWarsDeathType.GENERIC).build();
         }
 
         Entity attacker = lastDamage.getAttacker();
         DamageType damageType = lastDamage.getType().asValue();
 
-        // Direct player kill
         if (attacker instanceof BedWarsPlayer killer) {
-            return handlePlayerKill(builder, victim, killer, damageType);
+            return handlePlayerKill(builder, killer, damageType);
         }
 
-        // Mob kill
         if (attacker != null) {
             return handleMobKill(builder, attacker);
         }
 
-        // Environmental death - check for assist
         return handleEnvironmentalDeath(builder, victim, damageType, recentAttacker);
     }
 
-    private static BedWarsDeathResult handleNoDamageSource(BedWarsDeathResult.Builder builder,
-                                                           BedWarsPlayer victim,
-                                                           @Nullable BedWarsPlayer recentAttacker) {
-        boolean isInVoid = victim.getPosition().y() <= VOID_Y_THRESHOLD;
-
-        if (isInVoid) {
-            if (recentAttacker != null) {
-                return builder
-                        .deathType(BedWarsDeathType.VOID_ASSISTED)
-                        .assistPlayer(recentAttacker)
-                        .weaponUsed(BedWarsCombatTracker.getLastAttackerWeapon(victim))
-                        .build();
-            }
-            return builder.deathType(BedWarsDeathType.VOID).build();
-        }
-
-        return builder.deathType(BedWarsDeathType.GENERIC).build();
-    }
-
     private static BedWarsDeathResult handlePlayerKill(BedWarsDeathResult.Builder builder,
-                                                        BedWarsPlayer victim,
-                                                        BedWarsPlayer killer,
-                                                        DamageType damageType) {
+                                                       BedWarsPlayer killer,
+                                                       DamageType damageType) {
         BedWarsDeathType deathType;
 
-        if (damageType == DamageType.OUT_OF_WORLD.asValue() || victim.getPosition().y() <= VOID_Y_THRESHOLD) {
-            deathType = BedWarsDeathType.PLAYER_VOID_KNOCK;
-        } else if (damageType == DamageType.FALL.asValue()) {
-            deathType = BedWarsDeathType.PLAYER_FALL_KNOCK;
+        if (damageType == DamageType.OUT_OF_WORLD.asValue()) {
+            deathType = BedWarsDeathType.VOID_ASSISTED;
         } else if (damageType == DamageType.ARROW.asValue() || damageType == DamageType.TRIDENT.asValue()) {
-            deathType = BedWarsDeathType.PLAYER_PROJECTILE;
-        } else if (damageType == DamageType.EXPLOSION.asValue() || damageType == DamageType.PLAYER_EXPLOSION.asValue()) {
-            deathType = BedWarsDeathType.PLAYER_EXPLOSION;
-        } else if (damageType == DamageType.ON_FIRE.asValue() || damageType == DamageType.IN_FIRE.asValue()) {
-            deathType = BedWarsDeathType.PLAYER_FIRE;
+            deathType = BedWarsDeathType.BOW;
         } else {
-            deathType = BedWarsDeathType.PLAYER_MELEE;
+            deathType = BedWarsDeathType.GENERIC;
         }
 
         Material weaponUsed = null;
@@ -95,58 +72,33 @@ public class BedWarsDeathHandler {
         }
 
         return builder
-                .deathType(deathType)
-                .killer(killer)
-                .weaponUsed(weaponUsed)
-                .build();
+            .deathType(deathType)
+            .killer(killer)
+            .weaponUsed(weaponUsed)
+            .build();
     }
 
     private static BedWarsDeathResult handleMobKill(BedWarsDeathResult.Builder builder, Entity attacker) {
         return builder
-                .deathType(BedWarsDeathType.MOB_KILL)
-                .attackerEntity(attacker)
-                .build();
+            .deathType(BedWarsDeathType.ENTITY)
+            .attackerEntity(attacker)
+            .build();
     }
 
     private static BedWarsDeathResult handleEnvironmentalDeath(BedWarsDeathResult.Builder builder,
-                                                                BedWarsPlayer victim,
-                                                                DamageType damageType,
-                                                                @Nullable BedWarsPlayer recentAttacker) {
-        boolean isInVoid = victim.getPosition().y() <= VOID_Y_THRESHOLD;
+                                                               BedWarsPlayer victim,
+                                                               DamageType damageType,
+                                                               @Nullable BedWarsPlayer recentAttacker) {
 
-        // Void death
-        if (damageType == DamageType.OUT_OF_WORLD.asValue() || isInVoid) {
+        if (damageType == DamageType.OUT_OF_WORLD.asValue()) {
             if (recentAttacker != null) {
                 return builder
-                        .deathType(BedWarsDeathType.VOID_ASSISTED)
-                        .assistPlayer(recentAttacker)
-                        .weaponUsed(BedWarsCombatTracker.getLastAttackerWeapon(victim))
-                        .build();
+                    .deathType(BedWarsDeathType.VOID_ASSISTED)
+                    .assistPlayer(recentAttacker)
+                    .weaponUsed(BedWarsCombatTracker.getLastAttackerWeapon(victim))
+                    .build();
             }
             return builder.deathType(BedWarsDeathType.VOID).build();
-        }
-
-        // Fall death
-        if (damageType == DamageType.FALL.asValue()) {
-            if (recentAttacker != null) {
-                return builder
-                        .deathType(BedWarsDeathType.FALL_ASSISTED)
-                        .assistPlayer(recentAttacker)
-                        .weaponUsed(BedWarsCombatTracker.getLastAttackerWeapon(victim))
-                        .build();
-            }
-            return builder.deathType(BedWarsDeathType.FALL).build();
-        }
-
-        // Fire death
-        if (damageType == DamageType.ON_FIRE.asValue() || damageType == DamageType.IN_FIRE.asValue()
-                || damageType == DamageType.LAVA.asValue()) {
-            return builder.deathType(BedWarsDeathType.FIRE).build();
-        }
-
-        // Explosion death
-        if (damageType == DamageType.EXPLOSION.asValue()) {
-            return builder.deathType(BedWarsDeathType.EXPLOSION).build();
         }
 
         return builder.deathType(BedWarsDeathType.GENERIC).build();
@@ -156,50 +108,30 @@ public class BedWarsDeathHandler {
         String victimName = result.victim().getUsername();
         String victimColor = getTeamColor(result.victim());
         BedWarsDeathType deathType = result.deathType();
-        String messageFormat = deathType.getMessageFormat();
 
-        Component message;
-        if (deathType.involvesPlayer()) {
-            BedWarsPlayer involvedPlayer = deathType.isAssisted() ? result.assistPlayer() : result.killer();
-            message = createPlayerInvolvedMessage(victimName, victimColor, involvedPlayer, messageFormat);
-        } else if (deathType == BedWarsDeathType.MOB_KILL) {
-            message = createMobKillMessage(victimName, victimColor, messageFormat, result.attackerEntity());
-        } else {
-            message = createSingleMessage(victimName, victimColor, messageFormat);
-        }
+        List<ComponentLike> placeholders = List.of(
+            Argument.component("player", Component.text(victimColor + victimName)),
+            Argument.component("killer", result.killer() != null ? Component.text(getTeamColor(result.killer()) + result.killer().getUsername()) : Component.text("")),
+            Argument.component("entity", result.attackerEntity() != null ? result.attackerEntity().getCustomName() : Component.text(""))
+        );
 
-        // Append FINAL KILL if applicable
+        return getDeathMessage(result, deathType, placeholders);
+    }
+
+    private static @NonNull Component getDeathMessage(@NonNull BedWarsDeathResult result, BedWarsDeathType deathType, List<ComponentLike> placeholders) {
+        Component message = switch (deathType) {
+            case VOID -> Component.translatable("bedwars.kill.void.default", placeholders);
+            case VOID_ASSISTED -> Component.translatable("bedwars.kill.void_by.default", placeholders);
+            case GENERIC -> Component.translatable("bedwars.kill.generic.default", placeholders);
+            case GENERIC_ASSISTED -> Component.translatable("bedwars.kill.generic_by.default", placeholders);
+            case BOW -> Component.translatable("bedwars.kill.bow.default", placeholders);
+            case ENTITY -> Component.translatable("bedwars.kill.entity.default", placeholders);
+        };
+
         if (result.isFinalKill()) {
-            message = message.append(
-                    MiniMessage.miniMessage().deserialize("<gray> </gray><aqua><bold>FINAL KILL!</bold></aqua>")
-            );
+            message = message.append(Component.translatable("bedwars.kill.final_kill"));
         }
-
         return message;
-    }
-
-    private static Component createPlayerInvolvedMessage(String victimName, String victimColor,
-                                                         @Nullable BedWarsPlayer otherPlayer,
-                                                         String messageFormat) {
-        if (otherPlayer == null) {
-            return createSingleMessage(victimName, victimColor, messageFormat);
-        }
-
-        String otherColor = getTeamColor(otherPlayer);
-        return Component.text(victimColor + victimName + "§7" + messageFormat + otherColor + otherPlayer.getUsername() + "§7.");
-    }
-
-    private static Component createSingleMessage(String victimName, String victimColor, String messageFormat) {
-        return Component.text(victimColor + victimName + "§7" + messageFormat);
-    }
-
-    private static Component createMobKillMessage(String victimName, String victimColor, String messageFormat,
-                                                  @Nullable Entity mob) {
-        String mobName = mob != null
-                ? mob.getEntityType().name().toLowerCase().replace("_", " ")
-                : "a mob";
-
-        return Component.text(victimColor + victimName + "§7" + messageFormat + mobName + "§7.");
     }
 
     private static String getTeamColor(@Nullable BedWarsPlayer player) {

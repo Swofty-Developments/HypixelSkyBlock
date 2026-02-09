@@ -5,6 +5,6 @@ bedwars.kill.assist.default: "<player> tapettiin pelaajan <victim> <entity> avul
 bedwars.kill.void.default: "<player> putosi tyhjyyteen."
 bedwars.kill.void_by.default: "<player> putosi tyhjyyteen pelaajan <killer> toimesta."
 bedwars.kill.bed.default: "<gray>tuhosi pelaaja"
-bedwars.kill.final_kill: "Viimeistely"
+bedwars.kill.final_kill: "<aqua><bold>VIIMEISTELYTAPPO!</aqua></bold>"
 bedwars.bed_destroyed: "<white><bold>SÄNKY TUHOTTU ></bold> <gray><team> Sänky <gray><message> <gray>."
 bedwars.bed_destroyed_self: "<white><bold>SÄNKY TUHOTTU ></bold> <gray>Sänkysi <gray><message> <gray>."

@@ -2,9 +2,6 @@ package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Player;
-import net.minestom.server.entity.damage.Damage;
-import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
@@ -36,12 +33,7 @@ public class ActionGameMove implements HypixelEventClass {
 		}
 
 		if (player.getPosition().y() <= 0) {
-			if (player.getLastDamageSource() != null && player.getLastDamageSource().getSource() instanceof Player p) {
-				player.damage(Damage.fromPlayer(p, 1.0f));
-			} else {
-				player.damage(Damage.fromPosition(DamageType.OUT_OF_WORLD, player.getPosition(), 1.0f));
-			}
-			player.kill();
+			ActionGameDeath.death(player, game, game::broadcastMessage, true);
 			return;
 		}
 
