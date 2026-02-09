@@ -42,7 +42,8 @@ public abstract class HypixelNPC {
     public HypixelNPC(NPCConfiguration configuration) {
         this.parameters = configuration;
         String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
-        this.name = parameters.chatName() != null ? parameters.chatName() : className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+        String defaultName = className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+        this.name = parameters.chatName() != null ? parameters.chatName() : defaultName;
         this.dialogueController = new DialogueController(this);
     }
 
@@ -85,9 +86,22 @@ public abstract class HypixelNPC {
 			HypixelNPC.getRegisteredNPCs().forEach((npc) -> {
 				// If the main username can't be used (over 16 chars), use a blank space instead and use holograms for all lines
 				boolean playerHasNPC = cache.getEntityImpls().containsKey(npc);
+				NPCConfiguration config = npc.getParameters();
+
+				// Check visibility - if not visible, skip creation or remove existing
+				if (!config.visible(player)) {
+					if (playerHasNPC) {
+						// Remove NPC that is no longer visible
+						Entity entity = cache.get(npc).getValue();
+						PlayerHolograms.ExternalPlayerHologram holo = cache.get(npc).getKey();
+						entity.remove();
+						PlayerHolograms.removeExternalPlayerHologram(holo);
+						cache.remove(npc);
+					}
+					return;
+				}
 
 				if (!playerHasNPC) {
-					NPCConfiguration config = npc.getParameters();
 					String[] holograms = config.holograms(player);
 					Pos position = config.position(player);
 
@@ -141,7 +155,6 @@ public abstract class HypixelNPC {
 				Entity entity = cache.get(npc).getValue();
 				PlayerHolograms.ExternalPlayerHologram holo = cache.get(npc).getKey();
 
-				NPCConfiguration config = npc.getParameters();
 				Pos npcPosition = config.position(player);
 				String[] npcHolograms = config.holograms(player);
 
@@ -245,10 +258,20 @@ public abstract class HypixelNPC {
         sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
     }
 
-	public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
-		player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
-		player.playSound(sound);
-	}
+    public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
+        String displayName = getDisplayName(player);
+        player.sendMessage("§e[NPC] " + displayName + "§f: " + message);
+        player.playSound(sound);
+    }
+
+    /**
+     * Gets the display name for this NPC for a specific player.
+     * Uses per-player chatName if available, otherwise falls back to default name.
+     */
+    public String getDisplayName(HypixelPlayer player) {
+        String perPlayerName = parameters.chatName(player);
+        return perPlayerName != null ? perPlayerName : getName();
+    }
 
     protected DialogueController dialogue() {
         return dialogueController;

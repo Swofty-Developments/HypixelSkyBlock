@@ -8,6 +8,10 @@ plugins {
 group = "net.swofty"
 version = "1.0"
 
+repositories {
+    mavenCentral()
+}
+
 subprojects {
     apply(plugin = "java")
     apply(plugin = "java-library")
