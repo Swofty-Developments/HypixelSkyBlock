@@ -25,6 +25,7 @@ dependencies {
     implementation(project(":proxy.api"))
     implementation("org.mongodb:bson:5.6.2")
     implementation("org.mongodb:mongodb-driver-sync:5.6.2")
+    implementation("net.kyori:adventure-text-minimessage:4.25.0")
     // Must match AtlasRedisAPI's Jedis version to avoid conflicts
     implementation("redis.clients:jedis:7.2.0")
     implementation("org.tinylog:tinylog-api:2.7.0")
