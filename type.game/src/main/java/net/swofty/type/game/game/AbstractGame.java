@@ -152,7 +152,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         players.remove(player.getUuid());
         player.setGameId(null);
 
-        if (this instanceof AbstractTeamGame<P,?> teamGame) {
+        if (this instanceof AbstractTeamGame<P, ?> teamGame) {
             teamGame.removeFromTeam(player);
         }
 
@@ -246,7 +246,6 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         if (state == GameState.ENDING || state == GameState.TERMINATED) return;
 
         setState(GameState.ENDING);
-        onGameEnd();
     }
 
     @Override
@@ -271,12 +270,6 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 
         eventDispatcher.accept(new GameStateChangeEvent(gameId, oldState, newState));
     }
-
-    /**
-     * @deprecated use the Event system instead
-     */
-    @Deprecated(forRemoval = true)
-    protected abstract void onGameEnd();
 
     /**
      * Check if win conditions are met and end the game if so.

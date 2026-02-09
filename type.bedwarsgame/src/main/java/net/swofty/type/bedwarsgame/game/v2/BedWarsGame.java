@@ -229,20 +229,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     @Override
-    protected void onGameEnd() {
-        Logger.info("Ending BedWars game {}", gameId);
-        replayManager.stopRecording();
-
-        generatorManager.stopAllGenerators();
-        gameEventManager.stop();
-
-        MinecraftServer.getSchedulerManager().buildTask(() -> {
-            getPlayers().forEach(p -> p.sendTo(ServerType.BEDWARS_LOBBY));
-            dispose();
-        }).delay(TaskSchedule.seconds(10)).schedule();
-    }
-
-    @Override
     public void handleGameWin(BedWarsTeam winningTeam) {
         String titleMessage;
         String subtitleMessage;
