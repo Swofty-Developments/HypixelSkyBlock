@@ -186,7 +186,7 @@ public class BedWarsGeneratorManager {
                 MiniMessage.miniMessage().deserialize("<yellow>Spawns in <red>" + delaySeconds + "</red> seconds!</yellow>"));
             spawnDisplay.setInstance(game.getInstance(), new Pos(location.x(), locY, location.z()));
 
-            var size = 0.7;
+            var size = 0.6;
             locY -= size + 0.1 + 0.25;
             BlockDisplayEntity blockDisplay = new BlockDisplayEntity(getBlockFromType(generatorType), (meta) -> {
                 meta.setScale(new Vec(size, size, size));

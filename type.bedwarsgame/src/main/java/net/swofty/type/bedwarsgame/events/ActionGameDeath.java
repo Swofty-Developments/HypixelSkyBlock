@@ -90,19 +90,19 @@ public class ActionGameDeath implements HypixelEventClass {
         if (itemRecipient != null) {
             if (iron > 0) {
                 itemRecipient.getInventory().addItemStack(ItemStack.of(Material.IRON_INGOT, iron));
-                itemRecipient.sendMessage("§f+ " + iron + " iron");
+                itemRecipient.sendMessage("§f+" + iron + " Iron");
             }
             if (gold > 0) {
                 itemRecipient.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, gold));
-                itemRecipient.sendMessage("§e+ " + gold + " gold");
+                itemRecipient.sendMessage("§6+" + gold + " Gold");
             }
             if (diamonds > 0) {
                 itemRecipient.getInventory().addItemStack(ItemStack.of(Material.DIAMOND, diamonds));
-                itemRecipient.sendMessage("§b+ " + diamonds + " diamond");
+                itemRecipient.sendMessage("§b+" + diamonds + " Diamond");
             }
             if (emeralds > 0) {
                 itemRecipient.getInventory().addItemStack(ItemStack.of(Material.EMERALD, emeralds));
-                itemRecipient.sendMessage("§a+ " + emeralds + " emerald");
+                itemRecipient.sendMessage("§3+" + emeralds + " Emerald");
             }
         }
 
