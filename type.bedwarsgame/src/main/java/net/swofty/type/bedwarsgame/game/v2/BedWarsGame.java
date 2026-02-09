@@ -180,16 +180,13 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             // Re-add to players map
             players.put(player.getUuid(), player);
 
-            // Restore player data
-            restorePlayerData(player, data.savedData());
-
             // Call the rejoin handler
             onPlayerRejoin(player, data);
         }
     }
 
-    @Override
-    protected void onPlayerRejoin(BedWarsPlayer player, DisconnectedPlayerData data) {
+    public void onPlayerRejoin(BedWarsPlayer player, DisconnectedPlayerData data) {
+        restorePlayerData(player, data.savedData());
         player.setInstance(instance);
 
         Optional<BedWarsTeam> teamOpt = getPlayerTeam(player.getUuid());
@@ -224,7 +221,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         return data;
     }
 
-    @Override
     protected void restorePlayerData(BedWarsPlayer player, Map<String, Object> savedData) {
         Integer armorLevel = (Integer) savedData.get("armorLevel");
         if (armorLevel != null) {

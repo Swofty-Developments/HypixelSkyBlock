@@ -216,13 +216,10 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         players.put(player.getUuid(), player);
         player.setGameId(gameId);
 
-        restorePlayerData(player, data.savedData());
-        onPlayerRejoin(player, data);
-
         eventDispatcher.accept(new PlayerRejoinGameEvent(
             gameId,
-            player.getUuid(),
-            player.getServerPlayer().getUsername()
+            player.getServerPlayer(),
+            data
         ));
 
         return true;
@@ -287,13 +284,6 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
     protected abstract void checkWinConditions();
 
     /**
-     * @deprecated use the Event system instead
-     */
-    @Deprecated(forRemoval = true)
-    protected void onPlayerRejoin(P player, DisconnectedPlayerData data) {
-    }
-
-    /**
      * Determines if a player can rejoin after disconnecting.
      * Override for game-specific logic (e.g., bed status in BedWars).
      */
@@ -309,11 +299,4 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         return new HashMap<>();
     }
 
-    /**
-     * @deprecated use the Event system instead
-     */
-    @Deprecated(forRemoval = true)
-    protected void restorePlayerData(P player, Map<String, Object> savedData) {
-        // Default: no restoration
-    }
 }

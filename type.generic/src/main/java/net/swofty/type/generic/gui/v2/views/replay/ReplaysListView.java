@@ -78,7 +78,8 @@ public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysL
             "§f - Bed Wars"
         )));
 
-        layout.slot(49, (_, _) -> ItemStackCreator.getStack("§aShow Replays Only", Material.BOOK, 1, List.of(
+        // TODO: behaviour
+        layout.slot(49, (_, _) -> ItemStackCreator.getStack("§aShow Replays Only", Material.GRAY_DYE, 1, List.of(
             "§7Toggle whether all your recently",
             "§7played games should be displayed or",
             "§7only games with replays attached.",
