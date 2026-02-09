@@ -33,7 +33,7 @@ public class BedWarsCountdownListener implements HypixelEventClass {
         } else if (seconds == 10) {
             return Component.text("§eThe game starts in §610§e seconds!");
         } else if (seconds > 0) {
-            return Component.text("§eGThe game starts in §c" + seconds + " §eseconds!");
+            return Component.text("§eThe game starts in §c" + seconds + " §eseconds!");
         }
         return null;
     }

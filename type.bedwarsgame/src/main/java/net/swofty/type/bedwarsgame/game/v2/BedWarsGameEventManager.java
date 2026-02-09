@@ -136,8 +136,4 @@ public class BedWarsGameEventManager {
     public GamePhase getCurrentEvent() {
         return currentPhase;
     }
-
-    public long getSecondsUntilNextEvent() {
-        return secondsUntilNextPhase;
-    }
 }

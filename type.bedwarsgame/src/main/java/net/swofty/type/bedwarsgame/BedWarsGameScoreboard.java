@@ -51,11 +51,16 @@ public class BedWarsGameScoreboard {
                 lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
                 lines.add("§7 ");
 
-                if (game.getState() == GameState.WAITING) {
+                if (game.getState() == GameState.WAITING || game.getState() == GameState.STARTING) {
                     lines.add("§fMap: §a" + game.getMapEntry().getName());
                     lines.add("§fPlayers: §a" + game.getPlayers().size() + "/" + game.getMapEntry().getConfiguration().getTeams().size());
                     lines.add("§7 ");
-                    lines.add("§fWaiting...");
+                    if (game.getState() == GameState.STARTING) {
+                        long seconds = game.getCountdown().getRemainingSeconds();
+                        lines.add("§fStarting in §a" + seconds);
+                    } else {
+                        lines.add("§fWaiting...");
+                    }
                     lines.add("§7 ");
                     lines.add("§fMode: §a" + game.getGameType().getDisplayName());
                     lines.add("§fVersion: §7v1.10");
@@ -64,7 +69,7 @@ public class BedWarsGameScoreboard {
                     String eventName = nextGamePhase != null
                         ? nextGamePhase.getDisplayName()
                         : game.getGameEventManager().getCurrentEvent().getDisplayName();
-                    long seconds = game.getGameEventManager().getSecondsUntilNextEvent();
+                    long seconds = game.getGameEventManager().getSecondsUntilNextPhase();
                     long minutesPart = seconds / 60;
                     long secondsPart = seconds % 60;
                     String timeLeft = String.format("%d:%02d", minutesPart, secondsPart);
