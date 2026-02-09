@@ -1,9 +1,10 @@
 package net.swofty.type.bedwarslobby.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.VersionConst;
+import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.type.bedwarslobby.gui.GUIPlay;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
@@ -24,7 +25,7 @@ public class NPCDoubles extends HypixelNPC {
 				String commmaified = StringUtility.commaify(amountOnline);
 				return new String[]{
 						"§e§lCLICK TO PLAY",
-						"§bDoubles §7[v1.9]",
+						"§bDoubles §7[v" + VersionConst.BED_WARS_VERSION + "]",
 						"§e" + commmaified + " Players",
 				};
 			}

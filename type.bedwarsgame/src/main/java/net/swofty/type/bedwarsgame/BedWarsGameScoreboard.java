@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.VersionConst;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGameEventManager;
@@ -63,7 +64,7 @@ public class BedWarsGameScoreboard {
                     }
                     lines.add("§7 ");
                     lines.add("§fMode: §a" + game.getGameType().getDisplayName());
-                    lines.add("§fVersion: §7v1.10");
+                    lines.add("§fVersion: §7v" + VersionConst.BED_WARS_VERSION);
                 } else {
                     BedWarsGameEventManager.GamePhase nextGamePhase = game.getGameEventManager().getCurrentPhase().next();
                     String eventName = nextGamePhase != null

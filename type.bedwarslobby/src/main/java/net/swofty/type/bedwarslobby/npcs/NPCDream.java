@@ -6,15 +6,15 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
+import net.swofty.commons.VersionConst;
 import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCDream extends HypixelNPC {
 	private static List<UnderstandableProxyServer> cacheServers = new ArrayList<>();
@@ -41,7 +41,7 @@ public class NPCDream extends HypixelNPC {
 				String commmaified = StringUtility.commaify(amountOnline);
 				return new String[]{
 						"§e§lCLICK TO PLAY",
-						"§bDreams §7[v1.9]",
+						"§bDreams §7[v" + VersionConst.BED_WARS_VERSION + "]",
 						"§e" + commmaified + " Players",
 				};
 			}
