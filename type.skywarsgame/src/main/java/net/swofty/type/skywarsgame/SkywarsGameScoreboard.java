@@ -95,7 +95,7 @@ public class SkywarsGameScoreboard {
 				scoreboard.updateLines(player, lines);
 				scoreboard.updateTitle(player, getSidebarName(animationFrame));
 			}
-			return TaskSchedule.tick(10);
+			return TaskSchedule.tick(4);
 		});
 	}
 

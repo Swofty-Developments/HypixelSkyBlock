@@ -2,46 +2,34 @@ FROM eclipse-temurin:25-jdk
 
 WORKDIR /app
 
-# Install jq for JSON manipulation
-RUN apt-get update && apt-get install -y jq expect netcat-traditional && apt-get clean
-
+RUN apt-get update && apt-get install -y jq expect netcat-traditional curl && apt-get clean
 
 # Download Velocity proxy JAR
-ADD https://fill-data.papermc.io/v1/objects/ef1a852bfae7397e84907837925e7ad21c6312066290edaae401b77f6f423ac3/velocity-3.4.0-SNAPSHOT-558.jar velocity.jar
+RUN curl -fSL -o velocity.jar "https://fill-data.papermc.io/v1/objects/ef1a852bfae7397e84907837925e7ad21c6312066290edaae401b77f6f423ac3/velocity-3.4.0-SNAPSHOT-558.jar"
 
 # Download SkyBlockProxy.jar
-ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/SkyBlockProxy.jar plugins/SkyBlockProxy.jar
+RUN mkdir -p plugins && \
+    curl -fSL -o plugins/SkyBlockProxy.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/SkyBlockProxy.jar"
 
 # Copy configuration data
 COPY ./configuration /app/configuration_files
 
+# Run Velocity to generate forwarding.secret, then shut it down
+RUN printf '#!/usr/bin/expect -f\nset timeout 120\nspawn java -jar velocity.jar\nexpect ">"\nsend "shutdown\\r"\nexpect eof\n' > /tmp/run_velocity.exp && \
+    chmod +x /tmp/run_velocity.exp && \
+    /tmp/run_velocity.exp && \
+    rm /tmp/run_velocity.exp
 
-# Run Velocity and send "shutdown" to the console
-RUN expect <<EOF
-spawn java -jar velocity.jar
-expect ">"
-send "shutdown\r"
-expect eof
-EOF
+# Replace generated velocity.toml with our own
+RUN rm -f velocity.toml && \
+    cp configuration_files/velocity.toml velocity.toml
 
-# Remove velocity.toml
-RUN rm velocity.toml
-
-# Add back our velocity.toml
-RUN cp configuration_files/velocity.toml velocity.toml
-
-# Download config.yml
-RUN mkdir -p configuration
-
-RUN cp configuration_files/config.example.yml ./configuration/config.yml
-
-
-# Get Contents of the forwarding secret and add it to config.yml
-RUN secret=$(cat forwarding.secret) && \
+# Set up config.yml with the generated forwarding secret
+RUN mkdir -p configuration && \
+    cp configuration_files/config.example.yml ./configuration/config.yml && \
+    secret=$(cat forwarding.secret) && \
     sed -i "s/velocity-secret: .*/velocity-secret: '$secret'/" ./configuration/config.yml
 
-# Expose the required port
 EXPOSE 25565
 
-# Start the Velocity proxy and Copy the Forward.secret to the config files for use by other Dockerfiles
 CMD ["sh", "-c", "cp forwarding.secret /app/configuration_files/forwarding.secret && java -jar velocity.jar"]

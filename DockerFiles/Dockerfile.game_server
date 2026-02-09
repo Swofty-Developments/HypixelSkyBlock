@@ -2,58 +2,37 @@ FROM eclipse-temurin:25-jdk
 
 WORKDIR /app
 
-# Install unzip for extracting files
-RUN apt-get update && apt-get install -y jq unzip screen && apt-get clean
+RUN apt-get update && apt-get install -y jq curl && apt-get clean
 
-# Download SkyBlockCore.jar
-ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/HypixelCore.jar HypixelCore.jar
-
-# Download Services
-ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAPI.jar ./ServiceAPI.jar
-ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAuctionHouse.jar ./ServiceAuctionHouse.jar
-ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceBazaar.jar ./ServiceBazaar.jar
-ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceItemTracker.jar ./ServiceItemTracker.jar
-ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDataMutex.jar ./ServiceDataMutex.jar
-ADD https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceParty.jar ./ServiceParty.jar
+# Download all JARs in a single layer
+RUN curl -fSL -o HypixelCore.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/HypixelCore.jar" && \
+    curl -fSL -o ServiceAPI.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAPI.jar" && \
+    curl -fSL -o ServiceAuctionHouse.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAuctionHouse.jar" && \
+    curl -fSL -o ServiceBazaar.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceBazaar.jar" && \
+    curl -fSL -o ServiceItemTracker.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceItemTracker.jar" && \
+    curl -fSL -o ServiceDataMutex.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDataMutex.jar" && \
+    curl -fSL -o ServiceParty.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceParty.jar" && \
+    curl -fSL -o ServiceDarkAuction.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDarkAuction.jar" && \
+    curl -fSL -o ServiceOrchestrator.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceOrchestrator.jar" && \
+    curl -fSL -o ServiceFriend.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceFriend.jar"
 
 # Copy configuration data
 COPY ./configuration /app/configuration_files
 
-# Create configuration folder
-RUN mkdir -p configuration
+RUN mkdir -p configuration && \
+    cp configuration_files/config.yml ./configuration/config.yml
 
-# Copy config.yml
-RUN cp configuration_files/config.yml ./configuration/config.yml
+RUN curl -fSL -o /tmp/worlds.tar.gz "https://files.catbox.moe/9uas8z.gz" && \
+    tar -xzf /tmp/worlds.tar.gz -C ./configuration && \
+    rm /tmp/worlds.tar.gz
 
-# Make required folders
-RUN mkdir -p ./configuration/skyblock/islands
-
-RUN cp configuration_files/world.zip ./world.zip
-
-RUN unzip world.zip -d ./configuration && rm world.zip
-
-# Move to islands folder
-RUN mv ./configuration/hypixel_hub ./configuration/skyblock/islands/hypixel_skyblock_hub
-RUN mv ./configuration/hypixel_island_template ./configuration/skyblock/islands/hypixel_skyblock_island_template
-
-# Expose the required ports
 EXPOSE 25565 65535 8080 20000
 
-# Copy NanoLimbo
-RUN cp configuration_files/NanoLimbo-1.10.2.jar ./NanoLimbo-1.10.2.jar
-
-# Copy the Nano Config
-RUN cp configuration_files/settings.yml ./settings.yml
-
-# Copy Skyblock files
-RUN cp -a configuration_files/skyblock/. configuration/skyblock/
-
-# Copy Entrypoint Script
-RUN cp configuration_files/entrypoint.sh ./entrypoint.sh
-
-RUN chmod +x entrypoint.sh
-
-# Set the settings.yml bind: ip: 'localhost' to bind: ip: '0.0.0.0'
-RUN sed -i "s/ip: 'localhost'/ip: '0.0.0.0'/" ./settings.yml
+RUN cp configuration_files/NanoLimbo-1.10.2.jar ./NanoLimbo-1.10.2.jar && \
+    cp configuration_files/settings.yml ./settings.yml && \
+    cp -a configuration_files/skyblock/. configuration/skyblock/ && \
+    cp configuration_files/entrypoint.sh ./entrypoint.sh && \
+    chmod +x entrypoint.sh && \
+    sed -i "s/ip: 'localhost'/ip: '0.0.0.0'/" ./settings.yml
 
 CMD ["sh", "entrypoint.sh"]

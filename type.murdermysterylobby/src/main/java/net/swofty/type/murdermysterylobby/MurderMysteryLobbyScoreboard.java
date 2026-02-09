@@ -75,7 +75,7 @@ public class MurderMysteryLobbyScoreboard {
 				scoreboard.updateLines(player, lines);
 				scoreboard.updateTitle(player, getSidebarName(animationFrame));
 			}
-			return TaskSchedule.tick(5);
+			return TaskSchedule.tick(4);
 		});
 	}
 
