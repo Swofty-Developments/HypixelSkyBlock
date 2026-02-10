@@ -53,7 +53,6 @@ import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.redis.RedisOriginServer;
-import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -205,10 +204,9 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
         return MiniMessage.miniMessage().deserialize("<aqua>You are playing on <bold><yellow>MC.HYPIXEL.NET</yellow></bold>");
     }
 
-    private static Component footer(HypixelPlayer player) {
+    private static Component footer(BedWarsPlayer player) {
         Component start = Component.empty();
-        BedWarsPlayer bwPlayer = (BedWarsPlayer) player;
-        if (bwPlayer.getGame() != null) {
+        if (player.getGame() != null) {
             start = start.append(MiniMessage.miniMessage().deserialize("<aqua>Kills: <yellow>0 <aqua>Final Kills: <yellow>0 <aqua>Beds Broken: <yellow>0")).appendNewline();
         }
         return start
@@ -331,7 +329,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
             if (players.isEmpty())
                 return;
             for (HypixelPlayer player : players) {
-                player.sendPlayerListHeaderAndFooter(header(), footer(player));
+                player.sendPlayerListHeaderAndFooter(header(), footer((BedWarsPlayer) player));
             }
         }).repeat(10, TimeUnit.SERVER_TICK).schedule();
     }
@@ -347,10 +345,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return List.of(
-                    new EmptyTabModule(),
-                    new EmptyTabModule(),
-                    new EmptyTabModule(),
-                    new EmptyTabModule()
+                    new BedWarsGameTabListModule()
                 );
             }
         };

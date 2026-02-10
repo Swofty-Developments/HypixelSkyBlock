@@ -1,6 +1,7 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.entity.Entity;
+import net.minestom.server.event.entity.EntityDamageEvent;
 import net.swofty.pvp.events.PrepareAttackEvent;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -31,6 +32,20 @@ public class ActionEntityAttack implements HypixelEventClass {
 					event.setCancelled(true);
 					return;
 				}
+			}
+		}
+	}
+
+	@HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+	public void run(EntityDamageEvent event) {
+		if (event.getEntity() instanceof BedWarsPlayer player) {
+			BedWarsGame game = player.getGame();
+			if (game == null) {
+				return;
+			}
+
+			if (game.getState() == GameState.IN_PROGRESS) {
+				player.updateBelowTag();
 			}
 		}
 	}

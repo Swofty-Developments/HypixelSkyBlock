@@ -53,7 +53,7 @@ public class BedWarsGameScoreboard {
                 lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
                 lines.add("§7 ");
 
-                if (game.getState() == GameState.WAITING || game.getState() == GameState.COUNTDOWN) {
+                if (game.getState().isWaiting()) {
                     lines.add("§fMap: §a" + game.getMapEntry().getName());
                     lines.add("§fPlayers: §a" + game.getPlayers().size() + "/" + game.getMapEntry().getConfiguration().getTeams().size());
                     lines.add("§7 ");

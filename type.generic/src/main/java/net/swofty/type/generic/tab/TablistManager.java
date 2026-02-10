@@ -60,7 +60,6 @@ public abstract class TablistManager {
                 AtomicReference<Map.Entry<String, Integer>> charPrefix = new AtomicReference<>(Map.entry("§", 0));
 
                 getModules().forEach(module -> {
-                    try {
                         List<TablistModule.TablistEntry> entries = module.getEntries(player);
 
                         entries.forEach(entry -> {
@@ -120,7 +119,6 @@ public abstract class TablistManager {
                                             1, true)))
                             );
                         });
-                    } catch (Exception e) {}
                 });
             });
         }, TaskSchedule.seconds(5), TaskSchedule.seconds(3), ExecutionType.TICK_END);

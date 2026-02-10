@@ -8,6 +8,7 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
+import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.*;
@@ -177,6 +178,7 @@ public class HypixelDataHandler extends DataHandler {
             ScheduleUtility.delay(() -> {
                 if (!player.isOnline()) return;
                 if (HypixelConst.getTypeLoader().getType().isSkyBlock()) return;
+                if (HypixelConst.getTypeLoader().getType() == ServerType.BEDWARS_GAME) return;
 
                 String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
                 Team team = new TeamBuilder("Z" + teamName, MinecraftServer.getTeamManager())
@@ -189,6 +191,7 @@ public class HypixelDataHandler extends DataHandler {
         }, (player, datapoint) -> {
             player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
             if (HypixelConst.getTypeLoader().getType().isSkyBlock()) return;
+            if (HypixelConst.getTypeLoader().getType() == ServerType.BEDWARS_GAME) return;
 
             Rank rank = (Rank) datapoint.getValue();
             String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);

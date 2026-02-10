@@ -214,8 +214,9 @@ public class BedWarsGeneratorManager {
 
                 if (display == null) continue;
 
+                display.countdown--;
                 if (display.countdown <= 0) {
-                    Pos spawnPos = new Pos(location.x(), location.y(), location.z());
+                    Pos spawnPos = new Pos(location.x(), location.y() + 1, location.z());
                     long currentItemCount = game.getInstance().getNearbyEntities(spawnPos, 1.5)
                         .stream()
                         .filter(ItemEntity.class::isInstance)
@@ -225,7 +226,7 @@ public class BedWarsGeneratorManager {
                         .sum();
 
                     if (currentItemCount < limits.maxAmount) {
-                        spawnItem(limits.material, limits.amount, spawnPos, Duration.ofSeconds(1));
+                        spawnItem(limits.material, limits.amount, spawnPos, Duration.ofSeconds(2));
                     }
                     display.countdown = display.maxCountdown;
                 }
@@ -236,9 +237,6 @@ public class BedWarsGeneratorManager {
     private void updateGeneratorDisplays() {
         for (List<GeneratorDisplay> displays : generatorDisplays.values()) {
             for (GeneratorDisplay display : displays) {
-                display.countdown--;
-                if (display.countdown <= 0) display.countdown = display.maxCountdown;
-
                 display.spawnDisplay.setText(MiniMessage.miniMessage().deserialize(
                     "<yellow>Spawns in <red>" + display.countdown + "</red> seconds!</yellow>"));
             }
@@ -309,7 +307,7 @@ public class BedWarsGeneratorManager {
         entity.setPickupDelay(pickupDelay);
         entity.setInstance(game.getInstance(), position);
 
-        if (pickupDelay.equals(Duration.ofSeconds(1))) {
+        if (pickupDelay.equals(Duration.ofSeconds(2))) {
             entity.setVelocity(new Vec(0, 0.1, 0));
         }
     }
@@ -348,7 +346,7 @@ public class BedWarsGeneratorManager {
     }
 
     public void addTeamGeneratorTask(TeamKey teamKey, Task task) {
-        teamGeneratorTasks.computeIfAbsent(teamKey, k -> new ArrayList<>()).add(task);
+        teamGeneratorTasks.computeIfAbsent(teamKey, _ -> new ArrayList<>()).add(task);
     }
 
     private static class GeneratorDisplay {

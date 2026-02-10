@@ -5,5 +5,17 @@ public enum GameState {
 	COUNTDOWN,
 	IN_PROGRESS,
 	ENDING,
-	TERMINATED
+	TERMINATED;
+
+	public boolean isInProgress() {
+		return this == IN_PROGRESS;
+	}
+
+	public boolean isWaiting() {
+		return this == WAITING || this == COUNTDOWN;
+	}
+
+	public boolean isEnding() {
+		return this == ENDING || this == TERMINATED;
+	}
 }

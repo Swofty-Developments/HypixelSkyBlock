@@ -21,14 +21,14 @@ public class BedWarsGameEventManager {
     private Task ticker;
 
     public enum GamePhase {
-        NONE("None", 0, 0, 0),
+        NONE("None", 0, 30, 60),
         DIAMOND_II("Diamond II", 6 * 60, 30, 60),
         EMERALD_II("Emerald II", 2 * 6 * 60, 30, 60),
         DIAMOND_III("Diamond III", 3 * 6 * 60, 30, 60),
         EMERALD_III("Emerald III", 4 * 6 * 60, 30, 60),
         BED_DESTRUCTION("Bed Destruction", 5 * 6 * 60, 30, 60),
-        SUDDEN_DEATH("Sudden Death", 6 * 6 * 60 + 10 * 60, 30, 60),
-        GAME_END("Game End", 7 * 6 * 60 + 10 * 60, 30, 60);
+        SUDDEN_DEATH("Sudden Death", 5 * 6 * 60 + 10 * 60, 30, 60),
+        GAME_END("Game End", 5 * 6 * 60 + 20 * 60, 30, 60);
 
         @Getter
         private final String displayName;

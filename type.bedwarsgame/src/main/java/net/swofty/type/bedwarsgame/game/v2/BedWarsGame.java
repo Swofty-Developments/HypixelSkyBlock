@@ -342,6 +342,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
                     player.setGameMode(GameMode.SURVIVAL);
                     player.getInventory().clear();
                     player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
+                    player.reveal();
                     player.setDisplayName(Component.text(
                         team.getColorCode() + "§l" + team.firstLetter() + " §r" + team.getColorCode() + player.getUsername()
                     ));
