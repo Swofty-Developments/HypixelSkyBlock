@@ -1,6 +1,5 @@
 package net.swofty.type.bedwarsgame.game.v2.listener;
 
-import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.event.PlayerAssignedTeamEvent;
@@ -13,7 +12,7 @@ public class PlayerTeamAssignationListener implements HypixelEventClass {
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onPlayerTeamAssign(PlayerAssignedTeamEvent<BedWarsTeam> event) {
         BedWarsPlayer player = (BedWarsPlayer) event.player();
-        player.setTag(Tag.String("team"), event.team().getTeamKey().name());
+        player.setTeamName(event.team().getTeamKey());
     }
 
 }

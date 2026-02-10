@@ -41,6 +41,7 @@ public class BedWarsGameScoreboard {
                 if (player.joined - System.currentTimeMillis() > 5000) {
                     continue;
                 }
+
                 HypixelDataHandler dataHandler = player.getDataHandler();
                 BedWarsDataHandler bwDataHandler = BedWarsDataHandler.getUser(player);
 

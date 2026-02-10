@@ -74,6 +74,10 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 		return getTag(Tag.String("team"));
 	}
 
+	public void setTeamName(@NotNull BedWarsMapsConfig.TeamKey teamKey) {
+		setTag(Tag.String("team"), teamKey.name());
+	}
+
 	@Nullable
 	public BedWarsMapsConfig.TeamKey getTeamKey() {
 		return BedWarsMapsConfig.TeamKey.valueOf(getTeamName());

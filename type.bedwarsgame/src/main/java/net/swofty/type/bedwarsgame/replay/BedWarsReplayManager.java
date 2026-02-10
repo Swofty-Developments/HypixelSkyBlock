@@ -358,6 +358,12 @@ public class BedWarsReplayManager {
         recorder.record(new RecordableTeamElimination((byte) teamKey.ordinal()));
     }
 
+    /**
+     * Records a generator upgrade event.
+     *
+     * @param generatorType // 0=diamond, 1=emerald
+     * @param tier          // 1, 2, 3
+     */
     public void recordGeneratorUpgrade(byte generatorType, byte tier) {
         if (!recording) return;
         recorder.record(new RecordableGeneratorUpgrade(generatorType, tier));

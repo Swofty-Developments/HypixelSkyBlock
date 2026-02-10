@@ -1,8 +1,5 @@
 package net.swofty.type.bedwarsgame.game.v2.listener;
 
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.events.custom.BedWarsGameEventAdvanceEvent;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
@@ -16,12 +13,6 @@ public class BedWarsGameEventListener implements HypixelEventClass {
     public void onGameEventAdvance(BedWarsGameEventAdvanceEvent event) {
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.gameId());
         if (game == null) return;
-
-        // TODO: make this look like Hypixel
-        Component message = Component.text(event.currentEvent(), NamedTextColor.GREEN)
-            .append(Component.text(" has started!", NamedTextColor.YELLOW));
-
-        Audience.audience(game.getPlayers()).sendMessage(message);
 
         // update displays
         game.getGeneratorManager().updateDisplaysForEventChange();

@@ -184,6 +184,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
         BedWarsTeam team = teamOpt.get();
         String teamColor = team.getColorCode();
+        player.setTeamName(team.getTeamKey());
 
         broadcastMessage(Component.text(teamColor + player.getUsername() + " §7reconnected."));
 
