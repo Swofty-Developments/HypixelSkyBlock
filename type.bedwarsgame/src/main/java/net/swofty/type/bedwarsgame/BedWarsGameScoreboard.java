@@ -52,11 +52,11 @@ public class BedWarsGameScoreboard {
                 lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
                 lines.add("§7 ");
 
-                if (game.getState() == GameState.WAITING || game.getState() == GameState.STARTING) {
+                if (game.getState() == GameState.WAITING || game.getState() == GameState.COUNTDOWN) {
                     lines.add("§fMap: §a" + game.getMapEntry().getName());
                     lines.add("§fPlayers: §a" + game.getPlayers().size() + "/" + game.getMapEntry().getConfiguration().getTeams().size());
                     lines.add("§7 ");
-                    if (game.getState() == GameState.STARTING) {
+                    if (game.getState() == GameState.COUNTDOWN) {
                         long seconds = game.getCountdown().getRemainingSeconds();
                         lines.add("§fStarting in §a" + seconds + "s");
                     } else {
@@ -98,7 +98,11 @@ public class BedWarsGameScoreboard {
                                 bedStatus = "§c✖";
                             }
                         }
-                        lines.add(String.format("%s%s §f%s %s", teamKey.chatColor(), teamInitial, teamName, bedStatus));
+                        boolean isYourTeam = game.getPlayerTeam(player.getUuid())
+                            .map(t -> t.getTeamKey() == teamKey)
+                            .orElse(false);
+                        String isYourTeamSuffix = isYourTeam ? " §7YOU" : "";
+                        lines.add(String.format("%s%s §f%s %s%s", teamKey.chatColor(), teamInitial, teamName, bedStatus, isYourTeamSuffix));
                     }
                 }
                 lines.add("§7 ");

@@ -34,6 +34,6 @@ public record GameStateChangeEvent(
 	 * @return true if countdown just started
 	 */
 	public boolean isCountdownStart() {
-		return newState == GameState.STARTING && previousState == GameState.WAITING;
+		return newState == GameState.COUNTDOWN && previousState == GameState.WAITING;
 	}
 }

@@ -9,7 +9,7 @@ import net.minestom.server.event.trait.PlayerEvent;
  * Event fired when a player attempts to join a game.
  * Can be cancelled to prevent the join.
  */
-public class PlayerJoinGameEvent implements GameEvent, PlayerEvent, CancellableEvent {
+public class PlayerPreJoinGameEvent implements GameEvent, PlayerEvent, CancellableEvent {
     private final String gameId;
     @Getter
     private final Player player;
@@ -18,7 +18,7 @@ public class PlayerJoinGameEvent implements GameEvent, PlayerEvent, CancellableE
     @Getter
     private String cancelReason = null;
 
-    public PlayerJoinGameEvent(String gameId, Player player) {
+    public PlayerPreJoinGameEvent(String gameId, Player player) {
         this.gameId = gameId;
         this.player = player;
     }

@@ -33,7 +33,6 @@ import net.swofty.type.bedwarsgame.replay.BedWarsReplayManager;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
-import net.swofty.type.game.game.AbstractGame;
 import net.swofty.type.game.game.AbstractTeamGame;
 import net.swofty.type.game.game.CountdownConfig;
 import net.swofty.type.game.game.GameState;
@@ -171,18 +170,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             return "Cannot warp as the game has already started";
         }
         return null;
-    }
-
-    public void rejoin(BedWarsPlayer player) {
-        // Check if player has disconnected data
-        AbstractGame.DisconnectedPlayerData data = disconnectedPlayers.remove(player.getUuid());
-        if (data != null) {
-            // Re-add to players map
-            players.put(player.getUuid(), player);
-
-            // Call the rejoin handler
-            onPlayerRejoin(player, data);
-        }
     }
 
     public void onPlayerRejoin(BedWarsPlayer player, DisconnectedPlayerData data) {
@@ -337,7 +324,8 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     /**
-     * Respawns a team's bed (admin action).
+     * Respawns a team's bed. Usually an admin action, Lucky Block Bed Wars beds can be placed at any location
+     * which isn't supported yet.
      */
     public void respawnBed(TeamKey teamKey) {
         getTeam(teamKey.name()).ifPresent(team -> {
@@ -405,7 +393,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
                     player.getInventory().clear();
                     player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
                     player.setDisplayName(Component.text(
-                        team.getColorCode() + "§l" + team.getName() + " §r" + team.getColorCode() + player.getUsername()
+                        team.getColorCode() + "§l" + team.firstLetter() + " §r" + team.getColorCode() + player.getUsername()
                     ));
                 }
             });

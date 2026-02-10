@@ -2,7 +2,7 @@ package net.swofty.type.game.game;
 
 public enum GameState {
 	WAITING,
-	STARTING,
+	COUNTDOWN,
 	IN_PROGRESS,
 	ENDING,
 	TERMINATED

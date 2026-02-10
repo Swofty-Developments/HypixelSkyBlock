@@ -5,9 +5,9 @@ import net.swofty.type.game.game.event.GameDisposeEvent;
 import net.swofty.type.game.game.event.GameStartEvent;
 import net.swofty.type.game.game.event.GameStateChangeEvent;
 import net.swofty.type.game.game.event.PlayerDisconnectGameEvent;
-import net.swofty.type.game.game.event.PlayerJoinGameEvent;
-import net.swofty.type.game.game.event.PlayerJoinedGameEvent;
 import net.swofty.type.game.game.event.PlayerLeaveGameEvent;
+import net.swofty.type.game.game.event.PlayerPostJoinGameEvent;
+import net.swofty.type.game.game.event.PlayerPreJoinGameEvent;
 import net.swofty.type.game.game.event.PlayerRejoinGameEvent;
 
 import java.util.Collection;
@@ -107,7 +107,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 
     @Override
     public JoinResult join(P player) {
-        PlayerJoinGameEvent event = new PlayerJoinGameEvent(gameId, player.getServerPlayer());
+        PlayerPreJoinGameEvent event = new PlayerPreJoinGameEvent(gameId, player.getServerPlayer());
         eventDispatcher.accept(event);
 
         if (event.isCancelled()) {
@@ -115,7 +115,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         }
 
         // Check basic conditions
-        if (state != GameState.WAITING && state != GameState.STARTING) {
+        if (state != GameState.WAITING && state != GameState.COUNTDOWN) {
             return new JoinResult.Denied("Game already in progress");
         }
 
@@ -128,17 +128,16 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         player.setGameId(gameId);
 
         // Fire joined event
-        eventDispatcher.accept(new PlayerJoinedGameEvent(
+        eventDispatcher.accept(new PlayerPostJoinGameEvent(
             gameId,
-            player.getUuid(),
-            player.getServerPlayer().getUsername(),
+            player.getServerPlayer(),
             players.size(),
             getMaxPlayers()
         ));
 
         // Check if we should start countdown
         if (hasMinimumPlayers() && !countdown.isActive()) {
-            setState(GameState.STARTING);
+            setState(GameState.COUNTDOWN);
             countdown.start();
         }
 
@@ -165,7 +164,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         // Check countdown conditions
         if (countdown.isActive()) {
             countdown.checkConditions();
-            if (!countdown.isActive() && state == GameState.STARTING) {
+            if (!countdown.isActive() && state == GameState.COUNTDOWN) {
                 setState(GameState.WAITING);
             }
         }
@@ -235,6 +234,9 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
     @Override
     public void start() {
         if (state == GameState.IN_PROGRESS) return;
+        if (countdown.isActive()) {
+            countdown.stop();
+        }
 
         setState(GameState.IN_PROGRESS);
 

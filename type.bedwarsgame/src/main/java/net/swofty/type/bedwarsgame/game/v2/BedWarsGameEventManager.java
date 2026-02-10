@@ -22,13 +22,13 @@ public class BedWarsGameEventManager {
 
     public enum GamePhase {
         NONE("None", 0, 0, 0),
-        DIAMOND_II("Diamond II", 3 * 6 * 60, 30, 60),
-        EMERALD_II("Emerald II", 4 * 6 * 60, 30, 60),
-        DIAMOND_III("Diamond III", 5 * 6 * 60, 30, 60),
-        EMERALD_III("Emerald III", 6 * 6 * 60, 30, 60),
-        BED_DESTRUCTION("Bed Destruction", 7 * 6 * 60, 30, 60),
-        SUDDEN_DEATH("Sudden Death", 7 * 6 * 60 + 10 * 60, 30, 60),
-        GAME_END("Game End", 3720, 30, 60);
+        DIAMOND_II("Diamond II", 6 * 60, 30, 60),
+        EMERALD_II("Emerald II", 2 * 6 * 60, 30, 60),
+        DIAMOND_III("Diamond III", 3 * 6 * 60, 30, 60),
+        EMERALD_III("Emerald III", 4 * 6 * 60, 30, 60),
+        BED_DESTRUCTION("Bed Destruction", 5 * 6 * 60, 30, 60),
+        SUDDEN_DEATH("Sudden Death", 6 * 6 * 60 + 10 * 60, 30, 60),
+        GAME_END("Game End", 7 * 6 * 60 + 10 * 60, 30, 60);
 
         @Getter
         private final String displayName;
@@ -57,7 +57,9 @@ public class BedWarsGameEventManager {
         if (ticker != null) return;
 
         currentPhase = GamePhase.NONE;
-        secondsUntilNextPhase = currentPhase.getTriggerTimeSeconds();
+        secondsUntilNextPhase =
+            currentPhase.next().getTriggerTimeSeconds()
+                - currentPhase.getTriggerTimeSeconds();
 
         ticker = MinecraftServer.getSchedulerManager().buildTask(this::tick)
             .delay(TaskSchedule.seconds(1))

@@ -1,11 +1,10 @@
 package net.swofty.type.game.game.event;
 
-import java.util.UUID;
+import net.minestom.server.entity.Player;
 
-public record PlayerJoinedGameEvent(
+public record PlayerPostJoinGameEvent(
         String gameId,
-        UUID playerId,
-        String playerName,
+        Player player,
         int currentPlayerCount,
         int maxPlayerCount
 ) implements GameEvent {

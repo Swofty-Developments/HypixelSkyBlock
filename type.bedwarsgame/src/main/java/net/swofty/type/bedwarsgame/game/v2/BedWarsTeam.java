@@ -31,6 +31,10 @@ public class BedWarsTeam extends SimpleGameTeam {
         return bedAlive;
     }
 
+    public String firstLetter() {
+        return getName().substring(0, 1);
+    }
+
     /**
      * Gets the level of an upgrade.
      *

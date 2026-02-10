@@ -54,7 +54,10 @@ public class ActionPlayerJoin implements HypixelEventClass {
 		ScheduleUtility.delay(() -> {
 			if (!player.isOnline()) return;
 			if (preferred.hasDisconnectedPlayer(player.getUuid())) {
-				preferred.rejoin(player);
+				if (!preferred.handleRejoin(player)) {
+					player.sendMessage("§cFailed to rejoin your previous game! Returning to lobby...");
+					player.sendTo(ServerType.BEDWARS_LOBBY);
+				}
 			} else {
 				preferred.join(player);
 			}
