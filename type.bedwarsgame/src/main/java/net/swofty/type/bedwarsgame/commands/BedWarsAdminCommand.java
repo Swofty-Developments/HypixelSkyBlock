@@ -8,6 +8,7 @@ import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
+import net.swofty.type.game.game.event.GameTeamWinConditionEvent;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
@@ -106,9 +107,19 @@ public class BedWarsAdminCommand extends HypixelCommand {
 
             if (winnerKey != null) {
                 BedWarsTeam team = game.getTeam(winnerKey.name()).orElse(null);
-                game.handleGameWin(team);
+                game.getEventDispatcher().accept(
+                    new GameTeamWinConditionEvent<>(
+                        game.getGameId(),
+                        team
+                    )
+                );
             } else {
-                game.handleGameWin(null);
+                game.getEventDispatcher().accept(
+                    new GameTeamWinConditionEvent<>(
+                        game.getGameId(),
+                        null
+                    )
+                );
             }
 
         }, ArgumentType.Literal("endgame"), ArgumentType.String("winner").setDefaultValue(""));
@@ -125,7 +136,12 @@ public class BedWarsAdminCommand extends HypixelCommand {
                 return;
             }
 
-            game.handleGameWin(null);
+            game.getEventDispatcher().accept(
+                new GameTeamWinConditionEvent<>(
+                    game.getGameId(),
+                    null
+                )
+            );
         }, ArgumentType.Literal("endgame"));
 
         // /bwadmin info

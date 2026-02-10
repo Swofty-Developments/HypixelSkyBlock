@@ -1,5 +1,6 @@
 package net.swofty.type.bedwarsgame.user;
 
+import lombok.Getter;
 import net.minestom.server.ServerFlag;
 import net.minestom.server.collision.Aerodynamics;
 import net.minestom.server.collision.PhysicsResult;
@@ -17,11 +18,14 @@ import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.potion.TimedPotion;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.chunk.ChunkUtils;
+import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.pvp.player.CombatPlayer;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.game.game.GameParticipant;
+import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.data.datapoints.DatapointHypixelExperience;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -40,6 +44,12 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 
 	private boolean velocityUpdate = false;
 	private PhysicsResult previousPhysicsResult = null;
+	@Getter
+	private long xpThisGame = 0;
+	@Getter
+	private long tokensThisGame = 0;
+	@Getter
+	private long hypixelXpThisGame = 0;
 
 	public BedWarsPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
 		super(playerConnection, gameProfile);
@@ -55,9 +65,16 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 	public void setGameId(String gameId) {
 		if (gameId == null) {
 			removeTag(Tag.String("gameId"));
+			resetTrackable();
 		} else {
 			setTag(Tag.String("gameId"), gameId);
 		}
+	}
+
+	public void resetTrackable() {
+		xpThisGame = 0;
+		tokensThisGame = 0;
+		hypixelXpThisGame = 0;
 	}
 
 	@Override
@@ -89,6 +106,7 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 	}
 
 	public void xp(ExperienceCause cause) {
+		xpThisGame += cause.getExperience();
 		sendMessage("§b+" + cause.getExperience() + " Bed Wars XP (" + cause.getFormattedName() + ")");
 		DatapointLeaderboardLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class);
 		dp.setValue(dp.getValue() + cause.getExperience());
@@ -101,6 +119,28 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 		dp.setValue(dp.getValue() + amount);
 	}
 
+	public void hypixelXp(long amount) {
+		hypixelXpThisGame += amount;
+		sendMessage("§b+" + amount + " Hypixel Experience");
+		DatapointHypixelExperience dp = getDataHandler().get(HypixelDataHandler.Data.HYPIXEL_EXPERIENCE, DatapointHypixelExperience.class);
+		dp.setValue(dp.getValue() + amount);
+	}
+
+	public void token(TokenCause cause) {
+		tokensThisGame += cause.getExperience();
+		sendMessage("§3+" + cause.getExperience() + " Tokens (" + cause.getFormattedName() + ")");
+		DatapointLeaderboardLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class);
+		dp.setValue(dp.getValue() + cause.getExperience());
+	}
+
+	public long getCurrentBedWarsExperience() {
+		DatapointLeaderboardLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class);
+		return dp.getValue();
+	}
+
+	public long getCurrentBedWarsLevel() {
+		return BedwarsLevelUtil.calculateLevel(getCurrentBedWarsExperience());
+	}
 
 	@Override
 	public void setVelocity(@NotNull Vec velocity) {

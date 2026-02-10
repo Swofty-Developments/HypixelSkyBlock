@@ -1,6 +1,7 @@
 package net.swofty.type.game.game;
 
 import net.minestom.server.instance.InstanceContainer;
+import net.swofty.type.game.game.event.GameTeamWinConditionEvent;
 import net.swofty.type.game.game.event.PlayerAssignedTeamEvent;
 import net.swofty.type.game.game.event.TeamEliminatedEvent;
 import net.swofty.type.game.game.team.GameTeam;
@@ -153,14 +154,14 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
         List<T> viableTeams = getViableTeams().stream().toList();
 
         if (viableTeams.size() <= 1) {
-            T winner = viableTeams.isEmpty() ? null : viableTeams.get(0);
-            handleGameWin(winner);
+            T winner = viableTeams.isEmpty() ? null : viableTeams.getFirst();
+
+            eventDispatcher.accept(
+                new GameTeamWinConditionEvent<>(
+                    gameId,
+                    winner
+                )
+            );
         }
     }
-
-    /**
-     * Called when a team has won (or no teams remain).
-     * @param winningTeam The winning team, or null for a draw
-     */
-    public abstract void handleGameWin(T winningTeam);
 }

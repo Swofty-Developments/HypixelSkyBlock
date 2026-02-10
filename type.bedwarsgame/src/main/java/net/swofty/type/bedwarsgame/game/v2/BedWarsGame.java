@@ -2,8 +2,6 @@ package net.swofty.type.bedwarsgame.game.v2;
 
 import lombok.Getter;
 import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.key.Key;
-import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.TitlePart;
@@ -30,13 +28,12 @@ import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.events.custom.BedDestroyedEvent;
 import net.swofty.type.bedwarsgame.replay.BedWarsReplayManager;
-import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
+import net.swofty.type.bedwarsgame.user.TokenCause;
 import net.swofty.type.game.game.AbstractTeamGame;
 import net.swofty.type.game.game.CountdownConfig;
 import net.swofty.type.game.game.GameState;
-import net.swofty.type.game.game.event.GameEndEvent;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -215,54 +212,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             player.setTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG, armorLevel);
         }
     }
-
-    @Override
-    public void handleGameWin(BedWarsTeam winningTeam) {
-        String titleMessage;
-        String subtitleMessage;
-
-        if (winningTeam != null) {
-            titleMessage = winningTeam.getColorCode() + "Team " + winningTeam.getName() + " has won!";
-            subtitleMessage = "Congratulations!";
-
-            // Fire victory event
-            eventDispatcher.accept(new GameEndEvent(
-                gameId,
-                new GameEndEvent.GameResult.Victory(
-                    winningTeam.getId(),
-                    winningTeam.getName(),
-                    GameEndEvent.GameResult.Victory.WinnerType.TEAM
-                )
-            ));
-        } else {
-            titleMessage = "§cGame Over!";
-            subtitleMessage = "It's a draw!";
-
-            eventDispatcher.accept(new GameEndEvent(
-                gameId,
-                new GameEndEvent.GameResult.Draw("No teams remaining")
-            ));
-        }
-
-        // Show results to all players
-        for (BedWarsPlayer player : getPlayers()) {
-            player.sendTitlePart(TitlePart.TITLE, Component.text(titleMessage));
-            player.sendTitlePart(TitlePart.SUBTITLE, Component.text(subtitleMessage));
-            player.playSound(Sound.sound(Key.key("minecraft:ui.toast.challenge_complete"),
-                Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
-
-            // Record win
-            if (winningTeam != null && winningTeam.hasPlayer(player.getUuid())) {
-                BedWarsStatsRecorder.recordWin(player, gameType);
-                player.getAchievementHandler().addProgressByTrigger("bedwars.wins", 1);
-            }
-
-            player.setGameMode(GameMode.SPECTATOR);
-        }
-
-        end();
-    }
-
     @Override
     protected void onTeamEliminated(BedWarsTeam team) {
         super.onTeamEliminated(team);
@@ -406,6 +355,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             if (state != GameState.IN_PROGRESS) return;
             for (BedWarsPlayer player : getPlayers()) {
                 if (Boolean.TRUE.equals(player.getTag(ELIMINATED_TAG))) continue; // Skip eliminated spectators
+                player.token(TokenCause.TIME_PLAYED);
                 player.xp(ExperienceCause.TIME_PLAYED);
             }
         }).delay(TaskSchedule.minutes(1)).repeat(TaskSchedule.minutes(1)).schedule();
@@ -439,6 +389,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         return new ArrayList<>(disconnectedPlayers.keySet());
     }
 
+    // widens access modifier
     @Override
     public void checkWinConditions() {
         super.checkWinConditions();

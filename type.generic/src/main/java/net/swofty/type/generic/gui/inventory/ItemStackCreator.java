@@ -14,7 +14,11 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +27,9 @@ import java.util.stream.Collectors;
  */
 public class ItemStackCreator {
 	private static final TooltipDisplay DEFAULT_TOOLTIP_DISPLAY = new TooltipDisplay(false, Set.of(
-			DataComponents.UNBREAKABLE
+			DataComponents.UNBREAKABLE,
+			DataComponents.POTION_CONTENTS,
+			DataComponents.POTION_DURATION_SCALE
 	));
 
 	/**

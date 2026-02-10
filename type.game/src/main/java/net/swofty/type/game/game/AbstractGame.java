@@ -1,9 +1,11 @@
 package net.swofty.type.game.game;
 
+import lombok.Getter;
 import net.minestom.server.instance.InstanceContainer;
 import net.swofty.type.game.game.event.GameDisposeEvent;
 import net.swofty.type.game.game.event.GameStartEvent;
 import net.swofty.type.game.game.event.GameStateChangeEvent;
+import net.swofty.type.game.game.event.GameWinConditionEvent;
 import net.swofty.type.game.game.event.PlayerDisconnectGameEvent;
 import net.swofty.type.game.game.event.PlayerLeaveGameEvent;
 import net.swofty.type.game.game.event.PlayerPostJoinGameEvent;
@@ -24,6 +26,8 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
     protected final InstanceContainer instance;
     protected final Map<UUID, P> players = new ConcurrentHashMap<>();
     protected final Map<UUID, DisconnectedPlayerData> disconnectedPlayers = new ConcurrentHashMap<>();
+
+    @Getter
     protected final Consumer<Object> eventDispatcher;
 
     protected GameState state = GameState.WAITING;
@@ -273,10 +277,13 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         eventDispatcher.accept(new GameStateChangeEvent(gameId, oldState, newState));
     }
 
-    /**
-     * Check if win conditions are met and end the game if so.
-     */
-    protected abstract void checkWinConditions();
+    protected void checkWinConditions() {
+        eventDispatcher.accept(
+            new GameWinConditionEvent(
+                gameId
+            )
+        );
+    }
 
     /**
      * Determines if a player can rejoin after disconnecting.
