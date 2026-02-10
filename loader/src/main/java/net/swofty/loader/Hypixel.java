@@ -5,8 +5,10 @@ import io.sentry.Sentry;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.kyori.adventure.translation.GlobalTranslator;
 import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.adventure.MinestomAdventure;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -31,6 +33,7 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.RavengardTypeLoader;
 import net.swofty.type.generic.SkyBlockTypeLoader;
+import net.swofty.type.generic.i18n.HypixelTranslator;
 import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import org.json.JSONArray;
@@ -38,13 +41,18 @@ import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
+import java.net.InetAddress;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-import java.net.InetAddress;
 
 
 public class Hypixel {
@@ -179,6 +187,10 @@ public class Hypixel {
             });
         });
         typeLoader.afterInitialize(minecraftServer);
+
+        MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION = true;
+        HypixelTranslator translator = new HypixelTranslator();
+        GlobalTranslator.translator().addSource(translator);
 
         // Start the server
         MinecraftServer.setBrandName("Hypixel");

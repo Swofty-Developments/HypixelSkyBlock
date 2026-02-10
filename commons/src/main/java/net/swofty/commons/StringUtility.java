@@ -5,7 +5,6 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.commons.skyblock.statistics.ItemStatistic;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -150,6 +149,85 @@ public class StringUtility {
 
 	public static String profileAge(long tbf) {
 		return formatTimeWentBy(System.currentTimeMillis() - tbf);
+	}
+
+	/**
+	 * Unescapes a string that contains standard Java escape sequences.
+	 * This is untested and may not work as expected.
+	 *
+	 * @param input the string to unescape
+	 * @return the unescaped string
+	 */
+	public static String unescapeJava(String input) {
+		if (input == null) {
+			return null;
+		}
+		StringBuilder sb = new StringBuilder(input.length());
+		for (int i = 0; i < input.length(); i++) {
+			char c = input.charAt(i);
+			if (c == '\\' && i < input.length() - 1) {
+				char next = input.charAt(i + 1);
+				switch (next) {
+					case 'b':
+						sb.append('\b');
+						i++;
+						break;
+					case 't':
+						i++;
+						break;
+					case 'n':
+						sb.append('\n');
+						i++;
+						break;
+					case 'f':
+						sb.append('\f');
+						i++;
+						break;
+					case 'r':
+						sb.append('\r');
+						i++;
+						break;
+					case '\"':
+						sb.append('\"');
+						i++;
+						break;
+					case '\'':
+						sb.append('\'');
+						i++;
+						break;
+					case '\\':
+						sb.append('\\');
+						i++;
+						break;
+					case 'u':
+						// Unicode escape sequence:
+						if (i + 5 < input.length()) {
+							String hex = input.substring(i + 2, i + 6);
+							try {
+								int code = Integer.parseInt(hex, 16);
+								sb.append((char) code);
+								i += 5;
+							} catch (NumberFormatException e) {
+								// Not a valid Unicode escape, so fall back
+								sb.append('\\').append('u');
+								i++;
+							}
+						} else {
+							sb.append('\\').append('u');
+							i++;
+						}
+						break;
+					default:
+						// Unrecognized escape, skip the backslash
+						sb.append(next);
+						i++;
+						break;
+				}
+			} else {
+				sb.append(c);
+			}
+		}
+		return sb.toString();
 	}
 
 	public static String getAsRomanNumeral(int num) {
