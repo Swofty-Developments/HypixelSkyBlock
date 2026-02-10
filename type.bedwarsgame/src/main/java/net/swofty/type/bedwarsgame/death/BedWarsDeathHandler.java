@@ -1,8 +1,8 @@
 package net.swofty.type.bedwarsgame.death;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentLike;
-import net.kyori.adventure.text.minimessage.translation.Argument;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
@@ -13,9 +13,6 @@ import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
-
-import java.util.List;
 
 // While this file is somewhat sloppy and definitely is in need of a refactor
 // it also works pretty well. I haven't refactored it completely yet as I don't want
@@ -110,27 +107,33 @@ public class BedWarsDeathHandler {
         String victimColor = getTeamColor(result.victim());
         BedWarsDeathType deathType = result.deathType();
 
-        List<ComponentLike> placeholders = List.of(
-            Argument.component("player", Component.text(victimColor + victimName)),
-            Argument.component("killer", result.killer() != null ? Component.text(getTeamColor(result.killer()) + result.killer().getUsername()) : Component.text("")),
-            Argument.component("entity", result.attackerEntity() != null ? result.attackerEntity().getCustomName() : Component.text(""))
-        );
-
-        return getDeathMessage(result, deathType, placeholders);
-    }
-
-    private static @NonNull Component getDeathMessage(@NonNull BedWarsDeathResult result, BedWarsDeathType deathType, List<ComponentLike> placeholders) {
+        // would not be slop if we had translations :)
         Component message = switch (deathType) {
-            case VOID -> Component.translatable("bedwars.kill.void.default", placeholders);
-            case VOID_ASSISTED -> Component.translatable("bedwars.kill.void_by.default", placeholders);
-            case GENERIC -> Component.translatable("bedwars.kill.died.default", placeholders);
-            case GENERIC_ASSISTED -> Component.translatable("bedwars.kill.died_by.default", placeholders);
-            case BOW -> Component.translatable("bedwars.kill.projectile.default", placeholders);
-            case ENTITY -> Component.translatable("bedwars.kill.assist.default", placeholders);
+            case VOID -> Component.text(victimColor + victimName).append(Component.text(
+                " fell into the void.", NamedTextColor.GRAY
+            ));
+            case VOID_ASSISTED -> Component.text(victimColor + victimName).append(Component.text(
+                    " was knocked into the void by ", NamedTextColor.GRAY
+                )).append(Component.text(getTeamColor(result.assistPlayer()) + result.assistPlayer().getUsername()))
+                .append(Component.text(".", NamedTextColor.GRAY));
+            case GENERIC ->
+                Component.text(victimColor + victimName).append(Component.text(" died.", NamedTextColor.GRAY));
+            case GENERIC_ASSISTED -> Component.text(victimColor + victimName).append(Component.text(
+                    " was killed by ", NamedTextColor.GRAY
+                )).append(Component.text(getTeamColor(result.assistPlayer()) + result.assistPlayer().getUsername()))
+                .append(Component.text(".", NamedTextColor.GRAY));
+            case BOW -> Component.text(victimColor + victimName).append(Component.text(
+                    " was shot by ", NamedTextColor.GRAY
+                )).append(Component.text(getTeamColor(result.killer()) + result.killer().getUsername()))
+                .append(Component.text(".", NamedTextColor.GRAY));
+            case ENTITY -> Component.text(victimColor + victimName).append(Component.text(
+                    " was slain by ", NamedTextColor.GRAY
+                )).append(Component.text(getTeamColor(result.killer()) + result.killer().getUsername()))
+                .append(Component.text(".", NamedTextColor.GRAY));
         };
 
         if (result.isFinalKill()) {
-            message = message.append(Component.translatable("bedwars.kill.final_kill"));
+            message = message.append(MiniMessage.miniMessage().deserialize(" <aqua><bold>FINAL KILL!</bold></aqua>"));
         }
         return message;
     }
