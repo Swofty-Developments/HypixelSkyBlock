@@ -60,7 +60,7 @@ public class GameEndListener implements HypixelEventClass {
                 player.getAchievementHandler().addProgressByTrigger("bedwars.wins", 1);
             }
 
-            player.setGameMode(GameMode.SPECTATOR);
+            player.setGameMode(GameMode.ADVENTURE);
         }
 
         game.getReplayManager().stopRecording();

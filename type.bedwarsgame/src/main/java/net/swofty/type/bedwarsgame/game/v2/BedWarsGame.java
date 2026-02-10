@@ -118,6 +118,14 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             .orElse(false);
     }
 
+    public boolean isPlayerCurrentlyPlaying(UUID playerUuid) {
+        BedWarsPlayer player = getPlayer(playerUuid).get();
+        return getPlayerTeam(playerUuid).isPresent()
+            && !Boolean.TRUE.equals(player.getTag(ELIMINATED_TAG))
+            && !(player.getGameMode() == GameMode.ADVENTURE || player.getGameMode() == GameMode.SPECTATOR)
+            && !player.isInvisible();
+    }
+
     /**
      * Gets players on a specific team.
      */
@@ -303,7 +311,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     private void setupAsSpectator(BedWarsPlayer player) {
-        player.setGameMode(GameMode.SPECTATOR);
+        player.setGameMode(GameMode.ADVENTURE);
         player.setInvisible(true);
         player.setFlying(true);
 

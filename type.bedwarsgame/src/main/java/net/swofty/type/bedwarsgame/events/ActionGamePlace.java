@@ -32,6 +32,11 @@ public class ActionGamePlace implements HypixelEventClass {
 			return;
 		}
 
+		if (!game.isPlayerCurrentlyPlaying(player.getUuid())) {
+			event.setCancelled(true);
+			return;
+		}
+
 		if (event.getBlockPosition().y() >= 105) {
 			player.sendMessage("§cYou cannot place blocks this high!");
 			event.setCancelled(true);

@@ -52,7 +52,8 @@ public class BedWarsRespawnHandler implements RespawnHandler<BedWarsPlayer> {
         }
 
         // Put in spectator mode
-        player.setGameMode(GameMode.SPECTATOR);
+        player.setGameMode(GameMode.ADVENTURE);
+        player.setInvisible(true);
         player.getInventory().clear();
 
         // Teleport to spectator position
@@ -142,6 +143,7 @@ public class BedWarsRespawnHandler implements RespawnHandler<BedWarsPlayer> {
                 player.setInvisible(false);
                 player.setFlying(false);
                 player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
+                player.updateBelowTag();
             }
         });
 

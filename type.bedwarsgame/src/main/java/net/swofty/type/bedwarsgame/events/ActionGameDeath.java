@@ -123,7 +123,8 @@ public class ActionGameDeath implements HypixelEventClass {
         }
 
         BedWarsCombatTracker.clearCombatData(player);
-        player.setGameMode(GameMode.SPECTATOR);
+        player.setGameMode(GameMode.ADVENTURE);
+        player.setInvisible(true);
         player.getInventory().clear();
 
         if (bedExists) {
@@ -199,7 +200,7 @@ public class ActionGameDeath implements HypixelEventClass {
             player.sendTitlePart(TitlePart.SUBTITLE, Component.text("You will not respawn.", NamedTextColor.GRAY));
             player.getInventory().clear();
 
-            player.setGameMode(GameMode.SPECTATOR);
+            player.setGameMode(GameMode.ADVENTURE);
             player.setInvisible(true);
             player.setFlying(true);
 

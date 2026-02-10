@@ -28,7 +28,7 @@ public class GameStartListener implements HypixelEventClass {
         Map<BedWarsMapsConfig.TeamKey, BedWarsMapsConfig.MapTeam> activeTeamConfigs = game.getActiveTeamConfigs();
 
         game.getWorldManager().placeBeds(activeTeamConfigs);
-        game.getWorldManager().spawnShopNPCs(activeTeamConfigs);
+        game.getWorldManager().spawnShopNPCs(game.getMapEntry().getConfiguration().getTeams());
 
         // Start generators
         game.getGeneratorManager().startTeamGenerators(activeTeamConfigs);

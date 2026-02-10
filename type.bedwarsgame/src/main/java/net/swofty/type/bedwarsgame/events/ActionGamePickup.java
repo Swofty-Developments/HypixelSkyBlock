@@ -1,7 +1,6 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.component.DataComponents;
-import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.item.PickupItemEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.CustomData;
@@ -20,22 +19,21 @@ public class ActionGamePickup implements HypixelEventClass {
 	public void run(PickupItemEvent event) {
 		ItemStack itemStack = event.getItemEntity().getItemStack();
 		if (event.getLivingEntity() instanceof BedWarsPlayer player) {
-			// disallow spectator mode from picking up items
-			if (player.getGameMode() == GameMode.SPECTATOR) {
+			BedWarsGame game = player.getGame();
+			if (!game.isPlayerCurrentlyPlaying(player.getUuid())) {
 				event.setCancelled(true);
 				return;
 			}
 
-			player.getInventory().addItemStack(itemStack);
-
 			// Record item pickup to replay
-			BedWarsGame game = player.getGame();
 			if (game != null && game.getReplayManager().isRecording()) {
 				game.getReplayManager().recordItemPickup(
 					event.getItemEntity().getEntityId(),
 					player.getEntityId()
 				);
 			}
+
+			player.getInventory().addItemStack(itemStack);
 
 			// handle bedwars xp for diamonds and emeralds
 			for (Currency currency : Currency.values()) {
