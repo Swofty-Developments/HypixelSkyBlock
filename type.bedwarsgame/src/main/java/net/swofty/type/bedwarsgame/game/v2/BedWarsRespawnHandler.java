@@ -1,14 +1,23 @@
 package net.swofty.type.bedwarsgame.game.v2;
 
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.color.Color;
+import net.minestom.server.component.DataComponents;
+import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.game.game.event.PlayerRespawnCompleteEvent;
 import net.swofty.type.game.game.respawn.RespawnHandler;
-import net.swofty.type.generic.event.HypixelEventHandler;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,9 +50,6 @@ public class BedWarsRespawnHandler implements RespawnHandler<BedWarsPlayer> {
             return;
         }
 
-        // Todo stuff
-
-        // Start countdown
         AtomicInteger countdown = new AtomicInteger(getRespawnDelay(player.getUuid()));
         AtomicReference<Task> taskRef = new AtomicReference<>();
 
@@ -82,19 +88,87 @@ public class BedWarsRespawnHandler implements RespawnHandler<BedWarsPlayer> {
         return respawnTasks.containsKey(playerId);
     }
 
-    private void showRespawnTitle(BedWarsPlayer player, int seconds) {
+    final Title.Times titleTimes = Title.Times.times(Duration.ofMillis(100), Duration.ofSeconds(1), Duration.ofMillis(100));
 
+    private void showRespawnTitle(BedWarsPlayer player, int seconds) {
+        Component mainTitleText = Component.text("YOU DIED!", NamedTextColor.RED);
+        Component subTitleText = Component.text("You will respawn in " + seconds + " second" + (seconds == 1 ? "" : "s") + "!", NamedTextColor.YELLOW);
+        Title title = Title.title(mainTitleText, subTitleText, titleTimes);
+        player.showTitle(title);
+    }
+
+    public void equipTeamArmor(BedWarsPlayer player, BedWarsMapsConfig.TeamKey teamKey) {
+        final int armorLevel = getArmorLevel(player);
+        final Color teamColor = new Color(teamKey.rgb());
+
+        equipLegArmor(player, armorLevel, teamColor);
+        equipUpperArmor(player, teamColor);
+    }
+
+    private int getArmorLevel(BedWarsPlayer player) {
+        return player.getTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG) == null
+            ? 0
+            : player.getTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG);
+    }
+
+    private void equipLegArmor(BedWarsPlayer player, int armorLevel, Color teamColor) {
+        ArmorTier tier = ArmorTier.fromLevel(armorLevel);
+
+        if (tier == ArmorTier.LEATHER) {
+            player.setEquipment(EquipmentSlot.BOOTS, dyed(Material.LEATHER_BOOTS, teamColor));
+            player.setEquipment(EquipmentSlot.LEGGINGS, dyed(Material.LEATHER_LEGGINGS, teamColor));
+            return;
+        }
+
+        player.setEquipment(EquipmentSlot.BOOTS, ItemStack.of(tier.boots()));
+        player.setEquipment(EquipmentSlot.LEGGINGS, ItemStack.of(tier.leggings()));
+    }
+
+    private void equipUpperArmor(BedWarsPlayer player, Color teamColor) {
+        player.setEquipment(EquipmentSlot.CHESTPLATE, dyed(Material.LEATHER_CHESTPLATE, teamColor));
+        player.setEquipment(EquipmentSlot.HELMET, dyed(Material.LEATHER_HELMET, teamColor));
+    }
+
+    private ItemStack dyed(Material material, Color color) {
+        return ItemStack.of(material)
+            .with(DataComponents.DYED_COLOR, color);
+    }
+
+    private enum ArmorTier {
+        LEATHER(null, null),
+        CHAINMAIL(Material.CHAINMAIL_BOOTS, Material.CHAINMAIL_LEGGINGS),
+        IRON(Material.IRON_BOOTS, Material.IRON_LEGGINGS),
+        DIAMOND(Material.DIAMOND_BOOTS, Material.DIAMOND_LEGGINGS);
+
+        private final Material boots;
+        private final Material leggings;
+
+        ArmorTier(Material boots, Material leggings) {
+            this.boots = boots;
+            this.leggings = leggings;
+        }
+
+        public Material boots() {
+            return boots;
+        }
+
+        public Material leggings() {
+            return leggings;
+        }
+
+        public static ArmorTier fromLevel(int level) {
+            return switch (level) {
+                case 1 -> CHAINMAIL;
+                case 2 -> IRON;
+                case 3 -> DIAMOND;
+                default -> LEATHER;
+            };
+        }
     }
 
     private void completeRespawn(BedWarsPlayer player) {
         player.clearTitle();
 
         game.setupPlayer(player);
-
-        HypixelEventHandler.callCustomEvent(new PlayerRespawnCompleteEvent(
-            game.getGameId(),
-            player.getUuid(),
-            player.getUsername()
-        ));
     }
 }

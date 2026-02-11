@@ -27,7 +27,6 @@ public class PlayerTeamAssignationListener implements HypixelEventClass {
             .teamColor(color)
             .build());
         player.getTeam().sendUpdatePacket();
-        player.updateBelowTag();
     }
 
 }

@@ -3,16 +3,12 @@ package net.swofty.type.bedwarsgame.events;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.title.Title;
 import net.kyori.adventure.title.TitlePart;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.PlayerDeathEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.timer.Task;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.death.BedWarsCombatTracker;
@@ -30,9 +26,6 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.utility.ScheduleUtility;
 
-import java.time.Duration;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public class ActionGameDeath implements HypixelEventClass {
@@ -130,34 +123,9 @@ public class ActionGameDeath implements HypixelEventClass {
         });
 
         if (bedExists) {
-            final Title.Times titleTimes = Title.Times.times(Duration.ofMillis(100), Duration.ofSeconds(1), Duration.ofMillis(100));
-            final AtomicInteger countdown = new AtomicInteger(5);
-            final AtomicReference<Task> taskRef = new AtomicReference<>();
-
-            final Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
-                if (!player.isOnline()) {
-                    return;
-                }
-
-                int secondsRemaining = countdown.getAndDecrement();
-
-                if (secondsRemaining > 0) {
-                    Component mainTitleText = Component.text("YOU DIED!", NamedTextColor.RED);
-                    Component subTitleText = Component.text("You will respawn in " + secondsRemaining + " second" + (secondsRemaining == 1 ? "" : "s") + "!", NamedTextColor.YELLOW);
-                    Title title = Title.title(mainTitleText, subTitleText, titleTimes);
-                    player.showTitle(title);
-                } else {
-                    game.setupPlayer(player);
-                    // cancel repeating task
-                    Task currentTask = taskRef.get();
-                    if (currentTask != null) {
-                        currentTask.cancel();
-                    }
-                }
-            }).repeat(TaskSchedule.seconds(1)).schedule();
-            taskRef.set(task);
+            game.getRespawnHandler().startRespawn(player);
         } else {
-            // Final kill - no bed
+            // Final kill if the bed doesn't exist
             player.sendTitlePart(TitlePart.TITLE, Component.text("YOU DIED!", NamedTextColor.RED, TextDecoration.BOLD));
             player.sendTitlePart(TitlePart.SUBTITLE, Component.text("You will not respawn.", NamedTextColor.GRAY));
             player.getInventory().clear();
@@ -166,9 +134,7 @@ public class ActionGameDeath implements HypixelEventClass {
             player.setInvisible(true);
             player.setFlying(true);
 
-            if (game != null) {
-                game.onPlayerEliminated(player);
-            }
+            game.onPlayerEliminated(player);
         }
     }
 

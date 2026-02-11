@@ -1,8 +1,12 @@
 package net.swofty.type.bedwarsgame.game.v2.listener;
 
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.GameState;
 import net.swofty.type.game.game.event.GameStartEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -48,6 +52,17 @@ public class GameStartListener implements HypixelEventClass {
 
         // Send game start message
         game.sendGameStartMessage();
+
+        // just correct in case
+        MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+            if (game.getState() != GameState.IN_PROGRESS) {
+                return TaskSchedule.stop();
+            }
+            for (BedWarsPlayer player : game.getPlayers()) {
+                player.updateBelowTag();
+            }
+            return TaskSchedule.seconds(10);
+        }, TaskSchedule.seconds(1));
 
         Logger.info("BedWars game {} started with {} active teams", event.gameId(), activeTeamConfigs.size());
     }

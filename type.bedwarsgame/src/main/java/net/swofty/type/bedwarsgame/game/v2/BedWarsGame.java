@@ -146,25 +146,14 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             .orElse(List.of());
     }
 
-
-    /**
-     * Equips team armor to a player.
-     */
     public void equipTeamArmor(BedWarsPlayer player, TeamKey teamKey) {
         respawnHandler.equipTeamArmor(player, teamKey);
     }
 
-
-    /**
-     * Adds a trap to a team.
-     */
     public void addTeamTrap(TeamKey teamKey, String trapKey) {
         getTeam(teamKey.name()).ifPresent(team -> team.addTrap(trapKey));
     }
 
-    /**
-     * Gets a team's upgrade level.
-     */
     public int getTeamUpgradeLevel(TeamKey teamKey, String upgradeName) {
         return getTeam(teamKey.name())
             .map(team -> team.getUpgradeLevel(upgradeName))
@@ -223,6 +212,9 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         player.setInvisible(false);
         player.setFlying(false);
         player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
+        player.setHealth(20f);
+        player.setFood(20);
+        equipTeamArmor(player, teamKey);
 
         // Give back the downgraded tools
         AxeShopItem axeShopItem = new AxeShopItem();
@@ -372,6 +364,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         player.setGameMode(GameMode.ADVENTURE);
         player.setInvisible(true);
         player.setFlying(true);
+        player.updateBelowTag();
 
         BedWarsMapsConfig.Position spectatorPos = mapEntry.getConfiguration().getLocations().getSpectator();
         if (spectatorPos != null) {
