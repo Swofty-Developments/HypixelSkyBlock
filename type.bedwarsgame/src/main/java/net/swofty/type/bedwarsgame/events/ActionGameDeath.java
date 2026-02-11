@@ -11,13 +11,10 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.PlayerDeathEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.death.BedWarsCombatTracker;
 import net.swofty.type.bedwarsgame.death.BedWarsDeathHandler;
 import net.swofty.type.bedwarsgame.death.BedWarsDeathResult;
@@ -31,6 +28,7 @@ import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.utility.ScheduleUtility;
 
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -91,26 +89,6 @@ public class ActionGameDeath implements HypixelEventClass {
             BedWarsStatsRecorder.recordFinalDeath(player, game.getGameType());
         }
 
-        BedWarsPlayer itemRecipient = deathResult.getKillCreditPlayer();
-        if (itemRecipient != null) {
-            if (iron > 0) {
-                itemRecipient.getInventory().addItemStack(ItemStack.of(Material.IRON_INGOT, iron));
-                itemRecipient.sendMessage("§f+" + iron + " Iron");
-            }
-            if (gold > 0) {
-                itemRecipient.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, gold));
-                itemRecipient.sendMessage("§6+" + gold + " Gold");
-            }
-            if (diamonds > 0) {
-                itemRecipient.getInventory().addItemStack(ItemStack.of(Material.DIAMOND, diamonds));
-                itemRecipient.sendMessage("§b+" + diamonds + " Diamond");
-            }
-            if (emeralds > 0) {
-                itemRecipient.getInventory().addItemStack(ItemStack.of(Material.EMERALD, emeralds));
-                itemRecipient.sendMessage("§3+" + emeralds + " Emerald");
-            }
-        }
-
         TeamKey teamKey = player.getTeamKey();
         boolean bedExists = teamKey != null && game.isBedAlive(teamKey);
 
@@ -123,17 +101,38 @@ public class ActionGameDeath implements HypixelEventClass {
         }
 
         BedWarsCombatTracker.clearCombatData(player);
-        player.setGameMode(GameMode.ADVENTURE);
-        player.setInvisible(true);
-        player.getInventory().clear();
+        BedWarsGame.literalSetupSpectator(player);
+
+        final int finalIron = iron;
+        final int finalGold = gold;
+        final int finalDiamonds = diamonds;
+        final int finalEmeralds = emeralds;
+        ScheduleUtility.nextTick(() -> {
+            BedWarsPlayer itemRecipient = deathResult.getKillCreditPlayer();
+            if (itemRecipient != null) {
+                if (finalIron > 0) {
+                    itemRecipient.getInventory().addItemStack(ItemStack.of(Material.IRON_INGOT, finalIron));
+                    itemRecipient.sendMessage("§f+" + finalIron + " Iron");
+                }
+                if (finalGold > 0) {
+                    itemRecipient.getInventory().addItemStack(ItemStack.of(Material.GOLD_INGOT, finalGold));
+                    itemRecipient.sendMessage("§6+" + finalGold + " Gold");
+                }
+                if (finalDiamonds > 0) {
+                    itemRecipient.getInventory().addItemStack(ItemStack.of(Material.DIAMOND, finalDiamonds));
+                    itemRecipient.sendMessage("§b+" + finalDiamonds + " Diamond");
+                }
+                if (finalEmeralds > 0) {
+                    itemRecipient.getInventory().addItemStack(ItemStack.of(Material.EMERALD, finalEmeralds));
+                    itemRecipient.sendMessage("§3+" + finalEmeralds + " Emerald");
+                }
+            }
+        });
 
         if (bedExists) {
             final Title.Times titleTimes = Title.Times.times(Duration.ofMillis(100), Duration.ofSeconds(1), Duration.ofMillis(100));
             final AtomicInteger countdown = new AtomicInteger(5);
             final AtomicReference<Task> taskRef = new AtomicReference<>();
-
-            MapTeam playerTeam = game.getMapEntry().getConfiguration().getTeams().get(teamKey);
-            BedWarsMapsConfig.PitchYawPosition spawnPos = playerTeam.getSpawn();
 
             final Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
                 if (!player.isOnline()) {
@@ -148,44 +147,7 @@ public class ActionGameDeath implements HypixelEventClass {
                     Title title = Title.title(mainTitleText, subTitleText, titleTimes);
                     player.showTitle(title);
                 } else {
-                    player.clearTitle();
-                    player.teleport(new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw()));
-                    player.setGameMode(GameMode.SURVIVAL);
-                    player.setInvisible(false);
-                    player.setFlying(false);
-                    player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
-
-                    // Give back the downgraded tools
-                    AxeShopItem axeShopItem = new AxeShopItem();
-                    Integer currentAxeLevel = player.getTag(AxeShopItem.AXE_UPGRADE_TAG);
-                    if (currentAxeLevel != null && currentAxeLevel > 0) {
-                        player.getInventory().addItemStack(ItemStack.of(axeShopItem.getTier(currentAxeLevel - 1).material()));
-                    }
-
-                    PickaxeShopItem pickaxeShopItem = new PickaxeShopItem();
-                    Integer currentPickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
-                    if (currentPickaxeLevel != null && currentPickaxeLevel > 0) {
-                        player.getInventory().addItemStack(ItemStack.of(pickaxeShopItem.getTier(currentPickaxeLevel - 1).material()));
-                    }
-
-                    // equip the player with team armor
-                    game.equipTeamArmor(player, teamKey);
-
-                    Integer protectionLevel = player.getTag(Tag.Integer("upgrade_reinforced_armor"));
-                    if (protectionLevel != null) {
-                        TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("reinforced_armor").applyEffect(game, teamKey, protectionLevel);
-                    }
-
-                    Integer cushionedBootsLevel = player.getTag(Tag.Integer("upgrade_cushioned_boots"));
-                    if (cushionedBootsLevel != null) {
-                        TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("cushioned_boots").applyEffect(game, teamKey, cushionedBootsLevel);
-                    }
-
-                    Integer sharpnessLevel = player.getTag(Tag.Integer("upgrade_sharpness"));
-                    if (sharpnessLevel != null) {
-                        TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("sharpness").applyEffect(game, teamKey, sharpnessLevel);
-                    }
-
+                    game.setupPlayer(player);
                     // cancel repeating task
                     Task currentTask = taskRef.get();
                     if (currentTask != null) {
@@ -212,27 +174,22 @@ public class ActionGameDeath implements HypixelEventClass {
 
     private static void handleDeathTypeActions(BedWarsDeathResult result, BedWarsGame game) {
         BedWarsPlayer victim = result.victim();
-        BedWarsPlayer killer = result.killer();
-        BedWarsPlayer assistPlayer = result.assistPlayer();
+        BedWarsPlayer creditPlayer = result.getKillCreditPlayer();
 
-        if (killer != null) {
-            BedWarsStatsRecorder.recordKill(killer, game.getGameType());
-        } else if (assistPlayer != null) {
-            BedWarsStatsRecorder.recordKill(assistPlayer, game.getGameType());
+        if (creditPlayer != null) {
+            BedWarsStatsRecorder.recordKill(creditPlayer, game.getGameType());
         }
 
         BedWarsStatsRecorder.recordDeath(victim, game.getGameType());
 
-        if (killer != null || assistPlayer != null) {
-            BedWarsPlayer killCredit = killer != null ? killer : assistPlayer;
-            game.getReplayManager().recordKill(killCredit, victim, result.isFinalKill());
+        if (creditPlayer != null) {
+            game.getReplayManager().recordKill(creditPlayer, victim, result.isFinalKill());
         }
 
-        if (result.isFinalKill()) {
-            if (killer != null) killer.getAchievementHandler().addProgress("bedwars.bed_wars_killer", 1);
+        if (result.isFinalKill() && creditPlayer != null) {
+            creditPlayer.getAchievementHandler().addProgress("bedwars.bed_wars_killer", 1);
         }
 
-        BedWarsPlayer creditPlayer = result.getKillCreditPlayer();
         if (creditPlayer != null && result.weaponUsed() != null) {
             if (result.weaponUsed() == Material.SHEARS) {
                 creditPlayer.getAchievementHandler().completeAchievement("bedwars.shear_luck");

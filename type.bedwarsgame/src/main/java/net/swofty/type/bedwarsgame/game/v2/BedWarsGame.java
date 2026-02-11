@@ -28,6 +28,8 @@ import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.events.custom.BedDestroyedEvent;
 import net.swofty.type.bedwarsgame.replay.BedWarsReplayManager;
+import net.swofty.type.bedwarsgame.shop.impl.AxeShopItem;
+import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
 import net.swofty.type.bedwarsgame.user.TokenCause;
@@ -200,6 +202,62 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         }
     }
 
+    // find a better place for this method
+    public static void literalSetupSpectator(BedWarsPlayer player) {
+        player.setGameMode(GameMode.ADVENTURE);
+        player.setInvisible(true);
+        player.setFlying(true);
+        player.getInventory().clear();
+        player.getInventory().setItemStack(8, TypeBedWarsGameLoader.getItemHandler().getItem("teleporter").getItemStack());
+    }
+
+    public void setupPlayer(BedWarsPlayer player) {
+        TeamKey teamKey = player.getTeamKey();
+        MapTeam playerTeam = getMapEntry().getConfiguration().getTeams().get(teamKey);
+        BedWarsMapsConfig.PitchYawPosition spawnPos = playerTeam.getSpawn();
+
+        player.getInventory().clear();
+        player.clearTitle();
+        player.teleport(new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw()));
+        player.setGameMode(GameMode.SURVIVAL);
+        player.setInvisible(false);
+        player.setFlying(false);
+        player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
+
+        // Give back the downgraded tools
+        AxeShopItem axeShopItem = new AxeShopItem();
+        Integer currentAxeLevel = player.getTag(AxeShopItem.AXE_UPGRADE_TAG);
+        if (currentAxeLevel != null && currentAxeLevel > 0) {
+            player.getInventory().addItemStack(ItemStack.of(axeShopItem.getTier(currentAxeLevel - 1).material()));
+        }
+
+        PickaxeShopItem pickaxeShopItem = new PickaxeShopItem();
+        Integer currentPickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
+        if (currentPickaxeLevel != null && currentPickaxeLevel > 0) {
+            player.getInventory().addItemStack(ItemStack.of(pickaxeShopItem.getTier(currentPickaxeLevel - 1).material()));
+        }
+
+        // equip the player with team armor
+        equipTeamArmor(player, teamKey);
+
+        Integer protectionLevel = player.getTag(Tag.Integer("upgrade_reinforced_armor"));
+        if (protectionLevel != null) {
+            TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("reinforced_armor").applyEffect(this, teamKey, protectionLevel);
+        }
+
+        Integer cushionedBootsLevel = player.getTag(Tag.Integer("upgrade_cushioned_boots"));
+        if (cushionedBootsLevel != null) {
+            TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("cushioned_boots").applyEffect(this, teamKey, cushionedBootsLevel);
+        }
+
+        Integer sharpnessLevel = player.getTag(Tag.Integer("upgrade_sharpness"));
+        if (sharpnessLevel != null) {
+            TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("sharpness").applyEffect(this, teamKey, sharpnessLevel);
+        }
+
+
+    }
+
     @Override
     protected boolean canPlayerRejoin(BedWarsPlayer player) {
         return getPlayerTeam(player.getUuid())
@@ -345,11 +403,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             getPlayerTeam(player.getUuid()).ifPresent(team -> {
                 MapTeam config = teamConfigs.get(team.getTeamKey());
                 if (config != null) {
-                    BedWarsMapsConfig.PitchYawPosition spawn = config.getSpawn();
-                    player.teleport(new Pos(spawn.x(), spawn.y(), spawn.z(), spawn.yaw(), spawn.pitch()));
-                    player.setGameMode(GameMode.SURVIVAL);
-                    player.getInventory().clear();
-                    player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
+                    setupPlayer(player);
                     player.reveal();
                     player.setDisplayName(Component.text(
                         team.getColorCode() + "§l" + team.firstLetter() + " §r" + team.getColorCode() + player.getUsername()
