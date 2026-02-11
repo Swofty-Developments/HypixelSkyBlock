@@ -165,15 +165,6 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
             PlayerLeaveGameEvent.LeaveReason.VOLUNTARY
         ));
 
-        // Check countdown conditions
-        if (countdown.isActive()) {
-            countdown.checkConditions();
-            if (!countdown.isActive() && state == GameState.COUNTDOWN) {
-                setState(GameState.WAITING);
-            }
-        }
-
-        // Check win conditions if in progress
         if (state == GameState.IN_PROGRESS) {
             checkWinConditions();
         }
@@ -239,7 +230,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
     public void start() {
         if (state == GameState.IN_PROGRESS) return;
         if (countdown.isActive()) {
-            countdown.stop();
+            countdown.terminate();
         }
 
         setState(GameState.IN_PROGRESS);
@@ -257,7 +248,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
     @Override
     public void dispose() {
         setState(GameState.TERMINATED);
-        countdown.stop();
+        countdown.terminate();
         players.clear();
         disconnectedPlayers.clear();
         eventDispatcher.accept(new GameDisposeEvent(

@@ -72,12 +72,11 @@ public class DefaultGameCountdown implements GameCountdownController {
 	}
 
 	@Override
-	public void stop() {
+	public void terminate() {
 		if (!active) return;
 
 		active = false;
 		cancelTask();
-		eventDispatcher.accept(new CountdownCancelledEvent(gameId, "Countdown stopped"));
 	}
 
 	@Override
@@ -138,8 +137,8 @@ public class DefaultGameCountdown implements GameCountdownController {
 		}
 
 		if (!canStartCheck.canContinue()) {
-			stop();
-			eventDispatcher.accept(new CountdownCancelledEvent(gameId, "Not enough players"));
+			terminate();
+			eventDispatcher.accept(new CountdownCancelledEvent(gameId, "§cWe don't have enough players! Start cancelled."));
 			return;
 		}
 
@@ -170,7 +169,7 @@ public class DefaultGameCountdown implements GameCountdownController {
 
 	public void checkConditions() {
 		if (active && !canStartCheck.canContinue()) {
-			stop();
+			terminate();
 		}
 	}
 }

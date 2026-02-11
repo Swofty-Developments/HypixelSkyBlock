@@ -3,6 +3,7 @@ package net.swofty.type.bedwarsgame.game.v2;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.color.Color;
@@ -92,7 +93,7 @@ public class BedWarsRespawnHandler implements RespawnHandler<BedWarsPlayer> {
 
     private void showRespawnTitle(BedWarsPlayer player, int seconds) {
         Component mainTitleText = Component.text("YOU DIED!", NamedTextColor.RED);
-        Component subTitleText = Component.text("You will respawn in " + seconds + " second" + (seconds == 1 ? "" : "s") + "!", NamedTextColor.YELLOW);
+        Component subTitleText = MiniMessage.miniMessage().deserialize("<yellow>You will respawn in <red>" + seconds + "</red> second" + (seconds == 1 ? "" : "s") + "!</yellow>");
         Title title = Title.title(mainTitleText, subTitleText, titleTimes);
         player.showTitle(title);
     }

@@ -45,6 +45,7 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -67,6 +68,7 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 	@Getter
 	@Setter
 	private boolean shouldShowTrueIdentity = false;
+	@Getter
 	private UUID fakeUuid;
 
 	public BedWarsPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
@@ -108,7 +110,7 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 				new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER,
 					new PlayerInfoUpdatePacket.Entry(
 						fakeUuid,
-						"§k" + fakeUuid.toString().substring(0, 14),
+						"§k" + fakeUuid.toString().substring(0, new Random().nextInt(10) + 4),
 						List.of(),
 						false,
 						0,

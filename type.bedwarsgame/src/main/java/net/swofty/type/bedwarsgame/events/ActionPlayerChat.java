@@ -6,7 +6,6 @@ import net.swofty.commons.bedwars.BedwarsLevelColor;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.chat.StaffChat;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
@@ -17,6 +16,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.generic.user.categories.Rank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActionPlayerChat implements HypixelEventClass {
@@ -66,12 +66,10 @@ public class ActionPlayerChat implements HypixelEventClass {
 			return;
 		}
 
-		if (game.getState() == GameState.WAITING) {
+		if (game.getState().isWaiting()) {
 			String textColor = rank.equals(Rank.DEFAULT) ? "§7" : "§f";
 
-			game.getPlayers().forEach(onlinePlayer -> {
-				onlinePlayer.sendMessage(rank.getPrefix() + player.getUsername() + textColor + ": " + finalMessage);
-			});
+			game.getPlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(rank.getPrefix() + player.getUsername() + textColor + ": " + finalMessage));
 			return;
 		}
 
@@ -81,7 +79,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 
 		List<BedWarsPlayer> receivers;
 		if (game.getGameType() == BedwarsGameType.SOLO) {
-			receivers = new java.util.ArrayList<>(game.getPlayers());
+			receivers = new ArrayList<>(game.getPlayers());
 		} else {
 			receivers = game.getPlayersOnTeam(player.getTeamKey());
 		}

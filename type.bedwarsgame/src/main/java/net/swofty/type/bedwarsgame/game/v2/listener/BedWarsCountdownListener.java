@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.event.CountdownCancelledEvent;
 import net.swofty.type.game.game.event.CountdownTickEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -25,6 +26,14 @@ public class BedWarsCountdownListener implements HypixelEventClass {
         for (BedWarsPlayer player : game.getPlayers()) {
             player.sendMessage(message);
         }
+    }
+
+    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onCountdownCancelled(CountdownCancelledEvent event) {
+        BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.gameId());
+        if (game == null) return;
+
+        game.broadcastMessage(Component.text(event.reason()));
     }
 
     private Component createCountdownMessage(int seconds) {

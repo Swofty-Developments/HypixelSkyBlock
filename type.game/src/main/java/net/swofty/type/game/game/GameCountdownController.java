@@ -3,7 +3,7 @@ package net.swofty.type.game.game;
 public interface GameCountdownController {
 	boolean start();
 
-	void stop();
+	void terminate();
 
 	default boolean pause() {
 		return false;
