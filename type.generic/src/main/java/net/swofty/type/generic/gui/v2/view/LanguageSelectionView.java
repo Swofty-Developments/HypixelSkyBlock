@@ -1,11 +1,10 @@
 package net.swofty.type.generic.gui.v2.view;
 
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.TooltipDisplay;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.DefaultState;
 import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
@@ -16,10 +15,6 @@ import net.swofty.type.generic.language.PlayerLanguage;
 import net.swofty.type.generic.language.PlayerLanguageService;
 
 public final class LanguageSelectionView {
-    private static final ItemStack.Builder FILLER = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE)
-            .set(DataComponents.CUSTOM_NAME, net.kyori.adventure.text.Component.space())
-            .set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.EMPTY);
-
     private LanguageSelectionView() {
     }
 
@@ -31,7 +26,7 @@ public final class LanguageSelectionView {
 
         @Override
         public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-            layout.filler(FILLER);
+            Components.fill(layout);
             addLanguageSlot(layout, 10, PlayerLanguage.ENGLISH, Material.RED_CONCRETE);
             addLanguageSlot(layout, 11, PlayerLanguage.JAPANESE, Material.GREEN_CONCRETE);
             addLanguageSlot(layout, 12, PlayerLanguage.KOREAN, Material.BLUE_CONCRETE);
@@ -48,7 +43,7 @@ public final class LanguageSelectionView {
             setDecor(layout, 24, Material.BLACK_WOOL);
             setDecor(layout, 25, Material.RED_WOOL);
 
-            setCloseButton(layout, 31, ctx);
+            Components.close(layout, 31);
             setBookNoAction(layout, 33);
             setAutoDetectButton(layout, 34, ctx);
             layout.slot(35,
@@ -68,7 +63,7 @@ public final class LanguageSelectionView {
 
         @Override
         public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-            layout.filler(FILLER);
+            Components.fill(layout);
             setDecor(layout, 10, Material.CYAN_CONCRETE);
             setDecor(layout, 11, Material.ORANGE_CONCRETE);
             setDecor(layout, 12, Material.PURPLE_CONCRETE);
@@ -77,7 +72,7 @@ public final class LanguageSelectionView {
             setDecor(layout, 15, Material.PINK_CONCRETE);
             setDecor(layout, 16, Material.LIGHT_BLUE_CONCRETE);
 
-            setCloseButton(layout, 31, ctx);
+            Components.close(layout, 31);
             setBookNoAction(layout, 33);
             setAutoDetectButton(layout, 34, ctx);
             layout.slot(35,
@@ -115,10 +110,6 @@ public final class LanguageSelectionView {
 
     private static void setDecor(ViewLayout<DefaultState> layout, int slot, Material material) {
         layout.slot(slot, ItemStackCreator.createNamedItemStack(material, "§f"));
-    }
-
-    private static void setCloseButton(ViewLayout<DefaultState> layout, int slot, ViewContext ctx) {
-        layout.slot(slot, ItemStackCreator.getStack("§cClose", Material.BARRIER, 1), (click, clickCtx) -> ctx.player().closeInventory());
     }
 
     private static void setBookNoAction(ViewLayout<DefaultState> layout, int slot) {
