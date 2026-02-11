@@ -55,7 +55,7 @@ public final class LanguageSelectionView {
                             "§7View more language options.",
                             "",
                             "§eClick to continue"),
-                    (_, clickCtx) -> clickCtx.replace(new Page2()));
+                    (click, clickCtx) -> clickCtx.replace(new Page2()));
         }
     }
 
@@ -84,13 +84,13 @@ public final class LanguageSelectionView {
                             "§7Return to the main language page.",
                             "",
                             "§eClick to go back"),
-                    (_, clickCtx) -> clickCtx.replace(new Page1()));
+                    (click, clickCtx) -> clickCtx.replace(new Page1()));
         }
     }
 
     private static void addLanguageSlot(ViewLayout<Void> layout, int slot, PlayerLanguage language, Material material) {
         layout.slot(slot,
-                (_, ctx) -> {
+                (state, ctx) -> {
                     boolean selected = ctx.player().getLanguage() == language;
                     ItemStack.Builder base = ItemStackCreator.getStack(
                             (selected ? "§a" : "§f") + language.getDisplayName(),
@@ -102,7 +102,7 @@ public final class LanguageSelectionView {
                     );
                     return selected ? ItemStackCreator.enchant(base) : base;
                 },
-                (_, ctx) -> {
+                (click, ctx) -> {
                     PlayerLanguageService.applyLanguage(ctx.player(), language);
                     ctx.player().sendMessage(LanguageMessage.LANGUAGE_UPDATED.format(
                             language,
@@ -117,7 +117,7 @@ public final class LanguageSelectionView {
     }
 
     private static void setCloseButton(ViewLayout<Void> layout, int slot, ViewContext ctx) {
-        layout.slot(slot, ItemStackCreator.getStack("§cClose", Material.BARRIER, 1), (_, clickCtx) -> ctx.player().closeInventory());
+        layout.slot(slot, ItemStackCreator.getStack("§cClose", Material.BARRIER, 1), (click, clickCtx) -> ctx.player().closeInventory());
     }
 
     private static void setBookNoAction(ViewLayout<Void> layout, int slot) {
@@ -132,7 +132,7 @@ public final class LanguageSelectionView {
                         "§7client language and apply it.",
                         "",
                         "§eClick to detect"),
-                (_, clickCtx) -> {
+                (click, clickCtx) -> {
                     PlayerLanguage detected = PlayerLanguageService.detectClientLanguage(ctx.player());
                     PlayerLanguageService.applyLanguage(ctx.player(), detected);
                     ctx.player().sendMessage(LanguageMessage.LANGUAGE_UPDATED.format(
