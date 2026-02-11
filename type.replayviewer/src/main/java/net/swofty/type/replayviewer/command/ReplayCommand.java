@@ -10,10 +10,10 @@ import net.swofty.type.replayviewer.playback.ReplaySession;
 
 @CommandParameters(
         description = "Controls replay playback",
-        usage = "/replay <play|pause|speed|skip|goto|restart|leave>",
+        usage = "/viewer <play|pause|speed|skip|goto|restart|leave>",
         permission = Rank.DEFAULT,
         allowsConsole = false,
-        aliases = "replay"
+        aliases = "viewer"
 )
 public class ReplayCommand extends HypixelCommand {
 
@@ -21,7 +21,7 @@ public class ReplayCommand extends HypixelCommand {
     public void registerUsage(MinestomCommand command) {
         var valueArg = ArgumentType.String("value");
 
-        // /replay play
+        // /viewer play
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
@@ -30,7 +30,7 @@ public class ReplayCommand extends HypixelCommand {
             );
         }, ArgumentType.Literal("play"));
 
-        // /replay pause
+        // /viewer pause
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
@@ -39,7 +39,7 @@ public class ReplayCommand extends HypixelCommand {
             );
         }, ArgumentType.Literal("pause"));
 
-        // /replay speed <value>
+        // /viewer speed <value>
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             String value = context.get(valueArg);
@@ -54,7 +54,7 @@ public class ReplayCommand extends HypixelCommand {
             }
         }, ArgumentType.Literal("speed"), valueArg);
 
-        // /replay skip <seconds>
+        // /viewer skip <seconds>
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             String value = context.get(valueArg);
@@ -75,7 +75,7 @@ public class ReplayCommand extends HypixelCommand {
             }
         }, ArgumentType.Literal("skip"), valueArg);
 
-        // /replay goto <tick or time>
+        // /viewer goto <tick or time>
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             String value = context.get(valueArg);
@@ -92,7 +92,7 @@ public class ReplayCommand extends HypixelCommand {
             );
         }, ArgumentType.Literal("goto"), valueArg);
 
-        // /replay restart
+        // /viewer restart
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
@@ -101,7 +101,7 @@ public class ReplayCommand extends HypixelCommand {
             );
         }, ArgumentType.Literal("restart"));
 
-        // /replay leave
+        // /viewer leave
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.removeSession(player.getUuid());
@@ -109,7 +109,7 @@ public class ReplayCommand extends HypixelCommand {
             // Would send player back to lobby
         }, ArgumentType.Literal("leave"));
 
-        // /replay info
+        // /viewer info
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
@@ -130,7 +130,7 @@ public class ReplayCommand extends HypixelCommand {
             );
         }, ArgumentType.Literal("info"));
 
-        // /replay follow [player]
+        // /viewer follow [player]
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
@@ -139,7 +139,7 @@ public class ReplayCommand extends HypixelCommand {
             );
         }, ArgumentType.Literal("follow"));
 
-        // /replay follow next
+        // /viewer follow next
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
@@ -148,7 +148,7 @@ public class ReplayCommand extends HypixelCommand {
             );
         }, ArgumentType.Literal("follow"), ArgumentType.Literal("next"));
 
-        // /replay follow prev
+        // /viewer follow prev
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
@@ -157,7 +157,7 @@ public class ReplayCommand extends HypixelCommand {
             );
         }, ArgumentType.Literal("follow"), ArgumentType.Literal("prev"));
 
-        // /replay free (stop following)
+        // /viewer free (stop following)
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
@@ -166,7 +166,7 @@ public class ReplayCommand extends HypixelCommand {
             );
         }, ArgumentType.Literal("free"));
 
-        // /replay faster
+        // /viewer faster
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
@@ -175,7 +175,7 @@ public class ReplayCommand extends HypixelCommand {
             );
         }, ArgumentType.Literal("faster"));
 
-        // /replay slower
+        // /viewer slower
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(

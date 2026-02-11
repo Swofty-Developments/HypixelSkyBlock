@@ -6,6 +6,7 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithBlockEvent;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
+import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
@@ -115,6 +116,12 @@ public class ActionGameCustomItems implements HypixelEventClass {
 	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
 	public void run(PlayerBlockPlaceEvent event) {
 		TypeBedWarsGameLoader.getItemHandler().onBlockPlace(event);
+	}
+
+	// InventoryClickItem
+	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
+	public void run(InventoryPreClickEvent event) {
+		TypeBedWarsGameLoader.getItemHandler().onInventoryClick(event);
 	}
 
 }

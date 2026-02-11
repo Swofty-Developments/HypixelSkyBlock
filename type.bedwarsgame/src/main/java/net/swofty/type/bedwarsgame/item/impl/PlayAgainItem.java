@@ -8,15 +8,16 @@ import net.minestom.server.item.Material;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
-public class TeleporterItem extends SimpleInteractableItem {
+public class PlayAgainItem extends SimpleInteractableItem {
 
-    public TeleporterItem() {
-        super("teleporter");
+
+    public PlayAgainItem() {
+        super("play_again");
     }
 
     @Override
     public ItemStack getBlandItem() {
-        return ItemStackCreator.getStack("§a§lTeleporter §7(Right Click)", Material.COMPASS, 1, "§7Right-click to spectate players!").build();
+        return ItemStackCreator.getStack("§b§lPlay Again §7(Right Click)", Material.COMPASS, 1, "§7Right-click to play another game!").build();
     }
 
     @Override

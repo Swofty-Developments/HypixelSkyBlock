@@ -197,7 +197,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         player.setInvisible(true);
         player.setFlying(true);
         player.getInventory().clear();
-        player.getInventory().setItemStack(8, TypeBedWarsGameLoader.getItemHandler().getItem("teleporter").getItemStack());
     }
 
     public void setupPlayer(BedWarsPlayer player) {
@@ -374,6 +373,11 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
         player.sendTitlePart(TitlePart.TITLE, Component.text("SPECTATING", NamedTextColor.GRAY));
         player.sendTitlePart(TitlePart.SUBTITLE, Component.text("Your bed was destroyed.", NamedTextColor.RED));
+
+        player.getInventory().setItemStack(0, TypeBedWarsGameLoader.getItemHandler().getItem("teleporter").getItemStack());
+        player.getInventory().setItemStack(4, TypeBedWarsGameLoader.getItemHandler().getItem("spectator_settings").getItemStack());
+        player.getInventory().setItemStack(7, TypeBedWarsGameLoader.getItemHandler().getItem("play_again").getItemStack());
+        player.getInventory().setItemStack(8, TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack());
     }
 
     public Map<TeamKey, MapTeam> getActiveTeamConfigs() {
