@@ -1,11 +1,7 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.PlayerDeathEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -126,14 +122,7 @@ public class ActionGameDeath implements HypixelEventClass {
             game.getRespawnHandler().startRespawn(player);
         } else {
             // Final kill if the bed doesn't exist
-            player.sendTitlePart(TitlePart.TITLE, Component.text("YOU DIED!", NamedTextColor.RED, TextDecoration.BOLD));
-            player.sendTitlePart(TitlePart.SUBTITLE, Component.text("You will not respawn.", NamedTextColor.GRAY));
             player.getInventory().clear();
-
-            player.setGameMode(GameMode.ADVENTURE);
-            player.setInvisible(true);
-            player.setFlying(true);
-
             game.onPlayerEliminated(player);
         }
     }

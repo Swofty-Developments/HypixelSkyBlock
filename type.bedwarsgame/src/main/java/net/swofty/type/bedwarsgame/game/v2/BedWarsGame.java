@@ -246,8 +246,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         if (sharpnessLevel != null) {
             TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("sharpness").applyEffect(this, teamKey, sharpnessLevel);
         }
-
-
     }
 
     @Override
@@ -282,6 +280,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     @Override
     protected boolean isTeamViable(BedWarsTeam team) {
+        Logger.info("Checking if team exists for team " + team.getTeamKey());
         // Team is viable if bed is alive OR has active players OR has rejoinable disconnected players
         if (team.isBedAlive()) return true;
 
@@ -294,6 +293,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
                 return t.isPresent() && t.get().getId().equals(team.getId()) && team.isBedAlive();
             });
 
+        Logger.info(hasActivePlayers + " active players, " + hasRejoinablePlayers + " rejoinable players for team " + team.getTeamKey());
         return hasActivePlayers || hasRejoinablePlayers;
     }
 
@@ -364,6 +364,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         player.setGameMode(GameMode.ADVENTURE);
         player.setInvisible(true);
         player.setFlying(true);
+        player.setAllowFlying(true);
         player.updateBelowTag();
 
         BedWarsMapsConfig.Position spectatorPos = mapEntry.getConfiguration().getLocations().getSpectator();

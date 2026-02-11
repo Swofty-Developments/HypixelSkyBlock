@@ -14,7 +14,7 @@ import java.util.Map;
 public class BedWarsTeam extends SimpleGameTeam {
     private final TeamKey teamKey;
     @Setter
-    private boolean bedAlive = true;
+    private boolean bedAlive = false;
 
     // upgrade name -> level
     private final Map<String, Integer> upgrades = new HashMap<>();

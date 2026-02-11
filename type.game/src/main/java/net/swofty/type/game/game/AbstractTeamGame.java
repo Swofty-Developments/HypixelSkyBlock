@@ -6,6 +6,7 @@ import net.swofty.type.game.game.event.PlayerAssignedTeamEvent;
 import net.swofty.type.game.game.event.TeamEliminatedEvent;
 import net.swofty.type.game.game.team.GameTeam;
 import net.swofty.type.game.game.team.TeamManager;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -84,11 +85,8 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
 
     /**
      * Determines if a team can still win the game.
-     * Override for game-specific viability logic.
      */
-    protected boolean isTeamViable(T team) {
-        return team.hasPlayers();
-    }
+    protected abstract boolean isTeamViable(T team);
 
     protected void onTeamEliminated(T team) {
         eventDispatcher.accept(new TeamEliminatedEvent(
@@ -152,9 +150,11 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
         if (state != GameState.IN_PROGRESS) return;
 
         List<T> viableTeams = getViableTeams().stream().toList();
-
+        Logger.info("Viable teams: {}", viableTeams.stream().map(T::getName).toList());
         if (viableTeams.size() <= 1) {
             T winner = viableTeams.isEmpty() ? null : viableTeams.getFirst();
+
+            Logger.info("Game {} ended. Winner: {}", gameId, winner != null ? winner.getName() : "None");
 
             eventDispatcher.accept(
                 new GameTeamWinConditionEvent<>(
