@@ -7,6 +7,7 @@ import com.mongodb.client.MongoClients;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.translation.GlobalTranslator;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
@@ -43,6 +44,7 @@ import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.achievement.AchievementRegistry;
 import net.swofty.type.generic.achievement.AchievementStatisticsService;
 import net.swofty.type.generic.leaderboard.LeaderboardService;
+import net.swofty.type.generic.language.LanguageMessage;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.quest.QuestRegistry;
@@ -68,6 +70,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
     public void initialize(MinecraftServer server) {
         HypixelGenericLoader.server = server;
         HypixelConst.setTypeLoader(loader);
+        GlobalTranslator.translator().addSource(LanguageMessage.adventureTranslator());
         final boolean isSkyBlockType = loader.getType().isSkyBlock();
         final boolean isRavengardType = loader instanceof RavengardTypeLoader;
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
