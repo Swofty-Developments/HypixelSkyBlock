@@ -29,8 +29,8 @@ dependencies {
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
     implementation("com.google.code.gson:gson:2.11.0")
-    implementation("org.mongodb:bson:5.6.2")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.2")
+    implementation("org.mongodb:bson:5.6.3")
+    implementation("org.mongodb:mongodb-driver-sync:5.6.3")
 }
 
 application {

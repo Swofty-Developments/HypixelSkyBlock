@@ -22,7 +22,7 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
     implementation(project(":type.generic"))
-    implementation("org.mongodb:bson:4.11.2")
+    implementation("org.mongodb:bson:5.6.3")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
     implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
