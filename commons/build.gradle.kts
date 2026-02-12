@@ -15,7 +15,7 @@ java {
 }
 
 dependencies {
-    implementation("org.yaml:snakeyaml:2.2")
+    implementation("org.yaml:snakeyaml:2.5")
     implementation(project(":packer"))
     implementation("org.mongodb:bson:4.11.2")
     implementation("org.tinylog:tinylog-api:2.7.0")
