@@ -61,8 +61,4 @@ public class RecordableBedDestruction extends AbstractRecordable {
         bedZ = coords[2];
     }
 
-    @Override
-    public int estimatedSize() {
-        return 1 + 2 + 1 + (destroyerUuid != null ? 16 : 0) + 6; // ~26-42 bytes
-    }
 }

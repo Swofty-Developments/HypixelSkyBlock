@@ -42,11 +42,6 @@ public class RecordableEntityAnimation extends AbstractRecordable {
         return entityId;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 5;
-    }
-
     public enum AnimationType {
         SWING_MAIN_HAND,
         TAKE_DAMAGE,

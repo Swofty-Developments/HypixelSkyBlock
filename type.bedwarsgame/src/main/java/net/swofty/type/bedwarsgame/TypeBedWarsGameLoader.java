@@ -5,17 +5,15 @@ import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.hollowcube.polar.PolarLoader;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.Viewable;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Player;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
+import net.minestom.server.network.packet.server.play.EntityAnimationPacket;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.tag.Tag;
@@ -104,28 +102,32 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
         VANILLA_PLAYER_STATE, VANILLA_TOTEM//, VANILLA_DEATH_MESSAGE
     )).soundProvider((audience, original, x, y, z) -> {
         audience.playSound(original, x, y, z);
-        Logger.info("Playing sound via sound provider...");
+        // Try to get the game from the audience context
+        BedWarsGame game = null;
         if (audience instanceof BedWarsPlayer player) {
-            BedWarsGame game = player.getGame();
-            if (game == null) {
-                Logger.error("Game not found for player " + player.getUsername());
-                return;
-            }
+            game = player.getGame();
+        } else if (audience instanceof net.minestom.server.entity.Entity entity) {
+            game = TypeBedWarsGameLoader.getGameByInstance(entity.getInstance());
+        }
+        if (game != null && game.getReplayManager().isRecording()) {
             game.getReplayManager().recordSound(original, x, y, z);
         }
     }).packetProvider((viewable, packet) -> {
         viewable.sendPacketToViewersAndSelf(packet);
+        BedWarsGame game = null;
         if (viewable instanceof BedWarsPlayer bwPlayer) {
-            BedWarsGame game = bwPlayer.getGame();
-            if (game == null) {
-                Logger.error("Game not found for player " + bwPlayer.getUsername());
-                return;
-            }
-            if (packet instanceof ParticlePacket particlePacket) {
-                game.getReplayManager().recordParticle(particlePacket);
-            } else {
-                Logger.info("Packet is not a known packet, skipping recording.");
-            }
+            game = bwPlayer.getGame();
+        } else if (viewable instanceof Entity entity) {
+            game = TypeBedWarsGameLoader.getGameByInstance(entity.getInstance());
+        }
+        if (game == null || !game.getReplayManager().isRecording()) {
+            return;
+        }
+
+        if (packet instanceof ParticlePacket particlePacket) {
+            game.getReplayManager().recordParticle(particlePacket);
+        } else if (packet instanceof EntityAnimationPacket animationPacket) {
+            game.getReplayManager().recordEntityAnimation(animationPacket);
         }
     }).build();
 
@@ -136,33 +138,6 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
     private static int nextMapIndex = 0;
     private static List<BedWarsMapsConfig.MapEntry> filteredMaps = new ArrayList<>();
     private Gson gson;
-
-    public static @Nullable BedWarsGame getGameFromAudience(Audience audience) {
-        if (audience instanceof ForwardingAudience forwardingAudience) {
-            for (Audience a : forwardingAudience.audiences()) {
-                if (a instanceof BedWarsPlayer player) {
-                    BedWarsGame game = player.getGame();
-                    if (game != null) return game;
-                }
-            }
-        }
-
-        if (audience instanceof BedWarsPlayer player) {
-            BedWarsGame game = player.getGame();
-            if (game != null) return game;
-        }
-
-        if (audience instanceof Viewable viewable) {
-            for (Player player : viewable.getViewers()) {
-                if (player instanceof BedWarsPlayer bwPlayer) {
-                    BedWarsGame game = bwPlayer.getGame();
-                    if (game != null) return game;
-                }
-            }
-        }
-
-        return null;
-    }
 
     @Nullable
     public static BedWarsGame getGameById(@NotNull String gameId) {

@@ -143,6 +143,36 @@ public class BedWarsGeneratorManager {
             .schedule();
     }
 
+    public void recordInitialGeneratorDisplays() {
+        if (!game.getReplayManager().isRecording()) return;
+
+        for (Map.Entry<String, List<GeneratorDisplay>> entry : generatorDisplays.entrySet()) {
+            String generatorType = entry.getKey();
+            String tierLabel = getTierLabelFor(generatorType);
+            String capitalizedType = StringUtility.capitalize(generatorType);
+
+            List<GeneratorDisplay> displays = entry.getValue();
+            for (int i = 0; i < displays.size(); i++) {
+                GeneratorDisplay display = displays.get(i);
+                Pos position = display.spawnDisplay.getPosition();
+                List<String> textLines = List.of(
+                    "§e" + tierLabel,
+                    ("diamond".equalsIgnoreCase(generatorType) ? "§b§l" : "§2§l") + capitalizedType,
+                    "§eSpawns in §c" + display.countdown + "§e seconds!"
+                );
+
+                game.getReplayManager().recordGeneratorDisplay(
+                    display.spawnDisplay.getEntityId(),
+                    display.spawnDisplay.getUuid(),
+                    position,
+                    textLines,
+                    "generator",
+                    generatorType + "_" + i
+                );
+            }
+        }
+    }
+
     private void setupGlobalGenerator(String generatorType, BedWarsMapsConfig.MapEntry.MapConfiguration.GlobalGenerator config) {
         Material itemMaterial = getMaterialFromType(generatorType);
         if (itemMaterial == null) {
@@ -197,6 +227,22 @@ public class BedWarsGeneratorManager {
 
             generatorDisplays.computeIfAbsent(generatorType, _ -> new ArrayList<>())
                 .add(new GeneratorDisplay(tierDisplay, titleDisplay, spawnDisplay, blockDisplay, delaySeconds));
+
+            if (game.getReplayManager().isRecording()) {
+                List<String> textLines = List.of(
+                    "§eTier I",
+                    (isDiamond ? "§b§l" : "§2§l") + capitalizedType,
+                    "§eSpawns in §c" + delaySeconds + "§e seconds!"
+                );
+                game.getReplayManager().recordGeneratorDisplay(
+                    spawnDisplay.getEntityId(),
+                    spawnDisplay.getUuid(),
+                    spawnDisplay.getPosition(),
+                    textLines,
+                    "generator",
+                    generatorType + "_" + locations.indexOf(location)
+                );
+            }
         }
     }
 
@@ -237,8 +283,19 @@ public class BedWarsGeneratorManager {
     private void updateGeneratorDisplays() {
         for (List<GeneratorDisplay> displays : generatorDisplays.values()) {
             for (GeneratorDisplay display : displays) {
+                String newText = "§eSpawns in §c" + display.countdown + "§e seconds!";
                 display.spawnDisplay.setText(MiniMessage.miniMessage().deserialize(
                     "<yellow>Spawns in <red>" + display.countdown + "</red> seconds!</yellow>"));
+
+                // Record display update for replay
+                if (game.getReplayManager().isRecording()) {
+                    game.getReplayManager().recordTextDisplayUpdate(
+                        display.spawnDisplay.getEntityId(),
+                        List.of(newText),
+                        false,
+                        2 // Update third line (spawn timer)
+                    );
+                }
             }
         }
     }

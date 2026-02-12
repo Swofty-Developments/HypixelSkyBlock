@@ -134,7 +134,7 @@ public class ReplayCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
-                    ReplaySession::followNextPlayer,
+                    session -> session.followNextPlayer(player),
                     () -> player.sendMessage("§cNo active replay session.")
             );
         }, ArgumentType.Literal("follow"));
@@ -143,7 +143,7 @@ public class ReplayCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
-                    ReplaySession::followNextPlayer,
+                    session -> session.followNextPlayer(player),
                     () -> player.sendMessage("§cNo active replay session.")
             );
         }, ArgumentType.Literal("follow"), ArgumentType.Literal("next"));
@@ -152,7 +152,7 @@ public class ReplayCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
-                    ReplaySession::followPreviousPlayer,
+                    session -> session.followPreviousPlayer(player),
                     () -> player.sendMessage("§cNo active replay session.")
             );
         }, ArgumentType.Literal("follow"), ArgumentType.Literal("prev"));
@@ -161,7 +161,7 @@ public class ReplayCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             HypixelPlayer player = (HypixelPlayer) sender;
             TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
-                    ReplaySession::stopFollowing,
+                    session -> session.stopFollowing(player),
                     () -> player.sendMessage("§cNo active replay session.")
             );
         }, ArgumentType.Literal("free"));

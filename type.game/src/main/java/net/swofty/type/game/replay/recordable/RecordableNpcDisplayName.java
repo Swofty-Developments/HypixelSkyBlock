@@ -65,8 +65,4 @@ public class RecordableNpcDisplayName extends AbstractRecordable {
         return true;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 2 + 4 + displayName.length() + 4 + prefix.length() + 4 + suffix.length() + 4 + 1;
-    }
 }

@@ -51,8 +51,4 @@ public class RecordablePlayerHealth extends AbstractRecordable {
         return true;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 2 + 2 + 2; // 6 bytes
-    }
 }

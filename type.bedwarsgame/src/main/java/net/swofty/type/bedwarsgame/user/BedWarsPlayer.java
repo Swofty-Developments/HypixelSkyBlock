@@ -74,6 +74,7 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 	public BedWarsPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
 		super(playerConnection, gameProfile);
 		getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(1.0);
+		getAttribute(Attribute.ATTACK_SPEED).setBaseValue(1000); // basically removes the attack indicator
 		fakeUuid = UUID.randomUUID();
 	}
 
@@ -100,7 +101,13 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 	public void updateBelowTag() {
 		if (belowNameTag == null)
 			setBelowNameTag(new BelowNameTag("health", Component.text("§c❤")));
-		belowNameTag.updateScore(this, (int) (getHealth() + getAdditionalHearts()));
+		int health = (int) (getHealth() + getAdditionalHearts());
+		belowNameTag.updateScore(this, health);
+
+		BedWarsGame game = getGame();
+		if (game != null && game.getReplayManager().isRecording()) {
+			game.getReplayManager().recordBelowNameTag(this, health);
+		}
 	}
 
 	@Override

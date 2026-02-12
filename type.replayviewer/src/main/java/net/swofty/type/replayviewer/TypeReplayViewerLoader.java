@@ -149,15 +149,26 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
         return getSession(player.getUuid());
     }
 
+    public static Optional<ReplaySession> getSessionByReplayId(UUID replayId) {
+        return activeSessions.values().stream()
+            .filter(session -> session.getReplayId().equals(replayId))
+            .findFirst();
+    }
+
     public static void registerSession(UUID playerId, ReplaySession session) {
-        removeSession(playerId);
+        ReplaySession existingSession = activeSessions.get(playerId);
+        if (existingSession != null && !existingSession.getReplayId().equals(session.getReplayId())) {
+            existingSession.removeViewer(
+                existingSession.getViewers().stream()
+                    .filter(v -> v.getUuid().equals(playerId))
+                    .findFirst()
+                    .orElse(null)
+            );
+        }
         activeSessions.put(playerId, session);
     }
 
     public static void removeSession(UUID playerId) {
-        ReplaySession session = activeSessions.remove(playerId);
-        if (session != null) {
-            session.stop();
-        }
+        activeSessions.remove(playerId);
     }
 }

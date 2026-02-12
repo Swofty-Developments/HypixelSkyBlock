@@ -35,6 +35,11 @@ public class DynamicTextManager {
      */
     public void createDisplay(int entityId, UUID uuid, Pos position,
                                List<String> initialText, String displayType, String identifier) {
+        createDisplay(entityId, uuid, position, initialText, displayType, identifier, 0);
+    }
+
+    public void createDisplay(int entityId, UUID uuid, Pos position,
+                               List<String> initialText, String displayType, String identifier, int startTick) {
         // Remove existing if present
         removeDisplay(entityId);
 
@@ -45,14 +50,11 @@ public class DynamicTextManager {
         entity.setInstance(instance, position);
         displayEntities.put(entityId, entity);
 
-        // Create text source
-        DynamicTextConfig config = new DynamicTextConfig(
-            identifier, displayType, initialText, Map.of()
-        );
-        DynamicTextSource source = DynamicTextSourceRegistry.create(config);
+        // Create a recorded source so replay text matches recorded updates
+        RecordedTextSource source = new RecordedTextSource(identifier, displayType, initialText, startTick);
         textSources.put(entityId, source);
 
-        lastUpdateTicks.put(entityId, 0);
+        lastUpdateTicks.put(entityId, startTick);
     }
 
     /**
@@ -65,6 +67,11 @@ public class DynamicTextManager {
      */
     public void updateDisplayText(int entityId, List<String> newTextLines,
                                    boolean replaceAll, int startIndex) {
+        updateDisplayText(entityId, newTextLines, replaceAll, startIndex, session.getCurrentTick());
+    }
+
+    public void updateDisplayText(int entityId, List<String> newTextLines,
+                                   boolean replaceAll, int startIndex, int tick) {
         ReplayTextDisplayEntity entity = displayEntities.get(entityId);
         if (entity == null) return;
 
@@ -72,6 +79,11 @@ public class DynamicTextManager {
             entity.updateTextLines(newTextLines);
         } else {
             entity.updateTextLines(newTextLines, startIndex);
+        }
+
+        DynamicTextSource source = textSources.get(entityId);
+        if (source instanceof RecordedTextSource recordedSource) {
+            recordedSource.recordUpdate(tick, newTextLines, replaceAll, startIndex);
         }
     }
 

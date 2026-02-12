@@ -3,8 +3,8 @@ package net.swofty.type.game.replay.recordable;
 import lombok.Getter;
 import net.swofty.commons.replay.protocol.ReplayDataReader;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
-import net.swofty.type.game.replay.recordable.bedwars.RecordableFinalKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableGeneratorUpgrade;
+import net.swofty.type.game.replay.recordable.bedwars.RecordableKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableTeamElimination;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public enum RecordableType {
 
 	// BedWars
 	BEDWARS_BED_DESTRUCTION(120, RecordableBedDestruction::new),
-	BEDWARS_FINAL_KILL(121, RecordableFinalKill::new),
+	BEDWARS_KILL(121, RecordableKill::new),
 	BEDWARS_TEAM_ELIMINATION(122, RecordableTeamElimination::new),
 	BEDWARS_EVENT_CONTINUE(123, RecordableGeneratorUpgrade::new),
 

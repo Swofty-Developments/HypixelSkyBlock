@@ -50,11 +50,6 @@ public class RecordableEntityLocations extends AbstractRecordable {
     }
 
     @Override
-    public int estimatedSize() {
-        return 4 + entries.size() * 20;
-    }
-
-    @Override
     public boolean isEntityState() {
         return true; // Location is an entity state - can skip to latest
     }

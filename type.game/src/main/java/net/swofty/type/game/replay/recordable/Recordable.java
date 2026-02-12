@@ -16,10 +16,6 @@ public interface Recordable {
 
 	void setTick(int tick);
 
-	default int estimatedSize() {
-		return 16;
-	}
-
 	default boolean isEntityState() {
 		return false;
 	}

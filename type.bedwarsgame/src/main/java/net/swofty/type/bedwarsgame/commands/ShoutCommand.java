@@ -45,6 +45,10 @@ public class ShoutCommand extends HypixelCommand {
 			for (BedWarsPlayer receiver : game.getPlayers()) {
 				receiver.sendMessage("§6[SHOUT] §r" + player.getFullDisplayName() + "§r: " + message);
 			}
+
+			if (game.getReplayManager().isRecording()) {
+				game.getReplayManager().recordPlayerChat(player, message, true);
+			}
 		}, messageArg);
 
 		command.setDefaultExecutor((sender, _) -> {

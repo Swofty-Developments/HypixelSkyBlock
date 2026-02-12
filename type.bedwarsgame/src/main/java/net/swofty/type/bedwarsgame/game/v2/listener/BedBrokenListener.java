@@ -19,9 +19,6 @@ public class BedBrokenListener implements HypixelEventClass {
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.gameId());
         BedWarsMapsConfig.TeamKey teamKey = event.teamKey();
         if (game == null) return;
-        if (game.getReplayManager().isRecording()) {
-            game.getReplayManager().recordBedDestroyed(teamKey, event.destroyer());
-        }
 
         BedWarsPlayer destroyer = event.destroyer();
         BedWarsMapsConfig.TeamKey destroyerTeamKey = destroyer.getTeamKey();

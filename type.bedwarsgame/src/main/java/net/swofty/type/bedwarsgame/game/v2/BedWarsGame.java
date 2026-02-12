@@ -267,9 +267,16 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             player.setTag(TypeBedWarsGameLoader.ARMOR_LEVEL_TAG, armorLevel);
         }
     }
+
     @Override
     protected void onTeamEliminated(BedWarsTeam team) {
         super.onTeamEliminated(team);
+
+        String teamColor = team.getColorCode();
+        String teamName = team.getName();
+        broadcastMessage(Component.text(""));
+        broadcastMessage(Component.text("§f§lTEAM ELIMINATED > §c" + teamColor + teamName + " §7has been eliminated!"));
+        broadcastMessage(Component.text(""));
 
         // Record to replay
         if (replayManager.isRecording()) {
@@ -279,7 +286,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     @Override
     protected boolean isTeamViable(BedWarsTeam team) {
-        Logger.info("Checking if team exists for team " + team.getTeamKey());
         // Team is viable if bed is alive OR has active players OR has rejoinable disconnected players
         if (team.isBedAlive()) return true;
 
@@ -292,7 +298,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
                 return t.isPresent() && t.get().getId().equals(team.getId()) && team.isBedAlive();
             });
 
-        Logger.info(hasActivePlayers + " active players, " + hasRejoinablePlayers + " rejoinable players for team " + team.getTeamKey());
         return hasActivePlayers || hasRejoinablePlayers;
     }
 
@@ -365,6 +370,10 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         player.setFlying(true);
         player.setAllowFlying(true);
         player.updateBelowTag();
+
+        if (replayManager.isRecording()) {
+            replayManager.recordPlayerInvisibility(player, true);
+        }
 
         BedWarsMapsConfig.Position spectatorPos = mapEntry.getConfiguration().getLocations().getSpectator();
         if (spectatorPos != null) {

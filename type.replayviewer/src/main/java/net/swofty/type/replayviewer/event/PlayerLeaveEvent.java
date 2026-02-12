@@ -9,6 +9,8 @@ import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 public class PlayerLeaveEvent implements HypixelEventClass {
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerDisconnectEvent event) {
-		TypeReplayViewerLoader.removeSession(event.getPlayer().getUuid());
+		TypeReplayViewerLoader.getSession(event.getPlayer().getUuid()).ifPresent(session -> {
+			session.removeViewer(event.getPlayer());
+		});
 	}
 }

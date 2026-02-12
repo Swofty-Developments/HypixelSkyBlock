@@ -35,8 +35,4 @@ public class RecordableTeamElimination extends AbstractRecordable {
         teamId = (byte) reader.readByte();
     }
 
-    @Override
-    public int estimatedSize() {
-        return 1;
-    }
 }

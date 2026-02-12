@@ -18,7 +18,7 @@ public class ReplayChooseEndpoint implements ServiceEndpoint
 	@Override
 	public ChooseReplayProtocolObject.ChooseReplayResponse onMessage(ServiceProxyRequest message,
 																	 ChooseReplayProtocolObject.ChooseReplayMessage body) {
-		ServiceToServerManager.viewReplay(body.player(), body.replayId());
+		ServiceToServerManager.viewReplay(body.player(), body.replayId(), body.shareCode());
 		return new ChooseReplayProtocolObject.ChooseReplayResponse(false);
 	}
 

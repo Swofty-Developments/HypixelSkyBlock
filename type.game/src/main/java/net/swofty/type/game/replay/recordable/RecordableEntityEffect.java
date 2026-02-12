@@ -54,8 +54,4 @@ public class RecordableEntityEffect extends AbstractRecordable {
         return entityId;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 12;
-    }
 }

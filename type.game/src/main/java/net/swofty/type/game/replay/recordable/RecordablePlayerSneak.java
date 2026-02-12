@@ -47,8 +47,4 @@ public class RecordablePlayerSneak extends AbstractRecordable {
 		return true;
 	}
 
-	@Override
-	public int estimatedSize() {
-		return 5;
-	}
 }

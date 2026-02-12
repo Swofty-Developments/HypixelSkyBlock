@@ -14,26 +14,28 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RecordableFinalKill extends AbstractRecordable {
+public class RecordableKill extends AbstractRecordable {
     private int victimEntityId;
     private UUID victimUuid;
     private int killerEntityId; // nullable as -1
     private UUID killerUuid; // nullable
     private byte victimTeamId;
-    private byte deathCause; // 0=player, 1=void, 2=fall, 3=fire, 4=explosion, 5=other - Maybe could be better?
+    private byte deathCause; // 0=generic, 1=generic_player, 2=void, 3=void_player, 4=shot, 5=entity
+    private byte finalKill;
 
-    public RecordableFinalKill(int victimEntityId, UUID victimUuid, int killerEntityId, UUID killerUuid, byte victimTeamId, byte deathCause) {
+    public RecordableKill(int victimEntityId, UUID victimUuid, int killerEntityId, UUID killerUuid, byte victimTeamId, byte deathCause, byte finalKill) {
         this.victimEntityId = victimEntityId;
         this.victimUuid = victimUuid;
         this.killerEntityId = killerEntityId;
         this.killerUuid = killerUuid;
         this.victimTeamId = victimTeamId;
         this.deathCause = deathCause;
+        this.finalKill = finalKill;
     }
 
     @Override
     public RecordableType getType() {
-        return RecordableType.BEDWARS_FINAL_KILL;
+        return RecordableType.BEDWARS_KILL;
     }
 
     @Override
@@ -48,6 +50,7 @@ public class RecordableFinalKill extends AbstractRecordable {
         }
         writer.writeByte(victimTeamId);
         writer.writeByte(deathCause);
+        writer.writeByte(finalKill);
     }
 
     @Override
@@ -60,10 +63,7 @@ public class RecordableFinalKill extends AbstractRecordable {
         }
         victimTeamId = (byte) reader.readByte();
         deathCause = (byte) reader.readByte();
+        finalKill = (byte) reader.readByte();
     }
 
-    @Override
-    public int estimatedSize() {
-        return 2 + 16 + 2 + 1 + (killerUuid != null ? 16 : 0) + 2; // ~23-39 bytes
-    }
 }

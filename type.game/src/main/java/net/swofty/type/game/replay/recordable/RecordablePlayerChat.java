@@ -46,8 +46,4 @@ public class RecordablePlayerChat extends AbstractRecordable {
 		return entityId;
 	}
 
-	@Override
-	public int estimatedSize() {
-		return 5 + message.length();
-	}
 }

@@ -37,7 +37,7 @@ public class RecordableEntityEquipment extends AbstractRecordable {
     @Override
     public void read(ReplayDataReader reader) throws IOException {
         entityId = reader.readVarInt();
-        slotId = reader.readByte();
+        slotId = reader.readUnsignedByte();
         itemBytes = reader.readBytes();
     }
 
@@ -49,11 +49,6 @@ public class RecordableEntityEquipment extends AbstractRecordable {
     @Override
     public boolean isEntityState() {
         return true;
-    }
-
-    @Override
-    public int estimatedSize() {
-        return 6 + (itemBytes != null ? itemBytes.length : 0);
     }
 
 }

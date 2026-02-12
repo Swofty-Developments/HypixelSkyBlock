@@ -22,7 +22,7 @@ public class ShopManager {
 	private final ShopItem WOOL = new Wool();
 	private final ShopItem HARDENED_CLAY = new HardenedClay();
 	private final ShopItem GLASS = new BasicItem("glass", "Blast-Proof Glass", "Immune to explosions.", 12, 4, Currency.IRON, Material.GLASS);
-	private final ShopItem ENDSTONE = new BasicItem("endstone", "Endstone", "Solid block to defend your bed. w", 24, 12, Currency.IRON, Material.END_STONE);
+	private final ShopItem ENDSTONE = new BasicItem("endstone", "Endstone", "Solid block to defend your bed.", 24, 12, Currency.IRON, Material.END_STONE);
 	private final ShopItem OBSIDIAN = new BasicItem("obsidian", "Obsidian", "Great for defending.", 4, 4, Currency.EMERALD, Material.OBSIDIAN);
 	private final ShopItem LADDER = new BasicItem("ladder", "Ladder", "Useful to save cats stuck in trees.", 8, 8, Currency.IRON, Material.LADDER);
 	private final ShopItem PLANKS = new BasicItem("wood", "Wood", "Good block to defend your bed.\nStrong against pickaxes.", 4, 16, Currency.GOLD, Material.OAK_PLANKS);

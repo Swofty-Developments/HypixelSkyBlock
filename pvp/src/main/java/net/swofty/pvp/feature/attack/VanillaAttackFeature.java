@@ -254,17 +254,17 @@ public class VanillaAttackFeature implements AttackFeature, RegistrableFeature {
         );
 
         double cooldownProgress = 1;
-        if (attacker instanceof Player player) {
+        if (version.modern() && attacker instanceof Player player) {
             cooldownProgress = cooldownFeature.getAttackCooldownProgress(player);
             cooldownFeature.resetCooldownProgress(player);
         }
 
-        // Apply cooldownProgress to damage
-        damage *= (float) (0.2 + cooldownProgress * cooldownProgress * 0.8);
-        magicalDamage *= (float) cooldownProgress;
+        if (version.modern()) {
+            damage *= (float) (0.2 + cooldownProgress * cooldownProgress * 0.8);
+            magicalDamage *= (float) cooldownProgress;
+        }
 
-        // Calculate attacks
-        boolean strongAttack = cooldownProgress > 0.9;
+        boolean strongAttack = version.legacy() || cooldownProgress > 0.9;
         boolean sprintAttack = attacker.isSprinting() && strongAttack;
         int knockback = enchantmentFeature.getKnockback(attacker);
         int fireAspect = enchantmentFeature.getFireAspect(attacker);

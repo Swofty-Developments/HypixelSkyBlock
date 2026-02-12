@@ -42,8 +42,4 @@ public class RecordableItemPickup extends AbstractRecordable {
         return itemEntityId;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 4;
-    }
 }

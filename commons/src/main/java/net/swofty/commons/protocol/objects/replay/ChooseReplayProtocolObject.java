@@ -2,6 +2,7 @@ package net.swofty.commons.protocol.objects.replay;
 
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.util.UUID;
@@ -18,21 +19,26 @@ public class ChooseReplayProtocolObject extends ProtocolObject
                 JSONObject json = new JSONObject();
                 json.put("uuid", value.player.toString());
                 json.put("replayId", value.replayId);
+                if (value.shareCode != null) {
+                    json.put("shareCode", value.shareCode);
+                }
                 return json.toString();
             }
 
             @Override
             public ChooseReplayMessage deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
+                String shareCode = obj.optString("shareCode", null);
                 return new ChooseReplayMessage(
                     UUID.fromString(obj.getString("uuid")),
-                    obj.getString("replayId")
+                    obj.getString("replayId"),
+                    shareCode
                 );
             }
 
             @Override
             public ChooseReplayMessage clone(ChooseReplayMessage value) {
-                return new ChooseReplayMessage(value.player, value.replayId);
+                return new ChooseReplayMessage(value.player, value.replayId, value.shareCode);
             }
         };
     }
@@ -60,7 +66,11 @@ public class ChooseReplayProtocolObject extends ProtocolObject
         };
     }
 
-    public record ChooseReplayMessage(UUID player, String replayId) {
+    public record ChooseReplayMessage(UUID player, String replayId, @Nullable String shareCode) {
+        // Convenience constructor without share code
+        public ChooseReplayMessage(UUID player, String replayId) {
+            this(player, replayId, null);
+        }
     }
 
     public record ChooseReplayResponse(boolean error) {

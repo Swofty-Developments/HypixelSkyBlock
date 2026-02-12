@@ -47,8 +47,4 @@ public class RecordableEntityMetadata extends AbstractRecordable {
         return true;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 4 + (metadataBytes != null ? metadataBytes.length : 0);
-    }
 }

@@ -56,12 +56,4 @@ public class RecordableBatch extends AbstractRecordable {
         }
     }
 
-    @Override
-    public int estimatedSize() {
-        int size = 4;
-        for (Recordable r : recordables) {
-            size += 6 + r.estimatedSize();
-        }
-        return size;
-    }
 }

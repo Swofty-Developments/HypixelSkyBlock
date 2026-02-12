@@ -24,10 +24,10 @@ import net.swofty.type.replayviewer.playback.MapDeserializer;
 import net.swofty.type.replayviewer.playback.ReplayData;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 import net.swofty.type.replayviewer.redis.service.RedisChosenMap;
+import net.swofty.type.replayviewer.util.ReplayShareCodec;
 import org.tinylog.Logger;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -63,6 +63,24 @@ public class PlayerJoinEvent implements HypixelEventClass {
             return;
         }
 
+        var existingSession = TypeReplayViewerLoader.getSessionByReplayId(replayId);
+        if (existingSession.isPresent()) {
+            ReplaySession session = existingSession.get();
+            event.setSpawningInstance(session.getInstance());
+
+            Pos spawnPos = new Pos(session.getMetadata().getMapCenterX(), 100, session.getMetadata().getMapCenterZ());
+            event.getPlayer().setRespawnPoint(spawnPos);
+
+            CompletableFuture.runAsync(() -> {
+                ScheduleUtility.delay(() -> {
+                    session.addViewer(player);
+                    player.teleport(spawnPos);
+                    player.sendMessage("§aJoined existing replay session.");
+                }, 20);
+            });
+            return;
+        }
+
         InstanceContainer instance = MinecraftServer.getInstanceManager().createInstanceContainer();
         instance.setChunkSupplier(LightingChunk::new);
 
@@ -76,6 +94,9 @@ public class PlayerJoinEvent implements HypixelEventClass {
 
     private void loadReplay(Player player, UUID replayId, InstanceContainer instance) {
         try {
+            // Get share code if present
+            String shareCode = RedisChosenMap.getAndRemoveShareCode(player.getUuid());
+
             ProxyService replayService = new ProxyService(ServiceType.REPLAY);
             var request = new ReplayLoadProtocolObject.LoadRequest(replayId);
 
@@ -119,22 +140,49 @@ public class PlayerJoinEvent implements HypixelEventClass {
 
             ReplayData replayData = new ReplayData();
             if (response.dataChunks() != null && !response.dataChunks().isEmpty()) {
-                List<byte[]> chunks = response.dataChunks().stream()
-                    .map(ReplayLoadProtocolObject.DataChunk::data)
-                    .toList();
-                replayData.loadFromChunks(chunks);
+                ReplayData.IntegrityReport integrityReport = replayData.loadFromProtocolChunks(
+                    response.dataChunks(),
+                    metadata.getDurationTicks()
+                );
+
+                if (integrityReport.hasIssues()) {
+                    player.sendMessage("§eReplay data appears incomplete in places; some moments may be missing.");
+                }
             }
 
             // Load map data
             loadMapData(metadata.getMapHash(), instance, player);
 
-            // Teleport player to map center
-            Pos spawnPos = new Pos(metadata.getMapCenterX(), 100, metadata.getMapCenterZ());
-            player.teleport(spawnPos);
+            // Determine spawn position - use share code if available
+            Pos spawnPos;
+            int startTick = 0;
 
+            if (shareCode != null) {
+                ReplayShareCodec.ShareData shareData = ReplayShareCodec.decode(
+                    shareCode,
+                    metadata.getMapCenterX(),
+                    metadata.getMapCenterZ()
+                );
+                if (shareData != null) {
+                    spawnPos = shareData.position();
+                    startTick = Math.min(shareData.tick(), metadata.getDurationTicks() - 1);
+                    player.sendMessage("§aRestored shared replay position");
+                } else {
+                    spawnPos = new Pos(metadata.getMapCenterX(), 100, metadata.getMapCenterZ());
+                    player.sendMessage("§eInvalid share code, using default position");
+                }
+            } else {
+                spawnPos = new Pos(metadata.getMapCenterX(), 100, metadata.getMapCenterZ());
+            }
+
+            player.teleport(spawnPos);
 
             ReplaySession session = new ReplaySession(player, metadata, instance, replayData);
             TypeReplayViewerLoader.registerSession(player.getUuid(), session);
+
+            if (startTick > 0) {
+                session.seekTo(startTick);
+            }
 
             session.play();
         } catch (Exception e) {

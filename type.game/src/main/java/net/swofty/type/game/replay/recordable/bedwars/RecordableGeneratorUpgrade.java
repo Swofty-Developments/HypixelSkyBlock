@@ -39,8 +39,4 @@ public class RecordableGeneratorUpgrade extends AbstractRecordable {
         tier = (byte) reader.readByte();
     }
 
-    @Override
-    public int estimatedSize() {
-        return 2;
-    }
 }

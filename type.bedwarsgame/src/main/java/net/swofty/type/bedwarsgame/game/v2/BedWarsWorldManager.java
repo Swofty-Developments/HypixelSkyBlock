@@ -19,11 +19,15 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
 public class BedWarsWorldManager {
     private final BedWarsGame game;
+    private final List<RecordedShopNpc> recordedShopNpcs = new ArrayList<>();
+    private boolean shopNpcsRecorded = false;
 
     public void clearExistingBeds() {
         InstanceContainer instance = game.getInstance();
@@ -128,17 +132,20 @@ public class BedWarsWorldManager {
             BedWarsMapsConfig.PitchYawPosition teamShopPos = team.getShop().team();
 
             if (itemShopPos != null) {
+                Pos npcPos = new Pos(itemShopPos.x(), itemShopPos.y(), itemShopPos.z(),
+                    itemShopPos.yaw(), itemShopPos.pitch());
+                String[] holograms = new String[]{"§bITEM SHOP", "§e§lRIGHT CLICK"};
+
                 HypixelNPC shopNpc = new HypixelNPC(
                     new VillagerConfiguration() {
                         @Override
                         public String[] holograms(HypixelPlayer player) {
-                            return new String[]{"§bITEM SHOP", "§e§lRIGHT CLICK"};
+                            return holograms;
                         }
 
                         @Override
                         public Pos position(HypixelPlayer player) {
-                            return new Pos(itemShopPos.x(), itemShopPos.y(), itemShopPos.z(),
-                                itemShopPos.yaw(), itemShopPos.pitch());
+                            return npcPos;
                         }
 
                         @Override
@@ -164,20 +171,26 @@ public class BedWarsWorldManager {
                     }
                 };
                 shopNpc.register();
+
+                int npcEntityId = 10000 + teamKey.ordinal() * 2; // Generate unique entity ID
+                recordedShopNpcs.add(new RecordedShopNpc(npcEntityId, npcPos, holograms, "ITEM_SHOP"));
             }
 
             if (teamShopPos != null) {
+                Pos npcPos = new Pos(teamShopPos.x(), teamShopPos.y(), teamShopPos.z(),
+                    teamShopPos.yaw(), teamShopPos.pitch());
+                String[] holograms = new String[]{"§bTEAM", "§bUPGRADES", "§e§lRIGHT CLICK"};
+
                 HypixelNPC teamNpc = new HypixelNPC(
                     new VillagerConfiguration() {
                         @Override
                         public String[] holograms(HypixelPlayer player) {
-                            return new String[]{"§bTEAM", "§bUPGRADES", "§e§lRIGHT CLICK"};
+                            return holograms;
                         }
 
                         @Override
                         public Pos position(HypixelPlayer player) {
-                            return new Pos(teamShopPos.x(), teamShopPos.y(), teamShopPos.z(),
-                                teamShopPos.yaw(), teamShopPos.pitch());
+                            return npcPos;
                         }
 
                         @Override
@@ -203,7 +216,23 @@ public class BedWarsWorldManager {
                     }
                 };
                 teamNpc.register();
+
+                int npcEntityId = 10000 + teamKey.ordinal() * 2 + 1; // Generate unique entity ID
+                recordedShopNpcs.add(new RecordedShopNpc(npcEntityId, npcPos, holograms, "TEAM_SHOP"));
             }
         });
+    }
+
+    public void recordShopNpcsForReplay() {
+        if (shopNpcsRecorded || !game.getReplayManager().isRecording()) {
+            return;
+        }
+        for (RecordedShopNpc npc : recordedShopNpcs) {
+            game.getReplayManager().recordShopNpc(npc.entityId(), npc.position(), npc.holograms(), npc.npcType());
+        }
+        shopNpcsRecorded = true;
+    }
+
+    private record RecordedShopNpc(int entityId, Pos position, String[] holograms, String npcType) {
     }
 }

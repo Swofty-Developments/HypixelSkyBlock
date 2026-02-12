@@ -7,20 +7,24 @@ import net.kyori.adventure.sound.Sound;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.NetworkBuffer;
+import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
+import net.minestom.server.network.packet.server.play.EntityAnimationPacket;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
+import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.commons.protocol.objects.replay.ReplayDataBatchProtocolObject;
 import net.swofty.commons.protocol.objects.replay.ReplayStartProtocolObject;
 import net.swofty.commons.scoreboard.ScoreboardData;
 import net.swofty.proxyapi.ProxyService;
+import net.swofty.type.bedwarsgame.death.BedWarsDeathType;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -28,24 +32,17 @@ import net.swofty.type.game.replay.ReplayRecorder;
 import net.swofty.type.game.replay.dispatcher.BlockChangeDispatcher;
 import net.swofty.type.game.replay.dispatcher.DispatcherManager;
 import net.swofty.type.game.replay.dispatcher.EntityLocationDispatcher;
-import net.swofty.type.game.replay.recordable.RecordableBlockChange;
-import net.swofty.type.game.replay.recordable.RecordableDroppedItem;
-import net.swofty.type.game.replay.recordable.RecordableItemPickup;
-import net.swofty.type.game.replay.recordable.RecordableParticle;
-import net.swofty.type.game.replay.recordable.RecordablePlayerChat;
-import net.swofty.type.game.replay.recordable.RecordablePlayerDisplayName;
-import net.swofty.type.game.replay.recordable.RecordablePlayerHealth;
-import net.swofty.type.game.replay.recordable.RecordablePlayerSkin;
-import net.swofty.type.game.replay.recordable.RecordableSound;
+import net.swofty.type.game.replay.recordable.*;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
-import net.swofty.type.game.replay.recordable.bedwars.RecordableFinalKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableGeneratorUpgrade;
+import net.swofty.type.game.replay.recordable.bedwars.RecordableKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableTeamElimination;
 import net.swofty.type.generic.HypixelConst;
 import org.tinylog.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +50,6 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class BedWarsReplayManager {
-    private static final int BATCH_INTERVAL_SECONDS = 10;
-
     private final BedWarsGame game;
     private final ProxyService replayService;
 
@@ -64,9 +59,7 @@ public class BedWarsReplayManager {
     private final DispatcherManager dispatchers;
 
     private Task tickTask;
-    private Task batchTask;
     private Task scoreboardTask;
-    private int batchIndex = 0;
 
     private ScoreboardData lastScoreboardState;
 
@@ -158,20 +151,16 @@ public class BedWarsReplayManager {
         // Record initial player appearances
         recordInitialPlayerStates();
 
+        // Record NPCs and generator displays created before recording started
+        game.getWorldManager().recordShopNpcsForReplay();
+        game.getGeneratorManager().recordInitialGeneratorDisplays();
+
         // Start tick task (every tick for accurate timing)
         tickTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
             if (!recording) return;
             recorder.tick();
             dispatchers.tick();
         }).repeat(TaskSchedule.tick(1)).schedule();
-
-        // Start batch sending task (every 10 seconds)
-        batchTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
-                if (!recording) return;
-                sendCurrentBatch();
-            }).delay(TaskSchedule.seconds(BATCH_INTERVAL_SECONDS))
-            .repeat(TaskSchedule.seconds(BATCH_INTERVAL_SECONDS))
-            .schedule();
 
         Logger.info("Started replay recording for game {} (map: {})", game.getGameId(), mapName);
     }
@@ -182,16 +171,12 @@ public class BedWarsReplayManager {
         }
     }
 
-    /**
-     * Records a player's appearance (skin, display name, health).
-     */
     public void recordPlayerAppearance(BedWarsPlayer player) {
         if (!recording) return;
 
         int entityId = player.getEntityId();
         UUID uuid = player.getUuid();
 
-        // Record skin
         var skin = player.getSkin();
         if (skin != null) {
             recorder.record(new RecordablePlayerSkin(
@@ -199,9 +184,8 @@ public class BedWarsReplayManager {
             ));
         }
 
-        // Record display name with team prefix
         BedWarsTeam team = game.getTeam(player.getTeamKey().name()).orElse(null);
-        String prefix = team != null ? team.getColorCode() + "[" + team.getTeamKey().name().charAt(0) + "] " : "";
+        String prefix = team != null ? team.getColorCode() + "§l" + team.getTeamKey().name().charAt(0) + team.getColorCode() + " " : "";
         int nameColor = team != null ? team.getTeamKey().rgb() : -1;
 
         recorder.record(new RecordablePlayerDisplayName(
@@ -228,45 +212,44 @@ public class BedWarsReplayManager {
         if (team != null && team.getBed() != null) {
             var bedPos = team.getBed();
             if (bedPos.feet() != null) {
+                int x = (int) bedPos.feet().x();
+                int y = (int) bedPos.feet().y();
+                int z = (int) bedPos.feet().z();
+                int blockState = game.getInstance().getBlock(x, y, z).stateId();
                 recorder.record(new RecordableBlockChange(
-                    (int) bedPos.feet().x(), (int) bedPos.feet().y(), (int) bedPos.feet().z(),
-                    Block.RED_BED.stateId(), Block.AIR.stateId()
+                    x, y, z,
+                    blockState, Block.AIR.stateId()
                 ));
             }
             if (bedPos.head() != null) {
+                int x = (int) bedPos.head().x();
+                int y = (int) bedPos.head().y();
+                int z = (int) bedPos.head().z();
+                int blockState = game.getInstance().getBlock(x, y, z).stateId();
                 recorder.record(new RecordableBlockChange(
-                    (int) bedPos.head().x(), (int) bedPos.head().y(), (int) bedPos.head().z(),
-                    Block.RED_BED.stateId(), Block.AIR.stateId()
+                    x, y, z,
+                    blockState, Block.AIR.stateId()
                 ));
             }
         }
     }
 
-    public void recordKill(BedWarsPlayer killer, BedWarsPlayer victim, boolean isFinalKill) {
+    public void recordKill(BedWarsPlayer killer, BedWarsPlayer victim, BedWarsDeathType deathType, boolean isFinalKill) {
         if (!recording) return;
 
-        if (isFinalKill) {
-            byte deathCause = 0; // Player kill
-            recordFinalKill(victim, killer, deathCause);
-        }
-        // Regular kills are implicitly recorded through player death recordables
-    }
+        byte victimTeamId = (byte) victim.getTeamKey().ordinal();
+        byte deathCause = mapDeathCause(deathType);
+        byte finalKillFlag = (byte) (isFinalKill ? 1 : 0);
 
-    private void sendCurrentBatch() {
-        byte[] batchData = recorder.flushBatch();
-        if (batchData == null || batchData.length == 0) return;
-
-        ReplayDataBatchProtocolObject.BatchMessage batch = new ReplayDataBatchProtocolObject.BatchMessage(
-            UUID.fromString(game.getGameId()),
-            batchIndex++,
-            recorder.getStartTick(),
-            recorder.getCurrentTick(),
-            recorder.getRecordableCount(),
-            batchData
-        );
-
-        sendToService(batch);
-        Logger.debug("Sent replay batch {} ({} bytes) for game {}", batchIndex - 1, batchData.length, game.getGameId());
+        recorder.record(new RecordableKill(
+            victim.getEntityId(),
+            victim.getUuid(),
+            killer != null ? killer.getEntityId() : -1,
+            killer != null ? killer.getUuid() : null,
+            victimTeamId,
+            deathCause,
+            finalKillFlag
+        ));
     }
 
     /**
@@ -281,18 +264,10 @@ public class BedWarsReplayManager {
             tickTask = null;
         }
 
-        if (batchTask != null) {
-            batchTask.cancel();
-            batchTask = null;
-        }
-
         if (scoreboardTask != null) {
             scoreboardTask.cancel();
             scoreboardTask = null;
         }
-
-        // Send final batch
-        sendCurrentBatch();
 
         dispatchers.cleanup();
         recorder.finish();
@@ -324,33 +299,37 @@ public class BedWarsReplayManager {
         if (team != null && team.getBed() != null) {
             var bedPos = team.getBed();
             if (bedPos.feet() != null) {
+                int x = (int) bedPos.feet().x();
+                int y = (int) bedPos.feet().y();
+                int z = (int) bedPos.feet().z();
+                int blockState = game.getInstance().getBlock(x, y, z).stateId();
                 recorder.record(new RecordableBlockChange(
-                    (int) bedPos.feet().x(), (int) bedPos.feet().y(), (int) bedPos.feet().z(),
-                    Block.AIR.stateId(), Block.RED_BED.stateId()
+                    x, y, z,
+                    Block.AIR.stateId(), blockState
                 ));
             }
             if (bedPos.head() != null) {
+                int x = (int) bedPos.head().x();
+                int y = (int) bedPos.head().y();
+                int z = (int) bedPos.head().z();
+                int blockState = game.getInstance().getBlock(x, y, z).stateId();
                 recorder.record(new RecordableBlockChange(
-                    (int) bedPos.head().x(), (int) bedPos.head().y(), (int) bedPos.head().z(),
-                    Block.AIR.stateId(), Block.RED_BED.stateId()
+                    x, y, z,
+                    Block.AIR.stateId(), blockState
                 ));
             }
         }
     }
 
-    public void recordFinalKill(BedWarsPlayer victim, BedWarsPlayer killer, byte deathCause) {
-        if (!recording) return;
-
-        byte victimTeamId = (byte) victim.getTeamKey().ordinal();
-
-        recorder.record(new RecordableFinalKill(
-            victim.getEntityId(),
-            victim.getUuid(),
-            killer != null ? killer.getEntityId() : -1,
-            killer != null ? killer.getUuid() : null,
-            victimTeamId,
-            deathCause
-        ));
+    private byte mapDeathCause(BedWarsDeathType deathType) {
+        return switch (deathType) {
+            case GENERIC -> 0;
+            case GENERIC_ASSISTED -> 1;
+            case VOID -> 2;
+            case VOID_ASSISTED -> 3;
+            case BOW -> 4;
+            case ENTITY -> 5;
+        };
     }
 
     public void recordTeamElimination(TeamKey teamKey) {
@@ -402,6 +381,11 @@ public class BedWarsReplayManager {
         recorder.record(new RecordableItemPickup(itemEntityId, collectorEntityId));
     }
 
+    public void recordEntityDespawn(int entityId) {
+        if (!recording) return;
+        recorder.record(new RecordableEntityDespawn(entityId));
+    }
+
     public void recordPlayerChat(BedWarsPlayer player, String message, boolean isShout) {
         if (!recording) return;
         recorder.record(new RecordablePlayerChat(
@@ -426,6 +410,89 @@ public class BedWarsReplayManager {
             sound.volume(),
             sound.pitch()
         ));
+    }
+
+    public void recordEntityAnimation(EntityAnimationPacket packet) {
+        if (!recording) return;
+        RecordableEntityAnimation.AnimationType animationType = switch (packet.animation()) {
+            case SWING_MAIN_ARM -> RecordableEntityAnimation.AnimationType.SWING_MAIN_HAND;
+            case SWING_OFF_HAND -> RecordableEntityAnimation.AnimationType.SWING_OFFHAND;
+            case TAKE_DAMAGE -> RecordableEntityAnimation.AnimationType.TAKE_DAMAGE;
+            case LEAVE_BED -> RecordableEntityAnimation.AnimationType.LEAVE_BED;
+            case CRITICAL_EFFECT -> RecordableEntityAnimation.AnimationType.CRITICAL_EFFECT;
+            case MAGICAL_CRITICAL_EFFECT -> RecordableEntityAnimation.AnimationType.MAGIC_CRITICAL_EFFECT;
+        };
+        recorder.record(new RecordableEntityAnimation(packet.entityId(), animationType));
+    }
+
+    public void recordBlockBreakAnimation(BlockBreakAnimationPacket packet) {
+        if (!recording) return;
+        recorder.record(new RecordableBlockBreakAnimation(
+            packet.entityId(),
+            packet.blockPosition().blockX(),
+            packet.blockPosition().blockY(),
+            packet.blockPosition().blockZ(),
+            packet.destroyStage()
+        ));
+    }
+
+    public void recordPlayerInvisibility(BedWarsPlayer player, boolean invisible) {
+        if (!recording) return;
+        int effectId = PotionEffect.INVISIBILITY.id();
+        if (invisible) {
+            recorder.record(new RecordableEntityEffect(
+                player.getEntityId(),
+                effectId,
+                (byte) 0,
+                Integer.MAX_VALUE, // Infinite duration
+                (byte) 0x06 // No particles, show icon
+            ));
+        }
+    }
+
+    public void recordGeneratorDisplay(int entityId, UUID entityUuid, Pos position,
+                                       List<String> textLines, String displayType, String identifier) {
+        if (!recording) return;
+        recorder.record(new RecordableDynamicTextDisplay(
+            entityId, entityUuid,
+            position.x(), position.y(), position.z(),
+            textLines, displayType, identifier
+        ));
+    }
+
+    public void recordTextDisplayUpdate(int entityId, List<String> newTextLines, boolean replaceAll, int startIndex) {
+        if (!recording) return;
+        recorder.record(new RecordableTextDisplayUpdate(entityId, newTextLines, replaceAll, startIndex));
+    }
+
+    public void recordBelowNameTag(BedWarsPlayer player, int health) {
+        if (!recording) return;
+        recorder.record(new RecordablePlayerHealth(
+            player.getEntityId(), health, 20.0f
+        ));
+    }
+
+    public void recordShopNpc(int entityId, Pos position, String[] holograms, String npcType) {
+        if (!recording) return;
+
+        // Record NPC spawn
+        recorder.record(new RecordableEntitySpawn(
+            entityId,
+            java.util.UUID.randomUUID(),
+            EntityType.VILLAGER.id(),
+            position.x(), position.y(), position.z(),
+            position.yaw(), position.pitch()
+        ));
+
+        // Record NPC display name (last line of holograms is typically the name)
+        String displayName = holograms.length > 0 ? holograms[holograms.length - 1] : npcType;
+        recorder.record(new RecordableNpcDisplayName(entityId, displayName, "", "", -1, true));
+
+        // Record hologram text lines
+        if (holograms.length > 1) {
+            List<String> textLines = new ArrayList<>(Arrays.asList(holograms).subList(0, holograms.length - 1));
+            recorder.record(new RecordableNpcTextLine(entityId, textLines, 2.5, 0));
+        }
     }
 
     public static byte[] serializeItemStack(ItemStack itemStack) {

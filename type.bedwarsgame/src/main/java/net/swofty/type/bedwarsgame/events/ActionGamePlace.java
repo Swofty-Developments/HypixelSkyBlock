@@ -14,6 +14,7 @@ import net.swofty.type.bedwarsgame.entity.TntEntity;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
+import net.swofty.type.game.replay.dispatcher.BlockChangeDispatcher;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -75,7 +76,21 @@ public class ActionGamePlace implements HypixelEventClass {
 			return;
 		}
 
-		event.setBlock(event.getBlock().withTag(TypeBedWarsGameLoader.PLAYER_PLACED_TAG, true));
+		Block placedBlock = event.getBlock().withTag(TypeBedWarsGameLoader.PLAYER_PLACED_TAG, true);
+		if (game.getReplayManager().isRecording()) {
+			BlockChangeDispatcher blockDispatcher = game.getReplayManager().getBlockChangeDispatcher();
+			if (blockDispatcher != null) {
+				Block previousBlock = event.getInstance().getBlock(blockPosition);
+				blockDispatcher.recordBlockChange(
+					blockPosition.blockX(),
+					blockPosition.blockY(),
+					blockPosition.blockZ(),
+					previousBlock.stateId(),
+					placedBlock.stateId()
+				);
+			}
+		}
+		event.setBlock(placedBlock);
 		player.getAchievementHandler().addProgressByTrigger("bedwars.blocks_placed", 1);
 	}
 

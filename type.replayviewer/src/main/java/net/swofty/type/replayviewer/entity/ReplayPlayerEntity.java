@@ -1,6 +1,7 @@
 package net.swofty.type.replayviewer.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.component.DataComponents;
@@ -36,11 +37,15 @@ import java.util.concurrent.CompletableFuture;
 public class ReplayPlayerEntity extends LivingEntity {
     private final String playerName;
     private PlayerSkin skin;
+    private final UUID actualUuid;
+    @Setter
+    private int belowScore = 0;
 
     public ReplayPlayerEntity(String playerName,
-                              String textureValue, String textureSignature) {
+                              String textureValue, String textureSignature, UUID actualUuid) {
         super(EntityType.PLAYER, UUID.randomUUID());
         this.playerName = playerName;
+        this.actualUuid = actualUuid;
 
         if (textureValue != null && !textureValue.isEmpty()) {
             this.skin = new PlayerSkin(textureValue, textureSignature);
@@ -132,4 +137,9 @@ public class ReplayPlayerEntity extends LivingEntity {
                 null,
                 1, true)));
     }
+
+    public String getScoreboardEntryName() {
+        return playerName;
+    }
+
 }

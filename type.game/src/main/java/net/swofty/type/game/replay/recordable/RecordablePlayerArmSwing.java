@@ -42,8 +42,4 @@ public class RecordablePlayerArmSwing extends AbstractRecordable {
 		return entityId;
 	}
 
-	@Override
-	public int estimatedSize() {
-		return 5;
-	}
 }

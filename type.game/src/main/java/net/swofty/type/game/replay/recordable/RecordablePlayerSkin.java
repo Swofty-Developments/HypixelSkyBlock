@@ -56,9 +56,4 @@ public class RecordablePlayerSkin extends AbstractRecordable {
         return true;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 2 + 16 + 4 + (textureValue != null ? textureValue.length() : 0)
-            + 4 + (textureSignature != null ? textureSignature.length() : 0);
-    }
 }

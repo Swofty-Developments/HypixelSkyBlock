@@ -72,12 +72,4 @@ public class RecordableNpcTextLine extends AbstractRecordable {
         return true;
     }
 
-    @Override
-    public int estimatedSize() {
-        int size = 2 + 2 + 8 + 2;
-        for (String line : textLines) {
-            size += 2 + line.length();
-        }
-        return size;
-    }
 }

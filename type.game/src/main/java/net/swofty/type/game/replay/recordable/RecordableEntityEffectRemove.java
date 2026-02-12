@@ -42,8 +42,4 @@ public class RecordableEntityEffectRemove extends AbstractRecordable {
         return entityId;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 8;
-    }
 }

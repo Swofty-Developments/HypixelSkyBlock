@@ -20,7 +20,6 @@ import net.swofty.type.game.replay.dispatcher.BlockChangeDispatcher;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import org.tinylog.Logger;
 
 import java.util.Map;
 import java.util.Objects;
@@ -30,24 +29,24 @@ public class ActionGameBreak implements HypixelEventClass {
     @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
     public void globalBlockChange(InstanceBlockUpdateEvent event) {
         BedWarsGame game = TypeBedWarsGameLoader.getGameByInstance(event.getInstance());
-        if (game == null || game.getState() != GameState.IN_PROGRESS) {
+        if (game == null || !game.getReplayManager().isRecording()) {
             return;
+        }
+
+        if (Boolean.TRUE.equals(event.getBlock().getTag(TypeBedWarsGameLoader.PLAYER_PLACED_TAG))) {
+            return; // Player placements are recorded in ActionGamePlace
         }
 
         BlockChangeDispatcher blockDispatcher =
             game.getReplayManager().getBlockChangeDispatcher();
         if (blockDispatcher != null) {
-            Logger.info("Recording global block change at {}, {}, {} from {} to {}",
-                event.getBlockPosition().blockX(),
-                event.getBlockPosition().blockY(),
-                event.getBlockPosition().blockZ(),
-                event.getBlock().name()
-            );
+            Block previousBlock = event.getInstance().getBlock(event.getBlockPosition());
+
             blockDispatcher.recordBlockChange(
                 event.getBlockPosition().blockX(),
                 event.getBlockPosition().blockY(),
                 event.getBlockPosition().blockZ(),
-                Block.AIR.stateId(),
+                previousBlock.stateId(),
                 event.getBlock().stateId()
             );
         }

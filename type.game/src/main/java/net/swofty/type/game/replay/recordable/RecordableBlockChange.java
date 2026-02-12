@@ -48,8 +48,4 @@ public class RecordableBlockChange extends AbstractRecordable {
         previousBlockStateId = reader.readVarInt();
     }
 
-    @Override
-    public int estimatedSize() {
-        return 12; // 6 bytes coords + 2x VarInt
-    }
 }

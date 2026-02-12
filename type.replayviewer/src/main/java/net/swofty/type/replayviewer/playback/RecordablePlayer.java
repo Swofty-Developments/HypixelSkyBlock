@@ -14,11 +14,12 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.NetworkBuffer;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
+import net.minestom.server.potion.Potion;
+import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.utils.inventory.PlayerInventoryUtils;
 import net.swofty.type.game.replay.recordable.*;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
-import net.swofty.type.game.replay.recordable.bedwars.RecordableFinalKill;
-import net.swofty.type.game.replay.recordable.bedwars.RecordableGeneratorUpgrade;
+import net.swofty.type.game.replay.recordable.bedwars.RecordableKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableTeamElimination;
 import net.swofty.type.replayviewer.entity.ReplayDroppedItemEntity;
 import net.swofty.type.replayviewer.entity.ReplayEntity;
@@ -29,17 +30,22 @@ import org.tinylog.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class RecordablePlayer {
 
     public static void play(Recordable recordable, ReplaySession session) {
         switch (recordable.getType()) {
             case BLOCK_CHANGE -> playBlockChange((RecordableBlockChange) recordable, session);
+            case BLOCK_BREAK_ANIMATION -> playBlockBreakAnimation((RecordableBlockBreakAnimation) recordable, session);
             case ENTITY_SPAWN -> playEntitySpawn((RecordableEntitySpawn) recordable, session);
             case ENTITY_DESPAWN -> playEntityDespawn((RecordableEntityDespawn) recordable, session);
             case ENTITY_LOCATIONS -> playEntityLocations((RecordableEntityLocations) recordable, session);
             case ENTITY_ANIMATION -> playEntityAnimation((RecordableEntityAnimation) recordable, session);
             case ENTITY_EQUIPMENT -> playEntityEquipment((RecordableEntityEquipment) recordable, session);
+            case ENTITY_EFFECT -> playEntityEffect((RecordableEntityEffect) recordable, session);
             case PLAYER_SNEAK -> playPlayerSneak((RecordablePlayerSneak) recordable, session);
             case PLAYER_SPRINT -> playPlayerSprint((RecordablePlayerSprint) recordable, session);
             case PLAYER_ARM_SWING -> playPlayerArmSwing((RecordablePlayerArmSwing) recordable, session);
@@ -56,9 +62,8 @@ public class RecordablePlayer {
 
             // bw
             case BEDWARS_BED_DESTRUCTION -> playBedDestruction((RecordableBedDestruction) recordable, session);
-            case BEDWARS_FINAL_KILL -> playFinalKill((RecordableFinalKill) recordable, session);
+            case BEDWARS_KILL -> playFinalKill((RecordableKill) recordable, session);
             case BEDWARS_TEAM_ELIMINATION -> playTeamElimination((RecordableTeamElimination) recordable, session);
-            case BEDWARS_EVENT_CONTINUE -> playGeneratorUpgrade((RecordableGeneratorUpgrade) recordable, session);
 
             // Dropped items
             case DROPPED_ITEM -> playDroppedItem((RecordableDroppedItem) recordable, session);
@@ -86,14 +91,16 @@ public class RecordablePlayer {
         if (block != null) {
             session.getInstance().setBlock(rec.getX(), rec.getY(), rec.getZ(), block);
         }
-        // play sound
-        session.getViewer().playSound(
-            Sound.sound(
-                Key.key("minecraft:block." + block.key().value() + ".break"),
-                Sound.Source.BLOCK, 1.0f, 1.0f
-            ),
-            rec.getX(), rec.getY(), rec.getZ()
-        );
+        // play sound to all viewers
+        for (var viewer : session.getViewers()) {
+            viewer.playSound(
+                Sound.sound(
+                    Key.key("minecraft:block." + block.key().value() + ".break"),
+                    Sound.Source.BLOCK, 1.0f, 1.0f
+                ),
+                rec.getX(), rec.getY(), rec.getZ()
+            );
+        }
     }
 
     private static void playEntitySpawn(RecordableEntitySpawn rec, ReplaySession session) {
@@ -112,7 +119,8 @@ public class RecordablePlayer {
                 new ReplayPlayerEntity(
                     displayName,
                     skinData != null ? skinData.textureValue() : null,
-                    skinData != null ? skinData.textureSignature() : null
+                    skinData != null ? skinData.textureSignature() : null,
+                    rec.getEntityUuid()
                 );
             session.getEntityManager().spawnEntity(rec.getEntityId(), playerEntity, pos);
         } else {
@@ -141,6 +149,20 @@ public class RecordablePlayer {
         for (var entry : rec.getEntries()) {
             Pos pos = new Pos(entry.x(), entry.y(), entry.z(), entry.yaw(), entry.pitch());
             session.getEntityManager().updateEntityPosition(entry.entityId(), pos);
+            if (session.getNpcManager().getNpcData(entry.entityId()) != null) {
+                session.getNpcManager().updateNpcPosition(entry.entityId(), pos);
+            }
+        }
+    }
+
+    private static void playBlockBreakAnimation(RecordableBlockBreakAnimation rec, ReplaySession session) {
+        net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket packet = new net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket(
+            rec.getEntityId(),
+            new Pos(rec.getX(), rec.getY(), rec.getZ()),
+            rec.getStage()
+        );
+        for (var viewer : session.getViewers()) {
+            viewer.sendPacket(packet);
         }
     }
 
@@ -169,6 +191,13 @@ public class RecordablePlayer {
             case PlayerInventoryUtils.LEGGINGS_SLOT -> EquipmentSlot.LEGGINGS;
             case PlayerInventoryUtils.CHESTPLATE_SLOT -> EquipmentSlot.CHESTPLATE;
             case PlayerInventoryUtils.HELMET_SLOT -> EquipmentSlot.HELMET;
+            case 2 -> EquipmentSlot.BOOTS; // these seem to work from vanilla
+            case 3 -> EquipmentSlot.LEGGINGS;
+            case 4 -> EquipmentSlot.CHESTPLATE;
+            case 5 -> EquipmentSlot.HELMET;
+            case 0 -> EquipmentSlot.MAIN_HAND;
+            case 1 -> EquipmentSlot.OFF_HAND;
+            case 40 -> EquipmentSlot.OFF_HAND;
             default -> null;
         };
     }
@@ -185,6 +214,20 @@ public class RecordablePlayer {
                 }
             } catch (IOException e) {
                 Logger.error(e);
+            }
+        }
+    }
+
+    private static void playEntityEffect(RecordableEntityEffect rec, ReplaySession session) {
+        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
+        if (entity instanceof LivingEntity livingEntity) {
+            PotionEffect effect = PotionEffect.fromId(rec.getEffectId());
+            if (effect != null) {
+                // Flags: bit 0 = ambient, bit 1 = particles, bit 2 = icon
+                byte flags = rec.getFlags();
+
+                Potion potion = new Potion(effect, rec.getAmplifier(), rec.getDurationTicks(), flags);
+                livingEntity.addEffect(potion);
             }
         }
     }
@@ -227,19 +270,23 @@ public class RecordablePlayer {
         byte[] packetByteArray = rec.getData();
         ParticlePacket packet = ParticlePacket.SERIALIZER.read(NetworkBuffer.wrap(packetByteArray, 0, packetByteArray.length));
 
-        session.getViewer().sendPacket(packet);
+        for (var viewer : session.getViewers()) {
+            viewer.sendPacket(packet);
+        }
     }
 
     private static void playSound(RecordableSound rec, ReplaySession session) {
         @Subst("minecraft:block.note_block.pling") String soundId = rec.getSoundId();
-        session.getViewer().playSound(
-            Sound.sound(
-                Key.key(soundId),
-                Sound.Source.values()[rec.getCategory()],
-                    rec.getVolume(), rec.getPitch()
-            ),
-            rec.getX(), rec.getY(), rec.getZ()
-        );
+        for (var viewer : session.getViewers()) {
+            viewer.playSound(
+                Sound.sound(
+                    Key.key(soundId),
+                    Sound.Source.values()[rec.getCategory()],
+                        rec.getVolume(), rec.getPitch()
+                ),
+                rec.getX(), rec.getY(), rec.getZ()
+            );
+        }
     }
 
     private static void playExplosion(RecordableExplosion rec, ReplaySession session) {
@@ -261,57 +308,103 @@ public class RecordablePlayer {
     private static void playPlayerDisplayName(RecordablePlayerDisplayName rec, ReplaySession session) {
         Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
         if (entity != null) {
-            String fullName = rec.getPrefix() + rec.getDisplayName() + rec.getSuffix();
-            entity.setCustomName(Component.text(fullName));
-            entity.setCustomNameVisible(true);
+            session.applyPlayerDisplayName(
+                rec.getEntityId(),
+                rec.getDisplayName(),
+                rec.getPrefix(),
+                rec.getSuffix(),
+                rec.getNameColor()
+            );
         }
     }
 
     private static void playPlayerChat(RecordablePlayerChat rec, ReplaySession session) {
         String playerName = session.getEntityDisplayName(rec.getEntityId());
-        String prefix = rec.isShout() ? "§6[SHOUT] " : "§7[0star] ";
+        String message = rec.isShout()
+            ? "§6[SHOUT] §r" + playerName + "§r: " + rec.getMessage()
+            : "§7" + playerName + "§7: §f" + rec.getMessage();
 
-        session.getViewer().sendMessage(Component.text(
-            prefix + playerName + " §f" + rec.getMessage()
-        ));
+        for (var viewer : session.getViewers()) {
+            viewer.sendMessage(Component.text(message));
+        }
     }
 
     private static void playPlayerHealth(RecordablePlayerHealth rec, ReplaySession session) {
         session.getStateTracker().trackHealth(rec.getEntityId(), rec.getHealth(), rec.getMaxHealth());
+        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.setHealth(rec.getHealth());
+        }
+
+        session.updateBelowNameScore(rec.getEntityId(), (int) rec.getHealth());
     }
 
     private static void playBedDestruction(RecordableBedDestruction rec, ReplaySession session) {
         String teamName = getTeamName(rec.getTeamId());
-        // TODO: make proper
-        session.getViewer().sendMessage(Component.text(
-            "§f§lBED DESTRUCTION > §7" + teamName + "'s bed was destroyed by " + rec.getDestroyerUuid() + "!"
-        ));
+        String teamColor = getTeamColor(rec.getTeamId());
+
+        UUID destroyerUuid = getEntityUuid(session, rec.getDestroyerEntityId());
+        String destroyerColor = getTeamColorForPlayer(session, destroyerUuid);
+        String colouredPlayerName = destroyerColor + session.getEntityDisplayName(rec.getDestroyerEntityId());
+
+        for (var viewer : session.getViewers()) {
+            viewer.sendMessage(Component.text(""));
+            viewer.sendMessage(Component.text(
+                "§f§lBED DESTRUCTION > " + teamColor + teamName + " Bed §7has been destroyed by " + colouredPlayerName + "§7!"
+            ));
+            viewer.sendMessage(Component.text(""));
+        }
     }
 
-    private static void playFinalKill(RecordableFinalKill rec, ReplaySession session) {
-        String victimName = session.getMetadata().getPlayers().get(rec.getVictimUuid());
-        String killerName = rec.getKillerUuid() != null ?
-            session.getMetadata().getPlayers().get(rec.getKillerUuid()) : null;
+    private static void playFinalKill(RecordableKill rec, ReplaySession session) {
+        String victimBaseName = session.getMetadata().getPlayers().get(rec.getVictimUuid());
+        if (victimBaseName == null) {
+            victimBaseName = String.valueOf(rec.getVictimEntityId());
+        }
+        String victim = getTeamColor(rec.getVictimTeamId()) + victimBaseName;
 
-        String message = killerName != null ?
-            "§c§lFINAL KILL! §f" + killerName + " §7killed §f" + victimName :
-            "§c§lFINAL KILL! §f" + victimName + " §7was eliminated";
+        String killer = null;
+        if (rec.getKillerUuid() != null) {
+            String killerBaseName = session.getMetadata().getPlayers().get(rec.getKillerUuid());
+            if (killerBaseName != null) {
+                killer = getTeamColorForPlayer(session, rec.getKillerUuid()) + killerBaseName;
+            }
+        }
 
-        session.getViewer().sendMessage(Component.text(message));
+        String deathMessage = switch (rec.getDeathCause()) {
+            case 0 -> "§7" + victim + " died.";
+            case 1 -> killer != null
+                ? "§7" + victim + " was killed by " + killer + "§7."
+                : "§7" + victim + " died.";
+            case 2 -> "§7" + victim + " fell into the void.";
+            case 3 -> killer != null
+                ? "§7" + victim + " was knocked into the void by " + killer + "§7."
+                : "§7" + victim + " fell into the void.";
+            case 4 -> killer != null
+                ? "§7" + victim + " was shot by " + killer + "§7."
+                : "§7" + victim + " died.";
+            case 5 -> killer != null
+                ? "§7" + victim + " was slain by " + killer + "§7's entity."
+                : "§7" + victim + " died.";
+            default -> "§7" + victim + " died.";
+        };
+
+        String message = rec.getFinalKill() != 0 ? deathMessage + " §b§lFINAL KILL!" : deathMessage;
+        for (var viewer : session.getViewers()) {
+            viewer.sendMessage(Component.text(message));
+        }
     }
 
     private static void playTeamElimination(RecordableTeamElimination rec, ReplaySession session) {
         String teamName = getTeamName(rec.getTeamId());
-        session.getViewer().sendMessage(Component.text(
-            "§c§lTEAM ELIMINATED! §7" + teamName + " has been eliminated!"
-        ));
-    }
-
-    private static void playGeneratorUpgrade(RecordableGeneratorUpgrade rec, ReplaySession session) {
-        String genType = rec.getGeneratorType() == 0 ? "Diamond" : "Emerald";
-        session.getViewer().sendMessage(Component.text(
-            "§6§lGENERATOR UPGRADE! §e" + genType + " generators upgraded to tier " + rec.getTier()
-        ));
+        String teamColor = getTeamColor(rec.getTeamId());
+        for (var viewer : session.getViewers()) {
+            viewer.sendMessage(Component.text(""));
+            viewer.sendMessage(Component.text(
+                "§f§lTEAM ELIMINATED > §c" + teamColor + teamName + " §7has been eliminated!"
+            ));
+            viewer.sendMessage(Component.text(""));
+        }
     }
 
     private static void playDroppedItem(RecordableDroppedItem rec, ReplaySession session) {
@@ -337,8 +430,6 @@ public class RecordablePlayer {
         session.getDroppedItemManager().untrackItem(rec.getItemEntityId());
     }
 
-// ========== Dynamic Text Displays ==========
-
     private static void playDynamicTextDisplay(RecordableDynamicTextDisplay rec, ReplaySession session) {
         Pos pos = new Pos(rec.getX(), rec.getY(), rec.getZ());
 
@@ -348,7 +439,8 @@ public class RecordablePlayer {
             pos,
             rec.getTextLines(),
             rec.getDisplayType(),
-            rec.getDisplayIdentifier()
+            rec.getDisplayIdentifier(),
+            rec.getTick()
         );
     }
 
@@ -357,11 +449,10 @@ public class RecordablePlayer {
             rec.getEntityId(),
             rec.getNewTextLines(),
             rec.isReplaceAll(),
-            rec.getStartLineIndex()
+            rec.getStartLineIndex(),
+            rec.getTick()
         );
     }
-
-// ========== NPC Enhancements ==========
 
     private static void playNpcDisplayName(RecordableNpcDisplayName rec, ReplaySession session) {
         session.getNpcManager().updateNpcDisplayName(
@@ -395,6 +486,78 @@ public class RecordablePlayer {
             case 7 -> "Gray";
             default -> "Team " + teamId;
         };
+    }
+
+    private static String getTeamColor(byte teamId) {
+        return switch (teamId) {
+            case 0 -> "§c";
+            case 1 -> "§9";
+            case 2 -> "§a";
+            case 3 -> "§e";
+            case 4 -> "§b";
+            case 5 -> "§f";
+            case 6 -> "§d";
+            case 7 -> "§7";
+            default -> "§7";
+        };
+    }
+
+    private static UUID getEntityUuid(ReplaySession session, int entityId) {
+        Entity entity = session.getEntityManager().getEntity(entityId);
+        if (entity instanceof ReplayPlayerEntity playerEntity) {
+            return playerEntity.getActualUuid();
+        }
+        if (entity instanceof ReplayEntity replayEntity) {
+            return replayEntity.getRecordedUuid();
+        }
+        return null;
+    }
+
+    private static String getTeamColorForPlayer(ReplaySession session, UUID playerUuid) {
+        if (playerUuid == null) {
+            return "§7";
+        }
+
+        for (Map.Entry<String, List<UUID>> entry : session.getMetadata().getTeams().entrySet()) {
+            if (!entry.getValue().contains(playerUuid)) {
+                continue;
+            }
+            try {
+                byte teamId = Byte.parseByte(entry.getKey());
+                return getTeamColor(teamId);
+            } catch (NumberFormatException ignored) {
+                switch (entry.getKey().toUpperCase()) {
+                    case "RED" -> {
+                        return getTeamColor((byte) 0);
+                    }
+                    case "BLUE" -> {
+                        return getTeamColor((byte) 1);
+                    }
+                    case "GREEN" -> {
+                        return getTeamColor((byte) 2);
+                    }
+                    case "YELLOW" -> {
+                        return getTeamColor((byte) 3);
+                    }
+                    case "AQUA" -> {
+                        return getTeamColor((byte) 4);
+                    }
+                    case "WHITE" -> {
+                        return getTeamColor((byte) 5);
+                    }
+                    case "PINK" -> {
+                        return getTeamColor((byte) 6);
+                    }
+                    case "GRAY", "GREY" -> {
+                        return getTeamColor((byte) 7);
+                    }
+                    default -> {
+                    }
+                }
+            }
+        }
+
+        return "§7";
     }
 
     private static void trackEntityState(Recordable recordable, ReplaySession session) {

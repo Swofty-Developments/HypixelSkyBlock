@@ -77,8 +77,4 @@ public class RecordableEntitySpawn extends AbstractRecordable {
         return entityId;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 40 + (initialMetadata != null ? initialMetadata.length : 0);
-    }
 }

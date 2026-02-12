@@ -86,8 +86,4 @@ public class RecordableDroppedItem extends AbstractRecordable {
         return true;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 2 + 16 + 24 + 12 + (itemNbt != null ? itemNbt.length + 2 : 2) + 4 + 4;
-    }
 }

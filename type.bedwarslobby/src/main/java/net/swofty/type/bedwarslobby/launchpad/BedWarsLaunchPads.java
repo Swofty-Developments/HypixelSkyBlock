@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 @Getter
 public enum BedWarsLaunchPads implements LaunchPad {
     SPAWN(LaunchPadHandler.getSlimeBlocksNear(new Pos(-30, 66, 0)),
-            new Pos(-10.5, 67, 0.5),
+            new Pos(0, 90, 0),
             (player) -> {},
             "");
     ;

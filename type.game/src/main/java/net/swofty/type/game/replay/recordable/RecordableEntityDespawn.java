@@ -38,8 +38,4 @@ public class RecordableEntityDespawn extends AbstractRecordable {
         return entityId;
     }
 
-    @Override
-    public int estimatedSize() {
-        return 4;
-    }
 }

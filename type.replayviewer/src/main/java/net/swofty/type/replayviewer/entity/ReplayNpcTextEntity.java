@@ -1,11 +1,12 @@
 package net.swofty.type.replayviewer.entity;
 
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.metadata.display.AbstractDisplayMeta;
 import net.minestom.server.entity.metadata.display.TextDisplayMeta;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +30,7 @@ public class ReplayNpcTextEntity extends Entity {
 
         // Configure entity
         setNoGravity(true);
+        setGlowing(true);
 
         // Set initial text
         updateTextDisplay();
@@ -47,10 +49,10 @@ public class ReplayNpcTextEntity extends Entity {
     private void updateTextDisplay() {
         if (this.entityMeta instanceof TextDisplayMeta textMeta) {
             String combinedText = String.join("\n", textLines);
-            textMeta.setText(Component.text(combinedText));
-            textMeta.setBillboardRenderConstraints(TextDisplayMeta.BillboardConstraints.CENTER);
-            textMeta.setBackgroundColor(0); // Transparent
-            textMeta.setLineWidth(200);
+            textMeta.setText(LegacyComponentSerializer.legacySection().deserialize(combinedText));
+            textMeta.setBillboardRenderConstraints(AbstractDisplayMeta.BillboardConstraints.CENTER);
+            textMeta.setSeeThrough(true);
+            textMeta.setBackgroundColor(0);
         }
     }
 
@@ -60,7 +62,8 @@ public class ReplayNpcTextEntity extends Entity {
      * @param parentPos the parent NPC's position
      */
     public void updatePositionFromParent(Pos parentPos) {
-        Pos textPos = parentPos.add(0, yOffset, 0);
+        double lineOffset = Math.max(0, textLines.size() - 1) * 0.15;
+        Pos textPos = parentPos.add(0, yOffset + lineOffset, 0);
         teleport(textPos);
     }
 

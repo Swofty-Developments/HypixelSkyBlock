@@ -138,7 +138,7 @@ public class ActionGameDeath implements HypixelEventClass {
         BedWarsStatsRecorder.recordDeath(victim, game.getGameType());
 
         if (creditPlayer != null) {
-            game.getReplayManager().recordKill(creditPlayer, victim, result.isFinalKill());
+            game.getReplayManager().recordKill(creditPlayer, victim, result.deathType(), result.isFinalKill());
         }
 
         if (result.isFinalKill() && creditPlayer != null) {

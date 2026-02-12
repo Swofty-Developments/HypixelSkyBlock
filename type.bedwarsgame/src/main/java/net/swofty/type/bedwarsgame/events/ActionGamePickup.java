@@ -31,6 +31,7 @@ public class ActionGamePickup implements HypixelEventClass {
 					event.getItemEntity().getEntityId(),
 					player.getEntityId()
 				);
+				game.getReplayManager().recordEntityDespawn(event.getItemEntity().getEntityId());
 			}
 
 			player.getInventory().addItemStack(itemStack);

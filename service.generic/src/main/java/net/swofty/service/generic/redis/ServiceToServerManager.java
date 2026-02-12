@@ -217,9 +217,17 @@ public class ServiceToServerManager {
     }
 
     public static CompletableFuture<Map<UUID, JSONObject>> viewReplay(UUID playerUUID, String gameId) {
+        return viewReplay(playerUUID, gameId, null);
+    }
+
+    public static CompletableFuture<Map<UUID, JSONObject>> viewReplay(UUID playerUUID, String gameId, String shareCode) {
         JSONObject message = new JSONObject()
             .put("uuid", playerUUID)
             .put("replay-id", gameId);
+
+        if (shareCode != null) {
+            message.put("share-code", shareCode);
+        }
 
         return sendToAllServers(FromServiceChannels.VIEW_REPLAY, message);
     }

@@ -83,13 +83,4 @@ public class RecordableDynamicTextDisplay extends AbstractRecordable {
         return true;
     }
 
-    @Override
-    public int estimatedSize() {
-        int size = 2 + 16 + 24 + 2;
-        for (String line : textLines) {
-            size += 2 + line.length();
-        }
-        size += 2 + displayType.length() + 2 + displayIdentifier.length();
-        return size;
-    }
 }

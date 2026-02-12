@@ -76,15 +76,4 @@ public class RecordableTextDisplayUpdate extends AbstractRecordable {
         return true;
     }
 
-    @Override
-    public int estimatedSize() {
-        int size = 2 + 2 + 1;
-        for (String line : newTextLines) {
-            size += 2 + line.length();
-        }
-        if (!replaceAll) {
-            size += 2;
-        }
-        return size;
-    }
 }
