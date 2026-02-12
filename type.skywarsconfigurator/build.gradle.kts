@@ -23,7 +23,7 @@ dependencies {
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
-    implementation("org.mongodb:bson:4.11.2")
+    implementation("org.mongodb:bson:5.6.3")
     implementation("net.kyori:adventure-text-minimessage:4.25.0")
     compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")

@@ -23,5 +23,5 @@ dependencies {
     }
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("org.mongodb:bson:4.11.2")
+    implementation("org.mongodb:bson:5.6.3")
 }
