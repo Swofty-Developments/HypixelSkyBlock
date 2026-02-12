@@ -46,8 +46,8 @@ dependencies {
     implementation("io.netty:netty-transport")
     implementation("io.netty:netty-handler")
 
-    implementation("net.bytebuddy:byte-buddy:1.14.16")
-    implementation("net.bytebuddy:byte-buddy-agent:1.14.16")
+    implementation("net.bytebuddy:byte-buddy:1.18.4")
+    implementation("net.bytebuddy:byte-buddy-agent:1.18.4")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
 }
