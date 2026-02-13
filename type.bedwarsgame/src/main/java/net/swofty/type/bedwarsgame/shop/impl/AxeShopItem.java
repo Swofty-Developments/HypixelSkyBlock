@@ -5,6 +5,7 @@ import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.UpgradeableItemTier;
 import net.swofty.type.bedwarsgame.shop.UpgradeableShopItem;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 
 import java.util.List;
 
@@ -20,7 +21,8 @@ public class AxeShopItem extends UpgradeableShopItem {
                         new UpgradeableItemTier("Golden Axe (Efficiency II)", _ ->3, Currency.GOLD, Material.GOLDEN_AXE),
                         new UpgradeableItemTier("Diamond Axe (Efficiency III)", _ -> 6, Currency.GOLD, Material.DIAMOND_AXE)
                 ),
-                AXE_UPGRADE_TAG
+                AXE_UPGRADE_TAG,
+                DatapointBedWarsHotbar.HotbarItemType.AXE
         );
     }
 

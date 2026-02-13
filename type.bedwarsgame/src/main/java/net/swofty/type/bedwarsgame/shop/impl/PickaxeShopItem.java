@@ -5,6 +5,7 @@ import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.UpgradeableItemTier;
 import net.swofty.type.bedwarsgame.shop.UpgradeableShopItem;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -21,7 +22,8 @@ public class PickaxeShopItem extends UpgradeableShopItem {
                         new UpgradeableItemTier("Golden Pickaxe (Efficiency III, Sharpness II)", _ -> 3, Currency.GOLD, Material.GOLDEN_PICKAXE),
                         new UpgradeableItemTier("Diamond Pickaxe (Efficiency III)", _ -> 6, Currency.GOLD, Material.DIAMOND_PICKAXE)
                 ),
-                PICKAXE_UPGRADE_TAG
+                PICKAXE_UPGRADE_TAG,
+                DatapointBedWarsHotbar.HotbarItemType.PICKAXE
         );
     }
 

@@ -8,6 +8,7 @@ import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.Event;
 import net.minestom.server.instance.InstanceContainer;
@@ -33,9 +34,11 @@ import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
 import net.swofty.type.bedwarsgame.user.TokenCause;
+import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.game.game.AbstractTeamGame;
 import net.swofty.type.game.game.CountdownConfig;
 import net.swofty.type.game.game.GameState;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -206,11 +209,12 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
         player.getInventory().clear();
         player.clearTitle();
+        player.setVelocity(Vec.ZERO); // prevent high velocity movement on respawn
         player.teleport(new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw()));
         player.setGameMode(GameMode.SURVIVAL);
         player.setInvisible(false);
         player.setFlying(false);
-        player.getInventory().addItemStack(ItemStack.of(Material.WOODEN_SWORD));
+        BedWarsInventoryManipulator.addItemWithHotbarPriority(player, ItemStack.of(Material.WOODEN_SWORD), DatapointBedWarsHotbar.HotbarItemType.MELEE);
         player.setHealth(20f);
         player.setFood(20);
         equipTeamArmor(player, teamKey);
@@ -219,13 +223,17 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         AxeShopItem axeShopItem = new AxeShopItem();
         Integer currentAxeLevel = player.getTag(AxeShopItem.AXE_UPGRADE_TAG);
         if (currentAxeLevel != null && currentAxeLevel > 0) {
-            player.getInventory().addItemStack(ItemStack.of(axeShopItem.getTier(currentAxeLevel - 1).material()));
+            BedWarsInventoryManipulator.addItemWithHotbarPriority(player,
+                ItemStack.of(axeShopItem.getTier(currentAxeLevel - 1).material()),
+                DatapointBedWarsHotbar.HotbarItemType.AXE);
         }
 
         PickaxeShopItem pickaxeShopItem = new PickaxeShopItem();
         Integer currentPickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
         if (currentPickaxeLevel != null && currentPickaxeLevel > 0) {
-            player.getInventory().addItemStack(ItemStack.of(pickaxeShopItem.getTier(currentPickaxeLevel - 1).material()));
+            BedWarsInventoryManipulator.addItemWithHotbarPriority(player,
+                ItemStack.of(pickaxeShopItem.getTier(currentPickaxeLevel - 1).material()),
+                DatapointBedWarsHotbar.HotbarItemType.PICKAXE);
         }
 
         // equip the player with team armor

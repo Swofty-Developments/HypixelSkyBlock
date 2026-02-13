@@ -167,7 +167,7 @@ public class BedWarsWorldManager {
                     @Override
                     public void onClick(NPCInteractEvent event) {
                         BedWarsPlayer bwPlayer = (BedWarsPlayer) event.player();
-                        new GUIItemShop(bwPlayer.getGame()).open(event.player());
+                        bwPlayer.openView(new GUIItemShop(bwPlayer.getGame()));
                     }
                 };
                 shopNpc.register();
@@ -212,7 +212,7 @@ public class BedWarsWorldManager {
                     @Override
                     public void onClick(NPCInteractEvent event) {
                         BedWarsPlayer bwPlayer = (BedWarsPlayer) event.player();
-                        new GUITeamShop().open(bwPlayer);
+                        bwPlayer.openView(new GUITeamShop());
                     }
                 };
                 teamNpc.register();

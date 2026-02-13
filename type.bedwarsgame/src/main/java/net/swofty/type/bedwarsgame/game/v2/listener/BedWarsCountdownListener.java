@@ -1,5 +1,7 @@
 package net.swofty.type.bedwarsgame.game.v2.listener;
 
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
@@ -23,8 +25,17 @@ public class BedWarsCountdownListener implements HypixelEventClass {
 
         Component message = createCountdownMessage(event.remainingSeconds());
 
+        if (message == null) return;
+
         for (BedWarsPlayer player : game.getPlayers()) {
             player.sendMessage(message);
+            player.playSound(
+                Sound.sound()
+                    .type(Key.key("minecraft:block.note_block.pling"))
+                    .volume(1f)
+                    .pitch(1f)
+                    .build()
+            );
         }
     }
 

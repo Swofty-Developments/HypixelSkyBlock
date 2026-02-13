@@ -30,8 +30,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ActionGamePlayerEvent implements HypixelEventClass {
 
-	public static final ConcurrentHashMap<TeamKey, String> ACTIVE_TEAM_CHESTS = new ConcurrentHashMap<>();
-
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(InventoryPreClickEvent event) {
 		if (!(event.getInventory() instanceof PlayerInventory)) {
@@ -85,7 +83,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			return;
 		}
 		if (block.registry().material() == Material.ENDER_CHEST) {
-			new GUIEnderChest().open(player);
+			player.openView(new GUIEnderChest());
 			return;
 		}
 
@@ -135,15 +133,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			return;
 		}
 
-		String existingContextId = ACTIVE_TEAM_CHESTS.get(chestTeamKey);
-		GUITeamChest teamChest = new GUITeamChest(chestTeamKey);
-
-		if (existingContextId != null) {
-			teamChest.joinSharedContext(player, existingContextId);
-		} else {
-			String contextId = teamChest.createSharedContext(player);
-			ACTIVE_TEAM_CHESTS.put(chestTeamKey, contextId);
-		}
+		GUITeamChest.open(player, chestTeamKey);
 	}
 
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
