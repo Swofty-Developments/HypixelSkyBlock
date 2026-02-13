@@ -48,7 +48,7 @@ public class RedisInstantiateGame implements ServiceToClient {
             }
 
             // Create the game
-            BedWarsGame game = TypeBedWarsGameLoader.createGame(mapEntry);
+            BedWarsGame game = TypeBedWarsGameLoader.createGame(mapEntry, gameType);
             if (game == null) {
                 return new JSONObject()
                         .put("success", false)

@@ -74,7 +74,7 @@ import static net.swofty.type.generic.HypixelGenericLoader.getLoadedPlayers;
 
 public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 
-    public static final int MAX_GAMES = 8;
+    public static final int MAX_GAMES = 12;
 
     @Getter
     public static final List<BedWarsGame> games = new ArrayList<>();
@@ -156,7 +156,23 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
     }
 
     @SneakyThrows
-    public static BedWarsGame createGame(@NotNull BedWarsMapsConfig.MapEntry entry) {
+    public static List<BedWarsGame> createGame(@NotNull BedWarsMapsConfig.MapEntry entry) {
+        if (games.size() >= MAX_GAMES) {
+            return null;
+        }
+
+        List<String> supportedTypes = entry.getConfiguration() != null ? entry.getConfiguration().getTypes().stream().map(BedwarsGameType::name).toList() : List.of();
+        List<BedWarsGame> gameInternalList = new ArrayList<>(List.of());
+        for (String type : supportedTypes) {
+            BedwarsGameType bedwarsGameType = BedwarsGameType.from(type);
+            gameInternalList.add(createGame(entry, bedwarsGameType));
+        }
+        games.addAll(gameInternalList);
+        return gameInternalList;
+    }
+
+    @SneakyThrows
+    public static BedWarsGame createGame(@NotNull BedWarsMapsConfig.MapEntry entry, BedwarsGameType type) {
         if (games.size() >= MAX_GAMES) {
             return null;
         }
@@ -164,7 +180,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
         mapInstance.setChunkLoader(new PolarLoader(new File("./configuration/bedwars/" + entry.getId() + ".polar").toPath()));
         mapInstance.setExplosionSupplier(combatFeatures.get(FeatureType.EXPLOSION).getExplosionSupplier());
 
-        BedWarsGame game = new BedWarsGame(entry, mapInstance, BedwarsGameType.SOLO);
+        BedWarsGame game = new BedWarsGame(entry, mapInstance, type);
         games.add(game);
         return game;
     }

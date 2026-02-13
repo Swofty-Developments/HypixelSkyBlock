@@ -2,6 +2,7 @@ package net.swofty.type.bedwarsgame.events;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.event.player.PlayerDeathEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -40,7 +41,9 @@ public class ActionGameDeath implements HypixelEventClass {
 
     public static void death(BedWarsPlayer player, BedWarsGame game, Consumer<Component> deathMessageConsumer, boolean voidDeath) {
         BedWarsMapsConfig.Position position = game.getMapEntry().getConfiguration().getLocations().getSpectator();
+        player.setVelocity(Vec.ZERO); // Stop any momentum the player had before death
         player.teleport(new Pos(position.x(), position.y(), position.z()));
+        BedWarsGame.literalSetupSpectator(player);
 
         Integer pickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
         if (pickaxeLevel != null && pickaxeLevel > 1) {
@@ -90,7 +93,6 @@ public class ActionGameDeath implements HypixelEventClass {
         }
 
         BedWarsCombatTracker.clearCombatData(player);
-        BedWarsGame.literalSetupSpectator(player);
 
         final int finalIron = iron;
         final int finalGold = gold;

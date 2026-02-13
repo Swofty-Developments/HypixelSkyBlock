@@ -55,7 +55,7 @@ public class BedWarsGameScoreboard {
 
                 if (game.getState().isWaiting()) {
                     lines.add("§fMap: §a" + game.getMapEntry().getName());
-                    lines.add("§fPlayers: §a" + game.getPlayers().size() + "/" + game.getMapEntry().getConfiguration().getTeams().size());
+                    lines.add("§fPlayers: §a" + game.getPlayers().size() + "/" + game.getGameType().maxPlayers());
                     lines.add("§7 ");
                     if (game.getState() == GameState.COUNTDOWN) {
                         long seconds = game.getCountdown().getRemainingSeconds();

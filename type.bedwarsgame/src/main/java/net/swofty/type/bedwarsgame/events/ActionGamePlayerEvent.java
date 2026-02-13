@@ -248,7 +248,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
                 }
 
                 if (itemAdded) {
-                    player.sendMessage(depositMessage(itemInHand, true));
+                    player.sendMessage(depositMessage(itemInHand, false));
                     player.setItemInMainHand(ItemStack.AIR);
                     player.getAchievementHandler().addProgressByTrigger("bedwars.chest_deposit", 1);
                 } else {
@@ -267,7 +267,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
         Currency currency = Currency.byMaterial(itemStack.material());
         String itemName = StringUtility.capitalizeSentence(itemStack.material().name().toLowerCase().replace("minecraft:", "").replace("_", " "));
         if (currency != null) {
-            return "§7Deposited " + currency.getColor() + " x" + itemStack.amount() + " " + itemName + "§7 into " + chestType + "! §8(?? Total)";
+            return "§7Deposited " + currency.getColor() + "x" + itemStack.amount() + " " + itemName + "§7 into " + chestType + "! §8(?? Total)";
         }
         return "§7Deposited §fx" + itemStack.amount() + " " + itemName + " §7into " + chestType + "! §8(?? Total)";
     }
