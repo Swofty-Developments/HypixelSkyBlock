@@ -42,7 +42,7 @@ public class NPCSquads extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-2.5, 68, 5.5, 90, 0);
+                return new Pos(-0.5, 68, -3.5, 90, 0);
             }
 
             @Override

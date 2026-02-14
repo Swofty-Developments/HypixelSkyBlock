@@ -42,7 +42,7 @@ public class NPCDoubles extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-3.5, 68, -8.5, 90, 0);
+				return new Pos(-3.5, 68, -11.5, 90, 0);
 			}
 
 			@Override

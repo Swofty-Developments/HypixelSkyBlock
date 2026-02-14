@@ -42,7 +42,7 @@ public class NPCTrios extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-2.5, 68, -4.5, 90, 0);
+                return new Pos(-1.5, 68, -7.5, 90, 0);
             }
 
             @Override

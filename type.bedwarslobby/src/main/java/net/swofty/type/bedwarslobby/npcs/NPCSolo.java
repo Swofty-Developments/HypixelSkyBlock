@@ -42,7 +42,7 @@ public class NPCSolo extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-5.5, 68, -12.5, 90, 0);
+                return new Pos(-6.5, 68, -14.5, 90, 0);
             }
 
             @Override

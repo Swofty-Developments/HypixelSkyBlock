@@ -16,11 +16,11 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NPCDream extends HypixelNPC {
+public class NPCDreams extends HypixelNPC {
 	private static List<UnderstandableProxyServer> cacheServers = new ArrayList<>();
 	private static long lastCacheTime = 0;
 
-	public NPCDream() {
+	public NPCDreams() {
 		super(new HumanConfiguration() {
 			@Override
 			public String[] holograms(HypixelPlayer player) {
@@ -58,7 +58,7 @@ public class NPCDream extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-5.5, 68, 13.5, 90, 0);
+				return new Pos(-3.5, 68, 13.5, 90, 0);
 			}
 
 			@Override
