@@ -7,18 +7,18 @@ import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.minestom.server.sound.SoundEvent;
-import net.minestom.server.tag.Tag;
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.entity.TntEntity;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
-import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.entity.TntEntity;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.GameState;
+import net.swofty.type.game.replay.dispatcher.BlockChangeDispatcher;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import org.tinylog.Logger;
 
 public class ActionGamePlace implements HypixelEventClass {
@@ -26,10 +26,15 @@ public class ActionGamePlace implements HypixelEventClass {
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerBlockPlaceEvent event) {
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
-		Game game = player.getGame();
+		BedWarsGame game = player.getGame();
 		if (game == null) {
 			Logger.info("Player {} tried to place a block but is not in a game!", player.getUsername());
 			event.setCancelled(true); // Prevent placing if not in a game
+			return;
+		}
+
+		if (!game.isPlayerCurrentlyPlaying(player.getUuid())) {
+			event.setCancelled(true);
 			return;
 		}
 
@@ -39,7 +44,7 @@ public class ActionGamePlace implements HypixelEventClass {
 			return;
 		}
 
-		if (game.getGameStatus() != GameStatus.IN_PROGRESS) {
+		if (game.getState() != GameState.IN_PROGRESS) {
 			event.setCancelled(true);
 			return;
 		}
@@ -65,14 +70,27 @@ public class ActionGamePlace implements HypixelEventClass {
 					SoundEvent.ENTITY_TNT_PRIMED, Sound.Source.BLOCK,
 					1.0f, 1.0f
 			), entity);
-			MathUtility.delay(
-					() -> player.getInstance().setBlock(blockPosition, Block.AIR),
-					3
+			ScheduleUtility.nextTick(
+					() -> player.getInstance().setBlock(blockPosition, Block.AIR)
 			);
 			return;
 		}
 
-		event.setBlock(event.getBlock().withTag(TypeBedWarsGameLoader.PLAYER_PLACED_TAG, true));
+		Block placedBlock = event.getBlock().withTag(TypeBedWarsGameLoader.PLAYER_PLACED_TAG, true);
+		if (game.getReplayManager().isRecording()) {
+			BlockChangeDispatcher blockDispatcher = game.getReplayManager().getBlockChangeDispatcher();
+			if (blockDispatcher != null) {
+				Block previousBlock = event.getInstance().getBlock(blockPosition);
+				blockDispatcher.recordBlockChange(
+					blockPosition.blockX(),
+					blockPosition.blockY(),
+					blockPosition.blockZ(),
+					previousBlock.stateId(),
+					placedBlock.stateId()
+				);
+			}
+		}
+		event.setBlock(placedBlock);
 		player.getAchievementHandler().addProgressByTrigger("bedwars.blocks_placed", 1);
 	}
 

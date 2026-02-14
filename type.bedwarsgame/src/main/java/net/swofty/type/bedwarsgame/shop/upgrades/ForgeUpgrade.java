@@ -9,11 +9,11 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
+import net.swofty.type.game.game.GameState;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -36,7 +36,7 @@ public class ForgeUpgrade extends TeamUpgrade {
 	}
 
 	@Override
-	public void applyEffect(Game game, TeamKey teamKey, int level) {
+	public void applyEffect(BedWarsGame game, TeamKey teamKey, int level) {
 		// The resource multiplier for iron/gold is handled passively by the generator task in Game.java.
 		// This method only needs to handle the active effect of starting the emerald generator at level 3.
 		if (level != 3) {
@@ -60,9 +60,9 @@ public class ForgeUpgrade extends TeamUpgrade {
 		final int emeraldBaseAmount = 1;
 
 		var emeraldTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
-			if (game.getGameStatus() != GameStatus.IN_PROGRESS) return;
+			if (game.getState() != GameState.IN_PROGRESS) return;
 
-			int currentForgeLevel = game.getTeamManager().getTeamUpgradeLevel(teamKey, "forge");
+			int currentForgeLevel = game.getTeamUpgradeLevel(teamKey, "forge");
 			double multiplier = 1.0;
 			if (currentForgeLevel >= 4) {
 				multiplier = 3.0; // +200%
@@ -73,7 +73,7 @@ public class ForgeUpgrade extends TeamUpgrade {
 				ItemStack itemToSpawn = ItemStack.of(Material.EMERALD, finalAmount);
 				ItemEntity itemEntity = new ItemEntity(itemToSpawn);
 				itemEntity.setPickupDelay(Duration.ofMillis(500));
-				itemEntity.setInstance(game.getInstanceContainer(), spawnPosition);
+				itemEntity.setInstance(game.getInstance(), spawnPosition);
 			}
 		}).delay(TaskSchedule.seconds(emeraldDelaySeconds)).repeat(TaskSchedule.seconds(emeraldDelaySeconds)).schedule();
 

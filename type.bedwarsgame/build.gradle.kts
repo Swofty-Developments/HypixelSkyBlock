@@ -24,6 +24,7 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
     implementation(project(":pvp"))
+    implementation(project(":type.game"))
     implementation("org.mongodb:bson:4.11.2")
     implementation("net.kyori:adventure-text-minimessage:4.24.0")
     implementation("dev.hollowcube:polar:1.15.0")

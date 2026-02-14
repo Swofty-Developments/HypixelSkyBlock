@@ -6,7 +6,7 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.chest.ChestBuilder;
 import net.swofty.type.skyblockgeneric.event.custom.IslandFirstCreatedEvent;
 
@@ -14,7 +14,7 @@ public class ActionCreateStarterChest implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(IslandFirstCreatedEvent event) {
-        MathUtility.delay(()->{
+        ScheduleUtility.delay(()->{
             new ChestBuilder(event.getIsland().getIslandInstance(), new Pos(3, 93, 30))
                     .setItem(0, ItemStack.of(Material.DIRT, 5))
                     .setItem(1, ItemStack.of(Material.GRASS_BLOCK, 7))

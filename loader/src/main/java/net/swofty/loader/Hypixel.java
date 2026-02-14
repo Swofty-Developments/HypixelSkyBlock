@@ -38,13 +38,18 @@ import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
+import java.net.InetAddress;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-import java.net.InetAddress;
 
 
 public class Hypixel {
@@ -70,7 +75,6 @@ public class Hypixel {
                 options.setTracesSampleRate(1.0);
                 options.setProfileSessionSampleRate(1.0);
                 options.setProfileLifecycle(ProfileLifecycle.TRACE);
-                options.getLogs().setEnabled(true);
             });
         }
 

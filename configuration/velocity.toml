@@ -42,7 +42,7 @@ forwarding-secret-file = "forwarding.secret"
 
 # Announce whether your server supports Forge. If you run a modded server, we
 # suggest turning this on.
-# 
+#
 # If your network runs one modpack consistently, consider using ping-passthrough = "mods"
 # instead for a nicer display in the server list.
 announce-forge = false
@@ -126,6 +126,11 @@ log-command-executions = false
 # Enables logging of player connections when connecting to the proxy, switching servers
 # and disconnecting from the proxy.
 log-player-connections = true
+
+# How long (in milliseconds) should the proxy wait between disconnecting a player from one server
+# and connecting them to another when switching servers? This can be useful to give servers time
+# to properly clean up resources.
+server-switch-delay = 100
 
 [query]
 # Whether to enable responding to GameSpy 4 query responses or not.

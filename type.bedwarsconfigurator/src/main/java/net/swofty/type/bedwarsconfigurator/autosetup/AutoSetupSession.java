@@ -3,11 +3,24 @@ package net.swofty.type.bedwarsconfigurator.autosetup;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.instance.Instance;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.*;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.GeneratorSpeed;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapEntry;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MinMax;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.PitchYawPosition;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.Position;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TwoBlockPosition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -19,7 +32,7 @@ public class AutoSetupSession {
 
     private String mapId;
     private String mapName;
-    private final List<BedwarsGameType> gameTypes = new ArrayList<>();
+    private final List<BedWarsGameType> gameTypes = new ArrayList<>();
     private Double minX, maxX, minY, maxY, minZ, maxZ;
     private final Map<TeamKey, TeamConfig> teams = new EnumMap<>(TeamKey.class);
     private final List<Position> diamondGenerators = new ArrayList<>();

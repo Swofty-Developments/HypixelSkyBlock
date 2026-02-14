@@ -1,11 +1,18 @@
 package net.swofty.service.orchestrator;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.bedwars.BedwarsGameType;
-import net.swofty.commons.game.Game;
+import net.swofty.commons.bedwars.BedWarsGameType;
+import net.swofty.type.game.game.GameObject;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -19,7 +26,7 @@ public class OrchestratorCache {
 									   ServerType type,
 									   int maxPlayers,
 									   int onlinePlayers,
-									   List<Game> games) {
+									   List<GameObject> games) {
 		GameServerState state = new GameServerState(
 				uuid,
 				shortName,
@@ -34,7 +41,7 @@ public class OrchestratorCache {
 		gamesByGameId.entrySet().removeIf(entry -> entry.getValue().serverUuid().equals(uuid));
 
 		// Add current games with server tracking
-		for (Game game : games) {
+		for (GameObject game : games) {
 			gamesByGameId.put(game.getGameId(), new GameWithServer(game, uuid, shortName));
 		}
 	}
@@ -42,14 +49,14 @@ public class OrchestratorCache {
 	/**
 	 * Finds an existing joinable game for the specified game type and map (Bedwars-specific)
 	 */
-	public static GameWithServer findExisting(BedwarsGameType gameType, String map) {
+	public static GameWithServer findExisting(BedWarsGameType gameType, String map) {
 		return findExisting(ServerType.BEDWARS_GAME, gameType.maxPlayers(), map, 1);
 	}
 
 	/**
 	 * Finds an existing joinable game for the specified game type and map with needed slots (Bedwars-specific)
 	 */
-	public static GameWithServer findExisting(BedwarsGameType gameType, String map, int neededSlots) {
+	public static GameWithServer findExisting(BedWarsGameType gameType, String map, int neededSlots) {
 		return findExisting(ServerType.BEDWARS_GAME, gameType.maxPlayers(), map, neededSlots);
 	}
 
@@ -75,7 +82,7 @@ public class OrchestratorCache {
 
 		List<GameWithServer> candidates = new ArrayList<>();
 		for (GameWithServer gameWithServer : gamesByGameId.values()) {
-			Game game = gameWithServer.game();
+			GameObject game = gameWithServer.game();
 			int availableSlots = maxPlayers - game.getInvolvedPlayers().size();
 			if (game.getType() == serverType &&
 					availableSlots >= neededSlots &&
@@ -97,7 +104,7 @@ public class OrchestratorCache {
 	/**
 	 * Finds a server with capacity to host a new game (Bedwars-specific)
 	 */
-	public static GameServerState instantiateServer(BedwarsGameType gameType, String map) {
+	public static GameServerState instantiateServer(BedWarsGameType gameType, String map) {
 		return instantiateServer(ServerType.BEDWARS_GAME, gameType.maxPlayers());
 	}
 
@@ -140,7 +147,7 @@ public class OrchestratorCache {
 		Set<String> maps = new HashSet<>();
 
 		for (GameWithServer gameWithServer : gamesByGameId.values()) {
-			Game game = gameWithServer.game();
+			GameObject game = gameWithServer.game();
 			if (game.getType() == type) {
 				maps.add(game.getMap());
 			}
@@ -157,7 +164,7 @@ public class OrchestratorCache {
 		cleanup();
 
 		for (GameWithServer gameWithServer : gamesByGameId.values()) {
-			Game game = gameWithServer.game();
+			GameObject game = gameWithServer.game();
 			// Check active players
 			if (game.getInvolvedPlayers().contains(playerUuid)) {
 				return gameWithServer;
@@ -199,7 +206,7 @@ public class OrchestratorCache {
 		}
 	}
 
-	public record GameWithServer(Game game, UUID serverUuid, String serverShortName) {
+	public record GameWithServer(GameObject game, UUID serverUuid, String serverShortName) {
 	}
 
 	// Getter methods for debugging/monitoring
@@ -244,7 +251,7 @@ public class OrchestratorCache {
 		int gameCount = 0;
 
 		for (GameWithServer gameWithServer : gamesByGameId.values()) {
-			Game game = gameWithServer.game();
+			GameObject game = gameWithServer.game();
 			if (game.getType() == type) {
 				if (gameTypeName == null || gameTypeName.equals(game.getGameTypeName())) {
 					if (mapName == null || mapName.equals(game.getMap())) {

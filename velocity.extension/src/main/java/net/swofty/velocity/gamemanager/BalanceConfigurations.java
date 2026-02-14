@@ -6,6 +6,7 @@ import net.swofty.velocity.gamemanager.balanceconfigurations.IslandCheck;
 import net.swofty.velocity.gamemanager.balanceconfigurations.LowestPlayerCount;
 import net.swofty.velocity.gamemanager.balanceconfigurations.ReadyGames;
 import net.swofty.velocity.testflow.TestFlowManager;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -57,11 +58,12 @@ public class BalanceConfigurations {
 			Map.entry(ServerType.SKYBLOCK_JERRYS_WORKSHOP, List.of(
 					new LowestPlayerCount()
 			)),
-
+			Map.entry(ServerType.REPLAY_VIEWER, List.of(
+					new LowestPlayerCount()
+			)),
 			Map.entry(ServerType.PROTOTYPE_LOBBY, List.of(
 					new LowestPlayerCount()
 			)),
-
 			Map.entry(ServerType.BEDWARS_LOBBY, List.of(
 					new LowestPlayerCount()
 			)),
@@ -80,7 +82,6 @@ public class BalanceConfigurations {
             Map.entry(ServerType.MURDER_MYSTERY_GAME, List.of(
                     new ReadyGames()
             )),
-
             Map.entry(ServerType.SKYWARS_CONFIGURATOR, List.of(
                     new LowestPlayerCount()
             )),
@@ -95,7 +96,7 @@ public class BalanceConfigurations {
 			))
 	));
 
-	public static @Nullable GameManager.GameServer getServerFor(Player player, ServerType type) {
+	public static @Nullable GameManager.GameServer getServerFor(Player player, @NotNull ServerType type) {
 		if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
 			player.sendPlainMessage("§eYou are currently in a network-isolated test flow, load balancing will be restricted to test flow servers!");
 			player.sendPlainMessage("§8Executing test flow " + TestFlowManager.getTestFlowForPlayer(player.getUsername()).getName() + "...");

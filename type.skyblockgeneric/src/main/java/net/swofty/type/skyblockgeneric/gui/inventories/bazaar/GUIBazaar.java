@@ -13,7 +13,7 @@ import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarCategories;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarItemSet;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -199,7 +199,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                     CACHE.put(category, new CacheEntry(System.currentTimeMillis(), slotData));
 
                     // Schedule UI update on main thread
-                    MathUtility.delay(() -> {
+                    ScheduleUtility.delay(() -> {
                         renderSlots(slotData);
                     }, 1);
                 })
@@ -207,7 +207,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                     System.err.println("Failed to rebuild bazaar cache: " + throwable.getMessage());
 
                     // Fallback: render with "Error loading" placeholders
-                    MathUtility.delay(() -> {
+                    ScheduleUtility.delay(() -> {
                         for (int slot : SLOTS) {
                             set(new GUIItem(slot) {
                                 @Override

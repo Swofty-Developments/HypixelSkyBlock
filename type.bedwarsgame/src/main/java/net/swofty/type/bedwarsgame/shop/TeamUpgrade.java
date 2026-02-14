@@ -7,7 +7,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.TooltipDisplay;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 
@@ -32,12 +32,14 @@ public abstract class TeamUpgrade {
 		this.tiers = tiers;
 	}
 
-	public int getCurrentLevel(Game game, BedWarsMapsConfig.TeamKey teamName) {
-		return game.getTeamManager().getTeamUpgradeLevel(teamName, key);
+	public int getCurrentLevel(BedWarsGame game, BedWarsMapsConfig.TeamKey teamKey) {
+		return game.getTeam(teamKey.name())
+				.map(team -> team.getUpgradeLevel(key))
+				.orElse(0);
 	}
 
-	public TeamUpgradeTier getNextTier(Game game, BedWarsMapsConfig.TeamKey teamName) {
-		int currentLevel = getCurrentLevel(game, teamName);
+	public TeamUpgradeTier getNextTier(BedWarsGame game, BedWarsMapsConfig.TeamKey teamKey) {
+		int currentLevel = getCurrentLevel(game, teamKey);
 		if (currentLevel >= tiers.size()) {
 			return null;
 		}
@@ -51,14 +53,14 @@ public abstract class TeamUpgrade {
 				.sum() >= tier.getPrice();
 	}
 
-	public void purchase(Game game, BedWarsPlayer player) {
-		BedWarsMapsConfig.TeamKey teamName = player.getTeamKey();
-		if (teamName == null) {
+	public void purchase(BedWarsGame game, BedWarsPlayer player) {
+		BedWarsMapsConfig.TeamKey teamKey = player.getTeamKey();
+		if (teamKey == null) {
 			player.sendMessage("§cYou are not on a team. Report this to the administration.");
 			return;
 		}
 
-		TeamUpgradeTier nextTier = getNextTier(game, teamName);
+		TeamUpgradeTier nextTier = getNextTier(game, teamKey);
 		if (nextTier == null) {
 			player.sendMessage("§cYour team has already maxed out this upgrade.");
 			return;
@@ -71,13 +73,14 @@ public abstract class TeamUpgrade {
 
 		BedWarsInventoryManipulator.removeItems(player, nextTier.getCurrency().getMaterial(), nextTier.getPrice());
 
-		game.getTeamManager().setTeamUpgradeLevel(teamName, key, nextTier.getLevel());
-		applyEffect(game, teamName, nextTier.getLevel());
+		// Set upgrade level on team
+		game.getTeam(teamKey.name()).ifPresent(team -> team.setUpgradeLevel(key, nextTier.getLevel()));
+		applyEffect(game, teamKey, nextTier.getLevel());
 
+		// Notify all team members
 		game.getPlayers().stream()
-				.filter(p -> teamName.equals(p.getTeamKey()))
+				.filter(p -> teamKey.equals(p.getTeamKey()))
 				.forEach(p -> {
-					BedWarsMapsConfig.TeamKey teamKey = player.getTeamKey();
 					p.sendMessage(teamKey.chatColor() + " §apurchased §6" + name + " " + nextTier.getLevel() + "!");
 					p.setTag(Tag.Integer("upgrade_" + key), nextTier.getLevel());
 				});
@@ -91,7 +94,7 @@ public abstract class TeamUpgrade {
 	 * @param teamName The name of the team.
 	 * @param level    The new level of the upgrade.
 	 */
-	public abstract void applyEffect(Game game, BedWarsMapsConfig.TeamKey teamName, int level);
+	public abstract void applyEffect(BedWarsGame game, BedWarsMapsConfig.TeamKey teamKey, int level);
 
 	public ItemStack getDisplayItem() {
 		return displayItem.with(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(false, Set.of()));

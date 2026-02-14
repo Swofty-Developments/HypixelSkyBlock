@@ -7,22 +7,28 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
-import net.swofty.commons.MinecraftVersion;
+import net.minestom.server.scoreboard.BelowNameTag;
 import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
+import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.StatefulPaginatedView;
+import net.swofty.type.generic.gui.v2.StatefulView;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.View;
+import net.swofty.type.generic.gui.v2.ViewNavigator;
+import net.swofty.type.generic.gui.v2.ViewSession;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -37,6 +43,7 @@ public class HypixelPlayer extends Player {
 	private boolean readyForEvents = false;
 	@Getter
 	private PlayerHookManager hookManager;
+	protected BelowNameTag belowNameTag;
 
 	public HypixelPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
 		super(playerConnection, gameProfile);
@@ -113,6 +120,31 @@ public class HypixelPlayer extends Player {
 
 	public DatapointToggles.Toggles getToggles() {
 		return getDataHandler().get(HypixelDataHandler.Data.TOGGLES, DatapointToggles.class).getValue();
+	}
+
+	@Override
+	public void updateNewViewer(@NonNull Player player) {
+		super.updateNewViewer(player);
+		if (belowNameTag != null) {
+			belowNameTag.addViewer(player);
+		}
+	}
+
+	/**
+	 * Changes the tag below the name.
+	 *
+	 * @param belowNameTag The new below name tag
+	 */
+	@Override
+	public void setBelowNameTag(@NonNull BelowNameTag belowNameTag) {
+		if (this.belowNameTag == belowNameTag) return;
+
+		if (this.belowNameTag != null) {
+			this.belowNameTag.removeViewer(this);
+		}
+
+		this.belowNameTag = belowNameTag;
+		getViewers().forEach(this.belowNameTag::addViewer); // this is missing from the super method (bug most likely)
 	}
 
 	public String getFullDisplayName() {

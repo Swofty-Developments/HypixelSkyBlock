@@ -10,7 +10,7 @@ import net.minestom.server.command.builder.suggestion.SuggestionEntry;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.GeneratorSpeed;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.PitchYawPosition;
@@ -193,7 +193,7 @@ public class AutoSetupCommand extends HypixelCommand {
 
         var typeArg = ArgumentType.String("typeName");
         typeArg.setSuggestionCallback((sender, ctx, suggestion) -> {
-            for (BedwarsGameType type : BedwarsGameType.values()) {
+            for (BedWarsGameType type : BedWarsGameType.values()) {
                 suggestion.addEntry(new SuggestionEntry(type.name()));
             }
         });
@@ -205,7 +205,7 @@ public class AutoSetupCommand extends HypixelCommand {
             String action = context.get(actionArg);
             String typeName = context.get(typeArg);
 
-            BedwarsGameType gameType = BedwarsGameType.from(typeName);
+            BedWarsGameType gameType = BedWarsGameType.from(typeName);
             if (gameType == null) {
                 player.sendMessage(Component.text("§cInvalid game type: " + typeName));
                 return;

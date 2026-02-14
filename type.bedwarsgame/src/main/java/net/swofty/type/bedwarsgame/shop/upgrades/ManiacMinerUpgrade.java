@@ -9,7 +9,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
@@ -37,7 +37,7 @@ public class ManiacMinerUpgrade extends TeamUpgrade {
 	}
 
 	@Override
-	public void applyEffect(Game game, BedWarsMapsConfig.TeamKey teamName, int level) {
+	public void applyEffect(BedWarsGame game, BedWarsMapsConfig.TeamKey teamName, int level) {
 		game.getPlayers().stream()
 				.filter(p -> teamName.equals(p.getTeamKey()))
 				.forEach(player -> giveHaste(player, level));

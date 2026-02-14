@@ -9,7 +9,11 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ServiceToServerManager {
     private static final Map<UUID, CompletableFuture<JSONObject>> pendingRequests = new ConcurrentHashMap<>();
@@ -210,5 +214,21 @@ public class ServiceToServerManager {
                 .put("game-id", gameId);
 
         return sendToServers(List.of(serverUUID), FromServiceChannels.GAME_INFORMATION, message);
+    }
+
+    public static CompletableFuture<Map<UUID, JSONObject>> viewReplay(UUID playerUUID, String gameId) {
+        return viewReplay(playerUUID, gameId, null);
+    }
+
+    public static CompletableFuture<Map<UUID, JSONObject>> viewReplay(UUID playerUUID, String gameId, String shareCode) {
+        JSONObject message = new JSONObject()
+            .put("uuid", playerUUID)
+            .put("replay-id", gameId);
+
+        if (shareCode != null) {
+            message.put("share-code", shareCode);
+        }
+
+        return sendToAllServers(FromServiceChannels.VIEW_REPLAY, message);
     }
 }

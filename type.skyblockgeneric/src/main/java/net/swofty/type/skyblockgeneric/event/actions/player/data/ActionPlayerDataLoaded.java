@@ -19,7 +19,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.user.categories.CustomGroups;
 import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
@@ -81,7 +81,7 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
         player.sendMessage("");
 
         // Manually call region event with a delay
-        MathUtility.delay(() -> {
+        ScheduleUtility.delay(() -> {
             SkyBlockRegion playerRegion = player.getRegion();
             if (playerRegion != null && player.isOnline())
                 HypixelEventHandler.callCustomEvent(new PlayerRegionChangeEvent(
@@ -122,7 +122,7 @@ public class ActionPlayerDataLoaded implements HypixelEventClass {
                     20));
 
             MinecraftServer.getBossBarManager().removeAllBossBars(player);
-            MathUtility.delay(() -> {
+            ScheduleUtility.delay(() -> {
                 if (!player.isOnline()) return;
                 player.getPetData().updatePetEntityImpl(player);
             }, 20);
