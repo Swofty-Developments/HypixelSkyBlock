@@ -24,7 +24,6 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
@@ -37,7 +36,6 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
-import net.swofty.commons.config.Settings;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.command.ProtocolVersionCommand;
@@ -62,7 +60,6 @@ import org.json.JSONObject;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
-import java.net.InetSocketAddress;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.List;
@@ -87,8 +84,6 @@ public class SkyBlockVelocity {
 	@Getter
 	private static SkyBlockVelocity plugin;
 	@Getter
-	private static RegisteredServer limboServer;
-	@Getter
 	private static boolean shouldAuthenticate = false;
 	@Getter
 	private static boolean supportCrossVersion = false;
@@ -99,9 +94,6 @@ public class SkyBlockVelocity {
 	public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
 		plugin = this;
 		server = tempServer;
-
-		Settings.LimboSettings limbo = ConfigProvider.settings().getLimbo();
-		limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(limbo.getHostName(), limbo.getPort())));
 	}
 
 	@Subscribe
@@ -283,10 +275,7 @@ public class SkyBlockVelocity {
 		));
 		ServerType serverType = GameManager.getTypeFromRegisteredServer(originalServer);
 
-		event.setResult(KickedFromServerEvent.RedirectPlayer.create(
-				limboServer,
-				null
-		));
+		// TODO: send to Limbo
 
 		TransferHandler transferHandler = new TransferHandler(event.getPlayer());
 		transferHandler.noLimboTransferTo(serverType);
