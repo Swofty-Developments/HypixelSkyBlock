@@ -5,6 +5,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.VersionConst;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGameEventManager;
@@ -49,8 +50,13 @@ public class BedWarsGameScoreboard {
                     continue;
                 }
 
+                String tag = "";
+                if (game.getGameType() == BedWarsGameType.DREAM_DOUBLES || game.getGameType() == BedWarsGameType.DREAM_FOURS) {
+                    tag = "§8[D]";
+                }
+
                 List<String> lines = new ArrayList<>();
-                lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
+                lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName() + tag);
                 lines.add("§7 ");
 
                 if (game.getState().isWaiting()) {

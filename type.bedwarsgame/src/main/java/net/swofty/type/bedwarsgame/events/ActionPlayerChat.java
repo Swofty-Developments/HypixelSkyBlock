@@ -1,7 +1,7 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.event.player.PlayerChatEvent;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.BedwarsLevelColor;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
@@ -78,7 +78,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 		}
 
 		List<BedWarsPlayer> receivers;
-		if (game.getGameType() == BedwarsGameType.SOLO) {
+		if (game.getGameType() == BedWarsGameType.SOLO) {
 			receivers = new ArrayList<>(game.getPlayers());
 		} else {
 			receivers = game.getPlayersOnTeam(player.getTeamKey());

@@ -4,21 +4,23 @@ import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
-public enum BedwarsGameType {
+public enum BedWarsGameType {
 	SOLO(0, "Solo", 1, 8),
 	DOUBLES(1, "Doubles", 2, 8),
 	THREE_THREE_THREE_THREE(2, "3v3v3v3", 3, 4),
 	FOUR_FOUR_FOUR_FOUR(3, "4v4v4v4", 4, 4),
 	FOUR_FOUR(4, "4v4", 4, 2),
 	ULTIMATE_DOUBLES(5, "Ultimate", 2, 8),
-	ULTIMATE_FOURS(6, "Ultimate", 4, 4);
+	ULTIMATE_FOURS(6, "Ultimate", 4, 4),
+	DREAM_DOUBLES(7, "Dreams", 2, 8),
+	DREAM_FOURS(8, "Dreams", 4, 4);
 
 	private final int id;
 	private final String displayName;
 	private final int teamSize;
 	private final int teams;
 
-	BedwarsGameType(int id, String displayName, int teamSize, int teams) {
+	BedWarsGameType(int id, String displayName, int teamSize, int teams) {
 		this.id = id;
 		this.displayName = displayName;
 		this.teamSize = teamSize;
@@ -30,8 +32,8 @@ public enum BedwarsGameType {
 	}
 
 	@Nullable
-	public static BedwarsGameType from(String field) {
-		for (BedwarsGameType type : values()) {
+	public static BedWarsGameType from(String field) {
+		for (BedWarsGameType type : values()) {
 			if (type.name().equalsIgnoreCase(field)) {
 				return type;
 			}
@@ -40,8 +42,8 @@ public enum BedwarsGameType {
 	}
 
 	@Nullable
-	public static BedwarsGameType fromDisplayName(String displayName) {
-		for (BedwarsGameType type : values()) {
+	public static BedWarsGameType fromDisplayName(String displayName) {
+		for (BedWarsGameType type : values()) {
 			if (type.displayName.equalsIgnoreCase(displayName)) {
 				return type;
 			}
@@ -50,8 +52,8 @@ public enum BedwarsGameType {
 	}
 
 	@Nullable
-	public static BedwarsGameType fromId(int id) {
-		for (BedwarsGameType type : values()) {
+	public static BedWarsGameType fromId(int id) {
+		for (BedWarsGameType type : values()) {
 			if (type.id == id) {
 				return type;
 			}

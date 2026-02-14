@@ -1,7 +1,7 @@
 package net.swofty.type.bedwarsgame.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentType;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
@@ -30,7 +30,7 @@ public class ShoutCommand extends HypixelCommand {
 				player.sendMessage("§cYou are not in a game.");
 				return;
 			}
-			if (game.getGameType() == BedwarsGameType.SOLO) {
+			if (game.getGameType() == BedWarsGameType.SOLO) {
 				player.sendMessage("§cThis command is unavailable.");
 				return;
 			}

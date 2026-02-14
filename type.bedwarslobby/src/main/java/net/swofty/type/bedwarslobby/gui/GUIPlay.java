@@ -4,28 +4,28 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.bedwars.BedWarsGameType;
+import net.swofty.commons.party.FullParty;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.lobby.LobbyOrchestratorConnector;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.party.PartyManager;
-import net.swofty.commons.party.FullParty;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.lobby.LobbyOrchestratorConnector;
 
 public class GUIPlay extends HypixelInventoryGUI {
 
-	private final BedwarsGameType type;
+	private final BedWarsGameType type;
 
-	public GUIPlay(BedwarsGameType type) {
+	public GUIPlay(BedWarsGameType type) {
 		super("Play Bed Wars", InventoryType.CHEST_4_ROW);
 		this.type = type;
 	}
 
 	@Override
 	public void onOpen(InventoryGUIOpenEvent e) {
-		int playSlot = type == BedwarsGameType.FOUR_FOUR ? 13 : 12;
+		int playSlot = type == BedWarsGameType.FOUR_FOUR ? 13 : 12;
 		set(new GUIClickableItem(playSlot) {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
@@ -60,7 +60,7 @@ public class GUIPlay extends HypixelInventoryGUI {
 		});
 
 
-		if (type != BedwarsGameType.FOUR_FOUR) {
+		if (type != BedWarsGameType.FOUR_FOUR) {
 			set(new GUIClickableItem(14) {
 
 				@Override
@@ -108,6 +108,8 @@ public class GUIPlay extends HypixelInventoryGUI {
 			case FOUR_FOUR -> "4v4 is the classic Bed Wars\neveryone knows and lovees, but with\nonly 1 enemy team!";
 			case ULTIMATE_DOUBLES -> "Ultimate Doubles";
 			case ULTIMATE_FOURS -> "Ultimate 4v4v4v4";
+			case DREAM_DOUBLES -> "Dream";
+			case DREAM_FOURS -> "Dream";
 		};
 	}
 }

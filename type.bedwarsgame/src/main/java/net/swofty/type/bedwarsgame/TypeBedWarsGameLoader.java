@@ -23,7 +23,7 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObject;
 import net.swofty.proxyapi.ProxyService;
@@ -161,10 +161,10 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
             return null;
         }
 
-        List<String> supportedTypes = entry.getConfiguration() != null ? entry.getConfiguration().getTypes().stream().map(BedwarsGameType::name).toList() : List.of();
+        List<String> supportedTypes = entry.getConfiguration() != null ? entry.getConfiguration().getTypes().stream().map(BedWarsGameType::name).toList() : List.of();
         List<BedWarsGame> gameInternalList = new ArrayList<>(List.of());
         for (String type : supportedTypes) {
-            BedwarsGameType bedwarsGameType = BedwarsGameType.from(type);
+            BedWarsGameType bedwarsGameType = BedWarsGameType.from(type);
             gameInternalList.add(createGame(entry, bedwarsGameType));
         }
         games.addAll(gameInternalList);
@@ -172,7 +172,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
     }
 
     @SneakyThrows
-    public static BedWarsGame createGame(@NotNull BedWarsMapsConfig.MapEntry entry, BedwarsGameType type) {
+    public static BedWarsGame createGame(@NotNull BedWarsMapsConfig.MapEntry entry, BedWarsGameType type) {
         if (games.size() >= MAX_GAMES) {
             return null;
         }
@@ -229,12 +229,12 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
             if (mapsConfig != null && mapsConfig.getMaps() != null) {
                 for (BedWarsMapsConfig.MapEntry e : mapsConfig.getMaps()) {
                     BedWarsMapsConfig.MapEntry.MapConfiguration cfg = e.getConfiguration();
-                    List<BedwarsGameType> types = (cfg != null) ? cfg.getTypes() : null;
+                    List<BedWarsGameType> types = (cfg != null) ? cfg.getTypes() : null;
                     boolean allowed;
                     if (types == null || types.isEmpty()) {
                         allowed = true;
                     } else {
-                        allowed = types.contains(BedwarsGameType.SOLO);
+                        allowed = types.contains(BedWarsGameType.SOLO);
                     }
                     if (allowed) filteredMaps.add(e);
                     createGame(e);

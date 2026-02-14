@@ -1,5 +1,7 @@
 package net.swofty.type.game.game;
 
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.instance.InstanceContainer;
 import net.swofty.type.game.game.event.GameTeamWinConditionEvent;
 import net.swofty.type.game.game.event.PlayerAssignedTeamEvent;
@@ -89,11 +91,14 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
     protected abstract boolean isTeamViable(T team);
 
     protected void onTeamEliminated(T team) {
-        eventDispatcher.accept(new TeamEliminatedEvent(
-                gameId,
-                team.getId(),
-                team.getName()
+        eventDispatcher.accept(new TeamEliminatedEvent<>(
+                this,
+                team
         ));
+    }
+
+    public void broadcastMessage(Component message) {
+        Audience.audience(getPlayers().stream().map(GameParticipant::getServerPlayer).toList()).sendMessage(message);
     }
 
     /**

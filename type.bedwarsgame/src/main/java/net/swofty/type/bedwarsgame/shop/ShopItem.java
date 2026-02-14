@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
@@ -18,7 +18,7 @@ public abstract class ShopItem {
     private final String id;
     private final String name;
     private final String description;
-    private final Function<BedwarsGameType, Integer> price;
+    private final Function<BedWarsGameType, Integer> price;
     private final int amount;
     private final Currency currency;
     private final ItemStack display;
@@ -34,11 +34,11 @@ public abstract class ShopItem {
         this(id, name, description, (_) -> price, amount, currency, display, hotbarItemType);
     }
 
-    public ShopItem(String id, String name, String description, Function<BedwarsGameType, Integer> price, int amount, Currency currency, Material display) {
+    public ShopItem(String id, String name, String description, Function<BedWarsGameType, Integer> price, int amount, Currency currency, Material display) {
         this(id, name, description, price, amount, currency, display, null);
     }
 
-    public ShopItem(String id, String name, String description, Function<BedwarsGameType, Integer> price, int amount, Currency currency, Material display,
+    public ShopItem(String id, String name, String description, Function<BedWarsGameType, Integer> price, int amount, Currency currency, Material display,
                     @Nullable DatapointBedWarsHotbar.HotbarItemType hotbarItemType) {
         this.id = id;
         this.name = name;
@@ -67,7 +67,7 @@ public abstract class ShopItem {
      * @param player   the player making the purchase
      * @param gameType the gametype to determine the price
      */
-    public void handlePurchase(BedWarsPlayer player, BedwarsGameType gameType) {
+    public void handlePurchase(BedWarsPlayer player, BedWarsGameType gameType) {
         BedWarsInventoryManipulator.removeItems(player, currency.getMaterial(), price.apply(gameType));
         onPurchase(player);
     }

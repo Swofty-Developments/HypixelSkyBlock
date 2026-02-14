@@ -4,7 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.VersionConst;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.type.bedwarslobby.gui.GUIPlay;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
@@ -19,7 +19,7 @@ public class NPCSolo extends HypixelNPC {
             public String[] holograms(HypixelPlayer player) {
                 int amountOnline = GameCountCache.getPlayerCount(
                     ServerType.BEDWARS_GAME,
-                    BedwarsGameType.SOLO.name()
+                    BedWarsGameType.SOLO.name()
                 );
 
                 String commmaified = StringUtility.commaify(amountOnline);
@@ -54,6 +54,6 @@ public class NPCSolo extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        new GUIPlay(BedwarsGameType.SOLO).open(e.player());
+        new GUIPlay(BedWarsGameType.SOLO).open(e.player());
     }
 }

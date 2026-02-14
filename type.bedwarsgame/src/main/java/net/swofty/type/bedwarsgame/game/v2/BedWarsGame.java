@@ -20,7 +20,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ChatUtility;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
@@ -56,7 +56,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     public static final Tag<Boolean> ELIMINATED_TAG = Tag.Boolean("eliminated");
 
     private final BedWarsMapsConfig.MapEntry mapEntry;
-    private final BedwarsGameType gameType;
+    private final BedWarsGameType gameType;
 
     private final BedWarsGeneratorManager generatorManager;
     private final BedWarsWorldManager worldManager;
@@ -70,7 +70,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     public BedWarsGame(
         BedWarsMapsConfig.MapEntry mapEntry,
         InstanceContainer instance,
-        BedwarsGameType gameType
+        BedWarsGameType gameType
     ) {
         // these need to happen before super() is called
         this.mapEntry = mapEntry;
@@ -277,22 +277,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     @Override
-    protected void onTeamEliminated(BedWarsTeam team) {
-        super.onTeamEliminated(team);
-
-        String teamColor = team.getColorCode();
-        String teamName = team.getName();
-        broadcastMessage(Component.text(""));
-        broadcastMessage(Component.text("§f§lTEAM ELIMINATED > §c" + teamColor + teamName + " §7has been eliminated!"));
-        broadcastMessage(Component.text(""));
-
-        // Record to replay
-        if (replayManager.isRecording()) {
-            replayManager.recordTeamElimination(team.getTeamKey());
-        }
-    }
-
-    @Override
     protected boolean isTeamViable(BedWarsTeam team) {
         // Team is viable if bed is alive OR has active players OR has rejoinable disconnected players
         if (team.isBedAlive()) return true;
@@ -363,13 +347,24 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         });
     }
 
-    /**
-     * Called when a player is eliminated (died without bed).
-     */
     public void onPlayerEliminated(BedWarsPlayer player) {
         player.setTag(ELIMINATED_TAG, true);
         setupAsSpectator(player);
         checkWinConditions();
+
+        getPlayerTeam(player.getUuid()).ifPresent(team -> {
+            boolean allEliminated = getPlayers().stream()
+                .filter(p -> team.hasPlayer(p.getUuid()))
+                .allMatch(p -> Boolean.TRUE.equals(p.getTag(ELIMINATED_TAG)));
+
+            boolean allDisconnectedOrEliminated = getPlayers().stream()
+                .filter(p -> team.hasPlayer(p.getUuid()))
+                .allMatch(p -> Boolean.TRUE.equals(p.getTag(ELIMINATED_TAG)) || !isPlayerCurrentlyPlaying(p.getUuid()));
+
+            if (allEliminated || allDisconnectedOrEliminated) {
+                onTeamEliminated(team);
+            }
+        });
     }
 
     private void setupAsSpectator(BedWarsPlayer player) {
@@ -457,10 +452,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         for (Component msg : messages) {
             audience.sendMessage(msg);
         }
-    }
-
-    public void broadcastMessage(Component message) {
-        Audience.audience(getPlayers()).sendMessage(message);
     }
 
     public List<UUID> getDisconnectedPlayerUuids() {

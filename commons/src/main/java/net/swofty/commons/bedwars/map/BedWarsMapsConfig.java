@@ -2,7 +2,7 @@ package net.swofty.commons.bedwars.map;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class BedWarsMapsConfig {
         @Getter
         @Setter
         public static class MapConfiguration {
-            private List<BedwarsGameType> types;
+            private List<BedWarsGameType> types;
             private GeneratorSpeed generatorSpeed;
             private MapBounds bounds;
             private Map<TeamKey, MapTeam> teams;

@@ -5,7 +5,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 
@@ -43,7 +43,7 @@ public abstract class UpgradeableShopItem extends ShopItem {
     }
 
     @Override
-    public Function<BedwarsGameType, Integer> getPrice() {
+    public Function<BedWarsGameType, Integer> getPrice() {
         // This is not really used for upgradeable items as price is dynamic.
         return _ -> 0;
     }
@@ -66,7 +66,7 @@ public abstract class UpgradeableShopItem extends ShopItem {
     }
 
     @Override
-    public void handlePurchase(BedWarsPlayer player, BedwarsGameType gameType) {
+    public void handlePurchase(BedWarsPlayer player, BedWarsGameType gameType) {
         int nextLevel = getNextLevel(player);
         if (nextLevel >= tiers.size()) {
             return; // Already maxed out
