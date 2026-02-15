@@ -1,8 +1,8 @@
-name: Build on Release
+name: Add to GitHub Releases
 
 on:
-  release:
-    types: [published]
+  push:
+    branches: [ "master" ]
 
 permissions:
   contents: write
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v3
 
       - name: Set up JDK 25
         uses: actions/setup-java@v5.1.0
@@ -25,13 +25,26 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
-
       - name: Build with Gradle
         run: ./gradlew shadowJar
 
-      - name: Upload built jars to current release
-        uses: softprops/action-gh-release@v2
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
         with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Add Jar to GitHub releases
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          title: "Automatic Build"
           files: |
             velocity.extension/build/libs/*.jar
             proxy.api/build/libs/*.jar
