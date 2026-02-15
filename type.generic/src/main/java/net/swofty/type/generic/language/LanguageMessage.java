@@ -13,6 +13,7 @@ public enum LanguageMessage {
     AVAILABLE_LANGUAGES("language.available"),
     USE_LANGUAGE_HINT("language.hint.use_command"),
     UNKNOWN_LANGUAGE("language.error.unknown"),
+    PROTOTYPE_LOBBY_ROW1("prototype.row1"),
     LANGUAGE_UPDATED("language.updated");
 
     private static final Map<PlayerLanguage, Map<String, String>> MESSAGES = new EnumMap<>(PlayerLanguage.class);
