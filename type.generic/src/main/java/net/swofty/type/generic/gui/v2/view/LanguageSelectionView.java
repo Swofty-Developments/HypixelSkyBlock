@@ -1,17 +1,13 @@
 package net.swofty.type.generic.gui.v2.view;
 
-import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.Components;
-import net.swofty.type.generic.gui.v2.DefaultState;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.TooltipDisplay;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
 import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
@@ -31,14 +27,11 @@ public final class LanguageSelectionView {
     public static final class Page1 extends StatelessView {
         @Override
         public ViewConfiguration<DefaultState> configuration() {
-        public ViewConfiguration<Void> configuration() {
             return new ViewConfiguration<>("Select Language", InventoryType.CHEST_4_ROW);
         }
 
         @Override
         public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-            Components.fill(layout);
-        public void layout(ViewLayout<Void> layout, Void state, ViewContext ctx) {
             layout.filler(FILLER);
             addLanguageSlot(layout, 10, PlayerLanguage.ENGLISH, Material.RED_CONCRETE);
             addLanguageSlot(layout, 11, PlayerLanguage.JAPANESE, Material.GREEN_CONCRETE);
@@ -72,14 +65,11 @@ public final class LanguageSelectionView {
     public static final class Page2 extends StatelessView {
         @Override
         public ViewConfiguration<DefaultState> configuration() {
-        public ViewConfiguration<Void> configuration() {
             return new ViewConfiguration<>("Select Language", InventoryType.CHEST_4_ROW);
         }
 
         @Override
         public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-            Components.fill(layout);
-        public void layout(ViewLayout<Void> layout, Void state, ViewContext ctx) {
             layout.filler(FILLER);
             setDecor(layout, 10, Material.CYAN_CONCRETE);
             setDecor(layout, 11, Material.ORANGE_CONCRETE);
@@ -103,7 +93,6 @@ public final class LanguageSelectionView {
     }
 
     private static void addLanguageSlot(ViewLayout<DefaultState> layout, int slot, PlayerLanguage language, Material material) {
-    private static void addLanguageSlot(ViewLayout<Void> layout, int slot, PlayerLanguage language, Material material) {
         layout.slot(slot,
                 (state, ctx) -> {
                     boolean selected = ctx.player().getLanguage() == language;
@@ -131,22 +120,16 @@ public final class LanguageSelectionView {
         layout.slot(slot, ItemStackCreator.createNamedItemStack(material, "§f"));
     }
 
-    private static void setBookNoAction(ViewLayout<DefaultState> layout, int slot) {
-    private static void setDecor(ViewLayout<Void> layout, int slot, Material material) {
-        layout.slot(slot, ItemStackCreator.createNamedItemStack(material, "§f"));
-    }
-
-    private static void setCloseButton(ViewLayout<Void> layout, int slot, ViewContext ctx) {
+    private static void setCloseButton(ViewLayout<DefaultState> layout, int slot, ViewContext ctx) {
         layout.slot(slot, ItemStackCreator.getStack("§cClose", Material.BARRIER, 1), (click, clickCtx) -> ctx.player().closeInventory());
     }
 
-    private static void setBookNoAction(ViewLayout<Void> layout, int slot) {
+    private static void setBookNoAction(ViewLayout<DefaultState> layout, int slot) {
         layout.slot(slot, ItemStackCreator.getStack("§eLanguages", Material.BOOK, 1,
                 "§7Browse available languages."));
     }
 
     private static void setAutoDetectButton(ViewLayout<DefaultState> layout, int slot, ViewContext ctx) {
-    private static void setAutoDetectButton(ViewLayout<Void> layout, int slot, ViewContext ctx) {
         layout.slot(slot,
                 ItemStackCreator.getStack("§aAuto Detect Language", Material.MAGMA_CREAM, 1,
                         "§7Automatically detect your",
