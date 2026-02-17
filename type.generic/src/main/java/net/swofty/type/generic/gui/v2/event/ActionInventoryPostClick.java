@@ -12,7 +12,12 @@ public class ActionInventoryPostClick implements HypixelEventClass {
     @HypixelEvent(node = EventNodes.INVENTORY, requireDataLoaded = false)
     public void onInventoryPostClick(InventoryClickEvent event) {
         HypixelPlayer player = (HypixelPlayer) event.getPlayer();
-        ViewNavigator.find(player).ifPresent(navigator -> navigator.getCurrentSession().onPostClickEvent(event));
+        ViewNavigator.find(player).ifPresent(navigator -> {
+            if (navigator.getCurrentSession() == null) {
+                return;
+            }
+            navigator.getCurrentSession().onPostClickEvent(event);
+        });
     }
 
 }

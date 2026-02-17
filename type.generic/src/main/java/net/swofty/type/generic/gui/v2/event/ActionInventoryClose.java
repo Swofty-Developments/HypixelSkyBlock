@@ -15,6 +15,9 @@ public class ActionInventoryClose implements HypixelEventClass {
         HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         ViewNavigator.find(player).ifPresent(navigator -> {
             ViewSession<?> session = navigator.getCurrentSession();
+            if (session == null) {
+                return;
+            }
             if (event.getInventory() != session.inventory() || session.isSuppressCloseEvent()) {
                 session.setSuppressCloseEvent(false);
                 return;
