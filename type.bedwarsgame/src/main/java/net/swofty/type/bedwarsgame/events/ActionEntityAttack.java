@@ -33,6 +33,12 @@ public class ActionEntityAttack implements HypixelEventClass {
 					return;
 				}
 			}
+
+			if (game.isSameTeam(player.getUuid(), event.getTarget().getUuid())) {
+				player.sendMessage("§cYou cannot attack your teammate!");
+				event.setCancelled(true);
+				return;
+			}
 		}
 	}
 

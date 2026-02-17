@@ -13,6 +13,8 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 
+import java.util.Optional;
+
 @CommandParameters(aliases = "bwadmin",
         description = "Admin commands for BedWars game management.",
         usage = "/bwadmin <breakbed|respawnbed|endgame|info> [team]",
@@ -110,14 +112,14 @@ public class BedWarsAdminCommand extends HypixelCommand {
                 game.getEventDispatcher().accept(
                     new GameTeamWinConditionEvent<>(
                         game.getGameId(),
-                        team
+                        Optional.ofNullable(team)
                     )
                 );
             } else {
                 game.getEventDispatcher().accept(
                     new GameTeamWinConditionEvent<>(
                         game.getGameId(),
-                        null
+                        Optional.empty()
                     )
                 );
             }
@@ -139,7 +141,7 @@ public class BedWarsAdminCommand extends HypixelCommand {
             game.getEventDispatcher().accept(
                 new GameTeamWinConditionEvent<>(
                     game.getGameId(),
-                    null
+                    Optional.empty()
                 )
             );
         }, ArgumentType.Literal("endgame"));

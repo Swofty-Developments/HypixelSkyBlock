@@ -44,6 +44,7 @@ import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -78,10 +79,13 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
         super(instance, event -> HypixelEventHandler.callCustomEvent((Event) event));
 
-
-        // Initialize teams from map config
-        mapEntry.getConfiguration().getTeams().keySet()
-            .forEach(teamKey -> registerTeam(new BedWarsTeam(teamKey)));
+        // Initialize teams from map config, constrained by game mode team count
+        List<TeamKey> teamKeys = new ArrayList<>(mapEntry.getConfiguration().getTeams().keySet());
+        Collections.shuffle(teamKeys);
+        int teamsToRegister = Math.min(gameType.getTeams(), teamKeys.size());
+        for (int i = 0; i < teamsToRegister; i++) {
+            registerTeam(new BedWarsTeam(teamKeys.get(i)));
+        }
 
         // Initialize managers
         this.generatorManager = new BedWarsGeneratorManager(this);
@@ -104,12 +108,12 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     @Override
     public int getMaxPlayers() {
-        return mapEntry.getConfiguration().getTeams().size() * getTeamSize();
+        return getTeams().size() * getTeamSize();
     }
 
     @Override
     public int getMinPlayers() {
-        return getTeamSize() * Math.min(2, mapEntry.getConfiguration().getTeams().size());
+        return getTeamSize() * Math.min(2, getTeams().size());
     }
 
     @Override

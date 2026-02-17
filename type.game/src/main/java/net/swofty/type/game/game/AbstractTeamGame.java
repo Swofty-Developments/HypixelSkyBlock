@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * @param <T> The team type
  */
 public abstract class AbstractTeamGame<P extends GameParticipant, T extends GameTeam>
-        extends AbstractGame<P> implements TeamManager<T, P> {
+    extends AbstractGame<P> implements TeamManager<T, P> {
 
     protected final Map<String, T> teams = new LinkedHashMap<>();
     protected final Map<UUID, String> playerTeams = new HashMap<>();
@@ -49,6 +49,9 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
 
     @Override
     public Collection<T> getTeams() {
+        if (teams == null) {
+            return Collections.emptyList();
+        }
         return Collections.unmodifiableCollection(teams.values());
     }
 
@@ -74,15 +77,15 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
     @Override
     public Collection<T> getActiveTeams() {
         return teams.values().stream()
-                .filter(GameTeam::hasPlayers)
-                .collect(Collectors.toList());
+            .filter(GameTeam::hasPlayers)
+            .collect(Collectors.toList());
     }
 
     @Override
     public Collection<T> getViableTeams() {
         return teams.values().stream()
-                .filter(this::isTeamViable)
-                .collect(Collectors.toList());
+            .filter(this::isTeamViable)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -92,8 +95,8 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
 
     protected void onTeamEliminated(T team) {
         eventDispatcher.accept(new TeamEliminatedEvent<>(
-                this,
-                team
+            this,
+            team
         ));
     }
 
@@ -102,31 +105,55 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
     }
 
     /**
+     * Checks if two players are on the same team.
+     *
+     * @param first  uuid of the first player
+     * @param second uuid of the second player
+     * @return true if both players are on the same team, false otherwise
+     */
+    public boolean isSameTeam(UUID first, UUID second) {
+        String team1 = playerTeams.get(first);
+        String team2 = playerTeams.get(second);
+        return team1 != null && team1.equals(team2);
+    }
+
+    /**
      * Auto-assigns all unassigned players to teams.
      * Override for custom assignment logic.
      */
     public void autoAssignTeams() {
         List<P> unassignedPlayers = players.values().stream()
-                .filter(p -> !playerTeams.containsKey(p.getUuid()))
-                .collect(Collectors.toList());
+            .filter(p -> !playerTeams.containsKey(p.getUuid()))
+            .collect(Collectors.toList());
+
+        if (unassignedPlayers.isEmpty() || teams.isEmpty()) {
+            return;
+        }
 
         Collections.shuffle(unassignedPlayers);
-
-        List<T> availableTeams = new ArrayList<>(teams.values());
-        int teamIndex = 0;
         int teamSize = getTeamSize();
 
+        List<T> shuffledTeams = new ArrayList<>(teams.values());
+        Collections.shuffle(shuffledTeams);
+        Map<String, Integer> teamPriority = new HashMap<>();
+        for (int i = 0; i < shuffledTeams.size(); i++) {
+            teamPriority.put(shuffledTeams.get(i).getId(), i);
+        }
+
         for (P player : unassignedPlayers) {
-            // Find a team that isn't full
-            T targetTeam = null;
-            for (int i = 0; i < availableTeams.size(); i++) {
-                T team = availableTeams.get((teamIndex + i) % availableTeams.size());
-                if (team.getPlayerCount() < teamSize) {
-                    targetTeam = team;
-                    teamIndex = (teamIndex + i + 1) % availableTeams.size();
-                    break;
-                }
-            }
+            T targetTeam = teams.values().stream()
+                .filter(team -> team.getPlayerCount() < teamSize)
+                .max((left, right) -> {
+                    int byCount = Integer.compare(left.getPlayerCount(), right.getPlayerCount());
+                    if (byCount != 0) {
+                        return byCount;
+                    }
+
+                    int leftPriority = teamPriority.getOrDefault(left.getId(), Integer.MAX_VALUE);
+                    int rightPriority = teamPriority.getOrDefault(right.getId(), Integer.MAX_VALUE);
+                    return Integer.compare(rightPriority, leftPriority);
+                })
+                .orElse(null);
 
             if (targetTeam != null) {
                 // Remove from current team if any
@@ -136,7 +163,7 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
                 targetTeam.addPlayer(player.getUuid());
                 playerTeams.put(player.getUuid(), targetTeam.getId());
 
-                eventDispatcher.accept(new PlayerAssignedTeamEvent<T>(
+                eventDispatcher.accept(new PlayerAssignedTeamEvent<>(
                     gameId,
                     player.getServerPlayer(),
                     targetTeam
@@ -164,7 +191,7 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
             eventDispatcher.accept(
                 new GameTeamWinConditionEvent<>(
                     gameId,
-                    winner
+                    Optional.ofNullable(winner)
                 )
             );
         }

@@ -23,9 +23,7 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import org.tinylog.Logger;
 
-import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
 
 public class GameEndListener implements HypixelEventClass {
 
@@ -39,8 +37,8 @@ public class GameEndListener implements HypixelEventClass {
         String titleMessage;
         String subtitleMessage;
 
-        if (event.team() != null) {
-            titleMessage = event.team().getColorCode() + "Team " + event.team().getName() + " has won!";
+        if (event.team().isPresent()) {
+            titleMessage = event.team().get().getColorCode() + "Team " + event.team().get().getName() + " has won!";
             subtitleMessage = "Congratulations!";
         } else {
             titleMessage = "§cGame Over!";
@@ -55,10 +53,12 @@ public class GameEndListener implements HypixelEventClass {
                 Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
 
             // Record win
-            if (event.team() != null && event.team().hasPlayer(player.getUuid())) {
-                BedWarsStatsRecorder.recordWin(player, game.getGameType());
-                player.getAchievementHandler().addProgressByTrigger("bedwars.wins", 1);
-            }
+            event.team().ifPresent(team -> {
+                if (team.hasPlayer(player.getUuid())) {
+                    BedWarsStatsRecorder.recordWin(player, game.getGameType());
+                    player.getAchievementHandler().addProgressByTrigger("bedwars.wins", 1);
+                }
+            });
 
             player.setGameMode(GameMode.ADVENTURE);
         }
@@ -71,20 +71,24 @@ public class GameEndListener implements HypixelEventClass {
         Logger.info("Ending game " + gameId);
         game.end();
 
-        Collection<UUID> uuids = event.team().getPlayerIds();
-        String playerNamesConcatenated = uuids.stream()
-                .map(game::getPlayer)
-                .filter(Optional::isPresent)
-                .map(p -> LegacyComponentSerializer.legacySection().serialize(p.get().getColouredName()))
-                .reduce((a, b) -> a + "§7," + b)
-                .orElse("");
+
 
         for (BedWarsPlayer player : game.getPlayers()) {
             player.sendMessage(Component.text(THICK_BAR));
             player.sendMessage(Component.text(ChatUtility.FontInfo.center("§lBed Wars"), NamedTextColor.WHITE));
             player.sendMessage(Component.empty());
-            player.sendMessage(Component.text(ChatUtility.FontInfo.center(event.team().getColorCode() + event.team().getName() + " §7- " + playerNamesConcatenated), NamedTextColor.WHITE));
-            player.sendMessage(Component.empty());
+
+            event.team().ifPresent(team -> {
+                String playerNamesConcatenated = team.getPlayerIds().stream()
+                    .map(game::getPlayer)
+                    .filter(Optional::isPresent)
+                    .map(p -> LegacyComponentSerializer.legacySection().serialize(p.get().getColouredName()))
+                    .reduce((a, b) -> a + "§7," + b)
+                    .orElse("");
+                player.sendMessage(Component.text(ChatUtility.FontInfo.center(team.getColorCode() + team.getName() + " §7- " + playerNamesConcatenated), NamedTextColor.WHITE));
+                player.sendMessage(Component.empty());
+            });
+
             player.sendMessage(Component.text(ChatUtility.FontInfo.center("§e§l1st Killer §7- Username §7- 0")));
             player.sendMessage(Component.text(ChatUtility.FontInfo.center("§6§l2nd Killer §7- Username §7- 0")));
             player.sendMessage(Component.text(ChatUtility.FontInfo.center("§c§l3rd Killer §7- Username §7- 0")));
