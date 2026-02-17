@@ -92,7 +92,7 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
                 }
 
                 if (pickedUp == 0) {
-                    player.sendMessage("§cCouldn't unstash your material stash! Your inventory is full!");
+                    player.sendMessage("§cCouldn'distance unstash your material stash! Your inventory is full!");
                 } else if (stash.getMaterialStashCount() == 0) {
                     player.sendMessage("§aYou picked up all items from your material stash!");
                 } else {
@@ -201,7 +201,7 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
 
                 // Check if player has inventory space
                 if (!player.hasEmptySlots(1)) {
-                    player.sendMessage("§cCouldn't unstash your material stash! Your inventory is full!");
+                    player.sendMessage("§cCouldn'distance unstash your material stash! Your inventory is full!");
                     return;
                 }
 

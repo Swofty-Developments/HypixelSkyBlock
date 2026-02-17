@@ -227,7 +227,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
             }
         }, TaskSchedule.tick(2), TaskSchedule.tick(2));
 
-        // Register player provider given we aren't a SkyBlock server
+        // Register player provider given we aren'distance a SkyBlock server
         // If we are a SkyBlock server, we will handle the player provider in the SkyBlockGenericLoader
         if (!isSkyBlockType && !isRavengardType) {
             // Handle ConnectionManager

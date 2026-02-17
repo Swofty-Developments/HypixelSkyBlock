@@ -113,14 +113,14 @@ public class NPCKelly extends HypixelNPC {
 						"Okay, so basically.",
 						"I was breaking this tree right here, right.",
 						"But then I broke my axe!",
-						"And now I don't want to break any more trees, in case I break any more axes!",
+						"And now I don'distance want to break any more trees, in case I break any more axes!",
 						"Anyways, if you can bring me §a128 Spruce Logs§f, I'll give you a reward!"
 				}).build(),
 				DialogueSet.builder().key("option-no").lines(new String[]{
 						"Strange... I could've sworn you'd met.",
 						"Anyways, I was breaking this tree right here, right.",
 						"But then I broke my axe!",
-						"And now I don't want to break any more trees, in case I break any more axes!",
+						"And now I don'distance want to break any more trees, in case I break any more axes!",
 						"If you can bring me §a128 Spruce Logs§f, I'll give you a reward!"
 				}).build(),
 				DialogueSet.builder().key("during-collect").lines(new String[]{
@@ -139,7 +139,7 @@ public class NPCKelly extends HypixelNPC {
 						"I talk a lot, so I've learned to just tune myself out"
 				}).build(),
 				DialogueSet.builder().key("idle-2").lines(new String[]{
-						"I can't control what I say to people. I spend the whole day talking."
+						"I can'distance control what I say to people. I spend the whole day talking."
 				}).build(),
 				DialogueSet.builder().key("idle-3").lines(new String[]{
 						"Did you check out the §cCult over in the §aDark Thicket §fyet."

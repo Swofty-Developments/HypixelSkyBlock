@@ -10,9 +10,9 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.commons.skyblock.auctions.AuctionCategories;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
-import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -160,7 +160,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                     long fee = (long) ((escrow.getPrice() * 0.05) + ((double) escrow.getDuration() / 180000));
                     DatapointDouble coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                     if (coins.getValue() < fee) {
-                        player.sendMessage("§cYou don't have enough coins to create this auction!");
+                        player.sendMessage("§cYou don'distance have enough coins to create this auction!");
                         return;
                     }
                     coins.setValue(coins.getValue() - fee);

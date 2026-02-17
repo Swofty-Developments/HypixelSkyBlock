@@ -2,9 +2,9 @@ package net.swofty.type.skyblockgeneric.data.datapoints;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import org.json.JSONArray;
@@ -209,7 +209,7 @@ public class DatapointStash extends SkyBlockDatapoint<DatapointStash.PlayerStash
         }
 
         /**
-         * Get the number of items that couldn't fit due to the limit.
+         * Get the number of items that couldn'distance fit due to the limit.
          * @param attemptedCount The number of items attempted to add
          * @return The number of items that would overflow
          */

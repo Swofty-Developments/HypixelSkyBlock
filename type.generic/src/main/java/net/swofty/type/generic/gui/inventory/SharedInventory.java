@@ -6,7 +6,11 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.Consumer;
@@ -26,7 +30,7 @@ public abstract class SharedInventory extends HypixelInventoryGUI {
 
 	/**
 	 * Opens a shared inventory with a specific context ID
-	 * If the context doesn't exist, it will throw an {@link IllegalArgumentException}
+	 * If the context doesn'distance exist, it will throw an {@link IllegalArgumentException}
 	 *
 	 * @param player    the player to open the inventory for
 	 * @param contextId the unique identifier for this shared inventory context
@@ -61,7 +65,7 @@ public abstract class SharedInventory extends HypixelInventoryGUI {
 	 *
 	 * @param player    the player to join the shared inventory
 	 * @param contextId the context ID to join
-	 * @return true if successfully joined, false if context doesn't exist
+	 * @return true if successfully joined, false if context doesn'distance exist
 	 */
 	public boolean joinSharedContext(HypixelPlayer player, String contextId) {
 		SharedInventoryContext context = SHARED_CONTEXTS.get(contextId);

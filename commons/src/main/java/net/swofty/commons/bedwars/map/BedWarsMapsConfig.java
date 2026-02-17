@@ -3,6 +3,7 @@ package net.swofty.commons.bedwars.map;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.bedwars.BedWarsGameType;
+import net.swofty.commons.mc.HypixelPosition;
 
 import java.util.List;
 import java.util.Map;
@@ -33,8 +34,8 @@ public class BedWarsMapsConfig {
             @Getter
             @Setter
             public static class MapLocations {
-                private Position waiting;
-                private Position spectator;
+                private HypixelPosition waiting;
+                private HypixelPosition spectator;
             }
 
             @Getter
@@ -51,19 +52,13 @@ public class BedWarsMapsConfig {
             public static class GlobalGenerator {
                 private int amount;
                 private int max;
-                private List<Position> locations;
+                private List<HypixelPosition> locations;
             }
 
         }
     }
 
-    public record Position(double x, double y, double z) {
-    }
-
-    public record PitchYawPosition(double x, double y, double z, float pitch, float yaw) {
-    }
-
-    public record TwoBlockPosition(Position feet, Position head) {
+    public record TwoBlockPosition(HypixelPosition feet, HypixelPosition head) {
     }
 
     public record MinMax(double min, double max) {
@@ -143,11 +138,11 @@ public class BedWarsMapsConfig {
     @Setter
     public static class MapTeam {
         private Shops shop;
-        private PitchYawPosition spawn;
+        private HypixelPosition spawn;
         private TwoBlockPosition bed;
-        private Position generator;
+        private HypixelPosition generator;
 
-        public record Shops(PitchYawPosition item, PitchYawPosition team) {
+        public record Shops(HypixelPosition item, HypixelPosition team) {
         }
     }
 

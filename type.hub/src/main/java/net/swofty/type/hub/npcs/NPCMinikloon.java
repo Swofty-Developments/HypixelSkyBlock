@@ -1,13 +1,12 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCMinikloon extends HypixelNPC {
 
@@ -51,7 +50,7 @@ public class NPCMinikloon extends HypixelNPC {
         return Stream.of(
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "Don't forget to report bugs on discord.gg/atlasmc!",
+                                "Don'distance forget to report bugs on discord.gg/atlasmc!",
                                 "If you find an exploit, you can even report it directly to a staff member!"
                         }).build()
         ).toArray(DialogueSet[]::new);

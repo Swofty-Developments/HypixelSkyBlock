@@ -28,7 +28,7 @@ public class FormatNameCommand extends HypixelCommand {
             UUID uuid = HypixelDataHandler.getPotentialUUIDFromName(playerName);
 
             if (uuid == null) {
-                player.sendMessage("Nope doesn't exist");
+                player.sendMessage("Nope doesn'distance exist");
                 return;
             }
 

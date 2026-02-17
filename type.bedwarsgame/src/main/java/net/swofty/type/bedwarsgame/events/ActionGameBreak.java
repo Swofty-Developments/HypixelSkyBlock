@@ -81,7 +81,7 @@ public class ActionGameBreak implements HypixelEventClass {
                 // This is team X's bed
                 if (teamKey.equals(playerTeamKey)) {
                     player.getAchievementHandler().completeAchievement("bedwars.you_cant_do_that");
-                    player.sendMessage("§cYou can't destroy your own bed!");
+                    player.sendMessage("§cYou can'distance destroy your own bed!");
                     event.setCancelled(true);
                     return;
                 }

@@ -7,10 +7,10 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.skyblock.auctions.AuctionCategories;
-import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
+import net.swofty.commons.skyblock.auctions.AuctionCategories;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.proxyapi.ProxyService;
@@ -75,7 +75,7 @@ public class AuctionViewThirdNormal implements AuctionView {
             DatapointUUIDList activeBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
             DatapointUUIDList inactiveBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_BIDS, DatapointUUIDList.class);
 
-            // If UUID is in here, it hasn't been claimed yet, if it's not, it has been claimed,
+            // If UUID is in here, it hasn'distance been claimed yet, if it's not, it has been claimed,
             // goes for both coins and items
             // Check that they won the auction in the first place
 
@@ -261,14 +261,14 @@ public class AuctionViewThirdNormal implements AuctionView {
                     AuctionItem.Bid highestBid = item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).orElse(null);
 
                     if (highestBid != null && highestBid.value() >= gui.bidAmount) {
-                        player.sendMessage("§cCouldn't place your bid, the highest bid has changed!");
+                        player.sendMessage("§cCouldn'distance place your bid, the highest bid has changed!");
                         player.sendMessage("§8Returning escrowed coins...");
                         coins.setValue(coins.getValue() + gui.bidAmount);
                         return;
                     }
 
                     if (item.getEndTime() + 5000 < System.currentTimeMillis()) {
-                        player.sendMessage("§cCouldn't place your bid, the auction has ended!");
+                        player.sendMessage("§cCouldn'distance place your bid, the auction has ended!");
                         player.sendMessage("§8Returning escrowed coins...");
                         coins.setValue(coins.getValue() + gui.bidAmount);
                         return;

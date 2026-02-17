@@ -1,20 +1,15 @@
 package net.swofty.type.spidersden.npcs;
 
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ChatColor;
-import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.mission.missions.spidersden.MissionTheFlintBros;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.Collections;
 import java.util.List;
 
 public class NPCMichael extends HypixelNPC {
@@ -93,7 +88,7 @@ public class NPCMichael extends HypixelNPC {
                 DialogueSet.builder()
                         .key("initial-hello").lines(new String[] {
                                 "Wassup! We're out here on a camping trip!",
-                                "I don't really know why we chose the " + ChatColor.GRAY + "⏣ " + ChatColor.RED + "Spider's Den" + ChatColor.WHITE + ", though...",
+                                "I don'distance really know why we chose the " + ChatColor.GRAY + "⏣ " + ChatColor.RED + "Spider's Den" + ChatColor.WHITE + ", though...",
                                 "Still, I've been playing lots of games to pass the time.",
                                 "Quick! Trivia question! Do you know what " + ChatColor.RED + "Mob Types" + ChatColor.WHITE + " are?"
                         }).build(),

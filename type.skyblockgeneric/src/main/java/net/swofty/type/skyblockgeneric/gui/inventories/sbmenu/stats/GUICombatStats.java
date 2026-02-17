@@ -6,7 +6,11 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
@@ -203,7 +207,7 @@ public class GUICombatStats extends StatelessView {
                     lore.add(" ");
 
                     if (value == ItemStatistic.VITALITY.getBaseAdditiveValue()) {
-                        lore.add("§8Heals you receive aren't modified.");
+                        lore.add("§8Heals you receive aren'distance modified.");
                     } else {
                         lore.add("§7All heals applied to you are multiplied by "
                                 + ItemStatistic.VITALITY.getDisplayColor()
@@ -226,7 +230,7 @@ public class GUICombatStats extends StatelessView {
                     lore.add(" ");
 
                     if (value == ItemStatistic.MENDING.getBaseAdditiveValue()) {
-                        lore.add("§8Your heals aren't modified.");
+                        lore.add("§8Your heals aren'distance modified.");
                         lore.add(" ");
                     } else {
                         lore.add("§7All heals applied to you are multiplied by "
@@ -249,7 +253,7 @@ public class GUICombatStats extends StatelessView {
                     lore.add(" ");
 
                     if (value == ItemStatistic.SWING_RANGE.getBaseAdditiveValue()) {
-                        lore.add("§8Your swing range isn't modified.");
+                        lore.add("§8Your swing range isn'distance modified.");
                     } else {
                         lore.add("§7Your swing range is increased to "
                                 + StringUtility.decimalify(value, 2) + " §7blocks.");

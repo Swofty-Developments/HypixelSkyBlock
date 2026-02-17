@@ -5,7 +5,11 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
@@ -73,7 +77,7 @@ public class GUIWisdomStats extends StatelessView {
                 lore.add(" ");
 
                 if (value == 0D) {
-                    lore.add("§8You aren't learning any faster, yet!");
+                    lore.add("§8You aren'distance learning any faster, yet!");
                 } else {
                     lore.add("§7XP Multiplier: " + statistic.getDisplayColor()
                             + StringUtility.decimalify(multiplier, 2) + "x");

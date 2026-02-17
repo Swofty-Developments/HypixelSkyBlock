@@ -316,7 +316,7 @@ public class DatapointSkywarsKitStats extends Datapoint<DatapointSkywarsKitStats
         }
 
         /**
-         * Get statistics for a specific kit (creates if doesn't exist)
+         * Get statistics for a specific kit (creates if doesn'distance exist)
          */
         public KitStatistics getStatsForKit(String kitId) {
             return kitStats.computeIfAbsent(kitId, k -> new KitStatistics());

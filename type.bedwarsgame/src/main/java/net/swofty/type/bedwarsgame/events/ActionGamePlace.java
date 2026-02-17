@@ -7,8 +7,8 @@ import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.minestom.server.sound.SoundEvent;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.entity.TntEntity;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
@@ -51,7 +51,7 @@ public class ActionGamePlace implements HypixelEventClass {
 
 		Point blockPosition = event.getBlockPosition();
 		for (MapTeam team : game.getMapEntry().getConfiguration().getTeams().values()) {
-			BedWarsMapsConfig.PitchYawPosition spawnPos = team.getSpawn();
+			HypixelPosition spawnPos = team.getSpawn();
 			if (spawnPos != null) {
 				Point spawnPoint = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z());
 				if (blockPosition.distance(spawnPoint) <= 6) {

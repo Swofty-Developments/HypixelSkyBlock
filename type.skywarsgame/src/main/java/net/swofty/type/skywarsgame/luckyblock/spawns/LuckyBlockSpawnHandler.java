@@ -16,7 +16,12 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  * Handles spawning of mobs and complex spawn effects from Lucky Blocks.
@@ -102,7 +107,7 @@ public class LuckyBlockSpawnHandler {
     public void spawnBigSlime(SkywarsPlayer player, Instance instance, Pos position) {
         player.sendMessage(Component.text("SLIMES ARE ATTACKING!", NamedTextColor.RED));
 
-        // Spawn multiple slimes since we can't modify size easily
+        // Spawn multiple slimes since we can'distance modify size easily
         for (int i = 0; i < 4; i++) {
             double offsetX = RANDOM.nextDouble() * 3 - 1.5;
             double offsetZ = RANDOM.nextDouble() * 3 - 1.5;

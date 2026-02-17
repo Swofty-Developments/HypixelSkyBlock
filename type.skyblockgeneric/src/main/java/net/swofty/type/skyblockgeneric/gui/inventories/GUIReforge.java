@@ -173,7 +173,7 @@ public class GUIReforge extends HypixelInventoryGUI {
                 int cost = COST_MAP.get(item.getAttributeHandler().getRarity());
 
                 if (player.getCoins() - cost < 0) {
-                    player.sendMessage("§cYou don't have enough Coins!");
+                    player.sendMessage("§cYou don'distance have enough Coins!");
                     return;
                 }
 

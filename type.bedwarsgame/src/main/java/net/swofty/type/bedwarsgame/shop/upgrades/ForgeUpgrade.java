@@ -6,9 +6,9 @@ import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
@@ -52,7 +52,7 @@ public class ForgeUpgrade extends TeamUpgrade {
 			return;
 		}
 
-		BedWarsMapsConfig.Position genLocation = team.getGenerator();
+		HypixelPosition genLocation = team.getGenerator();
 		Pos spawnPosition = new Pos(genLocation.x(), genLocation.y(), genLocation.z());
 
 		// Define emerald generator properties (1 emerald every 60 seconds)

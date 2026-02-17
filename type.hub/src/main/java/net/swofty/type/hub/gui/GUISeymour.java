@@ -9,12 +9,12 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.List;
 
@@ -72,10 +72,10 @@ public class GUISeymour extends HypixelInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 double coins = player.getCoins();
                 if (coins < cheapTuxedoPrice) {
-                    player.sendMessage("§cYou don't have enough coins!");
+                    player.sendMessage("§cYou don'distance have enough coins!");
                     return;
                 }
                 cheapTuxedoSet.forEach(player::addAndUpdateItem);
@@ -85,7 +85,7 @@ public class GUISeymour extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack.Builder builder = ItemStackCreator.getStack("§5Cheap Tuxedo", Material.LEATHER_CHESTPLATE, 1,
                         "",
                         "§8Complete suit",
@@ -99,7 +99,7 @@ public class GUISeymour extends HypixelInventoryGUI {
                         "",
                         "§7Cost: §6" + StringUtility.commaify(cheapTuxedoPrice) + " Coins",
                         "",
-                        player.getCoins() >= cheapTuxedoPrice ? "§eClick to purchase" : "§cCan't afford this!"
+                        player.getCoins() >= cheapTuxedoPrice ? "§eClick to purchase" : "§cCan'distance afford this!"
                 );
 
                 builder.set(DataComponents.DYED_COLOR, new Color(56, 56, 56));
@@ -110,10 +110,10 @@ public class GUISeymour extends HypixelInventoryGUI {
         set(new GUIClickableItem(13) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 double coins = player.getCoins();
                 if (coins < fancyTuxedoPrice) {
-                    player.sendMessage("§cYou don't have enough coins!");
+                    player.sendMessage("§cYou don'distance have enough coins!");
                     return;
                 }
                 fancyTuxedoSet.forEach(player::addAndUpdateItem);
@@ -123,7 +123,7 @@ public class GUISeymour extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack.Builder builder = ItemStackCreator.getStack("§6Fancy Tuxedo", Material.LEATHER_CHESTPLATE, 1,
                         "",
                         "§8Complete suit",
@@ -137,7 +137,7 @@ public class GUISeymour extends HypixelInventoryGUI {
                         "",
                         "§7Cost: §6" + StringUtility.commaify(fancyTuxedoPrice) + " Coins",
                         "",
-                        player.getCoins() >= fancyTuxedoPrice ? "§eClick to purchase" : "§cCan't afford this!"
+                        player.getCoins() >= fancyTuxedoPrice ? "§eClick to purchase" : "§cCan'distance afford this!"
                 );
 
                 builder.set(DataComponents.DYED_COLOR, new Color(51, 42, 42));
@@ -149,10 +149,10 @@ public class GUISeymour extends HypixelInventoryGUI {
         set(new GUIClickableItem(15) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 double coins = player.getCoins();
                 if (coins < elegantTuxedoPrice) {
-                    player.sendMessage("§cYou don't have enough coins!");
+                    player.sendMessage("§cYou don'distance have enough coins!");
                     return;
                 }
                 elegantTuxedoSet.forEach(player::addAndUpdateItem);
@@ -162,7 +162,7 @@ public class GUISeymour extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack.Builder builder = ItemStackCreator.getStack("§6Elegant Tuxedo", Material.LEATHER_CHESTPLATE, 1,
                         "",
                         "§8Complete suit",
@@ -176,7 +176,7 @@ public class GUISeymour extends HypixelInventoryGUI {
                         "",
                         "§7Cost: §6" + StringUtility.commaify(elegantTuxedoPrice) + " Coins",
                         "",
-                        player.getCoins() >= elegantTuxedoPrice ? "§eClick to purchase" : "§cCan't afford this!"
+                        player.getCoins() >= elegantTuxedoPrice ? "§eClick to purchase" : "§cCan'distance afford this!"
                 );
 
                 builder.set(DataComponents.DYED_COLOR, new Color(25, 25, 25));

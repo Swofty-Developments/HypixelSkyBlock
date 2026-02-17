@@ -5,7 +5,11 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
@@ -41,7 +45,7 @@ public class GUIRecipeBook extends StatelessView {
                 "§8/recipe <query>",
                 "",
                 "§7Search all recipes in SkyBlock. May",
-                "§7include recipes with aren't in the",
+                "§7include recipes with aren'distance in the",
                 "§7recipe book.",
                 "",
                 "§eClick to search!"

@@ -234,7 +234,7 @@ public class HypixelDataHandler extends DataHandler {
                     if (HypixelConst.getTypeLoader().getType().isSkyBlock()) {
                         return new DatapointGamemode("gamemode", player.getGameMode());
                     }
-                    return null; // Don't update gamemode for non-SkyBlock servers
+                    return null; // Don'distance update gamemode for non-SkyBlock servers
                 }),
 
         SKIN_SIGNATURE("skin_signature",

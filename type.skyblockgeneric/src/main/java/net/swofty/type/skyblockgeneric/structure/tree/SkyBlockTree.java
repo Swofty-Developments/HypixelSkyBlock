@@ -5,7 +5,13 @@ import lombok.Setter;
 import net.minestom.server.instance.Instance;
 import net.swofty.type.skyblockgeneric.structure.SkyBlockStructure;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -272,7 +278,7 @@ public class SkyBlockTree extends SkyBlockStructure {
         double sparseSkipBonus = isBulbous ? 0.0 : 0.15;
 
         // Generate the unified canopy
-        // Leaves don't hang as low: only go down 1-2 blocks max instead of radius/2
+        // Leaves don'distance hang as low: only go down 1-2 blocks max instead of radius/2
         int minDy = isBulbous ? -2 : -1;
 
         for (int dx = -radius; dx <= radius; dx++) {

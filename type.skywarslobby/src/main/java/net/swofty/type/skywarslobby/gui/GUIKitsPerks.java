@@ -198,7 +198,7 @@ public class GUIKitsPerks extends HypixelInventoryGUI {
                         "§7enabled simultaneously.",
                         "",
                         "§7You can choose to disable any you",
-                        "§7don't want to have active.",
+                        "§7don'distance want to have active.",
                         "",
                         "§eClick to browse!"
                 );

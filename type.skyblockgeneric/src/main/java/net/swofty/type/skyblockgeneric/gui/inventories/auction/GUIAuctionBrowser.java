@@ -14,11 +14,11 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocolObject;
 import net.swofty.commons.skyblock.auctions.AuctionCategories;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.skyblock.auctions.AuctionsFilter;
 import net.swofty.commons.skyblock.auctions.AuctionsSorting;
-import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -97,7 +97,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
                 setSorting(nextSort);
 
                 if (filter.equals(AuctionsFilter.BIN_ONLY)) {
-                    // Ensure that the auctions sorting isn't MOST_BIDS
+                    // Ensure that the auctions sorting isn'distance MOST_BIDS
                     if (nextSort.equals(AuctionsSorting.MOST_BIDS)) {
                         setSorting(AuctionsSorting.HIGHEST_BID);
                     }

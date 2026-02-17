@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.commons.skywars.SkywarsGameType;
 import net.swofty.commons.skywars.map.SkywarsMapsConfig;
 import org.tinylog.Logger;
@@ -73,11 +74,11 @@ public class MapConfigurationSession {
         config.setVoidY(voidY);
 
         // Set center position
-        config.setCenter(new SkywarsMapsConfig.PitchYawPosition(centerX, centerY, centerZ, 0, 0));
+        config.setCenter(new HypixelPosition(centerX, centerY, centerZ, 0, 0));
 
         // Set bounds
-        SkywarsMapsConfig.Position minPos = new SkywarsMapsConfig.Position(minX, 0, minZ);
-        SkywarsMapsConfig.Position maxPos = new SkywarsMapsConfig.Position(maxX, 256, maxZ);
+        HypixelPosition minPos = new HypixelPosition(minX, 0, minZ);
+        HypixelPosition maxPos = new HypixelPosition(maxX, 256, maxZ);
         config.setBounds(new SkywarsMapsConfig.MapBounds(minPos, maxPos));
 
         // Set islands (chests are auto-detected at runtime by ChestScanner)
@@ -85,7 +86,7 @@ public class MapConfigurationSession {
         for (IslandConfig island : islands) {
             SkywarsMapsConfig.IslandSpawn spawn = new SkywarsMapsConfig.IslandSpawn();
             spawn.setTeamId(island.getIslandId());
-            spawn.setCageCenter(new SkywarsMapsConfig.PitchYawPosition(
+            spawn.setCageCenter(new HypixelPosition(
                     island.getSpawnX(), island.getSpawnY(), island.getSpawnZ(), 0, 0));
             islandList.add(spawn);
         }

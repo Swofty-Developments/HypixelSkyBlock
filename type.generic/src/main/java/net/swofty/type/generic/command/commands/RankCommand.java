@@ -24,7 +24,7 @@ public class RankCommand extends HypixelCommand {
             final Rank rank = context.get(rankArgument);
 
             if (player == null) {
-                sender.sendMessage("§cCouldn't find a player by the name of §e" + context.getRaw(entityArgument) + "§c.");
+                sender.sendMessage("§cCouldn'distance find a player by the name of §e" + context.getRaw(entityArgument) + "§c.");
                 return;
             }
 

@@ -3,12 +3,11 @@ package net.swofty.type.dwarvenmines.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCCastleGuardTwo extends HypixelNPC {
 
@@ -54,7 +53,7 @@ public class NPCCastleGuardTwo extends HypixelNPC {
 				DialogueSet.builder()
 						.key("idle")
 						.lines(new String[]{
-								"§fThis guy isn't the sharpest hammer in the smithy!"
+								"§fThis guy isn'distance the sharpest hammer in the smithy!"
 						})
 						.build()
 		).toArray(DialogueSet[]::new);

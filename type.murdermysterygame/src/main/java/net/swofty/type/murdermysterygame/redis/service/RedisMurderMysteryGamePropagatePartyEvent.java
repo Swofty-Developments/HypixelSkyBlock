@@ -23,7 +23,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class RedisMurderMysteryGamePropagatePartyEvent implements ServiceToClient {
@@ -355,8 +359,8 @@ public class RedisMurderMysteryGamePropagatePartyEvent implements ServiceToClien
             UnderstandableProxyServer warperServer = warperProxy.getServer().join();
 
             if (!warperProxy.isOnline().join()) {
-                player.sendMessage("§cCouldn't find a proxy for " + warperName + "!");
-                throw new RuntimeException("Couldn't find a proxy for " + warperName);
+                player.sendMessage("§cCouldn'distance find a proxy for " + warperName + "!");
+                throw new RuntimeException("Couldn'distance find a proxy for " + warperName);
             }
 
             if (warperServer.uuid().equals(HypixelConst.getServerUUID())) {

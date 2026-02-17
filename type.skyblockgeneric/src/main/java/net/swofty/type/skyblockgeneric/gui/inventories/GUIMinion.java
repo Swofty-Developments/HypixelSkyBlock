@@ -19,7 +19,6 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIMinionRecipes;
 import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
@@ -64,7 +63,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                 if (net.swofty.type.generic.gui.inventory.HypixelInventoryGUI.GUI_MAP.containsKey(member.getUuid())) {
                     if (net.swofty.type.generic.gui.inventory.HypixelInventoryGUI.GUI_MAP.get(member.getUuid()) instanceof GUIMinion) {
                         e.player().closeInventory();
-                        e.player().sendMessage("§cYou can't open this inventory while a coop member has it open!");
+                        e.player().sendMessage("§cYou can'distance open this inventory while a coop member has it open!");
                     }
                 }
             });
@@ -259,7 +258,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!p.getInventory().getCursorItem().isAir()) {
-                        player.sendMessage("§cYou can't put items in this inventory!");
+                        player.sendMessage("§cYou can'distance put items in this inventory!");
 
                         e.setCancelled(true);
                         return;

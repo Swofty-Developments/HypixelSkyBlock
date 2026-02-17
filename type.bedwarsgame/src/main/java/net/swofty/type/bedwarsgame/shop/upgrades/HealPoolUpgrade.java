@@ -6,9 +6,9 @@ import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
@@ -42,7 +42,7 @@ public class HealPoolUpgrade extends TeamUpgrade {
 			return;
 		}
 
-		BedWarsMapsConfig.PitchYawPosition spawnPos = team.getSpawn();
+		HypixelPosition spawnPos = team.getSpawn();
 		Pos teamSpawn = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw());
 
 		MinecraftServer.getSchedulerManager().buildTask(() -> {

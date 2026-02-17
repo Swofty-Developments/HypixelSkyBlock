@@ -11,9 +11,9 @@ import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.gui.GUIEnderChest;
 import net.swofty.type.bedwarsgame.gui.GUITeamChest;
@@ -109,7 +109,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
         for (java.util.Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
             TeamKey teamKey = entry.getKey();
             MapTeam team = entry.getValue();
-            BedWarsMapsConfig.PitchYawPosition teamSpawn = team.getSpawn();
+            HypixelPosition teamSpawn = team.getSpawn();
             if (teamSpawn == null) continue;
 
             double distance = Math.sqrt(
@@ -210,7 +210,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
             for (Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
                 TeamKey teamKey = entry.getKey();
                 MapTeam team = entry.getValue();
-                BedWarsMapsConfig.PitchYawPosition teamSpawn = team.getSpawn();
+                HypixelPosition teamSpawn = team.getSpawn();
                 if (teamSpawn == null) continue;
 
                 double distance = Math.sqrt(

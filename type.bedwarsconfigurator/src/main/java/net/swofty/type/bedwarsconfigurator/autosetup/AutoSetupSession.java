@@ -9,10 +9,9 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig.GeneratorSpeed;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapEntry;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MinMax;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.PitchYawPosition;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.Position;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TwoBlockPosition;
+import net.swofty.commons.mc.HypixelPosition;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,16 +34,16 @@ public class AutoSetupSession {
     private final List<BedWarsGameType> gameTypes = new ArrayList<>();
     private Double minX, maxX, minY, maxY, minZ, maxZ;
     private final Map<TeamKey, TeamConfig> teams = new EnumMap<>(TeamKey.class);
-    private final List<Position> diamondGenerators = new ArrayList<>();
-    private final List<Position> emeraldGenerators = new ArrayList<>();
+    private final List<HypixelPosition> diamondGenerators = new ArrayList<>();
+    private final List<HypixelPosition> emeraldGenerators = new ArrayList<>();
     private GeneratorSpeed generatorSpeed = GeneratorSpeed.SLOW;
     private int diamondAmount = 1;
     private int diamondMax = 4;
     private int emeraldAmount = 1;
     private int emeraldMax = 2;
 
-    private PitchYawPosition waitingLocation;
-    private PitchYawPosition spectatorLocation;
+    private HypixelPosition waitingLocation;
+    private HypixelPosition spectatorLocation;
 
     public AutoSetupSession(UUID playerUuid, Instance instance) {
         this.playerUuid = playerUuid;
@@ -112,6 +111,10 @@ public class AutoSetupSession {
         spectatorLocation = null;
     }
 
+    public void removeTeam(TeamKey key) {
+        teams.remove(key);
+    }
+
     public void loadFromMapEntry(BedWarsMapsConfig.MapEntry entry) {
         clear();
 
@@ -176,12 +179,12 @@ public class AutoSetupSession {
         if (config.getLocations() != null) {
             var locations = config.getLocations();
             if (locations.getWaiting() != null) {
-                Position w = locations.getWaiting();
-                waitingLocation = new PitchYawPosition(w.x(), w.y(), w.z(), 0, 0);
+                HypixelPosition w = locations.getWaiting();
+                waitingLocation = new HypixelPosition(w.x(), w.y(), w.z(), 0, 0);
             }
             if (locations.getSpectator() != null) {
-                Position s = locations.getSpectator();
-                spectatorLocation = new PitchYawPosition(s.x(), s.y(), s.z(), 0, 0);
+                HypixelPosition s = locations.getSpectator();
+                spectatorLocation = new HypixelPosition(s.x(), s.y(), s.z(), 0, 0);
             }
         }
 
@@ -252,10 +255,10 @@ public class AutoSetupSession {
         // Locations
         MapEntry.MapConfiguration.MapLocations locations = new MapEntry.MapConfiguration.MapLocations();
         if (waitingLocation != null) {
-            locations.setWaiting(new Position(waitingLocation.x(), waitingLocation.y(), waitingLocation.z()));
+            locations.setWaiting(new HypixelPosition(waitingLocation.x(), waitingLocation.y(), waitingLocation.z()));
         }
         if (spectatorLocation != null) {
-            locations.setSpectator(new Position(spectatorLocation.x(), spectatorLocation.y(), spectatorLocation.z()));
+            locations.setSpectator(new HypixelPosition(spectatorLocation.x(), spectatorLocation.y(), spectatorLocation.z()));
         }
         config.setLocations(locations);
 
@@ -286,12 +289,12 @@ public class AutoSetupSession {
     @Getter
     @Setter
     public static class TeamConfig {
-        private PitchYawPosition spawn;
-        private Position bedFeet;
-        private Position bedHead;
-        private Position generator;
-        private PitchYawPosition itemShop;
-        private PitchYawPosition teamShop;
+        private HypixelPosition spawn;
+        private HypixelPosition bedFeet;
+        private HypixelPosition bedHead;
+        private HypixelPosition generator;
+        private HypixelPosition itemShop;
+        private HypixelPosition teamShop;
     }
 }
 

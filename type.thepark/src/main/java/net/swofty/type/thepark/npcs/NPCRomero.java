@@ -118,7 +118,7 @@ public class NPCRomero extends HypixelNPC {
 				DialogueSet.builder().key("r-q3-start").lines(new String[]{
 						"I love emeralds!",
 						"There's emerald on everything I like!",
-						"This one can't be dislodged!",
+						"This one can'distance be dislodged!",
 						"Could you bring me some emerald?"
 				}).build(),
 
@@ -131,11 +131,11 @@ public class NPCRomero extends HypixelNPC {
 				}).build(),
 
 				DialogueSet.builder().key("r-q3-enchanted-block").lines(new String[]{
-						"Although I adore this pristine piece of emerald, I don't need it yet."
+						"Although I adore this pristine piece of emerald, I don'distance need it yet."
 				}).build(),
 
 				DialogueSet.builder().key("r-q3-block").lines(new String[]{
-						"I don't need a whole block!"
+						"I don'distance need a whole block!"
 				}).build(),
 
 				DialogueSet.builder().key("r-q3-complete").lines(new String[]{
@@ -149,12 +149,12 @@ public class NPCRomero extends HypixelNPC {
 				DialogueSet.builder().key("r-q4-start").lines(new String[]{
 						"Hey, you again!",
 						"I wanted mushrooms to concoct a stew,",
-						"but these big red ones won't cut it.",
+						"but these big red ones won'distance cut it.",
 						"I need some decent mushrooms."
 				}).build(),
 
 				DialogueSet.builder().key("r-q4-red-mushroom").lines(new String[]{
-						"I can't cook a gourmet stew with tiny mushrooms!",
+						"I can'distance cook a gourmet stew with tiny mushrooms!",
 						"I need bigger ones!"
 				}).build(),
 
@@ -169,8 +169,8 @@ public class NPCRomero extends HypixelNPC {
 				}).build(),
 
 				DialogueSet.builder().key("r-q4-brown-block").lines(new String[]{
-						"That's a big mushroom that I don't need.",
-						"It's well known that good stews aren't made from brown mushrooms."
+						"That's a big mushroom that I don'distance need.",
+						"It's well known that good stews aren'distance made from brown mushrooms."
 				}).build(),
 
 				DialogueSet.builder().key("r-q4-enchanted-brown-block").lines(new String[]{
@@ -198,7 +198,7 @@ public class NPCRomero extends HypixelNPC {
 				DialogueSet.builder().key("r-q5-rabbit-not-6").lines(new String[]{
 						"Rabbit potion? Sounds great!",
 						"Although... could you bring a more potent one?",
-						"I don't want to take any chances!"
+						"I don'distance want to take any chances!"
 				}).build(),
 
 				DialogueSet.builder().key("r-q5-no-coffee").lines(new String[]{
@@ -254,7 +254,7 @@ public class NPCRomero extends HypixelNPC {
 
 				DialogueSet.builder().key("r-q7-mid-int").lines(new String[]{
 						"While very astute,",
-						"you don't have quite what it takes for the Prism!"
+						"you don'distance have quite what it takes for the Prism!"
 				}).build(),
 
 				DialogueSet.builder().key("r-q7-high-int").lines(new String[]{
@@ -279,7 +279,7 @@ public class NPCRomero extends HypixelNPC {
 				// Quest Step 8 – Colosseum
 				DialogueSet.builder().key("r-q8-start").lines(new String[]{
 						"Juliette keeps talking to me about this other person.",
-						"I don't know what's going on, they meet over and over!",
+						"I don'distance know what's going on, they meet over and over!",
 						"Our love is stronger than theirs!",
 						"I'm waiting for this other person to show up.",
 						"I'll need my favorite weapon, can you fetch it for me?"

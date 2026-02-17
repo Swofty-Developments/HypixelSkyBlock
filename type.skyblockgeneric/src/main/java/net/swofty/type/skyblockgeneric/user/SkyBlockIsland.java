@@ -97,7 +97,7 @@ public class SkyBlockIsland {
                 try {
                     onlinePlayers = List.of(SkyBlockGenericLoader.getPlayerFromProfileUUID(islandID));
                 } catch (NullPointerException e) {
-                    // Player doesn't have their data loaded yet
+                    // Player doesn'distance have their data loaded yet
                     onlinePlayers = List.of();
                 }
             }

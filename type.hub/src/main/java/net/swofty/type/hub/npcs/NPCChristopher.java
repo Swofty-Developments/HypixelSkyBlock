@@ -3,11 +3,10 @@ package net.swofty.type.hub.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCChristopher extends HypixelNPC {
 
@@ -20,7 +19,7 @@ public class NPCChristopher extends HypixelNPC {
 
             @Override
             public String signature(HypixelPlayer player) {
-                return "vUuq+bODcSfPWjYkc3LH2mXTH6jXV8yTuL+tRl6VsJbp5Nw/etyYOHQC6qKb5FE/Mu3RUgYf4o7SRIMYdxc1XWj+edeCc80OV8wNA4rVwcYJFY9x+NggmDB5l8C0Cs+4syiS0jOirpA41GeqhhAT3b/6UiPsiYZz1z4f9Ege6MWu8AydCVFHnL1GNCkV+OjyfAtyAUEaMqW7AkxdlNjW45yk6ORGPKJ9rE66pDg8W63ggN/X5+HwGX29IwCafe5DWdz1XldP/Rh4N+/HhG/AawJTiKS2wsz6wD2qG2mat0FyUWtF7CKP6O1rjvkqgNus1ckI07PvqNCp58gSP03t1hoOuuyUReEmM6gTlwmOoV+t+32ugP1F8ERDYq3Oefvz4s5JfcgNO+xEFZaLyfcb9Ror34BU+5zZpRtBOS7EhJZBGMHBbBsEzRPt2axqW7XKee+bJhAYDP3ozTQAZy7EfCwQQRNQEcVOPzaGDtNyR0S76XQpSoUomJFpBs47u+zm3DDnhPX5egyHy4cbAfwaEUHABD56hYzjY3p/Xv4hEZuUx8V+bCx6YnJkZWqNUAKB1gzisdXk5woriWe5abwQEw5+Yo7+xi/gAKPecbSDT/WzKtfF+VqCKmM6C3nmNv3KEpAmBsze/grHrrU7e+DPaM/Txfy4jgE6zPtYmpPcMRg=";
+                return "vUuq+bODcSfPWjYkc3LH2mXTH6jXV8yTuL+tRl6VsJbp5Nw/etyYOHQC6qKb5FE/Mu3RUgYf4o7SRIMYdxc1XWj+edeCc80OV8wNA4rVwcYJFY9x+NggmDB5l8C0Cs+4syiS0jOirpA41GeqhhAT3b/6UiPsiYZz1z4f9Ege6MWu8AydCVFHnL1GNCkV+OjyfAtyAUEaMqW7AkxdlNjW45yk6ORGPKJ9rE66pDg8W63ggN/X5+HwGX29IwCafe5DWdz1XldP/Rh4N+/HhG/AawJTiKS2wsz6wD2qG2mat0FyUWtF7CKP6O1rjvkqgNus1ckI07PvqNCp58gSP03t1hoOuuyUReEmM6gTlwmOoV+distance+32ugP1F8ERDYq3Oefvz4s5JfcgNO+xEFZaLyfcb9Ror34BU+5zZpRtBOS7EhJZBGMHBbBsEzRPt2axqW7XKee+bJhAYDP3ozTQAZy7EfCwQQRNQEcVOPzaGDtNyR0S76XQpSoUomJFpBs47u+zm3DDnhPX5egyHy4cbAfwaEUHABD56hYzjY3p/Xv4hEZuUx8V+bCx6YnJkZWqNUAKB1gzisdXk5woriWe5abwQEw5+Yo7+xi/gAKPecbSDT/WzKtfF+VqCKmM6C3nmNv3KEpAmBsze/grHrrU7e+DPaM/Txfy4jgE6zPtYmpPcMRg=";
             }
 
             @Override

@@ -4,13 +4,12 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIYourMuseum;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCCurator extends HypixelNPC {
 
@@ -71,7 +70,7 @@ public class NPCCurator extends HypixelNPC {
                                 "Would you like to help me fill the Museum? My assistant, §6Madame Goldsworth§f, will even reward you!",
                                 "I'll show you the list of items that I'm currently looking for.",
                                 "You can donate any item from the list, and you'll still be able to use those items whenever you want!",
-                                "However - once you donate an item, it will be §dCo-op Soulbound §fto you, meaning that you won't be able to trade, auction or sell the item anymore.",
+                                "However - once you donate an item, it will be §dCo-op Soulbound §fto you, meaning that you won'distance be able to trade, auction or sell the item anymore.",
                                 "Choose carefully!"
                         }).build()
         ).toArray(DialogueSet[]::new);

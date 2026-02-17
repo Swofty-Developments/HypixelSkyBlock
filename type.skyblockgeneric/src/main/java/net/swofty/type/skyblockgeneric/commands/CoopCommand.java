@@ -8,10 +8,10 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -34,7 +34,7 @@ public class CoopCommand extends HypixelCommand {
 
             if (checkIfAlreadyExisting(player)) return;
 
-            player.sendMessage("§cYou don't have an outgoing co-op invite!");
+            player.sendMessage("§cYou don'distance have an outgoing co-op invite!");
             player.sendMessage("§eUse §b/coop <player 1> <player 2>... §eto create one!");
             player.sendMessage("§eUse §a/coopadd <player> §eto add a player to your current co-op!");
         });
@@ -48,7 +48,7 @@ public class CoopCommand extends HypixelCommand {
             player.sendMessage("§7Validating invite...");
 
             if (Arrays.stream(players).anyMatch(player1 -> player1.equalsIgnoreCase(player.getUsername()))) {
-                player.sendMessage("§cYou can't invite yourself to a co-op!");
+                player.sendMessage("§cYou can'distance invite yourself to a co-op!");
                 return;
             }
 
@@ -82,13 +82,13 @@ public class CoopCommand extends HypixelCommand {
 
             // Check if player put same player name in twice
             if (Arrays.stream(players).distinct().count() != Arrays.stream(players).count()) {
-                player.sendMessage("§b[Co-op] §cYou can't invite the same player twice!");
+                player.sendMessage("§b[Co-op] §cYou can'distance invite the same player twice!");
                 return;
             }
 
             // Check if there are more than 4 names
             if (players.length > 4) {
-                player.sendMessage("§b[Co-op] §cYou can't invite more than 4 players!");
+                player.sendMessage("§b[Co-op] §cYou can'distance invite more than 4 players!");
                 return;
             }
 

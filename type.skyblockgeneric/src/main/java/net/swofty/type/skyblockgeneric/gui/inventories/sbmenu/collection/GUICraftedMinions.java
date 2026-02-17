@@ -6,7 +6,10 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.PaginatedView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -19,7 +22,11 @@ import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
 import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GUICraftedMinions extends PaginatedView<SkyBlockItem, GUICraftedMinions.MinionsState> {
@@ -92,7 +99,7 @@ public class GUICraftedMinions extends PaginatedView<SkyBlockItem, GUICraftedMin
                     minionRegistry.asSkyBlockMinion().getTiers().getFirst().texture(), 1, lore);
         } else {
             return ItemStackCreator.getStack("§c" + StringUtility.toNormalCase(minionRegistry.name()) + " Minion",
-                    Material.GRAY_DYE, 1, "§7You haven't crafted this minion.");
+                    Material.GRAY_DYE, 1, "§7You haven'distance crafted this minion.");
         }
     }
 

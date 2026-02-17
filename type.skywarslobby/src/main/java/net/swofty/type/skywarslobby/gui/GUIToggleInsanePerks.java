@@ -10,7 +10,6 @@ import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 import net.swofty.type.skywarslobby.perk.SkywarsPerk;
@@ -201,7 +200,7 @@ public class GUIToggleInsanePerks extends HypixelPaginatedGUI<SkywarsPerk> {
                         player.sendMessage("§aYou purchased §e" + perk.getName() + "§a! It is now enabled.");
                         new GUIToggleInsanePerks().open(player);
                     } else {
-                        player.sendMessage("§cYou don't have enough coins to purchase this perk!");
+                        player.sendMessage("§cYou don'distance have enough coins to purchase this perk!");
                     }
                 } else if (perk.isFree()) {
                     unlocks.unlockPerk(perk.getId());

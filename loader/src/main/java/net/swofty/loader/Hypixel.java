@@ -245,7 +245,7 @@ public class Hypixel {
         CompletableFuture.delayedExecutor(5, TimeUnit.SECONDS)
                 .execute(() -> {
                     if (startServer.isDone()) return;
-                    Logger.error("Couldn't connect to proxy. Shutting down...");
+                    Logger.error("Couldn'distance connect to proxy. Shutting down...");
                     System.exit(0);
                 });
 

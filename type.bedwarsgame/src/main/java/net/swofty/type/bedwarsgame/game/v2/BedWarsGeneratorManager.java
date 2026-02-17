@@ -17,6 +17,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.entity.BlockDisplayEntity;
@@ -53,7 +54,7 @@ public class BedWarsGeneratorManager {
         }
 
         activeTeams.forEach((teamKey, team) -> {
-            BedWarsMapsConfig.Position genLocation = team.getGenerator();
+            HypixelPosition genLocation = team.getGenerator();
             if (genLocation == null) return;
 
             Pos spawnPosition = new Pos(genLocation.x(), genLocation.y(), genLocation.z());
@@ -178,7 +179,7 @@ public class BedWarsGeneratorManager {
             return;
         }
 
-        List<BedWarsMapsConfig.Position> locations = config.getLocations();
+        List<HypixelPosition> locations = config.getLocations();
         if (locations == null || locations.isEmpty()) return;
 
         int delaySeconds = generatorType.equals(BedWarsMapsConfig.GlobalGeneratorKey.DIAMOND)
@@ -191,12 +192,12 @@ public class BedWarsGeneratorManager {
 
     }
 
-    private void setupGlobalGeneratorDisplays(BedWarsMapsConfig.GlobalGeneratorKey generatorType, List<BedWarsMapsConfig.Position> locations, int delaySeconds) {
+    private void setupGlobalGeneratorDisplays(BedWarsMapsConfig.GlobalGeneratorKey generatorType, List<HypixelPosition> locations, int delaySeconds) {
         boolean isDiamond = generatorType.equals(BedWarsMapsConfig.GlobalGeneratorKey.DIAMOND);
         NamedTextColor color = isDiamond ? NamedTextColor.AQUA : NamedTextColor.DARK_GREEN;
         String capitalizedType = StringUtility.capitalize(generatorType.name());
 
-        for (BedWarsMapsConfig.Position location : locations) {
+        for (HypixelPosition location : locations) {
             double locY = location.y() + 5.0;
 
             TextDisplayEntity tierDisplay = new TextDisplayEntity(
@@ -252,7 +253,7 @@ public class BedWarsGeneratorManager {
             if (displays == null || displays.isEmpty()) continue;
 
             for (int i = 0; i < limits.locations.size(); i++) {
-                BedWarsMapsConfig.Position location = limits.locations.get(i);
+                HypixelPosition location = limits.locations.get(i);
                 GeneratorDisplay display = i < displays.size() ? displays.get(i) : null;
 
                 if (display == null) continue;
@@ -422,6 +423,6 @@ public class BedWarsGeneratorManager {
     }
 
     private record GeneratorLimits(Material material, int amount, int maxAmount,
-                                   List<BedWarsMapsConfig.Position> locations) {
+                                   List<HypixelPosition> locations) {
     }
 }

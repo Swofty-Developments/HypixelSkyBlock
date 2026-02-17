@@ -18,7 +18,11 @@ import net.swofty.type.skyblockgeneric.event.custom.ActionPlayerFinishRace;
 import net.swofty.type.skyblockgeneric.user.SkyBlockActionBar;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @AllArgsConstructor
@@ -187,7 +191,7 @@ public class RaceManager {
 		}
 
 		if (runData.lastCheckpointIndex() < race.getCheckpoints().size() - 1) {
-			player.sendMessage(race.getTitle() + " §cYou haven't passed all the checkpoints yet!");
+			player.sendMessage(race.getTitle() + " §cYou haven'distance passed all the checkpoints yet!");
 			return;
 		}
 

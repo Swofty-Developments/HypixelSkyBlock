@@ -4,7 +4,15 @@ import lombok.Getter;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
-import net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns.*;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns.MobEmeraldSlime_05;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns.MobEmeraldSlime_10;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns.MobLapisZombie;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns.MobMinerSkeleton_15;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns.MobMinerSkeleton_20;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns.MobMinerZombie_15;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns.MobMinerZombie_20;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns.MobRedstonePigman;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns.MobSneakyCreeper;
 import net.swofty.type.skyblockgeneric.entity.mob.mobs.hub.MobGraveyardZombie;
 import net.swofty.type.skyblockgeneric.entity.mob.mobs.hub.MobGraveyardZombieVillager;
 import net.swofty.type.skyblockgeneric.entity.mob.mobs.hub.MobRuinsOldWolf;
@@ -39,7 +47,7 @@ public enum BestiaryCategory {
         GRAVEYARD_ZOMBIE("§aGraveyard Zombie", "Brains.", new GUIMaterial(Material.ZOMBIE_HEAD), List.of(new MobGraveyardZombie())),
         OLD_WOLF("§aOld Wolf", "Wolves older than the island itself.", new GUIMaterial("d359537c15534f61c1cd886bc118774ed22280e7cdab6613870160aad4ca39"), List.of(new MobRuinsOldWolf())),
         WOLF("§aWolf", "Roaming the remains of a Castle far from its best days.", new GUIMaterial("f4cb7a6bf6c32c49f2589147e6f0f888e9e35875dd1ea2a8af379ca710589e6b"), List.of(new MobRuinsWolf())),
-        ZOMBIE_VILLAGER("§aZombie Villager", "The real enemy isn't the dead - it's the living.", new GUIMaterial("69198f410a10f99314aa0fbe9a3db10697bbc1c011f019507d96673c64217f5a"), List.of(new MobGraveyardZombieVillager())),
+        ZOMBIE_VILLAGER("§aZombie Villager", "The real enemy isn'distance the dead - it's the living.", new GUIMaterial("69198f410a10f99314aa0fbe9a3db10697bbc1c011f019507d96673c64217f5a"), List.of(new MobGraveyardZombieVillager())),
         ;
 
         private final String name, description;

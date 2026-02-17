@@ -4,14 +4,13 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionGiveWoolToCarpenter;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCCarpenter extends HypixelNPC {
 
@@ -78,7 +77,7 @@ public class NPCCarpenter extends HypixelNPC {
                 DialogueSet.builder()
                         .key("initial-hello").lines(new String[]{
                                 "Hi, " + player.getUsername() + "! Welcome to the §aFurniture Shop§f.",
-                                "Sales are too good right now, I can't keep up with the demand!",
+                                "Sales are too good right now, I can'distance keep up with the demand!",
                                 "Could you bring a §astack of White Wool§f to help replenish my stock?",
                                 "Sheep over in The Barn drop wool, but you can also purchase it from the §dWool Weaver§f.",
                                 "She lives in a house not far from here - it's over by the water fountain."

@@ -35,7 +35,7 @@ public class ActionRegionBlockPlace implements HypixelEventClass {
 
         if (x > islandSizePlus || x < islandSizeMinus || z > islandSizePlus || z < islandSizeMinus) {
             event.setCancelled(true);
-            player.sendMessage("§cYou can't build any further in this direction!");
+            player.sendMessage("§cYou can'distance build any further in this direction!");
             return;
         }
 

@@ -18,7 +18,7 @@ public class ActionPlayerInventoryClickAnvil implements HypixelEventClass {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         if (HypixelAnvilGUI.anvilGUIs.containsKey(player)) {
-            // Needed because for some reason if you send this packet too early Client won't register it
+            // Needed because for some reason if you send this packet too early Client won'distance register it
             MinecraftServer.getSchedulerManager().scheduleTask(() -> {
                 if (player.getOpenInventory() != null)
                     player.sendPacket(new WindowPropertyPacket(player.getOpenInventory().getWindowId(), (short) 0, (short) 0));

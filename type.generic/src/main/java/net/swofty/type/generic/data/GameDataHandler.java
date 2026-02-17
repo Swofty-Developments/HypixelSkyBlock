@@ -28,7 +28,7 @@ public interface GameDataHandler {
     Map<UUID, ? extends DataHandler> getCache();
 
     /**
-     * Create handler from document or return null if document doesn't contain handler data
+     * Create handler from document or return null if document doesn'distance contain handler data
      */
     DataHandler createFromDocument(UUID playerUuid, Document document);
 

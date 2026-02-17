@@ -16,16 +16,21 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.PlayerShopData;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
-import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.datapoints.*;
+import net.swofty.type.generic.data.datapoints.DatapointBoolean;
+import net.swofty.type.generic.data.datapoints.DatapointDouble;
+import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
+import net.swofty.type.generic.data.datapoints.DatapointRank;
+import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
@@ -61,7 +66,11 @@ import net.swofty.type.skyblockgeneric.utility.DeathMessageCreator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -592,7 +601,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
                 // Stash is full - item is lost
                 int overflowCount = 1;
                 sendMessage("§cUh oh! §e" + overflowCount + " §citem" + (overflowCount > 1 ? "s" : "") +
-                        " couldn't be stashed because you hit the item stash limit!");
+                        " couldn'distance be stashed because you hit the item stash limit!");
                 return;
             }
 
@@ -610,7 +619,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
      * Send a clickable notification that an item was added to the stash.
      */
     private void sendStashNotification(String stashType) {
-        Component message = Component.text("§eOne or more items didn't fit in your inventory and were added to your " +
+        Component message = Component.text("§eOne or more items didn'distance fit in your inventory and were added to your " +
                 stashType + " stash! ")
                 .append(Component.text("§6Click here §eto pick them up!")
                         .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/pickupstash " + stashType)));

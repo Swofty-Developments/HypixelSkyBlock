@@ -10,6 +10,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.bedwarsgame.gui.GUIItemShop;
 import net.swofty.type.bedwarsgame.gui.GUITeamShop;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -75,8 +76,8 @@ public class BedWarsWorldManager {
         }
 
         InstanceContainer instance = game.getInstance();
-        BedWarsMapsConfig.Position feetPos = bedPos.feet();
-        BedWarsMapsConfig.Position headPos = bedPos.head();
+        HypixelPosition feetPos = bedPos.feet();
+        HypixelPosition headPos = bedPos.head();
 
         try {
             Material bedMaterial = getBedMaterial(teamKey);
@@ -113,7 +114,7 @@ public class BedWarsWorldManager {
         };
     }
 
-    private String calculateBedFacing(BedWarsMapsConfig.Position feet, BedWarsMapsConfig.Position head) {
+    private String calculateBedFacing(HypixelPosition feet, HypixelPosition head) {
         double dx = head.x() - feet.x();
         double dz = head.z() - feet.z();
 
@@ -128,8 +129,8 @@ public class BedWarsWorldManager {
         activeTeams.forEach((teamKey, team) -> {
             if (team.getShop() == null) return;
 
-            BedWarsMapsConfig.PitchYawPosition itemShopPos = team.getShop().item();
-            BedWarsMapsConfig.PitchYawPosition teamShopPos = team.getShop().team();
+            HypixelPosition itemShopPos = team.getShop().item();
+            HypixelPosition teamShopPos = team.getShop().team();
 
             if (itemShopPos != null) {
                 Pos npcPos = new Pos(itemShopPos.x(), itemShopPos.y(), itemShopPos.z(),

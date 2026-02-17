@@ -4,13 +4,12 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class VillagerVex extends HypixelNPC {
     public VillagerVex() {
@@ -65,7 +64,7 @@ public class VillagerVex extends HypixelNPC {
                         .key("quest-hello").lines(new String[]{
                                 "You can shift click any player to trade with them!",
                                 "Once both players are ready to trade, click on §aAccept trade§f!",
-                                "Make sure you don't give away all your belongings!"
+                                "Make sure you don'distance give away all your belongings!"
                         }).build(),
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{

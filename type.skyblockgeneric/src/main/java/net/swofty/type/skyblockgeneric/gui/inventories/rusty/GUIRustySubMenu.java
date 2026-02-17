@@ -196,7 +196,7 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
                     skyblockPlayer.removeCoins(price);
                     skyblockPlayer.sendMessage("§aYou bought " + item.getDisplayName() + " §afor §6" + price + " Coins§a!");
                 } else {
-                    skyblockPlayer.sendMessage("§4You don't have enough coins!");
+                    skyblockPlayer.sendMessage("§4You don'distance have enough coins!");
                 }
             }
 

@@ -173,10 +173,10 @@ public class GUIKat extends HypixelInventoryGUI {
                     lore.add("§eClick to hire Kat!");
                 } else if (player.getCoins() < coins) {
                     lore.add("");
-                    lore.add("§cYou don't have enough Coins!");
+                    lore.add("§cYou don'distance have enough Coins!");
                 } else {
                     lore.add("");
-                    lore.add("§cYou don't have the required items!");
+                    lore.add("§cYou don'distance have the required items!");
                 }
                 return ItemStackCreator.getStack("§aHire Kat", material, 1, lore);
             }

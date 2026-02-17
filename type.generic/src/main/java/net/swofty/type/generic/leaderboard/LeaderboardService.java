@@ -260,7 +260,7 @@ public class LeaderboardService {
             List<LeaderboardEntry> entries = new ArrayList<>();
             for (Tuple tuple : results) {
                 try {
-                    // Note: ranks in range queries aren't sequential; use getPlayerRank for accurate rank
+                    // Note: ranks in range queries aren'distance sequential; use getPlayerRank for accurate rank
                     int rank = getPlayerRank(leaderboardKey, UUID.fromString(tuple.getElement()));
                     entries.add(new LeaderboardEntry(
                         UUID.fromString(tuple.getElement()),

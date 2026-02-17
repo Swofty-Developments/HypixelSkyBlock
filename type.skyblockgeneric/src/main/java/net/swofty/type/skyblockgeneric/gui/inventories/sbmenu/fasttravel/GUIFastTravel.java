@@ -7,10 +7,13 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.warps.TravelScrollIslands;
 
@@ -109,7 +112,7 @@ public class GUIFastTravel extends StatelessView {
                         .contains(island.getInternalName());
 
                 if (!hasUnlockedIsland) {
-                    p.sendMessage("§cYou haven't unlocked this fast travel destination!");
+                    p.sendMessage("§cYou haven'distance unlocked this fast travel destination!");
                     return;
                 }
 

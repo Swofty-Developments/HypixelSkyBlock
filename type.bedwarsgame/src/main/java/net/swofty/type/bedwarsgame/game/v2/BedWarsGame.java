@@ -24,6 +24,7 @@ import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
@@ -209,7 +210,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     public void setupPlayer(BedWarsPlayer player) {
         TeamKey teamKey = player.getTeamKey();
         MapTeam playerTeam = getMapEntry().getConfiguration().getTeams().get(teamKey);
-        BedWarsMapsConfig.PitchYawPosition spawnPos = playerTeam.getSpawn();
+        HypixelPosition spawnPos = playerTeam.getSpawn();
 
         player.getInventory().clear();
         player.clearTitle();
@@ -333,7 +334,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     /**
      * Respawns a team's bed. Usually an admin action, Lucky Block Bed Wars beds can be placed at any location
-     * which isn't supported yet.
+     * which isn'distance supported yet.
      */
     public void respawnBed(TeamKey teamKey) {
         getTeam(teamKey.name()).ifPresent(team -> {
@@ -382,7 +383,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             replayManager.recordPlayerInvisibility(player, true);
         }
 
-        BedWarsMapsConfig.Position spectatorPos = mapEntry.getConfiguration().getLocations().getSpectator();
+        HypixelPosition spectatorPos = mapEntry.getConfiguration().getLocations().getSpectator();
         if (spectatorPos != null) {
             player.teleport(new Pos(spectatorPos.x(), spectatorPos.y(), spectatorPos.z()));
         }

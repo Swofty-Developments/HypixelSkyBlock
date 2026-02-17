@@ -4,11 +4,10 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopWoolWeaverVibrant;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCWoolWeaver extends HypixelNPC {
 
@@ -63,7 +62,7 @@ public class NPCWoolWeaver extends HypixelNPC {
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "If wool shrinks when you wash it...",
-                                "...why don't sheep get smaller when it rains?"
+                                "...why don'distance sheep get smaller when it rains?"
                         }).build(),
         };
     }

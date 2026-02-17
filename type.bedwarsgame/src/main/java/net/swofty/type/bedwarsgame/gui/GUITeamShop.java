@@ -120,7 +120,7 @@ public class GUITeamShop extends StatelessView {
             return;
         }
         if (!upgrade.hasEnoughCurrency(player, nextTier)) {
-            player.sendMessage("§cYou don't have enough " + nextTier.getCurrency().getName() + "!");
+            player.sendMessage("§cYou don'distance have enough " + nextTier.getCurrency().getName() + "!");
             playClickSound(player);
             return;
         }
@@ -166,7 +166,7 @@ public class GUITeamShop extends StatelessView {
         } else if (canAfford) {
             lore.add(noItalic(Component.text("Click to purchase!").color(NamedTextColor.YELLOW)));
         } else {
-            lore.add(noItalic(Component.text("You don't have enough " + nextTier.getCurrency().getName() + "!").color(NamedTextColor.RED)));
+            lore.add(noItalic(Component.text("You don'distance have enough " + nextTier.getCurrency().getName() + "!").color(NamedTextColor.RED)));
         }
 
         return upgrade.getDisplayItem().builder()
@@ -185,7 +185,7 @@ public class GUITeamShop extends StatelessView {
 
         int trapSize = game.getTeamTraps(teamKey).size();
         if (trapSize >= 3) {
-            player.sendMessage("§cYou can't have more traps than 3");
+            player.sendMessage("§cYou can'distance have more traps than 3");
             playClickSound(player);
         }
 
@@ -196,7 +196,7 @@ public class GUITeamShop extends StatelessView {
             .mapToInt(ItemStack::amount)
             .sum();
         if (owned < price) {
-            player.sendMessage("§cYou don't have enough " + trap.getCurrency().getName() + "!");
+            player.sendMessage("§cYou don'distance have enough " + trap.getCurrency().getName() + "!");
             playClickSound(player);
             return;
         }
@@ -244,7 +244,7 @@ public class GUITeamShop extends StatelessView {
                 Component.empty().decoration(ITALIC, TextDecoration.State.FALSE),
                 canAfford
                     ? noItalic(Component.text("Click to purchase!").color(NamedTextColor.YELLOW))
-                    : noItalic(Component.text("You don't have enough " + trap.getCurrency().getName() + "!").color(NamedTextColor.RED))
+                    : noItalic(Component.text("You don'distance have enough " + trap.getCurrency().getName() + "!").color(NamedTextColor.RED))
             ));
     }
 

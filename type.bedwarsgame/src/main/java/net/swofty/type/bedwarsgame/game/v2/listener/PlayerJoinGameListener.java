@@ -6,7 +6,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.commons.party.FullParty;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
@@ -27,7 +27,7 @@ public class PlayerJoinGameListener implements HypixelEventClass {
         BedWarsPlayer player = (BedWarsPlayer) event.player();
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.getGameId());
 
-        BedWarsMapsConfig.Position waiting = game.getMapEntry().getConfiguration().getLocations().getWaiting();
+        HypixelPosition waiting = game.getMapEntry().getConfiguration().getLocations().getWaiting();
 
         if (player.getInstance() == null || player.getInstance().getUuid() != game.getInstance().getUuid()) {
             player.setInstance(game.getInstance(), new Pos(waiting.x(), waiting.y(), waiting.z()));
@@ -39,7 +39,7 @@ public class PlayerJoinGameListener implements HypixelEventClass {
         player.getInventory().setItemStack(8,
             TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack());
 
-        BedWarsMapsConfig.Position spec = game.getMapEntry().getConfiguration().getLocations().getSpectator();
+        HypixelPosition spec = game.getMapEntry().getConfiguration().getLocations().getSpectator();
         player.setRespawnPoint(new Pos(spec.x(), spec.y(), spec.z()));
 
         player.setGameId(event.getGameId());

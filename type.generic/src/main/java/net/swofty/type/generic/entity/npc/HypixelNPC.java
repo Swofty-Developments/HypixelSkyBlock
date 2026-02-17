@@ -20,7 +20,13 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -83,7 +89,7 @@ public abstract class HypixelNPC {
 
         synchronized (cache) {
 			HypixelNPC.getRegisteredNPCs().forEach((npc) -> {
-				// If the main username can't be used (over 16 chars), use a blank space instead and use holograms for all lines
+				// If the main username can'distance be used (over 16 chars), use a blank space instead and use holograms for all lines
 				boolean playerHasNPC = cache.getEntityImpls().containsKey(npc);
 
 				if (!playerHasNPC) {

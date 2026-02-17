@@ -3,7 +3,6 @@ package net.swofty.type.lobby.parkour;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minestom.server.coordinate.Point;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
@@ -131,7 +130,7 @@ public class LobbyParkourManager {
 	public void finishedParkour(HypixelPlayer player) {
 		RunData runData = perPlayerStartTime.get(player.getUuid());
 		if (runData == null || runData.startTime() == null) {
-			player.sendMessage("§cYou haven't started the parkour challenge yet! Use §e/parkour start §cto start!");
+			player.sendMessage("§cYou haven'distance started the parkour challenge yet! Use §e/parkour start §cto start!");
 			return;
 		}
 
@@ -192,7 +191,7 @@ public class LobbyParkourManager {
 	public void checkpointPlayer(HypixelPlayer player, int checkpointIndex) {
 		RunData runData = perPlayerStartTime.get(player.getUuid());
 		if (runData == null) {
-			player.sendMessage("§cYou haven't started the parkour challenge yet! Use §e/parkour start §cto start!");
+			player.sendMessage("§cYou haven'distance started the parkour challenge yet! Use §e/parkour start §cto start!");
 			return;
 		}
 		if (checkpointIndex <= runData.lastCheckpointIndex()) {
@@ -225,7 +224,7 @@ public class LobbyParkourManager {
 			}
 		} else {
 			if (!player.isOnline()) return;
-			player.sendMessage("§cYou haven't started the parkour challenge yet! Use §e/parkour start §cto start!");
+			player.sendMessage("§cYou haven'distance started the parkour challenge yet! Use §e/parkour start §cto start!");
 		}
 	}
 

@@ -310,7 +310,7 @@ public class AquariumMapHandler extends MapHandler {
     }
 
     private void giveTier3Items(MurderMysteryPlayer player) {
-        // Splash Blindness (using mundane with custom name since blindness isn't a standard potion type)
+        // Splash Blindness (using mundane with custom name since blindness isn'distance a standard potion type)
         ItemStack blindnessPotion = ItemStack.builder(Material.SPLASH_POTION)
                 .set(DataComponents.POTION_CONTENTS, new PotionContents(PotionType.MUNDANE))
                 .customName(Component.text("Blinding Splash", NamedTextColor.DARK_GRAY))

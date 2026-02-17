@@ -79,7 +79,7 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
                 }
 
                 if (pickedUp == 0) {
-                    player.sendMessage("§cCouldn't unstash your item stash! Your inventory is full!");
+                    player.sendMessage("§cCouldn'distance unstash your item stash! Your inventory is full!");
                 } else if (stash.getItemStashCount() == 0) {
                     player.sendMessage("§eYou picked up §aall §eitems from your item stash!");
                 } else {
@@ -135,7 +135,7 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
 
                 // Check if player has inventory space
                 if (!player.hasEmptySlots(1)) {
-                    player.sendMessage("§cCouldn't unstash your item stash! Your inventory is full!");
+                    player.sendMessage("§cCouldn'distance unstash your item stash! Your inventory is full!");
                     return;
                 }
 

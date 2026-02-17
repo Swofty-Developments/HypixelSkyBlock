@@ -62,7 +62,7 @@ public class GUISoulWell extends StatelessView {
                     if (handler == null) return;
                     long currentSouls = handler.get(SkywarsDataHandler.Data.SOULS, DatapointLong.class).getValue();
                     if (currentSouls < rollCost) {
-                        c.player().sendMessage("§cYou don't have enough souls!");
+                        c.player().sendMessage("§cYou don'distance have enough souls!");
                         return;
                     }
 
@@ -191,7 +191,7 @@ public class GUISoulWell extends StatelessView {
                         lore.add("");
 
                         if (canAfford) lore.add("§eClick to purchase!");
-                        else lore.add("§cYou can't afford this!");
+                        else lore.add("§cYou can'distance afford this!");
 
                         String displayName;
                         if (currentLevel == 0) {

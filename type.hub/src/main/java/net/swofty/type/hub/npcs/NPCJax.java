@@ -4,15 +4,13 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIJax;
-import net.swofty.type.hub.gui.GUIShopFishMerchant;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointArcheryPractice;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCJax extends HypixelNPC {
 
@@ -81,7 +79,7 @@ public class NPCJax extends HypixelNPC {
                         .key("completed_level_one").lines(new String[]{
                                 "Wow, you can really shoot a bow!",
                                 "Well, a deal's a deal! Come to me any time and I'll forge you whatever arrows you need for adventures.",
-                                "I only have one condition... These are powerful arrows, they can't fall into the wrong hands so keep them in your quiver and don't share them with anyone."
+                                "I only have one condition... These are powerful arrows, they can'distance fall into the wrong hands so keep them in your quiver and don'distance share them with anyone."
                         }).build()
         ).toArray(DialogueSet[]::new);
     }

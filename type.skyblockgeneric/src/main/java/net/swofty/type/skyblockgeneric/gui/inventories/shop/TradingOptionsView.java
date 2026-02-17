@@ -81,7 +81,7 @@ public final class TradingOptionsView implements View<TradingOptionsView.State> 
 
         ShopPrice totalPrice = state.stackPrice.multiply(amount);
         if (!totalPrice.canAfford(player)) {
-            player.sendMessage("§cYou don't have enough " + state.stackPrice.getNamePlural() + "!");
+            player.sendMessage("§cYou don'distance have enough " + state.stackPrice.getNamePlural() + "!");
             return;
         }
 

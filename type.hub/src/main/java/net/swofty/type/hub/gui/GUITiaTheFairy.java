@@ -6,19 +6,19 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointFairySouls;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulExchangeLevels;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUITiaTheFairy extends HypixelInventoryGUI {
     public GUITiaTheFairy() {
@@ -39,7 +39,7 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!canExchange) {
-                    player.sendMessage("§cYou don't have enough Fairy Souls!");
+                    player.sendMessage("§cYou don'distance have enough Fairy Souls!");
                     return;
                 }
 
@@ -81,7 +81,7 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
 
                 lore.addAll(List.of(
                         "",
-                        (canExchange ? "§eClick to exchange!" : "§cYou don't have enough Fairy Souls!"  )
+                        (canExchange ? "§eClick to exchange!" : "§cYou don'distance have enough Fairy Souls!"  )
                 ));
 
                 return ItemStackCreator.getStackHead("§aExchange Fairy Souls",

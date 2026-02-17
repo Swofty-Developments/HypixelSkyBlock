@@ -10,7 +10,11 @@ import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.actions.data.ActionPlayerDataSave;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
@@ -40,7 +44,7 @@ public class GUIProfileCreate extends StatelessView {
                         "",
                         "§7Profile name: §e" + profileName,
                         "",
-                        "§7You won't lose any progress.",
+                        "§7You won'distance lose any progress.",
                         "§7You can switch between profiles.",
                         "",
                         "§bYou are creating a SOLO profile!",

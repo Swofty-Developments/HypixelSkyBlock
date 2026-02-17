@@ -5,12 +5,10 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.hub.gui.GUIShopAdventurer;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCAlchemist extends HypixelNPC {
     public NPCAlchemist() {
@@ -66,7 +64,7 @@ public class NPCAlchemist extends HypixelNPC {
                         .key("hello").lines(new String[]{
                                 "There is a darkness in you, " + player.getUsername() + ".",
                                 "I've seen it in my flames, you are destined for great things.",
-                                "For now, you shouldn't let it get to your head."
+                                "For now, you shouldn'distance let it get to your head."
                         }).build(),
         };
     }

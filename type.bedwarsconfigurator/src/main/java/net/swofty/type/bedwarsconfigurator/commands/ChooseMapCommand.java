@@ -21,90 +21,104 @@ import java.util.HashSet;
 import java.util.Set;
 
 @CommandParameters(aliases = "choose choosemap selectmap select",
-		description = "Choose a BedWars map to configure",
-		usage = "/choosemap <map>",
-		permission = Rank.STAFF,
-		allowsConsole = false)
+    description = "Choose a BedWars map to configure",
+    usage = "/choosemap <map>",
+    permission = Rank.STAFF,
+    allowsConsole = false)
 public class ChooseMapCommand extends HypixelCommand {
 
-	@Override
-	public void registerUsage(MinestomCommand command) {
-		var mapArg = ArgumentType.String("map");
-		mapArg.setSuggestionCallback((sender, context, suggestion) -> {
-			Set<String> addedIds = new HashSet<>();
-			for (BedWarsMapsConfig.MapEntry entry : TypeBedWarsConfiguratorLoader.getMapsConfig().getMaps()) {
-				suggestion.addEntry(new SuggestionEntry(entry.getId(), Component.text(entry.getName() + " §7(configured)")));
-				addedIds.add(entry.getId().toLowerCase());
-			}
+    @Override
+    public void registerUsage(MinestomCommand command) {
+        var mapArg = ArgumentType.String("map");
+        mapArg.setSuggestionCallback((sender, context, suggestion) -> {
+            Set<String> addedIds = new HashSet<>();
+            Set<SuggestionEntry> suggestions = new HashSet<>();
 
-			File bedwarsDir = new File("./configuration/bedwars/");
-			if (bedwarsDir.exists() && bedwarsDir.isDirectory()) {
-				File[] polarFiles = bedwarsDir.listFiles((dir, name) -> name.endsWith(".polar"));
-				if (polarFiles != null) {
-					for (File polarFile : polarFiles) {
-						String mapId = polarFile.getName().replace(".polar", "");
-						if (!addedIds.contains(mapId.toLowerCase())) {
-							suggestion.addEntry(new SuggestionEntry(mapId, Component.text(mapId + " §e(unconfigured)")));
-						}
-					}
-				}
-			}
-		});
+            for (BedWarsMapsConfig.MapEntry entry : TypeBedWarsConfiguratorLoader.getMapsConfig().getMaps()) {
+                suggestions.add(new SuggestionEntry(entry.getId(), Component.text(entry.getName() + " §7(configured)")));
+                addedIds.add(entry.getId().toLowerCase());
+            }
 
-		command.addSyntax((sender, context) -> {
-			if (!(sender instanceof Player player)) {
-				sender.sendMessage(Component.text("§cThis command can only be executed by a player."));
-				return;
-			}
-			String mapId = context.get("map");
+            File bedwarsDir = new File("./configuration/bedwars/");
+            if (bedwarsDir.exists() && bedwarsDir.isDirectory()) {
+                File[] polarFiles = bedwarsDir.listFiles((_, name) -> name.endsWith(".polar"));
+                if (polarFiles != null) {
+                    for (File polarFile : polarFiles) {
+                        String mapId = polarFile.getName().replace(".polar", "");
+                        if (!addedIds.contains(mapId.toLowerCase())) {
+                            suggestions.add(new SuggestionEntry(mapId, Component.text(mapId + " §e(unconfigured)")));
+                        }
+                    }
+                }
+            }
 
-			BedWarsMapsConfig.MapEntry selectedMap = null;
-			for (BedWarsMapsConfig.MapEntry entry : TypeBedWarsConfiguratorLoader.getMapsConfig().getMaps()) {
-				if (entry.getId().equalsIgnoreCase(mapId)) {
-					selectedMap = entry;
-					break;
-				}
-			}
+            String input = context.getInput();
+            String currentInput = input.substring(input.lastIndexOf(" ") + 1).trim().toLowerCase();
 
-			File polarFile = new File("./configuration/bedwars/" + mapId + ".polar");
-			if (!polarFile.exists()) {
-				sender.sendMessage(Component.text("§cNo polar file found for map: " + mapId));
-				return;
-			}
+            if (currentInput.isEmpty()) {
+                suggestions.forEach(suggestion::addEntry);
+                return;
+            }
 
-			InstanceContainer mapInstance = MinecraftServer.getInstanceManager().createInstanceContainer();
-			try {
-				mapInstance.setChunkLoader(new PolarLoader(polarFile.toPath()));
-			} catch (IOException e) {
-				sender.sendMessage(Component.text("§cFailed to load map: " + mapId));
-				return;
-			}
+            suggestions.stream()
+                .filter(entry -> entry.getEntry().toLowerCase().startsWith(currentInput))
+                .forEach(suggestion::addEntry);
+        });
 
-			AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), mapInstance);
-			session.setMapId(mapId);
+        command.addSyntax((sender, context) -> {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(Component.text("§cThis command can only be executed by a player."));
+                return;
+            }
+            String mapId = context.get("map");
 
-			if (selectedMap != null) {
-				session.setMapName(selectedMap.getName());
+            BedWarsMapsConfig.MapEntry selectedMap = null;
+            for (BedWarsMapsConfig.MapEntry entry : TypeBedWarsConfiguratorLoader.getMapsConfig().getMaps()) {
+                if (entry.getId().equalsIgnoreCase(mapId)) {
+                    selectedMap = entry;
+                    break;
+                }
+            }
 
-				if (selectedMap.getConfiguration() != null) {
-					session.loadFromMapEntry(selectedMap);
-					player.sendMessage(Component.text("§aLoaded existing configuration for: " + selectedMap.getName()));
-				} else {
-					player.sendMessage(Component.text("§eSelected map: " + selectedMap.getName() + " §7(no existing config)"));
-				}
-			} else {
-				player.setGameMode(GameMode.CREATIVE);
-				player.setFlying(true);
-				session.setMapName(mapId);
-				session.clear();
-				session.setMapId(mapId);
-				session.setMapName(mapId);
-				player.sendMessage(Component.text("§eLoaded unconfigured map: §f" + mapId + " §7(starting fresh)"));
-				player.sendMessage(Component.text("§7Use §b/autosetup §7to automatically configure the map, or set things manually."));
-			}
+            File polarFile = new File("./configuration/bedwars/" + mapId + ".polar");
+            if (!polarFile.exists()) {
+                sender.sendMessage(Component.text("§cNo polar file found for map: " + mapId));
+                return;
+            }
 
-			player.setInstance(mapInstance);
-		}, mapArg);
-	}
+            InstanceContainer mapInstance = MinecraftServer.getInstanceManager().createInstanceContainer();
+            try {
+                mapInstance.setChunkLoader(new PolarLoader(polarFile.toPath()));
+            } catch (IOException e) {
+                sender.sendMessage(Component.text("§cFailed to load map: " + mapId));
+                return;
+            }
+
+            AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), mapInstance);
+            session.setMapId(mapId);
+
+            if (selectedMap != null) {
+                session.setMapName(selectedMap.getName());
+
+                if (selectedMap.getConfiguration() != null) {
+                    session.loadFromMapEntry(selectedMap);
+                    player.sendMessage(Component.text("§aLoaded existing configuration for: " + selectedMap.getName()));
+                } else {
+                    player.sendMessage(Component.text("§eSelected map: " + selectedMap.getName() + " §7(no existing config)"));
+                }
+            } else {
+                player.setGameMode(GameMode.CREATIVE);
+                player.setFlying(true);
+                session.setMapName(mapId);
+                session.clear();
+                session.setMapId(mapId);
+                session.setMapName(mapId);
+                player.sendMessage(Component.text("§eLoaded unconfigured map: §f" + mapId + " §7(starting fresh)"));
+                player.sendMessage(Component.text("§7Use §b/autosetup §7to automatically configure the map, or set things manually."));
+            }
+
+            player.setInstance(mapInstance);
+        }, mapArg);
+    }
 
 }

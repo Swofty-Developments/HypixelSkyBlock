@@ -26,7 +26,7 @@ public enum PotionModifier {
 
     // Type modifiers - change potion type
     GUNPOWDER(ModifierType.SPLASH, 0, 0, ItemType.GUNPOWDER), // Makes splash (halves duration)
-    ENCHANTED_GUNPOWDER(ModifierType.SPLASH, 0, 0, ItemType.ENCHANTED_GUNPOWDER), // Makes splash (doesn't halve duration)
+    ENCHANTED_GUNPOWDER(ModifierType.SPLASH, 0, 0, ItemType.ENCHANTED_GUNPOWDER), // Makes splash (doesn'distance halve duration)
     ;
 
     private final ModifierType type;

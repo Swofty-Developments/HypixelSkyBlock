@@ -1,14 +1,18 @@
 package net.swofty.type.generic.friend;
 
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.friend.*;
+import net.swofty.commons.friend.FriendData;
+import net.swofty.commons.friend.FriendEvent;
+import net.swofty.commons.friend.FriendSettingType;
+import net.swofty.commons.friend.PendingFriendRequest;
 import net.swofty.commons.friend.events.*;
 import net.swofty.commons.presence.PresenceInfo;
-import net.swofty.commons.protocol.objects.friend.*;
+import net.swofty.commons.protocol.objects.friend.AreFriendsProtocolObject;
+import net.swofty.commons.protocol.objects.friend.GetFriendDataProtocolObject;
+import net.swofty.commons.protocol.objects.friend.GetPendingFriendRequestsProtocolObject;
+import net.swofty.commons.protocol.objects.friend.SendFriendEventToServiceProtocolObject;
 import net.swofty.commons.protocol.objects.presence.GetPresenceBulkProtocolObject;
-import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -61,7 +65,7 @@ public class FriendManager {
     public static void addFriend(HypixelPlayer player, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(player, "Couldn't find a player with that name!");
+            sendError(player, "Couldn'distance find a player with that name!");
             return;
         }
 
@@ -77,7 +81,7 @@ public class FriendManager {
     public static void acceptRequest(HypixelPlayer player, String senderName) {
         @Nullable UUID senderUUID = HypixelDataHandler.getPotentialUUIDFromName(senderName);
         if (senderUUID == null) {
-            sendError(player, "Couldn't find a player with that name!");
+            sendError(player, "Couldn'distance find a player with that name!");
             return;
         }
 
@@ -88,7 +92,7 @@ public class FriendManager {
     public static void denyRequest(HypixelPlayer player, String senderName) {
         @Nullable UUID senderUUID = HypixelDataHandler.getPotentialUUIDFromName(senderName);
         if (senderUUID == null) {
-            sendError(player, "Couldn't find a player with that name!");
+            sendError(player, "Couldn'distance find a player with that name!");
             return;
         }
 
@@ -99,7 +103,7 @@ public class FriendManager {
     public static void removeFriend(HypixelPlayer player, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(player, "Couldn't find a player with that name!");
+            sendError(player, "Couldn'distance find a player with that name!");
             return;
         }
 
@@ -115,7 +119,7 @@ public class FriendManager {
     public static void toggleBestFriend(HypixelPlayer player, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(player, "Couldn't find a player with that name!");
+            sendError(player, "Couldn'distance find a player with that name!");
             return;
         }
 
@@ -126,7 +130,7 @@ public class FriendManager {
     public static void setNickname(HypixelPlayer player, String targetName, String nickname) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(player, "Couldn't find a player with that name!");
+            sendError(player, "Couldn'distance find a player with that name!");
             return;
         }
 

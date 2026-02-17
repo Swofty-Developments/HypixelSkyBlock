@@ -391,7 +391,7 @@ public class GUIAnvil extends HypixelInventoryGUI {
         int requiredLevels = component.applyCostLevels(upgradeItem, sacrificeItem, player);
 
         if (player.getLevel() < requiredLevels) {
-            player.sendMessage("§cYou don't have enough Experience Levels!");
+            player.sendMessage("§cYou don'distance have enough Experience Levels!");
             return;
         }
 

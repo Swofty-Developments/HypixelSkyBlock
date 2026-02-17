@@ -9,14 +9,16 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.PaginatedView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
-import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -87,7 +89,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
         if (result.allowed()) {
             ctx.push(new GUIRecipe(item.getResult().getAttributeHandler().getPotentialType()));
         } else {
-            player.sendMessage("§cYou haven't unlocked that recipe!");
+            player.sendMessage("§cYou haven'distance unlocked that recipe!");
         }
     }
 

@@ -152,7 +152,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int have = player.getAmountInInventory(itemType);
                 if (have <= 0) {
-                    p.sendMessage("§6[Bazaar] §cYou don't have any " + itemType.getDisplayName() + "!");
+                    p.sendMessage("§6[Bazaar] §cYou don'distance have any " + itemType.getDisplayName() + "!");
                     return;
                 }
 
@@ -262,7 +262,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int have = player.getAmountInInventory(itemType);
                 if (have <= 0) {
-                    p.sendMessage("§6[Bazaar] §cYou don't have any " + itemType.getDisplayName() + "!");
+                    p.sendMessage("§6[Bazaar] §cYou don'distance have any " + itemType.getDisplayName() + "!");
                     return;
                 }
 

@@ -5,15 +5,15 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCInfection extends HypixelNPC {
     public NPCInfection() {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                // Infection mode doesn't exist yet, so just show 0 players
+                // Infection mode doesn'distance exist yet, so just show 0 players
                 return new String[]{
                         "§e§lCLICK TO PLAY",
                         "§bInfection",

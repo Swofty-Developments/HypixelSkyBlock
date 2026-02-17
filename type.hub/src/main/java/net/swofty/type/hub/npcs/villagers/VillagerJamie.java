@@ -4,14 +4,13 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIJamie;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class VillagerJamie extends HypixelNPC {
     public VillagerJamie() {
@@ -68,7 +67,7 @@ public class VillagerJamie extends HypixelNPC {
                         .key("quest-hello").lines(new String[]{
                                 "You might have noticed that you have a Mana bar!",
                                 "Some items have mysterious properties, called Abilities.",
-                                "Abilities use your Mana as a resource. Here, take this Rogue Sword. I don't need it!"
+                                "Abilities use your Mana as a resource. Here, take this Rogue Sword. I don'distance need it!"
                         }).build(),
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{

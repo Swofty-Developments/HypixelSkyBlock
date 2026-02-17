@@ -39,7 +39,7 @@ public class AxeMiningHandler implements SkyBlockMiningHandler {
 
     @Override
     public int getMiningPowerRequirement() {
-        return 0; // Logs don't have power requirements
+        return 0; // Logs don'distance have power requirements
     }
 
     @Override

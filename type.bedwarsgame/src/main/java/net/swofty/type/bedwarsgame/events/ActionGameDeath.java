@@ -6,8 +6,8 @@ import net.minestom.server.coordinate.Vec;
 import net.minestom.server.event.player.PlayerDeathEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.bedwarsgame.death.BedWarsCombatTracker;
 import net.swofty.type.bedwarsgame.death.BedWarsDeathHandler;
 import net.swofty.type.bedwarsgame.death.BedWarsDeathResult;
@@ -40,7 +40,7 @@ public class ActionGameDeath implements HypixelEventClass {
     }
 
     public static void death(BedWarsPlayer player, BedWarsGame game, Consumer<Component> deathMessageConsumer, boolean voidDeath) {
-        BedWarsMapsConfig.Position position = game.getMapEntry().getConfiguration().getLocations().getSpectator();
+        HypixelPosition position = game.getMapEntry().getConfiguration().getLocations().getSpectator();
         player.setVelocity(Vec.ZERO); // Stop any momentum the player had before death
         player.teleport(new Pos(position.x(), position.y(), position.z()));
         BedWarsGame.literalSetupSpectator(player);
@@ -123,7 +123,7 @@ public class ActionGameDeath implements HypixelEventClass {
         if (bedExists) {
             game.getRespawnHandler().startRespawn(player);
         } else {
-            // Final kill if the bed doesn't exist
+            // Final kill if the bed doesn'distance exist
             player.getInventory().clear();
             game.onPlayerEliminated(player);
         }

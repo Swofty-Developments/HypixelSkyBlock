@@ -78,7 +78,7 @@ public class NPCRick extends HypixelNPC {
         return new DialogueSet[] {
                 DialogueSet.builder()
                         .key("initial-hello").lines(new String[] {
-                                "Hey, I could use some help! My " + ChatColor.BLUE + "Promising Shovel" + ChatColor.WHITE + " just broke, and I don't have the right ingredients to make a new one.",
+                                "Hey, I could use some help! My " + ChatColor.BLUE + "Promising Shovel" + ChatColor.WHITE + " just broke, and I don'distance have the right ingredients to make a new one.",
                                 "If you could get me a couple iron ingots, I could make one for us both!"
                         }).build(),
                 DialogueSet.builder()

@@ -6,10 +6,10 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.skyblock.auctions.AuctionCategories;
-import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
+import net.swofty.commons.skyblock.auctions.AuctionCategories;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
@@ -120,7 +120,7 @@ public class AuctionViewThirdBin implements AuctionView {
                 AuctionItem item = future.join().item();
 
                 if (!item.getBids().isEmpty()) {
-                    player.sendMessage("§cCouldn't purchase the item, it has been sold!");
+                    player.sendMessage("§cCouldn'distance purchase the item, it has been sold!");
                     player.sendMessage("§8Returning escrowed coins...");
                     player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + item.getStartingPrice());
                     return;

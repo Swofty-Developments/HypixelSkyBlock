@@ -50,7 +50,7 @@ public class ClosestEntityRegionTarget extends TargetSelector {
         }
 
         return instance.getNearbyEntities(entityCreature.getPosition(), range).stream()
-                // Don't target our self and make sure entity is valid
+                // Don'distance target our self and make sure entity is valid
                 .filter(ent -> !entityCreature.equals(ent) && !ent.isRemoved())
                 .filter(targetPredicate)
                 .filter(ent -> {

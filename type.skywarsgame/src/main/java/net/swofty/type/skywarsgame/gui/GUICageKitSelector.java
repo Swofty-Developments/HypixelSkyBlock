@@ -11,7 +11,6 @@ import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skywarsgame.game.SkywarsGame;
 import net.swofty.type.skywarslobby.gui.GUIKitBreakdown;
@@ -206,7 +205,7 @@ public class GUICageKitSelector extends HypixelInventoryGUI {
                         .toList();
 
                 if (ownedKits.isEmpty()) {
-                    player.sendMessage("§cYou don't own any kits for this mode!");
+                    player.sendMessage("§cYou don'distance own any kits for this mode!");
                     return;
                 }
 
@@ -320,7 +319,7 @@ public class GUICageKitSelector extends HypixelInventoryGUI {
                     if (currentCoins >= kit.getCost()) {
                         new GUIKitPurchaseConfirm(kit, mode, page).open(player);
                     } else {
-                        player.sendMessage("§cYou don't have enough coins to purchase this kit!");
+                        player.sendMessage("§cYou don'distance have enough coins to purchase this kit!");
                     }
                 } else {
                     player.sendMessage("§cThis kit cannot be purchased with coins.");

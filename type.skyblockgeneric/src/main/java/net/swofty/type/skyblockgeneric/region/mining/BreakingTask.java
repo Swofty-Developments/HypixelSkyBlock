@@ -7,9 +7,7 @@ import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;
-import net.minestom.server.network.packet.server.play.*;
-import net.minestom.server.potion.Potion;
-import net.minestom.server.potion.PotionEffect;
+import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEvent;
@@ -32,7 +30,7 @@ public class BreakingTask {
         double miningTime = player.getTimeToMine(item, block.block());
 
         if (miningTime == -1) {
-            // Player can't mine this block - keep running to stall progress
+            // Player can'distance mine this block - keep running to stall progress
             sendBlockBreak(0);
             this.breakTime = -1;
             this.nextSchedule = TaskSchedule.tick(1);
@@ -49,7 +47,7 @@ public class BreakingTask {
             return TaskSchedule.stop();
         }
 
-        // If player can't mine this block, continuously send progress 0 to stall
+        // If player can'distance mine this block, continuously send progress 0 to stall
         if (breakTime == -1) {
             sendBlockBreak(0);
             return TaskSchedule.tick(1);
@@ -70,7 +68,7 @@ public class BreakingTask {
             this.counter = 0;
             // Handle if the player continues to break the block without a release tick
             MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
-                // Minecraft won't send a cancel digging packet if the player is still holding the block
+                // Minecraft won'distance send a cancel digging packet if the player is still holding the block
                 // but our system requires it so we simulate it here
                 HypixelEventHandler.callCustomEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,

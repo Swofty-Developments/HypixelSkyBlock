@@ -4,13 +4,12 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class VillagerAndrew extends HypixelNPC {
     public VillagerAndrew() {
@@ -62,7 +61,7 @@ public class VillagerAndrew extends HypixelNPC {
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
                                 "This game is still under heavy development.",
-                                "Don't forget to check the §adiscord (discord.gg/atlasmc) §foften for updates!"
+                                "Don'distance forget to check the §adiscord (discord.gg/atlasmc) §foften for updates!"
                         }).build()
         ).toArray(DialogueSet[]::new);
     }

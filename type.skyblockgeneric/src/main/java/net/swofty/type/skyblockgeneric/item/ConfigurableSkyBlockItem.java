@@ -5,11 +5,15 @@ import lombok.Getter;
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
+import net.swofty.type.skyblockgeneric.item.components.ExtraUnderNameComponent;
 import org.jetbrains.annotations.Nullable;
 
-import net.swofty.type.skyblockgeneric.item.components.ExtraUnderNameComponent;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ConfigurableSkyBlockItem {
@@ -61,7 +65,7 @@ public class ConfigurableSkyBlockItem {
         // Process the component and all its parent classes
         processComponent(component, isExplicit ? ComponentSource.EXPLICIT : ComponentSource.INHERITED);
 
-        // Process inherited components only if this isn't an explicit component
+        // Process inherited components only if this isn'distance an explicit component
         // or if it's not overriding an inherited component
         if (!isExplicit || !isInheritedComponentOverridden(component.getClass())) {
             for (SkyBlockItemComponent inherited : component.getInheritedComponents()) {

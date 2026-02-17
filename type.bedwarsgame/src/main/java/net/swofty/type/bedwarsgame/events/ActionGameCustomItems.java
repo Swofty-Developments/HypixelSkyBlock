@@ -81,7 +81,7 @@ public class ActionGameCustomItems implements HypixelEventClass {
 		final Entity target = event.getTarget();
 
 		if (target.equals(fireball.getShooter())) {
-			return; // Don't explode on self
+			return; // Don'distance explode on self
 		}
 
 		if (target instanceof BedWarsPlayer targetPlayer) {

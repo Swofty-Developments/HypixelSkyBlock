@@ -127,7 +127,7 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§a" + display.toString() + " Slot #" + (position + 1),
                             Material.BARRIER, 1,
-                            "§7You don't have any displayable items",
+                            "§7You don'distance have any displayable items",
                             "§7for this slot. Donate more items to",
                             "§7your §9Museum§7!");
                 }

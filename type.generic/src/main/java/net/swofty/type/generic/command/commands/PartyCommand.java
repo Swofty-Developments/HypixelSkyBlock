@@ -165,7 +165,7 @@ public class PartyCommand extends HypixelCommand {
             pendingCommands.add(player.getUuid());
 
             if (!partyService.isOnline().join()) {
-                sender.sendMessage("§cCouldn't find a party service! Please try again later.");
+                sender.sendMessage("§cCouldn'distance find a party service! Please try again later.");
                 pendingCommands.remove(player.getUuid());
                 return;
             }

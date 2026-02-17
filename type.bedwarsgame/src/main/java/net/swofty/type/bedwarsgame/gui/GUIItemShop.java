@@ -245,7 +245,7 @@ public class GUIItemShop implements StatefulView<GUIItemShop.State> {
                 } else if (hasEnough) {
                     lore.add("§eClick to buy!");
                 } else {
-                    lore.add("§cYou don't have enough " + nextTier.currency().getName() + "!");
+                    lore.add("§cYou don'distance have enough " + nextTier.currency().getName() + "!");
                 }
             }
 
@@ -278,7 +278,7 @@ public class GUIItemShop implements StatefulView<GUIItemShop.State> {
                 lore.add("§bShift Click to remove from Quick Buy");
             }
             if (!hasEnough) {
-                lore.add("§cYou don't have enough " + shopItem.getCurrency().getName() + "!");
+                lore.add("§cYou don'distance have enough " + shopItem.getCurrency().getName() + "!");
             } else if (!shopItem.isOwned(player)) {
                 lore.add("§aUNLOCKED");
             } else if (hasBetterItem(player, shopItem.getDisplay().material())) {
@@ -354,7 +354,7 @@ public class GUIItemShop implements StatefulView<GUIItemShop.State> {
                         .mapToInt(ItemStack::amount)
                         .sum();
                 int needed = nextTier.price().apply(game.getGameType()) - owned;
-                player.sendMessage(noItalic(Component.text("You don't have enough " + nextTier.currency().getName() + "! Need " + needed + " more!").color(NamedTextColor.RED)));
+                player.sendMessage(noItalic(Component.text("You don'distance have enough " + nextTier.currency().getName() + "! Need " + needed + " more!").color(NamedTextColor.RED)));
                 return;
             }
 
@@ -366,7 +366,7 @@ public class GUIItemShop implements StatefulView<GUIItemShop.State> {
         }
 
         if (!hasPlayerEnoughCurrency(game, player, shopItem)) {
-            player.sendMessage(noItalic(Component.text("You don't have enough " + shopItem.getCurrency().getName() + "!").color(NamedTextColor.RED)));
+            player.sendMessage(noItalic(Component.text("You don'distance have enough " + shopItem.getCurrency().getName() + "!").color(NamedTextColor.RED)));
             return;
         }
         if (!shopItem.isOwned(player)) {

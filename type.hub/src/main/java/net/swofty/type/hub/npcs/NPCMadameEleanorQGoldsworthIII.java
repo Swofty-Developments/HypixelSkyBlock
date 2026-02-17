@@ -4,13 +4,12 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIMuseumAppraisal;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCMadameEleanorQGoldsworthIII extends HypixelNPC {
 
@@ -72,7 +71,7 @@ public class NPCMadameEleanorQGoldsworthIII extends HypixelNPC {
                         }).build(),
                 DialogueSet.builder()
                         .key("post-curator").lines(new String[]{
-                                "Don't trust what the §bCurator §ftold you, I am in no way his assistant.",
+                                "Don'distance trust what the §bCurator §ftold you, I am in no way his assistant.",
                                 "I serve someone much more important.",
                                 "I offer a §6Museum Appraisal Service§f, which allows you to determine the value of your Museum.",
                                 "For a one-time fee, I will appraise your Museum's worth each time you modify your Museum.",

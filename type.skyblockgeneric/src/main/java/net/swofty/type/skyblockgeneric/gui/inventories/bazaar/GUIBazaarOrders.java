@@ -118,7 +118,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§7No Sell Orders", Material.BARRIER, 1,
-                            "§7You don't have any active",
+                            "§7You don'distance have any active",
                             "§7sell orders in the Bazaar.");
                 }
             });
@@ -130,7 +130,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack("§7No Buy Orders", Material.BARRIER, 1,
-                            "§7You don't have any active",
+                            "§7You don'distance have any active",
                             "§7buy orders in the Bazaar.");
                 }
             });

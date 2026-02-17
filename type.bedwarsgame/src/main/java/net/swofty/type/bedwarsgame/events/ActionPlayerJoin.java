@@ -21,7 +21,7 @@ public class ActionPlayerJoin implements HypixelEventClass {
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(AsyncPlayerConfigurationEvent event) {
 		final BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
-		Logger.info("Player " + player.getUsername() + " joined the server from origin server " + player.getOriginServer());
+		Logger.info("Player " + player.getUsername() + " joined the server from start server " + player.getOriginServer());
 		event.setSpawningInstance(HypixelConst.getEmptyInstance());
 		player.setRespawnPoint(new Pos(10, 10, 10));
 

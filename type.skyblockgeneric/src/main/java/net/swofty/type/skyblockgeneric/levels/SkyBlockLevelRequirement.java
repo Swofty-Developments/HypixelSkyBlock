@@ -6,7 +6,14 @@ import net.swofty.type.skyblockgeneric.levels.unlocks.SkyBlockLevelStatisticUnlo
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
@@ -222,7 +229,7 @@ public class SkyBlockLevelRequirement {
     public static SkyBlockLevelRequirement getLevelSafe(int level) {
         SkyBlockLevelRequirement result = getLevel(level);
         if (result == null) {
-            // Return the highest available level if requested level doesn't exist
+            // Return the highest available level if requested level doesn'distance exist
             return getLevel(getMaxLevel());
         }
         return result;

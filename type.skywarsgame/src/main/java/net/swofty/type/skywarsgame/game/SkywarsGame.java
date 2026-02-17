@@ -10,31 +10,32 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.ItemEntity;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.commons.skywars.SkywarsGameType;
 import net.swofty.commons.skywars.SkywarsLeaderboardMode;
 import net.swofty.commons.skywars.SkywarsModeStats;
 import net.swofty.commons.skywars.map.SkywarsMapsConfig;
 import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.data.datapoints.DatapointSkywarsKitStats;
-import net.swofty.type.generic.data.datapoints.DatapointSkywarsUnlocks;
 import net.swofty.type.generic.data.datapoints.DatapointSkywarsModeStats;
+import net.swofty.type.generic.data.datapoints.DatapointSkywarsUnlocks;
 import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
-import net.swofty.type.skywarslobby.kit.SkywarsKit;
-import net.swofty.type.skywarslobby.kit.SkywarsKitRegistry;
 import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
-import net.swofty.type.skywarsgame.perk.SkywarsPerkHandler;
 import net.swofty.type.skywarsgame.luckyblock.LuckyBlock;
 import net.swofty.type.skywarsgame.luckyblock.oprule.OPRuleManager;
 import net.swofty.type.skywarsgame.manager.CageManager;
 import net.swofty.type.skywarsgame.manager.ChestManager;
 import net.swofty.type.skywarsgame.manager.DragonManager;
-import net.swofty.type.skywarsgame.util.ChestScanner;
+import net.swofty.type.skywarsgame.perk.SkywarsPerkHandler;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
+import net.swofty.type.skywarsgame.util.ChestScanner;
+import net.swofty.type.skywarslobby.kit.SkywarsKit;
+import net.swofty.type.skywarslobby.kit.SkywarsKitRegistry;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -87,12 +88,12 @@ public class SkywarsGame {
 
         List<Pos> cagePositions = config.getIslands().stream()
                 .map(island -> {
-                    SkywarsMapsConfig.PitchYawPosition cage = island.getCageCenter();
+                    HypixelPosition cage = island.getCageCenter();
                     return new Pos(cage.x(), cage.y(), cage.z(), cage.yaw(), cage.pitch());
                 })
                 .toList();
 
-        SkywarsMapsConfig.PitchYawPosition center = config.getCenter();
+        HypixelPosition center = config.getCenter();
         Pos centerPos = new Pos(center.x(), center.y(), center.z());
 
         ChestScanner.ChestScanResult scanResult = ChestScanner.scanForChests(

@@ -3,14 +3,17 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.collection;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GUICollectionCategory extends StatelessView {
@@ -100,7 +103,7 @@ public class GUICollectionCategory extends StatelessView {
                 DatapointCollection.PlayerCollection collection = player.getCollection();
 
                 if (!collection.unlocked(item.type())) {
-                    player.sendMessage("§cYou haven't found this item yet!");
+                    player.sendMessage("§cYou haven'distance found this item yet!");
                     return;
                 }
                 player.openView(new GUICollectionItem(item.type()));

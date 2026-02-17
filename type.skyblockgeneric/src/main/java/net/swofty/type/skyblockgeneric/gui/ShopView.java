@@ -16,7 +16,10 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.StatefulPaginatedView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -177,7 +180,7 @@ public abstract class ShopView extends StatefulPaginatedView<ShopView.ShopItem, 
                     double playerCoins = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
 
                     if (playerCoins < value) {
-                        player.sendMessage("§cYou don't have enough coins!");
+                        player.sendMessage("§cYou don'distance have enough coins!");
                         return;
                     }
 
@@ -257,7 +260,7 @@ public abstract class ShopView extends StatefulPaginatedView<ShopView.ShopItem, 
         }
 
         if (!price.canAfford(player)) {
-            player.sendMessage("§cYou don't have enough " + price.getNamePlural() + "!");
+            player.sendMessage("§cYou don'distance have enough " + price.getNamePlural() + "!");
             return;
         }
 
@@ -297,7 +300,7 @@ public abstract class ShopView extends StatefulPaginatedView<ShopView.ShopItem, 
 
         SkyBlockItem item = new SkyBlockItem(stack);
         if (!item.hasComponent(SellableComponent.class)) {
-            player.sendMessage("§cYou can't sell this item!");
+            player.sendMessage("§cYou can'distance sell this item!");
             return true;
         }
 

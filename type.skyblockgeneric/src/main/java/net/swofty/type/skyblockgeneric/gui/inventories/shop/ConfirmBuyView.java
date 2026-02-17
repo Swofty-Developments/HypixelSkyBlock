@@ -43,7 +43,7 @@ public final class ConfirmBuyView implements View<ConfirmBuyView.State> {
                         player.removeCoins(state.price);
                         player.sendMessage("§aYou bought " + state.item.getDisplayName() + " §afor §6" + state.price + " Coins§a!");
                     } else {
-                        player.sendMessage("§4You don't have enough coins!");
+                        player.sendMessage("§4You don'distance have enough coins!");
                     }
                     player.closeInventory();
                 }

@@ -37,7 +37,7 @@ public class ActionRejoinCheck implements HypixelEventClass {
                     player.sendMessage(message);
                 }
             }).exceptionally(throwable -> {
-                // Silently fail - don't bother the player with errors on this check
+                // Silently fail - don'distance bother the player with errors on this check
                 return null;
             });
         }, 500); // 500ms delay

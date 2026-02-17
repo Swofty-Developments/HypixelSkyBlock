@@ -17,7 +17,7 @@ public class ActionPlayerJoin implements HypixelEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         event.setSpawningInstance(HypixelConst.getInstanceContainer());
-        Logger.info("Player " + player.getUsername() + " joined the server from origin server " + player.getOriginServer());
+        Logger.info("Player " + player.getUsername() + " joined the server from start server " + player.getOriginServer());
         player.setRespawnPoint(HypixelConst.getTypeLoader()
                 .getLoaderValues()
                 .spawnPosition()

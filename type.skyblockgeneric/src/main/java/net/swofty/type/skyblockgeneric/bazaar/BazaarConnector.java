@@ -1,8 +1,14 @@
 package net.swofty.type.skyblockgeneric.bazaar;
 
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.protocol.objects.bazaar.BazaarBuyProtocolObject;
+import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocolObject;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingOrdersProtocolObject;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocolObject;
+import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocolObject;
+import net.swofty.commons.protocol.objects.bazaar.BazaarSellProtocolObject;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.commons.protocol.objects.bazaar.*;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -175,7 +181,7 @@ public class BazaarConnector {
         int availableAmount = player.getAmountInInventory(itemType);
         if (availableAmount <= 0) {
             return CompletableFuture.completedFuture(
-                    new BazaarResult(false, "You don't have any " + itemType.getDisplayName() + "!")
+                    new BazaarResult(false, "You don'distance have any " + itemType.getDisplayName() + "!")
             );
         }
 

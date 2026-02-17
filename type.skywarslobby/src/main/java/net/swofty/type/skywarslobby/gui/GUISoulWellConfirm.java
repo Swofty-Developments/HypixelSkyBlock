@@ -82,7 +82,7 @@ public class GUISoulWellConfirm extends StatelessView {
                             "§7You need §6" + formattedCost + " Coins",
                             "§7to purchase this upgrade.",
                             "",
-                            "§cYou don't have enough coins!"
+                            "§cYou don'distance have enough coins!"
                     );
                 },
                 (_, c) -> {
@@ -92,7 +92,7 @@ public class GUISoulWellConfirm extends StatelessView {
                     DatapointLong coinsDatapoint = dataHandler.get(SkywarsDataHandler.Data.COINS, DatapointLong.class);
                     long currentCoins = coinsDatapoint.getValue();
                     if (currentCoins < tier.cost()) {
-                        c.player().sendMessage("§cYou don't have enough coins to purchase this upgrade!");
+                        c.player().sendMessage("§cYou don'distance have enough coins to purchase this upgrade!");
                         c.session(Object.class).refresh();
                         return;
                     }
