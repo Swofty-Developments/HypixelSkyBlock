@@ -92,7 +92,7 @@ public class AutoSetupSession {
     }
 
     public TeamConfig getOrCreateTeam(TeamKey key) {
-        return teams.computeIfAbsent(key, k -> new TeamConfig());
+        return teams.computeIfAbsent(key, _ -> new TeamConfig());
     }
 
     public void clear() {
@@ -186,8 +186,8 @@ public class AutoSetupSession {
         }
 
         // Load global generators
-        if (config.getGlobal_generator() != null) {
-            var diamondGen = config.getGlobal_generator().get("diamond");
+        if (config.getGlobalGenerator() != null) {
+            var diamondGen = config.getGlobalGenerator().get(BedWarsMapsConfig.GlobalGeneratorKey.DIAMOND);
             if (diamondGen != null) {
                 diamondAmount = diamondGen.getAmount();
                 diamondMax = diamondGen.getMax();
@@ -195,7 +195,7 @@ public class AutoSetupSession {
                     diamondGenerators.addAll(diamondGen.getLocations());
                 }
             }
-            var emeraldGen = config.getGlobal_generator().get("emerald");
+            var emeraldGen = config.getGlobalGenerator().get(BedWarsMapsConfig.GlobalGeneratorKey.EMERALD);
             if (emeraldGen != null) {
                 emeraldAmount = emeraldGen.getAmount();
                 emeraldMax = emeraldGen.getMax();
@@ -260,14 +260,13 @@ public class AutoSetupSession {
         config.setLocations(locations);
 
         // Global generators
-        Map<String, MapEntry.MapConfiguration.GlobalGenerator> globalGenerators = new HashMap<>();
-
+        Map<BedWarsMapsConfig.GlobalGeneratorKey, MapEntry.MapConfiguration.GlobalGenerator> globalGenerators = new HashMap<>();
         if (!diamondGenerators.isEmpty()) {
             MapEntry.MapConfiguration.GlobalGenerator diamondGen = new MapEntry.MapConfiguration.GlobalGenerator();
             diamondGen.setAmount(diamondAmount);
             diamondGen.setMax(diamondMax);
             diamondGen.setLocations(new ArrayList<>(diamondGenerators));
-            globalGenerators.put("diamond", diamondGen);
+            globalGenerators.put(BedWarsMapsConfig.GlobalGeneratorKey.DIAMOND, diamondGen);
         }
 
         if (!emeraldGenerators.isEmpty()) {
@@ -275,10 +274,10 @@ public class AutoSetupSession {
             emeraldGen.setAmount(emeraldAmount);
             emeraldGen.setMax(emeraldMax);
             emeraldGen.setLocations(new ArrayList<>(emeraldGenerators));
-            globalGenerators.put("emerald", emeraldGen);
+            globalGenerators.put(BedWarsMapsConfig.GlobalGeneratorKey.EMERALD, emeraldGen);
         }
 
-        config.setGlobal_generator(globalGenerators);
+        config.setGlobalGenerator(globalGenerators);
         entry.setConfiguration(config);
 
         return entry;

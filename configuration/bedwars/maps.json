@@ -326,8 +326,8 @@
             "z": 0
           }
         },
-        "global_generator": {
-          "diamond": {
+        "globalGenerator": {
+          "DIAMOND": {
             "amount": 1,
             "max": 4,
             "locations": [
@@ -353,7 +353,7 @@
               }
             ]
           },
-          "emerald": {
+          "EMERALD": {
             "amount": 1,
             "max": 2,
             "locations": [
@@ -753,8 +753,8 @@
             "z": 0.0
           }
         },
-        "global_generator": {
-          "diamond": {
+        "globalGenerator": {
+          "DIAMOND": {
             "amount": 1,
             "max": 4,
             "locations": [
@@ -780,7 +780,7 @@
               }
             ]
           },
-          "emerald": {
+          "EMERALD": {
             "amount": 1,
             "max": 2,
             "locations": [
@@ -1183,8 +1183,8 @@
             "z": 3.5
           }
         },
-        "global_generator": {
-          "diamond": {
+        "globalGenerator": {
+          "DIAMOND": {
             "amount": 1,
             "max": 4,
             "locations": [
@@ -1210,7 +1210,7 @@
               }
             ]
           },
-          "emerald": {
+          "EMERALD": {
             "amount": 1,
             "max": 2,
             "locations": [
@@ -1613,8 +1613,8 @@
             "z": 0.0
           }
         },
-        "global_generator": {
-          "diamond": {
+        "globalGenerator": {
+          "DIAMOND": {
             "amount": 1,
             "max": 4,
             "locations": [
@@ -1640,7 +1640,7 @@
               }
             ]
           },
-          "emerald": {
+          "EMERALD": {
             "amount": 1,
             "max": 2,
             "locations": [

@@ -5,11 +5,12 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.suggestion.SuggestionEntry;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsconfigurator.TypeBedWarsConfiguratorLoader;
 import net.swofty.type.bedwarsconfigurator.autosetup.AutoSetupSession;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
@@ -87,17 +88,19 @@ public class ChooseMapCommand extends HypixelCommand {
 
 				if (selectedMap.getConfiguration() != null) {
 					session.loadFromMapEntry(selectedMap);
-					sender.sendMessage(Component.text("§aLoaded existing configuration for: " + selectedMap.getName()));
+					player.sendMessage(Component.text("§aLoaded existing configuration for: " + selectedMap.getName()));
 				} else {
-					sender.sendMessage(Component.text("§eSelected map: " + selectedMap.getName() + " §7(no existing config)"));
+					player.sendMessage(Component.text("§eSelected map: " + selectedMap.getName() + " §7(no existing config)"));
 				}
 			} else {
+				player.setGameMode(GameMode.CREATIVE);
+				player.setFlying(true);
 				session.setMapName(mapId);
 				session.clear();
 				session.setMapId(mapId);
 				session.setMapName(mapId);
-				sender.sendMessage(Component.text("§eLoaded unconfigured map: §f" + mapId + " §7(starting fresh)"));
-				sender.sendMessage(Component.text("§7Use §b/autosetup §7to automatically configure the map, or set things manually."));
+				player.sendMessage(Component.text("§eLoaded unconfigured map: §f" + mapId + " §7(starting fresh)"));
+				player.sendMessage(Component.text("§7Use §b/autosetup §7to automatically configure the map, or set things manually."));
 			}
 
 			player.setInstance(mapInstance);

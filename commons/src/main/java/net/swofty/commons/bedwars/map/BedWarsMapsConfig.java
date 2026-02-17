@@ -28,8 +28,7 @@ public class BedWarsMapsConfig {
             private MapBounds bounds;
             private Map<TeamKey, MapTeam> teams;
             private MapLocations locations;
-            // instead of a string, use an enum.
-            private Map<String, GlobalGenerator> global_generator;
+            private Map<GlobalGeneratorKey, GlobalGenerator> globalGenerator;
 
             @Getter
             @Setter
@@ -68,6 +67,10 @@ public class BedWarsMapsConfig {
     }
 
     public record MinMax(double min, double max) {
+    }
+
+    public enum GlobalGeneratorKey {
+        IRON, GOLD, DIAMOND, EMERALD
     }
 
     public enum TeamKey {
