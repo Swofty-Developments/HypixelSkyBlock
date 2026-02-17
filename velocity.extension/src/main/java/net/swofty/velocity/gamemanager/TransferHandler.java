@@ -6,11 +6,14 @@ import net.kyori.adventure.text.Component;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.proxy.FromProxyChannels;
-import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public record TransferHandler(Player player) {
@@ -45,9 +48,9 @@ public record TransferHandler(Player player) {
 				return;
 			}
 
-			RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
+			//RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
 
-			player.createConnectionRequest(limboServer).connectWithIndication();
+			//player.createConnectionRequest(limboServer).connectWithIndication();
 			playersGoalServerType.put(player, type);
 			playersOriginServer.put(player, currentServer);
 		}).start();
@@ -62,8 +65,8 @@ public record TransferHandler(Player player) {
 				playersOriginServer.put(player, previousServer);
 			}
 
-			RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
-			player.createConnectionRequest(limboServer).connectWithIndication();
+			//RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
+			//player.createConnectionRequest(limboServer).connectWithIndication();
 			future.complete(true);
 		}).start();
 
