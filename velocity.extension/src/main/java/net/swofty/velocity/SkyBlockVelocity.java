@@ -10,10 +10,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.permission.PermissionsSetupEvent;
-import com.velocitypowered.api.event.player.KickedFromServerEvent;
-import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
-import com.velocitypowered.api.event.player.ServerConnectedEvent;
-import com.velocitypowered.api.event.player.ServerPostConnectEvent;
+import com.velocitypowered.api.event.player.*;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
@@ -34,9 +31,15 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.swofty.commons.ServiceType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.proxy.FromProxyChannels;
+import net.swofty.commons.punishment.ActivePunishment;
+import net.swofty.commons.punishment.PunishmentMessages;
+import net.swofty.commons.punishment.PunishmentType;
+import net.swofty.proxyapi.ProxyService;
+import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.command.ProtocolVersionCommand;
 import net.swofty.velocity.command.ServerStatusCommand;
@@ -66,6 +69,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -194,6 +198,8 @@ public class SkyBlockVelocity {
 		for (FromProxyChannels channel : FromProxyChannels.values()) {
 			RedisMessage.registerProxyToServer(channel);
 		}
+		loopThroughPackage("net.swofty.commons.protocol.objects", ProtocolObject.class)
+				.forEach(ServerOutboundMessage::registerFromProtocolObject);
 		RedisAPI.getInstance().startListeners();
 
 		/**
@@ -202,9 +208,45 @@ public class SkyBlockVelocity {
 		GameManager.loopServers(server);
 	}
 
+	private boolean checkPunished(Player player) {
+		try {
+			ProxyService service = new ProxyService(ServiceType.PUNISHMENT);
+
+			CompletableFuture<?> banFuture = service.handleRequest(
+					new GetActivePunishmentProtocolObject.GetActivePunishmentMessage(player.getUniqueId(), PunishmentType.BAN.name()));
+			CompletableFuture<?> muteFuture = service.handleRequest(
+					new GetActivePunishmentProtocolObject.GetActivePunishmentMessage(player.getUniqueId(), PunishmentType.MUTE.name()));
+
+			CompletableFuture.allOf(banFuture, muteFuture).orTimeout(3, TimeUnit.SECONDS).join();
+
+			Object banResult = banFuture.join();
+			if (banResult instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse banResponse && banResponse.found()) {
+				ActivePunishment punishment = new ActivePunishment(
+						banResponse.type(), banResponse.banId(), banResponse.reason(), banResponse.expiresAt(), banResponse.tags());
+				player.disconnect(PunishmentMessages.banMessage(punishment));
+				return true;
+			}
+
+			Object muteResult = muteFuture.join();
+			if (muteResult instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse muteResponse && muteResponse.found()) {
+				ActivePunishment punishment = new ActivePunishment(
+						muteResponse.type(), muteResponse.banId(), muteResponse.reason(), muteResponse.expiresAt(), muteResponse.tags());
+				player.sendMessage(PunishmentMessages.muteMessage(punishment));
+			}
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 	@Subscribe
-	public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
+	public EventTask onPlayerJoin(PlayerChooseInitialServerEvent event) {
+		return EventTask.async(() -> {
 		Player player = event.getPlayer();
+
+		if (checkPunished(player)) {
+			return;
+		}
 
 		if (!GameManager.hasType(ServerType.PROTOTYPE_LOBBY) || !GameManager.isAnyEmpty(ServerType.PROTOTYPE_LOBBY)) {
 			player.disconnect(
@@ -264,10 +306,15 @@ public class SkyBlockVelocity {
 					FromProxyChannels.PROMPT_PLAYER_FOR_AUTHENTICATION,
 					new JSONObject().put("uuid", player.getUniqueId().toString()));
 		}
+		});
 	}
 
 	@Subscribe
 	public void onServerCrash(KickedFromServerEvent event) {
+		if (checkPunished(event.getPlayer())) {
+			return;
+		}
+
 		// Send the player to the limbo
 		RegisteredServer originalServer = event.getServer();
 		Component reason = event.getServerKickReason().orElse(Component.text(

@@ -43,4 +43,5 @@ public class ConfigProvider {
             throw new RuntimeException("Failed to load configuration", e);
         }
     }
+
 }

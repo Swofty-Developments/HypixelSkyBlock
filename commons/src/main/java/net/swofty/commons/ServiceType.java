@@ -10,6 +10,7 @@ public enum ServiceType {
     DARK_AUCTION,
     ORCHESTRATOR,
     FRIEND,
-    REPLAY
+    REPLAY,
+    PUNISHMENT
     ;
 }

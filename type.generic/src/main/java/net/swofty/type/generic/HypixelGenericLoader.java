@@ -246,6 +246,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                 return player;
             });
         }
+
     }
 
     public static List<HypixelPlayer> getLoadedPlayers() {
