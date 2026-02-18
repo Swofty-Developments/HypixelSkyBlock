@@ -120,6 +120,7 @@ public class ListenerPlayerHandler extends RedisListener {
                     FromProxyChannels.TELEPORT,
                     message).join();
             }
+            case LIMBO -> new TransferHandler(player).sendToLimbo().join();
             case EVENT -> {
                 if (potentialServer.isEmpty()) {
                     return new JSONObject();
@@ -145,58 +146,6 @@ public class ListenerPlayerHandler extends RedisListener {
                 player.sendMessage(JSONComponentSerializer.json().deserialize(messageToSend));
             }
         }
-			case TRANSFER -> {
-				ServerType type = ServerType.valueOf(message.getString("type"));
-				if (!GameManager.hasType(type)
-						|| new TransferHandler(player).isInLimbo()
-						|| !GameManager.isAnyEmpty(type)) {
-					player.sendMessage(Component.text(
-							"§cAttempted to transfer to a " + StringUtility.toNormalCase(type.name()) + " server, but there are no empty slots available. Please try again later."
-					));
-					return new JSONObject();
-				}
-				new TransferHandler(player).standardTransferTo(
-						player.getCurrentServer().get().getServer(),
-						type
-				);
-			}
-			case LIMBO -> {
-				new TransferHandler(player).sendToLimbo().join();
-			}
-			case TELEPORT -> {
-				if (potentialServer.isEmpty()) {
-					return new JSONObject();
-				}
-				UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-				return RedisMessage.sendMessageToServer(server,
-						FromProxyChannels.TELEPORT,
-						message).join();
-			}
-			case EVENT -> {
-				if (potentialServer.isEmpty()) {
-					return new JSONObject();
-				}
-				UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-				RedisMessage.sendMessageToServer(server,
-						FromProxyChannels.RUN_EVENT_ON_SERVER,
-						message
-				).join();
-			}
-			case REFRESH_COOP_DATA -> {
-				if (potentialServer.isEmpty()) {
-					return new JSONObject();
-				}
-				UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-				RedisMessage.sendMessageToServer(server,
-						FromProxyChannels.REFRESH_COOP_DATA_ON_SERVER,
-						message
-				).join();
-			}
-			case MESSAGE -> {
-				String messageToSend = message.getString("message");
-				player.sendMessage(JSONComponentSerializer.json().deserialize(messageToSend));
-			}
-		}
         return new JSONObject();
     }
 
