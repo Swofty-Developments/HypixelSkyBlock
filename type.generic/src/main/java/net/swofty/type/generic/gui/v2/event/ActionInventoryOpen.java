@@ -6,6 +6,7 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.gui.v2.ViewNavigator;
+import net.swofty.type.generic.gui.v2.ViewSession;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionInventoryOpen implements HypixelEventClass {
@@ -14,7 +15,9 @@ public class ActionInventoryOpen implements HypixelEventClass {
     public void onPlayerInventoryOpen(InventoryOpenEvent event) {
         MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
             HypixelPlayer player = (HypixelPlayer) event.getPlayer();
-            ViewNavigator.find(player).ifPresent(navigator -> navigator.getCurrentSession().onOpenEvent(event));
+            ViewNavigator.find(player)
+                    .map(ViewNavigator::getCurrentSession)
+                    .ifPresent(session -> session.onOpenEvent(event));
         });
 
     }

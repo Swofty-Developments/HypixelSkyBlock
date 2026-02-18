@@ -25,6 +25,17 @@ public interface NPCConfiguration {
         return null;
     }
 
+    /**
+     * Gets the chat name for this NPC specific to a player.
+     * Override this for NPCs that need per-player colored names.
+     * @param player The player viewing this NPC
+     * @return The formatted chat name, or null to use default
+     */
+    @Nullable
+    default String chatName(HypixelPlayer player) {
+        return chatName();
+    }
+
     default Instance instance() {
         return HypixelConst.getInstanceContainer();
     }
