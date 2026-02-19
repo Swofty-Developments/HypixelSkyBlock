@@ -31,7 +31,7 @@ subprojects {
         testImplementation("org.junit.jupiter:junit-jupiter:6.0.2")
 
         implementation("org.reflections:reflections:0.10.2")
-        implementation("org.json:json:20240303")
+        implementation("org.json:json:20251224")
         implementation("io.sentry:sentry-async-profiler:8.30.0")
 
         compileOnly("org.projectlombok:lombok:1.18.42")
