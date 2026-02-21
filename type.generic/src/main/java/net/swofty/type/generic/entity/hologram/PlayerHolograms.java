@@ -9,7 +9,11 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -142,6 +146,43 @@ public enum PlayerHolograms {
                     hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(),
                     newPosition.add(0, startY - (i * spacing), 0)
             );
+        }
+    }
+
+    public static void updateExternalPlayerHologramText(ExternalPlayerHologram hologram, String[] newText) {
+        List<HologramEntity> entities = externalPlayerHolograms.get(hologram);
+        if (entities == null) return;
+
+        double spacing = hologram.getSpacing();
+        double startY = newText.length * spacing - spacing;
+
+        // Update existing lines
+        for (int i = 0; i < newText.length && i < entities.size(); i++) {
+            HologramEntity entity = entities.get(i);
+            entity.setText(newText[i]);
+            entity.setInstance(
+                    hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(),
+                    hologram.pos.add(0, startY - (i * spacing), 0)
+            );
+        }
+
+        // Add new lines if needed
+        while (entities.size() < newText.length) {
+            int i = entities.size();
+            HologramEntity entity = new HologramEntity(newText[i]);
+            entity.setInstance(
+                    hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(),
+                    hologram.pos.add(0, startY - (i * spacing), 0)
+            );
+            entity.addViewer(hologram.player);
+            entities.add(entity);
+        }
+
+        // Remove excess lines if needed
+        while (entities.size() > newText.length) {
+            HologramEntity entity = entities.removeLast();
+            entity.removeViewer(hologram.player);
+            entity.remove();
         }
     }
 

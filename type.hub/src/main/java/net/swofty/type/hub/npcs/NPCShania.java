@@ -17,7 +17,7 @@ public class NPCShania extends HypixelNPC {
 
             @Override
             public float hologramYOffset() {
-                return -0.4f;
+                return 0.4f;
             }
 
             @Override
@@ -39,6 +39,6 @@ public class NPCShania extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().sendMessage("Moooooo!");
+        sendNPCMessage(e.player(), "Moooooo!");
     }
 }
