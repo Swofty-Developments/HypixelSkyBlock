@@ -4,19 +4,18 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUITiaTheFairy;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCTiaTheFairy extends HypixelNPC {
     public NPCTiaTheFairy() {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"Tia The Fairy", "§e§lCLICK"};
+                return new String[]{"§dTia the Fairy", "§e§lCLICK"};
             }
 
             @Override
@@ -31,7 +30,7 @@ public class NPCTiaTheFairy extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(129.5, 66, 137.5, 125, 0);
+                return new Pos(119.5, 65, 147.5, 145, 0);
             }
 
             @Override

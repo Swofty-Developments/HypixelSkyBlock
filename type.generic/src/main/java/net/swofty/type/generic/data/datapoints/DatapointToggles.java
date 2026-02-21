@@ -74,6 +74,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             SKYBLOCK_LEVELS_IN_CHAT(true),
             DISABLE_DROP_MESSAGES(false),
             HAS_SPOKEN_TO_BEA(false),
+            HAS_SPOKEN_TO_GAVIN(false),
             HAS_SPOKEN_TO_TIA(false),
             HAS_SPOKEN_TO_LIFT_OPERATOR(false),
             HAS_SPOKEN_TO_LAZY_MINER(false),

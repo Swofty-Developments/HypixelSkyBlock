@@ -29,7 +29,7 @@ public class NPCKaris extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(65.500, 81.000, -59.500, -15, 0);
+				return new Pos(65.5, 81, -59.5, -15, 0);
 			}
 
 			@Override

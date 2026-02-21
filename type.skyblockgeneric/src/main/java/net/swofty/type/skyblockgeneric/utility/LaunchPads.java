@@ -18,7 +18,12 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -189,10 +194,10 @@ public enum LaunchPads {
 	),
 
 	VILLAGE_TO_GOLD_MINE(
-			getSlimeBlocksNear(new Pos(-9, 63, -231)),
+			getSlimeBlocksNear(new Pos(-5, 73, -271)),
 			ServerType.SKYBLOCK_HUB, // TODO: UPDATE TO PROPER POSITIONS AND INFO
 			ServerType.SKYBLOCK_GOLD_MINE,
-			new Pos(-5, 74, -268),
+			new Pos(-1, 63, -192),
 			(player) -> player.sendTo(ServerType.SKYBLOCK_GOLD_MINE),
 			(player) -> player.getSkills().getCurrentLevel(SkillCategories.MINING) >= 1,
 			"§cYou must be at least Mining Level I to join this island!",
@@ -200,13 +205,13 @@ public enum LaunchPads {
 				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.MINING) >= 1;
 				if (!hasRequirement) {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-9.5, 64.7, -231.5))
+							.pos(new Pos(-1.5, 64.7, -192.5))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aGold Mine", "§cRequires Mining Level 1"})
 							.build();
 				} else {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-9.5, 64.7, -231.5))
+							.pos(new Pos(-1.5, 64.7, -192))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aGold Mine"})
 							.build();

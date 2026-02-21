@@ -50,6 +50,22 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
                     "Auction off your special items.",
                     "Bid on other player's items.");
 
+            case CRYPTS -> onNewZone(player, RegionType.CRYPTS, "Explore the Crypts.", "Watch out for the Zombies that lurk here!");
+
+            case FORAGING_CAMP -> onNewZone(player, RegionType.FORAGING_CAMP,
+                    "Unlock the §2Foraging Skill §fat §2Lumber Jark§f.",
+                    "Purchase Foraging Tools from the §2Lumber Merchant§f.",
+                    "Travel to the §aBirch Park§f.");
+
+            case MINING_DISTRICT -> onNewZone(player, RegionType.MINING_DISTRICT,
+                    "Purchase Mining Tools from the §6Mining Merchant§f.",
+                    "Learn about §3Reforges §fat the §6Blacksmith§f.",
+                    "Travel to the §8Coal Mine§f.");
+
+            case SHENS_AUCTION -> onNewZone(player, RegionType.SHENS_AUCTION,
+                    "Talk to Damia.",
+                    "Bid on high-end items.");
+
             case BANK -> onNewZone(player, RegionType.BANK,
                     "Talk to the Banker.",
                     "Store your coins to keep them safe.",

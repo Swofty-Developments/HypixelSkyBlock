@@ -3,10 +3,28 @@ package net.swofty.type.skyblockgeneric.region;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.commons.Songs;
-import net.swofty.type.skyblockgeneric.region.biome.*;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.*;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.*;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.*;
+import net.swofty.type.skyblockgeneric.region.biome.BirchParkBiome;
+import net.swofty.type.skyblockgeneric.region.biome.DarkThicketBiome;
+import net.swofty.type.skyblockgeneric.region.biome.SpruceWoodsBiome;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.BarnConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.DwarvenMinesConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.GlacialCaveConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.GoldMineConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.MineCoalConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.MineLogsConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.MineWheatConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.WheatAndFlowersConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.DiamondReserveConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.GunpowderMinesConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.LapisQuarryConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.ObsidianSanctuaryConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.PigmensDenConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.SlimehillConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.BirchParkConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.DarkOakConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.JungleIslandConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.SavannaWoodlandConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.SpruceWoodsConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,22 +37,32 @@ public enum RegionType {
 	BANK("Bank", "§6"),
 	LIBRARY("Library"),
 	AUCTION_HOUSE("Auction House", "§6"),
+	SHENS_AUCTION("Shen's Auction", "§6"),
 	FLOWER_HOUSE("Flower House"),
 	BAZAAR_ALLEY("Bazaar Alley", "§e"),
 	COMMUNITY_CENTER("Community Center"),
+	WIZARD_TOWER("Wizard Tower", "§d"),
 	BUILDERS_HOUSE("Builder's House"),
 	MOUNTAIN("Mountain"),
 	WILDERNESS("Wilderness", "§2", Songs.WILDERNESS),
 	RUINS("Ruins"),
+	UNINCORPORATED("Unincorporated", "§c"),
 	COLOSSEUM("Colosseum"),
+	COMBAT_SETTLMENT("Combat Settlement", "§c"),
+	MINING_DISTRICT("Mining District", "§6"),
 	GRAVEYARD("Graveyard", "§c"),
-	COAL_MINE("Coal Mine", MineCoalConfiguration.class),
+	CRYPTS("Crypts", "§c"),
+	COAL_MINE("Coal Mine", "§8", MineCoalConfiguration.class),
 	HIGH_LEVEL("High Level", "§4"),
 	ARCHERY_RANGE("Archery Range", "§9"),
 	BLACKSMITH("Blacksmith"),
-	FARM("Farm", MineWheatConfiguration.class),
+	FARM("Farm", "§E", MineWheatConfiguration.class),
 	DARK_AUCTION("Dark Auction", "§5"),
-	FOREST("Forest", MineLogsConfiguration.class),
+	FISHING_OUTPOST("Fishing Outpost"),
+	FISHERMANS_HUT("Fisherman's Hut"),
+	ARTISTS_ABODE("Artist's Abode", "§e"),
+	FOREST("Forest", "§2", MineLogsConfiguration.class),
+	FORAGING_CAMP("Foraging Camp", "§2", MineLogsConfiguration.class), // TODO: you can't break everything here though
 
 	BIRCH_PARK("Birch Park", "§a", BirchParkConfiguration.class, BirchParkBiome.class),
 	HOWLING_CAVE("Howling Cave", null, BirchParkBiome.class),

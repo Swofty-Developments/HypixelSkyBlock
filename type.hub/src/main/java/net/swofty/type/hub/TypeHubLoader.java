@@ -64,7 +64,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 		RuneEntityImpl thirdStone = new RuneEntityImpl(new Pos(-37.21875, 68.3125, -129.1875, 0, 0f), false);
 		RuneEntityImpl fourthStone = new RuneEntityImpl(new Pos(-37.84375, 68.3125, -129.1875, 0, 0f), false);
 		RuneEntityImpl head = new RuneEntityImpl(new Pos(-37.65625, 69.09375, -129.34375, 45, 0f), true);
-		Pos runePos = new Pos(-37.84375, 68.3125, -129.8125, 0, 0f);
+		Pos runePos = new Pos(-23.84375, 64.3125, -135.8125, 0, 0f);
 
 		AtomicReference<Double> i = new AtomicReference<>(0D);
 		MinecraftServer.getSchedulerManager().scheduleTask(() -> {
