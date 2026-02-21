@@ -24,9 +24,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
-    annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
-    compileOnly(files("velocity-proxy-3.4.0-SNAPSHOT.jar"))
+    compileOnly("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+    annotationProcessor("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+    compileOnly(files("velocity-3.5.0-SNAPSHOT-576.jar"))
 
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.5")
     implementation(project(":commons"))

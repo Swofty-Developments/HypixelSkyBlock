@@ -35,6 +35,43 @@ done
 # ─── Global error trap (safety net for uncaught errors) ──────────────────────
 trap 'on_error ${LINENO}' ERR
 
+generate_forwarding_secret() {
+    if command -v openssl >/dev/null 2>&1; then
+        openssl rand -hex 24
+    else
+        cat /proc/sys/kernel/random/uuid | tr -d '-'
+    fi
+}
+
+setup_forwarding_secret() {
+    local env_file="${INSTALL_DIR}/.env"
+    local secret=""
+
+    if [[ -f "$env_file" ]]; then
+        secret=$(grep -E '^FORWARDING_SECRET=' "$env_file" | tail -n1 | cut -d'=' -f2- || true)
+    fi
+
+    if [[ -z "$secret" && -f "${INSTALL_DIR}/configuration/forwarding.secret" ]]; then
+        secret=$(cat "${INSTALL_DIR}/configuration/forwarding.secret")
+    fi
+
+    if [[ -z "$secret" ]]; then
+        secret=$(generate_forwarding_secret)
+    fi
+
+    mkdir -p "$INSTALL_DIR" "${INSTALL_DIR}/configuration"
+
+    {
+        [[ -f "$env_file" ]] && grep -vE '^FORWARDING_SECRET=' "$env_file" || true
+        echo "FORWARDING_SECRET=${secret}"
+    } > "${env_file}.tmp"
+    mv "${env_file}.tmp" "$env_file"
+
+    printf '%s' "$secret" > "${INSTALL_DIR}/configuration/forwarding.secret"
+    export FORWARDING_SECRET="$secret"
+    log_ok "Forwarding secret configured"
+}
+
 # ─── Re-run detection ────────────────────────────────────────────────────────
 handle_existing_install() {
     local state_file="${1}/${STATE_FILE}"
@@ -62,6 +99,9 @@ main_install() {
 
     set_stage "Cleanup"
     handle_existing_install "$INSTALL_DIR"
+
+    set_stage "Secrets"
+    setup_forwarding_secret
 
     set_stage "Setup"
     do_setup

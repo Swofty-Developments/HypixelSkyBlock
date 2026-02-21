@@ -2,7 +2,7 @@ FROM eclipse-temurin:25-jdk
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y jq expect netcat-traditional curl && apt-get clean
+RUN apt-get update && apt-get install -y jq netcat-traditional curl && apt-get clean
 
 # Download Velocity proxy JAR
 RUN curl -fSL -o velocity.jar "https://fill-data.papermc.io/v1/objects/ef1a852bfae7397e84907837925e7ad21c6312066290edaae401b77f6f423ac3/velocity-3.4.0-SNAPSHOT-558.jar"
@@ -14,22 +14,14 @@ RUN mkdir -p plugins && \
 # Copy configuration data
 COPY ./configuration /app/configuration_files
 
-# Run Velocity to generate forwarding.secret, then shut it down
-RUN printf '#!/usr/bin/expect -f\nset timeout 120\nspawn java -jar velocity.jar\nexpect ">"\nsend "shutdown\\r"\nexpect eof\n' > /tmp/run_velocity.exp && \
-    chmod +x /tmp/run_velocity.exp && \
-    /tmp/run_velocity.exp && \
-    rm /tmp/run_velocity.exp
-
 # Replace generated velocity.toml with our own
 RUN rm -f velocity.toml && \
     cp configuration_files/velocity.toml velocity.toml
 
-# Set up config.yml with the generated forwarding secret
+# Set up config.yml template
 RUN mkdir -p configuration && \
-    cp configuration_files/config.example.yml ./configuration/config.yml && \
-    secret=$(cat forwarding.secret) && \
-    sed -i "s/velocity-secret: .*/velocity-secret: '$secret'/" ./configuration/config.yml
+    cp configuration_files/config.example.yml ./configuration/config.yml
 
 EXPOSE 25565
 
-CMD ["sh", "-c", "cp forwarding.secret /app/configuration_files/forwarding.secret && java -jar velocity.jar"]
+CMD ["sh", "-c", "[ -n \"$FORWARDING_SECRET\" ] || { echo 'FORWARDING_SECRET is required' >&2; exit 1; }; printf '%s' \"$FORWARDING_SECRET\" > /app/forwarding.secret; sed -i \"s/velocity-secret: .*/velocity-secret: '$FORWARDING_SECRET'/\" /app/configuration/config.yml; java -jar velocity.jar"]

@@ -28,11 +28,9 @@ RUN curl -fSL -o /tmp/worlds.tar.gz "https://files.catbox.moe/9uas8z.gz" && \
 
 EXPOSE 25565 65535 8080 20000
 
-RUN cp configuration_files/NanoLimbo-1.10.2.jar ./NanoLimbo-1.10.2.jar && \
-    cp configuration_files/settings.yml ./settings.yml && \
+RUN cp configuration_files/server.toml ./server.toml && \
     cp -a configuration_files/skyblock/. configuration/skyblock/ && \
     cp configuration_files/entrypoint.sh ./entrypoint.sh && \
-    chmod +x entrypoint.sh && \
-    sed -i "s/ip: 'localhost'/ip: '0.0.0.0'/" ./settings.yml
+    chmod +x entrypoint.sh
 
 CMD ["sh", "entrypoint.sh"]

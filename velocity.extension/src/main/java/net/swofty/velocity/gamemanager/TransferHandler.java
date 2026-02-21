@@ -4,13 +4,16 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.ServerType;
-import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public record TransferHandler(Player player) {
@@ -28,29 +31,6 @@ public record TransferHandler(Player player) {
 
 	public void removeFromDisregard() {
 		disregard.remove(player);
-	}
-
-	public void standardTransferTo(RegisteredServer currentServer, ServerType type) {
-		if (type == null) {
-			player.disconnect(Component.text("§cWe encountered an error while trying to transfer you to a server. Please try again later."));
-			return;
-		}
-
-		new Thread(() -> {
-			boolean hasEmptyServer = GameManager.hasType(type) && GameManager.isAnyEmpty(type);
-			if (!hasEmptyServer) {
-				player.sendMessage(Component.text(
-						"§cThere are no SkyBlock (type=" + type.name() + ") servers available at the moment."
-				));
-				return;
-			}
-
-			RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
-
-			player.createConnectionRequest(limboServer).connectWithIndication();
-			playersGoalServerType.put(player, type);
-			playersOriginServer.put(player, currentServer);
-		}).start();
 	}
 
 	public CompletableFuture<Boolean> sendToLimbo() {
@@ -125,12 +105,6 @@ public record TransferHandler(Player player) {
 			playersOriginServer.remove(player);
 			playersGoalServerType.remove(player);
 
-			try {
-				Thread.sleep(ConfigProvider.settings().getTransferTimeout());
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			}
-
 			player.sendMessage(Component.text("§7Sending to server " + server.displayName() + "..."));
 			player.createConnectionRequest(server.registeredServer()).connectWithIndication();
 
@@ -140,7 +114,7 @@ public record TransferHandler(Player player) {
 		}).start();
 	}
 
-	public void noLimboTransferTo(ServerType type) {
+	public void transferTo(ServerType type) {
 		new Thread(() -> {
 			RegisteredServer originServer = playersOriginServer.get(player);
 			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
@@ -173,7 +147,7 @@ public record TransferHandler(Player player) {
 		playersOriginServer.remove(player);
 	}
 
-	public void noLimboTransferTo(RegisteredServer toTransferTo) {
+	public void transferTo(RegisteredServer toTransferTo) {
 		new Thread(() -> {
 			RegisteredServer originServer = playersOriginServer.get(player);
 			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
