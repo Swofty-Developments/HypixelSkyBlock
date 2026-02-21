@@ -54,6 +54,7 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
         PlayerHolograms.addExternalPlayerHologram(holo);
         setInstance(config.instance(), pos);
         addViewer(viewer);
+        setPose(config.pose(viewer));
     }
 
     @Override
@@ -92,13 +93,17 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
 
     @Override
     public void updateNPC() {
-        if (!getPosition().asVec().equals(config.position(viewer).asVec())) {
+        Pos npcPosition = config.position(viewer);
+        if (!getPosition().asVec().equals(npcPosition.asVec())) {
             String[] holograms = config.holograms(viewer);
-            Pos npcPosition = config.position(viewer);
 
             boolean overflowing = holograms[holograms.length - 1].length() > 16;
             float yOffset = overflowing ? -0.2f : 0.0f;
-            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, 1.1f + yOffset, 0));
+            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getEyeHeight() + 0.5f + yOffset, 0));
+        }
+
+        if (!getPose().equals(config.pose(viewer))) {
+            setPose(config.pose(viewer));
         }
 
         String[] newHolograms = config.holograms(viewer);

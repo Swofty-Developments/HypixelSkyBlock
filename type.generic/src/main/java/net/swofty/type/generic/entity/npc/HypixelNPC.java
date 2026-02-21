@@ -19,7 +19,6 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -34,7 +33,7 @@ public abstract class HypixelNPC {
     @Getter
     private static final List<HypixelNPC> registeredNPCs = new ArrayList<>();
     @Getter
-    private static final Map<UUID, HypixelNPC.PlayerNPCCache> perPlayerNPCs = new HashMap<>();
+    private static final Map<UUID, HypixelNPC.PlayerNPCCache> perPlayerNPCs = new ConcurrentHashMap<>();
 
     @Getter
     private final NPCConfiguration parameters;
@@ -50,7 +49,10 @@ public abstract class HypixelNPC {
     }
 
     public static HypixelNPC getFromImpl(HypixelPlayer player, Entity impl) {
-        Map<HypixelNPC, Entity> npcs = perPlayerNPCs.get(player.getUuid()).getEntityImpls();
+        PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
+        if (cache == null) return null;
+
+        Map<HypixelNPC, Entity> npcs = cache.getEntityImpls();
         if (npcs == null) return null;
 
         for (Map.Entry<HypixelNPC, Entity> entry : npcs.entrySet()) {
@@ -104,8 +106,6 @@ public abstract class HypixelNPC {
                     }
 
                     Entity entity;
-                    // if overflowing, adjust yOffset downwards to replace username
-                    float yOffset = overflowing ? -0.2f : 0.0f;
                     switch (config) {
                         case HumanConfiguration humanConfig -> entity = new NPCEntityImpl(
                             player,
@@ -243,10 +243,10 @@ public abstract class HypixelNPC {
     }
 
     public static class PlayerNPCCache {
-        private final Map<HypixelNPC, List<Entity>> npcs = new ConcurrentHashMap<>();
+        private final Map<HypixelNPC, Entity> npcs = new ConcurrentHashMap<>();
 
         public void add(HypixelNPC npc, Entity entity) {
-            npcs.computeIfAbsent(npc, k -> new ArrayList<>()).add(entity);
+            npcs.put(npc, entity);
         }
 
         public void remove(HypixelNPC npc) {
@@ -254,17 +254,11 @@ public abstract class HypixelNPC {
         }
 
         public Map<HypixelNPC, Entity> getEntityImpls() {
-            Map<HypixelNPC, Entity> impls = new HashMap<>();
-            npcs.forEach((npc, entities) -> {
-                if (!entities.isEmpty()) {
-                    impls.put(npc, entities.getFirst()); // Assuming one entity per NPC per player
-                }
-            });
-            return impls;
+            return npcs;
         }
 
         public Entity get(HypixelNPC npc) {
-            return getEntityImpls().get(npc);
+            return npcs.get(npc);
         }
     }
 

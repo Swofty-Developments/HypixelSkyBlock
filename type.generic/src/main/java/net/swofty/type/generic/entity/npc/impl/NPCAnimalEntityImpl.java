@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
@@ -21,6 +22,7 @@ public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
     private final PlayerHolograms.ExternalPlayerHologram holo;
     private final AnimalConfiguration config;
     private String[] holograms;
+    private Entity seatMount;
 
     public NPCAnimalEntityImpl(@NotNull HypixelPlayer viewer, @NotNull Pos pos, @NotNull String bottomDisplay, @NotNull EntityType entityType, @NotNull AnimalConfiguration config, String[] holograms, boolean overflowing) {
         super(entityType);
@@ -33,7 +35,7 @@ public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
         setAutoViewable(false);
 
         PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
-            .pos(pos.add(0, getEyeHeight() + config.hologramYOffset(), 0))
+            .pos(pos.add(0, getEyeHeight() + config.hologramYOffset() + (overflowing ? -0.2f : 0f), 0))
             .text(Arrays.copyOfRange(holograms, 0, holograms.length - (overflowing ? 0 : 1)))
             .player(viewer)
             .instance(config.instance())
@@ -44,6 +46,7 @@ public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
         PlayerHolograms.addExternalPlayerHologram(holo);
         setInstance(config.instance(), pos);
         addViewer(viewer);
+        setPose(config.pose(viewer));
     }
 
     @Override
@@ -62,14 +65,18 @@ public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
 
     @Override
     public void updateNPC() {
-        if (!getPosition().asVec().equals(config.position(viewer).asVec())) {
+        Pos npcPosition = config.position(viewer);
+        if (!getPosition().asVec().equals(npcPosition.asVec())) {
             String[] holograms = config.holograms(viewer);
-            Pos npcPosition = config.position(viewer);
 
             boolean overflowing = holograms[holograms.length - 1].length() > 16;
             float yOffset = overflowing ? -0.2f : 0.0f;
             yOffset += config.hologramYOffset();
             PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getEyeHeight() + yOffset, 0));
+        }
+
+        if (!getPose().equals(config.pose(viewer))) {
+            setPose(config.pose(viewer));
         }
 
         String[] newHolograms = config.holograms(viewer);
