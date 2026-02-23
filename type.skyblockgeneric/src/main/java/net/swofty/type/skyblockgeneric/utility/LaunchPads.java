@@ -30,7 +30,7 @@ import java.util.function.Function;
 @Getter
 public enum LaunchPads {
 	VILLAGE_TO_FARMING(
-			getSlimeBlocksNear(new Pos(79, 71, -185)),
+			getSlimeBlocksNear(new Pos(87, 71, -154)),
 			ServerType.SKYBLOCK_HUB,
 			ServerType.SKYBLOCK_THE_FARMING_ISLANDS,
 			new Pos(116.5, 74, -210.5),
@@ -41,13 +41,13 @@ public enum LaunchPads {
 				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.FARMING) >= 5;
 				if (!hasRequirement) {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(79.5, 73.3, -184.5))
+							.pos(new Pos(87.5, 73, -154.5))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aThe Farming Islands", "§cRequires Farming Level 5"})
 							.build();
 				} else {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(79.5, 73.3, -184.5))
+							.pos(new Pos(87.5, 73, -154.5))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aThe Farming Islands"})
 							.build();
@@ -71,7 +71,7 @@ public enum LaunchPads {
 	),
 
 	GRAVEYARD_TO_SPIDERS_DEN(
-			getSlimeBlocksNear(new Pos(-162, 73, -161)),
+			getSlimeBlocksNear(new Pos(-151, 74, -180)),
 			ServerType.SKYBLOCK_HUB,
 			ServerType.SKYBLOCK_SPIDERS_DEN,
 			new Pos(-202.5, 83, -233.5),
@@ -82,13 +82,13 @@ public enum LaunchPads {
 				boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 1;
 				if (!hasRequirement) {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-162.5, 73.5, -161.5))
+							.pos(new Pos(-151.5, 76.5, -180.5))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aSpider's Den", "§cRequires Combat Level 1"})
 							.build();
 				} else {
 					return PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(new Pos(-162.5, 73.5, -161.5))
+							.pos(new Pos(-151.5, 76.5, -180.5))
 							.player(player)
 							.text(new String[]{"§bTravel to:", "§aSpider's Den"})
 							.build();

@@ -15,7 +15,7 @@ import java.util.Map;
 @Getter
 public enum ServerHolograms {
     TO_ISLAND(ServerType.SKYBLOCK_HUB, new Pos(0.5, 71, -27.5), "§bTravel to:", "§aYour Island"),
-    TO_DUNGEON_HUB(ServerType.SKYBLOCK_HUB, new Pos(-34, 73, 26), "§bTravel to:", "§aDungeon Hub"),
+    TO_DUNGEON_HUB(ServerType.SKYBLOCK_HUB, new Pos(-33.5, 75, 26.5), "§bTravel to:", "§aDungeon Hub"),
     ;
 
     private static final Map<ExternalHologram, List<HologramEntity>> externalHolograms = new HashMap<>();

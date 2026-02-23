@@ -21,6 +21,7 @@ import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
+import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 
 import java.text.SimpleDateFormat;
@@ -56,7 +57,12 @@ public class SkyBlockScoreboard {
                 lines.add("§f " + SkyBlockCalendar.getMonthName() + " " + StringUtility.ntify(SkyBlockCalendar.getDay()));
                 lines.add("§7 " + SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed()));
                 try {
-                    lines.add("§7 ⏣ " + region.getType().getColor() + region.getType().getName());
+                    RegionType type = region.getType();
+                    String name = type.getName();
+                    if (type == RegionType.PLAYER_MUSEUM) {
+                        name = name.formatted(player.getUsername());
+                    }
+                    lines.add("§7 ⏣ " + region.getType().getColor() + name);
                 } catch (NullPointerException ignored) {
                     lines.add(" §7Unknown");
                 }
