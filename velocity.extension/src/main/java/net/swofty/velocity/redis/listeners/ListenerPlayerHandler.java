@@ -89,8 +89,8 @@ public class ListenerPlayerHandler extends RedisListener {
                 }
 
                 transferHandler.addToDisregard();
-                transferHandler.transferTo(serverInfo.registeredServer());
-                transferHandler.removeFromDisregard();
+                transferHandler.transferTo(serverInfo.registeredServer())
+                    .thenRun(transferHandler::removeFromDisregard);
 
             }
             case TRANSFER -> {

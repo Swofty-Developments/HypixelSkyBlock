@@ -117,6 +117,10 @@ public record TransferHandler(Player player) {
 	public void transferTo(ServerType type) {
 		new Thread(() -> {
 			RegisteredServer originServer = playersOriginServer.get(player);
+			if (originServer == null) {
+				player.getCurrentServer().ifPresent(conn -> playersOriginServer.put(player, conn.getServer()));
+				originServer = playersOriginServer.get(player);
+			}
 			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
 
 			playersGoalServerType.remove(player);
@@ -147,27 +151,36 @@ public record TransferHandler(Player player) {
 		playersOriginServer.remove(player);
 	}
 
-	public void transferTo(RegisteredServer toTransferTo) {
+	public CompletableFuture<Void> transferTo(RegisteredServer toTransferTo) {
+		CompletableFuture<Void> future = new CompletableFuture<>();
 		new Thread(() -> {
-			RegisteredServer originServer = playersOriginServer.get(player);
-			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
+			try {
+				RegisteredServer originServer = playersOriginServer.get(player);
+				if (originServer == null) {
+					player.getCurrentServer().ifPresent(conn -> playersOriginServer.put(player, conn.getServer()));
+					originServer = playersOriginServer.get(player);
+				}
+				ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
 
-			playersGoalServerType.remove(player);
-			playersOriginServer.remove(player);
+				playersGoalServerType.remove(player);
+				playersOriginServer.remove(player);
 
-			ServerType type = GameManager.getTypeFromRegisteredServer(toTransferTo);
-			UUID serverUUID = UUID.fromString(toTransferTo.getServerInfo().getName());
+				UUID serverUUID = UUID.fromString(toTransferTo.getServerInfo().getName());
 
-			if (originServer != null && originServerType != null) {
-				RedisMessage.sendMessageToServer(serverUUID,
-						FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
-						new JSONObject().put("uuid", player.getUniqueId().toString())
-								.put("origin-type", originServerType.name())
-				);
+				if (originServer != null && originServerType != null) {
+					RedisMessage.sendMessageToServer(serverUUID,
+							FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
+							new JSONObject().put("uuid", player.getUniqueId().toString())
+									.put("origin-type", originServerType.name())
+					);
+				}
+
+				player.createConnectionRequest(toTransferTo).connectWithIndication();
+				future.complete(null);
+			} catch (Exception e) {
+				future.completeExceptionally(e);
 			}
-
-			GameManager.GameServer toTransferToAsGame = GameManager.getFromUUID(serverUUID);
-			player.createConnectionRequest(toTransferTo).connectWithIndication();
 		}).start();
+		return future;
 	}
 }
