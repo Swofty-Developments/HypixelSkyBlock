@@ -12,11 +12,17 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class TablistManager {
-    private static Map<HypixelPlayer, List<UUID>> tablistEntries = new HashMap<>();
+    private static final Map<HypixelPlayer, PlayerTabCache> tablistEntries = new HashMap<>();
+
+    private static final class PlayerTabCache {
+        private final List<UUID> tabEntries = new ArrayList<>();
+        private final Set<String> createdTeams = new HashSet<>();
+    }
 
     public abstract List<TablistModule> getModules();
 
@@ -25,89 +31,89 @@ public abstract class TablistManager {
     }
 
     public void nullifyCache(HypixelPlayer player) {
-        if (tablistEntries.containsKey(player) && tablistEntries.get(player) != null) {
-            player.sendPacket(new PlayerInfoRemovePacket(tablistEntries.get(player)));
-            tablistEntries.put(player, null);
+        PlayerTabCache cache = tablistEntries.get(player);
+        if (cache != null && !cache.tabEntries.isEmpty()) {
+            player.sendPacket(new PlayerInfoRemovePacket(cache.tabEntries));
+            cache.tabEntries.clear();
         }
     }
 
     public void runScheduler(Scheduler scheduler) {
         scheduler.scheduleTask(() -> {
             HypixelGenericLoader.getLoadedPlayers().forEach(player -> {
-                if (!tablistEntries.containsKey(player)) {
-                    tablistEntries.put(player, new ArrayList<>());
-                } else {
-                    if (tablistEntries.get(player) == null) return;
-                    player.sendPacket(new PlayerInfoRemovePacket(tablistEntries.get(player)));
-                }
-                tablistEntries.get(player).clear();
+                PlayerTabCache cache = tablistEntries.computeIfAbsent(player, ignored -> new PlayerTabCache());
 
-                AtomicReference<Map.Entry<String, Integer>> charPrefix = new AtomicReference<>(Map.entry("§", 0));
+                if (!cache.tabEntries.isEmpty()) {
+                    player.sendPacket(new PlayerInfoRemovePacket(cache.tabEntries));
+                }
+                cache.tabEntries.clear();
+
+                AtomicInteger slot = new AtomicInteger(0);
 
                 getModules().forEach(module -> {
                     try {
                         List<TablistModule.TablistEntry> entries = module.getEntries(player);
 
                         entries.forEach(entry -> {
+                            int slotIndex = slot.getAndIncrement();
+                            String teamName = getTeamName(slotIndex);
+                            String fakeProfileName = getFakeProfileName(slotIndex);
+
                             List<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
                             properties.add(new PlayerInfoUpdatePacket.Property(
-                                    "textures",
-                                    entry.registry().getTexture(),
-                                    entry.registry().getSignature()));
+                                "textures",
+                                entry.registry().getTexture(),
+                                entry.registry().getSignature()));
 
-                            if (!charPrefix.get().getKey().equals(entry.content())) {
-                                charPrefix.set(Map.entry(entry.content(), charPrefix.get().getValue() + 1));
-                            }
-
-                            // 0 is AA, 1 is AB, 2 is AC, etc.
-                            // 26 is BA, 27 is BB, 28 is BC, etc.
-                            StringBuilder prefix = new StringBuilder();
-                            int value = charPrefix.get().getValue();
-                            do {
-                                // 'A' has an ASCII value of 65, so adding value % 26 gives us the letter we want.
-                                // We subtract by 1 before the modulus operation because we want 'A' to represent 0, 'B' to represent 1, and so on.
-                                char charToAdd = (char) ('A' + (value - 1) % 26);
-                                prefix.insert(0, charToAdd); // Prepend the character
-                                value = (value - 1) / 26; // Move to the next 'digit'
-                            } while (value > 0);
-
-                            UUID uuid = UUID.randomUUID();
-                            tablistEntries.get(player).add(uuid);
-
-                            String randomName = UUID.randomUUID().toString().substring(0, 8);
-
-                            TeamsPacket teamPacket = new TeamsPacket(prefix.toString(), new TeamsPacket.CreateTeamAction(
-                                    Component.text(prefix.toString()),
+                            if (cache.createdTeams.add(teamName)) {
+                                TeamsPacket teamPacket = new TeamsPacket(teamName, new TeamsPacket.CreateTeamAction(
+                                    Component.text(teamName),
                                     (byte) 0x01,
                                     TeamsPacket.NameTagVisibility.ALWAYS,
                                     TeamsPacket.CollisionRule.ALWAYS,
                                     NamedTextColor.RED,
-                                    Component.text(prefix.toString()),
+                                    Component.text(teamName),
                                     Component.empty(),
-                                    new ArrayList<>(Collections.singletonList(randomName))
-                            ));
+                                    new ArrayList<>(Collections.singletonList(fakeProfileName))
+                                ));
+
+                                player.sendPacket(teamPacket);
+                            }
+
+                            UUID uuid = UUID.nameUUIDFromBytes((player.getUuid().toString() + "#tab#" + slotIndex)
+                                .getBytes(StandardCharsets.UTF_8));
+                            cache.tabEntries.add(uuid);
 
                             player.sendPackets(
-                                    teamPacket,
-                                    new PlayerInfoUpdatePacket(EnumSet.of(
-                                            PlayerInfoUpdatePacket.Action.ADD_PLAYER,
-                                            PlayerInfoUpdatePacket.Action.UPDATE_DISPLAY_NAME,
-                                            PlayerInfoUpdatePacket.Action.UPDATE_LISTED
-                                    ), Collections.singletonList(new PlayerInfoUpdatePacket.Entry(
-                                            uuid,
-                                            randomName,
-                                            properties,
-                                            true,
-                                            0,
-                                            GameMode.CREATIVE,
-                                            Component.text(entry.content()),
-                                            null,
-                                            1, true)))
+                                new PlayerInfoUpdatePacket(EnumSet.of(
+                                    PlayerInfoUpdatePacket.Action.ADD_PLAYER,
+                                    PlayerInfoUpdatePacket.Action.UPDATE_DISPLAY_NAME,
+                                    PlayerInfoUpdatePacket.Action.UPDATE_LISTED
+                                ), Collections.singletonList(new PlayerInfoUpdatePacket.Entry(
+                                    uuid,
+                                    fakeProfileName,
+                                    properties,
+                                    true,
+                                    0,
+                                    GameMode.CREATIVE,
+                                    Component.text(entry.content()),
+                                    null,
+                                    1, true)))
                             );
                         });
-                    } catch (Exception e) {}
+                    } catch (Exception _) {
+                    }
                 });
             });
         }, TaskSchedule.seconds(5), TaskSchedule.seconds(3), ExecutionType.TICK_END);
     }
+
+    private static String getTeamName(int slotIndex) {
+        return String.format(Locale.ROOT, "TAB%03d", slotIndex);
+    }
+
+    private static String getFakeProfileName(int slotIndex) {
+        return "tab" + Integer.toString(slotIndex, 36);
+    }
+
 }
