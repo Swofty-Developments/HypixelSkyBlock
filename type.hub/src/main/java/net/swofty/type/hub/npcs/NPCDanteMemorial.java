@@ -31,8 +31,8 @@ public class NPCDanteMemorial extends HypixelNPC {
             }
 
             @Override
-            public boolean looking(HypixelPlayer player) {
-                return true;
+            public boolean shouldDisplayHolograms(HypixelPlayer player) {
+                return false;
             }
         });
     }

@@ -1,5 +1,6 @@
 package net.swofty.type.hub.npcs;
 
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -60,7 +61,7 @@ public class NPCTiaTheFairy extends HypixelNPC {
         return Stream.of(
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "Welcome to the Fairy Pond! I am Tia.",
+                                "Welcome to the §dFairy Pond§f, " + LegacyComponentSerializer.legacySection().serialize(player.getColouredName()) + "! I am Tia.",
                                 "You may have noticed some strange orbs laying around the island.",
                                 "They are the souls of my fallen sisters.",
                                 "If you find any more during your travels, please bring them back to me!"

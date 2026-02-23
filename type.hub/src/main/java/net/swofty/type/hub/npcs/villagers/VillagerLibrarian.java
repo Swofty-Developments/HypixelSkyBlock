@@ -4,15 +4,13 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopLibrarian;
-import net.swofty.type.hub.gui.rosetta.GUIStarlightArmor;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class VillagerLibrarian extends HypixelNPC {
     public VillagerLibrarian() {
@@ -24,7 +22,7 @@ public class VillagerLibrarian extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-35, 69, -112, -45, 0);
+                return new Pos(-68.5, 70, -79.5, -45, 0);
             }
 
             @Override

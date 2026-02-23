@@ -1,5 +1,6 @@
 package net.swofty.type.hub.npcs;
 
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointString;
@@ -36,7 +37,7 @@ public class NPCMuseumDisplay extends HypixelNPC {
             if (dataHandler == null) {
                 dataHandler = HypixelDataHandler.getOfOfflinePlayer(currentlyViewing);
             }
-			String username = HypixelDataHandler.getPotentialIGNFromUUID(profileUUID);
+			String username = LegacyComponentSerializer.legacySection().serialize(p.getColouredName());
 			String profileName = skyblockHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
 
 			return new String[]{

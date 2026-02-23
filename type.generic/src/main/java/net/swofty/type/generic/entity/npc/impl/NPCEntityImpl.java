@@ -65,7 +65,9 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
             .build();
 
         this.holo = holo;
-        PlayerHolograms.addExternalPlayerHologram(holo);
+        if (config.shouldDisplayHolograms(viewer)) {
+            PlayerHolograms.addExternalPlayerHologram(holo);
+        }
 
         setInstance(config.instance(), pos);
         addViewer(viewer);
@@ -122,7 +124,7 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
     @Override
     public void updateNPC() {
         Pos npcPosition = config.position(viewer);
-        if (!getPosition().asVec().equals(npcPosition.asVec())) {
+        if (!getPosition().asVec().equals(npcPosition.asVec()) && config.shouldDisplayHolograms(viewer)) {
             PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getEyeHeight() + 0.1f, 0));
         }
 
@@ -137,10 +139,14 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
             ));
         }
 
-        String[] newHolograms = config.holograms(viewer);
-        if (!Arrays.equals(newHolograms, holograms)) {
-            PlayerHolograms.updateExternalPlayerHologramText(holo, newHolograms);
-            this.holograms = newHolograms;
+        if (config.shouldDisplayHolograms(viewer)) {
+            String[] newHolograms = config.holograms(viewer);
+            if (!Arrays.equals(newHolograms, holograms)) {
+                PlayerHolograms.updateExternalPlayerHologramText(holo, newHolograms);
+                this.holograms = newHolograms;
+            }
+        } else {
+            PlayerHolograms.removeExternalPlayerHologram(holo);
         }
 
         String actualSkinTexture = config.texture(viewer);

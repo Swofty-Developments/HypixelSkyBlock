@@ -6,6 +6,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.GameMode;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.entity.npc.configuration.NPCConfiguration;
@@ -153,7 +154,7 @@ public abstract class HypixelNPC {
 
                 Pos playerPosition = player.getPosition();
                 double entityDistance = playerPosition.distance(npcPosition);
-                boolean isLookingNPC = config.looking(player);
+                boolean isLookingNPC = config.looking(player) && player.getGameMode() != GameMode.SPECTATOR;
 
                 // Get inRangeOf list based on entity type
                 List<HypixelPlayer> inRange = npcViewable.getInRangeOf();

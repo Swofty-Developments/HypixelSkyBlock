@@ -33,4 +33,8 @@ public interface NPCConfiguration {
     default EntityPose pose(HypixelPlayer player) {
         return EntityPose.STANDING;
     }
+
+    default boolean shouldDisplayHolograms(HypixelPlayer player) {
+        return true;
+    }
 }
