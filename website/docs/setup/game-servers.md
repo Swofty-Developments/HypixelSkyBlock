@@ -7,7 +7,7 @@ Game servers run the actual gameplay using Minestom. Each server runs as a speci
 1. Download `HypixelCore.jar` from the [releases page](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
 2. Download [`config.yml`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
 3. Download [world files](https://files.catbox.moe/of7snu.zip)
-4. Download [`NanoLimbo.jar`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and its config
+4. Download [`PicoLimbo.jar`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and its config
 
 ## Directory Structure
 
@@ -78,15 +78,15 @@ Download from [configuration/skyblock](https://github.com/Swofty-Developments/Hy
 - `collections/` folder → `configuration/skyblock/collections/`
 - `songs/` folder → `configuration/skyblock/songs/` (optional)
 
-### 5. Setup NanoLimbo
+### 5. Setup PicoLimbo
 
-NanoLimbo handles players during server transfers:
+PicoLimbo handles the limbo state:
 
-1. Place `NanoLimbo-1.10.2.jar` in a separate directory
-2. Run it once: `java -jar NanoLimbo-1.10.2.jar`
-3. Edit generated `settings.yml`:
-   - Set `type: MODERN`
-   - Set `secret: 'YOUR_VELOCITY_SECRET'`
+1. Place `PicoLimbo.jar` in a separate directory
+2. Edit the `server.toml` which you can find in the repository configuration folder:
+   - Set `method="MODERN"`
+   - Set `secret="YOUR_SECRET"` (or FORWARDING_SECRET environment variable by default)
+3. Move the `limbo.polar` file to the same directory, or set polar_file to empty: `polar_file=""`
 4. Keep it running in the background
 
 ### 6. Start a Game Server

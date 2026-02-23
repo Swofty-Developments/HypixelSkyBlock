@@ -83,7 +83,7 @@ integrations:
     via-version: false
     sentry-dsn: ''
 limbo:
-    host-name: nanolimbo
+    host-name: picolimbo
     port: 65535
 resource-pack:
     public-url: ''
@@ -115,7 +115,7 @@ generate_dockerfiles() {
     cat > "${INSTALL_DIR}/DockerFiles/Dockerfile.proxy" <<'PROXY_EOF'
 FROM eclipse-temurin:25-jdk
 WORKDIR /app
-RUN apt-get update && apt-get install -y jq expect netcat-traditional curl && apt-get clean
+RUN apt-get update && apt-get install -y jq netcat-traditional curl && apt-get clean
 PROXY_EOF
 
     cat >> "${INSTALL_DIR}/DockerFiles/Dockerfile.proxy" <<PROXY_EOF
@@ -126,18 +126,12 @@ PROXY_EOF
 
     cat >> "${INSTALL_DIR}/DockerFiles/Dockerfile.proxy" <<'PROXY_EOF'
 COPY ./configuration /app/configuration_files
-RUN printf '#!/usr/bin/expect -f\nset timeout 120\nspawn java -jar velocity.jar\nexpect ">"\nsend "shutdown\\r"\nexpect eof\n' > /tmp/run_velocity.exp && \
-    chmod +x /tmp/run_velocity.exp && \
-    /tmp/run_velocity.exp && \
-    rm /tmp/run_velocity.exp
 RUN rm -f velocity.toml && \
     cp configuration_files/velocity.toml velocity.toml
 RUN mkdir -p configuration && \
-    cp configuration_files/config.example.yml ./configuration/config.yml && \
-    secret=$(cat forwarding.secret) && \
-    sed -i "s/velocity-secret: .*/velocity-secret: '$secret'/" ./configuration/config.yml
+    cp configuration_files/config.example.yml ./configuration/config.yml
 EXPOSE 25565
-CMD ["sh", "-c", "cp forwarding.secret /app/configuration_files/forwarding.secret && java -jar velocity.jar"]
+CMD ["sh", "-c", "[ -n \"$FORWARDING_SECRET\" ] || { echo 'FORWARDING_SECRET is required' >&2; exit 1; }; printf '%s' \"$FORWARDING_SECRET\" > /app/forwarding.secret; sed -i \"s/velocity-secret: .*/velocity-secret: '$FORWARDING_SECRET'/\" /app/configuration/config.yml; java -jar velocity.jar"]
 PROXY_EOF
 
     local jar_downloads=""
@@ -166,12 +160,10 @@ RUN curl -fSL -o /tmp/worlds.tar.gz "${worlds_url}" && \\
     tar -xzf /tmp/worlds.tar.gz -C ./configuration && \\
     rm /tmp/worlds.tar.gz
 EXPOSE 25565 65535 8080 20000
-RUN cp configuration_files/NanoLimbo-1.10.2.jar ./NanoLimbo-1.10.2.jar && \\
-    cp configuration_files/settings.yml ./settings.yml && \\
+RUN cp configuration_files/server.toml ./server.toml && \\
     cp -a configuration_files/skyblock/. configuration/skyblock/ && \\
     cp configuration_files/entrypoint.sh ./entrypoint.sh && \\
-    chmod +x entrypoint.sh && \\
-    sed -i "s/ip: 'localhost'/ip: '0.0.0.0'/" ./settings.yml
+    chmod +x entrypoint.sh
 CMD ["sh", "entrypoint.sh"]
 GAME_EOF
 
@@ -191,6 +183,8 @@ generate_docker_compose() {
     fi
 
     cat > "$compose_file" <<COMPOSE_HEAD
+x-forwarding-env: &forwarding_env
+  FORWARDING_SECRET: \${FORWARDING_SECRET:-change-me}
 services:
   mongodb:
     image: mongo:8.0.9
@@ -230,6 +224,8 @@ ${redis_ports}
       context: .
       dockerfile: "./DockerFiles/Dockerfile.proxy"
     container_name: hypixel_proxy
+    environment:
+      <<: *forwarding_env
     ports:
       - "25565:25565"
     depends_on:
@@ -259,12 +255,12 @@ ${redis_ports}
     networks:
       - hypixel_network
 
-  nanolimbo:
-    image: game_server_prepared
-    container_name: nanolimbo
-    restart: "unless-stopped"
+  pico-limbo:
+    image: ghcr.io/ariksquad/picolimbo:latest
+    container_name: picolimbo
+    restart: unless-stopped
     environment:
-      SERVICE_CMD: java -jar NanoLimbo-1.10.2.jar
+      <<: *forwarding_env
     depends_on:
       proxy:
         condition: service_healthy
@@ -286,6 +282,7 @@ COMPOSE_HEAD
     container_name: hypixelcore_${name_lower}
     restart: "unless-stopped"
     environment:
+      <<: *forwarding_env
       SERVICE_CMD: java -jar HypixelCore.jar ${server}
     depends_on:
       proxy:
@@ -318,6 +315,7 @@ GAME_SERVER
             echo "    container_name: service_${svc_lower}"
             echo "    restart: \"unless-stopped\""
             echo "    environment:"
+            echo "      <<: *forwarding_env"
             echo "      SERVICE_CMD: ${svc_cmd}"
             echo "    depends_on:"
             echo "      proxy:"

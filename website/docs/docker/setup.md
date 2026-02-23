@@ -9,6 +9,7 @@ curl -fsSL skyblock-installer.swofty.net | bash
 ```
 
 The installer will:
+
 1. Check and install dependencies (Docker, `gum`, `figlet`)
 2. Run a system requirements check
 3. Let you pick which server types and services to run
@@ -24,13 +25,13 @@ Requires **Linux** with **Docker** installed. The installer will guide you throu
 
 The installer walks you through:
 
-| Step | What It Does |
-|------|-------------|
-| System Check | Validates RAM, CPU, disk space, Docker version |
-| Configuration | Pick install directory, bind IP, online mode |
-| Server Selection | Choose from 14 SkyBlock servers and 10 minigame servers |
-| Service Selection | Pick which microservices to run (DataMutex and Party are required) |
-| Build & Launch | Builds Docker images, starts containers in order, waits for health checks |
+| Step              | What It Does                                                              |
+|-------------------|---------------------------------------------------------------------------|
+| System Check      | Validates RAM, CPU, disk space, Docker version                            |
+| Configuration     | Pick install directory, bind IP, online mode                              |
+| Server Selection  | Choose from 14 SkyBlock servers and 10 minigame servers                   |
+| Service Selection | Pick which microservices to run (DataMutex and Party are required)        |
+| Build & Launch    | Builds Docker images, starts containers in order, waits for health checks |
 
 ### Management Dashboard
 
@@ -78,6 +79,20 @@ In your `configuration` folder:
 1. Remove the default `config.yml`
 2. Rename `config.docker.yml` to `config.yml`
 
+In the top of `docker-compose.yml` change the `change-me` to other.
+
+```yml
+x-forwarding-env: &forwarding_env
+  FORWARDING_SECRET: ${FORWARDING_SECRET:-change-me}
+```
+
+For reference:
+
+```yml
+x-forwarding-env: &forwarding_env
+  FORWARDING_SECRET: ${FORWARDING_SECRET:-i7sC4xqh}
+```
+
 ### 3. Build and Run
 
 ```bash
@@ -100,14 +115,14 @@ docker compose down
 
 The Docker Compose setup starts:
 
-| Container | Purpose |
-|-----------|---------|
-| MongoDB | Database |
-| Redis | Caching & messaging |
-| Velocity Proxy | Player connections |
-| NanoLimbo | Connection queue |
-| Game Servers | Gameplay instances |
-| Services | Microservices (API, Auctions, Bazaar, etc.) |
+| Container      | Purpose                                     |
+|----------------|---------------------------------------------|
+| MongoDB        | Database                                    |
+| Redis          | Caching & messaging                         |
+| Velocity Proxy | Player connections                          |
+| PicoLimbo      | Connection queue                            |
+| Game Servers   | Gameplay instances                          |
+| Services       | Microservices (API, Auctions, Bazaar, etc.) |
 
 ## Connecting
 
@@ -120,11 +135,13 @@ localhost:25565
 ## Logs and Debugging
 
 View logs for all containers:
+
 ```bash
 docker compose logs -f
 ```
 
 View logs for a specific container:
+
 ```bash
 docker compose logs -f hypixel_proxy
 docker compose logs -f hypixelcore_skyblock_hub
