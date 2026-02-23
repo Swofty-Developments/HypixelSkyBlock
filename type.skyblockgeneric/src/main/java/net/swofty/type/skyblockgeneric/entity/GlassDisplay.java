@@ -11,6 +11,7 @@ import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.swofty.type.generic.entity.InteractionEntity;
+import net.swofty.type.generic.entity.hologram.HologramEntity;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -27,7 +28,7 @@ public class GlassDisplay extends LivingEntity {
 
 	// Child entities that need to be removed when this display is removed
 	private LivingEntity itemEntity;
-	private TextDisplayEntity nameDisplay;
+	private HologramEntity nameDisplay;
 	private InteractionEntity interactionEntity;
 
 	public GlassDisplay(SkyBlockItem item, BiConsumer<HypixelPlayer, PlayerEntityInteractEvent> onClick) {
@@ -60,10 +61,8 @@ public class GlassDisplay extends LivingEntity {
 		itemEntity.setNoGravity(true);
 		itemEntity.setInstance(getInstance(), getPosition().add(0.5, -0.1, 0.5));
 
-		nameDisplay = new TextDisplayEntity(Component.text(item.getDisplayName()), textDisplayMeta -> {
-			textDisplayMeta.setTranslation(new Vec(0, 0.8, 0));
-		});
-		nameDisplay.setInstance(getInstance(), getPosition().add(0.5, 0, 0.5));
+		nameDisplay = new HologramEntity(Component.text(item.getDisplayName()));
+		nameDisplay.setInstance(getInstance(), getPosition().add(0.5, 0.5, 0.5));
 
 		interactionEntity = new InteractionEntity(scale, scale, onClick);
 		interactionEntity.setInstance(getInstance(), getPosition().add(offset + (scale / 2), 0, offset + (scale / 2)));

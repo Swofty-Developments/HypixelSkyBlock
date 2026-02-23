@@ -9,18 +9,16 @@ import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 
 @Getter
 public class HologramEntity extends Entity {
-    private String text;
+    private Component text;
 
-    public HologramEntity(String text) {
+    public HologramEntity(Component text) {
         super(EntityType.ARMOR_STAND);
-
-        text = text.replace("&", "§");
         this.text = text;
 
         setInvisible(true);
         ArmorStandMeta meta = (ArmorStandMeta) this.getEntityMeta();
         meta.setNotifyAboutChanges(false);
-        set(DataComponents.CUSTOM_NAME, Component.text(this.text));
+        set(DataComponents.CUSTOM_NAME, text);
         meta.setNotifyAboutChanges(true);
 
         editEntityMeta(ArmorStandMeta.class, m -> {
@@ -31,14 +29,21 @@ public class HologramEntity extends Entity {
         });
     }
 
-    public void setText(String text) {
-        text = text.replace("&", "§");
+    public HologramEntity(String text) {
+        this(Component.text(text.replace("&", "§")));
+    }
+
+    public void setText(Component text) {
         this.text = text;
 
         ArmorStandMeta meta = (ArmorStandMeta) this.getEntityMeta();
 
         meta.setNotifyAboutChanges(false);
-        set(DataComponents.CUSTOM_NAME, Component.text(this.text));
+        set(DataComponents.CUSTOM_NAME, text);
         meta.setNotifyAboutChanges(true);
+    }
+
+    public void setText(String text) {
+        setText(Component.text(text.replace("&", "§")));
     }
 }
