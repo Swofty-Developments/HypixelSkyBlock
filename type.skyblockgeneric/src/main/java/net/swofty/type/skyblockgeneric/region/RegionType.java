@@ -49,6 +49,7 @@ public enum RegionType {
 	WILDERNESS("Wilderness", "§2", Songs.WILDERNESS),
 	PLAYER_MUSEUM("%s's Museum", "§3"),
 	RUINS("Ruins"),
+	HEXATORUM("Hexatorum", "§d"),
 	UNINCORPORATED("Unincorporated", "§c"),
 	COLOSSEUM("Colosseum"),
 	COMBAT_SETTLEMENT("Combat Settlement", "§c"),

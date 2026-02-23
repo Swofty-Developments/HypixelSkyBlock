@@ -27,12 +27,12 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.hub.darkauction.DarkAuctionDisplay;
-import net.swofty.type.hub.runes.RuneEntityImpl;
 import net.swofty.type.hub.tab.HubServerModule;
 import net.swofty.type.hub.util.HubMap;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
 import net.swofty.type.skyblockgeneric.entity.GlassDisplay;
+import net.swofty.type.skyblockgeneric.furniture.Furniture;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
@@ -59,13 +59,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
 	@Override
 	public void afterInitialize(MinecraftServer server) {
-		RuneEntityImpl firstStone = new RuneEntityImpl(new Pos(-37.84375, 68.3125, -129.8125, 0, 0f), false);
-		RuneEntityImpl secondStone = new RuneEntityImpl(new Pos(-37.21875, 68.3125, -129.8125, 0, 0f), false);
-		RuneEntityImpl thirdStone = new RuneEntityImpl(new Pos(-37.21875, 68.3125, -129.1875, 0, 0f), false);
-		RuneEntityImpl fourthStone = new RuneEntityImpl(new Pos(-37.84375, 68.3125, -129.1875, 0, 0f), false);
-		RuneEntityImpl head = new RuneEntityImpl(new Pos(-37.65625, 69.09375, -129.34375, 45, 0f), true);
-		Pos runePos = new Pos(-23.84375, 64.3125, -135.8125, 0, 0f);
-
+		Pos runePos = new Pos(23.5, 65.3, -135, 0, 0f);
 		AtomicReference<Double> i = new AtomicReference<>(0D);
 		MinecraftServer.getSchedulerManager().scheduleTask(() -> {
 			List<Pos> locationsToDisplayParticle = new ArrayList<>();
@@ -142,6 +136,9 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
 		HubMap hubMap = new HubMap();
 		hubMap.placeItemFrames(HypixelConst.getInstanceContainer());
+
+		Furniture.load("hexatorum");
+		Furniture.load("rune_table");
 	}
 
     @Override
