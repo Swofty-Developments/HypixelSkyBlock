@@ -233,6 +233,8 @@ public abstract class HypixelNPC {
      * Return an array of DialogueSet objects keyed by unique identifiers.
      *
      * @param player The player to get dialogues for (they can be different per-player).
+     *               May be null when called from {@link #hasDialogue()} — implementations
+     *               must handle null gracefully (e.g. return a default set).
      * @return Array of DialogueSet definitions.
      */
     protected DialogueSet[] dialogues(HypixelPlayer player) {
