@@ -3,9 +3,9 @@ package net.swofty.type.bedwarsgame.game.v2.listener;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.timer.TaskSchedule;
@@ -34,21 +34,8 @@ public class GameEndListener implements HypixelEventClass {
         String gameId = event.gameId();
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(gameId);
 
-        String titleMessage;
-        String subtitleMessage;
-
-        if (event.team().isPresent()) {
-            titleMessage = event.team().get().getColorCode() + "Team " + event.team().get().getName() + " has won!";
-            subtitleMessage = "Congratulations!";
-        } else {
-            titleMessage = "§cGame Over!";
-            subtitleMessage = "It's a draw!";
-        }
-
         // Show results to all players
         for (BedWarsPlayer player : game.getPlayers()) {
-            player.sendTitlePart(TitlePart.TITLE, Component.text(titleMessage));
-            player.sendTitlePart(TitlePart.SUBTITLE, Component.text(subtitleMessage));
             player.playSound(Sound.sound(Key.key("minecraft:ui.toast.challenge_complete"),
                 Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
 
@@ -63,6 +50,7 @@ public class GameEndListener implements HypixelEventClass {
             player.setGameMode(GameMode.ADVENTURE);
         }
 
+        boolean isRecording = game.getReplayManager().isRecording();
         game.getReplayManager().stopRecording();
 
         game.getGeneratorManager().stopAllGenerators();
@@ -70,8 +58,6 @@ public class GameEndListener implements HypixelEventClass {
 
         Logger.info("Ending game " + gameId);
         game.end();
-
-
 
         for (BedWarsPlayer player : game.getPlayers()) {
             player.sendMessage(Component.text(THICK_BAR));
@@ -144,6 +130,12 @@ public class GameEndListener implements HypixelEventClass {
                 player.sendMessage(Component.empty());
                 // xp multipliers shown here
                 player.sendMessage(Component.text(THICK_BAR));
+                if (isRecording) {
+                    player.sendMessage(Component.text("§aThis game has been recorded. §6Click here to watch the Replay!").clickEvent(
+                        ClickEvent.runCommand("/replay " + game.getReplayManager().getRecorder().getReplayId())
+                    ));
+                }
+                player.sendMessage(Component.empty());
             }
         }).delay(TaskSchedule.seconds(2)).schedule();
 
