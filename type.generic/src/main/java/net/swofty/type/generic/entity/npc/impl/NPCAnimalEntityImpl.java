@@ -14,10 +14,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Getter
 public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
-    private final ArrayList<HypixelPlayer> inRangeOf = new ArrayList<>();
+    private final List<HypixelPlayer> inRangeOf = Collections.synchronizedList(new ArrayList<>());
     private final HypixelPlayer viewer;
     private final PlayerHolograms.ExternalPlayerHologram holo;
     private final AnimalConfiguration config;
