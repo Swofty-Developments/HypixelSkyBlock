@@ -14,10 +14,11 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class TablistManager {
-    private static final Map<HypixelPlayer, PlayerTabCache> tablistEntries = new HashMap<>();
+    private static final Map<HypixelPlayer, PlayerTabCache> tablistEntries = new ConcurrentHashMap<>();
 
     private static final class PlayerTabCache {
         private final List<UUID> tabEntries = new ArrayList<>();

@@ -11,7 +11,6 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,7 +21,7 @@ import static java.util.stream.Collectors.*;
 public enum PlayerHolograms {
     ;
 
-    private static final HashMap<HypixelPlayer, List<Map.Entry<PlayerHolograms, HologramEntity>>> entities = new HashMap<>();
+    private static final Map<HypixelPlayer, List<Map.Entry<PlayerHolograms, HologramEntity>>> entities = new ConcurrentHashMap<>();
     public static final ConcurrentHashMap<ExternalPlayerHologram, List<HologramEntity>> externalPlayerHolograms = new ConcurrentHashMap<>();
 
     private final Pos pos;
