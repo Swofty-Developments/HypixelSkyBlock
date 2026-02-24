@@ -26,7 +26,7 @@ dependencies {
     }
 
     // Must match AtlasRedisAPI's Jedis version to avoid conflicts
-    implementation("redis.clients:jedis:4.2.3")
+    implementation("redis.clients:jedis:7.2.0")
 
-    implementation("org.spongepowered:configurate-yaml:4.2.0")
+    implementation("de.exlll:configlib-yaml:4.8.1")
 }

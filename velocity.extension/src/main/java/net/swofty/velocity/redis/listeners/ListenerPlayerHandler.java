@@ -89,13 +89,9 @@ public class ListenerPlayerHandler extends RedisListener {
                 }
 
                 transferHandler.addToDisregard();
+                transferHandler.transferTo(serverInfo.registeredServer())
+                    .thenRun(transferHandler::removeFromDisregard);
 
-                // Trick the packet blocker into thinking player is in normal transfer process
-                TransferHandler.playersGoalServerType.put(player, ServerType.SKYBLOCK_HUB);
-
-                TransferHandler.playersGoalServerType.remove(player);
-                transferHandler.noLimboTransferTo(serverInfo.registeredServer());
-                transferHandler.removeFromDisregard();
             }
             case TRANSFER -> {
                 ServerType type = ServerType.valueOf(message.getString("type"));
@@ -107,10 +103,9 @@ public class ListenerPlayerHandler extends RedisListener {
                     ));
                     return new JSONObject();
                 }
-                new TransferHandler(player).noLimboTransferTo(
-                    type
-                );
+                new TransferHandler(player).transferTo(type);
             }
+            case LIMBO -> new TransferHandler(player).sendToLimbo().join();
             case TELEPORT -> {
                 if (potentialServer.isEmpty()) {
                     return new JSONObject();
@@ -120,7 +115,6 @@ public class ListenerPlayerHandler extends RedisListener {
                     FromProxyChannels.TELEPORT,
                     message).join();
             }
-            case LIMBO -> new TransferHandler(player).sendToLimbo().join();
             case EVENT -> {
                 if (potentialServer.isEmpty()) {
                     return new JSONObject();

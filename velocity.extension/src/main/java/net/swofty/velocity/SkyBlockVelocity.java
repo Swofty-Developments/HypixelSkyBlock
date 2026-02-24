@@ -10,7 +10,10 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.permission.PermissionsSetupEvent;
-import com.velocitypowered.api.event.player.*;
+import com.velocitypowered.api.event.player.KickedFromServerEvent;
+import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
+import com.velocitypowered.api.event.player.ServerConnectedEvent;
+import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
@@ -21,6 +24,7 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
@@ -31,9 +35,12 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.swofty.commons.ServiceType;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
+import net.swofty.commons.config.Settings;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocolObject;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.commons.punishment.ActivePunishment;
 import net.swofty.commons.punishment.PunishmentMessages;
@@ -41,6 +48,7 @@ import net.swofty.commons.punishment.PunishmentType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.redisapi.api.RedisAPI;
+import net.swofty.velocity.command.LimboCommand;
 import net.swofty.velocity.command.ProtocolVersionCommand;
 import net.swofty.velocity.command.ServerStatusCommand;
 import net.swofty.velocity.data.CoopDatabase;
@@ -63,13 +71,14 @@ import org.json.JSONObject;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.InetSocketAddress;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -88,6 +97,8 @@ public class SkyBlockVelocity {
 	@Getter
 	private static SkyBlockVelocity plugin;
 	@Getter
+	private static RegisteredServer limboServer;
+	@Getter
 	private static boolean shouldAuthenticate = false;
 	@Getter
 	private static boolean supportCrossVersion = false;
@@ -98,6 +109,9 @@ public class SkyBlockVelocity {
 	public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
 		plugin = this;
 		server = tempServer;
+
+		Settings.LimboSettings limbo = ConfigProvider.settings().getLimbo();
+		limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(limbo.getHostName(), limbo.getPort())));
 	}
 
 	@Subscribe
@@ -125,7 +139,7 @@ public class SkyBlockVelocity {
 				}));
 		server.getEventManager().register(this, PermissionsSetupEvent.class,
 				(AwaitingEventExecutor<PermissionsSetupEvent>) permissionsEvent -> EventTask.withContinuation(continuation -> {
-					permissionsEvent.setProvider(permissionSubject -> PermissionFunction.ALWAYS_FALSE);
+					permissionsEvent.setProvider(_ -> PermissionFunction.ALWAYS_FALSE);
 					continuation.resume();
 				}));
 		server.getEventManager().register(this, DisconnectEvent.class, PostOrder.LAST,
@@ -160,9 +174,7 @@ public class SkyBlockVelocity {
             });
         }).repeat(Duration.ofSeconds(10)).schedule();
 
-		/**
-		 * Register commands
-		 */
+		// Register commands
 		CommandManager commandManager = proxy.getCommandManager();
 		CommandMeta statusCommandMeta = commandManager.metaBuilder("serverstatus")
 				.aliases("status")
@@ -178,6 +190,11 @@ public class SkyBlockVelocity {
 
 		commandManager.register(protocolVersionMeta, new ProtocolVersionCommand());
 
+		CommandMeta limboCommandMeta = commandManager.metaBuilder("limbo")
+				.plugin(this)
+				.build();
+
+		commandManager.register(limboCommandMeta, new LimboCommand());
 
 		// Handle database
 		new ProfilesDatabase("_placeHolder").connect(ConfigProvider.settings().getMongodb());
@@ -202,9 +219,7 @@ public class SkyBlockVelocity {
 				.forEach(ServerOutboundMessage::registerFromProtocolObject);
 		RedisAPI.getInstance().startListeners();
 
-		/**
-		 * Setup GameManager
-		 */
+		// Setup GameManager
 		GameManager.loopServers(server);
 	}
 
@@ -322,10 +337,13 @@ public class SkyBlockVelocity {
 		));
 		ServerType serverType = GameManager.getTypeFromRegisteredServer(originalServer);
 
-		// TODO: send to Limbo
+		event.setResult(KickedFromServerEvent.RedirectPlayer.create(
+				limboServer,
+				null
+		));
 
 		TransferHandler transferHandler = new TransferHandler(event.getPlayer());
-		transferHandler.noLimboTransferTo(serverType);
+		transferHandler.transferTo(serverType);
 
 		CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
 				.execute(() -> {
@@ -353,7 +371,7 @@ public class SkyBlockVelocity {
 							event.getPlayer().disconnect(reason);
 							return;
 						}
-						transferHandler.noLimboTransferTo(server.registeredServer());
+						transferHandler.transferTo(server.registeredServer());
 
 						if (!serverTypeToTry.isSkyBlock()) {
 							event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into the Prototype Lobby.");
@@ -381,18 +399,26 @@ public class SkyBlockVelocity {
 
 	@Subscribe
 	public void onPlayerConnect(ServerPostConnectEvent event) {
-		if (!(event.getPlayer().getProtocolVersion().getProtocol() >= ProtocolVersion.MAXIMUM_VERSION.getProtocol())) {
+		Player player = event.getPlayer();
+		if (!(player.getProtocolVersion().getProtocol() >= ProtocolVersion.MAXIMUM_VERSION.getProtocol())) {
 			StringBuilder message = new StringBuilder();
 
 			message.append("\n");
 			message.append("§6§l----------- §cServer Notice §6§l-----------\n");
-			message.append("§cAlthough we do support versions prior to §6" + ProtocolVersion.MAXIMUM_VERSION.getVersionIntroducedIn() + "§c, the experience may be buggy.\n");
-			message.append("§cIf you experience a bug, please test if it also occurs on §6" + ProtocolVersion.MAXIMUM_VERSION.getVersionIntroducedIn() + "§c before reporting it.\n");
+			message.append("§cAlthough we do support versions prior to §6" + ProtocolVersion.MAXIMUM_VERSION.getVersionIntroducedIn() + "§c, the experience may be degraded.\n");
+			message.append("§cIf you experience any issues, please test if it also occurs on §6" + ProtocolVersion.MAXIMUM_VERSION.getVersionIntroducedIn() + "§c before reporting it.\n");
 			message.append("§6§l---------------------------------\n");
 			message.append("\n");
 
-			event.getPlayer().sendMessage(Component.text(message.toString()));
+			player.sendMessage(Component.text(message.toString()));
 		}
+
+		player.getCurrentServer().ifPresent(connection -> {
+			if (connection.getServer() == limboServer) {
+				player.sendMessage(Component.text("§cYou were spawned in Limbo."));
+				player.sendMessage(Component.text("§b/limbo for more information."));
+			}
+		});
 	}
 
 	public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {
@@ -408,7 +434,7 @@ public class SkyBlockVelocity {
 						return null;
 					}
 				})
-				.filter(java.util.Objects::nonNull);
+				.filter(Objects::nonNull);
 	}
 
 	private void injectPlayer(Player player) {

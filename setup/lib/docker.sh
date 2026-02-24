@@ -11,7 +11,7 @@ do_launch() {
 
     set_step "Cleaning up stale containers"
     log_info "Removing stale containers..."
-    for c in $(docker ps -a --format '{{.Names}}' 2>/dev/null | grep -E '^(hypixel_|hypixelcore_|service_|nanolimbo|game_server_builder)'); do
+    for c in $(docker ps -a --format '{{.Names}}' 2>/dev/null | grep -E '^(hypixel_|hypixelcore_|service_|pico-limbo|game_server_builder)'); do
         docker rm -f "$c" &>/dev/null || true
     done
     docker volume rm mongo-data &>/dev/null || true
@@ -48,11 +48,11 @@ do_launch() {
     fi
     log_ok "Proxy healthy"
 
-    set_step "Starting NanoLimbo"
-    log_info "Starting NanoLimbo + image builder..."
-    run_step "Starting NanoLimbo + builder" docker compose up -d game_server_builder nanolimbo
+    set_step "Starting PicoLimbo"
+    log_info "Starting PicoLimbo + image builder..."
+    run_step "Starting PicoLimbo + builder" docker compose up -d game_server_builder pico-limbo
     sleep 3
-    log_ok "NanoLimbo started"
+    log_ok "PicoLimbo started"
 
     if [[ ${#SELECTED_SERVICES[@]} -gt 0 ]]; then
         set_step "Starting services"
@@ -254,7 +254,7 @@ start_all() {
     docker compose up -d proxy 2>&1 || true
     wait_healthy "hypixel_proxy" 60 || log_warn "Proxy may not be healthy"
 
-    docker compose up -d game_server_builder nanolimbo 2>&1 || true
+    docker compose up -d game_server_builder pico-limbo 2>&1 || true
     sleep 2
 
     docker compose up -d 2>&1 || true

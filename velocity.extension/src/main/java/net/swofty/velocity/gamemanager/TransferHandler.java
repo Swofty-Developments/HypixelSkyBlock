@@ -4,8 +4,8 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.ServerType;
-import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.proxy.FromProxyChannels;
+import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
 import org.json.JSONObject;
 
@@ -33,29 +33,6 @@ public record TransferHandler(Player player) {
 		disregard.remove(player);
 	}
 
-	public void standardTransferTo(RegisteredServer currentServer, ServerType type) {
-		if (type == null) {
-			player.disconnect(Component.text("§cWe encountered an error while trying to transfer you to a server. Please try again later."));
-			return;
-		}
-
-		new Thread(() -> {
-			boolean hasEmptyServer = GameManager.hasType(type) && GameManager.isAnyEmpty(type);
-			if (!hasEmptyServer) {
-				player.sendMessage(Component.text(
-						"§cThere are no SkyBlock (type=" + type.name() + ") servers available at the moment."
-				));
-				return;
-			}
-
-			//RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
-
-			//player.createConnectionRequest(limboServer).connectWithIndication();
-			playersGoalServerType.put(player, type);
-			playersOriginServer.put(player, currentServer);
-		}).start();
-	}
-
 	public CompletableFuture<Boolean> sendToLimbo() {
 		CompletableFuture<Boolean> future = new CompletableFuture<>();
 
@@ -65,8 +42,8 @@ public record TransferHandler(Player player) {
 				playersOriginServer.put(player, previousServer);
 			}
 
-			//RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
-			//player.createConnectionRequest(limboServer).connectWithIndication();
+			RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
+			player.createConnectionRequest(limboServer).connectWithIndication();
 			future.complete(true);
 		}).start();
 
@@ -128,12 +105,6 @@ public record TransferHandler(Player player) {
 			playersOriginServer.remove(player);
 			playersGoalServerType.remove(player);
 
-			try {
-				Thread.sleep(ConfigProvider.settings().getTransferTimeout());
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			}
-
 			player.sendMessage(Component.text("§7Sending to server " + server.displayName() + "..."));
 			player.createConnectionRequest(server.registeredServer()).connectWithIndication();
 
@@ -143,9 +114,13 @@ public record TransferHandler(Player player) {
 		}).start();
 	}
 
-	public void noLimboTransferTo(ServerType type) {
+	public void transferTo(ServerType type) {
 		new Thread(() -> {
 			RegisteredServer originServer = playersOriginServer.get(player);
+			if (originServer == null) {
+				player.getCurrentServer().ifPresent(conn -> playersOriginServer.put(player, conn.getServer()));
+				originServer = playersOriginServer.get(player);
+			}
 			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
 
 			playersGoalServerType.remove(player);
@@ -176,27 +151,36 @@ public record TransferHandler(Player player) {
 		playersOriginServer.remove(player);
 	}
 
-	public void noLimboTransferTo(RegisteredServer toTransferTo) {
+	public CompletableFuture<Void> transferTo(RegisteredServer toTransferTo) {
+		CompletableFuture<Void> future = new CompletableFuture<>();
 		new Thread(() -> {
-			RegisteredServer originServer = playersOriginServer.get(player);
-			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
+			try {
+				RegisteredServer originServer = playersOriginServer.get(player);
+				if (originServer == null) {
+					player.getCurrentServer().ifPresent(conn -> playersOriginServer.put(player, conn.getServer()));
+					originServer = playersOriginServer.get(player);
+				}
+				ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
 
-			playersGoalServerType.remove(player);
-			playersOriginServer.remove(player);
+				playersGoalServerType.remove(player);
+				playersOriginServer.remove(player);
 
-			ServerType type = GameManager.getTypeFromRegisteredServer(toTransferTo);
-			UUID serverUUID = UUID.fromString(toTransferTo.getServerInfo().getName());
+				UUID serverUUID = UUID.fromString(toTransferTo.getServerInfo().getName());
 
-			if (originServer != null && originServerType != null) {
-				RedisMessage.sendMessageToServer(serverUUID,
-						FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
-						new JSONObject().put("uuid", player.getUniqueId().toString())
-								.put("origin-type", originServerType.name())
-				);
+				if (originServer != null && originServerType != null) {
+					RedisMessage.sendMessageToServer(serverUUID,
+							FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
+							new JSONObject().put("uuid", player.getUniqueId().toString())
+									.put("origin-type", originServerType.name())
+					);
+				}
+
+				player.createConnectionRequest(toTransferTo).connectWithIndication();
+				future.complete(null);
+			} catch (Exception e) {
+				future.completeExceptionally(e);
 			}
-
-			GameManager.GameServer toTransferToAsGame = GameManager.getFromUUID(serverUUID);
-			player.createConnectionRequest(toTransferTo).connectWithIndication();
 		}).start();
+		return future;
 	}
 }
