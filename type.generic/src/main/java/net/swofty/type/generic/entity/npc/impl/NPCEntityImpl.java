@@ -140,6 +140,9 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
         }
 
         if (config.shouldDisplayHolograms(viewer)) {
+            if (!PlayerHolograms.externalPlayerHolograms.containsKey(holo)) {
+                PlayerHolograms.addExternalPlayerHologram(holo);
+            }
             String[] newHolograms = config.holograms(viewer);
             if (!Arrays.equals(newHolograms, holograms)) {
                 PlayerHolograms.updateExternalPlayerHologramText(holo, newHolograms);
