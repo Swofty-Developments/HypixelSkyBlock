@@ -94,6 +94,7 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
                 "Talk to the Lapis Miner.",
                 "Watch out for the zombies!");
 
+            // TODO: Replace placeholder text with correct Pigmen's Den zone features
             case PIGMENS_DEN -> onNewZone(player, RegionType.PIGMENS_DEN,
                 "The Lift Operator will now let you travel to the §bLapis Quarry.",
                 "Access to Lapis Lazuli ore.",
@@ -188,7 +189,7 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
                 "Explore the ancient ruins.",
                 "Watch out for the guard dogs!");
 
-            case THE_END -> onNewZone(player, RegionType.RUINS,
+            case THE_END -> onNewZone(player, RegionType.THE_END,
                 "Talk to the Pearl Dealer.",
                 "Explore the End Shop.",
                 "Kill Endermen.",
