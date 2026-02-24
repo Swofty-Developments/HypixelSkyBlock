@@ -56,6 +56,7 @@ import net.swofty.type.skyblockgeneric.data.monogdb.CrystalDatabase;
 import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
 import net.swofty.type.skyblockgeneric.data.monogdb.IslandDatabase;
 import net.swofty.type.skyblockgeneric.data.monogdb.RegionDatabase;
+import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
 import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
@@ -269,6 +270,9 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         SkyBlockCalendar.tick(MinecraftServer.getSchedulerManager());
         SkyBlockServerAttributes.loadAttributes(AttributeDatabase.getDocument("attributes"));
         SkyBlockServerAttributes.saveAttributeLoop();
+
+        ElectionManager.checkElectionCycle();
+        MinecraftServer.getSchedulerManager().buildTask(ElectionManager::checkElectionCycle).repeat(10, TimeUnit.SECOND).schedule();
 
         /**
          * Register Placement Rules
