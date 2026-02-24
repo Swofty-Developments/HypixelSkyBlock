@@ -28,7 +28,7 @@ subprojects {
     }
 
     dependencies {
-        testImplementation("org.junit.jupiter:junit-jupiter:6.0.2")
+        testImplementation("org.junit.jupiter:junit-jupiter:6.0.3")
 
         implementation("org.reflections:reflections:0.10.2")
         implementation("org.json:json:20240303")
