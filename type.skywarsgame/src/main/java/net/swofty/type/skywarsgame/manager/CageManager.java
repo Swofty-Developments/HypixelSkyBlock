@@ -1,10 +1,8 @@
 package net.swofty.type.skywarsgame.manager;
 
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 
 import java.util.ArrayList;

@@ -11,7 +11,7 @@ public class GetGameCountsProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<GetGameCountsMessage> getSerializer() {
-        return new Serializer<GetGameCountsMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(GetGameCountsMessage value) {
                 JSONObject json = new JSONObject();
@@ -25,9 +25,9 @@ public class GetGameCountsProtocolObject extends ProtocolObject
             public GetGameCountsMessage deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
                 return new GetGameCountsMessage(
-                        ServerType.valueOf(obj.getString("type")),
-                        obj.optString("gameTypeName", null),
-                        obj.optString("mapName", null)
+                    ServerType.valueOf(obj.getString("type")),
+                    obj.optString("gameTypeName", null),
+                    obj.optString("mapName", null)
                 );
             }
 
@@ -40,7 +40,7 @@ public class GetGameCountsProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<GetGameCountsResponse> getReturnSerializer() {
-        return new Serializer<GetGameCountsResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(GetGameCountsResponse value) {
                 JSONObject json = new JSONObject();
@@ -53,8 +53,8 @@ public class GetGameCountsProtocolObject extends ProtocolObject
             public GetGameCountsResponse deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
                 return new GetGameCountsResponse(
-                        obj.getInt("playerCount"),
-                        obj.getInt("gameCount")
+                    obj.getInt("playerCount"),
+                    obj.getInt("gameCount")
                 );
             }
 

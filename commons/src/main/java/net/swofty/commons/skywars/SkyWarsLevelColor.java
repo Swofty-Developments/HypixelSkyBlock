@@ -3,7 +3,7 @@ package net.swofty.commons.skywars;
 import lombok.Getter;
 
 @Getter
-public enum SkywarsLevelColor {
+public enum SkyWarsLevelColor {
     NONE(0, "7", "⋆"),
     IRON(5, "f", "✦"),
     GOLD(10, "6", "✦"),
@@ -20,15 +20,15 @@ public enum SkywarsLevelColor {
     private final String colorCode;
     private final String symbol;
 
-    SkywarsLevelColor(int minimumLevel, String colorCode, String symbol) {
+    SkyWarsLevelColor(int minimumLevel, String colorCode, String symbol) {
         this.minimumLevel = minimumLevel;
         this.colorCode = colorCode;
         this.symbol = symbol;
     }
 
-    public static SkywarsLevelColor fromLevel(int level) {
-        SkywarsLevelColor result = NONE;
-        for (SkywarsLevelColor color : values()) {
+    public static SkyWarsLevelColor fromLevel(int level) {
+        SkyWarsLevelColor result = NONE;
+        for (SkyWarsLevelColor color : values()) {
             if (level >= color.minimumLevel) {
                 result = color;
             }
@@ -59,7 +59,7 @@ public enum SkywarsLevelColor {
             result.append("§").append(colors[(i + 1) % colors.length]).append(levelStr.charAt(i));
         }
 
-        result.append("§f").append(symbol).append("§" + colors[0] + "]");
+        result.append("§f").append(symbol).append("§").append(colors[0]).append("]");
         return result.toString();
     }
 
@@ -77,7 +77,7 @@ public enum SkywarsLevelColor {
     }
 
     public static String getLevelDisplay(int level) {
-        SkywarsLevelColor color = fromLevel(level);
+        SkyWarsLevelColor color = fromLevel(level);
         return color.constructLevelBrackets(level);
     }
 }

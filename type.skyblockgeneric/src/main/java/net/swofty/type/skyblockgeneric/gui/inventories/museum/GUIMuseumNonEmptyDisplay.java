@@ -1,56 +1,32 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.museum;
 
 import lombok.SneakyThrows;
-import org.tinylog.Logger;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import org.tinylog.Logger;
 import net.minestom.server.inventory.InventoryType;
-import org.tinylog.Logger;
 import net.minestom.server.item.ItemStack;
-import org.tinylog.Logger;
 import net.minestom.server.item.Material;
-import org.tinylog.Logger;
 import net.swofty.commons.ServiceType;
-import org.tinylog.Logger;
 import net.swofty.commons.StringUtility;
-import org.tinylog.Logger;
 import net.swofty.commons.TrackedItem;
-import org.tinylog.Logger;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
-import org.tinylog.Logger;
 import net.swofty.proxyapi.ProxyService;
-import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import org.tinylog.Logger;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import org.tinylog.Logger;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.utility.ItemPriceCalculator;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
-import org.tinylog.Logger;
 import java.util.List;
-import org.tinylog.Logger;
 import java.util.Map;
-import org.tinylog.Logger;
 import java.util.UUID;
-import org.tinylog.Logger;
 
 public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
     private static final Map<Integer, int[]> SLOTS = Map.of(

@@ -9,6 +9,9 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.Rarity;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
@@ -24,9 +27,6 @@ import net.swofty.type.skyblockgeneric.potion.PotionEffectType;
 import net.swofty.type.skyblockgeneric.potion.PotionModifier;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.commons.skyblock.item.Rarity;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 
 public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGUI {
 
@@ -243,9 +243,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
         data.setIngredient(ingredientItem);
 
         SkyBlockItem[] potions = data.getPotionSlots();
-        for (int i = 0; i < potionItems.length; i++) {
-            potions[i] = potionItems[i];
-        }
+        System.arraycopy(potionItems, 0, potions, 0, potionItems.length);
 
         data.setBrewingStartTime(System.currentTimeMillis());
         data.setBrewingDurationSeconds(brewComp.getBrewingTimeSeconds());

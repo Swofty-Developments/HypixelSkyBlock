@@ -10,7 +10,7 @@ import java.util.List;
 public class DarkAuctionService implements SkyBlockService {
     private static DarkAuctionState currentAuction = null;
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SkyBlockService.init(new DarkAuctionService());
 
         // Start the scheduler that checks SkyBlock time

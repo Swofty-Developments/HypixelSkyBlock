@@ -8,7 +8,6 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIReforge;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCBramassBeastslayer extends HypixelNPC {

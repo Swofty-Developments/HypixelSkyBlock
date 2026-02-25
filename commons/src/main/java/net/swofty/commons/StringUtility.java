@@ -5,7 +5,6 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.commons.skyblock.statistics.ItemStatistic;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;

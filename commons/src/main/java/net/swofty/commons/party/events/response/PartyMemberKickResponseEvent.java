@@ -22,7 +22,7 @@ public class PartyMemberKickResponseEvent extends PartyResponseEvent {
 
     @Override
     public Serializer<PartyMemberKickResponseEvent> getSerializer() {
-        return new Serializer<PartyMemberKickResponseEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyMemberKickResponseEvent value) {
                 JSONObject json = new JSONObject();

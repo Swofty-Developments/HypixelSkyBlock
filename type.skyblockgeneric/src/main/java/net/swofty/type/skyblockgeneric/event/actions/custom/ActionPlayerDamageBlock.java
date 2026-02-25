@@ -1,7 +1,6 @@
 package net.swofty.type.skyblockgeneric.event.actions.custom;
 
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;

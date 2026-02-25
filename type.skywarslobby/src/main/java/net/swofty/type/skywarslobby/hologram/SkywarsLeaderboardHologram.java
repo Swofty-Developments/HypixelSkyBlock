@@ -2,18 +2,26 @@ package net.swofty.type.skywarslobby.hologram;
 
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.skywars.*;
+import net.swofty.commons.skywars.SkywarsLeaderboardMode;
+import net.swofty.commons.skywars.SkywarsLeaderboardPeriod;
+import net.swofty.commons.skywars.SkywarsLeaderboardView;
+import net.swofty.commons.skywars.SkywarsStatType;
+import net.swofty.commons.skywars.SkywarsTextAlignment;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.leaderboard.LeaderboardService;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skywarslobby.hologram.LeaderboardHologramManager.PlayerLeaderboardState;
 
 import java.text.NumberFormat;
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 @Getter
 public enum SkywarsLeaderboardHologram {
@@ -112,12 +120,8 @@ public enum SkywarsLeaderboardHologram {
                     lobbyPlayer.getInstance().equals(viewer.getInstance())) {
                 LeaderboardService.LeaderboardEntry entry =
                         LeaderboardService.getPlayerRankEntry(leaderboardKey, lobbyPlayer.getUuid());
-                if (entry != null) {
-                    lobbyEntries.add(entry);
-                } else {
-                    lobbyEntries.add(new LeaderboardService.LeaderboardEntry(
-                            lobbyPlayer.getUuid(), -1, 0));
-                }
+                lobbyEntries.add(Objects.requireNonNullElseGet(entry, () -> new LeaderboardService.LeaderboardEntry(
+                    lobbyPlayer.getUuid(), -1, 0)));
             }
         }
 

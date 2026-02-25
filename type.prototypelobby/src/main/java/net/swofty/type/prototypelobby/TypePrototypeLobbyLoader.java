@@ -1,6 +1,5 @@
 package net.swofty.type.prototypelobby;
 
-import io.sentry.Sentry;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
@@ -18,7 +17,11 @@ import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.*;
+import net.swofty.type.lobby.events.LobbyBlockBreak;
+import net.swofty.type.lobby.events.LobbyItemEvents;
+import net.swofty.type.lobby.events.LobbyParkourEvents;
+import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
+import net.swofty.type.lobby.events.LobbyPlayerMove;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
 import net.swofty.type.lobby.item.impl.HidePlayers;

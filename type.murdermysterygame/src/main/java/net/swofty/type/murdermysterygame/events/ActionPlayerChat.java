@@ -13,7 +13,6 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.game.GameStatus;
-import net.swofty.type.murdermysterygame.role.GameRole;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 
 public class ActionPlayerChat implements HypixelEventClass {

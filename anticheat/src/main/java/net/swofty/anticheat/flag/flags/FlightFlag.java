@@ -18,7 +18,7 @@ public class FlightFlag extends Flag {
 
     @ListenerMethod
     public void onPacket(AnticheatPacketEvent event) {
-        if (event.getPacket() instanceof AbilitiesPacket abilities) {
+        if (event.packet() instanceof AbilitiesPacket abilities) {
             SwoftyPlayer player = SwoftyPlayer.players.get(abilities.getPlayer().getUuid());
             if (player != null) {
                 player.updateAbilities(abilities.isFlying(), abilities.isAllowFlight(), abilities.isCreativeMode());

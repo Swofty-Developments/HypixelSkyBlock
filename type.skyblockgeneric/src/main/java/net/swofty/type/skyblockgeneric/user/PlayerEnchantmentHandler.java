@@ -51,7 +51,7 @@ public record PlayerEnchantmentHandler(SkyBlockPlayer player) {
         INVENTORY(player -> Arrays.stream(player.getAllInventoryItems()).toList()),
         ;
 
-        private Function<SkyBlockPlayer, List<SkyBlockItem>> items;
+        private final Function<SkyBlockPlayer, List<SkyBlockItem>> items;
 
         EnchantedItemSource(Function<SkyBlockPlayer, List<SkyBlockItem>> items) {
             this.items = items;

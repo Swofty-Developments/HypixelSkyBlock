@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Interface for game-specific data handlers (BedWars, SkyWars, etc.)
  * These are account-wide handlers that can be selectively loaded by servers.
- *
+ * <p>
  * To add a new game data handler:
  * 1. Create a class extending DataHandler and implementing GameDataHandler
  * 2. Register it in HypixelGenericLoader via GameDataHandlerRegistry.register()
