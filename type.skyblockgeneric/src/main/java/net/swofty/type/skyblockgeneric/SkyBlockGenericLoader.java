@@ -270,10 +270,6 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         SkyBlockCalendar.tick(MinecraftServer.getSchedulerManager());
         SkyBlockServerAttributes.loadAttributes(AttributeDatabase.getDocument("attributes"));
         SkyBlockServerAttributes.saveAttributeLoop();
-
-        ElectionManager.checkElectionCycle();
-        MinecraftServer.getSchedulerManager().buildTask(ElectionManager::checkElectionCycle).repeat(10, TimeUnit.SECOND).schedule();
-
         /**
          * Register Placement Rules
          */
@@ -556,6 +552,13 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
 
             return player;
         });
+    }
+
+    public void afterInitialize() {
+        CompletableFuture.runAsync(() -> {
+            ElectionManager.loadFromService();
+            ElectionManager.checkElectionCycle();
+        }).thenRun(() -> MinecraftServer.getSchedulerManager().buildTask(ElectionManager::checkElectionCycle).repeat(10, TimeUnit.SECOND).schedule());
     }
 
     public static List<SkyBlockPlayer> getLoadedPlayers() {

@@ -133,8 +133,10 @@ public class Hypixel {
         new HypixelGenericLoader(typeLoader).initialize(minecraftServer);
 
         // Initialize TypeLoader
+        SkyBlockGenericLoader skyblockLoader = null;
         if (typeLoader instanceof SkyBlockTypeLoader) {
-            new SkyBlockGenericLoader(typeLoader).initialize(minecraftServer);
+            skyblockLoader = new SkyBlockGenericLoader(typeLoader);
+            skyblockLoader.initialize(minecraftServer);
         }
         if (typeLoader instanceof RavengardTypeLoader) {
             new RavengardGenericLoader(typeLoader).initialize(minecraftServer);
@@ -183,7 +185,11 @@ public class Hypixel {
                 }
             });
         });
+
         typeLoader.afterInitialize(minecraftServer);
+        if (skyblockLoader != null) {
+            skyblockLoader.afterInitialize();
+        }
 
         // Start the server
         MinecraftServer.setBrandName("Hypixel");

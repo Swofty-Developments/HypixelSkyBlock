@@ -7,7 +7,7 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.elections.SkyBlockMayor;
-import net.swofty.type.skyblockgeneric.gui.inventories.election.GUIMayorMenu;
+import net.swofty.type.skyblockgeneric.gui.inventories.election.MayorMenuView;
 
 public class NPCCurrentMayor extends HypixelNPC {
 
@@ -53,6 +53,6 @@ public class NPCCurrentMayor extends HypixelNPC {
             event.player().sendMessage("§cHello!!");
             return;
         }
-        new GUIMayorMenu().open(event.player());
+        event.player().openView(new MayorMenuView());
     }
 }

@@ -1,15 +1,15 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.election;
 
 import net.minestom.server.entity.PlayerSkin;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.elections.ElectionData;
 import net.swofty.type.skyblockgeneric.elections.ElectionManager;
@@ -19,35 +19,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GUIElection extends HypixelInventoryGUI {
+public class ElectionView extends StatelessView {
 
-    public GUIElection() {
-        super("Election", InventoryType.CHEST_3_ROW);
+    @Override
+    public ViewConfiguration<DefaultState> configuration() {
+        return new ViewConfiguration<>("Election", InventoryType.CHEST_3_ROW);
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
+    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+        Components.fill(layout);
+        Components.backOrClose(layout, 22, ctx);
+
         ElectionData data = ElectionManager.getElectionData();
 
         if (!data.isElectionOpen() || data.getCandidates().isEmpty()) {
-            set(new GUIItem(13) {
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer player) {
-                    return ItemStackCreator.getStack(
-                            "§cNo Active Election",
-                            Material.BARRIER,
-                            1,
-                            "§7There is no active election",
-                            "§7at this time."
-                    );
-                }
-            });
-            updateItemStacks(getInventory(), getPlayer());
+            layout.slot(13, (s, c) -> ItemStackCreator.getStack(
+                    "§cNo Active Election",
+                    Material.BARRIER,
+                    1,
+                    "§7There is no active election",
+                    "§7at this time."
+            ));
             return;
         }
 
         int currentYear = SkyBlockCalendar.getYear();
-        String playerVote = ElectionManager.getPlayerVote(getPlayer().getUuid());
         Map<String, Long> tally = data.tallyVotes();
         long totalVotes = tally.values().stream().mapToLong(Long::longValue).sum();
 
@@ -60,39 +57,33 @@ public class GUIElection extends HypixelInventoryGUI {
             if (mayor == null) continue;
 
             int slot = slots[i];
-            boolean isVotedFor = candidate.getMayorName().equals(playerVote);
             long votes = tally.getOrDefault(candidate.getMayorName(), 0L);
             String voteStr = formatVotes(votes);
             String pctStr = totalVotes > 0
                     ? String.format("%.1f%%", (votes * 100.0) / totalVotes) : "0%";
-
             int yearsSince = data.getYearsSinceLastElected(candidate.getMayorName(), currentYear);
+            String candidateName = candidate.getMayorName();
 
-            set(new GUIClickableItem(slot) {
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer player) {
-                    List<String> lore = buildCandidateLore(
-                            mayor, candidate, data.getElectionYear(),
-                            yearsSince, voteStr, pctStr, isVotedFor
-                    );
-                    return ItemStackCreator.getStackHead(
-                            mayor.getColoredName(),
-                            new PlayerSkin(mayor.getTexture(), mayor.getSignature()),
-                            1,
-                            lore.toArray(new String[0])
-                    );
-                }
+            layout.slot(slot, (s, c) -> {
+                String playerVote = ElectionManager.getPlayerVote(c.player().getUuid());
+                boolean isVotedFor = candidateName.equals(playerVote);
 
-                @Override
-                public void run(InventoryPreClickEvent event, HypixelPlayer player) {
-                    ElectionManager.castVote(player.getUuid(), candidate.getMayorName());
-                    player.sendMessage("§aYou voted for " + mayor.getColoredName() + "§a!");
-                    new GUIElection().open(player);
-                }
+                List<String> lore = buildCandidateLore(
+                        mayor, candidate, data.getElectionYear(),
+                        yearsSince, voteStr, pctStr, isVotedFor
+                );
+                return ItemStackCreator.getStackHead(
+                        mayor.getColoredName(),
+                        new PlayerSkin(mayor.getTexture(), mayor.getSignature()),
+                        1,
+                        lore
+                );
+            }, (click, c) -> {
+                ElectionManager.castVote(c.player().getUuid(), candidateName);
+                c.player().sendMessage("§aYou voted for " + mayor.getColoredName() + "§a!");
+                c.replace(new ElectionView());
             });
         }
-
-        updateItemStacks(getInventory(), getPlayer());
     }
 
     private List<String> buildCandidateLore(SkyBlockMayor mayor, ElectionData.CandidateData candidate,
@@ -159,15 +150,5 @@ public class GUIElection extends HypixelInventoryGUI {
         if (votes >= 1_000_000) return String.format("%.1fM", votes / 1_000_000.0);
         if (votes >= 1_000) return String.format("%.1fk", votes / 1_000.0);
         return String.valueOf(votes);
-    }
-
-    @Override
-    public boolean allowHotkeying() {
-        return false;
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
     }
 }

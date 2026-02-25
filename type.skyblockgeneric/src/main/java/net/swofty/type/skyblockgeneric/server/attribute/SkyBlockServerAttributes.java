@@ -8,9 +8,7 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
-import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.server.attribute.attributes.AttributeLong;
-import net.swofty.type.skyblockgeneric.server.attribute.attributes.AttributeString;
 import org.bson.Document;
 import org.tinylog.Logger;
 import tools.jackson.core.JacksonException;
@@ -75,11 +73,7 @@ public class SkyBlockServerAttributes {
     public enum Attributes {
         CALENDER_ELAPSED_TIME("elapsed", AttributeLong.class, new AttributeLong("elapsed", 0L), (attribute) -> {
             SkyBlockCalendar.setElapsed((Long) attribute.getValue());
-        }, (server) -> new AttributeLong("elapsed", SkyBlockCalendar.getElapsed())),
-        ELECTION_DATA("election_data", AttributeString.class, new AttributeString("election_data", ""), (attribute) -> {
-            ElectionManager.loadFromAttribute();
-        }, (server) -> new AttributeString("election_data", ElectionManager.serializeData()));
-
+        }, (server) -> new AttributeLong("elapsed", SkyBlockCalendar.getElapsed()));
         @Getter
         private final String key;
         @Getter

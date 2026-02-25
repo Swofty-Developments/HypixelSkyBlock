@@ -129,10 +129,51 @@ public final class SkyBlockCalendar {
                     }
 
                     long timeUntilBegin = eventElapsed - currentElapsed;
-                    int eventYear = targetYear;
 
-                    EventInfo info = new EventInfo(timeUntilBegin, event.duration(), eventYear);
+                    EventInfo info = new EventInfo(timeUntilBegin, event.duration(), targetYear);
                     result.put(info, event);
+                    foundEvents++;
+                }
+            }
+            yearsAhead++;
+
+            // Safety check to prevent infinite loops
+            if (yearsAhead > 100) break;
+        }
+
+        return result;
+    }
+
+    public static Map<EventInfo, CalendarEvent> getEventsWithDurationUntilSkipSpecific(int amount, List<CalendarEvent> event) {
+        Map<EventInfo, CalendarEvent> result = new LinkedHashMap<>();
+        long currentElapsed = getElapsed();
+        int currentYear = getYear();
+
+        int foundEvents = 0;
+        int yearsAhead = 0;
+
+        while (foundEvents < amount) {
+            int targetYear = currentYear + yearsAhead;
+            long yearStartElapsed = (long) (targetYear - 1) * YEAR;
+
+            for (CalendarEvent e : CalendarEvent.getAllEvents()) {
+                if (event.contains(e)) continue; // Skip specified events
+                if (foundEvents >= amount) break;
+
+                for (Long eventTime : e.times()) {
+                    if (foundEvents >= amount) break;
+
+                    long eventElapsed = yearStartElapsed + eventTime;
+
+                    // Skip events that have already passed (including currently ongoing ones that started)
+                    if (eventElapsed <= currentElapsed) {
+                        continue;
+                    }
+
+                    long timeUntilBegin = eventElapsed - currentElapsed;
+
+                    EventInfo info = new EventInfo(timeUntilBegin, e.duration(), targetYear);
+                    result.put(info, e);
                     foundEvents++;
                 }
             }
