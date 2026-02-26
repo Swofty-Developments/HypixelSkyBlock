@@ -1,5 +1,6 @@
 items:
   - id: BEHEADED_HORROR
+    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -10,6 +11,7 @@ items:
       - id: RIGHT_CLICK_RECIPE
         recipe_item: REAPER_MASK
   - id: FOUL_FLESH
+    material: charcoal
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -24,6 +26,7 @@ items:
         fuel_percentage: 90.0
         last_time_ms: 18000000
   - id: REVENANT_CATALYST
+    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -33,12 +36,14 @@ items:
       - id: RIGHT_CLICK_RECIPE
         recipe_item: REAPER_FALCHION
   - id: REVENANT_FLESH
+    material: rotten_flesh
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 1.0
       - id: ENCHANTED
   - id: REVENANT_VISCERA
+    material: cooked_porkchop
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -64,12 +69,14 @@ items:
               type: REVENANT_VISCERA
               amount: 1
   - id: SCYTHE_BLADE
+    material: diamond
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: RIGHT_CLICK_RECIPE
         recipe_item: REAPER_SCYTHE
   - id: SHARD_OF_THE_SHREDDED
+    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -78,6 +85,7 @@ items:
       - id: RIGHT_CLICK_RECIPE
         recipe_item: AXE_OF_THE_SHREDDED
   - id: UNDEAD_CATALYST
+    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -87,6 +95,7 @@ items:
       - id: RIGHT_CLICK_RECIPE
         recipe_item: REVENANT_FALCHION
   - id: WARDEN_HEART
+    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD

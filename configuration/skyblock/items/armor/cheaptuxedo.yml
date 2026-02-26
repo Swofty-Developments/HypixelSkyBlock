@@ -1,5 +1,6 @@
 items:
   - id: CHEAP_TUXEDO_BOOTS
+    material: leather_boots
     rarity: COMMON
     default_statistics:
       CRITICAL_DAMAGE: 25.0
@@ -14,6 +15,7 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Cheap Tuxedo Oxfords
   - id: CHEAP_TUXEDO_CHESTPLATE
+    material: leather_chestplate
     rarity: COMMON
     default_statistics:
       CRITICAL_DAMAGE: 50.0
@@ -28,6 +30,7 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Cheap Tuxedo Jacket
   - id: CHEAP_TUXEDO_LEGGINGS
+    material: leather_leggings
     rarity: COMMON
     default_statistics:
       CRITICAL_DAMAGE: 25.0

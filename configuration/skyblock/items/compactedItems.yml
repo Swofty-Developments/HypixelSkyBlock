@@ -1524,6 +1524,7 @@ items:
         item_id: ENCHANTED_EGG
 
   - id: STUFFED_CHILI_PEPPER
+    material: player_head
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1535,6 +1536,7 @@ items:
         texture: f599f959f0ebcb1eb0f2e5852d122ca55bf5258fd4613ab50d72ad8cf5e12603
 
   - id: WHIPPED_MAGMA_CREAM
+    material: player_head
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1546,6 +1548,7 @@ items:
         texture: 7da530ad09e69e4678c69cf5b8e0f0751e4630355fc7f0c226c955baace30fb2
 
   - id: ABSOLUTE_ENDER_PEARL
+    material: player_head
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1557,6 +1560,7 @@ items:
         texture: 67d9fe065024fff4b34c78f92cd3150d6bdfaab7c375a0ee785076e1a4a254e9
 
   - id: ENCHANTED_MYCELIUM_CUBE
+    material: player_head
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1568,6 +1572,7 @@ items:
         texture: 9a351d5316e5b508fbbf595e0773aec9639a0891807fef09bc59a56d46490cb0
 
   - id: ENCHANTED_RED_SAND_CUBE
+    material: player_head
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1579,6 +1584,7 @@ items:
         texture: f31f5c78b7e961591293756b9e15012db10457846c5ebc5db0f2b0e1873468ee
 
   - id: ENCHANTED_SULPHUR_CUBE
+    material: player_head
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1590,6 +1596,7 @@ items:
         texture: 4f0c28dfcf42d4dbd27c3378f67176c84800bc69b4cd531702c95ca6fb990458
 
   - id: BOX_OF_SEEDS
+    material: player_head
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1601,6 +1608,7 @@ items:
         texture: 2c3f854bb65265ab3ff2e362669a5f806ab84dc240a4b99f9a62ab7267728ba3
 
   - id: MUTANT_NETHER_WART
+    material: player_head
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1612,6 +1620,7 @@ items:
         texture: 111a3cec7aaf904212ccf93bb67a3caf3d649783ba90b8b60bb63c7687eb39f
 
   - id: POLISHED_PUMPKIN
+    material: player_head
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1656,6 +1665,7 @@ items:
         value: 640
 
   - id: COMPACTED_MOONFLOWER
+    material: blue_orchid
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1667,6 +1677,7 @@ items:
         texture: 469b3bac406b51ba0e76c2c218aa4d45fde9ea7c101c85fbd8106c92c4aa36dd
 
   - id: COMPACTED_SUNFLOWER
+    material: sunflower
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1678,6 +1689,7 @@ items:
         texture: c4989d846862952f8ac844abbd4c1f77bf85e924c2bf98236f8d9253624d879f
 
   - id: COMPACTED_WILD_ROSE
+    material: rose_bush
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1722,6 +1734,7 @@ items:
         value: 576
 
   - id: ENCHANTED_TENDER_WOOD
+    material: player_head
     rarity: RARE
     default_statistics: {}
     components:
@@ -1734,6 +1747,7 @@ items:
         texture: 455affb78f594ca7b6ec39216151304ce1bf18b788cce13b14f345d808a44126
 
   - id: ENCHANTED_VINESAP
+    material: player_head
     rarity: RARE
     default_statistics: {}
     components:

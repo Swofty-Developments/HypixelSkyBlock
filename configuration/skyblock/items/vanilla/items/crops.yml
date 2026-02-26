@@ -1,5 +1,6 @@
 items:
   - id: CACTUS
+    material: cactus
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -23,6 +24,7 @@ items:
         alchemy_xp: 10
 
   - id: CARROT
+    material: carrot
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -39,6 +41,7 @@ items:
         value: 3.0
 
   - id: COCOA_BEANS
+    material: cocoa_beans
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -61,6 +64,7 @@ items:
         alchemy_xp: 5
 
   - id: POTATO
+    material: potato
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -77,6 +81,7 @@ items:
         value: 3.0
 
   - id: POISONOUS_POTATO
+    material: poisonous_potato
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -89,6 +94,7 @@ items:
         alchemy_xp: 20
 
   - id: MELON_BLOCK
+    material: melon
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -127,6 +133,7 @@ items:
               amount: 1
 
   - id: MELON_SLICE
+    material: melon_slice
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -135,6 +142,7 @@ items:
         display_name: Melon
 
   - id: SEEDS
+    material: wheat_seeds
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -143,6 +151,7 @@ items:
         display_name: Seeds
 
   - id: WHEAT
+    material: wheat
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -162,6 +171,7 @@ items:
         value: 6.0
 
   - id: SUGAR_CANE
+    material: sugar_cane
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -171,6 +181,7 @@ items:
         value: 4.0
 
   - id: PUMPKIN
+    material: pumpkin
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -180,6 +191,7 @@ items:
         value: 10.0
 
   - id: MUSHROOM
+    material: red_mushroom
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
