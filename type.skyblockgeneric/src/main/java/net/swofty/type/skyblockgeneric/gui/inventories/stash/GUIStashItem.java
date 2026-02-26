@@ -8,6 +8,7 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStash;
@@ -16,6 +17,7 @@ import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
+import java.util.Map;
 
 public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
 
@@ -65,7 +67,7 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
                 int pickedUp = 0;
 
                 if (stash.getItemStashCount() == 0) {
-                    player.sendMessage("§cYour item stash is already empty!");
+                    player.sendMessage(I18n.string("gui_stash.item.empty_message"));
                     return;
                 }
 
@@ -73,17 +75,17 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
                     SkyBlockItem removed = stash.removeFromItemStash(0);
                     if (removed != null) {
                         player.addAndUpdateItem(removed);
-                        player.sendMessage("§eFrom stash: §7" + removed.getDisplayName());
+                        player.sendMessage(I18n.string("gui_stash.item.from_stash", Map.of("item_name", removed.getDisplayName())));
                         pickedUp++;
                     }
                 }
 
                 if (pickedUp == 0) {
-                    player.sendMessage("§cCouldn't unstash your item stash! Your inventory is full!");
+                    player.sendMessage(I18n.string("gui_stash.item.inventory_full"));
                 } else if (stash.getItemStashCount() == 0) {
-                    player.sendMessage("§eYou picked up §aall §eitems from your item stash!");
+                    player.sendMessage(I18n.string("gui_stash.item.all_picked_up"));
                 } else {
-                    player.sendMessage("§eYou still have §b" + stash.getItemStashCount() + " §eitems in there!");
+                    player.sendMessage(I18n.string("gui_stash.item.remaining", Map.of("count", String.valueOf(stash.getItemStashCount()))));
                 }
 
                 player.closeInventory();
@@ -93,13 +95,8 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int count = player.getStash().getItemStashCount();
-                return ItemStackCreator.getStack("§aFill Inventory", Material.EMERALD, 1,
-                        "§7Pick up as many stashed items",
-                        "§7as can fit in your inventory.",
-                        "",
-                        "§7Items in stash: §e" + count + "/720",
-                        "",
-                        "§eClick to fill inventory!");
+                return ItemStackCreator.getStack(I18n.string("gui_stash.item.fill_inventory"), Material.EMERALD, 1,
+                        I18n.lore("gui_stash.item.fill_inventory.lore", Map.of("count", String.valueOf(count))));
             }
         });
 
@@ -116,9 +113,9 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
     public String getTitle(HypixelPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
         int maxPage = paged.getPageCount();
         if (maxPage <= 1) {
-            return "Item Stash";
+            return I18n.string("gui_stash.item.title");
         }
-        return "Item Stash (" + page + "/" + maxPage + ")";
+        return I18n.string("gui_stash.item.title_paged", Map.of("page", String.valueOf(page), "max_page", String.valueOf(maxPage)));
     }
 
     @Override
@@ -135,7 +132,7 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
 
                 // Check if player has inventory space
                 if (!player.hasEmptySlots(1)) {
-                    player.sendMessage("§cCouldn't unstash your item stash! Your inventory is full!");
+                    player.sendMessage(I18n.string("gui_stash.item.inventory_full"));
                     return;
                 }
 
@@ -152,14 +149,12 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
                 SkyBlockItem removed = player.getStash().removeFromItemStash(currentIndex);
                 if (removed != null) {
                     player.addAndUpdateItem(removed);
-                    player.sendMessage("§eFrom stash: §7" + removed.getDisplayName());
+                    player.sendMessage(I18n.string("gui_stash.item.from_stash", Map.of("item_name", removed.getDisplayName())));
 
-                    // Check if stash is now empty
                     if (player.getStash().getItemStashCount() == 0) {
-                        player.sendMessage("§eYou picked up §aall §eitems from your item stash!");
+                        player.sendMessage(I18n.string("gui_stash.item.all_picked_up"));
                     } else {
-                        player.sendMessage("§eYou still have §b" + player.getStash().getItemStashCount() +
-                                " §eitems in there!");
+                        player.sendMessage(I18n.string("gui_stash.item.remaining", Map.of("count", String.valueOf(player.getStash().getItemStashCount()))));
                     }
                 }
 

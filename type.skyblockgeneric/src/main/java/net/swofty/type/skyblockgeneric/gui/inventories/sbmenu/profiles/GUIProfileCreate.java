@@ -12,18 +12,20 @@ import net.swofty.type.generic.event.actions.data.ActionPlayerDataSave;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.bson.Document;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class GUIProfileCreate extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Create a Profile", InventoryType.CHEST_3_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.profiles.create.title"), InventoryType.CHEST_3_ROW);
     }
 
     @SneakyThrows
@@ -33,19 +35,8 @@ public class GUIProfileCreate extends StatelessView {
 
         String profileName = SkyBlockPlayerProfiles.getRandomName();
 
-        // Create New Profile
-        layout.slot(11, (s, c) -> ItemStackCreator.getStack("§aCreate New Profile", Material.GREEN_TERRACOTTA, 1,
-                        "§7You are creating a new SkyBlock",
-                        "§7profile.",
-                        "",
-                        "§7Profile name: §e" + profileName,
-                        "",
-                        "§7You won't lose any progress.",
-                        "§7You can switch between profiles.",
-                        "",
-                        "§bYou are creating a SOLO profile!",
-                        "§bUse /coop to play with friends!",
-                        "§eClick to confirm new profile!"),
+        layout.slot(11, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.create.confirm"), Material.GREEN_TERRACOTTA, 1,
+                        I18n.lore("gui_sbmenu.profiles.create.confirm.lore", Map.of("profile_name", profileName))),
                 (click, c) -> {
                     SkyBlockPlayer player = (SkyBlockPlayer) c.player();
                     SkyBlockPlayerProfiles profiles = player.getProfiles();
@@ -71,8 +62,7 @@ public class GUIProfileCreate extends StatelessView {
                     player.sendTo(ServerType.SKYBLOCK_ISLAND, true);
                 });
 
-        // Cancel
-        layout.slot(15, (s, c) -> ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, "§cCancel"),
+        layout.slot(15, (s, c) -> ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, I18n.string("gui_sbmenu.profiles.create.cancel")),
                 (click, c) -> c.player().openView(new GUIProfileSelectMode()));
     }
 }

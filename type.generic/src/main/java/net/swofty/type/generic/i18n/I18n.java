@@ -5,6 +5,7 @@ import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.translation.GlobalTranslator;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -61,6 +62,14 @@ public class I18n {
             result = result.replace("{" + entry.getKey() + "}", entry.getValue());
         }
         return result;
+    }
+
+    public static List<String> lore(String key) {
+        return List.of(string(key).split("\n"));
+    }
+
+    public static List<String> lore(String key, Map<String, String> placeholders) {
+        return List.of(string(key, placeholders).split("\n"));
     }
 
     public static String[] dialogueLines(String key) {

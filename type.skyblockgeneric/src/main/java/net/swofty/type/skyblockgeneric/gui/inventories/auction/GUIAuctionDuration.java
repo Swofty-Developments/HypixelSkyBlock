@@ -11,15 +11,18 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionEscrow;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.Map;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUIAuctionDuration extends HypixelInventoryGUI {
     public GUIAuctionDuration() {
-        super("Auction Duration", InventoryType.CHEST_4_ROW);
+        super(I18n.string("gui_auction.duration.title"), InventoryType.CHEST_4_ROW);
     }
 
     @Override
@@ -40,15 +43,15 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
                 try {
                     l = Long.parseLong(query);
                 } catch (NumberFormatException ex) {
-                    player.sendMessage("§cCould not read this number!");
+                    player.sendMessage(I18n.string("gui_auction.duration.number_parse_error"));
                     return null;
                 }
                 if (l <= 1) {
-                    player.sendMessage("§cInvalid time amount!");
+                    player.sendMessage(I18n.string("gui_auction.duration.invalid_time"));
                     return null;
                 }
                 if (l >= 336 && !right.get()) {
-                    player.sendMessage("§cYou can only put an auction up to a maximum of 14 days!");
+                    player.sendMessage(I18n.string("gui_auction.duration.max_exceeded"));
                     return null;
                 }
 
@@ -67,12 +70,8 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aCustom Duration", Material.COMPASS, 1,
-                        "§7Specify how long you want",
-                        "§7the auction to last.",
-                        " ",
-                        "§bRight-click for minutes!",
-                        "§eLeft-click to set hours!");
+                return ItemStackCreator.getStack(I18n.string("gui_auction.duration.custom"), Material.COMPASS, 1,
+                        I18n.lore("gui_auction.duration.custom.lore"));
             }
         });
 
@@ -106,9 +105,11 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                ItemStack.Builder stack = ItemStackCreator.getStack("§a" + hours + " Hours", color, 1,
+                ItemStack.Builder stack = ItemStackCreator.getStack(
+                        I18n.string("gui_auction.duration.hours", Map.of("hours", String.valueOf(hours))),
+                        color, 1,
                         " ",
-                        "§eClick to set this duration!");
+                        I18n.string("gui_auction.duration.hours_click"));
 
                 if (user.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().getDuration() == millis) {
                     stack = ItemStackCreator.enchant(stack);

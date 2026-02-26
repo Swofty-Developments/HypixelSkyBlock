@@ -7,6 +7,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
@@ -41,7 +42,7 @@ public class GUIMissionLog extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Quest Log " + (showCompleted ? "(Completed)" : ""), InventoryType.CHEST_6_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.questlog.title", Map.of("suffix", showCompleted ? "(Completed)" : "")), InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -50,43 +51,29 @@ public class GUIMissionLog extends StatelessView {
         Components.close(layout, 49);
         Components.back(layout, 48, ctx);
 
-        layout.slot(4, (s, c) -> ItemStackCreator.getStack("§aQuest Log " + (showCompleted ? "(Completed)" : ""),
-                Material.WRITABLE_BOOK, 1, "§7View your active quests,", "§7progress, and rewards."));
+        layout.slot(4, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.questlog.info", Map.of("suffix", showCompleted ? "(Completed)" : "")),
+                Material.WRITABLE_BOOK, 1, I18n.lore("gui_sbmenu.questlog.info.lore")));
 
         // Fairy Souls
         layout.slot(10, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
-            return ItemStackCreator.getStackHead("§eFind all Fairy Souls",
+            return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.questlog.fairy_souls"),
                     "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387", 1,
-                    "",
-                    "  §c✖ §eFound: " + player.getFairySoulHandler().getTotalFoundFairySouls() + "/" + FairySoulDatabase.getAllSouls().size(),
-                    "",
-                    "§7Forever ongoing quest...",
-                    "",
-                    "§eClick to view details!");
+                    I18n.lore("gui_sbmenu.questlog.fairy_souls.lore", Map.of("found", String.valueOf(player.getFairySoulHandler().getTotalFoundFairySouls()), "total", String.valueOf(FairySoulDatabase.getAllSouls().size()))));
         }, (_, c) -> {
             c.push(new GUIFairySoulsGuide());
         });
 
         // Toggle completed/ongoing
         if (showCompleted) {
-            layout.slot(50, (s, c) -> ItemStackCreator.getStack("§aOngoing Quests", Material.BOOK, 1,
-                            "§7View quests you are currently",
-                            "§7working towards.",
-                            "§7 ",
-                            "§eClick to view!"),
+            layout.slot(50, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.questlog.ongoing_quests"), Material.BOOK, 1,
+                            I18n.lore("gui_sbmenu.questlog.ongoing_quests.lore")),
                     (click, c) -> c.replace(new GUIMissionLog(false)));
         } else {
             layout.slot(50, (s, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
-                return ItemStackCreator.getStack("§aCompleted Quests", Material.BOOK, 1,
-                        "§7Take a peek at the past and",
-                        "§7browse quests you've,",
-                        "§7already completed.",
-                        "§f ",
-                        "§7Completed: §a" + player.getMissionData().getCompletedMissions().size(),
-                        "§7 ",
-                        "§eClick to view!");
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.questlog.completed_quests"), Material.BOOK, 1,
+                        I18n.lore("gui_sbmenu.questlog.completed_quests.lore", Map.of("count", String.valueOf(player.getMissionData().getCompletedMissions().size()))));
             }, (_, c) -> c.replace(new GUIMissionLog(true)));
         }
 
@@ -152,7 +139,7 @@ public class GUIMissionLog extends StatelessView {
                 if (firstMissionInSetEntry != null) {
                     MissionData.ActiveMission firstMissionInSet = firstMissionInSetEntry.getKey();
 
-                    lore.add("§7Started:");
+                    lore.add(I18n.string("gui_sbmenu.questlog.started"));
                     lore.add("§f  " + SkyBlockCalendar.getMonthName(
                             SkyBlockCalendar.getMonth(firstMissionInSet.getMissionStarted()))
                             + " " + StringUtility.ntify(SkyBlockCalendar.getDay(firstMissionInSet.getMissionStarted())));
@@ -160,14 +147,14 @@ public class GUIMissionLog extends StatelessView {
 
                     if (showCompleted) {
                         lore.add("§7 ");
-                        lore.add("§7Completed:");
+                        lore.add(I18n.string("gui_sbmenu.questlog.completed"));
                         lore.add("§f  " + SkyBlockCalendar.getMonthName(
                                 SkyBlockCalendar.getMonth(firstMissionInSet.getMissionEnded()))
                                 + " " + StringUtility.ntify(SkyBlockCalendar.getDay(firstMissionInSet.getMissionEnded())));
                         lore.add("§7  " + SkyBlockCalendar.getDisplay(firstMissionInSet.getMissionEnded()));
                     }
                 } else {
-                    lore.add("§7Not Yet Started");
+                    lore.add(I18n.string("gui_sbmenu.questlog.not_started"));
                 }
 
                 return ItemStackCreator.enchant(ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(missionSet.name()),

@@ -14,6 +14,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
@@ -23,12 +24,13 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 	private final SkyBlockPlayer viewedPlayer;
 
 	public GUIViewPlayerProfile(SkyBlockPlayer viewedPlayer) {
-		super(viewedPlayer.getUsername() + "'s Profile", InventoryType.CHEST_6_ROW);
+		super(I18n.string("gui_profile.title", Map.of("player_name", viewedPlayer.getUsername())), InventoryType.CHEST_6_ROW);
 		this.viewedPlayer = viewedPlayer;
 	}
 
@@ -44,7 +46,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 				if (!viewedPlayer.getItemInMainHand().isAir()) {
 					return ItemStackCreator.getFromStack(viewedPlayer.getItemInMainHand());
 				} else {
-					return ItemStackCreator.getStack("§7Empty Held Item Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+					return ItemStackCreator.getStack(I18n.string("gui_profile.empty_held_item"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
 				}
 			}
 		});
@@ -55,7 +57,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 				if (!viewedPlayer.getHelmet().isAir()) {
 					return ItemStackCreator.getFromStack(viewedPlayer.getHelmet());
 				} else {
-					return ItemStackCreator.getStack("§7Empty Helmet Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+					return ItemStackCreator.getStack(I18n.string("gui_profile.empty_helmet"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
 				}
 			}
 		});
@@ -66,7 +68,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 				if (!viewedPlayer.getChestplate().isAir()) {
 					return ItemStackCreator.getFromStack(viewedPlayer.getChestplate());
 				} else {
-					return ItemStackCreator.getStack("§7Empty Chestplate Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+					return ItemStackCreator.getStack(I18n.string("gui_profile.empty_chestplate"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
 				}
 			}
 		});
@@ -77,7 +79,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 				if (!viewedPlayer.getLeggings().isAir()) {
 					return ItemStackCreator.getFromStack(viewedPlayer.getLeggings());
 				} else {
-					return ItemStackCreator.getStack("§7Empty Leggings Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+					return ItemStackCreator.getStack(I18n.string("gui_profile.empty_leggings"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
 				}
 			}
 		});
@@ -88,7 +90,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 				if (!viewedPlayer.getBoots().isAir()) {
 					return ItemStackCreator.getFromStack(viewedPlayer.getBoots());
 				} else {
-					return ItemStackCreator.getStack("§7Empty Boots Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+					return ItemStackCreator.getStack(I18n.string("gui_profile.empty_boots"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
 				}
 			}
 		});
@@ -99,7 +101,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 					SkyBlockItem pet = viewedPlayer.getPetData().getEnabledPet();
 					return new NonPlayerItemUpdater(pet).getUpdatedItem();
 				} else {
-					return ItemStackCreator.getStack("§7Empty Pet Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+					return ItemStackCreator.getStack(I18n.string("gui_profile.empty_pet"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
 				}
 			}
 		});
@@ -110,11 +112,10 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 				String age = StringUtility.profileAge(System.currentTimeMillis() - dataHandler.get(SkyBlockDataHandler.Data.CREATED, DatapointLong.class).getValue());
 				List<String> lore = new ArrayList<>(List.of());
 
-
 				lore.add("§7 ");
-				lore.add("§7SkyBlock Level: " + viewedPlayer.getSkyBlockExperience().getLevel().getColor() + viewedPlayer.getSkyBlockExperience().getLevel());
+				lore.add(I18n.string("gui_profile.skyblock_level", Map.of("level", viewedPlayer.getSkyBlockExperience().getLevel().getColor() + viewedPlayer.getSkyBlockExperience().getLevel().toString())));
 				lore.add("§7 ");
-				lore.add("§7Oldest Profile: §5" + age);
+				lore.add(I18n.string("gui_profile.oldest_profile", Map.of("age", age)));
 
 				return ItemStackCreator.getStackHead(viewedPlayer.getShortenedDisplayName(),
 						PlayerSkin.fromUuid(viewedPlayer.getUuid().toString()), 1,
@@ -125,7 +126,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage("§cThis feature is not added yet.");
+				player.sendMessage(I18n.string("gui_profile.feature_not_added"));
 			}
 
 			@Override
@@ -135,16 +136,15 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 				String name;
 				Material material;
 				if (dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem() != null) {
-					name = "§fSelected Emblem: " + dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem().toString();
+					name = I18n.string("gui_profile.emblem_selected", Map.of("emblem", dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem().toString()));
 					material = dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getEmblem().displayMaterial();
 				} else {
-					name = "§cNo Selected Emblem";
+					name = I18n.string("gui_profile.no_emblem");
 					material = Material.BARRIER;
-					lore.add("§fThis player does not have any");
-					lore.add("§femblem selected.");
+					lore.addAll(I18n.lore("gui_profile.no_emblem.lore"));
 				}
 				lore.add(" ");
-				lore.add("§eClick to view unlocked emblems!");
+				lore.add(I18n.string("gui_profile.click_view_emblems"));
 				return ItemStackCreator.getStack(name, material, 1, lore);
 			}
 		});
@@ -152,78 +152,79 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage("§cThis feature is not added yet.");
+				player.sendMessage(I18n.string("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				return ItemStackCreator.getStack("§aVisit Island", Material.FEATHER, 1, "§eClick to visit!");
+				return ItemStackCreator.getStack(I18n.string("gui_profile.visit_island"), Material.FEATHER, 1,
+						I18n.lore("gui_profile.visit_island.lore"));
 			}
 		});
 		set(new GUIClickableItem(16) { //Trade Request
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage("§cThis feature is not added yet.");
+				player.sendMessage(I18n.string("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				return ItemStackCreator.getStack("§aTrade Request", Material.EMERALD, 1, "§eSend a trade request!");
+				return ItemStackCreator.getStack(I18n.string("gui_profile.trade_request"), Material.EMERALD, 1,
+						I18n.lore("gui_profile.trade_request.lore"));
 			}
 		});
 		set(new GUIClickableItem(24) { //Invite to Island
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage("§cThis feature is not added yet.");
+				player.sendMessage(I18n.string("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				return ItemStackCreator.getStack("§aInvite to Island", Material.POPPY, 1, "§eClick to invite!");
+				return ItemStackCreator.getStack(I18n.string("gui_profile.invite_to_island"), Material.POPPY, 1,
+						I18n.lore("gui_profile.invite_to_island.lore"));
 			}
 		});
 		set(new GUIClickableItem(25) { //Coop Request
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage("§cThis feature is not added yet.");
+				player.sendMessage(I18n.string("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				return ItemStackCreator.getStack("§aCo-op Request", Material.DIAMOND, 1, "§eSend a co-op request!");
+				return ItemStackCreator.getStack(I18n.string("gui_profile.coop_request"), Material.DIAMOND, 1,
+						I18n.lore("gui_profile.coop_request.lore"));
 			}
 		});
 		set(new GUIClickableItem(33) { //Personal Vault
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage("§cThis feature is not added yet.");
+				player.sendMessage(I18n.string("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				return ItemStackCreator.getStack("§aPersonal Vault", Material.ENDER_CHEST, 1, "§eClick to view!");
+				return ItemStackCreator.getStack(I18n.string("gui_profile.personal_vault"), Material.ENDER_CHEST, 1,
+						I18n.lore("gui_profile.personal_vault.lore"));
 			}
 		});
 		set(new GUIClickableItem(34) { //Museum
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage("§cThis feature is not added yet.");
+				player.sendMessage(I18n.string("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				List<String> lore = new ArrayList<>(List.of());
 				SkyBlockDataHandler dataHandler = viewedPlayer.getSkyblockDataHandler();
-				lore.add("§fProfile: §a" + dataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
-				lore.add(" ");
-				lore.add("§fItems Donated: §bMuseum not there yet :)");
-				lore.add(" ");
-				lore.add("§eClick to visit!");
+				String profileName = dataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
+				List<String> lore = new ArrayList<>(I18n.lore("gui_profile.museum.lore", Map.of("profile_name", profileName)));
 				return ItemStackCreator.getStackHead(viewedPlayer.getUsername() + "'s Museum",
 						PlayerSkin.fromUuid(viewedPlayer.getUuid().toString()), 1,
 						lore);

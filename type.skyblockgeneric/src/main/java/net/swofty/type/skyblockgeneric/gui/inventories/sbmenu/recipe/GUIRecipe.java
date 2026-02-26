@@ -10,6 +10,7 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
@@ -42,7 +43,7 @@ public class GUIRecipe extends StatelessView {
     public ViewConfiguration<DefaultState> configuration() {
         ItemType type = item.getAttributeHandler().getPotentialType();
         String name = type != null ? type.getDisplayName() : "Unknown";
-        return new ViewConfiguration<>(name + " Recipe", InventoryType.CHEST_6_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.recipe.view.title", java.util.Map.of("item_name", name)), InventoryType.CHEST_6_ROW);
     }
 
     @SneakyThrows
@@ -52,9 +53,8 @@ public class GUIRecipe extends StatelessView {
         Components.close(layout, 49);
         Components.back(layout, 48, ctx);
 
-        layout.slot(23, (s, c) -> ItemStackCreator.getStack("§aCrafting Table", Material.CRAFTING_TABLE, 1,
-                "§7Craft this recipe by using a",
-                "§7crafting table."));
+        layout.slot(23, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.view.crafting_table"), Material.CRAFTING_TABLE, 1,
+                I18n.lore("gui_sbmenu.recipe.view.crafting_table.lore")));
 
         ItemType itemTypeLinker = item.getAttributeHandler().getPotentialType();
         if (item.toConfigurableItem() == null) {
@@ -71,8 +71,8 @@ public class GUIRecipe extends StatelessView {
 
         // Next recipe button
         if (recipes.size() > actualRecipeIndex + 1) {
-            layout.slot(32, (s, c) -> ItemStackCreator.getStack("§aNext Recipe", Material.ARROW, 1,
-                            "§7Click to view the next recipe!"),
+            layout.slot(32, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.view.next"), Material.ARROW, 1,
+                            I18n.lore("gui_sbmenu.recipe.view.next.lore")),
                     (click, c) -> {
                         c.push(new GUIRecipe(item, actualRecipeIndex + 1));
                     });
@@ -80,8 +80,8 @@ public class GUIRecipe extends StatelessView {
 
         // Previous recipe button
         if (actualRecipeIndex > 0) {
-            layout.slot(14, (s, c) -> ItemStackCreator.getStack("§aPrevious Recipe", Material.ARROW, 1,
-                            "§7Click to view the previous recipe!"),
+            layout.slot(14, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.view.previous"), Material.ARROW, 1,
+                            I18n.lore("gui_sbmenu.recipe.view.previous.lore")),
                     (click, c) -> {
                         c.push(new GUIRecipe(item, actualRecipeIndex - 1));
                     });
@@ -109,7 +109,7 @@ public class GUIRecipe extends StatelessView {
                         List<Component> existingLore = builder.build().get(DataComponents.LORE);
                         ArrayList<Component> lore = existingLore != null ? new ArrayList<>(existingLore) : new ArrayList<>();
                         lore.add(Component.text(" "));
-                        lore.add(Component.text("§eClick to view recipe!"));
+                        lore.add(Component.text(I18n.string("gui_sbmenu.recipe.view.click_to_view")));
                         builder.set(DataComponents.LORE, lore);
                     }
 

@@ -15,6 +15,7 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSackOfSacks;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.SackComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
@@ -33,7 +34,7 @@ public class GUISackOfSacks implements StatefulView<GUISackOfSacks.SackOfSacksSt
 
     @Override
     public ViewConfiguration<SackOfSacksState> configuration() {
-        return new ViewConfiguration<>("Sack of Sacks", InventoryType.CHEST_5_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.bags.sack_of_sacks.title"), InventoryType.CHEST_5_ROW);
     }
 
     @Override
@@ -82,19 +83,14 @@ public class GUISackOfSacks implements StatefulView<GUISackOfSacks.SackOfSacksSt
         for (int i = totalSlots; i < slotsPerPage; i++) {
             CustomCollectionAward nextUpgrade = getUpgradeNeededForSlotIndex(i);
             if (nextUpgrade != null) {
-                layout.slot(i, (s, c) -> ItemStackCreator.getStack("§cLocked", Material.RED_STAINED_GLASS_PANE, 1,
-                        "§7You need to unlock the",
-                        "§a" + nextUpgrade.getDisplay() + " §7upgrade",
-                        "§7to use this slot."));
+                layout.slot(i, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.bags.sack_of_sacks.locked_slot"), Material.RED_STAINED_GLASS_PANE, 1,
+                        I18n.lore("gui_sbmenu.bags.sack_of_sacks.locked_slot.lore", Map.of("upgrade_name", nextUpgrade.getDisplay()))));
             }
         }
 
         // Insert inventory button
-        layout.slot(38, (s, c) -> ItemStackCreator.getStack("§aInsert inventory", Material.CHEST, 1,
-                        "§7Inserts your inventory items into",
-                        "§7your sacks.",
-                        "",
-                        "§eClick to put items in!"),
+        layout.slot(38, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.bags.sack_of_sacks.insert_inventory"), Material.CHEST, 1,
+                        I18n.lore("gui_sbmenu.bags.sack_of_sacks.insert_inventory.lore")),
                 (click, c) -> {
                     SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                     int slot = 0;
@@ -125,7 +121,7 @@ public class GUISackOfSacks implements StatefulView<GUISackOfSacks.SackOfSacksSt
             return true;
         }
 
-        player.sendMessage("§cYou cannot put this item in the Sack of Sacks!");
+        player.sendMessage(I18n.string("gui_sbmenu.bags.sack_of_sacks.msg.cannot_put"));
         return false;
     }
 

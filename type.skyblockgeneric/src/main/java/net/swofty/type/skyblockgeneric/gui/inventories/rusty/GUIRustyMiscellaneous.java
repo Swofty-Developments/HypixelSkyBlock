@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.rusty;
 
 import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -13,7 +14,7 @@ import java.util.function.Function;
 public class GUIRustyMiscellaneous extends GUIRustySubMenu<GUIRustyMiscellaneous.RustyItem> {
     public GUIRustyMiscellaneous() {
         super(
-                () -> "Rusty ➜ Miscellaneous",
+                () -> I18n.string("gui_rusty.miscellaneous.title"),
                 () -> List.of(RustyItem.values())
         );
     }

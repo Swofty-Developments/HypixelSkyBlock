@@ -12,16 +12,19 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.util.Map;
+
 public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIAuctionHouse() {
-        super("Auction House", InventoryType.CHEST_4_ROW);
+        super(I18n.string("gui_auction.house.title"), InventoryType.CHEST_4_ROW);
 
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join())
-            fill(Material.BLACK_STAINED_GLASS_PANE, "§cAuction House is currently offline!");
+            fill(Material.BLACK_STAINED_GLASS_PANE, I18n.string("gui_auction.house.offline_fill"));
     }
 
     @Override
@@ -38,11 +41,8 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aAuction Stats", Material.PAPER, 1,
-                        "§7View various statistics about you and",
-                        "§7the Auction House.",
-                        " ",
-                        "§eClick to view!");
+                return ItemStackCreator.getStack(I18n.string("gui_auction.house.stats_button"), Material.PAPER, 1,
+                        I18n.lore("gui_auction.house.stats_button.lore"));
             }
         });
 
@@ -56,15 +56,8 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§6Auctions Browser", Material.GOLD_BLOCK, 1,
-                        "§7Find items for sale by players",
-                        "§7across Hypixel SkyBlock!",
-                        " ",
-                        "§7Items offered here are for §6auction§7,",
-                        "§7meaning you have to place the top",
-                        "§7bid to acquire them!",
-                        " ",
-                        "§eClick to browse!");
+                return ItemStackCreator.getStack(I18n.string("gui_auction.house.browser_button"), Material.GOLD_BLOCK, 1,
+                        I18n.lore("gui_auction.house.browser_button.lore"));
             }
         });
 
@@ -79,11 +72,8 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack("§aCreate Auction", Material.GOLDEN_HORSE_ARMOR, 1,
-                            "§7Set your own items on auction for",
-                            "§7other players to purchase.",
-                            " ",
-                            "§eClick to become rich!");
+                    return ItemStackCreator.getStack(I18n.string("gui_auction.house.create_button"), Material.GOLDEN_HORSE_ARMOR, 1,
+                            I18n.lore("gui_auction.house.create_button.lore"));
                 }
             });
         } else {
@@ -97,11 +87,10 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack("§aManage Auctions", Material.GOLDEN_HORSE_ARMOR, 1,
-                            "§7You own §e" + player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size() + " auctions §7in progress or",
-                            "§7which recently ended.",
-                            " ",
-                            "§eClick to manage!");
+                    return ItemStackCreator.getStack(I18n.string("gui_auction.house.manage_button"), Material.GOLDEN_HORSE_ARMOR, 1,
+                            I18n.lore("gui_auction.house.manage_button.lore", Map.of(
+                                    "count", String.valueOf(player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size())
+                            )));
                 }
             });
         }
@@ -117,11 +106,8 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack("§aView Bids", Material.GOLDEN_CARROT, 1,
-                            "§7You've placed bids, check up on",
-                            "§7them here!",
-                            " ",
-                            "§eClick to view!");
+                    return ItemStackCreator.getStack(I18n.string("gui_auction.house.bids_button"), Material.GOLDEN_CARROT, 1,
+                            I18n.lore("gui_auction.house.bids_button.lore"));
                 }
             });
         }
@@ -150,7 +136,7 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage("§cAuction House is currently offline!");
+            player.sendMessage(I18n.string("gui_auction.house.offline_message"));
             player.closeInventory();
         }
     }

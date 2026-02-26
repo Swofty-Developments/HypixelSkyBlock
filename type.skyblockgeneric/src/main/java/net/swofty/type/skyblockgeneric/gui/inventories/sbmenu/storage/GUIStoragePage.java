@@ -11,7 +11,10 @@ import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStorage;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.Map;
 
 public class GUIStoragePage extends StatelessView {
     private final int page;
@@ -27,7 +30,7 @@ public class GUIStoragePage extends StatelessView {
                     SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
                     int highestPage = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class)
                             .getValue().getHighestPage();
-                    return "Ender Chest (" + page + "/" + highestPage + ")";
+                    return I18n.string("gui_sbmenu.storage.page.title", Map.of("page", String.valueOf(page), "max_page", String.valueOf(highestPage)));
                 },
                 InventoryType.CHEST_6_ROW
         );
@@ -46,18 +49,19 @@ public class GUIStoragePage extends StatelessView {
 
         Components.close(layout, 0);
 
-        layout.slot(1, (s, c) -> ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, "§7To Storage"),
+        layout.slot(1, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.page.go_back"), Material.ARROW, 1,
+                        I18n.lore("gui_sbmenu.storage.page.go_back.lore")),
                 (_, c) -> c.player().openView(new GUIStorage()));
 
         if (page != highestPage) {
-            layout.slot(8, (s, c) -> ItemStackCreator.getStackHead("§eLast Page >>",
+            layout.slot(8, (s, c) -> ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.storage.page.last_page"),
                             "1ceb50d0d79b9fb790a7392660bc296b7ad2f856c5cbe1c566d99cfec191e668"),
                     (click, c) -> {
                         saveItems((SkyBlockPlayer) c.player(), c);
                         c.player().openView(new GUIStoragePage(highestPage));
                     });
 
-            layout.slot(7, (s, c) -> ItemStackCreator.getStackHead("§aNext Page >>",
+            layout.slot(7, (s, c) -> ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.storage.page.next_page"),
                             "848ca732a6e35dafd15e795ebc10efedd9ef58ff2df9b17af6e3d807bdc0708b"),
                     (click, c) -> {
                         saveItems((SkyBlockPlayer) c.player(), c);
@@ -66,14 +70,14 @@ public class GUIStoragePage extends StatelessView {
         }
 
         if (page != 1) {
-            layout.slot(5, (s, c) -> ItemStackCreator.getStackHead("§e< First Page",
+            layout.slot(5, (s, c) -> ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.storage.page.first_page"),
                             "8af22a97292de001079a5d98a0ae3a82c427172eabc370ed6d4a31c7e3a0024f"),
                     (click, c) -> {
                         saveItems((SkyBlockPlayer) c.player(), c);
                         c.player().openView(new GUIStoragePage(1));
                     });
 
-            layout.slot(6, (s, c) -> ItemStackCreator.getStackHead("§a< Previous Page",
+            layout.slot(6, (s, c) -> ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.storage.page.previous_page"),
                             "9c042597eda9f061794fe11dacf78926d247f9eea8ddef39dfbe6022989b8395"),
                     (click, c) -> {
                         saveItems((SkyBlockPlayer) c.player(), c);
