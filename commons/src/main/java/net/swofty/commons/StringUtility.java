@@ -173,6 +173,7 @@ public class StringUtility {
 						i++;
 						break;
 					case 't':
+						sb.append('\t');
 						i++;
 						break;
 					case 'n':
