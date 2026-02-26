@@ -10,6 +10,7 @@ import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointQuiver;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
@@ -23,7 +24,7 @@ public class GUIQuiver implements StatefulView<GUIQuiver.QuiverState> {
 
     @Override
     public ViewConfiguration<QuiverState> configuration() {
-        return new ViewConfiguration<>("Quiver", InventoryType.CHEST_5_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.bags.quiver.title"), InventoryType.CHEST_5_ROW);
     }
 
     @Override
@@ -49,9 +50,8 @@ public class GUIQuiver implements StatefulView<GUIQuiver.QuiverState> {
                 for (int i = 0; i < entry.getValue(); i++) {
                     int slotIndex = i + rawAmountOfSlots;
                     if (slotIndex < 36) {
-                        layout.slot(slotIndex, (s, c) -> ItemStackCreator.getStack("§cLocked", Material.RED_STAINED_GLASS_PANE, 1,
-                                "§7You must have the §a" + entry.getKey().getDisplay() + " §7upgrade",
-                                "§7to unlock this slot."));
+                        layout.slot(slotIndex, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.bags.quiver.locked_slot"), Material.RED_STAINED_GLASS_PANE, 1,
+                                I18n.lore("gui_sbmenu.bags.quiver.locked_slot.lore", Map.of("upgrade_name", entry.getKey().getDisplay()))));
                     }
                 }
                 rawAmountOfSlots += entry.getValue();
@@ -74,7 +74,7 @@ public class GUIQuiver implements StatefulView<GUIQuiver.QuiverState> {
             }, (slot, oldItem, newItem, s) -> {
                 SkyBlockItem newSkyBlockItem = new SkyBlockItem(newItem);
                 if (!isItemAllowed(newSkyBlockItem)) {
-                    ctx.player().sendMessage("§cYou cannot put this item in the Quiver!");
+                    ctx.player().sendMessage(I18n.string("gui_sbmenu.bags.quiver.msg.cannot_put"));
                 }
             });
         }

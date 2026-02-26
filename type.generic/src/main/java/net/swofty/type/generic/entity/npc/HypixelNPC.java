@@ -16,6 +16,7 @@ import net.swofty.type.generic.entity.npc.impl.NPCEntityImpl;
 import net.swofty.type.generic.entity.npc.impl.NPCViewable;
 import net.swofty.type.generic.entity.npc.impl.NPCVillagerEntityImpl;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
@@ -268,5 +269,21 @@ public abstract class HypixelNPC {
     @Builder
     public record DialogueSet(String key, String[] lines, Sound sound) {
         public static final DialogueSet[] EMPTY = new DialogueSet[0];
+
+        public static DialogueSet ofTranslation(String key, String translationKey) {
+            return new DialogueSet(key, I18n.dialogueLines(translationKey), null);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, Sound sound) {
+            return new DialogueSet(key, I18n.dialogueLines(translationKey), sound);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, Map<String, String> placeholders) {
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, placeholders), null);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, Map<String, String> placeholders, Sound sound) {
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, placeholders), sound);
+        }
     }
 }

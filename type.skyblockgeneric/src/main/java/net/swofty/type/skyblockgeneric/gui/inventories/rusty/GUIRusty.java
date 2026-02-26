@@ -8,11 +8,12 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIRusty extends HypixelInventoryGUI {
     public GUIRusty() {
-        super("Rusty The Janitor", InventoryType.CHEST_4_ROW);
+        super(I18n.string("gui_rusty.main.title"), InventoryType.CHEST_4_ROW);
     }
 
 
@@ -29,12 +30,8 @@ public class GUIRusty extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack(
-                        "§aWeapons", Material.IRON_SWORD, 1,
-                        "§7Contains reobtainable weapons and",
-                        "§7gear that you have lost from all",
-                        "§7around SkyBlock.",
-                        "§7",
-                        "§eClick to view!"
+                        I18n.string("gui_rusty.main.weapons_button"), Material.IRON_SWORD, 1,
+                        I18n.lore("gui_rusty.main.weapons_button.lore")
                 );
             }
         });
@@ -48,11 +45,8 @@ public class GUIRusty extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStackHead(
-                        "§aPets", "4e794274c1bb197ad306540286a7aa952974f5661bccf2b725424f6ed79c7884", 1,
-                        "§7Contains pets, and some reobtainable",
-                        "§7pet items from all around SkyBlock",
-                        "§7",
-                        "§eClick to view!"
+                        I18n.string("gui_rusty.main.pets_button"), "4e794274c1bb197ad306540286a7aa952974f5661bccf2b725424f6ed79c7884", 1,
+                        I18n.lore("gui_rusty.main.pets_button.lore")
                 );
             }
         });
@@ -66,11 +60,8 @@ public class GUIRusty extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStackHead(
-                        "§aAccessories", "3ada666715bfd2aa9fbd81daef59b9fe1c96c4fa0d08dbc72eae5633177dbf88", 1,
-                        "§7Contains accessories and talismans",
-                        "§7from all around SkyBlock.",
-                        "§7",
-                        "§eClick to view!"
+                        I18n.string("gui_rusty.main.accessories_button"), "3ada666715bfd2aa9fbd81daef59b9fe1c96c4fa0d08dbc72eae5633177dbf88", 1,
+                        I18n.lore("gui_rusty.main.accessories_button.lore")
                 );
             }
         });
@@ -84,12 +75,8 @@ public class GUIRusty extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack(
-                        "§aMiscellaneous", Material.FILLED_MAP, 1,
-                        "§7Contains tools, travel scrolls,",
-                        "§7one-time qust rewards, and more",
-                        "§7random junk.",
-                        "§7",
-                        "§eClick to view!"
+                        I18n.string("gui_rusty.main.miscellaneous_button"), Material.FILLED_MAP, 1,
+                        I18n.lore("gui_rusty.main.miscellaneous_button.lore")
                 );
             }
         });
@@ -98,13 +85,8 @@ public class GUIRusty extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack(
-                        "§aThe Janitor", Material.REDSTONE_TORCH, 1,
-                        "§7Rusty watches over the neatness of the §6Gold",
-                        "§6Mines§7, but really he watches over the whole of",
-                        "§aSkyBlock§7.",
-                        "§7",
-                        "§7If you misplace a §6one-time-reward §7from a",
-                        "§7quest, it may be offered here!"
+                        I18n.string("gui_rusty.main.janitor_info"), Material.REDSTONE_TORCH, 1,
+                        I18n.lore("gui_rusty.main.janitor_info.lore")
                 );
             }
         });

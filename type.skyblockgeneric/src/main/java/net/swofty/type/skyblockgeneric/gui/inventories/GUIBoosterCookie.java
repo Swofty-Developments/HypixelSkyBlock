@@ -9,12 +9,13 @@ import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIBoosterCookie extends HypixelInventoryGUI {
     public GUIBoosterCookie() {
-        super("Consume Booster Cookie?", InventoryType.CHEST_3_ROW);
+        super(I18n.string("gui_misc.booster_cookie.title"), InventoryType.CHEST_3_ROW);
     }
 
     @Override
@@ -24,8 +25,8 @@ public class GUIBoosterCookie extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§cCancel", Material.RED_CONCRETE, 1,
-                        "§7I'm not hungry...");
+                return ItemStackCreator.getStack(I18n.string("gui_misc.booster_cookie.cancel_button"), Material.RED_CONCRETE, 1,
+                        I18n.lore("gui_misc.booster_cookie.cancel_button.lore"));
             }
 
             @Override
@@ -55,15 +56,8 @@ public class GUIBoosterCookie extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§eConsume Cookie", Material.COOKIE, 1,
-                        "§7Gain the §dCookie Buff§!",
-                        " ",
-                        "§7Duration: §b4 days§!",
-                        " ",
-                        "§7You will be able to gain",
-                        "§b4,000 Bits §7from this",
-                        "§7cookie."
-                );
+                return ItemStackCreator.getStack(I18n.string("gui_misc.booster_cookie.consume_button"), Material.COOKIE, 1,
+                        I18n.lore("gui_misc.booster_cookie.consume_button.lore"));
             }
         });
         updateItemStacks(getInventory(), getPlayer());

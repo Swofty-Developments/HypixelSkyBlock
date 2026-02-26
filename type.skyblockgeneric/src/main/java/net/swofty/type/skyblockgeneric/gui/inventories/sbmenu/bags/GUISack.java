@@ -13,11 +13,13 @@ import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.SackComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class GUISack implements StatefulView<GUISack.SackState> {
     private final ItemType itemTypeLinker;
@@ -80,7 +82,8 @@ public class GUISack implements StatefulView<GUISack.SackState> {
         };
 
         if (!closeGUIButton) {
-            layout.slot(backSlot, (s, c) -> ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, "§7To Sack of Sacks"),
+            layout.slot(backSlot, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.bags.sack.go_back"), Material.ARROW, 1,
+                            I18n.lore("gui_sbmenu.bags.sack.go_back.lore")),
                     (click, c) -> c.player().openView(new GUISackOfSacks()));
         } else {
             Components.close(layout, backSlot);
@@ -113,13 +116,17 @@ public class GUISack implements StatefulView<GUISack.SackState> {
                     Integer amount = p.getSackItems().getAmount(linker);
                     String color = (amount == finalMaxStorage) ? "§a" : "§e";
                     lore.add("");
-                    lore.add("§7Stored: " + color + amount + "§7/" + StringUtility.shortenNumber(StringUtility.roundTo(finalMaxStorage, 0)));
+                    lore.add(I18n.string("gui_sbmenu.bags.sack.stored", Map.of(
+                            "color", color,
+                            "amount", String.valueOf(amount),
+                            "max", StringUtility.shortenNumber(StringUtility.roundTo(finalMaxStorage, 0))
+                    )));
                     lore.add("");
                     if (amount != 0) {
-                        lore.add("§bRight-Click for stack!");
-                        lore.add("§eClick to pickup!");
+                        lore.add(I18n.string("gui_sbmenu.bags.sack.right_click_stack"));
+                        lore.add(I18n.string("gui_sbmenu.bags.sack.click_to_pickup"));
                     } else {
-                        lore.add("§8Empty sack!");
+                        lore.add(I18n.string("gui_sbmenu.bags.sack.empty"));
                     }
                     return ItemStackCreator.updateLore(builder, lore);
                 }, (click, c) -> handleSackItemClick(click, c, linker));

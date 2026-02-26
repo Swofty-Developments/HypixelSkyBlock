@@ -13,6 +13,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
@@ -40,7 +41,10 @@ public class GUIAccessoryBag implements StatefulView<GUIAccessoryBag.AccessoryBa
                     SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
                     int totalSlots = getTotalSlots(player);
                     int totalPages = Math.max(1, (int) Math.ceil((double) totalSlots / 45));
-                    return "Accessory Bag (" + (state.page() + 1) + "/" + totalPages + ")";
+                    return I18n.string("gui_sbmenu.bags.accessory.title", Map.of(
+                            "page", String.valueOf(state.page() + 1),
+                            "max_page", String.valueOf(totalPages)
+                    ));
                 },
                 InventoryType.CHEST_6_ROW
         );
@@ -87,22 +91,20 @@ public class GUIAccessoryBag implements StatefulView<GUIAccessoryBag.AccessoryBa
             int slotIndex = i + startIndex;
             CustomCollectionAward nextUpgrade = getUpgradeNeededForSlotIndex(slotIndex);
             if (nextUpgrade != null) {
-                layout.slot(i, (s, c) -> ItemStackCreator.getStack("§cLocked", Material.RED_STAINED_GLASS_PANE, 1,
-                        "§7You need to unlock the",
-                        "§a" + nextUpgrade.getDisplay() + " §7upgrade",
-                        "§7to use this slot."));
+                layout.slot(i, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.bags.accessory.locked"), Material.RED_STAINED_GLASS_PANE, 1,
+                        I18n.lore("gui_sbmenu.bags.accessory.locked.lore", Map.of("upgrade_name", nextUpgrade.getDisplay()))));
             }
         }
 
         // Previous page
         if (page > 0) {
-            layout.slot(45, (s, c) -> ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1),
+            layout.slot(45, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.bags.accessory.previous_page"), Material.ARROW, 1),
                     (click, c) -> c.session(AccessoryBagState.class).update(s -> s.withPage(s.page() - 1)));
         }
 
         // Next page
         if (page < totalPages - 1) {
-            layout.slot(53, (s, c) -> ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1),
+            layout.slot(53, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.bags.accessory.next_page"), Material.ARROW, 1),
                     (click, c) -> c.session(AccessoryBagState.class).update(s -> s.withPage(s.page() + 1)));
         }
     }
@@ -122,7 +124,7 @@ public class GUIAccessoryBag implements StatefulView<GUIAccessoryBag.AccessoryBa
             return true;
         }
 
-        player.sendMessage("§cYou cannot put this item in the Accessory Bag!");
+        player.sendMessage(I18n.string("gui_sbmenu.bags.accessory.msg.cannot_put"));
         return false;
     }
 

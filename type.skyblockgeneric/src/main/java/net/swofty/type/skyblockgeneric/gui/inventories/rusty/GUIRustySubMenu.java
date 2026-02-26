@@ -11,6 +11,7 @@ import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 import net.swofty.type.skyblockgeneric.gui.inventories.shop.ConfirmBuyView;
@@ -20,6 +21,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -111,25 +113,18 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack("§aShop Confirmations",
+                String toggleAction = player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION) ? "disable" : "enable";
+                return ItemStackCreator.getStack(I18n.string("gui_rusty.submenu.shop_confirmations"),
                         player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION) ? Material.LIME_DYE : Material.LIGHT_GRAY_DYE, 1,
-                        "§7Confirm when purchasing item worth",
-                        "§7at least a million coins.",
-                        "",
-                        "§eClick to " + (player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION) ? "disable" : "enable") + "!");
+                        I18n.lore("gui_rusty.submenu.shop_confirmations.lore", Map.of("toggle_action", toggleAction)));
             }
         });
 
         set(new GUIItem(50) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack("§aThe Janitor", Material.REDSTONE_TORCH, 1,
-                        "§7Rusty watches over the neatness of the §6Gold",
-                        "§6Mines§7, but really he watches over the whole of",
-                        "§aSkyBlock§7.",
-                        "",
-                        "§7If you misplace a §6one-time reward §7from a",
-                        "§7quest, it may be offered here!");
+                return ItemStackCreator.getStack(I18n.string("gui_rusty.submenu.janitor_info"), Material.REDSTONE_TORCH, 1,
+                        I18n.lore("gui_rusty.submenu.janitor_info.lore"));
             }
         });
 
@@ -145,10 +140,9 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                return ItemStackCreator.getStack("§aSort by Rarity", Material.ENDER_EYE, 1,
-                        "§7Enabled: " + (player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_SORT_BY_RARITY) ? "§aYES" : "§cNO"),
-                        "",
-                        "§eClick to toggle!");
+                String status = player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_SORT_BY_RARITY) ? "§aYES" : "§cNO";
+                return ItemStackCreator.getStack(I18n.string("gui_rusty.submenu.sort_by_rarity"), Material.ENDER_EYE, 1,
+                        I18n.lore("gui_rusty.submenu.sort_by_rarity.lore", Map.of("status", status)));
             }
         });
 
@@ -170,7 +164,7 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
                 @Override public void run(InventoryPreClickEvent e, HypixelPlayer player) {}
                 @Override public ItemStack.Builder getItem(HypixelPlayer player) {
                     return ItemStackCreator.getStackHead(
-                            "§c???",
+                            I18n.string("gui_rusty.submenu.unknown_item"),
                             "5359d91277242fc01c309accb87b533f1929be176ecba2cde63bf635e05e699b"
                     );
                 }
@@ -194,9 +188,12 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
                 if (skyblockPlayer.getCoins() >= price) {
                     skyblockPlayer.addAndUpdateItem(item);
                     skyblockPlayer.removeCoins(price);
-                    skyblockPlayer.sendMessage("§aYou bought " + item.getDisplayName() + " §afor §6" + price + " Coins§a!");
+                    skyblockPlayer.sendMessage(I18n.string("gui_rusty.submenu.bought_message", Map.of(
+                            "item_name", item.getDisplayName(),
+                            "price", String.valueOf(price)
+                    )));
                 } else {
-                    skyblockPlayer.sendMessage("§4You don't have enough coins!");
+                    skyblockPlayer.sendMessage(I18n.string("gui_rusty.submenu.not_enough_coins"));
                 }
             }
 
@@ -214,10 +211,10 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
                 );
 
                 lore.add("");
-                lore.add("§7Cost");
+                lore.add(I18n.string("gui_rusty.submenu.cost_label"));
                 lore.add("§6" + StringUtility.commaify(entry.price()) + " Coins");
                 lore.add("");
-                lore.add("§eClick to trade!");
+                lore.add(I18n.string("gui_rusty.submenu.click_to_trade"));
 
                 return ItemStackCreator.updateLore(stack, lore);
             }

@@ -8,12 +8,14 @@ import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionViewItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class AuctionViewSelfBIN implements AuctionView {
@@ -30,7 +32,7 @@ public class AuctionViewSelfBIN implements AuctionView {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
                         double coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
 
-                        player.sendMessage("§8Claiming your coins...");
+                        player.sendMessage(I18n.string("gui_auction.view_self_bin.claiming_coins"));
                         player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + item.getBids().getFirst().value());
 
                         ownedActive.remove(item.getUuid());
@@ -38,20 +40,18 @@ public class AuctionViewSelfBIN implements AuctionView {
                         ownedInactive.add(item.getUuid());
                         player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedInactive);
 
-                        player.sendMessage("§eYou collected §6" + item.getBids().getFirst().value() + " coins §efrom the auction!");
+                        player.sendMessage(I18n.string("gui_auction.view_self_bin.collected_coins", Map.of("amount", String.valueOf(item.getBids().getFirst().value()))));
                         player.closeInventory();
                     }
 
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        return ItemStackCreator.getStack("§6Collect Auction", Material.GOLD_BLOCK, 1,
-                                " ",
-                                "§7This item has been sold!",
-                                " ",
-                                SkyBlockPlayer.getDisplayName(item.getBids().getFirst().uuid()) + " §7bought it for §6" + item.getBids().getFirst().value() + " coins",
-                                " ",
-                                "§eClick to collect coins!");
+                        return ItemStackCreator.getStack(I18n.string("gui_auction.view_self_bin.collect_auction"), Material.GOLD_BLOCK, 1,
+                                I18n.lore("gui_auction.view_self_bin.collect_sold.lore", Map.of(
+                                        "buyer_name", SkyBlockPlayer.getDisplayName(item.getBids().getFirst().uuid()),
+                                        "price", String.valueOf(item.getBids().getFirst().value())
+                                )));
                     }
                 });
             } else {
@@ -59,11 +59,8 @@ public class AuctionViewSelfBIN implements AuctionView {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        return ItemStackCreator.getStack("§cYou Cannot Buy Your Own Item", Material.BEDROCK, 1,
-                                " ",
-                                "§7You cannot buy your own item!",
-                                " ",
-                                "§cYou have already claimed your item!");
+                        return ItemStackCreator.getStack(I18n.string("gui_auction.view_self_bin.cannot_buy_own"), Material.BEDROCK, 1,
+                                I18n.lore("gui_auction.view_self_bin.cannot_buy_own_claimed.lore"));
                     }
                 });
             }
@@ -80,18 +77,14 @@ public class AuctionViewSelfBIN implements AuctionView {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        return ItemStackCreator.getStack("§eClaim Item Back", Material.GOLD_INGOT, 1,
-                                " ",
-                                "§7This auction has ended!",
-                                "§7Nobody bought it :(",
-                                " ",
-                                "§eClick to claim it back!");
+                        return ItemStackCreator.getStack(I18n.string("gui_auction.view_self_bin.claim_item_back"), Material.GOLD_INGOT, 1,
+                                I18n.lore("gui_auction.view_self_bin.claim_item_back.lore"));
                     }
 
                     @Override
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        player.sendMessage("§8Claiming your item...");
+                        player.sendMessage(I18n.string("gui_auction.view_self_bin.claiming_item"));
                         ownedActive.remove(item.getUuid());
                         player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
                         ownedInactive.add(item.getUuid());
@@ -99,7 +92,7 @@ public class AuctionViewSelfBIN implements AuctionView {
 
                         player.addAndUpdateItem(item.getItem());
 
-                        player.sendMessage("§aYou have claimed your item.");
+                        player.sendMessage(I18n.string("gui_auction.view_self_bin.claimed_item"));
                         player.closeInventory();
                     }
                 });
@@ -108,11 +101,8 @@ public class AuctionViewSelfBIN implements AuctionView {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        return ItemStackCreator.getStack("§cYou Cannot Buy Your Own Item", Material.BEDROCK, 1,
-                                " ",
-                                "§7You cannot buy your own item!",
-                                " ",
-                                "§cThis item has expired and has been returned to you.");
+                        return ItemStackCreator.getStack(I18n.string("gui_auction.view_self_bin.cannot_buy_own"), Material.BEDROCK, 1,
+                                I18n.lore("gui_auction.view_self_bin.cannot_buy_own_expired.lore"));
                     }
                 });
             }
@@ -123,11 +113,8 @@ public class AuctionViewSelfBIN implements AuctionView {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§cYou Cannot Buy Your Own Item", Material.BEDROCK, 1,
-                        " ",
-                        "§7You cannot buy your own item!",
-                        " ",
-                        "§7You can only buy items from other players.");
+                return ItemStackCreator.getStack(I18n.string("gui_auction.view_self_bin.cannot_buy_own"), Material.BEDROCK, 1,
+                        I18n.lore("gui_auction.view_self_bin.cannot_buy_own_active.lore"));
             }
         });
     }

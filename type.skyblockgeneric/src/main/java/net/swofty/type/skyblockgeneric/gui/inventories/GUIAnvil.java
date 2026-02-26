@@ -11,6 +11,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AnvilCombinableComponent;
@@ -19,6 +20,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GUIAnvil extends HypixelInventoryGUI {
 
@@ -35,7 +37,7 @@ public class GUIAnvil extends HypixelInventoryGUI {
     private SkyBlockItem sacrificeItem = null;
 
     public GUIAnvil() {
-        super("Anvil", InventoryType.CHEST_6_ROW);
+        super(I18n.string("gui_anvil.title"), InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -58,9 +60,8 @@ public class GUIAnvil extends HypixelInventoryGUI {
         set(new GUIItem(COMBINE_BUTTON_SLOT) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1,
-                        "§7Combine the items in the slots to the",
-                        "§7left and right below.");
+                return ItemStackCreator.getStack(I18n.string("gui_anvil.combine_items"), Material.ANVIL, 1,
+                        I18n.lore("gui_anvil.combine_items.lore"));
             }
         });
     }
@@ -69,10 +70,8 @@ public class GUIAnvil extends HypixelInventoryGUI {
         set(new GUIItem(RESULT_SLOT) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1,
-                        "§7Place a target item in the left slot",
-                        "§7and a sacrifice item in the right slot",
-                        "§7to combine them!");
+                return ItemStackCreator.getStack(I18n.string("gui_anvil.result_empty"), Material.BARRIER, 1,
+                        I18n.lore("gui_anvil.result_empty.lore"));
             }
         });
     }
@@ -274,15 +273,11 @@ public class GUIAnvil extends HypixelInventoryGUI {
                 ? Material.LIME_STAINED_GLASS_PANE
                 : Material.RED_STAINED_GLASS_PANE;
 
-        ItemStack.Builder upgradeIndicator = ItemStackCreator.getStack("§6Item to Upgrade", upgradeMaterial, 1,
-                "§7The item you want to upgrade should",
-                "§7be placed in the slot on this side.");
+        ItemStack.Builder upgradeIndicator = ItemStackCreator.getStack(I18n.string("gui_anvil.item_to_upgrade"), upgradeMaterial, 1,
+                I18n.lore("gui_anvil.item_to_upgrade.lore"));
 
-        ItemStack.Builder sacrificeIndicator = ItemStackCreator.getStack("§6Item to Sacrifice", sacrificeMaterial, 1,
-                "§7The item you are sacrificing in order",
-                "§7to upgrade the item on the left",
-                "§7should be placed in the slot on this",
-                "§7side.");
+        ItemStack.Builder sacrificeIndicator = ItemStackCreator.getStack(I18n.string("gui_anvil.item_to_sacrifice"), sacrificeMaterial, 1,
+                I18n.lore("gui_anvil.item_to_sacrifice.lore"));
 
         for (int slot : UPGRADE_INDICATOR_SLOTS) {
             set(slot, upgradeIndicator);
@@ -307,18 +302,16 @@ public class GUIAnvil extends HypixelInventoryGUI {
                 set(new GUIItem(RESULT_SLOT) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                        return ItemStackCreator.getStack("§cError!", Material.BARRIER, 1,
-                                "§7You can not combine those Items");
+                        return ItemStackCreator.getStack(I18n.string("gui_anvil.result_error"), Material.BARRIER, 1,
+                                I18n.lore("gui_anvil.result_error.lore"));
                     }
                 });
             } else {
                 set(new GUIItem(RESULT_SLOT) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                        return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1,
-                                "§7Place a target item in the left slot",
-                                "§7and a sacrifice item in the right slot",
-                                "§7to combine them!");
+                        return ItemStackCreator.getStack(I18n.string("gui_anvil.result_empty"), Material.BARRIER, 1,
+                                I18n.lore("gui_anvil.result_empty.lore"));
                     }
                 });
             }
@@ -342,9 +335,8 @@ public class GUIAnvil extends HypixelInventoryGUI {
             set(new GUIItem(COMBINE_BUTTON_SLOT) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1,
-                            "§7Combine the items in the slots to the",
-                            "§7left and right below.");
+                    return ItemStackCreator.getStack(I18n.string("gui_anvil.combine_items"), Material.ANVIL, 1,
+                            I18n.lore("gui_anvil.combine_items.lore"));
                 }
             });
             return;
@@ -353,18 +345,16 @@ public class GUIAnvil extends HypixelInventoryGUI {
         int levelCost = sacrificeItem.getComponent(AnvilCombinableComponent.class)
                 .applyCostLevels(upgradeItem, sacrificeItem, (SkyBlockPlayer) getPlayer());
 
-        List<String> lore = new ArrayList<>();
-        lore.add("§7Combine the items in the slots to the");
-        lore.add("§7left and right below.");
+        List<String> lore = new ArrayList<>(I18n.lore("gui_anvil.combine_items.lore"));
 
         if (levelCost > 0) {
             lore.add("");
-            lore.add("§7Cost");
-            lore.add("§9" + levelCost + " Exp Levels");
+            lore.add(I18n.string("gui_anvil.cost_label"));
+            lore.add(I18n.string("gui_anvil.cost_exp_levels", Map.of("cost", String.valueOf(levelCost))));
         }
 
         lore.add("");
-        lore.add("§eClick to combine!");
+        lore.add(I18n.string("gui_anvil.click_to_combine"));
 
         set(new GUIClickableItem(COMBINE_BUTTON_SLOT) {
             @Override
@@ -375,7 +365,7 @@ public class GUIAnvil extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_anvil.combine_items"), Material.ANVIL, 1, lore);
             }
         });
     }
@@ -391,7 +381,7 @@ public class GUIAnvil extends HypixelInventoryGUI {
         int requiredLevels = component.applyCostLevels(upgradeItem, sacrificeItem, player);
 
         if (player.getLevel() < requiredLevels) {
-            player.sendMessage("§cYou don't have enough Experience Levels!");
+            player.sendMessage(I18n.string("gui_anvil.not_enough_levels"));
             return;
         }
 
@@ -418,8 +408,8 @@ public class GUIAnvil extends HypixelInventoryGUI {
         set(new GUIItem(COMBINE_BUTTON_SLOT) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack("§aAnvil", Material.OAK_SIGN, 1,
-                        "§7Claim the result item above!");
+                return ItemStackCreator.getStack(I18n.string("gui_anvil.claim_result"), Material.OAK_SIGN, 1,
+                        I18n.lore("gui_anvil.claim_result.lore"));
             }
         });
 
