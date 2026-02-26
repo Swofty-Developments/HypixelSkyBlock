@@ -44,7 +44,7 @@ public class CastVoteProtocolObject
             public String serialize(CastVoteResponse value) {
                 JSONObject json = new JSONObject();
                 json.put("success", value.success());
-                json.put("serializedData", value.serializedData());
+                json.put("talliesJson", value.talliesJson());
                 return json.toString();
             }
 
@@ -53,7 +53,7 @@ public class CastVoteProtocolObject
                 JSONObject obj = new JSONObject(json);
                 return new CastVoteResponse(
                         obj.getBoolean("success"),
-                        obj.optString("serializedData", null)
+                        obj.optString("talliesJson", null)
                 );
             }
 
@@ -66,5 +66,5 @@ public class CastVoteProtocolObject
 
     public record CastVoteMessage(UUID accountId, String candidateName) {}
 
-    public record CastVoteResponse(boolean success, String serializedData) {}
+    public record CastVoteResponse(boolean success, String talliesJson) {}
 }

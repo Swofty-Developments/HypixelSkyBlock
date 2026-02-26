@@ -179,6 +179,8 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 				player.openView(new ElectionViewStatsView());
 			}
 		}).setInstance(HypixelConst.getInstanceContainer(), new Pos(0.5, 50, 34.5));
+
+		MinecraftServer.getSchedulerManager().buildTask(ElectionDisplay::addAndUpdate).delay(TaskSchedule.seconds(1)).repeat(TaskSchedule.seconds(1)).schedule();
 	}
 
 	private static String[] electionLines() {
@@ -186,7 +188,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 			"§e§lMAYOR ELECTIONS",
 			"§bYear " + SkyBlockCalendar.getYear(),
 			"§eTime left: §a" + StringUtility.formatTimeLeft(
-				SkyBlockCalendar.timeUntilEvent(CalendarEvent.ELECTION_CLOSE))
+				SkyBlockCalendar.ticksUntilEvent(CalendarEvent.ELECTION_CLOSE) * 50L)
 		};
 	}
 

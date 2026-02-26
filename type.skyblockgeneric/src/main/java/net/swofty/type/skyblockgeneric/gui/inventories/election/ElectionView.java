@@ -110,11 +110,13 @@ public class ElectionView extends StatelessView {
         for (int j = 0; j < activePerks.size(); j++) {
             SkyBlockMayor.Perk perk = activePerks.get(j);
             if (j == 0) {
-                lore.addAll(StringUtility.splitByWordAndLengthKeepLegacyColor("§6✯ " + candidate.getColor() + perk.getDisplayName(), 50));
+                lore.add("§6✯ " + candidate.getColor() + perk.getDisplayName());
             } else {
-                lore.addAll(StringUtility.splitByWordAndLengthKeepLegacyColor(candidate.getColor() + perk.getDisplayName(), 50));
+                lore.addAll(StringUtility.splitByWordAndLengthKeepLegacyColor(
+                    candidate.getColor() + perk.getDisplayName(), 35));
             }
-            lore.add(perk.getDescription());
+            lore.addAll(StringUtility.splitByWordAndLengthKeepLegacyColor(
+                perk.getDescription(), 35));
             if (j < activePerks.size() - 1) lore.add("");
         }
 

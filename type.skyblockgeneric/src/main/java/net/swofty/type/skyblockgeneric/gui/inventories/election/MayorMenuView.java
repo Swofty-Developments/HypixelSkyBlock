@@ -22,7 +22,9 @@ public class MayorMenuView extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Mayor", InventoryType.CHEST_4_ROW);
+        SkyBlockMayor mayor = ElectionManager.getCurrentMayor();
+        if (mayor == null) return new ViewConfiguration<>("Mayor", InventoryType.CHEST_4_ROW);
+        return new ViewConfiguration<>("Mayor " + mayor.getDisplayName(), InventoryType.CHEST_4_ROW);
     }
 
     @Override

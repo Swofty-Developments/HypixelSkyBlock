@@ -60,7 +60,15 @@ public class CastVoteEndpoint implements ServiceEndpoint
             String updatedData = GSON.toJson(data);
             ElectionDatabase.saveElectionData(updatedData);
 
-            return new CastVoteProtocolObject.CastVoteResponse(true, updatedData);
+            Map<String, Long> tally = new HashMap<>();
+            for (Map<String, Object> c : candidates) {
+                tally.put((String) c.get("mayorName"), 0L);
+            }
+            for (String candidateName : votes.values()) {
+                tally.merge(candidateName, 1L, Long::sum);
+            }
+
+            return new CastVoteProtocolObject.CastVoteResponse(true, GSON.toJson(tally));
         } catch (Exception e) {
             return new CastVoteProtocolObject.CastVoteResponse(false, null);
         }

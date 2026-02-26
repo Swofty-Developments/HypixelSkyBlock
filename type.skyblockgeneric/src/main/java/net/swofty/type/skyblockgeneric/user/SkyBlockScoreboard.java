@@ -16,6 +16,7 @@ import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
@@ -28,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class SkyBlockScoreboard {
     private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
@@ -67,53 +69,67 @@ public class SkyBlockScoreboard {
                     lines.add(" §7Unknown");
                 }
                 lines.add("§7 ");
-                lines.add("§fPurse: §6" + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()));
-                lines.add("§fBits: §b" + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()));
 
-                if (DarkAuctionHandler.isPlayerInAuction(player.getUuid())
+                // TODO: make classes / a manager for regions to display scoreboard information.
+                if (region != null && region.getType() == RegionType.ELECTION_ROOM) {
+                    lines.add("§6Year " + SkyBlockCalendar.getYear() + " Votes");
+                    Map<String, Long> totalVotes = ElectionManager.getElectionData().tallyVotes();
+                    long maxVotes = totalVotes.values().stream().mapToLong(Long::longValue).max().orElse(1);
+                    ElectionManager.getElectionData().getCandidates().forEach(candidate -> {
+                        long votes = totalVotes.getOrDefault(candidate.getMayorName(), 0L);
+                        int barLength = maxVotes > 0 ? (int) Math.round((votes * 15.0) / maxVotes) : 0;
+                        String bars = candidate.getColor() + "|".repeat(barLength) + "§f" + "|".repeat(15 - barLength);
+                        lines.add(bars + " " + candidate.getColoredName());
+                    });
+                } else {
+                    lines.add("§fPurse: §6" + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()));
+                    lines.add("§fBits: §b" + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()));
+
+                    if (DarkAuctionHandler.isPlayerInAuction(player.getUuid())
                         && DarkAuctionHandler.getLocalState() != null
                         && DarkAuctionHandler.getLocalState().getPhase() == DarkAuctionPhase.BIDDING
-                ) {
-                    lines.add("§8 ");
-                    DarkAuctionHandler.DarkAuctionLocalState auctionState = DarkAuctionHandler.getLocalState();
-                    int timeRemaining = DarkAuctionHandler.getTimeLeft().get();
+                    ) {
+                        lines.add("§8 ");
+                        DarkAuctionHandler.DarkAuctionLocalState auctionState = DarkAuctionHandler.getLocalState();
+                        int timeRemaining = DarkAuctionHandler.getTimeLeft().get();
 
-                    lines.add("§fTime Left: §9" + timeRemaining + "s");
-                    lines.add("§fCurrent Item:");
+                        lines.add("§fTime Left: §9" + timeRemaining + "s");
+                        lines.add("§fCurrent Item:");
 
-                    String currentItem = auctionState.getCurrentItemType();
-                    if (currentItem != null) {
-                        try {
-                            ItemType itemType = ItemType.valueOf(currentItem);
-                            SkyBlockItem item = new SkyBlockItem(itemType);
-                            lines.add(" " + item.getDisplayName());
-                        } catch (Exception e) {
-                            lines.add(" §f" + currentItem.replace("_", " "));
+                        String currentItem = auctionState.getCurrentItemType();
+                        if (currentItem != null) {
+                            try {
+                                ItemType itemType = ItemType.valueOf(currentItem);
+                                SkyBlockItem item = new SkyBlockItem(itemType);
+                                lines.add(" " + item.getDisplayName());
+                            } catch (Exception e) {
+                                lines.add(" §f" + currentItem.replace("_", " "));
+                            }
+                        } else {
+                            lines.add(" §7Waiting...");
                         }
                     } else {
-                        lines.add(" §7Waiting...");
-                    }
-                } else {
-                    if (region != null &&
+                        if (region != null &&
                             !missionData.getActiveMissions(region.getType()).isEmpty()) {
-                        lines.add("§7 ");
-                        MissionData.ActiveMission mission = missionData.getActiveMissions(region.getType()).getFirst();
-                        SkyBlockMission skyBlockMission = MissionData.getMissionClass(mission.getMissionID());
+                            lines.add("§7 ");
+                            MissionData.ActiveMission mission = missionData.getActiveMissions(region.getType()).getFirst();
+                            SkyBlockMission skyBlockMission = MissionData.getMissionClass(mission.getMissionID());
 
-                        if (skyBlockMission instanceof LocationAssociatedMission locationAssociatedMission) {
-                            lines.add("§fObjective " + BlockUtility.getArrow(
+                            if (skyBlockMission instanceof LocationAssociatedMission locationAssociatedMission) {
+                                lines.add("§fObjective " + BlockUtility.getArrow(
                                     player.getPosition(),
                                     locationAssociatedMission.getLocation()
-                            ));
-                            lines.add("§e" + mission);
-                        } else {
-                            lines.add("§fObjective");
-                            lines.add("§e" + mission);
-                        }
+                                ));
+                                lines.add("§e" + mission);
+                            } else {
+                                lines.add("§fObjective");
+                                lines.add("§e" + mission);
+                            }
 
-                        SkyBlockProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
-                        if (progressMission != null)
-                            lines.add("§7 (§e" + mission.getMissionProgress() + "§7/§a" + progressMission.getMaxProgress() + "§7)");
+                            SkyBlockProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
+                            if (progressMission != null)
+                                lines.add("§7 (§e" + mission.getMissionProgress() + "§7/§a" + progressMission.getMaxProgress() + "§7)");
+                        }
                     }
                 }
 

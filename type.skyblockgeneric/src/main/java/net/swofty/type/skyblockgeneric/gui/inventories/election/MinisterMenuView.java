@@ -22,7 +22,9 @@ public class MinisterMenuView extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Minister", InventoryType.CHEST_4_ROW);
+        SkyBlockMayor minister = ElectionManager.getCurrentMinister();
+        if (minister == null) return new ViewConfiguration<>("Minister", InventoryType.CHEST_4_ROW);
+        return new ViewConfiguration<>("Minister " + minister.getDisplayName(), InventoryType.CHEST_4_ROW);
     }
 
     @Override

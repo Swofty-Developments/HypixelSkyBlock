@@ -7,7 +7,9 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.skyblockgeneric.commands.MinionGenerationCommand;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,31 +146,27 @@ public final class SkyBlockCalendar {
         return result;
     }
 
-    // TODO: clean this up
-    public static long timeUntilEvent(CalendarEvent event) {
+    public static long ticksUntilEvent(CalendarEvent event) {
         long currentElapsed = getElapsed();
         int currentYear = getYear();
 
-        int yearsAhead = 0;
-
-        do {
+        for (int yearsAhead = 0; yearsAhead <= 100; yearsAhead++) {
             int targetYear = currentYear + yearsAhead;
             long yearStartElapsed = (long) (targetYear - 1) * YEAR;
 
-            for (Long eventTime : event.times()) {
+            List<Long> sortedTimes = new ArrayList<>(event.times());
+            Collections.sort(sortedTimes);
+
+            for (Long eventTime : sortedTimes) {
                 long eventElapsed = yearStartElapsed + eventTime;
 
-                // Skip events that have already passed (including currently ongoing ones that started)
-                if (eventElapsed <= currentElapsed) {
-                    continue;
+                if (eventElapsed > currentElapsed) {
+                    return eventElapsed - currentElapsed;
                 }
-
-                return eventElapsed - currentElapsed;
             }
-            yearsAhead++;
-        } while (yearsAhead <= 100);
+        }
 
-        return -1; // Return -1 if no upcoming event is found within a reasonable timeframe
+        return -1;
     }
 
     public static Map<EventInfo, CalendarEvent> getEventsWithDurationUntilSkipSpecific(int amount, List<CalendarEvent> event) {

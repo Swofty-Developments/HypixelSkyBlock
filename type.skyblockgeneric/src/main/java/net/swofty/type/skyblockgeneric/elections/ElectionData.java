@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
@@ -28,7 +27,8 @@ public class ElectionData {
     private String ministerPerk;
 
     private List<CandidateData> candidates = new ArrayList<>();
-    private Map<String, String> votes = new HashMap<>();
+    private transient Map<String, String> votes = new HashMap<>();
+    private Map<String, Long> voteTallies = new HashMap<>();
     private boolean electionOpen;
 
     private Map<String, Integer> lastElectedYear = new HashMap<>();
@@ -76,15 +76,10 @@ public class ElectionData {
         return result;
     }
 
-    public void castVote(UUID accountId, String candidateName) {
-        votes.put(accountId.toString(), candidateName);
-    }
-
-    public String getVote(UUID accountId) {
-        return votes.get(accountId.toString());
-    }
-
     public Map<String, Long> tallyVotes() {
+        if (!voteTallies.isEmpty()) {
+            return new HashMap<>(voteTallies);
+        }
         Map<String, Long> tally = new HashMap<>();
         for (CandidateData candidate : candidates) {
             tally.put(candidate.getMayorName(), 0L);
@@ -93,6 +88,18 @@ public class ElectionData {
             tally.merge(candidateName, 1L, Long::sum);
         }
         return tally;
+    }
+
+    public void updateTallies(Map<String, Long> newTallies) {
+        voteTallies.clear();
+        voteTallies.putAll(newTallies);
+    }
+
+    public void incrementTally(String candidateName, String previousVote) {
+        if (previousVote != null) {
+            voteTallies.computeIfPresent(previousVote, (k, v) -> Math.max(0, v - 1));
+        }
+        voteTallies.merge(candidateName, 1L, Long::sum);
     }
 
     public void resolveElection(int currentYear) {
@@ -206,6 +213,7 @@ public class ElectionData {
 
         candidates.clear();
         votes.clear();
+        voteTallies.clear();
         electionOpen = false;
     }
 
@@ -213,6 +221,7 @@ public class ElectionData {
         this.electionYear = year;
         this.electionOpen = true;
         this.votes.clear();
+        this.voteTallies.clear();
         this.candidates.clear();
 
         boolean isSpecialYear = (year % 8 == 0);
