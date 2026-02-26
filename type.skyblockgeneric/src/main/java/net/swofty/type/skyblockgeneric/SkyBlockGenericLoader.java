@@ -41,6 +41,7 @@ import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.user.categories.CustomGroups;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
@@ -80,6 +81,7 @@ import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.redis.RedisAuthenticate;
+import net.swofty.type.skyblockgeneric.region.SkyBlockBiomeConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
@@ -311,13 +313,13 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                         .build());
         SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());
 
-        /*SkyBlockRegion.getRegions().forEach(region -> {
+        SkyBlockRegion.getRegions().forEach(region -> {
             if (region.getServerType() != HypixelConst.getTypeLoader().getType()) return;
             SkyBlockBiomeConfiguration biomeConfig = region.getType().getBiomeHandler();
             if (biomeConfig == null) return;
             RegistryKey<Biome> biomeKey = MinecraftServer.getBiomeRegistry().register(biomeConfig.getKey(), biomeConfig.getBiome());
             setBiome(region.getFirstLocation(), region.getSecondLocation(), biomeKey);
-        });*/
+        });
 
         /**
          * Load fairy souls

@@ -4,18 +4,20 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.CustomDropComponent;
+import net.swofty.type.skyblockgeneric.item.components.RegionSelectorComponent;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
@@ -30,6 +32,20 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerBlockBreakEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        final ItemStack stack = event.getPlayer().getItemInMainHand();
+        final SkyBlockItem item = new SkyBlockItem(stack);
+
+        if (item.hasComponent(RegionSelectorComponent.class)) {
+            RegionSelectorComponent.SelectedRegion region = RegionSelectorComponent.getPlayerRegionSelection().get(player);
+            if (region == null) {
+                region = new RegionSelectorComponent.SelectedRegion(null, null);
+            }
+            region.setPos1(event.getBlockPosition());
+            RegionSelectorComponent.getPlayerRegionSelection().put(player, region);
+            player.sendMessage("§aPosition 1 set to §e" + event.getBlockPosition() + "§a.");
+            event.setCancelled(true);
+            return;
+        }
 
         // Skip if player has build bypass
         if (player.isBypassBuild()) return;

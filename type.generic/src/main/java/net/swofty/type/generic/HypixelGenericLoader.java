@@ -23,6 +23,9 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.type.generic.achievement.AchievementRegistry;
 import net.swofty.type.generic.achievement.AchievementStatisticsService;
+import net.swofty.type.generic.block.BannerBlockHandler;
+import net.swofty.type.generic.achievement.AchievementRegistry;
+import net.swofty.type.generic.achievement.AchievementStatisticsService;
 import net.swofty.type.generic.block.PlayerHeadBlockHandler;
 import net.swofty.type.generic.block.SignBlockHandler;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -56,6 +59,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
@@ -214,6 +218,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         // Register Block Handlers
         MinecraftServer.getBlockManager().registerHandler(PlayerHeadBlockHandler.KEY, PlayerHeadBlockHandler::new);
         MinecraftServer.getBlockManager().registerHandler(SignBlockHandler.KEY, SignBlockHandler::new);
+        MinecraftServer.getBlockManager().registerHandler(BannerBlockHandler.KEY, BannerBlockHandler::new);
 
         // Register NPCs
         if (mainInstance != null) {
@@ -227,7 +232,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
             }
         }, TaskSchedule.tick(2), TaskSchedule.tick(2));
 
-        // Register player provider given we aren'distance a SkyBlock server
+        // Register player provider given we aren't a SkyBlock server
         // If we are a SkyBlock server, we will handle the player provider in the SkyBlockGenericLoader
         if (!isSkyBlockType && !isRavengardType) {
             // Handle ConnectionManager
@@ -283,6 +288,6 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                         return null;
                     }
                 })
-                .filter(java.util.Objects::nonNull);
+                .filter(Objects::nonNull);
     }
 }

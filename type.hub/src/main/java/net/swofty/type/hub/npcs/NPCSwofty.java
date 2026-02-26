@@ -1,13 +1,12 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCSwofty extends HypixelNPC {
 
@@ -30,7 +29,7 @@ public class NPCSwofty extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-5.5, 70, -91.5, -15, 0);
+                return new Pos(-34.5, 70, -5.5, 180, 0);
             }
 
             @Override

@@ -1,1 +1,24 @@
 items:
+  - id: ARTISANAL_SHORTBOW
+    rarity: RARE
+    material: BOW
+
+  - id: JUJU_SHORTBOW
+    rarity: EPIC
+    material: BOW
+
+  - id: MOSQUITO_BOW
+    rarity: LEGENDARY
+    material: BOW
+
+  - id: SCORPION_BOW
+    rarity: EPIC
+    material: BOW
+
+  - id: TERMINATOR
+    rarity: LEGENDARY
+    material: BOW
+
+  - id: WITHER_BOW
+    rarity: UNCOMMON
+    material: BOW

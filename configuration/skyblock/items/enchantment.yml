@@ -1,5 +1,6 @@
 items:
   - id: ENCHANTED_BOOK
+    material: enchanted_book
     components:
       - id: ANVIL_COMBINABLE
         handler_id: ENCHANTED_BOOK
@@ -10,6 +11,7 @@ items:
       - id: ENCHANTED
 
   - id: HOT_POTATO_BOOK
+    material: book
     rarity: EPIC
     lore:
       - "§7This item can be applied to an item up to"
@@ -44,6 +46,7 @@ items:
               amount: 1
 
   - id: FUMING_POTATO_BOOK
+    material: book
     rarity: EPIC
     lore:
       - "§7This book bypasses the §5 Hot Potato"

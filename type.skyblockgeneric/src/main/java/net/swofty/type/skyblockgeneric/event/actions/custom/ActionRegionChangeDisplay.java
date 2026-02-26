@@ -4,6 +4,7 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
+import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockActionBar;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -16,10 +17,16 @@ public class ActionRegionChangeDisplay implements HypixelEventClass {
         if (event.getTo() != null && event.getFrom() != null
                 && !event.getTo().equals(event.getFrom())) {
 
+            RegionType type = event.getTo();
+            String name = type.getName();
+            if (type == RegionType.PLAYER_MUSEUM) {
+                name = name.formatted(player.getUsername());
+            }
+
             SkyBlockActionBar.getFor(player).addReplacement(
                     SkyBlockActionBar.BarSection.DEFENSE,
                     new SkyBlockActionBar.DisplayReplacement(
-                            event.getTo().getColor() + " ⏣ " + event.getTo().getName(),
+                            type.getColor() + " ⏣ " + name,
                             20,
                             2
                     )

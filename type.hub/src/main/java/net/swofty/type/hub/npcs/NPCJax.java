@@ -33,7 +33,7 @@ public class NPCJax extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(5.5, 61, -134, 90, 0);
+                return new Pos(-40.5, 69, -92.5, 35, 0);
             }
 
             @Override

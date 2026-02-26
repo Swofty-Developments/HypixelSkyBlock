@@ -3,11 +3,10 @@ package net.swofty.type.hub.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCOzanne extends HypixelNPC {
 
@@ -15,7 +14,7 @@ public class NPCOzanne extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Ozanne", "§e§lCLICK"};
+                return new String[]{"Ozanne", "§e§lCLICK"};
             }
 
             @Override
@@ -30,7 +29,7 @@ public class NPCOzanne extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(41.5, 70, -39.5, -40, 0);
+                return new Pos(-54.5, 70, -65.5, 0, 0);
             }
 
             @Override

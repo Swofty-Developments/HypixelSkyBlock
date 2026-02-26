@@ -107,6 +107,9 @@ public abstract class ShopView extends StatefulPaginatedView<ShopView.ShopItem, 
     public ViewConfiguration<State> configuration() {
         return ViewConfiguration.withString((state, _) -> {
             int totalPages = Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / interiorSlots.length));
+            if (totalPages == 1) {
+                return title;
+            }
             return title + " | Page " + (state.page() + 1) + "/" + totalPages;
         }, InventoryType.CHEST_6_ROW);
     }

@@ -5,9 +5,9 @@ import net.swofty.commons.ServerType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.mission.MissionSet;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "h",
         description = "Sends the player to their hub",
@@ -28,7 +28,7 @@ public class HubCommand extends HypixelCommand {
             }
 
             if (HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_HUB) {
-                player.teleport(new Pos(-2.5, 72.5, -69.5, 180, 0));
+                player.teleport(new Pos(0.5, 77, -0.5, -180, 0));
                 return;
             }
 

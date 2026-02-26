@@ -30,7 +30,7 @@ public class NPCAlchemist extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(41.5, 70, -63.5);
+                return new Pos(80.5, 72, -90.5, 90, 0);
             }
 
             @Override

@@ -1,13 +1,13 @@
 package net.swofty.type.hub.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.List;
 
 public class NPCTheHandler extends HypixelNPC {
 
@@ -15,7 +15,7 @@ public class NPCTheHandler extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9The Handler", "§e§lCLICK"};
+                return new String[]{"§5The Handler", "§e§lCLICK"};
             }
 
             @Override
@@ -30,7 +30,7 @@ public class NPCTheHandler extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-64.5, 70, -126.5, 0, 45);
+                return new Pos(40.5, 72, 1.5, 90, 45);
             }
 
             @Override
@@ -42,8 +42,20 @@ public class NPCTheHandler extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
+        if (isInDialogue(player)) return;
+
+        setDialogue(player, "not-prosperous-" + (int) (Math.random() * 5 + 1));
     }
 
+    @Override
+    protected DialogueSet[] dialogues(HypixelPlayer player) {
+        return List.of(
+            DialogueSet.builder().key("not-prosperous-1").lines(new String[]{"§dThe Hex §fwill not see you now."}).build(),
+            DialogueSet.builder().key("not-prosperous-2").lines(new String[]{"he Hex is troubled by your presence."}).build(),
+            DialogueSet.builder().key("not-prosperous-3").lines(new String[]{"There is an absence of §dprosperity §fwithin you."}).build(),
+            DialogueSet.builder().key("not-prosperous-4").lines(new String[]{"§dThe Hex §fdoes not wish to be tainted with §duseless §fitems."}).build(),
+            DialogueSet.builder().key("not-prosperous-5").lines(new String[]{"§fThe Hex §fdoes not have time for you."}).build()
+        ).toArray(DialogueSet[]::new);
+    }
 }

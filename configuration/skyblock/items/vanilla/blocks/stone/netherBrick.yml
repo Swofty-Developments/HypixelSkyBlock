@@ -108,3 +108,7 @@ items:
             result:
               type: NETHER_BRICK_WALL
               amount: 6
+
+  - id: NETHER_BRICK
+    rarity: COMMON
+    material: NETHER_BRICK

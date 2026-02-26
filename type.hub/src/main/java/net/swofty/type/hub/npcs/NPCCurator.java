@@ -17,7 +17,7 @@ public class NPCCurator extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§fCurator", "§e§lCLICK"};
+                return new String[]{"§bCurator", "§e§lCLICK"};
             }
 
             @Override
@@ -32,7 +32,7 @@ public class NPCCurator extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-62.5, 77, 84.5, 180, 0);
+                return new Pos(27.5, 68, 33.5, -180, 0);
             }
 
             @Override

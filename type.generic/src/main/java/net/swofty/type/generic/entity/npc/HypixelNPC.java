@@ -6,19 +6,18 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
-import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
-import net.minestom.server.network.packet.server.play.EntityRotationPacket;
-import net.swofty.type.generic.entity.hologram.PlayerHolograms;
+import net.minestom.server.entity.GameMode;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.entity.npc.configuration.NPCConfiguration;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.entity.npc.impl.NPCAnimalEntityImpl;
 import net.swofty.type.generic.entity.npc.impl.NPCEntityImpl;
+import net.swofty.type.generic.entity.npc.impl.NPCViewable;
 import net.swofty.type.generic.entity.npc.impl.NPCVillagerEntityImpl;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +36,7 @@ public abstract class HypixelNPC {
     @Getter
     private static final List<HypixelNPC> registeredNPCs = new ArrayList<>();
     @Getter
-    private static final Map<UUID, HypixelNPC.PlayerNPCCache> perPlayerNPCs = new HashMap<>();
+    private static final Map<UUID, HypixelNPC.PlayerNPCCache> perPlayerNPCs = new ConcurrentHashMap<>();
 
     @Getter
     private final NPCConfiguration parameters;
@@ -53,7 +52,10 @@ public abstract class HypixelNPC {
     }
 
     public static HypixelNPC getFromImpl(HypixelPlayer player, Entity impl) {
-        Map<HypixelNPC, Entity> npcs = perPlayerNPCs.get(player.getUuid()).getEntityImpls();
+        PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
+        if (cache == null) return null;
+
+        Map<HypixelNPC, Entity> npcs = cache.getEntityImpls();
         if (npcs == null) return null;
 
         for (Map.Entry<HypixelNPC, Entity> entry : npcs.entrySet()) {
@@ -83,158 +85,104 @@ public abstract class HypixelNPC {
 
     public static void updateForPlayer(HypixelPlayer player) {
         PlayerNPCCache cache = perPlayerNPCs.computeIfAbsent(
-                player.getUuid(),
-                k -> new PlayerNPCCache()
+            player.getUuid(),
+            k -> new PlayerNPCCache()
         );
 
         synchronized (cache) {
-			HypixelNPC.getRegisteredNPCs().forEach((npc) -> {
-				// If the main username can'distance be used (over 16 chars), use a blank space instead and use holograms for all lines
-				boolean playerHasNPC = cache.getEntityImpls().containsKey(npc);
+            HypixelNPC.getRegisteredNPCs().forEach((npc) -> {
+                // If the main username can't be used (over 16 chars), use a blank space instead and use holograms for all lines
+                boolean playerHasNPC = cache.getEntityImpls().containsKey(npc);
 
-				if (!playerHasNPC) {
-					NPCConfiguration config = npc.getParameters();
-					String[] holograms = config.holograms(player);
-					Pos position = config.position(player);
+                if (!playerHasNPC) {
+                    NPCConfiguration config = npc.getParameters();
 
-					String username = holograms[holograms.length - 1];
-					boolean overflowing = username.length() > 16;
-					if (overflowing) {
-						username = " ";
-					}
+                    if (!config.visible(player)) return;
 
-					Entity entity;
-					// if overflowing, adjust yOffset downwards to replace username
-					float yOffset = overflowing ? -0.2f : 0.0f;
-					switch (config) {
-						case HumanConfiguration humanConfig -> entity = new NPCEntityImpl(
-								username,
-								humanConfig.texture(player),
-								humanConfig.signature(player),
-								holograms);
-						case VillagerConfiguration villagerConfig -> {
-                                    entity = new NPCVillagerEntityImpl(username, villagerConfig.profession());
-                                    yOffset = 0.2f;
-						}
-						case AnimalConfiguration animalConfig -> {
-                                    entity = new NPCAnimalEntityImpl(
-                                            username,
-                                            animalConfig.entityType());
-                                    yOffset = animalConfig.hologramYOffset();
-						}
-						default ->
-                                        throw new IllegalStateException("Unknown NPCConfiguration type: " + config.getClass().getName());
-					}
+                    String[] holograms = config.holograms(player);
+                    Pos position = config.position(player);
 
-					entity.setAutoViewable(false);
+                    String username = holograms[holograms.length - 1];
+                    boolean overflowing = username.length() > 16;
+                    if (overflowing) {
+                        username = " ";
+                    }
 
-					PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
-                                    .pos(position.add(0, 1.1 + yOffset, 0))
-                                    .text(Arrays.copyOfRange(holograms, 0, holograms.length - (overflowing ? 0 : 1)))
-                                    .player(player)
-                                    .instance(config.instance())
-                                    .build();
+                    Entity entity;
+                    switch (config) {
+                        case HumanConfiguration humanConfig -> entity = new NPCEntityImpl(
+                            player,
+                            position,
+                            username,
+                            humanConfig.texture(player),
+                            humanConfig.signature(player),
+                            holograms,
+                            humanConfig,
+                            overflowing);
+                        case VillagerConfiguration villagerConfig -> {
+                            entity = new NPCVillagerEntityImpl(player,
+                                position, username, villagerConfig.profession(), villagerConfig, holograms, overflowing);
+                        }
+                        case AnimalConfiguration animalConfig -> {
+                            entity = new NPCAnimalEntityImpl(player,
+                                position,
+                                username,
+                                animalConfig.entityType(), animalConfig, holograms, overflowing);
+                        }
+                        default ->
+                            throw new IllegalStateException("Unknown NPCConfiguration type: " + config.getClass().getName());
+                    }
 
-					PlayerHolograms.addExternalPlayerHologram(holo);
-					entity.setInstance(config.instance(), position);
-					entity.addViewer(player);
+                    cache.add(npc, entity);
+                    perPlayerNPCs.put(player.getUuid(), cache);
+                    return;
+                }
 
-					cache.add(npc, holo, entity);
-					perPlayerNPCs.put(player.getUuid(), cache);
-					return;
-				}
+                Entity entity = cache.get(npc);
+                NPCConfiguration config = npc.getParameters();
 
-				Entity entity = cache.get(npc).getValue();
-				PlayerHolograms.ExternalPlayerHologram holo = cache.get(npc).getKey();
+                if (!config.visible(player)) {
+                    entity.remove();
+                    cache.remove(npc);
+                    return;
+                }
 
-				NPCConfiguration config = npc.getParameters();
-				Pos npcPosition = config.position(player);
-				String[] npcHolograms = config.holograms(player);
+                Pos npcPosition = config.position(player);
+                if (!(entity instanceof NPCViewable npcViewable)) {
+                    Logger.error("Entity for NPC {} does not implement NPCViewable, skipping update", npc.getName());
+                    return;
+                }
+                npcViewable.updateNPC();
 
-				boolean needsUpdate = !entity.getPosition().equals(npcPosition);
-				boolean needsFullUpdate = false;
-				if (entity instanceof NPCEntityImpl playerEntity && config instanceof HumanConfiguration humanConfig) {
-					needsFullUpdate = !Arrays.equals(playerEntity.getHolograms(), npcHolograms) ||
-                                    !playerEntity.getSkinTexture().equals(humanConfig.texture(player)) ||
-                                    !playerEntity.getSkinSignature().equals(humanConfig.signature(player));
-				}
+                Pos playerPosition = player.getPosition();
+                double entityDistance = playerPosition.distance(npcPosition);
+                boolean isLookingNPC = config.looking(player) && player.getGameMode() != GameMode.SPECTATOR;
 
-				if (needsUpdate && !needsFullUpdate) {
-					boolean onlyViewChanged = entity.getPosition().x() == npcPosition.x() && entity.getPosition().z() == npcPosition.z() && entity.getPosition().y() == npcPosition.y();
-					entity.setView(npcPosition.yaw(), npcPosition.pitch());
-					entity.setInstance(config.instance(), npcPosition);
-					if (!onlyViewChanged) {
-						boolean overflowing = npcHolograms[npcHolograms.length - 1].length() > 16;
-						float yOffset = overflowing ? -0.2f : 0.0f;
-						if (config instanceof VillagerConfiguration) {
-							yOffset = 0.2f;
-						} else if (config instanceof AnimalConfiguration animalConfig) {
-							yOffset = animalConfig.hologramYOffset();
-						}
-						PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, 1.1f + yOffset, 0));
-					}
-					return;
-				}
-				if (needsFullUpdate) {
-                            entity.remove();
-                            PlayerHolograms.removeExternalPlayerHologram(holo);
-                            cache.remove(npc);
-                            return;
-				}
+                // Get inRangeOf list based on entity type
+                List<HypixelPlayer> inRange = npcViewable.getInRangeOf();
+                if (entityDistance <= SPAWN_DISTANCE) {
+                    if (!inRange.contains(player)) {
+                        inRange.add(player);
+                        entity.updateNewViewer(player);
+                    }
 
-				Pos playerPosition = player.getPosition();
-				double entityDistance = playerPosition.distance(npcPosition);
-				boolean isLookingNPC = config.looking(player);
-
-				// Get inRangeOf list based on entity type
-				List<HypixelPlayer> inRange = getInRangeList(entity);
-
-				if (entityDistance <= SPAWN_DISTANCE) {
-					if (!inRange.contains(player)) {
-						inRange.add(player);
-						entity.updateNewViewer(player);
-					}
-
-					if (isLookingNPC && entityDistance <= LOOK_DISTANCE) {
-						double diffX = playerPosition.x() - npcPosition.x();
-						double diffZ = playerPosition.z() - npcPosition.z();
-						double theta = Math.atan2(diffZ, diffX);
-						double yaw = MathUtility.normalizeAngle(Math.toDegrees(theta) + 90, 360.0);
-						player.sendPackets(
-                                        new EntityRotationPacket(entity.getEntityId(), (float) yaw, npcPosition.pitch(), true),
-                                        new EntityHeadLookPacket(entity.getEntityId(), (float) yaw)
-						);
-					} else if (isLookingNPC) {
-						player.sendPackets(
-                                        new EntityRotationPacket(entity.getEntityId(), npcPosition.yaw(), npcPosition.pitch(), true),
-                                        new EntityHeadLookPacket(entity.getEntityId(), npcPosition.yaw())
-						);
-					}
-				} else {
-					if (inRange.contains(player)) {
-						inRange.remove(player);
-						entity.updateOldViewer(player);
-
-						player.sendPackets(
-								new EntityRotationPacket(entity.getEntityId(), npcPosition.yaw(), npcPosition.pitch(), true),
-								new EntityHeadLookPacket(entity.getEntityId(), npcPosition.yaw())
-						);
-					}
-				}
-			});
-		}
-    }
-
-    private static List<HypixelPlayer> getInRangeList(Entity entity) {
-        if (entity instanceof NPCEntityImpl playerEntity) {
-            return playerEntity.getInRangeOf();
-        } else if (entity instanceof NPCAnimalEntityImpl animalEntity) {
-            return animalEntity.getInRangeOf();
-        } else if (entity instanceof NPCVillagerEntityImpl villagerEntity) {
-            return villagerEntity.getInRangeOf();
+                    if (isLookingNPC) {
+                        if (entityDistance <= LOOK_DISTANCE) {
+                            entity.lookAt(player);
+                        } else {
+                            // over the distance, reset back to default rotation
+                            entity.setView(npcPosition.yaw(), npcPosition.pitch());
+                        }
+                    }
+                } else {
+                    if (inRange.contains(player)) {
+                        inRange.remove(player);
+                        entity.updateOldViewer(player);
+                        entity.setView(npcPosition.yaw(), npcPosition.pitch());
+                    }
+                }
+            });
         }
-        // Fallback for unknown entity types
-        return new ArrayList<>();
     }
 
     public abstract void onClick(NPCInteractEvent event);
@@ -251,10 +199,10 @@ public abstract class HypixelNPC {
         sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
     }
 
-	public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
-		player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
-		player.playSound(sound);
-	}
+    public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
+        player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
+        player.playSound(sound);
+    }
 
     protected DialogueController dialogue() {
         return dialogueController;
@@ -287,6 +235,8 @@ public abstract class HypixelNPC {
      * Return an array of DialogueSet objects keyed by unique identifiers.
      *
      * @param player The player to get dialogues for (they can be different per-player).
+     *               May be null when called from {@link #hasDialogue()} — implementations
+     *               must handle null gracefully (e.g. return a default set).
      * @return Array of DialogueSet definitions.
      */
     protected DialogueSet[] dialogues(HypixelPlayer player) {
@@ -298,10 +248,10 @@ public abstract class HypixelNPC {
     }
 
     public static class PlayerNPCCache {
-        private final Map<HypixelNPC, Map.Entry<PlayerHolograms.ExternalPlayerHologram, Entity>> npcs = new ConcurrentHashMap<>();
+        private final Map<HypixelNPC, Entity> npcs = new ConcurrentHashMap<>();
 
-        public void add(HypixelNPC npc, PlayerHolograms.ExternalPlayerHologram hologram, Entity entity) {
-            npcs.put(npc, Map.entry(hologram, entity));
+        public void add(HypixelNPC npc, Entity entity) {
+            npcs.put(npc, entity);
         }
 
         public void remove(HypixelNPC npc) {
@@ -309,12 +259,10 @@ public abstract class HypixelNPC {
         }
 
         public Map<HypixelNPC, Entity> getEntityImpls() {
-            Map<HypixelNPC, Entity> entityImpls = new HashMap<>();
-            npcs.forEach((npc, entry) -> entityImpls.put(npc, entry.getValue()));
-            return entityImpls;
+            return npcs;
         }
 
-        public Map.Entry<PlayerHolograms.ExternalPlayerHologram, Entity> get(HypixelNPC npc) {
+        public Entity get(HypixelNPC npc) {
             return npcs.get(npc);
         }
     }
