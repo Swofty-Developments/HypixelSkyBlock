@@ -25,5 +25,8 @@ dependencies {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 
-    implementation("org.spongepowered:configurate-yaml:4.2.0")
+    // Must match AtlasRedisAPI's Jedis version to avoid conflicts
+    implementation("redis.clients:jedis:7.2.0")
+
+    implementation("de.exlll:configlib-yaml:4.8.1")
 }

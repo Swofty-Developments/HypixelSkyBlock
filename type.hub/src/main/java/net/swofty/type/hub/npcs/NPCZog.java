@@ -1,15 +1,13 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.hub.gui.GUIShopWeaponsmith;
-import net.swofty.type.hub.gui.GUIShopZog;
-import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIShopZog;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCZog extends HypixelNPC {
 
@@ -32,7 +30,7 @@ public class NPCZog extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(34.5, 71, -96.5, 125, -5);
+                return new Pos(10, 69, -71, 90, 0);
             }
 
             @Override

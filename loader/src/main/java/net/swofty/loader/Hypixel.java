@@ -71,7 +71,7 @@ public class Hypixel {
             return;
         }
 
-        if (ConfigProvider.settings().getIntegrations().getSentryDsn().isBlank()) {
+        if (!ConfigProvider.settings().getIntegrations().getSentryDsn().isBlank()) {
             Sentry.init(options -> {
                 options.setDsn(ConfigProvider.settings().getIntegrations().getSentryDsn());
                 options.setSendDefaultPii(true);

@@ -20,18 +20,18 @@ spark: false
 anticheat: false
 redis-uri: redis://localhost:6379
 limbo:
-    host-name: 127.0.0.1
-    port: 65535
+  host-name: 127.0.0.1
+  port: 65535
 
 ```
 
 ### Fields
 
-| Field                | Required | Description                                  |
-|----------------------|----------|----------------------------------------------|
-| `velocity-secret`    | Yes      | Must match `forwarding.secret` from Velocity |
-| `mongodb-uri`        | Yes      | MongoDB connection string                    |
-| `redis-uri`          | Yes      | Redis connection string                      |
+| Field             | Required | Description                                  |
+|-------------------|----------|----------------------------------------------|
+| `velocity-secret` | Yes      | Must match `forwarding.secret` from Velocity |
+| `mongodb-uri`     | Yes      | MongoDB connection string                    |
+| `redis-uri`       | Yes      | Redis connection string                      |
 
 ### Docker Configuration
 
@@ -75,24 +75,18 @@ motd = "<green>HypixelSkyBlock</green>"
 
 Servers register dynamically via Redis, so you don't need to manually configure server entries.
 
-## NanoLimbo settings.yml
+## PicoLimbo server.yml
 
 Configuration for the limbo server.
 
-**Location**: `settings.yml` (NanoLimbo directory)
+**Location**: `server.toml` (PicoLimbo directory)
 
 ### Key Settings
 
-```yaml
-# Bind settings
-bind:
-  host: "0.0.0.0"
-  port: 25566
-
-# Velocity forwarding
-forwarding:
-  type: MODERN
-  secret: "your-velocity-secret"
+```toml
+[forwarding]
+method = "MODERN"
+secret = "${FORWARDING_SECRET}"
 ```
 
 :::alert warning
@@ -102,6 +96,7 @@ The `secret` must match your Velocity forwarding secret exactly.
 ## Directory Structure
 
 ### Proxy Directory
+
 ```
 proxy/
 ├── velocity-3.4.0-SNAPSHOT-528.jar
@@ -114,6 +109,7 @@ proxy/
 ```
 
 ### Game Server Directory
+
 ```
 gameserver/
 ├── HypixelCore.jar
@@ -130,6 +126,7 @@ gameserver/
 ```
 
 ### Service Directory
+
 ```
 services/
 ├── ServiceAPI.jar

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatapointArcheryPractice extends SkyBlockDatapoint<DatapointArcheryPractice.ArcheryPracticeData> {
-    private static final Pos ARCHERY_PRACTICE_HOLOGRAM_POS = new Pos(0.5, 62, -144.5);
+    private static final Pos ARCHERY_PRACTICE_HOLOGRAM_POS = new Pos(-56.5, 62, -82.5);
 
     public static Pos getArcheryPosition() {
         return ARCHERY_PRACTICE_HOLOGRAM_POS;

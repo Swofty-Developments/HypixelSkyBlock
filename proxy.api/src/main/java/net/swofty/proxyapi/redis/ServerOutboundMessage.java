@@ -74,19 +74,16 @@ public class ServerOutboundMessage {
                                             Object rawMessage,
                                             Consumer<String> response) {
         UUID requestId = UUID.randomUUID();
-        UUID toCallback = null;
-        try {
-            toCallback = UUID.fromString(RedisAPI.getInstance().getFilterId());
-        } catch (Exception e) {
-            return;
-        }
+        String callbackId = RedisAPI.getInstance().getFilterId();
+        if (callbackId == null) return;
+
         redisMessageListeners.put(requestId, response);
 
         String message = specification.translateToString(rawMessage);
 
         RedisAPI.getInstance().publishMessage(service.name(),
                 ChannelRegistry.getFromName(specification.channel()),
-                new ServiceProxyRequest(requestId, toCallback.toString(),
+                new ServiceProxyRequest(requestId, callbackId,
                         specification.channel(), message).toJSON().toString());
     }
 

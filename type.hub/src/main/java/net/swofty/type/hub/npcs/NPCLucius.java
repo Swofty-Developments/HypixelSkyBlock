@@ -15,17 +15,17 @@ public class NPCLucius extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Lucius", "§e§lCLICK"};
+                return new String[]{"Lucius", "§e§lCLICK"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                return "qIfu78CDQ8MWv7TQESfQK2JXWa5+r9QlbDSLSAE4V1U1uJBtrC9HKobg5iKneNai1D38kA4dVZXvEkWE6MC7+EqJ8Lp2RsSi54uqf7xsQcMSWZFA8PkrxP43tpQ6VI4qA0TBdLkK1xYUT/Hd3szBl6frFcIZi6jYqk3wMyjjBLnOW+E57JT/udd4xUBSFuFVH/vVCz/Pu5O3U0xUnwFbF1Hyeac2jZmXbGCvT1GxS8jfIWgeWjkMUdovbpYuoPmmyhykInomv5eVxCg6x3XgW9Ncv98+zkGW/R+wCIw4iY45WK53j6qzm3HFeyHaH8Md171taZo4muPAAL41Txm+f/xzz6hDqpguLC8konuw5oN2YLKXr5j7416jNie27JiOTHrGC42a9DV+IVOWtQYDGd0tus74NoKN7QFrZ8FIpuTqXPCr211b7PhyfADneHdXKls/yA0YUfnmztrk/TWiHcrze3RzuL9d7GHCsyBivuUTK/LqhTDH0N0mQSNEbScc/d10e6hzQpBYygzxEuidLGJRY/xHby7VN6CwPmZ+2UWcy/XMh49B5On8I5Y5QgpB56Kkv/xkP8AKuSLHxRjy4xWohOOaxXekduM3S9afRt5pc5uqPnX8sbUMVw5qeot2yueDdS9jUDgHMuR9usymnQEdTenIFGcHJpuKAMwVd5o=";
+                return "rXiabawGlB76QvS4asOzdGVmgi3FNkjYA5E00KV9W4mZthyMdJuDNRD3ozvtKXPVUmW2vbHgitViegTlW9UQxvg5dtwsfFXLZ9/II7mehp24FI1GDoInABpqEWVAuz9es+z5sDvmayvhjcRdvExskD7YO2CrYdwo4PZ0+l/axDAs18hVzpZWRq+LswBYbANOo7P0gl3HG4lrpv3kuu4HQsotahfryt1+y+cN+T3FbCljuhL3yn672L9DfUDyW/BFWadWYPuw4SHNYhUCcYUh8aT7+3dYwzl4dz0RymlVU3ghJkljwNq3cvtnvNRCH/nui0waHKEhbUN+fx6n7OmyEIjrRocCJtIpoEKpmXEsHw8Kqa8x1KdPt7fIJsrViEaXuJl5F62oiqINjz5qGClVpzagjhe47a3mgzQFZi6W/BchksWjJml244qWF6Hy41V1viekc3aladLdfNz0oIoQD9rNacRIlnmS6AYGcvWc8xHwPGVYeOK1GEL0Xp/RllVPD6xDzWaN7R8IJ3zsDqo+v+/HX9P1xKR/EZ7wDcCRne76cASMQeROqMsSSJnpkxvUcW7VjnNkSDqx7jcSnucHJDBypcL0ZjwU7sRHm6BBabIG/HRRrGslYCWYyf/6eSt1rgs4t66ez7AVHa+Nc6dRFLRS+7bXuojto2s38FTNDjk=";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                return "ewogICJ0aW1lc3RhbXAiIDogMTYxMzY2MDY1NTkzNCwKICAicHJvZmlsZUlkIiA6ICI5NGMzZGM3YTdiMmQ0NzQ1YmVlYjQzZDc2ZjRjNDVkYyIsCiAgInByb2ZpbGVOYW1lIiA6ICJUaGVRdWFzb24iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTRkODk1MWNkMjA5NzY4ZGI1NzE1YmRjNDQzNjIxYTU0NTJkMjVmNGViNWI2YTFjMGU3Mjg2YjE4NDI5NDFmOSIKICAgIH0KICB9Cn0=";
+                return "eyJ0aW1lc3RhbXAiOjE1NzUyNTE4NDcwMTUsInByb2ZpbGVJZCI6IjQxZDNhYmMyZDc0OTQwMGM5MDkwZDU0MzRkMDM4MzFiIiwicHJvZmlsZU5hbWUiOiJNZWdha2xvb24iLCJzaWduYXR1cmVSZXF1aXJlZCI6dHJ1ZSwidGV4dHVyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2U0ZDg5NTFjZDIwOTc2OGRiNTcxNWJkYzQ0MzYyMWE1NDUyZDI1ZjRlYjViNmExYzBlNzI4NmIxODQyOTQxZjkifX19";
             }
 
             @Override

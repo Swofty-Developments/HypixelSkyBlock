@@ -179,7 +179,7 @@ public class HypixelDataHandler extends DataHandler {
                 if (HypixelConst.getTypeLoader().getType().isSkyBlock()) return;
 
                 String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
-                Team team = new TeamBuilder("Z" + teamName, MinecraftServer.getTeamManager())
+                Team team = new TeamBuilder("H" + teamName, MinecraftServer.getTeamManager())
                         .prefix(Component.text(rank.getPrefix()))
                         .teamColor(rank.getTextColor())
                         .build();
@@ -192,7 +192,7 @@ public class HypixelDataHandler extends DataHandler {
 
             Rank rank = (Rank) datapoint.getValue();
             String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
-            player.setTeam(new TeamBuilder("Z" + teamName, MinecraftServer.getTeamManager())
+            player.setTeam(new TeamBuilder("H" + teamName, MinecraftServer.getTeamManager())
                     .prefix(Component.text(rank.getPrefix()))
                     .teamColor(rank.getTextColor())
                     .build());

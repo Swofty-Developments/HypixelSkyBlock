@@ -8,28 +8,33 @@ import net.minestom.server.utils.location.RelativeVec;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.item.components.RegionSelectorComponent;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "regions",
-        description = "Handles regions across the server",
-        usage = "/signgui <text>",
-        permission = Rank.STAFF,
-        allowsConsole = false)
+    description = "Handles regions across the server",
+    usage = "/signgui <text>",
+    permission = Rank.STAFF,
+    allowsConsole = false)
 public class RegionCommand extends HypixelCommand {
     @Override
     public void registerUsage(MinestomCommand command) {
         ArgumentGroup removeRegion = ArgumentType.Group("remove",
-                ArgumentType.Literal("remove"),
-                ArgumentType.String("region_id"));
+            ArgumentType.Literal("remove"),
+            ArgumentType.String("region_id"));
         ArgumentGroup addRegion = ArgumentType.Group("add",
-                ArgumentType.Literal("add"),
-                ArgumentType.String("region_id"),
-                ArgumentType.Enum("region_type", RegionType.class),
-                ArgumentType.RelativeBlockPosition("pos1"),
-                ArgumentType.RelativeBlockPosition("pos2"));
+            ArgumentType.Literal("add"),
+            ArgumentType.String("region_id"),
+            ArgumentType.Enum("region_type", RegionType.class),
+            ArgumentType.RelativeBlockPosition("pos1"),
+            ArgumentType.RelativeBlockPosition("pos2"));
+        ArgumentGroup wandRegion = ArgumentType.Group("wand",
+            ArgumentType.Literal("wand"),
+            ArgumentType.String("region_id"),
+            ArgumentType.Enum("region_type", RegionType.class));
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
@@ -61,10 +66,31 @@ public class RegionCommand extends HypixelCommand {
             sender.sendMessage("§aPosition 2: §e" + vectorPosition2.x() + ", " + vectorPosition2.y() + ", " + vectorPosition2.z());
 
             new SkyBlockRegion(regionId,
-                    new Pos(vectorPosition1.x(), vectorPosition1.y(), vectorPosition1.z()),
-                    new Pos(vectorPosition2.x(), vectorPosition2.y(), vectorPosition2.z()),
-                    regionType,
-                    HypixelConst.getTypeLoader().getType()).save();
+                new Pos(vectorPosition1.x(), vectorPosition1.y(), vectorPosition1.z()),
+                new Pos(vectorPosition2.x(), vectorPosition2.y(), vectorPosition2.z()),
+                regionType,
+                HypixelConst.getTypeLoader().getType()).save();
         }, addRegion);
+
+        command.addSyntax((sender, context) -> {
+            RegionSelectorComponent.SelectedRegion region = RegionSelectorComponent.getPlayerRegionSelection().get((SkyBlockPlayer) sender);
+            if (region == null || region.getPos1() == null || region.getPos2() == null) {
+                sender.sendMessage("§cYou must select a region first using the region selector item.");
+                return;
+            }
+
+            String regionId = context.get(wandRegion).get("region_id");
+            RegionType regionType = context.get(wandRegion).get("region_type");
+
+            sender.sendMessage("§aSuccessfully created region §e" + regionId + "§a with type §e" + regionType.name() + "§a.");
+            sender.sendMessage("§aPosition 1: §e" + region.getPos1().x() + ", " + region.getPos1().y() + ", " + region.getPos1().z());
+            sender.sendMessage("§aPosition 2: §e" + region.getPos2().x() + ", " + region.getPos2().y() + ", " + region.getPos2().z());
+
+            new SkyBlockRegion(regionId,
+                new Pos(region.getPos1().x(), region.getPos1().y(), region.getPos1().z()),
+                new Pos(region.getPos2().x(), region.getPos2().y(), region.getPos2().z()),
+                regionType,
+                HypixelConst.getTypeLoader().getType()).save();
+        }, wandRegion);
     }
 }

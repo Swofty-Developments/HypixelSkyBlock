@@ -24,9 +24,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
-    annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
-    compileOnly(files("velocity-proxy-3.4.0-SNAPSHOT.jar"))
+    compileOnly("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+    annotationProcessor("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+    compileOnly(files("velocity-3.5.0-SNAPSHOT-576.jar"))
 
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.5")
     implementation(project(":commons"))
@@ -35,9 +35,9 @@ dependencies {
     implementation("org.mongodb:mongodb-driver-sync:5.6.2")
 
     implementation("com.viaversion:vialoader:4.0.6")
-    implementation("com.viaversion:viabackwards-common:5.7.0")
+    implementation("com.viaversion:viabackwards-common:5.7.1")
     implementation("com.viaversion:viarewind-common:4.0.14")
-    implementation("com.viaversion:viaversion:5.7.0")
+    implementation("com.viaversion:viaversion:5.7.1")
 
     implementation(platform("io.netty:netty-bom:4.2.9.Final"))
     implementation("io.netty:netty-buffer")

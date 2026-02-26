@@ -6,10 +6,8 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
-import net.swofty.type.generic.user.HypixelPlayer;
-
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class VillagerApprentice extends HypixelNPC {
     public VillagerApprentice() {
@@ -21,7 +19,7 @@ public class VillagerApprentice extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(20.5, 61, -9, 180, 0);
+                return new Pos(-152.5, 63, -33.5, -90, 0);
             }
 
             @Override

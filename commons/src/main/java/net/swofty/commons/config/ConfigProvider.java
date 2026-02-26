@@ -1,17 +1,29 @@
 package net.swofty.commons.config;
 
+import de.exlll.configlib.ConfigurationProperties;
+import de.exlll.configlib.NameFormatters;
+import de.exlll.configlib.YamlConfigurationProperties;
+import de.exlll.configlib.YamlConfigurations;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.yaml.NodeStyle;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
+import org.jetbrains.annotations.NotNull;
 import org.tinylog.Logger;
 
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
 public class ConfigProvider {
+
+    final static ConfigurationProperties.EnvVarResolutionConfiguration envResolution = ConfigurationProperties.EnvVarResolutionConfiguration
+        .resolveEnvVarsWithPrefix("HYPIXEL_", false);
+
+    @NotNull
+    static final YamlConfigurationProperties properties = YamlConfigurationProperties.newBuilder()
+        .setNameFormatter(NameFormatters.LOWER_KEBAB_CASE)
+        .charset(StandardCharsets.UTF_8)
+        .setEnvVarResolutionConfiguration(envResolution)
+        .build();
 
     @Getter
     @Setter
@@ -19,28 +31,14 @@ public class ConfigProvider {
     private static Settings settings;
 
     static {
-        try {
-            Logger.info("Loading config...");
-
-            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                    .path(Path.of("./configuration/config.yml"))
-                    .nodeStyle(NodeStyle.BLOCK)
-                    .build();
-
-            CommentedConfigurationNode root = loader.load();
-            CommentedConfigurationNode defaults = loader.createNode();
-            defaults.set(Settings.class, new Settings());
-            root.mergeFrom(defaults);
-
-            Settings loaded = root.get(Settings.class);
-            if (loaded == null) {
-                loaded = new Settings();
-            }
-
-            loader.save(root);
-            settings(loaded);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load configuration", e);
-        }
+        Logger.info("Loading config...");
+        settings(
+            YamlConfigurations.update(
+                Path.of("./configuration/config.yml"),
+                Settings.class,
+                properties
+            )
+        );
     }
+
 }
