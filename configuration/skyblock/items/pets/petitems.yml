@@ -1,17 +1,20 @@
 items:
   - id: ALL_SKILLS_EXP_BOOST
+    material: diamond
     rarity: COMMON
     components:
       - id: PET_ITEM
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
   - id: BIG_TEETH
+    material: ghast_tear
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: PET_ITEM
       - id: NOT_FINISHED_YET
   - id: BUBBLEGUM
+    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -19,12 +22,14 @@ items:
       - id: PET_ITEM
       - id: NOT_FINISHED_YET
   - id: COMBAT_EXP_BOOST
+    material: iron_sword
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: PET_ITEM
       - id: NOT_FINISHED_YET
   - id: FARMING_EXP_BOOST_COMMON
+    material: iron_hoe
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -33,6 +38,7 @@ items:
         display_name: Farming Exp Boost
       - id: NOT_FINISHED_YET
   - id: FARMING_EXP_BOOST_RARE
+    material: iron_hoe
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -41,30 +47,35 @@ items:
         display_name: Farming Exp Boost
       - id: NOT_FINISHED_YET
   - id: FISHING_EXP_BOOST
+    material: cod
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: PET_ITEM
       - id: NOT_FINISHED_YET
   - id: FORAGING_EXP_BOOST
+    material: iron_axe
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: PET_ITEM
       - id: NOT_FINISHED_YET
   - id: HARDENED_SCALES
+    material: prismarine_crystals
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: PET_ITEM
       - id: NOT_FINISHED_YET
   - id: IRON_CLAWS
+    material: iron_ingot
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: PET_ITEM
       - id: NOT_FINISHED_YET
   - id: MINING_EXP_BOOST_COMMON
+    material: iron_pickaxe
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -73,6 +84,7 @@ items:
         display_name: Mining Exp Boost
       - id: NOT_FINISHED_YET
   - id: MINING_EXP_BOOST_RARE
+    material: iron_pickaxe
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -81,6 +93,7 @@ items:
         display_name: Mining Exp Boost
       - id: NOT_FINISHED_YET
   - id: SHARPENED_CLAWS
+    material: prismarine_shard
     rarity: COMMON
     components:
       - id: ENCHANTED

@@ -35,3 +35,42 @@ items:
     default_statistics:
       defense: 15.0
       mining_speed: 10.0
+  - id: CHAINMAIL_HELMET
+    rarity: COMMON
+    material: CHAINMAIL_HELMET
+  - id: CHAINMAIL_CHESTPLATE
+    rarity: COMMON
+    material: CHAINMAIL_CHESTPLATE
+  - id: CHAINMAIL_LEGGINGS
+    rarity: COMMON
+    material: CHAINMAIL_LEGGINGS
+  - id: CHAINMAIL_BOOTS
+    rarity: COMMON
+    material: CHAINMAIL_BOOTS
+  - id: MINER_ARMOR_HELMET
+    rarity: RARE
+    material: IRON_HELMET
+  - id: MINER_ARMOR_CHESTPLATE
+    rarity: RARE
+    material: IRON_CHESTPLATE
+  - id: MINER_ARMOR_LEGGINGS
+    rarity: RARE
+    material: IRON_LEGGINGS
+  - id: MINER_ARMOR_BOOTS
+    rarity: RARE
+    material: IRON_BOOTS
+  - id: MINERS_OUTFIT_HELMET
+    rarity: UNCOMMON
+    material: LEATHER_HELMET
+  - id: MINERS_OUTFIT_CHESTPLATE
+    rarity: UNCOMMON
+    material: LEATHER_CHESTPLATE
+  - id: MINERS_OUTFIT_LEGGINGS
+    rarity: UNCOMMON
+    material: LEATHER_LEGGINGS
+  - id: MINERS_OUTFIT_BOOTS
+    rarity: UNCOMMON
+    material: LEATHER_BOOTS
+  - id: DWARF_TURTLE_SHELMET
+    rarity: RARE
+    material: PLAYER_HEAD

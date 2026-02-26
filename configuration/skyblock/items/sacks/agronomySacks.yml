@@ -1,5 +1,6 @@
 items:
   - id: SMALL_AGRONOMY_SACK
+    material: player_head
     rarity: UNCOMMON
     lore:
       - '§7Item pickups go directly into your'
@@ -62,6 +63,7 @@ items:
               amount: 1
 
   - id: MEDIUM_AGRONOMY_SACK
+    material: player_head
     rarity: RARE
     lore:
       - '§7Item pickups go directly into your'
@@ -124,6 +126,7 @@ items:
               amount: 1
 
   - id: LARGE_AGRONOMY_SACK
+    material: player_head
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'
@@ -186,6 +189,7 @@ items:
               amount: 1
 
   - id: LARGE_ENCHANTED_AGRONOMY_SACK
+    material: player_head
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'

@@ -1,5 +1,6 @@
 items:
   - id: ROUGH_AMBER_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -12,6 +13,7 @@ items:
         display_name: Rough Amber Gemstone
 
   - id: ROUGH_AMETHYST_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -24,6 +26,7 @@ items:
         display_name: Rough Amethyst Gemstone
 
   - id: ROUGH_JADE_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -36,6 +39,7 @@ items:
         display_name: Rough Jade Gemstone
 
   - id: ROUGH_JASPER_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -48,6 +52,7 @@ items:
         display_name: Rough Jasper Gemstone
 
   - id: ROUGH_RUBY_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -60,6 +65,7 @@ items:
         display_name: Rough Ruby Gemstone
 
   - id: ROUGH_SAPPHIRE_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -72,6 +78,7 @@ items:
         display_name: Rough Sapphire Gemstone
 
   - id: ROUGH_TOPAZ_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -84,6 +91,7 @@ items:
         display_name: Rough Topaz Gemstone
 
   - id: ROUGH_OPAL_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -96,6 +104,7 @@ items:
         skull_texture: a14d3c57f80824b3839b8b220f2158bca505d497fd1c9e3f29f422b1e6206a45
 
   - id: ROUGH_AQUAMARINE_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -108,6 +117,7 @@ items:
         skull_texture: 5a58a38f77b5f0f3610b164da29e901661b4628a482d5f702b71054f665e352c
 
   - id: ROUGH_CITRINE_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -120,6 +130,7 @@ items:
         skull_texture: 50e8517b3014e783556da47b17be931501b09da5bf8889b797ec087a8749a89
 
   - id: ROUGH_ONYX_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -132,6 +143,7 @@ items:
         skull_texture: c04d7b3d11143da776c25b85c0d3f4c2ba1c99ff57aea4e34b808002db7f39e9
 
   - id: ROUGH_PERIDOT_GEM
+    material: player_head
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME

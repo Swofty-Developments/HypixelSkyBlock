@@ -1,5 +1,6 @@
 items:
   - id: WOODEN_HOE
+    material: wooden_hoe
     rarity: COMMON
     components:
       - id: STANDARD_ITEM
@@ -28,6 +29,7 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: STONE_HOE
+    material: stone_hoe
     rarity: COMMON
     components:
       - id: STANDARD_ITEM
@@ -56,6 +58,7 @@ items:
       - id: SELLABLE
         value: 2.0
   - id: IRON_HOE
+    material: iron_hoe
     rarity: COMMON
     components:
       - id: STANDARD_ITEM
@@ -84,6 +87,7 @@ items:
       - id: SELLABLE
         value: 3.0
   - id: GOLDEN_HOE
+    material: golden_hoe
     rarity: COMMON
     components:
       - id: STANDARD_ITEM
@@ -112,6 +116,7 @@ items:
       - id: SELLABLE
         value: 4.0
   - id: DIAMOND_HOE
+    material: diamond_hoe
     rarity: COMMON
     components:
       - id: STANDARD_ITEM
