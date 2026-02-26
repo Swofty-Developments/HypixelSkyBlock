@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ElectionService implements SkyBlockService {
 
-    static void main(String[] args) {
+    static void main() {
         String mongoUri = ConfigProvider.settings().getMongodb();
         new ElectionDatabase(null).connect(mongoUri);
         SkyBlockService.init(new ElectionService());

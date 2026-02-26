@@ -5,7 +5,6 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.commons.skyblock.statistics.ItemStatistic;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -166,6 +165,18 @@ public class StringUtility {
 		return roman.toString();
 	}
 
+	/**
+	 * Capitalizes the first letter of the input string and lowercases the rest.
+	 * @param input The string to capitalize.
+	 * @return The input string with the first letter capitalized and the rest lowercased. If the input is null or empty, it returns the input as is.
+	 */
+	public static String capitalize(String input) {
+		if (input == null || input.isEmpty()) {
+			return input;
+		}
+		return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+	}
+
 	public static String getTextFromComponent(Component component) {
 		if (component == null)
 			throw new IllegalArgumentException("Component cannot be null");
@@ -258,6 +269,49 @@ public class StringUtility {
 
 			// Add any remaining text to the result
 			result.add(currentString.toString());
+		}
+
+		return result;
+	}
+
+	public static List<String> splitByWordAndLengthKeepLegacyColor(String string, int splitLength) {
+		List<String> result = new ArrayList<>();
+		String lastColorCode = "";
+
+		for (String line : string.split("\n", -1)) {
+			if (line.isEmpty()) {
+				result.add("");
+				continue;
+			}
+
+			StringBuilder currentLine = new StringBuilder(lastColorCode);
+
+			for (String word : line.split(" ")) {
+				if (word.isEmpty()) continue;
+
+				int extraSpace = currentLine.length() == lastColorCode.length() ? 0 : 1;
+
+				if (currentLine.length() + extraSpace + word.length() > splitLength) {
+					if (currentLine.length() > lastColorCode.length()) {
+						result.add(currentLine.toString());
+						currentLine = new StringBuilder(lastColorCode);
+					}
+				} else if (extraSpace == 1) {
+					currentLine.append(' ');
+				}
+
+				currentLine.append(word);
+
+				// this wont work with bold/italic and those but if you need those don't use this method
+				int colorIndex = word.lastIndexOf('§');
+				if (colorIndex != -1 && colorIndex < word.length() - 1) {
+					lastColorCode = "§" + word.charAt(colorIndex + 1);
+				}
+			}
+
+			if (currentLine.length() > lastColorCode.length()) {
+				result.add(currentLine.toString());
+			}
 		}
 
 		return result;

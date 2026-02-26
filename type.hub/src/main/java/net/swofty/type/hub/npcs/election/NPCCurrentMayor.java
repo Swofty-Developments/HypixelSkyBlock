@@ -1,4 +1,4 @@
-package net.swofty.type.hub.npcs;
+package net.swofty.type.hub.npcs.election;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -7,36 +7,36 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.elections.SkyBlockMayor;
-import net.swofty.type.skyblockgeneric.gui.inventories.election.MinisterMenuView;
+import net.swofty.type.skyblockgeneric.gui.inventories.election.MayorMenuView;
 
-public class NPCCurrentMinister extends HypixelNPC {
+public class NPCCurrentMayor extends HypixelNPC {
 
-    public NPCCurrentMinister() {
+    public NPCCurrentMayor() {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                SkyBlockMayor minister = ElectionManager.getCurrentMinister();
-                if (minister == null) return new String[]{"Minister ????", "§e§lCLICK"};
-                return new String[]{"Minister " + minister.getDisplayName(), "§e§lCLICK"};
+                SkyBlockMayor mayor = ElectionManager.getCurrentMayor();
+                if (mayor == null) return new String[]{"Mayor ???", "§e§lCLICK"};
+                return new String[]{"Mayor " + mayor.getDisplayName(), "§e§lCLICK"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                SkyBlockMayor minister = ElectionManager.getCurrentMinister();
-                if (minister == null) return "";
-                return minister.getSignature();
+                SkyBlockMayor mayor = ElectionManager.getCurrentMayor();
+                if (mayor == null) return "";
+                return mayor.getSignature();
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                SkyBlockMayor minister = ElectionManager.getCurrentMinister();
-                if (minister == null) return "";
-                return minister.getTexture();
+                SkyBlockMayor mayor = ElectionManager.getCurrentMayor();
+                if (mayor == null) return "";
+                return mayor.getTexture();
             }
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(8.5, 79, 17.5, 135, 0);
+                return new Pos(6.5, 79, 19.5, 135, 0);
             }
 
             @Override
@@ -48,11 +48,11 @@ public class NPCCurrentMinister extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent event) {
-        SkyBlockMayor minister = ElectionManager.getCurrentMinister();
-        if (minister == null) {
+        SkyBlockMayor mayor = ElectionManager.getCurrentMayor();
+        if (mayor == null) {
             event.player().sendMessage("§cHello!!");
             return;
         }
-        event.player().openView(new MinisterMenuView());
+        event.player().openView(new MayorMenuView());
     }
 }

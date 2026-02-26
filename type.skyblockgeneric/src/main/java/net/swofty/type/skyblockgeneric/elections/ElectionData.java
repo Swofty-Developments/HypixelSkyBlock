@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.elections;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,10 +19,12 @@ public class ElectionData {
     private int electionYear;
 
     private String currentMayor;
+    private String currentMayorColor;
     private List<String> currentMayorPerks = new ArrayList<>();
     private int mayorElectedYear;
 
     private String currentMinister;
+    private String currentMinisterColor;
     private String ministerPerk;
 
     private List<CandidateData> candidates = new ArrayList<>();
@@ -32,13 +35,14 @@ public class ElectionData {
     private Map<String, List<String>> candidateActivePerks = new HashMap<>();
     private Map<String, Boolean> failedPerkGainLastTime = new HashMap<>();
     private int specialCandidateIndex;
+    private ElectionResult lastElectionResult;
 
     public ElectionData() {}
 
     public SkyBlockMayor getMayorEnum() {
         if (currentMayor == null) return null;
         try {
-            return SkyBlockMayor.valueOf(currentMayor);
+            return SkyBlockMayor.valueOf(currentMayor).setColor(currentMayorColor);
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -47,7 +51,7 @@ public class ElectionData {
     public SkyBlockMayor getMinisterEnum() {
         if (currentMinister == null) return null;
         try {
-            return SkyBlockMayor.valueOf(currentMinister);
+            return SkyBlockMayor.valueOf(currentMinister).setColor(currentMinisterColor);
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -116,6 +120,7 @@ public class ElectionData {
                 .findFirst().orElse(null);
 
         currentMayor = winnerName;
+        currentMayorColor = winner.getColor();
         currentMayorPerks = winnerCandidate != null
                 ? new ArrayList<>(winnerCandidate.getActivePerks())
                 : Arrays.stream(winner.getAllPerks()).map(Enum::name).toList();
@@ -125,11 +130,13 @@ public class ElectionData {
         if (winner.isSpecial()) {
             currentMinister = null;
             ministerPerk = null;
+            currentMinisterColor = null;
         } else {
             String secondPlace = sorted.stream().filter(entry -> !entry.getKey().equals(winnerName)).findFirst().map(Map.Entry::getKey).orElse(null);
             if (secondPlace != null) {
                 SkyBlockMayor ministerMayor = SkyBlockMayor.valueOf(secondPlace);
                 currentMinister = secondPlace;
+                currentMinisterColor = ministerMayor.getColor();
 
                 CandidateData ministerCandidate = candidates.stream()
                         .filter(c -> c.getMayorName().equals(secondPlace))
@@ -185,6 +192,18 @@ public class ElectionData {
             candidateActivePerks.put(winnerName, List.of(randomPerk.name()));
         }
 
+        long totalVoteCount = tally.values().stream().mapToLong(Long::longValue).sum();
+        ElectionResult electionResult = new ElectionResult();
+        electionResult.setYear(currentYear);
+        for (Map.Entry<String, Long> entry : sorted) {
+            CandidateResult cr = new CandidateResult();
+            cr.setMayorName(entry.getKey());
+            cr.setVotes(entry.getValue());
+            cr.setPercentage(totalVoteCount > 0 ? (entry.getValue() * 100.0) / totalVoteCount : 0);
+            electionResult.getCandidateResults().add(cr);
+        }
+        this.lastElectionResult = electionResult;
+
         candidates.clear();
         votes.clear();
         electionOpen = false;
@@ -211,6 +230,7 @@ public class ElectionData {
         for (SkyBlockMayor mayor : selected) {
             CandidateData candidate = new CandidateData();
             candidate.setMayorName(mayor.name());
+            candidate.setIndex(selected.indexOf(mayor));
 
             List<String> perks = candidateActivePerks.get(mayor.name());
             if (perks == null || perks.isEmpty()) {
@@ -229,6 +249,7 @@ public class ElectionData {
 
             CandidateData candidate = new CandidateData();
             candidate.setMayorName(specialCandidate.name());
+            candidate.setIndex(selected.indexOf(specialCandidate));
             candidate.setActivePerks(Arrays.stream(specialCandidate.getAllPerks()).map(Enum::name).toList());
             candidates.add(candidate);
         }
@@ -244,6 +265,7 @@ public class ElectionData {
             if (!alreadyInElection) {
                 CandidateData diazCandidate = new CandidateData();
                 diazCandidate.setMayorName(SkyBlockMayor.DIAZ.name());
+                diazCandidate.setIndex(selected.indexOf(SkyBlockMayor.DIAZ));
                 diazCandidate.setActivePerks(Arrays.stream(SkyBlockMayor.DIAZ.getAllPerks()).map(Enum::name).toList());
                 candidates.add(diazCandidate);
             }
@@ -259,6 +281,7 @@ public class ElectionData {
     @Getter
     @Setter
     public static class CandidateData {
+        private int index;
         private String mayorName;
         private List<String> activePerks = new ArrayList<>();
 
@@ -282,8 +305,42 @@ public class ElectionData {
             return result;
         }
 
+        public String getColor() {
+            return switch (index) {
+                case 0 -> "§c";
+                case 1 -> "§a";
+                case 2 -> "§b";
+                case 3 -> "§e";
+                case 4 -> "§d";
+                default -> "§f";
+            };
+        }
+
+        public String getColoredName() {
+            return getColor() + StringUtility.capitalize(getMayorName());
+        }
+
         public boolean hasMinisterPerkMarker(SkyBlockMayor.Perk perk) {
             return activePerks.contains(perk.name());
         }
+    }
+
+    @Getter
+    @Setter
+    public static class ElectionResult {
+        private int year;
+        private List<CandidateResult> candidateResults = new ArrayList<>();
+
+        public ElectionResult() {}
+    }
+
+    @Getter
+    @Setter
+    public static class CandidateResult {
+        private String mayorName;
+        private long votes;
+        private double percentage;
+
+        public CandidateResult() {}
     }
 }

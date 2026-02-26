@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.gui.inventories.election;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.DefaultState;
@@ -35,11 +36,11 @@ public class ElectionView extends StatelessView {
 
         if (!data.isElectionOpen() || data.getCandidates().isEmpty()) {
             layout.slot(13, (s, c) -> ItemStackCreator.getStack(
-                    "§cNo Active Election",
-                    Material.BARRIER,
-                    1,
-                    "§7There is no active election",
-                    "§7at this time."
+                "§cNo Active Election",
+                Material.BARRIER,
+                1,
+                "§7There is no active election",
+                "§7at this time."
             ));
             return;
         }
@@ -60,7 +61,7 @@ public class ElectionView extends StatelessView {
             long votes = tally.getOrDefault(candidate.getMayorName(), 0L);
             String voteStr = formatVotes(votes);
             String pctStr = totalVotes > 0
-                    ? String.format("%.1f%%", (votes * 100.0) / totalVotes) : "0%";
+                ? String.format("%.1f%%", (votes * 100.0) / totalVotes) : "0%";
             int yearsSince = data.getYearsSinceLastElected(candidate.getMayorName(), currentYear);
             String candidateName = candidate.getMayorName();
 
@@ -69,19 +70,23 @@ public class ElectionView extends StatelessView {
                 boolean isVotedFor = candidateName.equals(playerVote);
 
                 List<String> lore = buildCandidateLore(
-                        mayor, candidate, data.getElectionYear(),
-                        yearsSince, voteStr, pctStr, isVotedFor
+                    mayor, candidate, data.getElectionYear(),
+                    yearsSince, voteStr, pctStr, isVotedFor
                 );
                 return ItemStackCreator.getStackHead(
-                        mayor.getColoredName(),
-                        new PlayerSkin(mayor.getTexture(), mayor.getSignature()),
-                        1,
-                        lore
+                    candidate.getColoredName(),
+                    new PlayerSkin(mayor.getTexture(), mayor.getSignature()),
+                    1,
+                    lore
                 );
-            }, (click, c) -> {
+            }, (_, c) -> {
                 ElectionManager.castVote(c.player().getUuid(), candidateName);
-                c.player().sendMessage("§aYou voted for " + mayor.getColoredName() + "§a!");
-                c.replace(new ElectionView());
+                c.player().sendMessage("§c-----------------------------------------------------");
+                c.player().sendMessage("§eYou cast §c1 vote §efor " + candidate.getColoredName() + " §ein the §bYear " + data.getElectionYear() + " Elections§e!");
+                c.player().sendMessage("  §bNew player §eFame Rank §a+1 vote");
+                c.player().sendMessage(candidate.getColoredName() + " §enow has §c" + pctStr + " §eof votes with §c" + voteStr + " votes§e!");
+                c.player().sendMessage("§c-----------------------------------------------------");
+                c.replace(new ElectionViewStatsView());
             });
         }
     }
@@ -92,11 +97,11 @@ public class ElectionView extends StatelessView {
         List<String> lore = new ArrayList<>();
         lore.add("§8Year " + electionYear + " Candidate");
         lore.add("");
-        lore.add("§7Votes: " + mayor.getColor() + voteStr + " §7(" + mayor.getColor() + pctStr + "§7)");
+        lore.add("§7Votes: " + candidate.getColor() + voteStr + " §7(" + candidate.getColor() + pctStr + "§7)");
         if (yearsSince >= 0) {
-            lore.add("§7Last elected: " + mayor.getColor() + yearsSince + "y ago");
+            lore.add("§7Last elected: " + candidate.getColor() + yearsSince + "y ago");
         } else {
-            lore.add("§7Last elected: " + mayor.getColor() + "Never");
+            lore.add("§7Last elected: " + candidate.getColor() + "Never");
         }
         lore.add("");
         lore.add("§8§m--------------------------");
@@ -105,9 +110,9 @@ public class ElectionView extends StatelessView {
         for (int j = 0; j < activePerks.size(); j++) {
             SkyBlockMayor.Perk perk = activePerks.get(j);
             if (j == 0) {
-                lore.add("§6✯ " + mayor.getColor() + perk.getDisplayName());
+                lore.addAll(StringUtility.splitByWordAndLengthKeepLegacyColor("§6✯ " + candidate.getColor() + perk.getDisplayName(), 50));
             } else {
-                lore.add(mayor.getColor() + perk.getDisplayName());
+                lore.addAll(StringUtility.splitByWordAndLengthKeepLegacyColor(candidate.getColor() + perk.getDisplayName(), 50));
             }
             lore.add(perk.getDescription());
             if (j < activePerks.size() - 1) lore.add("");
@@ -117,7 +122,7 @@ public class ElectionView extends StatelessView {
 
         if (!mayor.isSpecial()) {
             lore.add("");
-            lore.add("§6✯ " + mayor.getColor() + "Minister Perks §7are also granted if");
+            lore.add("§6✯ " + candidate.getColor() + "Minister Perks §7are also granted if");
             lore.add("§7this mayor wins second place!");
         }
 

@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.gui.inventories.election;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.DefaultState;
@@ -43,7 +44,9 @@ public class MayorMenuView extends StatelessView {
 
             for (SkyBlockMayor.Perk perk : activePerks) {
                 lore.add(mayor.getColor() + perk.getDisplayName());
-                lore.add(perk.getDescription());
+                for (String line : StringUtility.splitByWordAndLengthKeepLegacyColor(perk.getDescription(), 50)) {
+                    lore.add("§7" + line);
+                }
                 lore.add("");
             }
 
@@ -61,14 +64,39 @@ public class MayorMenuView extends StatelessView {
             );
         });
 
-        layout.slot(15, (s, c) -> ItemStackCreator.getStack(
-                "§bElection & Voting",
-                Material.JUKEBOX,
-                1,
-                "§7View the current election",
-                "§7candidates and cast your vote.",
-                "",
-                "§eClick to view!"
-        ), (click, c) -> c.push(new ElectionView()));
+        layout.slot(15, (s, c) -> {
+            ElectionData.ElectionResult lastResult = data.getLastElectionResult();
+            if (lastResult == null) {
+                return ItemStackCreator.getStack(
+                        "§bMayor Election Results",
+                        Material.JUKEBOX,
+                        1,
+                        "§7No previous election data",
+                        "§7available."
+                );
+            }
+
+            List<String> resultLore = new ArrayList<>();
+            resultLore.add("§8Year " + lastResult.getYear());
+            resultLore.add("");
+
+            for (ElectionData.CandidateResult cr : lastResult.getCandidateResults()) {
+                SkyBlockMayor m = null;
+                try { m = SkyBlockMayor.valueOf(cr.getMayorName()); } catch (IllegalArgumentException ignored) {}
+                String clr = m != null ? m.getColor() : "§7";
+                String name = m != null ? m.getDisplayName() : cr.getMayorName();
+                resultLore.add(clr + String.format("%.1f%%", cr.getPercentage())
+                        + "§8 ○ " + clr + String.format("%,d", cr.getVotes())
+                        + " votes§8 | " + clr + name);
+            }
+
+            resultLore.add("");
+            resultLore.add("§7These are the votes for the");
+            resultLore.add("§7last election in which " + mayor.getDisplayName());
+            resultLore.add("§7was elected.");
+
+            return ItemStackCreator.getStack("§bMayor Election Results", Material.JUKEBOX, 1,
+                    resultLore.toArray(new String[0]));
+        });
     }
 }

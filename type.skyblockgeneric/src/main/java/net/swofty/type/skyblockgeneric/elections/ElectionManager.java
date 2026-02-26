@@ -28,10 +28,10 @@ public class ElectionManager {
         SERVICE = new ProxyService(ServiceType.ELECTION);
         try {
             GetElectionDataProtocolObject.GetElectionDataResponse response =
-                    SERVICE.<GetElectionDataProtocolObject.GetElectionDataMessage,
-                            GetElectionDataProtocolObject.GetElectionDataResponse>handleRequest(
-                            new GetElectionDataProtocolObject.GetElectionDataMessage()
-                    ).join();
+                SERVICE.<GetElectionDataProtocolObject.GetElectionDataMessage,
+                    GetElectionDataProtocolObject.GetElectionDataResponse>handleRequest(
+                    new GetElectionDataProtocolObject.GetElectionDataMessage()
+                ).join();
 
             if (response.found() && response.serializedData() != null) {
                 electionData = GSON.fromJson(response.serializedData(), ElectionData.class);
@@ -58,8 +58,8 @@ public class ElectionManager {
         try {
             String serialized = GSON.toJson(electionData);
             SERVICE.<SaveElectionDataProtocolObject.SaveElectionDataMessage,
-                    SaveElectionDataProtocolObject.SaveElectionDataResponse>handleRequest(
-                    new SaveElectionDataProtocolObject.SaveElectionDataMessage(serialized)
+                SaveElectionDataProtocolObject.SaveElectionDataResponse>handleRequest(
+                new SaveElectionDataProtocolObject.SaveElectionDataMessage(serialized)
             );
         } catch (Exception e) {
             Logger.error(e, "Failed to save election data to service");
@@ -69,13 +69,12 @@ public class ElectionManager {
     private static void initializeFirstElection() {
         int currentYear = SkyBlockCalendar.getYear();
         electionData.setCurrentMayor(SkyBlockMayor.COLE.name());
-        electionData.setCurrentMayorPerks(
-                Arrays.stream(SkyBlockMayor.COLE.getAllPerks())
-                        .map(Enum::name).toList()
-        );
+        electionData.setCurrentMayorColor("§d");
+        electionData.setCurrentMayorPerks(Arrays.stream(SkyBlockMayor.COLE.getAllPerks()).map(Enum::name).toList());
         electionData.setMayorElectedYear(currentYear);
         electionData.setCurrentMinister(SkyBlockMayor.DIAZ.name());
         electionData.setMinisterPerk(SkyBlockMayor.Perk.STOCK_EXCHANGE.name());
+        electionData.setCurrentMinisterColor("§c");
     }
 
     public static void onElectionStart() {
@@ -100,14 +99,14 @@ public class ElectionManager {
         if (!electionData.isElectionOpen()) return CompletableFuture.completedFuture(null);
 
         boolean validCandidate = electionData.getCandidates().stream()
-                .anyMatch(c -> c.getMayorName().equals(candidateName));
+            .anyMatch(c -> c.getMayorName().equals(candidateName));
         if (!validCandidate) return CompletableFuture.completedFuture(null);
 
         electionData.castVote(accountId, candidateName);
 
         return SERVICE.<CastVoteProtocolObject.CastVoteMessage,
-                CastVoteProtocolObject.CastVoteResponse>handleRequest(
-                new CastVoteProtocolObject.CastVoteMessage(accountId, candidateName)
+            CastVoteProtocolObject.CastVoteResponse>handleRequest(
+            new CastVoteProtocolObject.CastVoteMessage(accountId, candidateName)
         ).thenAccept(response -> {
             if (response.success() && response.serializedData() != null) {
                 electionData = GSON.fromJson(response.serializedData(), ElectionData.class);
@@ -142,8 +141,8 @@ public class ElectionManager {
 
     public static CompletableFuture<List<GetCandidatesProtocolObject.CandidateInfo>> fetchCandidates() {
         return SERVICE.<GetCandidatesProtocolObject.GetCandidatesMessage,
-                GetCandidatesProtocolObject.GetCandidatesResponse>handleRequest(
-                new GetCandidatesProtocolObject.GetCandidatesMessage()
+            GetCandidatesProtocolObject.GetCandidatesResponse>handleRequest(
+            new GetCandidatesProtocolObject.GetCandidatesMessage()
         ).thenApply(GetCandidatesProtocolObject.GetCandidatesResponse::candidates);
     }
 

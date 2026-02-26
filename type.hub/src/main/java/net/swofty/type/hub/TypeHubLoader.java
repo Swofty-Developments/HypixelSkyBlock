@@ -24,6 +24,7 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
+import net.swofty.type.generic.entity.InteractionEntity;
 import net.swofty.type.generic.entity.hologram.ServerHolograms;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -36,12 +37,16 @@ import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
+import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.entity.GlassDisplay;
 import net.swofty.type.skyblockgeneric.furniture.Furniture;
+import net.swofty.type.skyblockgeneric.gui.inventories.election.ElectionView;
+import net.swofty.type.skyblockgeneric.gui.inventories.election.ElectionViewStatsView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.WarpPortal;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -164,6 +169,16 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
 		Furniture.load("hexatorum");
 		Furniture.load("rune_table");
+
+		new InteractionEntity(1.1f, 1.1f, (player, _) -> {
+			final SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+			String text = ElectionManager.getPlayerVote(skyBlockPlayer.getUuid());
+			if (text == null) {
+				player.openView(new ElectionView());
+			} else {
+				player.openView(new ElectionViewStatsView());
+			}
+		}).setInstance(HypixelConst.getInstanceContainer(), new Pos(0.5, 50, 34.5));
 	}
 
 	private static String[] electionLines() {

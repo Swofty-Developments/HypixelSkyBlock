@@ -39,13 +39,8 @@ public abstract class HypixelNPC {
     @Getter
     private final NPCConfiguration parameters;
     private final DialogueController dialogueController;
-    @Getter
-    private final String name;
-
     public HypixelNPC(NPCConfiguration configuration) {
         this.parameters = configuration;
-        String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
-        this.name = parameters.chatName() != null ? parameters.chatName() : className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
         this.dialogueController = new DialogueController(this);
     }
 
@@ -195,6 +190,11 @@ public abstract class HypixelNPC {
 
     public void sendNPCMessage(HypixelPlayer player, String message) {
         sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
+    }
+
+    public String getName() {
+        String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
+        return parameters.chatName() != null ? parameters.chatName() : className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
     }
 
     public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
