@@ -4,13 +4,12 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIMuseumAppraisal;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCMadameEleanorQGoldsworthIII extends HypixelNPC {
 
@@ -18,7 +17,7 @@ public class NPCMadameEleanorQGoldsworthIII extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"Madame Eleanor Q. Goldsworth III", "§e§lCLICK"};
+                return new String[]{"§6Madame Eleanor Q. Goldsworth III", "§e§lCLICK"};
             }
 
             @Override
@@ -33,7 +32,7 @@ public class NPCMadameEleanorQGoldsworthIII extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-49.5, 77, 76.5, 0, 0);
+                return new Pos(33.500, 73.000, 11.500, 90, 0);
             }
 
             @Override

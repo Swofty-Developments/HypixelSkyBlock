@@ -19,22 +19,22 @@ public class NPCLonelyPhilosopher extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Lonely Philosopher", "§e§lCLICK"};
+                return new String[]{"Lonely Philosopher", "§e§lCLICK"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                return "SGkbMOhgmZcqP0OQuKKcdNNxSjQr269u0hxroC5JEFM596JM8YMqFZCUnoIuetZVvBhdTktyKe2fVchEhFhNpOwLhSrUHWLDDGUvnBirPp9g8iDmntiRFL9D6WzI0srWQYY7jIYjIeY3j+D3nAbAiYosDS/eZbXDaa2JS0Xt30l6DqUzgxKBolzlhkwEWXVVXSmIoz8tGOlcn5STMDu/vmGY4j/Bh6dWQnXoMUGVcRBHD5P+5/ajutixuxB4ELl1LCptFcNJHsNMvV2KOmorUCT+xH9cEirrx3r38DGGCzSzBMIWQvgDYcFTpwFHyCZgL6e6atLP3DReYwpWEp0Mr9sRatVY/2IPoLcByRiJjufo931La5E5+3uagNkA8qQ8+O1mWMUNv1qEbCkPvVo9VQkJSL282DERvJPk0A5k9SK1jV+ecEkVHr6XSq6mmz8I8f+5NZNtd41xhJp6AAbr6AWMuP1+9aP60xfQK6Qh2Kephz06ya1afDnYdxDk7HDvjXFkDwC4P4EaR1KD0ouIUngG/cyjPytmhxxNLsPW9Ag+/3Hk62meVMIl0K42P+rYGg+scL/glJHgtZiR7P5pAvjc8vuW4TM30ZzZ9vAScfhTBAolYe5dx12X9IjFIiPw6gibo7Mf7FtfhVoTgYhYx6hFLhxlfhSuKCyKTGCyUYU=";
+                return "tKdLS3NJLZ66Hq4KK4jd0mjj+4BOeYpEkTK0+hS9JJfrFqbFdBypZKqnn5mMvujvoKfPUZ3LSH9s/HFfcnLsz33mvTStcv3HzwuiO68Dl7FTI3rye/Fho/en2zbihomGu7p8xb8+gEk6UYVgd9elaYkNt35jGKrlcOGePtPHVrG5LMM7qF9OYJtsA4zdR7h60zPg2SbSexhkbiKTM97xVPF+zya5PqSgwPMe1K/+s0SmIrd/6FMD7h+K0eavnCCq0dPweRYvc5vq3ji8a69h42Fg1p7U7vEuPdW0YH8wxD/dECx2w0VZqwWx4a14Gucnh87AlskOdrp2HZrdEAKU4i/rNPYrNIxzd//Ad899cuQ4fuk3NmnsrKpMvi4S9iPqkIYgkEHSbmm545r+Kcivhjj33eTTZr7ne9L+TAxPaxiqCjsP2hQQMS0jjtm6OUAALQRnq4625ZOZJ6TJGxXC8hSAJGv/PiqCpEsqc34gxhWVq8QgOq+2tX/A3TbmthxWp8BcoxyW9g25srCNZnmN0NyFVTjY9gTdWJwMfFOlzLSkHLksYB3QKYF4+HcTyyDIuQp12zKhYmFFAuz7WHcE4KOJ3QVHygmwPsnQMeqLvH9u6n9zBeC4KTK/AZvOH2BrkSfO6UUlnpv3jyu7ZCiz3PsFZVjn6DmnjOj1p88lan8=";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                return "eyJ0aW1lc3RhbXAiOjE1NTUyMjk2MzE5MjgsInByb2ZpbGVJZCI6IjkxZjA0ZmU5MGYzNjQzYjU4ZjIwZTMzNzVmODZkMzllIiwicHJvZmlsZU5hbWUiOiJTdG9ybVN0b3JteSIsInNpZ25hdHVyZVJlcXVpcmVkIjp0cnVlLCJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjAwOGRjYzg5YjdkMTQ4NzBmMzJhMjg5NjI5M2Q3NzhiMGU1MGQyNWZjNGRiNDRhMTBiYWI5ODAwMjFiYWRiNiJ9fX0=";
+                return "ewogICJ0aW1lc3RhbXAiIDogMTU4OTMzMzQ0ODA4OSwKICAicHJvZmlsZUlkIiA6ICI0MWQzYWJjMmQ3NDk0MDBjOTA5MGQ1NDM0ZDAzODMxYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJNZWdha2xvb24iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWFkYTg3NTE3OTBjN2FkZTAzZDNhOGFjMzI1MDZhM2RlZDE4Y2JmYWU4MTI2ODlkMDNmNmYzNGM3YTk2MjYyOCIKICAgIH0KICB9Cn0=";
             }
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-250.7, 130, 41.2, 40, 0);
+                return new Pos(-250.75, 130, 41.188, -51, 4);
             }
 
             @Override

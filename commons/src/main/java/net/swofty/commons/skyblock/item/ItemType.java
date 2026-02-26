@@ -7,6 +7,8 @@ import org.jetbrains.annotations.Nullable;
 
 public enum ItemType {
 	SANDBOX_ITEM(Material.BLAZE_POWDER, Rarity.COMMON),
+	REGION_SELECTOR(Material.BLAZE_ROD, Rarity.ADMIN),
+	BLOCK_DATA_TOOL(Material.COMPARATOR, Rarity.ADMIN),
 
 	/**
 	 * Miscellaneous

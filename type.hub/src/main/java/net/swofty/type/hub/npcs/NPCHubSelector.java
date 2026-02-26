@@ -1,12 +1,11 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.hub.gui.GUIHubSelector;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIHubSelector;
 
 public class NPCHubSelector extends HypixelNPC {
 
@@ -29,7 +28,7 @@ public class NPCHubSelector extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-10, 70, -67, 180, 0);
+                return new Pos(-5.500, 69.000, -22.500, -35, 0);
             }
 
             @Override

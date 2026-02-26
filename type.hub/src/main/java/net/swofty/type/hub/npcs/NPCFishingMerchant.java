@@ -4,19 +4,18 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.hub.gui.GUIShopFarmMerchant;
 import net.swofty.type.hub.gui.GUIShopFishMerchant;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
+public class NPCFishingMerchant extends HypixelNPC {
 
-public class NPCFishMerchant extends HypixelNPC {
-    public NPCFishMerchant() {
+    public NPCFishingMerchant() {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Fish Merchant", "§e§lCLICK"};
+                return new String[]{"§bFishing Merchant", "§e§lCLICK"};
             }
 
             @Override
@@ -31,7 +30,7 @@ public class NPCFishMerchant extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(52.5, 68, -82.5, 90, 0);
+                return new Pos(112.500, 71.000, -44.500, 0, 0);
             }
 
             @Override
@@ -59,13 +58,13 @@ public class NPCFishMerchant extends HypixelNPC {
 
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
-        return new DialogueSet[] {
-                DialogueSet.builder()
-                        .key("hello").lines(new String[]{
-                                "Fishing is my trade.",
-                                "I buy and sell any fish, rod, or treasure you can find!",
-                                "Click me again to open the Fisherman Shop!"
-                        }).build(),
+        return new DialogueSet[]{
+            DialogueSet.builder()
+                .key("hello").lines(new String[]{
+                    "Fishing is my trade.",
+                    "I buy and sell any fish, rod, or treasure you can find!",
+                    "Click me again to open the Fisherman Shop!"
+                }).build(),
         };
     }
 }

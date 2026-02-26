@@ -1,10 +1,12 @@
 package net.swofty.type.hub.npcs;
 
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
@@ -12,8 +14,6 @@ import net.swofty.type.skyblockgeneric.gui.inventories.museum.GUIYourMuseum;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.UUID;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCMuseumDisplay extends HypixelNPC {
     public NPCMuseumDisplay() {
@@ -37,7 +37,7 @@ public class NPCMuseumDisplay extends HypixelNPC {
             if (dataHandler == null) {
                 dataHandler = HypixelDataHandler.getOfOfflinePlayer(currentlyViewing);
             }
-			String username = HypixelDataHandler.getPotentialIGNFromUUID(profileUUID);
+			String username = LegacyComponentSerializer.legacySection().serialize(p.getColouredName());
 			String profileName = skyblockHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
 
 			return new String[]{
@@ -72,7 +72,7 @@ public class NPCMuseumDisplay extends HypixelNPC {
 
         @Override
         public Pos position(HypixelPlayer player) {
-            return new Pos(-22.5, 67, 80.5, 90, 0);
+            return new Pos(29.5, 70, 35.5, 180, 0);
         }
 
         @Override

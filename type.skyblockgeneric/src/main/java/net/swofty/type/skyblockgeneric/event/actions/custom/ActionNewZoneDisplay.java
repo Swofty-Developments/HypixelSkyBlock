@@ -27,8 +27,8 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
         }
 
         DatapointStringList discoveredZones = player.getSkyblockDataHandler().get(
-                SkyBlockDataHandler.Data.VISITED_REGIONS,
-                DatapointStringList.class
+            SkyBlockDataHandler.Data.VISITED_REGIONS,
+            DatapointStringList.class
         );
         List<String> discoveredZonesList = discoveredZones.getValue();
 
@@ -41,124 +41,162 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
 
         switch (event.getTo()) {
             case VILLAGE -> onNewZone(player, RegionType.VILLAGE,
-                    "Purchase items at the Market.",
-                    "Visit the Auction House.",
-                    "Manage your Coins in the Bank.",
-                    "Enchant items at the Library.");
+                "Purchase items at the Market.",
+                "Visit the Auction House.",
+                "Manage your Coins in the Bank.",
+                "Enchant items at the Library.");
 
             case AUCTION_HOUSE -> onNewZone(player, RegionType.AUCTION_HOUSE,
-                    "Auction off your special items.",
-                    "Bid on other player's items.");
+                "Auction off your special items.",
+                "Bid on other player's items.");
+
+            case CRYPTS ->
+                onNewZone(player, RegionType.CRYPTS, "Explore the Crypts.", "Watch out for the Zombies that lurk here!");
+
+            case FORAGING_CAMP -> onNewZone(player, RegionType.FORAGING_CAMP,
+                "Unlock the §2Foraging Skill §fat §2Lumber Jark§f.",
+                "Purchase Foraging Tools from the §2Lumber Merchant§f.",
+                "Travel to the §aBirch Park§f.");
+
+            case MINING_DISTRICT -> onNewZone(player, RegionType.MINING_DISTRICT,
+                "Purchase Mining Tools from the §6Mining Merchant§f.",
+                "Learn about §3Reforges §fat the §6Blacksmith§f.",
+                "Travel to the §8Coal Mine§f.");
+
+            case SHENS_AUCTION -> onNewZone(player, RegionType.SHENS_AUCTION,
+                "Talk to Damia.",
+                "Bid on high-end items.");
 
             case BANK -> onNewZone(player, RegionType.BANK,
-                    "Talk to the Banker.",
-                    "Store your coins to keep them safe.",
-                    "Earn interest on your coins.");
+                "Talk to the Banker.",
+                "Store your coins to keep them safe.",
+                "Earn interest on your coins.");
 
             case DEEP_CAVERNS -> onNewZone(player, RegionType.DEEP_CAVERNS,
-                    "Talk to the Lift Operator",
-                    "Mine valuable ores.",
-                    "Watch out for mobs!");
+                "Talk to the Lift Operator",
+                "Mine valuable ores.",
+                "Watch out for mobs!");
+
+            case MOUNTAIN -> onNewZone(player, RegionType.MOUNTAIN,
+                "Climb to the top!");
 
             case DWARVEN_MINES -> onNewZone(player, RegionType.DWARVEN_MINES,
-                    "Mine rare ores.");
+                "Mine rare ores.");
 
             case GUNPOWDER_MINES -> onNewZone(player, RegionType.GUNPOWDER_MINES,
-                    "Talk to the Lift Operator.",
-                    "Explore the caverns.",
-                    "Mine Coal, Iron ore, and Gold ore.");
+                "Talk to the Lift Operator.",
+                "Explore the caverns.",
+                "Mine Coal, Iron ore, and Gold ore.");
 
             case LAPIS_QUARRY -> onNewZone(player, RegionType.LAPIS_QUARRY,
-                    "The Lift Operator will now let you travel to the §bLapis Quarry.",
-                    "Access to Lapis Lazuli ore.",
-                    "Talk to the Lapis Miner.",
-                    "Watch out for the zombies!");
+                "The Lift Operator will now let you travel to the §bLapis Quarry.",
+                "Access to Lapis Lazuli ore.",
+                "Talk to the Lapis Miner.",
+                "Watch out for the zombies!");
 
+            // TODO: Replace placeholder text with correct Pigmen's Den zone features
             case PIGMENS_DEN -> onNewZone(player, RegionType.PIGMENS_DEN,
-                    "The Lift Operator will now let you travel to the §bLapis Quarry.",
-                    "Access to Lapis Lazuli ore.",
-                    "Talk to the Lapis Miner.",
-                    "Watch out for the zombies!");
+                "The Lift Operator will now let you travel to the §bLapis Quarry.",
+                "Access to Lapis Lazuli ore.",
+                "Talk to the Lapis Miner.",
+                "Watch out for the zombies!");
 
             case SLIMEHILL -> onNewZone(player, RegionType.SLIMEHILL,
-                    "The Lift Operator will now let you travel to the §bSlimehill.",
-                    "Mine Emerald ore.",
-                    "This area is covered with slimes!");
+                "The Lift Operator will now let you travel to the §bSlimehill.",
+                "Mine Emerald ore.",
+                "This area is covered with slimes!");
 
             case DIAMOND_RESERVE -> onNewZone(player, RegionType.DIAMOND_RESERVE,
-                    "The Lift Operator will now let you travel to the §bDiamond Reserve.",
-                    "Mine Diamond ore.",
-                    "Beware of deadly monsters!");
+                "The Lift Operator will now let you travel to the §bDiamond Reserve.",
+                "Mine Diamond ore.",
+                "Beware of deadly monsters!");
 
             case OBSIDIAN_SANCTUARY -> onNewZone(player, RegionType.OBSIDIAN_SANCTUARY,
-                    "The Lift Operator will now let you travel to the §bObsidian Sanctuary.",
-                    "Mine Obsidian and Diamond.",
-                    "Beware of deadly monsters!",
-                    "Talk to §dRhys.");
+                "The Lift Operator will now let you travel to the §bObsidian Sanctuary.",
+                "Mine Obsidian and Diamond.",
+                "Beware of deadly monsters!",
+                "Talk to §dRhys.");
 
             case GOLD_MINE -> onNewZone(player, RegionType.GOLD_MINE,
-                    "Talk to the Lazy Miner.",
-                    "Mine for gold, iron, and coal.",
-                    "Visit the Iron and Gold Forgers.",
-                    "Visit the Blacksmith.",
-                    "Talk to Rusty.");
+                "Talk to the Lazy Miner.",
+                "Mine for gold, iron, and coal.",
+                "Visit the Iron and Gold Forgers.",
+                "Visit the Blacksmith.",
+                "Talk to Rusty.");
 
             case COAL_MINE -> onNewZone(player, RegionType.COAL_MINE,
-                    "Mine coal.",
-                    "Travel to the Gold Mine.");
+                "Mine §8Coal§f.",
+                "Travel to the Gold Mine.");
 
             case FARM -> onNewZone(player, RegionType.FARM,
-                    "Talk to the farmer.", "Travel to The Barn.");
+                "Learn about the Farming Skill at §eFarmer Rigby§f.",
+                "Gather §eWheat§f.",
+                "Learn about Minion Upgrades at §eArthur§f.",
+                "Travel to §eThe Barn§f.");
 
             case BIRCH_PARK -> onNewZone(player, RegionType.BIRCH_PARK,
-                    "Talk to Charlie.",
-                    "Chop down Birch logs.");
+                "Talk to Charlie.",
+                "Chop down Birch logs.");
 
             case FOREST -> onNewZone(player, RegionType.FOREST,
-                    "Visit the §aLumber Jack.",
-                    "Chop down trees.",
-                    "Travel to the §aBirch Park§f.");
+                "Visit the §aLumber Jack.",
+                "Chop down trees.",
+                "Travel to the §aBirch Park§f.");
 
             case SPRUCE_WOODS -> onNewZone(player, RegionType.SPRUCE_WOODS,
-                    "Chop down Spruce logs.");
+                "Chop down Spruce logs.");
 
             case DARK_THICKET -> onNewZone(player, RegionType.DARK_THICKET,
-                    "Chop down Dark Oak Logs.",
-                    "Talk to §cRyan §fabout the §6Trial of Fire§f.");
+                "Chop down Dark Oak Logs.",
+                "Talk to §cRyan §fabout the §6Trial of Fire§f.");
 
             case TRIALS_OF_FIRE -> onNewZone(player, RegionType.TRIALS_OF_FIRE,
-                    "Compete in a §6Trial of Fire§f.");
+                "Compete in a §6Trial of Fire§f.");
 
             case SAVANNA_WOODLAND -> onNewZone(player, RegionType.SAVANNA_WOODLAND,
-                    "Chop down Acacia logs.");
+                "Chop down Acacia logs.");
 
             case GRAVEYARD -> onNewZone(player, RegionType.GRAVEYARD,
-                    "Fight Zombies.",
-                    "Travel to the Spider's Den.",
-                    "Talk to Pat.",
-                    "Investigate the Catacombs.");
+                "Fight Zombies.",
+                "Travel to the Spider's Den.",
+                "Talk to §7Pat§f.",
+                "Investigate the Catacombs.");
+
+            case COMBAT_SETTLEMENT -> onNewZone(player, RegionType.COMBAT_SETTLEMENT,
+                "Buy Combat Tools from the §cWeaponsmith §fand §cRosetta§f.",
+                "Talk to §cTalk §fat the §2Archery Range §fto learn about bows and arrows.",
+                "Learn about §2Enchanting §fat the §2Library§f.",
+                "Talk to §cMaxwell §fat the §6Thaumaturgist §fto learn about §6Magical Power§f.");
+
+            case FISHING_OUTPOST -> onNewZone(player, RegionType.FISHING_OUTPOST,
+                "Buy fishing essentials from the §bFishing Merchant§f.",
+                "Talk to §9Fisherman Gerald §fand §6Captain Baha §fabout your §6Ship§f.",
+                "Learn about §aFishing §fstats from §bGwynnie§f.");
+
+            case FLOWER_HOUSE -> onNewZone(player, RegionType.FLOWER_HOUSE,
+                "Talk to Marco about §aSpray Cans§f.",
+                "Gather flowers.");
 
             case BAZAAR_ALLEY -> onNewZone(player, RegionType.BAZAAR_ALLEY,
-                    "Buy and sell materials in bulk in the Bazaar.");
+                "Buy and sell materials in bulk in the Bazaar.");
 
             case WILDERNESS -> onNewZone(player, RegionType.WILDERNESS,
-                    "Fish.",
-                    "Visit the Fisherman's Hut.",
-                    "Visit the fairy at the Fairy Pond.",
-                    "Discover hidden secrets.");
+                "Fish in the pond.",
+                "Visit §dTia the Fairy §fat the §dFairy Pond§f.",
+                "Discover hidden secrets.");
 
             case RUINS -> onNewZone(player, RegionType.RUINS,
-                    "Explore the ancient ruins.",
-                    "Watch out for the guard dogs!");
+                "Explore the ancient ruins.",
+                "Watch out for the guard dogs!");
 
-            case THE_END -> onNewZone(player, RegionType.RUINS,
-                    "Talk to the Pearl Dealer.",
-                    "Explore the End Shop.",
-                    "Kill Endermen.",
-                    "Fight Dragons!");
+            case THE_END -> onNewZone(player, RegionType.THE_END,
+                "Talk to the Pearl Dealer.",
+                "Explore the End Shop.",
+                "Kill Endermen.",
+                "Fight Dragons!");
 
             case ARCHERY_RANGE -> onNewZone(player, RegionType.ARCHERY_RANGE,
-                    "Talk to Jax to forge special arrows!");
+                "Talk to Jax to forge special arrows!");
         }
     }
 
@@ -177,14 +215,14 @@ public class ActionNewZoneDisplay implements HypixelEventClass {
         player.sendMessage("");
 
         player.playSound(Sound.sound()
-                .type(Key.key("random.levelup"))
-                .volume(1f)
-                .build());
+            .type(Key.key("random.levelup"))
+            .volume(1f)
+            .build());
 
         player.showTitle(Title.title(
-                Component.text(zone.getColor() + zone.getName()),
-                Component.text("§6§lNEW AREA DISCOVERED!"),
-                Title.Times.times(Duration.ofSeconds(1), Duration.ofSeconds(3), Duration.ofSeconds(1))
+            Component.text(zone.getColor() + zone.getName()),
+            Component.text("§6§lNEW AREA DISCOVERED!"),
+            Title.Times.times(Duration.ofSeconds(1), Duration.ofSeconds(3), Duration.ofSeconds(1))
         ));
     }
 }
