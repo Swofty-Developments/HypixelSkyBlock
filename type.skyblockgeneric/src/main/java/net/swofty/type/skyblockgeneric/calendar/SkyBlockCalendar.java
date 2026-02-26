@@ -144,6 +144,33 @@ public final class SkyBlockCalendar {
         return result;
     }
 
+    // TODO: clean this up
+    public static long timeUntilEvent(CalendarEvent event) {
+        long currentElapsed = getElapsed();
+        int currentYear = getYear();
+
+        int yearsAhead = 0;
+
+        do {
+            int targetYear = currentYear + yearsAhead;
+            long yearStartElapsed = (long) (targetYear - 1) * YEAR;
+
+            for (Long eventTime : event.times()) {
+                long eventElapsed = yearStartElapsed + eventTime;
+
+                // Skip events that have already passed (including currently ongoing ones that started)
+                if (eventElapsed <= currentElapsed) {
+                    continue;
+                }
+
+                return eventElapsed - currentElapsed;
+            }
+            yearsAhead++;
+        } while (yearsAhead <= 100);
+
+        return -1; // Return -1 if no upcoming event is found within a reasonable timeframe
+    }
+
     public static Map<EventInfo, CalendarEvent> getEventsWithDurationUntilSkipSpecific(int amount, List<CalendarEvent> event) {
         Map<EventInfo, CalendarEvent> result = new LinkedHashMap<>();
         long currentElapsed = getElapsed();
