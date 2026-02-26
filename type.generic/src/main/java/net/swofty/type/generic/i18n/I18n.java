@@ -6,11 +6,14 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.translation.GlobalTranslator;
 
 import java.util.Locale;
+import java.util.Map;
 
 public class I18n {
 
     private static final LegacyComponentSerializer LEGACY =
             LegacyComponentSerializer.legacySection();
+
+    private static final String DIALOGUE_SEPARATOR = "\\|";
 
     public static TranslatableComponent t(String key) {
         return Component.translatable(key);
@@ -27,5 +30,35 @@ public class I18n {
 
     public static String string(String key) {
         return string(key, HypixelTranslator.defaultLocale);
+    }
+
+    public static String string(String key, Map<String, String> placeholders) {
+        String result = string(key);
+        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+            result = result.replace("{" + entry.getKey() + "}", entry.getValue());
+        }
+        return result;
+    }
+
+    public static String string(String key, Locale locale, Map<String, String> placeholders) {
+        String result = string(key, locale);
+        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+            result = result.replace("{" + entry.getKey() + "}", entry.getValue());
+        }
+        return result;
+    }
+
+    public static String[] dialogueLines(String key) {
+        return dialogueLines(key, HypixelTranslator.defaultLocale);
+    }
+
+    public static String[] dialogueLines(String key, Locale locale) {
+        String resolved = string(key, locale);
+        return resolved.split(DIALOGUE_SEPARATOR);
+    }
+
+    public static String[] dialogueLines(String key, Map<String, String> placeholders) {
+        String resolved = string(key, placeholders);
+        return resolved.split(DIALOGUE_SEPARATOR);
     }
 }
