@@ -1,17 +1,20 @@
 items:
   - id: BLAZE_ROD
+    material: blaze_rod
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 9.0
 
   - id: BONE
+    material: bone
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 2.0
 
   - id: BONE_MEAL
+    material: bone_meal
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
@@ -26,12 +29,14 @@ items:
               amount: 3
 
   - id: ENDER_PEARL
+    material: ender_pearl
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 7.0
 
   - id: EYE_OF_ENDER
+    material: ender_eye
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
@@ -50,6 +55,7 @@ items:
         value: 15.0
 
   - id: FERMENTED_SPIDER_EYE
+    material: fermented_spider_eye
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -76,6 +82,7 @@ items:
         alchemy_xp: 10
 
   - id: GUNPOWDER
+    material: gunpowder
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -88,12 +95,14 @@ items:
         alchemy_xp: 5
 
   - id: ROTTEN_FLESH
+    material: rotten_flesh
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 2.0
 
   - id: SLIME_BALL
+    material: slime_ball
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -106,6 +115,7 @@ items:
         alchemy_xp: 10
 
   - id: SLIME_BLOCK
+    material: slime_block
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -128,6 +138,7 @@ items:
               amount: 1
 
   - id: STRING
+    material: string
     rarity: COMMON
     components:
       - id: SELLABLE

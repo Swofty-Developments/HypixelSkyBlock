@@ -25,6 +25,7 @@ items:
               type: CHAIN
               amount: 1
   - id: HAY_BALE
+    material: hay_block
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -46,11 +47,13 @@ items:
               type: HAY_BALE
               amount: 1
   - id: BAKED_POTATO
+    material: baked_potato
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 3.0
   - id: CACTUS_GREEN
+    material: green_dye
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -205,10 +208,12 @@ items:
       damage: 10.0
       strength: 5.0
   - id: BREWING_STAND
+    material: brewing_stand
     components:
       - id: PLACEABLE
         block_type: BREWING_STAND
   - id: ENCHANTING_TABLE
+    material: enchanting_table
     components:
       - id: PLACEABLE
   - id: FURNACE

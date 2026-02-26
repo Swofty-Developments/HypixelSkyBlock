@@ -1,19 +1,24 @@
 items:
   - id: ANCIENT_ROSE
+    material: poppy
     rarity: COMMON
   - id: ARCHITECTS_FIRST_DRAFT
+    material: paper
     rarity: COMMON
   - id: KISMET_FEATHER
+    material: feather
     rarity: COMMON
     components:
       - id: ENCHANTED
   - id: NECRONS_HANDLE
+    material: stick
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: RIGHT_CLICK_RECIPE
         recipe_item: NECRONS_HANDLE
   - id: SUPERBOOM_TNT
+    material: tnt
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
