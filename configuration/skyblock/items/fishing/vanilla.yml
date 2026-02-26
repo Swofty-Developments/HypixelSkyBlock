@@ -69,3 +69,24 @@ items:
     components:
       - id: SELLABLE
         value: 20.0
+  - id: CHUM
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: CAN_OF_WORMS
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: GILL_MEMBRANE
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: SEA_LUMIES
+    rarity: COMMON
+    material: SEA_PICKLE
+  - id: OLD_LEATHER_BOOT
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: GRIZZLY_SALMON
+    rarity: RARE
+    material: COOKED_SALMON
+  - id: WASHED_UP_SOUVENIR
+    rarity: LEGENDARY
+    material: PLAYER_HEAD

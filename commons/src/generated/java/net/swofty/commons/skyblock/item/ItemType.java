@@ -318,7 +318,7 @@ public enum ItemType {
 
   BLAZE_ROD_DISTILLATE(Material.PLAYER_HEAD, Rarity.RARE),
 
-  BLOCK_DATA_TOOL(Material.COMPARATOR, Rarity.ADMIN),
+  BLOCK_DATA_TOOL(Material.BARRIER, Rarity.ADMIN),
 
   BLOCK_ZAPPER(Material.BARRIER, Rarity.COMMON),
 
@@ -2734,7 +2734,7 @@ public enum ItemType {
 
   REGENERATION_POTION_1(Material.POTION, Rarity.COMMON),
 
-  REGION_SELECTOR(Material.BLAZE_ROD, Rarity.ADMIN),
+  REGION_SELECTOR(Material.BARRIER, Rarity.ADMIN),
 
   RELIC_OF_COINS(Material.PLAYER_HEAD, Rarity.EPIC),
 

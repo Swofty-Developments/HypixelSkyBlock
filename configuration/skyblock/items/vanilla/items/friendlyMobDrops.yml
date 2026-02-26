@@ -70,3 +70,23 @@ items:
         effect_amplifier: 0
         alchemy_xp: 10
 
+  - id: BEEF
+    rarity: COMMON
+    material: BEEF
+
+  - id: CHICKEN
+    rarity: COMMON
+    material: CHICKEN
+
+  - id: HONEYCOMB
+    rarity: COMMON
+    material: HONEYCOMB
+
+  - id: PORKCHOP
+    rarity: COMMON
+    material: PORKCHOP
+
+  - id: RABBIT
+    rarity: COMMON
+    material: RABBIT
+

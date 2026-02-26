@@ -109,3 +109,39 @@ items:
         texture: f106277ad541aa76d9d4a19e7aac92621a3f0251ff9427dfdea539b51dd8d1ea
       - id: DEFAULT_SOULBOUND
         coop_allowed: true
+  - id: GLACITE
+    rarity: COMMON
+    material: PACKED_ICE
+  - id: ENCHANTED_GLACITE
+    rarity: UNCOMMON
+    material: PACKED_ICE
+  - id: TUNGSTEN
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: ENCHANTED_TUNGSTEN
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: UMBER
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: ENCHANTED_UMBER
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: SULPHUR
+    rarity: UNCOMMON
+    material: GLOWSTONE_DUST
+  - id: REFINED_MINERAL
+    rarity: COMMON
+    material: LIGHT_BLUE_DYE
+  - id: MANA_DISINTEGRATOR
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: KELVIN_INVERTER
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: SUBZERO_INVERTER
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: PROMISING_SHOVEL
+    rarity: UNCOMMON
+    material: IRON_SHOVEL

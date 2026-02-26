@@ -151,3 +151,7 @@ items:
             result:
               type: CHISELED_RED_SANDSTONE
               amount: 1
+
+  - id: SMOOTH_RED_SANDSTONE
+    rarity: COMMON
+    material: SMOOTH_RED_SANDSTONE

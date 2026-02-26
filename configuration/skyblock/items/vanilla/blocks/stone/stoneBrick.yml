@@ -86,3 +86,15 @@ items:
             result:
               type: STONE_BRICK_WALL
               amount: 6
+
+  - id: CHISELED_STONE_BRICKS
+    rarity: COMMON
+    material: CHISELED_STONE_BRICKS
+
+  - id: CRACKED_STONE_BRICKS
+    rarity: COMMON
+    material: CRACKED_STONE_BRICKS
+
+  - id: END_STONE_BRICKS
+    rarity: COMMON
+    material: END_STONE_BRICKS

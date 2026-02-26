@@ -19,3 +19,24 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Superboom TNT
       - id: ENCHANTED
+  - id: JUDGEMENT_CORE
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: ETHERWARP_CONDUIT
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: ETHERWARP_MERGER
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: GLOOMLOCK_GRIMOIRE
+    rarity: EPIC
+    material: WRITTEN_BOOK
+  - id: GYROKINETIC_WAND
+    rarity: EPIC
+    material: BLAZE_ROD
+  - id: TRANSMISSION_TUNER
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: EXCEEDINGLY_RARE_ENDER_ARTIFACT_UPGRADER
+    rarity: LEGENDARY
+    material: PLAYER_HEAD

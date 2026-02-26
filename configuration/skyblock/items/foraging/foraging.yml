@@ -30,3 +30,39 @@ items:
       - id: REFORGABLE
         reforge_type: AXES
       - id: NOT_FINISHED_YET
+  - id: FIG_LOG
+    rarity: COMMON
+    material: STRIPPED_SPRUCE_LOG
+  - id: FIGSTONE
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: LUSHLILAC
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: MANGCORE
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: VINESAP
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: TENDER_WOOD
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: DEEP_ROOT
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: BIOFUEL
+    rarity: RARE
+    material: GREEN_DYE
+  - id: ENDSTONE_ROSE
+    rarity: RARE
+    material: POPPY
+  - id: GLOWING_MUSHROOM
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: HALF_EATEN_MUSHROOM
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: WET_WATER
+    rarity: COMMON
+    material: PLAYER_HEAD

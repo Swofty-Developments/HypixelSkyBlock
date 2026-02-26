@@ -198,3 +198,15 @@ items:
         mining_value: 6.0
       - id: SELLABLE
         value: 10.0
+
+  - id: APPLE
+    rarity: COMMON
+    material: APPLE
+
+  - id: BAMBOO
+    rarity: COMMON
+    material: BAMBOO
+
+  - id: BEETROOT
+    rarity: COMMON
+    material: BEETROOT

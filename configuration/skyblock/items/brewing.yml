@@ -304,3 +304,18 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Zombie Brain Mixin
       - id: NOT_FINISHED_YET
+  - id: BLAZE_ROD_DISTILLATE
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: GABAGOOL_DISTILLATE
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: GLOWSTONE_DISTILLATE
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: MAGMA_CREAM_DISTILLATE
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: NETHER_WART_DISTILLATE
+    rarity: RARE
+    material: PLAYER_HEAD

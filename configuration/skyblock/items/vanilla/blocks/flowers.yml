@@ -111,3 +111,31 @@ items:
       - id: SELLABLE
         value: 1.0
       - id: PLACEABLE
+
+  - id: DEAD_BUSH
+    rarity: COMMON
+    material: DEAD_BUSH
+
+  - id: MOONFLOWER
+    rarity: COMMON
+    material: BLUE_ORCHID
+
+  - id: PINK_PETALS
+    rarity: COMMON
+    material: PINK_PETALS
+
+  - id: PITCHER_PLANT
+    rarity: COMMON
+    material: PITCHER_PLANT
+
+  - id: TORCHFLOWER
+    rarity: COMMON
+    material: TORCHFLOWER
+
+  - id: WILD_ROSE
+    rarity: COMMON
+    material: ROSE_BUSH
+
+  - id: WITHER_ROSE
+    rarity: COMMON
+    material: WITHER_ROSE

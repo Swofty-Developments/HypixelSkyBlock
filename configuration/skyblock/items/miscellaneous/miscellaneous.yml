@@ -12,3 +12,63 @@ items:
       - id: LORE_UPDATE
         handler_id: SKYBLOCK_MENU_LORE
         is_absolute: true
+  - id: AGARIMOO_TONGUE
+    rarity: UNCOMMON
+    material: MUTTON
+  - id: ALLIGATOR_SKIN
+    rarity: UNCOMMON
+    material: GREEN_DYE
+  - id: RED_CLAW_EGG
+    rarity: EPIC
+    material: MOOSHROOM_SPAWN_EGG
+  - id: CROCHET_TIGER_PLUSHIE
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: NULL_ATOM
+    rarity: RARE
+    material: OAK_BUTTON
+  - id: NULL_OVOID
+    rarity: RARE
+    material: ENDERMAN_SPAWN_EGG
+  - id: NULL_SPHERE
+    rarity: UNCOMMON
+    material: FIREWORK_STAR
+  - id: MINOS_RELIC
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: EMPERORS_SKULL
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: ANTIQUE_REMEDIES
+    rarity: EPIC
+    material: AZURE_BLUET
+  - id: RUSTY_COIN
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: BRONZE_BOWL
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: GLOSSY_GEMSTONE
+    rarity: EPIC
+    material: PURPLE_DYE
+  - id: LUXURIOUS_SPOOL
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: TORN_CLOTH
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: BROKEN_RADAR
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: BUSTED_BELT_BUCKLE
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: STARLYN_PRIZE
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: WILSON_ENGINEERING_PLANS
+    rarity: LEGENDARY
+    material: PAPER
+  - id: ASCENSION_ROPE
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
