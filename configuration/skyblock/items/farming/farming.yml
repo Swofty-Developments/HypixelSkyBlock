@@ -1,6 +1,5 @@
 items:
   - id: CARROT_CRYSTAL
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -13,7 +12,6 @@ items:
         handler_id: CARROT_CRYSTAL_PLACE
 
   - id: COMPOST
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -22,7 +20,6 @@ items:
         value: 4.0
 
   - id: COMPOST_BUNDLE
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -32,14 +29,12 @@ items:
       - id: TRACKED_UNIQUE
 
   - id: DUNG
-    material: brown_wool
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 100.0
 
   - id: FLOWER_CRYSTAL
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -52,7 +47,6 @@ items:
         handler_id: FLOWER_CRYSTAL_PLACE
 
   - id: HONEY_JAR
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -61,14 +55,12 @@ items:
         value: 100.0
 
   - id: PLANT_MATTER
-    material: oak_leaves
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 100.0
 
   - id: POTATO_CRYSTAL
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -81,7 +73,6 @@ items:
         handler_id: POTATO_CRYSTAL_PLACE
 
   - id: PUMPKIN_AND_MELON_CRYSTAL
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -95,10 +86,8 @@ items:
         handler_id: PUMPKIN_AND_MELON_CRYSTAL_PLACE
 
   - id: ROOKIE_HOE
-    material: stone_hoe
     rarity: COMMON
   - id: TIGHTLY_TIED_HAY_BALE
-    material: player_head
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -108,7 +97,6 @@ items:
         texture: f7c33cd0c14ba830da149907f7a6aae835b6a35aea01e0ce073fb3c59cc46326
 
   - id: WHEAT_CRYSTAL
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD

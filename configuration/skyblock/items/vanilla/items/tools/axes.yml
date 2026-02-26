@@ -1,6 +1,5 @@
 items:
   - id: WOODEN_AXE
-    material: wooden_axe
     rarity: COMMON
     default_statistics:
       damage: 10.0
@@ -47,7 +46,6 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: STONE_AXE
-    material: stone_axe
     rarity: COMMON
     default_statistics:
       damage: 15.0
@@ -94,7 +92,6 @@ items:
       - id: SELLABLE
         value: 2.0
   - id: IRON_AXE
-    material: iron_axe
     rarity: COMMON
     default_statistics:
       damage: 25.0
@@ -141,7 +138,6 @@ items:
       - id: SELLABLE
         value: 4.0
   - id: GOLDEN_AXE
-    material: golden_axe
     rarity: COMMON
     default_statistics:
       damage: 20.0
@@ -188,7 +184,6 @@ items:
       - id: SELLABLE
         value: 6.0
   - id: DIAMOND_AXE
-    material: diamond_axe
     rarity: COMMON
     default_statistics:
       damage: 30.0

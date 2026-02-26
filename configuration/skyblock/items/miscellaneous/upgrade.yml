@@ -1,6 +1,5 @@
 items:
   - id: AUTO_SMELTER
-    material: furnace
     rarity: COMMON
     components:
       - id: MINION_UPGRADE
@@ -28,7 +27,6 @@ items:
               amount: 1
 
   - id: COMPACTOR
-    material: dispenser
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -58,7 +56,6 @@ items:
               amount: 1
 
   - id: HYPER_FURNACE
-    material: furnace
     rarity: UNCOMMON
     components:
       - id: ENCHANTED
@@ -85,7 +82,6 @@ items:
               amount: 1
 
   - id: DIAMOND_SPREADING
-    material: diamond
     rarity: COMMON
     components:
       - id: MINION_UPGRADE
@@ -115,7 +111,6 @@ items:
               amount: 1
 
   - id: FLY_CATCHER
-    material: cobweb
     rarity: COMMON
     components:
       - id: MINION_UPGRADE
@@ -124,7 +119,6 @@ items:
       - id: TRACKED_UNIQUE
 
   - id: MINION_EXPANDER
-    material: command_block
     rarity: COMMON
     components:
       - id: MINION_UPGRADE
@@ -133,7 +127,6 @@ items:
       - id: TRACKED_UNIQUE
 
   - id: SUPER_COMPACTOR_3000
-    material: dispenser
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -163,7 +156,6 @@ items:
               amount: 1
 
   - id: MITHRIL_INFUSION
-    material: player_head
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE

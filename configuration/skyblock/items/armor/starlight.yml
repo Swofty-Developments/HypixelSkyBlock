@@ -1,6 +1,5 @@
 items:
   - id: STARLIGHT_BOOTS
-    material: leather_boots
     rarity: COMMON
     default_statistics:
       health: 30.0
@@ -16,7 +15,6 @@ items:
       - id: SELLABLE
         value: 15000.0
   - id: STARLIGHT_CHESTPLATE
-    material: leather_chestplate
     rarity: COMMON
     default_statistics:
       health: 30.0
@@ -32,7 +30,6 @@ items:
       - id: SELLABLE
         value: 35000.0
   - id: STARLIGHT_HELMET
-    material: golden_helmet
     rarity: COMMON
     default_statistics:
       health: 30.0
@@ -44,7 +41,6 @@ items:
       - id: SELLABLE
         value: 17500.0
   - id: STARLIGHT_LEGGINGS
-    material: golden_leggings
     rarity: COMMON
     default_statistics:
       health: 30.0

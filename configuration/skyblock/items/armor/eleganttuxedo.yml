@@ -1,6 +1,5 @@
 items:
   - id: ELEGANT_TUXEDO_BOOTS
-    material: leather_boots
     rarity: COMMON
     default_statistics:
       CRITICAL_DAMAGE: 50.0
@@ -16,7 +15,6 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Elegant Tuxedo Oxfords
   - id: ELEGANT_TUXEDO_CHESTPLATE
-    material: leather_chestplate
     rarity: COMMON
     default_statistics:
       CRITICAL_DAMAGE: 100.0
@@ -31,7 +29,6 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Elegant Tuxedo Jacket
   - id: ELEGANT_TUXEDO_LEGGINGS
-    material: leather_leggings
     rarity: COMMON
     default_statistics:
       CRITICAL_DAMAGE: 50.0

@@ -1,6 +1,5 @@
 items:
   - id: COAL
-    material: coal
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -15,7 +14,6 @@ items:
         effect_amplifier: 0
         alchemy_xp: 5
   - id: COAL_ORE
-    material: coal_ore
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -38,7 +36,6 @@ items:
       - id: SELLABLE
         value: 4.0
   - id: COAL_BLOCK
-    material: coal_block
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -63,13 +60,11 @@ items:
         fuel_percentage: 5.0
         last_time_ms: 18000000
   - id: DIAMOND
-    material: diamond
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 8.0
   - id: DIAMOND_ORE
-    material: diamond_ore
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -92,7 +87,6 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: DIAMOND_BLOCK
-    material: diamond_block
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -114,13 +108,11 @@ items:
               type: DIAMOND_BLOCK
               amount: 1
   - id: EMERALD
-    material: emerald
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 6.0
   - id: EMERALD_ORE
-    material: emerald_ore
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -143,7 +135,6 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: EMERALD_BLOCK
-    material: emerald_block
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -165,7 +156,6 @@ items:
               type: EMERALD_BLOCK
               amount: 1
   - id: END_STONE
-    material: end_stone
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -175,7 +165,6 @@ items:
       - id: SELLABLE
         value: 2.0
   - id: FLINT
-    material: flint
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -187,7 +176,6 @@ items:
         effect_amplifier: 0
         alchemy_xp: 10
   - id: GLOWSTONE
-    material: glowstone
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -221,7 +209,6 @@ items:
               type: GLOWSTONE
               amount: 1
   - id: GLOWSTONE_DUST
-    material: glowstone_dust
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -236,7 +223,6 @@ items:
         effect_amplifier: 0
         alchemy_xp: 5
   - id: GOLD_BLOCK
-    material: gold_block
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -258,7 +244,6 @@ items:
               type: GOLD_BLOCK
               amount: 1
   - id: GOLD_INGOT
-    material: gold_ingot
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -273,7 +258,6 @@ items:
         effect_amplifier: 0
         alchemy_xp: 5
   - id: GOLD_NUGGET
-    material: gold_nugget
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
@@ -289,7 +273,6 @@ items:
       - id: SELLABLE
         value: 0.4
   - id: GOLD_ORE
-    material: gold_ore
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -312,7 +295,6 @@ items:
       - id: SELLABLE
         value: 4.0
   - id: GRAVEL
-    material: gravel
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -322,14 +304,12 @@ items:
       - id: SELLABLE
         value: 3.0
   - id: ICE
-    material: ice
     rarity: COMMON
     components:
       - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
   - id: IRON_BLOCK
-    material: iron_block
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -351,13 +331,11 @@ items:
               type: IRON_BLOCK
               amount: 1
   - id: IRON_INGOT
-    material: iron_ingot
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 3.0
   - id: IRON_NUGGET
-    material: iron_nugget
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -373,7 +351,6 @@ items:
               type: IRON_NUGGET
               amount: 9
   - id: IRON_ORE
-    material: iron_ore
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -396,7 +373,6 @@ items:
       - id: SELLABLE
         value: 3.0
   - id: LAPIS_LAZULI
-    material: lapis_lazuli
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -408,7 +384,6 @@ items:
         effect_amplifier: 0
         alchemy_xp: 5
   - id: LAPIS_LAZULI_ORE
-    material: lapis_ore
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -431,7 +406,6 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: LAPIS_LAZULI_BLOCK
-    material: lapis_block
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -453,7 +427,6 @@ items:
               type: LAPIS_LAZULI_BLOCK
               amount: 1
   - id: MYCELIUM
-    material: mycelium
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -463,7 +436,6 @@ items:
         category: MINING
         mining_value: 3.0
   - id: NETHERRACK
-    material: netherrack
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -479,7 +451,6 @@ items:
         effect_amplifier: 0
         alchemy_xp: 5
   - id: OBSIDIAN
-    material: obsidian
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -495,7 +466,6 @@ items:
         effect_amplifier: 0
         alchemy_xp: 15
   - id: PACKED_ICE
-    material: packed_ice
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -517,13 +487,11 @@ items:
               type: PACKED_ICE
               amount: 1
   - id: QUARTZ
-    material: quartz
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 4.0
   - id: NETHER_QUARTZ_ORE
-    material: nether_quartz_ore
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -546,7 +514,6 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: RED_SAND
-    material: red_sand
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -556,7 +523,6 @@ items:
         category: MINING
         mining_value: 3.0
   - id: REDSTONE
-    material: redstone
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -569,7 +535,6 @@ items:
         effect_amplifier: 0
         alchemy_xp: 5
   - id: REDSTONE_ORE
-    material: redstone_ore
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -592,7 +557,6 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: REDSTONE_BLOCK
-    material: redstone_block
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -614,7 +578,6 @@ items:
               type: REDSTONE_BLOCK
               amount: 1
   - id: SAND
-    material: sand
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -630,20 +593,17 @@ items:
         effect_amplifier: 0
         alchemy_xp: 5
   - id: SNOW
-    material: snow
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 2.0
       - id: PLACEABLE
   - id: SNOWBALL
-    material: snowball
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 1.0
   - id: SNOW_BLOCK
-    material: snow_block
     rarity: COMMON
     components:
       - id: PLACEABLE

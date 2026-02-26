@@ -1,6 +1,5 @@
 items:
   - id: LAPIS_ARMOR_HELMET
-    material: sea_lantern
     rarity: COMMON
     default_statistics:
       defense: 25
@@ -23,7 +22,6 @@ items:
         game_stage: AMATEUR
         donation_xp: 3
   - id: LAPIS_ARMOR_CHESTPLATE
-    material: leather_chestplate
     rarity: COMMON
     default_statistics:
       defense: 40
@@ -46,7 +44,6 @@ items:
         game_stage: AMATEUR
         donation_xp: 3
   - id: LAPIS_ARMOR_LEGGINGS
-    material: leather_leggings
     rarity: COMMON
     default_statistics:
       defense: 35
@@ -69,7 +66,6 @@ items:
         game_stage: AMATEUR
         donation_xp: 3
   - id: LAPIS_ARMOR_BOOTS
-    material: leather_boots
     rarity: COMMON
     default_statistics:
       defense: 20

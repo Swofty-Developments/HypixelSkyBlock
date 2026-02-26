@@ -1,6 +1,5 @@
 items:
   - id: BLOOD_RUNE
-    material: player_head
     lore:
       - "§7Create a blood effect when you"
       - "§7kill mobs!"

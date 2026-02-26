@@ -1,6 +1,5 @@
 items:
   - id: SMALL_FORAGING_SACK
-    material: player_head
     rarity: COMMON
     lore:
       - '§7Item pickups go directly into your'
@@ -73,7 +72,6 @@ items:
               amount: 1
 
   - id: MEDIUM_FORAGING_SACK
-    material: player_head
     rarity: RARE
     lore:
       - '§7Item pickups go directly into your'
@@ -146,7 +144,6 @@ items:
               amount: 1
 
   - id: LARGE_FORAGING_SACK
-    material: player_head
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'
@@ -219,7 +216,6 @@ items:
               amount: 1
 
   - id: LARGE_ENCHANTED_FORAGING_SACK
-    material: player_head
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'

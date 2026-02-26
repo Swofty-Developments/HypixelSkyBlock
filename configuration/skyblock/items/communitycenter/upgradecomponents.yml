@@ -1,18 +1,15 @@
 items:
   - id: COLOSSAL_EXPERIENCE_BOTTLE_UPGRADE
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
         texture: 7054c29c78090471c1ea058bd641897391c9e4694aa9d140afbba8d0cc43637
   - id: HYPER_CATALYST_UPGRADER
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
         texture: e9469a2f7a98593a4b0bd6383d70fcf105904a930beaa0671a999b1930b94953
   - id: JUMBO_BACKPACK_UPGRADE
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -20,7 +17,6 @@ items:
       - id: INTERACTABLE
         handler_id: JUMBO_BACKPACK_UPGRADE_INTERACT
   - id: MINION_STORAGE_EXPANDER
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -28,7 +24,6 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Minion Storage X-pender
   - id: ULTIMATE_CARROT_CANDY_UPGRADE
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD

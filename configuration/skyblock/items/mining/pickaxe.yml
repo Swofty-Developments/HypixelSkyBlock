@@ -1,6 +1,5 @@
 items:
   - id: PROMISING_PICKAXE
-    material: iron_pickaxe
     rarity: UNCOMMON
     default_statistics:
       damage: 20.0

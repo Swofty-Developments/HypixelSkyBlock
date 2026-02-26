@@ -1,6 +1,5 @@
 items:
   - id: PERFECT_AMBER_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: GEMSTONE_IMPL
@@ -12,7 +11,6 @@ items:
         display_name: Perfect Amber Gemstone
 
   - id: PERFECT_AMETHYST_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: GEMSTONE_IMPL
@@ -24,7 +22,6 @@ items:
         display_name: Perfect Amethyst Gemstone
 
   - id: PERFECT_JADE_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: GEMSTONE_IMPL
@@ -36,7 +33,6 @@ items:
         display_name: Perfect Jade Gemstone
 
   - id: PERFECT_JASPER_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: GEMSTONE_IMPL
@@ -48,7 +44,6 @@ items:
         display_name: Perfect Jasper Gemstone
 
   - id: PERFECT_RUBY_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: GEMSTONE_IMPL
@@ -60,7 +55,6 @@ items:
         display_name: Perfect Ruby Gemstone
 
   - id: PERFECT_SAPPHIRE_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: GEMSTONE_IMPL
@@ -72,7 +66,6 @@ items:
         display_name: Perfect Sapphire Gemstone
 
   - id: PERFECT_TOPAZ_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: GEMSTONE_IMPL
@@ -84,7 +77,6 @@ items:
         display_name: Perfect Topaz Gemstone
 
   - id: PERFECT_OPAL_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -96,7 +88,6 @@ items:
         skull_texture: 7e509f06b8dc384358ff2472ab62ce6fdc2f646e338efdc3c9fb05ddc431f64
 
   - id: PERFECT_AQUAMARINE_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -108,7 +99,6 @@ items:
         skull_texture: 255c8aac8990e456abf35030115e36c7c566782e13d81b1a770995fa5f37c822
 
   - id: PERFECT_CITRINE_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -120,7 +110,6 @@ items:
         skull_texture: 1c3ca0db0b9af8e98acde1c7d696dcf79eb3079702e5b554141dba663b43dd65
 
   - id: PERFECT_ONYX_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -132,7 +121,6 @@ items:
         skull_texture: 6315486612c655a82f5ffda7a7d08ddd1bb8b31b622220a46e7781e3aa85c427
 
   - id: PERFECT_PERIDOT_GEM
-    material: player_head
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME

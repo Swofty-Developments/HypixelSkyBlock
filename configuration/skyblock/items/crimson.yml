@@ -1,19 +1,16 @@
 items:
   - id: DIAMOND_MAGMAFISH
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
         texture: 19b393eb6a5bd65d735aaa3b3cfa993b50f5e536d7a13b535514bd0740d63350
   - id: FLAMES
-    material: blaze_powder
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 200.0
       - id: ENCHANTED
   - id: GOLD_MAGMAFISH
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -21,7 +18,6 @@ items:
       - id: SELLABLE
         value: 128000.0
   - id: MAGMAFISH
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -29,7 +25,6 @@ items:
       - id: SELLABLE
         value: 20.0
   - id: SILVER_MAGMAFISH
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD

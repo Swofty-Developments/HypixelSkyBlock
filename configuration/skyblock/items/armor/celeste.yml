@@ -1,6 +1,5 @@
 items:
   - id: CELESTE_BOOTS
-    material: leather_boots
     rarity: COMMON
     default_statistics:
       health: 5.0
@@ -16,7 +15,6 @@ items:
       - id: SELLABLE
         value: 2000.0
   - id: CELESTE_CHESTPLATE
-    material: leather_chestplate
     rarity: COMMON
     default_statistics:
       health: 20.0
@@ -32,7 +30,6 @@ items:
       - id: SELLABLE
         value: 4000.0
   - id: CELESTE_HELMET
-    material: leather_helmet
     rarity: COMMON
     default_statistics:
       defense: 10.0
@@ -47,7 +44,6 @@ items:
       - id: SELLABLE
         value: 2500.0
   - id: CELESTE_LEGGINGS
-    material: leather_leggings
     rarity: COMMON
     default_statistics:
       health: 15.0

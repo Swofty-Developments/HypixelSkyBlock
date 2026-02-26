@@ -1,12 +1,10 @@
 items:
   - id: REGION_SELECTOR
-    material: golden_axe
     rarity: ADMIN
     name: "Region Selector Staff"
     components:
       - id: REGION_SELECTOR
   - id: BLOCK_DATA_TOOL
-    material: debug_stick
     rarity: ADMIN
     name: "Block Data Tool"
     components:

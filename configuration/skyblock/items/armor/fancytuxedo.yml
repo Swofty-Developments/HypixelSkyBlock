@@ -1,6 +1,5 @@
 items:
   - id: FANCY_TUXEDO_BOOTS
-    material: leather_boots
     rarity: COMMON
     default_statistics:
       CRITICAL_DAMAGE: 35.0
@@ -16,7 +15,6 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Fancy Tuxedo Oxfords
   - id: FANCY_TUXEDO_CHESTPLATE
-    material: leather_chestplate
     rarity: COMMON
     default_statistics:
       CRITICAL_DAMAGE: 80.0
@@ -31,7 +29,6 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Fancy Tuxedo Jacket
   - id: FANCY_TUXEDO_LEGGINGS
-    material: leather_leggings
     rarity: COMMON
     default_statistics:
       CRITICAL_DAMAGE: 35.0

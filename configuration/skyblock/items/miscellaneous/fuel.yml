@@ -1,6 +1,5 @@
 items:
   - id: ENCHANTED_LAVA_BUCKET
-    material: lava_bucket
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -32,7 +31,6 @@ items:
               amount: 1
 
   - id: EVERBURNING_FLAME
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -70,7 +68,6 @@ items:
               amount: 1
 
   - id: MAGMA_BUCKET
-    material: lava_bucket
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -98,7 +95,6 @@ items:
               amount: 1
 
   - id: PLASMA_BUCKET
-    material: lava_bucket
     rarity: COMMON
     components:
       - id: SELLABLE

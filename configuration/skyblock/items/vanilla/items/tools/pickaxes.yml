@@ -1,6 +1,5 @@
 items:
   - id: WOODEN_PICKAXE
-    material: wooden_pickaxe
     rarity: COMMON
     default_statistics:
       mining_speed: 70.0
@@ -32,7 +31,6 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: STONE_PICKAXE
-    material: stone_pickaxe
     rarity: COMMON
     default_statistics:
       mining_speed: 110.0
@@ -64,7 +62,6 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: IRON_PICKAXE
-    material: iron_pickaxe
     rarity: COMMON
     default_statistics:
       mining_speed: 160.0
@@ -96,7 +93,6 @@ items:
       - id: SELLABLE
         value: 4.0
   - id: GOLDEN_PICKAXE
-    material: golden_pickaxe
     rarity: COMMON
     default_statistics:
       mining_speed: 250.0
@@ -128,7 +124,6 @@ items:
       - id: SELLABLE
         value: 6.0
   - id: DIAMOND_PICKAXE
-    material: diamond_pickaxe
     rarity: COMMON
     default_statistics:
       mining_speed: 230.0

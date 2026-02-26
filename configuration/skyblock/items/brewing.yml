@@ -185,7 +185,6 @@ items:
 
   # Custom Brewing Items
   - id: BITTER_ICE_TEA
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -196,7 +195,6 @@ items:
         display_name: Bitter Iced Tea
       - id: NOT_FINISHED_YET
   - id: BLACK_COFFEE
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -207,7 +205,6 @@ items:
         display_name: Black Coffee
       - id: NOT_FINISHED_YET
   - id: CHEAP_COFFEE
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -218,7 +215,6 @@ items:
         display_name: Cheap Coffee
       - id: NOT_FINISHED_YET
   - id: DECENT_COFFEE
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -229,7 +225,6 @@ items:
         display_name: Decent Coffee
       - id: NOT_FINISHED_YET
   - id: END_PORTAL_FUMES
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -240,7 +235,6 @@ items:
         display_name: End Portal Fumes
       - id: NOT_FINISHED_YET
   - id: GABAGOEY_MIXIN
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -251,7 +245,6 @@ items:
         display_name: Gabagoey Mixin
       - id: NOT_FINISHED_YET
   - id: KNOCKOFF_COLA
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -262,7 +255,6 @@ items:
         display_name: KnockOff™ Cola
       - id: NOT_FINISHED_YET
   - id: PULPOUS_ORANGE_JUICE
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -273,7 +265,6 @@ items:
         display_name: Pulpous Orange Juice
       - id: NOT_FINISHED_YET
   - id: SPIDER_EGG_MIXIN
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -284,7 +275,6 @@ items:
         display_name: Spider Egg Mixin
       - id: NOT_FINISHED_YET
   - id: TEPID_GREEN_TEA
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -295,7 +285,6 @@ items:
         display_name: Tepid Green Tea
       - id: NOT_FINISHED_YET
   - id: WOLF_FUR_MIXIN
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -306,7 +295,6 @@ items:
         display_name: Wolf Fur Mixin
       - id: NOT_FINISHED_YET
   - id: ZOMBIE_BRAIN_MIXIN
-    material: player_head
     rarity: COMMON
     components:
       - id: DECORATION_HEAD

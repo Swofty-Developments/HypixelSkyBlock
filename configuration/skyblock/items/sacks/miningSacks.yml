@@ -1,6 +1,5 @@
 items:
   - id: SMALL_MINING_SACK
-    material: player_head
     rarity: COMMON
     lore:
       - '§7Item pickups go directly into your'
@@ -81,7 +80,6 @@ items:
               amount: 1
 
   - id: MEDIUM_MINING_SACK
-    material: player_head
     rarity: COMMON
     lore:
       - '§7Item pickups go directly into your'
@@ -162,7 +160,6 @@ items:
               amount: 1
 
   - id: LARGE_MINING_SACK
-    material: player_head
     rarity: COMMON
     lore:
       - '§7Item pickups go directly into your'
@@ -243,7 +240,6 @@ items:
               amount: 1
 
   - id: LARGE_ENCHANTED_MINING_SACK
-    material: player_head
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'

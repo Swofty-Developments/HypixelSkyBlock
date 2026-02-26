@@ -1,6 +1,5 @@
 items:
   - id: CHILI_PEPPER
-    material: player_head
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -9,14 +8,12 @@ items:
         texture: f859c8df1109c08a756275f1d2887c2748049fe33877769a7b415d56eda469d8
 
   - id: SOUL_STRING
-    material: string
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 5000.0
 
   - id: ZOMBIE_HEART
-    material: player_head
     rarity: COMMON
     default_statistics:
       health: 50.0

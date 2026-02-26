@@ -1,6 +1,5 @@
 items:
   - id: FLAWLESS_AMBER_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -23,7 +22,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_AMETHYST_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -46,7 +44,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_JADE_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -69,7 +66,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_JASPER_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -92,7 +88,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_RUBY_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -115,7 +110,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_SAPPHIRE_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -138,7 +132,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_TOPAZ_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -161,7 +154,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_OPAL_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -184,7 +176,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_AQUAMARINE_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -207,7 +198,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_CITRINE_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -230,7 +220,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_ONYX_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -253,7 +242,6 @@ items:
               amount: 1
 
   - id: FLAWLESS_PERIDOT_GEM
-    material: player_head
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME

@@ -1,6 +1,5 @@
 items:
   - id: GLACITE_JEWEL
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -8,10 +7,8 @@ items:
       - id: SELLABLE
         value: 2000.0
   - id: GOBLIN_EGG
-    material: egg
     rarity: COMMON
   - id: MITHRIL
-    material: prismarine_crystals
     rarity: COMMON
     lore:
       - "§7§o\"The Man called it \"true-silver\" while"
@@ -33,7 +30,6 @@ items:
         effect_amplifier: 0
         alchemy_xp: 5
   - id: PLASMA
-    material: player_head
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -41,7 +37,6 @@ items:
       - id: SKULL_HEAD
         texture: 75aa8332bbec4a958fea2be64b8f1682f5d8247451aa2b7569edd0498437d706
   - id: REFINED_MITHRIL
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -49,7 +44,6 @@ items:
       - id: SELLABLE
         value: 204800.0
   - id: REFINED_TITANIUM
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -57,19 +51,16 @@ items:
       - id: SELLABLE
         value: 51200.0
   - id: SORROW
-    material: ghast_tear
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 13.0
   - id: STARFALL
-    material: nether_star
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 15.0
   - id: TITANIUM
-    material: player_head
     rarity: COMMON
     lore:
       - "§7Its strength and resistance to"
@@ -86,13 +77,11 @@ items:
       - id: EXTRA_RARITY
         display: DWARVEN METAL
   - id: TREASURITE
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
         texture: be261c6b852dd38e0d51349b1b8132887cd1b69da04d8daf0121af79ad8dd92
   - id: VOLTA
-    material: player_head
     rarity: COMMON
     components:
       - id: SELLABLE

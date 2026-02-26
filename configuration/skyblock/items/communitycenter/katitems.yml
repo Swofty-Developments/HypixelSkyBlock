@@ -1,13 +1,11 @@
 items:
   - id: KAT_BOUQUET
-    material: rose_bush
     rarity: COMMON
     components:
       - id: KAT
         reduced_days: 5
       - id: ENCHANTED
   - id: KAT_FLOWER
-    material: poppy
     rarity: COMMON
     components:
       - id: KAT

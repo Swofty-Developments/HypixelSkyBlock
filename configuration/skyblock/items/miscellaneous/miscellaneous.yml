@@ -1,12 +1,10 @@
 items:
   - id: MOVE_JERRY
-    material: villager_spawn_egg
     rarity: COMMON
     components:
       - id: INTERACTABLE
         handler_id: MOVE_JERRY_INTERACT
   - id: SKYBLOCK_MENU
-    material: nether_star
     rarity: COMMON
     components:
       - id: INTERACTABLE

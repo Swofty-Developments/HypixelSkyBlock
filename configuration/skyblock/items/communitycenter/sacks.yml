@@ -1,6 +1,5 @@
 items:
   - id: CRYSTAL_HOLLOWS_SACK
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -24,7 +23,6 @@ items:
         max_capacity: 20160
         handler_id: CRYSTAL_HOLLOWS_SACK_SACK
   - id: DUNGEON_SACK
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -37,7 +35,6 @@ items:
         max_capacity: 20160
         handler_id: DUNGEON_SACK_SACK
   - id: DWARVEN_SACK
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -59,7 +56,6 @@ items:
         max_capacity: 20160
         handler_id: DWARVEN_SACK_SACK
   - id: FLOWER_SACK
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -87,7 +83,6 @@ items:
         max_capacity: 20160
         handler_id: FLOWER_SACK_SACK
   - id: POCKET_SACK_IN_A_SACK
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -96,7 +91,6 @@ items:
         display_name: Pocket Sack-in-a-Sack
       - id: NOT_FINISHED_YET
   - id: RUNE_SACK
-    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD

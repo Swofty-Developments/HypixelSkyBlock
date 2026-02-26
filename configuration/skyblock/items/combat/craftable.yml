@@ -1,6 +1,5 @@
 items:
   - id: AXE_OF_THE_SHREEDED
-    material: diamond_axe
     rarity: COMMON
     default_statistics:
       damage: 140.0
@@ -44,7 +43,6 @@ items:
               - FINE_AMETHYST_GEM:40
       - id: NOT_FINISHED_YET
   - id: CRYSTALLIZED_HEART
-    material: player_head
     rarity: COMMON
     default_statistics:
       health: 50.0
@@ -76,7 +74,6 @@ items:
               amount: 1
       - id: NOT_FINISHED_YET
   - id: REAPER_FALCHION
-    material: diamond_sword
     rarity: COMMON
     default_statistics:
       damage: 120.0
@@ -114,7 +111,6 @@ items:
               - FINE_JASPER_GEM:20
       - id: NOT_FINISHED_YET
   - id: REAPER_MASK
-    material: player_head
     rarity: COMMON
     default_statistics:
       health: 150.0
@@ -163,7 +159,6 @@ items:
         standard_item_type: HELMET
       - id: NOT_FINISHED_YET
   - id: REAPER_SCYTHE
-    material: diamond_hoe
     rarity: COMMON
     default_statistics:
       damage: 333.0
@@ -197,7 +192,6 @@ items:
         standard_item_type: SWORD
       - id: NOT_FINISHED_YET
   - id: REVENANT_FALCHION
-    material: diamond_sword
     rarity: COMMON
     default_statistics:
       damage: 90.0
@@ -229,7 +223,6 @@ items:
         standard_item_type: SWORD
       - id: NOT_FINISHED_YET
   - id: REVIVED_HEART
-    material: player_head
     rarity: COMMON
     default_statistics:
       health: 100.0
@@ -265,7 +258,6 @@ items:
             coins: 50000
       - id: NOT_FINISHED_YET
   - id: WARDEN_HELMET
-    material: player_head
     rarity: COMMON
     default_statistics:
       health: 300.0

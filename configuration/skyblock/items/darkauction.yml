@@ -1,6 +1,5 @@
 items:
   - id: DARK_PURPLE_DYE
-    material: player_head
     rarity: LEGENDARY
     lore:
       - "§7Can be applied to any vanilla Armor"

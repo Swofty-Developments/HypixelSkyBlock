@@ -1,6 +1,5 @@
 items:
   - id: MANGROVE_LOG
-    material: mangrove_log
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -11,7 +10,6 @@ items:
       - id: PLACEABLE
 
   - id: STRIPPED_MANGROVE_LOG
-    material: stripped_mangrove_log
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -19,7 +17,6 @@ items:
       - id: PLACEABLE
 
   - id: MANGROVE_WOOD
-    material: mangrove_wood
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -27,7 +24,6 @@ items:
       - id: PLACEABLE
 
   - id: STRIPPED_MANGROVE_WOOD
-    material: stripped_mangrove_wood
     rarity: COMMON
     components:
       - id: SELLABLE

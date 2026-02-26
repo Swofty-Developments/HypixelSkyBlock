@@ -1,6 +1,5 @@
 items:
   - id: EFFICIENT_AXE
-    material: iron_axe
     rarity: COMMON
     default_statistics:
       damage: 25.0
@@ -9,7 +8,6 @@ items:
         reforge_type: AXES
       - id: NOT_FINISHED_YET
   - id: PROMISING_AXE
-    material: iron_axe
     rarity: COMMON
     default_statistics:
       damage: 25.0
@@ -18,7 +16,6 @@ items:
         reforge_type: AXES
       - id: NOT_FINISHED_YET
   - id: ROOKIE_AXE
-    material: stone_axe
     rarity: COMMON
     default_statistics:
       damage: 20.0
@@ -26,7 +23,6 @@ items:
       - id: REFORGABLE
         reforge_type: AXES
   - id: SWEET_AXE
-    material: iron_axe
     rarity: COMMON
     default_statistics:
       damage: 25.0

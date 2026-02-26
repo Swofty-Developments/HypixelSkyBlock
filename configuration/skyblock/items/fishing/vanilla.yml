@@ -1,18 +1,15 @@
 items:
   - id: CLAY_BALL
-    material: clay_ball
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 3.0
   - id: RAW_FISH
-    material: cod
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 6.0
   - id: INK_SAC
-    material: ink_sac
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -24,26 +21,22 @@ items:
         effect_amplifier: 0
         alchemy_xp: 5
   - id: LILY_PAD
-    material: lily_pad
     rarity: COMMON
     components:
       - id: PLACEABLE
       - id: SELLABLE
         value: 10.0
   - id: PRISMARINE_CRYSTALS
-    material: prismarine_crystals
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 5.0
   - id: PRISMARINE_SHARD
-    material: prismarine_shard
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 5.0
   - id: PUFFERFISH
-    material: pufferfish
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -55,7 +48,6 @@ items:
         effect_amplifier: 0
         alchemy_xp: 12
   - id: RAW_SALMON
-    material: salmon
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -67,14 +59,12 @@ items:
         effect_amplifier: 0
         alchemy_xp: 20
   - id: SPONGE
-    material: sponge
     rarity: COMMON
     components:
       - id: PLACEABLE
       - id: SELLABLE
         value: 50.0
   - id: TROPICAL_FISH
-    material: tropical_fish
     rarity: COMMON
     components:
       - id: SELLABLE

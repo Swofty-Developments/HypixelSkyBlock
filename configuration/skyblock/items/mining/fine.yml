@@ -1,6 +1,5 @@
 items:
   - id: FINE_AMBER_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -24,7 +23,6 @@ items:
               amount: 1
 
   - id: FINE_AMETHYST_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -48,7 +46,6 @@ items:
               amount: 1
 
   - id: FINE_JADE_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -72,7 +69,6 @@ items:
               amount: 1
 
   - id: FINE_JASPER_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -96,7 +92,6 @@ items:
               amount: 1
 
   - id: FINE_RUBY_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -120,7 +115,6 @@ items:
               amount: 1
 
   - id: FINE_SAPPHIRE_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -144,7 +138,6 @@ items:
               amount: 1
 
   - id: FINE_TOPAZ_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -168,7 +161,6 @@ items:
               amount: 1
 
   - id: FINE_OPAL_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -192,7 +184,6 @@ items:
               amount: 1
 
   - id: FINE_AQUAMARINE_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -216,7 +207,6 @@ items:
               amount: 1
 
   - id: FINE_CITRINE_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -240,7 +230,6 @@ items:
               amount: 1
 
   - id: FINE_ONYX_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -264,7 +253,6 @@ items:
               amount: 1
 
   - id: FINE_PERIDOT_GEM
-    material: player_head
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
