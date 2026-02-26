@@ -381,3 +381,75 @@ items:
                 operation: ">="
                 right: "10"
                 fail-message: "§cLevel Requirement\n§7You must be at least §eLevel 10 §7to craft this item!"
+
+  - id: ATOMSPLIT_KATANA
+    rarity: LEGENDARY
+    material: DIAMOND_SWORD
+
+  - id: VOIDEDGE_KATANA
+    rarity: RARE
+    material: DIAMOND_SWORD
+
+  - id: VOIDWALKER_KATANA
+    rarity: UNCOMMON
+    material: IRON_SWORD
+
+  - id: VORPAL_KATANA
+    rarity: EPIC
+    material: DIAMOND_SWORD
+
+  - id: DAEDALUS_AXE
+    rarity: LEGENDARY
+    material: GOLDEN_AXE
+
+  - id: POOCH_SWORD
+    rarity: LEGENDARY
+    material: GOLDEN_SWORD
+
+  - id: RECLUSE_FANG
+    rarity: RARE
+    material: IRON_SWORD
+
+  - id: SHAMAN_SWORD
+    rarity: EPIC
+    material: IRON_SWORD
+
+  - id: SOUL_ESOWARD
+    rarity: RARE
+    material: BIRCH_SAPLING
+
+  - id: SWORD_OF_REVELATIONS
+    rarity: EPIC
+    material: WOODEN_SWORD
+
+  - id: SCORPION_FOIL
+    rarity: EPIC
+    material: WOODEN_SWORD
+
+  - id: NULL_BLADE
+    rarity: LEGENDARY
+    material: SHEARS
+
+  - id: NULL_EDGE
+    rarity: EPIC
+    material: STICK
+
+  - id: SINSEEKER_SCYTHE
+    rarity: EPIC
+    material: GOLDEN_HOE
+
+  - id: FLY_SWATTER
+    rarity: EPIC
+    material: GOLDEN_SHOVEL
+
+  - id: EDIBLE_MACE
+    rarity: RARE
+    material: MUTTON
+
+  - id: CROWN_OF_GREED
+    rarity: LEGENDARY
+    material: GOLDEN_HELMET
+
+  - id: STRETCHING_STICKS
+    rarity: COMMON
+    material: STICK

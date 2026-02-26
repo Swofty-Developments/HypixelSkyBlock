@@ -1,5 +1,6 @@
 items:
   - id: BEE_MINION_SKIN
+    material: player_head
     rarity: COMMON
     components:
       - id: MINION_SKIN

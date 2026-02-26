@@ -1,21 +1,47 @@
 items:
   - id: ANCIENT_ROSE
+    material: poppy
     rarity: COMMON
   - id: ARCHITECTS_FIRST_DRAFT
+    material: paper
     rarity: COMMON
   - id: KISMET_FEATHER
+    material: feather
     rarity: COMMON
     components:
       - id: ENCHANTED
-  - id: NECRON_HANDLE
+  - id: NECRONS_HANDLE
+    material: stick
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: RIGHT_CLICK_RECIPE
         recipe_item: NECRONS_HANDLE
   - id: SUPERBOOM_TNT
+    material: tnt
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Superboom TNT
       - id: ENCHANTED
+  - id: JUDGEMENT_CORE
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: ETHERWARP_CONDUIT
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: ETHERWARP_MERGER
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: GLOOMLOCK_GRIMOIRE
+    rarity: EPIC
+    material: WRITTEN_BOOK
+  - id: GYROKINETIC_WAND
+    rarity: EPIC
+    material: BLAZE_ROD
+  - id: TRANSMISSION_TUNER
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: EXCEEDINGLY_RARE_ENDER_ARTIFACT_UPGRADER
+    rarity: LEGENDARY
+    material: PLAYER_HEAD

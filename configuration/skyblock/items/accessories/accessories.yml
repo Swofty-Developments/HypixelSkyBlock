@@ -81,3 +81,19 @@ items:
       - id: SKULL_HEAD
         texture: 9c11d6c79b8a1f18902d783cdda4bdfb9d47337b73791028a126a6e6cf101def
       - id: TALISMAN
+
+  - id: SKELETON_TALISMAN
+    rarity: COMMON
+    material: SKELETON_SKULL
+  - id: BLUE_RING
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: ARCHFIEND_DICE
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: HIGH_CLASS_ARCHFIEND_DICE
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: SINFUL_DICE
+    rarity: EPIC
+    material: PLAYER_HEAD

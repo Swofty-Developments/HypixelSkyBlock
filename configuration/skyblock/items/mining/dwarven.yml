@@ -1,5 +1,6 @@
 items:
   - id: GLACITE_JEWEL
+    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -7,8 +8,10 @@ items:
       - id: SELLABLE
         value: 2000.0
   - id: GOBLIN_EGG
+    material: egg
     rarity: COMMON
   - id: MITHRIL
+    material: prismarine_crystals
     rarity: COMMON
     lore:
       - "§7§o\"The Man called it \"true-silver\" while"
@@ -30,6 +33,7 @@ items:
         effect_amplifier: 0
         alchemy_xp: 5
   - id: PLASMA
+    material: player_head
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -37,6 +41,7 @@ items:
       - id: SKULL_HEAD
         texture: 75aa8332bbec4a958fea2be64b8f1682f5d8247451aa2b7569edd0498437d706
   - id: REFINED_MITHRIL
+    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -44,6 +49,7 @@ items:
       - id: SELLABLE
         value: 204800.0
   - id: REFINED_TITANIUM
+    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -51,16 +57,19 @@ items:
       - id: SELLABLE
         value: 51200.0
   - id: SORROW
+    material: ghast_tear
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 13.0
   - id: STARFALL
+    material: nether_star
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 15.0
   - id: TITANIUM
+    material: player_head
     rarity: COMMON
     lore:
       - "§7Its strength and resistance to"
@@ -77,11 +86,13 @@ items:
       - id: EXTRA_RARITY
         display: DWARVEN METAL
   - id: TREASURITE
+    material: player_head
     rarity: COMMON
     components:
       - id: SKULL_HEAD
         texture: be261c6b852dd38e0d51349b1b8132887cd1b69da04d8daf0121af79ad8dd92
   - id: VOLTA
+    material: player_head
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -109,3 +120,39 @@ items:
         texture: f106277ad541aa76d9d4a19e7aac92621a3f0251ff9427dfdea539b51dd8d1ea
       - id: DEFAULT_SOULBOUND
         coop_allowed: true
+  - id: GLACITE
+    rarity: COMMON
+    material: PACKED_ICE
+  - id: ENCHANTED_GLACITE
+    rarity: UNCOMMON
+    material: PACKED_ICE
+  - id: TUNGSTEN
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: ENCHANTED_TUNGSTEN
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: UMBER
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: ENCHANTED_UMBER
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: SULPHUR
+    rarity: UNCOMMON
+    material: GLOWSTONE_DUST
+  - id: REFINED_MINERAL
+    rarity: COMMON
+    material: LIGHT_BLUE_DYE
+  - id: MANA_DISINTEGRATOR
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: KELVIN_INVERTER
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: SUBZERO_INVERTER
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: PROMISING_SHOVEL
+    rarity: UNCOMMON
+    material: IRON_SHOVEL
