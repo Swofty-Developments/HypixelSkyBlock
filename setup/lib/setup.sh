@@ -256,7 +256,7 @@ ${redis_ports}
       - hypixel_network
 
   pico-limbo:
-    image: ghcr.io/ariksquad/picolimbo:latest
+    image: ghcr.io/ariksquad/picolimbo:master
     container_name: picolimbo
     restart: unless-stopped
     environment:
