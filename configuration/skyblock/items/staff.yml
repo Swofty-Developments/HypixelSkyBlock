@@ -1,0 +1,11 @@
+items:
+  - id: REGION_SELECTOR
+    rarity: ADMIN
+    name: "Region Selector Staff"
+    components:
+      - id: REGION_SELECTOR
+  - id: BLOCK_DATA_TOOL
+    rarity: ADMIN
+    name: "Block Data Tool"
+    components:
+      - id: BLOCK_DATA_TOOL

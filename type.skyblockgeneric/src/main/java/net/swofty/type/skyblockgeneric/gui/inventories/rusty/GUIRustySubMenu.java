@@ -13,7 +13,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
-import net.swofty.type.skyblockgeneric.gui.inventories.shop.GUIConfirmBuy;
+import net.swofty.type.skyblockgeneric.gui.inventories.shop.ConfirmBuyView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -187,7 +187,7 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
                 if (player.getToggles()
                         .get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION)
                         && price >= 1_000_000) {
-                    new GUIConfirmBuy(item, price).open(player);
+                    player.openView(new ConfirmBuyView(), new ConfirmBuyView.State(item, price));
                     return;
                 }
 

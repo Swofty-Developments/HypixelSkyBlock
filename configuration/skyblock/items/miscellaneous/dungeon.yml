@@ -7,7 +7,7 @@ items:
     rarity: COMMON
     components:
       - id: ENCHANTED
-  - id: NECRON_HANDLE
+  - id: NECRONS_HANDLE
     rarity: COMMON
     components:
       - id: ENCHANTED

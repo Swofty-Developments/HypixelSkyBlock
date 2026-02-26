@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 @RequiredArgsConstructor
 public class ServiceInitializer {
@@ -58,5 +59,11 @@ public class ServiceInitializer {
 
         RedisAPI.getInstance().startListeners();
         System.out.println("Service " + service.getType().name() + " initialized!");
+
+        try {
+            new CountDownLatch(1).await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

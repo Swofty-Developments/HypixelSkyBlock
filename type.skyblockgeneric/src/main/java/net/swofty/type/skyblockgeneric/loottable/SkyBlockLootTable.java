@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 public abstract class SkyBlockLootTable {
@@ -22,7 +19,7 @@ public abstract class SkyBlockLootTable {
     }
 
     public @NonNull List<ItemType> getLootTableItems() {
-        List<ItemType> items = new java.util.ArrayList<>();
+        List<ItemType> items = new ArrayList<>();
         for (LootRecord record : getLootTable()) {
             items.add(record.itemType);
         }

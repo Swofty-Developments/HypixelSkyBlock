@@ -24,6 +24,6 @@ public class ActionPlayerInteractWithCrafting implements HypixelEventClass {
         player.getInventory().setCursorItem(ItemStack.AIR);
         player.getInventory().update();
 
-        new GUICrafting().open((SkyBlockPlayer) event.getPlayer());
+        player.openView(new GUICrafting());
     }
 }

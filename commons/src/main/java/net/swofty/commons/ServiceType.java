@@ -9,6 +9,7 @@ public enum ServiceType {
     PARTY,
     DARK_AUCTION,
     ORCHESTRATOR,
-    FRIEND
+    FRIEND,
+    PUNISHMENT,
     ;
 }

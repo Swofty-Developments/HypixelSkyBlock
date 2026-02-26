@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@Deprecated
 public abstract class HypixelPaginatedGUI<T> extends HypixelInventoryGUI {
 
     protected PaginationList<T> latestPaged;

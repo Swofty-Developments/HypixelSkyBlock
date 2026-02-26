@@ -105,6 +105,8 @@ public class ItemConfigParser {
 					int axeStrength = safeConfig.getInt("axe_strength", 1);
 					yield new AxeComponent(axeStrength);
 				}
+				case "REGION_SELECTOR" -> new RegionSelectorComponent();
+				case "BLOCK_DATA_TOOL" -> new BlockDataToolComponent();
 				case "BACKPACK" -> {
 					int rows = safeConfig.getInt("rows");
 					String skullTexture = safeConfig.getString("skull-texture");

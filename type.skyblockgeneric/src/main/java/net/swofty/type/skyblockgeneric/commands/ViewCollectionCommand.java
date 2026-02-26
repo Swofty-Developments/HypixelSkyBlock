@@ -6,7 +6,7 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.collection.GUICollectionItem;
+import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockProfile;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
@@ -31,7 +31,7 @@ public class ViewCollectionCommand extends HypixelCommand {
                 return;
             }
 
-            new GUICollectionItem(itemTypeLinker).open((SkyBlockPlayer) sender);
+            ((SkyBlockPlayer) sender).openView(new GUISkyBlockProfile());
         }, itemArgument);
     }
 }

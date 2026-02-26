@@ -14,6 +14,7 @@ public enum EventNodes {
     PLAYER_DATA(EventNode.type("player-data", EventFilter.PLAYER).setPriority(1)),
     ITEM(EventNode.type("item-listener", EventFilter.PLAYER)),
     PING(EventNode.type("ping-listener", EventFilter.ALL)),
+    INVENTORY(EventNode.type("inventory-listener", EventFilter.INVENTORY)),
     ALL(EventNode.all("all-listener")),
     // Player nodes
 

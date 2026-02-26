@@ -4,16 +4,16 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
 import java.util.Map;
 
-public class GUIShopIronForger extends SkyBlockShopGUI {
+public class GUIShopIronForger extends ShopView {
     public GUIShopIronForger() {
-        super("Iron Forger", 1, DEFAULT);
+        super("Iron Forger", DEFAULT);
     }
 
     private SkyBlockItem applyEnchantment (SkyBlockItem item, Map<EnchantmentType, Integer> enchantments) {

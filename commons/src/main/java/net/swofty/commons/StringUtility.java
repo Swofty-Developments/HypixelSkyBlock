@@ -167,8 +167,10 @@ public class StringUtility {
 	}
 
 	public static String getTextFromComponent(Component component) {
+		if (component == null)
+			throw new IllegalArgumentException("Component cannot be null");
 		if (!(component instanceof TextComponent))
-			throw new IllegalArgumentException("Component must be a TextComponent");
+			throw new IllegalArgumentException("Component must be a TextComponent, but got: " + component.getClass().getSimpleName());
 		return PlainTextComponentSerializer.plainText().serialize(component);
 	}
 
@@ -297,5 +299,22 @@ public class StringUtility {
 				default -> i + "th";
 			};
 		};
+	}
+
+	public static long parseDuration(String duration) {
+		long totalMillis = 0;
+		Pattern pattern = Pattern.compile("(\\d+)([dhms])");
+		Matcher matcher = pattern.matcher(duration);
+		while (matcher.find()) {
+			int value = Integer.parseInt(matcher.group(1));
+			char unit = matcher.group(2).charAt(0);
+			switch (unit) {
+				case 'd' -> totalMillis += TimeUnit.DAYS.toMillis(value);
+				case 'h' -> totalMillis += TimeUnit.HOURS.toMillis(value);
+				case 'm' -> totalMillis += TimeUnit.MINUTES.toMillis(value);
+				case 's' -> totalMillis += TimeUnit.SECONDS.toMillis(value);
+			}
+		}
+		return totalMillis;
 	}
 }

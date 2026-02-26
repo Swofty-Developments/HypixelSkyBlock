@@ -7,6 +7,7 @@ import net.swofty.velocity.gamemanager.balanceconfigurations.LowestPlayerCount;
 import net.swofty.velocity.gamemanager.balanceconfigurations.ReadyGames;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -88,6 +89,9 @@ public class BalanceConfigurations {
 					new LowestPlayerCount()
 			)),
 			Map.entry(ServerType.MURDER_MYSTERY_CONFIGURATOR, List.of(
+					new LowestPlayerCount()
+			)),
+			Map.entry(ServerType.RAVENGARD_LOBBY, List.of(
 					new LowestPlayerCount()
 			))
 	));

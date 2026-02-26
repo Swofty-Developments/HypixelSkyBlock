@@ -84,7 +84,7 @@ public class BedWarsLobbyScoreboard {
 				scoreboard.updateLines(player, lines);
 				scoreboard.updateTitle(player, getSidebarName(prototypeName));
 			}
-			return TaskSchedule.tick(5);
+			return TaskSchedule.tick(4);
 		});
 	}
 

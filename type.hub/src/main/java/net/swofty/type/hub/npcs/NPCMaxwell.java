@@ -1,12 +1,11 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.hub.gui.GUIMaxwell;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.GUIMaxwell;
 
 public class NPCMaxwell extends HypixelNPC {
 
@@ -14,7 +13,7 @@ public class NPCMaxwell extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§6Thaumaturgist", "§9Maxwell", "§e§lCLICK"};
+                return new String[]{"§6Thaumaturgist", "§fMaxwell", "§e§lCLICK"};
             }
 
             @Override
@@ -29,7 +28,7 @@ public class NPCMaxwell extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(46.5, 69, -34.5, 180, 0);
+                return new Pos(-66.5, 70, -66.5, -90, 0);
             }
 
             @Override

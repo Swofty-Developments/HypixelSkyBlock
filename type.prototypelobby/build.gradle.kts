@@ -20,7 +20,6 @@ repositories {
 dependencies {
     implementation(project(":type.lobby"))
     implementation(project(":commons"))
-    implementation(project(":packer"))
     implementation(project(":proxy.api"))
     implementation(project(":type.generic"))
 

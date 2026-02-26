@@ -1,0 +1,586 @@
+items:
+  - id: AGARIMOO_TONGUE
+    rarity: UNCOMMON
+    material: MUTTON
+  - id: ALLIGATOR_SKIN
+    rarity: UNCOMMON
+    material: GREEN_DYE
+  - id: ANCIENT_CLAW
+    rarity: RARE
+    material: FLINT
+  - id: ANTIQUE_REMEDIES
+    rarity: EPIC
+    material: AZURE_BLUET
+  - id: APPLE
+    rarity: COMMON
+    material: APPLE
+  - id: ARCHFIEND_DICE
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: ARTISANAL_SHORTBOW
+    rarity: RARE
+    material: BOW
+  - id: ASCENSION_ROPE
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: ATOMSPLIT_KATANA
+    rarity: LEGENDARY
+    material: DIAMOND_SWORD
+  - id: BAMBOO
+    rarity: COMMON
+    material: BAMBOO
+  - id: BEEF
+    rarity: COMMON
+    material: BEEF
+  - id: BEETROOT
+    rarity: COMMON
+    material: BEETROOT
+  - id: BIGFOOT_LASSO
+    rarity: EPIC
+    material: LEAD
+  - id: BIOFUEL
+    rarity: RARE
+    material: GREEN_DYE
+  - id: BLAZE_ROD_DISTILLATE
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: BLOCK_DATA_TOOL
+    rarity: ADMIN
+    material: COMPARATOR
+  - id: BLUE_RING
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: BONZO_FRAGMENT
+    rarity: RARE
+    material: RED_MUSHROOM
+  - id: BOOK
+    rarity: COMMON
+    material: BOOK
+  - id: BOWL
+    rarity: COMMON
+    material: BOWL
+  - id: BRAIDED_GRIFFIN_FEATHER
+    rarity: EPIC
+    material: STRING
+  - id: BREAD
+    rarity: COMMON
+    material: BREAD
+  - id: BRICKS
+    rarity: COMMON
+    material: BRICKS
+  - id: BRICK_SLAB
+    rarity: COMMON
+    material: BRICK_SLAB
+  - id: BRICK_STAIRS
+    rarity: COMMON
+    material: BRICK_STAIRS
+  - id: BROKEN_RADAR
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: BRONZE_BOWL
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: BROWN_MUSHROOM
+    rarity: COMMON
+    material: BROWN_MUSHROOM
+  - id: BROWN_MUSHROOM_BLOCK
+    rarity: COMMON
+    material: BROWN_MUSHROOM_BLOCK
+  - id: BUNDLE_OF_MAGMA_ARROWS
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: BUSTED_BELT_BUCKLE
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: CAN_OF_WORMS
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: CHAINMAIL_BOOTS
+    rarity: COMMON
+    material: CHAINMAIL_BOOTS
+  - id: CHAINMAIL_CHESTPLATE
+    rarity: COMMON
+    material: CHAINMAIL_CHESTPLATE
+  - id: CHAINMAIL_HELMET
+    rarity: COMMON
+    material: CHAINMAIL_HELMET
+  - id: CHAINMAIL_LEGGINGS
+    rarity: COMMON
+    material: CHAINMAIL_LEGGINGS
+  - id: CHARCOAL
+    rarity: COMMON
+    material: CHARCOAL
+  - id: CHICKEN
+    rarity: COMMON
+    material: CHICKEN
+  - id: CHISELED_STONE_BRICKS
+    rarity: COMMON
+    material: CHISELED_STONE_BRICKS
+  - id: CHUM
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: COARSE_DIRT
+    rarity: COMMON
+    material: COARSE_DIRT
+  - id: CRACKED_STONE_BRICKS
+    rarity: COMMON
+    material: CRACKED_STONE_BRICKS
+  - id: CROCHET_TIGER_PLUSHIE
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: CROWN_OF_GREED
+    rarity: LEGENDARY
+    material: GOLDEN_HELMET
+  - id: DAEDALUS_AXE
+    rarity: LEGENDARY
+    material: GOLDEN_AXE
+  - id: DAEDALUS_STICK
+    rarity: LEGENDARY
+    material: STICK
+  - id: DEAD_BUSH
+    rarity: COMMON
+    material: DEAD_BUSH
+  - id: DEEP_ROOT
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: DERELICT_ASHE
+    rarity: UNCOMMON
+    material: GUNPOWDER
+  - id: DIGESTED_MOSQUITO
+    rarity: LEGENDARY
+    material: ROTTEN_FLESH
+  - id: DRAGON_BREATH
+    rarity: COMMON
+    material: DRAGON_BREATH
+  - id: DWARF_TURTLE_SHELMET
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: EDIBLE_MACE
+    rarity: RARE
+    material: MUTTON
+  - id: ELDER_GUARDIAN_SPAWN_EGG
+    rarity: COMMON
+    material: ELDER_GUARDIAN_SPAWN_EGG
+  - id: EMPERORS_SKULL
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: ENCHANTED_GLACITE
+    rarity: UNCOMMON
+    material: PACKED_ICE
+  - id: ENCHANTED_TUNGSTEN
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: ENCHANTED_UMBER
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: ENDER_CHEST
+    rarity: COMMON
+    material: ENDER_CHEST
+  - id: ENDER_EYE
+    rarity: COMMON
+    material: ENDER_EYE
+  - id: ENDSTONE_ROSE
+    rarity: RARE
+    material: POPPY
+  - id: END_ROD
+    rarity: COMMON
+    material: END_ROD
+  - id: END_STONE_BRICKS
+    rarity: COMMON
+    material: END_STONE_BRICKS
+  - id: ETHERWARP_CONDUIT
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: ETHERWARP_MERGER
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: EXCEEDINGLY_RARE_ENDER_ARTIFACT_UPGRADER
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: EXPERIENCE_BOTTLE
+    rarity: COMMON
+    material: EXPERIENCE_BOTTLE
+  - id: FIGSTONE
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: FIG_LOG
+    rarity: COMMON
+    material: STRIPPED_SPRUCE_LOG
+  - id: FIREWORK_ROCKET
+    rarity: COMMON
+    material: FIREWORK_ROCKET
+  - id: FLEXBONE
+    rarity: COMMON
+    material: BONE
+  - id: FLOWER_POT
+    rarity: COMMON
+    material: FLOWER_POT
+  - id: FLY_SWATTER
+    rarity: EPIC
+    material: GOLDEN_SHOVEL
+  - id: GABAGOOL_DISTILLATE
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: GILL_MEMBRANE
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: GLACITE
+    rarity: COMMON
+    material: PACKED_ICE
+  - id: GLASS_BOTTLE
+    rarity: COMMON
+    material: GLASS_BOTTLE
+  - id: GLOOMLOCK_GRIMOIRE
+    rarity: EPIC
+    material: WRITTEN_BOOK
+  - id: GLOSSY_GEMSTONE
+    rarity: EPIC
+    material: PURPLE_DYE
+  - id: GLOWING_MUSHROOM
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: GLOWSTONE_DISTILLATE
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: GOLDEN_TOOTH
+    rarity: RARE
+    material: GOLD_NUGGET
+  - id: GREEN_DYE
+    rarity: COMMON
+    material: GREEN_DYE
+  - id: GRIFFIN_FEATHER
+    rarity: RARE
+    material: FEATHER
+  - id: GRIZZLY_SALMON
+    rarity: RARE
+    material: COOKED_SALMON
+  - id: GYROKINETIC_WAND
+    rarity: EPIC
+    material: BLAZE_ROD
+  - id: HALF_EATEN_MUSHROOM
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: HAMSTER_WHEEL
+    rarity: RARE
+    material: OAK_TRAPDOOR
+  - id: HIGH_CLASS_ARCHFIEND_DICE
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: HONEYCOMB
+    rarity: COMMON
+    material: HONEYCOMB
+  - id: IRON_BARS
+    rarity: COMMON
+    material: IRON_BARS
+  - id: IRON_DOOR
+    rarity: COMMON
+    material: IRON_DOOR
+  - id: IRON_TRAPDOOR
+    rarity: COMMON
+    material: IRON_TRAPDOOR
+  - id: JACK_O_LANTERN
+    rarity: COMMON
+    material: JACK_O_LANTERN
+  - id: JUDGEMENT_CORE
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: JUJU_SHORTBOW
+    rarity: EPIC
+    material: BOW
+  - id: KELVIN_INVERTER
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: LAVA_BUCKET
+    rarity: COMMON
+    material: LAVA_BUCKET
+  - id: LUSHLILAC
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: LUXURIOUS_SPOOL
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: MAGMA_CREAM_DISTILLATE
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: MANA_DISINTEGRATOR
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: MANGCORE
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: MILK_BUCKET
+    rarity: COMMON
+    material: MILK_BUCKET
+  - id: MINERS_OUTFIT_BOOTS
+    rarity: UNCOMMON
+    material: LEATHER_BOOTS
+  - id: MINERS_OUTFIT_CHESTPLATE
+    rarity: UNCOMMON
+    material: LEATHER_CHESTPLATE
+  - id: MINERS_OUTFIT_HELMET
+    rarity: UNCOMMON
+    material: LEATHER_HELMET
+  - id: MINERS_OUTFIT_LEGGINGS
+    rarity: UNCOMMON
+    material: LEATHER_LEGGINGS
+  - id: MINER_ARMOR_BOOTS
+    rarity: RARE
+    material: IRON_BOOTS
+  - id: MINER_ARMOR_CHESTPLATE
+    rarity: RARE
+    material: IRON_CHESTPLATE
+  - id: MINER_ARMOR_HELMET
+    rarity: RARE
+    material: IRON_HELMET
+  - id: MINER_ARMOR_LEGGINGS
+    rarity: RARE
+    material: IRON_LEGGINGS
+  - id: MINOS_RELIC
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: MOONFLOWER
+    rarity: COMMON
+    material: BLUE_ORCHID
+  - id: MOSQUITO_BOW
+    rarity: LEGENDARY
+    material: BOW
+  - id: NETHER_BRICK
+    rarity: COMMON
+    material: NETHER_BRICK
+  - id: NETHER_WART_DISTILLATE
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: NULL_ATOM
+    rarity: RARE
+    material: OAK_BUTTON
+  - id: NULL_BLADE
+    rarity: LEGENDARY
+    material: SHEARS
+  - id: NULL_EDGE
+    rarity: EPIC
+    material: STICK
+  - id: NULL_OVOID
+    rarity: RARE
+    material: ENDERMAN_SPAWN_EGG
+  - id: NULL_SPHERE
+    rarity: UNCOMMON
+    material: FIREWORK_STAR
+  - id: OLD_LEATHER_BOOT
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: OVERFLUX_CAPACITOR
+    rarity: EPIC
+    material: QUARTZ
+  - id: PAPER
+    rarity: COMMON
+    material: PAPER
+  - id: PINK_PETALS
+    rarity: COMMON
+    material: PINK_PETALS
+  - id: PITCHER_PLANT
+    rarity: COMMON
+    material: PITCHER_PLANT
+  - id: PODZOL
+    rarity: COMMON
+    material: PODZOL
+  - id: POOCH_SWORD
+    rarity: LEGENDARY
+    material: GOLDEN_SWORD
+  - id: PORKCHOP
+    rarity: COMMON
+    material: PORKCHOP
+  - id: PROMISING_SHOVEL
+    rarity: UNCOMMON
+    material: IRON_SHOVEL
+  - id: PURPUR_BLOCK
+    rarity: COMMON
+    material: PURPUR_BLOCK
+  - id: PURPUR_PILLAR
+    rarity: COMMON
+    material: PURPUR_PILLAR
+  - id: PURPUR_SLAB
+    rarity: COMMON
+    material: PURPUR_SLAB
+  - id: PURPUR_STAIRS
+    rarity: COMMON
+    material: PURPUR_STAIRS
+  - id: RABBIT
+    rarity: COMMON
+    material: RABBIT
+  - id: RECLUSE_FANG
+    rarity: RARE
+    material: IRON_SWORD
+  - id: REDSTONE_LAMP
+    rarity: COMMON
+    material: REDSTONE_LAMP
+  - id: RED_CLAW_EGG
+    rarity: EPIC
+    material: MOOSHROOM_SPAWN_EGG
+  - id: RED_MUSHROOM_BLOCK
+    rarity: COMMON
+    material: RED_MUSHROOM_BLOCK
+  - id: REFINED_MINERAL
+    rarity: COMMON
+    material: LIGHT_BLUE_DYE
+  - id: REGION_SELECTOR
+    rarity: ADMIN
+    material: BLAZE_ROD
+  - id: RUSTY_COIN
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: SCORCHED_POWER_CRYSTAL
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: SCORPION_BOW
+    rarity: EPIC
+    material: BOW
+  - id: SCORPION_FOIL
+    rarity: EPIC
+    material: WOODEN_SWORD
+  - id: SEA_LANTERN
+    rarity: COMMON
+    material: SEA_LANTERN
+  - id: SEA_LUMIES
+    rarity: COMMON
+    material: SEA_PICKLE
+  - id: SHAMAN_SWORD
+    rarity: EPIC
+    material: IRON_SWORD
+  - id: SHEARS
+    rarity: COMMON
+    material: SHEARS
+  - id: SINFUL_DICE
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: SINSEEKER_SCYTHE
+    rarity: EPIC
+    material: GOLDEN_HOE
+  - id: SKELETON_TALISMAN
+    rarity: COMMON
+    material: SKELETON_SKULL
+  - id: SMOOTH_QUARTZ
+    rarity: COMMON
+    material: SMOOTH_QUARTZ
+  - id: SMOOTH_RED_SANDSTONE
+    rarity: COMMON
+    material: SMOOTH_RED_SANDSTONE
+  - id: SMOOTH_SANDSTONE
+    rarity: COMMON
+    material: SMOOTH_SANDSTONE
+  - id: SOUL_ESOWARD
+    rarity: RARE
+    material: BIRCH_SAPLING
+  - id: SOUL_SAND
+    rarity: COMMON
+    material: SOUL_SAND
+  - id: SPIDER_CATALYST
+    rarity: RARE
+    material: PLAYER_HEAD
+  - id: STARLYN_PRIZE
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: STRETCHING_STICKS
+    rarity: COMMON
+    material: STICK
+  - id: STURDY_BONE
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: SUBZERO_INVERTER
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: SULPHUR
+    rarity: UNCOMMON
+    material: GLOWSTONE_DUST
+  - id: SUMMONING_EYE
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: SWORD_OF_REVELATIONS
+    rarity: EPIC
+    material: WOODEN_SWORD
+  - id: TARANTULA_SILK
+    rarity: RARE
+    material: COBWEB
+  - id: TARANTULA_WEB
+    rarity: UNCOMMON
+    material: STRING
+  - id: TENDER_WOOD
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: TERMINATOR
+    rarity: LEGENDARY
+    material: BOW
+  - id: TESSELLATED_ENDER_PEARL
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: TORCH
+    rarity: COMMON
+    material: TORCH
+  - id: TORCHFLOWER
+    rarity: COMMON
+    material: TORCHFLOWER
+  - id: TORN_CLOTH
+    rarity: UNCOMMON
+    material: PLAYER_HEAD
+  - id: TOXIC_ARROW_POISON
+    rarity: UNCOMMON
+    material: LIME_DYE
+  - id: TRANSMISSION_TUNER
+    rarity: EPIC
+    material: PLAYER_HEAD
+  - id: TUNGSTEN
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: TWILIGHT_ARROW_POISON
+    rarity: UNCOMMON
+    material: PURPLE_DYE
+  - id: UMBER
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: VINES
+    rarity: COMMON
+    material: VINE
+  - id: VINESAP
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: VOIDEDGE_KATANA
+    rarity: RARE
+    material: DIAMOND_SWORD
+  - id: VOIDWALKER_KATANA
+    rarity: UNCOMMON
+    material: IRON_SWORD
+  - id: VORPAL_KATANA
+    rarity: EPIC
+    material: DIAMOND_SWORD
+  - id: WASHED_UP_SOUVENIR
+    rarity: LEGENDARY
+    material: PLAYER_HEAD
+  - id: WATER_BOTTLE
+    rarity: COMMON
+    material: POTION
+  - id: WATER_BUCKET
+    rarity: COMMON
+    material: WATER_BUCKET
+  - id: WEIRD_TUBA
+    rarity: RARE
+    material: HOPPER
+  - id: WET_SPONGE
+    rarity: COMMON
+    material: WET_SPONGE
+  - id: WET_WATER
+    rarity: COMMON
+    material: PLAYER_HEAD
+  - id: WILD_ROSE
+    rarity: COMMON
+    material: ROSE_BUSH
+  - id: WILSON_ENGINEERING_PLANS
+    rarity: LEGENDARY
+    material: PAPER
+  - id: WITHER_BOW
+    rarity: UNCOMMON
+    material: BOW
+  - id: WITHER_ROSE
+    rarity: COMMON
+    material: WITHER_ROSE
+  - id: WOLF_TOOTH
+    rarity: UNCOMMON
+    material: GHAST_TEAR

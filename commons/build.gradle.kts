@@ -25,6 +25,11 @@ dependencies {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 
+    // Must match AtlasRedisAPI's Jedis version to avoid conflicts
+    implementation("redis.clients:jedis:7.2.0")
+
+    implementation("de.exlll:configlib-yaml:4.8.1")
+
     implementation("org.spongepowered:configurate-yaml:4.2.0")
     implementation("com.squareup:javapoet:1.13.0")
 }
@@ -41,8 +46,6 @@ sourceSets {
 
     codegen // just here to avoid "unused" warning
 }
-
-
 
 val generateItemTypes by tasks.registering(JavaExec::class) {
     group = "codegen"

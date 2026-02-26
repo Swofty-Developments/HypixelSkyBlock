@@ -127,7 +127,7 @@ items:
               type: SLIME_BLOCK
               amount: 1
 
-  - id: STRING_ITEM
+  - id: STRING
     rarity: COMMON
     components:
       - id: SELLABLE

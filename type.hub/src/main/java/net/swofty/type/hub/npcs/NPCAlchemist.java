@@ -5,11 +5,10 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCAlchemist extends HypixelNPC {
     public NPCAlchemist() {
@@ -31,7 +30,7 @@ public class NPCAlchemist extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(41.5, 70, -63.5);
+                return new Pos(80.5, 72, -90.5, 90, 0);
             }
 
             @Override
@@ -55,7 +54,7 @@ public class NPCAlchemist extends HypixelNPC {
             return;
         }
 
-        new GUIShopAlchemist().open(player);
+        player.openView(new GUIShopAlchemist());
     }
 
     @Override

@@ -2,8 +2,8 @@ package net.swofty.type.skyblockgeneric.server.eventcaller;
 
 import kotlin.jvm.functions.Function0;
 import lombok.Getter;
-import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.event.custom.CalenderHourlyUpdateEvent;
 
 import java.util.HashMap;
@@ -33,9 +33,7 @@ public class ServerValues {
 
     @Getter
     public enum Value {
-        CALENDER_HOUR(Integer.class, SkyBlockCalendar::getHour, (hour) -> {
-            HypixelEventHandler.callCustomEvent(new CalenderHourlyUpdateEvent((Integer) hour));
-        }),
+        CALENDER_HOUR(Integer.class, SkyBlockCalendar::getHour, (hour) -> HypixelEventHandler.callCustomEvent(new CalenderHourlyUpdateEvent((Integer) hour))),
         ;
 
         private final Class<?> type;

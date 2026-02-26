@@ -3,11 +3,10 @@ package net.swofty.type.hub.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCUdium extends HypixelNPC {
 
@@ -15,22 +14,22 @@ public class NPCUdium extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Udium", "§e§lCLICK"};
+                return new String[]{"§bUdium", "§e§lCLICK"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                return "GnM27W60Lt+aV2EqLga8sxV3Fw1Z9H2CaCbu/quQ3FItmdpjiiGuX2qQR/x1Wp4KrGLUdgoWlPX926lT++xt3fuIO9nLiCy/m/06KQ7ijvjtvYA3L4ZNpknN6bRKjmxICvczlpiZXfU+esO2wbnNA3Dq86MV0SIWhUPLUkqFa5e6JX5/4GOkVt/hiA32qx4eFLBHkaX3PUpzKn2YhoCAoHlB6p0bVccq5xi79utz72UfufFvEYVUs6jzKCE0i+hzMTFaAINQeKZ4zvybhEqQJuMt6mWnyRkJgav5DScueRLaR97oc1CcDE9ti4C9qsHDLi0N1n1OXJ2no4R6qwcMwGpoZXTQv/KpQWPcc7N4xY04Wp1J8ydL5yfZ+AlM2upt5pzzIni0yc/pbqRDLnyEyJpmLsMpKKtvF5THoyK7Gcyh87J4Q5g90ztkiP8qMV/h4iRskLNbPWNnLlPwlIZx8uaZZvtqf2JNvO9Tlh6AWRnaZyZ5OBKwokns/nospcQ2e4k3wnwiRx0NuR0vBMxw5QuNaH98A/kr9fbUTvhASV738rQgvGR9mlEE7WCO9G2cG2UvJuiPEWFJIHq+bcnJ8CA0A4aOuMfYibS8/K3Fou2Z1Ho2+50bKhCujUxIterBZMk4/oWPVx67MUT8faaJ7HcaJ7jUMja3DKPSKkotte0=";
+                return "Nr5ok8+BUckFs6UrMdisUo105wGkE1x4A3cinq2zqltLkFDei8GDarKeDIIZHKYbAwCt2pqWfCNBSuT/XzhANC0ssQM6N1kh515V2IE92DRV00LGoDY5lH3A5XDhnZy94FAVVsUzVUvVjeB/x7O1HaVF22xNaUzwFD9zAxGuGDyaUsA98i6XDgja9qlNnswAWeDkLPga9gM3XjxCaMwyrw8yroyu8KlkobCSWKCsFRGH2wqkmJJg7qlZgrQNDjDj4j/I6FVaqOxcgWtOrmLgZMF+UMDq0zBw5dtc5lB3myw77CogSNgzbyF5dI1b3kZ/7ULC1evvWCp7YpNMkNh4Aezp9ElTTUe+0mF6gGAMEo4F3Nj1VD8cs+eINFiCPneSJoMxAKCjppYaGXfO2zZeAgmmTnbj39v1/A5ZxC262z8fA26EfrUXoLiKsJ5He4dJfmo7WO+33ha+pMTLuzP+LrZ9QyInhD6uM0YpQRauTZPrAnz6x6gJvnCirFNjtPIPQZf01KJEB7hCvlPjMIHL+9MlRG1uflgKvMWiBbtZnLegAKvjCETHJ8tPd4hRrxbcNh15n3tyMuWGQCRDDX+fvEqRFg/FYATd9dnady1/monmy25j5+c6qpYlvxKGMS7UWjSDuBzH5uQvq03VMx2D4Qd6CniJ3jDEhTjsAD/7fWs=";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                return "ewogICJ0aW1lc3RhbXAiIDogMTY1OTM5NzU1NDUxMywKICAicHJvZmlsZUlkIiA6ICI4YmM3MjdlYThjZjA0YWUzYTI4MDVhY2YzNjRjMmQyNCIsCiAgInByb2ZpbGVOYW1lIiA6ICJub3RpbnZlbnRpdmUiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWVhZWU3ZTUxYTg3NjkzYThmYjdmZTQzMGE4ODdmZmIyN2VlYjk3NDljZWE4MTZkNjUyNDVlMmRmNjU1Y2YzMiIKICAgIH0KICB9Cn0=";
+                return "ewogICJ0aW1lc3RhbXAiIDogMTY4NzgwNDE4ODc1NCwKICAicHJvZmlsZUlkIiA6ICIzNjMzMGY2YzI5NmY0NjJmYjQ3M2I4MTc4NjczMzBhMSIsCiAgInByb2ZpbGVOYW1lIiA6ICJoZWFydHlkaWUiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWVhZWU3ZTUxYTg3NjkzYThmYjdmZTQzMGE4ODdmZmIyN2VlYjk3NDljZWE4MTZkNjUyNDVlMmRmNjU1Y2YzMiIsCiAgICAgICJtZXRhZGF0YSIgOiB7CiAgICAgICAgIm1vZGVsIiA6ICJzbGltIgogICAgICB9CiAgICB9CiAgfQp9";
             }
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(44.8, 10.4, 76, 145, 0);
+                return new Pos(46.5, 101, 100.5, 145, 0);
             }
 
             @Override

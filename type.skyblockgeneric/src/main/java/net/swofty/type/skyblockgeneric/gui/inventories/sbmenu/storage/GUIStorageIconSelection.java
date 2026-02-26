@@ -1,19 +1,15 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.storage;
 
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ClickContext;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.PaginationList;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStorage;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -21,113 +17,104 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIStorageIconSelection extends HypixelPaginatedGUI<Material> {
+public class GUIStorageIconSelection extends PaginatedView<Material, GUIStorageIconSelection.IconSelectionState> {
+    private static final int[] PAGINATED_SLOTS = {
+            10, 11, 12, 13, 14, 15, 16,
+            19, 20, 21, 22, 23, 24, 25,
+            28, 29, 30, 31, 32, 33, 34,
+            37, 38, 39, 40, 41, 42, 43
+    };
+
     private final int page;
-    private final HypixelInventoryGUI previous;
 
-    protected GUIStorageIconSelection(int page, HypixelInventoryGUI previous) {
-        super(InventoryType.CHEST_6_ROW);
-
+    public GUIStorageIconSelection(int page) {
         this.page = page;
-        this.previous = previous;
     }
 
     @Override
-    public boolean allowHotkeying() {
-        return false;
+    public ViewConfiguration<IconSelectionState> configuration() {
+        return ViewConfiguration.withString(
+                (state, ctx) -> {
+                    int totalPages = Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length));
+                    return "Choose an Icon (" + (state.page() + 1) + "/" + totalPages + ")";
+                },
+                InventoryType.CHEST_6_ROW
+        );
     }
 
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    public static IconSelectionState initialState() {
+        List<Material> items = new ArrayList<>();
+        items.add(Material.BARRIER);
 
-    }
+        List<Material> vanilla = new ArrayList<>(Material.values().stream().toList());
+        vanilla.removeIf((element) -> ItemType.isVanillaReplaced(element.name()));
+        items.addAll(vanilla);
 
-    @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
-
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
+        return new IconSelectionState(items, 0);
     }
 
     @Override
     protected int[] getPaginatedSlots() {
-        return new int[]{
-                10, 11, 12, 13, 14, 15, 16,
-                19, 20, 21, 22, 23, 24, 25,
-                28, 29, 30, 31, 32, 33, 34,
-                37, 38, 39, 40, 41, 42, 43
-        };
+        return PAGINATED_SLOTS;
     }
 
     @Override
-    protected PaginationList<Material> fillPaged(HypixelPlayer player, PaginationList<Material> paged) {
-        paged.add(Material.BARRIER);
-
-        List<Material> vanilla = new ArrayList<>(Material.values().stream().toList());
-        vanilla.removeIf((element) -> ItemType.isVanillaReplaced(element.name()));
-        paged.addAll(vanilla);
-
-        return paged;
+    protected int getNextPageSlot() {
+        return 53;
     }
 
     @Override
-    protected boolean shouldFilterFromSearch(String query, Material item) {
-        return !item.name().toLowerCase().contains(query.replaceAll(" ", "_").toLowerCase());
+    protected int getPreviousPageSlot() {
+        return 45;
     }
 
     @Override
-    protected void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
-        set(GUIClickableItem.getCloseItem(49));
-        if (previous != null)
-            set(GUIClickableItem.getGoBackItem(48, previous));
-        set(createSearchItem(this, 50, query));
+    protected ItemStack.Builder renderItem(Material item, int index, HypixelPlayer player) {
+        return ItemStackCreator.getStack(
+                (item == Material.BARRIER ? "§cReset" :
+                        StringUtility.toNormalCase(item.name().replace("minecraft:", ""))),
+                item, 1,
+                "§7Ender Chest icons replace the glass",
+                "§7panes in the navigation bar.",
+                " ",
+                "§eClick to select!");
+    }
 
-        if (page > 1) {
-            set(createNavigationButton(this, 45, query, page, false));
+    @Override
+    protected void onItemClick(ClickContext<IconSelectionState> click, ViewContext ctx, Material item, int index) {
+        SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
+        DatapointStorage.PlayerStorage storage = player.getSkyblockDataHandler()
+                .get(SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class).getValue();
+
+        if (item == Material.BARRIER) {
+            storage.setDisplay(page, Material.PURPLE_STAINED_GLASS_PANE);
+        } else {
+            storage.setDisplay(page, item);
         }
-        if (page < maxPage) {
-            set(createNavigationButton(this, 53, query, page, true));
+
+        player.openView(new GUIStorage());
+    }
+
+    @Override
+    protected boolean shouldFilterFromSearch(IconSelectionState state, Material item) {
+        return false;
+    }
+
+    @Override
+    protected void layoutCustom(ViewLayout<IconSelectionState> layout, IconSelectionState state, ViewContext ctx) {
+        Components.close(layout, 49);
+        Components.back(layout, 48, ctx);
+    }
+
+    public record IconSelectionState(List<Material> items, int page) implements PaginatedState<Material> {
+        @Override
+        public PaginatedState<Material> withPage(int page) {
+            return new IconSelectionState(items, page);
         }
-    }
 
-    @Override
-    protected String getTitle(HypixelPlayer player, String query, int page, PaginationList<Material> paged) {
-        return "Choose an Icon (" + page + "/" + paged.getPageCount() + ")";
-    }
-
-    @Override
-    protected GUIClickableItem createItemFor(Material item, int slot, HypixelPlayer player) {
-        return new GUIClickableItem(slot) {
-            @Override
-            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                DatapointStorage.PlayerStorage storage = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class).getValue();
-
-                if (item == Material.BARRIER) {
-                    storage.setDisplay(page, Material.PURPLE_STAINED_GLASS_PANE);
-                    new GUIStorage().open(player);
-                    return;
-                }
-
-                storage.setDisplay(page, item);
-                new GUIStorage().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack(
-                        (item == Material.BARRIER ? "§cReset" :
-                                StringUtility.toNormalCase(item.name().replace("minecraft:", ""))),
-                        item, 1,
-                        "§7Ender Chest icons replace the glass",
-                        "§7panes in the navigation bar.",
-                        " ",
-                        "§eClick to select!");
-            }
-        };
+        @Override
+        public PaginatedState<Material> withItems(List<Material> items) {
+            return new IconSelectionState(items, page);
+        }
     }
 }

@@ -29,20 +29,27 @@ import net.swofty.spark.Spark;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
+import net.swofty.type.generic.RavengardTypeLoader;
 import net.swofty.type.generic.SkyBlockTypeLoader;
+import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
+import java.net.InetAddress;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-import java.net.InetAddress;
 
 
 public class Hypixel {
@@ -61,7 +68,7 @@ public class Hypixel {
             return;
         }
 
-        if (ConfigProvider.settings().getIntegrations().getSentryDsn().isBlank()) {
+        if (!ConfigProvider.settings().getIntegrations().getSentryDsn().isBlank()) {
             Sentry.init(options -> {
                 options.setDsn(ConfigProvider.settings().getIntegrations().getSentryDsn());
                 options.setSendDefaultPii(true);
@@ -129,6 +136,9 @@ public class Hypixel {
         if (typeLoader instanceof SkyBlockTypeLoader) {
             new SkyBlockGenericLoader(typeLoader).initialize(minecraftServer);
         }
+        if (typeLoader instanceof RavengardTypeLoader) {
+            new RavengardGenericLoader(typeLoader).initialize(minecraftServer);
+        }
 
         // Initialize the server
         typeLoader.onInitialize(minecraftServer);
@@ -145,6 +155,11 @@ public class Hypixel {
             SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis", ProxyToClient.class)
                     .forEach(proxyAPI::registerFromProxyHandler);
             SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", ServiceToClient.class)
+                    .forEach(proxyAPI::registerFromServiceHandler);
+        } else if (typeLoader instanceof RavengardTypeLoader) {
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", ProxyToClient.class)
+                    .forEach(proxyAPI::registerFromProxyHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis.service", ServiceToClient.class)
                     .forEach(proxyAPI::registerFromServiceHandler);
         }
         Arrays.stream(ToProxyChannels.values()).forEach(
@@ -228,7 +243,7 @@ public class Hypixel {
             }
         });
 
-        CompletableFuture.delayedExecutor(100, TimeUnit.MILLISECONDS)
+        CompletableFuture.delayedExecutor(5, TimeUnit.SECONDS)
                 .execute(() -> {
                     if (startServer.isDone()) return;
                     Logger.error("Couldn't connect to proxy. Shutting down...");

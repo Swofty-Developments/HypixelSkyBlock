@@ -1,5 +1,5 @@
 items:
-  - id: DEAD_BUSHOF_LOVE
+  - id: DEAD_BUSH_OF_LOVE
     rarity: COMMON
     components:
       - id: SELLABLE

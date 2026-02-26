@@ -4,14 +4,13 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIJax;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointArcheryPractice;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCJax extends HypixelNPC {
 
@@ -34,7 +33,7 @@ public class NPCJax extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(5.5, 61, -134, 90, 0);
+                return new Pos(-40.5, 69, -92.5, 35, 0);
             }
 
             @Override
@@ -64,7 +63,7 @@ public class NPCJax extends HypixelNPC {
             return;
         }
 
-        new GUIJax().open(player);
+        player.openView(new GUIJax());
     }
 
     @Override

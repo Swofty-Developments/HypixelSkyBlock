@@ -142,7 +142,7 @@ public class MurderMysteryGameScoreboard {
 					scoreboard.updateTitle(player, getSidebarName(animationFrame));
 				}
 			}
-			return TaskSchedule.tick(10);
+			return TaskSchedule.tick(4);
 		});
 	}
 

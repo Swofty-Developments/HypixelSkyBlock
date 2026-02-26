@@ -3,11 +3,10 @@ package net.swofty.type.hub.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCJacobus extends HypixelNPC {
 
@@ -15,7 +14,7 @@ public class NPCJacobus extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Jacobus", "§e§lCLICK"};
+                return new String[]{"Jacobus", "§e§lCLICK"};
             }
 
             @Override
@@ -30,7 +29,7 @@ public class NPCJacobus extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(52, 69, -43, 0, 0);
+                return new Pos(-49.5, 70, -60.5, 90, 0);
             }
 
             @Override

@@ -23,7 +23,7 @@ public class GUIBuilder extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                new GUIShopBuilderWoodworking().open(player);
+                player.openView(new GUIShopBuilderWoodworking());
             }
 
             @Override
@@ -36,7 +36,7 @@ public class GUIBuilder extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                new GUIShopBuilderRocksBricks().open(player);
+                player.openView(new GUIShopBuilderRocksBricks());
             }
 
             @Override
@@ -51,7 +51,7 @@ public class GUIBuilder extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                new GUIShopBuilderGreenThumb().open(player);
+                player.openView(new GUIShopBuilderGreenThumb());
             }
 
             @Override
@@ -66,7 +66,7 @@ public class GUIBuilder extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                new GUIShopBuilderVariety().open(player);
+                player.openView(new GUIShopBuilderVariety());
             }
 
             @Override
