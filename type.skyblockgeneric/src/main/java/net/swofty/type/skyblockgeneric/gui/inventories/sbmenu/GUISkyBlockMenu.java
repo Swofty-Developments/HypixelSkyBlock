@@ -5,8 +5,13 @@ import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
@@ -18,7 +23,6 @@ import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.fasttravel.GUIFast
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.profiles.GUIProfileManagement;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.questlog.GUIMissionLog;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipeBook;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.skills.GUISkills;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.storage.GUIStorage;
@@ -30,6 +34,7 @@ import org.jspecify.annotations.NonNull;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -50,12 +55,12 @@ public class GUISkyBlockMenu extends StatelessView {
             PlayerStatistics statistics = player.getStatistics();
             List<String> lore = new ArrayList<>(List.of("§7View your equipment, stats, and more!", "§e "));
             List<String> stats = new ArrayList<>(List.of("Health", "Defense", "Speed", "Strength", "Intelligence",
-                    "Crit Chance", "Crit Damage", "Swing Range"
+                "Crit Chance", "Crit Damage", "Swing Range"
             ));
             statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                 if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
                     lore.add(" " + statistic.getFullDisplayName() + " §f" +
-                            StringUtility.decimalify(value, 2) + statistic.getSuffix());
+                        StringUtility.decimalify(value, 2) + statistic.getSuffix());
                 }
             });
 
@@ -63,8 +68,8 @@ public class GUISkyBlockMenu extends StatelessView {
             lore.add("§eClick to view!");
 
             return ItemStackCreator.getStackHead("§aYour SkyBlock Profile",
-                    player.getPlayerSkin(), 1,
-                    lore
+                player.getPlayerSkin(), 1,
+                lore
             );
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -77,25 +82,25 @@ public class GUISkyBlockMenu extends StatelessView {
             SkyBlockLevelRequirement nextLevel = levelRequirement.getNextLevel();
 
             return ItemStackCreator.getStackHead("§aSkyBlock Leveling", "3255327dd8e90afad681a19231665bea2bd06065a09d77ac1408837f9e0b242", 1,
-                    "§7Your SkyBlock Level: §8[" + levelRequirement.getColor() + levelRequirement + "§8]",
-                    " ",
-                    "§7Determine how far you've",
-                    "§7progressed in SkyBlock and earn",
-                    "§7rewards from completing unique",
-                    "§7tasks.",
-                    " ",
-                    "§7Progress to Level " + (nextLevel == null ? "§cMAX" : nextLevel),
-                    player.getSkyBlockExperience().getNextLevelDisplay(),
-                    " ",
-                    "§eClick to view!"
+                "§7Your SkyBlock Level: §8[" + levelRequirement.getColor() + levelRequirement + "§8]",
+                " ",
+                "§7Determine how far you've",
+                "§7progressed in SkyBlock and earn",
+                "§7rewards from completing unique",
+                "§7tasks.",
+                " ",
+                "§7Progress to Level " + (nextLevel == null ? "§cMAX" : nextLevel),
+                player.getSkyBlockExperience().getNextLevelDisplay(),
+                " ",
+                "§eClick to view!"
             );
         }, (click, c) -> c.push(new GUISkyBlockLevels()));
 
         layout.slot(29, (s, c) -> ItemStackCreator.getStackHead("§aYour Bags", "961a918c0c49ba8d053e522cb91abc74689367b4d8aa06bfc1ba9154730985ff", 1,
-                "§7Different bags allow you to store",
-                "§7many different items inside!",
-                " ",
-                "§eClick to view!"
+            "§7Different bags allow you to store",
+            "§7many different items inside!",
+            " ",
+            "§eClick to view!"
         ), (click, c) -> {
             c.push(new GUIYourBags());
         });
@@ -103,27 +108,27 @@ public class GUISkyBlockMenu extends StatelessView {
         layout.slot(30, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             return ItemStackCreator.getStack("§aPets", Material.BONE, 1,
-                    "§7View and manage all of your",
-                    "§7Pets.",
-                    " ",
-                    "§7Level up your pets faster by",
-                    "§7gaining XP in their favourite",
-                    "§7skill!",
-                    " ",
-                    "§7Selected pet: " + (player.getPetData().getEnabledPet() == null ? "§cNone" : player.getPetData().getEnabledPet().getDisplayName()),
-                    " ",
-                    "§eClick to view!"
+                "§7View and manage all of your",
+                "§7Pets.",
+                " ",
+                "§7Level up your pets faster by",
+                "§7gaining XP in their favourite",
+                "§7skill!",
+                " ",
+                "§7Selected pet: " + (player.getPetData().getEnabledPet() == null ? "§cNone" : player.getPetData().getEnabledPet().getDisplayName()),
+                " ",
+                "§eClick to view!"
             );
         }, (click, c) -> c.push(new GUIPets(), GUIPets.createInitialState((SkyBlockPlayer) c.player())));
 
         layout.slot(21, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             List<String> lore = new ArrayList<>(List.of(
-                    "§7Through your adventure, you will",
-                    "§7unlock recipes for all kinds of",
-                    "§7special items! You can view how to",
-                    "§7craft these items here.",
-                    " "
+                "§7Through your adventure, you will",
+                "§7unlock recipes for all kinds of",
+                "§7special items! You can view how to",
+                "§7craft these items here.",
+                " "
             ));
 
             SkyBlockRecipe.getMissionDisplay(lore, player.getUuid());
@@ -136,46 +141,46 @@ public class GUISkyBlockMenu extends StatelessView {
         });
 
         layout.slot(25, (s, c) -> ItemStackCreator.getStack("§aStorage", Material.CHEST, 1,
-                "§7Store global items that you",
-                "§7want to access at any time",
-                "§7from anywhere here.",
-                " ",
-                "§eClick to view!"
+            "§7Store global items that you",
+            "§7want to access at any time",
+            "§7from anywhere here.",
+            " ",
+            "§eClick to view!"
         ), (click, c) -> c.push(new GUIStorage()));
 
         layout.slot(23, (s, c) -> ItemStackCreator.getStack("§aQuests & Chapters", Material.WRITABLE_BOOK, 1,
-                "§7Each island has its own series of",
-                "§bChapters §7for you to complete!",
-                " ",
-                "§7Complete tasks within a Chapter to",
-                "§7earn small §6rewards§7, or complete",
-                "§7entire Chapters to earn big ones!",
-                " ",
-                "§7Some islands also have §aQuests §7for",
-                "§7you to complete! Some items can only",
-                "§7be obtained through Quests.",
-                " ",
-                "§eClick to view!"
+            "§7Each island has its own series of",
+            "§bChapters §7for you to complete!",
+            " ",
+            "§7Complete tasks within a Chapter to",
+            "§7earn small §6rewards§7, or complete",
+            "§7entire Chapters to earn big ones!",
+            " ",
+            "§7Some islands also have §aQuests §7for",
+            "§7you to complete! Some items can only",
+            "§7be obtained through Quests.",
+            " ",
+            "§eClick to view!"
         ), (click, c) -> c.push(new GUIMissionLog()));
 
-        layout.autoUpdating(24, (s, c) -> ItemStackCreator.getStack("§aCalendar and Events", Material.CLOCK, 1, getCalendarLore()),
-                (click, c) -> c.push(new GUICalendar()), Duration.ofSeconds(1));
+        layout.autoUpdating(24, (s, c) -> ItemStackCreator.getStack("§aCalendar and Events", Material.CLOCK, 1, getCalendarLore(ctx)),
+            (_, c) -> c.push(new GUICalendar()), Duration.ofSeconds(1));
 
         layout.slot(19, (s, c) -> ItemStackCreator.getStack("§aYour Skills", Material.DIAMOND_SWORD, 1,
-                "§7View your Skill progression and",
-                "§7rewards.",
-                " ",
-                "§eClick to view!"
+            "§7View your Skill progression and",
+            "§7rewards.",
+            " ",
+            "§eClick to view!"
         ), (click, c) -> c.push(new GUISkills()));
 
         layout.slot(20, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             List<String> lore = new ArrayList<>(List.of(
-                    "§7View all of the items available in",
-                    "§7SkyBlock. Collect more of an item to",
-                    "§7unlock rewards on your way to",
-                    "§7becoming a master of SkyBlock!",
-                    " "
+                "§7View all of the items available in",
+                "§7SkyBlock. Collect more of an item to",
+                "§7unlock rewards on your way to",
+                "§7becoming a master of SkyBlock!",
+                " "
             ));
 
             player.getCollection().getDisplay(lore);
@@ -189,17 +194,17 @@ public class GUISkyBlockMenu extends StatelessView {
         });
 
         layout.slot(31, (s, c) -> ItemStackCreator.getStack("§aCrafting Table", Material.CRAFTING_TABLE, 1,
-                "§7Opens the crafting grid.",
-                " ",
-                "§eClick to open!"
+            "§7Opens the crafting grid.",
+            " ",
+            "§eClick to open!"
         ), (click, c) -> c.push(new GUICrafting()));
 
         layout.slot(47, (s, c) -> ItemStackCreator.getStackHead("§bFast Travel", "f151cffdaf303673531a7651b36637cad912ba485643158e548d59b2ead5011", 1,
-                "§7Teleport to islands you've already",
-                "§7visited.",
-                " ",
-                "§8Right-click to warp home!",
-                "§eClick to pick location!"
+            "§7Teleport to islands you've already",
+            "§7visited.",
+            " ",
+            "§8Right-click to warp home!",
+            "§eClick to pick location!"
         ), (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             if (click.click() instanceof Click.Right) {
@@ -213,29 +218,29 @@ public class GUISkyBlockMenu extends StatelessView {
         layout.slot(48, (s, c) -> {
             HypixelPlayer player = c.player();
             return ItemStackCreator.getStack("§aProfile Management", Material.NAME_TAG, 1,
-                    "§7You can have multiple SkyBlock",
-                    "§7profiles at the same time.",
-                    " ",
-                    "§7Each profile has its own island,",
-                    "§7inventory, quest log...",
-                    " ",
-                    "§7Profiles: §e" + ((SkyBlockPlayer) player).getProfiles().getProfiles().size() + "§6/§e4",
-                    " ",
-                    "§eClick to manage!"
+                "§7You can have multiple SkyBlock",
+                "§7profiles at the same time.",
+                " ",
+                "§7Each profile has its own island,",
+                "§7inventory, quest log...",
+                " ",
+                "§7Profiles: §e" + ((SkyBlockPlayer) player).getProfiles().getProfiles().size() + "§6/§e4",
+                " ",
+                "§eClick to manage!"
             );
         }, (click, c) -> c.push(new GUIProfileManagement()));
     }
 
-    private static @NonNull List<String> getCalendarLore() {
+    private static @NonNull List<String> getCalendarLore(ViewContext ctx) {
         List<CalendarEvent> currentEvents = SkyBlockCalendar.getCurrentEvents();
         boolean multipleEvents = currentEvents.size() > 1;
 
         List<String> lore = new ArrayList<>(List.of("§7View the SkyBlock Calendar, upcoming",
-                "§7events, and event rewards!",
-                " ",
-                "§7Date: §a" + StringUtility.ntify(SkyBlockCalendar.getDay()) + " " + SkyBlockCalendar.getMonthName() + " " + SkyBlockCalendar.getYear(),
-                ""));
-        if(multipleEvents) {
+            "§7events, and event rewards!",
+            " ",
+            "§7Date: §a" + StringUtility.ntify(SkyBlockCalendar.getDay()) + " " + SkyBlockCalendar.getMonthName() + " " + SkyBlockCalendar.getYear(),
+            ""));
+        if (multipleEvents) {
             lore.add("§7Current events: ");
             for (CalendarEvent event : currentEvents) {
                 lore.add(event.getDisplayName(SkyBlockCalendar.getYear()));
@@ -251,7 +256,13 @@ public class GUISkyBlockMenu extends StatelessView {
 
         lore.add(" ");
 
-        Map<SkyBlockCalendar.EventInfo, CalendarEvent> upcomingEvents = SkyBlockCalendar.getEventsWithDurationUntil(1);
+        Map<SkyBlockCalendar.EventInfo, CalendarEvent> upcomingEvents;
+        if (ctx.player().getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_VISITED_DARK_AUCTION)) {
+            upcomingEvents = SkyBlockCalendar.getEventsWithDurationUntil(1);
+        } else {
+            upcomingEvents = SkyBlockCalendar.getEventsWithDurationUntilSkipSpecific(1, Collections.singletonList(CalendarEvent.DARK_AUCTION));
+        }
+
         if (!upcomingEvents.isEmpty()) {
             Map.Entry<SkyBlockCalendar.EventInfo, CalendarEvent> entry = upcomingEvents.entrySet().iterator().next();
             SkyBlockCalendar.EventInfo info = entry.getKey();
@@ -264,26 +275,26 @@ public class GUISkyBlockMenu extends StatelessView {
         }
 
         lore.addAll(
-                List.of(
-                        " ",
-                        "§8Also accessible via /calendar",
-                        " ",
-                        "§eClick to view!"
-                )
+            List.of(
+                " ",
+                "§8Also accessible via /calendar",
+                " ",
+                "§eClick to view!"
+            )
         );
         return lore;
     }
 
-	private static long getTicksRemaining(CalendarEvent currentEvent) {
-		long currentElapsedInYear = SkyBlockCalendar.getElapsed() % SkyBlockCalendar.YEAR;
-		long eventEndTime = 0;
-		for (Long eventStartTime : currentEvent.times()) {
-			if (currentElapsedInYear >= eventStartTime && currentElapsedInYear < eventStartTime + currentEvent.duration().toMillis() / 50) {
-				eventEndTime = eventStartTime + currentEvent.duration().toMillis() / 50;
-				break;
-			}
-		}
-		return eventEndTime - currentElapsedInYear;
-	}
+    private static long getTicksRemaining(CalendarEvent currentEvent) {
+        long currentElapsedInYear = SkyBlockCalendar.getElapsed() % SkyBlockCalendar.YEAR;
+        long eventEndTime = 0;
+        for (Long eventStartTime : currentEvent.times()) {
+            if (currentElapsedInYear >= eventStartTime && currentElapsedInYear < eventStartTime + currentEvent.duration().toMillis() / 50) {
+                eventEndTime = eventStartTime + currentEvent.duration().toMillis() / 50;
+                break;
+            }
+        }
+        return eventEndTime - currentElapsedInYear;
+    }
 
 }

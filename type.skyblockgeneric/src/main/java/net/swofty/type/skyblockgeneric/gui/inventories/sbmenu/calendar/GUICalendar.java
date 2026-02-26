@@ -14,6 +14,7 @@ import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,39 +36,51 @@ public class GUICalendar extends StatelessView {
         Components.close(layout, 40);
         Components.back(layout, 39, ctx);
 
-        Map<SkyBlockCalendar.EventInfo, CalendarEvent> events;
+        boolean includeDarkAuction = ctx.player().getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_VISITED_DARK_AUCTION);
 
-        if (ctx.player().getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_VISITED_DARK_AUCTION)) {
-            events = SkyBlockCalendar.getEventsWithDurationUntil(14);
-        } else {
-            events = SkyBlockCalendar.getEventsWithDurationUntilSkipSpecific(14, Collections.singletonList(CalendarEvent.DARK_AUCTION));
-        }
+        Map<SkyBlockCalendar.EventInfo, CalendarEvent> initialEvents = includeDarkAuction
+            ? SkyBlockCalendar.getEventsWithDurationUntil(14)
+            : SkyBlockCalendar.getEventsWithDurationUntilSkipSpecific(14, Collections.singletonList(CalendarEvent.DARK_AUCTION));
+        List<CalendarEvent> orderedEvents = new ArrayList<>(initialEvents.values());
 
-        int index = 0;
-        for (Map.Entry<SkyBlockCalendar.EventInfo, CalendarEvent> entry : events.entrySet()) {
-            if (index >= EVENT_SLOTS.length) break;
-            SkyBlockCalendar.EventInfo info = entry.getKey();
-            CalendarEvent event = entry.getValue();
-            int slot = EVENT_SLOTS[index];
+        for (int i = 0; i < Math.min(orderedEvents.size(), EVENT_SLOTS.length); i++) {
+            final CalendarEvent event = orderedEvents.get(i);
+            final int slot = EVENT_SLOTS[i];
 
-            layout.slot(slot, (_, _) -> {
-                List<Component> loreHeader = new ArrayList<>(List.of(Component.text("§7Starts in: §e" + StringUtility.formatTimeLeft(info.timeUntilBegin() * 50L))));
-                if (!info.duration().isZero()) {
-                    loreHeader.add(Component.text("§7Event lasts for §e" + StringUtility.formatTimeLeft(info.duration().toMillis()) + "§7!"));
+            layout.autoUpdating(slot, (_, _) -> {
+                Map<SkyBlockCalendar.EventInfo, CalendarEvent> freshEvents = includeDarkAuction
+                    ? SkyBlockCalendar.getEventsWithDurationUntil(14)
+                    : SkyBlockCalendar.getEventsWithDurationUntilSkipSpecific(14, Collections.singletonList(CalendarEvent.DARK_AUCTION));
+
+                SkyBlockCalendar.EventInfo freshInfo = freshEvents.entrySet().stream()
+                    .filter(e -> e.getValue() == event)
+                    .map(Map.Entry::getKey)
+                    .findFirst()
+                    .orElse(null);
+
+                if (freshInfo == null) {
+                    return event.representation().builder()
+                        .set(DataComponents.CUSTOM_NAME, Component.text(event.getDisplayName(0)))
+                        .set(DataComponents.LORE, List.of());
+                }
+
+                List<Component> loreHeader = new ArrayList<>(List.of(
+                    Component.text("§7Starts in: §e" + StringUtility.formatTimeLeft(freshInfo.timeUntilBegin() * 50L))
+                ));
+                if (!freshInfo.duration().isZero()) {
+                    loreHeader.add(Component.text("§7Event lasts for §e" + StringUtility.formatTimeLeft(freshInfo.duration().toMillis()) + "§7!"));
                 }
                 loreHeader.add(Component.text(" "));
 
-                List<Component> loreFooter = event.description().stream()
-                    .map(line -> (Component) Component.text(line))
-                    .toList();
-
-                List<Component> lore = Stream.concat(loreHeader.stream(), loreFooter.stream()).toList();
+                List<Component> lore = Stream.concat(
+                    loreHeader.stream(),
+                    event.description().stream().map(line -> (Component) Component.text(line))
+                ).toList();
 
                 return event.representation().builder()
-                    .set(DataComponents.CUSTOM_NAME, Component.text(event.getDisplayName(info.year())))
+                    .set(DataComponents.CUSTOM_NAME, Component.text(event.getDisplayName(freshInfo.year())))
                     .set(DataComponents.LORE, lore);
-            });
-            index++;
+            }, Duration.ofSeconds(1));
         }
     }
 }

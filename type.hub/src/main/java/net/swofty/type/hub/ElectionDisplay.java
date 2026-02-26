@@ -9,7 +9,6 @@ import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.elections.SkyBlockMayor;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,8 +23,6 @@ public class ElectionDisplay {
         HypixelGenericLoader.getLoadedPlayers().forEach(player -> {
             long timeLeft = SkyBlockCalendar.ticksUntilEvent(CalendarEvent.ELECTION_CLOSE);
             String timeLeftFormatted = StringUtility.formatTimeLeft(timeLeft * 50L);
-
-            Logger.info(timeLeftFormatted + " until election close for player " + timeLeft);
 
             List<String> message = new ArrayList<>(List.of(
                 "§e§lMAYOR ELECTIONS",
