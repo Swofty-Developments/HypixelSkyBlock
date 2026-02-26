@@ -11,6 +11,7 @@ import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 
 import java.util.List;
 import java.util.Map;
