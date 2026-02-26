@@ -104,3 +104,7 @@ items:
             result:
               type: QUARTZ_STAIRS
               amount: 4
+
+  - id: SMOOTH_QUARTZ
+    rarity: COMMON
+    material: SMOOTH_QUARTZ

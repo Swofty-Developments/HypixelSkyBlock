@@ -27,3 +27,11 @@ items:
       - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
+
+  - id: COARSE_DIRT
+    rarity: COMMON
+    material: COARSE_DIRT
+
+  - id: PODZOL
+    rarity: COMMON
+    material: PODZOL

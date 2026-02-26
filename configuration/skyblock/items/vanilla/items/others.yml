@@ -1,0 +1,64 @@
+items:
+  - id: BOOK
+    rarity: COMMON
+    material: BOOK
+
+  - id: BOWL
+    rarity: COMMON
+    material: BOWL
+
+  - id: BREAD
+    rarity: COMMON
+    material: BREAD
+
+  - id: CHARCOAL
+    rarity: COMMON
+    material: CHARCOAL
+
+  - id: DRAGON_BREATH
+    rarity: COMMON
+    material: DRAGON_BREATH
+
+  - id: ELDER_GUARDIAN_SPAWN_EGG
+    rarity: COMMON
+    material: ELDER_GUARDIAN_SPAWN_EGG
+
+  - id: ENDER_EYE
+    rarity: COMMON
+    material: ENDER_EYE
+
+  - id: EXPERIENCE_BOTTLE
+    rarity: COMMON
+    material: EXPERIENCE_BOTTLE
+
+  - id: FIREWORK_ROCKET
+    rarity: COMMON
+    material: FIREWORK_ROCKET
+
+  - id: GLASS_BOTTLE
+    rarity: COMMON
+    material: GLASS_BOTTLE
+
+  - id: LAVA_BUCKET
+    rarity: COMMON
+    material: LAVA_BUCKET
+
+  - id: MILK_BUCKET
+    rarity: COMMON
+    material: MILK_BUCKET
+
+  - id: PAPER
+    rarity: COMMON
+    material: PAPER
+
+  - id: SHEARS
+    rarity: COMMON
+    material: SHEARS
+
+  - id: WATER_BOTTLE
+    rarity: COMMON
+    material: POTION
+
+  - id: WATER_BUCKET
+    rarity: COMMON
+    material: WATER_BUCKET

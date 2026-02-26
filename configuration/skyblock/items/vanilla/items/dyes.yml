@@ -387,3 +387,7 @@ items:
             result:
               type: YELLOW_DYE
               amount: 2
+
+  - id: GREEN_DYE
+    rarity: COMMON
+    material: GREEN_DYE

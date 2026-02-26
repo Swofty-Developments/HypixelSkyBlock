@@ -1,5 +1,6 @@
 items:
   - id: WOODEN_SHOVEL
+    material: wooden_shovel
     rarity: COMMON
     default_statistics:
       damage: 15.0
@@ -26,6 +27,7 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: STONE_SHOVEL
+    material: stone_shovel
     rarity: COMMON
     default_statistics:
       damage: 20.0
@@ -52,6 +54,7 @@ items:
       - id: SELLABLE
         value: 1.0
   - id: IRON_SHOVEL
+    material: iron_shovel
     rarity: COMMON
     default_statistics:
       damage: 25.0
@@ -78,6 +81,7 @@ items:
       - id: SELLABLE
         value: 2.0
   - id: GOLDEN_SHOVEL
+    material: golden_shovel
     rarity: COMMON
     default_statistics:
       damage: 15.0
@@ -104,6 +108,7 @@ items:
       - id: SELLABLE
         value: 3.0
   - id: DIAMOND_SHOVEL
+    material: diamond_shovel
     rarity: COMMON
     default_statistics:
       damage: 30.0
