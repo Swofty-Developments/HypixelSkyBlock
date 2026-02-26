@@ -5,6 +5,7 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAdventurer;
 
@@ -57,13 +58,7 @@ public class NPCAdventurer extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.builder()
-                        .key("hello").lines(new String[]{
-                                "I've seen it all - every island from here to the edge of the world!",
-                                "Over the years I've acquired a variety of Talismans and Artifact.",
-                                "For a price, you can have it all!",
-                                "Click me again to open the Adventurer Shop!"
-                        }).build(),
+                DialogueSet.ofTranslation("hello", "npcs_hub.adventurer.dialogue.hello")
         };
     }
 }

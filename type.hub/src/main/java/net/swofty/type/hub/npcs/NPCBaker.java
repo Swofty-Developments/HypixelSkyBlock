@@ -15,6 +15,8 @@ import net.swofty.type.skyblockgeneric.gui.inventories.ClaimRewardView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import net.swofty.type.generic.i18n.I18n;
+
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -87,13 +89,8 @@ public class NPCBaker extends HypixelNPC {
 
     @Override
     protected DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("initial-hello").lines(new String[]{
-                                "At the end of each year I bake cakes for everyone in town to celebrate the year.",
-                                "I made one especially for you, here you go.",
-                                "I've recently added a §dNew Year Cake Bag §fto my inventory. Sadly, it's not free! Click me again to open my shop!",
-                        }).build()
-        ).toArray(DialogueSet[]::new);
+        return new DialogueSet[] {
+                DialogueSet.ofTranslation("initial-hello", "npcs_hub.baker.dialogue.initial_hello")
+        };
     }
 }
