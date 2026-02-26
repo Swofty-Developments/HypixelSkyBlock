@@ -61,7 +61,7 @@ dependencies {
     implementation(project(":proxy.api"))
     implementation(project(":spark"))
     implementation(project(":anticheat"))
-    implementation("org.slf4j:slf4j-api:2.0.13")
+    implementation("org.slf4j:slf4j-api:2.0.17")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
     implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
