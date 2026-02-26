@@ -18,10 +18,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 public class HypixelTranslator extends MiniMessageTranslator {
 
@@ -29,6 +31,7 @@ public class HypixelTranslator extends MiniMessageTranslator {
     private static final Path I18N_ROOT = Path.of("./configuration/i18n");
 
     private final Map<Locale, Map<String, Path>> fileIndexByLocale;
+    private final Set<String> defaultLocaleKeys;
     private final Cache<LocaleSubsystem, Map<String, String>> bundleCache;
     private final Cache<LocaleKey, Optional<String>> keyCache;
 
@@ -36,6 +39,7 @@ public class HypixelTranslator extends MiniMessageTranslator {
         super(MiniMessage.miniMessage());
 
         this.fileIndexByLocale = buildFileIndex(I18N_ROOT);
+        this.defaultLocaleKeys = loadAllKeysForLocale(defaultLocale);
 
         this.bundleCache = Caffeine.newBuilder()
                 .maximumSize(64L)
@@ -46,6 +50,25 @@ public class HypixelTranslator extends MiniMessageTranslator {
                 .maximumSize(250_000L)
                 .expireAfterAccess(Duration.ofMinutes(10))
                 .build();
+    }
+
+    public boolean hasKey(String key) {
+        return defaultLocaleKeys.contains(key);
+    }
+
+    public int keyCount() {
+        return defaultLocaleKeys.size();
+    }
+
+    private Set<String> loadAllKeysForLocale(Locale locale) {
+        Map<String, Path> localeIndex = fileIndexByLocale.get(locale);
+        if (localeIndex == null) return Set.of();
+
+        Set<String> keys = new HashSet<>();
+        for (Path file : localeIndex.values()) {
+            keys.addAll(loadPropertiesFileFlat(file).keySet());
+        }
+        return Set.copyOf(keys);
     }
 
     @Override

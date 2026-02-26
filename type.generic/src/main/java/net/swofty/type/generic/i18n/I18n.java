@@ -15,15 +15,30 @@ public class I18n {
 
     private static final String DIALOGUE_SEPARATOR = "\\|";
 
+    private static HypixelTranslator translator;
+
+    public static void init(HypixelTranslator instance) {
+        translator = instance;
+    }
+
+    public static void requireKey(String key) {
+        if (translator != null && !translator.hasKey(key)) {
+            throw new IllegalStateException("Missing translation key in en_US: " + key);
+        }
+    }
+
     public static TranslatableComponent t(String key) {
+        requireKey(key);
         return Component.translatable(key);
     }
 
     public static TranslatableComponent t(String key, Component... args) {
+        requireKey(key);
         return Component.translatable(key, args);
     }
 
     public static String string(String key, Locale locale) {
+        requireKey(key);
         Component rendered = GlobalTranslator.render(Component.translatable(key), locale);
         return LEGACY.serialize(rendered);
     }

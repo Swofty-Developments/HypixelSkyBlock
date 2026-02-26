@@ -34,6 +34,7 @@ import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.RavengardTypeLoader;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.i18n.HypixelTranslator;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import org.json.JSONArray;
@@ -190,7 +191,9 @@ public class Hypixel {
 
         MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION = true;
         HypixelTranslator translator = new HypixelTranslator();
+        I18n.init(translator);
         GlobalTranslator.translator().addSource(translator);
+        Logger.info("Loaded " + translator.keyCount() + " translation keys for default locale");
 
         // Start the server
         MinecraftServer.setBrandName("Hypixel");
