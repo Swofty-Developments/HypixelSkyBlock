@@ -1,5 +1,6 @@
 items:
   - id: PIONEERS_PICKAXE
+    material: wooden_pickaxe
     rarity: COMMON
     default_statistics:
       mining_speed: 1.0
@@ -8,6 +9,7 @@ items:
       - id: PICKAXE
 
   - id: ROOKIE_PICKAXE
+    material: stone_pickaxe
     rarity: COMMON
     default_statistics:
       mining_speed: 150.0

@@ -1,5 +1,6 @@
 items:
   - id: SMALL_COMBAT_SACK
+    material: player_head
     rarity: COMMON
     lore:
       - '§7Item pickups go directly into your'
@@ -51,6 +52,7 @@ items:
               amount: 1
 
   - id: MEDIUM_COMBAT_SACK
+    material: player_head
     rarity: RARE
     lore:
       - '§7Item pickups go directly into your'
@@ -102,6 +104,7 @@ items:
               amount: 1
 
   - id: LARGE_COMBAT_SACK
+    material: player_head
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'
@@ -153,6 +156,7 @@ items:
               amount: 1
 
   - id: LARGE_ENCHANTED_COMBAT_SACK
+    material: player_head
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'

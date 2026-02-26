@@ -1,5 +1,6 @@
 items:
   - id: DARK_PURPLE_DYE
+    material: player_head
     rarity: LEGENDARY
     lore:
       - "§7Can be applied to any vanilla Armor"
@@ -52,3 +53,13 @@ items:
         is_absolute: false
     default_statistics:
       damage: 170.0
+
+  - id: BIGFOOT_LASSO
+    rarity: EPIC
+    material: LEAD
+  - id: WEIRD_TUBA
+    rarity: RARE
+    material: HOPPER
+  - id: HAMSTER_WHEEL
+    rarity: RARE
+    material: OAK_TRAPDOOR

@@ -1,11 +1,13 @@
 items:
-  - id: DEAD_BUSHOF_LOVE
+  - id: DEAD_BUSH_OF_LOVE
+    material: dead_bush
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 333.0
       - id: ENCHANTED
   - id: GAME_ANNIHILATOR
+    material: player_head
     rarity: COMMON
     components:
       - id: DEFAULT_SOULBOUND
@@ -13,12 +15,14 @@ items:
       - id: SKULL_HEAD
         texture: 8da332abde333a15a6c6fcfeca83f0159ea94b68e8f274bafc04892b6dbfc
   - id: GAME_BREAKER
+    material: tnt
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 777.0
       - id: ENCHANTED
   - id: QUALITY_MAP
+    material: map
     rarity: COMMON
     components:
       - id: SELLABLE

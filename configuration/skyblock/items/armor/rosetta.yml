@@ -1,5 +1,6 @@
 items:
   - id: ROSETTA_BOOTS
+    material: diamond_boots
     rarity: COMMON
     default_statistics:
       health: 15.0
@@ -12,6 +13,7 @@ items:
       - id: SELLABLE
         value: 480.0
   - id: ROSETTA_CHESTPLATE
+    material: diamond_chestplate
     rarity: COMMON
     default_statistics:
       health: 15.0
@@ -24,6 +26,7 @@ items:
       - id: SELLABLE
         value: 660.0
   - id: ROSETTA_HELMET
+    material: diamond_helmet
     rarity: COMMON
     default_statistics:
       health: 15.0
@@ -36,6 +39,7 @@ items:
       - id: SELLABLE
         value: 525.0
   - id: ROSETTA_LEGGINGS
+    material: diamond_leggings
     rarity: COMMON
     default_statistics:
       health: 15.0
