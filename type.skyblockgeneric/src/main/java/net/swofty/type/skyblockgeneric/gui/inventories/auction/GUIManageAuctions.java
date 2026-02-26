@@ -18,6 +18,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
@@ -32,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class GUIManageAuctions extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIManageAuctions() {
-        super("Manage Auctions", InventoryType.CHEST_3_ROW);
+        super(I18n.string("gui_auction.manage.title"), InventoryType.CHEST_3_ROW);
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(22, new GUIAuctionHouse()));
@@ -46,11 +47,8 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aCreate Auction", Material.GOLDEN_HORSE_ARMOR, 1,
-                        "§7Set your own items on auction for",
-                        "§7other players to purchase.",
-                        " ",
-                        "§eClick to become rich!");
+                return ItemStackCreator.getStack(I18n.string("gui_auction.manage.create_button"), Material.GOLDEN_HORSE_ARMOR, 1,
+                        I18n.lore("gui_auction.manage.create_button.lore"));
             }
         });
     }
@@ -148,7 +146,7 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage("§cAuction House is currently offline!");
+            player.sendMessage(I18n.string("gui_auction.manage.offline_message"));
             player.closeInventory();
             return;
         }

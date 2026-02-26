@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionCollectWheat;
@@ -70,19 +71,10 @@ public class NPCFarmerRigby extends HypixelNPC {
 
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
-        return List.of(
-                DialogueSet.builder()
-                        .key("initial-hello").lines(new String[]{
-                                "Howdy, friend!",
-                                "My cow is sick, she needs some food to replenish her strength.",
-                                "Could you gather some Wheat from my farm and bring it back to me so that I can feed her? Poor thing."
-                        }).build(),
-                DialogueSet.builder()
-                        .key("spoke-again").lines(new String[]{
-                                "Thank you so much!",
-                                "My Farm is yours to harvest! Wheat is a valuable resource to collect, you can unlock many cool things by collecting it."
-                        }).build()
-        ).stream().toArray(DialogueSet[]::new);
+        return new DialogueSet[] {
+                DialogueSet.ofTranslation("initial-hello", "npcs_hub.farmer_rigby.dialogue.initial_hello"),
+                DialogueSet.ofTranslation("spoke-again", "npcs_hub.farmer_rigby.dialogue.spoke_again")
+        };
     }
 
 }

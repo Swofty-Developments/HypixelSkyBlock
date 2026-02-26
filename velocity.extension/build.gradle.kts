@@ -31,8 +31,8 @@ dependencies {
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.5")
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
-    implementation("org.mongodb:bson:5.6.2")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.2")
+    implementation("org.mongodb:bson:5.6.4")
+    implementation("org.mongodb:mongodb-driver-sync:5.6.4")
 
     implementation("com.viaversion:vialoader:4.0.6")
     implementation("com.viaversion:viabackwards-common:5.7.1")
@@ -46,8 +46,8 @@ dependencies {
     implementation("io.netty:netty-transport")
     implementation("io.netty:netty-handler")
 
-    implementation("net.bytebuddy:byte-buddy:1.14.16")
-    implementation("net.bytebuddy:byte-buddy-agent:1.14.16")
+    implementation("net.bytebuddy:byte-buddy:1.18.5")
+    implementation("net.bytebuddy:byte-buddy-agent:1.18.5")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
 }

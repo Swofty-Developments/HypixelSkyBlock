@@ -7,11 +7,13 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.friend.FriendManager;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @CommandParameters(aliases = "f",
@@ -46,7 +48,7 @@ public class FriendCommand extends HypixelCommand {
             pendingCommands.add(player.getUuid());
 
             if (!friendService.isOnline().join()) {
-                sender.sendMessage("§cCould not connect to the friend service! Please try again later.");
+                sender.sendMessage(I18n.string("commands.common.service_offline_friend"));
                 pendingCommands.remove(player.getUuid());
                 return;
             }
@@ -78,7 +80,7 @@ public class FriendCommand extends HypixelCommand {
             pendingCommands.add(player.getUuid());
 
             if (!friendService.isOnline().join()) {
-                sender.sendMessage("§cCould not connect to the friend service! Please try again later.");
+                sender.sendMessage(I18n.string("commands.common.service_offline_friend"));
                 pendingCommands.remove(player.getUuid());
                 return;
             }
@@ -104,7 +106,7 @@ public class FriendCommand extends HypixelCommand {
                     int page = parsePageNumber(arg);
                     FriendManager.listRequests(player, page);
                 }
-                default -> player.sendMessage("§cUnknown command. Use /friend for help.");
+                default -> player.sendMessage(I18n.string("commands.common.unknown_command_use_help", Map.of("command", "friend")));
             }
 
             pendingCommands.remove(player.getUuid());
@@ -122,7 +124,7 @@ public class FriendCommand extends HypixelCommand {
             pendingCommands.add(player.getUuid());
 
             if (!friendService.isOnline().join()) {
-                sender.sendMessage("§cCould not connect to the friend service! Please try again later.");
+                sender.sendMessage(I18n.string("commands.common.service_offline_friend"));
                 pendingCommands.remove(player.getUuid());
                 return;
             }
@@ -134,7 +136,7 @@ public class FriendCommand extends HypixelCommand {
             if (sub.equalsIgnoreCase("nickname")) {
                 FriendManager.setNickname(player, target, extra);
             } else {
-                player.sendMessage("§cUnknown command. Use /friend for help.");
+                player.sendMessage(I18n.string("commands.common.unknown_command_use_help", Map.of("command", "friend")));
             }
 
             pendingCommands.remove(player.getUuid());
@@ -142,20 +144,20 @@ public class FriendCommand extends HypixelCommand {
     }
 
     private void showHelp(HypixelPlayer player) {
-        player.sendMessage("§9§m-----------------------------------------------------");
-        player.sendMessage("§6Friend Commands");
-        player.sendMessage("§e/f add <player> §8- §7Add a player as a friend");
-        player.sendMessage("§e/f accept <player> §8- §7Accept a friend request");
-        player.sendMessage("§e/f deny <player> §8- §7Deny a friend request");
-        player.sendMessage("§e/f remove <player> §8- §7Remove a friend");
-        player.sendMessage("§e/f removeall §8- §7Remove all friends (keeps best friends)");
-        player.sendMessage("§e/f best <player> §8- §7Toggle best friend status");
-        player.sendMessage("§e/f nickname <player> <name> §8- §7Set a nickname for a friend");
-        player.sendMessage("§e/f list [page/best] §8- §7List your friends");
-        player.sendMessage("§e/f requests [page] §8- §7View pending friend requests");
-        player.sendMessage("§e/f toggle §8- §7Toggle accepting friend requests");
-        player.sendMessage("§e/f notifications §8- §7Toggle join/leave notifications");
-        player.sendMessage("§9§m-----------------------------------------------------");
+        player.sendMessage(I18n.string("commands.common.separator"));
+        player.sendMessage(I18n.string("commands.friend.help_header"));
+        player.sendMessage(I18n.string("commands.friend.help_add"));
+        player.sendMessage(I18n.string("commands.friend.help_accept"));
+        player.sendMessage(I18n.string("commands.friend.help_deny"));
+        player.sendMessage(I18n.string("commands.friend.help_remove"));
+        player.sendMessage(I18n.string("commands.friend.help_removeall"));
+        player.sendMessage(I18n.string("commands.friend.help_best"));
+        player.sendMessage(I18n.string("commands.friend.help_nickname"));
+        player.sendMessage(I18n.string("commands.friend.help_list"));
+        player.sendMessage(I18n.string("commands.friend.help_requests"));
+        player.sendMessage(I18n.string("commands.friend.help_toggle"));
+        player.sendMessage(I18n.string("commands.friend.help_notifications"));
+        player.sendMessage(I18n.string("commands.common.separator"));
     }
 
     private int parsePageNumber(String arg) {

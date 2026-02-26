@@ -13,6 +13,7 @@ import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
@@ -28,7 +29,7 @@ public class GUIProfileManagement extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Profile Management", InventoryType.CHEST_4_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.profiles.management.title"), InventoryType.CHEST_4_ROW);
     }
 
     @SneakyThrows
@@ -47,26 +48,8 @@ public class GUIProfileManagement extends StatelessView {
 
             if (profileIds.size() <= profileCount) {
                 // Empty profile slot
-                layout.slot(slot, (s, c) -> ItemStackCreator.getStack("§eEmpty Profile Slot", Material.OAK_BUTTON, 1,
-                                "§8Available",
-                                " ",
-                                "§7Use this slot if you want to",
-                                "§7start a new SkyBlock adventure.",
-                                " ",
-                                "§7Each profile has its own:",
-                                "§8- §7Personal island",
-                                "§8- §7Inventory",
-                                "§8- §7Ender Chest",
-                                "§8- §7Bank & Purse",
-                                "§8- §7Quests",
-                                "§8- §7Collections",
-                                " ",
-                                "§4§lWARNING: §cCreation of profiles",
-                                "§cwhich boost other profiles will",
-                                "§cbe considered abusive and",
-                                "§cpunished.",
-                                " ",
-                                "§eClick to create solo profile!"),
+                layout.slot(slot, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.empty_slot"), Material.OAK_BUTTON, 1,
+                                I18n.lore("gui_sbmenu.profiles.empty_slot.lore")),
                         (click, c) -> c.player().openView(new GUIProfileSelectMode()));
                 continue;
             }
@@ -91,29 +74,29 @@ public class GUIProfileManagement extends StatelessView {
             if (selected) {
                 layout.slot(slot, (s, c) -> {
                     SkyBlockPlayer p = (SkyBlockPlayer) c.player();
-                    List<String> lore = new ArrayList<>(Arrays.asList("§8Selected slot", " "));
+                    List<String> lore = new ArrayList<>(Arrays.asList(I18n.string("gui_sbmenu.profiles.selected.subtitle"), " "));
                     updateLore(p.getUuid(), finalDataHandler, lore);
                     lore.add(" ");
-                    lore.add("§aYou are playing on this profile!");
+                    lore.add(I18n.string("gui_sbmenu.profiles.selected.playing"));
 
                     String profileName = finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
-                    return ItemStackCreator.getStack("§eProfile: §a" + profileName, Material.EMERALD_BLOCK, 1, lore);
+                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.selected", java.util.Map.of("profile_name", profileName)), Material.EMERALD_BLOCK, 1, lore);
                 }, (click, c) -> {
                     SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                     String profileName = finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
-                    p.sendMessage("§aYep! §e" + profileName + "§a is the profile you are playing on!");
-                    p.sendMessage("§cIf you want to delete this profile, switch to another one first!");
+                    p.sendMessage(I18n.string("gui_sbmenu.profiles.msg.playing_on", java.util.Map.of("profile_name", profileName)));
+                    p.sendMessage(I18n.string("gui_sbmenu.profiles.msg.switch_first"));
                 });
             } else {
                 layout.slot(slot, (s, c) -> {
                     SkyBlockPlayer p = (SkyBlockPlayer) c.player();
-                    List<String> lore = new ArrayList<>(Arrays.asList("§8Slot in use", " "));
+                    List<String> lore = new ArrayList<>(Arrays.asList(I18n.string("gui_sbmenu.profiles.unselected.subtitle"), " "));
                     updateLore(p.getUuid(), finalDataHandler, lore);
                     lore.add(" ");
-                    lore.add("§eClick to manage!");
+                    lore.add(I18n.string("gui_sbmenu.profiles.unselected.click"));
 
                     String profileName = finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
-                    return ItemStackCreator.getStack("§eProfile: §a" + profileName, Material.GRASS_BLOCK, 1, lore);
+                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.unselected", java.util.Map.of("profile_name", profileName)), Material.GRASS_BLOCK, 1, lore);
                 }, (click, c) -> c.player().openView(new GUIProfileSelect(profileId)));
             }
         }
@@ -121,7 +104,7 @@ public class GUIProfileManagement extends StatelessView {
 
     public static List<String> updateLore(UUID playerUuid, SkyBlockDataHandler handler, List<String> lore) {
         if (handler.get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {
-            lore.add("§bCo-op:");
+            lore.add(I18n.string("gui_sbmenu.profiles.coop_label"));
 
             CoopDatabase.Coop coop = CoopDatabase.getFromMember(playerUuid);
             coop.members().forEach(member -> lore.add("§7Member " + SkyBlockPlayer.getDisplayName(member)));
@@ -132,17 +115,17 @@ public class GUIProfileManagement extends StatelessView {
         SkyBlockRecipe.getMissionDisplay(lore, playerUuid);
         lore.add(" ");
 
-        lore.add("§cNo Skills Yet!");
+        lore.add(I18n.string("gui_sbmenu.profiles.no_skills"));
         lore.add(" ");
 
         Double coins = handler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
         if (coins > 0) {
-            lore.add("§7Purse Coins: §6" + coins);
+            lore.add(I18n.string("gui_sbmenu.profiles.purse_coins", java.util.Map.of("coins", String.valueOf(coins))));
         }
 
         Long createdTime = handler.get(SkyBlockDataHandler.Data.CREATED, DatapointLong.class).getValue();
         String age = StringUtility.profileAge(System.currentTimeMillis() - createdTime);
-        lore.add("§7Age: §9" + age);
+        lore.add(I18n.string("gui_sbmenu.profiles.age", java.util.Map.of("age", age)));
 
         return lore;
     }

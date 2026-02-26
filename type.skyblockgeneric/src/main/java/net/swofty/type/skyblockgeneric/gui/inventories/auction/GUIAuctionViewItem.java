@@ -15,6 +15,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
 import net.swofty.type.skyblockgeneric.gui.inventories.auction.view.AuctionViewSelfBIN;
@@ -35,7 +36,7 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
     public long minimumBidAmount = 0;
 
     public GUIAuctionViewItem(UUID auctionID, HypixelInventoryGUI previousGUI) {
-        super("Auction View", InventoryType.CHEST_6_ROW);
+        super(I18n.string("gui_auction.view.title"), InventoryType.CHEST_6_ROW);
 
         this.auctionID = auctionID;
         this.previousGUI = previousGUI;
@@ -88,7 +89,7 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage("§cAuction House is currently offline!");
+            player.sendMessage(I18n.string("gui_auction.view.offline_message"));
             player.closeInventory();
         }
 

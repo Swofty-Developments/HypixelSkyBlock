@@ -5,8 +5,10 @@ import io.sentry.Sentry;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.kyori.adventure.translation.GlobalTranslator;
 import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.adventure.MinestomAdventure;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -31,6 +33,8 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.RavengardTypeLoader;
 import net.swofty.type.generic.SkyBlockTypeLoader;
+import net.swofty.type.generic.i18n.HypixelTranslator;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import org.json.JSONArray;
@@ -197,6 +201,12 @@ public class Hypixel {
         if (skyblockLoader != null) {
             skyblockLoader.afterInitialize();
         }
+
+        MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION = true;
+        HypixelTranslator translator = new HypixelTranslator();
+        I18n.init(translator);
+        GlobalTranslator.translator().addSource(translator);
+        Logger.info("Loaded " + translator.keyCount() + " translation keys for default locale");
 
         // Start the server
         MinecraftServer.setBrandName("Hypixel");

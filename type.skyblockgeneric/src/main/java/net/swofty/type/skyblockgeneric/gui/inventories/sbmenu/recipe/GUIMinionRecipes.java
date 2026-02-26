@@ -7,6 +7,7 @@ import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeMinion
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
 import net.swofty.type.skyblockgeneric.minion.SkyBlockMinion;
@@ -31,7 +32,7 @@ public class GUIMinionRecipes extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(StringUtility.toNormalCase(minionRegistry.toString()) + " Minion Recipes",
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.recipe.minion.title", Map.of("minion_name", StringUtility.toNormalCase(minionRegistry.toString()))),
                 InventoryType.CHEST_6_ROW);
     }
 

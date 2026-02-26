@@ -19,6 +19,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -45,7 +46,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
     private CoopDatabase.Coop coop;
 
     public GUICoopInviteSender(CoopDatabase.Coop coopTemp) {
-        super("Co-op Invitation", InventoryType.CHEST_6_ROW);
+        super(I18n.string("gui_coop.sender.title"), InventoryType.CHEST_6_ROW);
 
         this.coop = coopTemp;
 
@@ -90,7 +91,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                     }
                 }
 
-                player.kick("§cYou must reconnect to switch profiles");
+                player.kick(I18n.string("gui_coop.sender.reconnect_kick"));
 
                 // Fixed: Use the updated method signature
                 ProfilesDatabase.collection.insertOne(handler.toProfileDocument());
@@ -108,11 +109,8 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aConfirm co-op", Material.GREEN_TERRACOTTA, 1,
-                        "§7Ends the invitation so that you may",
-                        "§bplay §7on this co-op profile.",
-                        " ",
-                        "§eClick to confirm!");
+                return ItemStackCreator.getStack(I18n.string("gui_coop.sender.confirm_button"), Material.GREEN_TERRACOTTA, 1,
+                        I18n.lore("gui_coop.sender.confirm_button.lore"));
             }
         });
         set(new GUIClickableItem(33) {
@@ -124,17 +122,14 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                 coop.removeInvite(player.getUuid());
                 coop.save();
                 player.closeInventory();
-                player.sendMessage("§b[Co-op] §aYou have cancelled the co-op invitation!");
+                player.sendMessage(I18n.string("gui_coop.sender.cancelled_message"));
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§cCancel invite", Material.RED_TERRACOTTA, 1,
-                        "§7Cancels the invite and removes",
-                        "§7the co-op profile.",
-                        " ",
-                        "§eClick to cancel!");
+                return ItemStackCreator.getStack(I18n.string("gui_coop.sender.cancel_button"), Material.RED_TERRACOTTA, 1,
+                        I18n.lore("gui_coop.sender.cancel_button.lore"));
             }
         });
     }
@@ -150,10 +145,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStackHead(
                         player.getFullDisplayName(), PlayerSkin.fromUuid(String.valueOf(player.getUuid())), 1,
-                        " ",
-                        "§7Hey that's you!",
-                        "§bCreated the invite!"
-                );
+                        I18n.lore("gui_coop.sender.player_head_self.lore"));
             }
         });
 
@@ -174,11 +166,10 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    String status = accepted ? I18n.string("gui_coop.sender.accepted_yes") : I18n.string("gui_coop.sender.accepted_no");
                     return ItemStackCreator.getStackHead(
                             displayName, PlayerSkin.fromUuid(String.valueOf(target)), 1,
-                            " ",
-                            "§7Accepted: " + (accepted ? "§aYes" : "§cNot yet")
-                    );
+                            List.of(" ", I18n.string("gui_coop.sender.player_accepted", Map.of("status", status))));
                 }
             });
         }

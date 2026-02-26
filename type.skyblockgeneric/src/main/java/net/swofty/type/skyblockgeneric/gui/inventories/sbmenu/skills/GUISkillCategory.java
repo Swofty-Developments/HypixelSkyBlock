@@ -7,6 +7,7 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bestiary.GUIBestiary;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
@@ -15,6 +16,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GUISkillCategory extends StatelessView {
     private static final int[] DISPLAY_SLOTS = {
@@ -31,7 +33,7 @@ public class GUISkillCategory extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(category.toString() + " Skill", InventoryType.CHEST_6_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.skills.category.title", Map.of("category_name", category.toString())), InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -52,8 +54,8 @@ public class GUISkillCategory extends StatelessView {
                 ArrayList<String> lore = new ArrayList<>();
                 p.getBestiaryData().getTotalDisplay(lore);
                 lore.add("");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack("§3Bestiary", Material.WRITTEN_BOOK, 1, lore);
+                lore.add(I18n.string("gui_sbmenu.skills.category.bestiary.click"));
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.skills.category.bestiary"), Material.WRITTEN_BOOK, 1, lore);
             }, (click, c) -> c.push(new GUIBestiary()));
         }
 
@@ -65,16 +67,14 @@ public class GUISkillCategory extends StatelessView {
 
             Integer next = p.getSkills().getNextLevel(category);
             if (next == null) {
-                lore.add("§cMAX LEVEL REACHED");
+                lore.add(I18n.string("gui_sbmenu.skills.category.max_level"));
             } else {
                 p.getSkills().getDisplay(lore, category, category.asCategory().getReward(next).requirement(),
                         "§7Progress to Level " + StringUtility.getAsRomanNumeral(next) + ": ");
             }
 
             lore.add(" ");
-            lore.add("§8Increase your " + category + " Level to");
-            lore.add("§8unlock Perks, statistic bonuses, and");
-            lore.add("§8more!");
+            lore.addAll(I18n.lore("gui_sbmenu.skills.category.increase_level", Map.of("category_name", category.toString())));
 
             return ItemStackCreator.getStack("§a" + category + " Skill",
                     category.asCategory().getDisplayIcon(), 1, lore);
@@ -84,15 +84,15 @@ public class GUISkillCategory extends StatelessView {
 
         // Next page button
         if (rewards.size() > (page + 1) * DISPLAY_SLOTS.length) {
-            layout.slot(50, (s, c) -> ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1,
-                            "§7Click to view the next page of rewards."),
+            layout.slot(50, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.skills.category.next_page"), Material.ARROW, 1,
+                            I18n.lore("gui_sbmenu.skills.category.next_page.lore")),
                     (click, c) -> c.replace(new GUISkillCategory(category, page + 1)));
         }
 
         // Previous page button
         if (page > 0) {
-            layout.slot(48, (s, c) -> ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1,
-                            "§7Click to view the previous page of rewards."),
+            layout.slot(48, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.skills.category.previous_page"), Material.ARROW, 1,
+                            I18n.lore("gui_sbmenu.skills.category.previous_page.lore")),
                     (click, c) -> c.replace(new GUISkillCategory(category, page - 1)));
         }
 
@@ -118,7 +118,7 @@ public class GUISkillCategory extends StatelessView {
                     icon = Material.LIME_STAINED_GLASS_PANE;
                     colour = "§a";
                     lore.add(" ");
-                    lore.add("§a§lUNLOCKED");
+                    lore.add(I18n.string("gui_sbmenu.skills.category.unlocked"));
                 } else if ((currentLevel + 1) == reward.level()) {
                     icon = Material.YELLOW_STAINED_GLASS_PANE;
                     colour = "§e";

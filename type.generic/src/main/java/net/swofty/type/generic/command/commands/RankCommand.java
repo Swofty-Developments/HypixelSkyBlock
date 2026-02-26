@@ -8,7 +8,10 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.categories.Rank;
+
+import java.util.Map;
 
 @CommandParameters(aliases = "setrank", description = "Rank command", usage = "/rank <player> <rank>", permission = Rank.STAFF, allowsConsole = true)
 public class RankCommand extends HypixelCommand {
@@ -24,7 +27,7 @@ public class RankCommand extends HypixelCommand {
             final Rank rank = context.get(rankArgument);
 
             if (player == null) {
-                sender.sendMessage("§cCouldn't find a player by the name of §e" + context.getRaw(entityArgument) + "§c.");
+                sender.sendMessage(I18n.string("commands.rank.player_not_found", Map.of("player", context.getRaw(entityArgument))));
                 return;
             }
 
@@ -32,7 +35,7 @@ public class RankCommand extends HypixelCommand {
 
             HypixelDataHandler.getUser(player.getUuid()).get(HypixelDataHandler.Data.RANK, DatapointRank.class).setValue(rank);
 
-            sender.sendMessage("§aSuccessfully set §e" + playerName + "§a's rank to §e" + rank.name() + "§a.");
+            sender.sendMessage(I18n.string("commands.rank.success", Map.of("player", playerName, "rank", rank.name())));
         }, entityArgument, rankArgument);
     }
 }
