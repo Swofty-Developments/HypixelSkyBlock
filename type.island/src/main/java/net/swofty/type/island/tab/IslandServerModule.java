@@ -2,6 +2,7 @@ package net.swofty.type.island.tab;
 
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.tab.TablistSkinRegistry;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -13,6 +14,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class IslandServerModule extends TablistModule {
 
@@ -26,15 +28,15 @@ public class IslandServerModule extends TablistModule {
         ).getValue();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered("§3§lServer Info"), TablistSkinRegistry.CYAN)
+                new TablistEntry(getCentered(I18n.string("tablist.module.server_info")), TablistSkinRegistry.CYAN)
         ));
 
-        entries.add(new TablistEntry("§b§lArea: §7Private Island", TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(" Server: §8" + HypixelConst.getServerName(), TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(" Minions: §9" + minions.size() + "§7/§9" + data.getSlots(), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.string("tablist.server_info.area.private_island"), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.string("tablist.server_info.server_label", Map.of("server_name", HypixelConst.getServerName())), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.string("tablist.island.minions_label", Map.of("current", String.valueOf(minions.size()), "max", String.valueOf(data.getSlots()))), TablistSkinRegistry.GRAY));
 
         entries.add(getGrayEntry());
-        entries.add(new TablistEntry("§b§lMinions: §f(" + minions.size() + ")", TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.string("tablist.module.minions", Map.of("count", String.valueOf(minions.size()))), TablistSkinRegistry.GRAY));
 
         minions.forEach(minion -> {
             String content = " " + minion.getMinion().getDisplay().replace(" Minion", "");
@@ -45,9 +47,9 @@ public class IslandServerModule extends TablistModule {
             MinionHandler.InternalMinionTags.State minionState = minion.getInternalMinionTags().getState();
 
             switch (minionState) {
-                case BAD_FULL -> content = content + " §7[§cFULL§7]";
-                case BAD_LOCATION -> content = content + " §7[§cBLOCKED§7]";
-                default -> content = content + " §7[§aACTIVE§7]";
+                case BAD_FULL -> content = content + " " + I18n.string("tablist.island.minion_state.full");
+                case BAD_LOCATION -> content = content + " " + I18n.string("tablist.island.minion_state.blocked");
+                default -> content = content + " " + I18n.string("tablist.island.minion_state.active");
             }
 
             entries.add(new TablistEntry(content, TablistSkinRegistry.GRAY));
@@ -58,4 +60,3 @@ public class IslandServerModule extends TablistModule {
         return entries;
     }
 }
-
