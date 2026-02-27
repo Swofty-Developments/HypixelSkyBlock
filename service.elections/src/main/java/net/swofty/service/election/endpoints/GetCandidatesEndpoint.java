@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.election.GetCandidatesProtocolObject;
 import net.swofty.service.election.ElectionDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,35 +41,29 @@ public class GetCandidatesEndpoint implements ServiceEndpoint
                 return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of());
             }
 
+            int electionYear = ((Number) data.get("electionYear")).intValue();
+
             List<Map<String, Object>> candidates = (List<Map<String, Object>>) data.get("candidates");
             if (candidates == null || candidates.isEmpty()) {
                 return new GetCandidatesProtocolObject.GetCandidatesResponse(true, List.of());
             }
 
-            Map<String, String> votes = (Map<String, String>) data.get("votes");
-            if (votes == null) votes = Map.of();
-
-            Map<String, Long> tally = new java.util.HashMap<>();
-            for (Map<String, Object> c : candidates) {
-                tally.put((String) c.get("mayorName"), 0L);
-            }
-            for (String candidateName : votes.values()) {
-                tally.merge(candidateName, 1L, Long::sum);
-            }
-            long totalVotes = tally.values().stream().mapToLong(Long::longValue).sum();
+            Map<String, Long> tallies = ElectionDatabase.getTallies(electionYear);
+            long totalVotes = tallies.values().stream().mapToLong(Long::longValue).sum();
 
             List<GetCandidatesProtocolObject.CandidateInfo> infos = new ArrayList<>();
             for (Map<String, Object> c : candidates) {
                 String name = (String) c.get("mayorName");
                 List<String> perks = (List<String>) c.get("activePerks");
                 if (perks == null) perks = List.of();
-                long voteCount = tally.getOrDefault(name, 0L);
+                long voteCount = tallies.getOrDefault(name, 0L);
                 double pct = totalVotes > 0 ? (voteCount * 100.0) / totalVotes : 0;
                 infos.add(new GetCandidatesProtocolObject.CandidateInfo(name, perks, voteCount, pct));
             }
 
             return new GetCandidatesProtocolObject.GetCandidatesResponse(true, infos);
         } catch (Exception e) {
+            Logger.error(e, "Failed to get candidates");
             return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of());
         }
     }

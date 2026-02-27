@@ -6,8 +6,8 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.election.GetElectionDataProtocolObject;
 import net.swofty.service.election.ElectionDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
+import org.tinylog.Logger;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,27 +36,19 @@ public class GetElectionDataEndpoint implements ServiceEndpoint
         try {
             Map<String, Object> parsed = GSON.fromJson(data, Map.class);
 
-            Map<String, String> votes = (Map<String, String>) parsed.get("votes");
-            List<Map<String, Object>> candidates = (List<Map<String, Object>>) parsed.get("candidates");
-
-            Map<String, Long> tallies = new HashMap<>();
-            if (candidates != null) {
-                for (Map<String, Object> c : candidates) {
-                    tallies.put((String) c.get("mayorName"), 0L);
-                }
-            }
-            if (votes != null) {
-                for (String candidateName : votes.values()) {
-                    tallies.merge(candidateName, 1L, Long::sum);
-                }
-            }
-
-            parsed.put("voteTallies", tallies);
             parsed.remove("votes");
+
+            Number yearNum = (Number) parsed.get("electionYear");
+            if (yearNum != null) {
+                int electionYear = yearNum.intValue();
+                Map<String, Long> tallies = ElectionDatabase.getTallies(electionYear);
+                parsed.put("voteTallies", tallies);
+            }
 
             return new GetElectionDataProtocolObject.GetElectionDataResponse(true, GSON.toJson(parsed));
         } catch (Exception e) {
-            return new GetElectionDataProtocolObject.GetElectionDataResponse(true, data);
+            Logger.error(e, "Failed to parse election data");
+            return new GetElectionDataProtocolObject.GetElectionDataResponse(false, null);
         }
     }
 }

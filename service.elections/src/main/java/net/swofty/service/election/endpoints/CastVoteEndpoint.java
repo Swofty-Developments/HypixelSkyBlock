@@ -6,9 +6,8 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.election.CastVoteProtocolObject;
 import net.swofty.service.election.ElectionDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
+import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +40,12 @@ public class CastVoteEndpoint implements ServiceEndpoint
                 return new CastVoteProtocolObject.CastVoteResponse(false, null);
             }
 
+            int electionYear = ((Number) data.get("electionYear")).intValue();
+
             List<Map<String, Object>> candidates = (List<Map<String, Object>>) data.get("candidates");
-            if (candidates == null) candidates = new ArrayList<>();
+            if (candidates == null) {
+                return new CastVoteProtocolObject.CastVoteResponse(false, null);
+            }
 
             boolean validCandidate = candidates.stream()
                     .anyMatch(c -> messageObject.candidateName().equals(c.get("mayorName")));
@@ -50,26 +53,16 @@ public class CastVoteEndpoint implements ServiceEndpoint
                 return new CastVoteProtocolObject.CastVoteResponse(false, null);
             }
 
-            Map<String, String> votes = (Map<String, String>) data.get("votes");
-            if (votes == null) {
-                votes = new HashMap<>();
-                data.put("votes", votes);
-            }
-            votes.put(messageObject.accountId().toString(), messageObject.candidateName());
+            ElectionDatabase.castVote(
+                    messageObject.accountId().toString(),
+                    messageObject.candidateName(),
+                    electionYear
+            );
 
-            String updatedData = GSON.toJson(data);
-            ElectionDatabase.saveElectionData(updatedData);
-
-            Map<String, Long> tally = new HashMap<>();
-            for (Map<String, Object> c : candidates) {
-                tally.put((String) c.get("mayorName"), 0L);
-            }
-            for (String candidateName : votes.values()) {
-                tally.merge(candidateName, 1L, Long::sum);
-            }
-
-            return new CastVoteProtocolObject.CastVoteResponse(true, GSON.toJson(tally));
+            Map<String, Long> tallies = ElectionDatabase.getTallies(electionYear);
+            return new CastVoteProtocolObject.CastVoteResponse(true, GSON.toJson(tallies));
         } catch (Exception e) {
+            Logger.error(e, "Failed to cast vote");
             return new CastVoteProtocolObject.CastVoteResponse(false, null);
         }
     }

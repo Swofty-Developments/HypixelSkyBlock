@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.election.GetPlayerVoteProtocolObject;
 import net.swofty.service.election.ElectionDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
+import org.tinylog.Logger;
 
 import java.util.Map;
 
@@ -33,14 +34,18 @@ public class GetPlayerVoteEndpoint implements ServiceEndpoint
             }
 
             Map<String, Object> data = GSON.fromJson(rawData, Map.class);
-            Map<String, String> votes = (Map<String, String>) data.get("votes");
-            if (votes == null) {
+            Number yearNum = (Number) data.get("electionYear");
+            if (yearNum == null) {
                 return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(null);
             }
 
-            String vote = votes.get(messageObject.accountId().toString());
+            String vote = ElectionDatabase.getPlayerVote(
+                    messageObject.accountId().toString(),
+                    yearNum.intValue()
+            );
             return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(vote);
         } catch (Exception e) {
+            Logger.error(e, "Failed to get player vote");
             return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(null);
         }
     }
