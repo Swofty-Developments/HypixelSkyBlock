@@ -5,9 +5,10 @@ import net.swofty.anticheat.event.events.AnticheatPacketEvent;
 import net.swofty.anticheat.event.events.PlayerPositionUpdateEvent;
 import net.swofty.anticheat.flag.Flag;
 import net.swofty.anticheat.math.Pos;
-import net.swofty.anticheat.math.Vel;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class BadPacketsFlag extends Flag {
     // Track packet patterns per player

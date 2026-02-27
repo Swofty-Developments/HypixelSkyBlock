@@ -11,7 +11,7 @@ public class HypixelPackServer {
     private static final String DEFAULT_HOST = "0.0.0.0";
     private static final int DEFAULT_PORT = 7270;
 
-    public static void main(String[] args) throws IOException {
+    static void main(String[] args) throws IOException {
         String host = DEFAULT_HOST;
         int port = DEFAULT_PORT;
 

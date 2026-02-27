@@ -36,7 +36,7 @@ public class PartyWarpOverviewResponseEvent extends PartyResponseEvent {
 
     @Override
     public Serializer<PartyWarpOverviewResponseEvent> getSerializer() {
-        return new Serializer<PartyWarpOverviewResponseEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyWarpOverviewResponseEvent value) {
                 JSONObject json = new JSONObject();
@@ -86,7 +86,8 @@ public class PartyWarpOverviewResponseEvent extends PartyResponseEvent {
                     for (String key : failureReasonsJson.keySet()) {
                         try {
                             failureReasons.put(UUID.fromString(key), failureReasonsJson.getString(key));
-                        } catch (Exception ignored) {}
+                        } catch (Exception ignored) {
+                        }
                     }
                 }
 

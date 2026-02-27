@@ -14,7 +14,7 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skywarsconfigurator.MapConfigurationSession;
-import net.swofty.type.skywarsconfigurator.TypeSkywarsConfiguratorLoader;
+import net.swofty.type.skywarsconfigurator.TypeSkyWarsConfiguratorLoader;
 import org.tinylog.Logger;
 
 import java.io.File;
@@ -22,7 +22,10 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @CommandParameters(aliases = "choose choosemap selectmap select",
         description = "Choose a SkyWars map to configure",
@@ -115,7 +118,7 @@ public class ChooseMapCommand extends HypixelCommand {
 
             // Create a new configuration session
             MapConfigurationSession session = new MapConfigurationSession(mapId, mapId);
-            TypeSkywarsConfiguratorLoader.setCurrentSession(session);
+            TypeSkyWarsConfiguratorLoader.setCurrentSession(session);
 
             player.sendMessage(Component.text("§aLoaded map: §f" + mapId));
             player.sendMessage(Component.text("§7Use §b/swconfig §7to configure the map."));

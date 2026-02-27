@@ -16,10 +16,10 @@ import org.jetbrains.annotations.NotNull;
  * - whether the attack sounds should be played<br>
  */
 public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
-	
+
 	private final Entity entity;
 	private final Entity target;
-	
+
 	private boolean sprint;
 	private boolean critical;
 	private boolean sweeping;
@@ -27,9 +27,9 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	private float enchantsExtraDamage;
 	private boolean attackSounds;
 	private boolean playSoundsOnFail;
-	
+
 	private boolean cancelled;
-	
+
 	public FinalAttackEvent(@NotNull Entity entity, @NotNull Entity target,
 	                        boolean sprint, boolean critical, boolean sweeping,
 	                        float baseDamage, float enchantsExtraDamage,
@@ -44,16 +44,16 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 		this.attackSounds = attackSounds;
 		this.playSoundsOnFail = playSoundsOnFail;
 	}
-	
+
 	@Override
 	public @NotNull Entity getEntity() {
 		return entity;
 	}
-	
+
 	public @NotNull Entity getTarget() {
 		return target;
 	}
-	
+
 	/**
 	 * Gets whether the attack was a sprint attack.
 	 *
@@ -62,7 +62,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public boolean isSprint() {
 		return sprint;
 	}
-	
+
 	/**
 	 * Sets whether the attack was a sprint attack.
 	 *
@@ -71,7 +71,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public void setSprint(boolean sprint) {
 		this.sprint = sprint;
 	}
-	
+
 	/**
 	 * Gets whether the attack was critical.
 	 *
@@ -80,7 +80,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public boolean isCritical() {
 		return critical;
 	}
-	
+
 	/**
 	 * Sets whether the attack was critical.
 	 *
@@ -89,7 +89,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public void setCritical(boolean crit) {
 		this.critical = crit;
 	}
-	
+
 	/**
 	 * Gets whether the attack was sweeping.
 	 *
@@ -98,7 +98,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public boolean isSweeping() {
 		return sweeping;
 	}
-	
+
 	/**
 	 * Sets whether the attack was sweeping.
 	 *
@@ -107,7 +107,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public void setSweeping(boolean sweeping) {
 		this.sweeping = sweeping;
 	}
-	
+
 	/**
 	 * Gets the base damage of the attack.
 	 * Tool enchantments are excluded, but attack cooldown strength (for 1.9+) is not.
@@ -117,7 +117,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public float getBaseDamage() {
 		return baseDamage;
 	}
-	
+
 	/**
 	 * Sets the base damage of the attack.
 	 * Enchantment extra damage will be added to this to get the final damage.
@@ -127,7 +127,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public void setBaseDamage(float baseDamage) {
 		this.baseDamage = baseDamage;
 	}
-	
+
 	/**
 	 * Gets the extra damage from enchantments of the attack
 	 * (e.g. sharpness, but also mob based, e.g. impaling).
@@ -138,7 +138,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public float getEnchantsExtraDamage() {
 		return enchantsExtraDamage;
 	}
-	
+
 	/**
 	 * Sets the extra damage of the attack.
 	 * This will be added to the base damage to get the final damage.
@@ -148,7 +148,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public void setEnchantsExtraDamage(float enchantsExtraDamage) {
 		this.enchantsExtraDamage = enchantsExtraDamage;
 	}
-	
+
 	/**
 	 * Gets whether the 1.9+ attack sounds should be played.
 	 *
@@ -157,7 +157,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public boolean hasAttackSounds() {
 		return attackSounds;
 	}
-	
+
 	/**
 	 * Sets whether the 1.9+ attack sounds should be played.
 	 * This also works for legacy.
@@ -167,11 +167,11 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public void setAttackSounds(boolean attackSounds) {
 		this.attackSounds = attackSounds;
 	}
-	
+
 	/**
 	 * Gets whether the 1.9+ attack sounds should be played if the damage failed.
 	 * This only applies if hasAttackSounds() is true.
-	 *
+	 * <p>
 	 * If this is true, the only sounds that may be played are knockback and nodamage.
 	 *
 	 * @return whether the attack sounds should be played if the damage failed
@@ -179,11 +179,11 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public boolean playSoundsOnFail() {
 		return playSoundsOnFail;
 	}
-	
+
 	/**
 	 * Sets whether the 1.9+ attack sounds should be played if the damage failed.
 	 * This only applies if hasAttackSounds() is true.
-	 *
+	 * <p>
 	 * If this is true, the only sounds that may be played are knockback and nodamage.
 	 *
 	 * @param playSoundsOnFail whether the attack sounds should be played if the damage failed
@@ -191,12 +191,12 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
 	public void setPlaySoundsOnFail(boolean playSoundsOnFail) {
 		this.playSoundsOnFail = playSoundsOnFail;
 	}
-	
+
 	@Override
 	public boolean isCancelled() {
 		return cancelled;
 	}
-	
+
 	@Override
 	public void setCancelled(boolean cancel) {
 		this.cancelled = cancel;

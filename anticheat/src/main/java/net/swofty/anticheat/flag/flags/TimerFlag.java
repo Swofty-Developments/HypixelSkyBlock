@@ -5,7 +5,6 @@ import net.swofty.anticheat.engine.SwoftyPlayer;
 import net.swofty.anticheat.event.ListenerMethod;
 import net.swofty.anticheat.event.events.PlayerPositionUpdateEvent;
 import net.swofty.anticheat.flag.Flag;
-import net.swofty.anticheat.loader.SwoftyAnticheat;
 
 import java.util.HashMap;
 import java.util.Map;

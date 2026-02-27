@@ -23,7 +23,6 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class MobZombie_01 extends BestiaryMob implements RegionPopulator {
@@ -127,8 +126,8 @@ public class MobZombie_01 extends BestiaryMob implements RegionPopulator {
 
     @Override
     public List<Populator> getPopulators() {
-        return Arrays.asList(
-                new Populator(RegionType.PRIVATE_ISLAND, 20)
+        return List.of(
+            new Populator(RegionType.PRIVATE_ISLAND, 20)
         );
     }
 }

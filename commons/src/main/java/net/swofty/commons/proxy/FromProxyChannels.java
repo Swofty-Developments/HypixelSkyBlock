@@ -1,8 +1,15 @@
 package net.swofty.commons.proxy;
 
 import lombok.Getter;
-import net.swofty.commons.proxy.requirements.from.*;
 import net.swofty.commons.proxy.requirements.from.BroadcastStaffChatRequirements;
+import net.swofty.commons.proxy.requirements.from.DoesServerHaveIslandRequirements;
+import net.swofty.commons.proxy.requirements.from.GivePlayersOriginTypeRequirements;
+import net.swofty.commons.proxy.requirements.from.PingServerRequirements;
+import net.swofty.commons.proxy.requirements.from.PlayerHasSwitchedFromHereRequirements;
+import net.swofty.commons.proxy.requirements.from.PromptPlayerForAuthenticationRequirements;
+import net.swofty.commons.proxy.requirements.from.RefreshCoopDataOnServerRequirements;
+import net.swofty.commons.proxy.requirements.from.RunEventRequirements;
+import net.swofty.commons.proxy.requirements.from.TeleportRequirements;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 

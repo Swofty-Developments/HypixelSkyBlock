@@ -35,7 +35,7 @@ public class PendingParty implements Party {
 
     @Override
     public Serializer<PendingParty> getSerializer() {
-        return new Serializer<PendingParty>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PendingParty value) {
                 JSONObject json = new JSONObject();
@@ -49,9 +49,9 @@ public class PendingParty implements Party {
             public PendingParty deserialize(String json) {
                 JSONObject jsonObject = new JSONObject(json);
                 return new PendingParty(
-                        UUID.fromString(jsonObject.getString("resultPartyUUID")),
-                        UUID.fromString(jsonObject.getString("invitee")),
-                        UUID.fromString(jsonObject.getString("leader"))
+                    UUID.fromString(jsonObject.getString("resultPartyUUID")),
+                    UUID.fromString(jsonObject.getString("invitee")),
+                    UUID.fromString(jsonObject.getString("leader"))
                 );
             }
 
