@@ -132,7 +132,7 @@ public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_auction.bids.offline_message"));
+            player.sendMessage(I18n.string("gui_auction.bids.offline_message", player.getLocale()));
             player.closeInventory();
             return;
         }

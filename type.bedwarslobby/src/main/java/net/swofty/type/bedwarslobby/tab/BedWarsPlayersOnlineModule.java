@@ -16,6 +16,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class BedWarsPlayersOnlineModule extends TablistModule {
@@ -27,10 +28,11 @@ public class BedWarsPlayersOnlineModule extends TablistModule {
 
     @Override
     public List<TablistEntry> getEntries(HypixelPlayer player) {
+        Locale l = player.getLocale();
         List<HypixelPlayer> players = HypixelGenericLoader.getLoadedPlayers();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered(I18n.string("tablist.module.players", Map.of("count", String.valueOf(players.size())))), TablistSkinRegistry.GREEN)
+                new TablistEntry(getCentered(I18n.string("tablist.module.players", l, Map.of("count", String.valueOf(players.size())))), TablistSkinRegistry.GREEN)
         ));
 
         List<HypixelPlayer> toShow = new ArrayList<>();

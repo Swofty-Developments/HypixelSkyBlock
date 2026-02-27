@@ -20,11 +20,13 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
 import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -139,6 +141,14 @@ public class HypixelPlayer extends Player {
 
 	public PlayerQuestHandler getQuestHandler() {
 		return new PlayerQuestHandler(this);
+	}
+
+	public void sendTranslated(String key) {
+		sendMessage(Component.text(I18n.string(key, getLocale())));
+	}
+
+	public void sendTranslated(String key, Map<String, String> placeholders) {
+		sendMessage(Component.text(I18n.string(key, getLocale(), placeholders)));
 	}
 
 	public PlayerSkin getPlayerSkin() {

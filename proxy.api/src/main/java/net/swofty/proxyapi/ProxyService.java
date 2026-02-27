@@ -4,7 +4,6 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.PingProtocolObject;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
-import org.tinylog.Logger;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -16,17 +15,17 @@ public record ProxyService(ServiceType type) {
         AtomicBoolean hasReceivedResponse = new AtomicBoolean(false);
 
         ServerOutboundMessage.sendMessageToService(type, new PingProtocolObject(),
-                new PingProtocolObject.EmptyMessage(), (s) -> {
-            future.complete(true);
-            hasReceivedResponse.set(true);
-        });
+            new PingProtocolObject.EmptyMessage(), (s) -> {
+                future.complete(true);
+                hasReceivedResponse.set(true);
+            });
 
         CompletableFuture.delayedExecutor(150, TimeUnit.MILLISECONDS)
-                .execute(() -> {
-                    if (!hasReceivedResponse.get()) {
-                        future.complete(false);
-                    }
-                });
+            .execute(() -> {
+                if (!hasReceivedResponse.get()) {
+                    future.complete(false);
+                }
+            });
 
         return future;
     }
@@ -35,13 +34,15 @@ public record ProxyService(ServiceType type) {
         ProtocolObject<T, R> protocolObject = ServerOutboundMessage.protocolObjects.get(request.getClass().getSimpleName());
 
         CompletableFuture<R> future = new CompletableFuture<>();
-        Thread.startVirtualThread(() -> {
-            ServerOutboundMessage.sendMessageToService(type, protocolObject, request, (s) -> {
-                Thread.startVirtualThread(() -> {
-                    future.complete(protocolObject.translateReturnFromString(s));
-                });
-            });
-        });
+        Thread.startVirtualThread(() ->
+            ServerOutboundMessage.sendMessageToService(
+                type,
+                protocolObject,
+                request,
+                (s) -> Thread.startVirtualThread(
+                    () -> future.complete(protocolObject.translateReturnFromString(s))
+                )
+            ));
         return future;
     }
 }

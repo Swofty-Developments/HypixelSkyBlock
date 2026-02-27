@@ -5,6 +5,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -20,6 +21,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GUIMissionLog extends StatelessView {
@@ -42,7 +44,9 @@ public class GUIMissionLog extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.questlog.title", Map.of("suffix", showCompleted ? "(Completed)" : "")), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.withString(
+                (state, ctx) -> I18n.string("gui_sbmenu.questlog.title", ctx.player().getLocale(), Map.of("suffix", showCompleted ? "(Completed)" : "")),
+                InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -51,29 +55,32 @@ public class GUIMissionLog extends StatelessView {
         Components.close(layout, 49);
         Components.back(layout, 48, ctx);
 
-        layout.slot(4, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.questlog.info", Map.of("suffix", showCompleted ? "(Completed)" : "")),
-                Material.WRITABLE_BOOK, 1, I18n.lore("gui_sbmenu.questlog.info.lore")));
+        layout.slot(4, (s, c) -> {
+            Locale l = c.player().getLocale();
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.questlog.info", l, Map.of("suffix", showCompleted ? "(Completed)" : "")),
+                Material.WRITABLE_BOOK, 1, I18n.lore("gui_sbmenu.questlog.info.lore", l));
+        });
 
         // Fairy Souls
         layout.slot(10, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
-            return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.questlog.fairy_souls"),
+            return TranslatableItemStackCreator.getStackHead(c.player(), "gui_sbmenu.questlog.fairy_souls",
                     "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387", 1,
-                    I18n.lore("gui_sbmenu.questlog.fairy_souls.lore", Map.of("found", String.valueOf(player.getFairySoulHandler().getTotalFoundFairySouls()), "total", String.valueOf(FairySoulDatabase.getAllSouls().size()))));
+                    "gui_sbmenu.questlog.fairy_souls.lore", Map.of("found", String.valueOf(player.getFairySoulHandler().getTotalFoundFairySouls()), "total", String.valueOf(FairySoulDatabase.getAllSouls().size())));
         }, (_, c) -> {
             c.push(new GUIFairySoulsGuide());
         });
 
         // Toggle completed/ongoing
         if (showCompleted) {
-            layout.slot(50, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.questlog.ongoing_quests"), Material.BOOK, 1,
-                            I18n.lore("gui_sbmenu.questlog.ongoing_quests.lore")),
+            layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.questlog.ongoing_quests", Material.BOOK, 1,
+                            "gui_sbmenu.questlog.ongoing_quests.lore"),
                     (click, c) -> c.replace(new GUIMissionLog(false)));
         } else {
             layout.slot(50, (s, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.questlog.completed_quests"), Material.BOOK, 1,
-                        I18n.lore("gui_sbmenu.questlog.completed_quests.lore", Map.of("count", String.valueOf(player.getMissionData().getCompletedMissions().size()))));
+                return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.questlog.completed_quests", Material.BOOK, 1,
+                        "gui_sbmenu.questlog.completed_quests.lore", Map.of("count", String.valueOf(player.getMissionData().getCompletedMissions().size())));
             }, (_, c) -> c.replace(new GUIMissionLog(true)));
         }
 
@@ -111,6 +118,7 @@ public class GUIMissionLog extends StatelessView {
 
             layout.slot(slot, (s, c) -> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
+                Locale l = p.getLocale();
                 MissionData data = p.getMissionData();
                 List<String> lore = new ArrayList<>(List.of("§7 "));
 
@@ -139,7 +147,7 @@ public class GUIMissionLog extends StatelessView {
                 if (firstMissionInSetEntry != null) {
                     MissionData.ActiveMission firstMissionInSet = firstMissionInSetEntry.getKey();
 
-                    lore.add(I18n.string("gui_sbmenu.questlog.started"));
+                    lore.add(I18n.string("gui_sbmenu.questlog.started", l));
                     lore.add("§f  " + SkyBlockCalendar.getMonthName(
                             SkyBlockCalendar.getMonth(firstMissionInSet.getMissionStarted()))
                             + " " + StringUtility.ntify(SkyBlockCalendar.getDay(firstMissionInSet.getMissionStarted())));
@@ -147,14 +155,14 @@ public class GUIMissionLog extends StatelessView {
 
                     if (showCompleted) {
                         lore.add("§7 ");
-                        lore.add(I18n.string("gui_sbmenu.questlog.completed"));
+                        lore.add(I18n.string("gui_sbmenu.questlog.completed", l));
                         lore.add("§f  " + SkyBlockCalendar.getMonthName(
                                 SkyBlockCalendar.getMonth(firstMissionInSet.getMissionEnded()))
                                 + " " + StringUtility.ntify(SkyBlockCalendar.getDay(firstMissionInSet.getMissionEnded())));
                         lore.add("§7  " + SkyBlockCalendar.getDisplay(firstMissionInSet.getMissionEnded()));
                     }
                 } else {
-                    lore.add(I18n.string("gui_sbmenu.questlog.not_started"));
+                    lore.add(I18n.string("gui_sbmenu.questlog.not_started", l));
                 }
 
                 return ItemStackCreator.enchant(ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(missionSet.name()),

@@ -4,6 +4,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -12,6 +13,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GUILevelsGuide extends StatelessView {
@@ -33,7 +35,9 @@ public class GUILevelsGuide extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.levels.guide.title", Map.of("guide_name", StringUtility.toNormalCase(guide.name()))), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.withString(
+                (state, ctx) -> I18n.string("gui_sbmenu.levels.guide.title", ctx.player().getLocale(), Map.of("guide_name", StringUtility.toNormalCase(guide.name()))),
+                InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -47,8 +51,8 @@ public class GUILevelsGuide extends StatelessView {
         }
 
         // Guide info
-        layout.slot(50, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.guide.info"), Material.REDSTONE_TORCH, 1,
-                I18n.lore("gui_sbmenu.levels.guide.info.lore")));
+        layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.guide.info", Material.REDSTONE_TORCH, 1,
+                "gui_sbmenu.levels.guide.info.lore"));
 
         // Task items
         LevelsGuide.TasksSet[] tasks = guide.getTasksSets().toArray(new LevelsGuide.TasksSet[0]);
@@ -58,10 +62,11 @@ public class GUILevelsGuide extends StatelessView {
 
             layout.slot(slot, (s, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+                Locale l = player.getLocale();
                 List<String> lore = new ArrayList<>();
 
                 if (task.getCauses().size() > 1) {
-                    lore.add(I18n.string("gui_sbmenu.levels.guide.tasks", Map.of("count", String.valueOf(task.getCauses().size()))));
+                    lore.add(I18n.string("gui_sbmenu.levels.guide.tasks", l, Map.of("count", String.valueOf(task.getCauses().size()))));
                     lore.add("");
                 }
 

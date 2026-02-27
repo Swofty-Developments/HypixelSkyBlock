@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.color.Color;
+import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
@@ -16,12 +17,15 @@ import net.minestom.server.world.attribute.EnvironmentAttribute;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
+import net.swofty.type.generic.entity.InteractionEntity;
+import net.swofty.type.generic.entity.hologram.ServerHolograms;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
@@ -30,18 +34,26 @@ import net.swofty.type.hub.darkauction.DarkAuctionDisplay;
 import net.swofty.type.hub.tab.HubServerModule;
 import net.swofty.type.hub.util.HubMap;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
+import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
+import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.entity.GlassDisplay;
 import net.swofty.type.skyblockgeneric.furniture.Furniture;
+import net.swofty.type.skyblockgeneric.gui.inventories.election.ElectionView;
+import net.swofty.type.skyblockgeneric.gui.inventories.election.ElectionViewStatsView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplays;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.utility.WarpPortal;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -134,11 +146,50 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
         // Place forest trees
         //ForestTreePlacement.placeTrees(HypixelConst.getInstanceContainer()); TODO: fix this on new map
 
-		HubMap hubMap = new HubMap();
+		final HubMap hubMap = new HubMap();
 		hubMap.placeItemFrames(HypixelConst.getInstanceContainer());
+
+		final UUID electionUUID = UUID.nameUUIDFromBytes("election".getBytes());
+
+		ServerHolograms.addExternalHologram(
+			ServerHolograms.ExternalHologram.builder()
+				.uuid(electionUUID)
+				.instance(HypixelConst.getInstanceContainer())
+				.pos(new Pos(9.5, 81, 13.5))
+				.text(electionLines())
+				.build()
+		);
+
+		MinecraftServer.getSchedulerManager().buildTask(() ->
+			ServerHolograms.updateExternalHologramText(electionUUID, electionLines())
+		).delay(TaskSchedule.seconds(1)).repeat(TaskSchedule.seconds(1)).schedule();
+
+		WarpPortal.create(HypixelConst.getInstanceContainer(), new BlockVec(13, 78, 13), Component.text("Election Room"), new Pos(0.5, 50, 45.5, -180, 0));
+        WarpPortal.create(HypixelConst.getInstanceContainer(), new BlockVec(0, 49, 47), Component.text("Community Center"), new Pos(9.5, 79, 12.5, 90, 0));
 
 		Furniture.load("hexatorum");
 		Furniture.load("rune_table");
+
+		new InteractionEntity(1.1f, 1.1f, (player, _) -> {
+			final SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+			String text = ElectionManager.getPlayerVote(skyBlockPlayer.getUuid());
+			if (text == null) {
+				player.openView(new ElectionView());
+			} else {
+				player.openView(new ElectionViewStatsView());
+			}
+		}).setInstance(HypixelConst.getInstanceContainer(), new Pos(0.5, 50, 34.5));
+
+		MinecraftServer.getSchedulerManager().buildTask(ElectionDisplay::addAndUpdate).delay(TaskSchedule.seconds(1)).repeat(TaskSchedule.seconds(1)).schedule();
+	}
+
+	private static String[] electionLines() {
+		return new String[]{
+			"§e§lMAYOR ELECTIONS",
+			"§bYear " + SkyBlockCalendar.getYear(),
+			"§eTime left: §a" + StringUtility.formatTimeLeft(
+				SkyBlockCalendar.ticksUntilEvent(CalendarEvent.ELECTION_CLOSE) * 50L)
+		};
 	}
 
     @Override
@@ -219,7 +270,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
 	@Override
 	public List<ServiceType> getRequiredServices() {
-		return List.of(ServiceType.AUCTION_HOUSE, ServiceType.BAZAAR, ServiceType.ITEM_TRACKER, ServiceType.DATA_MUTEX);
+		return List.of(ServiceType.ELECTION, ServiceType.AUCTION_HOUSE, ServiceType.BAZAAR, ServiceType.ITEM_TRACKER, ServiceType.DATA_MUTEX);
 	}
 
 	@Override

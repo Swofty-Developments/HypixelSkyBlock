@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class PrototypeLobbyScoreboard {
     private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
@@ -32,6 +33,7 @@ public class PrototypeLobbyScoreboard {
             }
 
             for (HypixelPlayer player : HypixelGenericLoader.getLoadedPlayers()) {
+                Locale l = player.getLocale();
                 HypixelDataHandler dataHandler = player.getDataHandler();
                 PrototypeLobbyDataHandler prototypeDataHandler = PrototypeLobbyDataHandler.getUser(player);
 
@@ -42,25 +44,25 @@ public class PrototypeLobbyScoreboard {
                 long hype = prototypeDataHandler.get(PrototypeLobbyDataHandler.Data.HYPE, DatapointLeaderboardLong.class).getValue();
 
                 List<String> lines = new ArrayList<>();
-                lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
+                lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
                 lines.add("§7 ");
-                lines.add(I18n.string("scoreboard.prototype_lobby.dev_notice_line1"));
-                lines.add(I18n.string("scoreboard.prototype_lobby.dev_notice_line2"));
+                lines.add(I18n.string("scoreboard.prototype_lobby.dev_notice_line1", l));
+                lines.add(I18n.string("scoreboard.prototype_lobby.dev_notice_line2", l));
                 lines.add("§7 ");
-                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_line1"));
-                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_line2"));
-                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_url"));
+                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_line1", l));
+                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_line2", l));
+                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_url", l));
                 lines.add("§7 ");
-                lines.add(I18n.string("scoreboard.prototype_lobby.hype_label") + hype + I18n.string("scoreboard.prototype_lobby.hype_max"));
+                lines.add(I18n.string("scoreboard.prototype_lobby.hype_label", l) + hype + I18n.string("scoreboard.prototype_lobby.hype_max", l));
                 lines.add("§7 ");
-                lines.add(I18n.string("scoreboard.common.footer"));
+                lines.add(I18n.string("scoreboard.common.footer", l));
 
                 if (!scoreboard.hasScoreboard(player)) {
-                    scoreboard.createScoreboard(player, getSidebarName(prototypeName));
+                    scoreboard.createScoreboard(player, getSidebarName(prototypeName, l));
                 }
 
                 scoreboard.updateLines(player, lines);
-                scoreboard.updateTitle(player, getSidebarName(prototypeName));
+                scoreboard.updateTitle(player, getSidebarName(prototypeName, l));
             }
             return TaskSchedule.tick(4);
         });
@@ -70,8 +72,8 @@ public class PrototypeLobbyScoreboard {
         scoreboard.removeScoreboard(player);
     }
 
-    private static String getSidebarName(int counter) {
-        String baseText = I18n.string("scoreboard.prototype_lobby.title_base");
+    private static String getSidebarName(int counter, Locale locale) {
+        String baseText = I18n.string("scoreboard.prototype_lobby.title_base", locale);
         String[] colors = {"§f§l", "§6§l", "§e§l"};
         String endColor = "§a§l";
 

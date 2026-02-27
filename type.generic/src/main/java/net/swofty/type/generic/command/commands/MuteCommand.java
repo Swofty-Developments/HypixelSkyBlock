@@ -14,7 +14,6 @@ import net.swofty.commons.punishment.template.MuteType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
@@ -53,7 +52,7 @@ public class MuteCommand extends HypixelCommand {
             try {
                 type = MuteType.valueOf(context.get(reasonArg));
             } catch (IllegalArgumentException e) {
-                player.sendMessage(I18n.string("commands.mute.invalid_reason"));
+                player.sendTranslated("commands.mute.invalid_reason");
                 return;
             }
 
@@ -64,7 +63,7 @@ public class MuteCommand extends HypixelCommand {
                     long expiryTime = System.currentTimeMillis() + actualTime;
                     mutePlayer(player, targetUuid, type, player.getUuid(), actualTime, expiryTime, playerName);
                 } catch (IOException e) {
-                    player.sendMessage(I18n.string("commands.common.player_not_found_short", Map.of("player", playerName)));
+                    player.sendTranslated("commands.common.player_not_found_short", Map.of("player", playerName));
                 }
             });
         }, playerArg, durationArg, reasonArg);
@@ -77,7 +76,7 @@ public class MuteCommand extends HypixelCommand {
             try {
                 reason = MuteType.valueOf(context.get(reasonArg));
             } catch (IllegalArgumentException e) {
-                player.sendMessage(I18n.string("commands.mute.invalid_reason"));
+                player.sendTranslated("commands.mute.invalid_reason");
                 return;
             }
 
@@ -86,7 +85,7 @@ public class MuteCommand extends HypixelCommand {
                     mutePlayer(player, net.minestom.server.utils.mojang.MojangUtils.getUUID(playerName), reason,
                             player.getUuid(), 0, -1, playerName);
                 } catch (IOException e) {
-                    player.sendMessage(I18n.string("commands.common.player_not_found_short", Map.of("player", playerName)));
+                    player.sendTranslated("commands.common.player_not_found_short", Map.of("player", playerName));
                 }
             });
         }, playerArg, reasonArg);
@@ -108,15 +107,15 @@ public class MuteCommand extends HypixelCommand {
         punishmentService.handleRequest(message).thenAccept(result -> {
             if (result instanceof PunishPlayerProtocolObject.PunishPlayerResponse response) {
                 if (response.success()) {
-                    sender.sendMessage(I18n.string("commands.mute.success", Map.of("player", playerName, "id", response.punishmentId())));
+                    sender.sendTranslated("commands.mute.success", Map.of("player", playerName, "id", response.punishmentId()));
                 } else if (response.errorCode() == PunishPlayerProtocolObject.ErrorCode.ALREADY_PUNISHED) {
-                    sender.sendMessage(I18n.string("commands.mute.already_muted", Map.of("id", response.errorMessage())));
+                    sender.sendTranslated("commands.mute.already_muted", Map.of("id", response.errorMessage()));
                 } else {
-                    sender.sendMessage(I18n.string("commands.mute.failed", Map.of("error", response.errorMessage())));
+                    sender.sendTranslated("commands.mute.failed", Map.of("error", response.errorMessage()));
                 }
             }
         }).orTimeout(5, TimeUnit.SECONDS).exceptionally(_ -> {
-            sender.sendMessage(I18n.string("commands.mute.service_offline"));
+            sender.sendTranslated("commands.mute.service_offline");
             return null;
         });
     }

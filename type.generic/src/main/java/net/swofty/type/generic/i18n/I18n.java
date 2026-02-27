@@ -68,8 +68,16 @@ public class I18n {
         return List.of(string(key).split("\n"));
     }
 
+    public static List<String> lore(String key, Locale locale) {
+        return List.of(string(key, locale).split("\n"));
+    }
+
     public static List<String> lore(String key, Map<String, String> placeholders) {
         return List.of(string(key, placeholders).split("\n"));
+    }
+
+    public static List<String> lore(String key, Locale locale, Map<String, String> placeholders) {
+        return List.of(string(key, locale, placeholders).split("\n"));
     }
 
     public static String[] dialogueLines(String key) {
@@ -83,6 +91,11 @@ public class I18n {
 
     public static String[] dialogueLines(String key, Map<String, String> placeholders) {
         String resolved = string(key, placeholders);
+        return resolved.split(DIALOGUE_SEPARATOR);
+    }
+
+    public static String[] dialogueLines(String key, Locale locale, Map<String, String> placeholders) {
+        String resolved = string(key, locale, placeholders);
         return resolved.split(DIALOGUE_SEPARATOR);
     }
 }

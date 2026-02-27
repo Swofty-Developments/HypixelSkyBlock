@@ -9,6 +9,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -17,6 +18,7 @@ import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GUIContactManagement extends HypixelInventoryGUI {
@@ -47,18 +49,19 @@ public class GUIContactManagement extends HypixelInventoryGUI {
 		set(new GUIClickableItem(31) {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+				Locale l = player.getLocale();
 				new GUIConfirmAbiphone(npc, () -> {
 					abiphone.getAttributeHandler().removeAbiphoneNPC(npc);
 					player.closeInventory();
 					new GUIAbiphone(abiphone).open(player);
-					player.sendMessage(I18n.string("gui_abiphone.management.removed_message", Map.of("npc_name", npc.getName())));
+					player.sendMessage(I18n.string("gui_abiphone.management.removed_message", l, Map.of("npc_name", npc.getName())));
 				}).open(player);
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStackCreator.getStack(I18n.string("gui_abiphone.management.remove_contact"), Material.FEATHER, 1,
-						I18n.lore("gui_abiphone.management.remove_contact.lore"));
+				return TranslatableItemStackCreator.getStack(player, "gui_abiphone.management.remove_contact", Material.FEATHER, 1,
+						"gui_abiphone.management.remove_contact.lore");
 			}
 		});
 

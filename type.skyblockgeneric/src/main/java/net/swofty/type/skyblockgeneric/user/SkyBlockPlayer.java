@@ -6,7 +6,10 @@ import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.PlayerHand;
+import net.minestom.server.entity.RelativeFlags;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
@@ -16,16 +19,22 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
+import net.minestom.server.tag.Tag;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.PlayerShopData;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
-import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.datapoints.*;
+import net.swofty.type.generic.data.datapoints.DatapointBoolean;
+import net.swofty.type.generic.data.datapoints.DatapointDouble;
+import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
+import net.swofty.type.generic.data.datapoints.DatapointRank;
+import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
@@ -58,10 +67,16 @@ import net.swofty.type.skyblockgeneric.region.mining.handler.SkyBlockMiningHandl
 import net.swofty.type.skyblockgeneric.skill.skills.RunecraftingSkill;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.utility.DeathMessageCreator;
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -89,6 +104,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     public boolean speedManaged = false;
     @Setter
     private SkyBlockIsland skyBlockIsland;
+    private static final Tag<Integer> fallHeight = Tag.Integer("fallHeight");
 
     private static final Pattern SACK_PATTERN = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$");
 
@@ -98,7 +114,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
 	public SkyBlockDataHandler getSkyblockDataHandler() {
-        return (SkyBlockDataHandler) SkyBlockDataHandler.getUser(this.getUuid());
+        return SkyBlockDataHandler.getUser(this.getUuid());
     }
 
     public DatapointMuseum.MuseumData getMuseumData() {
@@ -125,6 +141,22 @@ public class SkyBlockPlayer extends HypixelPlayer {
         MissionData data = getSkyblockDataHandler().get(SkyBlockDataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
         data.setSkyBlockPlayer(this);
         return data;
+    }
+
+    @Override
+    public @NotNull CompletableFuture<Void> teleport(@NotNull Pos position, @NotNull Vec velocity, long @Nullable [] chunks,
+                                                                              @MagicConstant(flagsFromClass = RelativeFlags.class) int flags,
+                                                                              boolean shouldConfirm) {
+        setFallHeight(position.blockY());
+        return super.teleport(position, velocity, chunks, flags, shouldConfirm);
+    }
+
+    public void setFallHeight(int fallHeight) {
+        setTag(SkyBlockPlayer.fallHeight, fallHeight);
+    }
+
+    public Integer getFallHeight() {
+        return getTag(SkyBlockPlayer.fallHeight);
     }
 
     @Override

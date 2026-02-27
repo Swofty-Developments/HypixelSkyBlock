@@ -6,6 +6,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -27,7 +28,7 @@ public class GUISkyBlockProfile extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.profile.title"), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.profile.title", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class GUISkyBlockProfile extends StatelessView {
             if (!player.getItemInMainHand().isAir()) {
                 return ItemStackCreator.getFromStack(player.getItemInMainHand());
             } else {
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_held_item"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profile.empty_held_item", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         });
 
@@ -52,7 +53,7 @@ public class GUISkyBlockProfile extends StatelessView {
             if (!player.getHelmet().isAir()) {
                 return ItemStackCreator.getFromStack(player.getHelmet());
             } else {
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_helmet"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profile.empty_helmet", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -76,7 +77,7 @@ public class GUISkyBlockProfile extends StatelessView {
             if (!player.getChestplate().isAir()) {
                 return ItemStackCreator.getFromStack(player.getChestplate());
             } else {
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_chestplate"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profile.empty_chestplate", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -100,7 +101,7 @@ public class GUISkyBlockProfile extends StatelessView {
             if (!player.getLeggings().isAir()) {
                 return ItemStackCreator.getFromStack(player.getLeggings());
             } else {
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_leggings"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profile.empty_leggings", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -124,7 +125,7 @@ public class GUISkyBlockProfile extends StatelessView {
             if (!player.getBoots().isAir()) {
                 return ItemStackCreator.getFromStack(player.getBoots());
             } else {
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_boots"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profile.empty_boots", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -149,7 +150,7 @@ public class GUISkyBlockProfile extends StatelessView {
                 SkyBlockItem pet = player.getPetData().getEnabledPet();
                 return new NonPlayerItemUpdater(pet).getUpdatedItem();
             } else {
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_pet"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profile.empty_pet", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         }, (click, c) -> {
             //c.player().openView(new GUIPets())
@@ -172,8 +173,8 @@ public class GUISkyBlockProfile extends StatelessView {
                 }
             });
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.combat_stats"), Material.DIAMOND_SWORD, 1,
-                    I18n.lore("gui_sbmenu.profile.combat_stats.lore", Map.of("stats_display", statsDisplay.toString())));
+            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profile.combat_stats", Material.DIAMOND_SWORD, 1,
+                    "gui_sbmenu.profile.combat_stats.lore", Map.of("stats_display", statsDisplay.toString()));
         }, (click, c) -> {
             //c.player().openView(new GUICombatStats()))
         });
@@ -198,8 +199,8 @@ public class GUISkyBlockProfile extends StatelessView {
                 }
             });
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.gathering_stats"), Material.IRON_PICKAXE, 1,
-                    I18n.lore("gui_sbmenu.profile.gathering_stats.lore", Map.of("stats_display", statsDisplay.toString())));
+            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profile.gathering_stats", Material.IRON_PICKAXE, 1,
+                    "gui_sbmenu.profile.gathering_stats.lore", Map.of("stats_display", statsDisplay.toString()));
         }, (click, c) -> {
             // c.player().openView(new GUIGatheringStats());
         });
@@ -221,8 +222,8 @@ public class GUISkyBlockProfile extends StatelessView {
                 }
             });
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.wisdom_stats"), Material.BOOK, 1,
-                    I18n.lore("gui_sbmenu.profile.wisdom_stats.lore", Map.of("stats_display", statsDisplay.toString())));
+            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profile.wisdom_stats", Material.BOOK, 1,
+                    "gui_sbmenu.profile.wisdom_stats.lore", Map.of("stats_display", statsDisplay.toString()));
         }, (click, c) -> {
             //c.player().openView(new GUIWisdomStats())
         });
@@ -244,8 +245,8 @@ public class GUISkyBlockProfile extends StatelessView {
                 }
             });
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.misc_stats"), Material.CLOCK, 1,
-                    I18n.lore("gui_sbmenu.profile.misc_stats.lore", Map.of("stats_display", statsDisplay.toString())));
+            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profile.misc_stats", Material.CLOCK, 1,
+                    "gui_sbmenu.profile.misc_stats.lore", Map.of("stats_display", statsDisplay.toString()));
         }, (click, c) -> {
             //c.player().openView(new GUIMiscStats())
         });
