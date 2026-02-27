@@ -18,10 +18,12 @@ import net.swofty.type.generic.entity.npc.impl.NPCVillagerEntityImpl;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
+import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -284,6 +286,26 @@ public abstract class HypixelNPC {
 
         public static DialogueSet ofTranslation(String key, String translationKey, Map<String, String> placeholders, Sound sound) {
             return new DialogueSet(key, I18n.dialogueLines(translationKey, placeholders), sound);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player) {
+            Locale locale = player != null ? player.getLocale() : Locale.US;
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale), null);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Sound sound) {
+            Locale locale = player != null ? player.getLocale() : Locale.US;
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale), sound);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Map<String, String> placeholders) {
+            Locale locale = player != null ? player.getLocale() : Locale.US;
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale, placeholders), null);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Map<String, String> placeholders, Sound sound) {
+            Locale locale = player != null ? player.getLocale() : Locale.US;
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale, placeholders), sound);
         }
     }
 }
