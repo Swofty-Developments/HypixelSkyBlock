@@ -27,7 +27,6 @@ public class ElectionData {
     private String ministerPerk;
 
     private List<CandidateData> candidates = new ArrayList<>();
-    private transient Map<String, String> votes = new HashMap<>();
     private Map<String, Long> voteTallies = new HashMap<>();
     private boolean electionOpen;
 
@@ -42,7 +41,7 @@ public class ElectionData {
     public SkyBlockMayor getMayorEnum() {
         if (currentMayor == null) return null;
         try {
-            return SkyBlockMayor.valueOf(currentMayor).setColor(currentMayorColor);
+            return SkyBlockMayor.valueOf(currentMayor);
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -51,7 +50,7 @@ public class ElectionData {
     public SkyBlockMayor getMinisterEnum() {
         if (currentMinister == null) return null;
         try {
-            return SkyBlockMayor.valueOf(currentMinister).setColor(currentMinisterColor);
+            return SkyBlockMayor.valueOf(currentMinister);
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -77,17 +76,7 @@ public class ElectionData {
     }
 
     public Map<String, Long> tallyVotes() {
-        if (!voteTallies.isEmpty()) {
-            return new HashMap<>(voteTallies);
-        }
-        Map<String, Long> tally = new HashMap<>();
-        for (CandidateData candidate : candidates) {
-            tally.put(candidate.getMayorName(), 0L);
-        }
-        for (String candidateName : votes.values()) {
-            tally.merge(candidateName, 1L, Long::sum);
-        }
-        return tally;
+        return new HashMap<>(voteTallies);
     }
 
     public void updateTallies(Map<String, Long> newTallies) {
@@ -95,132 +84,9 @@ public class ElectionData {
         voteTallies.putAll(newTallies);
     }
 
-    public void incrementTally(String candidateName, String previousVote) {
-        if (previousVote != null) {
-            voteTallies.computeIfPresent(previousVote, (k, v) -> Math.max(0, v - 1));
-        }
-        voteTallies.merge(candidateName, 1L, Long::sum);
-    }
-
-    public void resolveElection(int currentYear) {
-        Map<String, Long> tally = tallyVotes();
-        List<Map.Entry<String, Long>> sorted = new ArrayList<>(tally.entrySet());
-        sorted.sort((a, b) -> Long.compare(b.getValue(), a.getValue()));
-
-        if (sorted.isEmpty()) return;
-
-        long topVotes = sorted.getFirst().getValue();
-        List<Map.Entry<String, Long>> tied = sorted.stream()
-                .filter(e -> e.getValue() == topVotes).toList();
-
-        String winnerName;
-        if (tied.size() > 1) {
-            winnerName = tied.get(ThreadLocalRandom.current().nextInt(tied.size())).getKey();
-        } else {
-            winnerName = sorted.getFirst().getKey();
-        }
-
-        SkyBlockMayor winner = SkyBlockMayor.valueOf(winnerName);
-
-        CandidateData winnerCandidate = candidates.stream()
-                .filter(c -> c.getMayorName().equals(winnerName))
-                .findFirst().orElse(null);
-
-        currentMayor = winnerName;
-        currentMayorColor = winner.getColor();
-        currentMayorPerks = winnerCandidate != null
-                ? new ArrayList<>(winnerCandidate.getActivePerks())
-                : Arrays.stream(winner.getAllPerks()).map(Enum::name).toList();
-        mayorElectedYear = currentYear;
-        lastElectedYear.put(winnerName, currentYear);
-
-        if (winner.isSpecial()) {
-            currentMinister = null;
-            ministerPerk = null;
-            currentMinisterColor = null;
-        } else {
-            String secondPlace = sorted.stream().filter(entry -> !entry.getKey().equals(winnerName)).findFirst().map(Map.Entry::getKey).orElse(null);
-            if (secondPlace != null) {
-                SkyBlockMayor ministerMayor = SkyBlockMayor.valueOf(secondPlace);
-                currentMinister = secondPlace;
-                currentMinisterColor = ministerMayor.getColor();
-
-                CandidateData ministerCandidate = candidates.stream()
-                        .filter(c -> c.getMayorName().equals(secondPlace))
-                        .findFirst().orElse(null);
-
-                if (ministerCandidate != null && !ministerCandidate.getActivePerks().isEmpty()) {
-                    List<String> perks = ministerCandidate.getActivePerks();
-                    ministerPerk = perks.get(ThreadLocalRandom.current().nextInt(perks.size()));
-                } else {
-                    SkyBlockMayor.Perk[] allPerks = ministerMayor.getAllPerks();
-                    ministerPerk = allPerks[ThreadLocalRandom.current().nextInt(allPerks.length)].name();
-                }
-            }
-        }
-
-        for (CandidateData candidate : candidates) {
-            if (candidate.getMayorName().equals(winnerName)) {
-                candidateActivePerks.remove(winnerName);
-                failedPerkGainLastTime.remove(winnerName);
-                continue;
-            }
-
-            SkyBlockMayor mayor = SkyBlockMayor.valueOf(candidate.getMayorName());
-            if (mayor.isSpecial()) continue;
-
-            List<String> currentPerks = new ArrayList<>(candidate.getActivePerks());
-            if (currentPerks.size() < mayor.getAllPerks().length) {
-                boolean failedLast = Boolean.TRUE.equals(failedPerkGainLastTime.get(candidate.getMayorName()));
-                boolean gainPerk = failedLast || ThreadLocalRandom.current().nextBoolean();
-
-                if (gainPerk) {
-                    List<String> available = new ArrayList<>();
-                    for (SkyBlockMayor.Perk perk : mayor.getAllPerks()) {
-                        if (!currentPerks.contains(perk.name())) {
-                            available.add(perk.name());
-                        }
-                    }
-                    if (!available.isEmpty()) {
-                        currentPerks.add(available.get(ThreadLocalRandom.current().nextInt(available.size())));
-                    }
-                    failedPerkGainLastTime.put(candidate.getMayorName(), false);
-                } else {
-                    failedPerkGainLastTime.put(candidate.getMayorName(), true);
-                }
-            }
-            candidateActivePerks.put(candidate.getMayorName(), currentPerks);
-        }
-
-        SkyBlockMayor winnerEnum = SkyBlockMayor.valueOf(winnerName);
-        if (!winnerEnum.isSpecial()) {
-            SkyBlockMayor.Perk[] allPerks = winnerEnum.getAllPerks();
-            SkyBlockMayor.Perk randomPerk = allPerks[ThreadLocalRandom.current().nextInt(allPerks.length)];
-            candidateActivePerks.put(winnerName, List.of(randomPerk.name()));
-        }
-
-        long totalVoteCount = tally.values().stream().mapToLong(Long::longValue).sum();
-        ElectionResult electionResult = new ElectionResult();
-        electionResult.setYear(currentYear);
-        for (Map.Entry<String, Long> entry : sorted) {
-            CandidateResult cr = new CandidateResult();
-            cr.setMayorName(entry.getKey());
-            cr.setVotes(entry.getValue());
-            cr.setPercentage(totalVoteCount > 0 ? (entry.getValue() * 100.0) / totalVoteCount : 0);
-            electionResult.getCandidateResults().add(cr);
-        }
-        this.lastElectionResult = electionResult;
-
-        candidates.clear();
-        votes.clear();
-        voteTallies.clear();
-        electionOpen = false;
-    }
-
     public void startNewElection(int year) {
         this.electionYear = year;
         this.electionOpen = true;
-        this.votes.clear();
         this.voteTallies.clear();
         this.candidates.clear();
 
@@ -258,7 +124,7 @@ public class ElectionData {
 
             CandidateData candidate = new CandidateData();
             candidate.setMayorName(specialCandidate.name());
-            candidate.setIndex(selected.indexOf(specialCandidate));
+            candidate.setIndex(candidates.size());
             candidate.setActivePerks(Arrays.stream(specialCandidate.getAllPerks()).map(Enum::name).toList());
             candidates.add(candidate);
         }
@@ -274,7 +140,7 @@ public class ElectionData {
             if (!alreadyInElection) {
                 CandidateData diazCandidate = new CandidateData();
                 diazCandidate.setMayorName(SkyBlockMayor.DIAZ.name());
-                diazCandidate.setIndex(selected.indexOf(SkyBlockMayor.DIAZ));
+                diazCandidate.setIndex(candidates.size());
                 diazCandidate.setActivePerks(Arrays.stream(SkyBlockMayor.DIAZ.getAllPerks()).map(Enum::name).toList());
                 candidates.add(diazCandidate);
             }
@@ -285,6 +151,17 @@ public class ElectionData {
         Integer lastYear = lastElectedYear.get(mayorName);
         if (lastYear == null) return -1;
         return currentYear - lastYear;
+    }
+
+    public static String colorForIndex(int index) {
+        return switch (index) {
+            case 0 -> "§c";
+            case 1 -> "§a";
+            case 2 -> "§b";
+            case 3 -> "§e";
+            case 4 -> "§d";
+            default -> "§f";
+        };
     }
 
     @Getter
@@ -315,14 +192,7 @@ public class ElectionData {
         }
 
         public String getColor() {
-            return switch (index) {
-                case 0 -> "§c";
-                case 1 -> "§a";
-                case 2 -> "§b";
-                case 3 -> "§e";
-                case 4 -> "§d";
-                default -> "§f";
-            };
+            return colorForIndex(index);
         }
 
         public String getColoredName() {

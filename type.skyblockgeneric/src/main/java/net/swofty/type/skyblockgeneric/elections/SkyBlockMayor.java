@@ -89,7 +89,6 @@ public enum SkyBlockMayor {
     private final String texture;
     private final String signature;
     private final Perk[] allPerks;
-    private String color;
 
     SkyBlockMayor(String displayName, boolean special, String texture, String signature, Perk[] allPerks) {
         this.displayName = displayName;
@@ -105,23 +104,6 @@ public enum SkyBlockMayor {
 
     public static List<SkyBlockMayor> getSpecialMayors() {
         return Arrays.stream(values()).filter(m -> m.special).toList();
-    }
-
-    public SkyBlockMayor setColor(String color) {
-        this.color = color;
-        return this;
-    }
-
-    public SkyBlockMayor setColorFromIndex(int index) {
-        String color = switch (index) {
-            case 0 -> "§c";
-            case 1 -> "§a";
-            case 2 -> "§b";
-            case 3 -> "§e";
-            case 4 -> "§d";
-            default -> "§f";
-        };
-        return setColor(color);
     }
 
     @Getter
