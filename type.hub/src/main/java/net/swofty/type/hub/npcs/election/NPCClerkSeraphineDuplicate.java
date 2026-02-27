@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.stream.Stream;
@@ -14,7 +15,10 @@ public class NPCClerkSeraphineDuplicate extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"Clerk Seraphine", "§e§lCLICK"};
+                return new String[]{
+                    I18n.string("npcs_hub.election.clerk_seraphine", player.getLocale()),
+                    I18n.string("npcs_hub.election.click", player.getLocale())
+                };
             }
 
             @Override
@@ -48,12 +52,7 @@ public class NPCClerkSeraphineDuplicate extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                DialogueSet.builder()
-                        .key("hello").lines(new String[]{
-                                "Welcome to the §bCommunity Center§f!",
-                                "Contribute to community projects, upgrade your account, and more by talking to §dElizabeth§f!",
-                                "You can also vote in the §bmayor elections §fby heading through the warp behind me!"
-                        }).build()
+                DialogueSet.ofTranslation("hello", "npcs_hub.clerk_seraphine.dialogue.hello", player)
         ).toArray(DialogueSet[]::new);
     }
 }
