@@ -13,6 +13,7 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.data.datapoints.DatapointSkywarsModeStats;
 import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
@@ -60,20 +61,20 @@ public class SkywarsLobbyScoreboard {
 				int level = SkywarsLevelRegistry.calculateLevel(experience);
 
 				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
+				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
 				lines.add("§7 ");
-				lines.add("§fYour Level: " + SkyWarsLevelColor.getLevelDisplay(level));
+				lines.add(I18n.string("scoreboard.skywars_lobby.your_level_label") + " " + SkyWarsLevelColor.getLevelDisplay(level));
 				lines.add("§7 ");
-				lines.add("§fSolo Kills: §a" + soloKills);
-				lines.add("§fSolo Wins: §a" + soloWins);
-				lines.add("§fDoubles Kills: §a" + doublesKills);
-				lines.add("§fDoubles Wins: §a" + doublesWins);
+				lines.add(I18n.string("scoreboard.skywars_lobby.solo_kills_label") + soloKills);
+				lines.add(I18n.string("scoreboard.skywars_lobby.solo_wins_label") + soloWins);
+				lines.add(I18n.string("scoreboard.skywars_lobby.doubles_kills_label") + doublesKills);
+				lines.add(I18n.string("scoreboard.skywars_lobby.doubles_wins_label") + doublesWins);
 				lines.add("§7 ");
-				lines.add("§fCoins: §6" + coins);
-				lines.add("§fSouls: §b" + souls);
-				lines.add("§fTokens: §2" + tokens);
+				lines.add(I18n.string("scoreboard.skywars_lobby.coins_label") + coins);
+				lines.add(I18n.string("scoreboard.skywars_lobby.souls_label") + souls);
+				lines.add(I18n.string("scoreboard.skywars_lobby.tokens_label") + tokens);
 				lines.add("§7 ");
-				lines.add("§ewww.hypixel.net");
+				lines.add(I18n.string("scoreboard.common.footer"));
 
 				if (!scoreboard.hasScoreboard(player)) {
 					scoreboard.createScoreboard(player, getSidebarName(animationFrame));
@@ -91,7 +92,7 @@ public class SkywarsLobbyScoreboard {
 	}
 
 	private static String getSidebarName(int counter) {
-		String baseText = "SKYWARS";
+		String baseText = I18n.string("scoreboard.skywars_lobby.title_base");
 		String[] colors = {"§f§l", "§e§l", "§6§l"};
 
 		if (counter > 0 && counter <= 7) {

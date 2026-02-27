@@ -61,12 +61,14 @@ dependencies {
     implementation(project(":proxy.api"))
     implementation(project(":spark"))
     implementation(project(":anticheat"))
-    implementation("org.slf4j:slf4j-api:2.0.13")
+    implementation("org.slf4j:slf4j-api:2.0.17")
     implementation("org.tinylog:tinylog-api:2.7.0")
     implementation("org.tinylog:tinylog-impl:2.7.0")
     implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
+    implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
+    implementation("net.kyori:adventure-text-minimessage:4.25.0")
     implementation("dev.hollowcube:polar:1.15.0")
     implementation("org.yaml:snakeyaml:2.0")
 }

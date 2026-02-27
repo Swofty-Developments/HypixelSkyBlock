@@ -25,6 +25,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
 import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
@@ -35,6 +36,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Setter
 public class GUIAuctionBrowser extends HypixelInventoryGUI implements RefreshingGUI {
@@ -55,7 +57,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
     private List<AuctionItem> itemCache = new ArrayList<>();
 
     public GUIAuctionBrowser() {
-        super("Auction Browser", InventoryType.CHEST_6_ROW);
+        super(I18n.string("gui_auction.browser.title"), InventoryType.CHEST_6_ROW);
 
         Thread.startVirtualThread(this::updateItemsCache);
     }
@@ -87,7 +89,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
     private void setItems() {
         fill(ItemStackCreator.createNamedItemStack(category.getMaterial(), ""));
         set(GUIClickableItem.getGoBackItem(49, new GUIAuctionHouse()));
-        getInventory().setTitle(Component.text("Auction Browser - " + StringUtility.toNormalCase(category.name())));
+        getInventory().setTitle(Component.text(I18n.string("gui_auction.browser.title_with_category", Map.of("category", StringUtility.toNormalCase(category.name())))));
 
         set(new GUIClickableItem(50) {
             @Override
@@ -120,16 +122,16 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
                     }
 
                     if (sort == sorting) {
-                        lore.add("§b§l> §b" + StringUtility.toNormalCase(sort.name()));
+                        lore.add(I18n.string("gui_auction.browser.sort_selected_prefix") + StringUtility.toNormalCase(sort.name()));
                     } else {
-                        lore.add("§7" + StringUtility.toNormalCase(sort.name()));
+                        lore.add(I18n.string("gui_auction.browser.sort_unselected_prefix") + StringUtility.toNormalCase(sort.name()));
                     }
                 });
 
                 lore.add(" ");
-                lore.add("§eClick to switch sort!");
+                lore.add(I18n.string("gui_auction.browser.sort_click"));
 
-                return ItemStackCreator.getStack("§aSort", Material.HOPPER, 1,
+                return ItemStackCreator.getStack(I18n.string("gui_auction.browser.sort_button"), Material.HOPPER, 1,
                         lore);
             }
         });
@@ -156,17 +158,17 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
 
                 Arrays.stream(AuctionsFilter.values()).forEach(filter -> {
                     if (filter == GUIAuctionBrowser.this.filter) {
-                        lore.add("§b§l> §b" + StringUtility.toNormalCase(filter.name()));
+                        lore.add(I18n.string("gui_auction.browser.filter_selected_prefix") + StringUtility.toNormalCase(filter.name()));
                     } else {
-                        lore.add("§7" + StringUtility.toNormalCase(filter.name()));
+                        lore.add(I18n.string("gui_auction.browser.filter_unselected_prefix") + StringUtility.toNormalCase(filter.name()));
                     }
                 });
 
                 lore.add(" ");
-                lore.add("§bRight-Click to go backwards!");
-                lore.add("§eClick to switch filter!");
+                lore.add(I18n.string("gui_auction.browser.filter_right_click"));
+                lore.add(I18n.string("gui_auction.browser.filter_click"));
 
-                return ItemStackCreator.getStack("§aBIN Filter", Material.GOLD_BLOCK, 1,
+                return ItemStackCreator.getStack(I18n.string("gui_auction.browser.filter_button"), Material.GOLD_BLOCK, 1,
                         lore);
             }
         });
@@ -187,14 +189,14 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    List<String> lore = new ArrayList<>(List.of("§8Category", " ", "§7Examples:"));
-                    category.getExamples().forEach(example -> lore.add("§8◼ §7" + example));
+                    List<String> lore = new ArrayList<>(List.of(I18n.string("gui_auction.browser.category_subtitle"), " ", I18n.string("gui_auction.browser.category_examples")));
+                    category.getExamples().forEach(example -> lore.add(I18n.string("gui_auction.browser.category_example_prefix") + example));
                     lore.add(" ");
 
                     if (category.equals(getCategory())) {
-                        lore.add("§aCurrently Browsing");
+                        lore.add(I18n.string("gui_auction.browser.category_browsing"));
                     } else {
-                        lore.add("§eClick to view items!");
+                        lore.add(I18n.string("gui_auction.browser.category_click"));
                     }
 
                     return ItemStackCreator.getStack(category.getColor() + StringUtility.toNormalCase(category.name()), category.getDisplayMaterial(), 1, lore);
@@ -272,7 +274,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage("§cAuction House is currently offline!");
+            player.sendMessage(I18n.string("gui_auction.browser.offline_message"));
             player.closeInventory();
         }
 

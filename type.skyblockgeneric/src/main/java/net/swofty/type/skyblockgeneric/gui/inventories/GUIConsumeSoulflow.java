@@ -9,10 +9,13 @@ import net.swofty.type.generic.gui.v2.View;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.SoulflowComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.Map;
 
 public class GUIConsumeSoulflow implements View<GUIConsumeSoulflow.State> {
 
@@ -26,7 +29,7 @@ public class GUIConsumeSoulflow implements View<GUIConsumeSoulflow.State> {
 
 	@Override
 	public ViewConfiguration<State> configuration() {
-		return new ViewConfiguration<>("Consume Soulflow", InventoryType.CHEST_4_ROW);
+		return new ViewConfiguration<>(I18n.string("gui_misc.consume_soulflow.title"), InventoryType.CHEST_4_ROW);
 	}
 
 	@Override
@@ -41,19 +44,13 @@ public class GUIConsumeSoulflow implements View<GUIConsumeSoulflow.State> {
 					int addition = s.item().getAmount() * itemSoulflow;
 
 					return ItemStackCreator.getStackHead(
-							"§aConsume Soulflow?",
+							I18n.string("gui_misc.consume_soulflow.confirm_button"),
 							"94f0c693b85658b0bae792c9f9b717eb024ab8c4b349455648ea08358b50ddc4",
 							1,
-							"§7Takes all the §3⸎ Soulflow §7items in",
-							"§7your inventory and internalizes them",
-							"§7to be ready for use.",
-							"",
-							"§7Internalized: §3" + soulflow + "⸎",
-							"",
-							"§7Adding from inventory: §3+" + addition + "⸎ Soulflow",
-							"",
-							"§eClick to consume!"
-					);
+							I18n.lore("gui_misc.consume_soulflow.confirm_button.lore", Map.of(
+									"soulflow", String.valueOf(soulflow),
+									"addition", String.valueOf(addition)
+							)));
 				},
 				(click, viewCtx) -> {
 					SkyBlockPlayer player = (SkyBlockPlayer) viewCtx.player();
@@ -64,7 +61,10 @@ public class GUIConsumeSoulflow implements View<GUIConsumeSoulflow.State> {
 					int addition = click.state().item().getAmount() * itemSoulflow;
 
 					data.get(SkyBlockDataHandler.Data.SOULFLOW, DatapointInteger.class).setValue(soulflow + addition);
-					player.sendMessage("§bYou internalized §3+" + addition + "⸎ Soulflow §band have a total of §3" + (soulflow + addition) + "⸎§b!");
+					player.sendMessage(I18n.string("gui_misc.consume_soulflow.consumed_message", Map.of(
+							"addition", String.valueOf(addition),
+							"total", String.valueOf(soulflow + addition)
+					)));
 
 					player.getInventory().setItemStack(player.getHeldSlot(), ItemStack.AIR);
 					player.closeInventory();

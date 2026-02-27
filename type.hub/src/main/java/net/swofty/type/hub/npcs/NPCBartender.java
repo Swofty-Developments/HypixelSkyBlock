@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopBartender;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionKillZombies;
@@ -68,24 +69,10 @@ public class NPCBartender extends HypixelNPC {
 
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("quest-hello").lines(new String[]{
-                                "Welcome to the Bar, friend!",
-                                "These are trying times, indeed. The §cGraveyard §fis overflowing with monsters! Anyone who comes in is spooked off by the grunts of zombies in the distance.",
-                                "Could you give me a hand? If you help clear out some of these monsters, I'll pay you for it."
-                        }).build(),
-                DialogueSet.builder()
-                        .key("quest-talk").lines(new String[]{
-                                "Clear out some more of those Zombies and I'll pay you greatly for it!"
-                        }).build(),
-                DialogueSet.builder()
-                        .key("quest-complete").lines(new String[]{
-                                "Words cannot describe how thankful I am!",
-                                "That whole area is very dangerous, but can be quite rewarding for a warrior such as yourself.",
-                                "If you're up for the challenge, both the §cGraveyard§f and the §cSpider's Den §fbeyond it are great training grounds for improving your §aCombat Skill§f.",
-                                "For now, here's a reward for helping me out!"
-                        }).build()
-        ).toArray(DialogueSet[]::new);
+        return new DialogueSet[] {
+                DialogueSet.ofTranslation("quest-hello", "npcs_hub.bartender.dialogue.quest_hello"),
+                DialogueSet.ofTranslation("quest-talk", "npcs_hub.bartender.dialogue.quest_talk"),
+                DialogueSet.ofTranslation("quest-complete", "npcs_hub.bartender.dialogue.quest_complete")
+        };
     }
 }

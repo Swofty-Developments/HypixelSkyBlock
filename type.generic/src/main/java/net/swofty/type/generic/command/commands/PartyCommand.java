@@ -8,6 +8,7 @@ import net.swofty.commons.party.FullParty;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
@@ -15,6 +16,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -47,7 +49,7 @@ public class PartyCommand extends HypixelCommand {
             pendingCommands.add(player.getUuid());
 
             if (!partyService.isOnline().join()) {
-                sender.sendMessage("§cCould not connect to the party service! Please try again later.");
+                sender.sendMessage(I18n.string("commands.common.service_offline_party"));
                 pendingCommands.remove(player.getUuid());
                 return;
             }
@@ -57,20 +59,20 @@ public class PartyCommand extends HypixelCommand {
             switch (sub.toLowerCase()) {
                 case "list" -> {
                     if (!PartyManager.isInParty(player)) {
-                        player.sendMessage("§9§m-----------------------------------------------------");
-                        player.sendMessage("§cYou are not in a party!");
-                        player.sendMessage("§9§m-----------------------------------------------------");
+                        player.sendMessage(I18n.string("commands.common.separator"));
+                        player.sendMessage(I18n.string("commands.party.not_in_party"));
+                        player.sendMessage(I18n.string("commands.common.separator"));
                         return;
                     }
                     FullParty party = PartyManager.getPartyFromPlayer(player);
 
                     int partySize = party.getMembers().size();
-                    player.sendMessage("§9§m-----------------------------------------------------");
-                    player.sendMessage("§6Party Members (" + partySize + ")");
-                    player.sendMessage("§f ");
+                    player.sendMessage(I18n.string("commands.common.separator"));
+                    player.sendMessage(I18n.string("commands.party.list_header", Map.of("count", String.valueOf(partySize))));
+                    player.sendMessage(I18n.string("commands.common.empty_line"));
 
                     FullParty.Member leader = party.getLeader();
-                    player.sendMessage("§eParty Leader: " + HypixelPlayer.getDisplayName(leader.getUuid()));
+                    player.sendMessage(I18n.string("commands.party.list_leader", Map.of("leader", HypixelPlayer.getDisplayName(leader.getUuid()))));
 
                     boolean hasMods = false;
                     for (FullParty.Member member : party.getMembers()) {
@@ -81,12 +83,12 @@ public class PartyCommand extends HypixelCommand {
                     }
 
                     if (hasMods) {
-                        player.sendMessage("§f ");
+                        player.sendMessage(I18n.string("commands.common.empty_line"));
                         String modList = party.getMembers().stream()
                                 .filter(member -> member.getRole() == FullParty.Role.MODERATOR)
                                 .map(member -> HypixelPlayer.getDisplayName(member.getUuid()))
                                 .collect(Collectors.joining(", "));
-                        player.sendMessage("§eParty Moderators: " + modList);
+                        player.sendMessage(I18n.string("commands.party.list_moderators", Map.of("moderators", modList)));
                     }
 
                     boolean hasMembers = false;
@@ -102,10 +104,10 @@ public class PartyCommand extends HypixelCommand {
                             .map(member -> HypixelPlayer.getDisplayName(member.getUuid()))
                             .collect(Collectors.joining(", "));
                     if (hasMembers) {
-                        player.sendMessage("§f ");
-                        player.sendMessage("§eParty Members: " + memberList);
+                        player.sendMessage(I18n.string("commands.common.empty_line"));
+                        player.sendMessage(I18n.string("commands.party.list_members", Map.of("members", memberList)));
                     }
-                    player.sendMessage("§9§m-----------------------------------------------------");
+                    player.sendMessage(I18n.string("commands.common.separator"));
                 }
                 case "leave" -> PartyManager.leaveParty(player);
                 case "disband" -> PartyManager.disbandParty(player);
@@ -127,7 +129,7 @@ public class PartyCommand extends HypixelCommand {
             pendingCommands.add(player.getUuid());
 
             if (!partyService.isOnline().join()) {
-                sender.sendMessage("§cCould not connect to the party service! Please try again later.");
+                sender.sendMessage(I18n.string("commands.common.service_offline_party"));
                 pendingCommands.remove(player.getUuid());
                 return;
             }
@@ -148,7 +150,7 @@ public class PartyCommand extends HypixelCommand {
                     UUID targetServer = UUID.fromString(target);
                     player.asProxyPlayer().transferToWithIndication(targetServer);
                 }
-                default -> player.sendMessage("§cUnknown command. Use /party for help.");
+                default -> player.sendMessage(I18n.string("commands.common.unknown_command_use_help", Map.of("command", "party")));
             }
 
             pendingCommands.remove(player.getUuid());
@@ -165,7 +167,7 @@ public class PartyCommand extends HypixelCommand {
             pendingCommands.add(player.getUuid());
 
             if (!partyService.isOnline().join()) {
-                sender.sendMessage("§cCouldn't find a party service! Please try again later.");
+                sender.sendMessage(I18n.string("commands.common.service_offline_party_alt"));
                 pendingCommands.remove(player.getUuid());
                 return;
             }
@@ -175,7 +177,7 @@ public class PartyCommand extends HypixelCommand {
 
             switch (sub.toLowerCase()) {
                 case "chat" -> PartyManager.sendChat(player, message);
-                default -> player.sendMessage("§cUnknown command. Use /party for help.");
+                default -> player.sendMessage(I18n.string("commands.common.unknown_command_use_help", Map.of("command", "party")));
             }
 
             pendingCommands.remove(player.getUuid());
@@ -183,22 +185,22 @@ public class PartyCommand extends HypixelCommand {
     }
 
     private void showHelp(HypixelPlayer player) {
-        player.sendMessage("§9§m-----------------------------------------------------");
-        player.sendMessage("§6Party Commands");
-        player.sendMessage("§e/p accept §8- §7§oAccept a party invite from a player");
-        player.sendMessage("§e/p invite <player> §8- §7§oInvite another player to your party");
-        player.sendMessage("§e/p list §8- §7§oLists the players in your current party");
-        player.sendMessage("§e/p leave §8- §7§oLeaves your current party");
-        player.sendMessage("§e/p warp §8- §7§oWarps the members of a party to your current server");
-        player.sendMessage("§e/p disband §8- §7§oDisbands the party");
-        player.sendMessage("§e/p transfer <player> §8- §7§oTransfers the party to another player");
-        player.sendMessage("§e/p kick <player> §8- §7§oRemove a player from your party");
-        player.sendMessage("§e/p promote <player> §8- §7§oPromote a player to moderator");
-        player.sendMessage("§e/p demote <player> §8- §7§oDemote a player from moderator");
-        player.sendMessage("§e/p chat §8- §7§oSends a chat message to the entire party");
+        player.sendMessage(I18n.string("commands.common.separator"));
+        player.sendMessage(I18n.string("commands.party.help_header"));
+        player.sendMessage(I18n.string("commands.party.help_accept"));
+        player.sendMessage(I18n.string("commands.party.help_invite"));
+        player.sendMessage(I18n.string("commands.party.help_list"));
+        player.sendMessage(I18n.string("commands.party.help_leave"));
+        player.sendMessage(I18n.string("commands.party.help_warp"));
+        player.sendMessage(I18n.string("commands.party.help_disband"));
+        player.sendMessage(I18n.string("commands.party.help_transfer"));
+        player.sendMessage(I18n.string("commands.party.help_kick"));
+        player.sendMessage(I18n.string("commands.party.help_promote"));
+        player.sendMessage(I18n.string("commands.party.help_demote"));
+        player.sendMessage(I18n.string("commands.party.help_chat"));
         if (player.getRank().isEqualOrHigherThan(Rank.STAFF)) {
-            player.sendMessage("§e/p hijack <player> §8- §7§oHijacks a party (Admin only)");
+            player.sendMessage(I18n.string("commands.party.help_hijack"));
         }
-        player.sendMessage("§9§m-----------------------------------------------------");
+        player.sendMessage(I18n.string("commands.common.separator"));
     }
 }

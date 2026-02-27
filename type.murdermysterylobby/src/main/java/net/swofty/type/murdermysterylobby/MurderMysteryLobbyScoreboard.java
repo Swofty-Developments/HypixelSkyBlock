@@ -10,6 +10,7 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointMurderMysteryModeStats;
 import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
 
@@ -56,17 +57,17 @@ public class MurderMysteryLobbyScoreboard {
 				}
 
 				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
+				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
 				lines.add("§7 ");
-				lines.add("§fTotal Kills: §a" + totalKills);
-				lines.add("§fTotal Wins: §a" + totalWins);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_kills_label") + totalKills);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_wins_label") + totalWins);
 				lines.add("§7 ");
-				lines.add("§fWins as Detective: §a" + detectiveWins);
-				lines.add("§fWins as Murderer: §a" + murdererWins);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_detective_label") + detectiveWins);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_murderer_label") + murdererWins);
 				lines.add("§7 ");
-				lines.add("§fTokens: §2" + tokens);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.tokens_label") + tokens);
 				lines.add("§7 ");
-				lines.add("§ewww.hypixel.net");
+				lines.add(I18n.string("scoreboard.common.footer"));
 
 				if (!scoreboard.hasScoreboard(player)) {
 					scoreboard.createScoreboard(player, getSidebarName(animationFrame));
@@ -84,7 +85,7 @@ public class MurderMysteryLobbyScoreboard {
 	}
 
 	private static String getSidebarName(int counter) {
-		String baseText = "MURDER MYSTERY";
+		String baseText = I18n.string("scoreboard.murdermystery_lobby.title_base");
 		String[] colors = {"§f§l", "§6§l", "§e§l"};
 		String endColor = "§a§l";
 

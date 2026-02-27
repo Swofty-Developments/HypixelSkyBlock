@@ -12,6 +12,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -32,14 +33,14 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
     );
 
     public GUIYourMuseum() {
-        super("Your Museum", InventoryType.CHEST_6_ROW);
+        super(I18n.string("gui_museum.main.title"), InventoryType.CHEST_6_ROW);
     }
 
     @SneakyThrows
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline().join()) {
-            e.player().sendMessage("§cThe item tracker is currently offline. Please try again later.");
+            e.player().sendMessage(I18n.string("gui_museum.main.item_tracker_offline"));
             e.player().closeInventory();
             return;
         }
@@ -59,47 +60,23 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§6Museum Rewards", Material.GOLD_BLOCK, 1,
-                        "§7Each time you donate an item to your",
-                        "§7Museum, the §bCurator §7will reward you.",
-                        " ",
-                        "§dSpecial Items §ddo not count towards",
-                        "§7your Museum rewards progress.",
-                        " ",
-                        "§7Currently, most rewards are §ccoming",
-                        "§csoon§7, but you can view them anyway.",
-                        " ",
-                        "§eClick to view!");
+                return ItemStackCreator.getStack(I18n.string("gui_museum.main.rewards_button"), Material.GOLD_BLOCK, 1,
+                        I18n.lore("gui_museum.main.rewards_button.lore"));
             }
         });
         set(new GUIItem(45) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aEdit NPC Tags", Material.NAME_TAG, 1,
-                        "§7Edit the tags that appear above",
-                        "§7your NPC. Show off your SkyBlock",
-                        "§7progress with tags showing your",
-                        "§7highest collection, best Skill, and",
-                        "§7more!",
-                        " ",
-                        "§cCOMING SOON");
+                return ItemStackCreator.getStack(I18n.string("gui_museum.main.edit_npc_tags"), Material.NAME_TAG, 1,
+                        I18n.lore("gui_museum.main.edit_npc_tags.lore"));
             }
         });
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7The §9Museum §7is a compendium of all of",
-                        "§7your items in SkyBlock. Donate items",
-                        "§7to your Museum to unlock rewards.",
-                        " ",
-                        "§7Other players can visit your Museum",
-                        "§7at any time! Display your best items",
-                        "§7proudly for all to see.",
-                        " "
-                ));
+                List<String> lore = new ArrayList<>(I18n.lore("gui_museum.main.museum_info.lore"));
 
                 int maxAmountOfItems = MuseumableItemCategory.getMuseumableItemCategorySize();
                 int unlockedItems = data.getAllItems().size();
@@ -107,13 +84,13 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
                 double percentageUnlocked = (double) unlockedItems / (double) maxAmountOfItems * 100;
                 double percentageUnlockedToTwoDecimalPlaces = Math.round(percentageUnlocked * 100) / 100.0;
 
-                lore.add("§7Items Donated: §e" + percentageUnlockedToTwoDecimalPlaces + "§6%");
+                lore.add(I18n.string("gui_museum.main.items_donated", Map.of("percentage", String.valueOf(percentageUnlockedToTwoDecimalPlaces))));
                 lore.add(getAsDisplay(unlockedItems, maxAmountOfItems));
 
                 Map<UUID, Double> calculatedPrices = data.getCalculatedPrices();
                 if (!calculatedPrices.isEmpty()) {
                     lore.add(" ");
-                    lore.add("§7Top Items");
+                    lore.add(I18n.string("gui_museum.main.top_items"));
 
                     AtomicInteger index = new AtomicInteger(1);
                     calculatedPrices.entrySet().stream()
@@ -128,7 +105,7 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
                             });
                 }
 
-                return ItemStackCreator.getStackHead("§9Museum",
+                return ItemStackCreator.getStackHead(I18n.string("gui_museum.main.museum_info"),
                         "597e4e27a04afa5f06108265a9bfb797630391c7f3d880d244f610bb1ff393d8",
                         1, lore);
             }
@@ -152,21 +129,18 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    List<String> lore = new ArrayList<>(List.of(
-                            "§7View all of the " + category.getColor() + category.getCategory() + " §7that you",
-                            "§7have donated to the §9Museum§7!",
-                            " "
-                    ));
+                    List<String> lore = new ArrayList<>(I18n.lore("gui_museum.main.category_button.lore_prefix",
+                            Map.of("color", category.getColor(), "category", category.getCategory())));
 
                     int maxAmountOfItems = MuseumableItemCategory.getMuseumableItemCategorySize(category);
                     int unlockedItems = data.getItemsByCategory(category).size();
                     double percentage = (double) unlockedItems / (double) maxAmountOfItems * 100;
                     double percentageToTwoDecimalPlaces = Math.round(percentage * 100) / 100.0;
 
-                    lore.add("§7Items Donated: §e" + percentageToTwoDecimalPlaces + "§6%");
+                    lore.add(I18n.string("gui_museum.main.category_items_donated", Map.of("percentage", String.valueOf(percentageToTwoDecimalPlaces))));
                     lore.add(getAsDisplay(unlockedItems, maxAmountOfItems));
                     lore.add(" ");
-                    lore.add("§eClick to view!");
+                    lore.add(I18n.string("gui_museum.main.category_click"));
 
                     return ItemStackCreator.getStack("§a" + category.getCategory(),
                             category.getMaterial(), 1,

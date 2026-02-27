@@ -4,6 +4,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.tab.TablistSkinRegistry;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -11,6 +12,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class MurderMysteryPlayersOnlineModule extends TablistModule {
     public int page;
@@ -24,7 +26,7 @@ public class MurderMysteryPlayersOnlineModule extends TablistModule {
         List<HypixelPlayer> players = HypixelGenericLoader.getLoadedPlayers();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered("§c§lPlayers §f(" + players.size() + ")"), TablistSkinRegistry.ORANGE)
+                new TablistEntry(getCentered(I18n.string("tablist.module.players_murder_mystery", Map.of("count", String.valueOf(players.size())))), TablistSkinRegistry.ORANGE)
         ));
 
         List<HypixelPlayer> toShow = new ArrayList<>();

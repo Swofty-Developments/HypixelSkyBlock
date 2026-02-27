@@ -12,10 +12,12 @@ import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStorage;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GUIStorageIconSelection extends PaginatedView<Material, GUIStorageIconSelection.IconSelectionState> {
     private static final int[] PAGINATED_SLOTS = {
@@ -36,7 +38,7 @@ public class GUIStorageIconSelection extends PaginatedView<Material, GUIStorageI
         return ViewConfiguration.withString(
                 (state, ctx) -> {
                     int totalPages = Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length));
-                    return "Choose an Icon (" + (state.page() + 1) + "/" + totalPages + ")";
+                    return I18n.string("gui_sbmenu.storage.icon.title", Map.of("page", String.valueOf(state.page() + 1), "max_page", String.valueOf(totalPages)));
                 },
                 InventoryType.CHEST_6_ROW
         );
@@ -71,13 +73,10 @@ public class GUIStorageIconSelection extends PaginatedView<Material, GUIStorageI
     @Override
     protected ItemStack.Builder renderItem(Material item, int index, HypixelPlayer player) {
         return ItemStackCreator.getStack(
-                (item == Material.BARRIER ? "§cReset" :
+                (item == Material.BARRIER ? I18n.string("gui_sbmenu.storage.icon.reset") :
                         StringUtility.toNormalCase(item.name().replace("minecraft:", ""))),
                 item, 1,
-                "§7Ender Chest icons replace the glass",
-                "§7panes in the navigation bar.",
-                " ",
-                "§eClick to select!");
+                I18n.lore("gui_sbmenu.storage.icon.lore"));
     }
 
     @Override

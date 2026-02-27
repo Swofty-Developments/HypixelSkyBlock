@@ -10,12 +10,14 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
@@ -37,8 +39,8 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
             double unitPrice
     ) {
         super(isInstant
-                        ? (isBuy ? "Cobblestone → Instant Buy" : "Cobblestone → Instant Sell")
-                        : (isBuy ? "How many do you want?" : "How many to sell?"),
+                        ? (isBuy ? I18n.string("gui_bazaar.amount_selection.title_instant_buy") : I18n.string("gui_bazaar.amount_selection.title_instant_sell"))
+                        : (isBuy ? I18n.string("gui_bazaar.amount_selection.title_buy") : I18n.string("gui_bazaar.amount_selection.title_sell")),
                 InventoryType.CHEST_4_ROW);
 
         this.isBuy = isBuy;
@@ -100,12 +102,14 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add("§7" + subtitle);
-                lore.add("§7Per unit: §6" + F.format(unitPrice));
+                lore.add(I18n.string("gui_bazaar.amount_selection.per_unit", Map.of("price", F.format(unitPrice))));
                 lore.add(isBuy
-                        ? "§7Total cost: §6" + F.format(unitPrice * qty)
-                        : "§7Total rev : §6" + F.format(unitPrice * qty));
+                        ? I18n.string("gui_bazaar.amount_selection.total_cost", Map.of("amount", F.format(unitPrice * qty)))
+                        : I18n.string("gui_bazaar.amount_selection.total_rev", Map.of("amount", F.format(unitPrice * qty))));
                 lore.add(" ");
-                lore.add("§eClick to " + (isBuy ? "buy" : "sell") + " now!");
+                lore.add(isBuy
+                        ? I18n.string("gui_bazaar.amount_selection.click_buy")
+                        : I18n.string("gui_bazaar.amount_selection.click_sell"));
                 return ItemStackCreator.getStack(
                         (isBuy ? "§a" : "§6") + title,
                         itemType.material, qty, lore
@@ -127,11 +131,11 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
-                lore.add("§7Buy Order Setup");
+                lore.add(I18n.string("gui_bazaar.amount_selection.limit_subtitle"));
                 lore.add("§7" + amountLine);
-                lore.add("§7Per unit: §6" + F.format(unitPrice));
+                lore.add(I18n.string("gui_bazaar.amount_selection.per_unit", Map.of("price", F.format(unitPrice))));
                 lore.add(" ");
-                lore.add("§eClick to proceed!");
+                lore.add(I18n.string("gui_bazaar.amount_selection.limit_click"));
                 return ItemStackCreator.getStack(
                         "§b" + title,
                         slot == 13 ? Material.CHEST : itemType.material,
@@ -148,12 +152,12 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                 try {
                     int v = Integer.parseInt(q);
                     if (v < 1 || v > maxAmount) {
-                        pl.sendMessage("§cEnter 1–" + maxAmount);
+                        pl.sendMessage(I18n.string("gui_bazaar.amount_selection.invalid_range", Map.of("max", String.valueOf(maxAmount))));
                         return null;
                     }
                     future.complete(v);
                 } catch (NumberFormatException ex) {
-                    pl.sendMessage("§cInvalid number");
+                    pl.sendMessage(I18n.string("gui_bazaar.amount_selection.invalid_number"));
                 }
                 return null;
             }
@@ -163,13 +167,13 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
                 lore.add(isInstant
-                        ? "§7Type a custom amount"
-                        : "§7Buy Order Quantity");
-                lore.add("§7Up to " + maxAmount + "×");
+                        ? I18n.string("gui_bazaar.amount_selection.custom_instant")
+                        : I18n.string("gui_bazaar.amount_selection.custom_limit"));
+                lore.add(I18n.string("gui_bazaar.amount_selection.custom_max", Map.of("max", String.valueOf(maxAmount))));
                 lore.add(" ");
-                lore.add("§eClick to specify!");
+                lore.add(I18n.string("gui_bazaar.amount_selection.custom_click"));
                 return ItemStackCreator.getStack(
-                        "§eCustom Amount",
+                        I18n.string("gui_bazaar.amount_selection.custom_amount"),
                         Material.OAK_SIGN, 1, lore
                 );
             }

@@ -6,11 +6,13 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.levels.LevelsGuide;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GUILevelsGuide extends StatelessView {
     private final LevelsGuide guide;
@@ -31,7 +33,7 @@ public class GUILevelsGuide extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Guide -> " + StringUtility.toNormalCase(guide.name()), InventoryType.CHEST_6_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.levels.guide.title", Map.of("guide_name", StringUtility.toNormalCase(guide.name()))), InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -45,15 +47,8 @@ public class GUILevelsGuide extends StatelessView {
         }
 
         // Guide info
-        layout.slot(50, (s, c) -> ItemStackCreator.getStack("§6SkyBlock Guide", Material.REDSTONE_TORCH, 1,
-                "§7Your §6SkyBlock Guide §7tracks the",
-                "§7progress you have made through",
-                "§7SkyBlock.",
-                "",
-                "§7Complete tasks within your current",
-                "§7game stage to increase your",
-                "§bSkyBlock Level §7and become a §dMaster",
-                "§7of SkyBlock!"));
+        layout.slot(50, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.guide.info"), Material.REDSTONE_TORCH, 1,
+                I18n.lore("gui_sbmenu.levels.guide.info.lore")));
 
         // Task items
         LevelsGuide.TasksSet[] tasks = guide.getTasksSets().toArray(new LevelsGuide.TasksSet[0]);
@@ -66,7 +61,7 @@ public class GUILevelsGuide extends StatelessView {
                 List<String> lore = new ArrayList<>();
 
                 if (task.getCauses().size() > 1) {
-                    lore.add("§8" + task.getCauses().size() + " Tasks");
+                    lore.add(I18n.string("gui_sbmenu.levels.guide.tasks", Map.of("count", String.valueOf(task.getCauses().size()))));
                     lore.add("");
                 }
 

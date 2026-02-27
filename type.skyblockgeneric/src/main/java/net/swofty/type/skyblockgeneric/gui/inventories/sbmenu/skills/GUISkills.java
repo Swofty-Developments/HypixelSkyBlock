@@ -6,6 +6,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.skill.SkillCategory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -20,7 +21,7 @@ public class GUISkills extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Your Skills", InventoryType.CHEST_6_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.skills.main.title"), InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -29,9 +30,8 @@ public class GUISkills extends StatelessView {
         Components.close(layout, 49);
         Components.back(layout, 48, ctx);
 
-        layout.slot(4, (s, c) -> ItemStackCreator.getStack("§aYour Skills", Material.DIAMOND_SWORD, 1,
-                "§7View your Skill progression and",
-                "§7rewards."));
+        layout.slot(4, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.skills.main.info"), Material.DIAMOND_SWORD, 1,
+                I18n.lore("gui_sbmenu.skills.main.info.lore")));
 
         SkillCategories[] allCategories = SkillCategories.values();
         for (int i = 0; i < DISPLAY_SLOTS.length && i < allCategories.length; i++) {
@@ -44,10 +44,7 @@ public class GUISkills extends StatelessView {
                 ArrayList<String> lore = new ArrayList<>();
 
                 if (category == SkillCategories.CARPENTRY && !player.getMissionData().hasCompleted("give_wool_to_carpenter")) {
-                    lore.add("§7Unlock this skill by talking to the");
-                    lore.add("§7Carpenter.");
-                    lore.add("");
-                    lore.add("§bNot unlocked!");
+                    lore.addAll(I18n.lore("gui_sbmenu.skills.main.carpentry_locked.lore"));
                 } else {
                     lore.addAll(skillCategory.getDescription());
                     lore.add(" ");
@@ -64,11 +61,11 @@ public class GUISkills extends StatelessView {
 
                         reward.getDisplay(lore);
                     } else {
-                        lore.add("§cMax Level Reached!");
+                        lore.add(I18n.string("gui_sbmenu.skills.main.max_level"));
                     }
 
                     lore.add(" ");
-                    lore.add("§eClick to view!");
+                    lore.add(I18n.string("gui_sbmenu.skills.main.click_to_view"));
                 }
 
                 return ItemStackCreator.getStack(

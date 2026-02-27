@@ -255,9 +255,9 @@ ${redis_ports}
     networks:
       - hypixel_network
 
-  pico-limbo:
-    image: ghcr.io/ariksquad/picolimbo:latest
-    container_name: picolimbo
+  pico_limbo:
+    image: ghcr.io/ariksquad/picolimbo:master
+    container_name: pico_limbo
     restart: unless-stopped
     environment:
       <<: *forwarding_env

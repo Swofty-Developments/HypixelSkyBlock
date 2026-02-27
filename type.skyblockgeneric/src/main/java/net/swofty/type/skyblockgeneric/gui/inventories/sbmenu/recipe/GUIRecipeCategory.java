@@ -15,6 +15,7 @@ import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
@@ -25,6 +26,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -46,7 +48,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
     @Override
     public ViewConfiguration<RecipeCategoryState> configuration() {
         return ViewConfiguration.withString(
-                (state, ctx) -> "(" + (state.page() + 1) + "/" + Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length)) + ") " + StringUtility.toNormalCase(type.name()) + " Recipes",
+                (state, ctx) -> I18n.string("gui_sbmenu.recipe.category.title", Map.of("page", String.valueOf(state.page() + 1), "max_page", String.valueOf(Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length))), "category_name", StringUtility.toNormalCase(type.name()))),
                 InventoryType.CHEST_6_ROW
         );
     }
@@ -69,7 +71,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
                     Objects.requireNonNull(itemStack.build().get(DataComponents.LORE)).stream().map(StringUtility::getTextFromComponent).toList()
             );
             lore.add("§e ");
-            lore.add("§eClick to view recipe!");
+            lore.add(I18n.string("gui_sbmenu.recipe.category.click_to_view"));
 
             return itemStack.set(DataComponents.LORE,
                     lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
@@ -77,7 +79,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
         } else {
             List<String> lore = Arrays.asList(result.errorMessage());
             lore = lore.stream().map(line -> "§7" + line).toList();
-            return ItemStackCreator.getStack("§c???", Material.GRAY_DYE, 1, lore);
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.locked"), Material.GRAY_DYE, 1, lore);
         }
     }
 
@@ -89,7 +91,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
         if (result.allowed()) {
             ctx.push(new GUIRecipe(item.getResult().getAttributeHandler().getPotentialType()));
         } else {
-            player.sendMessage("§cYou haven't unlocked that recipe!");
+            player.sendMessage(I18n.string("gui_sbmenu.recipe.category.msg.not_unlocked"));
         }
     }
 
@@ -119,10 +121,6 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
                 }
             });
 
-            ArrayList<String> lore = new ArrayList<>(Arrays.asList(
-                    "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
-                    "§7that you have unlocked!", " "));
-
             typeRecipes.forEach(recipe -> {
                 SkyBlockRecipe.CraftingResult result = recipe.getCanCraft().apply(player);
 
@@ -132,23 +130,22 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
             });
 
             String unlockedPercentage = String.format("%.2f", (allowedRecipes.size() / (double) typeRecipes.size()) * 100);
-            lore.add("§7Recipes Unlocked: §e" + unlockedPercentage + "§6%");
+            String categoryName = StringUtility.toNormalCase(type.name());
 
             String baseLoadingBar = "─────────────────";
             int maxBarLength = baseLoadingBar.length();
             int completedLength = (int) ((allowedRecipes.size() / (double) typeRecipes.size()) * maxBarLength);
-
             String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
             int formattingCodeLength = 4;
             String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
                     completedLoadingBar.length() - formattingCodeLength,
                     maxBarLength
             ));
+            String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
-            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size());
-
-            return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
-                    type.getMaterial(), 1, lore);
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.info", Map.of("category_name", categoryName)),
+                    type.getMaterial(), 1,
+                    I18n.lore("gui_sbmenu.recipe.category.info.lore", Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
         });
     }
 
