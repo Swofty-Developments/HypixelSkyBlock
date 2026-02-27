@@ -49,7 +49,7 @@ public class ActionGameMove implements HypixelEventClass {
 			TeamKey teamKey = entry.getKey();
 			MapTeam team = entry.getValue();
 
-			// Don'distance trigger own team's traps
+			// Don't trigger own team's traps
 			if (teamKey.equals(playerTeamKey)) {
 				continue;
 			}

@@ -77,7 +77,7 @@ public class NPCCarpenter extends HypixelNPC {
                 DialogueSet.builder()
                         .key("initial-hello").lines(new String[]{
                                 "Hi, " + player.getUsername() + "! Welcome to the §aFurniture Shop§f.",
-                                "Sales are too good right now, I can'distance keep up with the demand!",
+                                "Sales are too good right now, I can't keep up with the demand!",
                                 "Could you bring a §astack of White Wool§f to help replenish my stock?",
                                 "Sheep over in The Barn drop wool, but you can also purchase it from the §dWool Weaver§f.",
                                 "She lives in a house not far from here - it's over by the water fountain."

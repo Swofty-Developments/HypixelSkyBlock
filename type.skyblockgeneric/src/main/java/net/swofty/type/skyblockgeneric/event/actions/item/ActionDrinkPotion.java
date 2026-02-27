@@ -40,7 +40,7 @@ public class ActionDrinkPotion implements HypixelEventClass {
             return;
         }
 
-        // Don'distance process base potions (water, awkward, thick, mundane)
+        // Don't process base potions (water, awkward, thick, mundane)
         String effectType = potionData.getEffectType();
         if (effectType.equals("WATER") || effectType.equals("AWKWARD") ||
             effectType.equals("THICK") || effectType.equals("MUNDANE")) {

@@ -102,7 +102,7 @@ public class NPCSirius extends HypixelNPC {
         return Stream.of(
                 DialogueSet.builder()
                         .key("closed").lines(new String[]{
-                                "You shouldn'distance have of had been able to click me!"
+                                "You shouldn't have of had been able to click me!"
                         }).build(),
                 DialogueSet.builder()
                         .key("adding_to_auction").lines(new String[]{

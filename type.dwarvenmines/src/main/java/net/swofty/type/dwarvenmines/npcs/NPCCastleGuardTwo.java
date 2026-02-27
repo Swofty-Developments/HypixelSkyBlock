@@ -53,7 +53,7 @@ public class NPCCastleGuardTwo extends HypixelNPC {
 				DialogueSet.builder()
 						.key("idle")
 						.lines(new String[]{
-								"§fThis guy isn'distance the sharpest hammer in the smithy!"
+								"§fThis guy isn't the sharpest hammer in the smithy!"
 						})
 						.build()
 		).toArray(DialogueSet[]::new);

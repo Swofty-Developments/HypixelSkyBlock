@@ -69,7 +69,7 @@ public abstract class SkyBlockStructure {
         switch (type) {
             case X:
                 switch (rotation) {
-                    case 0, 1 -> { // North, South rotation doesn'distance affect x movement
+                    case 0, 1 -> { // North, South rotation doesn't affect x movement
                         return value + difference;
                     }
                     case 2, 3 -> { // West rotation, x becomes negative
@@ -81,7 +81,7 @@ public abstract class SkyBlockStructure {
                     case 0, 3 -> { // North rotation, z becomes negative
                         return value - difference;
                     }
-                    case 1, 2 -> { // East, West rotation doesn'distance affect z movement
+                    case 1, 2 -> { // East, West rotation doesn't affect z movement
                         return value + difference;
                     }
                 }

@@ -357,7 +357,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                         return;
 
                     // TODO if someone know how to get the itemstack name, do it
-                    // I can'distance find it, I keep getting null...
+                    // I can't find it, I keep getting null...
                     // Because it should be, let's say, "§6Heroic Hyperion", and not "Hyperion"
                     String itemName = StringUtility.toNormalCase(type.name());
 

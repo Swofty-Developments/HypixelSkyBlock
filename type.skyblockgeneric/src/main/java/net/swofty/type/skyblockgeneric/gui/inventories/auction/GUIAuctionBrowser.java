@@ -99,7 +99,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
                 setSorting(nextSort);
 
                 if (filter.equals(AuctionsFilter.BIN_ONLY)) {
-                    // Ensure that the auctions sorting isn'distance MOST_BIDS
+                    // Ensure that the auctions sorting isn't MOST_BIDS
                     if (nextSort.equals(AuctionsSorting.MOST_BIDS)) {
                         setSorting(AuctionsSorting.HIGHEST_BID);
                     }

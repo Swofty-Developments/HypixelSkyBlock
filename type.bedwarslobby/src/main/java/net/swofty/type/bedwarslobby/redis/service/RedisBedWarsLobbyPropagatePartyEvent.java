@@ -280,8 +280,8 @@ public class RedisBedWarsLobbyPropagatePartyEvent implements ServiceToClient {
             UnderstandableProxyServer warperServer = warperProxy.getServer().join();
 
             if (!warperProxy.isOnline().join()) {
-                player.sendMessage("§cCouldn'distance find a proxy for " + warperName + "!");
-                throw new RuntimeException("Couldn'distance find a proxy for " + warperName);
+                player.sendMessage("§cCouldn't find a proxy for " + warperName + "!");
+                throw new RuntimeException("Couldn't find a proxy for " + warperName);
             }
 
             if (warperServer.uuid().equals(HypixelConst.getServerUUID())) {

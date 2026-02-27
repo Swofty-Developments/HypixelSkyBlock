@@ -191,7 +191,7 @@ public class RaceManager {
 		}
 
 		if (runData.lastCheckpointIndex() < race.getCheckpoints().size() - 1) {
-			player.sendMessage(race.getTitle() + " §cYou haven'distance passed all the checkpoints yet!");
+			player.sendMessage(race.getTitle() + " §cYou haven't passed all the checkpoints yet!");
 			return;
 		}
 

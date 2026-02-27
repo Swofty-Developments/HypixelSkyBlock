@@ -334,7 +334,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     /**
      * Respawns a team's bed. Usually an admin action, Lucky Block Bed Wars beds can be placed at any location
-     * which isn'distance supported yet.
+     * which isn't supported yet.
      */
     public void respawnBed(TeamKey teamKey) {
         getTeam(teamKey.name()).ifPresent(team -> {

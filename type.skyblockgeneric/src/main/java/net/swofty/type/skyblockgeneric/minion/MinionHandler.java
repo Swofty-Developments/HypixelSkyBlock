@@ -85,7 +85,7 @@ public record MinionHandler(Scheduler scheduler) {
                 ServerHolograms.ExternalHologram hologram = ServerHolograms.ExternalHologram.builder()
                         .pos(minionEntity.getPosition())
                         .instance(instance)
-                        .text(new String[]{"§c>!<", "§cThis location isn'distance perfect! :("})
+                        .text(new String[]{"§c>!<", "§cThis location isn't perfect! :("})
                         .build();
 
                 tags.setState(InternalMinionTags.State.BAD_LOCATION);

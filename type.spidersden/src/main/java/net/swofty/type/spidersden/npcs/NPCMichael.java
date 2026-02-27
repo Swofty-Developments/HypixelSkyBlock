@@ -88,7 +88,7 @@ public class NPCMichael extends HypixelNPC {
                 DialogueSet.builder()
                         .key("initial-hello").lines(new String[] {
                                 "Wassup! We're out here on a camping trip!",
-                                "I don'distance really know why we chose the " + ChatColor.GRAY + "⏣ " + ChatColor.RED + "Spider's Den" + ChatColor.WHITE + ", though...",
+                                "I don't really know why we chose the " + ChatColor.GRAY + "⏣ " + ChatColor.RED + "Spider's Den" + ChatColor.WHITE + ", though...",
                                 "Still, I've been playing lots of games to pass the time.",
                                 "Quick! Trivia question! Do you know what " + ChatColor.RED + "Mob Types" + ChatColor.WHITE + " are?"
                         }).build(),

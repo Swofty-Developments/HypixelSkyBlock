@@ -191,7 +191,7 @@ public class GUIGemstoneGrinder extends HypixelInventoryGUI {
 
                                 updateFromItem(item);
                             } else {
-                                player.sendMessage("§cYou don'distance have enough coins to remove this!");
+                                player.sendMessage("§cYou don't have enough coins to remove this!");
                             }
                         }
 
@@ -256,12 +256,12 @@ public class GUIGemstoneGrinder extends HypixelInventoryGUI {
                         }
 
                         if (player.getCoins() < coins) {
-                            player.sendMessage("§cYou don'distance have the required items!");
+                            player.sendMessage("§cYou don't have the required items!");
                             return;
                         }
 
                         if (!player.removeItemsFromPlayer(itemRequirements)) {
-                            player.sendMessage("§cYou don'distance have the required items!");
+                            player.sendMessage("§cYou don't have the required items!");
                             return;
                         }
 

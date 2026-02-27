@@ -61,7 +61,7 @@ public class ActionPlayerDamageBlock implements HypixelEventClass {
         MineableBlock mineableBlock = MineableBlock.get(player.getInstance().getBlock(event.getBlockPosition()));
         if (mineableBlock != null) {
             SkyBlockMiningHandler handler = mineableBlock.getMiningHandler();
-            // If block doesn'distance break instantly and tool can'distance break it, return
+            // If block doesn't break instantly and tool can't break it, return
             if (!handler.breaksInstantly() && !handler.canToolBreak(item)) {
                 return;
             }

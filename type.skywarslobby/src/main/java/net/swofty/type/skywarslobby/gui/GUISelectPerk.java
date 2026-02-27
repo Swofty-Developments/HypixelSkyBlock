@@ -192,7 +192,7 @@ public class GUISelectPerk extends HypixelPaginatedGUI<SkywarsPerk> {
                         player.sendMessage("§aYou purchased and selected §e" + perk.getName() + "§a!");
                         new GUISelectNormalPerks().open(player);
                     } else {
-                        player.sendMessage("§cYou don'distance have enough coins to purchase this perk!");
+                        player.sendMessage("§cYou don't have enough coins to purchase this perk!");
                     }
                 } else if (perk.isFree()) {
                     unlocks.unlockPerk(perk.getId());

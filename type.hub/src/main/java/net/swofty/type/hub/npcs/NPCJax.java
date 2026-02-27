@@ -79,7 +79,7 @@ public class NPCJax extends HypixelNPC {
                         .key("completed_level_one").lines(new String[]{
                                 "Wow, you can really shoot a bow!",
                                 "Well, a deal's a deal! Come to me any time and I'll forge you whatever arrows you need for adventures.",
-                                "I only have one condition... These are powerful arrows, they can'distance fall into the wrong hands so keep them in your quiver and don'distance share them with anyone."
+                                "I only have one condition... These are powerful arrows, they can't fall into the wrong hands so keep them in your quiver and don't share them with anyone."
                         }).build()
         ).toArray(DialogueSet[]::new);
     }

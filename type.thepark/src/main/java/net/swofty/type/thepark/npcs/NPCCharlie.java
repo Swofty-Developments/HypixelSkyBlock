@@ -59,7 +59,7 @@ public class NPCCharlie extends HypixelNPC {
 		}
 
 		if (data.isCurrentlyActive(MissionCollectBirchLogs.class)) {
-			sendNPCMessage(player, "I don'distance see §a64 Birch Logs§f. Where are they?");
+			sendNPCMessage(player, "I don't see §a64 Birch Logs§f. Where are they?");
 			return;
 		}
 

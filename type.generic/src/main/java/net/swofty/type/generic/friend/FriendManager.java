@@ -65,7 +65,7 @@ public class FriendManager {
     public static void addFriend(HypixelPlayer player, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(player, "Couldn'distance find a player with that name!");
+            sendError(player, "Couldn't find a player with that name!");
             return;
         }
 
@@ -81,7 +81,7 @@ public class FriendManager {
     public static void acceptRequest(HypixelPlayer player, String senderName) {
         @Nullable UUID senderUUID = HypixelDataHandler.getPotentialUUIDFromName(senderName);
         if (senderUUID == null) {
-            sendError(player, "Couldn'distance find a player with that name!");
+            sendError(player, "Couldn't find a player with that name!");
             return;
         }
 
@@ -92,7 +92,7 @@ public class FriendManager {
     public static void denyRequest(HypixelPlayer player, String senderName) {
         @Nullable UUID senderUUID = HypixelDataHandler.getPotentialUUIDFromName(senderName);
         if (senderUUID == null) {
-            sendError(player, "Couldn'distance find a player with that name!");
+            sendError(player, "Couldn't find a player with that name!");
             return;
         }
 
@@ -103,7 +103,7 @@ public class FriendManager {
     public static void removeFriend(HypixelPlayer player, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(player, "Couldn'distance find a player with that name!");
+            sendError(player, "Couldn't find a player with that name!");
             return;
         }
 
@@ -119,7 +119,7 @@ public class FriendManager {
     public static void toggleBestFriend(HypixelPlayer player, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(player, "Couldn'distance find a player with that name!");
+            sendError(player, "Couldn't find a player with that name!");
             return;
         }
 
@@ -130,7 +130,7 @@ public class FriendManager {
     public static void setNickname(HypixelPlayer player, String targetName, String nickname) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(player, "Couldn'distance find a player with that name!");
+            sendError(player, "Couldn't find a player with that name!");
             return;
         }
 

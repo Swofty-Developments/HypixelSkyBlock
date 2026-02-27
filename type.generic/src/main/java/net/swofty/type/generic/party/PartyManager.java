@@ -32,7 +32,7 @@ public class PartyManager {
     public static void invitePlayer(HypixelPlayer inviter, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(inviter, "§cCouldn'distance find a player with that name!");
+            sendError(inviter, "§cCouldn't find a player with that name!");
             return;
         }
 
@@ -63,7 +63,7 @@ public class PartyManager {
     public static void acceptInvite(HypixelPlayer player, String inviterName) {
         @Nullable UUID inviterUUID = HypixelDataHandler.getPotentialUUIDFromName(inviterName);
         if (inviterUUID == null) {
-            sendError(player, "§cCouldn'distance find a player with that name!");
+            sendError(player, "§cCouldn't find a player with that name!");
             return;
         }
 
@@ -89,7 +89,7 @@ public class PartyManager {
     public static void transferLeadership(HypixelPlayer leader, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(leader, "§cCouldn'distance find a player with that name!");
+            sendError(leader, "§cCouldn't find a player with that name!");
             return;
         }
 
@@ -100,7 +100,7 @@ public class PartyManager {
     public static void kickPlayer(HypixelPlayer kicker, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(kicker, "§cCouldn'distance find a player with that name!");
+            sendError(kicker, "§cCouldn't find a player with that name!");
             return;
         }
 
@@ -111,7 +111,7 @@ public class PartyManager {
     public static void promotePlayer(HypixelPlayer promoter, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(promoter, "§cCouldn'distance find a player with that name!");
+            sendError(promoter, "§cCouldn't find a player with that name!");
             return;
         }
 
@@ -122,7 +122,7 @@ public class PartyManager {
     public static void demotePlayer(HypixelPlayer demoter, String targetName) {
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(demoter, "§cCouldn'distance find a player with that name!");
+            sendError(demoter, "§cCouldn't find a player with that name!");
             return;
         }
 
@@ -175,7 +175,7 @@ public class PartyManager {
 
         @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(targetName);
         if (targetUUID == null) {
-            sendError(hijacker, "§cCouldn'distance find a player with that name!");
+            sendError(hijacker, "§cCouldn't find a player with that name!");
             return;
         }
 

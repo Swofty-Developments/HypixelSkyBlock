@@ -39,7 +39,7 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!canExchange) {
-                    player.sendMessage("§cYou don'distance have enough Fairy Souls!");
+                    player.sendMessage("§cYou don't have enough Fairy Souls!");
                     return;
                 }
 
@@ -81,7 +81,7 @@ public class GUITiaTheFairy extends HypixelInventoryGUI {
 
                 lore.addAll(List.of(
                         "",
-                        (canExchange ? "§eClick to exchange!" : "§cYou don'distance have enough Fairy Souls!"  )
+                        (canExchange ? "§eClick to exchange!" : "§cYou don't have enough Fairy Souls!"  )
                 ));
 
                 return ItemStackCreator.getStackHead("§aExchange Fairy Souls",

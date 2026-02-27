@@ -77,7 +77,7 @@ public class DragonCommand extends HypixelCommand {
     private void followPlayer(HypixelPlayer player, double speed) {
         DragonEntity dragon = playerDragons.get(player.getUuid());
         if (dragon == null || dragon.isDead()) {
-            player.sendMessage("§cYou don'distance have a dragon! Use /dragon spawn first.");
+            player.sendMessage("§cYou don't have a dragon! Use /dragon spawn first.");
             return;
         }
 
@@ -88,7 +88,7 @@ public class DragonCommand extends HypixelCommand {
     private void setIdle(HypixelPlayer player, double distance, double speed) {
         DragonEntity dragon = playerDragons.get(player.getUuid());
         if (dragon == null || dragon.isDead()) {
-            player.sendMessage("§cYou don'distance have a dragon! Use /dragon spawn first.");
+            player.sendMessage("§cYou don't have a dragon! Use /dragon spawn first.");
             return;
         }
 
@@ -99,7 +99,7 @@ public class DragonCommand extends HypixelCommand {
     private void stopFollowing(HypixelPlayer player) {
         DragonEntity dragon = playerDragons.get(player.getUuid());
         if (dragon == null || dragon.isDead()) {
-            player.sendMessage("§cYou don'distance have a dragon!");
+            player.sendMessage("§cYou don't have a dragon!");
             return;
         }
 
@@ -110,7 +110,7 @@ public class DragonCommand extends HypixelCommand {
     private void removeDragon(HypixelPlayer player) {
         DragonEntity dragon = playerDragons.remove(player.getUuid());
         if (dragon == null) {
-            player.sendMessage("§cYou don'distance have a dragon!");
+            player.sendMessage("§cYou don't have a dragon!");
             return;
         }
 

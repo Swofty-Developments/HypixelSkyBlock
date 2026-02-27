@@ -72,7 +72,7 @@ public class NPCSilnar extends HypixelNPC {
 						.key("after-claiming-fallen-star-lozenge")
 						.lines(new String[]{
 								"§fWith the §5Fallen Star Lozenge§f, you can find §5Fallen Stars §fmuch easier!",
-								"§fNow go find some stars, but don'distance forget about the next meeting of the §5Cult§f!",
+								"§fNow go find some stars, but don't forget about the next meeting of the §5Cult§f!",
 								"§fI expect to see you there!"
 						})
 						.build()

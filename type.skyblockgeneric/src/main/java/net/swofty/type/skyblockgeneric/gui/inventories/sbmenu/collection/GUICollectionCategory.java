@@ -103,7 +103,7 @@ public class GUICollectionCategory extends StatelessView {
                 DatapointCollection.PlayerCollection collection = player.getCollection();
 
                 if (!collection.unlocked(item.type())) {
-                    player.sendMessage("§cYou haven'distance found this item yet!");
+                    player.sendMessage("§cYou haven't found this item yet!");
                     return;
                 }
                 player.openView(new GUICollectionItem(item.type()));

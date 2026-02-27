@@ -30,7 +30,7 @@ public class BreakingTask {
         double miningTime = player.getTimeToMine(item, block.block());
 
         if (miningTime == -1) {
-            // Player can'distance mine this block - keep running to stall progress
+            // Player can't mine this block - keep running to stall progress
             sendBlockBreak(0);
             this.breakTime = -1;
             this.nextSchedule = TaskSchedule.tick(1);
@@ -47,7 +47,7 @@ public class BreakingTask {
             return TaskSchedule.stop();
         }
 
-        // If player can'distance mine this block, continuously send progress 0 to stall
+        // If player can't mine this block, continuously send progress 0 to stall
         if (breakTime == -1) {
             sendBlockBreak(0);
             return TaskSchedule.tick(1);
@@ -68,7 +68,7 @@ public class BreakingTask {
             this.counter = 0;
             // Handle if the player continues to break the block without a release tick
             MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
-                // Minecraft won'distance send a cancel digging packet if the player is still holding the block
+                // Minecraft won't send a cancel digging packet if the player is still holding the block
                 // but our system requires it so we simulate it here
                 HypixelEventHandler.callCustomEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,

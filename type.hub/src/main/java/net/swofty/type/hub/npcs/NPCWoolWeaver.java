@@ -62,7 +62,7 @@ public class NPCWoolWeaver extends HypixelNPC {
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "If wool shrinks when you wash it...",
-                                "...why don'distance sheep get smaller when it rains?"
+                                "...why don't sheep get smaller when it rains?"
                         }).build(),
         };
     }

@@ -112,7 +112,7 @@ public class GUIFastTravel extends StatelessView {
                         .contains(island.getInternalName());
 
                 if (!hasUnlockedIsland) {
-                    p.sendMessage("§cYou haven'distance unlocked this fast travel destination!");
+                    p.sendMessage("§cYou haven't unlocked this fast travel destination!");
                     return;
                 }
 

@@ -601,7 +601,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
                 // Stash is full - item is lost
                 int overflowCount = 1;
                 sendMessage("§cUh oh! §e" + overflowCount + " §citem" + (overflowCount > 1 ? "s" : "") +
-                        " couldn'distance be stashed because you hit the item stash limit!");
+                        " couldn't be stashed because you hit the item stash limit!");
                 return;
             }
 
@@ -619,7 +619,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
      * Send a clickable notification that an item was added to the stash.
      */
     private void sendStashNotification(String stashType) {
-        Component message = Component.text("§eOne or more items didn'distance fit in your inventory and were added to your " +
+        Component message = Component.text("§eOne or more items didn't fit in your inventory and were added to your " +
                 stashType + " stash! ")
                 .append(Component.text("§6Click here §eto pick them up!")
                         .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/pickupstash " + stashType)));

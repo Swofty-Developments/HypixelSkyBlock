@@ -134,14 +134,6 @@ public class BedWarsGameScoreboard {
         String baseText = "BED WARS";
         String[] colors = {"§f§l", "§6§l", "§e§l"};
         String endColor = "§a§l";
-    private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
-    private static Integer prototypeName = 0;
-    public static void start(BedWarsGame game) {
-        Scheduler scheduler = MinecraftServer.getSchedulerManager();
-        scheduler.submitTask(() -> {
-            if (game == null) {
-                return TaskSchedule.stop();
-            }
 
         if (counter > 0 && counter <= 8) {
             return colors[0] + baseText.substring(0, counter - 1) +

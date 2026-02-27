@@ -75,7 +75,7 @@ public class AbiphoneBuilder extends AbiphoneNPC {
 						}).build(),
 				DialogueSet.builder()
 						.key("donate_no_requirements").lines(new String[]{
-								"You don'distance have what I need! Nice try!",
+								"You don't have what I need! Nice try!",
 						}).build()
 		};
 	}

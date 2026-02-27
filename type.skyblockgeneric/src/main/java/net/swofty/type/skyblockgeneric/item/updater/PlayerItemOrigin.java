@@ -15,7 +15,7 @@ import java.util.function.Function;
 public enum PlayerItemOrigin {
     MAIN_HAND((entry) -> {
         SkyBlockPlayer player = entry.getKey();
-        // We don'distance want to update the item of a player who is in a ShopGUI
+        // We don't want to update the item of a player who is in a ShopGUI
         if (player.getOpenInventory() == null)
             return entry.getKey().getItemInMainHand();
         return null;

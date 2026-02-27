@@ -192,7 +192,7 @@ public class ChooseMapCommand extends HypixelCommand {
                     raf.seek(index);
 
                     int offset = raf.readInt();
-                    // If offset is 0, chunk doesn'distance exist
+                    // If offset is 0, chunk doesn't exist
                     if (offset != 0) {
                         int chunkX = regionX * 32 + localX;
                         int chunkZ = regionZ * 32 + localZ;

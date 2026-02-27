@@ -123,7 +123,7 @@ public class ActionGameDeath implements HypixelEventClass {
         if (bedExists) {
             game.getRespawnHandler().startRespawn(player);
         } else {
-            // Final kill if the bed doesn'distance exist
+            // Final kill if the bed doesn't exist
             player.getInventory().clear();
             game.onPlayerEliminated(player);
         }

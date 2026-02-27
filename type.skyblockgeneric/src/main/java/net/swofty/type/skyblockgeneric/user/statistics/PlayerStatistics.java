@@ -533,7 +533,7 @@ public class PlayerStatistics {
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                 Thread.startVirtualThread(() -> {
                     double speed = player.getStatistics().allStatistics().getOverall(ItemStatistic.SPEED);
-                    if (player.isSpeedManaged()) return; // if the Speed is currently managed by another source, don'distance override it
+                    if (player.isSpeedManaged()) return; // if the Speed is currently managed by another source, don't override it
                     player.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue((float) (speed / 1000));
                 });
             });

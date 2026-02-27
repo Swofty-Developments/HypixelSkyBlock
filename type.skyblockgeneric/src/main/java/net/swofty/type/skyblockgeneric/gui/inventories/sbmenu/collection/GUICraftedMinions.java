@@ -99,7 +99,7 @@ public class GUICraftedMinions extends PaginatedView<SkyBlockItem, GUICraftedMin
                     minionRegistry.asSkyBlockMinion().getTiers().getFirst().texture(), 1, lore);
         } else {
             return ItemStackCreator.getStack("§c" + StringUtility.toNormalCase(minionRegistry.name()) + " Minion",
-                    Material.GRAY_DYE, 1, "§7You haven'distance crafted this minion.");
+                    Material.GRAY_DYE, 1, "§7You haven't crafted this minion.");
         }
     }
 

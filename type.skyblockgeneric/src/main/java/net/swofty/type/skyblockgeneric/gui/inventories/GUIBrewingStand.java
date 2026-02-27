@@ -321,7 +321,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
             // This is a modifier being applied to an existing potion
             newData = applyModifier(currentData, modifier);
         } else if (effectName.equals("MODIFIER")) {
-            // This is a modifier item but can'distance be applied (no existing potion data or water bottle)
+            // This is a modifier item but can't be applied (no existing potion data or water bottle)
             // Return the potion unchanged
             return potion;
         } else if (effectName.equals("AWKWARD") || effectName.equals("THICK") || effectName.equals("MUNDANE")) {

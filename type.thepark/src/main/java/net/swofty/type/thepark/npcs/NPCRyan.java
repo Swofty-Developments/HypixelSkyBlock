@@ -123,13 +123,13 @@ public class NPCRyan extends HypixelNPC {
 		}
 
 		if (data.isCurrentlyActive(MissionCollectDarkOakLogs.class)) {
-			sendNPCMessage(player, "Grab me §a256 Dark Oak Logs §fand I'll make you a badge! You don'distance have enough yet!");
+			sendNPCMessage(player, "Grab me §a256 Dark Oak Logs §fand I'll make you a badge! You don't have enough yet!");
 			return;
 		}
 
 		if (data.isCurrentlyActive(MissionGiveRyanDarkOakLogs.class)) {
 			if (!player.removeItemFromPlayer(ItemType.DARK_OAK_LOG, 256)) {
-				sendNPCMessage(player, "Grab me §a256 Dark Oak Logs §fand I'll make you a badge! You don'distance have enough yet!");
+				sendNPCMessage(player, "Grab me §a256 Dark Oak Logs §fand I'll make you a badge! You don't have enough yet!");
 				return;
 			}
 			setDialogue(player, "give_logs").thenRun(() -> {
@@ -145,7 +145,7 @@ public class NPCRyan extends HypixelNPC {
 	protected DialogueSet[] dialogues(HypixelPlayer player) {
 		return List.of(
 				DialogueSet.builder().key("startled").lines(new String[]{
-						"§cAAAHHHHH! §fDon'distance startle me like that bro!",
+						"§cAAAHHHHH! §fDon't startle me like that bro!",
 						"§fY'know, someone as stealthy as you could be a useful member of the §cCampfire Cult§f.",
 						"§fWhat do you say to that?"
 				}).build(),
@@ -154,7 +154,7 @@ public class NPCRyan extends HypixelNPC {
 						"Stand in the §6§lCAMPFIRE§f!"
 				}).build(),
 				DialogueSet.builder().key("accept_2").lines(new String[]{
-						"Yeah don'distance worry, it's not as hot as it looks.",
+						"Yeah don't worry, it's not as hot as it looks.",
 						"If you can last for §a10 seconds §fwhile standing in the campfire, I'll give you a reward!"
 				}).build(),
 				DialogueSet.builder().key("talk").lines(new String[]{

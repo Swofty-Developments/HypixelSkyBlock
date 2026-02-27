@@ -243,7 +243,7 @@ public class GUIDarkAuction extends HypixelInventoryGUI implements RefreshingGUI
 
                     // Check if player has enough coins
                     if (sp.getCoins() < bidValue) {
-                        sp.sendMessage("§cYou don'distance have enough coins! You need §6" +
+                        sp.sendMessage("§cYou don't have enough coins! You need §6" +
                                 StringUtility.commaify(bidValue) + " coins§c.");
                         return;
                     }
@@ -376,7 +376,7 @@ public class GUIDarkAuction extends HypixelInventoryGUI implements RefreshingGUI
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        // Don'distance remove from auction on close - they might reopen
+        // Don't remove from auction on close - they might reopen
     }
 
     @Override

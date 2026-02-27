@@ -66,7 +66,7 @@ public class AddToStashCommand extends HypixelCommand {
                 player.sendMessage("§aAdded §e" + added + "x " + itemType.getDisplayName() + " §ato your item stash.");
             }
             if (added < amount) {
-                player.sendMessage("§cCouldn'distance add " + (amount - added) + " items - item stash is at limit (720).");
+                player.sendMessage("§cCouldn't add " + (amount - added) + " items - item stash is at limit (720).");
             }
         }
     }

@@ -73,7 +73,7 @@ public class SplashPotionEntity extends Entity {
     public void spawn() {
         super.spawn();
 
-        // Auto-remove after 5 seconds if it somehow doesn'distance hit anything
+        // Auto-remove after 5 seconds if it somehow doesn't hit anything
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             if (!isRemoved() && !hasImpacted) {
                 impact();
@@ -115,7 +115,7 @@ public class SplashPotionEntity extends Entity {
         for (EntityCollisionResult collisionResult : collided) {
             if (collisionResult != null && collisionResult.entity() != thrower) {
                 Entity entity = collisionResult.entity();
-                // Don'distance collide with armor stands
+                // Don't collide with armor stands
                 if (entity.getEntityType() == EntityType.ARMOR_STAND) {
                     continue;
                 }

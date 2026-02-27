@@ -74,7 +74,7 @@ public class ParkourCommand extends HypixelCommand {
 			if (!(sender instanceof HypixelPlayer player)) return;
 			Parkour parkour = manager.getParkour();
 			if (!manager.getPerPlayerStartTime().containsKey(player.getUuid())) {
-				sender.sendMessage("§cYou haven'distance started the parkour challenge yet! Use §e/parkour start §cto start!");
+				sender.sendMessage("§cYou haven't started the parkour challenge yet! Use §e/parkour start §cto start!");
 				return;
 			}
 			int checkpointIndex = manager.getPerPlayerStartTime().get(player.getUuid()).lastCheckpointIndex();

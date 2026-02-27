@@ -47,7 +47,7 @@ public class GUIGuests extends HypixelInventoryGUI {
                         "§7You can get Guest on other islands",
                         "§7using §a/visit <player>",
                         "",
-                        "§7Guests §cCan'distance interact with the",
+                        "§7Guests §cCan't interact with the",
                         "§7world, but it's always fun to see",
                         "§7what others are up to!"
                 );

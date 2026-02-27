@@ -13,7 +13,7 @@ public class NPCInfection extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                // Infection mode doesn'distance exist yet, so just show 0 players
+                // Infection mode doesn't exist yet, so just show 0 players
                 return new String[]{
                         "§e§lCLICK TO PLAY",
                         "§bInfection",

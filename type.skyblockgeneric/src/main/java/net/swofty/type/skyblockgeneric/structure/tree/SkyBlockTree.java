@@ -278,7 +278,7 @@ public class SkyBlockTree extends SkyBlockStructure {
         double sparseSkipBonus = isBulbous ? 0.0 : 0.15;
 
         // Generate the unified canopy
-        // Leaves don'distance hang as low: only go down 1-2 blocks max instead of radius/2
+        // Leaves don't hang as low: only go down 1-2 blocks max instead of radius/2
         int minDy = isBulbous ? -2 : -1;
 
         for (int dx = -radius; dx <= radius; dx++) {

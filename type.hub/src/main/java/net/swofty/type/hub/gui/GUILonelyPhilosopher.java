@@ -30,7 +30,7 @@ public class GUILonelyPhilosopher extends HypixelInventoryGUI {
                 double coins = player.getCoins();
                 double price = 150000;
                 if (coins < price) {
-                    player.sendMessage("§cYou don'distance have enough coins!");
+                    player.sendMessage("§cYou don't have enough coins!");
                     return;
                 }
                 player.addAndUpdateItem(ItemType.HUB_CASTLE_TRAVEL_SCROLL);

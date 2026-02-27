@@ -109,16 +109,16 @@ public class NPCMelancholicViking extends HypixelNPC {
 						"Take a look at my wares!"
 				}).build(),
 				DialogueSet.builder().key("splashing-no-requirements").lines(new String[]{
-						"§eWow! Nice move! §fThere just isn'distance the ambience to fully appreciate it."
+						"§eWow! Nice move! §fThere just isn't the ambience to fully appreciate it."
 				}).build(),
 				DialogueSet.builder().key("holding-ice").lines(new String[]{
-						"Don'distance you have some liquid water?"
+						"Don't you have some liquid water?"
 				}).build(),
 				DialogueSet.builder().key("holding-raw-fish").lines(new String[]{
 						"I prefer when the fishes are lively and go splish-splash in the water!"
 				}).build(),
 				DialogueSet.builder().key("holding-fishing-rod").lines(new String[]{
-						"It's a nice thought, but I don'distance feel like fishing right now."
+						"It's a nice thought, but I don't feel like fishing right now."
 				}).build(),
 				DialogueSet.builder().key("holding-magical-water-bucket").lines(new String[]{
 						"There's as much water here as an ocean.",

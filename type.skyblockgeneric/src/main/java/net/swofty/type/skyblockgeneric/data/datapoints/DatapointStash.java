@@ -209,7 +209,7 @@ public class DatapointStash extends SkyBlockDatapoint<DatapointStash.PlayerStash
         }
 
         /**
-         * Get the number of items that couldn'distance fit due to the limit.
+         * Get the number of items that couldn't fit due to the limit.
          * @param attemptedCount The number of items attempted to add
          * @return The number of items that would overflow
          */

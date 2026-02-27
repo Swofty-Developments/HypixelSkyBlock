@@ -65,7 +65,7 @@ public class PickupStashCommand extends HypixelCommand {
         }
 
         if (pickedUp == 0) {
-            player.sendMessage("§cCouldn'distance unstash your item stash! Your inventory is full!");
+            player.sendMessage("§cCouldn't unstash your item stash! Your inventory is full!");
         } else if (stash.getItemStashCount() == 0) {
             player.sendMessage("§aYou picked up all items from your item stash!");
         } else {
@@ -107,7 +107,7 @@ public class PickupStashCommand extends HypixelCommand {
         }
 
         if (pickedUp == 0) {
-            player.sendMessage("§cCouldn'distance unstash your material stash! Your inventory is full!");
+            player.sendMessage("§cCouldn't unstash your material stash! Your inventory is full!");
         } else if (stash.getMaterialStashCount() == 0) {
             player.sendMessage("§aYou picked up all items from your material stash!");
         } else {

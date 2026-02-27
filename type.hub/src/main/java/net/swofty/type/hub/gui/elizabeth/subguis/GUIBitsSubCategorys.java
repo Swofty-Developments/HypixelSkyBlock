@@ -66,7 +66,7 @@ public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, Hypixe
                                     new GUIBitsConfirmBuy(finalItem, price).open(player);
                                 }
                             } else {
-                                player.sendMessage("§cYou don'distance have enough Bits to buy that!");
+                                player.sendMessage("§cYou don't have enough Bits to buy that!");
                             }
                         }
 

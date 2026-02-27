@@ -68,7 +68,7 @@ public class GUIKitPurchaseConfirm extends HypixelInventoryGUI {
                     // Return to kit selector
                     new GUIKitSelector(mode, returnPage).open(player);
                 } else {
-                    player.sendMessage("§cYou don'distance have enough coins!");
+                    player.sendMessage("§cYou don't have enough coins!");
                     new GUIKitSelector(mode, returnPage).open(player);
                 }
             }

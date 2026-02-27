@@ -38,12 +38,12 @@ public class ActionThrowSplashPotion implements HypixelEventClass {
         SkyBlockItem skyBlockItem = new SkyBlockItem(itemStack);
         ItemAttributePotionData.PotionData potionData = skyBlockItem.getAttributeHandler().getPotionData();
 
-        // If no potion data, don'distance throw
+        // If no potion data, don't throw
         if (potionData == null) {
             return;
         }
 
-        // Don'distance throw base potions (water, awkward, thick, mundane)
+        // Don't throw base potions (water, awkward, thick, mundane)
         String effectType = potionData.getEffectType();
         if (effectType.equals("WATER") || effectType.equals("AWKWARD") ||
             effectType.equals("THICK") || effectType.equals("MUNDANE")) {

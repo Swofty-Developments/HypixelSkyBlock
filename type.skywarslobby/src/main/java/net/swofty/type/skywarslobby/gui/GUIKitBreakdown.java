@@ -213,7 +213,7 @@ public class GUIKitBreakdown extends HypixelInventoryGUI {
                             1,
                             "§7Customize the layout of this kit.",
                             "",
-                            "§cYou don'distance own this kit!"
+                            "§cYou don't own this kit!"
                     );
                 }
             }

@@ -144,7 +144,7 @@ public enum BlockPlacementManager {
             FenceGatePlacement::new
     ),
     UNKNOWN(
-            _ -> true, // Default rule for any block that doesn'distance match the above conditions
+            _ -> true, // Default rule for any block that doesn't match the above conditions
             UnknownPlacement::new
     );
 

@@ -127,7 +127,7 @@ public class GUIFastTravelSubMenu extends StatelessView {
                         .contains(scroll.getInternalName());
 
                 if (!isUnlocked) {
-                    p.sendMessage("§cYou haven'distance unlocked this fast travel destination!");
+                    p.sendMessage("§cYou haven't unlocked this fast travel destination!");
                     return;
                 }
 

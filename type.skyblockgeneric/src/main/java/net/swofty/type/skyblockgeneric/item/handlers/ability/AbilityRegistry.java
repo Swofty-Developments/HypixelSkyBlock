@@ -46,7 +46,7 @@ public class AbilityRegistry {
 				new RegisteredAbility.AbilityManaCost(50),
 				(player, item, ignored, ignored2) -> {
 					BlockVec tpPos = player.getPosition().add(player.getPosition().direction().mul(8)).asBlockVec();
-					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return false; // TODO: Make it so you can'distance go through walls
+					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return false; // TODO: Make it so you can't go through walls
 					player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
 					ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 50.0).build();
 					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(3000).withDisplayName("Instant Transmission").build();

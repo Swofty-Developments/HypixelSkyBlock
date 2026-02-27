@@ -102,7 +102,7 @@ public class NPCMolbert extends HypixelNPC {
 
 		if (data.isCurrentlyActive(MissionGiveMolbertJungleLogs.class)) {
 			if (!player.removeItemFromPlayer(ItemType.JUNGLE_LOG, 512)) {
-				sendNPCMessage(player, "You don'distance have §a512 Jungle Logs§f on you.");
+				sendNPCMessage(player, "You don't have §a512 Jungle Logs§f on you.");
 				return;
 			}
 
@@ -198,7 +198,7 @@ public class NPCMolbert extends HypixelNPC {
 				DialogueSet.builder().key("option-mole").lines(new String[]{
 						"§c§lRidiculous! §fHow could I be a mole if I am §bwearing human clothes§f, huh?",
 						"Have you seen moles wearing human clothes before?",
-						"I don'distance think so. Now get back to the issue!"
+						"I don't think so. Now get back to the issue!"
 				}).build(),
 				DialogueSet.builder().key("quick-intro").lines(new String[]{
 						"The moles must be dealt with, and I am sure you will do so quickly and quietly."
@@ -207,7 +207,7 @@ public class NPCMolbert extends HypixelNPC {
 						"Great. First thing we need is to build some §5traps§f.",
 						"For that however, I need §a512 Jungle Logs§f, should be enough to get things going.",
 						"Moles §6loooove carrots§f, they are just too good to resist.",
-						"Don'distance worry, I've got a stash ready.",
+						"Don't worry, I've got a stash ready.",
 						"Just thinking about them §omakes me§f... Uhm I mean §omakes them §fcome out of their hiding space."
 				}).build(),
 				DialogueSet.builder().key("after-resources").lines(new String[]{
@@ -231,7 +231,7 @@ public class NPCMolbert extends HypixelNPC {
 						"...and then I ate the §6carrot §fbecause I was almost starving in there!"
 				}).build(),
 				DialogueSet.builder().key("option-iknow").lines(new String[]{
-						"§fOk, fine you caught me. But §cplease don'distance tell the others§f, they wouldn'distance want to be my friends anymore if they knew the truth.",
+						"§fOk, fine you caught me. But §cplease don't tell the others§f, they wouldn't want to be my friends anymore if they knew the truth.",
 						"Here, take this §acompensation §ffor all the trouble I made you go through.",
 						"I hope you forgive me after this and we can still be §6friends§f."
 				}).build(),

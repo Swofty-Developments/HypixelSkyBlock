@@ -229,7 +229,7 @@ public class SkyBlockLevelRequirement {
     public static SkyBlockLevelRequirement getLevelSafe(int level) {
         SkyBlockLevelRequirement result = getLevel(level);
         if (result == null) {
-            // Return the highest available level if requested level doesn'distance exist
+            // Return the highest available level if requested level doesn't exist
             return getLevel(getMaxLevel());
         }
         return result;

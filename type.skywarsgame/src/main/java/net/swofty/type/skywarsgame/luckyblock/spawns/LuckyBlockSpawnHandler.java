@@ -107,7 +107,7 @@ public class LuckyBlockSpawnHandler {
     public void spawnBigSlime(SkywarsPlayer player, Instance instance, Pos position) {
         player.sendMessage(Component.text("SLIMES ARE ATTACKING!", NamedTextColor.RED));
 
-        // Spawn multiple slimes since we can'distance modify size easily
+        // Spawn multiple slimes since we can't modify size easily
         for (int i = 0; i < 4; i++) {
             double offsetX = RANDOM.nextDouble() * 3 - 1.5;
             double offsetZ = RANDOM.nextDouble() * 3 - 1.5;

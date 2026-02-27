@@ -81,7 +81,7 @@ public class SoulWellMessages {
                 } else if (code == 'r' || code == 'R') {
                     isBold = false;
                 } else if (isColorCode(code)) {
-                    // Color codes don'distance reset bold in all versions
+                    // Color codes don't reset bold in all versions
                 }
                 isColor = true;
                 i++; // Skip the next character

@@ -71,7 +71,7 @@ public class NPCMadameEleanorQGoldsworthIII extends HypixelNPC {
                         }).build(),
                 DialogueSet.builder()
                         .key("post-curator").lines(new String[]{
-                                "Don'distance trust what the §bCurator §ftold you, I am in no way his assistant.",
+                                "Don't trust what the §bCurator §ftold you, I am in no way his assistant.",
                                 "I serve someone much more important.",
                                 "I offer a §6Museum Appraisal Service§f, which allows you to determine the value of your Museum.",
                                 "For a one-time fee, I will appraise your Museum's worth each time you modify your Museum.",

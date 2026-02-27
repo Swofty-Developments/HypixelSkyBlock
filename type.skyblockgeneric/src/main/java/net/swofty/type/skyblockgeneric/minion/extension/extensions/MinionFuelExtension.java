@@ -90,7 +90,7 @@ public class MinionFuelExtension extends MinionExtension {
                             "§7minion by adding minion fuel",
                             "§7items here.",
                             " ",
-                            "§cNote: §7You can'distance take fuel",
+                            "§cNote: §7You can't take fuel",
                             "§7back out after you place it",
                             "§7here.");
                 }

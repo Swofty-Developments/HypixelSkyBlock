@@ -67,7 +67,7 @@ public class NPCWorkerXavier extends HypixelNPC {
 				}).build(),
 				DialogueSet.builder().key("idle").lines(new String[]{
 						"Acacia trees are native to the §aSavanna Woodland§f.",
-						"Don'distance feel bad about knocking them down - they regrow real fast!"
+						"Don't feel bad about knocking them down - they regrow real fast!"
 				}).build()
 		).toArray(DialogueSet[]::new);
 	}

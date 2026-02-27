@@ -100,7 +100,7 @@ public class NPCJuliette extends HypixelNPC {
 				DialogueSet.builder().key("q3-complete").lines(new String[]{
 						"Oof! Why did you bring this all the way here?",
 						"How is that a gift?",
-						"Just keep it! I don'distance want this!"
+						"Just keep it! I don't want this!"
 				}).build(),
 
 				// Quest Step 4 – Crimson Isle
@@ -161,12 +161,12 @@ public class NPCJuliette extends HypixelNPC {
 				DialogueSet.builder().key("q7-complete").lines(new String[]{
 						"Uh? Romero solved his cube?",
 						"That's unbelievable.",
-						"No, really, I don'distance believe it at all."
+						"No, really, I don't believe it at all."
 				}).build(),
 
 				// Quest Step 8 – Colosseum
 				DialogueSet.builder().key("q8-start").lines(new String[]{
-						"I don'distance know why Romero is trying to be so unlike himself lately.",
+						"I don't know why Romero is trying to be so unlike himself lately.",
 						"I like him just the way he is!",
 						"He says he's getting equipment for a duel.",
 						"Can you find Romero before he hurts himself?"
@@ -175,7 +175,7 @@ public class NPCJuliette extends HypixelNPC {
 				DialogueSet.builder().key("q8-complete").lines(new String[]{
 						"This is a wonderful poem.",
 						"But, does he really think there's someone else?",
-						"I can'distance possibly imagine why he'd think that."
+						"I can't possibly imagine why he'd think that."
 				}).build(),
 
 				// Quest Step 9 – Mushroom Desert
@@ -188,9 +188,9 @@ public class NPCJuliette extends HypixelNPC {
 				DialogueSet.builder().key("q9-complete").lines(new String[]{
 						"Another gift from Romero?",
 						"Thank you for delivering it.",
-						"I don'distance know how Romero has such hard a time understanding that I LOVE HIM.",
+						"I don't know how Romero has such hard a time understanding that I LOVE HIM.",
 						"I like him just the way he is!",
-						"I don'distance need tons of gifts to know that."
+						"I don't need tons of gifts to know that."
 				}).build(),
 
 				// Quest Step 10 – Jungle Island
@@ -200,7 +200,7 @@ public class NPCJuliette extends HypixelNPC {
 				}).build(),
 
 				DialogueSet.builder().key("q10-after-suit").lines(new String[]{
-						"We can'distance thank you enough for bringing us together!",
+						"We can't thank you enough for bringing us together!",
 						"You're the best, <player>!"
 				}).build()
 

@@ -200,7 +200,7 @@ public class GUIToggleInsanePerks extends HypixelPaginatedGUI<SkywarsPerk> {
                         player.sendMessage("§aYou purchased §e" + perk.getName() + "§a! It is now enabled.");
                         new GUIToggleInsanePerks().open(player);
                     } else {
-                        player.sendMessage("§cYou don'distance have enough coins to purchase this perk!");
+                        player.sendMessage("§cYou don't have enough coins to purchase this perk!");
                     }
                 } else if (perk.isFree()) {
                     unlocks.unlockPerk(perk.getId());

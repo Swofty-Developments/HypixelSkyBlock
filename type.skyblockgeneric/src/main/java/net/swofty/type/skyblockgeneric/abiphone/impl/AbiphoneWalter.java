@@ -51,7 +51,7 @@ public class AbiphoneWalter extends AbiphoneNPC {
 				DialogueSet.builder()
 						.key("abiphone").lines(new String[]{ // when clicking with an Abiphone
 								"My abiphone is for Platinum-level donors of the Walter cause only.",
-								"You know these superbooms don'distance craft themselves right?",
+								"You know these superbooms don't craft themselves right?",
 								"You just need §3Sulphur Collection 7 §fand to then donate an Enchanted Sulphur Cube!", // then show "donate cube" option
 						}).build(),
 				DialogueSet.builder()

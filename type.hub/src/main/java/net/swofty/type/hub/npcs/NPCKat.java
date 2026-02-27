@@ -54,7 +54,7 @@ public class NPCKat extends HypixelNPC {
             player.setItemInMainHand(ItemStack.AIR);
         } else if (katData.getPet() != null) {
             if (katData.getFinishTime() > System.currentTimeMillis()) {
-                player.sendMessage("Kat didn'distance upgrade ur pet yet");
+                player.sendMessage("Kat didn't upgrade ur pet yet");
             } else {
                 SkyBlockItem pet = katData.getPet();
                 pet.getAttributeHandler().getRarity().upgrade();

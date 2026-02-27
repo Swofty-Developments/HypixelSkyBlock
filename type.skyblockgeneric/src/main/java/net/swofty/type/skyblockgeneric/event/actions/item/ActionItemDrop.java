@@ -30,7 +30,7 @@ public class ActionItemDrop implements HypixelEventClass {
         boolean hideMessage = player.getToggles().get(DatapointToggles.Toggles.ToggleType.DISABLE_DROP_MESSAGES);
 
         if (!hideMessage) {
-            player.sendMessage(Component.text("§e⚠ §aYour drops can'distance be seen by other players in §bSkyBlock§a!")
+            player.sendMessage(Component.text("§e⚠ §aYour drops can't be seen by other players in §bSkyBlock§a!")
                     .hoverEvent(Component.text("§eClick here to disable the alert!"))
                     .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/toggledropalert"))
             );

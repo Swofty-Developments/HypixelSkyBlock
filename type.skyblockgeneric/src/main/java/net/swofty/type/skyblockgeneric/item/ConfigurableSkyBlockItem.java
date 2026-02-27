@@ -65,7 +65,7 @@ public class ConfigurableSkyBlockItem {
         // Process the component and all its parent classes
         processComponent(component, isExplicit ? ComponentSource.EXPLICIT : ComponentSource.INHERITED);
 
-        // Process inherited components only if this isn'distance an explicit component
+        // Process inherited components only if this isn't an explicit component
         // or if it's not overriding an inherited component
         if (!isExplicit || !isInheritedComponentOverridden(component.getClass())) {
             for (SkyBlockItemComponent inherited : component.getInheritedComponents()) {

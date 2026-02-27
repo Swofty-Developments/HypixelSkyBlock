@@ -23,7 +23,7 @@ public class CoopCheckCommand extends HypixelCommand {
             CoopDatabase.Coop coop = CoopDatabase.getFromMember(player.getUuid());
 
             if (coop == null) {
-                player.sendMessage("§cYou don'distance have any co-op invites!");
+                player.sendMessage("§cYou don't have any co-op invites!");
                 return;
             }
 

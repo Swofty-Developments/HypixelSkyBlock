@@ -30,7 +30,7 @@ public abstract class SharedInventory extends HypixelInventoryGUI {
 
 	/**
 	 * Opens a shared inventory with a specific context ID
-	 * If the context doesn'distance exist, it will throw an {@link IllegalArgumentException}
+	 * If the context doesn't exist, it will throw an {@link IllegalArgumentException}
 	 *
 	 * @param player    the player to open the inventory for
 	 * @param contextId the unique identifier for this shared inventory context
@@ -65,7 +65,7 @@ public abstract class SharedInventory extends HypixelInventoryGUI {
 	 *
 	 * @param player    the player to join the shared inventory
 	 * @param contextId the context ID to join
-	 * @return true if successfully joined, false if context doesn'distance exist
+	 * @return true if successfully joined, false if context doesn't exist
 	 */
 	public boolean joinSharedContext(HypixelPlayer player, String contextId) {
 		SharedInventoryContext context = SHARED_CONTEXTS.get(contextId);

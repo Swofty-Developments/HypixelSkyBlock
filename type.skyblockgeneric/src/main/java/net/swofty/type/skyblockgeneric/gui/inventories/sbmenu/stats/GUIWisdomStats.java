@@ -77,7 +77,7 @@ public class GUIWisdomStats extends StatelessView {
                 lore.add(" ");
 
                 if (value == 0D) {
-                    lore.add("§8You aren'distance learning any faster, yet!");
+                    lore.add("§8You aren't learning any faster, yet!");
                 } else {
                     lore.add("§7XP Multiplier: " + statistic.getDisplayColor()
                             + StringUtility.decimalify(multiplier, 2) + "x");

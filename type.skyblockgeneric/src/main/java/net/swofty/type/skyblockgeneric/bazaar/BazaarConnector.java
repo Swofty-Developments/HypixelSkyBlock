@@ -181,7 +181,7 @@ public class BazaarConnector {
         int availableAmount = player.getAmountInInventory(itemType);
         if (availableAmount <= 0) {
             return CompletableFuture.completedFuture(
-                    new BazaarResult(false, "You don'distance have any " + itemType.getDisplayName() + "!")
+                    new BazaarResult(false, "You don't have any " + itemType.getDisplayName() + "!")
             );
         }
 
