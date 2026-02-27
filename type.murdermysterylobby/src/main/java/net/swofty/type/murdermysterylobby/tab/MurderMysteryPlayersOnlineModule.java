@@ -12,6 +12,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MurderMysteryPlayersOnlineModule extends TablistModule {
@@ -23,10 +24,11 @@ public class MurderMysteryPlayersOnlineModule extends TablistModule {
 
     @Override
     public List<TablistEntry> getEntries(HypixelPlayer player) {
+        Locale l = player.getLocale();
         List<HypixelPlayer> players = HypixelGenericLoader.getLoadedPlayers();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered(I18n.string("tablist.module.players_murder_mystery", Map.of("count", String.valueOf(players.size())))), TablistSkinRegistry.ORANGE)
+                new TablistEntry(getCentered(I18n.string("tablist.module.players_murder_mystery", l, Map.of("count", String.valueOf(players.size())))), TablistSkinRegistry.ORANGE)
         ));
 
         List<HypixelPlayer> toShow = new ArrayList<>();

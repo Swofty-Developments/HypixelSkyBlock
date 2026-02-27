@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class SkyBlockScoreboard {
@@ -46,6 +47,7 @@ public class SkyBlockScoreboard {
             }
 
             for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
+                Locale l = player.getLocale();
                 SkyBlockDataHandler dataHandler = player.getSkyblockDataHandler();
                 SkyBlockRegion region = player.getRegion();
                 MissionData missionData = player.getMissionData();
@@ -55,7 +57,7 @@ public class SkyBlockScoreboard {
                 }
 
                 List<String> lines = new ArrayList<>();
-                lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
+                lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
                 lines.add("§7 ");
                 lines.add("§f " + SkyBlockCalendar.getMonthName() + " " + StringUtility.ntify(SkyBlockCalendar.getDay()));
                 lines.add("§7 " + SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed()));
@@ -67,7 +69,7 @@ public class SkyBlockScoreboard {
                     }
                     lines.add("§7 ⏣ " + region.getType().getColor() + name);
                 } catch (NullPointerException ignored) {
-                    lines.add(" " + I18n.string("scoreboard.skyblock.region_unknown"));
+                    lines.add(" " + I18n.string("scoreboard.skyblock.region_unknown", l));
                 }
                 lines.add("§7 ");
 
@@ -83,8 +85,8 @@ public class SkyBlockScoreboard {
                         lines.add(bars + " " + candidate.getColoredName());
                     });
                 } else {
-                    lines.add(I18n.string("scoreboard.skyblock.purse_label") + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()));
-                    lines.add(I18n.string("scoreboard.skyblock.bits_label") + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()));
+                    lines.add(I18n.string("scoreboard.skyblock.purse_label", l) + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()));
+                    lines.add(I18n.string("scoreboard.skyblock.bits_label", l) + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()));
 
                     if (DarkAuctionHandler.isPlayerInAuction(player.getUuid())
                         && DarkAuctionHandler.getLocalState() != null
@@ -94,8 +96,8 @@ public class SkyBlockScoreboard {
                         DarkAuctionHandler.DarkAuctionLocalState auctionState = DarkAuctionHandler.getLocalState();
                         int timeRemaining = DarkAuctionHandler.getTimeLeft().get();
 
-                        lines.add(I18n.string("scoreboard.skyblock.dark_auction.time_left_label") + timeRemaining + I18n.string("scoreboard.skyblock.dark_auction.time_left_suffix"));
-                        lines.add(I18n.string("scoreboard.skyblock.dark_auction.current_item_label"));
+                        lines.add(I18n.string("scoreboard.skyblock.dark_auction.time_left_label", l) + timeRemaining + I18n.string("scoreboard.skyblock.dark_auction.time_left_suffix", l));
+                        lines.add(I18n.string("scoreboard.skyblock.dark_auction.current_item_label", l));
 
                         String currentItem = auctionState.getCurrentItemType();
                         if (currentItem != null) {
@@ -107,7 +109,7 @@ public class SkyBlockScoreboard {
                                 lines.add(" §f" + currentItem.replace("_", " "));
                             }
                         } else {
-                            lines.add(" " + I18n.string("scoreboard.skyblock.dark_auction.waiting"));
+                            lines.add(" " + I18n.string("scoreboard.skyblock.dark_auction.waiting", l));
                         }
                     } else {
                         if (region != null &&
@@ -117,13 +119,13 @@ public class SkyBlockScoreboard {
                             SkyBlockMission skyBlockMission = MissionData.getMissionClass(mission.getMissionID());
 
                             if (skyBlockMission instanceof LocationAssociatedMission locationAssociatedMission) {
-                                lines.add(I18n.string("scoreboard.skyblock.objective_label") + " " + BlockUtility.getArrow(
+                                lines.add(I18n.string("scoreboard.skyblock.objective_label", l) + " " + BlockUtility.getArrow(
                                     player.getPosition(),
                                     locationAssociatedMission.getLocation()
                                 ));
                                 lines.add("§e" + mission);
                             } else {
-                                lines.add(I18n.string("scoreboard.skyblock.objective_label"));
+                                lines.add(I18n.string("scoreboard.skyblock.objective_label", l));
                                 lines.add("§e" + mission);
                             }
 
@@ -135,10 +137,10 @@ public class SkyBlockScoreboard {
                 }
 
                 lines.add("§7 ");
-                lines.add(I18n.string("scoreboard.common.footer"));
+                lines.add(I18n.string("scoreboard.common.footer", l));
 
-                String title = "  " + getSidebarName(skyblockName, false)
-                        + (player.isCoop() ? " " + I18n.string("scoreboard.skyblock.coop_suffix") + "  " : "  ");
+                String title = "  " + getSidebarName(skyblockName, false, l)
+                        + (player.isCoop() ? " " + I18n.string("scoreboard.skyblock.coop_suffix", l) + "  " : "  ");
 
                 if (!scoreboard.hasScoreboard(player)) {
                     scoreboard.createScoreboard(player, title);
@@ -155,8 +157,8 @@ public class SkyBlockScoreboard {
         scoreboard.removeScoreboard(player);
     }
 
-    private static String getSidebarName(int counter, boolean isGuest) {
-        String baseText = I18n.string("scoreboard.skyblock.title_base");
+    private static String getSidebarName(int counter, boolean isGuest, Locale locale) {
+        String baseText = I18n.string("scoreboard.skyblock.title_base", locale);
         String[] colors = {"§f§l", "§6§l", "§e§l"};
         String endColor = "§a§l";
         String endText = isGuest ? " GUEST" : "";

@@ -8,17 +8,19 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class TheFarmingIslandsServerModule extends TablistModule {
     @Override
     public List<TablistEntry> getEntries(HypixelPlayer player) {
+        Locale l = player.getLocale();
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered(I18n.string("tablist.module.server_info")), TablistSkinRegistry.CYAN)
+                new TablistEntry(getCentered(I18n.string("tablist.module.server_info", l)), TablistSkinRegistry.CYAN)
         ));
 
-        entries.add(new TablistEntry(I18n.string("tablist.server_info.area.the_farming_islands"), TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(I18n.string("tablist.server_info.server_label", Map.of("server_name", HypixelConst.getServerName())), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.string("tablist.server_info.area.the_farming_islands", l), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.string("tablist.server_info.server_label", l, Map.of("server_name", HypixelConst.getServerName())), TablistSkinRegistry.GRAY));
 
         fillRestWithGray(entries);
 

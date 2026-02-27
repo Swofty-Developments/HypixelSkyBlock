@@ -38,19 +38,19 @@ public class MessageCommand extends HypixelCommand {
 
             @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(playerName);
             if (targetUUID == null) {
-                player.sendMessage(I18n.string("commands.message.player_not_found", Map.of("player", playerName)));
+                player.sendTranslated("commands.message.player_not_found", Map.of("player", playerName));
                 return;
             }
 
             ProxyPlayer target = new ProxyPlayer(targetUUID);
             if (!target.isOnline().join()) {
-                player.sendMessage(I18n.string("commands.message.player_not_online", Map.of("player", playerName)));
+                player.sendTranslated("commands.message.player_not_online", Map.of("player", playerName));
                 return;
             }
             String targetName = HypixelPlayer.getDisplayName(targetUUID);
             String ourName = player.getFullDisplayName();
 
-            player.sendMessage(I18n.string("commands.message.outgoing", Map.of("target", targetName, "message", String.join(" ", message))));
+            player.sendTranslated("commands.message.outgoing", Map.of("target", targetName, "message", String.join(" ", message)));
             target.sendMessage(I18n.string("commands.message.incoming", Map.of("sender", ourName, "message", String.join(" ", message))));
         }, playerArgument, messageArgument);
     }

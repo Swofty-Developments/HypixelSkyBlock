@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MurderMysteryGameScoreboard {
@@ -37,132 +38,133 @@ public class MurderMysteryGameScoreboard {
 			for (Game game : TypeMurderMysteryGameLoader.getGames()) {
 				for (MurderMysteryPlayer player : game.getPlayers()) {
 					if (player.getInstance() == null) continue;
+					Locale l = player.getLocale();
 
 					List<String> lines = new ArrayList<>();
-					lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
+					lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
 					lines.add("§7 ");
 
 					if (game.getGameStatus() == GameStatus.WAITING) {
-						lines.add(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName());
-						lines.add(I18n.string("scoreboard.murdermystery_game.players_label") + game.getPlayers().size() + "/" + game.getGameType().getMaxPlayers());
+						lines.add(I18n.string("scoreboard.murdermystery_game.map_label", l) + game.getMapEntry().getName());
+						lines.add(I18n.string("scoreboard.murdermystery_game.players_label", l) + game.getPlayers().size() + "/" + game.getGameType().getMaxPlayers());
 						lines.add("§7 ");
 						if (game.getCountdown().isActive()) {
-							lines.add(I18n.string("scoreboard.murdermystery_game.starting_in_label") + game.getCountdown().getSecondsRemaining() + I18n.string("scoreboard.murdermystery_game.starting_in_suffix"));
+							lines.add(I18n.string("scoreboard.murdermystery_game.starting_in_label", l) + game.getCountdown().getSecondsRemaining() + I18n.string("scoreboard.murdermystery_game.starting_in_suffix", l));
 						} else {
-							lines.add(I18n.string("scoreboard.murdermystery_game.waiting_for_players"));
+							lines.add(I18n.string("scoreboard.murdermystery_game.waiting_for_players", l));
 						}
 						lines.add("§7 ");
-						lines.add(I18n.string("scoreboard.murdermystery_game.mode_label") + game.getGameType().getDisplayName());
+						lines.add(I18n.string("scoreboard.murdermystery_game.mode_label", l) + game.getGameType().getDisplayName());
 
 						int playerCount = game.getPlayers().size();
 						int murdererChance = playerCount > 0 ? Math.round(100f / playerCount) : 0;
 						int detectiveChance = playerCount > 0 ? Math.round(100f / playerCount) : 0;
 						Component actionBar = Component.empty()
-								.append(Component.text(I18n.string("scoreboard.murdermystery_game.actionbar.murderer_chance", Map.of("chance", String.valueOf(murdererChance))), NamedTextColor.RED))
+								.append(Component.text(I18n.string("scoreboard.murdermystery_game.actionbar.murderer_chance", l, Map.of("chance", String.valueOf(murdererChance))), NamedTextColor.RED))
 								.append(Component.text("    ", NamedTextColor.GRAY))
-								.append(Component.text(I18n.string("scoreboard.murdermystery_game.actionbar.detective_chance", Map.of("chance", String.valueOf(detectiveChance))), NamedTextColor.AQUA));
+								.append(Component.text(I18n.string("scoreboard.murdermystery_game.actionbar.detective_chance", l, Map.of("chance", String.valueOf(detectiveChance))), NamedTextColor.AQUA));
 						player.sendActionBar(actionBar);
 					} else if (game.getGameStatus() == GameStatus.IN_PROGRESS) {
 						GameRole role = game.getRoleManager().getRole(player.getUuid());
 
 						if (player.isEliminated()) {
-							lines.add(I18n.string("scoreboard.murdermystery_game.spectating_label"));
+							lines.add(I18n.string("scoreboard.murdermystery_game.spectating_label", l));
 							lines.add("§7 ");
 
 							if (role != null) {
-								lines.add(I18n.string("scoreboard.murdermystery_game.your_role_label") + " " + getScoreboardRoleColor(role) + role.getDisplayName());
+								lines.add(I18n.string("scoreboard.murdermystery_game.your_role_label", l) + " " + getScoreboardRoleColor(role, l) + role.getDisplayName());
 							}
 							lines.add("§7 ");
 
 							int playersAlive = game.getRoleManager().countAliveWithRole(GameRole.INNOCENT)
 									+ game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE)
 									+ game.getRoleManager().countAliveWithRole(GameRole.MURDERER);
-							lines.add(I18n.string("scoreboard.murdermystery_game.players_alive_label") + playersAlive);
+							lines.add(I18n.string("scoreboard.murdermystery_game.players_alive_label", l) + playersAlive);
 
-							String timeLeft = formatTimeRemaining(game.getGameStartTime());
-							lines.add(I18n.string("scoreboard.murdermystery_game.time_left_label") + timeLeft);
+							String timeLeft = formatTimeRemaining(game.getGameStartTime(), l);
+							lines.add(I18n.string("scoreboard.murdermystery_game.time_left_label", l) + timeLeft);
 							lines.add("§7 ");
 
 							boolean detectiveAlive = game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE) > 0;
 							String detectiveStatus = detectiveAlive
-									? I18n.string("scoreboard.murdermystery_game.detective_alive")
-									: I18n.string("scoreboard.murdermystery_game.detective_dead");
-							lines.add(I18n.string("scoreboard.murdermystery_game.detective_label") + " " + detectiveStatus);
+									? I18n.string("scoreboard.murdermystery_game.detective_alive", l)
+									: I18n.string("scoreboard.murdermystery_game.detective_dead", l);
+							lines.add(I18n.string("scoreboard.murdermystery_game.detective_label", l) + " " + detectiveStatus);
 							lines.add("§7 ");
 
-							lines.add(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName());
+							lines.add(I18n.string("scoreboard.murdermystery_game.map_label", l) + game.getMapEntry().getName());
 						} else {
 							if (role != null) {
-								lines.add(I18n.string("scoreboard.murdermystery_game.role_label") + " " + getScoreboardRoleColor(role) + role.getDisplayName());
+								lines.add(I18n.string("scoreboard.murdermystery_game.role_label", l) + " " + getScoreboardRoleColor(role, l) + role.getDisplayName());
 							}
 							lines.add("§7 ");
 
 							int innocentsLeft = game.getRoleManager().countAliveWithRole(GameRole.INNOCENT)
 									+ game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE);
-							lines.add(I18n.string("scoreboard.murdermystery_game.innocents_left_label") + innocentsLeft);
+							lines.add(I18n.string("scoreboard.murdermystery_game.innocents_left_label", l) + innocentsLeft);
 
-							String timeLeft = formatTimeRemaining(game.getGameStartTime());
-							lines.add(I18n.string("scoreboard.murdermystery_game.time_left_label") + timeLeft);
+							String timeLeft = formatTimeRemaining(game.getGameStartTime(), l);
+							lines.add(I18n.string("scoreboard.murdermystery_game.time_left_label", l) + timeLeft);
 							lines.add("§7 ");
 
 							boolean detectiveAlive = game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE) > 0;
 							String detectiveStatus = detectiveAlive
-									? I18n.string("scoreboard.murdermystery_game.detective_alive")
-									: I18n.string("scoreboard.murdermystery_game.detective_dead");
-							lines.add(I18n.string("scoreboard.murdermystery_game.detective_label") + " " + detectiveStatus);
+									? I18n.string("scoreboard.murdermystery_game.detective_alive", l)
+									: I18n.string("scoreboard.murdermystery_game.detective_dead", l);
+							lines.add(I18n.string("scoreboard.murdermystery_game.detective_label", l) + " " + detectiveStatus);
 							lines.add("§7 ");
 
-							lines.add(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName());
+							lines.add(I18n.string("scoreboard.murdermystery_game.map_label", l) + game.getMapEntry().getName());
 						}
 					} else if (game.getGameStatus() == GameStatus.ENDING) {
-						lines.add(I18n.string("scoreboard.murdermystery_game.game_over"));
+						lines.add(I18n.string("scoreboard.murdermystery_game.game_over", l));
 						lines.add("§7 ");
 
 						GameRole role = game.getRoleManager().getRole(player.getUuid());
 						if (role != null) {
-							lines.add(I18n.string("scoreboard.murdermystery_game.your_role_label") + " " + getScoreboardRoleColor(role) + role.getDisplayName());
+							lines.add(I18n.string("scoreboard.murdermystery_game.your_role_label", l) + " " + getScoreboardRoleColor(role, l) + role.getDisplayName());
 						}
 						lines.add("§7 ");
 
 						int kills = player.getKillsThisGame();
 						if (kills > 0) {
-							lines.add(I18n.string("scoreboard.murdermystery_game.your_kills_label") + kills);
+							lines.add(I18n.string("scoreboard.murdermystery_game.your_kills_label", l) + kills);
 						}
 
 						int tokens = player.getTokensEarnedThisGame();
-						lines.add(I18n.string("scoreboard.murdermystery_game.tokens_earned_label") + tokens);
+						lines.add(I18n.string("scoreboard.murdermystery_game.tokens_earned_label", l) + tokens);
 						lines.add("§7 ");
 
-						lines.add(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName());
-						lines.add(I18n.string("scoreboard.murdermystery_game.mode_label") + game.getGameType().getDisplayName());
+						lines.add(I18n.string("scoreboard.murdermystery_game.map_label", l) + game.getMapEntry().getName());
+						lines.add(I18n.string("scoreboard.murdermystery_game.mode_label", l) + game.getGameType().getDisplayName());
 					}
 
 					lines.add("§7 ");
-					lines.add(I18n.string("scoreboard.common.footer"));
+					lines.add(I18n.string("scoreboard.common.footer", l));
 
 					if (!scoreboard.hasScoreboard(player)) {
-						scoreboard.createScoreboard(player, getSidebarName(animationFrame));
+						scoreboard.createScoreboard(player, getSidebarName(animationFrame, l));
 					}
 
 					scoreboard.updateLines(player, lines);
-					scoreboard.updateTitle(player, getSidebarName(animationFrame));
+					scoreboard.updateTitle(player, getSidebarName(animationFrame, l));
 				}
 			}
 			return TaskSchedule.tick(4);
 		});
 	}
 
-	private static String getScoreboardRoleColor(GameRole role) {
+	private static String getScoreboardRoleColor(GameRole role, Locale locale) {
 		return switch (role) {
-			case MURDERER -> I18n.string("scoreboard.murdermystery_game.role_color.murderer");
-			case DETECTIVE -> I18n.string("scoreboard.murdermystery_game.role_color.detective");
-			case INNOCENT -> I18n.string("scoreboard.murdermystery_game.role_color.innocent");
-			case ASSASSIN -> I18n.string("scoreboard.murdermystery_game.role_color.assassin");
+			case MURDERER -> I18n.string("scoreboard.murdermystery_game.role_color.murderer", locale);
+			case DETECTIVE -> I18n.string("scoreboard.murdermystery_game.role_color.detective", locale);
+			case INNOCENT -> I18n.string("scoreboard.murdermystery_game.role_color.innocent", locale);
+			case ASSASSIN -> I18n.string("scoreboard.murdermystery_game.role_color.assassin", locale);
 		};
 	}
 
-	private static String formatTimeRemaining(long gameStartTime) {
-		if (gameStartTime == 0) return I18n.string("scoreboard.murdermystery_game.time_left_default");
+	private static String formatTimeRemaining(long gameStartTime, Locale locale) {
+		if (gameStartTime == 0) return I18n.string("scoreboard.murdermystery_game.time_left_default", locale);
 		long elapsed = System.currentTimeMillis() - gameStartTime;
 		long remaining = GAME_DURATION_MS - elapsed;
 		if (remaining < 0) remaining = 0;
@@ -176,8 +178,8 @@ public class MurderMysteryGameScoreboard {
 		scoreboard.removeScoreboard(player);
 	}
 
-	private static String getSidebarName(int counter) {
-		String baseText = I18n.string("scoreboard.murdermystery_game.title_base");
+	private static String getSidebarName(int counter, Locale locale) {
+		String baseText = I18n.string("scoreboard.murdermystery_game.title_base", locale);
 		String[] colors = {"§f§l", "§6§l", "§e§l"};
 		String endColor = "§a§l";
 

@@ -32,7 +32,8 @@ public class GUIMinionRecipes extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.recipe.minion.title", Map.of("minion_name", StringUtility.toNormalCase(minionRegistry.toString()))),
+        return ViewConfiguration.withString(
+                (state, ctx) -> I18n.string("gui_sbmenu.recipe.minion.title", ctx.player().getLocale(), Map.of("minion_name", StringUtility.toNormalCase(minionRegistry.toString()))),
                 InventoryType.CHEST_6_ROW);
     }
 

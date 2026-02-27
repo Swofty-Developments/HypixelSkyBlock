@@ -11,6 +11,7 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -24,6 +25,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -63,8 +65,8 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return getStack(I18n.string("gui_bazaar.item_set.manage_orders_button"), Material.BOOK, 1,
-                        I18n.lore("gui_bazaar.item_set.manage_orders_button.lore"));
+                return TranslatableItemStackCreator.getStack(p, "gui_bazaar.item_set.manage_orders_button", Material.BOOK, 1,
+                        "gui_bazaar.item_set.manage_orders_button.lore");
             }
         });
     }
@@ -89,30 +91,31 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                             @Override
                             public ItemStack.Builder getItem(HypixelPlayer p) {
                                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                                Locale l = p.getLocale();
                                 List<String> lore = new ArrayList<>();
-                                lore.add(I18n.string("gui_bazaar.item_set.commodity_label", Map.of("rarity", StringUtility.toNormalCase(itemType.rarity.name()))));
+                                lore.add(I18n.string("gui_bazaar.item_set.commodity_label", l, Map.of("rarity", StringUtility.toNormalCase(itemType.rarity.name()))));
                                 lore.add(" ");
 
                                 if (stats.bestAsk() > 0) {
-                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price", Map.of("price", new DecimalFormat("#,###").format(stats.bestAsk()))));
-                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price_best", Map.of("price", StringUtility.shortenNumber(stats.bestAsk()))));
+                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price", l, Map.of("price", new DecimalFormat("#,###").format(stats.bestAsk()))));
+                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price_best", l, Map.of("price", StringUtility.shortenNumber(stats.bestAsk()))));
                                 } else {
-                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price_none"));
-                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price_none_desc"));
+                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price_none", l));
+                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price_none_desc", l));
                                 }
 
                                 lore.add(" ");
 
                                 if (stats.bestBid() > 0) {
-                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price", Map.of("price", new DecimalFormat("#,###").format(stats.bestBid()))));
-                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price_best", Map.of("price", StringUtility.shortenNumber(stats.bestBid()))));
+                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price", l, Map.of("price", new DecimalFormat("#,###").format(stats.bestBid()))));
+                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price_best", l, Map.of("price", StringUtility.shortenNumber(stats.bestBid()))));
                                 } else {
-                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price_none"));
-                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price_none_desc"));
+                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price_none", l));
+                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price_none_desc", l));
                                 }
 
                                 lore.add(" ");
-                                lore.add(I18n.string("gui_bazaar.item_set.click_to_view"));
+                                lore.add(I18n.string("gui_bazaar.item_set.click_to_view", l));
 
                                 SkyBlockItem item = new SkyBlockItem(itemType);
 
@@ -132,13 +135,14 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                             @Override
                             public ItemStack.Builder getItem(HypixelPlayer p) {
                                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                                Locale l = p.getLocale();
                                 List<String> lore = new ArrayList<>();
-                                lore.add(I18n.string("gui_bazaar.item_set.commodity_label", Map.of("rarity", StringUtility.toNormalCase(itemType.rarity.name()))));
+                                lore.add(I18n.string("gui_bazaar.item_set.commodity_label", l, Map.of("rarity", StringUtility.toNormalCase(itemType.rarity.name()))));
                                 lore.add(" ");
-                                lore.add(I18n.string("gui_bazaar.item_set.error_loading"));
-                                lore.add(I18n.string("gui_bazaar.item_set.error_try_again"));
+                                lore.add(I18n.string("gui_bazaar.item_set.error_loading", l));
+                                lore.add(I18n.string("gui_bazaar.item_set.error_try_again", l));
                                 lore.add(" ");
-                                lore.add(I18n.string("gui_bazaar.item_set.click_to_view"));
+                                lore.add(I18n.string("gui_bazaar.item_set.click_to_view", l));
 
                                 return getStack(
                                         itemType.rarity.getColor() + itemType.getDisplayName(),
@@ -203,7 +207,7 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
         }
         player.getBazaarConnector().isOnline().thenAccept(online -> {
             if (!online) {
-                player.sendMessage(I18n.string("gui_bazaar.item_set.offline_message"));
+                player.sendMessage(I18n.string("gui_bazaar.item_set.offline_message", player.getLocale()));
                 player.closeInventory();
             }
         });
