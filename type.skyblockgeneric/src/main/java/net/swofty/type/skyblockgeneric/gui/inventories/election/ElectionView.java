@@ -11,6 +11,7 @@ import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.elections.ElectionData;
 import net.swofty.type.skyblockgeneric.elections.ElectionManager;
@@ -18,13 +19,14 @@ import net.swofty.type.skyblockgeneric.elections.SkyBlockMayor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ElectionView extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Election", InventoryType.CHEST_3_ROW);
+        return ViewConfiguration.translatable("gui_election.view.title", InventoryType.CHEST_3_ROW);
     }
 
     @Override
@@ -35,13 +37,15 @@ public class ElectionView extends StatelessView {
         ElectionData data = ElectionManager.getElectionData();
 
         if (!data.isElectionOpen() || data.getCandidates().isEmpty()) {
-            layout.slot(13, (s, c) -> ItemStackCreator.getStack(
-                "§cNo Active Election",
-                Material.BARRIER,
-                1,
-                "§7There is no active election",
-                "§7at this time."
-            ));
+            layout.slot(13, (s, c) -> {
+                Locale l = c.player().getLocale();
+                return ItemStackCreator.getStack(
+                    I18n.string("gui_election.view.no_election", l),
+                    Material.BARRIER,
+                    1,
+                    I18n.lore("gui_election.view.no_election.lore", l)
+                );
+            });
             return;
         }
 
@@ -66,11 +70,12 @@ public class ElectionView extends StatelessView {
             String candidateName = candidate.getMayorName();
 
             layout.slot(slot, (s, c) -> {
+                Locale l = c.player().getLocale();
                 String playerVote = ElectionManager.getPlayerVote(c.player().getUuid());
                 boolean isVotedFor = candidateName.equals(playerVote);
 
                 List<String> lore = buildCandidateLore(
-                    mayor, candidate, data.getElectionYear(),
+                    l, mayor, candidate, data.getElectionYear(),
                     yearsSince, voteStr, pctStr, isVotedFor
                 );
                 return ItemStackCreator.getStackHead(
@@ -80,28 +85,37 @@ public class ElectionView extends StatelessView {
                     lore
                 );
             }, (_, c) -> {
+                Locale l = c.player().getLocale();
                 ElectionManager.castVote(c.player().getUuid(), candidateName);
-                c.player().sendMessage("§c-----------------------------------------------------");
-                c.player().sendMessage("§eYou cast §c1 vote §efor " + candidate.getColoredName() + " §ein the §bYear " + data.getElectionYear() + " Elections§e!");
-                c.player().sendMessage("  §bNew player §eFame Rank §a+1 vote");
-                c.player().sendMessage(candidate.getColoredName() + " §enow has §c" + pctStr + " §eof votes with §c" + voteStr + " votes§e!");
-                c.player().sendMessage("§c-----------------------------------------------------");
+                c.player().sendMessage(I18n.string("gui_election.view.vote_divider", l));
+                c.player().sendMessage(I18n.string("gui_election.view.vote_cast", l, Map.of(
+                        "candidate", candidate.getColoredName(),
+                        "year", String.valueOf(data.getElectionYear()))));
+                c.player().sendMessage("  " + I18n.string("gui_election.view.vote_fame", l));
+                c.player().sendMessage(I18n.string("gui_election.view.vote_result", l, Map.of(
+                        "candidate", candidate.getColoredName(),
+                        "percentage", pctStr,
+                        "votes", voteStr)));
+                c.player().sendMessage(I18n.string("gui_election.view.vote_divider", l));
                 c.replace(new ElectionViewStatsView());
             });
         }
     }
 
-    private List<String> buildCandidateLore(SkyBlockMayor mayor, ElectionData.CandidateData candidate,
+    private List<String> buildCandidateLore(Locale l, SkyBlockMayor mayor, ElectionData.CandidateData candidate,
                                             int electionYear, int yearsSince,
                                             String voteStr, String pctStr, boolean votedFor) {
+        String color = candidate.getColor();
         List<String> lore = new ArrayList<>();
-        lore.add("§8Year " + electionYear + " Candidate");
+        lore.add(I18n.string("gui_election.view.candidate.year", l, Map.of("year", String.valueOf(electionYear))));
         lore.add("");
-        lore.add("§7Votes: " + candidate.getColor() + voteStr + " §7(" + candidate.getColor() + pctStr + "§7)");
+        lore.add(I18n.string("gui_election.view.candidate.votes", l, Map.of(
+                "color", color, "votes", voteStr, "percentage", pctStr)));
         if (yearsSince >= 0) {
-            lore.add("§7Last elected: " + candidate.getColor() + yearsSince + "y ago");
+            lore.add(I18n.string("gui_election.view.candidate.last_elected", l, Map.of(
+                    "color", color, "years", String.valueOf(yearsSince))));
         } else {
-            lore.add("§7Last elected: " + candidate.getColor() + "Never");
+            lore.add(I18n.string("gui_election.view.candidate.last_elected_never", l, Map.of("color", color)));
         }
         lore.add("");
         lore.add("§8§m--------------------------");
@@ -110,10 +124,10 @@ public class ElectionView extends StatelessView {
         for (int j = 0; j < activePerks.size(); j++) {
             SkyBlockMayor.Perk perk = activePerks.get(j);
             if (j == 0) {
-                lore.add("§6✯ " + candidate.getColor() + perk.getDisplayName());
+                lore.add("§6✯ " + color + perk.getDisplayName());
             } else {
                 lore.addAll(StringUtility.splitByWordAndLengthKeepLegacyColor(
-                    candidate.getColor() + perk.getDisplayName(), 35));
+                    color + perk.getDisplayName(), 35));
             }
             lore.addAll(StringUtility.splitByWordAndLengthKeepLegacyColor(
                 perk.getDescription(), 35));
@@ -124,18 +138,18 @@ public class ElectionView extends StatelessView {
 
         if (!mayor.isSpecial()) {
             lore.add("");
-            lore.add("§6✯ " + candidate.getColor() + "Minister Perks §7are also granted if");
-            lore.add("§7this mayor wins second place!");
+            lore.add(I18n.string("gui_election.view.candidate.minister_note_1", l, Map.of("color", color)));
+            lore.add(I18n.string("gui_election.view.candidate.minister_note_2", l));
         }
 
         lore.add("");
         if (votedFor) {
-            lore.add("§aYou voted for this candidate!");
+            lore.add(I18n.string("gui_election.view.candidate.voted", l));
         } else {
-            lore.add("§8You may change your vote at any");
-            lore.add("§8time until the election ends!");
+            lore.add(I18n.string("gui_election.view.candidate.change_vote_1", l));
+            lore.add(I18n.string("gui_election.view.candidate.change_vote_2", l));
             lore.add("");
-            lore.add("§eClick to vote for " + mayor.getDisplayName() + "!");
+            lore.add(I18n.string("gui_election.view.candidate.click_vote", l, Map.of("name", mayor.getDisplayName())));
         }
 
         return lore;

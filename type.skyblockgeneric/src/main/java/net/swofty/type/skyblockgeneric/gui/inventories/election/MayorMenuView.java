@@ -11,20 +11,28 @@ import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.elections.ElectionData;
 import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.elections.SkyBlockMayor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class MayorMenuView extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
         SkyBlockMayor mayor = ElectionManager.getCurrentMayor();
-        if (mayor == null) return new ViewConfiguration<>("Mayor", InventoryType.CHEST_4_ROW);
-        return new ViewConfiguration<>("Mayor " + mayor.getDisplayName(), InventoryType.CHEST_4_ROW);
+        if (mayor == null) {
+            return ViewConfiguration.translatable("gui_election.mayor.title_fallback", InventoryType.CHEST_4_ROW);
+        }
+        return ViewConfiguration.withString(
+                (s, ctx) -> I18n.string("gui_election.mayor.title", ctx.player().getLocale(),
+                        Map.of("name", mayor.getDisplayName())),
+                InventoryType.CHEST_4_ROW);
     }
 
     @Override
@@ -36,16 +44,18 @@ public class MayorMenuView extends StatelessView {
         if (mayor == null) return;
 
         ElectionData data = ElectionManager.getElectionData();
+        String mayorColor = data.getCurrentMayorColor();
         List<SkyBlockMayor.Perk> activePerks = data.getCurrentMayorPerkEnums();
 
         layout.slot(11, (s, c) -> {
+            Locale l = c.player().getLocale();
             List<String> lore = new ArrayList<>();
-            lore.add("§8Perks List");
+            lore.add(I18n.string("gui_election.mayor.perks_label", l));
             lore.add("");
             lore.add("§8§m--------------------------");
 
             for (SkyBlockMayor.Perk perk : activePerks) {
-                lore.add(mayor.getColor() + perk.getDisplayName());
+                lore.add(mayorColor + perk.getDisplayName());
                 for (String line : StringUtility.splitByWordAndLengthKeepLegacyColor(perk.getDescription(), 50)) {
                     lore.add("§7" + line);
                 }
@@ -54,12 +64,12 @@ public class MayorMenuView extends StatelessView {
 
             lore.add("§8§m--------------------------");
             lore.add("");
-            lore.add("§7The listed perks are available to");
-            lore.add("§7all players until the closing of");
-            lore.add("§7the next elections.");
+            lore.add(I18n.string("gui_election.mayor.perks_footer_1", l));
+            lore.add(I18n.string("gui_election.mayor.perks_footer_2", l));
+            lore.add(I18n.string("gui_election.mayor.perks_footer_3", l));
 
             return ItemStackCreator.getStackHead(
-                    mayor.getColor() + "Mayor " + mayor.getDisplayName(),
+                    mayorColor + "Mayor " + mayor.getDisplayName(),
                     new PlayerSkin(mayor.getTexture(), mayor.getSignature()),
                     1,
                     lore
@@ -67,25 +77,29 @@ public class MayorMenuView extends StatelessView {
         });
 
         layout.slot(15, (s, c) -> {
+            Locale l = c.player().getLocale();
             ElectionData.ElectionResult lastResult = data.getLastElectionResult();
             if (lastResult == null) {
                 return ItemStackCreator.getStack(
-                        "§bMayor Election Results",
+                        I18n.string("gui_election.mayor.results_title", l),
                         Material.JUKEBOX,
                         1,
-                        "§7No previous election data",
-                        "§7available."
+                        I18n.string("gui_election.mayor.results_no_data_1", l),
+                        I18n.string("gui_election.mayor.results_no_data_2", l)
                 );
             }
 
             List<String> resultLore = new ArrayList<>();
-            resultLore.add("§8Year " + lastResult.getYear());
+            resultLore.add(I18n.string("gui_election.mayor.results_year", l,
+                    Map.of("year", String.valueOf(lastResult.getYear()))));
             resultLore.add("");
 
-            for (ElectionData.CandidateResult cr : lastResult.getCandidateResults()) {
+            List<ElectionData.CandidateResult> results = lastResult.getCandidateResults();
+            for (int i = 0; i < results.size(); i++) {
+                ElectionData.CandidateResult cr = results.get(i);
+                String clr = ElectionData.colorForIndex(i);
                 SkyBlockMayor m = null;
                 try { m = SkyBlockMayor.valueOf(cr.getMayorName()); } catch (IllegalArgumentException ignored) {}
-                String clr = m != null ? m.getColor() : "§7";
                 String name = m != null ? m.getDisplayName() : cr.getMayorName();
                 resultLore.add(clr + String.format("%.1f%%", cr.getPercentage())
                         + "§8 ○ " + clr + String.format("%,d", cr.getVotes())
@@ -93,12 +107,13 @@ public class MayorMenuView extends StatelessView {
             }
 
             resultLore.add("");
-            resultLore.add("§7These are the votes for the");
-            resultLore.add("§7last election in which " + mayor.getDisplayName());
-            resultLore.add("§7was elected.");
+            resultLore.add(I18n.string("gui_election.mayor.results_footer_1", l));
+            resultLore.add(I18n.string("gui_election.mayor.results_footer_2", l,
+                    Map.of("name", mayor.getDisplayName())));
+            resultLore.add(I18n.string("gui_election.mayor.results_footer_3", l));
 
-            return ItemStackCreator.getStack("§bMayor Election Results", Material.JUKEBOX, 1,
-                    resultLore.toArray(new String[0]));
+            return ItemStackCreator.getStack(I18n.string("gui_election.mayor.results_title", l),
+                    Material.JUKEBOX, 1, resultLore.toArray(new String[0]));
         });
     }
 }
