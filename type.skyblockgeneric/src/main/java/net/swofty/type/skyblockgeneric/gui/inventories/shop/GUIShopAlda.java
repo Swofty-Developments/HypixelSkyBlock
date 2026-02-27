@@ -1,13 +1,14 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.shop;
 
 import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
 public class GUIShopAlda extends ShopView {
     public GUIShopAlda() {
-        super("Alda", SINGLE_SLOT);
+        super(I18n.string("gui_shop.alda.title"), SINGLE_SLOT);
     }
 
     @Override

@@ -7,10 +7,12 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.UUID;
 
 @CommandParameters(aliases = "msg message whipser",
@@ -33,20 +35,20 @@ public class MessageCommand extends HypixelCommand {
 
             @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(playerName);
             if (targetUUID == null) {
-                player.sendMessage("§cCan'distance find a player by the name of '" + playerName + "'");
+                player.sendMessage(I18n.string("commands.message.player_not_found", Map.of("player", playerName)));
                 return;
             }
 
             ProxyPlayer target = new ProxyPlayer(targetUUID);
             if (!target.isOnline().join()) {
-                player.sendMessage("§cThe player you tried to message, " + playerName + ", is not online.");
+                player.sendMessage(I18n.string("commands.message.player_not_online", Map.of("player", playerName)));
                 return;
             }
             String targetName = HypixelPlayer.getDisplayName(targetUUID);
             String ourName = player.getFullDisplayName();
 
-            player.sendMessage("§dTo " + targetName + "§7: " + String.join(" ", message));
-            target.sendMessage("§dFrom " + ourName + "§7: " + String.join(" ", message));
+            player.sendMessage(I18n.string("commands.message.outgoing", Map.of("target", targetName, "message", String.join(" ", message))));
+            target.sendMessage(I18n.string("commands.message.incoming", Map.of("sender", ourName, "message", String.join(" ", message))));
         }, playerArgument, messageArgument);
     }
 }

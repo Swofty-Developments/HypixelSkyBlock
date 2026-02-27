@@ -16,6 +16,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -43,7 +44,7 @@ public class GUIReforge extends HypixelInventoryGUI {
     }
 
     public GUIReforge() {
-        super("Reforge Item", InventoryType.CHEST_5_ROW);
+        super(I18n.string("gui_reforge.title"), InventoryType.CHEST_5_ROW);
     }
 
     @Override
@@ -87,19 +88,15 @@ public class GUIReforge extends HypixelInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    player.sendMessage("§cPlace an item in the empty slot above to reforge it!");
+                    player.sendMessage(I18n.string("gui_reforge.place_item_message"));
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
-                            "§eReforge Item", Material.ANVIL, 1,
-                            "§7Place an item above to reforge it!",
-                            "§7Reforging items adds a random",
-                            "§7modifier to the item that grants stat",
-                            "§7boosts."
-                    );
+                            I18n.string("gui_reforge.reforge_button_empty"), Material.ANVIL, 1,
+                            I18n.lore("gui_reforge.reforge_button_empty.lore"));
                 }
             });
             updateItemStacks(getInventory(), getPlayer());
@@ -137,9 +134,8 @@ public class GUIReforge extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
-                            "§cError!", Material.BARRIER, 1,
-                            "§7You cannot reforge this item!"
-                    );
+                            I18n.string("gui_reforge.error_cannot_reforge"), Material.BARRIER, 1,
+                            I18n.lore("gui_reforge.error_cannot_reforge.lore"));
                 }
             });
             updateItemStacks(getInventory(), getPlayer());
@@ -156,9 +152,8 @@ public class GUIReforge extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
-                            "§cError!", Material.BARRIER, 1,
-                            "§7No reforges available for this item type!"
-                    );
+                            I18n.string("gui_reforge.error_no_reforges"), Material.BARRIER, 1,
+                            I18n.lore("gui_reforge.error_no_reforges.lore"));
                 }
             });
             updateItemStacks(getInventory(), getPlayer());
@@ -173,7 +168,7 @@ public class GUIReforge extends HypixelInventoryGUI {
                 int cost = COST_MAP.get(item.getAttributeHandler().getRarity());
 
                 if (player.getCoins() - cost < 0) {
-                    player.sendMessage("§cYou don'distance have enough Coins!");
+                    player.sendMessage(I18n.string("gui_reforge.not_enough_coins"));
                     return;
                 }
 
@@ -183,7 +178,7 @@ public class GUIReforge extends HypixelInventoryGUI {
                 List<Reforge> availableReforges = ReforgeLoader.getReforgesForType(itemReforgeType);
 
                 if (availableReforges.isEmpty()) {
-                    player.sendMessage("§cNo reforges available for this item!");
+                    player.sendMessage(I18n.string("gui_reforge.no_reforges_available"));
                     return;
                 }
 
@@ -202,9 +197,11 @@ public class GUIReforge extends HypixelInventoryGUI {
 
                 String itemName = StringUtility.toNormalCase(item.getAttributeHandler().getTypeAsString());
 
-                player.sendMessage("§aYou reforged your" +
-                        item.getAttributeHandler().getRarity().getColor() + oldPrefix + " " + itemName + "§a into a " +
-                        item.getAttributeHandler().getRarity().getColor() + selectedReforge.getPrefix() + " " + itemName + "§a!");
+                player.sendMessage(I18n.string("gui_reforge.success_message", Map.of(
+                        "old_name", item.getAttributeHandler().getRarity().getColor() + oldPrefix,
+                        "item_name", itemName,
+                        "new_name", item.getAttributeHandler().getRarity().getColor() + " " + selectedReforge.getPrefix()
+                )));
 
                 updateFromItem(item);
             }
@@ -213,16 +210,10 @@ public class GUIReforge extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack(
-                        "§eReforge Item", Material.ANVIL, 1,
-                        "§7Reforges the above item, giving it a",
-                        "§7random stat modifier that boosts its",
-                        "§7stats.",
-                        "§2 ",
-                        "§7Cost",
-                        "§6" + COST_MAP.get(item.getAttributeHandler().getRarity()) + " Coins",
-                        "§2 ",
-                        "§eClick to reforge!"
-                );
+                        I18n.string("gui_reforge.reforge_button"), Material.ANVIL, 1,
+                        I18n.lore("gui_reforge.reforge_button.lore", Map.of(
+                                "cost", String.valueOf(COST_MAP.get(item.getAttributeHandler().getRarity()))
+                        )));
             }
         });
         updateItemStacks(getInventory(), getPlayer());

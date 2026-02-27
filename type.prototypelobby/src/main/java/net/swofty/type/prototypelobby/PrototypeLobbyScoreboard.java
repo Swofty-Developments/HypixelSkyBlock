@@ -9,6 +9,7 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
 
@@ -41,18 +42,18 @@ public class PrototypeLobbyScoreboard {
                 long hype = prototypeDataHandler.get(PrototypeLobbyDataHandler.Data.HYPE, DatapointLeaderboardLong.class).getValue();
 
                 List<String> lines = new ArrayList<>();
-                lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
+                lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
                 lines.add("§7 ");
-                lines.add("§fGames in this lobby are");
-                lines.add("§funder heavy development!");
+                lines.add(I18n.string("scoreboard.prototype_lobby.dev_notice_line1"));
+                lines.add(I18n.string("scoreboard.prototype_lobby.dev_notice_line2"));
                 lines.add("§7 ");
-                lines.add("§fReport bugs and leave");
-                lines.add("§ffeedback at");
-                lines.add("§ehypixel.net/ptl");
+                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_line1"));
+                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_line2"));
+                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_url"));
                 lines.add("§7 ");
-                lines.add("§fHype: §b" + hype + "§7/200");
+                lines.add(I18n.string("scoreboard.prototype_lobby.hype_label") + hype + I18n.string("scoreboard.prototype_lobby.hype_max"));
                 lines.add("§7 ");
-                lines.add("§ewww.hypixel.net");
+                lines.add(I18n.string("scoreboard.common.footer"));
 
                 if (!scoreboard.hasScoreboard(player)) {
                     scoreboard.createScoreboard(player, getSidebarName(prototypeName));
@@ -70,7 +71,7 @@ public class PrototypeLobbyScoreboard {
     }
 
     private static String getSidebarName(int counter) {
-        String baseText = "PROTOTYPE";
+        String baseText = I18n.string("scoreboard.prototype_lobby.title_base");
         String[] colors = {"§f§l", "§6§l", "§e§l"};
         String endColor = "§a§l";
 

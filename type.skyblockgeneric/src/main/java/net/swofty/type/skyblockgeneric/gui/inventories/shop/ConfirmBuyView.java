@@ -11,16 +11,18 @@ import net.swofty.type.generic.gui.v2.View;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public final class ConfirmBuyView implements View<ConfirmBuyView.State> {
 
     @Override
     public ViewConfiguration<State> configuration() {
-        return new ViewConfiguration<>(Component.text("Confirm"), InventoryType.CHEST_3_ROW);
+        return new ViewConfiguration<State>(I18n.string("gui_shop.confirm_buy.title"), InventoryType.CHEST_3_ROW);
     }
 
     @Override
@@ -29,10 +31,11 @@ public final class ConfirmBuyView implements View<ConfirmBuyView.State> {
 
         layout.slot(12,
                 (_, __) -> {
-                    ArrayList<String> lore = new ArrayList<>();
-                    lore.add("§7Buying: " + state.item.getDisplayItem());
-                    lore.add("§7Cost: §6" + StringUtility.commaify(state.price) + " Coins");
-                    return ItemStackCreator.getStack("§aConfirm", Material.LIME_TERRACOTTA, 1, lore);
+                    ArrayList<String> lore = new ArrayList<>(I18n.lore("gui_shop.confirm_buy.confirm_button.lore", Map.of(
+                            "item_name", state.item.getDisplayName(),
+                            "cost", StringUtility.commaify(state.price)
+                    )));
+                    return ItemStackCreator.getStack(I18n.string("gui_shop.confirm_buy.confirm_button"), Material.LIME_TERRACOTTA, 1, lore);
                 },
                 (click, c) -> {
                     if (!(click.click() instanceof Click.Left || click.click() instanceof Click.Right)) return;
@@ -41,16 +44,19 @@ public final class ConfirmBuyView implements View<ConfirmBuyView.State> {
                     if (player.getCoins() >= state.price) {
                         player.addAndUpdateItem(state.item);
                         player.removeCoins(state.price);
-                        player.sendMessage("§aYou bought " + state.item.getDisplayName() + " §afor §6" + state.price + " Coins§a!");
+                        player.sendMessage(I18n.string("gui_shop.confirm_buy.bought_message", Map.of(
+                                "item_name", state.item.getDisplayName(),
+                                "cost", String.valueOf(state.price)
+                        )));
                     } else {
-                        player.sendMessage("§4You don'distance have enough coins!");
+                        player.sendMessage(I18n.string("gui_shop.confirm_buy.not_enough_coins"));
                     }
                     player.closeInventory();
                 }
         );
 
         layout.slot(16,
-                (_, __) -> ItemStackCreator.getStack("§4Cancel", Material.RED_TERRACOTTA, 1),
+                (_, __) -> ItemStackCreator.getStack(I18n.string("gui_shop.confirm_buy.cancel_button"), Material.RED_TERRACOTTA, 1),
                 (_, c) -> c.player().closeInventory()
         );
     }

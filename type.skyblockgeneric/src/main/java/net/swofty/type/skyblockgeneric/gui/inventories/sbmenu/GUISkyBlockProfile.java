@@ -8,6 +8,7 @@ import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats.GUICombatStats;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats.GUIGatheringStats;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.stats.GUIMiscStats;
@@ -20,12 +21,13 @@ import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GUISkyBlockProfile extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Your Equipment and Stats", InventoryType.CHEST_6_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.profile.title"), InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class GUISkyBlockProfile extends StatelessView {
             if (!player.getItemInMainHand().isAir()) {
                 return ItemStackCreator.getFromStack(player.getItemInMainHand());
             } else {
-                return ItemStackCreator.getStack("§7Empty Held Item Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_held_item"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         });
 
@@ -50,7 +52,7 @@ public class GUISkyBlockProfile extends StatelessView {
             if (!player.getHelmet().isAir()) {
                 return ItemStackCreator.getFromStack(player.getHelmet());
             } else {
-                return ItemStackCreator.getStack("§7Empty Helmet Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_helmet"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -74,7 +76,7 @@ public class GUISkyBlockProfile extends StatelessView {
             if (!player.getChestplate().isAir()) {
                 return ItemStackCreator.getFromStack(player.getChestplate());
             } else {
-                return ItemStackCreator.getStack("§7Empty Chestplate Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_chestplate"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -98,7 +100,7 @@ public class GUISkyBlockProfile extends StatelessView {
             if (!player.getLeggings().isAir()) {
                 return ItemStackCreator.getFromStack(player.getLeggings());
             } else {
-                return ItemStackCreator.getStack("§7Empty Leggings Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_leggings"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -122,7 +124,7 @@ public class GUISkyBlockProfile extends StatelessView {
             if (!player.getBoots().isAir()) {
                 return ItemStackCreator.getFromStack(player.getBoots());
             } else {
-                return ItemStackCreator.getStack("§7Empty Boots Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_boots"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -147,7 +149,7 @@ public class GUISkyBlockProfile extends StatelessView {
                 SkyBlockItem pet = player.getPetData().getEnabledPet();
                 return new NonPlayerItemUpdater(pet).getUpdatedItem();
             } else {
-                return ItemStackCreator.getStack("§7Empty Pet Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.empty_pet"), Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             }
         }, (click, c) -> {
             //c.player().openView(new GUIPets())
@@ -157,21 +159,21 @@ public class GUISkyBlockProfile extends StatelessView {
         layout.slot(15, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             PlayerStatistics statistics = player.getStatistics();
-            List<String> lore = new ArrayList<>(List.of("§7Gives you a better chance at", "§7fighting strong monsters. ", " "));
+            StringBuilder statsDisplay = new StringBuilder();
             List<ItemStatistic> stats = List.of(ItemStatistic.HEALTH, ItemStatistic.DEFENSE, ItemStatistic.STRENGTH, ItemStatistic.INTELLIGENCE,
                     ItemStatistic.CRITICAL_CHANCE, ItemStatistic.CRITICAL_DAMAGE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.TRUE_DEFENSE,
                     ItemStatistic.FEROCITY, ItemStatistic.HEALTH_REGENERATION, ItemStatistic.VITALITY, ItemStatistic.MENDING, ItemStatistic.SWING_RANGE);
 
             statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                 if (stats.contains(statistic)) {
-                    lore.add(" " + statistic.getFullDisplayName() + " §f" +
-                            StringUtility.decimalify(value, 2) + statistic.getSuffix());
+                    if (statsDisplay.length() > 0) statsDisplay.append("\n");
+                    statsDisplay.append(" ").append(statistic.getFullDisplayName()).append(" §f")
+                            .append(StringUtility.decimalify(value, 2)).append(statistic.getSuffix());
                 }
             });
 
-            lore.add("");
-            lore.add("§eClick for details!");
-            return ItemStackCreator.getStack("§cCombat Stats", Material.DIAMOND_SWORD, 1, lore);
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.combat_stats"), Material.DIAMOND_SWORD, 1,
+                    I18n.lore("gui_sbmenu.profile.combat_stats.lore", Map.of("stats_display", statsDisplay.toString())));
         }, (click, c) -> {
             //c.player().openView(new GUICombatStats()))
         });
@@ -180,7 +182,7 @@ public class GUISkyBlockProfile extends StatelessView {
         layout.slot(16, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             PlayerStatistics statistics = player.getStatistics();
-            List<String> lore = new ArrayList<>(List.of("§7Lets you collect and harvest better", "§7items, or more of them. ", " "));
+            StringBuilder statsDisplay = new StringBuilder();
             List<ItemStatistic> stats = List.of(ItemStatistic.MINING_SPEED, ItemStatistic.MINING_FORTUNE, ItemStatistic.BREAKING_POWER,
                     ItemStatistic.PRISTINE, ItemStatistic.FORAGING_FORTUNE, ItemStatistic.FARMING_FORTUNE, ItemStatistic.MINING_SPREAD, ItemStatistic.GEMSTONE_SPREAD,
                     ItemStatistic.HUNTER_FORTUNE, ItemStatistic.SWEEP, ItemStatistic.ORE_FORTUNE, ItemStatistic.BLOCK_FORTUNE, ItemStatistic.DWARVEN_METAL_FORTUNE,
@@ -190,14 +192,14 @@ public class GUISkyBlockProfile extends StatelessView {
 
             statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                 if (stats.contains(statistic)) {
-                    lore.add(" " + statistic.getFullDisplayName() + " §f" +
-                            StringUtility.decimalify(value, 2) + statistic.getSuffix());
+                    if (statsDisplay.length() > 0) statsDisplay.append("\n");
+                    statsDisplay.append(" ").append(statistic.getFullDisplayName()).append(" §f")
+                            .append(StringUtility.decimalify(value, 2)).append(statistic.getSuffix());
                 }
             });
 
-            lore.add("");
-            lore.add("§eClick for details!");
-            return ItemStackCreator.getStack("§eGathering Stats", Material.IRON_PICKAXE, 1, lore);
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.gathering_stats"), Material.IRON_PICKAXE, 1,
+                    I18n.lore("gui_sbmenu.profile.gathering_stats.lore", Map.of("stats_display", statsDisplay.toString())));
         }, (click, c) -> {
             // c.player().openView(new GUIGatheringStats());
         });
@@ -206,21 +208,21 @@ public class GUISkyBlockProfile extends StatelessView {
         layout.slot(24, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             PlayerStatistics statistics = player.getStatistics();
-            List<String> lore = new ArrayList<>(List.of("§7Increases the §3XP §7you gain on your", "§7skills ", " "));
+            StringBuilder statsDisplay = new StringBuilder();
             List<ItemStatistic> stats = List.of(ItemStatistic.COMBAT_WISDOM, ItemStatistic.MINING_WISDOM, ItemStatistic.FARMING_WISDOM, ItemStatistic.FORAGING_WISDOM,
                     ItemStatistic.FISHING_WISDOM, ItemStatistic.ENCHANTING_WISDOM, ItemStatistic.ALCHEMY_WISDOM, ItemStatistic.CARPENTRY_WISDOM, ItemStatistic.RUNE_CRAFTING_WISDOM,
                     ItemStatistic.SOCIAL_WISDOM, ItemStatistic.TAMING_WISDOM, ItemStatistic.HUNTING_WISDOM);
 
             statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                 if (stats.contains(statistic)) {
-                    lore.add(" " + statistic.getFullDisplayName() + " §f" +
-                            StringUtility.decimalify(value, 2) + statistic.getSuffix());
+                    if (statsDisplay.length() > 0) statsDisplay.append("\n");
+                    statsDisplay.append(" ").append(statistic.getFullDisplayName()).append(" §f")
+                            .append(StringUtility.decimalify(value, 2)).append(statistic.getSuffix());
                 }
             });
 
-            lore.add("");
-            lore.add("§eClick for details!");
-            return ItemStackCreator.getStack("§3Wisdom Stats", Material.BOOK, 1, lore);
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.wisdom_stats"), Material.BOOK, 1,
+                    I18n.lore("gui_sbmenu.profile.wisdom_stats.lore", Map.of("stats_display", statsDisplay.toString())));
         }, (click, c) -> {
             //c.player().openView(new GUIWisdomStats())
         });
@@ -229,21 +231,21 @@ public class GUISkyBlockProfile extends StatelessView {
         layout.slot(25, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             PlayerStatistics statistics = player.getStatistics();
-            List<String> lore = new ArrayList<>(List.of("§7Augments various aspects of your", "§7gameplay! ", " "));
+            StringBuilder statsDisplay = new StringBuilder();
             List<ItemStatistic> stats = List.of(ItemStatistic.SPEED, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK,
                     ItemStatistic.COLD_RESISTANCE, ItemStatistic.BONUS_PEST_CHANCE, ItemStatistic.HEAT_RESISTANCE, ItemStatistic.FEAR,
                     ItemStatistic.PULL, ItemStatistic.RESPIRATION, ItemStatistic.PRESSURE_RESISTANCE);
 
             statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                 if (stats.contains(statistic)) {
-                    lore.add(" " + statistic.getFullDisplayName() + " §f" +
-                            StringUtility.decimalify(value, 2) + statistic.getSuffix());
+                    if (statsDisplay.length() > 0) statsDisplay.append("\n");
+                    statsDisplay.append(" ").append(statistic.getFullDisplayName()).append(" §f")
+                            .append(StringUtility.decimalify(value, 2)).append(statistic.getSuffix());
                 }
             });
 
-            lore.add("");
-            lore.add("§eClick for details!");
-            return ItemStackCreator.getStack("§dMisc Stats", Material.CLOCK, 1, lore);
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profile.misc_stats"), Material.CLOCK, 1,
+                    I18n.lore("gui_sbmenu.profile.misc_stats.lore", Map.of("stats_display", statsDisplay.toString())));
         }, (click, c) -> {
             //c.player().openView(new GUIMiscStats())
         });

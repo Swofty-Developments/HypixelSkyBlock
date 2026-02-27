@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.banker.GUIBanker;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
@@ -58,13 +59,8 @@ public class NPCBanker extends HypixelNPC {
 
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("quest-hello").lines(new String[]{
-                                "Hello there!",
-                                "You may want to store your §6Coins §fin a safe place while you are off adventuring.",
-                                "Storing them in your §6Bank §fkeeps them safe and allows you to earn interest at the start of every season!"
-                        }).build()
-        ).toArray(DialogueSet[]::new);
+        return new DialogueSet[] {
+                DialogueSet.ofTranslation("quest-hello", "npcs_hub.banker.dialogue.quest_hello")
+        };
     }
 }

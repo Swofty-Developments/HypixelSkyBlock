@@ -17,6 +17,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentSource;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
@@ -32,6 +33,7 @@ import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class GUIEnchantmentTable extends HypixelInventoryGUI {
     private static final int[] PAGINATED_SLOTS_LIST_ENCHANTS = new int[]{
@@ -47,7 +49,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
     private final int bookshelfPower;
 
     public GUIEnchantmentTable(Instance instance, Pos enchantmentTable) {
-        super("Enchantment Table", InventoryType.CHEST_6_ROW);
+        super(I18n.string("gui_enchantment.title"), InventoryType.CHEST_6_ROW);
 
         this.bookshelfPower = getBookshelfPower(instance, enchantmentTable);
     }
@@ -62,14 +64,10 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack(
-                        "§dBookshelf Power", Material.BOOKSHELF, 1,
-                        "§7Stronger enchantments require",
-                        "§7more bookshelf power which can",
-                        "§7be increased by placing",
-                        "§7bookshelves nearby.",
-                        "§a ",
-                        "§7Current Bookshelf Power:",
-                        "§d" + bookshelfPower);
+                        I18n.string("gui_enchantment.bookshelf_power"), Material.BOOKSHELF, 1,
+                        I18n.lore("gui_enchantment.bookshelf_power.lore", Map.of(
+                                "power", String.valueOf(bookshelfPower)
+                        )));
             }
         });
 
@@ -78,12 +76,8 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack(
-                        "§aEnchantments Guide", Material.BOOK, 1,
-                        "§7View a complete list of all",
-                        "§7enchantments and their",
-                        "§7requirements.",
-                        "§a ",
-                        "§eClick to view!");
+                        I18n.string("gui_enchantment.enchantments_guide"), Material.BOOK, 1,
+                        I18n.lore("gui_enchantment.enchantments_guide.lore"));
             }
         });
 
@@ -92,10 +86,8 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack(
-                        "§aEnchant Item", Material.ENCHANTING_TABLE, 1,
-                        "§7Add and remove enchantments from",
-                        "§7the time in the slot above!"
-                );
+                        I18n.string("gui_enchantment.enchant_item_label"), Material.ENCHANTING_TABLE, 1,
+                        I18n.lore("gui_enchantment.enchant_item_label.lore"));
             }
         });
 
@@ -105,7 +97,10 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
     @SneakyThrows
     public void updateFromItem(SkyBlockItem item, EnchantmentType selected) {
         getInventory().setTitle(Component.text(
-                "Enchant Item " + (selected == null ? "" : "-> " + StringUtility.toNormalCase(selected.name())))
+                selected == null ? I18n.string("gui_enchantment.title") :
+                        I18n.string("gui_enchantment.title_selected", Map.of(
+                                "enchantment", StringUtility.toNormalCase(selected.name())
+                        )))
         );
 
         Arrays.stream(PAGINATED_SLOTS_LIST_ENCHANTS).forEach(slot -> set(slot, ItemStackCreator.createNamedItemStack(
@@ -119,10 +114,8 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
-                            "§cEnchant Item", Material.GRAY_DYE, 1,
-                            "§7Place an item in the open slot",
-                            "§7to enchant it!"
-                    );
+                            I18n.string("gui_enchantment.place_item"), Material.GRAY_DYE, 1,
+                            I18n.lore("gui_enchantment.place_item.lore"));
                 }
             });
 
@@ -187,9 +180,8 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
-                            "§cInvalid Item!", Material.RED_DYE, 1,
-                            "§7You cannot enchant stacked items!"
-                    );
+                            I18n.string("gui_enchantment.invalid_item"), Material.RED_DYE, 1,
+                            I18n.lore("gui_enchantment.invalid_item.lore"));
                 }
             });
 
@@ -209,9 +201,8 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(
-                            "§cCannot Enchant Item!", Material.RED_DYE, 1,
-                            "§7This item cannot be enchanted!"
-                    );
+                            I18n.string("gui_enchantment.cannot_enchant"), Material.RED_DYE, 1,
+                            I18n.lore("gui_enchantment.cannot_enchant.lore"));
                 }
             });
             updateItemStacks(getInventory(), getPlayer());
@@ -229,8 +220,9 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
                         if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
-                            player.sendMessage("§cThis enchantment requires " +
-                                    enchantmentType.getEnchFromTable().getRequiredBookshelfPower() + " Bookshelf Power!");
+                            player.sendMessage(I18n.string("gui_enchantment.requires_bookshelf_message", Map.of(
+                                    "power", String.valueOf(enchantmentType.getEnchFromTable().getRequiredBookshelfPower())
+                            )));
                             return;
                         }
 
@@ -258,10 +250,11 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                         lore.add("§a ");
 
                         if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
-                            lore.add("§cRequires " + enchantmentType.getEnchFromTable().getRequiredBookshelfPower()
-                                    + " Bookshelf Power!");
+                            lore.add(I18n.string("gui_enchantment.requires_bookshelf", Map.of(
+                                    "power", String.valueOf(enchantmentType.getEnchFromTable().getRequiredBookshelfPower())
+                            )));
                         } else {
-                            lore.add("§eClick to view!");
+                            lore.add(I18n.string("gui_enchantment.click_to_view"));
                         }
 
                         return ItemStackCreator.getStack(
@@ -307,27 +300,28 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                     if (selected.getEnch() instanceof ConflictingEnch conflictingEnch) {
                         for (EnchantmentType ench : conflictingEnch.getConflictingEnchantments()) {
                             if (item.getAttributeHandler().hasEnchantment(ench)) {
-                                lore.add("§c§lWARNING: This will remove " + StringUtility.toNormalCase(ench.name()) + ".");
+                                lore.add(I18n.string("gui_enchantment.warning_remove_conflicting", Map.of(
+                                        "enchantment", StringUtility.toNormalCase(ench.name())
+                                )));
                                 break;
                             }
                         }
                     }
 
                     if (finalHasLevel == finalLevel) {
-                        lore.add("§cThis enchantment is already present");
-                        lore.add("§cand can be removed.");
+                        lore.addAll(I18n.lore("gui_enchantment.already_present"));
                         lore.add("§a ");
                     }
 
-                    lore.add("§7Cost");
+                    lore.add(I18n.string("gui_enchantment.cost_label"));
 
                     if (finalHasLevel > finalLevel) {
                         if (levelCost > player.getLevel())
-                            lore.add("§3" + levelCost + " Exp Levels §c§l✖");
-                        else lore.add("§3" + levelCost + " Exp Levels §a§l✓");
+                            lore.add(I18n.string("gui_enchantment.cost_exp_levels_fail", Map.of("cost", String.valueOf(levelCost))));
+                        else lore.add(I18n.string("gui_enchantment.cost_exp_levels_pass", Map.of("cost", String.valueOf(levelCost))));
 
                         lore.add("§a ");
-                        lore.add("§cHigher level already present!");
+                        lore.add(I18n.string("gui_enchantment.higher_level_present"));
                         return ItemStackCreator.getStack(
                                 "§9" + selected.getName() + " " + StringUtility.getAsRomanNumeral(finalLevel),
                                 Material.GRAY_DYE, 1,
@@ -336,16 +330,16 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                     }
 
                     if (levelCost > player.getLevel()) {
-                        lore.add("§3" + levelCost + " Exp Levels §c§l✖");
+                        lore.add(I18n.string("gui_enchantment.cost_exp_levels_fail", Map.of("cost", String.valueOf(levelCost))));
                         lore.add("§a ");
-                        lore.add("§cYou have insufficient levels!");
+                        lore.add(I18n.string("gui_enchantment.insufficient_levels"));
                     } else {
-                        lore.add("§3" + levelCost + " Exp Levels §a§l✓");
+                        lore.add(I18n.string("gui_enchantment.cost_exp_levels_pass", Map.of("cost", String.valueOf(levelCost))));
                         lore.add("§a ");
                         if (finalHasLevel >= finalLevel) {
-                            lore.add("§eClick to remove!");
+                            lore.add(I18n.string("gui_enchantment.click_to_remove"));
                         } else {
-                            lore.add("§eClick to enchant!");
+                            lore.add(I18n.string("gui_enchantment.click_to_enchant"));
                         }
                     }
 
@@ -368,7 +362,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                     String itemName = StringUtility.toNormalCase(type.name());
 
                     if (player.getLevel() < selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel)) {
-                        player.sendMessage("§cYou have insufficient levels!");
+                        player.sendMessage(I18n.string("gui_enchantment.insufficient_levels_message"));
                         return;
                     }
 
@@ -386,8 +380,11 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                         }
 
                         player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel));
-                        player.sendMessage("§aYou enchanted your " + itemName + " §awith " +
-                                StringUtility.toNormalCase(selected.name()) + " " + StringUtility.getAsRomanNumeral(finalLevel) + "!");
+                        player.sendMessage(I18n.string("gui_enchantment.enchanted_message", Map.of(
+                                "item_name", itemName,
+                                "enchantment", StringUtility.toNormalCase(selected.name()),
+                                "level", StringUtility.getAsRomanNumeral(finalLevel)
+                        )));
                     } else {
                         int difference = finalHasLevel - finalLevel;
 
@@ -398,7 +395,10 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                         }
 
                         player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel));
-                        player.sendMessage("§cYou removed " + StringUtility.toNormalCase(selected.name()) + " from your " + itemName + "§c!");
+                        player.sendMessage(I18n.string("gui_enchantment.removed_message", Map.of(
+                                "enchantment", StringUtility.toNormalCase(selected.name()),
+                                "item_name", itemName
+                        )));
                     }
 
                     updateFromItem(item, selected);
@@ -417,7 +417,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.createNamedItemStack(
-                        Material.ARROW, "§aGo Back"
+                        Material.ARROW, I18n.string("gui_enchantment.go_back")
                 );
             }
         });

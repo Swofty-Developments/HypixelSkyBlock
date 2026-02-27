@@ -11,14 +11,15 @@ import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapelessRecipe;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class GUIRecipeBook extends StatelessView {
     private static final int[] CATEGORY_SLOTS = {
@@ -28,7 +29,7 @@ public class GUIRecipeBook extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Recipe Book", InventoryType.CHEST_6_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.recipe.book.title"), InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -41,15 +42,8 @@ public class GUIRecipeBook extends StatelessView {
         allRecipes.addAll(ShapedRecipe.CACHED_RECIPES);
         allRecipes.addAll(ShapelessRecipe.CACHED_RECIPES);
 
-        layout.slot(51, (_, _) -> ItemStackCreator.getStack("§aSearch Recipes", Material.OAK_SIGN, 1, List.of(
-                "§8/recipe <query>",
-                "",
-                "§7Search all recipes in SkyBlock. May",
-                "§7include recipes with aren'distance in the",
-                "§7recipe book.",
-                "",
-                "§eClick to search!"
-        )), (_, c) -> {
+        layout.slot(51, (_, _) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.search"), Material.OAK_SIGN, 1,
+                I18n.lore("gui_sbmenu.recipe.book.search.lore")), (_, c) -> {
             new HypixelSignGUI(c.player()).open(new String[]{"Enter query", ""}).thenAccept(line -> {
                 if (line == null) {
                     return;
@@ -61,15 +55,15 @@ public class GUIRecipeBook extends StatelessView {
 
         layout.slot(4, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
-            List<String> lore = new ArrayList<>(List.of(
-                    "§7Through your adventure, you will",
-                    "§7unlock recipes for all kinds of",
-                    "§7special items! You can view how to",
-                    "§7craft these items here.",
-                    " "
-            ));
-            SkyBlockRecipe.getMissionDisplay(lore, player.getUuid());
-            return ItemStackCreator.getStack("§aRecipe Book", Material.BOOK, 1, lore.toArray(new String[0]));
+            StringBuilder missionDisplay = new StringBuilder();
+            List<String> missionLore = new ArrayList<>();
+            SkyBlockRecipe.getMissionDisplay(missionLore, player.getUuid());
+            for (int j = 0; j < missionLore.size(); j++) {
+                missionDisplay.append(missionLore.get(j));
+                if (j < missionLore.size() - 1) missionDisplay.append("\n");
+            }
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.info"), Material.BOOK, 1,
+                    I18n.lore("gui_sbmenu.recipe.book.info.lore", Map.of("mission_display", missionDisplay.toString())));
         });
 
         for (int i = 0; i < CATEGORY_SLOTS.length && i < SkyBlockRecipe.RecipeType.values().length; i++) {
@@ -87,10 +81,6 @@ public class GUIRecipeBook extends StatelessView {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
                 ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
 
-                ArrayList<String> lore = new ArrayList<>(Arrays.asList(
-                        "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
-                        "§7that you have unlocked!", " "));
-
                 typeRecipes.forEach(recipe -> {
                     SkyBlockRecipe.CraftingResult result = (SkyBlockRecipe.CraftingResult) recipe.getCanCraft().apply(player);
                     if (result.allowed()) {
@@ -99,23 +89,19 @@ public class GUIRecipeBook extends StatelessView {
                 });
 
                 String unlockedPercentage = String.format("%.2f", (allowedRecipes.size() / (double) typeRecipes.size()) * 100);
-                lore.add("§7Recipes Unlocked: §e" + unlockedPercentage + "§6%");
-
                 String baseLoadingBar = "─────────────────";
                 int maxBarLength = baseLoadingBar.length();
                 int completedLength = (int) ((allowedRecipes.size() / (double) typeRecipes.size()) * maxBarLength);
-
                 String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
                 int formattingCodeLength = 4;
                 String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
                         completedLoadingBar.length() - formattingCodeLength, maxBarLength));
+                String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
-                lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size());
-                lore.add(" ");
-                lore.add("§eClick to view!");
-
-                return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
-                        type.getMaterial(), 1, lore);
+                String categoryName = StringUtility.toNormalCase(type.name());
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", Map.of("category_name", categoryName)),
+                        type.getMaterial(), 1,
+                        I18n.lore("gui_sbmenu.recipe.book.category.lore", Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
             }, (_, c) -> c.push(new GUIRecipeCategory(type), GUIRecipeCategory.createInitialState((SkyBlockPlayer) c.player(), type)));
         }
 
@@ -139,10 +125,6 @@ public class GUIRecipeBook extends StatelessView {
                 }
             });
 
-            ArrayList<String> lore = new ArrayList<>(Arrays.asList(
-                    "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
-                    "§7that you have unlocked!", " "));
-
             typeRecipes.forEach(recipe -> {
                 SkyBlockRecipe.CraftingResult result = (SkyBlockRecipe.CraftingResult) recipe.getCanCraft().apply(player);
                 if (result.allowed()) {
@@ -151,23 +133,20 @@ public class GUIRecipeBook extends StatelessView {
             });
 
             String unlockedPercentage = String.format("%.2f", (allowedRecipes.size() / (double) typeRecipes.size()) * 100);
-            lore.add("§7Slayer Recipes Unlocked: §e" + unlockedPercentage + "§6%");
+            String categoryName = StringUtility.toNormalCase(type.name());
 
             String baseLoadingBar = "─────────────────";
             int maxBarLength = baseLoadingBar.length();
             int completedLength = (int) ((allowedRecipes.size() / (double) typeRecipes.size()) * maxBarLength);
-
             String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
             int formattingCodeLength = 4;
             String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
                     completedLoadingBar.length() - formattingCodeLength, maxBarLength));
+            String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
-            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size());
-            lore.add(" ");
-            lore.add("§eClick to view!");
-
-            return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
-                    type.getMaterial(), 1, lore);
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", Map.of("category_name", categoryName)),
+                    type.getMaterial(), 1,
+                    I18n.lore("gui_sbmenu.recipe.book.category.lore", Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
         }, (click, c) -> c.push(new GUIRecipeSlayers()));
     }
 }

@@ -9,6 +9,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStorage;
@@ -24,7 +25,7 @@ public class GUIStorage extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Storage", InventoryType.CHEST_6_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.storage.title"), InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -33,28 +34,22 @@ public class GUIStorage extends StatelessView {
         Components.back(layout, 48, ctx);
         Components.close(layout, 49);
 
-        layout.slot(4, (s, c) -> ItemStackCreator.getStack("§aEnder Chest", Material.ENDER_CHEST, 1,
-                "§7Store global items you can",
-                "§7access anywhere in your ender",
-                "§7chest."));
+        layout.slot(4, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.ender_chest"), Material.ENDER_CHEST, 1,
+                I18n.lore("gui_sbmenu.storage.ender_chest.lore")));
 
-        layout.slot(22, (s, c) -> ItemStackCreator.getStack("§aBackpacks", Material.CHEST, 1,
-                "§7Place backpack items in these slots",
-                "§7to use them as additional storage",
-                "§7that can be accessed anywhere."));
+        layout.slot(22, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.backpacks"), Material.CHEST, 1,
+                I18n.lore("gui_sbmenu.storage.backpacks.lore")));
 
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
         DatapointStorage.PlayerStorage storage = player.getSkyblockDataHandler().get(
                 SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class
         ).getValue();
 
-        // Initialize empty storages
         if (!storage.hasPage(1)) {
             storage.addPage(1);
             storage.addPage(2);
         }
 
-        // Ender chest pages (slots 9-17)
         for (int enderSlot = 9; enderSlot < 18; enderSlot++) {
             int page = enderSlot - 8;
 
@@ -65,16 +60,14 @@ public class GUIStorage extends StatelessView {
                 ).getValue();
 
                 if (!playerStorage.hasPage(page))
-                    return ItemStackCreator.getStack("§cLocked Page", Material.RED_STAINED_GLASS_PANE, 1,
-                            "§7Unlock more Ender Chest pages in",
-                            "§7the community shop!");
+                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.locked_page"), Material.RED_STAINED_GLASS_PANE, 1,
+                            I18n.lore("gui_sbmenu.storage.locked_page.lore"));
 
                 Material material = playerStorage.getPage(page).display;
 
-                return ItemStackCreator.getStack("§aEnder Chest Page " + page, material, page,
-                        " ",
-                        "§eLeft-click to open!",
-                        "§eRight-click to change icon!");
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.ender_chest_page", Map.of("page", String.valueOf(page))),
+                        material, page,
+                        I18n.lore("gui_sbmenu.storage.ender_chest_page.lore"));
             }, (click, c) -> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                 DatapointStorage.PlayerStorage playerStorage = p.getSkyblockDataHandler().get(
@@ -91,7 +84,6 @@ public class GUIStorage extends StatelessView {
             });
         }
 
-        // Backpack slots (slots 27-44)
         DatapointBackpacks.PlayerBackpacks backpacks = player.getSkyblockDataHandler().get(
                 SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class
         ).getValue();
@@ -102,19 +94,16 @@ public class GUIStorage extends StatelessView {
             int slot = backpackSlot - 26;
 
             if (backpacks.getUnlockedSlots() < slot) {
-                layout.slot(backpackSlot, (s, c) -> ItemStackCreator.getStack("§cLocked Backpack Slot " + slot,
+                layout.slot(backpackSlot, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.locked_backpack", Map.of("slot", String.valueOf(slot))),
                         Material.GRAY_DYE, 1,
-                        "§7Talk to Tia the Fairy to unlock more",
-                        "§7Backpack Slots!"));
+                        I18n.lore("gui_sbmenu.storage.locked_backpack.lore")));
                 continue;
             }
 
             if (!backpackItems.containsKey(slot)) {
-                layout.slot(backpackSlot, (s, c) -> ItemStackCreator.getStack("§eEmpty Backpack Slot " + slot,
+                layout.slot(backpackSlot, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.empty_backpack", Map.of("slot", String.valueOf(slot))),
                                 Material.BROWN_STAINED_GLASS_PANE, slot,
-                                " ",
-                                "§eLeft-click a backpack item on this",
-                                "§eslot to place it!"),
+                                I18n.lore("gui_sbmenu.storage.empty_backpack.lore")),
                         (click, c) -> handleEmptyBackpackSlotClick(click, c, slot));
                 continue;
             }
@@ -123,14 +112,15 @@ public class GUIStorage extends StatelessView {
 
             layout.slot(backpackSlot, (s, c) -> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
-                return ItemStackCreator.getStackHead("§6Backpack Slot " + slot,
+                String itemName = item.getAttributeHandler().getRarity().getColor() +
+                        item.getAttributeHandler().getPotentialType().getDisplayName();
+                String slots = String.valueOf(item.getComponent(BackpackComponent.class).getRows() * 9);
+                return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.storage.backpack_slot", Map.of("slot", String.valueOf(slot))),
                         item.getComponent(SkullHeadComponent.class).getSkullTexture(item), slot,
-                        item.getAttributeHandler().getRarity().getColor() +
-                                item.getAttributeHandler().getPotentialType().getDisplayName(),
-                        "§7This backpack has §a" + (item.getComponent(BackpackComponent.class).getRows() * 9) + " §7slots.",
-                        " ",
-                        "§eLeft-click to open!",
-                        "§eRight-click to remove!");
+                        I18n.lore("gui_sbmenu.storage.backpack_slot.lore", Map.of(
+                                "item_name", itemName,
+                                "slots", slots
+                        )));
             }, (click, c) -> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                 DatapointBackpacks.PlayerBackpacks playerBackpacks = p.getSkyblockDataHandler().get(
@@ -144,11 +134,11 @@ public class GUIStorage extends StatelessView {
                             && !backpackItem.getAttributeHandler().getBackpackData().items()
                             .stream()
                             .map(SkyBlockItem::new).allMatch(SkyBlockItem::isNA)) {
-                        p.sendMessage("§cThe backpack in slot " + slot + " is not empty! Please empty it before removing it.");
+                        p.sendMessage(I18n.string("gui_sbmenu.storage.msg.not_empty", Map.of("slot", String.valueOf(slot))));
                         return;
                     }
 
-                    p.sendMessage("§aRemoved backpack from slot " + slot + "!");
+                    p.sendMessage(I18n.string("gui_sbmenu.storage.msg.removed", Map.of("slot", String.valueOf(slot))));
                     p.getInventory().setCursorItem(PlayerItemUpdater.playerUpdate(p, backpackItem.getItemStack()).build());
 
                     playerBackpackItems.remove(slot);
@@ -178,8 +168,8 @@ public class GUIStorage extends StatelessView {
                 new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.getUnlockedSlots())
         );
 
-        player.sendMessage("§ePlacing backpack in slot " + slot + "...");
-        player.sendMessage("§aSuccess!");
+        player.sendMessage(I18n.string("gui_sbmenu.storage.msg.placing", Map.of("slot", String.valueOf(slot))));
+        player.sendMessage(I18n.string("gui_sbmenu.storage.msg.success"));
         player.getInventory().setCursorItem(ItemStack.AIR);
 
         ctx.session(DefaultState.class).refresh();

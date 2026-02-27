@@ -14,6 +14,7 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.Nullable;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -58,7 +60,7 @@ public class BanCommand extends HypixelCommand {
             try {
                 type = BanType.valueOf(context.get(reasonArg));
             } catch (IllegalArgumentException e) {
-                player.sendMessage("§cInvalid ban reason. Use tab-completion to see valid options.");
+                player.sendMessage(I18n.string("commands.ban.invalid_reason"));
                 return;
             }
 
@@ -69,7 +71,7 @@ public class BanCommand extends HypixelCommand {
                     long expiryTime = System.currentTimeMillis() + actualTime;
                     banPlayer(player, targetUuid, type, player.getUuid(), actualTime, expiryTime, playerName, null);
                 } catch (IOException e) {
-                    player.sendMessage("§cCould not find player: " + playerName);
+                    player.sendMessage(I18n.string("commands.common.player_not_found_short", Map.of("player", playerName)));
                 }
             });
         }, playerArg, durationArg, reasonArg);
@@ -82,7 +84,7 @@ public class BanCommand extends HypixelCommand {
             try {
                 reason = BanType.valueOf(context.get(reasonArg));
             } catch (IllegalArgumentException e) {
-                player.sendMessage("§cInvalid ban reason. Use tab-completion to see valid options.");
+                player.sendMessage(I18n.string("commands.ban.invalid_reason"));
                 return;
             }
 
@@ -91,7 +93,7 @@ public class BanCommand extends HypixelCommand {
                     banPlayer(player, net.minestom.server.utils.mojang.MojangUtils.getUUID(playerName), reason,
                             player.getUuid(), 0, -1, playerName, null);
                 } catch (IOException e) {
-                    player.sendMessage("§cCould not find player: " + playerName);
+                    player.sendMessage(I18n.string("commands.common.player_not_found_short", Map.of("player", playerName)));
                 }
             });
         }, playerArg, reasonArg);
@@ -104,7 +106,7 @@ public class BanCommand extends HypixelCommand {
             try {
                 reason = BanType.valueOf(context.get(reasonArg));
             } catch (IllegalArgumentException e) {
-                player.sendMessage("§cInvalid ban reason. Use tab-completion to see valid options.");
+                player.sendMessage(I18n.string("commands.ban.invalid_reason"));
                 return;
             }
 
@@ -115,7 +117,7 @@ public class BanCommand extends HypixelCommand {
                     banPlayer(player, net.minestom.server.utils.mojang.MojangUtils.getUUID(playerName), reason,
                             player.getUuid(), 0, -1, playerName, tags);
                 } catch (IOException e) {
-                    player.sendMessage("§cCould not find player: " + playerName);
+                    player.sendMessage(I18n.string("commands.common.player_not_found_short", Map.of("player", playerName)));
                 }
             });
         }, playerArg, reasonArg, extraArg);
@@ -155,15 +157,15 @@ public class BanCommand extends HypixelCommand {
             if (result instanceof PunishPlayerProtocolObject.PunishPlayerResponse response) {
                 if (response.success()) {
                     new ProxyPlayer(targetUuid).transferToLimbo();
-                    sender.sendMessage("§aSuccessfully banned player §e" + playerName + "§a. §8Punishment ID: §7" + response.punishmentId());
+                    sender.sendMessage(I18n.string("commands.ban.success", Map.of("player", playerName, "id", response.punishmentId())));
                 } else if (response.errorCode() == PunishPlayerProtocolObject.ErrorCode.ALREADY_PUNISHED) {
-                    sender.sendMessage("§cThis player is already banned. Use the tag -O to overwrite. Punishment ID: §7" + response.errorMessage());
+                    sender.sendMessage(I18n.string("commands.ban.already_banned", Map.of("id", response.errorMessage())));
                 } else {
-                    sender.sendMessage("§cFailed to ban player: " + response.errorMessage());
+                    sender.sendMessage(I18n.string("commands.ban.failed", Map.of("error", response.errorMessage())));
                 }
             }
         }).orTimeout(5, TimeUnit.SECONDS).exceptionally(_ -> {
-            sender.sendMessage("§cCould not ban this player at this time. The punishment service may be offline.");
+            sender.sendMessage(I18n.string("commands.ban.service_offline"));
             return null;
         });
     }

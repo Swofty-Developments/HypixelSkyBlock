@@ -11,6 +11,7 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
 
@@ -48,34 +49,34 @@ public class BedWarsLobbyScoreboard {
 
 				double percentage = Math.min(1.0, (double) progress / maxExperience);
 				int filledSquares = (int) Math.round(percentage * 10);
-				StringBuilder progressBar = new StringBuilder(" §8[");
+				StringBuilder progressBar = new StringBuilder(" " + I18n.string("scoreboard.bedwars_lobby.progress_bar_open"));
 				for (int i = 0; i < 10; i++) {
 					if (i < filledSquares) {
-						progressBar.append("§b■");
+						progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_filled"));
 					} else {
-						progressBar.append("§7■");
+						progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_empty"));
 					}
 				}
-				progressBar.append("§8]");
+				progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_close"));
 
 				long tokens = bwDataHandler.get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class).getValue();
 				long tickets = bwDataHandler.get(BedWarsDataHandler.Data.SLUMBER_TICKETS, DatapointLeaderboardLong.class).getValue();
 
 				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName());
+				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
 				lines.add("§7 ");
-				lines.add("§fLevel: §7" + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)));
+				lines.add(I18n.string("scoreboard.bedwars_lobby.level_label") + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)));
 				lines.add("§7 ");
-				lines.add("§fProgress: §b" + suffix(progress) + "§7/§a" + suffix(maxExperience));
+				lines.add(I18n.string("scoreboard.bedwars_lobby.progress_label") + suffix(progress) + I18n.string("scoreboard.bedwars_lobby.progress_separator") + suffix(maxExperience));
 				lines.add(progressBar.toString());
 				lines.add("§7 ");
-				lines.add("§fTokens: §2" + tokens);
-				lines.add("§fTickets: §b" + tickets + "§7/75");
+				lines.add(I18n.string("scoreboard.bedwars_lobby.tokens_label") + tokens);
+				lines.add(I18n.string("scoreboard.bedwars_lobby.tickets_label") + tickets + I18n.string("scoreboard.bedwars_lobby.tickets_max"));
 				lines.add("§7 ");
-				lines.add("§fTotal Kills: §a0");
-				lines.add("§fTotal Wins: §a0");
+				lines.add(I18n.string("scoreboard.bedwars_lobby.total_kills_label"));
+				lines.add(I18n.string("scoreboard.bedwars_lobby.total_wins_label"));
 				lines.add("§7 ");
-				lines.add("§ewww.hypixel.net");
+				lines.add(I18n.string("scoreboard.common.footer"));
 
 				if (!scoreboard.hasScoreboard(player)) {
 					scoreboard.createScoreboard(player, getSidebarName(prototypeName));
@@ -93,7 +94,7 @@ public class BedWarsLobbyScoreboard {
 	}
 
 	private static String getSidebarName(int counter) {
-		String baseText = "BED WARS";
+		String baseText = I18n.string("scoreboard.bedwars_lobby.title_base");
 		String[] colors = {"§f§l", "§6§l", "§e§l"};
 		String endColor = "§a§l";
 

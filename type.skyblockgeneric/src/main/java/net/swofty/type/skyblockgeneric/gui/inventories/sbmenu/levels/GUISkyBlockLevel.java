@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelUnlock;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -30,7 +31,7 @@ public class GUISkyBlockLevel extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Level " + levelRequirement.asInt() + " Rewards", InventoryType.CHEST_4_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.levels.level.title", Map.of("level", String.valueOf(levelRequirement.asInt()))), InventoryType.CHEST_4_ROW);
     }
 
     @Override

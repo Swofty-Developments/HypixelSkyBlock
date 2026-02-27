@@ -18,6 +18,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -42,7 +43,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
     );
 
     public GUICoopInviteTarget(CoopDatabase.Coop coop) {
-        super("Co-op Invitation", InventoryType.CHEST_5_ROW);
+        super(I18n.string("gui_coop.target.title"), InventoryType.CHEST_5_ROW);
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
 
@@ -63,9 +64,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStackHead(
                         SkyBlockPlayer.getDisplayName(coop.originator()), PlayerSkin.fromUuid(String.valueOf(coop.originator())), 1,
-                        " ",
-                        "§bCreated the invite!"
-                );
+                        I18n.lore("gui_coop.target.originator_head.lore"));
             }
         });
 
@@ -78,11 +77,10 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    String status = accepted ? I18n.string("gui_coop.sender.accepted_yes") : I18n.string("gui_coop.sender.accepted_no");
                     return ItemStackCreator.getStackHead(
                             displayName, PlayerSkin.fromUuid(String.valueOf(target)), 1,
-                            " ",
-                            "§7Accepted: " + (accepted ? "§aYes" : "§cNot yet")
-                    );
+                            List.of(" ", I18n.string("gui_coop.sender.player_accepted", Map.of("status", status))));
                 }
             });
         }
@@ -93,19 +91,19 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 coop.removeInvite(player.getUuid());
                 coop.save();
-                player.sendMessage("§b[Co-op] §eYou have denied the co-op invite!");
+                player.sendMessage(I18n.string("gui_coop.target.denied_message"));
                 player.closeInventory();
 
                 SkyBlockPlayer target = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
                 if (target != null &&
                         (coop.memberInvites().contains(target.getUuid()) || coop.members().contains(target.getUuid())))
-                    target.sendMessage("§b[Co-op] §e" + player.getUsername() + " §chas denied your co-op invite!");
+                    target.sendMessage(I18n.string("gui_coop.target.denied_notify", Map.of("player_name", player.getUsername())));
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§cDeny Invite", Material.BARRIER, 1);
+                return ItemStackCreator.getStack(I18n.string("gui_coop.target.deny_button"), Material.BARRIER, 1);
             }
         });
 
@@ -144,7 +142,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                     }
                 }
 
-                player.kick("§cYou must reconnect to switch profiles");
+                player.kick(I18n.string("gui_coop.target.reconnect_kick"));
 
                 ProfilesDatabase.collection.insertOne(handler.toProfileDocument());
                 coop.memberProfiles().add(profileId);
@@ -160,37 +158,15 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                 SkyBlockPlayer target = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
                 if (target != null &&
                         (coop.memberInvites().contains(target.getUuid()) || coop.members().contains(target.getUuid())))
-                    target.sendMessage("§b[Co-op] §a" + player.getUsername() + " §ahas accepted your co-op invite!");
+                    target.sendMessage(I18n.string("gui_coop.target.accepted_notify", Map.of("player_name", player.getUsername())));
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aAccept Invite", Material.GREEN_TERRACOTTA, 1,
-                        "§7Creates a NEW §bco-op §7profile on your",
-                        "§7account with the above player.",
-                        " ",
-                        "§7Shared with co-op:",
-                        "§8- §bPrivate Island",
-                        "§8- §bCollections progress",
-                        "§8- §bBanks & Auctions",
-                        " ",
-                        "§7Per-player:",
-                        "§8- §aInventory",
-                        "§8- §aPurse",
-                        "§8- §aStorage",
-                        "§8- §aQuests and Objectives",
-                        "§8- §aPets",
-                        "§7 ",
-                        "§7Uses a profile slot!",
-                        "§7Profiles: §e" + player.getProfiles().getProfiles().size() + "§6/§e4",
-                        " ",
-                        "§eClick to accept!",
-                        " ",
-                        "§4§lWARNING: §cCreation of profiles",
-                        "§cwhich boost other profiles will",
-                        "§cbe considered abusive and",
-                        "§cpunished.");
+                return ItemStackCreator.getStack(I18n.string("gui_coop.target.accept_button"), Material.GREEN_TERRACOTTA, 1,
+                        I18n.lore("gui_coop.target.accept_button.lore", Map.of(
+                                "profile_count", String.valueOf(player.getProfiles().getProfiles().size()))));
             }
         });
     }

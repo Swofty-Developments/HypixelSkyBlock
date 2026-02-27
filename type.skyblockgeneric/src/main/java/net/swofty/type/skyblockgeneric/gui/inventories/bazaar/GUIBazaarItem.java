@@ -10,6 +10,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarCategories;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarConnector;
@@ -31,7 +32,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
     private BazaarConnector.BazaarStatistics currentStats;
 
     public GUIBazaarItem(ItemType itemType) {
-        super(BazaarCategories.getFromItem(itemType).getValue().displayName + " → " + itemType.getDisplayName(), InventoryType.CHEST_4_ROW);
+        super(I18n.string("gui_bazaar.item.title", Map.of("set_name", BazaarCategories.getFromItem(itemType).getValue().displayName, "item_name", itemType.getDisplayName())), InventoryType.CHEST_4_ROW);
         this.itemType = itemType;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
@@ -49,8 +50,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
-                        "§7View your pending Bazaar orders", "§eClick to open");
+                return ItemStackCreator.getStack(I18n.string("gui_bazaar.item.manage_orders_button"), Material.BOOK, 1,
+                        I18n.lore("gui_bazaar.item.manage_orders_button.lore"));
             }
         });
 
@@ -64,8 +65,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStackHead("§6Go Back", "c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7", 1,
-                        "§7To Bazaar");
+                return ItemStackCreator.getStackHead(I18n.string("gui_bazaar.item.go_back_bazaar"), "c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7", 1,
+                        I18n.lore("gui_bazaar.item.go_back_bazaar.lore"));
             }
         });
 
@@ -94,13 +95,13 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (stats.bestAsk() <= 0) {
-                    p.sendMessage("§6[Bazaar] §cNo sell offers available!");
+                    p.sendMessage(I18n.string("gui_bazaar.item.buy_no_offers_message"));
                     return;
                 }
 
                 int maxSpace = player.maxItemFit(itemType);
                 if (maxSpace <= 0) {
-                    p.sendMessage("§6[Bazaar] §cInventory full!");
+                    p.sendMessage(I18n.string("gui_bazaar.item.buy_inventory_full"));
                     return;
                 }
 
@@ -113,13 +114,13 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
                             double totalCost = priceWithFee * amount;
                             if (totalCost > player.getCoins()) {
-                                p.sendMessage("§6[Bazaar] §cNeed " + FORMATTER.format(totalCost) + " coins!");
+                                p.sendMessage(I18n.string("gui_bazaar.item.buy_need_coins", Map.of("amount", FORMATTER.format(totalCost))));
                                 return;
                             }
 
                             player.getBazaarConnector().instantBuy(itemType, amount)
                                     .thenAccept(result -> {
-                                        player.sendMessage("§6[Bazaar] " + (result.success() ? "§a" : "§c") + result.message());
+                                        player.sendMessage(I18n.string("gui_bazaar.item.bazaar_result_prefix") + " " + (result.success() ? "§a" : "§c") + result.message());
                                         if (result.success()) p.closeInventory();
                                     });
                         });
@@ -129,20 +130,20 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
-                lore.add("§8Instant Buy");
+                lore.add(I18n.string("gui_bazaar.item.buy_instantly_subtitle"));
                 lore.add(" ");
 
                 if (stats.bestAsk() <= 0) {
-                    lore.add("§cNo sell offers available");
+                    lore.add(I18n.string("gui_bazaar.item.buy_no_offers"));
                 } else {
                     double priceWithFee = stats.bestAsk() * 1.04;
-                    lore.add("§7Price: §6" + FORMATTER.format(priceWithFee) + " coins §7(+4% fee)");
-                    lore.add("§7Max space: §e" + player.maxItemFit(itemType) + "x");
+                    lore.add(I18n.string("gui_bazaar.item.buy_price", Map.of("price", FORMATTER.format(priceWithFee))));
+                    lore.add(I18n.string("gui_bazaar.item.buy_max_space", Map.of("amount", String.valueOf(player.maxItemFit(itemType)))));
                     lore.add(" ");
-                    lore.add("§eClick to select amount!");
+                    lore.add(I18n.string("gui_bazaar.item.buy_click"));
                 }
 
-                return ItemStackCreator.getStack("§aBuy Instantly", Material.GOLDEN_HORSE_ARMOR, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_bazaar.item.buy_instantly"), Material.GOLDEN_HORSE_ARMOR, 1, lore);
             }
         });
 
@@ -152,12 +153,12 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int have = player.getAmountInInventory(itemType);
                 if (have <= 0) {
-                    p.sendMessage("§6[Bazaar] §cYou don'distance have any " + itemType.getDisplayName() + "!");
+                    p.sendMessage(I18n.string("gui_bazaar.item.sell_no_items", Map.of("item_name", itemType.getDisplayName())));
                     return;
                 }
 
                 if (stats.bestBid() <= 0) {
-                    p.sendMessage("§6[Bazaar] §cNo buy orders available!");
+                    p.sendMessage(I18n.string("gui_bazaar.item.sell_no_orders_message"));
                     return;
                 }
 
@@ -168,7 +169,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
                             player.getBazaarConnector().instantSell(itemType)
                                     .thenAccept(result -> {
-                                        p.sendMessage("§6[Bazaar] " + (result.success() ? "§a" : "§c") + result.message());
+                                        p.sendMessage(I18n.string("gui_bazaar.item.bazaar_result_prefix") + " " + (result.success() ? "§a" : "§c") + result.message());
                                         if (result.success()) p.closeInventory();
                                     });
                         });
@@ -178,23 +179,23 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
-                lore.add("§8Instant Sell");
+                lore.add(I18n.string("gui_bazaar.item.sell_instantly_subtitle"));
                 lore.add(" ");
 
                 int have = player.getAmountInInventory(itemType);
                 if (have <= 0) {
-                    lore.add("§7You have: §c0x");
+                    lore.add(I18n.string("gui_bazaar.item.sell_have_zero"));
                 } else if (stats.bestBid() <= 0) {
-                    lore.add("§7You have: §e" + have + "x");
-                    lore.add("§cNo buy orders available");
+                    lore.add(I18n.string("gui_bazaar.item.sell_have", Map.of("amount", String.valueOf(have))));
+                    lore.add(I18n.string("gui_bazaar.item.sell_no_orders"));
                 } else {
-                    lore.add("§7You have: §e" + have + "x");
-                    lore.add("§7Price: §6" + FORMATTER.format(stats.bestBid()) + " coins");
+                    lore.add(I18n.string("gui_bazaar.item.sell_have", Map.of("amount", String.valueOf(have))));
+                    lore.add(I18n.string("gui_bazaar.item.sell_price", Map.of("price", FORMATTER.format(stats.bestBid()))));
                     lore.add(" ");
-                    lore.add("§eClick to select amount!");
+                    lore.add(I18n.string("gui_bazaar.item.sell_click"));
                 }
 
-                return ItemStackCreator.getStack("§6Sell Instantly", Material.HOPPER, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_bazaar.item.sell_instantly"), Material.HOPPER, 1, lore);
             }
         });
 
@@ -215,23 +216,22 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
                                 double totalCost = price * amount;
                                 if (totalCost > player.getCoins()) {
-                                    p.sendMessage("§6[Bazaar] §cNeed " + FORMATTER.format(totalCost) + " coins!");
+                                    p.sendMessage(I18n.string("gui_bazaar.item.buy_order_need_coins", Map.of("amount", FORMATTER.format(totalCost))));
                                     new GUIBazaarItem(itemType).open(p);
                                     return;
                                 }
 
                                 player.removeCoins(totalCost);
-                                p.sendMessage("§6[Bazaar] §7Escrowing " + FORMATTER.format(totalCost) + " coins...");
+                                p.sendMessage(I18n.string("gui_bazaar.item.buy_order_escrow", Map.of("amount", FORMATTER.format(totalCost))));
 
                                 player.getBazaarConnector().createBuyOrder(itemType, price, amount)
                                         .thenAccept(result -> {
                                             if (result.success()) {
-                                                p.sendMessage("§6[Bazaar] §aBuy order created for " + amount + "x at " +
-                                                        FORMATTER.format(price) + " coins each!");
+                                                p.sendMessage(I18n.string("gui_bazaar.item.buy_order_created", Map.of("amount", String.valueOf(amount), "price", FORMATTER.format(price))));
                                                 p.closeInventory();
                                             } else {
                                                 player.addCoins(totalCost);
-                                                p.sendMessage("§6[Bazaar] §cFailed! Refunded " + FORMATTER.format(totalCost) + " coins.");
+                                                p.sendMessage(I18n.string("gui_bazaar.item.buy_order_failed", Map.of("amount", FORMATTER.format(totalCost))));
                                                 new GUIBazaarItem(itemType).open(p);
                                             }
                                         });
@@ -243,16 +243,16 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
-                lore.add("§8Create Buy Order");
+                lore.add(I18n.string("gui_bazaar.item.create_buy_order_subtitle"));
                 lore.add(" ");
-                lore.add("§7Max space: §e71680x");
+                lore.add(I18n.string("gui_bazaar.item.create_buy_order_max"));
                 if (stats.bestAsk() > 0) {
-                    lore.add("§7Best ask: §6" + FORMATTER.format(stats.bestAsk()) + " coins");
+                    lore.add(I18n.string("gui_bazaar.item.create_buy_order_best_ask", Map.of("price", FORMATTER.format(stats.bestAsk()))));
                 }
                 lore.add(" ");
-                lore.add("§eClick to create order!");
+                lore.add(I18n.string("gui_bazaar.item.create_buy_order_click"));
 
-                return ItemStackCreator.getStack("§aCreate Buy Order", Material.FILLED_MAP, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_bazaar.item.create_buy_order"), Material.FILLED_MAP, 1, lore);
             }
         });
 
@@ -262,7 +262,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int have = player.getAmountInInventory(itemType);
                 if (have <= 0) {
-                    p.sendMessage("§6[Bazaar] §cYou don'distance have any " + itemType.getDisplayName() + "!");
+                    p.sendMessage(I18n.string("gui_bazaar.item.sell_order_no_items", Map.of("item_name", itemType.getDisplayName())));
                     return;
                 }
 
@@ -278,22 +278,21 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
                                 var items = player.takeItem(itemType, amount);
                                 if (items == null) {
-                                    p.sendMessage("§6[Bazaar] §cFailed to remove items!");
+                                    p.sendMessage(I18n.string("gui_bazaar.item.sell_order_remove_fail"));
                                     new GUIBazaarItem(itemType).open(p);
                                     return;
                                 }
 
-                                p.sendMessage("§6[Bazaar] §7Escrowing " + amount + "x " + itemType.getDisplayName() + "...");
+                                p.sendMessage(I18n.string("gui_bazaar.item.sell_order_escrow", Map.of("amount", String.valueOf(amount), "item_name", itemType.getDisplayName())));
 
                                 player.getBazaarConnector().createSellOrder(itemType, price, amount)
                                         .thenAccept(result -> {
                                             if (result.success()) {
-                                                p.sendMessage("§6[Bazaar] §aSell order created for " + amount + "x at " +
-                                                        FORMATTER.format(price) + " coins each!");
+                                                p.sendMessage(I18n.string("gui_bazaar.item.sell_order_created", Map.of("amount", String.valueOf(amount), "price", FORMATTER.format(price))));
                                                 p.closeInventory();
                                             } else {
                                                 player.addAndUpdateItem(items);
-                                                p.sendMessage("§6[Bazaar] §cFailed! Items returned.");
+                                                p.sendMessage(I18n.string("gui_bazaar.item.sell_order_failed"));
                                                 new GUIBazaarItem(itemType).open(p);
                                             }
                                         });
@@ -305,17 +304,17 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 List<String> lore = new ArrayList<>();
-                lore.add("§8Create Sell Order");
+                lore.add(I18n.string("gui_bazaar.item.create_sell_order_subtitle"));
                 lore.add(" ");
                 int have = player.getAmountInInventory(itemType);
-                lore.add("§7You have: §e" + have + "x");
+                lore.add(I18n.string("gui_bazaar.item.create_sell_order_have", Map.of("amount", String.valueOf(have))));
                 if (stats.bestBid() > 0) {
-                    lore.add("§7Best bid: §6" + FORMATTER.format(stats.bestBid()) + " coins");
+                    lore.add(I18n.string("gui_bazaar.item.create_sell_order_best_bid", Map.of("price", FORMATTER.format(stats.bestBid()))));
                 }
                 lore.add(" ");
-                lore.add("§eClick to create order!");
+                lore.add(I18n.string("gui_bazaar.item.create_sell_order_click"));
 
-                return ItemStackCreator.getStack("§6Create Sell Order", Material.MAP, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_bazaar.item.create_sell_order"), Material.MAP, 1, lore);
             }
         });
 

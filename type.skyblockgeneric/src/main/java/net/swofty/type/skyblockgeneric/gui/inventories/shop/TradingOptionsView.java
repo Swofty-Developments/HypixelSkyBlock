@@ -13,6 +13,7 @@ import net.swofty.type.generic.gui.v2.View;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -21,12 +22,13 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public final class TradingOptionsView implements View<TradingOptionsView.State> {
 
     @Override
     public ViewConfiguration<State> configuration() {
-        return new ViewConfiguration<>("Shop Trading Options", InventoryType.CHEST_6_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_shop.trading_options.title"), InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -53,13 +55,13 @@ public final class TradingOptionsView implements View<TradingOptionsView.State> 
                 .stream().map(StringUtility::getTextFromComponent).toList());
 
         lore.add("");
-        lore.add("§7Cost");
+        lore.add(I18n.string("gui_shop.trading_options.cost_label"));
         lore.addAll(totalPrice.getGUIDisplay());
         lore.add("");
-        lore.add("§7Stock");
-        lore.add("§6 " + player.getShoppingData().getStock(item.getItem().toUnderstandable()) + " §7remaining");
+        lore.add(I18n.string("gui_shop.trading_options.stock_label"));
+        lore.add(I18n.string("gui_shop.trading_options.stock_remaining", Map.of("count", String.valueOf(player.getShoppingData().getStock(item.getItem().toUnderstandable())))));
         lore.add("");
-        lore.add("§eClick to purchase!");
+        lore.add(I18n.string("gui_shop.trading_options.click_to_purchase"));
 
         Component baseName = itemStack.build().get(DataComponents.CUSTOM_NAME);
         if (baseName == null) {
@@ -75,13 +77,13 @@ public final class TradingOptionsView implements View<TradingOptionsView.State> 
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
 
         if (!player.getShoppingData().canPurchase(state.item.getItem().toUnderstandable(), amount)) {
-            player.sendMessage("§cYou have reached the maximum amount of items you can buy!");
+            player.sendMessage(I18n.string("gui_shop.trading_options.max_reached"));
             return;
         }
 
         ShopPrice totalPrice = state.stackPrice.multiply(amount);
         if (!totalPrice.canAfford(player)) {
-            player.sendMessage("§cYou don'distance have enough " + state.stackPrice.getNamePlural() + "!");
+            player.sendMessage(I18n.string("gui_shop.trading_options.not_enough", Map.of("currency", state.stackPrice.getNamePlural())));
             return;
         }
 

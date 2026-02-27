@@ -12,6 +12,7 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarCategories;
@@ -39,7 +40,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
     private final BazaarCategories category;
 
     public GUIBazaar(BazaarCategories category) {
-        super("Bazaar → " + StringUtility.toNormalCase(category.name()),
+        super(I18n.string("gui_bazaar.main.title", Map.of("category", StringUtility.toNormalCase(category.name()))),
                 InventoryType.CHEST_6_ROW);
         this.category = category;
 
@@ -56,10 +57,9 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack("§aManage Orders",
+                return ItemStackCreator.getStack(I18n.string("gui_bazaar.main.manage_orders_button"),
                         Material.BOOK, 1,
-                        "§7View your pending Bazaar orders",
-                        "§eClick to open");
+                        I18n.lore("gui_bazaar.main.manage_orders_button.lore"));
             }
         });
     }
@@ -101,10 +101,10 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                     var b = ItemStackCreator.getStack(
                             cat.getColor() + StringUtility.toNormalCase(cat.name()),
                             cat.getDisplayItem(), 1,
-                            "§8Category", " ",
+                            I18n.string("gui_bazaar.main.category_subtitle"), " ",
                             category == cat
-                                    ? "§aCurrently Viewing"
-                                    : "§eClick to view!"
+                                    ? I18n.string("gui_bazaar.main.category_viewing")
+                                    : I18n.string("gui_bazaar.main.category_click")
                     );
                     if (category == cat) b = ItemStackCreator.enchant(b);
                     return b;
@@ -121,7 +121,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack("§7Loading...", Material.GRAY_STAINED_GLASS_PANE, 1);
+                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.main.loading"), Material.GRAY_STAINED_GLASS_PANE, 1);
                 }
             });
         }
@@ -175,7 +175,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
 
                         // Build lore safely
                         List<String> lore = new ArrayList<>();
-                        lore.add("§8" + set.items.size() + " products");
+                        lore.add(I18n.string("gui_bazaar.main.item_set_products", Map.of("count", String.valueOf(set.items.size()))));
                         lore.add(" ");
 
                         // Add price data for each item in the set
@@ -191,7 +191,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                         }
 
                         lore.add(" ");
-                        lore.add("§eClick to view products!");
+                        lore.add(I18n.string("gui_bazaar.main.item_set_click"));
                         slotData.add(new CacheEntry.CachedSlot(slot, set, lore));
                     }
 
@@ -213,9 +213,8 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                                 @Override
                                 public ItemStack.Builder getItem(HypixelPlayer p) {
                                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                                    return ItemStackCreator.getStack("§cError Loading", Material.BARRIER, 1,
-                                            "§7Failed to load bazaar data",
-                                            "§7Please try again later");
+                                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.main.error_loading"), Material.BARRIER, 1,
+                                            I18n.lore("gui_bazaar.main.error_loading.lore"));
                                 }
                             });
                         }
@@ -287,7 +286,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
         SkyBlockPlayer player = (SkyBlockPlayer) p;
         player.getBazaarConnector().isOnline().thenAccept(online -> {
             if (!online) {
-                player.sendMessage("§cThe Bazaar is currently offline!");
+                player.sendMessage(I18n.string("gui_bazaar.main.offline_message"));
                 player.closeInventory();
             } else {
                 player.getBazaarConnector().processAllPendingTransactions();

@@ -173,6 +173,7 @@ public class StringUtility {
 						i++;
 						break;
 					case 't':
+						sb.append('\t');
 						i++;
 						break;
 					case 'n':
@@ -409,7 +410,7 @@ public class StringUtility {
 		}
 		return capitalized.toString().trim();
   }
-  
+
 	public static long parseDuration(String duration) {
 		long totalMillis = 0;
 		Pattern pattern = Pattern.compile("(\\d+)([dhms])");

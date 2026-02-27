@@ -10,14 +10,18 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionStatistics;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.util.Map;
+import static java.util.Map.entry;
+
 public class GUIAuctionHouseStats extends HypixelInventoryGUI {
     public GUIAuctionHouseStats() {
-        super("Auction Stats", InventoryType.CHEST_4_ROW);
+        super(I18n.string("gui_auction.stats.title"), InventoryType.CHEST_4_ROW);
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(31, new GUIAuctionHouse()));
@@ -31,23 +35,23 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
                         DatapointAuctionStatistics.class
                 ).getValue();
 
-                return ItemStackCreator.getStack("§aSeller Stats", Material.PAPER, 1,
-                        "§7Auctions created: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_CREATED),
-                        "§7Auctions completed without bids: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITHOUT_BIDS),
-                        "§7Auctions completed with bids: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITH_BIDS),
-                        " ",
-                        "§7Highest auction held: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.HIGHEST_AUCTION_HELD),
-                        "§7Total coins earned: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_COINS_EARNED),
-                        "§7Coins spent on fees: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COINS_SPENT_ON_FEES),
-                        " ",
-                        "§7Common Sold: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COMMON_SOLD),
-                        "§7Uncommon Sold: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.UNCOMMON_SOLD),
-                        "§7Rare Sold: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.RARE_SOLD),
-                        "§7Epic Sold: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.EPIC_SOLD),
-                        "§7Legendary Sold: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.LEGENDARY_SOLD),
-                        "§7Mythic Sold: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.MYTHIC_SOLD),
-                        "§7Special Sold: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.SPECIAL_SOLD),
-                        "§7Ultimate Sold: §6" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.ULTIMATE_SOLD));
+                return ItemStackCreator.getStack(I18n.string("gui_auction.stats.seller_stats"), Material.PAPER, 1,
+                        I18n.lore("gui_auction.stats.seller_stats.lore", Map.ofEntries(
+                                entry("auctions_created", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_CREATED))),
+                                entry("completed_without_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITHOUT_BIDS))),
+                                entry("completed_with_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITH_BIDS))),
+                                entry("highest_auction", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.HIGHEST_AUCTION_HELD))),
+                                entry("total_earned", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_COINS_EARNED))),
+                                entry("fees_spent", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COINS_SPENT_ON_FEES))),
+                                entry("common_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COMMON_SOLD))),
+                                entry("uncommon_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.UNCOMMON_SOLD))),
+                                entry("rare_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.RARE_SOLD))),
+                                entry("epic_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.EPIC_SOLD))),
+                                entry("legendary_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.LEGENDARY_SOLD))),
+                                entry("mythic_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.MYTHIC_SOLD))),
+                                entry("special_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.SPECIAL_SOLD))),
+                                entry("ultimate_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.ULTIMATE_SOLD)))
+                        )));
             }
         });
         set(new GUIItem(15) {
@@ -59,21 +63,21 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
                         DatapointAuctionStatistics.class
                 ).getValue();
 
-                return ItemStackCreator.getStack("§6Buyer Stats", Material.FILLED_MAP, 1,
-                        "§7Auctions won: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_WON),
-                        "§7Total bids: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_BIDS),
-                        " ",
-                        "§7Highest bid made: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.HIGHEST_BID_MADE),
-                        "§7Total coins spent: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_COINS_SPENT),
-                        " ",
-                        "§7Common Bought: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COMMON_BOUGHT),
-                        "§7Uncommon Bought: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.UNCOMMON_BOUGHT),
-                        "§7Rare Bought: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.RARE_BOUGHT),
-                        "§7Epic Bought: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.EPIC_BOUGHT),
-                        "§7Legendary Bought: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.LEGENDARY_BOUGHT),
-                        "§7Mythic Bought: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.MYTHIC_BOUGHT),
-                        "§7Special Bought: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.SPECIAL_BOUGHT),
-                        "§7Ultimate Bought: §a" + stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.ULTIMATE_BOUGHT));
+                return ItemStackCreator.getStack(I18n.string("gui_auction.stats.buyer_stats"), Material.FILLED_MAP, 1,
+                        I18n.lore("gui_auction.stats.buyer_stats.lore", Map.ofEntries(
+                                entry("auctions_won", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_WON))),
+                                entry("total_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_BIDS))),
+                                entry("highest_bid", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.HIGHEST_BID_MADE))),
+                                entry("total_spent", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_COINS_SPENT))),
+                                entry("common_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COMMON_BOUGHT))),
+                                entry("uncommon_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.UNCOMMON_BOUGHT))),
+                                entry("rare_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.RARE_BOUGHT))),
+                                entry("epic_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.EPIC_BOUGHT))),
+                                entry("legendary_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.LEGENDARY_BOUGHT))),
+                                entry("mythic_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.MYTHIC_BOUGHT))),
+                                entry("special_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.SPECIAL_BOUGHT))),
+                                entry("ultimate_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.ULTIMATE_BOUGHT)))
+                        )));
             }
         });
     }

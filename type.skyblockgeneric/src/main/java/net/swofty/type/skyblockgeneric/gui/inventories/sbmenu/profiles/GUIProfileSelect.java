@@ -16,6 +16,9 @@ import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import net.swofty.type.generic.i18n.I18n;
+
+import java.util.Map;
 import java.util.UUID;
 
 public class GUIProfileSelect extends StatelessView {
@@ -27,7 +30,7 @@ public class GUIProfileSelect extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Profile Management", InventoryType.CHEST_4_ROW);
+        return new ViewConfiguration<>(I18n.string("gui_sbmenu.profiles.select.title"), InventoryType.CHEST_4_ROW);
     }
 
     @Override
@@ -47,15 +50,8 @@ public class GUIProfileSelect extends StatelessView {
                 switchingTo = "Unknown";
             }
 
-            return ItemStackCreator.getStack("§aSwitch to Profile", Material.GRASS_BLOCK, 1,
-                    "§7Teleports you to your island on",
-                    "§7another profile and loads your",
-                    "§7inventory, skills, collections",
-                    "§7and more...",
-                    "",
-                    "§7Current: §e" + currentProfile,
-                    "§7Switching to: §a" + switchingTo,
-                    "", "§eClick to switch");
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.select.switch"), Material.GRASS_BLOCK, 1,
+                    I18n.lore("gui_sbmenu.profiles.select.switch.lore", Map.of("current", currentProfile, "switching_to", switchingTo)));
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             SkyBlockPlayerProfiles profiles = player.getProfiles();
@@ -72,19 +68,13 @@ public class GUIProfileSelect extends StatelessView {
         });
 
         // Delete Profile
-        layout.slot(15, (s, c) -> ItemStackCreator.getStack("§cDelete profile", Material.RED_STAINED_GLASS, 1,
-                        "§7Clear this profile slot by",
-                        "§7deleting the profile forever.",
-                        "",
-                        "§cWarning!",
-                        "§fYou cannot revert this actions!",
-                        "",
-                        "§eClick to continue!"),
+        layout.slot(15, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.select.delete"), Material.RED_STAINED_GLASS, 1,
+                        I18n.lore("gui_sbmenu.profiles.select.delete.lore")),
                 (click, c) -> {
                     SkyBlockPlayer player = (SkyBlockPlayer) c.player();
                     if (CoopDatabase.getFromMemberProfile(profileUuid) != null) {
-                        player.sendMessage("§cYou cannot delete a profile that is in a coop!");
-                        player.sendMessage("§eInstead run §a/coopleave §eto leave your coop.");
+                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.cannot_delete_coop"));
+                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.coop_leave"));
                         return;
                     }
 
@@ -93,11 +83,10 @@ public class GUIProfileSelect extends StatelessView {
 
                     try {
                         SkyBlockDataHandler handler = SkyBlockDataHandler.createFromProfileOnly(new ProfilesDatabase(profileUuid.toString()).getDocument());
-                        player.sendMessage("§aDone! Your §e"
-                                + handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
-                                + " §aprofile was deleted!");
+                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.deleted", Map.of("profile_name",
+                                handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue())));
                     } catch (Exception e) {
-                        player.sendMessage("§aDone! Your profile was deleted!");
+                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.deleted_generic"));
                     }
 
                     ProfilesDatabase.collection.deleteOne(Filters.eq("_id", profileUuid.toString()));
