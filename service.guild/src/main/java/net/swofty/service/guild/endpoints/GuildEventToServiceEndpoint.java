@@ -8,8 +8,8 @@ import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.guild.GuildCache;
 
 public class GuildEventToServiceEndpoint implements ServiceEndpoint<
-        SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage,
-        SendGuildEventToServiceProtocolObject.SendGuildEventToServiceResponse> {
+    SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage,
+    SendGuildEventToServiceProtocolObject.SendGuildEventToServiceResponse> {
 
     @Override
     public SendGuildEventToServiceProtocolObject associatedProtocolObject() {
@@ -18,8 +18,8 @@ public class GuildEventToServiceEndpoint implements ServiceEndpoint<
 
     @Override
     public SendGuildEventToServiceProtocolObject.SendGuildEventToServiceResponse onMessage(
-            ServiceProxyRequest message,
-            SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage messageObject) {
+        ServiceProxyRequest message,
+        SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage messageObject) {
         GuildEvent event = messageObject.event();
 
         switch (event) {
@@ -37,7 +37,8 @@ public class GuildEventToServiceEndpoint implements ServiceEndpoint<
             case GuildMuteRequestEvent e -> GuildCache.handleMuteRequest(e);
             case GuildUnmuteRequestEvent e -> GuildCache.handleUnmuteRequest(e);
             case GuildSetRankRequestEvent e -> GuildCache.handleSetRankRequest(e);
-            default -> throw new IllegalArgumentException("Unknown guild event type: " + event.getClass().getSimpleName());
+            default ->
+                throw new IllegalArgumentException("Unknown guild event type: " + event.getClass().getSimpleName());
         }
 
         return new SendGuildEventToServiceProtocolObject.SendGuildEventToServiceResponse(true);

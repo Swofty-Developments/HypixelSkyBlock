@@ -52,10 +52,10 @@ public record GuildDatabase(String id) implements MongoDB {
 
         if (existing != null) {
             guildCollection.updateOne(query,
-                    Updates.combine(
-                            Updates.set("data", serialized),
-                            Updates.set("name", guild.getName().toLowerCase())
-                    ));
+                Updates.combine(
+                    Updates.set("data", serialized),
+                    Updates.set("name", guild.getName().toLowerCase())
+                ));
         } else {
             Document doc = new Document("_id", guildId);
             doc.append("data", serialized);

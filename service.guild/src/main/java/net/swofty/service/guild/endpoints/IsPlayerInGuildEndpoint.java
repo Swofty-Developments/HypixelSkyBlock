@@ -6,8 +6,8 @@ import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.guild.GuildCache;
 
 public class IsPlayerInGuildEndpoint implements ServiceEndpoint<
-        IsPlayerInGuildProtocolObject.IsPlayerInGuildMessage,
-        IsPlayerInGuildProtocolObject.IsPlayerInGuildResponse> {
+    IsPlayerInGuildProtocolObject.IsPlayerInGuildMessage,
+    IsPlayerInGuildProtocolObject.IsPlayerInGuildResponse> {
 
     @Override
     public IsPlayerInGuildProtocolObject associatedProtocolObject() {
@@ -16,10 +16,10 @@ public class IsPlayerInGuildEndpoint implements ServiceEndpoint<
 
     @Override
     public IsPlayerInGuildProtocolObject.IsPlayerInGuildResponse onMessage(
-            ServiceProxyRequest message,
-            IsPlayerInGuildProtocolObject.IsPlayerInGuildMessage messageObject) {
+        ServiceProxyRequest message,
+        IsPlayerInGuildProtocolObject.IsPlayerInGuildMessage messageObject) {
         return new IsPlayerInGuildProtocolObject.IsPlayerInGuildResponse(
-                GuildCache.isInGuild(messageObject.playerUUID())
+            GuildCache.isInGuild(messageObject.playerUUID())
         );
     }
 }

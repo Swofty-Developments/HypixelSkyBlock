@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GuildService implements SkyBlockService {
 
-    public static void main(String[] args) {
+    static void main() {
         String mongoUri = ConfigProvider.settings().getMongodb();
         new GuildDatabase(null).connect(mongoUri);
 

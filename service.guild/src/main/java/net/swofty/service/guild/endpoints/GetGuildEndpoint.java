@@ -6,8 +6,8 @@ import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.guild.GuildCache;
 
 public class GetGuildEndpoint implements ServiceEndpoint<
-        GetGuildProtocolObject.GetGuildMessage,
-        GetGuildProtocolObject.GetGuildResponse> {
+    GetGuildProtocolObject.GetGuildMessage,
+    GetGuildProtocolObject.GetGuildResponse> {
 
     @Override
     public GetGuildProtocolObject associatedProtocolObject() {
@@ -16,10 +16,10 @@ public class GetGuildEndpoint implements ServiceEndpoint<
 
     @Override
     public GetGuildProtocolObject.GetGuildResponse onMessage(
-            ServiceProxyRequest message,
-            GetGuildProtocolObject.GetGuildMessage messageObject) {
+        ServiceProxyRequest message,
+        GetGuildProtocolObject.GetGuildMessage messageObject) {
         return new GetGuildProtocolObject.GetGuildResponse(
-                GuildCache.getGuildFromPlayer(messageObject.memberUUID())
+            GuildCache.getGuildFromPlayer(messageObject.memberUUID())
         );
     }
 }

@@ -20,10 +20,10 @@ import java.util.concurrent.TimeUnit;
 public class GUIGuildMembers extends PaginatedView<GuildMember, GUIGuildMembers.MembersState> {
 
     private static final int[] MEMBER_SLOTS = {
-            10, 11, 12, 13, 14, 15, 16,
-            19, 20, 21, 22, 23, 24, 25,
-            28, 29, 30, 31, 32, 33, 34,
-            37, 38, 39, 40, 41, 42, 43
+        10, 11, 12, 13, 14, 15, 16,
+        19, 20, 21, 22, 23, 24, 25,
+        28, 29, 30, 31, 32, 33, 34,
+        37, 38, 39, 40, 41, 42, 43
     };
 
     @Override
@@ -49,10 +49,10 @@ public class GUIGuildMembers extends PaginatedView<GuildMember, GUIGuildMembers.
     @Override
     protected void layoutCustom(ViewLayout<MembersState> layout, MembersState state, ViewContext ctx) {
         layout.slot(49, ItemStackCreator.getStack(
-                "§aGo Back",
-                Material.ARROW,
-                1,
-                "§7To Guild"
+            "§aGo Back",
+            Material.ARROW,
+            1,
+            "§7To Guild"
         ), (click, viewCtx) -> viewCtx.navigator().pop());
     }
 
@@ -62,13 +62,13 @@ public class GUIGuildMembers extends PaginatedView<GuildMember, GUIGuildMembers.
         NumberFormat nf = NumberFormat.getInstance();
 
         return ItemStackCreator.getStack(
-                displayName,
-                Material.PLAYER_HEAD,
-                1,
-                "§7Guild Rank: §b" + member.getRankName(),
-                "§7Member since: §b" + formatDuration(System.currentTimeMillis() - member.getJoinedAt()),
-                "§7Weekly GEXP: §6" + nf.format(member.getWeeklyGexp()),
-                "§7Total GEXP: §6" + nf.format(member.getTotalGexp())
+            displayName,
+            Material.PLAYER_HEAD,
+            1,
+            "§7Guild Rank: §b" + member.getRankName(),
+            "§7Member since: §b" + formatDuration(System.currentTimeMillis() - member.getJoinedAt()),
+            "§7Weekly GEXP: §6" + nf.format(member.getWeeklyGexp()),
+            "§7Total GEXP: §6" + nf.format(member.getTotalGexp())
         );
     }
 

@@ -21,9 +21,9 @@ import java.util.concurrent.TimeUnit;
 
 public class GuildCache {
     private static final Cache<UUID, GuildData> guildCache = Caffeine.newBuilder()
-            .maximumSize(10_000)
-            .expireAfterAccess(30, TimeUnit.MINUTES)
-            .build();
+        .maximumSize(10_000)
+        .expireAfterAccess(30, TimeUnit.MINUTES)
+        .build();
 
     private static final Map<UUID, PendingGuildInvite> pendingInvites = new ConcurrentHashMap<>();
     private static final Map<UUID, Long> lastChatTimestamps = new ConcurrentHashMap<>();
@@ -650,5 +650,6 @@ public class GuildCache {
         GuildDatabase.saveGuild(guild);
     }
 
-    public record PendingGuildInvite(UUID guildId, UUID inviter, UUID invitee) { }
+    public record PendingGuildInvite(UUID guildId, UUID inviter, UUID invitee) {
+    }
 }
