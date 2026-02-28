@@ -9,7 +9,11 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.Layouts;
+import net.swofty.type.generic.gui.v2.PaginatedView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -70,8 +74,7 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
 
     @Override
     protected void layoutBackground(ViewLayout<CreativeState> layout, CreativeState state, ViewContext ctx) {
-        Components.fill(layout);
-        layout.filler(Layouts.border(0, 53), ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
+        layout.filler(Layouts.border(0, 53), Components.FILLER);
     }
 
     @Override
