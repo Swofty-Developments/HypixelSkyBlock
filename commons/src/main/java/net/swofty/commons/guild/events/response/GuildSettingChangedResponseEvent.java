@@ -1,5 +1,6 @@
 package net.swofty.commons.guild.events.response;
 
+import lombok.Getter;
 import net.swofty.commons.guild.GuildData;
 import net.swofty.commons.guild.GuildResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.UUID;
 
+@Getter
 public class GuildSettingChangedResponseEvent extends GuildResponseEvent {
     private final UUID changer;
     private final String setting;
@@ -18,10 +20,6 @@ public class GuildSettingChangedResponseEvent extends GuildResponseEvent {
         this.setting = setting;
         this.value = value;
     }
-
-    public UUID getChanger() { return changer; }
-    public String getSetting() { return setting; }
-    public String getValue() { return value; }
 
     @Override
     public Serializer<GuildSettingChangedResponseEvent> getSerializer() {

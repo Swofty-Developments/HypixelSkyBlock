@@ -1,5 +1,6 @@
 package net.swofty.commons.guild.events.response;
 
+import lombok.Getter;
 import net.swofty.commons.guild.GuildData;
 import net.swofty.commons.guild.GuildResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
 public class GuildMemberKickedResponseEvent extends GuildResponseEvent {
     private final UUID kicker;
     private final UUID kicked;
@@ -19,10 +21,6 @@ public class GuildMemberKickedResponseEvent extends GuildResponseEvent {
         this.kicked = kicked;
         this.reason = reason;
     }
-
-    public UUID getKicker() { return kicker; }
-    public UUID getKicked() { return kicked; }
-    public String getReason() { return reason; }
 
     @Override
     public List<UUID> getParticipants() {

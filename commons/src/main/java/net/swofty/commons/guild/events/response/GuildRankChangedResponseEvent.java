@@ -1,5 +1,6 @@
 package net.swofty.commons.guild.events.response;
 
+import lombok.Getter;
 import net.swofty.commons.guild.GuildData;
 import net.swofty.commons.guild.GuildResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.UUID;
 
+@Getter
 public class GuildRankChangedResponseEvent extends GuildResponseEvent {
     private final UUID changer;
     private final UUID target;
@@ -20,11 +22,6 @@ public class GuildRankChangedResponseEvent extends GuildResponseEvent {
         this.fromRank = fromRank;
         this.toRank = toRank;
     }
-
-    public UUID getChanger() { return changer; }
-    public UUID getTarget() { return target; }
-    public String getFromRank() { return fromRank; }
-    public String getToRank() { return toRank; }
 
     @Override
     public Serializer<GuildRankChangedResponseEvent> getSerializer() {

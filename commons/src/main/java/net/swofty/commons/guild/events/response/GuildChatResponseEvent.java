@@ -1,5 +1,6 @@
 package net.swofty.commons.guild.events.response;
 
+import lombok.Getter;
 import net.swofty.commons.guild.GuildData;
 import net.swofty.commons.guild.GuildResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.UUID;
 
+@Getter
 public class GuildChatResponseEvent extends GuildResponseEvent {
     private final UUID sender;
     private final String message;
@@ -18,10 +20,6 @@ public class GuildChatResponseEvent extends GuildResponseEvent {
         this.message = message;
         this.officerChat = officerChat;
     }
-
-    public UUID getSender() { return sender; }
-    public String getMessage() { return message; }
-    public boolean isOfficerChat() { return officerChat; }
 
     @Override
     public Serializer<GuildChatResponseEvent> getSerializer() {

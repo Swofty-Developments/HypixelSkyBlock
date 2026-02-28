@@ -1,5 +1,6 @@
 package net.swofty.commons.guild.events.response;
 
+import lombok.Getter;
 import net.swofty.commons.guild.GuildData;
 import net.swofty.commons.guild.GuildResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
 public class GuildMemberLeftResponseEvent extends GuildResponseEvent {
     private final UUID leaver;
 
@@ -15,8 +17,6 @@ public class GuildMemberLeftResponseEvent extends GuildResponseEvent {
         super(guild);
         this.leaver = leaver;
     }
-
-    public UUID getLeaver() { return leaver; }
 
     @Override
     public List<UUID> getParticipants() {

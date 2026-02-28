@@ -1,5 +1,6 @@
 package net.swofty.commons.guild.events.response;
 
+import lombok.Getter;
 import net.swofty.commons.guild.GuildData;
 import net.swofty.commons.guild.GuildResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.UUID;
 
+@Getter
 public class GuildMuteChangedResponseEvent extends GuildResponseEvent {
     private final UUID muter;
     private final String target;
@@ -20,11 +22,6 @@ public class GuildMuteChangedResponseEvent extends GuildResponseEvent {
         this.duration = duration;
         this.unmute = unmute;
     }
-
-    public UUID getMuter() { return muter; }
-    public String getTarget() { return target; }
-    public long getDuration() { return duration; }
-    public boolean isUnmute() { return unmute; }
 
     @Override
     public Serializer<GuildMuteChangedResponseEvent> getSerializer() {

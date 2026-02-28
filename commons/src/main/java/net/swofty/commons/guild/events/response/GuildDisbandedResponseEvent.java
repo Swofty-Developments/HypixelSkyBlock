@@ -1,5 +1,6 @@
 package net.swofty.commons.guild.events.response;
 
+import lombok.Getter;
 import net.swofty.commons.guild.GuildData;
 import net.swofty.commons.guild.GuildResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.UUID;
 
+@Getter
 public class GuildDisbandedResponseEvent extends GuildResponseEvent {
     private final UUID disbander;
 
@@ -14,8 +16,6 @@ public class GuildDisbandedResponseEvent extends GuildResponseEvent {
         super(guild);
         this.disbander = disbander;
     }
-
-    public UUID getDisbander() { return disbander; }
 
     @Override
     public Serializer<GuildDisbandedResponseEvent> getSerializer() {
