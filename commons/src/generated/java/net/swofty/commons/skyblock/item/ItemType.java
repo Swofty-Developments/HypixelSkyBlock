@@ -1,8 +1,6 @@
 // AUTO-GENERATED FILE. DO NOT EDIT.
 package net.swofty.commons.skyblock.item;
 
-import java.lang.Exception;
-import java.lang.String;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
@@ -876,15 +874,15 @@ public enum ItemType {
 
   DIAMOND_BLOCK(Material.DIAMOND_BLOCK, Rarity.COMMON),
 
-  DIAMOND_BOOTS(Material.DIAMOND_BOOTS, Rarity.RARE),
+  DIAMOND_BOOTS(Material.DIAMOND_BOOTS, Rarity.COMMON),
 
-  DIAMOND_CHESTPLATE(Material.DIAMOND_CHESTPLATE, Rarity.RARE),
+  DIAMOND_CHESTPLATE(Material.DIAMOND_CHESTPLATE, Rarity.COMMON),
 
-  DIAMOND_HELMET(Material.DIAMOND_HELMET, Rarity.RARE),
+  DIAMOND_HELMET(Material.DIAMOND_HELMET, Rarity.COMMON),
 
   DIAMOND_HOE(Material.DIAMOND_HOE, Rarity.COMMON),
 
-  DIAMOND_LEGGINGS(Material.DIAMOND_LEGGINGS, Rarity.RARE),
+  DIAMOND_LEGGINGS(Material.DIAMOND_LEGGINGS, Rarity.COMMON),
 
   DIAMOND_MAGMAFISH(Material.PLAYER_HEAD, Rarity.COMMON),
 

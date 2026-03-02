@@ -1,7 +1,5 @@
 package net.swofty.type.bedwarslobby.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
@@ -9,12 +7,11 @@ import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCDream extends HypixelNPC {
 	private static List<UnderstandableProxyServer> cacheServers = new ArrayList<>();
@@ -71,7 +68,6 @@ public class NPCDream extends HypixelNPC {
 	@Override
 	public void onClick(NPCInteractEvent event) {
 		event.player().sendMessage("§7You can dream about this :)");
-		event.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+		event.player().notImplemented();
 	}
 }

@@ -1,7 +1,5 @@
 package net.swofty.type.bedwarslobby.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
@@ -44,7 +42,6 @@ public class NPCDoormanDave extends HypixelNPC {
 
 	@Override
 	public void onClick(NPCInteractEvent event) {
-		event.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+		event.player().notImplemented();
 	}
 }
