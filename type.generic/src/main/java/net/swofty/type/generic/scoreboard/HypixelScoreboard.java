@@ -4,7 +4,11 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class HypixelScoreboard {
     private final Map<UUID, Sidebar> sidebarCache = new HashMap<>();
@@ -54,9 +58,10 @@ public class HypixelScoreboard {
 
         for (int i = oldCount; i < newCount; i++) {
             sidebar.createLine(new Sidebar.ScoreboardLine(
-                    lineId(i),
-                    Component.text(lines.get(i)),
-                    newCount - 1 - i
+                lineId(i),
+                Component.text(lines.get(i)),
+                newCount - 1 - i,
+                Sidebar.NumberFormat.blank()
             ));
         }
 

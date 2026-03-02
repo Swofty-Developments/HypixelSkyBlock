@@ -1,6 +1,7 @@
 package net.swofty.type.skywarslobby.soulwell;
 
 import net.kyori.adventure.text.Component;
+import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 /**
@@ -24,7 +25,7 @@ public class SoulWellMessages {
         player.sendMessage(Component.empty());
 
         // Centered purple upgrade name with level
-        String upgradeName = "§5§l" + upgrade.name().toUpperCase() + " " + toRoman(newLevel);
+        String upgradeName = "§5§l" + upgrade.name().toUpperCase() + " " + StringUtility.getAsRomanNumeral(newLevel);
         player.sendMessage(Component.text(centerMessage(upgradeName)));
 
         // Centered white description
@@ -139,22 +140,4 @@ public class SoulWellMessages {
         return width;
     }
 
-    /**
-     * Convert a number to Roman numerals
-     */
-    public static String toRoman(int number) {
-        if (number <= 0) return "";
-
-        String[] romanNumerals = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
-        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < values.length; i++) {
-            while (number >= values[i]) {
-                number -= values[i];
-                result.append(romanNumerals[i]);
-            }
-        }
-        return result.toString();
-    }
 }

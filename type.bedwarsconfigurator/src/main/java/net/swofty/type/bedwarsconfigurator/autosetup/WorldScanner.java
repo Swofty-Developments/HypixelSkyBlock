@@ -6,12 +6,16 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.PitchYawPosition;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.Position;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.mc.HypixelPosition;
 import org.tinylog.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class WorldScanner {
@@ -67,12 +71,12 @@ public class WorldScanner {
                 teamConfig.setBedFeet(bed.feet);
                 teamConfig.setBedHead(bed.head);
 
-                Position spawn = findSpawnNearBed(bed);
+                HypixelPosition spawn = findSpawnNearBed(bed);
                 if (spawn != null) {
-                    teamConfig.setSpawn(new PitchYawPosition(spawn.x(), spawn.y(), spawn.z(), 0, calculateYawTowardsBed(spawn, bed)));
+                    teamConfig.setSpawn(new HypixelPosition(spawn.x(), spawn.y(), spawn.z(), 0, calculateYawTowardsBed(spawn, bed)));
                 }
 
-                Position generator = findTeamGenerator(bed, 20);
+                HypixelPosition generator = findTeamGenerator(bed, 20);
                 if (generator != null) {
                     teamConfig.setGenerator(generator);
                 }
@@ -84,13 +88,13 @@ public class WorldScanner {
         }
 
         // Find diamond generators
-        List<Position> diamondGens = findGlobalGenerators(Block.DIAMOND_BLOCK);
+        List<HypixelPosition> diamondGens = findGlobalGenerators(Block.DIAMOND_BLOCK);
         session.getDiamondGenerators().clear();
         session.getDiamondGenerators().addAll(diamondGens);
         result.addMessage("Found " + diamondGens.size() + " diamond generators");
 
         // Find emerald generators
-        List<Position> emeraldGens = findGlobalGenerators(Block.EMERALD_BLOCK);
+        List<HypixelPosition> emeraldGens = findGlobalGenerators(Block.EMERALD_BLOCK);
         session.getEmeraldGenerators().clear();
         session.getEmeraldGenerators().addAll(emeraldGens);
         result.addMessage("Found " + emeraldGens.size() + " emerald generators");
@@ -126,14 +130,14 @@ public class WorldScanner {
                             facing = "south"; // Default facing if not found
                         }
 
-                        // Calculate head position based on facing
-                        Point headPos = calculateHeadPosition(x, y, z, facing);
+                        // Calculate head HypixelPosition based on facing
+                        Point headPos = calculateHeadHypixelPosition(x, y, z, facing);
 
                         if (!processedHeads.contains(headPos)) {
                             processedHeads.add(headPos);
                             beds.add(new BedLocation(
-                                    new Position(x, y, z),
-                                    new Position(headPos.x(), headPos.y(), headPos.z()),
+                                    new HypixelPosition(x, y, z),
+                                    new HypixelPosition(headPos.x(), headPos.y(), headPos.z()),
                                     facing
                             ));
                         }
@@ -146,7 +150,7 @@ public class WorldScanner {
         return beds;
     }
 
-    private Point calculateHeadPosition(int footX, int footY, int footZ, String facing) {
+    private Point calculateHeadHypixelPosition(int footX, int footY, int footZ, String facing) {
         return switch (facing) {
             case "north" -> Pos.ZERO.add(footX, footY, footZ - 1);
             case "south" -> Pos.ZERO.add(footX, footY, footZ + 1);
@@ -199,7 +203,7 @@ public class WorldScanner {
     }
 
     // suitable area around the bed for placeholder
-    private Position findSpawnNearBed(BedLocation bed) {
+    private HypixelPosition findSpawnNearBed(BedLocation bed) {
         int[][] offsets = {{0, 0, 2}, {0, 0, -2}, {2, 0, 0}, {-2, 0, 0},
                 {0, 0, 3}, {0, 0, -3}, {3, 0, 0}, {-3, 0, 0}};
 
@@ -217,20 +221,20 @@ public class WorldScanner {
             Block head = instance.getBlock(x, y + 1, z);
 
             if (ground.isSolid() && feet.isAir() && head.isAir()) {
-                return new Position(x + 0.5, y, z + 0.5);
+                return new HypixelPosition(x + 0.5, y, z + 0.5);
             }
         }
 
-        return new Position(bed.feet.x() + 0.5, bed.feet.y(), bed.feet.z() + 2.5);
+        return new HypixelPosition(bed.feet.x() + 0.5, bed.feet.y(), bed.feet.z() + 2.5);
     }
 
-    private float calculateYawTowardsBed(Position spawn, BedLocation bed) {
+    private float calculateYawTowardsBed(HypixelPosition spawn, BedLocation bed) {
         double dx = bed.feet.x() - spawn.x();
         double dz = bed.feet.z() - spawn.z();
         return (float) (Math.toDegrees(Math.atan2(-dx, dz)));
     }
 
-    private Position findTeamGenerator(BedLocation bed, int radius) {
+    private HypixelPosition findTeamGenerator(BedLocation bed, int radius) {
         int centerX = (int) bed.feet.x();
         int centerY = (int) bed.feet.y();
         int centerZ = (int) bed.feet.z();
@@ -239,7 +243,7 @@ public class WorldScanner {
             for (int y = centerY - 5; y <= centerY + 5; y++) {
                 for (int z = centerZ - radius; z <= centerZ + radius; z++) {
                     if (isSlabPlatform(x, y, z)) {
-                        return new Position(x + 1.5, y + 0.5, z + 0.5);
+                        return new HypixelPosition(x + 1.5, y + 0.5, z + 0.5);
                     }
                 }
             }
@@ -277,8 +281,8 @@ public class WorldScanner {
         return block.name().contains("slab");
     }
 
-    public List<Position> findGlobalGenerators(Block centerBlock) {
-        List<Position> generators = new ArrayList<>();
+    public List<HypixelPosition> findGlobalGenerators(Block centerBlock) {
+        List<HypixelPosition> generators = new ArrayList<>();
 
         // Normalize bounds to handle cases where min > max
         int minX = Math.min(session.getMinX().intValue(), session.getMaxX().intValue());
@@ -295,7 +299,7 @@ public class WorldScanner {
 
                     if (block.compare(centerBlock)) {
                         if (hasStairPattern(x, y, z)) {
-                            generators.add(new Position(x + 0.5, y + 1, z + 0.5));
+                            generators.add(new HypixelPosition(x + 0.5, y + 1, z + 0.5));
                         }
                     }
                 }
@@ -324,7 +328,7 @@ public class WorldScanner {
         return stairCount >= 4; // At least 4 stairs (corners or sides)
     }
 
-    public record BedLocation(Position feet, Position head, String facing) {
+    public record BedLocation(HypixelPosition feet, HypixelPosition head, String facing) {
     }
 
     @Getter

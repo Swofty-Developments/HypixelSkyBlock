@@ -9,6 +9,9 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.Rarity;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
@@ -25,9 +28,6 @@ import net.swofty.type.skyblockgeneric.potion.PotionEffectType;
 import net.swofty.type.skyblockgeneric.potion.PotionModifier;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.commons.skyblock.item.Rarity;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 
 import java.util.Map;
 
@@ -397,7 +397,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
             }
             case SPLASH -> {
                 isSplash = true;
-                // Enchanted gunpowder preserves duration, regular gunpowder doesn't
+                // Enchanted gunpowder preserves duration, regular gunpowder doesn'distance
                 if (modifier == PotionModifier.GUNPOWDER) {
                     isExtended = false; // This will halve duration when calculating
                 }

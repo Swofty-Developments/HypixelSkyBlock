@@ -13,17 +13,20 @@ import net.swofty.commons.party.events.response.*;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class RedisBedWarsGamePropagatePartyEvent implements ServiceToClient {
@@ -75,7 +78,7 @@ public class RedisBedWarsGamePropagatePartyEvent implements ServiceToClient {
         }
 
         // Warper IS on this game server - check if they're in a game
-        Game warperGame = warper.getGame();
+        BedWarsGame warperGame = warper.getGame();
 
         if (warperGame == null) {
             // Warper is on this server but not in a game - handle normally

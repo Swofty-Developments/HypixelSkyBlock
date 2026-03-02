@@ -1,9 +1,10 @@
 package net.swofty.type.bedwarslobby.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.VersionConst;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.type.bedwarslobby.gui.GUIPlay;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
@@ -18,14 +19,14 @@ public class NPCDoubles extends HypixelNPC {
 			public String[] holograms(HypixelPlayer player) {
 				int amountOnline = GameCountCache.getPlayerCount(
 						ServerType.BEDWARS_GAME,
-						BedwarsGameType.DOUBLES.name()
+						BedWarsGameType.DOUBLES.name()
 				);
 
-				String commmaified = StringUtility.commaify(amountOnline);
+				String commaified = StringUtility.commaify(amountOnline);
 				return new String[]{
 						"§e§lCLICK TO PLAY",
-						"§bDoubles §7[v1.9]",
-						"§e" + commmaified + " Players",
+						"§bDoubles §7[v" + VersionConst.BED_WARS_VERSION + "]",
+						"§e" + commaified + " Players",
 				};
 			}
 
@@ -41,7 +42,7 @@ public class NPCDoubles extends HypixelNPC {
 
 			@Override
 			public Pos position(HypixelPlayer player) {
-				return new Pos(-3.5, 68, -8.5, 90, 0);
+				return new Pos(-3.5, 68, -11.5, 90, 0);
 			}
 
 			@Override
@@ -53,6 +54,6 @@ public class NPCDoubles extends HypixelNPC {
 
 	@Override
 	public void onClick(NPCInteractEvent e) {
-		new GUIPlay(BedwarsGameType.DOUBLES).open(e.player());
+		new GUIPlay(BedWarsGameType.DOUBLES).open(e.player());
 	}
 }

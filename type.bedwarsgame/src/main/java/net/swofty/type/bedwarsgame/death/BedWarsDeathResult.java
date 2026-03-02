@@ -7,36 +7,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public record BedWarsDeathResult(
-        @NotNull BedWarsDeathType deathType,
-        @NotNull BedWarsPlayer victim,
-        @Nullable BedWarsPlayer killer,
-        @Nullable BedWarsPlayer assistPlayer,
-        @Nullable Entity attackerEntity,
-        @Nullable Material weaponUsed,
-        boolean isFinalKill
+    @NotNull BedWarsDeathType deathType,
+    @NotNull BedWarsPlayer victim,
+    @Nullable BedWarsPlayer killer,
+    @Nullable BedWarsPlayer assistPlayer,
+    @Nullable Entity attackerEntity,
+    @Nullable Material weaponUsed,
+    boolean isFinalKill
 ) {
     @Nullable
     public BedWarsPlayer getKillCreditPlayer() {
         return killer != null ? killer : assistPlayer;
     }
 
-    public boolean hasPlayerInvolvement() {
-        return killer != null || assistPlayer != null;
-    }
-
-    public boolean isDirectKill() {
-        return killer != null && assistPlayer == null;
-    }
-
-    public boolean isAssistedKill() {
-        return assistPlayer != null && killer == null;
-    }
-
-    public boolean wasKilledWith(Material material) {
-        return weaponUsed != null && weaponUsed == material;
-    }
-
-    public static class Builder {
+    public static final class Builder {
         private BedWarsDeathType deathType = BedWarsDeathType.GENERIC;
         private BedWarsPlayer victim;
         private BedWarsPlayer killer;
@@ -84,6 +68,30 @@ public record BedWarsDeathResult(
             if (victim == null) {
                 throw new IllegalStateException("Victim must be set");
             }
+
+            switch (deathType) {
+                case VOID_ASSISTED, GENERIC_ASSISTED -> {
+                    if (assistPlayer == null && killer == null) {
+                        throw new IllegalStateException(deathType + " requires a credited player (assistPlayer or killer)");
+                    }
+                }
+                case BOW -> {
+                    if (killer == null && assistPlayer == null) {
+                        throw new IllegalStateException("BOW requires a credited player (killer or assistPlayer)");
+                    }
+                }
+                case ENTITY -> {
+                    if (attackerEntity == null) {
+                        throw new IllegalStateException("ENTITY requires attackerEntity");
+                    }
+                    if (killer == null) {
+                        throw new IllegalStateException("ENTITY requires killer");
+                    }
+                }
+                case VOID, GENERIC -> {
+                }
+            }
+
             return new BedWarsDeathResult(deathType, victim, killer, assistPlayer, attackerEntity, weaponUsed, isFinalKill);
         }
     }
@@ -92,4 +100,3 @@ public record BedWarsDeathResult(
         return new Builder();
     }
 }
-

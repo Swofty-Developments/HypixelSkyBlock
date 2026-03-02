@@ -5,10 +5,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +53,7 @@ public class NPCOption {
 		player.sendMessage(optionMessage);
 		options.put(player, new OptionData(id, message));
 
-		MathUtility.delay(
+		ScheduleUtility.delay(
 				() -> options.remove(player),
 				20 * 60 * 5 // 5 minutes
 		);

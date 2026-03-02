@@ -1,10 +1,5 @@
 package net.swofty.pvp.feature.knockback;
 
-import net.swofty.pvp.events.EntityKnockbackEvent;
-import net.swofty.pvp.feature.FeatureType;
-import net.swofty.pvp.feature.config.DefinedFeature;
-import net.swofty.pvp.feature.config.FeatureConfiguration;
-import net.swofty.pvp.player.CombatPlayer;
 import net.minestom.server.ServerFlag;
 import net.minestom.server.collision.Aerodynamics;
 import net.minestom.server.coordinate.Vec;
@@ -12,6 +7,11 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.block.Block;
+import net.swofty.pvp.events.EntityKnockbackEvent;
+import net.swofty.pvp.feature.FeatureType;
+import net.swofty.pvp.feature.config.DefinedFeature;
+import net.swofty.pvp.feature.config.FeatureConfiguration;
+import net.swofty.pvp.player.CombatPlayer;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -42,26 +42,26 @@ public class FairKnockbackFeature extends VanillaKnockbackFeature {
 			FeatureType.KNOCKBACK, configuration -> new FairKnockbackFeature(configuration, true),
 			FeatureType.VERSION
 	);
-	
+
 	private static final int PING_OFFSET = 25;
-	
+
 	protected final boolean compensateFallKnockback;
-	
+
 	public FairKnockbackFeature(FeatureConfiguration configuration, boolean compensateFallKnockback) {
 		super(configuration);
 		this.compensateFallKnockback = compensateFallKnockback;
 	}
-	
+
 	@Override
 	protected boolean applyKnockback(LivingEntity target, Entity attacker, @Nullable Entity source,
 	                                 EntityKnockbackEvent.KnockbackType type, int extraKnockback,
 	                                 double dx, double dz, boolean legacy) {
 		if (!(target instanceof Player player) || player.getLatency() < PING_OFFSET)
 			return super.applyKnockback(target, attacker, source, type, extraKnockback, dx, dz, legacy);
-		
+
 		KnockbackValues values = prepareKnockback(target, attacker, source, type, extraKnockback, dx, dz, legacy);
 		if (values == null) return false;
-		
+
 		Vec velocity = target.getVelocity();
 		if (legacy && type == EntityKnockbackEvent.KnockbackType.ATTACK) {
 			// For legacy versions, extra knockback is added directly on top of the original velocity
@@ -72,7 +72,7 @@ public class FairKnockbackFeature extends VanillaKnockbackFeature {
 			));
 		} else {
 			// For modern versions and legacy non-attack knockback, the velocity is first divided by 2
-			
+
 			int latencyTicks = getLatencyTicks(player.getLatency());
 			double vertical;
 			if (isOnGroundClientSide(player, latencyTicks)) {
@@ -82,7 +82,7 @@ public class FairKnockbackFeature extends VanillaKnockbackFeature {
 			} else {
 				vertical = velocity.y();
 			}
-			
+
 			target.setVelocity(new Vec(
 					velocity.x() / 2d - values.horizontalModifier().x(),
 					vertical,
@@ -97,11 +97,11 @@ public class FairKnockbackFeature extends VanillaKnockbackFeature {
 
 		return true;
 	}
-	
+
 	protected boolean isOnGroundClientSide(Player player, int latencyTicks) {
 		if (player.isOnGround() || !(player instanceof CombatPlayer combatPlayer)) return true;
 		if (player.getGravityTickCount() > 30) return false; // Very uncertain, default to false
-		
+
 		// These are all cases in which isOnGroundAfterTicks() will not be accurate
 		Block block = player.getInstance().getBlock(player.getPosition());
 		if (player.isFlyingWithElytra()
@@ -110,10 +110,10 @@ public class FairKnockbackFeature extends VanillaKnockbackFeature {
 				|| block.compare(Block.COBWEB)
 				|| block.compare(Block.SCAFFOLDING))
 			return false;
-		
+
 		return combatPlayer.isOnGroundAfterTicks(latencyTicks);
 	}
-	
+
 	/**
 	 * Compensates the given vertical velocity for gravity calculations for a given amount of ticks.
 	 * This means for every tick, it will be affected by gravity and vertical air resistance.
@@ -128,10 +128,10 @@ public class FairKnockbackFeature extends VanillaKnockbackFeature {
 			velocity -= aerodynamics.gravity();
 			velocity *= aerodynamics.verticalAirResistance();
 		}
-		
+
 		return velocity;
 	}
-	
+
 	private static int getLatencyTicks(int latencyMillis) {
 		return Math.ceilDiv(latencyMillis * ServerFlag.SERVER_TICKS_PER_SECOND, 1000) + 2;
 	}

@@ -23,22 +23,22 @@ public enum BedwarsLeaderboardMode {
 		this.displayName = displayName;
 	}
 
-	private static final List<BedwarsGameType> CORE_MODES = Arrays.asList(
-			BedwarsGameType.SOLO,
-			BedwarsGameType.DOUBLES,
-			BedwarsGameType.THREE_THREE_THREE_THREE,
-			BedwarsGameType.FOUR_FOUR_FOUR_FOUR
+	private static final List<BedWarsGameType> CORE_MODES = Arrays.asList(
+			BedWarsGameType.SOLO,
+			BedWarsGameType.DOUBLES,
+			BedWarsGameType.THREE_THREE_THREE_THREE,
+			BedWarsGameType.FOUR_FOUR_FOUR_FOUR
 	);
 
-	public boolean includes(BedwarsGameType gameType) {
+	public boolean includes(BedWarsGameType gameType) {
 		return switch (this) {
 			case ALL -> true;
 			case CORE -> CORE_MODES.contains(gameType);
-			case SOLO -> gameType == BedwarsGameType.SOLO;
-			case DOUBLES -> gameType == BedwarsGameType.DOUBLES;
-			case THREE_THREE -> gameType == BedwarsGameType.THREE_THREE_THREE_THREE;
-			case FOUR_FOUR_FOUR -> gameType == BedwarsGameType.FOUR_FOUR_FOUR_FOUR;
-			case FOUR_FOUR -> gameType == BedwarsGameType.FOUR_FOUR;
+			case SOLO -> gameType == BedWarsGameType.SOLO;
+			case DOUBLES -> gameType == BedWarsGameType.DOUBLES;
+			case THREE_THREE -> gameType == BedWarsGameType.THREE_THREE_THREE_THREE;
+			case FOUR_FOUR_FOUR -> gameType == BedWarsGameType.FOUR_FOUR_FOUR_FOUR;
+			case FOUR_FOUR -> gameType == BedWarsGameType.FOUR_FOUR;
 		};
 	}
 
@@ -63,13 +63,14 @@ public enum BedwarsLeaderboardMode {
 		return ALL;
 	}
 
-	public static BedwarsLeaderboardMode fromGameType(BedwarsGameType gameType) {
+	public static BedwarsLeaderboardMode fromGameType(BedWarsGameType gameType) {
 		return switch (gameType) {
 			case SOLO -> SOLO;
 			case DOUBLES, ULTIMATE_DOUBLES -> DOUBLES;
 			case THREE_THREE_THREE_THREE -> THREE_THREE;
 			case FOUR_FOUR_FOUR_FOUR, ULTIMATE_FOURS -> FOUR_FOUR_FOUR;
 			case FOUR_FOUR -> FOUR_FOUR;
+			case null, default -> null;
 		};
 	}
 }

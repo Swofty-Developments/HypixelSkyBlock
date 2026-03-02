@@ -7,20 +7,21 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.metadata.item.ItemEntityMeta;
+import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.CollectItemPacket;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.game.GameStatus;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 
-import net.minestom.server.inventory.PlayerInventory;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class GoldManager {
     private static final int GOLD_FOR_BOW = 10;
@@ -43,11 +44,11 @@ public class GoldManager {
             return;
         }
 
-        List<MurderMysteryMapsConfig.Position> spawnLocations = config.getGoldSpawns();
+        List<HypixelPosition> spawnLocations = config.getGoldSpawns();
 
         spawnTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
             if (spawnedGold.size() < MAX_GOLD_SPAWNED && !spawnLocations.isEmpty()) {
-                MurderMysteryMapsConfig.Position randomSpawn = spawnLocations.get(new Random().nextInt(spawnLocations.size()));
+                HypixelPosition randomSpawn = spawnLocations.get(new Random().nextInt(spawnLocations.size()));
                 spawnGoldCoin(new Pos(randomSpawn.x(), randomSpawn.y(), randomSpawn.z()));
             }
         }).delay(TaskSchedule.seconds(3)).repeat(TaskSchedule.seconds(SPAWN_INTERVAL_SECONDS)).schedule();
@@ -191,7 +192,7 @@ public class GoldManager {
     private void addGoldToSlot(MurderMysteryPlayer player, int amount) {
         PlayerInventory inventory = player.getInventory();
         ItemStack slot8Item = inventory.getItemStack(8);
-        
+
         if (slot8Item.material() == Material.GOLD_INGOT) {
             inventory.setItemStack(8, slot8Item.withAmount(slot8Item.amount() + amount));
         } else {

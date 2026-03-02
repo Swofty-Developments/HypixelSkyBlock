@@ -22,7 +22,7 @@ public final class ConfirmBuyView implements View<ConfirmBuyView.State> {
 
     @Override
     public ViewConfiguration<State> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_shop.confirm_buy.title"), InventoryType.CHEST_3_ROW);
+        return new ViewConfiguration<State>(I18n.string("gui_shop.confirm_buy.title"), InventoryType.CHEST_3_ROW);
     }
 
     @Override

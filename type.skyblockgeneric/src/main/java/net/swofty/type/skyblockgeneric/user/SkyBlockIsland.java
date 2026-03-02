@@ -2,7 +2,12 @@ package net.swofty.type.skyblockgeneric.user;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.hollowcube.polar.*;
+import net.hollowcube.polar.AnvilPolar;
+import net.hollowcube.polar.ChunkSelector;
+import net.hollowcube.polar.PolarLoader;
+import net.hollowcube.polar.PolarReader;
+import net.hollowcube.polar.PolarWorld;
+import net.hollowcube.polar.PolarWriter;
 import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.InstanceContainer;
@@ -15,17 +20,17 @@ import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.data.monogdb.IslandDatabase;
-import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.custom.IslandFetchedFromDatabaseEvent;
 import net.swofty.type.skyblockgeneric.event.custom.IslandFirstCreatedEvent;
 import net.swofty.type.skyblockgeneric.event.custom.IslandSavedIntoDatabaseEvent;
 import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
 import net.swofty.type.skyblockgeneric.utility.JerryInformation;
-import net.swofty.type.generic.utility.MathUtility;
 import org.bson.types.Binary;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -131,7 +136,7 @@ public class SkyBlockIsland {
 
                 int oldVersion = islandVersion;
                 if (islandVersion < HypixelConst.getCurrentIslandVersion()) {
-                    MathUtility.delay(() -> {
+                    ScheduleUtility.delay(() -> {
                         SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getSkyBlockIsland().getIslandID() == islandID).forEach(player -> {
                             player.getLogHandler().debug("Your island was migrated from version §c" + oldVersion + " §fto §a" + HypixelConst.getCurrentIslandVersion() + "§f!");
                         });

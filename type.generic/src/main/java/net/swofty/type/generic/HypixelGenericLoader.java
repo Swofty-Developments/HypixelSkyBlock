@@ -24,6 +24,8 @@ import net.swofty.commons.config.ConfigProvider;
 import net.swofty.type.generic.achievement.AchievementRegistry;
 import net.swofty.type.generic.achievement.AchievementStatisticsService;
 import net.swofty.type.generic.block.BannerBlockHandler;
+import net.swofty.type.generic.achievement.AchievementRegistry;
+import net.swofty.type.generic.achievement.AchievementStatisticsService;
 import net.swofty.type.generic.block.PlayerHeadBlockHandler;
 import net.swofty.type.generic.block.SignBlockHandler;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -32,6 +34,7 @@ import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
 import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
+import net.swofty.type.generic.data.handlers.ReplayDataHandler;
 import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
 import net.swofty.type.generic.data.mongodb.AuthenticationDatabase;
@@ -56,6 +59,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
@@ -209,6 +213,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         GameDataHandlerRegistry.register(new PrototypeLobbyDataHandler());
         GameDataHandlerRegistry.register(new MurderMysteryDataHandler());
         GameDataHandlerRegistry.register(new SkywarsDataHandler());
+        GameDataHandlerRegistry.register(new ReplayDataHandler());
 
         // Register Block Handlers
         MinecraftServer.getBlockManager().registerHandler(PlayerHeadBlockHandler.KEY, PlayerHeadBlockHandler::new);
@@ -283,6 +288,6 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                         return null;
                     }
                 })
-                .filter(java.util.Objects::nonNull);
+                .filter(Objects::nonNull);
     }
 }

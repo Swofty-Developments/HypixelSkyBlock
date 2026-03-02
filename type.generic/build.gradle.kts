@@ -23,6 +23,7 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":packer"))
     implementation(project(":proxy.api"))
+    implementation("net.kyori:adventure-text-minimessage:4.25.0")
     implementation("org.mongodb:bson:5.6.4")
     implementation("org.mongodb:mongodb-driver-sync:5.6.4")
     // Must match AtlasRedisAPI's Jedis version to avoid conflicts

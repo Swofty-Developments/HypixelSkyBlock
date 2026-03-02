@@ -1,15 +1,15 @@
 package net.swofty.pvp.feature.explosion;
 
-import net.swofty.pvp.entity.explosion.TntEntity;
-import net.swofty.pvp.events.ExplosivePrimeEvent;
-import net.swofty.pvp.feature.FeatureType;
-import net.swofty.pvp.feature.config.DefinedFeature;
-import net.swofty.pvp.feature.config.FeatureConfiguration;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.sound.SoundEvent;
+import net.swofty.pvp.entity.explosion.TntEntity;
+import net.swofty.pvp.events.ExplosivePrimeEvent;
+import net.swofty.pvp.feature.FeatureType;
+import net.swofty.pvp.feature.config.DefinedFeature;
+import net.swofty.pvp.feature.config.FeatureConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -23,25 +23,25 @@ public class VanillaExplosionFeature implements ExplosionFeature {
 			FeatureType.EXPLOSION, VanillaExplosionFeature::new,
 			FeatureType.ENCHANTMENT
 	);
-	
+
 	private final FeatureConfiguration configuration;
-	
+
 	private VanillaExplosionSupplier explosionSupplier;
-	
+
 	public VanillaExplosionFeature(FeatureConfiguration configuration) {
 		this.configuration = configuration;
 	}
-	
+
 	@Override
 	public void initDependencies() {
 		this.explosionSupplier = new VanillaExplosionSupplier(this, configuration.get(FeatureType.ENCHANTMENT));
 	}
-	
+
 	@Override
 	public VanillaExplosionSupplier getExplosionSupplier() {
 		return explosionSupplier;
 	}
-	
+
 	@Override
 	public void primeExplosive(Instance instance, Point blockPosition, @NotNull IgnitionCause cause, int fuse) {
 		ExplosivePrimeEvent event = new ExplosivePrimeEvent(instance, blockPosition, cause, fuse);

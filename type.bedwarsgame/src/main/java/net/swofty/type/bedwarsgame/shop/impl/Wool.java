@@ -6,11 +6,13 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 
 public class Wool extends ShopItem {
 
 	public Wool() {
-		super("wool", "Wool", "Great for bridging across islands.\nTurns into your team's color.", 4, 16, Currency.IRON, Material.WHITE_WOOL);
+		super("wool", "Wool", "Great for bridging across islands.\nTurns into your team's color.", 4, 16, Currency.IRON, Material.WHITE_WOOL,
+			DatapointBedWarsHotbar.HotbarItemType.BLOCKS);
 	}
 
 	private Material mapTeamToWool(BedWarsMapsConfig.TeamKey teamKey) {
@@ -29,7 +31,7 @@ public class Wool extends ShopItem {
 	@Override
 	public void onPurchase(BedWarsPlayer player) {
 		Material woolMaterial = mapTeamToWool(player.getTeamKey());
-		player.getInventory().addItemStack(ItemStack.builder(woolMaterial)
+		giveItem(player, ItemStack.builder(woolMaterial)
 				.amount(16)
 				.build());
 	}

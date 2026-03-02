@@ -5,10 +5,14 @@ import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.GameDataHandler;
-import net.swofty.type.generic.data.datapoints.*;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsModeStats;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsQuickBuy;
+import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardPreferences;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
+import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
+import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
@@ -202,6 +206,7 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
         FAVORITE_MAPS("bedwars_favorite_maps", DatapointStringList.class, new DatapointStringList("bedwars_favorite_maps")),
         QUICK_BUY("bedwars_quick_buy", DatapointBedWarsQuickBuy.class, new DatapointBedWarsQuickBuy("bedwars_quick_buy")),
         MAP_JOIN_COUNTS("bedwars_map_join_counts", DatapointMapStringLong.class, new DatapointMapStringLong("bedwars_map_join_counts")),
+        HOTBAR_LAYOUT("bedwars_hotbar_layout", DatapointBedWarsHotbar.class, new DatapointBedWarsHotbar("bedwars_hotbar_layout")),
 
         // Cumulative lifetime stats (for quick access without DB aggregation)
         TOTAL_WINS("bedwars_total_wins", DatapointLong.class, new DatapointLong("bedwars_total_wins", 0L)),

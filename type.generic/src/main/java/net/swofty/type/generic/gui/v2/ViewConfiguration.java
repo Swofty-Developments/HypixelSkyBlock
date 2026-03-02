@@ -14,12 +14,12 @@ public class ViewConfiguration<S> {
     private final InventoryType inventoryType;
 
     public ViewConfiguration(Component title, InventoryType type) {
-        this.titleFunction = (v, c) -> title;
+        this.titleFunction = (_, _) -> title;
         this.inventoryType = type;
     }
 
     public ViewConfiguration(String title, InventoryType type) {
-        this.titleFunction = (v, c) -> Component.text(title);
+        this.titleFunction = (_, _) -> Component.text(title);
         this.inventoryType = type;
     }
 
@@ -29,7 +29,7 @@ public class ViewConfiguration<S> {
     }
 
     public ViewConfiguration(StringTitle<S> title, InventoryType type) {
-        this.titleFunction = (v, c) -> Component.text(title.getTitle(v, c));
+        this.titleFunction = (s, c) -> Component.text(title.getTitle(s, c));
         this.inventoryType = type;
     }
 

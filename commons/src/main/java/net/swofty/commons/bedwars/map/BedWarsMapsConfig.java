@@ -2,7 +2,8 @@ package net.swofty.commons.bedwars.map;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
+import net.swofty.commons.mc.HypixelPosition;
 
 import java.util.List;
 import java.util.Map;
@@ -23,18 +24,18 @@ public class BedWarsMapsConfig {
         @Getter
         @Setter
         public static class MapConfiguration {
-            private List<BedwarsGameType> types;
+            private List<BedWarsGameType> types;
             private GeneratorSpeed generatorSpeed;
             private MapBounds bounds;
             private Map<TeamKey, MapTeam> teams;
             private MapLocations locations;
-            private Map<String, GlobalGenerator> global_generator;
+            private Map<GlobalGeneratorKey, GlobalGenerator> globalGenerator;
 
             @Getter
             @Setter
             public static class MapLocations {
-                private Position waiting;
-                private Position spectator;
+                private HypixelPosition waiting;
+                private HypixelPosition spectator;
             }
 
             @Getter
@@ -51,26 +52,24 @@ public class BedWarsMapsConfig {
             public static class GlobalGenerator {
                 private int amount;
                 private int max;
-                private List<Position> locations;
+                private List<HypixelPosition> locations;
             }
 
         }
     }
 
-    public record Position(double x, double y, double z) {
-    }
-
-    public record PitchYawPosition(double x, double y, double z, float pitch, float yaw) {
-    }
-
-    public record TwoBlockPosition(Position feet, Position head) {
+    public record TwoBlockPosition(HypixelPosition feet, HypixelPosition head) {
     }
 
     public record MinMax(double min, double max) {
     }
 
+    public enum GlobalGeneratorKey {
+        IRON, GOLD, DIAMOND, EMERALD
+    }
+
     public enum TeamKey {
-        RED("Red", "§c", 0xFF0000),
+        RED("Red", "§c", 0xFF5555),
         BLUE("Blue", "§9", 0x5555FF),
         GREEN("Green", "§a", 0x55FF55),
         YELLOW("Yellow", "§e", 0xFFFF55),
@@ -82,16 +81,16 @@ public class BedWarsMapsConfig {
         @Getter
         private final String name;
         private final String chatColor;
-        private final int armorColor;
+        private final int rgb;
 
-        TeamKey(String name, String chatColor, int rbg) {
+        TeamKey(String name, String chatColor, int rgb) {
             this.name = name;
             this.chatColor = chatColor;
-            this.armorColor = rbg;
+            this.rgb = rgb;
         }
 
         public int rgb() {
-            return armorColor;
+            return rgb;
         }
 
         public String chatColor() {
@@ -139,11 +138,11 @@ public class BedWarsMapsConfig {
     @Setter
     public static class MapTeam {
         private Shops shop;
-        private PitchYawPosition spawn;
+        private HypixelPosition spawn;
         private TwoBlockPosition bed;
-        private Position generator;
+        private HypixelPosition generator;
 
-        public record Shops(PitchYawPosition item, PitchYawPosition team) {
+        public record Shops(HypixelPosition item, HypixelPosition team) {
         }
     }
 

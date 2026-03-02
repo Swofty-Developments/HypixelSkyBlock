@@ -7,10 +7,10 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.skyblock.auctions.AuctionCategories;
-import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
+import net.swofty.commons.skyblock.auctions.AuctionCategories;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.proxyapi.ProxyService;
@@ -183,7 +183,6 @@ public class AuctionViewThirdNormal implements AuctionView {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack(
                         I18n.string("gui_auction.view_third_normal.bid_amount", Map.of("amount", String.valueOf(gui.bidAmount))),
                         Material.GOLD_INGOT, 1,

@@ -20,7 +20,6 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIMinionRecipes;
 import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
@@ -110,7 +109,6 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack(I18n.string("gui_minion.pickup_button"), Material.BEDROCK, 1,
                         I18n.lore("gui_minion.pickup_button.lore"));
             }

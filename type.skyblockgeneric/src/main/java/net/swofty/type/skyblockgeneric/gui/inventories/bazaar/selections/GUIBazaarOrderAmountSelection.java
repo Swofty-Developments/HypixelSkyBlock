@@ -124,7 +124,7 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 future.complete(qty);
-                // *don’t* close—so your price‐selection GUI will open next
+                // *don’distance* close—so your price‐selection GUI will open next
             }
 
             @Override

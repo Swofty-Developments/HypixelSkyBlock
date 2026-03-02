@@ -6,21 +6,21 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.bedwars.BedWarsGameType;
+import net.swofty.commons.party.FullParty;
 import net.swofty.commons.protocol.objects.orchestrator.GetMapsProtocolObject;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
-import net.swofty.type.lobby.LobbyOrchestratorConnector;
 import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
 import net.swofty.type.generic.data.datapoints.DatapointStringList;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.party.PartyManager;
-import net.swofty.commons.party.FullParty;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.lobby.LobbyOrchestratorConnector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +28,11 @@ import java.util.Map;
 
 public class GUIMapSelection extends HypixelInventoryGUI {
 
-	private final BedwarsGameType gameType;
+	private final BedWarsGameType gameType;
 	private List<String> maps = new ArrayList<>();
 	private boolean mapsLoaded = false;
 
-	public GUIMapSelection(BedwarsGameType gameType) {
+	public GUIMapSelection(BedWarsGameType gameType) {
 		super("Map Selection - " + gameType.getDisplayName(), InventoryType.CHEST_4_ROW);
 		this.gameType = gameType;
 	}

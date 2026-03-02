@@ -79,7 +79,6 @@ public class Hypixel {
                 options.setTracesSampleRate(1.0);
                 options.setProfileSessionSampleRate(1.0);
                 options.setProfileLifecycle(ProfileLifecycle.TRACE);
-                options.getLogs().setEnabled(true);
             });
         }
 

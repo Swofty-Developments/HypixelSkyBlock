@@ -10,7 +10,7 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -21,7 +21,7 @@ public class ActionAddSkyBlockXPToNametag implements HypixelEventClass {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (!event.isFirstSpawn()) return;
 
-        MathUtility.delay(() -> {
+        ScheduleUtility.delay(() -> {
             updatePlayerNametag(player);
         }, 15);
     }

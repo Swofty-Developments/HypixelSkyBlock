@@ -117,7 +117,6 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(SELL_SLOTS[0]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(I18n.string("gui_bazaar.orders.no_sell_orders"), Material.BARRIER, 1,
                             I18n.lore("gui_bazaar.orders.no_sell_orders.lore"));
                 }
@@ -128,7 +127,6 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(BUY_SLOTS[0]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStackCreator.getStack(I18n.string("gui_bazaar.orders.no_buy_orders"), Material.BARRIER, 1,
                             I18n.lore("gui_bazaar.orders.no_buy_orders.lore"));
                 }
@@ -142,7 +140,6 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (item.isCompleted()) {
                     new GUIBazaarOrderCompletedOptions(item.getCompletions(), item.getActiveOrder()).open(p);
                 } else {
@@ -152,7 +149,6 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return item.createDisplayItem();
             }
         };
@@ -163,7 +159,6 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });
@@ -172,7 +167,6 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return ItemStack.builder(Material.AIR);
                 }
             });

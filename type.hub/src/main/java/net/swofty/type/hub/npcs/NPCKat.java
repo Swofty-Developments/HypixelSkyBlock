@@ -4,14 +4,13 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.kat.GUIKat;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointKat;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.KatComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCKat extends HypixelNPC {
 

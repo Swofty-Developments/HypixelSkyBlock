@@ -1,7 +1,6 @@
 package net.swofty.type.lobby.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentLiteral;
-import net.minestom.server.entity.Player;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;

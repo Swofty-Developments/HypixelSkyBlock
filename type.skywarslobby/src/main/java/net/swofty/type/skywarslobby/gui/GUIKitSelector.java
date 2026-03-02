@@ -17,9 +17,7 @@ import net.swofty.type.skywarslobby.kit.SkywarsKit;
 import net.swofty.type.skywarslobby.kit.SkywarsKitRegistry;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Kit selector GUI for a specific game mode.

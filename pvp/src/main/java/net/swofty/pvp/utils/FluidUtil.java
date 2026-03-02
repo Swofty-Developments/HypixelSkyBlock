@@ -1,6 +1,7 @@
 package net.swofty.pvp.utils;
 
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
@@ -85,6 +86,38 @@ public class FluidUtil {
 			if (y - blockY >= 2 - player.getBoundingBox().height()) {
 				block = instance.getBlock(pair.x(), blockY + 2, pair.z());
 				if (isTouchingWater(player, block, blockY + 2)) return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks if a LivingEntity is touching water.
+	 * This is used for critical hit detection in legacy 1.8.9 mode.
+	 * 
+	 * @param entity The entity to check
+	 * @return true if the entity is touching water
+	 */
+	public static boolean isTouchingWater(LivingEntity entity) {
+		if (entity instanceof Player player) {
+			return isTouchingWater(player);
+		}
+		
+		// For non-player entities, check the blocks at their position
+		Pos position = entity.getPosition();
+		int blockX = position.blockX();
+		int blockZ = position.blockZ();
+		int blockY = position.blockY();
+
+		Instance instance = entity.getInstance();
+		if (instance == null) return false;
+
+		// Check current block and blocks above
+		for (int yOff = 0; yOff <= 2; yOff++) {
+			Block block = instance.getBlock(blockX, blockY + yOff, blockZ);
+			if (block.compare(Block.WATER)) {
+				return true;
 			}
 		}
 
