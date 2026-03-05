@@ -32,7 +32,7 @@ subprojects {
 
         implementation("org.reflections:reflections:0.10.2")
         implementation("org.json:json:20251224")
-        implementation("io.sentry:sentry-async-profiler:8.30.0")
+        implementation("io.sentry:sentry-async-profiler:8.34.1")
 
         compileOnly("org.projectlombok:lombok:1.18.42")
 
