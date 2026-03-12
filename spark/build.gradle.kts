@@ -18,12 +18,12 @@ java {
 }
 
 dependencies {
-    implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
+    implementation(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation(project(":type.generic"))
-    implementation("com.google.guava:guava:33.5.0-jre")
-    api("me.lucko:spark-common:1.10.158-20260110.094844-1")
+    implementation(libs.guava)
+    api(libs.sparkCommon)
 }
 
 application {

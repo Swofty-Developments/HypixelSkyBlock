@@ -25,9 +25,9 @@ repositories {
 dependencies {
     implementation(project(":service.generic"))
     implementation(project(":commons"))
-    implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
-    implementation("org.mongodb:bson:5.6.4")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.4")
+    implementation(libs.caffeine)
+    implementation(libs.mongodbBson)
+    implementation(libs.mongodbDriverSync)
 }
 
 application {

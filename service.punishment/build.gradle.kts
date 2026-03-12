@@ -25,15 +25,15 @@ repositories {
 dependencies {
     implementation(project(":service.generic"))
     implementation(project(":commons"))
-    implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("org.mongodb:bson:5.6.4")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.4")
+    implementation(libs.caffeine)
+    implementation(libs.tinylogApi)
+    implementation(libs.tinylogImpl)
+    implementation(libs.gson)
+    implementation(libs.mongodbBson)
+    implementation(libs.mongodbDriverSync)
 
-    //implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.3")
-    implementation("redis.clients:jedis:7.2.0")
+    //implementation(libs.atlasRedis)
+    implementation(libs.jedis)
 }
 
 application {

@@ -24,32 +24,32 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
-    annotationProcessor("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+    compileOnly(libs.velocityApi)
+    annotationProcessor(libs.velocityApi)
     compileOnly(files("velocity-3.5.0-SNAPSHOT-576.jar"))
 
-    implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.5")
+    implementation(libs.atlasRedis)
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
-    implementation("org.mongodb:bson:5.6.4")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.4")
+    implementation(libs.mongodbBson)
+    implementation(libs.mongodbDriverSync)
 
-    implementation("com.viaversion:vialoader:4.0.6")
-    implementation("com.viaversion:viabackwards-common:5.7.1")
-    implementation("com.viaversion:viarewind-common:4.0.14")
-    implementation("com.viaversion:viaversion:5.7.1")
+    implementation(libs.vialoader)
+    implementation(libs.viabackwardsCommon)
+    implementation(libs.viarewindCommon)
+    implementation(libs.viaversion)
 
-    implementation(platform("io.netty:netty-bom:4.2.9.Final"))
-    implementation("io.netty:netty-buffer")
-    implementation("io.netty:netty-codec")
-    implementation("io.netty:netty-codec-http")
-    implementation("io.netty:netty-transport")
-    implementation("io.netty:netty-handler")
+    implementation(platform(libs.nettyBom))
+    implementation(libs.nettyBuffer)
+    implementation(libs.nettyCodec)
+    implementation(libs.nettyCodecHttp)
+    implementation(libs.nettyTransport)
+    implementation(libs.nettyHandler)
 
-    implementation("net.bytebuddy:byte-buddy:1.18.5")
-    implementation("net.bytebuddy:byte-buddy-agent:1.18.5")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
+    implementation(libs.byteBuddy)
+    implementation(libs.byteBuddyAgent)
+    implementation(libs.tinylogApi)
+    implementation(libs.tinylogImpl)
 }
 
 evaluationDependsOn(":commons")

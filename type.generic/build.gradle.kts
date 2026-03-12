@@ -23,21 +23,21 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":packer"))
     implementation(project(":proxy.api"))
-    implementation("org.mongodb:bson:5.6.4")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.4")
+    implementation(libs.mongodbBson)
+    implementation(libs.mongodbDriverSync)
     // Must match AtlasRedisAPI's Jedis version to avoid conflicts
-    implementation("redis.clients:jedis:7.2.0")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.0")
-    compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
+    implementation(libs.jedis)
+    implementation(libs.tinylogApi)
+    implementation(libs.tinylogImpl)
+    implementation(libs.kotlinStdlib)
+    compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("net.kyori:adventure-text-minimessage:4.25.0")
-    implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
-    implementation("dev.hollowcube:polar:1.15.0")
-    implementation("org.yaml:snakeyaml:2.2")
-    implementation("it.unimi.dsi:fastutil:8.5.18")
+    implementation(libs.adventureTextMinimessage)
+    implementation(libs.caffeine)
+    implementation(libs.polar)
+    implementation(libs.snakeyaml)
+    implementation(libs.fastutil)
 }
 
 tasks.test {
