@@ -24,32 +24,32 @@ repositories {
 }
 
 dependencies {
-    compileOnly(libs.velocityApi)
-    annotationProcessor(libs.velocityApi)
+    compileOnly(libs.velocity.api)
+    annotationProcessor(libs.velocity.api)
     compileOnly(files("velocity-3.5.0-SNAPSHOT-576.jar"))
 
-    implementation(libs.atlasRedis)
+    implementation(libs.atlas.redis)
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
-    implementation(libs.mongodbBson)
-    implementation(libs.mongodbDriverSync)
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
 
     implementation(libs.vialoader)
-    implementation(libs.viabackwardsCommon)
-    implementation(libs.viarewindCommon)
+    implementation(libs.viabackwards.common)
+    implementation(libs.viarewind.common)
     implementation(libs.viaversion)
 
-    implementation(platform(libs.nettyBom))
-    implementation(libs.nettyBuffer)
-    implementation(libs.nettyCodec)
-    implementation(libs.nettyCodecHttp)
-    implementation(libs.nettyTransport)
-    implementation(libs.nettyHandler)
+    implementation(platform(libs.netty.bom))
+    implementation(libs.netty.buffer)
+    implementation(libs.netty.codec)
+    implementation(libs.netty.codec.http)
+    implementation(libs.netty.transport)
+    implementation(libs.netty.handler)
 
-    implementation(libs.byteBuddy)
-    implementation(libs.byteBuddyAgent)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.byte.buddy)
+    implementation(libs.byte.buddy.agent)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 }
 
 evaluationDependsOn(":commons")

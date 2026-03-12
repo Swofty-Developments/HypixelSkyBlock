@@ -22,11 +22,11 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
     implementation(project(":type.generic"))
-    implementation(libs.mongodbBson)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.mongodb.bson)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
     implementation(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation(libs.adventureTextMinimessage)
+    implementation(libs.adventure.text.minimessage)
 }

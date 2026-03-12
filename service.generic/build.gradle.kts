@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     implementation(project(":commons"))
-    implementation(libs.atlasRedis)
-    implementation(libs.adventureApi)
-    implementation(libs.adventureTextSerializerGson)
+    implementation(libs.atlas.redis)
+    implementation(libs.adventure.api)
+    implementation(libs.adventure.text.serializer.gson)
 }

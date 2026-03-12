@@ -26,8 +26,8 @@ dependencies {
     implementation(project(":service.generic"))
     implementation(project(":commons"))
     implementation(libs.caffeine)
-    implementation(libs.mongodbBson)
-    implementation(libs.mongodbDriverSync)
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
 }
 
 application {

@@ -20,12 +20,12 @@ repositories {
 
 dependencies {
     implementation(project(":commons"))
-    implementation(libs.atlasRedis)
+    implementation(libs.atlas.redis)
     compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation(libs.adventureApi)
-    implementation(libs.adventureTextSerializerGson)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.adventure.api)
+    implementation(libs.adventure.text.serializer.gson)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 }

@@ -23,7 +23,7 @@ dependencies {
     }
     implementation(project(":type.generic"))
     implementation(libs.guava)
-    api(libs.sparkCommon)
+    api(libs.spark.common)
 }
 
 application {

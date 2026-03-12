@@ -28,11 +28,11 @@ dependencies {
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(libs.gson)
-    implementation(libs.sparkCore)
-    implementation(libs.mongodbBson)
-    implementation(libs.mongodbDriverSync)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.spark.core)
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
     compileOnly(libs.annotations)
 }
 

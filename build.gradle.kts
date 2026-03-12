@@ -34,18 +34,18 @@ subprojects {
     }
 
     dependencies {
-        testImplementation(libsCatalog.findLibrary("junitJupiter").get())
+        testImplementation(libsCatalog.findLibrary("junit-jupiter").get())
 
         implementation(libsCatalog.findLibrary("reflections").get())
         implementation(libsCatalog.findLibrary("json").get())
-        implementation(libsCatalog.findLibrary("sentryAsyncProfiler").get())
+        implementation(libsCatalog.findLibrary("sentry-async-profiler").get())
 
         compileOnly(libsCatalog.findLibrary("lombok").get())
 
-        implementation(platform(libsCatalog.findLibrary("jacksonBom").get()))
-        implementation(libsCatalog.findLibrary("jacksonCore").get())
-        implementation(libsCatalog.findLibrary("jacksonDatabind").get())
-        implementation(libsCatalog.findLibrary("jacksonAnnotations").get())
+        implementation(platform(libsCatalog.findLibrary("jackson-bom").get()))
+        implementation(libsCatalog.findLibrary("jackson-core").get())
+        implementation(libsCatalog.findLibrary("jackson-databind").get())
+        implementation(libsCatalog.findLibrary("jackson-annotations").get())
     }
 
     tasks.test {

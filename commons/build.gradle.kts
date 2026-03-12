@@ -17,9 +17,9 @@ java {
 dependencies {
     implementation(libs.snakeyaml)
     implementation(project(":packer"))
-    implementation(libs.mongodbBson)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.mongodb.bson)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 
     compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
@@ -28,9 +28,9 @@ dependencies {
     // Must match AtlasRedisAPI's Jedis version to avoid conflicts
     implementation(libs.jedis)
 
-    implementation(libs.configlibYaml)
+    implementation(libs.configlib.yaml)
 
-    implementation(libs.configurateYaml)
+    implementation(libs.configurate.yaml)
     implementation(libs.javapoet)
 }
 

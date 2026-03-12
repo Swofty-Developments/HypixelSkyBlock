@@ -18,11 +18,11 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":packer"))
     implementation(project(":proxy.api"))
-    implementation(libs.mongodbBson)
+    implementation(libs.mongodb.bson)
     compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation(libs.gson)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 }

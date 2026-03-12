@@ -61,14 +61,14 @@ dependencies {
     implementation(project(":proxy.api"))
     implementation(project(":spark"))
     implementation(project(":anticheat"))
-    implementation(libs.slf4jApi)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.slf4j.api)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
     implementation(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation(libs.caffeine)
-    implementation(libs.adventureTextMinimessage)
+    implementation(libs.adventure.text.minimessage)
     implementation(libs.polar)
     implementation(libs.snakeyaml)
 }

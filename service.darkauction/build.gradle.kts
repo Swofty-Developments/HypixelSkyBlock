@@ -26,8 +26,8 @@ dependencies {
     implementation(project(":service.generic"))
     implementation(project(":commons"))
     implementation(libs.caffeine)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 
     implementation(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")

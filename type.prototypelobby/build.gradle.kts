@@ -23,10 +23,10 @@ dependencies {
     implementation(project(":proxy.api"))
     implementation(project(":type.generic"))
 
-    implementation(libs.mongodbBson)
-    implementation(libs.mongodbDriverSync)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
     implementation(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }

@@ -25,8 +25,8 @@ dependencies {
     implementation(project(":service.generic"))
     implementation(project(":commons"))
     implementation(libs.caffeine)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 }
 
 application {

@@ -18,9 +18,9 @@ java {
 }
 
 dependencies {
-    api(libs.creativeApi)
-    api(libs.creativeSerializerMinecraft)
-    api(libs.creativeServer)
+    api(libs.creative.api)
+    api(libs.creative.serializer.minecraft)
+    api(libs.creative.server)
 }
 
 application {

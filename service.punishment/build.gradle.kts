@@ -26,13 +26,13 @@ dependencies {
     implementation(project(":service.generic"))
     implementation(project(":commons"))
     implementation(libs.caffeine)
-    implementation(libs.tinylogApi)
-    implementation(libs.tinylogImpl)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
     implementation(libs.gson)
-    implementation(libs.mongodbBson)
-    implementation(libs.mongodbDriverSync)
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
 
-    //implementation(libs.atlasRedis)
+    //implementation(libs.atlas.redis)
     implementation(libs.jedis)
 }
 
