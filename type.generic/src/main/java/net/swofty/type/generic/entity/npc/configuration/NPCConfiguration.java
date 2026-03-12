@@ -30,6 +30,10 @@ public interface NPCConfiguration {
         return HypixelConst.getInstanceContainer();
     }
 
+    default Instance instance(HypixelPlayer player) {
+        return instance();
+    }
+
     default EntityPose pose(HypixelPlayer player) {
         return EntityPose.STANDING;
     }

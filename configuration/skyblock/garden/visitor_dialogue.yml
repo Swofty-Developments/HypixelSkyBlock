@@ -1,0 +1,7 @@
+ambient_dialogue:
+  time_queries:
+    enabled: true
+  seasonal_small_talk:
+    enabled: true
+  generic_pairs: [ ]
+visitor_lines: { }

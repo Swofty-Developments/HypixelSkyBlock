@@ -16,16 +16,22 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
+import net.swofty.commons.ServerType;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.PlayerShopData;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
-import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.datapoints.*;
+import net.swofty.type.generic.data.datapoints.DatapointBoolean;
+import net.swofty.type.generic.data.datapoints.DatapointDouble;
+import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
+import net.swofty.type.generic.data.datapoints.DatapointRank;
+import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
@@ -39,6 +45,8 @@ import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.ValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.MaxHealthValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.MiningValueUpdateEvent;
+import net.swofty.type.skyblockgeneric.garden.SkyBlockEditableWorldHandle;
+import net.swofty.type.skyblockgeneric.garden.SkyBlockGardenHandle;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
@@ -61,7 +69,11 @@ import net.swofty.type.skyblockgeneric.utility.DeathMessageCreator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -89,6 +101,8 @@ public class SkyBlockPlayer extends HypixelPlayer {
     public boolean speedManaged = false;
     @Setter
     private SkyBlockIsland skyBlockIsland;
+    @Setter
+    private SkyBlockGardenHandle skyBlockGarden;
 
     private static final Pattern SACK_PATTERN = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$");
 
@@ -170,9 +184,31 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public boolean isOnIsland() {
+        if (skyBlockIsland == null || HypixelConst.getTypeLoader().getType() != ServerType.SKYBLOCK_ISLAND) {
+            return false;
+        }
+        return getInstance() != null
+            && getInstance() != HypixelConst.getInstanceContainer()
+            && getInstance() != HypixelConst.getEmptyInstance();
+    }
+
+    public boolean isOnGarden() {
+        if (skyBlockGarden == null || HypixelConst.getTypeLoader().getType() != ServerType.SKYBLOCK_GARDEN) {
+            return false;
+        }
         return getInstance() != null
                 && getInstance() != HypixelConst.getInstanceContainer()
                 && getInstance() != HypixelConst.getEmptyInstance();
+    }
+
+    public @Nullable SkyBlockEditableWorldHandle getEditableWorldHandle() {
+        if (HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_GARDEN && skyBlockGarden != null) {
+            return skyBlockGarden;
+        }
+        if (HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_ISLAND) {
+            return skyBlockIsland;
+        }
+        return null;
     }
 
     public @Nullable SkyBlockItem getArrow() {
@@ -427,7 +463,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public @Nullable SkyBlockRegion getRegion() {
-        if (isOnIsland()) return SkyBlockRegion.getIslandRegion();
+        if (getEditableWorldHandle() != null) return SkyBlockRegion.getIslandRegion();
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
     }
 

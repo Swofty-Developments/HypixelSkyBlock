@@ -1,0 +1,67 @@
+skins:
+  default:
+    npcs:
+      desk: { enabled: true, x: 0.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      sam: { enabled: true, x: 3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      anita: { enabled: true, x: -3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jacob: { enabled: true, x: 6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jeff: { enabled: true, x: -6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      pesthunter_phillip: { enabled: true, x: 9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      carpenter: { enabled: true, x: -9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      shifty: { enabled: true, x: 12.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+    armor_stands: { }
+  spruce:
+    npcs:
+      desk: { enabled: true, x: 0.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      sam: { enabled: true, x: 3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      anita: { enabled: true, x: -3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jacob: { enabled: true, x: 6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jeff: { enabled: true, x: -6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      pesthunter_phillip: { enabled: true, x: 9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      carpenter: { enabled: true, x: -9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      shifty: { enabled: true, x: 12.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+    armor_stands: { }
+  red:
+    npcs:
+      desk: { enabled: true, x: 0.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      sam: { enabled: true, x: 3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      anita: { enabled: true, x: -3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jacob: { enabled: true, x: 6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jeff: { enabled: true, x: -6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      pesthunter_phillip: { enabled: true, x: 9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      carpenter: { enabled: true, x: -9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      shifty: { enabled: true, x: 12.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+    armor_stands: { }
+  sunny:
+    npcs:
+      desk: { enabled: true, x: 0.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      sam: { enabled: true, x: 3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      anita: { enabled: true, x: -3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jacob: { enabled: true, x: 6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jeff: { enabled: true, x: -6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      pesthunter_phillip: { enabled: true, x: 9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      carpenter: { enabled: true, x: -9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      shifty: { enabled: true, x: 12.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+    armor_stands: { }
+  cabin:
+    npcs:
+      desk: { enabled: true, x: 0.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      sam: { enabled: true, x: 3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      anita: { enabled: true, x: -3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jacob: { enabled: true, x: 6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jeff: { enabled: true, x: -6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      pesthunter_phillip: { enabled: true, x: 9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      carpenter: { enabled: true, x: -9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      shifty: { enabled: true, x: 12.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+    armor_stands: { }
+  chocolate:
+    npcs:
+      desk: { enabled: true, x: 0.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      sam: { enabled: true, x: 3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      anita: { enabled: true, x: -3.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jacob: { enabled: true, x: 6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      jeff: { enabled: true, x: -6.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      pesthunter_phillip: { enabled: true, x: 9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      carpenter: { enabled: true, x: -9.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+      shifty: { enabled: true, x: 12.5, y: 100.0, z: -6.5, yaw: 180, pitch: 0 }
+    armor_stands: { }

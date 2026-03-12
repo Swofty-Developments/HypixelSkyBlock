@@ -11,7 +11,14 @@ import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
-import net.swofty.type.generic.data.datapoints.*;
+import net.swofty.type.generic.data.datapoints.DatapointBoolean;
+import net.swofty.type.generic.data.datapoints.DatapointDouble;
+import net.swofty.type.generic.data.datapoints.DatapointInteger;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
+import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
+import net.swofty.type.generic.data.datapoints.DatapointPresentYear;
+import net.swofty.type.generic.data.datapoints.DatapointString;
+import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -30,7 +37,11 @@ import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 import tools.jackson.core.JacksonException;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -311,7 +322,14 @@ public class SkyBlockDataHandler extends DataHandler {
         ISLAND_UUID("island_uuid", false, true, false,
                 DatapointUUID.class, new DatapointUUID("island_uuid", null),
                 (player, datapoint) -> {},
-                (player, datapoint) -> ((DatapointUUID) datapoint).setValue(player.getSkyBlockIsland().getIslandID())),
+            (player, datapoint) -> {
+                DatapointUUID islandUuid = (DatapointUUID) datapoint;
+                if (player.getSkyBlockIsland() != null) {
+                    islandUuid.setValue(player.getSkyBlockIsland().getIslandID());
+                } else if (islandUuid.getValue() == null && player.getProfiles() != null) {
+                    islandUuid.setValue(player.getProfiles().getCurrentlySelected());
+                }
+            }),
 
         IS_COOP("is_coop", false, true, false,
                 DatapointBoolean.class, new DatapointBoolean("is_coop", false)),
@@ -451,6 +469,24 @@ public class SkyBlockDataHandler extends DataHandler {
 
         KAT("kat", false, false, false,
                 DatapointKat.class, new DatapointKat("kat")),
+
+        GARDEN_CORE("garden_core", false, true, false,
+            DatapointGardenCore.class, new DatapointGardenCore("garden_core")),
+
+        GARDEN_VISITORS("garden_visitors", false, true, false,
+            DatapointGardenVisitors.class, new DatapointGardenVisitors("garden_visitors")),
+
+        GARDEN_PESTS("garden_pests", false, true, false,
+            DatapointGardenPests.class, new DatapointGardenPests("garden_pests")),
+
+        GARDEN_COMPOSTER("garden_composter", false, true, false,
+            DatapointGardenComposter.class, new DatapointGardenComposter("garden_composter")),
+
+        GARDEN_GREENHOUSE("garden_greenhouse", false, true, false,
+            DatapointGardenGreenhouse.class, new DatapointGardenGreenhouse("garden_greenhouse")),
+
+        GARDEN_PERSONAL("garden_personal", false, false, false,
+            DatapointGardenPersonal.class, new DatapointGardenPersonal("garden_personal")),
 
         STASH("stash", false, false, false,
                 DatapointStash.class, new DatapointStash("stash")),

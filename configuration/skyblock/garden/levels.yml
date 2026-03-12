@@ -1,0 +1,216 @@
+max_level: 15
+crop_growth_per_level_percent: 10
+skyblock_xp_per_level: 10
+levels:
+  - level: 1
+    visitor_unlocks: 46
+    crop_unlocks:
+      - WHEAT
+    reward_summary:
+      - "+46 Visitors"
+      - "Wheat Crop"
+  - level: 2
+    visitor_unlocks: 9
+    crop_unlocks:
+      - CARROT
+    crop_upgrade_tier: 1
+    skyblock_xp: 10
+    reward_summary:
+      - "+9 Visitors"
+      - "Carrot Crop"
+      - "Tier I Crop Upgrades"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 3
+    visitor_unlocks: 13
+    crop_unlocks:
+      - POTATO
+    barn_skin_unlocks:
+      - spruce
+    skyblock_xp: 10
+    reward_summary:
+      - "+13 Visitors"
+      - "Potato Crop"
+      - "Medieval Barn Skin"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 4
+    visitor_unlocks: 5
+    crop_unlocks:
+      - PUMPKIN
+    crop_upgrade_tier: 2
+    skyblock_xp: 10
+    reward_summary:
+      - "+5 Visitors"
+      - "Pumpkin Crop"
+      - "Tier II Crop Upgrades"
+      - "Gearing Up Quest"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 5
+    visitor_unlocks: 5
+    crop_unlocks:
+      - SUGAR_CANE
+    pest_unlocks:
+      - FLY
+      - CRICKET
+      - LOCUST
+      - RAT
+      - MOSQUITO
+      - FIELD_MOUSE
+    skyblock_xp: 10
+    reward_summary:
+      - "+5 Visitors"
+      - "Sugar Cane Crop"
+      - "Fly Pest"
+      - "Cricket Pest"
+      - "Locust Pest"
+      - "Rat Pest"
+      - "Field Mouse Pest"
+      - "Mosquito Pest"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 6
+    visitor_unlocks: 6
+    crop_unlocks:
+      - MELON_SLICE
+    pest_unlocks:
+      - EARTHWORM
+    crop_upgrade_tier: 3
+    barn_skin_unlocks:
+      - sunny
+    skyblock_xp: 10
+    reward_summary:
+      - "+6 Visitors"
+      - "Melon Slice Crop"
+      - "Earthworm Pest"
+      - "Tier III Crop Upgrades"
+      - "Sunny Barn Skin"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 7
+    visitor_unlocks: 10
+    crop_unlocks:
+      - CACTUS
+    pest_unlocks:
+      - MITE
+    greenhouse_unlocked: true
+    skyblock_xp: 10
+    reward_summary:
+      - "+10 Visitors"
+      - "Cactus Crop"
+      - "Mite Pest"
+      - "Greenhouse Unlock"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 8
+    visitor_unlocks: 9
+    crop_unlocks:
+      - COCOA_BEANS
+    pest_unlocks:
+      - MOTH
+    crop_upgrade_tier: 4
+    skyblock_xp: 10
+    reward_summary:
+      - "+9 Visitors"
+      - "Cocoa Beans Crop"
+      - "Moth Pest"
+      - "Tier IV Crop Upgrades"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 9
+    visitor_unlocks: 8
+    crop_unlocks:
+      - MUSHROOM
+    pest_unlocks:
+      - SLUG
+    barn_skin_unlocks:
+      - red
+    skyblock_xp: 10
+    reward_summary:
+      - "+8 Visitors"
+      - "Mushroom Crop"
+      - "Slug Pest"
+      - "Red Barn Skin"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 10
+    visitor_unlocks: 9
+    crop_unlocks:
+      - NETHER_WART
+    pest_unlocks:
+      - BEETLE
+    crop_upgrade_tier: 5
+    skyblock_xp: 10
+    reward_summary:
+      - "+9 Visitors"
+      - "Nether Wart Crop"
+      - "Beetle Pest"
+      - "Tier V Crop Upgrades"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 11
+    visitor_unlocks: 3
+    crop_unlocks:
+      - SUNFLOWER
+      - MOONFLOWER
+    pest_unlocks:
+      - FIREFLY
+      - DRAGONFLY
+    barn_skin_unlocks:
+      - cabin
+    skyblock_xp: 10
+    reward_summary:
+      - "+3 Visitors"
+      - "Sunflower Crop"
+      - "Moonflower Crop"
+      - "Firefly Pest"
+      - "Dragonfly Pest"
+      - "Cabin Barn Skin"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 12
+    visitor_unlocks: 9
+    crop_unlocks:
+      - WILD_ROSE
+    pest_unlocks:
+      - PRAYING_MANTIS
+    crop_upgrade_tier: 6
+    skyblock_xp: 10
+    reward_summary:
+      - "+9 Visitors"
+      - "Wild Rose Crop"
+      - "Praying Mantis Pest"
+      - "Tier VI Crop Upgrades"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 13
+    visitor_unlocks: 2
+    crop_upgrade_tier: 7
+    skyblock_xp: 10
+    reward_summary:
+      - "+2 Visitors"
+      - "Tier VII Crop Upgrades"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 14
+    visitor_unlocks: 1
+    crop_upgrade_tier: 8
+    skyblock_xp: 10
+    reward_summary:
+      - "+1 Visitor"
+      - "Tier VIII Crop Upgrades"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"
+  - level: 15
+    visitor_unlocks: 2
+    crop_upgrade_tier: 9
+    barn_skin_unlocks:
+      - mansion_heights
+    skyblock_xp: 10
+    reward_summary:
+      - "+2 Visitors"
+      - "Tier IX Crop Upgrades"
+      - "Mansion Heights Barn Skin"
+      - "+10 SkyBlock XP"
+      - "+10 Crop Growth"

@@ -49,12 +49,12 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
             .pos(pos.add(0, getEyeHeight() + 0.5f + (overflowing ? -0.2f : 0f), 0))
             .text(Arrays.copyOfRange(holograms, 0, holograms.length - (overflowing ? 0 : 1)))
             .player(viewer)
-            .instance(config.instance())
+            .instance(config.instance(viewer))
             .build();
 
         this.holo = holo;
         PlayerHolograms.addExternalPlayerHologram(holo);
-        setInstance(config.instance(), pos);
+        setInstance(config.instance(viewer), pos);
         addViewer(viewer);
         setPose(config.pose(viewer));
     }

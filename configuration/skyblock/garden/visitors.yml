@@ -1,0 +1,331 @@
+expected_unique_visitors: 137
+arrival_minutes:
+  base: 15
+  fifty_unique: 12
+  one_hundred_unique: 9
+farming_speedup_multiplier: 3
+finnegan_blooming_business_reduction_percent: 25
+max_visible_visitors: 5
+max_queued_visitors: 1
+rarity_weights:
+  UNCOMMON: 50
+  RARE: 15
+  LEGENDARY: 3
+  MYTHIC: 0.3
+  SPECIAL: 0.03
+rarity_request_multipliers:
+  UNCOMMON: 1
+  RARE: 1.5
+  LEGENDARY: 3
+  MYTHIC: 3
+  SPECIAL: 3
+farming_xp_rarity_multipliers:
+  UNCOMMON: 0.05
+  RARE: 0.06
+  LEGENDARY: 0.075
+  MYTHIC: 0.075
+  SPECIAL: 0.075
+copper_rarity_multipliers:
+  UNCOMMON: 1
+  RARE: 2
+  LEGENDARY: 5
+  MYTHIC: 5
+  SPECIAL: 5
+bits_base: 5
+bonus_rewards:
+  - item: FLOWERING_BOUQUET
+    chance: 0.02
+    min_rarity: UNCOMMON
+  - item: FRUIT_BOWL
+    chance: 0.002
+    min_rarity: UNCOMMON
+  - item: OVERGROWN_GRASS
+    chance: 0.001
+    min_rarity: UNCOMMON
+  - item: GREEN_BANDANA
+    chance: 0.004
+    min_rarity: RARE
+  - item: COPPER_DYE
+    chance: 0.0001
+    min_rarity: UNCOMMON
+base_item_ranges:
+  - { level: 1, min: 500, max: 1000 }
+  - { level: 2, min: 1250, max: 2500 }
+  - { level: 3, min: 2000, max: 4000 }
+  - { level: 4, min: 5000, max: 10000 }
+  - { level: 5, min: 10000, max: 20000 }
+  - { level: 6, min: 20000, max: 40000 }
+  - { level: 7, min: 30000, max: 60000 }
+  - { level: 8, min: 40000, max: 80000 }
+  - { level: 9, min: 50000, max: 100000 }
+  - { level: 10, min: 70000, max: 140000 }
+  - { level: 11, min: 75000, max: 150000 }
+  - { level: 12, min: 80000, max: 160000 }
+  - { level: 13, min: 85000, max: 170000 }
+  - { level: 14, min: 90000, max: 180000 }
+  - { level: 15, min: 95000, max: 190000 }
+garden_xp_by_level:
+  - { level: 1, uncommon: 2, rare: 4, legendary: 10, mythic: 10, special: 10 }
+  - { level: 2, uncommon: 3, rare: 5, legendary: 13, mythic: 13, special: 13 }
+  - { level: 3, uncommon: 3, rare: 6, legendary: 15, mythic: 15, special: 15 }
+  - { level: 4, uncommon: 4, rare: 8, legendary: 20, mythic: 20, special: 20 }
+  - { level: 5, uncommon: 5, rare: 10, legendary: 25, mythic: 25, special: 25 }
+  - { level: 6, uncommon: 6, rare: 12, legendary: 30, mythic: 30, special: 30 }
+  - { level: 7, uncommon: 8, rare: 16, legendary: 40, mythic: 40, special: 40 }
+  - { level: 8, uncommon: 10, rare: 20, legendary: 50, mythic: 50, special: 50 }
+  - { level: 9, uncommon: 12, rare: 24, legendary: 60, mythic: 60, special: 60 }
+  - { level: 10, uncommon: 15, rare: 30, legendary: 75, mythic: 75, special: 75 }
+  - { level: 11, uncommon: 15, rare: 30, legendary: 75, mythic: 75, special: 75 }
+  - { level: 12, uncommon: 15, rare: 30, legendary: 75, mythic: 75, special: 75 }
+  - { level: 13, uncommon: 15, rare: 30, legendary: 75, mythic: 75, special: 75 }
+  - { level: 14, uncommon: 15, rare: 30, legendary: 75, mythic: 75, special: 75 }
+  - { level: 15, uncommon: 15, rare: 30, legendary: 75, mythic: 75, special: 75 }
+item_quantity_multipliers:
+  WHEAT: 1
+  CARROT: 3.5
+  POTATO: 3
+  PUMPKIN: 0.85
+  SUGAR_CANE: 2
+  MELON_SLICE: 4
+  CACTUS: 1.5
+  COCOA_BEANS: 1
+  MUSHROOM: 0.95
+  NETHER_WART: 3
+registry:
+  - id: adventurer
+    display_name: Adventurer
+    rarity: UNCOMMON
+    garden_level: 3
+    requirements:
+      - Talk to the Adventurer
+    wanted_items:
+      - POTATO
+  - id: alchemage
+    display_name: Alchemage
+    rarity: RARE
+    wanted_items:
+      - CARROT
+  - id: alchemist
+    display_name: Alchemist
+    rarity: UNCOMMON
+    garden_level: 10
+    requirements:
+      - Talk to the Alchemist
+    wanted_items:
+      - NETHER_WART
+  - id: an
+    display_name: An
+    rarity: UNCOMMON
+    wanted_items:
+      - NETHER_WART
+  - id: andrew
+    display_name: Andrew
+    rarity: UNCOMMON
+    requirements:
+      - Talk to Andrew
+    wanted_items:
+      - ANY
+  - id: anita
+    display_name: Anita
+    rarity: UNCOMMON
+    garden_level: 2
+    requirements:
+      - Talk to Anita
+    wanted_items:
+      - CARROT
+  - id: arthur
+    display_name: Arthur
+    rarity: UNCOMMON
+    requirements:
+      - Talk to Arthur
+    wanted_items:
+      - WHEAT
+  - id: banker_broadjaw
+    display_name: Banker Broadjaw
+    rarity: UNCOMMON
+    garden_level: 7
+    requirements:
+      - Talk to Banker Broadjaw
+    wanted_items:
+      - CACTUS
+  - id: carpenter
+    display_name: Carpenter
+    rarity: RARE
+    wanted_items:
+      - MELON_SLICE
+      - COCOA_BEANS
+    unique_rewards:
+      - GREENHOUSE_BLUEPRINT_ON_FIRST_VISIT
+  - id: clerk_seraphine
+    display_name: Clerk Seraphine
+    rarity: LEGENDARY
+    garden_level: 5
+    requirements:
+      - Talk to Clerk Seraphine
+    wanted_items:
+      - SUGAR_CANE
+  - id: duke
+    display_name: Duke
+    rarity: UNCOMMON
+    requirements:
+      - Talk to Duke
+    wanted_items:
+      - ANY
+  - id: emissary_carlton
+    display_name: Emissary Carlton
+    rarity: UNCOMMON
+    garden_level: 8
+    requirements:
+      - Talk to Emissary Carlton
+    wanted_items:
+      - COCOA_BEANS
+  - id: emissary_ceanna
+    display_name: Emissary Ceanna
+    rarity: UNCOMMON
+    garden_level: 3
+    requirements:
+      - Talk to Emissary Ceanna
+    wanted_items:
+      - POTATO
+  - id: emissary_fraiser
+    display_name: Emissary Fraiser
+    rarity: UNCOMMON
+    garden_level: 6
+    requirements:
+      - Talk to Emissary Fraiser
+    wanted_items:
+      - MELON_SLICE
+  - id: emissary_wilson
+    display_name: Emissary Wilson
+    rarity: UNCOMMON
+    garden_level: 2
+    requirements:
+      - Talk to Emissary Wilson
+    wanted_items:
+      - CARROT
+  - id: farm_merchant
+    display_name: Farm Merchant
+    rarity: UNCOMMON
+    wanted_items:
+      - WHEAT
+  - id: farmer_jon
+    display_name: Farmer Jon
+    rarity: UNCOMMON
+    requirements:
+      - Talk to Farmer Jon
+    wanted_items:
+      - SUGAR_CANE
+  - id: farmhand
+    display_name: Farmhand
+    rarity: UNCOMMON
+    garden_level: 3
+    requirements:
+      - Talk to Farmhand
+    wanted_items:
+      - WHEAT
+      - CARROT
+      - POTATO
+  - id: fear_mongerer
+    display_name: Fear Mongerer
+    rarity: UNCOMMON
+    garden_level: 4
+    requirements:
+      - Talk to the Fear Mongerer
+    wanted_items:
+      - PUMPKIN
+  - id: friendly_hiker
+    display_name: Friendly Hiker
+    rarity: UNCOMMON
+    requirements:
+      - Talk to this Hiker
+    wanted_items:
+      - RAW_MUTTON
+      - RAW_PORKCHOP
+      - RAW_RABBIT
+  - id: geonathan_greatforge
+    display_name: Geonathan Greatforge
+    rarity: UNCOMMON
+    requirements:
+      - Talk to Geonathan Greatforge
+    wanted_items:
+      - COMPOST
+    override_rewards:
+      farming_xp: 15000
+      copper: 30
+      items:
+        - BIOFUEL
+  - id: guy
+    display_name: Guy
+    rarity: UNCOMMON
+    garden_level: 9
+    requirements:
+      - Talk to Guy
+    wanted_items:
+      - MUSHROOM
+  - id: gwendolyn
+    display_name: Gwendolyn
+    rarity: RARE
+    requirements:
+      - Talk to Gwendolyn
+    wanted_items:
+      - COCOA_BEANS
+  - id: jacob
+    display_name: Jacob
+    rarity: UNCOMMON
+    requirements:
+      - Talk to Jacob
+    wanted_items:
+      - WHEAT
+    unique_rewards:
+      - JACOBS_TICKET
+  - id: jerry
+    display_name: Jerry
+    rarity: LEGENDARY
+    wanted_items:
+      - BREAD
+      - ANY
+    first_visit_override:
+      garden_level: 1
+      farming_xp: 500
+      copper: 5
+  - id: jotraeline_greatforge
+    display_name: Jotraeline Greatforge
+    rarity: UNCOMMON
+    requirements:
+      - Talk to Jotraeline Greatforge
+    wanted_items:
+      - COMPOST
+    override_rewards:
+      farming_xp: 15000
+      copper: 30
+      items:
+        - BIOFUEL
+  - id: librarian
+    display_name: Librarian
+    rarity: UNCOMMON
+    garden_level: 5
+    requirements:
+      - Talk to the Librarian
+    wanted_items:
+      - SUGAR_CANE
+  - id: leo
+    display_name: Leo
+    rarity: UNCOMMON
+    requirements:
+      - Talk to Leo
+    wanted_items:
+      - ANY
+  - id: liam
+    display_name: Liam
+    rarity: UNCOMMON
+    requirements:
+      - Talk to Liam
+    wanted_items:
+      - ANY
+  - id: shifty
+    display_name: Shifty
+    rarity: RARE
+    requirements:
+      - Talk to Shifty
+    wanted_items:
+      - ANY
