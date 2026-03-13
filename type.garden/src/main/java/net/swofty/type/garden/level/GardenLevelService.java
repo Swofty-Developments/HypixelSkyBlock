@@ -1,6 +1,8 @@
 package net.swofty.type.garden.level;
 
+import net.swofty.type.garden.GardenServices;
 import net.swofty.type.garden.config.GardenConfigRegistry;
+import net.swofty.type.skyblockgeneric.garden.GardenData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +37,20 @@ public class GardenLevelService {
 
     public List<String> getRewardsForLevel(int level) {
         return findLevel(level)
-            .map(entry -> GardenConfigRegistry.getList(entry, "reward_summary").stream()
-                .map(String::valueOf)
-                .toList())
+            .map(entry -> {
+                List<String> legacySummary = GardenConfigRegistry.getList(entry, "reward_summary").stream()
+                    .map(String::valueOf)
+                    .toList();
+                if (!legacySummary.isEmpty()) {
+                    return legacySummary;
+                }
+
+                List<String> rendered = new ArrayList<>();
+                for (Object rawReward : GardenConfigRegistry.getList(entry, "rewards")) {
+                    rendered.add(renderReward(rawReward));
+                }
+                return rendered;
+            })
             .orElse(List.of());
     }
 
@@ -53,5 +66,71 @@ public class GardenLevelService {
         return levels.stream()
             .filter(entry -> GardenConfigRegistry.getInt(entry, "level", 0) == level)
             .findFirst();
+    }
+
+    @SuppressWarnings("unchecked")
+    private String renderReward(Object rawReward) {
+        if (rawReward instanceof Map<?, ?> rewardMapRaw) {
+            Map<String, Object> rewardMap = (Map<String, Object>) rewardMapRaw;
+            String type = GardenConfigRegistry.getString(rewardMap, "type", "").toUpperCase();
+            return switch (type) {
+                case "VISITOR_UNLOCKS" -> "+" + GardenConfigRegistry.getInt(rewardMap, "amount", 0) + " Visitor" +
+                    (GardenConfigRegistry.getInt(rewardMap, "amount", 0) == 1 ? "" : "s");
+                case "CROP_UNLOCK" -> normalizeDisplay(GardenConfigRegistry.getString(rewardMap, "key", "")) + " Crop";
+                case "PEST_UNLOCK" -> normalizeDisplay(GardenConfigRegistry.getString(rewardMap, "key", "")) + " Pest";
+                case "CROP_UPGRADE_TIER" ->
+                    "Tier " + toRoman(GardenConfigRegistry.getInt(rewardMap, "amount", 0)) + " Crop Upgrades";
+                case "BARN_SKIN_UNLOCK" ->
+                    normalizeDisplay(GardenConfigRegistry.getString(rewardMap, "key", "")) + " Barn Skin";
+                case "GREENHOUSE_UNLOCK" -> "Greenhouse Unlock";
+                case "SKYBLOCK_XP" -> "+" + GardenConfigRegistry.getInt(rewardMap, "amount", 0) + " SkyBlock XP";
+                case "CROP_GROWTH" -> "+" + GardenConfigRegistry.getInt(rewardMap, "amount", 0) + " Crop Growth";
+                default -> {
+                    GardenData.GardenRewardState rewardState = new GardenData.GardenRewardState();
+                    rewardState.setType(type);
+                    rewardState.setKey(GardenConfigRegistry.getString(rewardMap, "key", ""));
+                    rewardState.setAmount(GardenConfigRegistry.getLong(rewardMap, "amount", 0L));
+                    rewardState.setDisplayOverride(GardenConfigRegistry.getString(rewardMap, "display", ""));
+                    yield GardenServices.visitors().describeReward(rewardState);
+                }
+            };
+        }
+        return String.valueOf(rawReward);
+    }
+
+    private String normalizeDisplay(String key) {
+        if (key == null || key.isBlank()) {
+            return "";
+        }
+        String[] parts = key.toLowerCase().split("_");
+        StringBuilder builder = new StringBuilder();
+        for (String part : parts) {
+            if (part.isBlank()) {
+                continue;
+            }
+            if (builder.length() > 0) {
+                builder.append(' ');
+            }
+            builder.append(Character.toUpperCase(part.charAt(0)));
+            if (part.length() > 1) {
+                builder.append(part.substring(1));
+            }
+        }
+        return builder.toString();
+    }
+
+    private String toRoman(int value) {
+        return switch (value) {
+            case 1 -> "I";
+            case 2 -> "II";
+            case 3 -> "III";
+            case 4 -> "IV";
+            case 5 -> "V";
+            case 6 -> "VI";
+            case 7 -> "VII";
+            case 8 -> "VIII";
+            case 9 -> "IX";
+            default -> String.valueOf(value);
+        };
     }
 }

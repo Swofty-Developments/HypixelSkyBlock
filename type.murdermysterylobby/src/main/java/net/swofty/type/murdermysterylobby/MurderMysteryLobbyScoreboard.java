@@ -1,5 +1,7 @@
 package net.swofty.type.murdermysterylobby;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
@@ -56,18 +58,18 @@ public class MurderMysteryLobbyScoreboard {
 					tokens = stats.getTotalTokens(MurderMysteryLeaderboardPeriod.LIFETIME);
 				}
 
-				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_kills_label") + totalKills);
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_wins_label") + totalWins);
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_detective_label") + detectiveWins);
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_murderer_label") + murdererWins);
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.tokens_label") + tokens);
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.common.footer"));
+                List<Component> lines = new ArrayList<>();
+                lines.add(HypixelScoreboard.legacy("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName()));
+                lines.add(HypixelScoreboard.legacy("§7 "));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_lobby.total_kills_label") + totalKills));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_lobby.total_wins_label") + totalWins));
+                lines.add(HypixelScoreboard.legacy("§7 "));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_lobby.wins_as_detective_label") + detectiveWins));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_lobby.wins_as_murderer_label") + murdererWins));
+                lines.add(HypixelScoreboard.legacy("§7 "));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_lobby.tokens_label") + tokens));
+                lines.add(HypixelScoreboard.legacy("§7 "));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.common.footer")));
 
 				if (!scoreboard.hasScoreboard(player)) {
 					scoreboard.createScoreboard(player, getSidebarName(animationFrame));
@@ -84,20 +86,21 @@ public class MurderMysteryLobbyScoreboard {
 		scoreboard.removeScoreboard(player);
 	}
 
-	private static String getSidebarName(int counter) {
-		String baseText = I18n.string("scoreboard.murdermystery_lobby.title_base");
-		String[] colors = {"§f§l", "§6§l", "§e§l"};
-		String endColor = "§a§l";
-
-		if (counter > 0 && counter <= 14) {
-			return colors[0] + baseText.substring(0, counter - 1) +
-					colors[1] + baseText.charAt(counter - 1) +
-					colors[2] + baseText.substring(counter) +
-					endColor;
-		} else if ((counter >= 15 && counter <= 25) || (counter >= 35 && counter <= 45)) {
-			return colors[0] + baseText + endColor;
-		} else {
-			return colors[2] + baseText + endColor;
-		}
+    private static Component getSidebarName(int counter) {
+        return HypixelScoreboard.animatedSidebarName(
+            I18n.string("scoreboard.murdermystery_lobby.title_base"),
+            counter,
+            NamedTextColor.WHITE,
+            NamedTextColor.GOLD,
+            NamedTextColor.YELLOW,
+            NamedTextColor.WHITE,
+            NamedTextColor.YELLOW,
+            14,
+            15,
+            25,
+            35,
+            45,
+            Component.text("MYSTERY", NamedTextColor.GREEN, net.kyori.adventure.text.format.TextDecoration.BOLD)
+        );
 	}
 }

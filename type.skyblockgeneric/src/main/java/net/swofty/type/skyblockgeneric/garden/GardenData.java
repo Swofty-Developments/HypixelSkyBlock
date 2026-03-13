@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.garden;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +25,13 @@ public final class GardenData {
         private Set<String> servedUniqueVisitors = new LinkedHashSet<>();
         private Map<String, Integer> gardenMilestones = new HashMap<>();
         private Map<String, Integer> cropMilestones = new HashMap<>();
+        private Map<String, Long> cropMilestoneProgress = new HashMap<>();
         private Map<String, Integer> visitorMilestones = new HashMap<>();
+        private Map<String, Long> visitorMilestoneProgress = new HashMap<>();
         private Set<String> skyMartPurchases = new LinkedHashSet<>();
         private Set<String> tutorialFlags = new LinkedHashSet<>();
+        private Set<String> visitorRequirementFlags = new LinkedHashSet<>();
+        private Map<String, Long> visitorRequirementCounters = new HashMap<>();
         private String selectedTimeMode = "DYNAMIC";
         private long lastActiveAt = 0;
 
@@ -126,12 +131,28 @@ public final class GardenData {
             this.cropMilestones = cropMilestones;
         }
 
+        public Map<String, Long> getCropMilestoneProgress() {
+            return cropMilestoneProgress;
+        }
+
+        public void setCropMilestoneProgress(Map<String, Long> cropMilestoneProgress) {
+            this.cropMilestoneProgress = cropMilestoneProgress;
+        }
+
         public Map<String, Integer> getVisitorMilestones() {
             return visitorMilestones;
         }
 
         public void setVisitorMilestones(Map<String, Integer> visitorMilestones) {
             this.visitorMilestones = visitorMilestones;
+        }
+
+        public Map<String, Long> getVisitorMilestoneProgress() {
+            return visitorMilestoneProgress;
+        }
+
+        public void setVisitorMilestoneProgress(Map<String, Long> visitorMilestoneProgress) {
+            this.visitorMilestoneProgress = visitorMilestoneProgress;
         }
 
         public Set<String> getSkyMartPurchases() {
@@ -148,6 +169,22 @@ public final class GardenData {
 
         public void setTutorialFlags(Set<String> tutorialFlags) {
             this.tutorialFlags = tutorialFlags;
+        }
+
+        public Set<String> getVisitorRequirementFlags() {
+            return visitorRequirementFlags;
+        }
+
+        public void setVisitorRequirementFlags(Set<String> visitorRequirementFlags) {
+            this.visitorRequirementFlags = visitorRequirementFlags;
+        }
+
+        public Map<String, Long> getVisitorRequirementCounters() {
+            return visitorRequirementCounters;
+        }
+
+        public void setVisitorRequirementCounters(Map<String, Long> visitorRequirementCounters) {
+            this.visitorRequirementCounters = visitorRequirementCounters;
         }
 
         public String getSelectedTimeMode() {
@@ -250,8 +287,8 @@ public final class GardenData {
         private int gardenXp = 0;
         private int copper = 0;
         private int bits = 0;
-        private List<String> guaranteedRewards = new ArrayList<>();
-        private List<String> bonusRewards = new ArrayList<>();
+        private List<Object> guaranteedRewards = new ArrayList<>();
+        private List<Object> bonusRewards = new ArrayList<>();
         private long arrivedAt = 0;
         private boolean queued = false;
 
@@ -311,20 +348,20 @@ public final class GardenData {
             this.bits = bits;
         }
 
-        public List<String> getGuaranteedRewards() {
-            return guaranteedRewards;
+        public List<GardenRewardState> getGuaranteedRewards() {
+            return normalizeRewards(guaranteedRewards);
         }
 
-        public void setGuaranteedRewards(List<String> guaranteedRewards) {
-            this.guaranteedRewards = guaranteedRewards;
+        public void setGuaranteedRewards(List<?> guaranteedRewards) {
+            this.guaranteedRewards = guaranteedRewards == null ? new ArrayList<>() : new ArrayList<>(guaranteedRewards);
         }
 
-        public List<String> getBonusRewards() {
-            return bonusRewards;
+        public List<GardenRewardState> getBonusRewards() {
+            return normalizeRewards(bonusRewards);
         }
 
-        public void setBonusRewards(List<String> bonusRewards) {
-            this.bonusRewards = bonusRewards;
+        public void setBonusRewards(List<?> bonusRewards) {
+            this.bonusRewards = bonusRewards == null ? new ArrayList<>() : new ArrayList<>(bonusRewards);
         }
 
         public long getArrivedAt() {
@@ -341,6 +378,65 @@ public final class GardenData {
 
         public void setQueued(boolean queued) {
             this.queued = queued;
+        }
+
+        private static List<GardenRewardState> normalizeRewards(List<Object> rawRewards) {
+            List<GardenRewardState> normalized = new ArrayList<>();
+            if (rawRewards == null) {
+                return normalized;
+            }
+            for (Object rawReward : rawRewards) {
+                if (rawReward instanceof GardenRewardState rewardState) {
+                    normalized.add(rewardState);
+                    continue;
+                }
+                if (rawReward instanceof Map<?, ?> rewardMap) {
+                    GardenRewardState rewardState = new GardenRewardState();
+                    rewardState.setType(String.valueOf(rewardMap.containsKey("type") ? rewardMap.get("type") : "PROFILE_FLAG"));
+                    rewardState.setKey(String.valueOf(rewardMap.containsKey("key") ? rewardMap.get("key") : ""));
+                    rewardState.setAmount(parseLong(rewardMap.get("amount"), 0L));
+                    rewardState.setMin(parseLong(rewardMap.get("min"), 0L));
+                    rewardState.setMax(parseLong(rewardMap.get("max"), 0L));
+                    rewardState.setPoolId(String.valueOf(rewardMap.containsKey("poolId") ? rewardMap.get("poolId") : ""));
+                    rewardState.setFirstVisitOnly(Boolean.parseBoolean(String.valueOf(
+                        rewardMap.containsKey("firstVisitOnly") ? rewardMap.get("firstVisitOnly") : false
+                    )));
+                    rewardState.setDisplayOverride(String.valueOf(
+                        rewardMap.containsKey("displayOverride") ? rewardMap.get("displayOverride") : ""
+                    ));
+                    Object metadata = rewardMap.get("metadata");
+                    if (metadata instanceof Map<?, ?> metadataMap) {
+                        Map<String, String> normalizedMetadata = new LinkedHashMap<>();
+                        metadataMap.forEach((metadataKey, metadataValue) -> normalizedMetadata.put(
+                            String.valueOf(metadataKey),
+                            String.valueOf(metadataValue)
+                        ));
+                        rewardState.setMetadata(normalizedMetadata);
+                    }
+                    normalized.add(rewardState);
+                    continue;
+                }
+
+                GardenRewardState rewardState = new GardenRewardState();
+                rewardState.setType("LEGACY");
+                rewardState.setKey(String.valueOf(rawReward));
+                normalized.add(rewardState);
+            }
+            return normalized;
+        }
+
+        private static long parseLong(Object rawValue, long defaultValue) {
+            if (rawValue instanceof Number number) {
+                return number.longValue();
+            }
+            if (rawValue == null) {
+                return defaultValue;
+            }
+            try {
+                return Long.parseLong(String.valueOf(rawValue));
+            } catch (NumberFormatException ignored) {
+                return defaultValue;
+            }
         }
     }
 
@@ -371,6 +467,90 @@ public final class GardenData {
 
         public void setItemQuantityMultiplier(double itemQuantityMultiplier) {
             this.itemQuantityMultiplier = itemQuantityMultiplier;
+        }
+    }
+
+    public static class GardenRewardState {
+        private String type = "";
+        private String key = "";
+        private long amount = 0;
+        private long min = 0;
+        private long max = 0;
+        private String poolId = "";
+        private boolean firstVisitOnly = false;
+        private String displayOverride = "";
+        private Map<String, String> metadata = new LinkedHashMap<>();
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public long getAmount() {
+            return amount;
+        }
+
+        public void setAmount(long amount) {
+            this.amount = amount;
+        }
+
+        public long getMin() {
+            return min;
+        }
+
+        public void setMin(long min) {
+            this.min = min;
+        }
+
+        public long getMax() {
+            return max;
+        }
+
+        public void setMax(long max) {
+            this.max = max;
+        }
+
+        public String getPoolId() {
+            return poolId;
+        }
+
+        public void setPoolId(String poolId) {
+            this.poolId = poolId;
+        }
+
+        public boolean isFirstVisitOnly() {
+            return firstVisitOnly;
+        }
+
+        public void setFirstVisitOnly(boolean firstVisitOnly) {
+            this.firstVisitOnly = firstVisitOnly;
+        }
+
+        public String getDisplayOverride() {
+            return displayOverride;
+        }
+
+        public void setDisplayOverride(String displayOverride) {
+            this.displayOverride = displayOverride;
+        }
+
+        public Map<String, String> getMetadata() {
+            return metadata;
+        }
+
+        public void setMetadata(Map<String, String> metadata) {
+            this.metadata = metadata;
         }
     }
 
@@ -675,6 +855,11 @@ public final class GardenData {
         private Set<String> spokenNpcFlags = new LinkedHashSet<>();
         private Set<String> anitaPurchases = new LinkedHashSet<>();
         private Set<String> tutorialFlags = new LinkedHashSet<>();
+        private Set<String> visitorRequirementFlags = new LinkedHashSet<>();
+        private Map<String, Long> visitorRequirementCounters = new HashMap<>();
+        private Set<String> donatedItems = new LinkedHashSet<>();
+        private Map<String, Long> exportedItems = new HashMap<>();
+        private Set<String> accessFlags = new LinkedHashSet<>();
 
         public double getSowdust() {
             return sowdust;
@@ -746,6 +931,46 @@ public final class GardenData {
 
         public void setTutorialFlags(Set<String> tutorialFlags) {
             this.tutorialFlags = tutorialFlags;
+        }
+
+        public Set<String> getVisitorRequirementFlags() {
+            return visitorRequirementFlags;
+        }
+
+        public void setVisitorRequirementFlags(Set<String> visitorRequirementFlags) {
+            this.visitorRequirementFlags = visitorRequirementFlags;
+        }
+
+        public Map<String, Long> getVisitorRequirementCounters() {
+            return visitorRequirementCounters;
+        }
+
+        public void setVisitorRequirementCounters(Map<String, Long> visitorRequirementCounters) {
+            this.visitorRequirementCounters = visitorRequirementCounters;
+        }
+
+        public Set<String> getDonatedItems() {
+            return donatedItems;
+        }
+
+        public void setDonatedItems(Set<String> donatedItems) {
+            this.donatedItems = donatedItems;
+        }
+
+        public Map<String, Long> getExportedItems() {
+            return exportedItems;
+        }
+
+        public void setExportedItems(Map<String, Long> exportedItems) {
+            this.exportedItems = exportedItems;
+        }
+
+        public Set<String> getAccessFlags() {
+            return accessFlags;
+        }
+
+        public void setAccessFlags(Set<String> accessFlags) {
+            this.accessFlags = accessFlags;
         }
     }
 

@@ -44,7 +44,10 @@ public class HypixelConst {
     private static int maxPlayers;
 
     public static boolean isIslandServer() {
-        return typeLoader.getType() == ServerType.SKYBLOCK_ISLAND
-            || typeLoader.getType() == ServerType.SKYBLOCK_GARDEN;
+        return typeLoader.getType() == ServerType.SKYBLOCK_ISLAND;
+    }
+
+    public static boolean isGarden() {
+        return typeLoader.getType() == ServerType.SKYBLOCK_GARDEN;
     }
 }

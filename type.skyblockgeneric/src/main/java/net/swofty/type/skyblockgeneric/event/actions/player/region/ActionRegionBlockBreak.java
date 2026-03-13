@@ -59,7 +59,7 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
         boolean shouldItemDrop = false;
 
         // Handle island server block breaks
-        if (HypixelConst.isIslandServer()) {
+        if (HypixelConst.isIslandServer() || HypixelConst.isGarden()) {
             SkyBlockEditableWorldHandle editableWorld = player.getEditableWorldHandle();
             if (editableWorld == null || !editableWorld.canEdit(event.getBlockPosition())) {
                 if (editableWorld != null) {

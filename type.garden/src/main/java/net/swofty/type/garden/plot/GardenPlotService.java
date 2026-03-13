@@ -67,7 +67,7 @@ public class GardenPlotService {
         if (!garden.isWithinBounds(point)) {
             return false;
         }
-        if (barnSwapInProgress && isInBarnSwapRegion(point)) {
+        if (isInBarnSwapRegion(point)) {
             return false;
         }
         GardenPlotDefinition plot = getPlotAt(point);

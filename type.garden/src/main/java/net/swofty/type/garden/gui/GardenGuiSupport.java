@@ -16,6 +16,7 @@ import net.swofty.type.garden.config.GardenBarnSkinDefinition;
 import net.swofty.type.garden.config.GardenConfigRegistry;
 import net.swofty.type.garden.config.GardenPlotDefinition;
 import net.swofty.type.garden.user.SkyBlockGarden;
+import net.swofty.type.garden.visitor.GardenBarnRuntime;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
@@ -208,7 +209,7 @@ public final class GardenGuiSupport {
         visitors.getLogbookEntries().add(visitorId);
 
         GardenData.GardenCoreData core = core(player);
-        core.getServedUniqueVisitors().add(visitorId);
+        boolean firstUniqueVisit = core.getServedUniqueVisitors().add(visitorId);
         core.setExperience(core.getExperience() + visitor.getGardenXp());
         core.setCopper(core.getCopper() + visitor.getCopper());
 
@@ -216,19 +217,25 @@ public final class GardenGuiSupport {
         DatapointInteger bits = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class);
         bits.setValue(bits.getValue() + visitor.getBits());
 
-        for (String rewardId : visitor.getGuaranteedRewards()) {
-            giveReward(player, rewardId);
+        for (GardenData.GardenRewardState reward : visitor.getGuaranteedRewards()) {
+            giveReward(player, reward);
         }
-        for (String rewardId : visitor.getBonusRewards()) {
-            giveReward(player, rewardId);
+        for (GardenData.GardenRewardState reward : visitor.getBonusRewards()) {
+            giveReward(player, reward);
         }
 
         if (visitorId.equalsIgnoreCase("carpenter") && !greenhouse(player).isBlueprintUnlocked()) {
             greenhouse(player).setBlueprintUnlocked(true);
-            giveReward(player, "GREENHOUSE_BLUEPRINT");
+            giveReward(player, GardenServices.visitors().parseReward("GREENHOUSE_BLUEPRINT"));
         }
 
+        if (firstUniqueVisit) {
+            net.swofty.type.garden.GardenServices.milestones().advanceVisitorMilestone(player, "UNIQUE_SERVED", 1);
+        }
+        net.swofty.type.garden.GardenServices.milestones().advanceVisitorMilestone(player, "OFFERS_ACCEPTED", 1);
+
         player.playSuccessSound();
+        GardenBarnRuntime.requestImmediateSync(player);
         return true;
     }
 
@@ -237,6 +244,7 @@ public final class GardenGuiSupport {
         boolean removed = visitors.getActiveVisitors().removeIf(visitor -> visitor.getVisitorId().equalsIgnoreCase(visitorId));
         if (removed) {
             pushQueuedVisitor(visitors);
+            GardenBarnRuntime.requestImmediateSync(player);
         }
         return removed;
     }
@@ -319,18 +327,100 @@ public final class GardenGuiSupport {
         visitors.getActiveVisitors().add(queued);
     }
 
-    private static void giveReward(SkyBlockPlayer player, String rewardId) {
-        if (rewardId == null || rewardId.isBlank() || rewardId.endsWith("_ON_FIRST_VISIT")) {
+    public static String describeReward(GardenData.GardenRewardState reward) {
+        return GardenServices.visitors().describeReward(reward);
+    }
+
+    public static List<String> describeRewards(List<GardenData.GardenRewardState> rewards, String colorPrefix) {
+        List<String> lore = new ArrayList<>();
+        for (GardenData.GardenRewardState reward : rewards) {
+            String description = describeReward(reward);
+            if (!description.isBlank()) {
+                lore.add(colorPrefix + description);
+            }
+        }
+        return lore;
+    }
+
+    public static ItemStack.Builder visitorIcon(Map<String, Object> definition, String displayName, String rarity, List<String> lore) {
+        String iconHeadTexture = GardenServices.visitors().getIconHeadTexture(definition);
+        if (!iconHeadTexture.isBlank()) {
+            return ItemStackCreator.getStackHead(
+                colorForRarity(rarity) + displayName,
+                iconHeadTexture,
+                1,
+                lore.toArray(String[]::new)
+            );
+        }
+
+        String iconItem = GardenServices.visitors().getIconItem(definition);
+        if (!iconItem.isBlank()) {
+            return itemWithLore(iconItem, colorForRarity(rarity) + displayName, lore);
+        }
+
+        if ("VILLAGER".equals(GardenServices.visitors().getEntityKind(definition))) {
+            return ItemStackCreator.getStack(
+                colorForRarity(rarity) + displayName,
+                Material.VILLAGER_SPAWN_EGG,
+                1,
+                lore
+            );
+        }
+
+        return itemWithLore("BOOK", colorForRarity(rarity) + displayName, lore);
+    }
+
+    private static void giveReward(SkyBlockPlayer player, GardenData.GardenRewardState reward) {
+        if (reward == null) {
             return;
         }
-        if (rewardId.equalsIgnoreCase("JACOBS_TICKET")) {
-            personal(player).setJacobsTickets(personal(player).getJacobsTickets() + 1);
-            return;
+        long amount = normalizeRewardAmount(reward);
+        switch (reward.getType()) {
+            case "ITEM" -> {
+                ItemType itemType = ItemType.get(reward.getKey());
+                if (itemType != null) {
+                    player.addAndUpdateItem(itemType, (int) Math.max(1L, amount));
+                }
+            }
+            case "BITS" -> {
+                DatapointInteger bits = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class);
+                bits.setValue(bits.getValue() + (int) amount);
+            }
+            case "COPPER" -> core(player).setCopper(core(player).getCopper() + amount);
+            case "FARMING_XP" -> player.getSkills().increase(player, SkillCategories.FARMING, (double) amount);
+            case "GARDEN_XP" -> core(player).setExperience(core(player).getExperience() + amount);
+            case "JACOBS_TICKET" ->
+                personal(player).setJacobsTickets(personal(player).getJacobsTickets() + (int) amount);
+            case "BARN_SKIN_UNLOCK" -> core(player).getOwnedBarnSkins().add(reward.getKey().toLowerCase());
+            case "GREENHOUSE_UNLOCK" -> greenhouse(player).setBlueprintUnlocked(true);
+            case "SKYMART_UNLOCK" -> core(player).getSkyMartPurchases().add(reward.getKey().toLowerCase());
+            case "TUTORIAL_FLAG" -> personal(player).getTutorialFlags().add(reward.getKey().toLowerCase());
+            case "PROFILE_FLAG", "ACCESS_FLAG" ->
+                personal(player).getVisitorRequirementFlags().add(reward.getKey().toLowerCase());
+            case "PROFILE_COUNTER" ->
+                personal(player).getVisitorRequirementCounters().merge(reward.getKey().toLowerCase(), amount, Long::sum);
+            case "POWDER" ->
+                personal(player).getVisitorRequirementCounters().merge(("powder_" + reward.getKey()).toLowerCase(), amount, Long::sum);
+            case "ESSENCE" ->
+                personal(player).getVisitorRequirementCounters().merge(("essence_" + reward.getKey()).toLowerCase(), amount, Long::sum);
+            case "PELTS" -> personal(player).getVisitorRequirementCounters().merge("pelts", amount, Long::sum);
+            case "FAIRY_SOUL" ->
+                personal(player).getVisitorRequirementCounters().merge("fairy_souls", amount, Long::sum);
+            default -> {
+            }
         }
-        ItemType itemType = ItemType.get(rewardId);
-        if (itemType != null) {
-            player.addAndUpdateItem(itemType);
+    }
+
+    private static long normalizeRewardAmount(GardenData.GardenRewardState reward) {
+        if (reward.getAmount() > 0) {
+            return reward.getAmount();
         }
+        if (reward.getMin() > 0 && reward.getMax() >= reward.getMin()) {
+            return reward.getMax() == reward.getMin()
+                ? reward.getMin()
+                : java.util.concurrent.ThreadLocalRandom.current().nextLong(reward.getMin(), reward.getMax() + 1);
+        }
+        return 1L;
     }
 
     public record UpcomingContestDisplay(int year, GetJacobContestScheduleProtocol.ContestScheduleEntry entry) {

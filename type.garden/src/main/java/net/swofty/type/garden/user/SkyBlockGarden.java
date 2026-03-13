@@ -8,6 +8,7 @@ import net.hollowcube.polar.PolarWorld;
 import net.hollowcube.polar.PolarWriter;
 import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.SharedInstance;
@@ -23,6 +24,7 @@ import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointGardenCore;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.data.monogdb.GardenDatabase;
+import net.swofty.type.skyblockgeneric.furniture.Furniture;
 import net.swofty.type.skyblockgeneric.garden.GardenData;
 import net.swofty.type.skyblockgeneric.garden.SkyBlockGardenHandle;
 import net.swofty.type.skyblockgeneric.garden.WorldBuildLimits;
@@ -117,6 +119,7 @@ public class SkyBlockGarden implements SkyBlockGardenHandle {
             }
 
             temporaryInstance.setChunkLoader(new PolarLoader(world));
+            Furniture.load(gardenInstance, "composter", new Pos(-11.0, 72.0, -28.0));
             created = true;
 
             future.complete(gardenInstance);
@@ -183,8 +186,8 @@ public class SkyBlockGarden implements SkyBlockGardenHandle {
         if (!isWithinBounds(point)) {
             return SkyBlockGardenHandle.super.getDeniedBuildMessage(point);
         }
-        if (barnSwapInProgress && plotService.isInBarnSwapRegion(point)) {
-            return "§cYou can't edit the Barn while a skin is being applied!";
+        if (plotService.isInBarnSwapRegion(point)) {
+            return "§cYou can't edit the Barn in the Garden!";
         }
         if (!plotService.isUnlocked(point, resolveCoreData())) {
             return "§cYou haven't unlocked this plot yet!";

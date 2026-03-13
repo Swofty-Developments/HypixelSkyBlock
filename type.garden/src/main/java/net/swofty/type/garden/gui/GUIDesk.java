@@ -28,7 +28,6 @@ public class GUIDesk extends StatelessView {
 
     @Override
     public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-        Components.fill(layout);
         Components.close(layout, 49);
 
         layout.slot(4, (s, c) -> {
@@ -42,9 +41,7 @@ public class GUIDesk extends StatelessView {
                 "§7accepting visitors' offers and",
                 "§7unlocking new milestones!",
                 "",
-                "§7Garden XP: §e" + StringUtility.commaify(core.getExperience()),
-                "§7Visitors unlocked: §b" + core.getServedUniqueVisitors().size() + "§7/§a" + net.swofty.type.garden.GardenServices.visitors().getExpectedUniqueVisitors(),
-                ""
+                "§7Garden XP: §e" + StringUtility.commaify(core.getExperience())
             ));
 
             if (core.getLevel() < 15 && !next.isEmpty()) {
@@ -97,7 +94,11 @@ public class GUIDesk extends StatelessView {
                 Material.EMERALD,
                 1,
                 "§7Browse the wide variety of products",
-                "§7SkyMart has to offer.",
+                "§7SkyMart has to offer. We are not",
+                "§7responsible for any injuries,",
+                "§7accidents, headaches, paper-cuts or",
+                "§7sudden outburst of tears. SkyMart",
+                "§7wishes you happy shopping.",
                 "",
                 "§7Copper: §c" + StringUtility.commaify(GardenGuiSupport.core(player).getCopper()),
                 "",
@@ -164,11 +165,9 @@ public class GUIDesk extends StatelessView {
                 "§aGarden Time",
                 Material.CLOCK,
                 1,
-                "§7Modifies your Garden time display.",
+                "§7Modifies your Garden time.",
                 "",
-                "§7Current mode: §e" + StringUtility.toNormalCase(mode),
-                "",
-                "§eClick to cycle!"
+                "§7Current mode: §e" + StringUtility.toNormalCase(mode)
             );
         }, (click, c) -> {
             SkyBlockPlayer current = (SkyBlockPlayer) c.player();
@@ -195,13 +194,13 @@ public class GUIDesk extends StatelessView {
         }
         lore.add("");
         lore.add("§7Rewards: §2+" + visitor.getGardenXp() + " Garden XP §8/ §c+" + visitor.getCopper() + " Copper");
+        if (visitor.getBits() > 0) {
+            lore.add("§7Bonus Bits: §b+" + visitor.getBits());
+        }
+        lore.addAll(GardenGuiSupport.describeRewards(visitor.getGuaranteedRewards(), " §8+§6"));
         lore.add("§7Visited: §a" + GardenGuiSupport.visitors(player).getVisitCounts().getOrDefault(visitor.getVisitorId(), 0) + "x");
         lore.add("");
         lore.add("§eClick to view offer!");
-        return GardenGuiSupport.itemWithLore(
-            visitor.getRequests().isEmpty() ? "BOOK" : visitor.getRequests().getFirst().getItemId(),
-            GardenGuiSupport.colorForRarity(visitor.getRarity()) + displayName,
-            lore
-        );
+        return GardenGuiSupport.visitorIcon(definition, displayName, visitor.getRarity(), lore);
     }
 }

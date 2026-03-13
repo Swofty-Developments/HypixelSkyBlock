@@ -1,5 +1,7 @@
 package net.swofty.type.skywarslobby;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
@@ -7,7 +9,6 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.skywars.SkywarsLeaderboardMode;
 import net.swofty.commons.skywars.SkywarsLeaderboardPeriod;
 import net.swofty.commons.skywars.SkywarsLevelColor;
-import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 import net.swofty.commons.skywars.SkywarsModeStats;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -17,6 +18,7 @@ import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,21 +62,21 @@ public class SkywarsLobbyScoreboard {
 
 				int level = SkywarsLevelRegistry.calculateLevel(experience);
 
-				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.skywars_lobby.your_level_label") + " " + SkywarsLevelColor.getLevelDisplay(level));
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.skywars_lobby.solo_kills_label") + soloKills);
-				lines.add(I18n.string("scoreboard.skywars_lobby.solo_wins_label") + soloWins);
-				lines.add(I18n.string("scoreboard.skywars_lobby.doubles_kills_label") + doublesKills);
-				lines.add(I18n.string("scoreboard.skywars_lobby.doubles_wins_label") + doublesWins);
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.skywars_lobby.coins_label") + coins);
-				lines.add(I18n.string("scoreboard.skywars_lobby.souls_label") + souls);
-				lines.add(I18n.string("scoreboard.skywars_lobby.tokens_label") + tokens);
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.common.footer"));
+                List<Component> lines = new ArrayList<>();
+                lines.add(HypixelScoreboard.legacy("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName()));
+                lines.add(HypixelScoreboard.legacy("§7 "));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.skywars_lobby.your_level_label") + " " + SkywarsLevelColor.getLevelDisplay(level)));
+                lines.add(HypixelScoreboard.legacy("§7 "));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.skywars_lobby.solo_kills_label") + soloKills));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.skywars_lobby.solo_wins_label") + soloWins));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.skywars_lobby.doubles_kills_label") + doublesKills));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.skywars_lobby.doubles_wins_label") + doublesWins));
+                lines.add(HypixelScoreboard.legacy("§7 "));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.skywars_lobby.coins_label") + coins));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.skywars_lobby.souls_label") + souls));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.skywars_lobby.tokens_label") + tokens));
+                lines.add(HypixelScoreboard.legacy("§7 "));
+                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.common.footer")));
 
 				if (!scoreboard.hasScoreboard(player)) {
 					scoreboard.createScoreboard(player, getSidebarName(animationFrame));
@@ -91,19 +93,21 @@ public class SkywarsLobbyScoreboard {
 		scoreboard.removeScoreboard(player);
 	}
 
-	private static String getSidebarName(int counter) {
-		String baseText = I18n.string("scoreboard.skywars_lobby.title_base");
-		String[] colors = {"§f§l", "§e§l", "§6§l"};
-
-		if (counter > 0 && counter <= 7) {
-			return colors[0] + baseText.substring(0, counter - 1) +
-					colors[1] + baseText.charAt(counter - 1) +
-					colors[2] + baseText.substring(counter);
-		} else if ((counter >= 8 && counter <= 18) ||
-				(counter >= 25 && counter <= 29)) {
-			return colors[0] + baseText;
-		} else {
-			return colors[1] + baseText;
-		}
+    private static Component getSidebarName(int counter) {
+        return HypixelScoreboard.animatedSidebarName(
+            I18n.string("scoreboard.skywars_lobby.title_base"),
+            counter,
+            NamedTextColor.WHITE,
+            NamedTextColor.YELLOW,
+            NamedTextColor.GOLD,
+            NamedTextColor.WHITE,
+            NamedTextColor.YELLOW,
+            7,
+            8,
+            18,
+            25,
+            29,
+            Component.empty()
+        );
 	}
 }

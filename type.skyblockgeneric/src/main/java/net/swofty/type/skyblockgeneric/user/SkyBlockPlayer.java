@@ -463,6 +463,9 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public @Nullable SkyBlockRegion getRegion() {
+        if (HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_GARDEN) {
+            return SkyBlockRegion.getGardenRegion();
+        }
         if (getEditableWorldHandle() != null) return SkyBlockRegion.getIslandRegion();
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
     }

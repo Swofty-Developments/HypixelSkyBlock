@@ -5,8 +5,8 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCAnita extends AbstractGardenNpc {
-    private static final String TEXTURE = "ewogICJ0aW1lc3RhbXAiIDogMTYwOTYwOTQwMjU0MywKICAicHJvZmlsZUlkIiA6ICJmMTA0NzMxZjljYTU0NmI0OTkzNjM4NTlkZWY5N2NjNiIsCiAgInByb2ZpbGVOYW1lIiA6ICJ6aWFkODciLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjVmMzFjMWMyMTVhNTdlOTM3ZmQ3NWFiMzU3ODJmODVlYzI0MmExYjFmOTUwYTI2YTQyYmI1ZTBhYTVjYmVkYSIKICAgIH0KICB9Cn0=";
-    private static final String SIGNATURE = "q+WCbao7pfdeqzeoM228bAO5L1zhmYrlwxTz/7pY+Y+YsOPhKrKYX3pDO2XLsWqg2Zzh55wXsa2fHRWCd8p0GnYfUkVWWHBQWHy600iVH48RnSZLECnCure/bbn7auNbs7fjdtkXk0lmyn5z2lxnQFpFHy4gOODPgkpXNsLSJAnaNnOnebS1UBu4p/HVlS0jK/DLngtCK9NV/4bo4BpDXVDvZQOShSJoWSvnzVPriTla1zpVq86WKGHioFdUeCM/tTSSw5jtM32/HiQaC388Rvt1yuvKFoI5VoDAbjY5R0Kh8q8PsYKrKwUsN8SFREsCqXE1kjyG3zTkyrz8tXO5vBh9J5fPavQBdvGr9H6Vs1JgAngS5vuNl3sqfqYgTd5p2JE1JSxOJX/v4v7iTj6TKtrGA+jZ7xCDX1pexi110iEnZMm0bvJRgkwlSxXYKpzO5dZjyHqRNvl0sbQ5O7Pa0H0fSPrM1Fo/2WxY76GtYHeRucIKHgX8H264TlLtQ3QrALP9gS68Xcm4/mfYrT/YZAossLbUP2PhWvWL4xnGjRWPsu9LVHyY4oI6Z0aRBQPFBTc/v7IaucUcGmSAh4MKV4V62hMQ74sxK94vOJYYCWsI52GLyz6EWAQj3TQR8IIgGfIhKnn7UeIDbOntyisFkdsJU0iOHF1uXGYkmpayzSc=";
+    private static final String TEXTURE = "ewogICJ0aW1lc3RhbXAiIDogMTYwNDQxODU1MDQ5MCwKICAicHJvZmlsZUlkIiA6ICI0MWQzYWJjMmQ3NDk0MDBjOTA5MGQ1NDM0ZDAzODMxYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJNZWdha2xvb24iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGQ0ZTlkMmE4Yzg4ZDBlZmQ3NTBlODUyNzMyYmEwNWZhM2YzMDJlMjA0ZTJiZGM4OGRhZDYwNWUyNTU3ZTJhNiIsCiAgICAgICJtZXRhZGF0YSIgOiB7CiAgICAgICAgIm1vZGVsIiA6ICJzbGltIgogICAgICB9CiAgICB9CiAgfQp9";
+    private static final String SIGNATURE = "kgTWKoHcjvKRS1D7bWAlG6yIYm+5y6xLnq4j1q8Q1UyeNyQkjaDBis+AiHGyQQQ+iyKC2iu3XTv1nXkxV1oYRwWFqg/aabA3S/FIEwppEZBrkDl+2zWNqFmwfsppPZ5zbsJHBvDm/c9RSlaKLEzeSO66KEyJDllRfcJWIGTg1xk5FxCf3hsgZ0QPynp3v/m0Pv9bmUtd88iuHus7kC76G41DDIQYm4xUOXY6E3i7AyqNX+fhl0EaLGg8DGm4mpfdFx0HVvOf5njXauhkTKCKMg7+WLQcLEHtPnnL8wSHOiNuzk8+tYbah2KzKJHjXSulWE4o5BGLgbbowPnLB3Nknzi2fwNnjqKNaoU1EZj3YpgPgpL4W6+fx7rScrt3gsGEso/7bHJwBBJLoYNdUL3XzJwI/z7sbFFukB28tL4kJ4Bc9eOduVopuaueioNcAHhPfxVp5wSrvNPq6r/c+yDBNHgOgcd3vn5iwWRh7Ls6tzY3bwUDqM7RUjIEhGb4shqDdMUSaS90eLlieZG9jpBVstMwHh5K2LXjIDeGH9sD9hFQaZ7G0OPvtlErRyoEXxnS1DxLs6Zcn/A4sxjFJbs4aoXweM7xpO2DmhdxCGYvMlAcj9KcCPkcYkwN5EM9Ws3EQWURIV37QNOWcd51vDmdH7f3GI6PVjbalS3esM9vgX8=";
 
     public NPCAnita() {
         super("anita", "Anita", TEXTURE, SIGNATURE);
@@ -27,14 +27,6 @@ public class NPCAnita extends AbstractGardenNpc {
 
     @Override
     protected DialogueSet[] dialogues(net.swofty.type.generic.user.HypixelPlayer player) {
-        return new DialogueSet[]{
-            DialogueSet.builder()
-                .key("hello")
-                .lines(new String[]{
-                    "Earn Jacob's Tickets and medals in farming contests.",
-                    "Come back to me when you're ready to spend them."
-                })
-                .build()
-        };
+        return configuredDialogues();
     }
 }

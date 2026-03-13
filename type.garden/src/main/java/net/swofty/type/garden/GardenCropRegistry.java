@@ -2,6 +2,7 @@ package net.swofty.type.garden;
 
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,10 @@ public final class GardenCropRegistry {
         Map.entry(Material.CACTUS, new CropContext("CACTUS", ItemStatistic.CACTUS_FORTUNE, true)),
         Map.entry(Material.BROWN_MUSHROOM, new CropContext("MUSHROOM", ItemStatistic.MUSHROOM_FORTUNE, false)),
         Map.entry(Material.RED_MUSHROOM, new CropContext("MUSHROOM", ItemStatistic.MUSHROOM_FORTUNE, false)),
-        Map.entry(Material.NETHER_WART, new CropContext("NETHER_WART", ItemStatistic.NETHER_WART_FORTUNE, false))
+        Map.entry(Material.NETHER_WART, new CropContext("NETHER_WART", ItemStatistic.NETHER_WART_FORTUNE, false)),
+        Map.entry(Material.SUNFLOWER, new CropContext("SUNFLOWER", null, false)),
+        Map.entry(Material.BLUE_ORCHID, new CropContext("MOONFLOWER", null, false)),
+        Map.entry(Material.ROSE_BUSH, new CropContext("WILD_ROSE", null, false))
     );
 
     private GardenCropRegistry() {
@@ -48,6 +52,6 @@ public final class GardenCropRegistry {
         return VISITOR_CROP_POOL;
     }
 
-    public record CropContext(String cropId, ItemStatistic specificFortune, boolean doubleBreakCrop) {
+    public record CropContext(String cropId, @Nullable ItemStatistic specificFortune, boolean doubleBreakCrop) {
     }
 }

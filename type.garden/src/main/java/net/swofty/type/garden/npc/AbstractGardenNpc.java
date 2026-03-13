@@ -1,13 +1,16 @@
 package net.swofty.type.garden.npc;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.instance.Instance;
-import net.swofty.type.garden.user.SkyBlockGarden;
-import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.garden.config.GardenConfigRegistry;
+import net.swofty.type.garden.gui.GardenGuiSupport;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractGardenNpc extends HypixelNPC {
     private final String npcId;
@@ -22,11 +25,9 @@ public abstract class AbstractGardenNpc extends HypixelNPC {
             @Override
             public Pos position(HypixelPlayer player) {
                 if (!(player instanceof SkyBlockPlayer skyBlockPlayer)) {
-                    return new Pos(0, -1000, 0);
+                    return GardenNpcSupport.hiddenPosition();
                 }
-                return GardenNpcAnchorRegistry.getNpcAnchor(skyBlockPlayer, npcId)
-                    .map(GardenNpcAnchorRegistry.NpcAnchor::position)
-                    .orElse(new Pos(0, -1000, 0));
+                return GardenNpcAnchorRegistry.getNpcAnchor(skyBlockPlayer, npcId).map(GardenNpcAnchorRegistry.NpcAnchor::position).orElse(GardenNpcSupport.hiddenPosition());
             }
 
             @Override
@@ -36,9 +37,7 @@ public abstract class AbstractGardenNpc extends HypixelNPC {
 
             @Override
             public boolean visible(HypixelPlayer player) {
-                return player instanceof SkyBlockPlayer skyBlockPlayer
-                    && skyBlockPlayer.isOnGarden()
-                    && GardenNpcAnchorRegistry.getNpcAnchor(skyBlockPlayer, npcId).isPresent();
+                return player instanceof SkyBlockPlayer skyBlockPlayer && GardenNpcSupport.isVisibleOnGarden(skyBlockPlayer) && GardenNpcAnchorRegistry.getNpcAnchor(skyBlockPlayer, npcId).isPresent();
             }
 
             @Override
@@ -52,23 +51,38 @@ public abstract class AbstractGardenNpc extends HypixelNPC {
             }
 
             @Override
-            public Instance instance(HypixelPlayer player) {
-                if (player instanceof SkyBlockPlayer skyBlockPlayer
-                    && skyBlockPlayer.getSkyBlockGarden() instanceof SkyBlockGarden garden
-                    && garden.getGardenInstance() != null) {
-                    return garden.getGardenInstance();
-                }
-                return HypixelConst.getInstanceContainer();
+            public net.minestom.server.instance.Instance instance(HypixelPlayer player) {
+                return GardenNpcSupport.instanceFor(player instanceof SkyBlockPlayer skyBlockPlayer ? skyBlockPlayer : null);
             }
         });
         this.npcId = npcId;
     }
 
     protected boolean hasSpoken(SkyBlockPlayer player) {
-        return net.swofty.type.garden.gui.GardenGuiSupport.personal(player).getSpokenNpcFlags().contains(npcId);
+        return GardenGuiSupport.personal(player).getSpokenNpcFlags().contains(npcId);
     }
 
     protected void markSpoken(SkyBlockPlayer player) {
-        net.swofty.type.garden.gui.GardenGuiSupport.personal(player).getSpokenNpcFlags().add(npcId);
+        GardenGuiSupport.personal(player).getSpokenNpcFlags().add(npcId);
+    }
+
+    protected DialogueSet[] configuredDialogues() {
+        Map<String, Object> config = GardenConfigRegistry.getConfig("visitor_dialogue.yml");
+        Map<String, Object> npcConfig = GardenConfigRegistry.getSection(
+            GardenConfigRegistry.getSection(config, "npcs"),
+            npcId
+        );
+        List<DialogueSet> dialogueSets = new ArrayList<>();
+        for (Map<String, Object> entry : GardenConfigRegistry.getMapList(npcConfig, "dialogue_sets")) {
+            List<Object> lines = GardenConfigRegistry.getList(entry, "lines");
+            if (lines.isEmpty()) {
+                continue;
+            }
+            dialogueSets.add(DialogueSet.builder()
+                .key(GardenConfigRegistry.getString(entry, "key", "hello"))
+                .lines(lines.stream().map(String::valueOf).toArray(String[]::new))
+                .build());
+        }
+        return dialogueSets.toArray(DialogueSet[]::new);
     }
 }

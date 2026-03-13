@@ -7,16 +7,17 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.type.garden.commands.GardenAdminCommand;
 import net.swofty.type.garden.npc.NPCAnita;
-import net.swofty.type.garden.npc.NPCCarpenter;
-import net.swofty.type.garden.npc.NPCDesk;
+import net.swofty.type.garden.npc.NPCGardenVisitorSlot;
 import net.swofty.type.garden.npc.NPCJacob;
 import net.swofty.type.garden.npc.NPCJeff;
+import net.swofty.type.garden.npc.NPCPamela;
 import net.swofty.type.garden.npc.NPCPesthunterPhillip;
 import net.swofty.type.garden.npc.NPCSam;
-import net.swofty.type.garden.npc.NPCShifty;
 import net.swofty.type.garden.pest.GardenPestRuntime;
 import net.swofty.type.garden.user.SkyBlockGarden;
+import net.swofty.type.garden.visitor.GardenBarnRuntime;
 import net.swofty.type.garden.visitor.GardenVisitorRuntime;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -33,6 +34,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TypeGardenLoader implements SkyBlockTypeLoader {
+    private final List<HypixelNPC> npcs = List.of(
+        new NPCSam(),
+        new NPCAnita(),
+        new NPCPamela(),
+        new NPCJacob(),
+        new NPCJeff(),
+        new NPCPesthunterPhillip(),
+        new NPCGardenVisitorSlot(1),
+        new NPCGardenVisitorSlot(2),
+        new NPCGardenVisitorSlot(3),
+        new NPCGardenVisitorSlot(4),
+        new NPCGardenVisitorSlot(5)
+    );
+
     @Override
     public ServerType getType() {
         return ServerType.SKYBLOCK_GARDEN;
@@ -42,8 +57,11 @@ public class TypeGardenLoader implements SkyBlockTypeLoader {
     public void onInitialize(MinecraftServer server) {
         Logger.info("TypeGardenLoader initialized!");
         GardenServices.initialize();
+        MinecraftServer.getCommandManager().register(new GardenAdminCommand().getCommand());
+        npcs.forEach(HypixelNPC::register);
         GardenPestRuntime.start(MinecraftServer.getSchedulerManager());
         GardenVisitorRuntime.start(MinecraftServer.getSchedulerManager());
+        GardenBarnRuntime.start(MinecraftServer.getSchedulerManager());
         SkyBlockGarden.runVacantLoop(MinecraftServer.getSchedulerManager());
     }
 
@@ -53,7 +71,7 @@ public class TypeGardenLoader implements SkyBlockTypeLoader {
 
     @Override
     public LoaderValues getLoaderValues() {
-        return new LoaderValues((type) -> new Pos(0, 100, 0), true);
+        return new LoaderValues((_) -> new Pos(-5.5, 71, 17.5, 180, 0), true);
     }
 
     @Override
@@ -94,16 +112,7 @@ public class TypeGardenLoader implements SkyBlockTypeLoader {
 
     @Override
     public List<HypixelNPC> getNPCs() {
-        return List.of(
-            new NPCDesk(),
-            new NPCSam(),
-            new NPCAnita(),
-            new NPCJacob(),
-            new NPCJeff(),
-            new NPCPesthunterPhillip(),
-            new NPCCarpenter(),
-            new NPCShifty()
-        );
+        return npcs;
     }
 
     @Override

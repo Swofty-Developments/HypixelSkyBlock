@@ -28,9 +28,10 @@ public final class GardenVisitorRuntime {
     private static final List<String> TRACKED_DIALOGUE_FLAGS = List.of(
         "sam",
         "anita",
+        "pamela",
         "jacob",
         "jeff",
-        "pesthunter_phillip",
+        "phillip",
         "carpenter",
         "shifty",
         "desk"
@@ -44,6 +45,23 @@ public final class GardenVisitorRuntime {
             tickAllGardens();
             return TaskSchedule.seconds(1);
         }, ExecutionType.TICK_END);
+    }
+
+    public static GardenData.GardenVisitorState createVisitorState(SkyBlockPlayer player, String visitorId) {
+        if (player == null) {
+            return null;
+        }
+        Map<String, Object> definition = GardenServices.visitors().getVisitor(visitorId);
+        if (definition.isEmpty()) {
+            return null;
+        }
+        return buildVisitorState(
+            player,
+            GardenGuiSupport.visitors(player),
+            GardenGuiSupport.core(player),
+            definition,
+            System.currentTimeMillis()
+        );
     }
 
     private static void tickAllGardens() {
@@ -123,6 +141,7 @@ public final class GardenVisitorRuntime {
 
         String displayName = GardenConfigRegistry.getString(chosen, "display_name", StringUtility.toNormalCase(visitorId));
         viewers.forEach(player -> player.sendMessage("§aVisitor §e" + displayName + " §ahas arrived at your Desk."));
+        GardenBarnRuntime.requestImmediateSync(primary);
         return true;
     }
 
@@ -140,26 +159,29 @@ public final class GardenVisitorRuntime {
         int[] baseRange = GardenServices.visitors().getBaseItemsRange(core.getLevel());
         int baseItems = ThreadLocalRandom.current().nextInt(baseRange[0], baseRange[1] + 1);
 
-        List<String> wantedItems = resolveWantedItems(definition, firstVisit);
+        List<WantedRequest> wantedItems = resolveWantedItems(definition, firstVisit);
         List<GardenData.GardenRequest> requests = new ArrayList<>();
         double farmingXp = 0D;
         int copper = 0;
 
-        for (String wantedItem : wantedItems) {
-            double quantityMultiplier = GardenServices.visitors().getQuantityMultiplier(wantedItem);
-            int amount = Math.max(1, (int) Math.round(
+        for (WantedRequest wantedItem : wantedItems) {
+            double quantityMultiplier = GardenServices.visitors().getQuantityMultiplier(wantedItem.itemId());
+            int rawAmount = wantedItem.fixedAmount() > 0
+                ? wantedItem.fixedAmount()
+                : Math.max(1, (int) Math.round(
                 baseItems * quantityMultiplier * GardenServices.visitors().getRequestMultiplier(rarity)
             ));
+            GardenVisitorService.CompactedRequest compactedRequest = GardenServices.visitors().compactRequest(wantedItem.itemId(), rawAmount);
 
             GardenData.GardenRequest request = new GardenData.GardenRequest();
-            request.setItemId(wantedItem);
-            request.setAmount(amount);
+            request.setItemId(compactedRequest.itemId());
+            request.setAmount(compactedRequest.amount());
             request.setItemQuantityMultiplier(quantityMultiplier);
             requests.add(request);
 
             farmingXp += GardenServices.visitors().calculateFarmingXp(
                 baseItems,
-                GardenServices.visitors().getItemFarmingXpAmount(wantedItem),
+                GardenServices.visitors().getItemFarmingXpAmount(wantedItem.itemId()),
                 rarity
             );
             copper += GardenServices.visitors().calculateCopper(baseItems, quantityMultiplier, rarity);
@@ -174,26 +196,42 @@ public final class GardenVisitorRuntime {
             farmingXpReward = GardenConfigRegistry.getLong(firstVisitOverride, "farming_xp", farmingXpReward);
             copper = GardenConfigRegistry.getInt(firstVisitOverride, "copper", copper);
             gardenXpReward = GardenConfigRegistry.getInt(firstVisitOverride, "garden_xp", gardenXpReward);
+            bits = GardenConfigRegistry.getInt(firstVisitOverride, "bits", bits);
         }
 
         Map<String, Object> overrideRewards = GardenConfigRegistry.getSection(definition, "override_rewards");
-        List<String> guaranteedRewards = new ArrayList<>();
+        List<GardenData.GardenRewardState> guaranteedRewards = new ArrayList<>();
         if (!overrideRewards.isEmpty()) {
             farmingXpReward = GardenConfigRegistry.getLong(overrideRewards, "farming_xp", farmingXpReward);
             copper = GardenConfigRegistry.getInt(overrideRewards, "copper", copper);
-            guaranteedRewards.addAll(GardenConfigRegistry.getList(overrideRewards, "items").stream()
-                .map(String::valueOf)
-                .toList());
-        }
-
-        for (Object reward : GardenConfigRegistry.getList(definition, "unique_rewards")) {
-            String rewardId = String.valueOf(reward);
-            if (!rewardId.endsWith("_ON_FIRST_VISIT") || firstVisit) {
-                guaranteedRewards.add(rewardId);
+            gardenXpReward = GardenConfigRegistry.getInt(overrideRewards, "garden_xp", gardenXpReward);
+            bits = GardenConfigRegistry.getInt(overrideRewards, "bits", bits);
+            guaranteedRewards.addAll(GardenServices.visitors().getConfiguredRewards(overrideRewards, "rewards"));
+            for (Object reward : GardenConfigRegistry.getList(overrideRewards, "items")) {
+                GardenData.GardenRewardState rewardState = GardenServices.visitors().parseReward(reward);
+                if (rewardState != null) {
+                    guaranteedRewards.add(rewardState);
+                }
             }
         }
 
-        List<String> bonusRewards = rollBonusRewards(rarity);
+        guaranteedRewards.addAll(GardenServices.visitors().getConfiguredRewards(definition, "guaranteed_rewards"));
+
+        for (Object reward : GardenConfigRegistry.getList(definition, "unique_rewards")) {
+            GardenData.GardenRewardState rewardState = GardenServices.visitors().parseReward(reward);
+            if (rewardState == null) {
+                continue;
+            }
+            if (!rewardState.isFirstVisitOnly() || firstVisit) {
+                guaranteedRewards.add(rewardState);
+            }
+        }
+
+        if (firstVisit) {
+            guaranteedRewards.addAll(GardenServices.visitors().getConfiguredRewards(firstVisitOverride, "rewards"));
+        }
+
+        List<GardenData.GardenRewardState> bonusRewards = rollBonusRewards(rarity);
 
         GardenData.GardenVisitorState state = new GardenData.GardenVisitorState();
         state.setVisitorId(visitorId);
@@ -228,39 +266,50 @@ public final class GardenVisitorRuntime {
             return false;
         }
 
-        for (Object rawRequirement : GardenConfigRegistry.getList(definition, "requirements")) {
-            if (!isRequirementMet(player, core, visitorId, String.valueOf(rawRequirement))) {
+        for (GardenVisitorService.VisitorRequirement requirement : GardenServices.visitors().getRequirements(definition)) {
+            if (!isRequirementMet(player, core, visitorId, requirement)) {
                 return false;
             }
         }
         return true;
     }
 
-    private static boolean isRequirementMet(SkyBlockPlayer player, GardenData.GardenCoreData core, String visitorId, String requirement) {
-        String normalized = requirement == null ? "" : requirement.trim();
-        if (normalized.isBlank()) {
+    private static boolean isRequirementMet(SkyBlockPlayer player, GardenData.GardenCoreData core, String visitorId, GardenVisitorService.VisitorRequirement requirement) {
+        if (requirement == null) {
             return true;
         }
-        if (normalized.regionMatches(true, 0, "Talk to", 0, "Talk to".length())) {
-            return isTalkRequirementMet(player, visitorId, normalized);
-        }
-        if (normalized.regionMatches(true, 0, "Garden ", 0, "Garden ".length())) {
-            return core.getLevel() >= parseTrailingRoman(normalized);
-        }
-        if (normalized.regionMatches(true, 0, "Farming ", 0, "Farming ".length())) {
-            return player.getSkills().getCurrentLevel(SkillCategories.FARMING) >= parseTrailingRoman(normalized);
-        }
-        if (normalized.regionMatches(true, 0, "Fishing ", 0, "Fishing ".length())) {
-            return player.getSkills().getCurrentLevel(SkillCategories.FISHING) >= parseTrailingRoman(normalized);
-        }
-        return false;
+        return switch (requirement.type()) {
+            case "SPOKEN_TO_NPC" -> isTalkRequirementMet(player, visitorId, requirement.key());
+            case "GARDEN_LEVEL_AT_LEAST" -> core.getLevel() >= requirement.amount();
+            case "SKILL_LEVEL_AT_LEAST" -> switch (requirement.key()) {
+                case "FARMING" -> player.getSkills().getCurrentLevel(SkillCategories.FARMING) >= requirement.amount();
+                case "FISHING" -> player.getSkills().getCurrentLevel(SkillCategories.FISHING) >= requirement.amount();
+                default -> false;
+            };
+            case "GARDEN_FLAG", "PROFILE_FLAG", "CUSTOM_PROFILE_FLAG", "ACCESS_FLAG" ->
+                GardenGuiSupport.personal(player).getVisitorRequirementFlags().contains(requirement.key())
+                    || GardenGuiSupport.personal(player).getAccessFlags().contains(requirement.key())
+                    || GardenGuiSupport.core(player).getVisitorRequirementFlags().contains(requirement.key());
+            case "GARDEN_COUNTER_AT_LEAST", "PROFILE_COUNTER" ->
+                ("SERVED_UNIQUE_VISITORS".equals(requirement.key()) && GardenGuiSupport.core(player).getServedUniqueVisitors().size() >= requirement.amount())
+                    || GardenGuiSupport.personal(player).getVisitorRequirementCounters().getOrDefault(requirement.key(), 0L) >= requirement.amount()
+                    || GardenGuiSupport.core(player).getVisitorRequirementCounters().getOrDefault(requirement.key(), 0L) >= requirement.amount();
+            case "ITEM_DONATED" -> GardenGuiSupport.personal(player).getDonatedItems().contains(requirement.key());
+            case "ITEM_EXPORTED" ->
+                GardenGuiSupport.personal(player).getExportedItems().getOrDefault(requirement.key(), 0L) >= requirement.amount();
+            case "HAS_UNLOCK" -> GardenGuiSupport.personal(player).getAccessFlags().contains(requirement.key())
+                || GardenGuiSupport.core(player).getSkyMartPurchases().contains(requirement.key().toLowerCase())
+                || GardenGuiSupport.core(player).getOwnedBarnSkins().contains(requirement.key().toLowerCase());
+            case "VISITOR_SERVED" ->
+                GardenGuiSupport.core(player).getServedUniqueVisitors().contains(requirement.key().toLowerCase())
+                    || GardenGuiSupport.visitors(player).getServedCounts().getOrDefault(requirement.key().toLowerCase(), 0) >= requirement.amount();
+            case "MAYOR_PERK_ACTIVE" -> GardenGuiSupport.personal(player).getAccessFlags().contains(requirement.key());
+            default -> false;
+        };
     }
 
-    private static boolean isTalkRequirementMet(SkyBlockPlayer player, String visitorId, String requirement) {
-        String normalizedNpc = normalizeDialogueFlag(requirement
-            .replaceFirst("(?i)^Talk to\\s+", "")
-            .replaceFirst("(?i)^the\\s+", "")
-            .replaceFirst("(?i)^this\\s+", ""));
+    private static boolean isTalkRequirementMet(SkyBlockPlayer player, String visitorId, String requirementKey) {
+        String normalizedNpc = normalizeDialogueFlag(requirementKey);
         List<String> spokenFlags = new ArrayList<>(GardenGuiSupport.personal(player).getSpokenNpcFlags());
         if (spokenFlags.contains(visitorId.toLowerCase()) || spokenFlags.contains(normalizedNpc)) {
             return true;
@@ -268,44 +317,85 @@ public final class GardenVisitorRuntime {
         return !TRACKED_DIALOGUE_FLAGS.contains(normalizedNpc);
     }
 
-    private static List<String> resolveWantedItems(Map<String, Object> definition, boolean firstVisit) {
-        List<String> configured = GardenConfigRegistry.getList(definition, "wanted_items").stream()
-            .map(String::valueOf)
-            .toList();
-        if (configured.isEmpty()) {
-            return List.of("WHEAT");
+    private static List<WantedRequest> resolveWantedItems(Map<String, Object> definition, boolean firstVisit) {
+        Map<String, Object> firstVisitOverride = firstVisit ? GardenConfigRegistry.getSection(definition, "first_visit_override") : Map.of();
+        List<Object> configuredWantedItems = firstVisit ? GardenConfigRegistry.getList(firstVisitOverride, "wanted_items") : List.of();
+        if (configuredWantedItems.isEmpty()) {
+            Map<String, Object> requestRules = GardenConfigRegistry.getSection(definition, "request_rules");
+            configuredWantedItems = GardenConfigRegistry.getList(requestRules, "items");
         }
-        if (firstVisit && "jerry".equalsIgnoreCase(GardenConfigRegistry.getString(definition, "id", "")) && configured.contains("BREAD")) {
-            return List.of("BREAD");
+        if (configuredWantedItems.isEmpty()) {
+            configuredWantedItems = GardenConfigRegistry.getList(definition, "wanted_items");
+        }
+        if (configuredWantedItems.isEmpty()) {
+            return List.of(new WantedRequest("WHEAT", 0));
         }
 
-        List<String> resolved = new ArrayList<>();
-        for (String entry : configured) {
-            Matcher matcher = ANY_PATTERN.matcher(entry.trim());
+        List<WantedRequest> resolved = new ArrayList<>();
+        for (Object configuredWantedItem : configuredWantedItems) {
+            if (configuredWantedItem instanceof Map<?, ?> mapRaw) {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> itemConfig = (Map<String, Object>) mapRaw;
+                String itemId = GardenConfigRegistry.getString(itemConfig, "id", "").trim().toUpperCase();
+                int fixedAmount = GardenConfigRegistry.getInt(itemConfig, "fixed_amount", 0);
+                if (!itemId.isBlank()) {
+                    resolved.add(new WantedRequest(itemId, Math.max(0, fixedAmount)));
+                }
+                continue;
+            }
+
+            String entry = String.valueOf(configuredWantedItem).trim();
+            if (entry.isBlank()) {
+                continue;
+            }
+            Matcher matcher = ANY_PATTERN.matcher(entry);
             if (matcher.matches()) {
                 int amount = matcher.group(1) == null ? 1 : Integer.parseInt(matcher.group(1));
                 List<String> pool = new ArrayList<>(GardenCropRegistry.getVisitorCropPool());
                 while (amount > 0 && !pool.isEmpty()) {
                     String selected = pool.remove(ThreadLocalRandom.current().nextInt(pool.size()));
-                    resolved.add(selected);
+                    resolved.add(new WantedRequest(selected, 0));
                     amount--;
                 }
-            } else {
-                resolved.add(entry.trim().toUpperCase());
+                continue;
             }
+
+            Matcher fixedMatcher = Pattern.compile("^([\\d,]+)X\\s+(.+)$", Pattern.CASE_INSENSITIVE).matcher(entry);
+            if (fixedMatcher.matches()) {
+                int fixedAmount = Integer.parseInt(fixedMatcher.group(1).replace(",", ""));
+                resolved.add(new WantedRequest(fixedMatcher.group(2).trim().toUpperCase(), fixedAmount));
+                continue;
+            }
+
+            resolved.add(new WantedRequest(entry.toUpperCase(), 0));
         }
-        return resolved.isEmpty() ? List.of("WHEAT") : resolved;
+        if (resolved.isEmpty()) {
+            return List.of(new WantedRequest("WHEAT", 0));
+        }
+        if (firstVisit && "jerry".equalsIgnoreCase(GardenConfigRegistry.getString(definition, "id", ""))
+            && resolved.stream().anyMatch(request -> request.itemId().equals("BREAD"))) {
+            return List.of(new WantedRequest("BREAD", 0));
+        }
+        return resolved;
     }
 
-    private static List<String> rollBonusRewards(String rarity) {
-        List<String> rewards = new ArrayList<>();
+    private static List<GardenData.GardenRewardState> rollBonusRewards(String rarity) {
+        List<GardenData.GardenRewardState> rewards = new ArrayList<>();
         for (Map<String, Object> entry : GardenServices.visitors().getBonusRewards()) {
             String minRarity = GardenConfigRegistry.getString(entry, "min_rarity", "UNCOMMON");
             if (!isAtLeastRarity(rarity, minRarity)) {
                 continue;
             }
             if (ThreadLocalRandom.current().nextDouble() <= GardenConfigRegistry.getDouble(entry, "chance", 0D)) {
-                rewards.add(GardenConfigRegistry.getString(entry, "item", ""));
+                List<GardenData.GardenRewardState> configuredRewards = GardenServices.visitors().getConfiguredRewards(entry, "rewards");
+                if (!configuredRewards.isEmpty()) {
+                    rewards.addAll(configuredRewards);
+                    continue;
+                }
+                GardenData.GardenRewardState rewardState = GardenServices.visitors().parseReward(GardenConfigRegistry.getString(entry, "item", ""));
+                if (rewardState != null) {
+                    rewards.add(rewardState);
+                }
             }
         }
         return rewards;
@@ -348,32 +438,6 @@ public final class GardenVisitorRuntime {
             .replaceAll("^_+|_+$", "");
     }
 
-    private static int parseTrailingRoman(String requirement) {
-        String[] tokens = requirement.trim().split("\\s+");
-        if (tokens.length == 0) {
-            return 0;
-        }
-        return romanToInt(tokens[tokens.length - 1]);
-    }
-
-    private static int romanToInt(String roman) {
-        return switch (roman.toUpperCase()) {
-            case "I" -> 1;
-            case "II" -> 2;
-            case "III" -> 3;
-            case "IV" -> 4;
-            case "V" -> 5;
-            case "VI" -> 6;
-            case "VII" -> 7;
-            case "VIII" -> 8;
-            case "IX" -> 9;
-            case "X" -> 10;
-            case "XI" -> 11;
-            case "XII" -> 12;
-            case "XIII" -> 13;
-            case "XIV" -> 14;
-            case "XV" -> 15;
-            default -> 0;
-        };
+    private record WantedRequest(String itemId, int fixedAmount) {
     }
 }

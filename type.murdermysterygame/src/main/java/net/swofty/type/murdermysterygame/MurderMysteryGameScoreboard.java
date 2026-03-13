@@ -6,13 +6,13 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.i18n.I18n;
+import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.game.GameStatus;
 import net.swofty.type.murdermysterygame.role.GameRole;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
-import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.i18n.I18n;
-import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,21 +38,21 @@ public class MurderMysteryGameScoreboard {
 				for (MurderMysteryPlayer player : game.getPlayers()) {
 					if (player.getInstance() == null) continue;
 
-					List<String> lines = new ArrayList<>();
-					lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
-					lines.add("§7 ");
+                    List<Component> lines = new ArrayList<>();
+                    lines.add(HypixelScoreboard.legacy("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName()));
+                    lines.add(HypixelScoreboard.legacy("§7 "));
 
 					if (game.getGameStatus() == GameStatus.WAITING) {
-						lines.add(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName());
-						lines.add(I18n.string("scoreboard.murdermystery_game.players_label") + game.getPlayers().size() + "/" + game.getGameType().getMaxPlayers());
-						lines.add("§7 ");
+                        lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName()));
+                        lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.players_label") + game.getPlayers().size() + "/" + game.getGameType().getMaxPlayers()));
+                        lines.add(HypixelScoreboard.legacy("§7 "));
 						if (game.getCountdown().isActive()) {
-							lines.add(I18n.string("scoreboard.murdermystery_game.starting_in_label") + game.getCountdown().getSecondsRemaining() + I18n.string("scoreboard.murdermystery_game.starting_in_suffix"));
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.starting_in_label") + game.getCountdown().getSecondsRemaining() + I18n.string("scoreboard.murdermystery_game.starting_in_suffix")));
 						} else {
-							lines.add(I18n.string("scoreboard.murdermystery_game.waiting_for_players"));
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.waiting_for_players")));
 						}
-						lines.add("§7 ");
-						lines.add(I18n.string("scoreboard.murdermystery_game.mode_label") + game.getGameType().getDisplayName());
+                        lines.add(HypixelScoreboard.legacy("§7 "));
+                        lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.mode_label") + game.getGameType().getDisplayName()));
 
 						int playerCount = game.getPlayers().size();
 						int murdererChance = playerCount > 0 ? Math.round(100f / playerCount) : 0;
@@ -66,79 +66,79 @@ public class MurderMysteryGameScoreboard {
 						GameRole role = game.getRoleManager().getRole(player.getUuid());
 
 						if (player.isEliminated()) {
-							lines.add(I18n.string("scoreboard.murdermystery_game.spectating_label"));
-							lines.add("§7 ");
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.spectating_label")));
+                            lines.add(HypixelScoreboard.legacy("§7 "));
 
 							if (role != null) {
-								lines.add(I18n.string("scoreboard.murdermystery_game.your_role_label") + " " + getScoreboardRoleColor(role) + role.getDisplayName());
+                                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.your_role_label") + " " + getScoreboardRoleColor(role) + role.getDisplayName()));
 							}
-							lines.add("§7 ");
+                            lines.add(HypixelScoreboard.legacy("§7 "));
 
 							int playersAlive = game.getRoleManager().countAliveWithRole(GameRole.INNOCENT)
 									+ game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE)
 									+ game.getRoleManager().countAliveWithRole(GameRole.MURDERER);
-							lines.add(I18n.string("scoreboard.murdermystery_game.players_alive_label") + playersAlive);
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.players_alive_label") + playersAlive));
 
 							String timeLeft = formatTimeRemaining(game.getGameStartTime());
-							lines.add(I18n.string("scoreboard.murdermystery_game.time_left_label") + timeLeft);
-							lines.add("§7 ");
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.time_left_label") + timeLeft));
+                            lines.add(HypixelScoreboard.legacy("§7 "));
 
 							boolean detectiveAlive = game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE) > 0;
 							String detectiveStatus = detectiveAlive
 									? I18n.string("scoreboard.murdermystery_game.detective_alive")
 									: I18n.string("scoreboard.murdermystery_game.detective_dead");
-							lines.add(I18n.string("scoreboard.murdermystery_game.detective_label") + " " + detectiveStatus);
-							lines.add("§7 ");
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.detective_label") + " " + detectiveStatus));
+                            lines.add(HypixelScoreboard.legacy("§7 "));
 
-							lines.add(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName());
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName()));
 						} else {
 							if (role != null) {
-								lines.add(I18n.string("scoreboard.murdermystery_game.role_label") + " " + getScoreboardRoleColor(role) + role.getDisplayName());
+                                lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.role_label") + " " + getScoreboardRoleColor(role) + role.getDisplayName()));
 							}
-							lines.add("§7 ");
+                            lines.add(HypixelScoreboard.legacy("§7 "));
 
 							int innocentsLeft = game.getRoleManager().countAliveWithRole(GameRole.INNOCENT)
 									+ game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE);
-							lines.add(I18n.string("scoreboard.murdermystery_game.innocents_left_label") + innocentsLeft);
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.innocents_left_label") + innocentsLeft));
 
 							String timeLeft = formatTimeRemaining(game.getGameStartTime());
-							lines.add(I18n.string("scoreboard.murdermystery_game.time_left_label") + timeLeft);
-							lines.add("§7 ");
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.time_left_label") + timeLeft));
+                            lines.add(HypixelScoreboard.legacy("§7 "));
 
 							boolean detectiveAlive = game.getRoleManager().countAliveWithRole(GameRole.DETECTIVE) > 0;
 							String detectiveStatus = detectiveAlive
 									? I18n.string("scoreboard.murdermystery_game.detective_alive")
 									: I18n.string("scoreboard.murdermystery_game.detective_dead");
-							lines.add(I18n.string("scoreboard.murdermystery_game.detective_label") + " " + detectiveStatus);
-							lines.add("§7 ");
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.detective_label") + " " + detectiveStatus));
+                            lines.add(HypixelScoreboard.legacy("§7 "));
 
-							lines.add(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName());
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName()));
 						}
 					} else if (game.getGameStatus() == GameStatus.ENDING) {
-						lines.add(I18n.string("scoreboard.murdermystery_game.game_over"));
-						lines.add("§7 ");
+                        lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.game_over")));
+                        lines.add(HypixelScoreboard.legacy("§7 "));
 
 						GameRole role = game.getRoleManager().getRole(player.getUuid());
 						if (role != null) {
-							lines.add(I18n.string("scoreboard.murdermystery_game.your_role_label") + " " + getScoreboardRoleColor(role) + role.getDisplayName());
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.your_role_label") + " " + getScoreboardRoleColor(role) + role.getDisplayName()));
 						}
-						lines.add("§7 ");
+                        lines.add(HypixelScoreboard.legacy("§7 "));
 
 						int kills = player.getKillsThisGame();
 						if (kills > 0) {
-							lines.add(I18n.string("scoreboard.murdermystery_game.your_kills_label") + kills);
+                            lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.your_kills_label") + kills));
 						}
 
 						int tokens = player.getTokensEarnedThisGame();
-						lines.add(I18n.string("scoreboard.murdermystery_game.tokens_earned_label") + tokens);
-						lines.add("§7 ");
+                        lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.tokens_earned_label") + tokens));
+                        lines.add(HypixelScoreboard.legacy("§7 "));
 
-						lines.add(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName());
-						lines.add(I18n.string("scoreboard.murdermystery_game.mode_label") + game.getGameType().getDisplayName());
+                        lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.map_label") + game.getMapEntry().getName()));
+                        lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.murdermystery_game.mode_label") + game.getGameType().getDisplayName()));
 					}
 
-					lines.add("§7 ");
-					lines.add(I18n.string("scoreboard.common.footer"));
+                    lines.add(HypixelScoreboard.legacy("§7 "));
+                    lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.common.footer")));
 
 					if (!scoreboard.hasScoreboard(player)) {
 						scoreboard.createScoreboard(player, getSidebarName(animationFrame));
@@ -176,20 +176,21 @@ public class MurderMysteryGameScoreboard {
 		scoreboard.removeScoreboard(player);
 	}
 
-	private static String getSidebarName(int counter) {
-		String baseText = I18n.string("scoreboard.murdermystery_game.title_base");
-		String[] colors = {"§f§l", "§6§l", "§e§l"};
-		String endColor = "§a§l";
-
-		if (counter > 0 && counter <= 14) {
-			return colors[0] + baseText.substring(0, Math.min(counter - 1, baseText.length())) +
-					colors[1] + (counter <= baseText.length() ? String.valueOf(baseText.charAt(counter - 1)) : "") +
-					colors[2] + (counter < baseText.length() ? baseText.substring(counter) : "") +
-					endColor;
-		} else if ((counter >= 15 && counter <= 25) || (counter >= 35 && counter <= 45)) {
-			return colors[0] + baseText + endColor;
-		} else {
-			return colors[2] + baseText + endColor;
-		}
+    private static Component getSidebarName(int counter) {
+        return HypixelScoreboard.animatedSidebarName(
+            I18n.string("scoreboard.murdermystery_game.title_base"),
+            counter,
+            NamedTextColor.WHITE,
+            NamedTextColor.GOLD,
+            NamedTextColor.YELLOW,
+            NamedTextColor.WHITE,
+            NamedTextColor.YELLOW,
+            14,
+            15,
+            25,
+            35,
+            45,
+            Component.text("MYSTERY", NamedTextColor.GREEN, net.kyori.adventure.text.format.TextDecoration.BOLD)
+        );
 	}
 }

@@ -139,6 +139,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
 		Furniture.load("hexatorum");
 		Furniture.load("rune_table");
+		Furniture.load("swords_hub", new Pos(-52.5, 69.25, -85.5));
 	}
 
     @Override

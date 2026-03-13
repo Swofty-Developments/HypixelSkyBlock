@@ -6,6 +6,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.garden.GardenServices;
 import net.swofty.type.garden.config.GardenConfigRegistry;
+import net.swofty.type.garden.visitor.GardenVisitorService;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.PaginatedView;
@@ -58,10 +59,10 @@ public class GUIVisitorLogbook extends StatefulPaginatedView<Map<String, Object>
 
         if (!unlocked && visitCount == 0) {
             lore.add("§7Requirement:");
-            for (Object requirement : GardenConfigRegistry.getList(visitor, "requirements")) {
-                lore.add("§c✖ " + requirement);
+            for (GardenVisitorService.VisitorRequirement requirement : GardenServices.visitors().getRequirements(visitor)) {
+                lore.add("§c✖ " + GardenServices.visitors().renderRequirement(requirement));
             }
-            if (GardenConfigRegistry.getList(visitor, "requirements").isEmpty()) {
+            if (GardenServices.visitors().getRequirements(visitor).isEmpty()) {
                 lore.add("§c✖ Requirement data unavailable");
             }
             return ItemStackCreator.getStack("§7" + displayName, Material.GRAY_DYE, 1, lore);
@@ -83,11 +84,7 @@ public class GUIVisitorLogbook extends StatefulPaginatedView<Map<String, Object>
         }
 
         lore.add(active ? "§eClick to view offer!" : "§7This visitor is not currently on your Garden.");
-        return GardenGuiSupport.itemWithLore(
-            getIconItemId(visitor),
-            GardenGuiSupport.colorForRarity(rarity) + displayName,
-            lore
-        );
+        return GardenGuiSupport.visitorIcon(visitor, displayName, rarity, lore);
     }
 
     @Override
@@ -119,14 +116,17 @@ public class GUIVisitorLogbook extends StatefulPaginatedView<Map<String, Object>
             "§aLogbook",
             "8d34f38c1bb106e11908ad3cc90162c18b863d678265c84a84a358903f8f7a1c",
             1,
-            "§7Various visitors will stop by your",
-            "§7Garden and wait by your Desk with",
-            "§7requests for crops and supplies.",
+            "§7Various NPCs will visit your island",
+            "§7and queue at your barn stand to",
+            "§7make offers.",
+            "",
+            "§7Harvesting crops will reduce the time",
+            "§7until the next visitor appears.",
             "",
             "§7Next Visitor: " + nextVisitor,
-            "§7Arrival cadence: §a" + GardenServices.visitors().getArrivalMinutes(GardenGuiSupport.core(player).getServedUniqueVisitors().size()) + " minutes",
-            "§7Known entries: §e" + visitors.getLogbookEntries().size() + "§7/§a" + GardenServices.visitors().getExpectedUniqueVisitors(),
-            "§7Active / queued: §e" + visitors.getActiveVisitors().size() + "§7/§e" + visitors.getQueuedVisitors().size()
+            "",
+            "§7New Visitors come every §a" + GardenServices.visitors().getArrivalMinutes(GardenGuiSupport.core(player).getServedUniqueVisitors().size()) + " minutes§7.",
+            "§7Known entries: §e" + visitors.getLogbookEntries().size() + "§7/§a" + GardenServices.visitors().getExpectedUniqueVisitors()
         ));
 
         if (!Components.back(layout, 48, ctx)) {
@@ -158,27 +158,24 @@ public class GUIVisitorLogbook extends StatefulPaginatedView<Map<String, Object>
         if (GardenGuiSupport.core(player).getLevel() < GardenConfigRegistry.getInt(visitor, "garden_level", 1)) {
             return false;
         }
-        for (Object rawRequirement : GardenConfigRegistry.getList(visitor, "requirements")) {
-            String requirement = String.valueOf(rawRequirement);
-            if (requirement.regionMatches(true, 0, "Talk to", 0, "Talk to".length())) {
-                String flag = requirement
-                    .replaceFirst("(?i)^Talk to\\s+", "")
-                    .replaceFirst("(?i)^the\\s+", "")
-                    .replaceFirst("(?i)^this\\s+", "")
-                    .toLowerCase()
-                    .replaceAll("[^a-z0-9]+", "_")
-                    .replaceAll("^_+|_+$", "");
-                if (GardenGuiSupport.personal(player).getSpokenNpcFlags().contains(flag)) {
-                    continue;
+        for (GardenVisitorService.VisitorRequirement requirement : GardenServices.visitors().getRequirements(visitor)) {
+            switch (requirement.type()) {
+                case "SPOKEN_TO_NPC" -> {
+                    String flag = requirement.key().toLowerCase().replaceAll("[^a-z0-9]+", "_").replaceAll("^_+|_+$", "");
+                    if (!GardenGuiSupport.personal(player).getSpokenNpcFlags().contains(flag)
+                        && List.of("sam", "anita", "pamela", "jacob", "jeff", "phillip", "carpenter", "shifty", "desk").contains(flag)) {
+                        return false;
+                    }
                 }
-                if (List.of("sam", "anita", "jacob", "jeff", "pesthunter_phillip", "carpenter", "shifty", "desk").contains(flag)) {
-                    return false;
+                case "GARDEN_LEVEL_AT_LEAST", "SKILL_LEVEL_AT_LEAST" -> {
                 }
-            } else if (requirement.regionMatches(true, 0, "Farming ", 0, "Farming ".length())
-                || requirement.regionMatches(true, 0, "Fishing ", 0, "Fishing ".length())) {
-                continue;
-            } else {
-                return false;
+                default -> {
+                    if (!GardenGuiSupport.personal(player).getVisitorRequirementFlags().contains(requirement.key().toLowerCase())
+                        && !GardenGuiSupport.core(player).getVisitorRequirementFlags().contains(requirement.key().toLowerCase())
+                        && !GardenGuiSupport.personal(player).getAccessFlags().contains(requirement.key().toLowerCase())) {
+                        return false;
+                    }
+                }
             }
         }
         return true;
@@ -189,16 +186,6 @@ public class GUIVisitorLogbook extends StatefulPaginatedView<Map<String, Object>
             .anyMatch(visitor -> visitor.getVisitorId().equalsIgnoreCase(visitorId))
             || GardenGuiSupport.visitors(player).getQueuedVisitors().stream()
             .anyMatch(visitor -> visitor.getVisitorId().equalsIgnoreCase(visitorId));
-    }
-
-    private String getIconItemId(Map<String, Object> visitor) {
-        for (Object wanted : GardenConfigRegistry.getList(visitor, "wanted_items")) {
-            String item = String.valueOf(wanted).toUpperCase();
-            if (!item.startsWith("ANY")) {
-                return item;
-            }
-        }
-        return "BOOK";
     }
 
     public record State(List<Map<String, Object>> items,

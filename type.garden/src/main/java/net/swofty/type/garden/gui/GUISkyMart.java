@@ -2,7 +2,6 @@ package net.swofty.type.garden.gui;
 
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
-import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.DefaultState;
@@ -20,18 +19,9 @@ public class GUISkyMart extends StatelessView {
 
     @Override
     public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-        Components.fill(layout);
-        Components.backOrClose(layout, 31, ctx);
+        Components.close(layout, 31);
 
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
-        long copper = GardenGuiSupport.core(player).getCopper();
-
-        layout.slot(4, ItemStackCreator.getStack(
-            "§6Copper Purse",
-            Material.COPPER_BLOCK,
-            1,
-            "§7Available Copper: §c" + StringUtility.commaify(copper)
-        ));
 
         layout.slot(11, ItemStackCreator.getStack(
             "§aFarming Essentials",
@@ -40,7 +30,6 @@ public class GUISkyMart extends StatelessView {
             "§7All the farming supplies you could",
             "§7ever need!",
             "",
-            "§7Entries: §e" + net.swofty.type.garden.GardenServices.desk().getSkyMartEntries("farming_essentials").size(),
             "§eClick to view!"
         ), (click, c) -> c.push(new GUISkyMartCategory("farming_essentials", "Farming Essentials")));
 
@@ -51,7 +40,6 @@ public class GUISkyMart extends StatelessView {
             "§7Purchase tools made specifically for",
             "§7each crop!",
             "",
-            "§7Entries: §e" + net.swofty.type.garden.GardenServices.desk().getSkyMartEntries("farming_tools").size(),
             "§eClick to view!"
         ), (click, c) -> c.push(new GUISkyMartCategory("farming_tools", "Farming Tools")));
 
@@ -61,7 +49,6 @@ public class GUISkyMart extends StatelessView {
             1,
             "§7Spruce up your Barn!",
             "",
-            "§7Entries: §e" + net.swofty.type.garden.GardenServices.desk().getSkyMartEntries("barn_skins").size(),
             "§eClick to view!"
         ), (click, c) -> c.push(new GUISkyMartCategory("barn_skins", "Barn Skins")));
 
@@ -71,7 +58,7 @@ public class GUISkyMart extends StatelessView {
             1,
             "§7Make your Greenhouse look fresh!",
             "",
-            "§cNo live entries yet"
+            "§eClick to view!"
         ));
 
         layout.slot(15, ItemStackCreator.getStack(
@@ -80,7 +67,9 @@ public class GUISkyMart extends StatelessView {
             1,
             "§7Got pests? We got you.",
             "",
-            "§cNo live entries yet"
+            "§eClick to view!"
         ));
+
+        Components.back(layout, 30, ctx);
     }
 }

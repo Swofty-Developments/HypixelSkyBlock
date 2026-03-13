@@ -1,7 +1,6 @@
 package net.swofty.type.garden.gui;
 
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.garden.config.GardenConfigRegistry;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -49,20 +48,18 @@ public class GardenVisitorOfferView extends StatelessView {
         String displayName = GardenConfigRegistry.getString(definition, "display_name", StringUtility.toNormalCase(visitorId));
         String rarity = GardenConfigRegistry.getString(definition, "rarity", active == null ? "UNCOMMON" : active.getRarity());
 
-        layout.slot(13, ItemStackCreator.getStack(
-            GardenGuiSupport.colorForRarity(rarity) + displayName,
-            Material.PLAYER_HEAD,
-            1,
+        List<String> profileLore = new ArrayList<>(List.of(
             GardenGuiSupport.colorForRarity(rarity) + "§l" + rarity,
             "",
             "§7Times Visited: §a" + GardenGuiSupport.visitors(player).getVisitCounts().getOrDefault(visitorId, 0),
             "§7Offers Accepted: §a" + GardenGuiSupport.visitors(player).getServedCounts().getOrDefault(visitorId, 0)
         ));
+        layout.slot(13, GardenGuiSupport.visitorIcon(definition, displayName, rarity, profileLore));
 
         if (active == null) {
             layout.slot(31, ItemStackCreator.getStack(
                 "§cNo Active Offer",
-                Material.BARRIER,
+                net.minestom.server.item.Material.BARRIER,
                 1,
                 "§7This visitor is not currently on",
                 "§7your Garden."
@@ -84,18 +81,14 @@ public class GardenVisitorOfferView extends StatelessView {
         if (active.getBits() > 0) {
             acceptLore.add(" §8+§b" + active.getBits() + " Bits");
         }
-        for (String reward : active.getGuaranteedRewards()) {
-            acceptLore.add(" §8+§6" + StringUtility.toNormalCase(reward));
-        }
-        for (String reward : active.getBonusRewards()) {
-            acceptLore.add(" §8+§d" + StringUtility.toNormalCase(reward));
-        }
+        acceptLore.addAll(GardenGuiSupport.describeRewards(active.getGuaranteedRewards(), " §8+§6"));
+        acceptLore.addAll(GardenGuiSupport.describeRewards(active.getBonusRewards(), " §8+§d"));
         acceptLore.add("");
         acceptLore.add(canAccept ? "§eClick to accept!" : "§cMissing items to accept!");
 
         layout.slot(29, ItemStackCreator.getStack(
             "§aAccept Offer",
-            Material.GREEN_TERRACOTTA,
+            net.minestom.server.item.Material.GREEN_TERRACOTTA,
             1,
             acceptLore
         ), (click, c) -> {
@@ -108,7 +101,7 @@ public class GardenVisitorOfferView extends StatelessView {
 
         layout.slot(33, ItemStackCreator.getStack(
             "§cRefuse Offer",
-            Material.RED_TERRACOTTA,
+            net.minestom.server.item.Material.RED_TERRACOTTA,
             1,
             "§7" + displayName + " §7will leave your §aGarden",
             "§7and maybe come back later.",

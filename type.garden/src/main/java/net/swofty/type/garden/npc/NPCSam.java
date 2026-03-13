@@ -5,12 +5,11 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCSam extends AbstractGardenNpc {
-    private static final String TEXTURE = NPCDesk.class.getName();
-    private static final String BUILDER_TEXTURE = "eyJ0aW1lc3RhbXAiOjE1NTA2Nzg1OTkwMDQsInByb2ZpbGVJZCI6ImEyZjgzNDU5NWM4OTRhMjdhZGQzMDQ5NzE2Y2E5MTBjIiwicHJvZmlsZU5hbWUiOiJiUHVuY2giLCJzaWduYXR1cmVSZXF1aXJlZCI6dHJ1ZSwidGV4dHVyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2M4Y2NkNGZkZjU4YjMwYWE4MzAxN2NmYTVmZWQ5NzcxOTZjMDI0YzhkMWEyNzYwMDRlOTA2OGU4ZWNiYjBiNzkifX19";
-    private static final String BUILDER_SIGNATURE = "EzyAHb6TAVKVuO3R6cTt6eNJYXdU6C1fpPByuOEL/FUIIHqW5QpUnQLP7s3EjLhhzRagDi/eU/xGe09Ucsb7s6tSavn1jzfqwnmVG7C2FJ30ELl35y3pYbNKwmBl8I2fDY9pQrmfJbWRVhv9Gw8W4h8YRZARnW5PfVdsL1ddbTTsssaxapU8YTfUc88h2egnTD/bEHaqYEgfLBzjyMAyK9pDUIqe0NDmBJLbjPZXIVImRbMKanwgLRxmUkjGLONerb0HE8Kx6QoJEumoLOBrOLA5BJF7Jwghrv2d1W9S6hr89Ul6R8CnxQwHFfBMejccm0hLZein4DrKbiFHC8c/hs4jCoC4JT4rvOd/Yp8zNr3Y/dtUk5uTOguk/gYExI+p+1xc8HwTK3sK75LiFl+Ryu4LlKv5GBEznsnRHv1Ufeia3NeuVXDLi/W3zR8VG95Hf0lmKHdwJ/R9E56TxNYRh7wpma37ZTfEpUpKE1o7Z2m5c3jmDxLRdQg8dK1ZYMjlul36Qa8SXYTM4T+bdB1577M/44Vyde1NFVepYK0vRXDDNRal2LoDRM9buoTuN2taeP3pmt5C+pL554r7tWgOdCHUz51E9hwsOA9VCVxIA5eS+bgzSBLkWbXZYNo+zi/0bVr9OGdP2hCTJDsd0x7YEL2P7qribidVjnRLWWP8a2k=";
+    private static final String BUILDER_TEXTURE = "ewogICJ0aW1lc3RhbXAiIDogMTY2MTI0NzcyMjk1MiwKICAicHJvZmlsZUlkIiA6ICJjYmFkZmRmNTRkZTM0N2UwODQ3MjUyMDIyYTFkNGRkZCIsCiAgInByb2ZpbGVOYW1lIiA6ICJvRml3aSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS85NWRjZmM4YjMyMDAzMjZiOGY2MWQ4MDYxNWM1YjUzNjk5N2ExMTg1NzBhNDdmMWQzNTMwNjMyOTY5MjFmZTEzIgogICAgfQogIH0KfQ==";
+    private static final String BUILDER_SIGNATURE = "BgdB1A6pFJnqpQ5hCaEhFcEt4kZgvELFPg5Sx1bCXsUM956OmkAOJ3vqsyTAVcfhV/US7sKxDqwSh8JIV0tTV8fsC28cjur2f83cTw6ehlBKoERMRzwMV+ppLs6YjWIncTbst0D5CZqLpDs4ZhuR6u5uaDtbC716FJWFng+4YYn4XAapwiOqufUtmTdNjBuN1gmAJXtMhdcG5pNrm3SYO6KqVzo1a5eHcdXIkGp0mHFulAYZNy9S9RHuaEX1YNWWjyCTI+KQyv/mNfV/OfJtLH5e/BwPvL+Dcp7f+4wPeu3U2exiGpXPe2VOFRqFnaGP2URagVMj5BjVeuuiaY519YEGbYbR0SyG6HPSXVOM8A5NeVqGJ6FCcCg1ejfWNpIDS9mchIxgbufIzFOK1rD1E/JX051/IRAUrxW9hx8hne8X3/gOy84D6wS0j/KDjR7X7U1gZyAsTb1HqYdcNard1PNSLsdathh71APASTH0EZVm2JCh8exx7tNCKSW4jB9uvw0FugAdDUBKjWs1qO2Zrd7/IBePfW1uvoEU7TUnXRMKu0OB8yug7Y7CCE/jM1zMDnWRhn1QuF94+se6R2swmDJM8NA/exsDmzFMXi+ndw+bOfJYdyzM+s3H6AgvOnmOtgrZBIkLYSMlvSMigxl2Vd/9rRdVn4wFyv4/Dd1aPho=";
 
     public NPCSam() {
-        super("sam", "Sam", BUILDER_TEXTURE, BUILDER_SIGNATURE);
+        super("sam", "§bSam", BUILDER_TEXTURE, BUILDER_SIGNATURE);
     }
 
     @Override
@@ -28,14 +27,6 @@ public class NPCSam extends AbstractGardenNpc {
 
     @Override
     protected DialogueSet[] dialogues(net.swofty.type.generic.user.HypixelPlayer player) {
-        return new DialogueSet[]{
-            DialogueSet.builder()
-                .key("hello")
-                .lines(new String[]{
-                    "Welcome to your Garden!",
-                    "Use the Desk to manage plots, skins, upgrades, and visitors."
-                })
-                .build()
-        };
+        return configuredDialogues();
     }
 }

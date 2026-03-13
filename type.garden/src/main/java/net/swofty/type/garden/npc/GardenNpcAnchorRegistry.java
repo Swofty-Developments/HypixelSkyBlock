@@ -12,17 +12,29 @@ public final class GardenNpcAnchorRegistry {
     }
 
     public static Optional<NpcAnchor> getNpcAnchor(SkyBlockPlayer player, String npcId) {
+        return getAnchor(player, "npcs", npcId);
+    }
+
+    public static Optional<NpcAnchor> getInteractionAnchor(SkyBlockPlayer player, String anchorId) {
+        return getAnchor(player, "interactions", anchorId);
+    }
+
+    public static Optional<NpcAnchor> getVisitorSlotAnchor(SkyBlockPlayer player, int slot) {
+        return getAnchor(player, "visitor_slots", "slot_" + slot);
+    }
+
+    private static Optional<NpcAnchor> getAnchor(SkyBlockPlayer player, String sectionName, String anchorId) {
         Map<String, Object> config = GardenConfigRegistry.getConfig("npc_anchors.yml");
         Map<String, Object> skins = GardenConfigRegistry.getSection(config, "skins");
         String selectedSkin = player == null ? "default" : net.swofty.type.garden.gui.GardenGuiSupport.core(player).getSelectedBarnSkin();
 
         Map<String, Object> selectedSkinSection = GardenConfigRegistry.getSection(skins, selectedSkin);
-        Map<String, Object> selectedNpcs = GardenConfigRegistry.getSection(selectedSkinSection, "npcs");
-        Map<String, Object> anchor = GardenConfigRegistry.getSection(selectedNpcs, npcId);
+        Map<String, Object> selectedAnchors = GardenConfigRegistry.getSection(selectedSkinSection, sectionName);
+        Map<String, Object> anchor = GardenConfigRegistry.getSection(selectedAnchors, anchorId);
         if (anchor.isEmpty()) {
             Map<String, Object> defaultSkinSection = GardenConfigRegistry.getSection(skins, "default");
-            Map<String, Object> defaultNpcs = GardenConfigRegistry.getSection(defaultSkinSection, "npcs");
-            anchor = GardenConfigRegistry.getSection(defaultNpcs, npcId);
+            Map<String, Object> defaultAnchors = GardenConfigRegistry.getSection(defaultSkinSection, sectionName);
+            anchor = GardenConfigRegistry.getSection(defaultAnchors, anchorId);
         }
 
         if (anchor.isEmpty() || !GardenConfigRegistry.getBoolean(anchor, "enabled", true)) {

@@ -8,6 +8,14 @@ plugins {
 group = "net.swofty"
 version = "1.0"
 
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven("https://repo.viaversion.com")
+    maven("https://jitpack.io")
+    maven("https://repo.lucko.me/")
+}
+
 subprojects {
     apply(plugin = "java")
     apply(plugin = "java-library")

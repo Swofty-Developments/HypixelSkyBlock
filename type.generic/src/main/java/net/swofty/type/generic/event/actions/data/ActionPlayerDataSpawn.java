@@ -7,10 +7,10 @@ import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.resourcepack.ResourcePackManager;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.resourcepack.ResourcePackManager;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
         }
 
         HypixelNPC.updateForPlayer(player);
-        if (HypixelConst.isIslandServer()) return;
+        if (HypixelConst.isIslandServer() || HypixelConst.isGarden()) return;
         PlayerHolograms.spawnAll(player);
     }
 }

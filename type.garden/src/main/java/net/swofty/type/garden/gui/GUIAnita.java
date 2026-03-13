@@ -14,17 +14,16 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 public class GUIAnita extends StatelessView {
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Anita", InventoryType.CHEST_4_ROW);
+        return new ViewConfiguration<>("Anita", InventoryType.CHEST_6_ROW);
     }
 
     @Override
     public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-        Components.fill(layout);
-        Components.backOrClose(layout, 31, ctx);
+        Components.backOrClose(layout, 49, ctx);
 
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
 
-        layout.slot(11, ItemStackCreator.getStack(
+        layout.slot(20, ItemStackCreator.getStack(
             "§aContest Overview",
             Material.WHEAT,
             1,
@@ -36,7 +35,7 @@ public class GUIAnita extends StatelessView {
             "§eClick to view!"
         ), (click, c) -> c.push(new GUIJacobSFarmingContests()));
 
-        layout.slot(13, ItemStackCreator.getStack(
+        layout.slot(22, ItemStackCreator.getStack(
             "§aPersonal Bests",
             Material.PAPER,
             1,
@@ -47,7 +46,7 @@ public class GUIAnita extends StatelessView {
             "§e" + GardenGuiSupport.personal(player).getAnitaPurchases().size()
         ));
 
-        layout.slot(15, ItemStackCreator.getStackHead(
+        layout.slot(24, ItemStackCreator.getStackHead(
             "§aGarden Chips",
             "560aa469cc6b667dbcbfdc63e827b7c05ca7726af8a178a4aa2e8ffa2690e843",
             1,

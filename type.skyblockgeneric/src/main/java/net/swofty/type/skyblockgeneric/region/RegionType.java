@@ -32,6 +32,7 @@ import java.util.List;
 @Getter
 public enum RegionType {
 	PRIVATE_ISLAND("Your Island", "§a"),
+	THE_GARDEN("The Garden", "§c"),
 
 	VILLAGE("Village", WheatAndFlowersConfiguration.class),
 	BANK("Bank", "§6"),

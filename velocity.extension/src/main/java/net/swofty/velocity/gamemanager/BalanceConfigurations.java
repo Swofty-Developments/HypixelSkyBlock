@@ -7,7 +7,6 @@ import net.swofty.velocity.gamemanager.balanceconfigurations.LowestPlayerCount;
 import net.swofty.velocity.gamemanager.balanceconfigurations.ReadyGames;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.jetbrains.annotations.Nullable;
-import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +57,9 @@ public class BalanceConfigurations {
 			Map.entry(ServerType.SKYBLOCK_JERRYS_WORKSHOP, List.of(
 					new LowestPlayerCount()
 			)),
-
+		Map.entry(ServerType.SKYBLOCK_GARDEN, List.of(
+			new LowestPlayerCount()
+		)),
 			Map.entry(ServerType.PROTOTYPE_LOBBY, List.of(
 					new LowestPlayerCount()
 			)),
@@ -81,7 +82,6 @@ public class BalanceConfigurations {
             Map.entry(ServerType.MURDER_MYSTERY_GAME, List.of(
                     new ReadyGames()
             )),
-
             Map.entry(ServerType.SKYWARS_CONFIGURATOR, List.of(
                     new LowestPlayerCount()
             )),

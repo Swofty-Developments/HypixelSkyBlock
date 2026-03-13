@@ -4,10 +4,12 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.metadata.display.BlockDisplayMeta;
 import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
+import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
@@ -36,8 +38,11 @@ public class Furniture {
 	}
 
 	public static List<LivingEntity> load(String furnitureName, Pos offset) {
+		return load(HypixelConst.getInstanceContainer(), furnitureName, offset);
+	}
+
+	public static List<LivingEntity> load(final Instance instance, final String furnitureName, final Pos offset) {
 		try {
-			final Instance instance = HypixelConst.getInstanceContainer();
 			if (instance == null) {
 				throw new IllegalStateException("SkyBlock instance is not initialized");
 			}
@@ -65,6 +70,13 @@ public class Furniture {
 
 				if ("minecraft:block_display".equals(type)) {
 					LivingEntity entity = createBlockDisplay(entry);
+					spawnEntity(entity, entry, offset, instance);
+					spawned.add(entity);
+					continue;
+				}
+
+				if ("minecraft:armor_stand".equals(type)) {
+					LivingEntity entity = createArmorStand(entry);
 					spawnEntity(entity, entry, offset, instance);
 					spawned.add(entity);
 				}
@@ -175,6 +187,40 @@ public class Furniture {
 		return entity;
 	}
 
+	private static LivingEntity createArmorStand(final JSONObject entry) {
+		final LivingEntity entity = new LivingEntity(EntityType.ARMOR_STAND);
+		entity.editEntityMeta(ArmorStandMeta.class, meta -> {
+			meta.setHasNoGravity(true);
+			meta.setInvisible(entry.optBoolean("invisible", false));
+			meta.setSmall(entry.optBoolean("small", false));
+			meta.setMarker(entry.optBoolean("marker", false));
+			meta.setHasArms(entry.optBoolean("showArms", false));
+			meta.setHasNoBasePlate(!entry.optBoolean("showBasePlate", true));
+
+			JSONObject pose = entry.optJSONObject("pose");
+			if (pose != null) {
+				meta.setHeadRotation(readRotationVector(pose, "head"));
+				meta.setBodyRotation(readRotationVector(pose, "body"));
+				meta.setLeftArmRotation(readRotationVector(pose, "leftArm"));
+				meta.setRightArmRotation(readRotationVector(pose, "rightArm"));
+				meta.setLeftLegRotation(readRotationVector(pose, "leftLeg"));
+				meta.setRightLegRotation(readRotationVector(pose, "rightLeg"));
+			}
+		});
+
+		JSONObject equipment = entry.optJSONObject("equipment");
+		if (equipment != null) {
+			setEquipment(entity, equipment, "head", EquipmentSlot.HELMET);
+			setEquipment(entity, equipment, "chest", EquipmentSlot.CHESTPLATE);
+			setEquipment(entity, equipment, "legs", EquipmentSlot.LEGGINGS);
+			setEquipment(entity, equipment, "feet", EquipmentSlot.BOOTS);
+			setEquipment(entity, equipment, "mainhand", EquipmentSlot.MAIN_HAND);
+			setEquipment(entity, equipment, "offhand", EquipmentSlot.OFF_HAND);
+		}
+
+		return entity;
+	}
+
 	private static ItemStack buildItemStack(final JSONObject item) {
 		final String itemId = item.getString("id");
 		Material material = Material.fromKey(itemId);
@@ -218,6 +264,26 @@ public class Furniture {
 			return matcher.group(1);
 		}
 		return null;
+	}
+
+	private static Vec readRotationVector(JSONObject pose, String key) {
+		JSONObject rotation = pose.optJSONObject(key);
+		if (rotation == null) {
+			return Vec.ZERO;
+		}
+		return new Vec(
+			rotation.optDouble("x", 0D),
+			rotation.optDouble("y", 0D),
+			rotation.optDouble("z", 0D)
+		);
+	}
+
+	private static void setEquipment(LivingEntity entity, JSONObject equipment, String key, EquipmentSlot slot) {
+		JSONObject item = equipment.optJSONObject(key);
+		if (item == null) {
+			return;
+		}
+		entity.setEquipment(slot, buildItemStack(item));
 	}
 
 }

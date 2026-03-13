@@ -1,5 +1,6 @@
 package net.swofty.type.garden.events.custom;
 
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.garden.GardenCropRegistry;
 import net.swofty.type.garden.GardenServices;
@@ -12,6 +13,7 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.garden.GardenData;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
@@ -37,10 +39,30 @@ public class ActionGardenBlockBreak implements HypixelEventClass {
         visitors.setLastFarmingActivityAt(now);
 
         double totalFortune = player.getStatistics().allStatistics().getOverall(ItemStatistic.FARMING_FORTUNE)
-            + player.getStatistics().allStatistics().getOverall(crop.specificFortune());
+            + (crop.specificFortune() == null
+            ? 0D
+            : player.getStatistics().allStatistics().getOverall(crop.specificFortune()));
         personal.setSowdust(personal.getSowdust() + GardenServices.chips().calculateGardenSowdust(totalFortune, crop.doubleBreakCrop()));
 
+        long harvestedAmount = getHarvestedAmount(event, crop.cropId());
+        GardenServices.milestones().advanceCropMilestone(player, crop.cropId(), harvestedAmount);
         trySpawnPest(player, crop, now);
+    }
+
+    private long getHarvestedAmount(CustomBlockBreakEvent event, String cropId) {
+        return event.getDrops().stream()
+            .filter(drop -> {
+                ItemType type = drop.getAttributeHandler().getPotentialType();
+                if (type == null) {
+                    return false;
+                }
+                if ("MUSHROOM".equalsIgnoreCase(cropId)) {
+                    return type.name().contains("MUSHROOM");
+                }
+                return type.name().equalsIgnoreCase(cropId);
+            })
+            .mapToLong(SkyBlockItem::getAmount)
+            .sum();
     }
 
     private void trySpawnPest(SkyBlockPlayer player, GardenCropRegistry.CropContext crop, long now) {

@@ -5,6 +5,7 @@ import net.swofty.type.garden.composter.GardenComposterService;
 import net.swofty.type.garden.config.GardenConfigRegistry;
 import net.swofty.type.garden.greenhouse.GardenGreenhouseService;
 import net.swofty.type.garden.level.GardenLevelService;
+import net.swofty.type.garden.milestone.GardenMilestoneService;
 import net.swofty.type.garden.pest.GardenPestService;
 import net.swofty.type.garden.shop.GardenDeskService;
 import net.swofty.type.garden.visitor.GardenVisitorService;
@@ -17,6 +18,7 @@ public final class GardenServices {
     private static final GardenGreenhouseService GREENHOUSE_SERVICE = new GardenGreenhouseService();
     private static final GardenLevelService LEVEL_SERVICE = new GardenLevelService();
     private static final GardenDeskService DESK_SERVICE = new GardenDeskService();
+    private static final GardenMilestoneService MILESTONE_SERVICE = new GardenMilestoneService();
 
     private GardenServices() {
     }
@@ -30,6 +32,7 @@ public final class GardenServices {
         GREENHOUSE_SERVICE.reload();
         LEVEL_SERVICE.reload();
         DESK_SERVICE.reload();
+        MILESTONE_SERVICE.reload();
     }
 
     public static GardenVisitorService visitors() {
@@ -58,5 +61,9 @@ public final class GardenServices {
 
     public static GardenDeskService desk() {
         return DESK_SERVICE;
+    }
+
+    public static GardenMilestoneService milestones() {
+        return MILESTONE_SERVICE;
     }
 }

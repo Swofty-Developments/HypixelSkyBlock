@@ -124,8 +124,12 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
     @Override
     public void updateNPC() {
         Pos npcPosition = config.position(viewer);
-        if (!getPosition().asVec().equals(npcPosition.asVec()) && config.shouldDisplayHolograms(viewer)) {
-            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getEyeHeight() + 0.1f, 0));
+        if (!getPosition().samePoint(npcPosition)) {
+            Pos nextPosition = stepTowards(getPosition(), npcPosition, 0.85D);
+            teleport(nextPosition);
+            if (config.shouldDisplayHolograms(viewer)) {
+                PlayerHolograms.relocateExternalPlayerHologram(holo, nextPosition.add(0, getEyeHeight() + 0.1f, 0));
+            }
         }
 
         if (!getPose().equals(config.pose(viewer))) {
@@ -163,5 +167,24 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
                 );
             });
         }
+    }
+
+    private static Pos stepTowards(Pos current, Pos target, double maxDistance) {
+        double dx = target.x() - current.x();
+        double dy = target.y() - current.y();
+        double dz = target.z() - current.z();
+        double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        if (distance <= maxDistance || distance == 0D) {
+            return target;
+        }
+
+        double multiplier = maxDistance / distance;
+        return new Pos(
+            current.x() + dx * multiplier,
+            current.y() + dy * multiplier,
+            current.z() + dz * multiplier,
+            target.yaw(),
+            target.pitch()
+        );
     }
 }

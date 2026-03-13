@@ -22,7 +22,7 @@ public class ActionRegionBlockPlace implements HypixelEventClass {
             return;
         }
 
-        if (!HypixelConst.isIslandServer()) {
+        if (!HypixelConst.isIslandServer() && !HypixelConst.isGarden()) {
             event.setCancelled(true);
             return;
         }

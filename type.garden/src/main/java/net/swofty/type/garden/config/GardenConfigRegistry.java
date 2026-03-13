@@ -28,7 +28,8 @@ public final class GardenConfigRegistry {
         "greenhouse.yml",
         "mutations.yml",
         "npc_anchors.yml",
-        "jacobs_contests.yml"
+        "jacobs_contests.yml",
+        "milestones.yml"
     );
 
     private static final Map<String, Map<String, Object>> CONFIGS = new HashMap<>();

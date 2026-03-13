@@ -1,5 +1,7 @@
 package net.swofty.type.bedwarslobby;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
@@ -62,21 +64,21 @@ public class BedWarsLobbyScoreboard {
 				long tokens = bwDataHandler.get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class).getValue();
 				long tickets = bwDataHandler.get(BedWarsDataHandler.Data.SLUMBER_TICKETS, DatapointLeaderboardLong.class).getValue();
 
-				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.level_label") + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)));
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.progress_label") + suffix(progress) + I18n.string("scoreboard.bedwars_lobby.progress_separator") + suffix(maxExperience));
-				lines.add(progressBar.toString());
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.tokens_label") + tokens);
-				lines.add(I18n.string("scoreboard.bedwars_lobby.tickets_label") + tickets + I18n.string("scoreboard.bedwars_lobby.tickets_max"));
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.total_kills_label"));
-				lines.add(I18n.string("scoreboard.bedwars_lobby.total_wins_label"));
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.common.footer"));
+				List<Component> lines = new ArrayList<>();
+				lines.add(HypixelScoreboard.legacy("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName()));
+				lines.add(HypixelScoreboard.legacy("§7 "));
+				lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.bedwars_lobby.level_label") + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience))));
+				lines.add(HypixelScoreboard.legacy("§7 "));
+				lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.bedwars_lobby.progress_label") + suffix(progress) + I18n.string("scoreboard.bedwars_lobby.progress_separator") + suffix(maxExperience)));
+				lines.add(HypixelScoreboard.legacy(progressBar.toString()));
+				lines.add(HypixelScoreboard.legacy("§7 "));
+				lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.bedwars_lobby.tokens_label") + tokens));
+				lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.bedwars_lobby.tickets_label") + tickets + I18n.string("scoreboard.bedwars_lobby.tickets_max")));
+				lines.add(HypixelScoreboard.legacy("§7 "));
+				lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.bedwars_lobby.total_kills_label")));
+				lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.bedwars_lobby.total_wins_label")));
+				lines.add(HypixelScoreboard.legacy("§7 "));
+				lines.add(HypixelScoreboard.legacy(I18n.string("scoreboard.common.footer")));
 
 				if (!scoreboard.hasScoreboard(player)) {
 					scoreboard.createScoreboard(player, getSidebarName(prototypeName));
@@ -93,21 +95,21 @@ public class BedWarsLobbyScoreboard {
 		scoreboard.removeScoreboard(player);
 	}
 
-	private static String getSidebarName(int counter) {
-		String baseText = I18n.string("scoreboard.bedwars_lobby.title_base");
-		String[] colors = {"§f§l", "§6§l", "§e§l"};
-		String endColor = "§a§l";
-
-		if (counter > 0 && counter <= 8) {
-			return colors[0] + baseText.substring(0, counter - 1) +
-					colors[1] + baseText.charAt(counter - 1) +
-					colors[2] + baseText.substring(counter) +
-					endColor;
-		} else if ((counter >= 9 && counter <= 19) ||
-				(counter >= 25 && counter <= 29)) {
-			return colors[0] + baseText + endColor;
-		} else {
-			return colors[2] + baseText + endColor;
-		}
+	private static Component getSidebarName(int counter) {
+		return HypixelScoreboard.animatedSidebarName(
+			I18n.string("scoreboard.bedwars_lobby.title_base"),
+			counter,
+			NamedTextColor.WHITE,
+			NamedTextColor.GOLD,
+			NamedTextColor.YELLOW,
+			NamedTextColor.WHITE,
+			NamedTextColor.YELLOW,
+			8,
+			9,
+			19,
+			25,
+			29,
+			Component.text("BED WARS", NamedTextColor.GREEN, net.kyori.adventure.text.format.TextDecoration.BOLD)
+		);
 	}
 }

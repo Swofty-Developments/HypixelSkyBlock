@@ -282,3 +282,39 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Rarefinder Chip
       - id: NOT_FINISHED_YET
+
+  - id: SUNDER_I
+    material: enchanted_book
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Enchanted Book (Sunder I)
+      - id: NOT_FINISHED_YET
+
+  - id: GREEN_THUMB_I
+    material: enchanted_book
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Enchanted Book (Green Thumb I)
+      - id: NOT_FINISHED_YET
+
+  - id: DEDICATION_I
+    material: enchanted_book
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Enchanted Book (Dedication I)
+      - id: NOT_FINISHED_YET
+
+  - id: SUNDER_VI_BOOK
+    material: enchanted_book
+    rarity: RARE
+    components:
+      - id: ENCHANTED
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Enchanted Book (Sunder VI)
+      - id: NOT_FINISHED_YET
