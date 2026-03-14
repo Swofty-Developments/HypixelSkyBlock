@@ -1,0 +1,13 @@
+host-name: 0.0.0.0
+transfer-timeout: 800
+mongodb: mongodb://localhost
+redis-url: redis://localhost:6379
+velocity-secret: ixmSUgWOgvs7
+require-auth: false
+sandbox: false
+spark: false
+anticheat: false
+redis-uri: redis://localhost:6379
+limbo:
+    host-name: 127.0.0.1
+    port: 65535

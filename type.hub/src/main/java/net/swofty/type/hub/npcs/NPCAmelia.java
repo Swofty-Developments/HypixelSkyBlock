@@ -1,13 +1,10 @@
 package net.swofty.type.hub.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCAmelia extends HypixelNPC {
 
@@ -15,7 +12,7 @@ public class NPCAmelia extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Amelia", "§e§lCLICK"};
+                return new String[]{"Amelia", "§e§lCLICK"};
             }
 
             @Override
@@ -30,7 +27,7 @@ public class NPCAmelia extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-44.5, 85, -4.5, 0, 0);
+                return new Pos(-15.5, 74, -68.5, -90, 0);
             }
 
             @Override
@@ -42,8 +39,7 @@ public class NPCAmelia extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        e.player().notImplemented();
     }
 
 }

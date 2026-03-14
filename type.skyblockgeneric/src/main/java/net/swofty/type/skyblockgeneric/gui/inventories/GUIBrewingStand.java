@@ -13,6 +13,7 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
 import net.swofty.type.skyblockgeneric.block.attribute.attributes.BlockAttributeBrewingData;
@@ -27,6 +28,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
+
+import java.util.Map;
 
 public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGUI {
 
@@ -45,7 +48,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
     private SkyBlockItem[] potionItems = new SkyBlockItem[3];
 
     public GUIBrewingStand(Instance instance, Point position, SkyBlockBlock block) {
-        super("Brewing Stand", InventoryType.CHEST_6_ROW);
+        super(I18n.string("gui_misc.brewing_stand.title"), InventoryType.CHEST_6_ROW);
         this.instance = instance;
         this.blockPosition = position;
         this.block = block;
@@ -199,12 +202,12 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
         if (brewingData.isBrewing()) {
             paneMaterial = animationToggle ? Material.RED_STAINED_GLASS_PANE : Material.ORANGE_STAINED_GLASS_PANE;
             long remainingSeconds = brewingData.getRemainingTimeMs() / 1000;
-            paneName = "§e" + remainingSeconds + "s remaining";
+            paneName = I18n.string("gui_misc.brewing_stand.remaining_time", Map.of("seconds", String.valueOf(remainingSeconds)));
             paneLore = new String[0];
         } else {
             paneMaterial = Material.LIGHT_BLUE_STAINED_GLASS_PANE;
-            paneName = "§bPlace Water Bottles or Potions";
-            paneLore = new String[]{"§bbelow to brew."};
+            paneName = I18n.string("gui_misc.brewing_stand.place_bottles");
+            paneLore = new String[]{I18n.string("gui_misc.brewing_stand.place_bottles_below")};
         }
 
         for (int slot : ANIMATION_SLOTS) {

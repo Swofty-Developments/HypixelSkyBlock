@@ -1,13 +1,10 @@
 package net.swofty.type.hub.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCJacob extends HypixelNPC {
 
@@ -15,22 +12,22 @@ public class NPCJacob extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Jacob", "§e§lCLICK"};
+                return new String[]{"Jacob", "§e§lCLICK"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                return "ER8CsHYuprQMm5HqK1Kj960TrzSWJDYikes0JORZ+llY/f5ArCuF11c7vtzngFVXRpGKFMnSezYDag+iyPoc64KTH0KQx9XuzLz04LH49UWl3diVbIxGvq5VHao1GieKE308TJOQt4sFaz+Dai8z1rWJdo0MPnHf7jsEy+/M/mMtXZv3dsexEvTzOFm6tF1RTt8f1Zq4LLpY2bWjp4V8pcx6DbYsn3qc274B3shIIEkBPUI1ySaueh2yw5Y8QXIzsVRknpjRfO7WBkvQpoCmTC2tNF6F3KlWCGH6NcrXeH2rxTIehDOCqiq9tL2boR+7t4vgqetPArVvU+66aeMBsRoaLjQOI76sztpxh0hY1ThSuhpgSpYmjF3TBW1TBgu4oVRvhyr4bQFVMCPIlNR0ruzm3DgjsBCAb3ILF+1PkhXBm0u5ytdcDCgDU8u4ZM8BOFKwI8s4arHZi2HjFEwn+dZGkoNoxCdkJ+LUEJjCl31yyU8X2CkocZe4/dtLxB4akcvhoyif0+QqjxkIGdPD6bXkIdmV52rCS8t84Toz65BcYxKWaiTafPGlEQkSqYn9w04qAwBu2k1X5id0NYypdTsTb53UfHN5xScQKxWtrCFOnE0Uo90+At7H5Kr4wWDPR0GgjYF+kSBmeju9WKi6YOdmgvTf2fbRQi+3vj67kAI=";
+                return "pEkQ4zTK7/clvbGWw7JthccvquN+7wwY1rAIqUULhF6PLc8FWRwcVnwtd4K/j8xaTbe3ol8wayk8hraHtPPx6gxtLUbT/r/th9gsfJIBlbvcYJmrLnOI5yUHHYtxPjC2O9OTcxspyv2Ha0kF5Ua/RzOEjU4JN9HM5ni1g6c/U2mFgUnnj3SrNjr5pkIO0wZ27INHcswdVJuD8pC+yaflaSgKPV4CnoPFPp9uBvnVG9Knsz6oVNLno3ZUMojMYU5O3Nnkg8naNb/G2H1FBbwtgVxsjaprKbsqhrQHvFF9oia/Fz9I8IqGukLM0J9Dc3UANjORxeTZcqKkTnDM1wic7s52B5cuZZCQ2by5Di+km/hL2m8dJzVe7TbfS+FrK0galtQHD7jb7yXapQ7LqbutHTuElVCijrp0FlUE0rC+dUeBTbVFcXqo+V/cy2OVuv6DBJM87/6yogqlxyD3ZIetmJx9go42rIXwK97IgTtHt4nO/l14/kc46FL2ESe+P7Nqe/bJRmVDqEy5kuTSB7P4po1O2UHYv9Fydt0daxDrnm/CekKAg5EWh/m30RSKcXu84E85Y2FPW0U4jnmd2fcHaR3MCIY9os44GUEMm56xDKDNtqpRohTEhfo9ncLHTnC3+urN4QudtTbwjha31fvewzIDZKFsHAKakhyEG+OHehk=";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                return "ewogICJ0aW1lc3RhbXAiIDogMTYxMzg1MDcxMDY0NiwKICAicHJvZmlsZUlkIiA6ICJlYjIwYWVkYTRiYTM0NzVmOTczZGNmZjkzNTE2OGZhYSIsCiAgInByb2ZpbGVOYW1lIiA6ICJTa3lGYWxsZWVlIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzdiOGJiMWI0OGY0YmFiYzY3Y2UzOTU0NzIwOGZkYmVkNzIyY2E1OThjZGYzMDY4MWUzNjdjNjI0N2NhYjE5MTgiCiAgICB9CiAgfQp9";
+                return "ewogICJ0aW1lc3RhbXAiIDogMTYwNDM3MDQyNDk4NiwKICAicHJvZmlsZUlkIiA6ICI0MWQzYWJjMmQ3NDk0MDBjOTA5MGQ1NDM0ZDAzODMxYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJNZWdha2xvb24iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2I4YmIxYjQ4ZjRiYWJjNjdjZTM5NTQ3MjA4ZmRiZWQ3MjJjYTU5OGNkZjMwNjgxZTM2N2M2MjQ3Y2FiMTkxOCIKICAgIH0KICB9Cn0=";
             }
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(23, 71, -69, 45, 0);
+                return new Pos(46.5, 73, -128.5, -37, 0);
             }
 
             @Override
@@ -42,8 +39,7 @@ public class NPCJacob extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        e.player().notImplemented();
     }
 
 }

@@ -3,11 +3,10 @@ package net.swofty.type.hub.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCMarco extends HypixelNPC {
 
@@ -15,22 +14,22 @@ public class NPCMarco extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Marco", "§e§lCLICK"};
+                return new String[]{"Marco", "§e§lCLICK"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                return "iD4YTAup8ydps4Hvc1aynvCWIdXyHVms+Zv24BWUa0F7DecE/2ACQNZz7wdzYSflOrITWRiyUOx5Ezc6wIvbVmpcs30NC3dNqiL0FBnSDwvh8X9Zhx1OL+lnWchdVFvehJC/TXiwk75zZx2WJRP5GxmVFAEdqPHHw9CqWESejVrdXptNafkjr6fajZpa7LS54I5YUA81vvLyOwsAm35u8UI2wCv3A1riQX7WaE5pYL0PHW3B7B8woiWJ4vnzLpjA90aIzOX+Rks/bdH1B83RdW2L4RY3K1rgnPOeq/jVmxvCHqVy9+EUNKHKKqPBY9dB27MeewHsm3+/BXRJ1FutP7Fhxdiz/cVqZ5ExatHhLBIQWeutHSCykbNVvUshzddTxV0Wn+RYAUBfwS3OWmL9bU6EEItYVWww65lH3Au792M5u9X8/ByEDwXADZUpZYy7MgF/sh2pXDpUv6sBY+B8t1QY5mPX+c7Mbxdt6S5wFQtbziXp8I5wHrRqJGkfsq/mKkP+nYfBysTO6XFE3JFc4sf2IzYbpaIAPHhFTOxxEEmISJZDJ6qaLWQgotWeKO/v3Mt7WqTqvYV9FVMAY1AR/XTRZmb32HTBHR40R0j5qbN9sxDz8VASjRjzjmgujE1uskHceto1Resyb096CKHO98uyaOg+651xBF3AjdgAnPo=";
+                return "q+SigjPrEtKesr/szWqXWuA0Scs0NgEhDCtp1VRXB0a5uxOkdo4YgFRsP9wLPyaeQPXWI5FQOxbtOy6lxHLpTArbQgIzzdoyZ72mhyuXH+w924+x8+zUWhKiPkA+zTCxn8T/SYulQ0ptigs+vxTFkWyNp+I2QkzgB6fnmh2/IHRKP42PyIiLfPsLh9cTBm7ekXSrCUcSXlbX0BRNPmkpWv8KLx3/iK0diZB+oz0eBO13JHLKITO/unjLMRKt9LC3q1L3WSPFFjOJzN5cJmD6EwO5ANWhERHruwF+UlrZDm1tcOLXGoqyYo1p+gmy2Ims13H1kPJG3807jtnrmXOXrgkQTfddBpCm2gi593hnpsvBoNfAfmjE+CkdhnE7xlCwD5I6SWUrYGZ6kFgGoxTuv31zAVUKEGCMryKgch7AEX8OYCDfvmncpnqkHCkrxlVNE9fQ4/iI20R77Muw+iOTcQTQOU4KMI48w6O5tlfpZjm2vtJlaW2vaN2zmba1R2v/ncMi1p2LidZcwfEe5EV15WAOkHSo3nEAvMprV6uiLbRTXOK1RZmNQPFVIJ7Gb+5q9X0Nv9S4OH/U/SiN83VKy9KCUhZ7IemL5epT/pP1pjbhTMuxVmQlfHp7qwUxLMbRwP/P8UWjPq3nhnB3cnQ763Dr+2+OOpYoTbmAqtLmNqM=";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                return "ewogICJ0aW1lc3RhbXAiIDogMTU4ODYyMzkwOTIyNCwKICAicHJvZmlsZUlkIiA6ICIwNGI3MDhhMzM1NjY0ZjJmODVlYzVlZWYyN2QxNGRhZCIsCiAgInByb2ZpbGVOYW1lIiA6ICJWaW9sZXRza3l6eiIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS82M2I0MGRhZGQ2YTAyNjBkMGU3NmE1NDIwMTVlMGFiNWRjZDkzNjc5NjM0M2QzOWM0NDE0ZDI4MDg3NzEzNTliIgogICAgfQogIH0KfQ==";
+                return "eyJ0aW1lc3RhbXAiOjE1MDAwMDQ3OTM5MjMsInByb2ZpbGVJZCI6IjkzYzdmMmUxMTg2MzQ5NzU4OGE2ZWI0YzUwYjRhZGZiIiwicHJvZmlsZU5hbWUiOiJUYWN0ZnVsIiwic2lnbmF0dXJlUmVxdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS80OTQ1ZDA2NDM4ZjdmZmYyOTFjY2QxNWIxNTZlM2ZiODcyYmMyNWNkOGUyMmE1Zjc2NWM3MDNlYjMzOWY4In19fQ==";
             }
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-9.5, 71, -14, -170, 0);
+                return new Pos(90.5, 76, 3.5, 0, 0);
             }
 
             @Override
@@ -42,8 +41,7 @@ public class NPCMarco extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        e.player().notImplemented();
     }
 
 }

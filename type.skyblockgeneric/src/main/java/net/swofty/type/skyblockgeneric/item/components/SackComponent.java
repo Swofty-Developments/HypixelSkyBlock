@@ -25,6 +25,6 @@ public class SackComponent extends SkyBlockItemComponent {
     }
 
     private void onInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        new GUISack(item.getItemType(), false).open(player);
+        player.openView(new GUISack(item.getItemType(), false));
     }
 }

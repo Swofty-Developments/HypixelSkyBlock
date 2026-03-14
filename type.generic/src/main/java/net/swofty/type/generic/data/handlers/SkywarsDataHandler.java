@@ -1,5 +1,6 @@
 package net.swofty.type.generic.data.handlers;
 
+import io.sentry.Sentry;
 import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
@@ -109,6 +110,7 @@ public class SkywarsDataHandler extends DataHandler implements GameDataHandler {
                 this.datapoints.put(key, data.getDefaultDatapoint().deepClone().setUser(this).setData(data));
                 Logger.info("Issue with datapoint " + key + " for user " + this.uuid + " - defaulting");
                 e.printStackTrace();
+                Sentry.captureException(e);
             }
         }
         return this;

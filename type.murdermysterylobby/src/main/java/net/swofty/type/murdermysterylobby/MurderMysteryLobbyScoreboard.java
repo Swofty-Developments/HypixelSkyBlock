@@ -1,9 +1,7 @@
 package net.swofty.type.murdermysterylobby;
 
-import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
-import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.murdermystery.MurderMysteryLeaderboardPeriod;
@@ -12,102 +10,94 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointMurderMysteryModeStats;
 import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
+import net.swofty.type.generic.i18n.I18n;
+import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
 
 public class MurderMysteryLobbyScoreboard {
-    private static final Map<UUID, Sidebar> sidebarCache = new HashMap<>();
-    private static Integer animationFrame = 0;
+	private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
+	private static Integer animationFrame = 0;
 
-    public static void start() {
-        Scheduler scheduler = MinecraftServer.getSchedulerManager();
+	public static void start() {
+		Scheduler scheduler = MinecraftServer.getSchedulerManager();
 
-        scheduler.submitTask(() -> {
-            animationFrame++;
-            if (animationFrame > 50) {
-                animationFrame = 0;
-            }
+		scheduler.submitTask(() -> {
+			animationFrame++;
+			if (animationFrame > 50) {
+				animationFrame = 0;
+			}
 
-            for (HypixelPlayer player : HypixelGenericLoader.getLoadedPlayers()) {
-                if (player.getDataHandler() == null) {
-                    continue;
-                }
+			for (HypixelPlayer player : HypixelGenericLoader.getLoadedPlayers()) {
+				if (player.getDataHandler() == null) {
+					continue;
+				}
 
-                Sidebar sidebar = sidebarCache.get(player.getUuid());
-                
-                if (sidebar == null) {
-                    sidebar = new Sidebar(Component.text(getSidebarName(animationFrame)));
+				MurderMysteryDataHandler handler = MurderMysteryDataHandler.getUser(player);
+				long totalKills = 0;
+				long totalWins = 0;
+				long detectiveWins = 0;
+				long murdererWins = 0;
+				long tokens = 0;
 
-                    // Get player stats
-                    MurderMysteryDataHandler handler = MurderMysteryDataHandler.getUser(player);
-                    long totalKills = 0;
-                    long totalWins = 0;
-                    long detectiveWins = 0;
-                    long murdererWins = 0;
-                    long tokens = 0;
+				if (handler != null) {
+					DatapointMurderMysteryModeStats statsDP = handler.get(
+							MurderMysteryDataHandler.Data.MODE_STATS,
+							DatapointMurderMysteryModeStats.class);
+					MurderMysteryModeStats stats = statsDP.getValue();
+					totalKills = stats.getTotalKills(MurderMysteryLeaderboardPeriod.LIFETIME);
+					totalWins = stats.getTotalWins(MurderMysteryLeaderboardPeriod.LIFETIME);
+					detectiveWins = stats.getTotalDetectiveWins(MurderMysteryLeaderboardPeriod.LIFETIME);
+					murdererWins = stats.getTotalMurdererWins(MurderMysteryLeaderboardPeriod.LIFETIME);
+					tokens = stats.getTotalTokens(MurderMysteryLeaderboardPeriod.LIFETIME);
+				}
 
-                    if (handler != null) {
-                        DatapointMurderMysteryModeStats statsDP = handler.get(
-                                MurderMysteryDataHandler.Data.MODE_STATS,
-                                DatapointMurderMysteryModeStats.class);
-                        MurderMysteryModeStats stats = statsDP.getValue();
-                        totalKills = stats.getTotalKills(MurderMysteryLeaderboardPeriod.LIFETIME);
-                        totalWins = stats.getTotalWins(MurderMysteryLeaderboardPeriod.LIFETIME);
-                        detectiveWins = stats.getTotalDetectiveWins(MurderMysteryLeaderboardPeriod.LIFETIME);
-                        murdererWins = stats.getTotalMurdererWins(MurderMysteryLeaderboardPeriod.LIFETIME);
-                        tokens = stats.getTotalTokens(MurderMysteryLeaderboardPeriod.LIFETIME);
-                    }
+				List<String> lines = new ArrayList<>();
+				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
+				lines.add("§7 ");
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_kills_label") + totalKills);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_wins_label") + totalWins);
+				lines.add("§7 ");
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_detective_label") + detectiveWins);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_murderer_label") + murdererWins);
+				lines.add("§7 ");
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.tokens_label") + tokens);
+				lines.add("§7 ");
+				lines.add(I18n.string("scoreboard.common.footer"));
 
-                    addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName(), sidebar);
-                    addLine("§7 ", sidebar);
-                    addLine("§fTotal Kills: §a" + totalKills, sidebar);
-                    addLine("§fTotal Wins: §a" + totalWins, sidebar);
-                    addLine("§7 ", sidebar);
-                    addLine("§fWins as Detective: §a" + detectiveWins, sidebar);
-                    addLine("§fWins as Murderer: §a" + murdererWins, sidebar);
-                    addLine("§7 ", sidebar);
-                    addLine("§fTokens: §2" + tokens, sidebar);
-                    addLine("§7 ", sidebar);
-                    addLine("§ewww.hypixel.net", sidebar);
+				if (!scoreboard.hasScoreboard(player)) {
+					scoreboard.createScoreboard(player, getSidebarName(animationFrame));
+				}
 
-                    sidebar.addViewer(player);
-                    sidebarCache.put(player.getUuid(), sidebar);
-                }
+				scoreboard.updateLines(player, lines);
+				scoreboard.updateTitle(player, getSidebarName(animationFrame));
+			}
+			return TaskSchedule.tick(4);
+		});
+	}
 
-            }
-            return TaskSchedule.tick(5);
-        });
-    }
+	public static void removeCache(Player player) {
+		scoreboard.removeScoreboard(player);
+	}
 
-    public static void removeCache(Player player) {
-        sidebarCache.remove(player.getUuid());
-    }
+	private static String getSidebarName(int counter) {
+		String baseText = I18n.string("scoreboard.murdermystery_lobby.title_base");
+		String[] colors = {"§f§l", "§6§l", "§e§l"};
+		String endColor = "§a§l";
 
-    private static void addLine(String text, Sidebar sidebar) {
-
-        int score = sidebar.getLines().size();
-        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), score));
-    }
-
-    private static String getSidebarName(int counter) {
-        String baseText = "MURDER MYSTERY";
-        String[] colors = {"§f§l", "§6§l", "§e§l"};
-        String endColor = "§a§l";
-
-        if (counter > 0 && counter <= 14) {
-            return colors[0] + baseText.substring(0, counter - 1) +
-                    colors[1] + baseText.charAt(counter - 1) +
-                    colors[2] + baseText.substring(counter) +
-                    endColor;
-        } else if ((counter >= 15 && counter <= 25) || (counter >= 35 && counter <= 45)) {
-            return colors[0] + baseText + endColor;
-        } else {
-            return colors[2] + baseText + endColor;
-        }
-    }
+		if (counter > 0 && counter <= 14) {
+			return colors[0] + baseText.substring(0, counter - 1) +
+					colors[1] + baseText.charAt(counter - 1) +
+					colors[2] + baseText.substring(counter) +
+					endColor;
+		} else if ((counter >= 15 && counter <= 25) || (counter >= 35 && counter <= 45)) {
+			return colors[0] + baseText + endColor;
+		} else {
+			return colors[2] + baseText + endColor;
+		}
+	}
 }

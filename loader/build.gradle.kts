@@ -53,20 +53,24 @@ dependencies {
     implementation(project(":type.skywarslobby"))
     implementation(project(":type.skywarsgame"))
     implementation(project(":type.skywarsconfigurator"))
+    implementation(project(":type.ravengardgeneric"))
+    implementation(project(":type.ravengardlobby"))
 
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
     implementation(project(":spark"))
     implementation(project(":anticheat"))
-    implementation("org.slf4j:slf4j-api:2.0.13")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
+    implementation(libs.slf4j.api)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
+    implementation(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("dev.hollowcube:polar:1.15.0")
-    implementation("org.yaml:snakeyaml:2.0")
+    implementation(libs.caffeine)
+    implementation(libs.adventure.text.minimessage)
+    implementation(libs.polar)
+    implementation(libs.snakeyaml)
 }
 
 application {

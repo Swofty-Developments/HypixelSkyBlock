@@ -1,15 +1,11 @@
 package net.swofty.type.hub.npcs.villagers;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
-import net.swofty.type.generic.user.HypixelPlayer;
-
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class VillagerPlumberJoe extends HypixelNPC {
     public VillagerPlumberJoe() {
@@ -21,7 +17,7 @@ public class VillagerPlumberJoe extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(56, 70, -78, 180, 0);
+                return new Pos(123.5, 74, -38.5, -75, 0);
             }
 
             @Override
@@ -38,7 +34,6 @@ public class VillagerPlumberJoe extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        e.player().notImplemented();
     }
 }

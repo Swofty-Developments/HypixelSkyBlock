@@ -6,8 +6,9 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.gui.inventories.GUIClaimReward;
+import net.swofty.type.skyblockgeneric.gui.inventories.ClaimRewardView;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionBreakOaklog;
 import net.swofty.type.skyblockgeneric.mission.missions.lumber.MissionTalkToLumberjack;
@@ -16,15 +17,13 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-
 public class NPCLumberJack extends HypixelNPC {
 
     public NPCLumberJack() {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§aLumber Jack", "§e§lCLICK"};
+                return new String[]{"§2Lumber Jack", "§e§lCLICK"};
             }
 
             @Override
@@ -39,7 +38,7 @@ public class NPCLumberJack extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-112.5, 74, -36.5, -90, 0);
+                return new Pos(-123.5, 73, -29.5, -89, 0);
             }
 
             @Override
@@ -88,9 +87,9 @@ public class NPCLumberJack extends HypixelNPC {
         }
         if (!data.hasCompleted(MissionTalkToLumberjackAgain.class)) {
             setDialogue(player, "spoke-again").thenRun(() -> {
-				new GUIClaimReward(ItemType.PROMISING_AXE, () -> {
+				player.openView(new ClaimRewardView(), new ClaimRewardView.State(ItemType.PROMISING_AXE, () -> {
 					data.endMission(MissionTalkToLumberjackAgain.class);
-				}).open(player);
+				}));
             });
             return;
         }

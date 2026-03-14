@@ -17,7 +17,7 @@ public class NPCFishermanGerald extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§3Fisherman Gerald", "§e§lCLICK"};
+                return new String[]{"§9Fisherman Gerald", "§e§lCLICK"};
             }
 
             @Override

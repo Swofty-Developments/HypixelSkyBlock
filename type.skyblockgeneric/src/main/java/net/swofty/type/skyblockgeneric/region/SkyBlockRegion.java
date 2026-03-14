@@ -12,7 +12,12 @@ import net.swofty.type.skyblockgeneric.data.monogdb.RegionDatabase;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @Getter
 @Setter
@@ -69,6 +74,7 @@ public class SkyBlockRegion {
 
     /**
      * Gets a random position for an entity to spawn in the region
+     *
      * @param instance The instance to check if the position is valid in
      * @return A random position in the region, or null if there is no valid position
      * @see SkyBlockMob#spawn()
@@ -89,9 +95,9 @@ public class SkyBlockRegion {
             }
 
             if (instance.isChunkLoaded(randomPosition)
-                    && instance.getBlock(randomPosition).isAir()
-                    && instance.getBlock(blockAbove).isAir()
-                    && !instance.getBlock(blockBelow).isAir())
+                && instance.getBlock(randomPosition).isAir()
+                && instance.getBlock(blockAbove).isAir()
+                && !instance.getBlock(blockBelow).isAir())
                 return randomPosition;
         }
     }
@@ -142,15 +148,35 @@ public class SkyBlockRegion {
         return regions.get(index);
     }
 
-    public static SkyBlockRegion getRegionOfPosition(Pos position) {
-        List<SkyBlockRegion> possible = new ArrayList<>();
-        for (SkyBlockRegion region : getRegions()) {
-            if (region.insideRegion(position))
-                possible.add(region);
+    private long cachedVolume = -1;
+
+    public long getVolume() {
+        if (cachedVolume == -1) {
+            List<Integer> bounds = getBounds();
+            long x = (long) bounds.get(1) - bounds.get(0) + 1;
+            long y = (long) bounds.get(3) - bounds.get(2) + 1;
+            long z = (long) bounds.get(5) - bounds.get(4) + 1;
+            cachedVolume = x * y * z;
         }
-        possible.sort(Comparator.comparingInt(r -> r.getType().ordinal()));
-        Collections.reverse(possible);
-        return !possible.isEmpty() ? possible.getFirst() : null;
+        return cachedVolume;
+    }
+
+    public static SkyBlockRegion getRegionOfPosition(Pos position) {
+        SkyBlockRegion smallest = null;
+        long smallestVolume = Long.MAX_VALUE;
+
+        for (SkyBlockRegion region : getRegions()) {
+            if (!region.insideRegion(position))
+                continue;
+
+            long volume = region.getVolume();
+            if (volume < smallestVolume) {
+                smallestVolume = volume;
+                smallest = region;
+            }
+        }
+
+        return smallest;
     }
 
     public boolean insideRegion(Entity entity) {
@@ -165,17 +191,17 @@ public class SkyBlockRegion {
         if (firstLocation == null)
             return false;
         return x >= (double) bounds.get(0) && x <= (double) bounds.get(1) &&
-                y >= (double) bounds.get(2) && y <= (double) bounds.get(3) &&
-                z >= (double) bounds.get(4) && z <= (double) bounds.get(5);
+            y >= (double) bounds.get(2) && y <= (double) bounds.get(3) &&
+            z >= (double) bounds.get(4) && z <= (double) bounds.get(5);
     }
 
     public List<Integer> getBounds() {
         int sx = Math.min(firstLocation.blockX(), secondLocation.blockX()),
-                ex = Math.max(firstLocation.blockX(), secondLocation.blockX()),
-                sy = Math.min(firstLocation.blockY(), secondLocation.blockY()),
-                ey = Math.max(firstLocation.blockY(), secondLocation.blockY()),
-                sz = Math.min(firstLocation.blockZ(), secondLocation.blockZ()),
-                ez = Math.max(firstLocation.blockZ(), secondLocation.blockZ());
+            ex = Math.max(firstLocation.blockX(), secondLocation.blockX()),
+            sy = Math.min(firstLocation.blockY(), secondLocation.blockY()),
+            ey = Math.max(firstLocation.blockY(), secondLocation.blockY()),
+            sz = Math.min(firstLocation.blockZ(), secondLocation.blockZ()),
+            ez = Math.max(firstLocation.blockZ(), secondLocation.blockZ());
         return Arrays.asList(sx, ex, sy, ey, sz, ez);
     }
 
@@ -192,10 +218,10 @@ public class SkyBlockRegion {
             }
         }
         REGION_CACHE.put("island", new SkyBlockRegion("island",
-                new Pos(0, 0, 0),
-                new Pos(0, 0, 0),
-                RegionType.PRIVATE_ISLAND,
-                ServerType.SKYBLOCK_ISLAND));
+            new Pos(0, 0, 0),
+            new Pos(0, 0, 0),
+            RegionType.PRIVATE_ISLAND,
+            ServerType.SKYBLOCK_ISLAND));
     }
 
     public static SkyBlockRegion getIslandRegion() {

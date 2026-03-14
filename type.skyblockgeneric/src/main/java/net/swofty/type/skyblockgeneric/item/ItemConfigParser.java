@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.item;
 
+import io.sentry.Sentry;
 import net.minestom.server.color.Color;
 import net.minestom.server.item.ItemAnimation;
 import net.minestom.server.item.Material;
@@ -75,6 +76,7 @@ public class ItemConfigParser {
 		} catch (Exception e) {
 			Logger.error("Unexpected error parsing item: {}", e.getMessage());
 			e.printStackTrace();
+			Sentry.captureException(e);
 			return null;
 		}
 	}
@@ -103,6 +105,8 @@ public class ItemConfigParser {
 					int axeStrength = safeConfig.getInt("axe_strength", 1);
 					yield new AxeComponent(axeStrength);
 				}
+				case "REGION_SELECTOR" -> new RegionSelectorComponent();
+				case "BLOCK_DATA_TOOL" -> new BlockDataToolComponent();
 				case "BACKPACK" -> {
 					int rows = safeConfig.getInt("rows");
 					String skullTexture = safeConfig.getString("skull-texture");

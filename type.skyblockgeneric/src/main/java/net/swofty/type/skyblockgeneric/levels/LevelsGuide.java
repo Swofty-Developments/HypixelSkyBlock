@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.v2.View;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.starter.GUIStarterAccessories;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.starter.GUIStarterSkills;
@@ -64,20 +64,20 @@ public enum LevelsGuide {
     public static class TasksSet {
         private Map<SkyBlockLevelCauseAbstr, String> causes;
         private ItemStack.Builder material;
-        private HypixelInventoryGUI guiToOpen;
+        private View<?> guiToOpen;
         private Function<SkyBlockPlayer, List<String>> display;
 
-        public static Builder builder(ItemStack.Builder material, HypixelInventoryGUI guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
+        public static Builder builder(ItemStack.Builder material, View<?> guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
             return new Builder(material, guiToOpen, display);
         }
 
         public static class Builder {
             private final Map<SkyBlockLevelCauseAbstr, String> causes = new HashMap<>();
             private final ItemStack.Builder material;
-            private final HypixelInventoryGUI guiToOpen;
+            private final View<?> guiToOpen;
             private final Function<SkyBlockPlayer, List<String>> display;
 
-            public Builder(ItemStack.Builder material, HypixelInventoryGUI guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
+            public Builder(ItemStack.Builder material, View<?> guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
                 this.material = material;
                 this.guiToOpen = guiToOpen;
                 this.display = display;

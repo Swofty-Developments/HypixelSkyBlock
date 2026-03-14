@@ -24,34 +24,32 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
-    annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
-    compileOnly(files("velocity-proxy-3.4.0-SNAPSHOT.jar"))
+    compileOnly(libs.velocity.api)
+    annotationProcessor(libs.velocity.api)
+    compileOnly(files("velocity-3.5.0-SNAPSHOT-576.jar"))
 
-    implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.3")
-    // implementation("net.swofty:AtlasRedisAPI:1.1.4")
+    implementation(libs.atlas.redis)
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
 
-    implementation("org.mongodb:bson:4.11.2")
-    implementation("org.mongodb:mongodb-driver-sync:4.11.2")
+    implementation(libs.vialoader)
+    implementation(libs.viabackwards.common)
+    implementation(libs.viarewind.common)
+    implementation(libs.viaversion)
 
-    implementation("com.viaversion:vialoader:4.0.6")
-    implementation("com.viaversion:viabackwards-common:5.7.0")
-    implementation("com.viaversion:viarewind-common:4.0.13")
-    implementation("com.viaversion:viaversion:5.7.0")
+    implementation(platform(libs.netty.bom))
+    implementation(libs.netty.buffer)
+    implementation(libs.netty.codec)
+    implementation(libs.netty.codec.http)
+    implementation(libs.netty.transport)
+    implementation(libs.netty.handler)
 
-    implementation(platform("io.netty:netty-bom:4.1.110.Final"))
-    implementation("io.netty:netty-buffer")
-    implementation("io.netty:netty-codec")
-    implementation("io.netty:netty-codec-http")
-    implementation("io.netty:netty-transport")
-    implementation("io.netty:netty-handler")
-
-    implementation("net.bytebuddy:byte-buddy:1.14.16")
-    implementation("net.bytebuddy:byte-buddy-agent:1.14.16")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
+    implementation(libs.byte.buddy)
+    implementation(libs.byte.buddy.agent)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 }
 
 evaluationDependsOn(":commons")

@@ -1,0 +1,77 @@
+# configuration for PicoLimbo
+bind = "0.0.0.0:65535"
+welcome_message = ""
+action_bar = ""
+default_game_mode = "survival"
+hardcore = true
+fetch_player_skins = false
+reduced_debug_info = false
+allow_unsupported_versions = false
+allow_flight = false
+accept_transfers = false
+
+[forwarding]
+method = "MODERN"
+secret = "${FORWARDING_SECRET}"
+
+[world]
+spawn_position = [
+    -22.5,
+    31.06250,
+    21.5,
+]
+spawn_rotation = [
+    -90.0,
+    0.0,
+]
+dimension = "end"
+time = "day"
+
+[world.experimental]
+view_distance = 4
+schematic_file = ""
+polar_file = "limbo.polar"
+lock_time = false
+
+[world.boundaries]
+enabled = false
+min_y = -64
+teleport_message = ""
+
+[server_list]
+reply_to_status = false
+max_players = 20
+message_of_the_day = "Limbo"
+show_online_player_count = false
+server_icon = "server-icon.png"
+
+[compression]
+threshold = -1
+level = 6
+
+[tab_list]
+enabled = false
+header = ""
+footer = ""
+player_listed = false
+
+[boss_bar]
+enabled = false
+title = ""
+health = 1.0
+color = "pink"
+division = 0
+
+[title]
+enabled = false
+title = ""
+subtitle = ""
+fade_in = 10
+stay = 70
+fade_out = 20
+
+[commands]
+spawn = ""
+fly = ""
+fly_speed = ""
+transfer = ""

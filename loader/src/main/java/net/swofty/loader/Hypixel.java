@@ -1,10 +1,14 @@
 package net.swofty.loader;
 
+import io.sentry.ProfileLifecycle;
+import io.sentry.Sentry;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.kyori.adventure.translation.GlobalTranslator;
 import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.adventure.MinestomAdventure;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -13,9 +17,9 @@ import net.swofty.anticheat.loader.PunishmentHandler;
 import net.swofty.anticheat.loader.SwoftyAnticheat;
 import net.swofty.anticheat.loader.SwoftyValues;
 import net.swofty.anticheat.loader.minestom.MinestomLoader;
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.TestFlow;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.proxyapi.ProxyAPI;
@@ -23,23 +27,33 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.spark.Spark;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
+import net.swofty.type.generic.RavengardTypeLoader;
 import net.swofty.type.generic.SkyBlockTypeLoader;
+import net.swofty.type.generic.i18n.HypixelTranslator;
+import net.swofty.type.generic.i18n.I18n;
+import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.net.InetAddress;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-import java.net.InetAddress;
 
 
 public class Hypixel {
@@ -47,15 +61,26 @@ public class Hypixel {
     @Setter
     private static UUID serverUUID;
 
-    private static final boolean ENABLE_SPARK = Configuration.getOrDefault("spark", false);
+    private static final boolean ENABLE_SPARK = ConfigProvider.settings().getIntegrations().isSpark();
 
     @SneakyThrows
-    public static void main(String[] args) {
+    static void main(String[] args) {
         if (args.length == 0 || !ServerType.isServerType(args[0])) {
             Logger.error("Please specify a server type.");
             Arrays.stream(ServerType.values()).forEach(serverType -> Logger.error(serverType.name()));
             System.exit(0);
             return;
+        }
+
+        if (!ConfigProvider.settings().getIntegrations().getSentryDsn().isBlank()) {
+            Sentry.init(options -> {
+                options.setDsn(ConfigProvider.settings().getIntegrations().getSentryDsn());
+                options.setSendDefaultPii(true);
+                options.setTracesSampleRate(1.0);
+                options.setProfileSessionSampleRate(1.0);
+                options.setProfileLifecycle(ProfileLifecycle.TRACE);
+                options.getLogs().setEnabled(true);
+            });
         }
 
         ServerType serverType = ServerType.valueOf(args[0].toUpperCase());
@@ -83,17 +108,13 @@ public class Hypixel {
             Logger.info("Server index: " + testFlowIndex + " of " + testFlowTotal);
         }
 
-        /**
-         * Initialize the server
-         */
-        MinecraftServer minecraftServer = MinecraftServer.init(
-                new Auth.Velocity(Configuration.get("velocity-secret"))
+        // Initialize Minecraft server
+		MinecraftServer minecraftServer = MinecraftServer.init(
+                new Auth.Velocity(ConfigProvider.settings().getVelocitySecret())
         );
         serverUUID = UUID.randomUUID();
 
-        /**
-         * Initialize GenericLoader
-         */
+        // Initialize GenericLoader
         Reflections reflections = new Reflections("net.swofty.type");
         Set<Class<? extends HypixelTypeLoader>> subTypes = reflections.getSubTypesOf(HypixelTypeLoader.class);
         if (subTypes.isEmpty()) {
@@ -115,24 +136,19 @@ public class Hypixel {
 
         new HypixelGenericLoader(typeLoader).initialize(minecraftServer);
 
-        /**
-         * Initialize TypeLoader
-         */
+        // Initialize TypeLoader
         if (typeLoader instanceof SkyBlockTypeLoader) {
             new SkyBlockGenericLoader(typeLoader).initialize(minecraftServer);
         }
+        if (typeLoader instanceof RavengardTypeLoader) {
+            new RavengardGenericLoader(typeLoader).initialize(minecraftServer);
+        }
 
-        /**
-         * Initialize the server
-         */
+        // Initialize the server
         typeLoader.onInitialize(minecraftServer);
 
-        /**
-         * Initialize Proxy support
-         */
-        Logger.info("Initializing proxy support...");
-
-        ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID);
+        // Initialize proxy support
+        ProxyAPI proxyAPI = new ProxyAPI(ConfigProvider.settings().getRedisUri(), serverUUID);
         SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis", ProxyToClient.class)
                 .forEach(proxyAPI::registerFromProxyHandler);
         SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", ServiceToClient.class)
@@ -144,6 +160,11 @@ public class Hypixel {
                     .forEach(proxyAPI::registerFromProxyHandler);
             SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", ServiceToClient.class)
                     .forEach(proxyAPI::registerFromServiceHandler);
+        } else if (typeLoader instanceof RavengardTypeLoader) {
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", ProxyToClient.class)
+                    .forEach(proxyAPI::registerFromProxyHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis.service", ServiceToClient.class)
+                    .forEach(proxyAPI::registerFromServiceHandler);
         }
         Arrays.stream(ToProxyChannels.values()).forEach(
                 ServerOutboundMessage::registerServerToProxy
@@ -153,16 +174,12 @@ public class Hypixel {
         protocolObjects.forEach(ServerOutboundMessage::registerFromProtocolObject);
         proxyAPI.start();
 
-        /**
-         * Start spark if enabled
-         */
+        // Start spark if enabled
         if (ENABLE_SPARK) {
-            // Spark.enable(Files.createTempDirectory("spark"));
+            Spark.enable(Files.createTempDirectory("spark"));
         }
 
-        /**
-         * Ensure all services are running
-         */
+        // Ensure all services are running
         typeLoader.getRequiredServices().forEach(serviceType -> {
             new ProxyService(serviceType).isOnline().thenAccept(online -> {
                 if (!online) {
@@ -172,13 +189,17 @@ public class Hypixel {
         });
         typeLoader.afterInitialize(minecraftServer);
 
-        /**
-         * Start the server
-         */
+        MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION = true;
+        HypixelTranslator translator = new HypixelTranslator();
+        I18n.init(translator);
+        GlobalTranslator.translator().addSource(translator);
+        Logger.info("Loaded " + translator.keyCount() + " translation keys for default locale");
+
+        // Start the server
         MinecraftServer.setBrandName("Hypixel");
         CompletableFuture<Integer> startServer = new CompletableFuture<>();
         startServer.whenComplete((port, throwable) -> {
-            minecraftServer.start(Configuration.get("host-name"), port);
+            minecraftServer.start(ConfigProvider.settings().getHostName(), port);
 
             long endTime = System.currentTimeMillis();
             Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
@@ -211,10 +232,8 @@ public class Hypixel {
                     });
             checkProxyConnected(MinecraftServer.getSchedulerManager());
 
-            /**
-             * Initialize the anticheat
-             */
-            if (Configuration.getOrDefault("anticheat", true)) {
+            // Initialize anticheat
+            if (ConfigProvider.settings().getIntegrations().isAnticheat()) {
                 Thread.startVirtualThread(() -> {
                     Logger.info("Initializing anticheat...");
 
@@ -234,7 +253,7 @@ public class Hypixel {
             }
         });
 
-        CompletableFuture.delayedExecutor(100, TimeUnit.MILLISECONDS)
+        CompletableFuture.delayedExecutor(5, TimeUnit.SECONDS)
                 .execute(() -> {
                     if (startServer.isDone()) return;
                     Logger.error("Couldn't connect to proxy. Shutting down...");

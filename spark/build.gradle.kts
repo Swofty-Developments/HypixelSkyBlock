@@ -17,16 +17,13 @@ java {
     }
 }
 
-repositories {
-    maven("https://jitpack.io")
-}
-
 dependencies {
-    implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
+    implementation(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation(files("dependencies/spark-1.10.1.10-minestom.jar"))
     implementation(project(":type.generic"))
+    implementation(libs.guava)
+    api(libs.spark.common)
 }
 
 application {

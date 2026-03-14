@@ -37,3 +37,95 @@ items:
             result:
               type: BOOKSHELF
               amount: 1
+
+  - id: BRICKS
+    rarity: COMMON
+    material: BRICKS
+
+  - id: BRICK_SLAB
+    rarity: COMMON
+    material: BRICK_SLAB
+
+  - id: BRICK_STAIRS
+    rarity: COMMON
+    material: BRICK_STAIRS
+
+  - id: BROWN_MUSHROOM
+    rarity: COMMON
+    material: BROWN_MUSHROOM
+
+  - id: BROWN_MUSHROOM_BLOCK
+    rarity: COMMON
+    material: BROWN_MUSHROOM_BLOCK
+
+  - id: ENDER_CHEST
+    rarity: COMMON
+    material: ENDER_CHEST
+
+  - id: END_ROD
+    rarity: COMMON
+    material: END_ROD
+
+  - id: FLOWER_POT
+    rarity: COMMON
+    material: FLOWER_POT
+
+  - id: IRON_BARS
+    rarity: COMMON
+    material: IRON_BARS
+
+  - id: IRON_DOOR
+    rarity: COMMON
+    material: IRON_DOOR
+
+  - id: IRON_TRAPDOOR
+    rarity: COMMON
+    material: IRON_TRAPDOOR
+
+  - id: JACK_O_LANTERN
+    rarity: COMMON
+    material: JACK_O_LANTERN
+
+  - id: PURPUR_BLOCK
+    rarity: COMMON
+    material: PURPUR_BLOCK
+
+  - id: PURPUR_PILLAR
+    rarity: COMMON
+    material: PURPUR_PILLAR
+
+  - id: PURPUR_SLAB
+    rarity: COMMON
+    material: PURPUR_SLAB
+
+  - id: PURPUR_STAIRS
+    rarity: COMMON
+    material: PURPUR_STAIRS
+
+  - id: RED_MUSHROOM_BLOCK
+    rarity: COMMON
+    material: RED_MUSHROOM_BLOCK
+
+  - id: REDSTONE_LAMP
+    rarity: COMMON
+    material: REDSTONE_LAMP
+
+  - id: SEA_LANTERN
+    rarity: COMMON
+    material: SEA_LANTERN
+
+  - id: SOUL_SAND
+    rarity: COMMON
+    material: SOUL_SAND
+
+  - id: TORCH
+    rarity: COMMON
+    material: TORCH
+
+  - id: VINES
+    rarity: COMMON
+    material: VINE
+
+  - id: WET_SPONGE
+    rarity: COMMON
+    material: WET_SPONGE

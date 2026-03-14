@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     application
-    id("io.github.goooler.shadow") version "8.1.7"
+    id("io.github.goooler.shadow") version "8.1.8"
 }
 
 group = "net.swofty"
@@ -25,11 +25,11 @@ repositories {
 dependencies {
     implementation(project(":service.generic"))
     implementation(project(":commons"))
-    implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
+    implementation(libs.caffeine)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 
-    implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
+    implementation(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 }

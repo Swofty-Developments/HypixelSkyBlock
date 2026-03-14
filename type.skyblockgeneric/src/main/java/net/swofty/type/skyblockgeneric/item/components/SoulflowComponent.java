@@ -19,9 +19,7 @@ public class SoulflowComponent extends SkyBlockItemComponent {
 				), false
 		));
 		addInheritedComponent(
-				new InteractableComponent((player, item) -> {
-					new GUIConsumeSoulflow(item).open(player);
-				}, null, null)
+				new InteractableComponent(GUIConsumeSoulflow::open, null, null)
 		);
 		this.amount = amount;
 	}

@@ -2,13 +2,13 @@ package net.swofty.type.hub.gui;
 
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
-public class GUIShopAlchemist extends SkyBlockShopGUI{
+public class GUIShopAlchemist extends ShopView {
     public GUIShopAlchemist() {
-        super("Alchemist", 1, DEFAULT);
+        super("Alchemist", DEFAULT);
     }
 
     @Override

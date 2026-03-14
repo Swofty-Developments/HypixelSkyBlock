@@ -7,6 +7,7 @@ import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
+import net.swofty.type.generic.resourcepack.ResourcePackManager;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -36,6 +37,12 @@ public class ActionPlayerDataSpawn implements HypixelEventClass {
             if (gameHandler != null) {
                 gameHandler.runOnLoad(uuid, player);
             }
+        }
+
+        ResourcePackManager packManager = HypixelConst.getResourcePackManager();
+        if (packManager != null) {
+            packManager.sendPack(player);
+            packManager.getActivePack().onPlayerJoin(player);
         }
 
         HypixelNPC.updateForPlayer(player);

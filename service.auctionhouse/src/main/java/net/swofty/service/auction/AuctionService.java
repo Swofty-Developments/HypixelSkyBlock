@@ -1,7 +1,7 @@
 package net.swofty.service.auction;
 
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.generic.SkyBlockService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 
@@ -15,8 +15,8 @@ public class AuctionService implements SkyBlockService {
 
         cacheService = new AuctionsCacheService();
 
-        new AuctionActiveDatabase("_placeholder").connect(Configuration.get("mongodb"));
-        new AuctionInactiveDatabase("_placeholder").connect(Configuration.get("mongodb"));
+        new AuctionActiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
+        new AuctionInactiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
     }
 
     @Override

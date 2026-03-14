@@ -1,5 +1,6 @@
 items:
   - id: SMALL_BACKPACK
+    material: player_head
     rarity: COMMON
     components:
       - id: BACKPACK
@@ -26,6 +27,7 @@ items:
               amount: 1
 
   - id: MEDIUM_BACKPACK
+    material: player_head
     rarity: COMMON
     components:
       - id: BACKPACK
@@ -52,6 +54,7 @@ items:
               amount: 1
 
   - id: LARGE_BACKPACK
+    material: player_head
     rarity: COMMON
     components:
       - id: BACKPACK
@@ -78,6 +81,7 @@ items:
               amount: 1
 
   - id: GREATER_BACKPACK
+    material: player_head
     rarity: COMMON
     components:
       - id: BACKPACK
@@ -104,6 +108,7 @@ items:
               amount: 1
 
   - id: JUMBO_BACKPACK
+    material: player_head
     rarity: COMMON
     components:
       - id: BACKPACK

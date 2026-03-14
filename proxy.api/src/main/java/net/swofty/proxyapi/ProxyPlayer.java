@@ -32,7 +32,7 @@ public class ProxyPlayer {
         this.uuid = uuid;
     }
 
-    public void sendMessage(TextComponent message) {
+    public void sendMessage(Component message) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
         json.put("message", JSONComponentSerializer.json().serialize(message));
@@ -143,6 +143,18 @@ public class ProxyPlayer {
 
         PlayerHandlerRequirements.PlayerHandlerActions action =
                 PlayerHandlerRequirements.PlayerHandlerActions.TRANSFER;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {});
+    }
+
+    public void transferToLimbo() {
+        JSONObject json = new JSONObject();
+        json.put("uuid", uuid.toString());
+
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.LIMBO;
         json.put("action", action.name());
 
         ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,

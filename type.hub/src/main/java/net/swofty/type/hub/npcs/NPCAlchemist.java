@@ -5,11 +5,13 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import java.util.Map;
 
 public class NPCAlchemist extends HypixelNPC {
     public NPCAlchemist() {
@@ -31,7 +33,7 @@ public class NPCAlchemist extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(41.5, 70, -63.5);
+                return new Pos(80.5, 72, -90.5, 90, 0);
             }
 
             @Override
@@ -55,18 +57,13 @@ public class NPCAlchemist extends HypixelNPC {
             return;
         }
 
-        new GUIShopAlchemist().open(player);
+        player.openView(new GUIShopAlchemist());
     }
 
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.builder()
-                        .key("hello").lines(new String[]{
-                                "There is a darkness in you, " + player.getUsername() + ".",
-                                "I've seen it in my flames, you are destined for great things.",
-                                "For now, you shouldn't let it get to your head."
-                        }).build(),
+                DialogueSet.ofTranslation("hello", "npcs_hub.alchemist.dialogue.hello", Map.of("player", player.getUsername()))
         };
     }
 }

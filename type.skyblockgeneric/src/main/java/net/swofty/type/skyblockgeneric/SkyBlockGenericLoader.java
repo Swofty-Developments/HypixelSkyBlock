@@ -11,7 +11,6 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.CoordConversion;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.monitoring.BenchmarkManager;
@@ -21,17 +20,28 @@ import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
 import net.minestom.server.world.biome.Biome;
-import net.swofty.commons.*;
+import net.swofty.commons.CustomWorlds;
+import net.swofty.commons.Songs;
+import net.swofty.commons.StringUtility;
+import net.swofty.commons.YamlFileUtils;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.skyblock.item.reforge.ReforgeLoader;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
-import net.swofty.type.generic.data.mongodb.*;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.data.mongodb.AttributeDatabase;
+import net.swofty.type.generic.entity.hologram.PlayerHolograms;
+import net.swofty.type.generic.entity.hologram.ServerHolograms;
+import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
+import net.swofty.type.generic.redis.RedisOriginServer;
+import net.swofty.type.generic.user.categories.CustomGroups;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
@@ -40,17 +50,15 @@ import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
-import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.data.monogdb.*;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.skyblockgeneric.data.monogdb.CrystalDatabase;
+import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
+import net.swofty.type.skyblockgeneric.data.monogdb.IslandDatabase;
+import net.swofty.type.skyblockgeneric.data.monogdb.RegionDatabase;
 import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
-import net.swofty.type.generic.entity.hologram.PlayerHolograms;
-import net.swofty.type.generic.entity.hologram.ServerHolograms;
 import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
-
-import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.item.ItemConfigParser;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -72,7 +80,6 @@ import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.redis.RedisAuthenticate;
-import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.skyblockgeneric.region.SkyBlockBiomeConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
@@ -82,13 +89,11 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockScoreboard;
 import net.swofty.type.skyblockgeneric.user.StashReminder;
-import net.swofty.type.generic.user.categories.CustomGroups;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.user.statistics.TemporaryStatistic;
 import net.swofty.type.skyblockgeneric.utility.LaunchPads;
-import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
@@ -96,9 +101,14 @@ import org.tinylog.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -121,7 +131,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         /**
          * Register SkyBlock databases
          */
-        ConnectionString cs = new ConnectionString(Configuration.get("mongodb"));
+        ConnectionString cs = new ConnectionString(ConfigProvider.settings().getMongodb());
         MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
         MongoClient mongoClient = MongoClients.create(settings);
 
@@ -302,13 +312,13 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
                         .build());
         SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());
 
-        /*SkyBlockRegion.getRegions().forEach(region -> {
+        SkyBlockRegion.getRegions().forEach(region -> {
             if (region.getServerType() != HypixelConst.getTypeLoader().getType()) return;
             SkyBlockBiomeConfiguration biomeConfig = region.getType().getBiomeHandler();
             if (biomeConfig == null) return;
             RegistryKey<Biome> biomeKey = MinecraftServer.getBiomeRegistry().register(biomeConfig.getKey(), biomeConfig.getBiome());
             setBiome(region.getFirstLocation(), region.getSecondLocation(), biomeKey);
-        });*/
+        });
 
         /**
          * Load fairy souls

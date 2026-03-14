@@ -167,7 +167,7 @@ public class GUILeaderboardSettings extends HypixelInventoryGUI {
 
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-				player.sendMessage("§cThis feature is coming soon!");
+				player.notImplemented();
 			}
 		});
 

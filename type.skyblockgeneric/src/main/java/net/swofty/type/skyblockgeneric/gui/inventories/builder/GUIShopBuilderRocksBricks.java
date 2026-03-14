@@ -1,13 +1,14 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.builder;
 
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.generic.i18n.I18n;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
-public class GUIShopBuilderRocksBricks extends SkyBlockShopGUI {
+public class GUIShopBuilderRocksBricks extends ShopView {
     public GUIShopBuilderRocksBricks() {
-        super("Rocks & Bricks", 1, UPPER5ROWS);
+        super(I18n.string("gui_builder.rocks_bricks.title"), UPPER5ROWS);
     }
 
     @Override

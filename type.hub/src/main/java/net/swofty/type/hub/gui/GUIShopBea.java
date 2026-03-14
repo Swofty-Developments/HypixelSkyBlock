@@ -3,7 +3,7 @@ package net.swofty.type.hub.gui;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePetData;
-import net.swofty.type.skyblockgeneric.gui.SkyBlockShopGUI;
+import net.swofty.type.skyblockgeneric.gui.ShopView;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 import net.swofty.type.skyblockgeneric.shop.type.CombinedShopPrice;
@@ -12,9 +12,9 @@ import net.swofty.type.skyblockgeneric.shop.type.ItemShopPrice;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIShopBea extends SkyBlockShopGUI {
+public class GUIShopBea extends ShopView {
     public GUIShopBea() {
-        super("Pea", 1, DEFAULT);
+        super("Pea", DEFAULT);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class GUIShopBea extends SkyBlockShopGUI {
         lore.add("§cThis is a preview of Lvl 100");
         lore.add("§cNew pets are lowest level!");
 
-        bee.setDisplayLore(lore);
+        bee.setLore(lore);
         bee.setDisplayName(beeDisplayItem.getDisplayName());
         attachItem(bee);
     }

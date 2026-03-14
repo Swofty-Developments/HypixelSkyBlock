@@ -1,5 +1,6 @@
 items:
   - id: SANDBOX_ITEM
+    material: blaze_powder
     components:
       - id: CUSTOM_STATISTICS
         handler_id: SANDBOX_ITEM

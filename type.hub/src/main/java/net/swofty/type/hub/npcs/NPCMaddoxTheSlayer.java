@@ -1,13 +1,10 @@
 package net.swofty.type.hub.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCMaddoxTheSlayer extends HypixelNPC {
 
@@ -15,22 +12,22 @@ public class NPCMaddoxTheSlayer extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Maddox The Slayer", "§e§lCLICK"};
+                return new String[]{"§5Maddox the Slayer", "§e§lCLICK"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                return "DnggeaoC7Ik+Kdw10vBW5QdzUNCMuPN12+mfK9p5/gT1tMBS7KOZcnWXx/mQTAAWlOmkLomCTa1z79YynQZDbikrZ3L/2/V8vM3uySA/DWtBpDp0nZZYWccIuZ01rKoduSj1iUJMmYlzOfBEYm/Fi0mrHLezShmv+zR2cUDT3zuHfOr2Y19rS29axh242C28ADd96sNTSSKIBUr5QO25LM/EQOW5dKge3xbVHk/RmSdHE0aaHVNnB5wecM7kEvBLJQNP3k6ydtlFTgcJiRB5qzPeqeXbnVyMVd2sSGbvLPR2gWEeu1CA5i5Duf/syeutmH490+lT9NEZL76qGic3/I9e7KQoT+uAe7wqI74AbCmQPxRddPJHVjE6WBcKpvrARgOiBv9TLmWe+FCvp+d7v+3ZvLG6BmPOXB8c1a4Ovmx5UN/e1KJiOOismPyWGEh2Zyv/jveZNYw859AlD+D/p4ZatwF+ZNicK5xuhE1X/g0UJWmPiax9Quvpa5eLUvo+V/80L8NtGd/vUJggGHJ/3gnVE64haZqcO2iK6lZubOFS3gPp2OdcU/YNRvSbXwxHIDkq4L0nOHHObkT7WUV+PsNSTuVlnrekGu7/XTPb4TDXOhJUwjEbdiOHhTbzDfJC/UuzPqtpmFyYHRV2ucLg3M9bFKoHj2A6sRFXgmp5oHM=";
+                return "enmXRpBElHQ2aBCDawMdi5hG0pm9oLwOerSYQHhSO/fDZwy0eZRJwJzo3QgnYcESf9EEGyxZ1sVpn3Apw1UAPh8h0j5rf0I6l1xXmlj5cyqTaPZWPETMCvOSgX75L0hUm87X3eROyyU9pQq1HY6JaMC/raNwwg/PQuxt28UmTYQczzCg4cStVfLfO1sAIzYZK5+gBY3fnKkW3N0t1gcJfJJXUKOKnfTTy31C3rtKqU8FKg4VqRH3JbYSdGjV1+uUtTv59s9NnJJIjgTvj+uyzaqgy189xh9c8apUUftwyUhapymG9XyMBVF8SclTicPSA+Bgqx7OpVGcgE0fW8a3H0hLO6ZbDhODmAIfPV+gxXb8rPR12i4JvzuK2AuInsLeIrpUpeujoO0VcZl4a/h3TQLaUgTjVQzkoLYEi+b7VXuaJBdSiHXjjfD2op+iGIzUaNmNHjIcNpBvTds2Uu1bZdygYFciANJEPtUHnXH8I6Vv/hnJ9mQ7py6UOSRlxN9ncOuTtwvSqudZnaTueHZ2Jbclu4worL0wCNIXQyOxIqlC4sMfYm7H56JCrLlpZCH1rFuNa88M051PVXZei4Z4X+eIUhB3xiW/gpwwZW32ax0W8Vlgdy928BUmczRksjxKJ2hHCO14QCJnH9kgdQtVQPxnobYnz+56ijNsByWdBMg=";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                return "ewogICJ0aW1lc3RhbXAiIDogMTY1MTE5MTAzMDIyNywKICAicHJvZmlsZUlkIiA6ICI4N2RiMmNjNWY4Y2I0MjI4YTU0OGRiMzJlM2Y0NmFmNiIsCiAgInByb2ZpbGVOYW1lIiA6ICJZVG1hdGlhczEzbG9sIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzczOGM2ODdkZDg4ODdjNTA5ZDU1ODY1ZWJiNjJhYjYwODdlZjc0M2U5NDI1Y2Q1ZGM2YjRjN2I5M2I3NDdmZjIiCiAgICB9CiAgfQp9";
+                return "ewogICJ0aW1lc3RhbXAiIDogMTY0NjY1MjUwNjMxMCwKICAicHJvZmlsZUlkIiA6ICI0MWQzYWJjMmQ3NDk0MDBjOTA5MGQ1NDM0ZDAzODMxYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJNZWdha2xvb24iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzM4YzY4N2RkODg4N2M1MDlkNTU4NjVlYmI2MmFiNjA4N2VmNzQzZTk0MjVjZDVkYzZiNGM3YjkzYjc0N2ZmMiIKICAgIH0KICB9Cn0=";
             }
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-74, 65, -50, 180, 0);
+                return new Pos(-83.5, 68, -129.5, -135, 0);
             }
 
             @Override
@@ -42,8 +39,7 @@ public class NPCMaddoxTheSlayer extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        e.player().notImplemented();
     }
 
 }

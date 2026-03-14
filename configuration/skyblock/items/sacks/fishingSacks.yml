@@ -1,5 +1,6 @@
 items:
   - id: SMALL_FISHING_SACK
+    material: player_head
     rarity: COMMON
     lore:
       - '§7Item pickups go directly into your'
@@ -74,6 +75,7 @@ items:
               amount: 1
 
   - id: MEDIUM_FISHING_SACK
+    material: player_head
     rarity: RARE
     lore:
       - '§7Item pickups go directly into your'
@@ -148,6 +150,7 @@ items:
               amount: 1
 
   - id: LARGE_FISHING_SACK
+    material: player_head
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'
@@ -222,6 +225,7 @@ items:
               amount: 1
 
   - id: LARGE_ENCHANTED_FISHING_SACK
+    material: player_head
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'

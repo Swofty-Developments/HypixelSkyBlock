@@ -1,3 +1,6 @@
+x-forwarding-env: &forwarding_env
+  FORWARDING_SECRET: ${FORWARDING_SECRET:-change-me}
+
 services:
   mongodb:
     image: mongo:8.0.9
@@ -39,6 +42,8 @@ services:
       context: .
       dockerfile: "./DockerFiles/Dockerfile.proxy"
     container_name: hypixel_proxy
+    environment:
+      <<: *forwarding_env
     ports:
       - "25565:25565"
     depends_on:
@@ -73,6 +78,7 @@ services:
     container_name: hypixelcore_island
     restart: "unless-stopped"
     environment:
+      <<: *forwarding_env
       SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_ISLAND
     depends_on:
       proxy:
@@ -89,6 +95,7 @@ services:
     container_name: hypixelcore_hub
     restart: "unless-stopped"
     environment:
+      <<: *forwarding_env
       SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_HUB
     depends_on:
       proxy:
@@ -105,6 +112,7 @@ services:
     container_name: hypixelcore_farming
     restart: "unless-stopped"
     environment:
+      <<: *forwarding_env
       SERVICE_CMD: java -jar HypixelCore.jar SKYBLOCK_THE_FARMING_ISLANDS
     depends_on:
       proxy:
@@ -121,6 +129,7 @@ services:
     container_name: prototype_lobby
     restart: "unless-stopped"
     environment:
+      <<: *forwarding_env
       SERVICE_CMD: java -jar HypixelCore.jar PROTOTYPE_LOBBY
     depends_on:
       proxy:
@@ -147,7 +156,7 @@ services:
   #     - ./configuration:/app/configuration_files
   #   networks:
   #     - hypixel_network
-  
+
   # bedwars_game:
   #   image: game_server_prepared
   #   container_name: bedwars_game
@@ -164,12 +173,12 @@ services:
   #   networks:
   #     - hypixel_network
 
-  nanolimbo:
-    image: game_server_prepared
-    container_name: nanolimbo
-    restart: "unless-stopped"
+  pico_limbo:
+    image: ghcr.io/ariksquad/picolimbo:master
+    container_name: pico_limbo
+    restart: unless-stopped
     environment:
-      SERVICE_CMD: java -jar NanoLimbo-1.10.2.jar
+      <<: *forwarding_env
     depends_on:
       proxy:
         condition: service_healthy
@@ -185,12 +194,13 @@ services:
     container_name: service_api
     restart: "unless-stopped"
     environment:
+      <<: *forwarding_env
       SERVICE_CMD: java -jar ServiceAPI.jar
     depends_on:
       proxy:
         condition: service_healthy
       game_server_builder:
-        condition: service_started   
+        condition: service_started
     volumes:
       - ./configuration:/app/configuration_files
     networks:
@@ -201,6 +211,7 @@ services:
     container_name: service_auctionhouse
     restart: "unless-stopped"
     environment:
+      <<: *forwarding_env
       SERVICE_CMD: java -jar ServiceAuctionHouse.jar
     depends_on:
       proxy:
@@ -217,6 +228,7 @@ services:
     container_name: service_bazaar
     restart: "unless-stopped"
     environment:
+      <<: *forwarding_env
       SERVICE_CMD: java -jar ServiceBazaar.jar
     depends_on:
       proxy:
@@ -233,6 +245,7 @@ services:
     container_name: service_itemtracker
     restart: "unless-stopped"
     environment:
+      <<: *forwarding_env
       SERVICE_CMD: java -jar ServiceItemTracker.jar
     depends_on:
       proxy:
@@ -249,6 +262,7 @@ services:
     container_name: service_party
     restart: "unless-stopped"
     environment:
+      <<: *forwarding_env
       SERVICE_CMD: java -jar ServiceParty.jar
     depends_on:
       proxy:

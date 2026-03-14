@@ -15,13 +15,63 @@ java {
 }
 
 dependencies {
-    implementation("org.yaml:snakeyaml:2.2")
+    implementation(libs.snakeyaml)
     implementation(project(":packer"))
-    implementation("org.mongodb:bson:4.11.2")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
+    implementation(libs.mongodb.bson)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 
-    compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
+    compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
+
+    // Must match AtlasRedisAPI's Jedis version to avoid conflicts
+    implementation(libs.jedis)
+
+    implementation(libs.configlib.yaml)
+
+    implementation(libs.configurate.yaml)
+    implementation(libs.javapoet)
+}
+
+sourceSets {
+    val main by getting
+
+    val codegen by creating {
+        java.srcDir("src/codegen/java")
+
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.compileClasspath
+    }
+
+    codegen // just here to avoid "unused" warning
+}
+
+val generateItemTypes by tasks.registering(JavaExec::class) {
+    group = "codegen"
+    description = "Generate ItemType enum from SkyBlock YAML"
+
+    classpath = sourceSets["codegen"].runtimeClasspath
+    mainClass.set("net.swofty.codegen.ItemTypeGenerator")
+
+    args(
+        rootProject.projectDir
+            .resolve("configuration/skyblock/items")
+            .absolutePath,
+        layout.projectDirectory
+            .dir("src/generated/java")
+            .asFile
+            .absolutePath
+    )
+
+    inputs.dir(rootProject.projectDir.resolve("configuration/skyblock/items"))
+    outputs.dir(layout.projectDirectory.dir("src/generated/java"))
+}
+
+sourceSets["main"].java {
+    srcDir(layout.projectDirectory.dir("src/generated/java"))
+}
+
+tasks.compileJava {
+    dependsOn(generateItemTypes)
 }

@@ -54,7 +54,7 @@ public class NPCGoldForger extends HypixelNPC {
 			return;
 		}
 
-		new GUIShopGoldForger().open(player);
+		player.openView(new GUIShopGoldForger());
 	}
 
 	@Override

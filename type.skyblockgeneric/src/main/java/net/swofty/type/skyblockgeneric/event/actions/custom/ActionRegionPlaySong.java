@@ -2,6 +2,8 @@ package net.swofty.type.skyblockgeneric.event.actions.custom;
 
 import net.swofty.commons.Songs;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -20,25 +22,39 @@ public class ActionRegionPlaySong implements HypixelEventClass {
     public void run(PlayerRegionChangeEvent event) {
         SkyBlockPlayer player = event.getPlayer();
         SkyBlockSongsHandler songHandler = player.getSongHandler();
+        if (!SkyBlockSongsHandler.isEnabled) return;
 
-        if (event.getTo() != null && event.getFrom() != null
-                && !event.getTo().equals(event.getFrom())) {
-            RegionType to = event.getTo();
-            List<Songs> songs = to.getSongs();
+        RegionType to = event.getTo();
+        RegionType from = event.getFrom();
+        if (to == null || (from != null && to.equals(from))) return;
 
-            if (songs == null || songs.isEmpty()) return;
-
-            Songs randomSong = songs.get((int) (Math.random() * songs.size()));
-            songHandler.setPlayerSong(new SkyBlockSong(randomSong));
-
-            SkyBlockActionBar.getFor(player).addReplacement(
-                    SkyBlockActionBar.BarSection.MANA,
-                    new SkyBlockActionBar.DisplayReplacement(
-                            "§2" + StringUtility.toNormalCase(randomSong.name()),
-                            20,
-                            2
-                    )
-            );
+        Songs songToPlay = null;
+        List<Songs> regionSongs = to.getSongs();
+        if (regionSongs != null && !regionSongs.isEmpty()) {
+            songToPlay = regionSongs.get((int) (Math.random() * regionSongs.size()));
+        } else if (HypixelConst.getTypeLoader() instanceof SkyBlockTypeLoader skyBlockTypeLoader) {
+            songToPlay = skyBlockTypeLoader.getIslandSong();
         }
+
+        SkyBlockSongsHandler.PlayerSong activeSong = songHandler.getPlayerSong();
+        if (songToPlay == null) {
+            if (activeSong != null) songHandler.stopPlayerSong();
+            return;
+        }
+
+        if (activeSong != null && activeSong.song().getSong() == songToPlay) {
+            return;
+        }
+
+        songHandler.setPlayerSong(new SkyBlockSong(songToPlay));
+
+        SkyBlockActionBar.getFor(player).addReplacement(
+            SkyBlockActionBar.BarSection.MANA,
+            new SkyBlockActionBar.DisplayReplacement(
+                "§2" + StringUtility.toNormalCase(songToPlay.name()),
+                20,
+                2
+            )
+        );
     }
 }

@@ -1,18 +1,24 @@
 #!/bin/bash
 
-# Copy the Forwarding Secret
-cp configuration_files/forwarding.secret ./forwarding.secret
+if [ -n "$FORWARDING_SECRET" ]; then
+    secret="$FORWARDING_SECRET"
+elif [ -f ./configuration_files/forwarding.secret ]; then
+    secret=$(cat ./configuration_files/forwarding.secret)
+else
+    echo "FORWARDING_SECRET is required (env var or configuration_files/forwarding.secret)" >&2
+    exit 1
+fi
 
-# Update resources.json with the forwarding secret
-secret=$(cat ./forwarding.secret)
-jq --arg secret "$secret" '.["velocity-secret"] = $secret' ./configuration/resources.json > ./configuration/resources.json.tmp
-mv ./configuration/resources.json.tmp ./configuration/resources.json
+printf '%s' "$secret" > ./forwarding.secret
 
-# Replace the secret in settings.yml
-sed -i "s/secret: '.*'/secret: '$secret'/" ./settings.yml
+# Ensure configuration/config.yml exists
+mkdir -p ./configuration
+if [ ! -f ./configuration/config.yml ]; then
+    cp configuration_files/config.example.yml ./configuration/config.yml
+fi
 
-# Set the settings.yml bind: ip: 'localhost' to bind: ip: '0.0.0.0'
-sed -i "s/ip: 'localhost'/ip: '0.0.0.0'/" ./settings.yml
+# Update config.yml with the forwarding secret (velocity-secret)
+sed -i "s/velocity-secret: .*/velocity-secret: '$secret'/" ./configuration/config.yml
 
 echo "$SERVICE_CMD"
 exec $SERVICE_CMD

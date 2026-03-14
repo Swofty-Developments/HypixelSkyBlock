@@ -20,15 +20,14 @@ repositories {
 dependencies {
     implementation(project(":type.lobby"))
     implementation(project(":commons"))
-    implementation(project(":packer"))
     implementation(project(":proxy.api"))
     implementation(project(":type.generic"))
 
-    implementation("org.mongodb:bson:4.11.2")
-    implementation("org.mongodb:mongodb-driver-sync:4.11.2")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("net.minestom:minestom:2025.12.20c-1.21.11") {
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
+    implementation(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 }

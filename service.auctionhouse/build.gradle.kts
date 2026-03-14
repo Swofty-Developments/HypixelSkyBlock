@@ -23,13 +23,13 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
+    implementation(libs.caffeine)
     implementation(project(":service.generic"))
     implementation(project(":type.skyblockgeneric"))
     implementation(project(":commons"))
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("org.mongodb:bson:4.11.2")
-    implementation("org.mongodb:mongodb-driver-sync:4.11.2")
+    implementation(libs.gson)
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
 }
 
 application {

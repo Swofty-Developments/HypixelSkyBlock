@@ -43,30 +43,11 @@ public class TypeJerrysWorkshopLoader implements SkyBlockTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
-        GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(14, 77, 91), (player, event) -> {
-            player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                    .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
-        });
-
-        GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(16, 77, 91), (player, event) -> {
-            player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                    .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
-        });
-
-        GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(13, 77, 97), (player, event) -> {
-            player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                    .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
-        });
-
-        GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(13, 77, 99), (player, event) -> {
-            player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                    .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
-        });
-
-        GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(13, 77, 101), (player, event) -> {
-            player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                    .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
-        });
+        GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(14, 77, 91), (player, _) -> player.notImplemented());
+        GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(16, 77, 91), (player, _) -> player.notImplemented());
+        GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(13, 77, 97), (player, _) -> player.notImplemented());
+        GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(13, 77, 99), (player, _) -> player.notImplemented());
+        GlassDisplay.create(new SkyBlockItem(ItemType.DIRT), HypixelConst.getInstanceContainer(), new Pos(13, 77, 101), (player, _) -> player.notImplemented());
 
         Present.spawnAll();
     }
@@ -74,10 +55,8 @@ public class TypeJerrysWorkshopLoader implements SkyBlockTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> switch (type) {
-                    default -> new Pos(-4.5, 76, 100.5, -180, 0);
-                }, // Spawn position
-                true // Announce death messages
+            (_) -> new Pos(-4.5, 76, 100.5, -180, 0), // Spawn position
+            true // Announce death messages
         );
     }
 
@@ -86,10 +65,10 @@ public class TypeJerrysWorkshopLoader implements SkyBlockTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return new ArrayList<>(List.of(
-                        new SkyBlockPlayersOnlineModule(1),
-                        new SkyBlockPlayersOnlineModule(2),
-                        new JerrysWorkshopServerModule(),
-                        new AccountInformationModule()
+                    new SkyBlockPlayersOnlineModule(1),
+                    new SkyBlockPlayersOnlineModule(2),
+                    new JerrysWorkshopServerModule(),
+                    new AccountInformationModule()
                 ));
             }
         };
@@ -98,8 +77,8 @@ public class TypeJerrysWorkshopLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.jerrysworkshop.events",
-                HypixelEventClass.class
+            "net.swofty.type.jerrysworkshop.events",
+            HypixelEventClass.class
         ).collect(Collectors.toList());
     }
 
@@ -111,8 +90,8 @@ public class TypeJerrysWorkshopLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelNPC> getNPCs() {
         return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.jerrysworkshop.npcs",
-                HypixelNPC.class
+            "net.swofty.type.jerrysworkshop.npcs",
+            HypixelNPC.class
         ).toList());
     }
 

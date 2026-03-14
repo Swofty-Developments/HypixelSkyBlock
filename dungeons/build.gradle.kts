@@ -11,6 +11,6 @@ java {
 }
 
 dependencies {
-    testImplementation("junit:junit:4.13.2")
-    compileOnly("org.projectlombok:lombok:1.18.42")
+    testImplementation(libs.junit)
+    compileOnly(libs.lombok)
 }

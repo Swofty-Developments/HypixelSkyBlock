@@ -3,11 +3,10 @@ package net.swofty.type.hub.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 public class NPCMalik extends HypixelNPC {
 
@@ -15,22 +14,22 @@ public class NPCMalik extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§9Malik", "§e§lBLACKSMITH"};
+                return new String[]{"§cMalik", "§e§lBLACKSMITH"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                return "apqCV7ME+n/tSQMWMXIrkAyQoDL3nJrvnXtwNIRiIpc5o1QRzsLK4fIhaDbtrTEt/qtwx+93pMRgFqp+CwkutYvc76u6gYybVTcfmDfIJyhacppqUgQiqUCPSCvg+3BvG1bHaRCM8Lrc6wRsFRqqDP22mzFqeY1o3O0+0RqClwKUYntnx1dS58l93rnm3dKKo5NOH0bnM+uZEKxCTTI5/IQwL4CAe1ntyqXPRy7QO5LEWBlA4vDwR60WesDCVdx4QV6mK8IO8DM5BqThszsLm3PMuMP61pnE12+7WleHOlEqC6xY+kDUgsfXZQgfJGqV67J1U+Hi3RSCj3EkokMh45+ZalXWaP+BlSjzzTvhZUP2nM/XLgpuC7k4F2hxOcPz5X2vmVqcjuaGVDa40J2qJ+vRwvMEFs+O9rlSTPxa6oVJiPD/aFFpMCJtqmoTkfbJKNVHQXhtJBYHkdxqAvAfUNnkd024CQNc8WYRnmovRxgx+i6pDaF8ADLFPIMaLZnUOJ2M8wwocuSpLT3qXTqOBHjA8IdWB+ekzyLDkqwWomMUoR06Ws1U6qHiKxJvnJz6MQ1Qu9mHB9tKCgL8wB4SK/2v/KvklGXVyeuim3P0sW5buuMH4SJNWKUdUYK8sZFN1grydmnZo2dILaXAXAcwisUROEUG/vT/WudTD+rV53A=";
+                return "ncXMtxFxI7V2a5yENlI3/RwTv96VE7KoLUFDLmyI7fFqjTtU2toRUIV4NbrMMmkc85O0R19KC3h0HpTg8u2SxMrjbmvJQ0HhuP9+vqklcAoE2sFDpSf94AMXVpao8tLfHirvBQLROP8v6OWG2Kj6SNfbytpTzH+lOYBRXu+la9axEyU7ntzc+hfJ9ijPgs2IfAcL/6yQMe/RDKy39C7JC+oAW3oiBkEqxL5PqkgqHni7N4eY4Xf6iRj2Myh/e4iZ9zIj6iGF73s5c2oaqBUiqk7Up1cDd5GvR61Ptoongnz71fBOS19mHKC4EDOr2lWxMlJc1CKoA9tE2YVg/HwSF0aj4JmZPdESbmdckoxY61j6cihrU1hPQhAo0MM/gIZ+gnAnPIp4TcdmHYlTyRwcWuvh2/VmUZt9TYMJd0PnKS0a69OM8V2gW3kMf9z36Meos8fdGXQr1PGW/rrcwdOftZsMsx6sCAFG7TbWnEDpFsipDBX7tq8+CNY3y9ayiO3HHkgYDTEw1HikGfXu/Nza3s165oSV3SRO6W+5WwdB9uTEwLQB6mcl/cYT29vm6okNVIkKr5aK7SCynGIYgPOEbank0cKNtwZHQg3d9IWlPPydyhybFHgrEkYI/Ecp8gdE3yjBQye/o1032CJwaAgzYfwntn+6aAnr3K45k60oKQk=";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                return "ewogICJ0aW1lc3RhbXAiIDogMTYxMjAzNjg4MDAyNCwKICAicHJvZmlsZUlkIiA6ICI5MzZmMTA3MTEzOGM0YjMyYTg0OGY2NmE5Nzc2NDJhMiIsCiAgInByb2ZpbGVOYW1lIiA6ICIwMDAwMDAwMDAwMDAwMDB4IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2FkMjY1YjAwNGI0MTAwNTJmZjE1YmMwOWFjOGM0OGU4ZWYwY2E5YWE2NmYzN2I0NDY0NDE3NTY2N2YxNGY2MDYiCiAgICB9CiAgfQp9";
+                return "eyJ0aW1lc3RhbXAiOjE1Nzg0MDkwNTYzODYsInByb2ZpbGVJZCI6IjQxZDNhYmMyZDc0OTQwMGM5MDkwZDU0MzRkMDM4MzFiIiwicHJvZmlsZU5hbWUiOiJNZWdha2xvb24iLCJzaWduYXR1cmVSZXF1aXJlZCI6dHJ1ZSwidGV4dHVyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2FkMjY1YjAwNGI0MTAwNTJmZjE1YmMwOWFjOGM0OGU4ZWYwY2E5YWE2NmYzN2I0NDY0NDE3NTY2N2YxNGY2MDYifX19";
             }
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-80.5, 56, -119.5, 180, 0);
+                return new Pos(-80.5, 56, -119.5, -180, 0);
             }
 
             @Override
@@ -42,8 +41,7 @@ public class NPCMalik extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        e.player().notImplemented();
     }
 
 }

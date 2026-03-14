@@ -2,6 +2,9 @@ package net.swofty.type.dwarvenmines.commission;
 
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 public enum CommissionMilestone {
     TIER_1(1, 5, 100_000, 20, true, false, false, false, false, false),
@@ -58,7 +61,7 @@ public enum CommissionMilestone {
     }
 
     public String[] getRewardDescriptions() {
-        java.util.List<String> rewards = new java.util.ArrayList<>();
+        List<String> rewards = new ArrayList<>();
 
         if (unlocksEmissaries) {
             rewards.add("§7- §aEmissaries");

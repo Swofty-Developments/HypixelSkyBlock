@@ -5,9 +5,9 @@ Game servers run the actual gameplay using Minestom. Each server runs as a speci
 ## Download Required Files
 
 1. Download `HypixelCore.jar` from the [releases page](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
-2. Download [`resources.json`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
+2. Download [`config.yml`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
 3. Download [world files](https://files.catbox.moe/of7snu.zip)
-4. Download [`NanoLimbo.jar`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and its config
+4. Download [`PicoLimbo.jar`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and its config
 
 ## Directory Structure
 
@@ -15,7 +15,7 @@ Game servers run the actual gameplay using Minestom. Each server runs as a speci
 gameserver/
 ├── HypixelCore.jar
 ├── configuration/
-│   ├── resources.json
+│   ├── config.yml
 │   ├── skyblock/
 │   │   ├── islands/
 │   │   │   ├── hypixel_skyblock_hub/
@@ -43,16 +43,24 @@ gameserver/
 mkdir -p gameserver/configuration/skyblock/islands
 ```
 
-### 2. Configure resources.json
+### 2. Configure config.yml
 
-Copy the `forwarding.secret` from your Velocity proxy directory and add it to `resources.json`:
+Copy the `forwarding.secret` from your Velocity proxy directory and add it to `config.yml`:
 
-```json
-{
-  "velocity-secret": "PASTE_YOUR_SECRET_HERE",
-  "mongodb-uri": "mongodb://localhost:27017",
-  "redis-uri": "redis://localhost:6379"
-}
+```yaml
+host-name: 0.0.0.0
+transfer-timeout: 800
+mongodb: mongodb://localhost
+redis-url: redis://localhost:6379
+velocity-secret: your-forwarding-secret-here
+require-auth: false
+sandbox: false
+spark: false
+anticheat: false
+redis-uri: redis://localhost:6379
+limbo:
+  host-name: 127.0.0.1
+  port: 65535
 ```
 
 ### 3. Install World Files
@@ -70,15 +78,15 @@ Download from [configuration/skyblock](https://github.com/Swofty-Developments/Hy
 - `collections/` folder → `configuration/skyblock/collections/`
 - `songs/` folder → `configuration/skyblock/songs/` (optional)
 
-### 5. Setup NanoLimbo
+### 5. Setup PicoLimbo
 
-NanoLimbo handles players during server transfers:
+PicoLimbo handles the limbo state:
 
-1. Place `NanoLimbo-1.10.2.jar` in a separate directory
-2. Run it once: `java -jar NanoLimbo-1.10.2.jar`
-3. Edit generated `settings.yml`:
-   - Set `type: MODERN`
-   - Set `secret: 'YOUR_VELOCITY_SECRET'`
+1. Place `PicoLimbo.jar` in a separate directory
+2. Edit the `server.toml` which you can find in the repository configuration folder:
+   - Set `method="MODERN"`
+   - Set `secret="YOUR_SECRET"` (or FORWARDING_SECRET environment variable by default)
+3. Move the `limbo.polar` file to the same directory, or set polar_file to empty: `polar_file=""`
 4. Keep it running in the background
 
 ### 6. Start a Game Server

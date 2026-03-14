@@ -16,12 +16,12 @@ public class InteractableRegistry {
 
     static {
         register("SKYBLOCK_MENU_INTERACT", InteractableItemConfig.builder().rightClickHandler(
-                ((skyBlockPlayer, skyBlockItem) -> new GUISkyBlockMenu().open(skyBlockPlayer))
+                ((skyBlockPlayer, skyBlockItem) -> skyBlockPlayer.openView(new GUISkyBlockMenu()))
         ).leftClickHandler(
-                ((skyBlockPlayer, skyBlockItem) -> new GUISkyBlockMenu().open(skyBlockPlayer))
+                ((skyBlockPlayer, skyBlockItem) -> skyBlockPlayer.openView(new GUISkyBlockMenu()))
         ).inventoryInteractHandler(
                 ((skyBlockPlayer, skyBlockItem) -> {
-                    new GUISkyBlockMenu().open(skyBlockPlayer);
+                    skyBlockPlayer.openView(new GUISkyBlockMenu());
                     return false;
                 })
         ).build());

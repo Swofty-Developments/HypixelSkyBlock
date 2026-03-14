@@ -4,11 +4,10 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopFarmMerchant;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCFarmMerchant extends HypixelNPC {
 
@@ -21,17 +20,17 @@ public class NPCFarmMerchant extends HypixelNPC {
 
             @Override
             public String signature(HypixelPlayer player) {
-                return "qRdj9NhBftgViWv6Ihdr48J0G9FDZIPh4s2X0dSBmnyvHujXKdgJL031wH0VaCerI9hbSuNVVqOuDuMWoW1LpYOMVO99fUx8ksXAUGo85gQQsRaYF5XN92gwYOuxLwhkLlDMj8h2EbyL7+3/rFysqC6b4ppV1N4uEgvkLRF7KzTGoB1geMw4uv4hZ9YpnhsY7adRT3d/ZY6KwygzqcncvZPdq2tW7f41vwYtdJ4IcGVk7+dnosd7+xkiYDYjWx0H6MGhsSdsqoIuMY4TwihsUDVlByteeEKyN3OAc39VyJsOvMUMEytTPwsYiWsVJ7D4YPV+xdnebMiGTJF9vLmRyIInhJpciBUEqMJz3k7AnkBrtF9oZ65mI0uvXM5PeHdQz7uMt4qbnXJaqy3u7VkC7ajrskHvWmKaEy0mHk1iBJcN/eq0gwVu21Hu3zFAGpeIJI92FnGLdHHcncNHri+TKSbpoBxeoM1oB22mPYW2v5iBX8Zb+YjWrkZX7BFkRLvjhNHy6uAGK5UsNIrXw8TqiBQsvcJ1NnNmkboUmo+iIQlL5bLMAa24ekQ3FVK7AjuqZDcrjPQwK4b6a82iLUK/dGxkXJRjO3/AzAtLwxM3pgG+P9aXpubk4pxjzYE1op5CpHA2ERrCaDqaiORptYUzDn5+FgTe3YRU4OPoK8WobZ4=";
+                return "JzFsBS2+uF9KejwuhN9Y/ri1D7GckhODpugutLbPBdtCr4me3NURwE6owdr/rY3EUa2S36bbqRucuTsEM/HU3Tti4MXUqNJv9RnsZsr/o528EtpA4LfDMBO+MZKBXKvspe5rLYl1lb6ZVgWCJ1hTm7s6yhA9bBqZ5mtcRsgwMJV5fY9uzydiOuUe15vtLzDYrXfmuu8USoR6EIQOeSQe1Ui0RLE3MmueURwXBXOzdtYnLwdsdOKofv4haRe7W74f1Xab6hxRW3oyhtm4pKune0sOyxGsNA8/DQ0vgAWKF712F+DoRGEvVGiyhXIqMl9xEYi+oKcMIOWdkj9vwvIuJBuXKsagPMIMVKveKu/agP2OjFf71KY4ob/nreRKhLR2aNU5qpzC+KXbMa88gkiZUvEAmzzIECY/RgwI0DFxkL43GXetKQQ2tfElPvkgeqhnQkArOYFXIPlRQI01E8dku9ekKuSkLiNClwN4Knaw7OOYpPSe65viYUhREj3UWYzj3Al40ut7MEP7565pj4OKxKQ2ToOcfT9Zm/2FJ4X9PPN+ubKVAq1la1cZuh/O78lV3k5v/6UlhXXMTuKPVep1U86rd0Fdp1E/nYReKoJHX1NIg7xynSk2qy8dol9OZbLlKdxo00rrinckpoAY/GeABu8FR+ZhFgCqDdOaVo1Z+wQ=";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                return "ewogICJ0aW1lc3RhbXAiIDogMTYzODA3ODcyNTAyMSwKICAicHJvZmlsZUlkIiA6ICIyMjI3ZDM4ZmRkYTA0OGJmODA1MTFlNzlmNTBlOWVhYSIsCiAgInByb2ZpbGVOYW1lIiA6ICJtYXBkYWRkeSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8xM2Y0ZGMzZTY1YjY3OTI2MDMzYjBhZjgzYThkYWU2YzYzOGQzNzcwNzc4OWYzYTYxZDc4YjZmZGJkZjkyOWJmIgogICAgfQogIH0KfQ==";
+                return "eyJ0aW1lc3RhbXAiOjE1NjAxOTM1MzI5MjIsInByb2ZpbGVJZCI6ImEyZjgzNDU5NWM4OTRhMjdhZGQzMDQ5NzE2Y2E5MTBjIiwicHJvZmlsZU5hbWUiOiJiUHVuY2giLCJzaWduYXR1cmVSZXF1aXJlZCI6dHJ1ZSwidGV4dHVyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzgzOTAzODQ0ODczOTk4ZmRjYThmOTVjMjNiMDZlMTA5NTQ5NGZkZmYyY2YzMzgyNGE1YzU2MGU0NjU0Mjc0ZmMifX19";
             }
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(15.5, 70.0, -71.8, 90, 0);
+                return new Pos(63.5, 72, -113.5, 45, 0);
             }
 
             @Override
@@ -54,7 +53,7 @@ public class NPCFarmMerchant extends HypixelNPC {
             return;
         }
 
-        new GUIShopFarmMerchant().open(player);
+        player.openView(new GUIShopFarmMerchant());
     }
 
     @Override

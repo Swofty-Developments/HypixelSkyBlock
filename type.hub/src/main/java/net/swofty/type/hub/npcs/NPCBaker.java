@@ -1,17 +1,21 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
-import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIBakerShop;
-import net.swofty.type.hub.gui.GUIClaimCake;
+import net.swofty.type.hub.gui.GUIShopLumberMerchant;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.gui.inventories.ClaimRewardView;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import net.swofty.type.generic.i18n.I18n;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -27,7 +31,8 @@ public class NPCBaker extends HypixelNPC {
                 List<CalendarEvent> events = SkyBlockCalendar.getCurrentEvents();
                 if (!events.contains(CalendarEvent.NEW_YEAR)) {
                     return new String[]{""};
-                };
+                }
+                ;
                 return new String[]{"§fBaker", "§e§lCLICK"};
             }
 
@@ -46,7 +51,8 @@ public class NPCBaker extends HypixelNPC {
                 List<CalendarEvent> events = SkyBlockCalendar.getCurrentEvents();
                 if (!events.contains(CalendarEvent.NEW_YEAR)) {
                     return new Pos(-6.5, 0, -47.5, 180, 0);
-                };
+                }
+                ;
                 return new Pos(-6.5, 70, -47.5, 180, 0);
             }
 
@@ -64,31 +70,27 @@ public class NPCBaker extends HypixelNPC {
 
         SkyBlockPlayer player = (SkyBlockPlayer) event.player();
         if (isInDialogue(player)) return;
-
-        if(!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_BAKER)) {
-            setDialogue(player, "initial-hello").thenRun(() -> {
-               player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_BAKER, true);
-            });
-            return;
-        }
-
         SkyBlockDataHandler dataHandler = player.getSkyblockDataHandler();
         if (dataHandler.get(SkyBlockDataHandler.Data.LATEST_NEW_YEAR_CAKE_YEAR, DatapointInteger.class).getValue() >= SkyBlockCalendar.getYear()) {
-            new GUIBakerShop().open(player);
+            player.openView(new GUIBakerShop());
             return;
         }
-        new GUIClaimCake().open(player);
+        setDialogue(player, "initial-hello").thenRun(() -> {
+            SkyBlockItem item = new SkyBlockItem(ItemType.NEW_YEAR_CAKE);
+            item.getAttributeHandler().setNewYearCakeYear(SkyBlockCalendar.getYear());
+            player.openView(new ClaimRewardView(), new ClaimRewardView.State(
+                    item, () -> SkyBlockCalendar.getCurrentEvents().contains(CalendarEvent.NEW_YEAR) && (dataHandler.get(SkyBlockDataHandler.Data.LATEST_NEW_YEAR_CAKE_YEAR, DatapointInteger.class).getValue() < SkyBlockCalendar.getYear()), () -> {
+                dataHandler.get(SkyBlockDataHandler.Data.LATEST_NEW_YEAR_CAKE_YEAR, DatapointInteger.class).setValue(SkyBlockCalendar.getYear());
+                player.getAchievementHandler().completeAchievement("skyblock.happy_new_year");
+            }
+            ));
+        });
     }
 
     @Override
     protected DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("initial-hello").lines(new String[]{
-                                "At the end of each year I bake cakes for everyone in town to celebrate the year.",
-                                "I made one especially for you, here you go.",
-                                "I've recently added a §dNew Year Cake Bag §fto my inventory. Sadly, it's not free! Click me again to open my shop!",
-                        }).build()
-        ).toArray(DialogueSet[]::new);
+        return new DialogueSet[] {
+                DialogueSet.ofTranslation("initial-hello", "npcs_hub.baker.dialogue.initial_hello")
+        };
     }
 }

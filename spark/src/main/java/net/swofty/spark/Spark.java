@@ -55,7 +55,7 @@ public final class Spark implements SparkPlugin {
 
     @Override
     public String getVersion() {
-        return "@VERSION@"; // replaced by Gradle
+        return "dev";
     }
 
     @Override
@@ -86,6 +86,14 @@ public final class Spark implements SparkPlugin {
         if (level == Level.INFO) LOGGER.info(message);
         else if (level == Level.WARNING) LOGGER.warn(message);
         else if (level == Level.SEVERE) LOGGER.error(message);
+        else throw new IllegalArgumentException(level.getName());
+    }
+
+    @Override
+    public void log(Level level, String s, Throwable throwable) {
+        if (level == Level.INFO) LOGGER.info(s, throwable);
+        else if (level == Level.WARNING) LOGGER.warn(s, throwable);
+        else if (level == Level.SEVERE) LOGGER.error(s, throwable);
         else throw new IllegalArgumentException(level.getName());
     }
 

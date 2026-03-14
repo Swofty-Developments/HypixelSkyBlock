@@ -1,5 +1,6 @@
 package net.swofty.type.generic.data;
 
+import io.sentry.Sentry;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
@@ -59,6 +60,7 @@ public class HypixelDataHandler extends DataHandler {
             } catch (Exception e) {
                 this.datapoints.put(key, data.getDefaultDatapoint().deepClone().setUser(this).setData(data));
                 Logger.error(e, "Issue with datapoint {} for user {} - defaulting to default value", key, this.uuid);
+                Sentry.captureException(e);
             }
         }
         return this;
@@ -177,7 +179,7 @@ public class HypixelDataHandler extends DataHandler {
                 if (HypixelConst.getTypeLoader().getType().isSkyBlock()) return;
 
                 String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
-                Team team = new TeamBuilder("Z" + teamName, MinecraftServer.getTeamManager())
+                Team team = new TeamBuilder("H" + teamName, MinecraftServer.getTeamManager())
                         .prefix(Component.text(rank.getPrefix()))
                         .teamColor(rank.getTextColor())
                         .build();
@@ -190,7 +192,7 @@ public class HypixelDataHandler extends DataHandler {
 
             Rank rank = (Rank) datapoint.getValue();
             String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
-            player.setTeam(new TeamBuilder("Z" + teamName, MinecraftServer.getTeamManager())
+            player.setTeam(new TeamBuilder("H" + teamName, MinecraftServer.getTeamManager())
                     .prefix(Component.text(rank.getPrefix()))
                     .teamColor(rank.getTextColor())
                     .build());

@@ -1,31 +1,32 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.starter;
 
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.levels.causes.NewAccessoryLevelCause;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-public class GUIStarterAccessories extends HypixelInventoryGUI {
-    private List<NewAccessoryLevelCause> causes;
+public class GUIStarterAccessories extends StatelessView {
+    private final List<NewAccessoryLevelCause> causes;
 
     public GUIStarterAccessories(ItemType... causes) {
-        super("Starter -> Accessories", InventoryType.CHEST_6_ROW);
-
         this.causes = Stream.of(causes).map(SkyBlockLevelCause::getAccessoryCause).toList();
     }
 
     @Override
-    public boolean allowHotkeying() {
-        return false;
+    public ViewConfiguration<DefaultState> configuration() {
+        return new ViewConfiguration<>("Starter -> Accessories", InventoryType.CHEST_6_ROW);
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-
+    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+        Components.fill(layout);
+        Components.close(layout, 49);
+        Components.back(layout, 48, ctx);
+        // TODO: Add accessory-related content using causes
     }
 }

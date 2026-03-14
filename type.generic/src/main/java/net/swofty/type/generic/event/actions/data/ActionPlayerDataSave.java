@@ -17,6 +17,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.leaderboard.LeaderboardService;
 import net.swofty.type.generic.leaderboard.LeaderboardTracked;
 import net.swofty.type.generic.leaderboard.MapLeaderboardTracked;
+import net.swofty.type.generic.resourcepack.ResourcePackManager;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 import org.json.JSONObject;
@@ -32,6 +33,11 @@ public class ActionPlayerDataSave implements HypixelEventClass {
     public void run(PlayerDisconnectEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         UUID uuid = player.getUuid();
+
+        ResourcePackManager packManager = HypixelConst.getResourcePackManager();
+        if (packManager != null) {
+            packManager.getActivePack().onPlayerQuit(player);
+        }
 
         Logger.info("Saving Hypixel account data for: " + player.getUsername() + "...");
 

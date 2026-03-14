@@ -1,0 +1,1094 @@
+[
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.625,
+      "y": 0.625,
+      "z": 0.625
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:purple_carpet",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:purple_carpet\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": 3.601323E-4,
+      "z": -0.625
+    },
+    "scale": {
+      "x": 0.625,
+      "y": 0.625,
+      "z": 0.625
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:purple_carpet",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:purple_carpet\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": -0.001553675,
+      "z": 0.625
+    },
+    "scale": {
+      "x": 0.625,
+      "y": 0.625,
+      "z": 0.625
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:purple_carpet",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:purple_carpet\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": -0.625,
+      "y": 2.1383136E-4,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.625,
+      "y": 0.625,
+      "z": 0.625
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:purple_carpet",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:purple_carpet\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": -0.625,
+      "y": 5.739637E-4,
+      "z": -0.625
+    },
+    "scale": {
+      "x": 0.625,
+      "y": 0.625,
+      "z": 0.625
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:purple_carpet",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:purple_carpet\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": -0.625,
+      "y": -0.0013398437,
+      "z": 0.625
+    },
+    "scale": {
+      "x": 0.625,
+      "y": 0.625,
+      "z": 0.625
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:purple_carpet",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:purple_carpet\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.625,
+      "y": 0.0021972656,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.625,
+      "y": 0.625,
+      "z": 0.625
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:purple_carpet",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:purple_carpet\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.625,
+      "y": 0.0025573978,
+      "z": -0.625
+    },
+    "scale": {
+      "x": 0.625,
+      "y": 0.625,
+      "z": 0.625
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:purple_carpet",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:purple_carpet\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.625,
+      "y": 6.435906E-4,
+      "z": 0.625
+    },
+    "scale": {
+      "x": 0.625,
+      "y": 0.625,
+      "z": 0.625
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:purple_carpet",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:purple_carpet\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": -0.33081055,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.1875,
+      "y": 1.1875,
+      "z": 1.1875
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;1878706987,640565300,-1528335319,-1043839247],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2IxMWZiOTBkYjdmNTdiZWI0MzU5NTQwMTNiMWM3ZWY3NzZjNmJkOTZjYmYzMzA4YWE4ZWJhYzI5NTkxZWJiZCJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": -0.6435547,
+      "y": -0.33081055,
+      "z": -0.6506682
+    },
+    "scale": {
+      "x": 1.1875,
+      "y": 1.1875,
+      "z": 1.1875
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;-785142950,-87208510,-2004525119,2011737701],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2IxMWZiOTBkYjdmNTdiZWI0MzU5NTQwMTNiMWM3ZWY3NzZjNmJkOTZjYmYzMzA4YWE4ZWJhYzI5NTkxZWJiZCJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": -0.6435547,
+      "y": -0.33081055,
+      "z": 0.002223296
+    },
+    "scale": {
+      "x": 1.1875,
+      "y": 1.1875,
+      "z": 1.1875
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;-377338932,533939650,-1126858113,405460319],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTc3YzFmYzkzMjE2ZTk2ZDQzNWNmOTYyZTExNzNkZThkMWEyNDliNjQ0ODk0ZDcyNjc2ZWJhNzMyZmNkNTZlNyJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": -0.6435547,
+      "y": -0.33081055,
+      "z": 0.652639
+    },
+    "scale": {
+      "x": 1.1875,
+      "y": 1.1875,
+      "z": 1.1875
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;754245068,-458407580,-1265096088,-366514044],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I0ODFjMzFkYzY4M2JkY2I3ZDM3NWE3YzVkYjdhYzdhZGY5ZTlmZThiNmMwNGE2NDkzMTYxM2UyOWZlNDcwZSJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.007104857,
+      "y": -0.33081055,
+      "z": -0.649568
+    },
+    "scale": {
+      "x": 1.1875,
+      "y": 1.1875,
+      "z": 1.1875
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;-579921850,89542616,-1573526321,-775895278],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTc3YzFmYzkzMjE2ZTk2ZDQzNWNmOTYyZTExNzNkZThkMWEyNDliNjQ0ODk0ZDcyNjc2ZWJhNzMyZmNkNTZlNyJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.64870536,
+      "y": -0.33081055,
+      "z": -0.6488829
+    },
+    "scale": {
+      "x": 1.1875,
+      "y": 1.1875,
+      "z": 1.1875
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;796644727,1841382381,-1233882413,-1507064230],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I0ODFjMzFkYzY4M2JkY2I3ZDM3NWE3YzVkYjdhYzdhZGY5ZTlmZThiNmMwNGE2NDkzMTYxM2UyOWZlNDcwZSJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.6491699,
+      "y": -0.33081055,
+      "z": 0.0039891964
+    },
+    "scale": {
+      "x": 1.1875,
+      "y": 1.1875,
+      "z": 1.1875
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;336732457,279134708,-1980874332,2015882460],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTc3YzFmYzkzMjE2ZTk2ZDQzNWNmOTYyZTExNzNkZThkMWEyNDliNjQ0ODk0ZDcyNjc2ZWJhNzMyZmNkNTZlNyJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.6476036,
+      "y": -0.33081055,
+      "z": 0.652639
+    },
+    "scale": {
+      "x": 1.1875,
+      "y": 1.1875,
+      "z": 1.1875
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;-1128576098,-1228323243,-1188405065,-874958307],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2IxMWZiOTBkYjdmNTdiZWI0MzU5NTQwMTNiMWM3ZWY3NzZjNmJkOTZjYmYzMzA4YWE4ZWJhYzI5NTkxZWJiZCJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.004638672,
+      "y": -0.33081055,
+      "z": 0.652639
+    },
+    "scale": {
+      "x": 1.1875,
+      "y": 1.1875,
+      "z": 1.1875
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;-35026247,-162182151,-1985521784,2079644536],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTc3YzFmYzkzMjE2ZTk2ZDQzNWNmOTYyZTExNzNkZThkMWEyNDliNjQ0ODk0ZDcyNjc2ZWJhNzMyZmNkNTZlNyJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": -0.26831055,
+      "z": -0.625
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;834547412,860242948,-1689373996,967131038],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGY3NDY3YzVmNzM4YzY0MTI0NmMwOWY4Y2U3OTFlMzM5YTg2ZTgxZGU2MjA0OWI0MWY0OTI4ODgxNzJmYTcyNiJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": -0.625,
+      "y": -0.26831055,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;-978982394,-1365096199,-1835478897,-993527232],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGY3NDY3YzVmNzM4YzY0MTI0NmMwOWY4Y2U3OTFlMzM5YTg2ZTgxZGU2MjA0OWI0MWY0OTI4ODgxNzJmYTcyNiJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": -0.625,
+      "y": -0.26831055,
+      "z": -0.625
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;656231771,-644856837,-1624382102,-747907584],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGY3NDY3YzVmNzM4YzY0MTI0NmMwOWY4Y2U3OTFlMzM5YTg2ZTgxZGU2MjA0OWI0MWY0OTI4ODgxNzJmYTcyNiJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": -0.625,
+      "y": -0.26831055,
+      "z": 0.625
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;1687679885,-1463072015,-1147477635,574450566],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGY3NDY3YzVmNzM4YzY0MTI0NmMwOWY4Y2U3OTFlMzM5YTg2ZTgxZGU2MjA0OWI0MWY0OTI4ODgxNzJmYTcyNiJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": -0.26831055,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;1901111978,-1171045779,-1274714017,-384573310],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGY3NDY3YzVmNzM4YzY0MTI0NmMwOWY4Y2U3OTFlMzM5YTg2ZTgxZGU2MjA0OWI0MWY0OTI4ODgxNzJmYTcyNiJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": -0.26831055,
+      "z": 0.625
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;-890052532,1201752761,-2119197111,2028013813],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGY3NDY3YzVmNzM4YzY0MTI0NmMwOWY4Y2U3OTFlMzM5YTg2ZTgxZGU2MjA0OWI0MWY0OTI4ODgxNzJmYTcyNiJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.625,
+      "y": -0.26831055,
+      "z": -0.625
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;1770861190,634864994,-1512365621,1514962633],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGY3NDY3YzVmNzM4YzY0MTI0NmMwOWY4Y2U3OTFlMzM5YTg2ZTgxZGU2MjA0OWI0MWY0OTI4ODgxNzJmYTcyNiJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.625,
+      "y": -0.26831055,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;-878922548,-503954831,-1983728927,236433576],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGY3NDY3YzVmNzM4YzY0MTI0NmMwOWY4Y2U3OTFlMzM5YTg2ZTgxZGU2MjA0OWI0MWY0OTI4ODgxNzJmYTcyNiJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.625,
+      "y": -0.26831055,
+      "z": 0.625
+    },
+    "scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;265799027,-137804802,-1450230740,-964421114],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGY3NDY3YzVmNzM4YzY0MTI0NmMwOWY4Y2U3OTFlMzM5YTg2ZTgxZGU2MjA0OWI0MWY0OTI4ODgxNzJmYTcyNiJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  },
+  {
+    "type": "minecraft:block_display",
+    "position": {
+      "x": 38.5,
+      "y": 73.143310546875,
+      "z": 1.5
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": -1.1875,
+      "y": -1.0808105,
+      "z": -1.1875
+    },
+    "scale": {
+      "x": 2.375,
+      "y": 0.25,
+      "z": 2.375
+    },
+    "leftRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "id": "minecraft:smooth_quartz_slab",
+    "blockState": {
+      "type": "bottom",
+      "waterlogged": "false"
+    }
+  }
+]

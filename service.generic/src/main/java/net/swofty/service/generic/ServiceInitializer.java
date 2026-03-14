@@ -1,7 +1,7 @@
 package net.swofty.service.generic;
 
 import lombok.RequiredArgsConstructor;
-import net.swofty.commons.Configuration;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.protocol.ProtocolObject;
@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 @RequiredArgsConstructor
 public class ServiceInitializer {
@@ -27,7 +28,7 @@ public class ServiceInitializer {
         /**
          * Register Redis
          */
-        ServiceRedisManager.connect(Configuration.get("redis-uri"), service.getType());
+        ServiceRedisManager.connect(ConfigProvider.settings().getRedisUri(), service.getType());
         // Initialize service-to-server communication
         ServiceToServerManager.initialize(service.getType());
 
@@ -58,5 +59,11 @@ public class ServiceInitializer {
 
         RedisAPI.getInstance().startListeners();
         System.out.println("Service " + service.getType().name() + " initialized!");
+
+        try {
+            new CountDownLatch(1).await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

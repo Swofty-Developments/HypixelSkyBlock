@@ -44,20 +44,20 @@ export default defineConfig({
           ],
         },
         {
-          text: "Setup",
+          text: "Docker (Recommended)",
+          items: [
+            { text: "Quick Install", link: "/docs/docker/setup" },
+            { text: "Adding Servers", link: "/docs/docker/adding-servers" },
+          ],
+        },
+        {
+          text: "Manual Setup",
           items: [
             { text: "Proxy Setup", link: "/docs/setup/proxy" },
             { text: "Game Servers", link: "/docs/setup/game-servers" },
             { text: "Services", link: "/docs/setup/services" },
             { text: "Resource Pack", link: "/docs/setup/resource-pack" },
             { text: "Forums Website", link: "/docs/setup/forums" },
-          ],
-        },
-        {
-          text: "Docker",
-          items: [
-            { text: "Docker Setup", link: "/docs/docker/setup" },
-            { text: "Adding Servers", link: "/docs/docker/adding-servers" },
           ],
         },
         {
