@@ -1,6 +1,7 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
@@ -31,7 +32,7 @@ public class NPCFishermanGerald extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(118.500, 71.000, -32.500, 145, 0);
+                return new Pos(153.5, 68.5, 55.5, -60, 0);
             }
 
             @Override
@@ -49,6 +50,13 @@ public class NPCFishermanGerald extends HypixelNPC {
         boolean belowFive = player.getSkills().getCurrentLevel(SkillCategories.FISHING) < 5;
         if (belowFive) {
             setDialogue(player, "below-fishing-5");
+            return;
+        }
+
+        if(!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FISHERMAN_GERALD)) {
+            setDialogue(player, "first-interaction").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FISHERMAN_GERALD, true);
+            });
             return;
         }
 
