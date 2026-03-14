@@ -4,12 +4,9 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.stream.Stream;
-
-public class NPCArthur extends HypixelNPC {
+public class NPCArthur extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCArthur() {
         super(new HumanConfiguration() {
@@ -58,5 +55,10 @@ public class NPCArthur extends HypixelNPC {
                 DialogueSet.ofTranslation("dialogue-6", "npcs_hub.arthur.dialogue.dialogue_6"),
                 DialogueSet.ofTranslation("dialogue-7", "npcs_hub.arthur.dialogue.dialogue_7")
         };
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "ARTHUR";
     }
 }

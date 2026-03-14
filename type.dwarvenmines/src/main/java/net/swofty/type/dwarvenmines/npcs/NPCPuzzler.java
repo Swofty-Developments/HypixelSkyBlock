@@ -5,9 +5,10 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCPuzzler extends HypixelNPC {
+public class NPCPuzzler extends HypixelNPC implements GardenSpokenNpcSource {
 
 	public NPCPuzzler() {
 		super(new HumanConfiguration() {
@@ -44,4 +45,8 @@ public class NPCPuzzler extends HypixelNPC {
 		player.notImplemented();
 	}
 
+    @Override
+    public String gardenSpokenNpcId() {
+        return "PUZZLER";
+    }
 }

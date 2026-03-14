@@ -4,16 +4,13 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopBartender;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionKillZombies;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToBartender;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.stream.Stream;
-
-public class NPCBartender extends HypixelNPC {
+public class NPCBartender extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCBartender() {
         super(new HumanConfiguration() {
@@ -74,5 +71,10 @@ public class NPCBartender extends HypixelNPC {
                 DialogueSet.ofTranslation("quest-talk", "npcs_hub.bartender.dialogue.quest_talk"),
                 DialogueSet.ofTranslation("quest-complete", "npcs_hub.bartender.dialogue.quest_complete")
         };
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "BARTENDER";
     }
 }

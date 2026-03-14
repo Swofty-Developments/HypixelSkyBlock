@@ -19,6 +19,7 @@ import net.swofty.type.generic.utility.MathUtility;
 import org.bson.Document;
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 import org.tinylog.Logger;
 import tools.jackson.core.JacksonException;
 
@@ -31,13 +32,17 @@ public class HypixelDataHandler extends DataHandler {
     protected HypixelDataHandler() { super(); }
     public HypixelDataHandler(UUID uuid) { super(uuid); }
 
-    public static HypixelDataHandler getUser(UUID uuid) {
-        if (!userCache.containsKey(uuid)) throw new RuntimeException("User " + uuid + " does not exist!");
+    public static @NonNull HypixelDataHandler getUser(UUID uuid) {
+        if (!userCache.containsKey(uuid)) throw new DataLoadException("User " + uuid + " does not exist!");
         return (HypixelDataHandler) userCache.get(uuid);
     }
 
     public static @Nullable HypixelDataHandler getUser(Player player) {
-        try { return getUser(player.getUuid()); } catch (Exception e) { return null; }
+        try {
+            return getUser(player.getUuid());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

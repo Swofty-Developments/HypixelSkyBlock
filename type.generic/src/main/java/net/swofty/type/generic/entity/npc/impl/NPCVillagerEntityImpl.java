@@ -49,12 +49,12 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
             .pos(pos.add(0, getEyeHeight() + 0.5f + (overflowing ? -0.2f : 0f), 0))
             .text(Arrays.copyOfRange(holograms, 0, holograms.length - (overflowing ? 0 : 1)))
             .player(viewer)
-            .instance(config.instance())
+            .instance(config.instance(viewer))
             .build();
 
         this.holo = holo;
         PlayerHolograms.addExternalPlayerHologram(holo);
-        setInstance(config.instance(), pos);
+        setInstance(config.instance(viewer), pos);
         addViewer(viewer);
         setPose(config.pose(viewer));
     }
@@ -96,12 +96,14 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
     @Override
     public void updateNPC() {
         Pos npcPosition = config.position(viewer);
-        if (!getPosition().asVec().equals(npcPosition.asVec())) {
+        if (!getPosition().samePoint(npcPosition)) {
+            Pos nextPosition = stepTowards(getPosition(), npcPosition, 0.85D);
+            teleport(nextPosition);
             String[] holograms = config.holograms(viewer);
 
             boolean overflowing = holograms[holograms.length - 1].length() > 16;
             float yOffset = overflowing ? -0.2f : 0.0f;
-            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getEyeHeight() + 0.5f + yOffset, 0));
+            PlayerHolograms.relocateExternalPlayerHologram(holo, nextPosition.add(0, getEyeHeight() + 0.5f + yOffset, 0));
         }
 
         if (!getPose().equals(config.pose(viewer))) {
@@ -115,5 +117,24 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
             PlayerHolograms.updateExternalPlayerHologramText(holo, finalHolograms);
             this.holograms = finalHolograms;
         }
+    }
+
+    private static Pos stepTowards(Pos current, Pos target, double maxDistance) {
+        double dx = target.x() - current.x();
+        double dy = target.y() - current.y();
+        double dz = target.z() - current.z();
+        double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        if (distance <= maxDistance || distance == 0D) {
+            return target;
+        }
+
+        double multiplier = maxDistance / distance;
+        return new Pos(
+            current.x() + dx * multiplier,
+            current.y() + dy * multiplier,
+            current.z() + dz * multiplier,
+            target.yaw(),
+            target.pitch()
+        );
     }
 }

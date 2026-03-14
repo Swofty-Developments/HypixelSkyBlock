@@ -5,6 +5,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIDarkAuction;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
@@ -12,9 +13,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-
-public class NPCSirius extends HypixelNPC {
+public class NPCSirius extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
     private static final long MINIMUM_COINS = 400_000;
 
     public NPCSirius() {
@@ -119,5 +118,10 @@ public class NPCSirius extends HypixelNPC {
                                 "You'll be warped once it starts..."
                         }).build()
         ).toArray(DialogueSet[]::new);
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "SIRIUS";
     }
 }

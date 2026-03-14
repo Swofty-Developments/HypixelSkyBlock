@@ -15,6 +15,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
+import net.swofty.type.skyblockgeneric.garden.SkyBlockEditableWorldHandle;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.CustomDropComponent;
 import net.swofty.type.skyblockgeneric.item.components.RegionSelectorComponent;
@@ -58,7 +59,14 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
         boolean shouldItemDrop = false;
 
         // Handle island server block breaks
-        if (HypixelConst.isIslandServer()) {
+        if (HypixelConst.isIslandServer() || HypixelConst.isGarden()) {
+            SkyBlockEditableWorldHandle editableWorld = player.getEditableWorldHandle();
+            if (editableWorld == null || !editableWorld.canEdit(event.getBlockPosition())) {
+                if (editableWorld != null) {
+                    editableWorld.getDeniedBuildMessage(event.getBlockPosition()).ifPresent(player::sendMessage);
+                }
+                return;
+            }
             event.getInstance().setBlock(event.getBlockPosition(), Block.AIR);
             shouldItemDrop = true;
         }
@@ -193,4 +201,3 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
         }
     }
 }
-

@@ -4,11 +4,10 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.dwarvenmines.gui.fragilis.GUIHandyBlockGuide;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-
-public class NPCFragilis extends HypixelNPC {
+public class NPCFragilis extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
 	public NPCFragilis() {
 		super(new HumanConfiguration() {
@@ -43,4 +42,9 @@ public class NPCFragilis extends HypixelNPC {
 	public void onClick(NPCInteractEvent event) {
 		new GUIHandyBlockGuide().open(event.player());
 	}
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "FRAGILIS";
+    }
 }

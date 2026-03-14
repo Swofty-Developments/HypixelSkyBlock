@@ -9,17 +9,16 @@ import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 public record TransferHandler(Player player) {
-	public static final Map<Player, ServerType> playersGoalServerType = new HashMap<>();
-	private static final Map<Player, RegisteredServer> playersOriginServer = new HashMap<>();
-	private static final List<Player> disregard = new ArrayList<>();
+	public static final Map<Player, ServerType> playersGoalServerType = new ConcurrentHashMap<>();
+	private static final Map<Player, RegisteredServer> playersOriginServer = new ConcurrentHashMap<>();
+	private static final Set<Player> disregard = ConcurrentHashMap.newKeySet();
 
 	public boolean isInLimbo() {
 		return playersGoalServerType.containsKey(player);
@@ -50,21 +49,29 @@ public record TransferHandler(Player player) {
 		return future;
 	}
 
+	public void queueTransferAfterCurrentServer(ServerType type) {
+		RegisteredServer originServer = playersOriginServer.get(player);
+		if (originServer == null) {
+			player.getCurrentServer().ifPresent(conn -> playersOriginServer.put(player, conn.getServer()));
+		}
+		playersGoalServerType.put(player, type);
+	}
+
 	public void previousServerIsFinished(RegisteredServer manualPick) {
 		new Thread(() -> {
 			if (disregard.contains(player)) return;
 
 			RegisteredServer originServer = playersOriginServer.get(player);
-			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
+			ServerType originServerType = originServer != null ? GameManager.getTypeFromRegisteredServer(originServer) : null;
 
 			UUID serverUUID = UUID.fromString(manualPick.getServerInfo().getName());
-			UUID originServerUUID = UUID.fromString(originServer.getServerInfo().getName());
-
-			RedisMessage.sendMessageToServer(serverUUID,
+			if (originServerType != null) {
+				RedisMessage.sendMessageToServer(serverUUID,
 					FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
 					new JSONObject().put("uuid", player.getUniqueId().toString())
-							.put("origin-type", originServerType.name())
-			);
+						.put("origin-type", originServerType.name())
+				);
+			}
 
 			playersGoalServerType.remove(player);
 			playersOriginServer.remove(player);
@@ -73,9 +80,12 @@ public record TransferHandler(Player player) {
 			player.sendMessage(Component.text("§7Sending to server " + manualPickAsGame.displayName() + "..."));
 			player.createConnectionRequest(manualPick).connectWithIndication();
 
-			RedisMessage.sendMessageToServer(originServerUUID,
+			if (originServer != null) {
+				UUID originServerUUID = UUID.fromString(originServer.getServerInfo().getName());
+				RedisMessage.sendMessageToServer(originServerUUID,
 					FromProxyChannels.PLAYER_HAS_SWITCHED_FROM_HERE,
 					new JSONObject().put("uuid", player.getUniqueId().toString()));
+			}
 		}).start();
 	}
 
@@ -84,23 +94,31 @@ public record TransferHandler(Player player) {
 			if (disregard.contains(player)) return;
 
 			ServerType type = playersGoalServerType.get(player);
+			if (type == null) {
+				forceRemoveFromLimbo();
+				player.disconnect(Component.text("§cYour transfer state expired before the previous server finished. Please reconnect."));
+				return;
+			}
+
 			GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
 
 			if (server == null) {
+				forceRemoveFromLimbo();
 				player.disconnect(Component.text("§cThere are no Hypixel (type=" + type.name() + ") servers available at the moment."));
 				return;
 			}
 
 			RegisteredServer originServer = playersOriginServer.get(player);
-			UUID originServerUUID = UUID.fromString(originServer.getServerInfo().getName());
 			UUID sendingToServerUUID = server.internalID();
-			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
+			ServerType originServerType = originServer != null ? GameManager.getTypeFromRegisteredServer(originServer) : null;
 
-			RedisMessage.sendMessageToServer(sendingToServerUUID,
+			if (originServerType != null) {
+				RedisMessage.sendMessageToServer(sendingToServerUUID,
 					FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
 					new JSONObject().put("uuid", player.getUniqueId().toString())
-							.put("origin-type", originServerType.name())
-			);
+						.put("origin-type", originServerType.name())
+				);
+			}
 
 			playersOriginServer.remove(player);
 			playersGoalServerType.remove(player);
@@ -108,9 +126,12 @@ public record TransferHandler(Player player) {
 			player.sendMessage(Component.text("§7Sending to server " + server.displayName() + "..."));
 			player.createConnectionRequest(server.registeredServer()).connectWithIndication();
 
-			RedisMessage.sendMessageToServer(originServerUUID,
+			if (originServer != null) {
+				UUID originServerUUID = UUID.fromString(originServer.getServerInfo().getName());
+				RedisMessage.sendMessageToServer(originServerUUID,
 					FromProxyChannels.PLAYER_HAS_SWITCHED_FROM_HERE,
 					new JSONObject().put("uuid", player.getUniqueId().toString()));
+			}
 		}).start();
 	}
 
@@ -121,7 +142,7 @@ public record TransferHandler(Player player) {
 				player.getCurrentServer().ifPresent(conn -> playersOriginServer.put(player, conn.getServer()));
 				originServer = playersOriginServer.get(player);
 			}
-			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
+			ServerType originServerType = originServer != null ? GameManager.getTypeFromRegisteredServer(originServer) : null;
 
 			playersGoalServerType.remove(player);
 			playersOriginServer.remove(player);

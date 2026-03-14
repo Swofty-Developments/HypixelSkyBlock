@@ -3,13 +3,12 @@ package net.swofty.type.thefarmingislands.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 
-public class NPCFarmerJon extends HypixelNPC {
+public class NPCFarmerJon extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
     public NPCFarmerJon() {
         super(new HumanConfiguration() {
             @Override
@@ -42,5 +41,10 @@ public class NPCFarmerJon extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "FARMER_JON";
     }
 }

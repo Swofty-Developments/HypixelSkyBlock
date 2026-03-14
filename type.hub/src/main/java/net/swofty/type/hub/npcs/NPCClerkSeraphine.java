@@ -8,7 +8,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCClerkSeraphine extends HypixelNPC {
+public class NPCClerkSeraphine extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCClerkSeraphine() {
         super(new HumanConfiguration() {
@@ -55,5 +55,10 @@ public class NPCClerkSeraphine extends HypixelNPC {
                                 "You can also vote in the §bmayor elections §fby heading through the warp behind me!"
                         }).build()
         ).toArray(DialogueSet[]::new);
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "CLERK_SERAPHINE";
     }
 }

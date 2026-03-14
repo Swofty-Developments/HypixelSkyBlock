@@ -11,7 +11,7 @@ import net.swofty.type.hub.gui.GUITiaTheFairy;
 
 import java.util.stream.Stream;
 
-public class NPCTiaTheFairy extends HypixelNPC {
+public class NPCTiaTheFairy extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
     public NPCTiaTheFairy() {
         super(new HumanConfiguration() {
             @Override
@@ -67,5 +67,10 @@ public class NPCTiaTheFairy extends HypixelNPC {
                                 "If you find any more during your travels, please bring them back to me!"
                         }).build()
         ).toArray(DialogueSet[]::new);
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "TIA_THE_FAIRY";
     }
 }

@@ -49,6 +49,7 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.command.LimboCommand;
+import net.swofty.velocity.command.LobbyCommand;
 import net.swofty.velocity.command.ProtocolVersionCommand;
 import net.swofty.velocity.command.ServerStatusCommand;
 import net.swofty.velocity.data.CoopDatabase;
@@ -195,6 +196,13 @@ public class SkyBlockVelocity {
 				.build();
 
 		commandManager.register(limboCommandMeta, new LimboCommand());
+
+		CommandMeta lobbyCommandMeta = commandManager.metaBuilder("lobby")
+			.plugin(this)
+			.aliases("l")
+			.build();
+
+		commandManager.register(lobbyCommandMeta, new LobbyCommand());
 
 		// Handle database
 		new ProfilesDatabase("_placeHolder").connect(ConfigProvider.settings().getMongodb());
@@ -343,7 +351,7 @@ public class SkyBlockVelocity {
 		));
 
 		TransferHandler transferHandler = new TransferHandler(event.getPlayer());
-		transferHandler.transferTo(serverType);
+		transferHandler.queueTransferAfterCurrentServer(serverType);
 
 		CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
 				.execute(() -> {

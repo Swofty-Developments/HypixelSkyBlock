@@ -112,6 +112,8 @@ public enum ItemType {
 
   APPLE(Material.APPLE, Rarity.COMMON),
 
+  ARACHNE_FRAGMENT(Material.PLAYER_HEAD, Rarity.RARE),
+
   ARCHFIEND_DICE(Material.PLAYER_HEAD, Rarity.EPIC),
 
   ARCHITECTS_FIRST_DRAFT(Material.PAPER, Rarity.COMMON),
@@ -203,6 +205,8 @@ public enum ItemType {
   BAT_RING(Material.PLAYER_HEAD, Rarity.EPIC),
 
   BAT_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE),
+
+  BEADY_EYES(Material.SPIDER_EYE, Rarity.UNCOMMON),
 
   BEASTMASTER_CREST_COMMON(Material.PLAYER_HEAD, Rarity.COMMON),
 
@@ -376,6 +380,8 @@ public enum ItemType {
 
   BOOKSHELF(Material.BOOKSHELF, Rarity.COMMON),
 
+  BOOKWORMS_FAVORITE_BOOK(Material.BOOK, Rarity.RARE),
+
   BOOSTER_COOKIE(Material.COOKIE, Rarity.COMMON),
 
   BOW(Material.BOW, Rarity.COMMON),
@@ -435,6 +441,8 @@ public enum ItemType {
   BUNDLE_OF_MAGMA_ARROWS(Material.PLAYER_HEAD, Rarity.EPIC),
 
   BURNING_KUUDRA_CORE(Material.PLAYER_HEAD, Rarity.RARE),
+
+  BURROWING_SPORES(Material.BROWN_MUSHROOM, Rarity.RARE),
 
   BURSTSTOPPER_ARTIFACT(Material.PLAYER_HEAD, Rarity.EPIC),
 
@@ -515,6 +523,8 @@ public enum ItemType {
   CANDY_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
   CAN_OF_WORMS(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
+  CARNIVAL_TICKET(Material.NAME_TAG, Rarity.UNCOMMON),
 
   CARROT(Material.CARROT, Rarity.COMMON),
 
@@ -624,7 +634,11 @@ public enum ItemType {
 
   CLAY_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  CLIPPED_WINGS(Material.FEATHER, Rarity.RARE),
+
   COAL(Material.COAL, Rarity.COMMON),
+
+  COALROOT(Material.COAL, Rarity.UNCOMMON),
 
   COAL_BLOCK(Material.COAL_BLOCK, Rarity.COMMON),
 
@@ -673,6 +687,8 @@ public enum ItemType {
   CONCENTRATED_STONE(Material.PLAYER_HEAD, Rarity.COMMON),
 
   CONTROL_SWITCH(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  COPPER_DYE(Material.ORANGE_DYE, Rarity.SPECIAL),
 
   CORLEONITE(Material.PLAYER_HEAD, Rarity.COMMON),
 
@@ -724,7 +740,11 @@ public enum ItemType {
 
   CROCHET_TIGER_PLUSHIE(Material.PLAYER_HEAD, Rarity.EPIC),
 
+  CROPIE(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
   CROPIE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  CROPSHOT_GARDEN_CHIP(Material.PLAYER_HEAD, Rarity.RARE),
 
   CROWN_OF_GREED(Material.GOLDEN_HELMET, Rarity.LEGENDARY),
 
@@ -860,6 +880,8 @@ public enum ItemType {
 
   DECORATION_PINK_BERRY(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  DEDICATION_I(Material.ENCHANTED_BOOK, Rarity.COMMON),
+
   DEEP_ROOT(Material.PLAYER_HEAD, Rarity.COMMON),
 
   DEFENSE_ENRICHMENT(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -933,6 +955,8 @@ public enum ItemType {
   DUNG(Material.BROWN_WOOL, Rarity.COMMON),
 
   DUNGEON_SACK(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  DUNG_DYE(Material.BROWN_DYE, Rarity.EPIC),
 
   DWARF_TURTLE_SHELMET(Material.PLAYER_HEAD, Rarity.RARE),
 
@@ -1272,11 +1296,15 @@ public enum ItemType {
 
   ETERNAL_FLAME_RING(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  ETHEREAL_VINE(Material.VINE, Rarity.RARE),
+
   ETHERWARP_CONDUIT(Material.PLAYER_HEAD, Rarity.EPIC),
 
   ETHERWARP_MERGER(Material.PLAYER_HEAD, Rarity.EPIC),
 
   EVERBURNING_FLAME(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  EVERGREEN_GARDEN_CHIP(Material.PLAYER_HEAD, Rarity.RARE),
 
   EXCEEDINGLY_RARE_ENDER_ARTIFACT_UPGRADER(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
@@ -1298,6 +1326,8 @@ public enum ItemType {
 
   FARMING_EXP_BOOST_RARE(Material.IRON_HOE, Rarity.COMMON),
 
+  FARMING_EXP_BOOST_UNCOMMON(Material.IRON_HOE, Rarity.UNCOMMON),
+
   FARMING_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON),
 
   FARM_SUIT_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON),
@@ -1317,6 +1347,8 @@ public enum ItemType {
   FEATHER_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON),
 
   FERMENTED_SPIDER_EYE(Material.FERMENTED_SPIDER_EYE, Rarity.COMMON),
+
+  FERMENTO(Material.PLAYER_HEAD, Rarity.EPIC),
 
   FERMENTO_ARTIFACT(Material.PLAYER_HEAD, Rarity.RARE),
 
@@ -1338,6 +1370,8 @@ public enum ItemType {
 
   FINE_CITRINE_GEM(Material.PLAYER_HEAD, Rarity.RARE),
 
+  FINE_FLOUR(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
   FINE_JADE_GEM(Material.PLAYER_HEAD, Rarity.RARE),
 
   FINE_JASPER_GEM(Material.PLAYER_HEAD, Rarity.RARE),
@@ -1355,6 +1389,8 @@ public enum ItemType {
   FINE_TOPAZ_GEM(Material.PLAYER_HEAD, Rarity.RARE),
 
   FIREWORK_ROCKET(Material.FIREWORK_ROCKET, Rarity.COMMON),
+
+  FIRE_IN_A_BOTTLE(Material.EXPERIENCE_BOTTLE, Rarity.RARE),
 
   FIRE_RESISTANCE_POTION(Material.POTION, Rarity.COMMON),
 
@@ -1426,6 +1462,8 @@ public enum ItemType {
 
   FLOWERING_AZALEA_LEAVES(Material.FLOWERING_AZALEA_LEAVES, Rarity.COMMON),
 
+  FLOWERING_BOUQUET(Material.PLAYER_HEAD, Rarity.RARE),
+
   FLOWER_CRYSTAL(Material.PLAYER_HEAD, Rarity.COMMON),
 
   FLOWER_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -1447,6 +1485,8 @@ public enum ItemType {
   FRIED_FROZEN_CHICKEN(Material.PLAYER_HEAD, Rarity.EPIC),
 
   FROZEN_CHICKEN(Material.PLAYER_HEAD, Rarity.RARE),
+
+  FRUIT_BOWL(Material.BOWL, Rarity.RARE),
 
   FTX_3070(Material.PLAYER_HEAD, Rarity.COMMON),
 
@@ -1594,6 +1634,10 @@ public enum ItemType {
 
   GREAT_WHITE_SHARK_TOOTH(Material.GHAST_TEAR, Rarity.LEGENDARY),
 
+  GREENHOUSE_BLUEPRINT(Material.PAPER, Rarity.RARE),
+
+  GREEN_BANDANA(Material.LIME_BANNER, Rarity.EPIC),
+
   GREEN_BANNER(Material.GREEN_BANNER, Rarity.COMMON),
 
   GREEN_BED(Material.GREEN_BED, Rarity.COMMON),
@@ -1620,6 +1664,8 @@ public enum ItemType {
 
   GREEN_TERRACOTTA(Material.GREEN_TERRACOTTA, Rarity.COMMON),
 
+  GREEN_THUMB_I(Material.ENCHANTED_BOOK, Rarity.COMMON),
+
   GREEN_WOOL(Material.GREEN_WOOL, Rarity.COMMON),
 
   GRIFFIN_FEATHER(Material.FEATHER, Rarity.RARE),
@@ -1639,6 +1685,8 @@ public enum ItemType {
   HARD_STONE(Material.STONE, Rarity.COMMON),
 
   HARD_STONE_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  HARVEST_HARBINGER_POTION(Material.POTION, Rarity.RARE),
 
   HASTE_ARTIFACT(Material.PLAYER_HEAD, Rarity.EPIC),
 
@@ -1702,6 +1750,8 @@ public enum ItemType {
 
   HUNTER_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
+  HYPERCHARGE_GARDEN_CHIP(Material.PLAYER_HEAD, Rarity.RARE),
+
   HYPERION(Material.IRON_SWORD, Rarity.LEGENDARY),
 
   HYPER_CATALYST_UPGRADER(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -1731,6 +1781,8 @@ public enum ItemType {
   INTIMIDATION_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON),
 
   INVISIBILITY_POTION(Material.POTION, Rarity.COMMON),
+
+  IRIDIUM(Material.PRISMARINE_CRYSTALS, Rarity.EPIC),
 
   IRON_AXE(Material.IRON_AXE, Rarity.COMMON),
 
@@ -1769,6 +1821,8 @@ public enum ItemType {
   IRON_TRAPDOOR(Material.IRON_TRAPDOOR, Rarity.COMMON),
 
   JACK_O_LANTERN(Material.JACK_O_LANTERN, Rarity.COMMON),
+
+  JELLY(Material.SLIME_BALL, Rarity.COMMON),
 
   JERRY_TALISMAN_BLUE(Material.PLAYER_HEAD, Rarity.RARE),
 
@@ -2070,6 +2124,8 @@ public enum ItemType {
 
   MANGROVE_WOOD(Material.MANGROVE_WOOD, Rarity.COMMON),
 
+  MANTID_CLAW(Material.RABBIT_FOOT, Rarity.RARE),
+
   MASTER_SKULL_TIER_1(Material.PLAYER_HEAD, Rarity.COMMON),
 
   MASTER_SKULL_TIER_2(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -2085,6 +2141,8 @@ public enum ItemType {
   MASTER_SKULL_TIER_7(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
   MATRIARCHS_PERFUME(Material.RABBIT_STEW, Rarity.COMMON),
+
+  MECHAMIND_GARDEN_CHIP(Material.PLAYER_HEAD, Rarity.RARE),
 
   MEDIUM_AGRONOMY_SACK(Material.PLAYER_HEAD, Rarity.RARE),
 
@@ -2216,6 +2274,8 @@ public enum ItemType {
 
   MYCELIUM(Material.MYCELIUM, Rarity.COMMON),
 
+  MYSTERIOUS_CROP(Material.DEAD_BUSH, Rarity.COMMON),
+
   NECRONS_HANDLE(Material.STICK, Rarity.COMMON),
 
   NETHERRACK(Material.NETHERRACK, Rarity.COMMON),
@@ -2338,7 +2398,11 @@ public enum ItemType {
 
   ORANGE_WOOL(Material.ORANGE_WOOL, Rarity.COMMON),
 
+  OVERDRIVE_GARDEN_CHIP(Material.PLAYER_HEAD, Rarity.RARE),
+
   OVERFLUX_CAPACITOR(Material.QUARTZ, Rarity.EPIC),
+
+  OVERGROWN_GRASS(Material.GRASS_BLOCK, Rarity.RARE),
 
   OXEYE_DAISY(Material.OXEYE_DAISY, Rarity.COMMON),
 
@@ -2429,6 +2493,8 @@ public enum ItemType {
   PESTHUNTER_RELIC(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
   PESTHUNTER_RING(Material.PLAYER_HEAD, Rarity.RARE),
+
+  PET_CAKE(Material.CAKE, Rarity.COMMON),
 
   PET_LUCK_POTION_1(Material.POTION, Rarity.COMMON),
 
@@ -2626,6 +2692,8 @@ public enum ItemType {
 
   QUARTZ_STAIRS(Material.QUARTZ_STAIRS, Rarity.COMMON),
 
+  QUICKDRAW_GARDEN_CHIP(Material.PLAYER_HEAD, Rarity.RARE),
+
   RABBIT(Material.RABBIT, Rarity.COMMON),
 
   RABBIT_FOOT(Material.RABBIT_FOOT, Rarity.COMMON),
@@ -2637,6 +2705,8 @@ public enum ItemType {
   RAGGEDY_SHARK_TOOTH_NECKLACE(Material.PLAYER_HEAD, Rarity.COMMON),
 
   RAIL(Material.RAIL, Rarity.COMMON),
+
+  RAREFINDER_GARDEN_CHIP(Material.PLAYER_HEAD, Rarity.RARE),
 
   RAW_BEEF(Material.BEEF, Rarity.COMMON),
 
@@ -3026,6 +3096,12 @@ public enum ItemType {
 
   SOUL_STRING(Material.STRING, Rarity.COMMON),
 
+  SOWDUST(Material.GREEN_DYE, Rarity.COMMON),
+
+  SOWLEDGE_GARDEN_CHIP(Material.PLAYER_HEAD, Rarity.RARE),
+
+  SPACE_HELMET(Material.PLAYER_HEAD, Rarity.SPECIAL),
+
   SPEED_ARTIFACT(Material.PLAYER_HEAD, Rarity.COMMON),
 
   SPEED_ENRICHMENT(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -3096,7 +3172,13 @@ public enum ItemType {
 
   SPRUCE_WOOD(Material.SPRUCE_WOOD, Rarity.COMMON),
 
+  SQUASH(Material.PLAYER_HEAD, Rarity.RARE),
+
   SQUASH_RING(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
+  SQUEAKY_MOUSEMAT(Material.GRAY_CARPET, Rarity.EPIC),
+
+  SQUEAKY_TOY(Material.RABBIT_FOOT, Rarity.RARE),
 
   SQUIRE_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON),
 
@@ -3228,7 +3310,13 @@ public enum ItemType {
 
   SUMSUNG_GG_ABICASE(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  SUNDER_I(Material.ENCHANTED_BOOK, Rarity.COMMON),
+
+  SUNDER_VI_BOOK(Material.ENCHANTED_BOOK, Rarity.RARE),
+
   SUNFLOWER(Material.SUNFLOWER, Rarity.COMMON),
+
+  SUNFLOWER_OIL(Material.HONEY_BOTTLE, Rarity.UNCOMMON),
 
   SUPERBOOM_TNT(Material.TNT, Rarity.RARE),
 
@@ -3242,6 +3330,8 @@ public enum ItemType {
 
   SWORD_OF_REVELATIONS(Material.WOODEN_SWORD, Rarity.EPIC),
 
+  SYNTHESIS_GARDEN_CHIP(Material.PLAYER_HEAD, Rarity.RARE),
+
   SYNTHETIC_HEART(Material.PLAYER_HEAD, Rarity.COMMON),
 
   TALL_GRASS(Material.TALL_GRASS, Rarity.COMMON),
@@ -3249,6 +3339,8 @@ public enum ItemType {
   TARANTULA_SILK(Material.COBWEB, Rarity.RARE),
 
   TARANTULA_WEB(Material.STRING, Rarity.UNCOMMON),
+
+  TASTY_CHEESE(Material.HONEYCOMB, Rarity.COMMON),
 
   TENDER_WOOD(Material.PLAYER_HEAD, Rarity.COMMON),
 
@@ -3317,6 +3409,8 @@ public enum ItemType {
   VACCINE_RING(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
   VACCINE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  VERMIN_VAPORIZER_GARDEN_CHIP(Material.PLAYER_HEAD, Rarity.RARE),
 
   VILLAGE_AFFINITY_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON),
 
@@ -3416,6 +3510,8 @@ public enum ItemType {
 
   WILD_ROSE(Material.ROSE_BUSH, Rarity.COMMON),
 
+  WILD_STRAWBERRY_DYE(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+
   WILSON_ENGINEERING_PLANS(Material.PAPER, Rarity.LEGENDARY),
 
   WISHING_COMPASS(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -3447,6 +3543,8 @@ public enum ItemType {
   WOODEN_SWORD(Material.WOODEN_SWORD, Rarity.COMMON),
 
   WORM_MEMBRANE(Material.ROTTEN_FLESH, Rarity.COMMON),
+
+  WRIGGLING_LARVA(Material.STRING, Rarity.RARE),
 
   YELLOW_BANNER(Material.YELLOW_BANNER, Rarity.COMMON),
 

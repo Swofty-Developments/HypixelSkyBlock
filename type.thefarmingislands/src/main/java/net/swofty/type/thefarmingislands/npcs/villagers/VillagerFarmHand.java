@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.barn.MissionCraftWheatMinion;
@@ -13,9 +14,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-
-public class VillagerFarmHand extends HypixelNPC {
+public class VillagerFarmHand extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
     public VillagerFarmHand() {
         super(new VillagerConfiguration(){
             @Override
@@ -87,5 +86,10 @@ public class VillagerFarmHand extends HypixelNPC {
             return;
         }
         setDialogue(e.player(), "initial-hello");
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "FARMHAND";
     }
 }

@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class VillagerLibrarian extends HypixelNPC {
+public class VillagerLibrarian extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
     public VillagerLibrarian() {
         super(new VillagerConfiguration(){
             @Override
@@ -65,5 +65,10 @@ public class VillagerLibrarian extends HypixelNPC {
                                 "Use the §aEnchanting Table §fto enchant an item!"
                         }).build()
         ).toArray(DialogueSet[]::new);
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "LIBRARIAN";
     }
 }

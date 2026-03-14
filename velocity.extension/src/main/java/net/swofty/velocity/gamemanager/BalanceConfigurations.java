@@ -7,7 +7,6 @@ import net.swofty.velocity.gamemanager.balanceconfigurations.LowestPlayerCount;
 import net.swofty.velocity.gamemanager.balanceconfigurations.ReadyGames;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.jetbrains.annotations.Nullable;
-import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +57,9 @@ public class BalanceConfigurations {
 			Map.entry(ServerType.SKYBLOCK_JERRYS_WORKSHOP, List.of(
 					new LowestPlayerCount()
 			)),
-
+		Map.entry(ServerType.SKYBLOCK_GARDEN, List.of(
+			new LowestPlayerCount()
+		)),
 			Map.entry(ServerType.PROTOTYPE_LOBBY, List.of(
 					new LowestPlayerCount()
 			)),
@@ -81,7 +82,6 @@ public class BalanceConfigurations {
             Map.entry(ServerType.MURDER_MYSTERY_GAME, List.of(
                     new ReadyGames()
             )),
-
             Map.entry(ServerType.SKYWARS_CONFIGURATOR, List.of(
                     new LowestPlayerCount()
             )),
@@ -97,13 +97,22 @@ public class BalanceConfigurations {
 	));
 
 	public static @Nullable GameManager.GameServer getServerFor(Player player, ServerType type) {
+		if (type == null) {
+			return null;
+		}
+
+		List<BalanceConfiguration> typeConfigurations = configurations.get(type);
+		if (typeConfigurations == null || typeConfigurations.isEmpty()) {
+			return null;
+		}
+
 		if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
 			player.sendPlainMessage("§eYou are currently in a network-isolated test flow, load balancing will be restricted to test flow servers!");
 			player.sendPlainMessage("§8Executing test flow " + TestFlowManager.getTestFlowForPlayer(player.getUsername()).getName() + "...");
 		}
 
 		try {
-			for (BalanceConfiguration configuration : configurations.get(type)) {
+			for (BalanceConfiguration configuration : typeConfigurations) {
 				List<GameManager.GameServer> serversToConsider = GameManager.getFromType(type);
 				if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
 					serversToConsider.removeIf(server -> {
@@ -146,7 +155,7 @@ public class BalanceConfigurations {
 			}
 			return null;
 		} catch (Exception e) {
-			System.out.println("Error in trying to balance type " + type.name() + " for player " + player.getUsername());
+			System.out.println("Error in trying to balance type " + String.valueOf(type) + " for player " + player.getUsername());
 			throw e;
 		}
 	}
