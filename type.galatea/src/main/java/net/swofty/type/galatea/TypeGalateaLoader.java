@@ -5,6 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.Songs;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.galatea.tab.GalateaServerModule;
@@ -37,6 +38,11 @@ public class TypeGalateaLoader implements SkyBlockTypeLoader {
     @Override
     public void afterInitialize(MinecraftServer server) {
 
+    }
+
+    @Override
+    public Songs getIslandSong() {
+        return Songs.A_SILENT_MEMOIR;
     }
 
     @Override

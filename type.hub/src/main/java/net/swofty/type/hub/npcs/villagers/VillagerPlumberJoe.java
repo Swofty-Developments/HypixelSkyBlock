@@ -1,7 +1,5 @@
 package net.swofty.type.hub.npcs.villagers;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -36,8 +34,7 @@ public class VillagerPlumberJoe extends HypixelNPC implements net.swofty.type.sk
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        e.player().notImplemented();
     }
 
     @Override

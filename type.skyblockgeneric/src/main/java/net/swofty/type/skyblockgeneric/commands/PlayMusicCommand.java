@@ -28,8 +28,18 @@ public class PlayMusicCommand extends HypixelCommand {
                 return;
             }
 
-            SkyBlockSong skyBlockSong = new SkyBlockSong(context.get(song));
+            player.sendMessage("§aLoading song §e" + context.get(song).name() + "§a...");
+            SkyBlockSong skyBlockSong;
+            try {
+                skyBlockSong = new SkyBlockSong(context.get(song));
+            } catch (Exception e) {
+                e.printStackTrace();
+                player.sendMessage("§cError loading song: " + e.getMessage());
+                return;
+            }
+            player.sendMessage("§aLoaded song §e" + context.get(song).name() + "§a, now playing...");
             SkyBlockSongsHandler songsHandler = new SkyBlockSongsHandler(player);
+            player.sendMessage("§aPlaying song §e" + skyBlockSong.getSong().name() + "§a...");
             songsHandler.setPlayerSong(skyBlockSong);
 
             player.sendMessage("§aPlaying song §e" + skyBlockSong.getSong().name() + "§a.");
