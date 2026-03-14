@@ -17,6 +17,7 @@ public enum FromServiceChannels {
     DARK_AUCTION_EVENT("dark-auction-event"),
     TRIGGER_DARK_AUCTION("trigger-dark-auction"),
     PROPAGATE_FRIEND_EVENT("propagate_friend_event"),
+    PROPAGATE_GUILD_EVENT("propagate_guild_event"),
     ;
 
     private final String channelName;
