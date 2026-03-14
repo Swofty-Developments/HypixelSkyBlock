@@ -14,7 +14,7 @@ public class GetPartyProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<GetPartyMessage> getSerializer() {
-        return new Serializer<GetPartyMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(GetPartyMessage value) {
                 JSONObject json = new JSONObject();
@@ -38,7 +38,7 @@ public class GetPartyProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<GetPartyResponse> getReturnSerializer() {
-        return new Serializer<GetPartyResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(GetPartyResponse value) {
                 JSONObject json = new JSONObject();

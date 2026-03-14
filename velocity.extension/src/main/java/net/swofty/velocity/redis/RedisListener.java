@@ -1,14 +1,11 @@
 package net.swofty.velocity.redis;
 
 import net.swofty.redisapi.api.ChannelRegistry;
-import org.tinylog.Logger;
 import net.swofty.redisapi.api.RedisAPI;
-import org.tinylog.Logger;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.UUID;
-import org.tinylog.Logger;
 
 public abstract class RedisListener {
 

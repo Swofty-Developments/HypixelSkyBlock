@@ -3,11 +3,14 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.collection;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;

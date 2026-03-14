@@ -79,7 +79,7 @@ public class ProxyAPI {
                 RedisAPI.getInstance().publishMessage(
                         serviceId,
                         ChannelRegistry.getFromName("service_broadcast_response"),
-                        requestId + "}=-=-={" + serverUUID.toString() + "}=-=-={" + response.toString());
+                        requestId + "}=-=-={" + serverUUID.toString() + "}=-=-={" + response);
             });
         });
     }

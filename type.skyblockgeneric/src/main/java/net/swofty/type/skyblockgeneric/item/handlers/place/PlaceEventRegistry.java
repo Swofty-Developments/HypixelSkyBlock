@@ -1,15 +1,12 @@
 package net.swofty.type.skyblockgeneric.item.handlers.place;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.instance.block.Block;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMinionData;
-import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
 import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.Map;

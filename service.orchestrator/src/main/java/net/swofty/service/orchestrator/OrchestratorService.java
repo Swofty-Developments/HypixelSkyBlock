@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class OrchestratorService implements SkyBlockService {
 
-	public static void main(String[] args) {
+	static void main(String[] args) {
 		SkyBlockService.init(new OrchestratorService());
 
 		ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {

@@ -10,7 +10,7 @@ import java.util.List;
 public class AuctionService implements SkyBlockService {
     public static AuctionsCacheService cacheService;
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SkyBlockService.init(new AuctionService());
 
         cacheService = new AuctionsCacheService();

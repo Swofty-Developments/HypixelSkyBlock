@@ -104,7 +104,7 @@ public class CombatManager {
 		}
 
 		CombatEntry heaviestFall = null;
-		CombatEntry lastEntry = entries.get(entries.size() - 1);
+		CombatEntry lastEntry = entries.getLast();
 		DamageTypeInfo lastInfo = DamageTypeInfo.of(lastEntry.damage().getType());
 
 		boolean fall = false;

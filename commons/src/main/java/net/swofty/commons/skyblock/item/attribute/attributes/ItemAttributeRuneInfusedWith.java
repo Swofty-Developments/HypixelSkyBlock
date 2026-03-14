@@ -26,8 +26,8 @@ public class ItemAttributeRuneInfusedWith extends ItemAttribute<ItemAttributeRun
             return new RuneData(null, null);
         }
         String[] split = string.split(";");
-        Integer level = Integer.parseInt(split[0]);;
-        ItemType runeType = ItemType.valueOf(split[1]);;
+        Integer level = Integer.parseInt(split[0]);
+        ItemType runeType = ItemType.valueOf(split[1]);
 
         return new RuneData(level, runeType);
     }

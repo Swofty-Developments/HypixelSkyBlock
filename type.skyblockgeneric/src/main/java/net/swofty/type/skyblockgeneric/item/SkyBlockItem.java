@@ -270,7 +270,6 @@ public class SkyBlockItem {
 		return config.hasComponent(componentClass);
 	}
 
-	@SuppressWarnings("unchecked")
 	public <T extends SkyBlockItemComponent> T getComponent(Class<T> componentClass) {
 		return config.getComponent(componentClass);
 	}

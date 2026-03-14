@@ -27,7 +27,7 @@ public class PartyChatMessageEvent extends PartyEvent {
 
     @Override
     public Serializer<PartyChatMessageEvent> getSerializer() {
-        return new Serializer<PartyChatMessageEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyChatMessageEvent value) {
                 JSONObject json = new JSONObject();

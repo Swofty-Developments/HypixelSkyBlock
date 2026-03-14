@@ -5,13 +5,15 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.PaginatedView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 public final class TestPaginatedView extends PaginatedView<Integer, TestPaginatedView.State> {
 

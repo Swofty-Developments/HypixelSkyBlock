@@ -35,7 +35,6 @@ public abstract class FriendEvent {
         throw new RuntimeException("Failed to find friend event class: " + className + " in " + Arrays.toString(packageNames));
     }
 
-    @SuppressWarnings("unchecked")
     private static FriendEvent createDummyInstance(Class<?> clazz) throws Exception {
         String className = clazz.getSimpleName();
 

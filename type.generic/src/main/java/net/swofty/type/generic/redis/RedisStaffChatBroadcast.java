@@ -7,7 +7,6 @@ import net.swofty.type.generic.command.commands.ChatCommand;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import org.json.JSONObject;
 
@@ -68,7 +67,7 @@ public class RedisStaffChatBroadcast implements ProxyToClient {
         HypixelGenericLoader.getLoadedPlayers().stream()
                 .filter(player -> player.getRank().isStaff())
                 .filter(player -> ChatCommand.isStaffViewEnabled(player.getUuid()) ||
-                        (senderUuid != null && player.getUuid().equals(senderUuid)))
+                        (player.getUuid().equals(senderUuid)))
                 .forEach(player -> player.sendMessage(message));
     }
 }

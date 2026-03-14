@@ -4,7 +4,13 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.achievement.*;
+import net.swofty.type.generic.achievement.AchievementCategory;
+import net.swofty.type.generic.achievement.AchievementDefinition;
+import net.swofty.type.generic.achievement.AchievementRegistry;
+import net.swofty.type.generic.achievement.AchievementStatisticsService;
+import net.swofty.type.generic.achievement.AchievementTier;
+import net.swofty.type.generic.achievement.AchievementType;
+import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -234,11 +240,11 @@ public class GUITieredAchievements extends HypixelInventoryGUI {
                 if (unlocked) {
                     lore.add("§7Progress: §aDONE! §7(§a" + String.format("%,d", currentProgress) + "§7)");
                 } else {
-                    lore.add("§7Progress: §a" + String.format("%,d", currentProgress) + "§7/§a" + String.format("%,d", tier.getGoal()));
+                    lore.add("§7Progress: §a" + String.format("%,d", currentProgress) + "§7/§a" + String.format("%,d", tier.goal()));
                 }
 
                 lore.add("§7Reward:");
-                lore.add("§8+§e" + tier.getPoints() + " §7Achievement Points");
+                lore.add("§8+§e" + tier.points() + " §7Achievement Points");
                 lore.add("");
 
                 if (unlocked) {

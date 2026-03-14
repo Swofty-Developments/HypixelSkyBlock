@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class APIService implements SkyBlockService {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         int port = 0;
         for (String arg : args) {
             if (arg.startsWith("--port=")) {

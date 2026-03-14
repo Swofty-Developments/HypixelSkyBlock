@@ -5,14 +5,18 @@ import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.GameDataHandler;
-import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsModeStats;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsQuickBuy;
+import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardPreferences;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
+import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
+import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 import org.tinylog.Logger;
 import tools.jackson.core.JacksonException;
 
@@ -82,7 +86,7 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
         return false;
     }
 
-    public static BedWarsDataHandler getUser(UUID uuid) {
+    public static @NonNull BedWarsDataHandler getUser(UUID uuid) {
         if (!bedwarsCache.containsKey(uuid)) throw new RuntimeException("User " + uuid + " does not exist!");
         return bedwarsCache.get(uuid);
     }
@@ -146,7 +150,6 @@ public class BedWarsDataHandler extends DataHandler implements GameDataHandler {
         return dp != null ? dp : datapoint.defaultDatapoint;
     }
 
-    @SuppressWarnings("unchecked")
     public <R extends Datapoint<?>> R get(Data datapoint, Class<R> type) {
         Datapoint<?> dp = this.datapoints.get(datapoint.key);
         return (R) (dp != null ? type.cast(dp) : type.cast(datapoint.defaultDatapoint));

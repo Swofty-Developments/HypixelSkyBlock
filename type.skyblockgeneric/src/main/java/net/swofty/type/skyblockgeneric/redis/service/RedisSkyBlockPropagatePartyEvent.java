@@ -2,7 +2,6 @@ package net.swofty.type.skyblockgeneric.redis.service;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;

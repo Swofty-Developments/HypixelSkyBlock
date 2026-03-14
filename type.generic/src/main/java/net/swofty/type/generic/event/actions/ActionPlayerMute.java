@@ -26,10 +26,13 @@ public class ActionPlayerMute implements HypixelEventClass {
                     .orTimeout(2, TimeUnit.SECONDS)
                     .join();
 
-            if (response instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse muteResponse && muteResponse.found()) {
+            if (response instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse(
+                boolean found, String type, String banId, net.swofty.commons.punishment.PunishmentReason reason,
+                long expiresAt, java.util.List<net.swofty.commons.punishment.PunishmentTag> tags
+            ) && found) {
                 event.setCancelled(true);
                 ActivePunishment punishment = new ActivePunishment(
-                        muteResponse.type(), muteResponse.banId(), muteResponse.reason(), muteResponse.expiresAt(), muteResponse.tags());
+                    type, banId, reason, expiresAt, tags);
                 player.sendMessage(PunishmentMessages.muteMessage(punishment));
             }
         } catch (Exception ignored) {
