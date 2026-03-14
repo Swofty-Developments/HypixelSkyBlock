@@ -24,12 +24,12 @@ dependencies {
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
-    implementation("org.mongodb:bson:4.11.2")
-    implementation("net.kyori:adventure-text-minimessage:4.25.0")
-    compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
+    implementation(libs.mongodb.bson)
+    implementation(libs.adventure.text.minimessage)
+    compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("org.yaml:snakeyaml:2.2")
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
+    implementation(libs.snakeyaml)
 }

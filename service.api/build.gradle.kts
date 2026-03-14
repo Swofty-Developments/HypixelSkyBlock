@@ -23,17 +23,17 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
+    implementation(libs.caffeine)
     implementation(project(":service.generic"))
     implementation(project(":type.generic"))
     implementation(project(":commons"))
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("com.sparkjava:spark-core:2.9.4")
-    implementation("org.mongodb:bson:5.6.4")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.4")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
-    compileOnly("org.jetbrains:annotations:26.1.0")
+    implementation(libs.gson)
+    implementation(libs.spark.core)
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
+    compileOnly(libs.annotations)
 }
 
 application {
