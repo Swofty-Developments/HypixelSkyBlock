@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class PrototypeLobbyScoreboard {
     private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
@@ -34,10 +35,10 @@ public class PrototypeLobbyScoreboard {
             }
 
             for (HypixelPlayer player : HypixelGenericLoader.getLoadedPlayers()) {
-                HypixelDataHandler dataHandler = player.getDataHandler();
+                Optional<HypixelDataHandler> dataHandler = player.getOptionalDataHandler();
                 PrototypeLobbyDataHandler prototypeDataHandler = PrototypeLobbyDataHandler.getUser(player);
 
-                if (dataHandler == null || prototypeDataHandler == null) {
+                if (dataHandler.isEmpty() || prototypeDataHandler == null) {
                     continue;
                 }
 

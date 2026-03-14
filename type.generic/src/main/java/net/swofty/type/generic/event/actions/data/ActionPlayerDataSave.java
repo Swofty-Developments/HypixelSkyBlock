@@ -25,72 +25,88 @@ import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public class ActionPlayerDataSave implements HypixelEventClass {
+    private static final String DATA_SAVE_FAILURE_MESSAGE =
+        "We couldn't safely save your player data during transfer. Please reconnect.";
+
     @SneakyThrows
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
     public void run(PlayerDisconnectEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         UUID uuid = player.getUuid();
+        boolean saveSucceeded = false;
 
         ResourcePackManager packManager = HypixelConst.getResourcePackManager();
         if (packManager != null) {
             packManager.getActivePack().onPlayerQuit(player);
         }
 
-        Logger.info("Saving Hypixel account data for: " + player.getUsername() + "...");
+        try {
+            Logger.info("Saving Hypixel account data for: " + player.getUsername() + "...");
 
-        HypixelDataHandler handler = player.getDataHandler();
+            Optional<HypixelDataHandler> handlerOptional = player.getOptionalDataHandler();
+            if (handlerOptional.isEmpty()) {
+                throw new IllegalStateException("User " + uuid + " does not exist in HypixelDataHandler cache during save");
+            }
 
-        // Run onSave callbacks for basic Hypixel functionality
-        handler.runOnSave(player);
+            HypixelDataHandler handler = handlerOptional.get();
 
-        // Save Hypixel data to UserDatabase (account-wide data)
-        UserDatabase userDatabase = new UserDatabase(uuid);
-        userDatabase.saveData(handler);
+            // Run onSave callbacks for basic Hypixel functionality
+            handler.runOnSave(player);
 
-        // Sync all leaderboard-tracked datapoints for Hypixel data
-        syncLeaderboards(uuid, handler);
+            // Save Hypixel data to UserDatabase (account-wide data)
+            UserDatabase userDatabase = new UserDatabase(uuid);
+            userDatabase.saveData(handler);
 
-        // Remove from cache
-        HypixelDataHandler.userCache.remove(uuid);
+            // Sync all leaderboard-tracked datapoints for Hypixel data
+            syncLeaderboards(uuid, handler);
 
-        // Save additional game handlers
-        List<Class<? extends GameDataHandler>> additionalHandlers =
+            // Save additional game handlers
+            List<Class<? extends GameDataHandler>> additionalHandlers =
                 HypixelConst.getTypeLoader().getAdditionalDataHandlers();
 
-        for (Class<? extends GameDataHandler> handlerClass : additionalHandlers) {
-            GameDataHandler gameHandler = GameDataHandlerRegistry.get(handlerClass);
-            if (gameHandler == null) continue;
+            for (Class<? extends GameDataHandler> handlerClass : additionalHandlers) {
+                GameDataHandler gameHandler = GameDataHandlerRegistry.get(handlerClass);
+                if (gameHandler == null) continue;
 
-            DataHandler gameDataHandler = gameHandler.getHandler(uuid);
-            if (gameDataHandler == null) continue;
+                DataHandler gameDataHandler = gameHandler.getHandler(uuid);
+                if (gameDataHandler == null) continue;
 
-            Logger.info("Saving " + gameHandler.getHandlerId() + " data for: " + player.getUsername());
+                Logger.info("Saving " + gameHandler.getHandlerId() + " data for: " + player.getUsername());
 
-            gameDataHandler.runOnSave(player);
-            userDatabase.saveData(gameDataHandler);
+                gameDataHandler.runOnSave(player);
+                userDatabase.saveData(gameDataHandler);
 
-            // Sync leaderboards for this game handler
-            syncLeaderboards(uuid, gameDataHandler);
+                // Sync leaderboards for this game handler
+                syncLeaderboards(uuid, gameDataHandler);
+            }
 
-            gameHandler.removeFromCache(uuid);
+            saveSucceeded = true;
+            Logger.info("Successfully saved all data for: " + player.getUsername());
+        } catch (Exception e) {
+            Logger.error(e, "Failed to save all data for: {}", player.getUsername());
+        } finally {
+            HypixelDataHandler.userCache.remove(uuid);
+
+            List<Class<? extends GameDataHandler>> additionalHandlers =
+                HypixelConst.getTypeLoader().getAdditionalDataHandlers();
+            for (Class<? extends GameDataHandler> handlerClass : additionalHandlers) {
+                GameDataHandler gameHandler = GameDataHandlerRegistry.get(handlerClass);
+                if (gameHandler != null) {
+                    gameHandler.removeFromCache(uuid);
+                }
+            }
+
+            notifyProxyOfSaveCompletion(uuid, saveSucceeded);
+
+            // Clean up tablist entries
+            MathUtility.delay(() -> {
+                HypixelConst.getTypeLoader().getTablistManager().deleteTablistEntries(player);
+            }, 5);
         }
-
-        // Notify proxy that we're done with this player
-        ServerOutboundMessage.sendMessageToProxy(
-                ToProxyChannels.FINISHED_WITH_PLAYER,
-                new JSONObject().put("uuid", uuid.toString()),
-                (response) -> {}
-        );
-
-        // Clean up tablist entries
-        MathUtility.delay(() -> {
-            HypixelConst.getTypeLoader().getTablistManager().deleteTablistEntries(player);
-        }, 5);
-
-        Logger.info("Successfully saved all data for: " + player.getUsername());
     }
 
     /**
@@ -121,5 +137,21 @@ public class ActionPlayerDataSave implements HypixelEventClass {
                 }
             }
         }
+    }
+
+    private void notifyProxyOfSaveCompletion(UUID uuid, boolean saveSucceeded) {
+        JSONObject message = new JSONObject()
+            .put("uuid", uuid.toString())
+            .put("success", saveSucceeded);
+        if (!saveSucceeded) {
+            message.put("reason", DATA_SAVE_FAILURE_MESSAGE);
+        }
+
+        ServerOutboundMessage.sendMessageToProxy(
+            ToProxyChannels.FINISHED_WITH_PLAYER,
+            message,
+            (response) -> {
+            }
+        );
     }
 }

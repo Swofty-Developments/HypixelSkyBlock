@@ -9,18 +9,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
+@Getter
 public abstract class DataHandler {
-    public static Map<UUID, DataHandler> userCache = new HashMap<>();
+    public static Map<UUID, DataHandler> userCache = new ConcurrentHashMap<>();
 
-    @Getter protected UUID uuid;
+    protected UUID uuid;
     protected final Map<String, Datapoint<?>> datapoints = new HashMap<>();
 
     protected DataHandler() {}
     protected DataHandler(UUID uuid) { this.uuid = uuid; }
 
     public Datapoint<?> getDatapoint(String key) { return this.datapoints.get(key); }
-    public Map<String, Datapoint<?>> getDatapoints() { return this.datapoints; }
 
     public static @NonNull DataHandler getUser(UUID uuid) {
         if (!userCache.containsKey(uuid)) throw new RuntimeException("User " + uuid + " does not exist!");
