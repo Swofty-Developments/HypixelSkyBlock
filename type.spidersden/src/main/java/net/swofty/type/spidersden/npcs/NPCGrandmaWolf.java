@@ -7,7 +7,7 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-public class NPCGrandmaWolf extends HypixelNPC {
+public class NPCGrandmaWolf extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
     public NPCGrandmaWolf() {
         super(new HumanConfiguration() {
             @Override
@@ -43,5 +43,10 @@ public class NPCGrandmaWolf extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent event) {
 
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "GRANDMA_WOLF";
     }
 }

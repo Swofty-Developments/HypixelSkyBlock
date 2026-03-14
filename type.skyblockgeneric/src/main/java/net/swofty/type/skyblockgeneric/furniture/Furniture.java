@@ -44,12 +44,12 @@ public class Furniture {
 	public static List<LivingEntity> load(final Instance instance, final String furnitureName, final Pos offset) {
 		try {
 			if (instance == null) {
-				throw new IllegalStateException("SkyBlock instance is not initialized");
+				throw new IllegalStateException("Instance is not initialized");
 			}
 
 			final File file = new File(FURNITURE_DIR, furnitureName.toLowerCase() + ".json");
 			if (!file.exists()) {
-				throw new IllegalArgumentException("Furniture file not found: " + file.getPath());
+				throw new FurnitureNotPresent("Furniture file not found: " + file.getPath());
 			}
 
 			final String content = Files.readString(file.toPath(), StandardCharsets.UTF_8);
@@ -84,7 +84,7 @@ public class Furniture {
 
 			return spawned;
 		} catch (Exception exception) {
-			throw new IllegalStateException("Failed to load furniture '" + furnitureName + "'", exception);
+			throw new FurnitureLoadException("Failed to load furniture '" + furnitureName + "'", exception);
 		}
 	}
 

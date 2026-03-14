@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopWeaponsmith;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCWeaponsmith extends HypixelNPC {
+public class NPCWeaponsmith extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
     public NPCWeaponsmith() {
         super(new HumanConfiguration() {
             @Override
@@ -64,5 +64,10 @@ public class NPCWeaponsmith extends HypixelNPC {
                                 "Click me again to open the Weaponsmith Shop!"
                         }).build(),
         };
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "WEAPONSMITH";
     }
 }

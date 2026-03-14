@@ -8,7 +8,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCDusk extends HypixelNPC {
+public class NPCDusk extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCDusk() {
         super(new HumanConfiguration() {
@@ -54,5 +54,10 @@ public class NPCDusk extends HypixelNPC {
                                 "You can also combine two runes for a chance to create a higher level rune with a better effect!"
                         }).build()
         ).toArray(DialogueSet[]::new);
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "DUSK";
     }
 }

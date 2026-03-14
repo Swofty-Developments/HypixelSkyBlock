@@ -8,7 +8,7 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-public class NPCGuy extends HypixelNPC {
+public class NPCGuy extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCGuy() {
         super(new HumanConfiguration() {
@@ -45,4 +45,8 @@ public class NPCGuy extends HypixelNPC {
                         .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
     }
 
+    @Override
+    public String gardenSpokenNpcId() {
+        return "GUY";
+    }
 }

@@ -3,14 +3,13 @@ package net.swofty.type.deepcaverns.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-
-public class NPCRhys extends HypixelNPC {
+public class NPCRhys extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
 	public NPCRhys() {
 		super(new HumanConfiguration() {
@@ -46,5 +45,10 @@ public class NPCRhys extends HypixelNPC {
 		SkyBlockPlayer player = (SkyBlockPlayer) event.player();
 		player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
 				.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+	}
+
+	@Override
+	public String gardenSpokenNpcId() {
+		return "RHYS";
 	}
 }

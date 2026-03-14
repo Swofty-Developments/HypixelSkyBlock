@@ -47,9 +47,9 @@ public final class GardenNpcAnchorRegistry {
             GardenConfigRegistry.getDouble(anchor, "z", 0D),
             (float) GardenConfigRegistry.getDouble(anchor, "yaw", 0D),
             (float) GardenConfigRegistry.getDouble(anchor, "pitch", 0D)
-        )));
+        ), GardenConfigRegistry.getDouble(anchor, "offsetY", 0D)));
     }
 
-    public record NpcAnchor(Pos position) {
+    public record NpcAnchor(Pos position, Double offsetY) {
     }
 }

@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopZog;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCZog extends HypixelNPC {
+public class NPCZog extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCZog() {
         super(new HumanConfiguration() {
@@ -66,5 +66,10 @@ public class NPCZog extends HypixelNPC {
                                 "I sell all kinds of them if you'd like to try one out!"
                         }).build(),
         };
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "ZOG";
     }
 }

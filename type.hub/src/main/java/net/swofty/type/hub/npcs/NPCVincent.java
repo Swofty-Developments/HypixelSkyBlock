@@ -7,8 +7,8 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointGardenPersonal;
+import net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward;
+import net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -55,8 +55,7 @@ public class NPCVincent extends HypixelNPC {
             if (heldType != null) {
                 player.takeItem(heldType, 1);
             }
-            player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.GARDEN_PERSONAL, DatapointGardenPersonal.class)
-                .getValue().getDonatedItems().add("DYE");
+            GardenProgressionSupport.apply(player, GardenProgressionReward.donatedItem("DYE"));
             sendNPCMessage(player, "A lovely color choice. I'll remember your donation.");
             return;
         }

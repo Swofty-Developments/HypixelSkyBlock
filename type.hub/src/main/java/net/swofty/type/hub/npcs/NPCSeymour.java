@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUISeymour;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCSeymour extends HypixelNPC {
+public class NPCSeymour extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCSeymour() {
         super(new HumanConfiguration() {
@@ -64,5 +64,10 @@ public class NPCSeymour extends HypixelNPC {
                                 "Looking to buy something fancy?",
                         }).build(),
         };
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "SEYMOUR";
     }
 }

@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
@@ -14,9 +15,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-
-public class NPCLazyMiner extends HypixelNPC {
+public class NPCLazyMiner extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCLazyMiner() {
         super(new HumanConfiguration() {
@@ -132,5 +131,10 @@ public class NPCLazyMiner extends HypixelNPC {
                                 "Maybe some day I'll go back down there."
                         }).build()
         ).toArray(DialogueSet[]::new);
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "LAZY_MINER";
     }
 }

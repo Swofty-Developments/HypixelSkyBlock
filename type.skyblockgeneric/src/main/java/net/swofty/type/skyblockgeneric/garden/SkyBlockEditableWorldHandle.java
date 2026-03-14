@@ -2,6 +2,8 @@ package net.swofty.type.skyblockgeneric.garden;
 
 import net.minestom.server.coordinate.Point;
 
+import java.util.Optional;
+
 public interface SkyBlockEditableWorldHandle {
     WorldBuildLimits getBuildLimits();
 
@@ -13,10 +15,10 @@ public interface SkyBlockEditableWorldHandle {
         return isWithinBounds(point);
     }
 
-    default String getDeniedBuildMessage(Point point) {
+    default Optional<String> getDeniedBuildMessage(Point point) {
         if (!isWithinBounds(point)) {
-            return "§cYou can't build any further in this direction!";
+            return Optional.of("§cYou can't build any further in this direction!");
         }
-        return "§cYou can't edit that part yet!";
+        return Optional.of("§cYou can't edit that part yet!");
     }
 }

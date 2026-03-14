@@ -6,14 +6,13 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
 
-public class NPCAlchemist extends HypixelNPC {
+public class NPCAlchemist extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
     public NPCAlchemist() {
         super(new AnimalConfiguration() {
             @Override
@@ -65,5 +64,10 @@ public class NPCAlchemist extends HypixelNPC {
         return new DialogueSet[] {
                 DialogueSet.ofTranslation("hello", "npcs_hub.alchemist.dialogue.hello", Map.of("player", player.getUsername()))
         };
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "ALCHEMIST";
     }
 }

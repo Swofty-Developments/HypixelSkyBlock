@@ -3,7 +3,6 @@ package net.swofty.type.garden.gui;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.garden.config.GardenConfigRegistry;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.DefaultState;
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 public class GUIDesk extends StatelessView {
-    private static final int[] ACTIVE_VISITOR_SLOTS = {36, 37, 38, 39, 40};
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
@@ -29,6 +27,7 @@ public class GUIDesk extends StatelessView {
     @Override
     public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
         Components.close(layout, 49);
+        Components.fill(layout);
 
         layout.slot(4, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -126,38 +125,6 @@ public class GUIDesk extends StatelessView {
             "§eClick to view!"
         ), (click, c) -> c.push(new GUIGardenSkins()));
 
-        SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
-        List<GardenData.GardenVisitorState> activeVisitors = GardenGuiSupport.visitors(player).getActiveVisitors();
-        for (int index = 0; index < Math.min(activeVisitors.size(), ACTIVE_VISITOR_SLOTS.length); index++) {
-            GardenData.GardenVisitorState visitor = activeVisitors.get(index);
-            layout.slot(ACTIVE_VISITOR_SLOTS[index], (s, c) -> buildActiveVisitorCard((SkyBlockPlayer) c.player(), visitor), (click, c) ->
-                c.push(new GardenVisitorOfferView(visitor.getVisitorId())));
-        }
-
-        layout.slot(44, (s, c) -> {
-            SkyBlockPlayer current = (SkyBlockPlayer) c.player();
-            GardenData.GardenVisitorsData visitors = GardenGuiSupport.visitors(current);
-            long remaining = Math.max(0L, visitors.getNextArrivalAt() - System.currentTimeMillis());
-            String status = visitors.getActiveVisitors().size() + visitors.getQueuedVisitors().size()
-                >= net.swofty.type.garden.GardenServices.visitors().getMaxVisibleVisitors()
-                + net.swofty.type.garden.GardenServices.visitors().getMaxQueuedVisitors()
-                && System.currentTimeMillis() >= visitors.getNextArrivalAt()
-                ? "§cQueue Full"
-                : "§a" + StringUtility.formatTimeLeft(remaining);
-            return ItemStackCreator.getStack(
-                "§aVisitor's Logbook",
-                Material.BOOK,
-                1,
-                "§7Review all available Garden visitors",
-                "§7and browse current offers.",
-                "",
-                "§7Next Visitor: " + status,
-                "§7Visible / queued: §e" + visitors.getActiveVisitors().size() + "§7/§e" + visitors.getQueuedVisitors().size(),
-                "",
-                "§eClick to browse!"
-            );
-        }, (click, c) -> c.push(new GUIVisitorLogbook()));
-
         layout.slot(50, (s, c) -> {
             SkyBlockPlayer current = (SkyBlockPlayer) c.player();
             String mode = GardenGuiSupport.core(current).getSelectedTimeMode();
@@ -182,25 +149,4 @@ public class GUIDesk extends StatelessView {
         });
     }
 
-    private net.minestom.server.item.ItemStack.Builder buildActiveVisitorCard(SkyBlockPlayer player, GardenData.GardenVisitorState visitor) {
-        Map<String, Object> definition = net.swofty.type.garden.GardenServices.visitors().getVisitor(visitor.getVisitorId());
-        String displayName = GardenConfigRegistry.getString(definition, "display_name", StringUtility.toNormalCase(visitor.getVisitorId()));
-        List<String> lore = new ArrayList<>();
-        lore.add(GardenGuiSupport.colorForRarity(visitor.getRarity()) + "§l" + visitor.getRarity());
-        lore.add("");
-        lore.add("§7Requests:");
-        for (GardenData.GardenRequest request : visitor.getRequests()) {
-            lore.add(" §8- §7" + StringUtility.toNormalCase(request.getItemId()) + " §8x" + StringUtility.commaify(request.getAmount()));
-        }
-        lore.add("");
-        lore.add("§7Rewards: §2+" + visitor.getGardenXp() + " Garden XP §8/ §c+" + visitor.getCopper() + " Copper");
-        if (visitor.getBits() > 0) {
-            lore.add("§7Bonus Bits: §b+" + visitor.getBits());
-        }
-        lore.addAll(GardenGuiSupport.describeRewards(visitor.getGuaranteedRewards(), " §8+§6"));
-        lore.add("§7Visited: §a" + GardenGuiSupport.visitors(player).getVisitCounts().getOrDefault(visitor.getVisitorId(), 0) + "x");
-        lore.add("");
-        lore.add("§eClick to view offer!");
-        return GardenGuiSupport.visitorIcon(definition, displayName, visitor.getRarity(), lore);
-    }
 }

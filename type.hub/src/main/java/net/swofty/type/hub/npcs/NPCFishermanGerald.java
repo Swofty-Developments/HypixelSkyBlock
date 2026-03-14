@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCFishermanGerald extends HypixelNPC {
+public class NPCFishermanGerald extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCFishermanGerald() {
         super(new HumanConfiguration() {
@@ -71,5 +71,10 @@ public class NPCFishermanGerald extends HypixelNPC {
                                 "She's fishing a bit §bupstream§f. Once she's shown you the ropes, come back and talk to me!",
                         }).build()
         ).toArray(DialogueSet[]::new);
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "FISHERMAN_GERALD";
     }
 }

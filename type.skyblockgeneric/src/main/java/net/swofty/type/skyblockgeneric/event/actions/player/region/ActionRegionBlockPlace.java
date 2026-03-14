@@ -31,9 +31,11 @@ public class ActionRegionBlockPlace implements HypixelEventClass {
         SkyBlockEditableWorldHandle editableWorld = player.getEditableWorldHandle();
         if (editableWorld == null || !editableWorld.canEdit(position)) {
             event.setCancelled(true);
-            player.sendMessage(editableWorld == null
-                ? "§cYou can't build here right now!"
-                : editableWorld.getDeniedBuildMessage(position));
+            if (editableWorld == null) {
+                player.sendMessage("§cYou can't build here right now!");
+            } else {
+                editableWorld.getDeniedBuildMessage(position).ifPresent(player::sendMessage);
+            }
             return;
         }
 

@@ -9,7 +9,7 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCLumina extends HypixelNPC {
+public class NPCLumina extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
     public NPCLumina() {
         super(new HumanConfiguration() {
             @Override
@@ -47,5 +47,10 @@ public class NPCLumina extends HypixelNPC {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         player.openView(new GUIShopLumina());
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "LUMINA";
     }
 }

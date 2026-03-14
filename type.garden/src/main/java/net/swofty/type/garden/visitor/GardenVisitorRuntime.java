@@ -25,18 +25,6 @@ import java.util.stream.Collectors;
 public final class GardenVisitorRuntime {
     private static final Pattern ANY_PATTERN = Pattern.compile("^ANY(?:\\s+(\\d+))?$", Pattern.CASE_INSENSITIVE);
     private static final List<String> RARITY_ORDER = List.of("UNCOMMON", "RARE", "LEGENDARY", "MYTHIC", "SPECIAL");
-    private static final List<String> TRACKED_DIALOGUE_FLAGS = List.of(
-        "sam",
-        "anita",
-        "pamela",
-        "jacob",
-        "jeff",
-        "phillip",
-        "carpenter",
-        "shifty",
-        "desk"
-    );
-
     private GardenVisitorRuntime() {
     }
 
@@ -311,10 +299,11 @@ public final class GardenVisitorRuntime {
     private static boolean isTalkRequirementMet(SkyBlockPlayer player, String visitorId, String requirementKey) {
         String normalizedNpc = normalizeDialogueFlag(requirementKey);
         List<String> spokenFlags = new ArrayList<>(GardenGuiSupport.personal(player).getSpokenNpcFlags());
-        if (spokenFlags.contains(visitorId.toLowerCase()) || spokenFlags.contains(normalizedNpc)) {
-            return true;
-        }
-        return !TRACKED_DIALOGUE_FLAGS.contains(normalizedNpc);
+        return spokenFlags.contains(visitorId.toLowerCase())
+            || spokenFlags.contains(normalizedNpc)
+            || spokenFlags.contains(requirementKey)
+            || spokenFlags.contains(requirementKey.toLowerCase(java.util.Locale.ROOT))
+            || spokenFlags.contains(requirementKey.toUpperCase(java.util.Locale.ROOT));
     }
 
     private static List<WantedRequest> resolveWantedItems(Map<String, Object> definition, boolean firstVisit) {

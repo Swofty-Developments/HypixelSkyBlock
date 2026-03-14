@@ -8,7 +8,7 @@ import net.hollowcube.polar.PolarWorld;
 import net.hollowcube.polar.PolarWriter;
 import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.SharedInstance;
@@ -24,7 +24,6 @@ import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointGardenCore;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.data.monogdb.GardenDatabase;
-import net.swofty.type.skyblockgeneric.furniture.Furniture;
 import net.swofty.type.skyblockgeneric.garden.GardenData;
 import net.swofty.type.skyblockgeneric.garden.SkyBlockGardenHandle;
 import net.swofty.type.skyblockgeneric.garden.WorldBuildLimits;
@@ -38,6 +37,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -55,6 +55,7 @@ public class SkyBlockGarden implements SkyBlockGardenHandle {
     private boolean created = false;
     private SharedInstance gardenInstance;
     private PolarWorld world;
+    @Setter
     private boolean barnSwapInProgress = false;
     @Setter
     private long lastSaved = 0;
@@ -119,7 +120,6 @@ public class SkyBlockGarden implements SkyBlockGardenHandle {
             }
 
             temporaryInstance.setChunkLoader(new PolarLoader(world));
-            Furniture.load(gardenInstance, "composter", new Pos(-11.0, 72.0, -28.0));
             created = true;
 
             future.complete(gardenInstance);
@@ -147,18 +147,6 @@ public class SkyBlockGarden implements SkyBlockGardenHandle {
         return plotService.applyBarnSkin(skinId);
     }
 
-    public SharedInstance getGardenInstance() {
-        return gardenInstance;
-    }
-
-    public boolean isBarnSwapInProgress() {
-        return barnSwapInProgress;
-    }
-
-    public void setBarnSwapInProgress(boolean barnSwapInProgress) {
-        this.barnSwapInProgress = barnSwapInProgress;
-    }
-
     private void save() {
         if (world == null || gardenInstance == null) {
             return;
@@ -182,17 +170,17 @@ public class SkyBlockGarden implements SkyBlockGardenHandle {
     }
 
     @Override
-    public String getDeniedBuildMessage(net.minestom.server.coordinate.Point point) {
+    public Optional<String> getDeniedBuildMessage(Point point) {
         if (!isWithinBounds(point)) {
             return SkyBlockGardenHandle.super.getDeniedBuildMessage(point);
         }
         if (plotService.isInBarnSwapRegion(point)) {
-            return "§cYou can't edit the Barn in the Garden!";
+            return Optional.empty();
         }
         if (!plotService.isUnlocked(point, resolveCoreData())) {
-            return "§cYou haven't unlocked this plot yet!";
+            return Optional.of("§cYou haven't unlocked this area yet!");
         }
-        return "§cYou can't edit that part of your Garden yet!";
+        return Optional.of("§cYou can't edit that part of your Garden yet!");
     }
 
     private GardenData.GardenCoreData resolveCoreData() {

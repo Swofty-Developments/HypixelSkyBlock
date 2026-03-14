@@ -63,7 +63,7 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
             SkyBlockEditableWorldHandle editableWorld = player.getEditableWorldHandle();
             if (editableWorld == null || !editableWorld.canEdit(event.getBlockPosition())) {
                 if (editableWorld != null) {
-                    player.sendMessage(editableWorld.getDeniedBuildMessage(event.getBlockPosition()));
+                    editableWorld.getDeniedBuildMessage(event.getBlockPosition()).ifPresent(player::sendMessage);
                 }
                 return;
             }

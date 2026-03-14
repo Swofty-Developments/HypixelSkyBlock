@@ -3,11 +3,10 @@ package net.swofty.type.jerrysworkshop.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.generic.entity.npc.configuration.NPCConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-public class NPCTerry extends HypixelNPC {
+public class NPCTerry extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
 	public NPCTerry() {
 		super(new HumanConfiguration() {
@@ -41,5 +40,10 @@ public class NPCTerry extends HypixelNPC {
 	@Override
 	public void onClick(NPCInteractEvent event) {
 
+	}
+
+	@Override
+	public String gardenSpokenNpcId() {
+		return "TERRY";
 	}
 }

@@ -14,7 +14,11 @@ import net.swofty.type.garden.user.SkyBlockGarden;
 import net.swofty.type.generic.entity.InteractionEntity;
 import net.swofty.type.generic.entity.hologram.ServerHolograms;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.furniture.Furniture;
+import net.swofty.type.skyblockgeneric.furniture.FurnitureLoadException;
+import net.swofty.type.skyblockgeneric.furniture.FurnitureNotPresent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -104,12 +108,12 @@ public final class GardenBarnRuntime {
                 Pos position = anchor.position();
                 ServerHolograms.ExternalHologram hologram = ServerHolograms.ExternalHologram.builder()
                     .instance(instance)
-                    .pos(position.add(0, 0.6, 0))
+                    .pos(position.add(0, anchor.offsetY() != null ? anchor.offsetY() : 0.6, 0))
                     .text(new String[]{label, "§e§lCLICK"})
                     .build();
                 ServerHolograms.addExternalHologram(hologram);
 
-                InteractionEntity interaction = new InteractionEntity(1.4f, 1.8f, (viewer, event) -> {
+                InteractionEntity interaction = new InteractionEntity(1.4f, 2f, (viewer, _) -> {
                     if (!(viewer instanceof SkyBlockPlayer skyBlockPlayer)) {
                         return;
                     }
@@ -122,6 +126,12 @@ public final class GardenBarnRuntime {
                     }
                 });
                 interaction.setInstance(instance, position);
+
+                try {
+                    Furniture.load(player.getInstance(), anchorId, position);
+                } catch (FurnitureLoadException | FurnitureNotPresent _) {
+                    Logger.warn("Failed to load Garden furniture");
+                }
 
                 interactables.put(anchorId, new GardenInteractable(hologram, interaction));
             });

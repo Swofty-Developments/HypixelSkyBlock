@@ -5,11 +5,10 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAdventurer;
 
-public class NPCAdventurer extends HypixelNPC {
+public class NPCAdventurer extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
     public NPCAdventurer() {
         super(new HumanConfiguration() {
             @Override
@@ -60,5 +59,10 @@ public class NPCAdventurer extends HypixelNPC {
         return new DialogueSet[] {
                 DialogueSet.ofTranslation("hello", "npcs_hub.adventurer.dialogue.hello")
         };
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "ADVENTURER";
     }
 }

@@ -1,7 +1,6 @@
 package net.swofty.type.garden.world;
 
 import net.hollowcube.schem.Schematic;
-import net.hollowcube.schem.reader.SchematicReader;
 import net.swofty.type.garden.config.GardenBarnSkinDefinition;
 import net.swofty.type.garden.config.GardenConfigRegistry;
 import org.tinylog.Logger;
@@ -34,7 +33,7 @@ public final class GardenAssetRegistry {
     private static Schematic loadSchematic(GardenBarnSkinDefinition definition) {
         Path file = getBarnSkinSchematicPath(definition.schematicFile());
         try {
-            return SchematicReader.litematica().read(Files.readAllBytes(file));
+            return new LitematicaSchematicReader().read(Files.readAllBytes(file));
         } catch (IOException e) {
             Logger.error(e, "Failed to load barn skin schematic {}", file);
             throw new RuntimeException("Failed to load barn skin schematic " + definition.id(), e);

@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCMadameEleanorQGoldsworthIII extends HypixelNPC {
+public class NPCMadameEleanorQGoldsworthIII extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCMadameEleanorQGoldsworthIII() {
         super(new HumanConfiguration() {
@@ -80,5 +80,10 @@ public class NPCMadameEleanorQGoldsworthIII extends HypixelNPC {
                                 "In the future, reaching these thresholds will reward even more!"
                         }).build()
         ).toArray(DialogueSet[]::new);
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "MADAME_ELEANOR_Q_GOLDSWORTH_III";
     }
 }

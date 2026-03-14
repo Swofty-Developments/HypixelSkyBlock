@@ -14,12 +14,13 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.garden.GardenData;
+import net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Locale;
 
 @CommandParameters(
-    aliases = "gadmin",
+    aliases = "gardenadmin",
     description = "Mutates Garden data for testing",
     usage = "/gardenadmin <section> ...",
     permission = Rank.STAFF,
@@ -216,7 +217,7 @@ public class GardenAdminCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             String mode = normalize(context.get(personalSpoken).get("mode"));
-            String npcId = normalize(context.get(personalSpoken).get("npc_id"));
+            String npcId = GardenProgressionSupport.normalizeSpokenKey(context.get(personalSpoken).get("npc_id"));
             if (mode.equals("ADD")) {
                 GardenGuiSupport.personal(player).getSpokenNpcFlags().add(npcId);
             } else if (mode.equals("REMOVE")) {
@@ -233,7 +234,7 @@ public class GardenAdminCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             String mode = normalize(context.get(personalDonate).get("mode"));
-            String itemId = normalize(context.get(personalDonate).get("item_id"));
+            String itemId = GardenProgressionSupport.normalizeKey(context.get(personalDonate).get("item_id"));
             if (mode.equals("ADD")) {
                 GardenGuiSupport.personal(player).getDonatedItems().add(itemId);
             } else if (mode.equals("REMOVE")) {
@@ -249,7 +250,7 @@ public class GardenAdminCommand extends HypixelCommand {
             ArgumentType.Literal("personal"), ArgumentType.Literal("exported"), ArgumentType.String("item_id"), longAmount);
         command.addSyntax((sender, context) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
-            String itemId = normalize(context.get(personalExport).get("item_id"));
+            String itemId = GardenProgressionSupport.normalizeKey(context.get(personalExport).get("item_id"));
             long amount = Math.max(0L, context.get(personalExport).get("amount"));
             GardenGuiSupport.personal(player).getExportedItems().put(itemId, amount);
             sender.sendMessage("§aUpdated exported amount for §e" + itemId + " §ato §e" + amount + "§a.");

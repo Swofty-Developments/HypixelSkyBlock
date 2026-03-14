@@ -4,8 +4,9 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.VillagerProfession;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.trait.NPCAbiphoneTrait;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
+import net.swofty.type.generic.entity.npc.trait.NPCAbiphoneTrait;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.rusty.GUIRusty;
 import net.swofty.type.skyblockgeneric.mission.missions.goldmine.lazyminer.MissionFindLazyMinerPickaxe;
@@ -13,9 +14,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-
-public class VillagerRusty extends HypixelNPC implements NPCAbiphoneTrait {
+public class VillagerRusty extends HypixelNPC implements NPCAbiphoneTrait, net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 	public VillagerRusty() {
 		super(new VillagerConfiguration() {
 			@Override
@@ -105,4 +104,9 @@ public class VillagerRusty extends HypixelNPC implements NPCAbiphoneTrait {
 	public String getAbiphoneKey() {
 		return "rusty";
 	}
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "RUSTY";
+    }
 }

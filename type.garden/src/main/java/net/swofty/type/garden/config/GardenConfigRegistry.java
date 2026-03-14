@@ -132,6 +132,7 @@ public final class GardenConfigRegistry {
             try {
                 return Double.parseDouble(String.valueOf(value));
             } catch (NumberFormatException ignored) {
+                return 0.0d; // kinda dumb this hides problems
             }
         }
         return def;

@@ -32,7 +32,6 @@ dependencies {
     implementation("org.mongodb:bson:5.6.4")
     implementation("org.mongodb:mongodb-driver-sync:5.6.4")
 
-    //implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.3")
     implementation("redis.clients:jedis:7.2.0")
 }
 

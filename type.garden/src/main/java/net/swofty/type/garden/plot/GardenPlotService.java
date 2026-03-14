@@ -5,7 +5,6 @@ import net.hollowcube.schem.util.Rotation;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.instance.SharedInstance;
-import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.garden.config.GardenBarnSkinDefinition;
 import net.swofty.type.garden.config.GardenConfigRegistry;
@@ -26,6 +25,7 @@ public class GardenPlotService {
     private final SkyBlockGarden garden;
     private final Map<String, GardenPlotDefinition> plots = new LinkedHashMap<>();
     private GardenRegion barnSwapRegion = new GardenRegion(-33, 35, -47, -5);
+    private final int BASE_Y = 67;
 
     public GardenPlotService(SkyBlockGarden garden) {
         this.garden = garden;
@@ -117,7 +117,6 @@ public class GardenPlotService {
         }
 
         Schematic schematic = GardenAssetRegistry.getBarnSkinSchematic(definition);
-        int baseY = detectBarnBaseY(instance);
         int delayTicks = Math.max(1, Math.round((30f * 20f) / barnSwapRegion.width()));
         final int[] currentX = {barnSwapRegion.minX()};
 
@@ -129,7 +128,7 @@ public class GardenPlotService {
                 return TaskSchedule.stop();
             }
 
-            pasteSlice(instance, schematic, definition, baseY, currentX[0]);
+            pasteSlice(instance, schematic, definition, currentX[0]);
             currentX[0]++;
             return TaskSchedule.tick(delayTicks);
         });
@@ -137,10 +136,10 @@ public class GardenPlotService {
         return future;
     }
 
-    private void pasteSlice(SharedInstance instance, Schematic schematic, GardenBarnSkinDefinition definition, int baseY, int targetX) {
+    private void pasteSlice(SharedInstance instance, Schematic schematic, GardenBarnSkinDefinition definition, int targetX) {
         schematic.forEachBlock(Rotation.NONE, (point, block) -> {
             int worldX = barnSwapRegion.minX() + point.blockX() + definition.offsetX();
-            int worldY = baseY + point.blockY() + definition.offsetY();
+            int worldY = BASE_Y + point.blockY() + definition.offsetY();
             int worldZ = barnSwapRegion.minZ() + point.blockZ() + definition.offsetZ();
 
             if (worldX != targetX) {
@@ -149,11 +148,7 @@ public class GardenPlotService {
             if (worldZ < barnSwapRegion.minZ() || worldZ > barnSwapRegion.maxZ()) {
                 return;
             }
-            if (block == Block.AIR) {
-                instance.setBlock(worldX, worldY, worldZ, Block.AIR);
-            } else {
-                instance.setBlock(worldX, worldY, worldZ, block);
-            }
+            instance.setBlock(worldX, worldY, worldZ, block);
         });
     }
 

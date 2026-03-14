@@ -17,7 +17,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
-public class NPCLumberJack extends HypixelNPC {
+public class NPCLumberJack extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
     public NPCLumberJack() {
         super(new HumanConfiguration() {
@@ -137,5 +137,10 @@ public class NPCLumberJack extends HypixelNPC {
 								"Have you enchanted your axe with §aEfficiency V§f? It'll help ya break stuff a lot faster."
 						}).build()
 		).toArray(DialogueSet[]::new);
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "LUMBER_JACK";
     }
 }

@@ -3,13 +3,13 @@ package net.swofty.type.thefarmingislands.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource;
 
-public class NPCBeth extends HypixelNPC {
+public class NPCBeth extends HypixelNPC implements GardenSpokenNpcSource {
     public NPCBeth() {
         super(new HumanConfiguration() {
             @Override
@@ -43,5 +43,10 @@ public class NPCBeth extends HypixelNPC {
     public void onClick(NPCInteractEvent e) {
         e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
                 .clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+    }
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "BETH";
     }
 }

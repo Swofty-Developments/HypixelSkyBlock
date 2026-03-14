@@ -86,7 +86,7 @@ public class PrototypeLobbyScoreboard {
             19,
             25,
             29,
-            Component.text("LOBBY", NamedTextColor.GREEN, net.kyori.adventure.text.format.TextDecoration.BOLD)
+            Component.empty()
         );
     }
 }

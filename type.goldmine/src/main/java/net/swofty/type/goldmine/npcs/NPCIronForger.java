@@ -4,14 +4,12 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.goldmine.gui.GUIShopGoldForger;
 import net.swofty.type.goldmine.gui.GUIShopIronForger;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-
-public class NPCIronForger extends HypixelNPC {
+public class NPCIronForger extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
 
 	public NPCIronForger() {
 		super(new HumanConfiguration() {
@@ -69,4 +67,9 @@ public class NPCIronForger extends HypixelNPC {
 						}).build(),
 		};
 	}
+
+    @Override
+    public String gardenSpokenNpcId() {
+        return "IRON_FORGER";
+    }
 }
