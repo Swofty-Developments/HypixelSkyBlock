@@ -1,0 +1,5 @@
+hotspots:
+  - x: 100
+    y: 50
+    z: 100
+    serverType: BACKWATER_BAYOU

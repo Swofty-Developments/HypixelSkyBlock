@@ -2,20 +2,27 @@ package net.swofty.type.skyblockgeneric.item;
 
 import net.minestom.server.color.Color;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocolObject;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.*;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeExtraDynamicStatistics;
 import net.swofty.commons.skyblock.item.reforge.Reforge;
 import net.swofty.commons.skyblock.item.reforge.ReforgeLoader;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocolObject;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
-import net.swofty.type.skyblockgeneric.item.components.*;
+import net.swofty.type.skyblockgeneric.item.components.BackpackComponent;
+import net.swofty.type.skyblockgeneric.item.components.DefaultSoulboundComponent;
+import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
+import net.swofty.type.skyblockgeneric.item.components.GemstoneComponent;
+import net.swofty.type.skyblockgeneric.item.components.LeatherColorComponent;
+import net.swofty.type.skyblockgeneric.item.components.MinionComponent;
+import net.swofty.type.skyblockgeneric.item.components.PetComponent;
+import net.swofty.type.skyblockgeneric.item.components.PetItemComponent;
+import net.swofty.type.skyblockgeneric.item.components.RuneableComponent;
 import net.swofty.type.skyblockgeneric.minion.MinionRegistry;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -76,6 +83,41 @@ public class ItemAttributeHandler {
 
     public void setRuneData(ItemAttributeRuneInfusedWith.RuneData data) {
         ((ItemAttributeRuneInfusedWith) item.getAttribute("rune_infused_with")).setValue(data);
+    }
+
+    public @Nullable String getFishingHook() {
+        String value = ((ItemAttributeFishingHook) item.getAttribute("fishing_hook")).getValue();
+        return value == null || value.equalsIgnoreCase("none") ? null : value;
+    }
+
+    public void setFishingHook(@Nullable String hookId) {
+        item.getAttribute("fishing_hook").setValue(hookId == null ? "none" : hookId);
+    }
+
+    public @Nullable String getFishingLine() {
+        String value = ((ItemAttributeFishingLine) item.getAttribute("fishing_line")).getValue();
+        return value == null || value.equalsIgnoreCase("none") ? null : value;
+    }
+
+    public void setFishingLine(@Nullable String lineId) {
+        item.getAttribute("fishing_line").setValue(lineId == null ? "none" : lineId);
+    }
+
+    public @Nullable String getFishingSinker() {
+        String value = ((ItemAttributeFishingSinker) item.getAttribute("fishing_sinker")).getValue();
+        return value == null || value.equalsIgnoreCase("none") ? null : value;
+    }
+
+    public void setFishingSinker(@Nullable String sinkerId) {
+        item.getAttribute("fishing_sinker").setValue(sinkerId == null ? "none" : sinkerId);
+    }
+
+    public long getFishingExpertiseKills() {
+        return ((ItemAttributeFishingExpertiseKills) item.getAttribute("fishing_expertise_kills")).getValue();
+    }
+
+    public void setFishingExpertiseKills(long kills) {
+        item.getAttribute("fishing_expertise_kills").setValue(kills);
     }
 
     public boolean isPet() {

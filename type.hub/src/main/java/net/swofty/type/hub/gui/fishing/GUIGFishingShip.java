@@ -1,4 +1,4 @@
-package net.swofty.type.hub.gui;
+package net.swofty.type.hub.gui.fishing;
 
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;

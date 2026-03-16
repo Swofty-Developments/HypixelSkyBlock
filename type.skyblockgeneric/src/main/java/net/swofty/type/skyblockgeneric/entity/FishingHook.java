@@ -6,7 +6,6 @@ import net.kyori.adventure.sound.Sound;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.Player;
 import net.minestom.server.entity.metadata.other.FishingHookMeta;
 import net.minestom.server.event.entity.EntityTickEvent;
 import net.minestom.server.instance.Instance;
@@ -16,6 +15,15 @@ import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.timer.Scheduler;
+import net.minestom.server.timer.Task;
+import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.skyblockgeneric.fishing.BaitDefinition;
+import net.swofty.type.skyblockgeneric.fishing.FishingItemCatalog;
+import net.swofty.type.skyblockgeneric.fishing.FishingMedium;
+import net.swofty.type.skyblockgeneric.fishing.FishingService;
+import net.swofty.type.skyblockgeneric.fishing.FishingSession;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -32,7 +40,10 @@ public class FishingHook {
 	private static final double PULL_DOWN_RECOVERY_SPEED = 0.016666666666666666;
 	private static final double CONTROLLER_DRAG = 0.2;
 	private static final double WATER_CHECK_OFFSET = -0.2;
-	private final Player owner;
+	private static final long BITE_WINDOW_TICKS = 20L;
+	private final SkyBlockPlayer owner;
+	private final SkyBlockItem rod;
+	private final FishingMedium requiredMedium;
 	private final Entity hook;
 	private final Entity controller;
 	@Getter
@@ -40,9 +51,16 @@ public class FishingHook {
 	private double bobTick = 0;
 	private double pullDownOffset = 0;
 	private Double stableWaterY = null;
+	private Task nextBiteTask;
+	private Task biteExpiryTask;
+	private boolean sessionStarted = false;
 
-	public FishingHook(Player owner) {
+	public FishingHook(SkyBlockPlayer owner, SkyBlockItem rod) {
 		this.owner = owner;
+		this.rod = rod;
+		String itemId = rod.getAttributeHandler().getPotentialType() == null ? null : rod.getAttributeHandler().getPotentialType().name();
+		var rodDefinition = FishingItemCatalog.getRod(itemId);
+		this.requiredMedium = rodDefinition == null ? FishingMedium.WATER : rodDefinition.medium();
 
 		this.hook = new Entity(EntityType.FISHING_BOBBER);
 		this.hook.editEntityMeta(FishingHookMeta.class, meta -> {
@@ -56,7 +74,7 @@ public class FishingHook {
 				event -> tick(event.getEntity()));
 	}
 
-	public static FishingHook getFishingHookForOwner(@NotNull Player owner) {
+	public static FishingHook getFishingHookForOwner(@NotNull SkyBlockPlayer owner) {
 		for (FishingHook fishingHook : activeHooks) {
 			if (fishingHook.owner.getUuid().equals(owner.getUuid())) {
 				return fishingHook;
@@ -65,8 +83,15 @@ public class FishingHook {
 		return null;
 	}
 
-	private static boolean isNotWater(@NotNull Block block) {
-		return !block.isLiquid() || !block.name().contains("water");
+	private static boolean blockMatchesMedium(@NotNull Block block, @NotNull FishingMedium medium) {
+		if (!block.isLiquid()) {
+			return false;
+		}
+		String blockName = block.name();
+		return switch (medium) {
+			case WATER -> blockName.contains("water");
+			case LAVA -> blockName.contains("lava");
+		};
 	}
 
 	public void spawn(Instance instance) {
@@ -115,7 +140,24 @@ public class FishingHook {
 			return;
 		}
 
-		// Hook is in water
+		FishingMedium mediumAtHook = getCurrentMedium();
+		if (mediumAtHook == null) {
+			if (sessionStarted) {
+				FishingService.clearSession(owner.getUuid());
+				sessionStarted = false;
+			}
+			stableWaterY = null;
+			cancelBiteTasks();
+			controller.setNoGravity(false);
+			return;
+		}
+
+		if (mediumAtHook != requiredMedium) {
+			remove();
+			return;
+		}
+
+		// Hook is in valid fishing liquid
 		controller.setNoGravity(true);
 		Block blockBelow = instance.getBlock(pos.add(0, WATER_CHECK_OFFSET, 0));
 
@@ -138,6 +180,7 @@ public class FishingHook {
 					new Pos(0.1, 0.001, 0.1),
 					0, 5
 			));
+			startFishingSession();
 		}
 
 		bobTick += BOB_SPEED;
@@ -154,15 +197,8 @@ public class FishingHook {
 	public boolean notInWater() {
 		Instance instance = controller.getInstance();
 		Pos pos = controller.getPosition();
-		// Check the block at the entity's precise location
-		Block currentBlock = instance.getBlock(pos);
-
-		// Check the block slightly below the entity's location
-		Block blockBelow = instance.getBlock(pos.add(0, WATER_CHECK_OFFSET, 0));
-
-		// The hook is considered "in water" if either its current block OR
-		// the block directly below it is water.
-		return isNotWater(currentBlock) && isNotWater(blockBelow);
+		return getMedium(instance.getBlock(pos)) == null
+			&& getMedium(instance.getBlock(pos.add(0, WATER_CHECK_OFFSET, 0))) == null;
 	}
 
 	public void showBiteAnimation() {
@@ -189,8 +225,19 @@ public class FishingHook {
 		activeHooks.remove(this);
 		if (this.isRemoved) return;
 		this.isRemoved = true;
+		cancelBiteTasks();
+		FishingService.clearSession(owner.getUuid());
 		hook.remove();
 		controller.remove();
+	}
+
+	public void tryRetrieve(SkyBlockItem rodInHand) {
+		FishingSession session = FishingService.getSession(owner.getUuid());
+		if (session == null || !session.biteReady() || System.currentTimeMillis() > session.biteWindowEndsAt()) {
+			return;
+		}
+
+		FishingService.resolveCatch(owner, rodInHand, this);
 	}
 
 	private double getWaterSurface(Block block, int blockY) {
@@ -208,5 +255,86 @@ public class FishingHook {
 
 	public Instance getInstance() {
 		return controller.getInstance();
+	}
+
+	public Pos getSpawnPosition() {
+		return controller.getPosition();
+	}
+
+	private void startFishingSession() {
+		if (sessionStarted) {
+			return;
+		}
+
+		FishingSession session = FishingService.beginCast(owner, rod, requiredMedium);
+		sessionStarted = true;
+		BaitDefinition bait = FishingItemCatalog.getBait(session.baitItemId());
+		long waitTicks = FishingService.computeWaitTicks(owner, rod, bait);
+		scheduleNextBite(waitTicks);
+	}
+
+	private void scheduleNextBite(long delayTicks) {
+		cancelBiteTasks();
+		nextBiteTask = hook.scheduler().buildTask(() -> {
+			if (isRemoved || notInWater()) {
+				return;
+			}
+
+			FishingSession session = FishingService.getSession(owner.getUuid());
+			if (session == null || session.resolved()) {
+				return;
+			}
+
+			long now = System.currentTimeMillis();
+			FishingService.updateSession(session.withBiteTiming(now, now + (BITE_WINDOW_TICKS * 50)).withBiteReady(true));
+			showBiteAnimation();
+
+			biteExpiryTask = hook.scheduler().buildTask(() -> {
+				FishingSession activeSession = FishingService.getSession(owner.getUuid());
+				if (activeSession == null || activeSession.resolved() || isRemoved) {
+					return;
+				}
+
+				FishingService.updateSession(activeSession.withBiteReady(false));
+				BaitDefinition bait = FishingItemCatalog.getBait(activeSession.baitItemId());
+				long nextDelay = FishingService.computeWaitTicks(owner, rod, bait);
+				scheduleNextBite(nextDelay);
+			}).delay(TaskSchedule.tick((int) BITE_WINDOW_TICKS)).schedule();
+		}).delay(TaskSchedule.tick((int) delayTicks)).schedule();
+	}
+
+	private void cancelBiteTasks() {
+		if (nextBiteTask != null) {
+			nextBiteTask.cancel();
+			nextBiteTask = null;
+		}
+		if (biteExpiryTask != null) {
+			biteExpiryTask.cancel();
+			biteExpiryTask = null;
+		}
+	}
+
+	private FishingMedium getCurrentMedium() {
+		Instance instance = controller.getInstance();
+		if (instance == null) {
+			return null;
+		}
+
+		Pos pos = controller.getPosition();
+		FishingMedium current = getMedium(instance.getBlock(pos));
+		if (current != null) {
+			return current;
+		}
+		return getMedium(instance.getBlock(pos.add(0, WATER_CHECK_OFFSET, 0)));
+	}
+
+	private FishingMedium getMedium(Block block) {
+		if (blockMatchesMedium(block, FishingMedium.WATER)) {
+			return FishingMedium.WATER;
+		}
+		if (blockMatchesMedium(block, FishingMedium.LAVA)) {
+			return FishingMedium.LAVA;
+		}
+		return null;
 	}
 }

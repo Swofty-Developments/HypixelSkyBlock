@@ -42,9 +42,7 @@ public class TypeBackwaterBayouLoader implements SkyBlockTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> switch (type) {
-                    default -> new Pos(-12.5, 74, -10.5, -55, 0);
-                }, // Spawn position
+            (type) -> new Pos(-12.5, 74, -10.5, -55, 0), // Spawn position
                 true // Announce death messages
         );
     }

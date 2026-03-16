@@ -1,6 +1,8 @@
 // AUTO-GENERATED FILE. DO NOT EDIT.
 package net.swofty.commons.skyblock.item;
 
+import java.lang.Exception;
+import java.lang.String;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
@@ -135,6 +137,8 @@ public enum ItemType {
   ATOMSPLIT_KATANA(Material.DIAMOND_SWORD, Rarity.LEGENDARY),
 
   ATTACK_SPEED_ENRICHMENT(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  AUGER_ROD(Material.FISHING_ROD, Rarity.LEGENDARY),
 
   AUTOPET_RULES_2_PACK(Material.PLAYER_HEAD, Rarity.SPECIAL),
 
@@ -316,6 +320,8 @@ public enum ItemType {
 
   BLAZE_ROD_DISTILLATE(Material.PLAYER_HEAD, Rarity.RARE),
 
+  BLESSED_BAIT(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
   BLOCK_DATA_TOOL(Material.DEBUG_STICK, Rarity.ADMIN),
 
   BLOCK_ZAPPER(Material.FLINT, Rarity.COMMON),
@@ -401,6 +407,12 @@ public enum ItemType {
   BROKEN_RADAR(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
   BRONZE_BOWL(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
+  BRONZE_SHIP_ENGINE(Material.PLAYER_HEAD, Rarity.RARE),
+
+  BRONZE_SHIP_HELM(Material.PLAYER_HEAD, Rarity.RARE),
+
+  BRONZE_SHIP_HULL(Material.PLAYER_HEAD, Rarity.RARE),
 
   BROWN_BANNER(Material.BROWN_BANNER, Rarity.COMMON),
 
@@ -518,6 +530,8 @@ public enum ItemType {
 
   CARROT(Material.CARROT, Rarity.COMMON),
 
+  CARROT_BAIT(Material.PLAYER_HEAD, Rarity.COMMON),
+
   CARROT_CRYSTAL(Material.PLAYER_HEAD, Rarity.COMMON),
 
   CARROT_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -550,7 +564,11 @@ public enum ItemType {
 
   CHAINMAIL_LEGGINGS(Material.CHAINMAIL_LEGGINGS, Rarity.COMMON),
 
+  CHALLENGE_ROD(Material.FISHING_ROD, Rarity.UNCOMMON),
+
   CHAMPION(Material.ENCHANTED_BOOK, Rarity.COMMON),
+
+  CHAMP_ROD(Material.FISHING_ROD, Rarity.RARE),
 
   CHARCOAL(Material.CHARCOAL, Rarity.COMMON),
 
@@ -620,6 +638,10 @@ public enum ItemType {
 
   CHUM(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
+  CHUM_ROD(Material.FISHING_ROD, Rarity.RARE),
+
+  CHUM_SINKER(Material.PLAYER_HEAD, Rarity.RARE),
+
   CLAY_BALL(Material.CLAY_BALL, Rarity.COMMON),
 
   CLAY_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -654,6 +676,8 @@ public enum ItemType {
 
   COMBAT_EXP_BOOST(Material.IRON_SWORD, Rarity.COMMON),
 
+  COMMON_HOOK(Material.PLAYER_HEAD, Rarity.RARE),
+
   COMPACT(Material.ENCHANTED_BOOK, Rarity.COMMON),
 
   COMPACTED_MOONFLOWER(Material.BLUE_ORCHID, Rarity.COMMON),
@@ -677,6 +701,8 @@ public enum ItemType {
   CORLEONITE(Material.PLAYER_HEAD, Rarity.COMMON),
 
   CORNFLOWER(Material.CORNFLOWER, Rarity.COMMON),
+
+  CORRUPTED_BAIT(Material.PLAYER_HEAD, Rarity.COMMON),
 
   COW_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
 
@@ -769,6 +795,8 @@ public enum ItemType {
   DAMAGE_SPLASH_POTION(Material.SPLASH_POTION, Rarity.COMMON),
 
   DANDELION(Material.DANDELION, Rarity.COMMON),
+
+  DARK_BAIT(Material.PLAYER_HEAD, Rarity.COMMON),
 
   DARK_OAK_BOAT(Material.DARK_OAK_BOAT, Rarity.COMMON),
 
@@ -909,6 +937,8 @@ public enum ItemType {
   DIORITE_WALL(Material.DIORITE_WALL, Rarity.COMMON),
 
   DIRT(Material.DIRT, Rarity.COMMON),
+
+  DIRT_ROD(Material.FISHING_ROD, Rarity.UNCOMMON),
 
   DISPENSER(Material.DISPENSER, Rarity.COMMON),
 
@@ -1294,6 +1324,8 @@ public enum ItemType {
 
   FANCY_TUXEDO_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.COMMON),
 
+  FARMER_ROD(Material.FISHING_ROD, Rarity.UNCOMMON),
+
   FARMING_EXP_BOOST_COMMON(Material.IRON_HOE, Rarity.COMMON),
 
   FARMING_EXP_BOOST_RARE(Material.IRON_HOE, Rarity.COMMON),
@@ -1323,6 +1355,8 @@ public enum ItemType {
   FERN(Material.FERN, Rarity.COMMON),
 
   FEROCITY_ENRICHMENT(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  FESTIVE_SINKER(Material.PLAYER_HEAD, Rarity.RARE),
 
   FIERY_KUUDRA_CORE(Material.PLAYER_HEAD, Rarity.EPIC),
 
@@ -1365,6 +1399,8 @@ public enum ItemType {
   FISHING_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
 
   FISHING_ROD(Material.FISHING_ROD, Rarity.COMMON),
+
+  FISH_BAIT(Material.PLAYER_HEAD, Rarity.COMMON),
 
   FLAMES(Material.BLAZE_POWDER, Rarity.COMMON),
 
@@ -1446,6 +1482,8 @@ public enum ItemType {
 
   FRIED_FROZEN_CHICKEN(Material.PLAYER_HEAD, Rarity.EPIC),
 
+  FROZEN_BAIT(Material.PLAYER_HEAD, Rarity.RARE),
+
   FROZEN_CHICKEN(Material.PLAYER_HEAD, Rarity.RARE),
 
   FTX_3070(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -1471,6 +1509,8 @@ public enum ItemType {
   GHAST_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
 
   GHAST_TEAR(Material.GHAST_TEAR, Rarity.UNCOMMON),
+
+  GIANT_FISHING_ROD(Material.FISHING_ROD, Rarity.LEGENDARY),
 
   GILL_MEMBRANE(Material.PLAYER_HEAD, Rarity.COMMON),
 
@@ -1510,11 +1550,15 @@ public enum ItemType {
 
   GLOWSTONE_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  GLOWY_CHUM_BAIT(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
   GOBLIN_EGG(Material.EGG, Rarity.COMMON),
 
   GOD_POTION(Material.PLAYER_HEAD, Rarity.COMMON),
 
   GOLDEN_AXE(Material.GOLDEN_AXE, Rarity.COMMON),
+
+  GOLDEN_BAIT(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
   GOLDEN_BOOTS(Material.GOLDEN_BOOTS, Rarity.COMMON),
 
@@ -1670,6 +1714,8 @@ public enum ItemType {
 
   HELIX(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  HELLFIRE_ROD(Material.FISHING_ROD, Rarity.LEGENDARY),
+
   HIGH_CLASS_ARCHFIEND_DICE(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
   HOLOGRAM(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -1685,6 +1731,14 @@ public enum ItemType {
   HOPPER_MINECART(Material.HOPPER_MINECART, Rarity.COMMON),
 
   HORSEMAN_CANDLE(Material.PLAYER_HEAD, Rarity.RARE),
+
+  HOTSPOT_BAIT(Material.PLAYER_HEAD, Rarity.RARE),
+
+  HOTSPOT_HOOK(Material.PLAYER_HEAD, Rarity.RARE),
+
+  HOTSPOT_SINKER(Material.PLAYER_HEAD, Rarity.RARE),
+
+  HOT_BAIT(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
   HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC),
 
@@ -1710,11 +1764,19 @@ public enum ItemType {
 
   ICE(Material.ICE, Rarity.COMMON),
 
+  ICE_BAIT(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
   ICE_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  ICE_ROD(Material.FISHING_ROD, Rarity.RARE),
+
+  ICY_SINKER(Material.PLAYER_HEAD, Rarity.RARE),
 
   INFERNAL_KUUDRA_CORE(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
   INFERNO_FUEL_BLOCK(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  INFERNO_ROD(Material.FISHING_ROD, Rarity.EPIC),
 
   INFINI_TORCH(Material.TORCH, Rarity.EPIC),
 
@@ -1830,6 +1892,8 @@ public enum ItemType {
 
   JUNK_RING(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
+  JUNK_SINKER(Material.PLAYER_HEAD, Rarity.RARE),
+
   JUNK_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON),
 
   KAT_BOUQUET(Material.ROSE_BUSH, Rarity.COMMON),
@@ -1912,9 +1976,13 @@ public enum ItemType {
 
   LEATHER_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.COMMON),
 
+  LEGEND_ROD(Material.FISHING_ROD, Rarity.EPIC),
+
   LEVER(Material.LEVER, Rarity.COMMON),
 
   LIGHTER_BLUE_ABICASE(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  LIGHT_BAIT(Material.PLAYER_HEAD, Rarity.COMMON),
 
   LIGHT_BLUE_BANNER(Material.LIGHT_BLUE_BANNER, Rarity.COMMON),
 
@@ -2031,6 +2099,8 @@ public enum ItemType {
   MAGMA_CREAM_DISTILLATE(Material.PLAYER_HEAD, Rarity.RARE),
 
   MAGMA_CUBE_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  MAGMA_ROD(Material.FISHING_ROD, Rarity.RARE),
 
   MANA_DISINTEGRATOR(Material.PLAYER_HEAD, Rarity.RARE),
 
@@ -2159,6 +2229,8 @@ public enum ItemType {
   MINION_EXPANDER(Material.COMMAND_BLOCK, Rarity.COMMON),
 
   MINION_STORAGE_EXPANDER(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  MINNOW_BAIT(Material.PLAYER_HEAD, Rarity.COMMON),
 
   MINOS_RELIC(Material.PLAYER_HEAD, Rarity.EPIC),
 
@@ -2432,6 +2504,10 @@ public enum ItemType {
 
   PET_LUCK_POTION_1(Material.POTION, Rarity.COMMON),
 
+  PHANTOM_HOOK(Material.PLAYER_HEAD, Rarity.RARE),
+
+  PHANTOM_ROD(Material.FISHING_ROD, Rarity.LEGENDARY),
+
   PICKONIMBUS_2000(Material.DIAMOND_PICKAXE, Rarity.COMMON),
 
   PIGGY_BANK(Material.PLAYER_HEAD, Rarity.UNCOMMON),
@@ -2502,6 +2578,8 @@ public enum ItemType {
 
   POLISHED_PUMPKIN(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  POLISHED_TOPAZ_ROD(Material.FISHING_ROD, Rarity.RARE),
+
   POOCH_SWORD(Material.GOLDEN_SWORD, Rarity.LEGENDARY),
 
   POPPY(Material.POPPY, Rarity.COMMON),
@@ -2548,7 +2626,11 @@ public enum ItemType {
 
   PRISMARINE_CRYSTALS(Material.PRISMARINE_CRYSTALS, Rarity.COMMON),
 
+  PRISMARINE_ROD(Material.FISHING_ROD, Rarity.COMMON),
+
   PRISMARINE_SHARD(Material.PRISMARINE_SHARD, Rarity.COMMON),
+
+  PRISMARINE_SINKER(Material.PLAYER_HEAD, Rarity.RARE),
 
   PROMISING_AXE(Material.IRON_AXE, Rarity.COMMON),
 
@@ -2766,6 +2848,8 @@ public enum ItemType {
 
   ROBOTRON_REFLECTOR(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  ROD_OF_THE_SEA(Material.FISHING_ROD, Rarity.LEGENDARY),
+
   ROGUE_SWORD(Material.GOLDEN_SWORD, Rarity.COMMON),
 
   ROOKIE_AXE(Material.STONE_AXE, Rarity.COMMON),
@@ -2824,6 +2908,8 @@ public enum ItemType {
 
   RUSTY_COIN(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
+  RUSTY_SHIP_ENGINE(Material.PLAYER_HEAD, Rarity.SPECIAL),
+
   SAND(Material.SAND, Rarity.COMMON),
 
   SANDBOX_ITEM(Material.BLAZE_POWDER, Rarity.COMMON),
@@ -2880,6 +2966,8 @@ public enum ItemType {
 
   SHARD_OF_THE_SHREDDED(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  SHARK_BAIT(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
   SHARK_FIN(Material.PRISMARINE_SHARD, Rarity.RARE),
 
   SHARPENED_CLAWS(Material.PRISMARINE_SHARD, Rarity.COMMON),
@@ -2891,6 +2979,8 @@ public enum ItemType {
   SHEEP_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
 
   SHORT_GRASS(Material.SHORT_GRASS, Rarity.COMMON),
+
+  SHREDDED_LINE(Material.PLAYER_HEAD, Rarity.RARE),
 
   SILVER_FANG(Material.IRON_SWORD, Rarity.UNCOMMON),
 
@@ -3026,6 +3116,10 @@ public enum ItemType {
 
   SOUL_STRING(Material.STRING, Rarity.COMMON),
 
+  SPEEDSTER_ROD(Material.FISHING_ROD, Rarity.UNCOMMON),
+
+  SPEEDY_LINE(Material.PLAYER_HEAD, Rarity.RARE),
+
   SPEED_ARTIFACT(Material.PLAYER_HEAD, Rarity.COMMON),
 
   SPEED_ENRICHMENT(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -3056,7 +3150,15 @@ public enum ItemType {
 
   SPIDER_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  SPIKED_BAIT(Material.PLAYER_HEAD, Rarity.COMMON),
+
   SPONGE(Material.SPONGE, Rarity.COMMON),
+
+  SPONGE_ROD(Material.FISHING_ROD, Rarity.COMMON),
+
+  SPONGE_SINKER(Material.PLAYER_HEAD, Rarity.RARE),
+
+  SPOOKY_BAIT(Material.PLAYER_HEAD, Rarity.COMMON),
 
   SPOOKY_SHARD(Material.PLAYER_HEAD, Rarity.RARE),
 
@@ -3120,9 +3222,13 @@ public enum ItemType {
 
   STARLYN_PRIZE(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  STARTER_LAVA_ROD(Material.FISHING_ROD, Rarity.UNCOMMON),
+
   STICK(Material.STICK, Rarity.COMMON),
 
   STICKY_PISTON(Material.STICKY_PISTON, Rarity.COMMON),
+
+  STINGY_SINKER(Material.PLAYER_HEAD, Rarity.RARE),
 
   STONE(Material.STONE, Rarity.COMMON),
 
@@ -3260,6 +3366,8 @@ public enum ItemType {
 
   TESSELLATED_ENDER_PEARL(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
+  THE_SHREDDER(Material.FISHING_ROD, Rarity.LEGENDARY),
+
   TIGER_SHARK_TOOTH(Material.GHAST_TEAR, Rarity.EPIC),
 
   TIGHTLY_TIED_HAY_BALE(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -3273,6 +3381,8 @@ public enum ItemType {
   TITANIUM_RING(Material.PLAYER_HEAD, Rarity.RARE),
 
   TITANIUM_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
+  TITAN_LINE(Material.PLAYER_HEAD, Rarity.RARE),
 
   TNT(Material.TNT, Rarity.COMMON),
 
@@ -3289,6 +3399,10 @@ public enum ItemType {
   TRANSMISSION_TUNER(Material.PLAYER_HEAD, Rarity.EPIC),
 
   TREASURE_ARTIFACT(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  TREASURE_BAIT(Material.PLAYER_HEAD, Rarity.RARE),
+
+  TREASURE_HOOK(Material.PLAYER_HEAD, Rarity.RARE),
 
   TREASURE_RING(Material.PLAYER_HEAD, Rarity.COMMON),
 
@@ -3380,6 +3494,8 @@ public enum ItemType {
 
   WET_WATER(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  WHALE_BAIT(Material.PLAYER_HEAD, Rarity.RARE),
+
   WHEAT(Material.WHEAT, Rarity.COMMON),
 
   WHEAT_CRYSTAL(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -3418,6 +3534,8 @@ public enum ItemType {
 
   WILSON_ENGINEERING_PLANS(Material.PAPER, Rarity.LEGENDARY),
 
+  WINTER_ROD(Material.FISHING_ROD, Rarity.RARE),
+
   WISHING_COMPASS(Material.PLAYER_HEAD, Rarity.COMMON),
 
   WITHER_ARTIFACT(Material.PLAYER_HEAD, Rarity.EPIC),
@@ -3438,6 +3556,8 @@ public enum ItemType {
 
   WOODEN_AXE(Material.WOODEN_AXE, Rarity.COMMON),
 
+  WOODEN_BAIT(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
   WOODEN_HOE(Material.WOODEN_HOE, Rarity.COMMON),
 
   WOODEN_PICKAXE(Material.WOODEN_PICKAXE, Rarity.COMMON),
@@ -3445,6 +3565,8 @@ public enum ItemType {
   WOODEN_SHOVEL(Material.WOODEN_SHOVEL, Rarity.COMMON),
 
   WOODEN_SWORD(Material.WOODEN_SWORD, Rarity.COMMON),
+
+  WORM_BAIT(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
   WORM_MEMBRANE(Material.ROTTEN_FLESH, Rarity.COMMON),
 
@@ -3469,6 +3591,8 @@ public enum ItemType {
   YELLOW_TERRACOTTA(Material.YELLOW_TERRACOTTA, Rarity.COMMON),
 
   YELLOW_WOOL(Material.YELLOW_WOOL, Rarity.COMMON),
+
+  YETI_ROD(Material.FISHING_ROD, Rarity.EPIC),
 
   ZOMBIE_ARTIFACT(Material.PLAYER_HEAD, Rarity.COMMON),
 

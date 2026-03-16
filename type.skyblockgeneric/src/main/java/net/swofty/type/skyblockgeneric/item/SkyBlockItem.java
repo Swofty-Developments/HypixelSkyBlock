@@ -18,6 +18,7 @@ import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeStatis
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeType;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.skyblockgeneric.fishing.FishingItemBootstrap;
 import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -124,6 +125,8 @@ public class SkyBlockItem {
 			ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
 			statisticsAttribute.setValue(statistics.clone());
 		}
+
+        FishingItemBootstrap.applyDefaults(this);
 	}
 
 	private void loadAsMaterial(Material material) {
@@ -180,11 +183,36 @@ public class SkyBlockItem {
 			}
 		}
 
+        migrateLegacyFishingRodState(item);
+
 		if (config != null) {
 			ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
 			statisticsAttribute.setValue(config.getDefaultStatistics());
 		}
 	}
+
+    private void migrateLegacyFishingRodState(ItemStack item) {
+        String legacy = item.getTag(Tag.String("fishing_rod_state"));
+        if (legacy == null || legacy.isBlank()) {
+            return;
+        }
+
+        String[] parts = legacy.split(";", -1);
+        getAttributeHandler().setFishingHook(readLegacyFishingPart(parts, 0));
+        getAttributeHandler().setFishingLine(readLegacyFishingPart(parts, 1));
+        getAttributeHandler().setFishingSinker(readLegacyFishingPart(parts, 2));
+        if (parts.length > 3 && !parts[3].isBlank()) {
+            getAttributeHandler().setFishingExpertiseKills(Long.parseLong(parts[3]));
+        }
+    }
+
+    private @Nullable String readLegacyFishingPart(String[] parts, int index) {
+        if (index >= parts.length) {
+            return null;
+        }
+        String value = parts[index];
+        return value == null || value.isBlank() || value.equalsIgnoreCase("none") ? null : value;
+    }
 
 	public ItemStack.Builder getDisplayItem() {
 		ItemStack.Builder builder;

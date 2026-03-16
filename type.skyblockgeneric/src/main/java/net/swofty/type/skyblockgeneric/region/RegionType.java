@@ -131,6 +131,17 @@ public enum RegionType {
 	MURKWATER_SHALLOWS("Murkwater Shallows", "§3"),
 	NORTH_WETLANDS("North Wetlands", "§2"),
 
+	// Backwater Bayou
+	BACKWATER_BAYOU("Backwater Bayou", "§2"),
+	CRIMSON_ISLE("Crimson Isle", "§c"),
+	BLAZING_VOLCANO("Blazing Volcano", "§4"),
+	DOJO("Dojo", "§6"),
+	MYSTIC_MARSH("Mystic Marsh", "§2"),
+	SCARLETON("Scarleton", "§c"),
+	BURNING_DESERT("Burning Desert", "§6"),
+	DRAGONTAIL("Dragontail", "§4"),
+	STRONGHOLD("Stronghold", "§4"),
+
 	DWARVEN_VILLAGE("Dwarven Village", DwarvenMinesConfiguration.class),
 	DWARVEN_MINES("Dwarven Mines", "§2", DwarvenMinesConfiguration.class),
 	GOBLIN_BURROWS("Goblin Burrows", DwarvenMinesConfiguration.class),
