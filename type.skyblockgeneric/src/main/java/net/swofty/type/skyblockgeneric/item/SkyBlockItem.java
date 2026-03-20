@@ -18,7 +18,6 @@ import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeStatis
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeType;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.skyblockgeneric.fishing.FishingItemBootstrap;
 import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -126,7 +125,6 @@ public class SkyBlockItem {
 			statisticsAttribute.setValue(statistics.clone());
 		}
 
-        FishingItemBootstrap.applyDefaults(this);
 	}
 
 	private void loadAsMaterial(Material material) {

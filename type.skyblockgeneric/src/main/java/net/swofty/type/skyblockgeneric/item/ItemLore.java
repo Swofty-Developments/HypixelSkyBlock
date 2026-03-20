@@ -13,14 +13,15 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeHotPotatoBookData;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.commons.skyblock.item.reforge.Reforge;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
+import net.swofty.type.skyblockgeneric.fishing.FishingRodLoreBuilder;
 import net.swofty.type.skyblockgeneric.gems.GemRarity;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
 import net.swofty.type.skyblockgeneric.item.components.*;
@@ -92,6 +93,17 @@ public class ItemLore {
 			}
 		}
 		String displayRarity = rarity.getDisplay();
+
+        if (item.hasComponent(FishingRodMetadataComponent.class)) {
+            FishingRodLoreBuilder.FishingRodLore rodLore = FishingRodLoreBuilder.build(item, player);
+            if (rodLore != null) {
+                rodLore.lore().forEach(this::addLoreLine);
+                this.stack = stack
+                    .with(DataComponents.LORE, loreLines)
+                    .with(DataComponents.CUSTOM_NAME, Component.text(rodLore.displayName()).decoration(TextDecoration.ITALIC, false));
+                return;
+            }
+        }
 
 		if (item.hasComponent(LoreUpdateComponent.class)) {
 			LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);

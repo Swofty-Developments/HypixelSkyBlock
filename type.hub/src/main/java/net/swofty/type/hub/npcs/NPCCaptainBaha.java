@@ -10,9 +10,8 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.fishing.GUIGFishingShip;
-import net.swofty.type.skyblockgeneric.fishing.FishingItemCatalog;
+import net.swofty.type.skyblockgeneric.fishing.FishingItemSupport;
 import net.swofty.type.skyblockgeneric.fishing.FishingShipService;
-import net.swofty.type.skyblockgeneric.fishing.ShipPartDefinition;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
@@ -84,9 +83,9 @@ public class NPCCaptainBaha extends HypixelNPC {
 
     private void handleRustyShipEngine(SkyBlockPlayer player) {
         setDialogue(player, "dialogue-yes").thenRun(() -> {
-            ShipPartDefinition definition = FishingItemCatalog.getShipPart(ItemType.RUSTY_SHIP_ENGINE.name());
+            var definition = FishingItemSupport.getShipPart(ItemType.RUSTY_SHIP_ENGINE.name());
             if (definition != null) {
-                FishingShipService.installPart(player, definition);
+                FishingShipService.installPart(player, ItemType.RUSTY_SHIP_ENGINE.name(), definition);
             }
             player.takeItem(ItemType.RUSTY_SHIP_ENGINE, 1);
             FishingShipService.unlockDestination(player, "BACKWATER_BAYOU");

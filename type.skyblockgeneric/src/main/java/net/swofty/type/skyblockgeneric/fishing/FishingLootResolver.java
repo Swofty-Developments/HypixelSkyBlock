@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.fishing;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,14 +14,14 @@ public final class FishingLootResolver {
     }
 
     public static FishingCatchResult resolve(FishingContext context) {
-        FishingCatchResult trophyFish = tryResolveTrophyFish(context);
-        if (trophyFish != null) {
-            return trophyFish;
-        }
-
         FishingCatchResult questCatch = tryResolveQuestCatch(context);
         if (questCatch != null) {
             return questCatch;
+        }
+
+        FishingCatchResult trophyFish = tryResolveTrophyFish(context);
+        if (trophyFish != null) {
+            return trophyFish;
         }
 
         FishingCatchResult seaCreature = tryResolveSeaCreature(context);
@@ -38,7 +39,7 @@ public final class FishingLootResolver {
 
         double bonus = getTotalStatistic(context, ItemStatistic.TROPHY_FISH_CHANCE);
         if (context.bait() != null) {
-            bonus += context.bait().trophyFishChanceBonus();
+            bonus += context.bait().getTrophyFishChanceBonus();
         }
 
         List<TrophyFishDefinition> eligible = new ArrayList<>();
@@ -125,7 +126,7 @@ public final class FishingLootResolver {
         double charmBonus = 0.0D;
         var charm = context.rod().getAttributeHandler().getEnchantment(net.swofty.type.skyblockgeneric.enchantment.EnchantmentType.CHARM);
         if (charm != null) {
-            charmBonus = charm.level();
+            charmBonus = charm.level() * 2.0D;
         }
 
         if (Math.random() <= (0.002D * (1 + charmBonus / 100D))) {
@@ -147,7 +148,7 @@ public final class FishingLootResolver {
         }
 
         double seaCreatureChance = getTotalStatistic(context, ItemStatistic.SEA_CREATURE_CHANCE);
-        if (context.hook() != null && context.hook().treasureOnly()) {
+        if (context.hook() != null && context.hook().isTreasureOnly()) {
             return null;
         }
 
@@ -174,14 +175,14 @@ public final class FishingLootResolver {
         List<FishingTableDefinition.LootEntry> pool = table.items();
         double treasureChance = getTotalStatistic(context, ItemStatistic.TREASURE_CHANCE);
         if (context.bait() != null) {
-            treasureChance += context.bait().treasureChanceBonus();
+            treasureChance += context.bait().getTreasureChanceBonus();
         }
-        if (context.sinker() != null && context.sinker().bayouTreasureToJunk()) {
+        if (context.sinker() != null && context.sinker().isBayouTreasureToJunk()) {
             treasureChance += 10.0D;
         }
 
         if (!table.treasures().isEmpty() && Math.random() * 100 <= treasureChance) {
-            pool = context.sinker() != null && context.sinker().bayouTreasureToJunk() ? table.junk() : table.treasures();
+            pool = context.sinker() != null && context.sinker().isBayouTreasureToJunk() ? table.junk() : table.treasures();
             return pick(pool, FishingCatchKind.TREASURE);
         }
 
@@ -208,18 +209,19 @@ public final class FishingLootResolver {
     }
 
     private static FishingTableDefinition findTable(FishingContext context) {
+        FishingTableDefinition fallback = null;
         for (FishingTableDefinition definition : FishingRegistry.getTables()) {
             if (!definition.mediums().isEmpty() && !definition.mediums().contains(context.medium())) {
                 continue;
             }
-            if (definition.regions().isEmpty()) {
-                return definition;
-            }
             if (context.regionId() != null && definition.regions().contains(context.regionId())) {
                 return definition;
             }
+            if (definition.regions().isEmpty() && fallback == null) {
+                fallback = definition;
+            }
         }
-        return null;
+        return fallback;
     }
 
     private static double getTotalStatistic(FishingContext context, ItemStatistic statistic) {
@@ -227,7 +229,10 @@ public final class FishingLootResolver {
             + FishingRodPartService.getStatistics(context.rod()).getOverall(statistic);
         total += context.hotspotBuffs().getOverall(statistic);
         if (context.bait() != null) {
-            total += context.bait().statistics().getOverall(statistic);
+            SkyBlockItem baitItem = FishingItemSupport.getItem(context.bait().getItemId());
+            if (baitItem != null) {
+                total += baitItem.getAttributeHandler().getStatistics().getOverall(statistic);
+            }
         }
         return total;
     }
@@ -235,16 +240,16 @@ public final class FishingLootResolver {
     private static double getTagBonus(FishingContext context, List<String> tags) {
         double total = 0.0D;
         if (context.hook() != null) {
-            total += getTagBonus(context.hook().tagBonuses(), tags);
+            total += getTagBonus(context.hook().getTagBonuses(), tags);
         }
         if (context.line() != null) {
-            total += getTagBonus(context.line().tagBonuses(), tags);
+            total += getTagBonus(context.line().getTagBonuses(), tags);
         }
         if (context.sinker() != null) {
-            total += getTagBonus(context.sinker().tagBonuses(), tags);
+            total += getTagBonus(context.sinker().getTagBonuses(), tags);
         }
         if (context.bait() != null) {
-            total += getTagBonus(context.bait().tagBonuses(), tags);
+            total += getTagBonus(context.bait().getTagBonuses(), tags);
         }
         return total;
     }

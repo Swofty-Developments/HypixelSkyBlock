@@ -6,6 +6,8 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointTrophyFish;
 import net.swofty.type.skyblockgeneric.entity.FishingHook;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.FishingBaitComponent;
+import net.swofty.type.skyblockgeneric.item.components.FishingRodPartComponent;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -21,12 +23,12 @@ public final class FishingService {
     }
 
     public static FishingSession beginCast(SkyBlockPlayer player, SkyBlockItem rod, FishingMedium medium) {
-        BaitDefinition bait = FishingBaitService.getFirstAvailableBait(player, medium);
+        FishingBaitComponent bait = FishingBaitService.getFirstAvailableBait(player, medium);
         FishingSession session = new FishingSession(
             player.getUuid(),
             rod.getAttributeHandler().getPotentialType().name(),
             medium,
-            bait == null ? null : bait.itemId(),
+            bait == null ? null : bait.getItemId(),
             System.currentTimeMillis(),
             0L,
             0L,
@@ -49,13 +51,16 @@ public final class FishingService {
         SESSIONS.remove(playerUuid);
     }
 
-    public static long computeWaitTicks(SkyBlockPlayer player, SkyBlockItem rod, @Nullable BaitDefinition bait) {
+    public static long computeWaitTicks(SkyBlockPlayer player, SkyBlockItem rod, @Nullable FishingBaitComponent bait) {
         double fishingSpeed = player.getStatistics().allStatistics().getOverall(net.swofty.commons.skyblock.statistics.ItemStatistic.FISHING_SPEED)
             + rod.getAttributeHandler().getStatistics().getOverall(net.swofty.commons.skyblock.statistics.ItemStatistic.FISHING_SPEED)
             + FishingRodPartService.getStatistics(rod).getOverall(net.swofty.commons.skyblock.statistics.ItemStatistic.FISHING_SPEED);
         if (bait != null) {
-            fishingSpeed += bait.statistics().getOverall(net.swofty.commons.skyblock.statistics.ItemStatistic.FISHING_SPEED);
-            if ("CORRUPTED_BAIT".equals(bait.itemId())) {
+            SkyBlockItem baitItem = FishingItemSupport.getItem(bait.getItemId());
+            if (baitItem != null) {
+                fishingSpeed += baitItem.getAttributeHandler().getStatistics().getOverall(net.swofty.commons.skyblock.statistics.ItemStatistic.FISHING_SPEED);
+            }
+            if ("CORRUPTED_BAIT".equals(bait.getItemId())) {
                 fishingSpeed /= 2.0D;
             }
         }
@@ -69,7 +74,7 @@ public final class FishingService {
             return null;
         }
 
-        BaitDefinition bait = FishingItemCatalog.getBait(session.baitItemId());
+        FishingBaitComponent bait = FishingItemSupport.getBait(session.baitItemId());
         SkyBlockRegion region = player.getRegion();
         var hotspotBuffs = FishingHotspotService.getActiveHotspotBuffs(player, session.medium(), hook.getSpawnPosition());
         boolean hotspotActive = hasAnyBuffValue(hotspotBuffs);
@@ -98,9 +103,9 @@ public final class FishingService {
             if (caster != null) {
                 preserve |= Math.random() * 100 < caster.level();
             }
-            RodPartDefinition sinker = FishingRodPartService.getSinker(rod);
-            if (!preserve && sinker != null && sinker.baitPreservationChance() > 0) {
-                preserve = Math.random() * 100 < sinker.baitPreservationChance();
+            FishingRodPartComponent sinker = FishingRodPartService.getSinker(rod);
+            if (!preserve && sinker != null && sinker.getBaitPreservationChance() > 0) {
+                preserve = Math.random() * 100 < sinker.getBaitPreservationChance();
             }
             if (!preserve) {
                 FishingBaitService.consumeOneBait(player, session.baitItemId());
@@ -123,9 +128,9 @@ public final class FishingService {
             player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COLLECTION, DatapointCollection.class).setValue(player.getCollection());
         }
 
-        RodPartDefinition sinker = FishingRodPartService.getSinker(rod);
-        if (sinker != null && sinker.materializedItemId() != null && Math.random() <= sinker.materializedChance()) {
-            player.addAndUpdateItem(net.swofty.commons.skyblock.item.ItemType.valueOf(sinker.materializedItemId()));
+        FishingRodPartComponent sinker = FishingRodPartService.getSinker(rod);
+        if (sinker != null && sinker.getMaterializedItemId() != null && Math.random() <= sinker.getMaterializedChance()) {
+            player.addAndUpdateItem(net.swofty.commons.skyblock.item.ItemType.valueOf(sinker.getMaterializedItemId()));
         }
 
         if (result.trophyFishId() != null) {

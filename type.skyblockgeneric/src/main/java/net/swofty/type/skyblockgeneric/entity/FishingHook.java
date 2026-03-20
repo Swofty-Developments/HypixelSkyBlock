@@ -17,12 +17,12 @@ import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.skyblockgeneric.fishing.BaitDefinition;
-import net.swofty.type.skyblockgeneric.fishing.FishingItemCatalog;
+import net.swofty.type.skyblockgeneric.fishing.FishingItemSupport;
 import net.swofty.type.skyblockgeneric.fishing.FishingMedium;
 import net.swofty.type.skyblockgeneric.fishing.FishingService;
 import net.swofty.type.skyblockgeneric.fishing.FishingSession;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.FishingBaitComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -59,8 +59,8 @@ public class FishingHook {
 		this.owner = owner;
 		this.rod = rod;
 		String itemId = rod.getAttributeHandler().getPotentialType() == null ? null : rod.getAttributeHandler().getPotentialType().name();
-		var rodDefinition = FishingItemCatalog.getRod(itemId);
-		this.requiredMedium = rodDefinition == null ? FishingMedium.WATER : rodDefinition.medium();
+        var rodMetadata = FishingItemSupport.getRodMetadata(itemId);
+        this.requiredMedium = rodMetadata == null ? FishingMedium.WATER : rodMetadata.getMedium();
 
 		this.hook = new Entity(EntityType.FISHING_BOBBER);
 		this.hook.editEntityMeta(FishingHookMeta.class, meta -> {
@@ -268,7 +268,7 @@ public class FishingHook {
 
 		FishingSession session = FishingService.beginCast(owner, rod, requiredMedium);
 		sessionStarted = true;
-		BaitDefinition bait = FishingItemCatalog.getBait(session.baitItemId());
+        FishingBaitComponent bait = FishingItemSupport.getBait(session.baitItemId());
 		long waitTicks = FishingService.computeWaitTicks(owner, rod, bait);
 		scheduleNextBite(waitTicks);
 	}
@@ -296,7 +296,7 @@ public class FishingHook {
 				}
 
 				FishingService.updateSession(activeSession.withBiteReady(false));
-				BaitDefinition bait = FishingItemCatalog.getBait(activeSession.baitItemId());
+                FishingBaitComponent bait = FishingItemSupport.getBait(activeSession.baitItemId());
 				long nextDelay = FishingService.computeWaitTicks(owner, rod, bait);
 				scheduleNextBite(nextDelay);
 			}).delay(TaskSchedule.tick((int) BITE_WINDOW_TICKS)).schedule();

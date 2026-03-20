@@ -24,6 +24,8 @@ public class DatapointTrophyFish extends SkyBlockDatapoint<DatapointTrophyFish.T
                 progressObject.put("gold", progress.getGold());
                 progressObject.put("diamond", progress.getDiamond());
                 progressObject.put("totalCatches", progress.getTotalCatches());
+                progressObject.put("catchesSinceGoldPity", progress.getCatchesSinceGoldPity());
+                progressObject.put("catchesSinceDiamondPity", progress.getCatchesSinceDiamondPity());
                 fishObject.put(fishId, progressObject);
             });
             object.put("fish", fishObject);
@@ -50,7 +52,9 @@ public class DatapointTrophyFish extends SkyBlockDatapoint<DatapointTrophyFish.T
                     progressObject.optInt("silver", 0),
                     progressObject.optInt("gold", 0),
                     progressObject.optInt("diamond", 0),
-                    progressObject.optInt("totalCatches", 0)
+                    progressObject.optInt("totalCatches", 0),
+                    progressObject.optInt("catchesSinceGoldPity", progressObject.optInt("totalCatches", 0)),
+                    progressObject.optInt("catchesSinceDiamondPity", progressObject.optInt("totalCatches", 0))
                 ));
             }
             return data;
@@ -65,7 +69,9 @@ public class DatapointTrophyFish extends SkyBlockDatapoint<DatapointTrophyFish.T
                     progress.getSilver(),
                     progress.getGold(),
                     progress.getDiamond(),
-                    progress.getTotalCatches()
+                    progress.getTotalCatches(),
+                    progress.getCatchesSinceGoldPity(),
+                    progress.getCatchesSinceDiamondPity()
                 )));
             return new TrophyFishData(fish);
         }
@@ -101,13 +107,27 @@ public class DatapointTrophyFish extends SkyBlockDatapoint<DatapointTrophyFish.T
         private int gold;
         private int diamond;
         private int totalCatches;
+        private int catchesSinceGoldPity;
+        private int catchesSinceDiamondPity;
 
         public void increment(String tier) {
             switch (tier.toUpperCase()) {
-                case "DIAMOND" -> diamond++;
-                case "GOLD" -> gold++;
+                case "DIAMOND" -> {
+                    diamond++;
+                    catchesSinceDiamondPity = 0;
+                    catchesSinceGoldPity = 0;
+                }
+                case "GOLD" -> {
+                    gold++;
+                    catchesSinceGoldPity = 0;
+                    catchesSinceDiamondPity++;
+                }
                 case "SILVER" -> silver++;
                 default -> bronze++;
+            }
+            if (!"GOLD".equalsIgnoreCase(tier) && !"DIAMOND".equalsIgnoreCase(tier)) {
+                catchesSinceGoldPity++;
+                catchesSinceDiamondPity++;
             }
             totalCatches++;
         }

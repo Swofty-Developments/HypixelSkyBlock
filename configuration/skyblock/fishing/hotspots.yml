@@ -1,5 +1,19 @@
 hotspots:
-  - x: 100
-    y: 50
-    z: 100
+  - id: BAYOU_WATER_1
+    medium: WATER
+    regions:
+      - BACKWATER_BAYOU
     serverType: BACKWATER_BAYOU
+    durationSeconds: 120
+    maxActive: 2
+    buffs:
+      FISHING_SPEED: 15
+      SEA_CREATURE_CHANCE: 5
+      DOUBLE_HOOK_CHANCE: 2
+      TROPHY_FISH_CHANCE: 5
+      TREASURE_CHANCE: 1
+    spawnPoints:
+      - serverType: BACKWATER_BAYOU
+        x: 100
+        y: 50
+        z: 100

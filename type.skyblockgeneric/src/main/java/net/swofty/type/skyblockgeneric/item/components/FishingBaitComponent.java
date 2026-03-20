@@ -1,13 +1,16 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.fishing.FishingMedium;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 
 import java.util.List;
 import java.util.Map;
 
 @Getter
-public class FishingBaitComponent extends net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent {
+public class FishingBaitComponent extends SkyBlockItemComponent {
+    private final String itemId;
     private final String displayName;
     private final Map<String, Double> tagBonuses;
     private final double treasureChanceBonus;
@@ -18,6 +21,7 @@ public class FishingBaitComponent extends net.swofty.type.skyblockgeneric.item.S
     private final String texture;
 
     public FishingBaitComponent(
+        String itemId,
         String displayName,
         Map<String, Double> tagBonuses,
         double treasureChanceBonus,
@@ -27,7 +31,11 @@ public class FishingBaitComponent extends net.swofty.type.skyblockgeneric.item.S
         List<FishingMedium> mediums,
         String texture
     ) {
-        this.displayName = displayName;
+        this.itemId = itemId;
+        ItemType type = ItemType.get(itemId);
+        this.displayName = displayName == null || displayName.isBlank()
+            ? (type == null ? itemId : type.getDisplayName())
+            : displayName;
         this.tagBonuses = Map.copyOf(tagBonuses);
         this.treasureChanceBonus = treasureChanceBonus;
         this.treasureQualityBonus = treasureQualityBonus;
@@ -36,7 +44,7 @@ public class FishingBaitComponent extends net.swofty.type.skyblockgeneric.item.S
         this.mediums = List.copyOf(mediums);
         this.texture = texture;
 
-        addInheritedComponent(new CustomDisplayNameComponent(ignored -> displayName));
+        addInheritedComponent(new CustomDisplayNameComponent(ignored -> this.displayName));
         if (texture != null && !texture.isBlank()) {
             addInheritedComponent(new SkullHeadComponent(ignored -> texture));
         }

@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.fishing;
 import net.minestom.server.item.ItemStack;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.FishingBaitComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +12,7 @@ public final class FishingBaitService {
     private FishingBaitService() {
     }
 
-    public static @Nullable BaitDefinition getFirstAvailableBait(SkyBlockPlayer player, FishingMedium medium) {
+    public static @Nullable FishingBaitComponent getFirstAvailableBait(SkyBlockPlayer player, FishingMedium medium) {
         for (int slot = 0; slot < 36; slot++) {
             SkyBlockItem item = new SkyBlockItem(player.getInventory().getItemStack(slot));
             ItemType type = item.getAttributeHandler().getPotentialType();
@@ -19,14 +20,14 @@ public final class FishingBaitService {
                 continue;
             }
 
-            BaitDefinition bait = FishingItemCatalog.getBait(type.name());
-            if (bait == null) {
+            FishingBaitComponent baitComponent = item.getComponent(FishingBaitComponent.class);
+            if (baitComponent == null) {
                 continue;
             }
-            if (!bait.mediums().isEmpty() && !bait.mediums().contains(medium)) {
+            if (!baitComponent.getMediums().isEmpty() && !baitComponent.getMediums().contains(medium)) {
                 continue;
             }
-            return bait;
+            return baitComponent;
         }
         return null;
     }

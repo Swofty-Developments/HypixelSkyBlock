@@ -27,6 +27,14 @@ public final class FishingHotspotService {
         String serverType = HypixelConst.getTypeLoader().getType().name();
         SkyBlockRegion playerRegion = player.getRegion();
         String regionId = playerRegion == null ? null : playerRegion.getType().name();
+        double sinkerMultiplier = 1.0D;
+        if (player.getItemInMainHand() != null) {
+            var heldItem = new net.swofty.type.skyblockgeneric.item.SkyBlockItem(player.getItemInMainHand());
+            var sinker = FishingRodPartService.getSinker(heldItem);
+            if (sinker != null && sinker.getHotspotBuffMultiplier() > 0) {
+                sinkerMultiplier = sinker.getHotspotBuffMultiplier();
+            }
+        }
 
         ItemStatistics.Builder builder = ItemStatistics.builder();
         for (HotspotDefinition hotspot : FishingRegistry.getHotspots()) {
@@ -41,7 +49,7 @@ public final class FishingHotspotService {
             }
 
             for (ItemStatistic statistic : ItemStatistic.values()) {
-                double value = hotspot.buffs().getOverall(statistic);
+                double value = hotspot.buffs().getOverall(statistic) * sinkerMultiplier;
                 if (value != 0.0D) {
                     builder.withBase(statistic, value);
                 }
@@ -65,5 +73,3 @@ public final class FishingHotspotService {
         return false;
     }
 }
-
-

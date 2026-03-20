@@ -1,0 +1,292 @@
+items:
+  - id: CHALLENGE_ROD
+    material: FISHING_ROD
+    rarity: UNCOMMON
+    default_statistics:
+      DAMAGE: 75
+      STRENGTH: 75
+      FISHING_SPEED: 35
+      SEA_CREATURE_CHANCE: 2
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 10
+
+  - id: CHAMP_ROD
+    material: FISHING_ROD
+    rarity: RARE
+    default_statistics:
+      DAMAGE: 90
+      STRENGTH: 80
+      FISHING_SPEED: 90
+      SEA_CREATURE_CHANCE: 4
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 15
+
+  - id: LEGEND_ROD
+    material: FISHING_ROD
+    rarity: EPIC
+    default_statistics:
+      DAMAGE: 130
+      STRENGTH: 120
+      FISHING_SPEED: 105
+      SEA_CREATURE_CHANCE: 6
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 20
+
+  - id: ROD_OF_THE_SEA
+    material: FISHING_ROD
+    rarity: LEGENDARY
+    default_statistics:
+      DAMAGE: 150
+      STRENGTH: 150
+      FISHING_SPEED: 80
+      SEA_CREATURE_CHANCE: 8
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 24
+
+  - id: GIANT_FISHING_ROD
+    material: FISHING_ROD
+    rarity: LEGENDARY
+    default_statistics:
+      DAMAGE: 20
+      STRENGTH: 10
+      FISHING_SPEED: 20
+      DOUBLE_HOOK_CHANCE: 10
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+
+  - id: DIRT_ROD
+    material: FISHING_ROD
+    rarity: UNCOMMON
+    default_statistics:
+      FISHING_SPEED: 20
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        rod_parts_enabled: false
+
+  - id: STARTER_LAVA_ROD
+    material: FISHING_ROD
+    rarity: UNCOMMON
+    default_statistics:
+      DAMAGE: 50
+      STRENGTH: 50
+      FISHING_SPEED: 10
+      TROPHY_FISH_CHANCE: 5
+    components:
+      - id: FISHING_ROD_METADATA
+        subtitle: Lava Rod
+        medium: LAVA
+        required_fishing_level: 10
+
+  - id: POLISHED_TOPAZ_ROD
+    material: FISHING_ROD
+    rarity: RARE
+    default_statistics:
+      DAMAGE: 100
+      STRENGTH: 100
+      FISHING_SPEED: 50
+      SEA_CREATURE_CHANCE: 2
+    components:
+      - id: FISHING_ROD_METADATA
+        subtitle: Lava Rod
+        medium: LAVA
+        required_fishing_level: 19
+        extra_requirements:
+          - "❣ Requires Heart of the Mountain Tier 5."
+
+  - id: MAGMA_ROD
+    material: FISHING_ROD
+    rarity: RARE
+    default_statistics:
+      DAMAGE: 150
+      STRENGTH: 120
+      FISHING_SPEED: 40
+      SEA_CREATURE_CHANCE: 6
+      TROPHY_FISH_CHANCE: 10
+    components:
+      - id: FISHING_ROD_METADATA
+        subtitle: Lava Rod
+        medium: LAVA
+        required_fishing_level: 27
+
+  - id: INFERNO_ROD
+    material: FISHING_ROD
+    rarity: EPIC
+    default_statistics:
+      DAMAGE: 210
+      STRENGTH: 150
+      FISHING_SPEED: 60
+      SEA_CREATURE_CHANCE: 10
+      TROPHY_FISH_CHANCE: 15
+    components:
+      - id: FISHING_ROD_METADATA
+        subtitle: Lava Rod
+        medium: LAVA
+        required_fishing_level: 30
+
+  - id: HELLFIRE_ROD
+    material: FISHING_ROD
+    rarity: LEGENDARY
+    default_statistics:
+      DAMAGE: 225
+      STRENGTH: 225
+      FISHING_SPEED: 60
+      SEA_CREATURE_CHANCE: 14
+      TROPHY_FISH_CHANCE: 20
+    components:
+      - id: FISHING_ROD_METADATA
+        subtitle: Lava Rod
+        medium: LAVA
+        required_fishing_level: 35
+
+  - id: CHUM_ROD
+    material: FISHING_ROD
+    rarity: RARE
+    default_statistics:
+      DAMAGE: 55
+      STRENGTH: 40
+      FISHING_SPEED: 70
+      SEA_CREATURE_CHANCE: 2
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 5
+        legacy_conversion_target: CHALLENGE_ROD
+
+  - id: PRISMARINE_ROD
+    material: FISHING_ROD
+    rarity: COMMON
+    default_statistics:
+      DAMAGE: 15
+      STRENGTH: 10
+      FISHING_SPEED: 15
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 3
+        legacy_conversion_target: CHALLENGE_ROD
+
+  - id: SPONGE_ROD
+    material: FISHING_ROD
+    rarity: COMMON
+    default_statistics:
+      DAMAGE: 20
+      STRENGTH: 15
+      FISHING_SPEED: 30
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 5
+        legacy_conversion_target: CHALLENGE_ROD
+
+  - id: SPEEDSTER_ROD
+    material: FISHING_ROD
+    rarity: UNCOMMON
+    default_statistics:
+      DAMAGE: 30
+      STRENGTH: 15
+      FISHING_SPEED: 45
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 6
+        legacy_conversion_target: CHALLENGE_ROD
+
+  - id: FARMER_ROD
+    material: FISHING_ROD
+    rarity: UNCOMMON
+    default_statistics:
+      DAMAGE: 50
+      STRENGTH: 20
+      FISHING_SPEED: 60
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 8
+        legacy_conversion_target: CHALLENGE_ROD
+
+  - id: ICE_ROD
+    material: FISHING_ROD
+    rarity: RARE
+    default_statistics:
+      DAMAGE: 30
+      FISHING_SPEED: 15
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 3
+        legacy_conversion_target: CHALLENGE_ROD
+
+  - id: WINTER_ROD
+    material: FISHING_ROD
+    rarity: RARE
+    default_statistics:
+      DAMAGE: 50
+      STRENGTH: 50
+      FISHING_SPEED: 75
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 10
+        legacy_conversion_target: CHALLENGE_ROD
+
+  - id: YETI_ROD
+    material: FISHING_ROD
+    rarity: EPIC
+    default_statistics:
+      DAMAGE: 150
+      STRENGTH: 130
+      FISHING_SPEED: 75
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 25
+        legacy_conversion_target: CHALLENGE_ROD
+
+  - id: THE_SHREDDER
+    material: FISHING_ROD
+    rarity: LEGENDARY
+    default_statistics:
+      DAMAGE: 120
+      FEROCITY: 50
+      FISHING_SPEED: 115
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 20
+        legacy_conversion_target: CHALLENGE_ROD
+
+  - id: PHANTOM_ROD
+    material: FISHING_ROD
+    rarity: LEGENDARY
+    default_statistics:
+      DAMAGE: 200
+      STRENGTH: 125
+      FISHING_SPEED: 100
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 21
+        legacy_conversion_target: CHALLENGE_ROD
+
+  - id: AUGER_ROD
+    material: FISHING_ROD
+    rarity: LEGENDARY
+    default_statistics:
+      DAMAGE: 135
+      STRENGTH: 90
+      FISHING_SPEED: 110
+    components:
+      - id: FISHING_ROD_METADATA
+        medium: WATER
+        required_fishing_level: 25
+        legacy_conversion_target: ROD_OF_THE_SEA

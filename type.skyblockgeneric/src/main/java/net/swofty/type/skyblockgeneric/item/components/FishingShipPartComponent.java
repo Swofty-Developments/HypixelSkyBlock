@@ -1,20 +1,26 @@
 package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
-import net.swofty.type.skyblockgeneric.fishing.ShipPartDefinition;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.type.skyblockgeneric.fishing.FishingShipPartSlot;
 
 @Getter
 public class FishingShipPartComponent extends net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent {
+    private final String itemId;
     private final String displayName;
-    private final ShipPartDefinition.ShipPartSlot slot;
+    private final FishingShipPartSlot slot;
     private final String texture;
 
-    public FishingShipPartComponent(String displayName, ShipPartDefinition.ShipPartSlot slot, String texture) {
-        this.displayName = displayName;
+    public FishingShipPartComponent(String itemId, String displayName, FishingShipPartSlot slot, String texture) {
+        this.itemId = itemId;
+        ItemType type = ItemType.get(itemId);
+        this.displayName = displayName == null || displayName.isBlank()
+            ? (type == null ? itemId : type.getDisplayName())
+            : displayName;
         this.slot = slot;
         this.texture = texture;
 
-        addInheritedComponent(new CustomDisplayNameComponent(ignored -> displayName));
+        addInheritedComponent(new CustomDisplayNameComponent(ignored -> this.displayName));
         if (texture != null && !texture.isBlank()) {
             addInheritedComponent(new SkullHeadComponent(ignored -> texture));
         }

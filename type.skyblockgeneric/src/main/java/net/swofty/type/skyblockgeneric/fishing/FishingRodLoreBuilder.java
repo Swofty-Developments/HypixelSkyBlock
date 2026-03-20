@@ -2,20 +2,16 @@ package net.swofty.type.skyblockgeneric.fishing;
 
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.commons.skyblock.item.Rarity;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeHotPotatoBookData;
-import net.swofty.commons.skyblock.item.reforge.Reforge;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
-import net.swofty.commons.skyblock.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.DefaultSoulboundComponent;
+import net.swofty.type.skyblockgeneric.item.components.FishingRodMetadataComponent;
+import net.swofty.type.skyblockgeneric.item.components.GemstoneComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 public final class FishingRodLoreBuilder {
     private static final List<ItemStatistic> STAT_ORDER = List.of(
@@ -24,193 +20,86 @@ public final class FishingRodLoreBuilder {
         ItemStatistic.FEROCITY,
         ItemStatistic.FISHING_SPEED,
         ItemStatistic.SEA_CREATURE_CHANCE,
-        ItemStatistic.TREASURE_CHANCE,
-        ItemStatistic.TROPHY_FISH_CHANCE,
-        ItemStatistic.MAGIC_FIND
+        ItemStatistic.DOUBLE_HOOK_CHANCE,
+        ItemStatistic.TROPHY_FISH_CHANCE
     );
 
     private FishingRodLoreBuilder() {
     }
 
     public static @Nullable FishingRodLore build(SkyBlockItem item, @Nullable SkyBlockPlayer player) {
-        ItemType itemType = item.getAttributeHandler().getPotentialType();
-        if (itemType == null) {
+        if (!item.hasComponent(FishingRodMetadataComponent.class)) {
             return null;
         }
 
-        FishingRodDefinition definition = FishingItemCatalog.getRod(itemType.name());
-        if (definition == null) {
-            return null;
-        }
-
-        var handler = item.getAttributeHandler();
-        Rarity rarity = handler.isRecombobulated() ? handler.getRarity().upgrade() : handler.getRarity();
-
-        String displayName = definition.displayName();
-        Reforge reforge = handler.getReforge();
-        if (reforge != null) {
-            displayName = reforge.getPrefix() + " " + displayName;
-        }
-        displayName = rarity.getColor() + displayName;
-
+        FishingRodMetadataComponent metadata = item.getComponent(FishingRodMetadataComponent.class);
         List<String> lore = new ArrayList<>();
-        if (definition.subtitle() != null) {
-            lore.add("§8" + definition.subtitle());
-            lore.add("");
+        if (metadata.getSubtitle() != null && !metadata.getSubtitle().isBlank()) {
+            lore.add(metadata.getSubtitle());
         }
 
         for (ItemStatistic statistic : STAT_ORDER) {
-            String line = buildStatLine(item, definition, rarity, statistic);
-            if (line != null) {
-                lore.add(line);
+            double amount = item.getAttributeHandler().getStatistics().getOverall(statistic)
+                + FishingRodPartService.getStatistics(item).getOverall(statistic);
+            if (amount == 0.0D) {
+                continue;
             }
+            lore.add(formatStatistic(statistic, amount));
         }
 
-        lore.addAll(definition.lore());
-        if (!lore.isEmpty() && !lore.getLast().isEmpty()) {
-            lore.add("");
+        if (item.hasComponent(GemstoneComponent.class)) {
+            lore.add(renderGemSlots(item.getComponent(GemstoneComponent.class)));
         }
 
-        List<String> enchantLines = buildEnchantLines(item, rarity);
-        lore.addAll(enchantLines);
-        if (!enchantLines.isEmpty()) {
-            lore.add("");
+        lore.add(partLine("ථ Hook ", item.getAttributeHandler().getFishingHook()));
+        lore.add(partLine("ꨃ Line ", item.getAttributeHandler().getFishingLine()));
+        lore.add(partLine("࿉ Sinker ", item.getAttributeHandler().getFishingSinker()));
+
+        if (metadata.getLegacyConversionTarget() != null) {
+            lore.add("Talk to Roddy in the Backwater");
+            lore.add("Bayou to convert this rod.");
+        } else if (metadata.isRodPartsEnabled()) {
+            lore.add("Talk to Roddy in the Backwater");
+            lore.add("Bayou to apply parts to this rod.");
         }
 
-        if (definition.rodPartsEnabled()) {
-            RodPartDefinition hook = FishingRodPartService.getHook(item);
-            RodPartDefinition line = FishingRodPartService.getLine(item);
-            RodPartDefinition sinker = FishingRodPartService.getSinker(item);
-
-            lore.add(renderPartHeader("ථ", "Hook", hook));
-            if (hook != null) {
-                lore.addAll(renderAppliedPartLore(hook, player));
-            }
-            lore.add(renderPartHeader("ꨃ", "Line", line));
-            if (line != null) {
-                lore.addAll(renderAppliedPartLore(line, player));
-            }
-            lore.add(renderPartHeader("࿉", "Sinker", sinker));
-            if (sinker != null) {
-                lore.addAll(renderAppliedPartLore(sinker, player));
-            }
-            lore.add("");
-            lore.add("§7Talk to §2Roddy §7in the §2Backwater");
-            lore.add("§2Bayou §7to apply parts to this rod.");
-            lore.add("");
-        } else if (definition.legacyConversionTarget() != null) {
-            lore.add("§7§cThis rod is broken and cannot be");
-            lore.add("§cused to fish.");
-            lore.add("");
-            lore.add("§7Bring it to §2Roddy §7in the §2Backwater");
-            lore.add("§2Bayou §7to convert it into a §anew rod§7!");
-            lore.add("");
+        if (item.hasComponent(net.swofty.type.skyblockgeneric.item.components.ReforgableComponent.class)) {
+            lore.add("This item can be reforged!");
+        }
+        if (metadata.getRequiredFishingLevel() > 0) {
+            lore.add("❣ Requires Fishing Skill " + metadata.getRequiredFishingLevel() + ".");
+        }
+        if (metadata.getExtraRequirements() != null) {
+            lore.addAll(metadata.getExtraRequirements());
+        }
+        if (item.hasComponent(DefaultSoulboundComponent.class)) {
+            lore.add("* Co-op Soulbound *");
         }
 
-        lore.add("§8This item can be reforged!");
-
-        if (handler.getFishingExpertiseKills() > 0) {
-            lore.add("§fKills: §6" + StringUtility.commaify(handler.getFishingExpertiseKills()));
-        }
-
-        if (handler.getSoulBoundData() != null) {
-            lore.add("§8§l* Co-op Soulbound §l*");
-        }
-
-        if (definition.requiredFishingLevel() > 0 && player != null &&
-            player.getSkills().getCurrentLevel(net.swofty.type.skyblockgeneric.skill.SkillCategories.FISHING) < definition.requiredFishingLevel()) {
-            lore.add("§4❣ §cRequires §aFishing Skill " + definition.requiredFishingLevel() + "§c.");
-        }
-
-        String footer = rarity.getDisplay() + " FISHING ROD";
-        if (handler.isRecombobulated()) {
-            footer = rarity.getColor() + "§l§ka §l" + rarity.name() + " FISHING ROD §l§ka";
-        }
-        lore.add(footer);
-
-        return new FishingRodLore(displayName, lore);
+        lore.add(item.getAttributeHandler().getRarity().getDisplay() + " FISHING ROD");
+        return new FishingRodLore(item.getDisplayName(), lore);
     }
 
-    private static @Nullable String buildStatLine(SkyBlockItem item, FishingRodDefinition definition, Rarity rarity, ItemStatistic statistic) {
-        double base = definition.statistics().getOverall(statistic);
-        double reforge = 0.0D;
-        if (item.getAttributeHandler().getReforge() != null) {
-            reforge = item.getAttributeHandler().getReforge().getAfterCalculation(ItemStatistics.empty(), rarity.ordinal() + 1).getOverall(statistic);
-        }
-
-        double part = FishingRodPartService.getStatistics(item).getOverall(statistic);
-        double dynamic = item.getAttributeHandler().getExtraDynamicStatistics().getOverall(statistic);
-        double hpb = getHotPotatoContribution(item, statistic);
-        double total = base + reforge + part + dynamic + hpb;
-
-        if (total == 0) {
-            return null;
-        }
-
-        String line = "§7" + statistic.getDisplayName() + ": " + statistic.getLoreColor()
-            + statistic.getPrefix() + formatNumber(total) + statistic.getSuffix();
-        if (hpb != 0) {
-            line += " §e(" + (hpb > 0 ? "+" : "") + formatNumber(hpb) + ")";
-        }
-        if (part != 0) {
-            line += " §d(" + (part > 0 ? "+" : "") + formatNumber(part) + ")";
-        } else if (reforge != 0) {
-            line += " §9(" + (reforge > 0 ? "+" : "") + formatNumber(reforge) + ")";
-        }
-        return line;
-    }
-
-    private static double getHotPotatoContribution(SkyBlockItem item, ItemStatistic statistic) {
-        ItemAttributeHotPotatoBookData.HotPotatoBookData data = item.getAttributeHandler().getHotPotatoBookData();
-        if (!data.hasAppliedItem()) {
-            return 0.0D;
-        }
-
-        double total = 0.0D;
-        for (Map.Entry<ItemStatistic, Double> entry : data.getPotatoType().stats.entrySet()) {
-            if (entry.getKey() == statistic) {
-                total += entry.getValue();
-            }
-        }
-        return total;
-    }
-
-    private static List<String> buildEnchantLines(SkyBlockItem item, Rarity rarity) {
-        List<SkyBlockEnchantment> enchantments = item.getAttributeHandler().getEnchantments()
-            .sorted(Comparator.comparing(enchantment -> enchantment.type().getName()))
-            .toList();
-        if (enchantments.isEmpty()) {
-            return List.of();
-        }
-
-        String enchantColor = rarity == Rarity.MYTHIC ? "§d" : "§9";
-        String joined = enchantments.stream()
-            .map(enchantment -> enchantColor + enchantment.type().getName() + " " + StringUtility.getAsRomanNumeral(enchantment.level()))
-            .reduce((left, right) -> left + ", " + right)
+    private static String renderGemSlots(GemstoneComponent gemstone) {
+        return gemstone.getSlots().stream()
+            .map(slot -> "[" + slot.slot().getSymbol() + "]")
+            .reduce((left, right) -> left + " " + right)
             .orElse("");
-        return StringUtility.splitByWordAndLength(joined, 34);
     }
 
-    private static String renderPartHeader(String symbol, String label, @Nullable RodPartDefinition part) {
-        if (part == null) {
-            return "§9" + symbol + " " + label + " §8§lNONE";
+    private static String partLine(String prefix, @Nullable String itemId) {
+        if (itemId == null) {
+            return prefix + "NONE";
         }
-        return ItemType.valueOf(part.itemId()).rarity.getColor() + symbol + " " + part.displayName();
+        ItemType type = ItemType.get(itemId);
+        return prefix + (type == null ? "NONE" : type.getDisplayName().replace("§", ""));
     }
 
-    private static List<String> renderAppliedPartLore(RodPartDefinition part, @Nullable SkyBlockPlayer player) {
-        List<String> lines = new ArrayList<>();
-        for (String line : part.lore()) {
-            lines.add("§7" + line);
-        }
-        if (part.requiredFishingLevel() > 0 && player != null &&
-            player.getSkills().getCurrentLevel(net.swofty.type.skyblockgeneric.skill.SkillCategories.FISHING) < part.requiredFishingLevel()) {
-            lines.add("§4❣ §cRequires §aFishing Skill " + part.requiredFishingLevel() + "§c.");
-        }
-        return lines;
+    private static String formatStatistic(ItemStatistic statistic, double amount) {
+        return statistic.getDisplayName() + ": " + statistic.getPrefix() + format(amount) + statistic.getSuffix();
     }
 
-    private static String formatNumber(double value) {
+    private static String format(double value) {
         if (Math.abs(value - Math.rint(value)) < 0.0001D) {
             return String.valueOf((long) Math.rint(value));
         }

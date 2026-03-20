@@ -15,6 +15,11 @@ public record HotspotDefinition(
     List<String> seaCreatureIds,
     List<SpawnPoint> spawnPoints
 ) {
-    public record SpawnPoint(double x, double y, double z, String serverType) {
+    public record SpawnPoint(
+        String serverType,
+        double x,
+        double y,
+        double z
+    ) {
     }
 }

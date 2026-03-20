@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.item.components;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.swofty.type.skyblockgeneric.entity.FishingHook;
-import net.swofty.type.skyblockgeneric.fishing.FishingItemCatalog;
+import net.swofty.type.skyblockgeneric.fishing.FishingItemSupport;
 import net.swofty.type.skyblockgeneric.fishing.FishingService;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 
@@ -29,8 +29,8 @@ public class FishingRodComponent extends SkyBlockItemComponent {
 						);
 					} else {
 						String itemId = item.getAttributeHandler().getPotentialType() == null ? null : item.getAttributeHandler().getPotentialType().name();
-						var definition = FishingItemCatalog.getRod(itemId);
-						if (definition != null && definition.legacyConversionTarget() != null) {
+                        var metadata = FishingItemSupport.getRodMetadata(itemId);
+                        if (metadata != null && metadata.getLegacyConversionTarget() != null) {
 							return;
 						}
 						new FishingHook(player, item).spawn(player.getInstance());

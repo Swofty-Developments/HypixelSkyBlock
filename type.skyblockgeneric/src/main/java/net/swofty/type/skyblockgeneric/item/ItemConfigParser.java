@@ -11,10 +11,9 @@ import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.reforge.ReforgeType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
 import net.swofty.type.skyblockgeneric.fishing.FishingMedium;
-import net.swofty.type.skyblockgeneric.fishing.RodPartDefinition;
-import net.swofty.type.skyblockgeneric.fishing.ShipPartDefinition;
+import net.swofty.type.skyblockgeneric.fishing.FishingPartCategory;
+import net.swofty.type.skyblockgeneric.fishing.FishingShipPartSlot;
 import net.swofty.type.skyblockgeneric.gems.GemRarity;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
 import net.swofty.type.skyblockgeneric.item.components.*;
@@ -168,36 +167,33 @@ public class ItemConfigParser {
 				}
 				case "FISHING_ROD" -> new FishingRodComponent();
                 case "FISHING_ROD_METADATA" -> {
-                    String displayName = safeConfig.getString("display_name");
-                    String subtitle = safeConfig.getString("subtitle", null);
                     FishingMedium medium = safeConfig.containsKey("medium")
                         ? safeConfig.getEnum("medium", FishingMedium.class)
                         : FishingMedium.WATER;
                     int requiredFishingLevel = safeConfig.getInt("required_fishing_level", 0);
-                    Map<EnchantmentType, Integer> enchantments = new java.util.EnumMap<>(EnchantmentType.class);
-                    for (Map.Entry<String, Object> entry : safeConfig.getMap("enchantments").entrySet()) {
-                        enchantments.put(EnchantmentType.valueOf(entry.getKey().toUpperCase()), ((Number) entry.getValue()).intValue());
-                    }
+                    boolean rodPartsEnabled = safeConfig.getBoolean("rod_parts_enabled", true);
+                    String legacyConversionTarget = safeConfig.getString("legacy_conversion_target", null);
+                    String subtitle = safeConfig.getString("subtitle", null);
+                    List<String> extraRequirements = safeConfig.getList("extra_requirements", String.class);
                     yield new FishingRodMetadataComponent(
-                        displayName,
-                        subtitle,
                         medium,
                         requiredFishingLevel,
-                        enchantments,
-                        safeConfig.getString("legacy_conversion_target", null),
-                        safeConfig.getString("legacy_conversion_part", null),
-                        safeConfig.getBoolean("rod_parts_enabled", true)
+                        rodPartsEnabled,
+                        legacyConversionTarget,
+                        subtitle,
+                        extraRequirements
                     );
                 }
                 case "FISHING_ROD_PART" -> {
                     String displayName = safeConfig.getString("display_name");
-                    RodPartDefinition.PartCategory category = safeConfig.getEnum("category", RodPartDefinition.PartCategory.class);
+                    FishingPartCategory category = safeConfig.getEnum("category", FishingPartCategory.class);
                     int requiredFishingLevel = safeConfig.getInt("required_fishing_level", 0);
                     Map<String, Double> tagBonuses = new java.util.LinkedHashMap<>();
                     for (Map.Entry<String, Object> entry : safeConfig.getMap("tag_bonuses").entrySet()) {
                         tagBonuses.put(entry.getKey(), ((Number) entry.getValue()).doubleValue());
                     }
                     yield new FishingRodPartComponent(
+                        itemId,
                         displayName,
                         category,
                         requiredFishingLevel,
@@ -221,6 +217,7 @@ public class ItemConfigParser {
                         ? safeConfig.getList("mediums", String.class).stream().map(value -> FishingMedium.valueOf(value.toUpperCase())).toList()
                         : List.of(FishingMedium.WATER, FishingMedium.LAVA);
                     yield new FishingBaitComponent(
+                        itemId,
                         displayName,
                         tagBonuses,
                         safeConfig.getDouble("treasure_chance_bonus", 0.0),
@@ -233,8 +230,8 @@ public class ItemConfigParser {
                 }
                 case "FISHING_SHIP_PART" -> {
                     String displayName = safeConfig.getString("display_name");
-                    ShipPartDefinition.ShipPartSlot slot = safeConfig.getEnum("slot", ShipPartDefinition.ShipPartSlot.class);
-                    yield new FishingShipPartComponent(displayName, slot, safeConfig.getString("texture", null));
+                    FishingShipPartSlot slot = safeConfig.getEnum("slot", FishingShipPartSlot.class);
+                    yield new FishingShipPartComponent(itemId, displayName, slot, safeConfig.getString("texture", null));
                 }
 				case "ENCHANTED" -> {
 					if (safeConfig.containsKey("recipes")) {
