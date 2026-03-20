@@ -56,8 +56,9 @@ public class ElectionViewStatsView extends StatelessView {
         List<ElectionData.CandidateData> candidates = data.getCandidates();
 
         String leaderName = null;
-        long leaderVotes = -1;
+        long leaderVotes = 0;
         for (ElectionData.CandidateData c : candidates) {
+            if (c.getMayorEnum() == null) continue;
             long v = tally.getOrDefault(c.getMayorName(), 0L);
             if (v > leaderVotes) {
                 leaderVotes = v;
