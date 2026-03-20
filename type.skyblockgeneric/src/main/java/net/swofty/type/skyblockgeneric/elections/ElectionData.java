@@ -106,11 +106,12 @@ public class ElectionData {
             CandidateData candidate = new CandidateData();
             candidate.setMayorName(mayor.name());
             candidate.setIndex(selected.indexOf(mayor));
+            candidate.setAllPerks(Arrays.stream(mayor.getAllPerks()).map(Enum::name).toList());
 
             List<String> perks = candidateActivePerks.get(mayor.name());
             if (perks == null || perks.isEmpty()) {
-                SkyBlockMayor.Perk[] allPerks = mayor.getAllPerks();
-                candidate.setActivePerks(List.of(allPerks[ThreadLocalRandom.current().nextInt(allPerks.length)].name()));
+                SkyBlockMayor.Perk[] mayorPerks = mayor.getAllPerks();
+                candidate.setActivePerks(List.of(mayorPerks[ThreadLocalRandom.current().nextInt(mayorPerks.length)].name()));
             } else {
                 candidate.setActivePerks(new ArrayList<>(perks));
             }
@@ -125,6 +126,7 @@ public class ElectionData {
             CandidateData candidate = new CandidateData();
             candidate.setMayorName(specialCandidate.name());
             candidate.setIndex(candidates.size());
+            candidate.setAllPerks(Arrays.stream(specialCandidate.getAllPerks()).map(Enum::name).toList());
             candidate.setActivePerks(Arrays.stream(specialCandidate.getAllPerks()).map(Enum::name).toList());
             candidates.add(candidate);
         }
@@ -141,6 +143,7 @@ public class ElectionData {
                 CandidateData diazCandidate = new CandidateData();
                 diazCandidate.setMayorName(SkyBlockMayor.DIAZ.name());
                 diazCandidate.setIndex(candidates.size());
+                diazCandidate.setAllPerks(Arrays.stream(SkyBlockMayor.DIAZ.getAllPerks()).map(Enum::name).toList());
                 diazCandidate.setActivePerks(Arrays.stream(SkyBlockMayor.DIAZ.getAllPerks()).map(Enum::name).toList());
                 candidates.add(diazCandidate);
             }
@@ -170,6 +173,7 @@ public class ElectionData {
         private int index;
         private String mayorName;
         private List<String> activePerks = new ArrayList<>();
+        private List<String> allPerks = new ArrayList<>();
 
         public CandidateData() {}
 

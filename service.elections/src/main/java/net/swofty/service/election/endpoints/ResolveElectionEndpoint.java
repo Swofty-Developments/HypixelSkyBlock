@@ -182,12 +182,21 @@ public class ResolveElectionEndpoint implements ServiceEndpoint
                     ? new ArrayList<>((List<String>) candidate.get("activePerks"))
                     : new ArrayList<>();
 
-            int maxPerks = estimateMaxPerks(name);
+            List<String> allPerks = candidate.get("allPerks") != null
+                    ? (List<String>) candidate.get("allPerks")
+                    : new ArrayList<>();
+
+            int maxPerks = Math.min(estimateMaxPerks(name), allPerks.size());
             if (currentPerks.size() < maxPerks) {
                 Boolean failedLast = (Boolean) failedPerkGainLastTime.get(name);
                 boolean gainPerk = Boolean.TRUE.equals(failedLast) || ThreadLocalRandom.current().nextBoolean();
 
                 if (gainPerk) {
+                    List<String> available = new ArrayList<>(allPerks);
+                    available.removeAll(currentPerks);
+                    if (!available.isEmpty()) {
+                        currentPerks.add(available.get(ThreadLocalRandom.current().nextInt(available.size())));
+                    }
                     failedPerkGainLastTime.put(name, false);
                 } else {
                     failedPerkGainLastTime.put(name, true);
