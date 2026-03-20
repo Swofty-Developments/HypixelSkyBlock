@@ -36,7 +36,7 @@ tinylog = "2.7.0"
 velocity-api = "3.5.0-SNAPSHOT"
 viabackwards = "5.7.1"
 vialoader = "4.0.6"
-viarewind = "4.0.14"
+viarewind = "4.0.15"
 viaversion = "5.7.1"
 
 [libraries]
