@@ -2,7 +2,6 @@ package net.swofty.type.skyblockgeneric.elections;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServiceType;
@@ -23,6 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ElectionManager {
 
@@ -30,8 +30,11 @@ public class ElectionManager {
     private static ProxyService SERVICE;
     private static final ConcurrentHashMap<UUID, String> playerVoteCache = new ConcurrentHashMap<>();
 
-    @Getter
-    private static ElectionData electionData = new ElectionData();
+    private static final AtomicReference<ElectionData> electionDataRef = new AtomicReference<>(new ElectionData());
+
+    public static ElectionData getElectionData() {
+        return electionDataRef.get();
+    }
 
     public static void loadFromService() {
         SERVICE = new ProxyService(ServiceType.ELECTION);
@@ -43,20 +46,23 @@ public class ElectionManager {
                 ).join();
 
             if (response.found() && response.serializedData() != null) {
-                electionData = GSON.fromJson(response.serializedData(), ElectionData.class);
-                if (electionData.getCurrentMayor() == null) {
-                    electionData = new ElectionData();
+                ElectionData loaded = GSON.fromJson(response.serializedData(), ElectionData.class);
+                if (loaded.getCurrentMayor() == null) {
+                    loaded = new ElectionData();
+                    electionDataRef.set(loaded);
                     initializeFirstElection();
                     Logger.info("Election data was missing mayor info. Reinitialized first election.");
+                } else {
+                    electionDataRef.set(loaded);
                 }
             } else {
-                electionData = new ElectionData();
+                electionDataRef.set(new ElectionData());
                 initializeFirstElection();
                 Logger.info("No election data found. Initialized first election.");
             }
         } catch (Exception e) {
             Logger.error(e, "Failed to load election data from service");
-            electionData = new ElectionData();
+            electionDataRef.set(new ElectionData());
             initializeFirstElection();
         }
 
@@ -64,22 +70,24 @@ public class ElectionManager {
     }
 
     private static void initializeFirstElection() {
+        ElectionData data = electionDataRef.get();
         int currentYear = SkyBlockCalendar.getYear();
-        electionData.setCurrentMayor(SkyBlockMayor.COLE.name());
-        electionData.setCurrentMayorColor(ElectionData.colorForIndex(4));
-        electionData.setCurrentMayorPerks(Arrays.stream(SkyBlockMayor.COLE.getAllPerks()).map(Enum::name).toList());
-        electionData.setMayorElectedYear(currentYear);
-        electionData.setCurrentMinister(SkyBlockMayor.DIAZ.name());
-        electionData.setMinisterPerk(SkyBlockMayor.Perk.STOCK_EXCHANGE.name());
-        electionData.setCurrentMinisterColor(ElectionData.colorForIndex(0));
+        data.setCurrentMayor(SkyBlockMayor.COLE.name());
+        data.setCurrentMayorColor(ElectionData.colorForIndex(4));
+        data.setCurrentMayorPerks(Arrays.stream(SkyBlockMayor.COLE.getAllPerks()).map(Enum::name).toList());
+        data.setMayorElectedYear(currentYear);
+        data.setCurrentMinister(SkyBlockMayor.DIAZ.name());
+        data.setMinisterPerk(SkyBlockMayor.Perk.STOCK_EXCHANGE.name());
+        data.setCurrentMinisterColor(ElectionData.colorForIndex(0));
     }
 
     public static void onElectionStart() {
         int currentYear = SkyBlockCalendar.getYear();
-        if (electionData.isElectionOpen()) return;
+        ElectionData data = electionDataRef.get();
+        if (data.isElectionOpen()) return;
 
-        electionData.startNewElection(currentYear);
-        String serialized = GSON.toJson(electionData);
+        data.startNewElection(currentYear);
+        String serialized = GSON.toJson(data);
 
         try {
             StartElectionProtocolObject.StartElectionResponse response =
@@ -89,7 +97,7 @@ public class ElectionManager {
                 ).join();
 
             if (response.serializedData() != null) {
-                electionData = GSON.fromJson(response.serializedData(), ElectionData.class);
+                electionDataRef.set(GSON.fromJson(response.serializedData(), ElectionData.class));
             }
 
             if (response.started()) {
@@ -103,7 +111,7 @@ public class ElectionManager {
     }
 
     public static void onElectionEnd() {
-        if (!electionData.isElectionOpen()) return;
+        if (!electionDataRef.get().isElectionOpen()) return;
 
         int currentYear = SkyBlockCalendar.getYear();
 
@@ -115,11 +123,11 @@ public class ElectionManager {
                 ).join();
 
             if (response.serializedData() != null) {
-                electionData = GSON.fromJson(response.serializedData(), ElectionData.class);
+                electionDataRef.set(GSON.fromJson(response.serializedData(), ElectionData.class));
             }
 
             if (response.resolved()) {
-                Logger.info("Election resolved for Year {}. New Mayor: {}", currentYear, electionData.getCurrentMayor());
+                Logger.info("Election resolved for Year {}. New Mayor: {}", currentYear, electionDataRef.get().getCurrentMayor());
             } else {
                 Logger.info("Election for Year {} was already resolved by another server", currentYear);
             }
@@ -131,9 +139,10 @@ public class ElectionManager {
     }
 
     public static CompletableFuture<Void> castVote(UUID accountId, String candidateName) {
-        if (!electionData.isElectionOpen()) return CompletableFuture.completedFuture(null);
+        ElectionData data = electionDataRef.get();
+        if (!data.isElectionOpen()) return CompletableFuture.completedFuture(null);
 
-        boolean validCandidate = electionData.getCandidates().stream()
+        boolean validCandidate = data.getCandidates().stream()
             .anyMatch(c -> c.getMayorName().equals(candidateName));
         if (!validCandidate) return CompletableFuture.completedFuture(null);
 
@@ -148,7 +157,7 @@ public class ElectionManager {
                         response.talliesJson(),
                         new TypeToken<Map<String, Long>>(){}.getType()
                     );
-                    electionData.updateTallies(tallies);
+                    electionDataRef.get().updateTallies(tallies);
                 }
             }
         }).exceptionally(e -> {
@@ -181,19 +190,19 @@ public class ElectionManager {
     }
 
     public static SkyBlockMayor getCurrentMayor() {
-        return electionData.getMayorEnum();
+        return electionDataRef.get().getMayorEnum();
     }
 
     public static SkyBlockMayor getCurrentMinister() {
-        return electionData.getMinisterEnum();
+        return electionDataRef.get().getMinisterEnum();
     }
 
     public static boolean isMayorPerkActive(SkyBlockMayor.Perk perk) {
-        return electionData.getCurrentMayorPerkEnums().contains(perk);
+        return electionDataRef.get().getCurrentMayorPerkEnums().contains(perk);
     }
 
     public static boolean isMinisterPerkActive(SkyBlockMayor.Perk perk) {
-        SkyBlockMayor.Perk activePerk = electionData.getMinisterPerkEnum();
+        SkyBlockMayor.Perk activePerk = electionDataRef.get().getMinisterPerkEnum();
         return activePerk != null && activePerk == perk;
     }
 
@@ -209,23 +218,24 @@ public class ElectionManager {
     }
 
     public static void checkElectionCycle() {
+        ElectionData data = electionDataRef.get();
         int currentYear = SkyBlockCalendar.getYear();
         int currentMonth = SkyBlockCalendar.getMonth();
 
-        if (currentMonth >= 6 && currentMonth <= 8 && !electionData.isElectionOpen()) {
-            if (electionData.getElectionYear() != currentYear) {
+        if (currentMonth >= 6 && currentMonth <= 8 && !data.isElectionOpen()) {
+            if (data.getElectionYear() != currentYear) {
                 onElectionStart();
             }
         }
 
-        if (currentMonth >= 9 && electionData.isElectionOpen()) {
+        if (currentMonth >= 9 && data.isElectionOpen()) {
             onElectionEnd();
         }
     }
 
     private static void startTallyRefreshTask() {
         MinecraftServer.getSchedulerManager().submitTask(() -> {
-            if (electionData.isElectionOpen()) {
+            if (electionDataRef.get().isElectionOpen()) {
                 refreshTalliesAsync();
             }
             return TaskSchedule.seconds(30);
@@ -242,7 +252,7 @@ public class ElectionManager {
                 for (GetCandidatesProtocolObject.CandidateInfo info : response.candidates()) {
                     tallies.put(info.mayorName(), info.votes());
                 }
-                electionData.updateTallies(tallies);
+                electionDataRef.get().updateTallies(tallies);
             }
         }).exceptionally(e -> {
             Logger.warn("Failed to refresh election tallies: {}", e.getMessage());
