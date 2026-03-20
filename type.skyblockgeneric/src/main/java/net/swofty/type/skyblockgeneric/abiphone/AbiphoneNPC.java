@@ -6,7 +6,6 @@ import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.components.AbiphoneComponent;
-import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @Getter

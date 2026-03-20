@@ -42,7 +42,6 @@ public abstract class PartyEvent {
         throw new RuntimeException("Failed to find party event class: " + className + " in " + Arrays.toString(packageNames));
     }
 
-    @SuppressWarnings("unchecked")
     private static PartyEvent createDummyInstance(Class<?> clazz) throws Exception {
         String className = clazz.getSimpleName();
 

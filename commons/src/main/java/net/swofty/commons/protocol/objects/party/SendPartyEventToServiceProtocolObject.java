@@ -1,14 +1,9 @@
 package net.swofty.commons.protocol.objects.party;
 
-import net.swofty.commons.TrackedItem;
 import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
-import org.bson.Document;
 import org.json.JSONObject;
-
-import java.util.UUID;
 
 public class SendPartyEventToServiceProtocolObject extends ProtocolObject
         <SendPartyEventToServiceProtocolObject.SendPartyEventToServiceMessage,
@@ -17,7 +12,7 @@ public class SendPartyEventToServiceProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<SendPartyEventToServiceMessage> getSerializer() {
-        return new Serializer<SendPartyEventToServiceMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(SendPartyEventToServiceMessage value) {
                 JSONObject json = new JSONObject();
@@ -44,7 +39,7 @@ public class SendPartyEventToServiceProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<SendPartyEventToServiceResponse> getReturnSerializer() {
-        return new Serializer<SendPartyEventToServiceResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(SendPartyEventToServiceResponse value) {
                 return value.success ? "true" : "false";

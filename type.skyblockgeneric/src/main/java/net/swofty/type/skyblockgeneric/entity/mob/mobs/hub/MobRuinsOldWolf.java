@@ -23,7 +23,6 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class MobRuinsOldWolf extends BestiaryMob implements RegionPopulator {
@@ -103,8 +102,8 @@ public class MobRuinsOldWolf extends BestiaryMob implements RegionPopulator {
 
     @Override
     public List<Populator> getPopulators() {
-        return Arrays.asList(
-                new Populator(RegionType.RUINS, 2)
+        return List.of(
+            new Populator(RegionType.RUINS, 2)
         );
     }
 

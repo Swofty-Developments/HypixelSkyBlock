@@ -22,7 +22,7 @@ public class PartyMemberDisconnectTimeoutResponseEvent extends PartyResponseEven
 
     @Override
     public Serializer<PartyMemberDisconnectTimeoutResponseEvent> getSerializer() {
-        return new Serializer<PartyMemberDisconnectTimeoutResponseEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyMemberDisconnectTimeoutResponseEvent value) {
                 JSONObject json = new JSONObject();

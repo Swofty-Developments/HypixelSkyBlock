@@ -24,7 +24,7 @@ public class DataMutexService implements SkyBlockService {
         );
     }
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SkyBlockService.init(new DataMutexService());
     }
 }

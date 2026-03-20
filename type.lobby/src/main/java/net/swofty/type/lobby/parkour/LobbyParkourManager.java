@@ -3,7 +3,6 @@ package net.swofty.type.lobby.parkour;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minestom.server.coordinate.Point;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;

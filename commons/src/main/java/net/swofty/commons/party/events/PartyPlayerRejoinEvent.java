@@ -24,7 +24,7 @@ public class PartyPlayerRejoinEvent extends PartyEvent {
 
     @Override
     public Serializer<PartyPlayerRejoinEvent> getSerializer() {
-        return new Serializer<PartyPlayerRejoinEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyPlayerRejoinEvent value) {
                 JSONObject json = new JSONObject();

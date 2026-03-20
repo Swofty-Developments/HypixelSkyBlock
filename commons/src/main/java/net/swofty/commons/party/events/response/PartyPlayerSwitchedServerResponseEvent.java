@@ -19,7 +19,7 @@ public class PartyPlayerSwitchedServerResponseEvent extends PartyResponseEvent {
 
     @Override
     public Serializer<PartyPlayerSwitchedServerResponseEvent> getSerializer() {
-        return new Serializer<PartyPlayerSwitchedServerResponseEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyPlayerSwitchedServerResponseEvent value) {
                 JSONObject json = new JSONObject();

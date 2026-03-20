@@ -12,7 +12,7 @@ public class PartyInviteEvent extends PartyEvent {
 
     @Override
     public Serializer<PartyInviteEvent> getSerializer() {
-        return new Serializer<PartyInviteEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyInviteEvent value) {
                 JSONObject json = new JSONObject();

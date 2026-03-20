@@ -11,5 +11,4 @@ public enum ServiceType {
     ORCHESTRATOR,
     FRIEND,
     PUNISHMENT,
-    ;
 }

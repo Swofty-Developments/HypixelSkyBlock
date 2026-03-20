@@ -24,7 +24,7 @@ public class PartyWarpRequestEvent extends PartyEvent {
 
     @Override
     public Serializer<PartyWarpRequestEvent> getSerializer() {
-        return new Serializer<PartyWarpRequestEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyWarpRequestEvent value) {
                 JSONObject json = new JSONObject();

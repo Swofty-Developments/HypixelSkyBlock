@@ -125,7 +125,6 @@ public class PrototypeLobbyDataHandler extends DataHandler implements GameDataHa
         return dp != null ? dp : datapoint.defaultDatapoint;
     }
 
-    @SuppressWarnings("unchecked")
     public <R extends Datapoint<?>> R get(Data datapoint, Class<R> type) {
         Datapoint<?> dp = this.datapoints.get(datapoint.key);
         return (R) (dp != null ? type.cast(dp) : type.cast(datapoint.defaultDatapoint));
