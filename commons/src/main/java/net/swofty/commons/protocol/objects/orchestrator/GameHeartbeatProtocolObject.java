@@ -7,7 +7,9 @@ import net.swofty.commons.protocol.Serializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class GameHeartbeatProtocolObject extends ProtocolObject
         <GameHeartbeatProtocolObject.HeartbeatMessage,
@@ -15,7 +17,7 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<HeartbeatMessage> getSerializer() {
-        return new Serializer<HeartbeatMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(HeartbeatMessage value) {
                 JSONObject json = new JSONObject();
@@ -58,7 +60,7 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<HeartbeatResponse> getReturnSerializer() {
-        return new Serializer<HeartbeatResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(HeartbeatResponse value) {
                 JSONObject json = new JSONObject();

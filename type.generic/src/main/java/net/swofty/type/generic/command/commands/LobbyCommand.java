@@ -1,8 +1,5 @@
 package net.swofty.type.generic.command.commands;
 
-import net.minestom.server.command.builder.arguments.ArgumentEnum;
-import net.minestom.server.command.builder.arguments.ArgumentType;
-import net.minestom.server.entity.GameMode;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;

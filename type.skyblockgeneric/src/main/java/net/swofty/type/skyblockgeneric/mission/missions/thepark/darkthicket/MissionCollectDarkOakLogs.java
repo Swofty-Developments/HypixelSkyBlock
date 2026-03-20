@@ -1,14 +1,11 @@
 package net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket;
 
-import net.minestom.server.event.player.PlayerTickEndEvent;
 import net.minestom.server.event.player.PlayerTickEvent;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;

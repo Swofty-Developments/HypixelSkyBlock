@@ -5,9 +5,9 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIBakerShop;
-import net.swofty.type.hub.gui.GUIShopLumberMerchant;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -20,8 +20,6 @@ import net.swofty.type.generic.i18n.I18n;
 import java.util.List;
 import java.util.stream.Stream;
 
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-
 public class NPCBaker extends HypixelNPC {
 
     public NPCBaker() {
@@ -32,7 +30,6 @@ public class NPCBaker extends HypixelNPC {
                 if (!events.contains(CalendarEvent.NEW_YEAR)) {
                     return new String[]{""};
                 }
-                ;
                 return new String[]{"§fBaker", "§e§lCLICK"};
             }
 
@@ -52,7 +49,6 @@ public class NPCBaker extends HypixelNPC {
                 if (!events.contains(CalendarEvent.NEW_YEAR)) {
                     return new Pos(-6.5, 0, -47.5, 180, 0);
                 }
-                ;
                 return new Pos(-6.5, 70, -47.5, 180, 0);
             }
 

@@ -43,17 +43,17 @@ public class FullParty implements Party {
 
     @Override
     public Serializer<FullParty> getSerializer() {
-        return new Serializer<FullParty>() {
+        return new Serializer<>() {
             @Override
             public String serialize(FullParty value) {
                 JSONObject json = new JSONObject();
                 json.put("uuid", value.uuid.toString());
                 json.put("members", value.members.stream()
-                        .map(member -> new JSONObject()
-                                .put("uuid", member.uuid.toString())
-                                .put("role", member.role.name())
-                                .put("joined", member.joined)
-                        ).toList());
+                    .map(member -> new JSONObject()
+                        .put("uuid", member.uuid.toString())
+                        .put("role", member.role.name())
+                        .put("joined", member.joined)
+                    ).toList());
                 return json.toString();
             }
 
@@ -62,15 +62,15 @@ public class FullParty implements Party {
                 JSONObject jsonObject = new JSONObject(json);
                 UUID uuid = UUID.fromString(jsonObject.getString("uuid"));
                 List<Member> members = jsonObject.getJSONArray("members").toList().stream()
-                        .map(member -> {
-                            Map<String, Object> memberObject = (Map<String, Object>) member;
+                    .map(member -> {
+                        Map<String, Object> memberObject = (Map<String, Object>) member;
 
-                            return new Member(
-                                    UUID.fromString(memberObject.get("uuid").toString()),
-                                    Role.valueOf(memberObject.get("role").toString()),
-                                    memberObject.get("joined").toString().equals("true")
-                            );
-                        }).toList();
+                        return new Member(
+                            UUID.fromString(memberObject.get("uuid").toString()),
+                            Role.valueOf(memberObject.get("role").toString()),
+                            memberObject.get("joined").toString().equals("true")
+                        );
+                    }).toList();
                 return new FullParty(uuid, members);
             }
 

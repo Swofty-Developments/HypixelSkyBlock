@@ -2,17 +2,18 @@ package net.swofty.type.skyblockgeneric.block;
 
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.tag.Tag;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttributeHandler;
 import net.swofty.type.skyblockgeneric.block.attribute.attributes.BlockAttributeType;
 import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
+import org.tinylog.Logger;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SkyBlockBlock {
-    public List<BlockAttribute> attributes = new ArrayList<>();
+    public List<BlockAttribute<?>> attributes = new ArrayList<>();
     public Class<? extends CustomSkyBlockBlock> clazz;
     public CustomSkyBlockBlock instance = null;
 
@@ -43,8 +44,8 @@ public class SkyBlockBlock {
         }
 
         try {
-            instance = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            instance = clazz.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             Logger.error(e, "Failed to instantiate CustomSkyBlockBlock from block: {}", clazz.getSimpleName());
         }
     }
@@ -56,7 +57,7 @@ public class SkyBlockBlock {
     public Block toBlock() {
         Block block = instance.getDisplayMaterial();
 
-        for (BlockAttribute attribute : attributes) {
+        for (BlockAttribute<?> attribute : attributes) {
             block = block.withTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
         }
 
@@ -68,9 +69,9 @@ public class SkyBlockBlock {
             return instance;
 
         try {
-            instance = clazz.newInstance();
+            instance = clazz.getDeclaredConstructor().newInstance();
             return instance;
-        } catch (Exception e) {}
+        } catch (Exception _) {}
         return null;
     }
 

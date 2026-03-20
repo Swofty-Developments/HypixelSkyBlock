@@ -1,9 +1,6 @@
 package net.swofty.type.skyblockgeneric.event.actions.player;
 
 import net.kyori.adventure.key.Key;
-import net.swofty.commons.StringUtility;
-import net.swofty.commons.UnderstandableProxyServer;
-import org.tinylog.Logger;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -13,6 +10,8 @@ import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.StringUtility;
+import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -133,7 +132,7 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
                         }
                         try {
                             armorStand.remove();
-                        } catch (Exception e) {
+                        } catch (Exception _) {
                         }
                     }, 2, TimeUnit.SECONDS);
                 } else {

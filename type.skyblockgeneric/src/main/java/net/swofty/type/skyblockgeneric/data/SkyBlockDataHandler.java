@@ -165,7 +165,6 @@ public class SkyBlockDataHandler extends DataHandler {
     }
 
     /** Optionally typed getter (casts to the class you pass). */
-    @SuppressWarnings("unchecked")
     public <R extends Datapoint<?>> R get(Data datapoint, Class<R> type) {
         Datapoint<?> dp = datapoints.get(datapoint.key);
         return (R) (dp != null ? type.cast(dp) : type.cast(datapoint.defaultDatapoint));

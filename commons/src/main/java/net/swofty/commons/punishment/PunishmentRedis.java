@@ -8,8 +8,12 @@ import redis.clients.jedis.JedisPoolConfig;
 
 import java.net.URI;
 import java.time.Duration;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 public class PunishmentRedis {
     private static final String PREFIX = "punish:active:";

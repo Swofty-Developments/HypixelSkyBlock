@@ -2,7 +2,6 @@ package net.swofty.velocity.presence;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import net.swofty.commons.ServiceType;
 import net.swofty.commons.presence.PresenceInfo;
 import net.swofty.commons.protocol.objects.presence.UpdatePresenceProtocolObject;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;

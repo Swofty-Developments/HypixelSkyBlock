@@ -19,7 +19,7 @@ public class PartyWarpResponseEvent extends PartyResponseEvent {
 
     @Override
     public Serializer<PartyWarpResponseEvent> getSerializer() {
-        return new Serializer<PartyWarpResponseEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyWarpResponseEvent value) {
                 JSONObject json = new JSONObject();

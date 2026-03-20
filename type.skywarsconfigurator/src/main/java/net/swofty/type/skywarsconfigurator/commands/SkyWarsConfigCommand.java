@@ -9,7 +9,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skywarsconfigurator.MapConfigurationSession;
-import net.swofty.type.skywarsconfigurator.TypeSkywarsConfiguratorLoader;
+import net.swofty.type.skywarsconfigurator.TypeSkyWarsConfiguratorLoader;
 
 import java.util.stream.Collectors;
 
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
         permission = Rank.STAFF,
         allowsConsole = false
 )
-public class SkywarsConfigCommand extends HypixelCommand {
+public class SkyWarsConfigCommand extends HypixelCommand {
 
     @Override
     public void registerUsage(MinestomCommand command) {
@@ -50,7 +50,7 @@ public class SkywarsConfigCommand extends HypixelCommand {
             String id = context.get(idArg);
             String name = context.get(nameArg);
             MapConfigurationSession session = new MapConfigurationSession(id, name);
-            TypeSkywarsConfiguratorLoader.setCurrentSession(session);
+            TypeSkyWarsConfiguratorLoader.setCurrentSession(session);
             sender.sendMessage("§aStarted new configuration session for map: " + name + " (id: " + id + ")");
         }, newLit, idArg, nameArg);
 
@@ -64,7 +64,7 @@ public class SkywarsConfigCommand extends HypixelCommand {
         });
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
-            MapConfigurationSession session = TypeSkywarsConfiguratorLoader.getCurrentSession();
+            MapConfigurationSession session = TypeSkyWarsConfiguratorLoader.getCurrentSession();
             if (session == null) {
                 sender.sendMessage("§cNo active session!");
                 return;
@@ -91,7 +91,7 @@ public class SkywarsConfigCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
             if (!(sender instanceof HypixelPlayer player)) return;
-            MapConfigurationSession session = TypeSkywarsConfiguratorLoader.getCurrentSession();
+            MapConfigurationSession session = TypeSkyWarsConfiguratorLoader.getCurrentSession();
             if (session == null) {
                 sender.sendMessage("§cNo active session! Use /swconfig new <id> <name> first.");
                 return;
@@ -106,7 +106,7 @@ public class SkywarsConfigCommand extends HypixelCommand {
         var yArg = ArgumentType.Integer("y");
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
-            MapConfigurationSession session = TypeSkywarsConfiguratorLoader.getCurrentSession();
+            MapConfigurationSession session = TypeSkyWarsConfiguratorLoader.getCurrentSession();
             if (session == null) {
                 sender.sendMessage("§cNo active session!");
                 return;
@@ -124,7 +124,7 @@ public class SkywarsConfigCommand extends HypixelCommand {
         var maxZArg = ArgumentType.Integer("maxZ");
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
-            MapConfigurationSession session = TypeSkywarsConfiguratorLoader.getCurrentSession();
+            MapConfigurationSession session = TypeSkyWarsConfiguratorLoader.getCurrentSession();
             if (session == null) {
                 sender.sendMessage("§cNo active session!");
                 return;
@@ -142,7 +142,7 @@ public class SkywarsConfigCommand extends HypixelCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
             if (!(sender instanceof HypixelPlayer player)) return;
-            MapConfigurationSession session = TypeSkywarsConfiguratorLoader.getCurrentSession();
+            MapConfigurationSession session = TypeSkyWarsConfiguratorLoader.getCurrentSession();
             if (session == null) {
                 sender.sendMessage("§cNo active session!");
                 return;
@@ -156,7 +156,7 @@ public class SkywarsConfigCommand extends HypixelCommand {
         var saveLit = ArgumentType.Literal("save");
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
-            MapConfigurationSession session = TypeSkywarsConfiguratorLoader.getCurrentSession();
+            MapConfigurationSession session = TypeSkyWarsConfiguratorLoader.getCurrentSession();
             if (session == null) {
                 sender.sendMessage("§cNo active session!");
                 return;
@@ -169,7 +169,7 @@ public class SkywarsConfigCommand extends HypixelCommand {
         var statusLit = ArgumentType.Literal("status");
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
-            MapConfigurationSession session = TypeSkywarsConfiguratorLoader.getCurrentSession();
+            MapConfigurationSession session = TypeSkyWarsConfiguratorLoader.getCurrentSession();
             if (session == null) {
                 sender.sendMessage("§cNo active session!");
                 return;

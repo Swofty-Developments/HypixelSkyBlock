@@ -5,7 +5,14 @@ import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.game.Game;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -121,7 +128,7 @@ public class OrchestratorCache {
 
 		// Prefer servers with more available capacity
 		candidates.sort(Comparator.comparingInt(GameServerState::availableSlots).reversed());
-		int topAvail = candidates.get(0).availableSlots();
+		int topAvail = candidates.getFirst().availableSlots();
 
 		List<GameServerState> topServers = new ArrayList<>();
 		for (GameServerState server : candidates) {

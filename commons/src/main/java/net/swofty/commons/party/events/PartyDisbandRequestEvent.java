@@ -24,7 +24,7 @@ public class PartyDisbandRequestEvent extends PartyEvent {
 
     @Override
     public Serializer<PartyDisbandRequestEvent> getSerializer() {
-        return new Serializer<PartyDisbandRequestEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyDisbandRequestEvent value) {
                 JSONObject json = new JSONObject();

@@ -1,6 +1,5 @@
 package net.swofty.anticheat.loader.minestom.packets;
 
-import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.network.packet.client.play.ClientAnimationPacket;
 import net.swofty.anticheat.event.packet.AnimationPacket;

@@ -1,6 +1,5 @@
 package net.swofty.type.lobby.item.impl;
 
-import net.minestom.server.coordinate.CoordConversion;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.ItemStack;
