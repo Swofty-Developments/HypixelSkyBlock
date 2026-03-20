@@ -3,21 +3,21 @@ package net.swofty.type.generic.user;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
-import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
+import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.i18n.I18n;
@@ -45,6 +45,11 @@ public class HypixelPlayer extends Player {
 
 		joined = System.currentTimeMillis();
 		hookManager = new PlayerHookManager(this, new HashMap<>());
+	}
+
+	public void notImplemented() {
+		sendMessage(Component.text("§cThis feature hasn't been implemented yet. §aOpen a Pull Request HERE to get it added quickly!")
+			.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
 	}
 
 	public static String getDisplayName(UUID uuid) {

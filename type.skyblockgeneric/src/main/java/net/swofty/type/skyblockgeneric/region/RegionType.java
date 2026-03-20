@@ -120,6 +120,18 @@ public enum RegionType {
 	DIAMOND_RESERVE("Diamond Reserve", DiamondReserveConfiguration.class),
 	OBSIDIAN_SANCTUARY("Obsidian Sanctuary", ObsidianSanctuaryConfiguration.class),
 
+	// Galatea
+	TANGLEBURGS_PATH("Tangleburg's Path"),
+	TANGLEBURG("Tangleburg"),
+	TANGLEBURG_BANK("Tangleburg Bank", "§6"),
+	EVERGREEN_PLATEAU("Evergreen Plateau", "§a"),
+	SOUTH_REACHES("South Reaches", "§a"),
+	MOONGLADES_EDGE("Moonglade's Edge", "§2"),
+	MOONGLADE_MARSH("Moonglade Marsh", "§2"),
+	MURKWATER_LOCH("Murkwater Loch", "§2"),
+	MURKWATER_SHALLOWS("Murkwater Shallows", "§3"),
+	NORTH_WETLANDS("North Wetlands", "§2"),
+
 	DWARVEN_VILLAGE("Dwarven Village", DwarvenMinesConfiguration.class),
 	DWARVEN_MINES("Dwarven Mines", "§2", DwarvenMinesConfiguration.class),
 	GOBLIN_BURROWS("Goblin Burrows", DwarvenMinesConfiguration.class),

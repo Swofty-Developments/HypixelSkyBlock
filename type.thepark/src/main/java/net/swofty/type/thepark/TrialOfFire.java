@@ -65,8 +65,7 @@ public class TrialOfFire {
 		// TODO: remove this
 		if (trial == Trial.II) {
 			sendMessage(player, "§cTrials are not finished.");
-			player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-					.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+			player.notImplemented();
 			return;
 		}
 

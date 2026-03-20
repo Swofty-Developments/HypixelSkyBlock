@@ -1,3 +1,7 @@
+<script setup>
+import contributors from '../.vitepress/theme/contributors.vue'
+</script>
+
 # Credits
 
 ## Contributors
@@ -5,6 +9,8 @@
 This project is maintained by [Swofty Developments](https://github.com/Swofty-Developments) and all the amazing contributors.
 
 View all contributors on [GitHub](https://github.com/Swofty-Developments/HypixelSkyBlock/graphs/contributors).
+
+<contributors />
 
 ## Special Thanks
 

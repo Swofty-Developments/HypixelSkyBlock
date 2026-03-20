@@ -33,7 +33,8 @@ public record RegionDatabase(String id) implements MongoDB {
 			try {
 				type = RegionType.valueOf(doc.getString("type"));
 			} catch (IllegalArgumentException e) {
-				throw new IllegalArgumentException("Region " + name + " has an invalid type: " + doc.getString("type"));
+				continue;
+				//throw new IllegalArgumentException("Region " + name + " has an invalid type: " + doc.getString("type"));
 			}
 			int x1 = doc.getInteger("x1");
 			int y1 = doc.getInteger("y1");
