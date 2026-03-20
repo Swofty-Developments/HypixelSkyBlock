@@ -2,7 +2,7 @@
 adventure = "4.26.1"
 annotations = "26.1.0"
 atlasRedis = "1.1.5"
-byte-buddy = "1.18.5"
+byte-buddy = "1.18.7"
 caffeine = "3.2.3"
 configlib-yaml = "4.8.1"
 configurate-yaml = "4.2.0"
