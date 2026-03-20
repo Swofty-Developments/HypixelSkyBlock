@@ -2,12 +2,14 @@ package net.swofty.service.election;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.client.ClientSession;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.ReplaceOptions;
+import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 import net.swofty.service.generic.MongoDB;
 import org.bson.Document;
@@ -92,35 +94,40 @@ public record ElectionDatabase(String key) implements MongoDB {
     public static void castVote(String playerId, String candidateName, int electionYear) {
         String talliesDocId = "tallies_" + electionYear;
 
-        Document existingVote = votesCollection.find(
-                Filters.and(Filters.eq("_id", playerId), Filters.eq("electionYear", electionYear))
-        ).first();
+        try (ClientSession session = client.startSession()) {
+            session.withTransaction(() -> {
+                Document existingVote = votesCollection.find(session,
+                        Filters.and(Filters.eq("_id", playerId), Filters.eq("electionYear", electionYear))
+                ).first();
 
-        if (existingVote != null) {
-            String oldCandidate = existingVote.getString("candidate");
-            if (oldCandidate != null && !oldCandidate.equals(candidateName)) {
-                talliesCollection.updateOne(
-                        Filters.eq("_id", talliesDocId),
-                        Updates.inc(oldCandidate, -1L)
+                if (existingVote != null) {
+                    String oldCandidate = existingVote.getString("candidate");
+                    if (oldCandidate != null && !oldCandidate.equals(candidateName)) {
+                        talliesCollection.updateOne(session,
+                                Filters.eq("_id", talliesDocId),
+                                Updates.inc(oldCandidate, -1L)
+                        );
+                    }
+                }
+
+                Document voteDoc = new Document("_id", playerId)
+                        .append("candidate", candidateName)
+                        .append("electionYear", electionYear);
+                votesCollection.replaceOne(session,
+                        Filters.and(Filters.eq("_id", playerId), Filters.eq("electionYear", electionYear)),
+                        voteDoc,
+                        new ReplaceOptions().upsert(true)
                 );
-            }
-        }
 
-        Document voteDoc = new Document("_id", playerId)
-                .append("candidate", candidateName)
-                .append("electionYear", electionYear);
-        votesCollection.replaceOne(
-                Filters.eq("_id", playerId),
-                voteDoc,
-                new ReplaceOptions().upsert(true)
-        );
-
-        if (existingVote == null || !candidateName.equals(existingVote.getString("candidate"))) {
-            talliesCollection.updateOne(
-                    Filters.eq("_id", talliesDocId),
-                    Updates.inc(candidateName, 1L),
-                    new com.mongodb.client.model.UpdateOptions().upsert(true)
-            );
+                if (existingVote == null || !candidateName.equals(existingVote.getString("candidate"))) {
+                    talliesCollection.updateOne(session,
+                            Filters.eq("_id", talliesDocId),
+                            Updates.inc(candidateName, 1L),
+                            new UpdateOptions().upsert(true)
+                    );
+                }
+                return null;
+            });
         }
     }
 
