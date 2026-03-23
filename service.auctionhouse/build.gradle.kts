@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     application
-    id("com.gradleup.shadow") version "9.3.1"
+    id("com.gradleup.shadow") version "9.3.2"
 }
 
 group = "net.swofty"
@@ -23,13 +23,13 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
+    implementation(libs.caffeine)
     implementation(project(":service.generic"))
     implementation(project(":type.skyblockgeneric"))
     implementation(project(":commons"))
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("org.mongodb:bson:5.6.4")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.4")
+    implementation(libs.gson)
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
 }
 
 application {

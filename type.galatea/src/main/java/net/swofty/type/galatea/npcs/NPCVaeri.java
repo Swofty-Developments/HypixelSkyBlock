@@ -9,7 +9,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCVaeri extends HypixelNPC {
 
-
     public NPCVaeri() {
         super(new HumanConfiguration() {
             @Override

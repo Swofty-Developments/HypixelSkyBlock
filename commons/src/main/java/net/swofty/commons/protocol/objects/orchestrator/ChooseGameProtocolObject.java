@@ -13,7 +13,7 @@ public class ChooseGameProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<ChooseGameMessage> getSerializer() {
-        return new Serializer<ChooseGameMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(ChooseGameMessage value) {
                 JSONObject json = new JSONObject();
@@ -27,9 +27,9 @@ public class ChooseGameProtocolObject extends ProtocolObject
             public ChooseGameMessage deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
                 return new ChooseGameMessage(
-                        UUID.fromString(obj.getString("uuid")),
-                        UnderstandableProxyServer.singleFromJSON(obj.getJSONObject("server")),
-                        obj.getString("gameId")
+                    UUID.fromString(obj.getString("uuid")),
+                    UnderstandableProxyServer.singleFromJSON(obj.getJSONObject("server")),
+                    obj.getString("gameId")
                 );
             }
 
@@ -42,7 +42,7 @@ public class ChooseGameProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<ChooseGameResponse> getReturnSerializer() {
-        return new Serializer<ChooseGameResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(ChooseGameResponse value) {
                 JSONObject json = new JSONObject();

@@ -27,7 +27,7 @@ public class PartyKickRequestEvent extends PartyEvent {
 
     @Override
     public Serializer<PartyKickRequestEvent> getSerializer() {
-        return new Serializer<PartyKickRequestEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyKickRequestEvent value) {
                 JSONObject json = new JSONObject();

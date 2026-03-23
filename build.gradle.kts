@@ -1,3 +1,7 @@
+import org.gradle.api.artifacts.VersionCatalog
+import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.kotlin.dsl.getByType
+
 plugins {
     base
     java
@@ -7,6 +11,8 @@ plugins {
 
 group = "net.swofty"
 version = "1.0"
+
+val libsCatalog: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 subprojects {
     apply(plugin = "java")
@@ -28,18 +34,18 @@ subprojects {
     }
 
     dependencies {
-        testImplementation("org.junit.jupiter:junit-jupiter:6.0.3")
+        testImplementation(libsCatalog.findLibrary("junit-jupiter").get())
 
-        implementation("org.reflections:reflections:0.10.2")
-        implementation("org.json:json:20251224")
-        implementation("io.sentry:sentry-async-profiler:8.30.0")
+        implementation(libsCatalog.findLibrary("reflections").get())
+        implementation(libsCatalog.findLibrary("json").get())
+        implementation(libsCatalog.findLibrary("sentry-async-profiler").get())
 
-        compileOnly("org.projectlombok:lombok:1.18.42")
+        compileOnly(libsCatalog.findLibrary("lombok").get())
 
-        implementation(platform("tools.jackson:jackson-bom:3.1.0"))
-        implementation("tools.jackson.core:jackson-core")
-        implementation("tools.jackson.core:jackson-databind")
-        implementation("com.fasterxml.jackson.core:jackson-annotations:2.20")
+        implementation(platform(libsCatalog.findLibrary("jackson-bom").get()))
+        implementation(libsCatalog.findLibrary("jackson-core").get())
+        implementation(libsCatalog.findLibrary("jackson-databind").get())
+        implementation(libsCatalog.findLibrary("jackson-annotations").get())
     }
 
     tasks.test {

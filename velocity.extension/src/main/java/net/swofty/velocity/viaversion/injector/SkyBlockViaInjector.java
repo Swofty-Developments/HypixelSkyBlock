@@ -7,13 +7,13 @@ import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.util.ReflectionUtil;
 import io.netty.channel.ChannelInitializer;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.SortedSet;
-
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.packet.PlayerChannelInitializer;
 import org.jetbrains.annotations.Nullable;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.SortedSet;
 
 public class SkyBlockViaInjector implements ViaInjector {
     public static final Method GET_PLAYER_INFO_FORWARDING_MODE = getPlayerInfoForwardingModeMethod();
@@ -94,7 +94,7 @@ public class SkyBlockViaInjector implements ViaInjector {
         JsonObject data = new JsonObject();
         try {
             data.addProperty("currentInitializer", getInitializer().getClass().getName());
-        } catch (Exception e) {
+        } catch (Exception _) {
         }
         return data;
     }

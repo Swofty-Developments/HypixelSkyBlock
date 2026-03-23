@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * Pool for Dark Auction round 2 (book round)
  * All books have equal chance of being selected
- *
+ * <p>
  * In actual Hypixel, these are specific enchanted books like:
  * - Soul Eater V
  * - One For All I
@@ -19,7 +19,7 @@ import java.util.Random;
  * - Ender Slayer VII
  * - No Pain No Gain I
  * - Mana Vampire VI
- *
+ * <p>
  * For now, we use ENCHANTED_BOOK as a placeholder.
  * The specific enchantment type would be handled by item metadata.
  */

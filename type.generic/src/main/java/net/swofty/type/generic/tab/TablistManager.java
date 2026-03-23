@@ -13,7 +13,15 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -81,7 +89,7 @@ public abstract class TablistManager {
                                 player.sendPacket(teamPacket);
                             }
 
-                            UUID uuid = UUID.nameUUIDFromBytes((player.getUuid().toString() + "#tab#" + slotIndex)
+                            UUID uuid = UUID.nameUUIDFromBytes((player.getUuid() + "#tab#" + slotIndex)
                                 .getBytes(StandardCharsets.UTF_8));
                             cache.tabEntries.add(uuid);
 

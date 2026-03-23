@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BazaarService implements SkyBlockService {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SkyBlockService.init(new BazaarService());
 
         // Connect to MongoDB for orders
