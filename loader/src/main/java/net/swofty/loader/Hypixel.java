@@ -20,6 +20,7 @@ import net.swofty.anticheat.loader.minestom.MinestomLoader;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.TestFlow;
 import net.swofty.commons.config.ConfigProvider;
+import net.swofty.commons.management.ManagementServer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.proxyapi.ProxyAPI;
@@ -53,6 +54,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
@@ -62,6 +64,7 @@ public class Hypixel {
     private static UUID serverUUID;
 
     private static final boolean ENABLE_SPARK = ConfigProvider.settings().getIntegrations().isSpark();
+    private static final AtomicBoolean READY = new AtomicBoolean(false);
 
     @SneakyThrows
     static void main(String[] args) {
@@ -88,6 +91,47 @@ public class Hypixel {
         Map<String, String> options = parseOptionalArgs(args);
         Integer maxPlayers = options.containsKey("--max-players") ?
                 Integer.parseInt(options.get("--max-players")) : 20;
+        String advertisedHost = resolveAdvertisedHost();
+        int advertisedPort = ConfigProvider.settings().getAdvertisedPort();
+        AtomicInteger managementMaxPlayers = new AtomicInteger(maxPlayers);
+
+        ManagementServer.start(
+            "game-server",
+            ConfigProvider.settings().getManagement(),
+            () -> true,
+            READY::get,
+            () -> {
+                Map<String, String> baseLabels = new HashMap<>();
+                baseLabels.put("server_type", serverType.name());
+                String serverName = HypixelConst.getServerName();
+                if (serverName != null) {
+                    baseLabels.put("server_name", serverName);
+                }
+                if (serverUUID != null) {
+                    baseLabels.put("server_uuid", serverUUID.toString());
+                }
+
+                return ManagementServer.metricLine(
+                    "hypixel_game_online_players",
+                    MinecraftServer.getConnectionManager().getOnlinePlayers().size(),
+                    baseLabels
+                ) +
+                    ManagementServer.metricLine(
+                        "hypixel_game_capacity",
+                        managementMaxPlayers.get(),
+                        baseLabels
+                    ) +
+                    ManagementServer.metricLine(
+                        "hypixel_game_advertised_endpoint",
+                        1,
+                        Map.of(
+                            "server_type", serverType.name(),
+                            "host", advertisedHost,
+                            "port", Integer.toString(advertisedPort)
+                        )
+                    );
+            }
+        );
 
         // Test flow configuration
         String testFlowName = options.get("--test-flow");
@@ -178,14 +222,14 @@ public class Hypixel {
             Spark.enable(Files.createTempDirectory("spark"));
         }
 
-        // Ensure all services are running
-        typeLoader.getRequiredServices().forEach(serviceType -> {
-            new ProxyService(serviceType).isOnline().thenAccept(online -> {
-                if (!online) {
-                    Logger.error("Service " + serviceType.name() + " is not online!");
-                }
-            });
-        });
+        // Give backing services a brief window to register before checking availability.
+        CompletableFuture.delayedExecutor(3, TimeUnit.SECONDS).execute(() ->
+            typeLoader.getRequiredServices().forEach(serviceType ->
+                new ProxyService(serviceType).isOnline().thenAccept(online -> {
+                    if (!online) {
+                        Logger.error("Service " + serviceType.name() + " is not online!");
+                    }
+                })));
         typeLoader.afterInitialize(minecraftServer);
 
         MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION = true;
@@ -206,6 +250,7 @@ public class Hypixel {
             Logger.info("Internal ID: " + serverUUID.toString());
             HypixelConst.setPort(port);
             HypixelConst.setMaxPlayers(maxPlayers);
+            managementMaxPlayers.set(maxPlayers);
             HypixelConst.setServerUUID(serverUUID);
 
             ServerOutboundMessage.sendMessageToProxy(
@@ -228,6 +273,7 @@ public class Hypixel {
                         }
 
                         Logger.info("Received server name: " + HypixelConst.getServerName());
+                        READY.set(true);
                     });
             checkProxyConnected(MinecraftServer.getSchedulerManager());
 
@@ -262,7 +308,8 @@ public class Hypixel {
         JSONObject registerMessage = new JSONObject()
                 .put("type", serverType.name())
                 .put("max_players", maxPlayers)
-                .put("host", InetAddress.getLocalHost().getHostName());
+            .put("host", advertisedHost)
+            .put("port", advertisedPort);
 
         // Add test flow information if this is a test flow server
         if (isTestFlow) {
@@ -276,6 +323,18 @@ public class Hypixel {
                 ToProxyChannels.REGISTER_SERVER,
                 registerMessage,
                 (response) -> startServer.complete(Integer.parseInt(response.get("port").toString())));
+    }
+
+    private static String resolveAdvertisedHost() {
+        String configured = ConfigProvider.settings().getAdvertisedHost();
+        if (configured != null && !configured.isBlank()) {
+            return configured;
+        }
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (Exception ignored) {
+            return ConfigProvider.settings().getHostName();
+        }
     }
 
     private static void handleTestFlowRegistration(String testFlowName, String handler, String players,

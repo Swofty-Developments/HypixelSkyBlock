@@ -1,7 +1,3 @@
-import org.gradle.api.artifacts.VersionCatalog
-import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.getByType
-
 plugins {
     base
     java
@@ -50,5 +46,38 @@ subprojects {
 
     tasks.test {
         useJUnitPlatform()
+    }
+}
+
+val deployableProjects = linkedMapOf(
+    ":loader" to "HypixelCore.jar",
+    ":velocity.extension" to "SkyBlockProxy.jar",
+    ":service.api" to "ServiceAPI.jar",
+    ":service.auctionhouse" to "ServiceAuctionHouse.jar",
+    ":service.bazaar" to "ServiceBazaar.jar",
+    ":service.darkauction" to "ServiceDarkAuction.jar",
+    ":service.datamutex" to "ServiceDataMutex.jar",
+    ":service.friend" to "ServiceFriend.jar",
+    ":service.itemtracker" to "ServiceItemTracker.jar",
+    ":service.orchestrator" to "ServiceOrchestrator.jar",
+    ":service.party" to "ServiceParty.jar",
+    ":service.punishment" to "ServicePunishment.jar"
+)
+
+val availableDeployableProjects = deployableProjects.filterKeys { path ->
+    findProject(path) != null
+}
+
+tasks.register<Sync>("assembleDeploymentArtifacts") {
+    group = "distribution"
+    description = "Builds and collects all deployable fat jars into build/deployment."
+
+    val shadowTasks = availableDeployableProjects.keys.map { path -> "$path:shadowJar" }
+    dependsOn(shadowTasks)
+
+    into(layout.buildDirectory.dir("deployment"))
+    availableDeployableProjects.forEach { (path, jarName) ->
+        val projectPath = path.removePrefix(":")
+        from(layout.projectDirectory.file("$projectPath/build/libs/$jarName"))
     }
 }

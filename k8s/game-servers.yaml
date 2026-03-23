@@ -1,0 +1,259 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prototype-lobby
+  namespace: hypixel
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prototype-lobby
+      hypixel/server-type: PROTOTYPE_LOBBY
+  template:
+    metadata:
+      labels:
+        app: prototype-lobby
+        hypixel/server-type: PROTOTYPE_LOBBY
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: prototype-lobby
+      containers:
+        - name: game-server
+          image: ghcr.io/your-org/hypixel-game:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          env:
+            - name: HYPIXEL_ADVERTISED_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: SERVICE_CMD
+              value: java $JAVA_OPTS -jar HypixelCore.jar PROTOTYPE_LOBBY
+          ports:
+            - name: minecraft
+              containerPort: 25565
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "768Mi"
+            limits:
+              cpu: "2"
+              memory: "2Gi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bedwars-lobby
+  namespace: hypixel
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bedwars-lobby
+      hypixel/server-type: BEDWARS_LOBBY
+  template:
+    metadata:
+      labels:
+        app: bedwars-lobby
+        hypixel/server-type: BEDWARS_LOBBY
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: bedwars-lobby
+      containers:
+        - name: game-server
+          image: ghcr.io/your-org/hypixel-game:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          env:
+            - name: HYPIXEL_ADVERTISED_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: SERVICE_CMD
+              value: java $JAVA_OPTS -jar HypixelCore.jar BEDWARS_LOBBY
+          ports:
+            - name: minecraft
+              containerPort: 25565
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "768Mi"
+            limits:
+              cpu: "2"
+              memory: "2Gi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bedwars-game
+  namespace: hypixel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bedwars-game
+      hypixel/server-type: BEDWARS_GAME
+  template:
+    metadata:
+      labels:
+        app: bedwars-game
+        hypixel/server-type: BEDWARS_GAME
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: bedwars-game
+      containers:
+        - name: game-server
+          image: ghcr.io/your-org/hypixel-game:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          env:
+            - name: HYPIXEL_ADVERTISED_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: SERVICE_CMD
+              value: java $JAVA_OPTS -jar HypixelCore.jar BEDWARS_GAME
+          ports:
+            - name: minecraft
+              containerPort: 25565
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+          resources:
+            requests:
+              cpu: "750m"
+              memory: "1Gi"
+            limits:
+              cpu: "3"
+              memory: "3Gi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skyblock-hub
+  namespace: hypixel
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: skyblock-hub
+      hypixel/server-type: SKYBLOCK_HUB
+  template:
+    metadata:
+      labels:
+        app: skyblock-hub
+        hypixel/server-type: SKYBLOCK_HUB
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: skyblock-hub
+      containers:
+        - name: game-server
+          image: ghcr.io/your-org/hypixel-game:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          env:
+            - name: HYPIXEL_ADVERTISED_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: SERVICE_CMD
+              value: java $JAVA_OPTS -jar HypixelCore.jar SKYBLOCK_HUB
+          ports:
+            - name: minecraft
+              containerPort: 25565
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+          resources:
+            requests:
+              cpu: "1"
+              memory: "2Gi"
+            limits:
+              cpu: "4"
+              memory: "4Gi"

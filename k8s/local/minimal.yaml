@@ -1,0 +1,435 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hypixel-local
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hypixel-config
+  namespace: hypixel-local
+data:
+  HYPIXEL_HOST_NAME: "0.0.0.0"
+  HYPIXEL_ADVERTISED_PORT: "25565"
+  HYPIXEL_MANAGEMENT_ENABLED: "true"
+  HYPIXEL_MANAGEMENT_HOST_NAME: "0.0.0.0"
+  HYPIXEL_MANAGEMENT_PORT: "9090"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hypixel-secrets
+  namespace: hypixel-local
+type: Opaque
+stringData:
+  HYPIXEL_MONGODB: "mongodb://mongodb.hypixel-local.svc.cluster.local:27017/Minestom?directConnection=true"
+  HYPIXEL_REDIS_URI: "redis://redis.hypixel-local.svc.cluster.local:6379"
+  HYPIXEL_VELOCITY_SECRET: "change-me-local"
+  FORWARDING_SECRET: "change-me-local"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  namespace: hypixel-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:7.0
+          ports:
+            - containerPort: 27017
+              name: mongo
+          readinessProbe:
+            tcpSocket:
+              port: mongo
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: mongo
+            initialDelaySeconds: 15
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: hypixel-local
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - name: mongo
+      port: 27017
+      targetPort: mongo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: hypixel-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7.4
+          ports:
+            - containerPort: 6379
+              name: redis
+          readinessProbe:
+            tcpSocket:
+              port: redis
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: redis
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: hypixel-local
+spec:
+  selector:
+    app: redis
+  ports:
+    - name: redis
+      port: 6379
+      targetPort: redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hypixel-proxy
+  namespace: hypixel-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hypixel-proxy
+  template:
+    metadata:
+      labels:
+        app: hypixel-proxy
+    spec:
+      containers:
+        - name: proxy
+          image: hypixel-local/proxy:dev
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: minecraft
+              containerPort: 25565
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+            initialDelaySeconds: 30
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hypixel-proxy
+  namespace: hypixel-local
+spec:
+  type: LoadBalancer
+  selector:
+    app: hypixel-proxy
+  ports:
+    - name: minecraft
+      port: 25565
+      targetPort: minecraft
+    - name: management
+      port: 9090
+      targetPort: management
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-auctionhouse
+  namespace: hypixel-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-auctionhouse
+  template:
+    metadata:
+      labels:
+        app: service-auctionhouse
+    spec:
+      containers:
+        - name: service
+          image: hypixel-local/service-auctionhouse:dev
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+            initialDelaySeconds: 20
+            periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-bazaar
+  namespace: hypixel-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-bazaar
+  template:
+    metadata:
+      labels:
+        app: service-bazaar
+    spec:
+      containers:
+        - name: service
+          image: hypixel-local/service-bazaar:dev
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+            initialDelaySeconds: 20
+            periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-datamutex
+  namespace: hypixel-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-datamutex
+  template:
+    metadata:
+      labels:
+        app: service-datamutex
+    spec:
+      containers:
+        - name: service
+          image: hypixel-local/service-datamutex:dev
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+            initialDelaySeconds: 20
+            periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-itemtracker
+  namespace: hypixel-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-itemtracker
+  template:
+    metadata:
+      labels:
+        app: service-itemtracker
+    spec:
+      containers:
+        - name: service
+          image: hypixel-local/service-itemtracker:dev
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+            initialDelaySeconds: 20
+            periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prototype-lobby
+  namespace: hypixel-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prototype-lobby
+  template:
+    metadata:
+      labels:
+        app: prototype-lobby
+    spec:
+      containers:
+        - name: game-server
+          image: hypixel-local/game-server:dev
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          env:
+            - name: HYPIXEL_ADVERTISED_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: SERVICE_CMD
+              value: java $JAVA_OPTS -jar HypixelCore.jar PROTOTYPE_LOBBY
+          ports:
+            - name: minecraft
+              containerPort: 25565
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+            initialDelaySeconds: 35
+            periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skyblock-hub
+  namespace: hypixel-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: skyblock-hub
+  template:
+    metadata:
+      labels:
+        app: skyblock-hub
+    spec:
+      containers:
+        - name: game-server
+          image: hypixel-local/game-server:dev
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          env:
+            - name: HYPIXEL_ADVERTISED_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: SERVICE_CMD
+              value: java $JAVA_OPTS -jar HypixelCore.jar SKYBLOCK_HUB
+          ports:
+            - name: minecraft
+              containerPort: 25565
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+            initialDelaySeconds: 35
+            periodSeconds: 10

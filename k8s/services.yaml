@@ -1,0 +1,413 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-auctionhouse
+  namespace: hypixel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-auctionhouse
+  template:
+    metadata:
+      labels:
+        app: service-auctionhouse
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: service
+          image: ghcr.io/your-org/hypixel-service-auctionhouse:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-orchestrator
+  namespace: hypixel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-orchestrator
+  template:
+    metadata:
+      labels:
+        app: service-orchestrator
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: service
+          image: ghcr.io/your-org/hypixel-service-orchestrator:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "1"
+              memory: "768Mi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-api
+  namespace: hypixel
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: service-api
+  template:
+    metadata:
+      labels:
+        app: service-api
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: service
+          image: ghcr.io/your-org/hypixel-service-api:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "384Mi"
+            limits:
+              cpu: "2"
+              memory: "1Gi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-darkauction
+  namespace: hypixel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-darkauction
+  template:
+    metadata:
+      labels:
+        app: service-darkauction
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: service
+          image: ghcr.io/your-org/hypixel-service-darkauction:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-datamutex
+  namespace: hypixel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-datamutex
+  template:
+    metadata:
+      labels:
+        app: service-datamutex
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: service
+          image: ghcr.io/your-org/hypixel-service-datamutex:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-friend
+  namespace: hypixel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-friend
+  template:
+    metadata:
+      labels:
+        app: service-friend
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: service
+          image: ghcr.io/your-org/hypixel-service-friend:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-itemtracker
+  namespace: hypixel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-itemtracker
+  template:
+    metadata:
+      labels:
+        app: service-itemtracker
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: service
+          image: ghcr.io/your-org/hypixel-service-itemtracker:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-bazaar
+  namespace: hypixel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-bazaar
+  template:
+    metadata:
+      labels:
+        app: service-bazaar
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: service
+          image: ghcr.io/your-org/hypixel-service-bazaar:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-party
+  namespace: hypixel
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: service-party
+  template:
+    metadata:
+      labels:
+        app: service-party
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: service
+          image: ghcr.io/your-org/hypixel-service-party:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-punishment
+  namespace: hypixel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-punishment
+  template:
+    metadata:
+      labels:
+        app: service-punishment
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: service
+          image: ghcr.io/your-org/hypixel-service-punishment:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management

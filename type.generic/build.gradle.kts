@@ -23,6 +23,7 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":packer"))
     implementation(project(":proxy.api"))
+    implementation(libs.atlas.redis)
     implementation(libs.mongodb.bson)
     implementation(libs.mongodb.driver.sync)
     // Must match AtlasRedisAPI's Jedis version to avoid conflicts

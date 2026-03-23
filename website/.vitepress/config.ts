@@ -56,6 +56,7 @@ export default defineConfig({
             { text: "Proxy Setup", link: "/docs/setup/proxy" },
             { text: "Game Servers", link: "/docs/setup/game-servers" },
             { text: "Services", link: "/docs/setup/services" },
+            { text: "Kubernetes on Linux", link: "/docs/setup/kubernetes-linux" },
             { text: "Resource Pack", link: "/docs/setup/resource-pack" },
             { text: "Forums Website", link: "/docs/setup/forums" },
           ],

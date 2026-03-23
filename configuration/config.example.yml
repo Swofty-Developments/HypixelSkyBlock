@@ -1,4 +1,6 @@
 host-name: 0.0.0.0
+advertised-host: ""
+advertised-port: 25565
 transfer-timeout: 800
 mongodb: mongodb://localhost
 redis-url: redis://localhost:6379
@@ -8,6 +10,10 @@ sandbox: false
 spark: false
 anticheat: false
 redis-uri: redis://localhost:6379
+management:
+    enabled: true
+    host-name: 0.0.0.0
+    port: 9090
 limbo:
     host-name: 127.0.0.1
     port: 65535

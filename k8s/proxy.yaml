@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hypixel-proxy
+  namespace: hypixel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hypixel-proxy
+  template:
+    metadata:
+      labels:
+        app: hypixel-proxy
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: proxy
+          image: ghcr.io/your-org/hypixel-proxy:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: hypixel-config
+            - secretRef:
+                name: hypixel-secrets
+          ports:
+            - name: minecraft
+              containerPort: 25565
+            - name: management
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: management
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "768Mi"
+            limits:
+              cpu: "2"
+              memory: "2Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hypixel-proxy
+  namespace: hypixel
+spec:
+  selector:
+    app: hypixel-proxy
+  ports:
+    - name: minecraft
+      port: 25565
+      targetPort: minecraft
+    - name: management
+      port: 9090
+      targetPort: management

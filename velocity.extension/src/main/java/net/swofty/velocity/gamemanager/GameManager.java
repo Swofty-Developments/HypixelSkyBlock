@@ -15,13 +15,21 @@ import org.json.JSONObject;
 
 import java.net.InetSocketAddress;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameManager {
     public static final int SLEEP_TIME = 300;
     @Getter
-    private static Map<ServerType, ArrayList<GameServer>> servers = new HashMap<>();
+    private static final Map<ServerType, CopyOnWriteArrayList<GameServer>> servers = new ConcurrentHashMap<>();
 
     public static GameServer addServer(ServerType type, UUID serverID, String host, int port, int maxPlayers) {
         port = port == -1 ? getNextAvailablePort() : port;    // if port is -1 then get next available port
@@ -41,8 +49,7 @@ public class GameManager {
                 rootName + displayName, shortenedRootName + displayName,
                 serverID, registeredServer, maxPlayers
         );
-        if (!servers.containsKey(type)) servers.put(type, new ArrayList<>(List.of(server)));
-        else servers.get(type).add(server);
+        servers.computeIfAbsent(type, ignored -> new CopyOnWriteArrayList<>()).add(server);
 
         return server;
     }
@@ -52,7 +59,7 @@ public class GameManager {
     }
 
     public static @Nullable GameServer getFromRegisteredServer(RegisteredServer registeredServer) {
-        for (ArrayList<GameServer> gameServers : servers.values()) {
+        for (List<GameServer> gameServers : servers.values()) {
             for (GameServer gameServer : gameServers) {
                 if (gameServer.registeredServer().equals(registeredServer)) {
                     return gameServer;
@@ -89,7 +96,7 @@ public class GameManager {
     }
 
     public static GameServer getFromUUID(UUID uuid) {
-        for (ArrayList<GameServer> gameServers : servers.values()) {
+        for (List<GameServer> gameServers : servers.values()) {
             for (GameServer gameServer : gameServers) {
                 if (gameServer.internalID().equals(uuid)) return gameServer;
             }
@@ -127,7 +134,7 @@ public class GameManager {
 
     private static int getNextAvailableDisplayName() {
         Set<Integer> used = new HashSet<>();
-        for (ArrayList<GameServer> list : servers.values()) {
+        for (List<GameServer> list : servers.values()) {
             for (GameServer gs : list) {
                 String digits = gs.displayName().replaceAll("[^0-9]", "");
                 if (!digits.isEmpty()) {
@@ -146,7 +153,7 @@ public class GameManager {
 
     private static int getNextAvailablePort() {
         if (servers.isEmpty()) return 20000;
-        if (servers.values().stream().allMatch(ArrayList::isEmpty)) return 20000;
+        if (servers.values().stream().allMatch(List::isEmpty)) return 20000;
 
         ArrayList<GameServer> gameServers = new ArrayList<>();
         servers.values().forEach(gameServers::addAll);

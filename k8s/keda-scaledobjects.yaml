@@ -1,0 +1,59 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: prototype-lobby
+  namespace: hypixel
+spec:
+  scaleTargetRef:
+    name: prototype-lobby
+  minReplicaCount: 2
+  maxReplicaCount: 12
+  cooldownPeriod: 60
+  pollingInterval: 15
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-operated.monitoring.svc.cluster.local:9090
+        metricName: prototype_lobby_players
+        threshold: "80"
+        query: sum(hypixel_proxy_server_type_players{server_type="PROTOTYPE_LOBBY"}) + 80
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: bedwars-lobby
+  namespace: hypixel
+spec:
+  scaleTargetRef:
+    name: bedwars-lobby
+  minReplicaCount: 2
+  maxReplicaCount: 12
+  cooldownPeriod: 60
+  pollingInterval: 15
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-operated.monitoring.svc.cluster.local:9090
+        metricName: bedwars_lobby_players
+        threshold: "80"
+        query: sum(hypixel_proxy_server_type_players{server_type="BEDWARS_LOBBY"}) + 80
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: bedwars-game
+  namespace: hypixel
+spec:
+  scaleTargetRef:
+    name: bedwars-game
+  minReplicaCount: 1
+  maxReplicaCount: 64
+  cooldownPeriod: 45
+  pollingInterval: 15
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-operated.monitoring.svc.cluster.local:9090
+        metricName: bedwars_game_players
+        threshold: "16"
+        query: sum(hypixel_proxy_server_type_players{server_type="BEDWARS_GAME"}) + 16
