@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Set up JDK 25
         uses: actions/setup-java@v5.1.0
@@ -38,6 +38,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: setup/go.mod
+
+      - name: Run Go tests
+        working-directory: setup
+        run: go test ./...
+
+      - name: Build setup CLI archives
+        working-directory: setup
+        run: |
+          mkdir -p dist
+          GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o dist/hypixel-setup-linux-amd64 ./cmd/hypixel-setup
+          GOOS=linux GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o dist/hypixel-setup-linux-arm64 ./cmd/hypixel-setup
+          tar -C dist -czf dist/hypixel-setup-linux-amd64.tar.gz hypixel-setup-linux-amd64 --transform 's/hypixel-setup-linux-amd64/hypixel-setup/'
+          tar -C dist -czf dist/hypixel-setup-linux-arm64.tar.gz hypixel-setup-linux-arm64 --transform 's/hypixel-setup-linux-arm64/hypixel-setup/'
+
       - name: Add Jar to GitHub releases
         uses: marvinpinto/action-automatic-releases@latest
         with:
@@ -60,3 +78,5 @@ jobs:
             service.orchestrator/build/libs/*.jar
             service.friend/build/libs/*.jar
             service.darkauction/build/libs/*.jar
+            setup/dist/hypixel-setup-linux-amd64.tar.gz
+            setup/dist/hypixel-setup-linux-arm64.tar.gz
