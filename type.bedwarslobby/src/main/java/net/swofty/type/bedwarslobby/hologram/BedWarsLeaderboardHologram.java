@@ -2,9 +2,14 @@ package net.swofty.type.bedwarslobby.hologram;
 
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.bedwars.*;
+import net.swofty.commons.bedwars.BedwarsLeaderboardMode;
+import net.swofty.commons.bedwars.BedwarsLeaderboardPeriod;
+import net.swofty.commons.bedwars.BedwarsLeaderboardView;
+import net.swofty.commons.bedwars.BedwarsLevelColor;
+import net.swofty.commons.bedwars.BedwarsLevelUtil;
+import net.swofty.commons.bedwars.BedwarsStatType;
+import net.swofty.commons.bedwars.BedwarsTextAlignment;
 import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager.PlayerLeaderboardState;
-import net.swofty.type.bedwarslobby.util.BedwarsNameFormatter;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
@@ -13,11 +18,15 @@ import net.swofty.type.generic.leaderboard.LeaderboardService;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.NumberFormat;
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 @Getter
 public enum BedWarsLeaderboardHologram {
@@ -131,12 +140,8 @@ public enum BedWarsLeaderboardHologram {
 					lobbyPlayer.getInstance().equals(viewer.getInstance())) {
 				LeaderboardService.LeaderboardEntry entry =
 						LeaderboardService.getPlayerRankEntry(leaderboardKey, lobbyPlayer.getUuid());
-				if (entry != null) {
-					lobbyEntries.add(entry);
-				} else {
-					lobbyEntries.add(new LeaderboardService.LeaderboardEntry(
-							lobbyPlayer.getUuid(), -1, 0));
-				}
+                lobbyEntries.add(Objects.requireNonNullElseGet(entry, () -> new LeaderboardService.LeaderboardEntry(
+                    lobbyPlayer.getUuid(), -1, 0)));
 			}
 		}
 

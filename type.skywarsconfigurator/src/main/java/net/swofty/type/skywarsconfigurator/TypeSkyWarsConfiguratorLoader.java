@@ -5,8 +5,6 @@ import lombok.Setter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
-import net.minestom.server.instance.InstanceContainer;
-import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
 import net.swofty.commons.CustomWorlds;
@@ -17,7 +15,6 @@ import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.redis.RedisOriginServer;
@@ -31,9 +28,7 @@ import org.tinylog.Logger;
 import java.util.List;
 import java.util.UUID;
 
-public class TypeSkywarsConfiguratorLoader implements HypixelTypeLoader {
-    @Getter
-    private static InstanceContainer mainInstance;
+public class TypeSkyWarsConfiguratorLoader implements HypixelTypeLoader {
 
     @Setter
     @Getter
@@ -46,9 +41,6 @@ public class TypeSkywarsConfiguratorLoader implements HypixelTypeLoader {
 
     @Override
     public void onInitialize(MinecraftServer server) {
-        InstanceManager instanceManager = MinecraftServer.getInstanceManager();
-        mainInstance = instanceManager.createInstanceContainer();
-
         MinecraftServer.getConnectionManager().setPlayerProvider((PlayerConnection playerConnection, GameProfile gameProfile) -> {
             HypixelPlayer player = new HypixelPlayer(playerConnection, gameProfile);
 

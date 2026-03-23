@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.mission.missions.lumber;
 
-import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionTravelToThePark;

@@ -24,7 +24,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class MobRuinsWolf extends BestiaryMob implements RegionPopulator {
@@ -104,8 +103,8 @@ public class MobRuinsWolf extends BestiaryMob implements RegionPopulator {
 
     @Override
     public List<Populator> getPopulators() {
-        return Arrays.asList(
-                new Populator(RegionType.RUINS, 20)
+        return List.of(
+            new Populator(RegionType.RUINS, 20)
         );
     }
 

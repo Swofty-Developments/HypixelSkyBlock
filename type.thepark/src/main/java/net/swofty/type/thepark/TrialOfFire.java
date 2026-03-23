@@ -10,21 +10,18 @@ import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.ExecutionType;
-import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionCompleteTrialOfFireOne;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna.MissionTravelToTheSavannaWoodland;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.thepark.npcs.NPCRyan;
-import org.tinylog.Logger;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class TrialOfFire {
 
@@ -65,8 +62,7 @@ public class TrialOfFire {
 		// TODO: remove this
 		if (trial == Trial.II) {
 			sendMessage(player, "§cTrials are not finished.");
-			player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-					.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+			player.notImplemented();
 			return;
 		}
 

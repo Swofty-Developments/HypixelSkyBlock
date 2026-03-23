@@ -78,7 +78,7 @@ public class FinalAttackEvent implements EntityInstanceEvent, CancellableEvent {
     /**
 	 * Gets whether the 1.9+ attack sounds should be played if the damage failed.
 	 * This only applies if hasAttackSounds() is true.
-	 *
+	 * <p>
 	 * If this is true, the only sounds that may be played are knockback and nodamage.
 	 *
 	 * @return whether the attack sounds should be played if the damage failed

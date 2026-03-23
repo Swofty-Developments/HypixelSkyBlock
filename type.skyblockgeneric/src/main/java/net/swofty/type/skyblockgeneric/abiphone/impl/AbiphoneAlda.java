@@ -2,7 +2,6 @@ package net.swofty.type.skyblockgeneric.abiphone.impl;
 
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.ViewNavigator;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.gui.inventories.shop.GUIShopAlda;

@@ -27,7 +27,7 @@ public class PartyDemoteRequestEvent extends PartyEvent {
 
     @Override
     public Serializer<PartyDemoteRequestEvent> getSerializer() {
-        return new Serializer<PartyDemoteRequestEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyDemoteRequestEvent value) {
                 JSONObject json = new JSONObject();

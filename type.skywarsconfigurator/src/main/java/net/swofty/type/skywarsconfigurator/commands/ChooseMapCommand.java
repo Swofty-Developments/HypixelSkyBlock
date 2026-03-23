@@ -14,7 +14,7 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skywarsconfigurator.MapConfigurationSession;
-import net.swofty.type.skywarsconfigurator.TypeSkywarsConfiguratorLoader;
+import net.swofty.type.skywarsconfigurator.TypeSkyWarsConfiguratorLoader;
 import org.tinylog.Logger;
 
 import java.io.File;
@@ -118,7 +118,7 @@ public class ChooseMapCommand extends HypixelCommand {
 
             // Create a new configuration session
             MapConfigurationSession session = new MapConfigurationSession(mapId, mapId);
-            TypeSkywarsConfiguratorLoader.setCurrentSession(session);
+            TypeSkyWarsConfiguratorLoader.setCurrentSession(session);
 
             player.sendMessage(Component.text("§aLoaded map: §f" + mapId));
             player.sendMessage(Component.text("§7Use §b/swconfig §7to configure the map."));

@@ -25,13 +25,13 @@ dependencies {
     implementation(project(":proxy.api"))
     implementation(project(":pvp"))
     implementation(project(":type.game"))
-    implementation("org.mongodb:bson:4.11.2")
-    implementation("net.kyori:adventure-text-minimessage:4.24.0")
-    implementation("dev.hollowcube:polar:1.15.0")
-    implementation("it.unimi.dsi:fastutil:8.5.18")
-    compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
+    implementation(libs.mongodb.bson)
+    implementation(libs.adventure.text.minimessage)
+    implementation(libs.polar)
+    implementation(libs.fastutil)
+    compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 }

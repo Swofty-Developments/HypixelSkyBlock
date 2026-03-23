@@ -44,9 +44,7 @@ public class GUISelectPerk extends HypixelPaginatedGUI<SkywarsPerk> {
     @Override
     protected PaginationList<SkywarsPerk> fillPaged(HypixelPlayer player, PaginationList<SkywarsPerk> paged) {
         List<SkywarsPerk> perks = SkywarsPerkRegistry.getSelectablePerksSortedByRarity(MODE, true);
-        for (SkywarsPerk perk : perks) {
-            paged.add(perk);
-        }
+        paged.addAll(perks);
         return paged;
     }
 

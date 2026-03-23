@@ -128,7 +128,7 @@ public class OrchestratorCache {
 
 		// Prefer servers with more available capacity
 		candidates.sort(Comparator.comparingInt(GameServerState::availableSlots).reversed());
-		int topAvail = candidates.get(0).availableSlots();
+		int topAvail = candidates.getFirst().availableSlots();
 
 		List<GameServerState> topServers = new ArrayList<>();
 		for (GameServerState server : candidates) {

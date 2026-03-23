@@ -13,9 +13,14 @@ import java.util.concurrent.TimeUnit;
 public class OrchestratorService implements SkyBlockService {
 
 	static void main() {
-		ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-		scheduler.scheduleAtFixedRate(OrchestratorCache::cleanup, 5, 5, TimeUnit.SECONDS);
-		SkyBlockService.init(new OrchestratorService());
+        SkyBlockService.init(new OrchestratorService());
+
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
+            Thread t = new Thread(r, "orchestrator-cleanup");
+            t.setDaemon(true);
+            return t;
+        });
+        scheduler.scheduleAtFixedRate(OrchestratorCache::cleanup, 5, 5, TimeUnit.SECONDS);
 		Logger.info("Started orchestrator service");
 	}
 

@@ -15,7 +15,6 @@ public enum BedWarsLaunchPads implements LaunchPad {
             new Pos(0, 90, 0),
             (player) -> {},
             "");
-    ;
 
     private final List<Pos> slimeBlocks;
     private final Pos destination;

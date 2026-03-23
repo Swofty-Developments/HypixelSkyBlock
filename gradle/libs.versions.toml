@@ -1,0 +1,95 @@
+[versions]
+adventure = "4.26.1"
+annotations = "26.1.0"
+atlasRedis = "1.1.5"
+byte-buddy = "1.18.7"
+caffeine = "3.2.3"
+configlib-yaml = "4.8.1"
+configurate-yaml = "4.2.0"
+creative = "1.7.3"
+fastutil = "8.5.18"
+gson = "2.11.0"
+guava = "33.5.0-jre"
+jackson-annotations = "2.20"
+jackson-bom = "3.1.0"
+javapoet = "1.13.0"
+jedis = "7.2.0"
+joml = "1.10.8"
+json = "20251224"
+junit = "4.13.2"
+junit-jupiter = "6.0.3"
+kotlin-stdlib = "2.3.0"
+lombok = "1.18.42"
+minestom = "2025.12.20c-1.21.11"
+mongodb = "5.6.4"
+netty-bom = "4.2.9.Final"
+polar = "1.15.0"
+protocollib = "5.4.0"
+reflections = "0.10.2"
+sentry-async-profiler = "8.35.0"
+slf4j = "2.0.17"
+snakeyaml = "2.5"
+spark-common = "1.10.158-20260110.094844-1"
+spark-core = "2.9.4"
+spigot-api = "1.21-R0.1-SNAPSHOT"
+tinylog = "2.7.0"
+velocity-api = "3.5.0-SNAPSHOT"
+viabackwards = "5.7.2"
+vialoader = "4.0.6"
+viarewind = "4.0.15"
+viaversion = "5.7.1"
+
+[libraries]
+adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
+adventure-text-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
+adventure-text-serializer-gson = { module = "net.kyori:adventure-text-serializer-gson", version.ref = "adventure" }
+annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+atlas-redis = { module = "com.github.Swofty-Developments:AtlasRedisAPI", version.ref = "atlasRedis" }
+byte-buddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byte-buddy" }
+byte-buddy-agent = { module = "net.bytebuddy:byte-buddy-agent", version.ref = "byte-buddy" }
+caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
+configlib-yaml = { module = "de.exlll:configlib-yaml", version.ref = "configlib-yaml" }
+configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "configurate-yaml" }
+creative-api = { module = "team.unnamed:creative-api", version.ref = "creative" }
+creative-serializer-minecraft = { module = "team.unnamed:creative-serializer-minecraft", version.ref = "creative" }
+creative-server = { module = "team.unnamed:creative-server", version.ref = "creative" }
+fastutil = { module = "it.unimi.dsi:fastutil", version.ref = "fastutil" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson-annotations" }
+jackson-bom = { module = "tools.jackson:jackson-bom", version.ref = "jackson-bom" }
+jackson-core = { module = "tools.jackson.core:jackson-core" }
+jackson-databind = { module = "tools.jackson.core:jackson-databind" }
+javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
+jedis = { module = "redis.clients:jedis", version.ref = "jedis" }
+json = { module = "org.json:json", version.ref = "json" }
+joml = { module = "org.joml:joml", version.ref = "joml" }
+junit = { module = "junit:junit", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin-stdlib" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+minestom = { module = "net.minestom:minestom", version.ref = "minestom" }
+mongodb-bson = { module = "org.mongodb:bson", version.ref = "mongodb" }
+mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync", version.ref = "mongodb" }
+netty-bom = { module = "io.netty:netty-bom", version.ref = "netty-bom" }
+netty-buffer = { module = "io.netty:netty-buffer" }
+netty-codec = { module = "io.netty:netty-codec" }
+netty-codec-http = { module = "io.netty:netty-codec-http" }
+netty-handler = { module = "io.netty:netty-handler" }
+netty-transport = { module = "io.netty:netty-transport" }
+polar = { module = "dev.hollowcube:polar", version.ref = "polar" }
+protocollib = { module = "net.dmulloy2:ProtocolLib", version.ref = "protocollib" }
+reflections = { module = "org.reflections:reflections", version.ref = "reflections" }
+sentry-async-profiler = { module = "io.sentry:sentry-async-profiler", version.ref = "sentry-async-profiler" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml" }
+spark-common = { module = "me.lucko:spark-common", version.ref = "spark-common" }
+spark-core = { module = "com.sparkjava:spark-core", version.ref = "spark-core" }
+spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "spigot-api" }
+tinylog-api = { module = "org.tinylog:tinylog-api", version.ref = "tinylog" }
+tinylog-impl = { module = "org.tinylog:tinylog-impl", version.ref = "tinylog" }
+velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "velocity-api" }
+viabackwards-common = { module = "com.viaversion:viabackwards-common", version.ref = "viabackwards" }
+vialoader = { module = "com.viaversion:vialoader", version.ref = "vialoader" }
+viarewind-common = { module = "com.viaversion:viarewind-common", version.ref = "viarewind" }
+viaversion = { module = "com.viaversion:viaversion", version.ref = "viaversion" }

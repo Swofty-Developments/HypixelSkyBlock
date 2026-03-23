@@ -20,12 +20,12 @@ repositories {
 
 dependencies {
     implementation(project(":commons"))
-    implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.5")
-    compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
+    implementation(libs.atlas.redis)
+    compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("net.kyori:adventure-api:4.26.1")
-    implementation("net.kyori:adventure-text-serializer-gson:4.26.1")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
+    implementation(libs.adventure.api)
+    implementation(libs.adventure.text.serializer.gson)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 }

@@ -28,15 +28,15 @@ repositories {
 }
 
 dependencies {
-    compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
+    compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 
-    compileOnly("org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT")
+    compileOnly(libs.spigot.api)
 
-    compileOnly("net.dmulloy2:ProtocolLib:5.4.0")
+    compileOnly(libs.protocollib)
 }
 
 tasks.test {

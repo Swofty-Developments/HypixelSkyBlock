@@ -29,6 +29,6 @@ public class Objective {
 		GOLDEN_GOBLIN,
 		STAR_SENTRY,
 		MITHRIL,
-		TITANIUM;
+		TITANIUM
 	}
 }

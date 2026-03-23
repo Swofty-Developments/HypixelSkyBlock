@@ -44,9 +44,7 @@ public class GUIToggleInsanePerks extends HypixelPaginatedGUI<SkywarsPerk> {
     protected PaginationList<SkywarsPerk> fillPaged(HypixelPlayer player, PaginationList<SkywarsPerk> paged) {
         // Show all selectable perks (owned + unowned)
         List<SkywarsPerk> perks = SkywarsPerkRegistry.getSelectablePerksSortedByRarity(MODE, true);
-        for (SkywarsPerk perk : perks) {
-            paged.add(perk);
-        }
+        paged.addAll(perks);
         return paged;
     }
 

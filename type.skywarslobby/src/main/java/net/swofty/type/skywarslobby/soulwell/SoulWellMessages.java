@@ -60,7 +60,7 @@ public class SoulWellMessages {
             compensated += spaceLength;
         }
 
-        return sb.toString() + message;
+        return sb + message;
     }
 
     /**

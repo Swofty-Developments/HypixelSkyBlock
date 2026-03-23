@@ -4,7 +4,7 @@ plugins {
     java
     application
     `maven-publish`
-    id("com.gradleup.shadow") version "9.3.1"
+    id("com.gradleup.shadow") version "9.3.2"
     id("org.jetbrains.gradle.plugin.idea-ext") version "1.3"
 }
 
@@ -24,32 +24,32 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
-    annotationProcessor("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+    compileOnly(libs.velocity.api)
+    annotationProcessor(libs.velocity.api)
     compileOnly(files("velocity-3.5.0-SNAPSHOT-576.jar"))
 
-    implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.5")
+    implementation(libs.atlas.redis)
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
-    implementation("org.mongodb:bson:5.6.4")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.4")
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
 
-    implementation("com.viaversion:vialoader:4.0.6")
-    implementation("com.viaversion:viabackwards-common:5.7.1")
-    implementation("com.viaversion:viarewind-common:4.0.14")
-    implementation("com.viaversion:viaversion:5.7.1")
+    implementation(libs.vialoader)
+    implementation(libs.viabackwards.common)
+    implementation(libs.viarewind.common)
+    implementation(libs.viaversion)
 
-    implementation(platform("io.netty:netty-bom:4.2.9.Final"))
-    implementation("io.netty:netty-buffer")
-    implementation("io.netty:netty-codec")
-    implementation("io.netty:netty-codec-http")
-    implementation("io.netty:netty-transport")
-    implementation("io.netty:netty-handler")
+    implementation(platform(libs.netty.bom))
+    implementation(libs.netty.buffer)
+    implementation(libs.netty.codec)
+    implementation(libs.netty.codec.http)
+    implementation(libs.netty.transport)
+    implementation(libs.netty.handler)
 
-    implementation("net.bytebuddy:byte-buddy:1.18.5")
-    implementation("net.bytebuddy:byte-buddy-agent:1.18.5")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
+    implementation(libs.byte.buddy)
+    implementation(libs.byte.buddy.agent)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 }
 
 evaluationDependsOn(":commons")

@@ -1,24 +1,17 @@
 package net.swofty.type.skyblockgeneric.entity.mob;
 
 import lombok.Getter;
-import org.tinylog.Logger;
 import net.minestom.server.entity.EntityType;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.RegionPopulator;
 import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
-import org.tinylog.Logger;
 import java.util.ArrayList;
-import org.tinylog.Logger;
-import java.util.Arrays;
-import org.tinylog.Logger;
 import java.util.List;
-import org.tinylog.Logger;
 
 @Getter
 public class MobRegistry {
-    public static final List<MobRegistry> REGISTERED_MOBS = new ArrayList<>(Arrays.asList());
+    public static final List<MobRegistry> REGISTERED_MOBS = new ArrayList<>(List.of());
 
     private final EntityType entityType;
     private final Class<? extends SkyBlockMob> clazz;

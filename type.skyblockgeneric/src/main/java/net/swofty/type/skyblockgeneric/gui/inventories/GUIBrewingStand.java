@@ -246,9 +246,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
         data.setIngredient(ingredientItem);
 
         SkyBlockItem[] potions = data.getPotionSlots();
-        for (int i = 0; i < potionItems.length; i++) {
-            potions[i] = potionItems[i];
-        }
+        System.arraycopy(potionItems, 0, potions, 0, potionItems.length);
 
         data.setBrewingStartTime(System.currentTimeMillis());
         data.setBrewingDurationSeconds(brewComp.getBrewingTimeSeconds());

@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Interface for datapoints that hold map-based data where each key has its own leaderboard.
  * Implement this for datapoints like Collections, Skills, etc.
- *
+ * <p>
  * Example usage for SkyBlock Collections:
  * <pre>
  * public class DatapointCollection extends SkyBlockDatapoint<PlayerCollection>

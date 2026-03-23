@@ -213,10 +213,8 @@ public class GUIKitSelector extends HypixelInventoryGUI {
                 boolean owned = unlocks.hasKit(kit.getId());
                 boolean selected = unlocks.getSelectedKitForMode(mode).equals(kit.getId());
 
-                List<String> lore = new ArrayList<>();
-
                 // Items preview
-                lore.addAll(kit.getItemsLore(mode));
+                List<String> lore = new ArrayList<>(kit.getItemsLore(mode));
                 lore.add("");
 
                 // Rarity

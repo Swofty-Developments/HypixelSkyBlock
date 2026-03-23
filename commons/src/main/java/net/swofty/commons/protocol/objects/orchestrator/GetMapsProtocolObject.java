@@ -6,7 +6,8 @@ import net.swofty.commons.protocol.Serializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetMapsProtocolObject extends ProtocolObject
         <GetMapsProtocolObject.GetMapsMessage,
@@ -14,7 +15,7 @@ public class GetMapsProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<GetMapsMessage> getSerializer() {
-        return new Serializer<GetMapsMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(GetMapsMessage value) {
                 JSONObject json = new JSONObject();
@@ -38,7 +39,7 @@ public class GetMapsProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<GetMapsResponse> getReturnSerializer() {
-        return new Serializer<GetMapsResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(GetMapsResponse value) {
                 JSONObject json = new JSONObject();

@@ -11,6 +11,6 @@ public enum ServiceType {
     ORCHESTRATOR,
     FRIEND,
     REPLAY,
-    PUNISHMENT
+    PUNISHMENT,
     ;
 }

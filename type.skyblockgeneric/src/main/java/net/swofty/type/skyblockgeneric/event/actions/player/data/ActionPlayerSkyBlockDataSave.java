@@ -2,9 +2,7 @@ package net.swofty.type.skyblockgeneric.event.actions.player.data;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
-import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;

@@ -17,7 +17,7 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<HeartbeatMessage> getSerializer() {
-        return new Serializer<HeartbeatMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(HeartbeatMessage value) {
                 JSONObject json = new JSONObject();
@@ -60,7 +60,7 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<HeartbeatResponse> getReturnSerializer() {
-        return new Serializer<HeartbeatResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(HeartbeatResponse value) {
                 JSONObject json = new JSONObject();

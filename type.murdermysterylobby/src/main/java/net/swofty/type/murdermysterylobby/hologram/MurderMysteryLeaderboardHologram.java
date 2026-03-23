@@ -21,6 +21,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 @Getter
 public enum MurderMysteryLeaderboardHologram {
@@ -113,12 +114,8 @@ public enum MurderMysteryLeaderboardHologram {
                     lobbyPlayer.getInstance().equals(viewer.getInstance())) {
                 LeaderboardService.LeaderboardEntry entry =
                         LeaderboardService.getPlayerRankEntry(leaderboardKey, lobbyPlayer.getUuid());
-                if (entry != null) {
-                    lobbyEntries.add(entry);
-                } else {
-                    lobbyEntries.add(new LeaderboardService.LeaderboardEntry(
-                            lobbyPlayer.getUuid(), -1, 0));
-                }
+                lobbyEntries.add(Objects.requireNonNullElseGet(entry, () -> new LeaderboardService.LeaderboardEntry(
+                    lobbyPlayer.getUuid(), -1, 0)));
             }
         }
 

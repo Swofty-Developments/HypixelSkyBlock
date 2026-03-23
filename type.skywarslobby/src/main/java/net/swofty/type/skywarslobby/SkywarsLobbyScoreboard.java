@@ -4,10 +4,9 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.skywars.SkyWarsLevelColor;
 import net.swofty.commons.skywars.SkywarsLeaderboardMode;
 import net.swofty.commons.skywars.SkywarsLeaderboardPeriod;
-import net.swofty.commons.skywars.SkywarsLevelColor;
-import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 import net.swofty.commons.skywars.SkywarsModeStats;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -17,6 +16,7 @@ import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class SkywarsLobbyScoreboard {
 				List<String> lines = new ArrayList<>();
 				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.skywars_lobby.your_level_label") + " " + SkywarsLevelColor.getLevelDisplay(level));
+				lines.add(I18n.string("scoreboard.skywars_lobby.your_level_label") + " " + SkyWarsLevelColor.getLevelDisplay(level));
 				lines.add("§7 ");
 				lines.add(I18n.string("scoreboard.skywars_lobby.solo_kills_label") + soloKills);
 				lines.add(I18n.string("scoreboard.skywars_lobby.solo_wins_label") + soloWins);

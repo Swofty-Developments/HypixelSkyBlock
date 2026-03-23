@@ -5,7 +5,10 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.dwarvenmines.commission.*;
+import net.swofty.type.dwarvenmines.commission.Commission;
+import net.swofty.type.dwarvenmines.commission.CommissionMilestone;
+import net.swofty.type.dwarvenmines.commission.CommissionReward;
+import net.swofty.type.dwarvenmines.commission.Commissions;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -17,6 +20,7 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GUICommisions extends HypixelInventoryGUI {
@@ -114,9 +118,7 @@ public class GUICommisions extends HypixelInventoryGUI {
 					lore.add("§9Rewards");
 
 					String[] rewardLines = CommissionReward.getRewardLore(hotmTier, isHotmMaxed, willGetDailyBonus);
-					for (String line : rewardLines) {
-						lore.add(line);
-					}
+                    lore.addAll(Arrays.asList(rewardLines));
 
 					lore.add(" ");
 
@@ -184,15 +186,9 @@ public class GUICommisions extends HypixelInventoryGUI {
 		int filled = percentage / 5; // 20 segments total
 		int empty = 20 - filled;
 
-		StringBuilder bar = new StringBuilder("§f§l§m");
-		for (int i = 0; i < filled; i++) {
-			bar.append(" ");
-		}
-		bar.append("§7§l§m");
-		for (int i = 0; i < empty; i++) {
-			bar.append(" ");
-		}
-		return bar.toString();
+        return "§f§l§m" + " ".repeat(Math.max(0, filled)) +
+            "§7§l§m" +
+            " ".repeat(Math.max(0, empty));
 	}
 
 	private String buildMilestoneProgressBar(double percentage) {

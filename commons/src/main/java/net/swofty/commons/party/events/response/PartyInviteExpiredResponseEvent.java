@@ -23,7 +23,7 @@ public class PartyInviteExpiredResponseEvent extends PartyResponseEvent {
 
     @Override
     public Serializer<PartyInviteExpiredResponseEvent> getSerializer() {
-        return new Serializer<PartyInviteExpiredResponseEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyInviteExpiredResponseEvent value) {
                 JSONObject json = new JSONObject();

@@ -142,7 +142,7 @@ public class ItemAttributePotionData extends ItemAttribute<ItemAttributePotionDa
             StringBuilder result = new StringBuilder();
             for (String word : words) {
                 if (!word.isEmpty()) {
-                    if (result.length() > 0) result.append(" ");
+                    if (!result.isEmpty()) result.append(" ");
                     result.append(Character.toUpperCase(word.charAt(0)));
                     if (word.length() > 1) {
                         result.append(word.substring(1));

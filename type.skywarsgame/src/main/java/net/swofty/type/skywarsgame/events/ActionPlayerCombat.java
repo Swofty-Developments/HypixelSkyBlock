@@ -1,6 +1,5 @@
 package net.swofty.type.skywarsgame.events;
 
-import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.entity.EntityDamageEvent;
 import net.swofty.type.generic.event.EventNodes;
