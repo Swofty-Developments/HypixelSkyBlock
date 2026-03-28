@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"time"
@@ -15,12 +16,13 @@ import (
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/tui"
 )
 
-func Run() error {
-	repoRoot, err := findRepoRoot()
-	if err != nil {
-		return err
-	}
+const (
+	defaultRepoURL    = "https://github.com/Swofty-Developments/HypixelSkyBlock.git"
+	defaultRepoBranch = "master"
+	bootstrapRepoDir  = "repo"
+)
 
+func Run() error {
 	defaultInstallDir, err := profile.DefaultInstallDir()
 	if err != nil {
 		return err
@@ -45,6 +47,10 @@ func Run() error {
 	flag.Parse()
 
 	selectedDir := profile.ExpandHome(*installDir)
+	repoRoot, err := resolveRepoRoot(selectedDir)
+	if err != nil {
+		return err
+	}
 	p, err := profile.LoadOrDefault(repoRoot, selectedDir)
 	if err != nil {
 		return err
@@ -127,13 +133,79 @@ func watchStatus(p profile.Profile) error {
 	}
 }
 
-func findRepoRoot() (string, error) {
+func resolveRepoRoot(installDir string) (string, error) {
 	wd, err := os.Getwd()
 	if err != nil {
 		return "", err
 	}
+	return resolveRepoRootFrom(wd, installDir, bootstrapRepoCheckout)
+}
+
+func resolveRepoRootFrom(wd, installDir string, bootstrap func(string) error) (string, error) {
+	if repoRoot, err := findRepoRootFrom(wd); err == nil {
+		return repoRoot, nil
+	}
+
+	if saved, err := profile.Load(installDir); err == nil && isRepoRoot(saved.RepoRoot) {
+		return saved.RepoRoot, nil
+	}
+
+	bootstrappedRoot := filepath.Join(installDir, bootstrapRepoDir)
+	if isRepoRoot(bootstrappedRoot) {
+		return bootstrappedRoot, nil
+	}
+
+	if err := bootstrap(bootstrappedRoot); err != nil {
+		return "", fmt.Errorf("could not locate repository root and failed to bootstrap checkout in %s: %w", bootstrappedRoot, err)
+	}
+	if !isRepoRoot(bootstrappedRoot) {
+		return "", fmt.Errorf("bootstrapped checkout in %s is missing expected repository files", bootstrappedRoot)
+	}
+	return bootstrappedRoot, nil
+}
+
+func bootstrapRepoCheckout(repoRoot string) error {
+	parentDir := filepath.Dir(repoRoot)
+	if err := os.MkdirAll(parentDir, 0o755); err != nil {
+		return err
+	}
+
+	if exists(repoRoot) && !exists(filepath.Join(repoRoot, ".git")) {
+		return fmt.Errorf("%s already exists but is not a git checkout", repoRoot)
+	}
+
+	repoURL := envOrDefault("HYPIXEL_SETUP_REPO_URL", defaultRepoURL)
+	repoBranch := envOrDefault("HYPIXEL_SETUP_REPO_BRANCH", defaultRepoBranch)
+
+	if exists(filepath.Join(repoRoot, ".git")) {
+		if err := runCommand(parentDir, "git", "-C", repoRoot, "fetch", "origin", repoBranch, "--depth", "1"); err != nil {
+			return err
+		}
+		return runCommand(parentDir, "git", "-C", repoRoot, "checkout", "origin/"+repoBranch)
+	}
+
+	return runCommand(parentDir, "git", "clone", "--depth", "1", "--branch", repoBranch, repoURL, repoRoot)
+}
+
+func runCommand(dir string, name string, args ...string) error {
+	cmd := exec.Command(name, args...)
+	cmd.Dir = dir
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
+func envOrDefault(key, fallback string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return fallback
+	}
+	return value
+}
+
+func findRepoRootFrom(wd string) (string, error) {
 	for dir := wd; ; dir = filepath.Dir(dir) {
-		if exists(filepath.Join(dir, "settings.gradle.kts")) && exists(filepath.Join(dir, "configuration", "velocity.toml")) {
+		if isRepoRoot(dir) {
 			return dir, nil
 		}
 		parent := filepath.Dir(dir)
@@ -141,6 +213,10 @@ func findRepoRoot() (string, error) {
 			return "", errors.New("could not locate repository root")
 		}
 	}
+}
+
+func isRepoRoot(dir string) bool {
+	return exists(filepath.Join(dir, "settings.gradle.kts")) && exists(filepath.Join(dir, "configuration", "velocity.toml"))
 }
 
 func exists(path string) bool {
