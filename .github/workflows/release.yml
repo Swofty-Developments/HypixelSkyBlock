@@ -49,7 +49,10 @@ jobs:
 
       - name: Build setup CLI archives
         working-directory: setup
+        env:
+          CGO_ENABLED: 0
         run: |
+          set -euo pipefail
           mkdir -p dist
           GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o dist/hypixel-setup-linux-amd64 ./cmd/hypixel-setup
           GOOS=linux GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o dist/hypixel-setup-linux-arm64 ./cmd/hypixel-setup
