@@ -16,7 +16,7 @@ const (
 	RuntimeCompose  = "compose"
 	RuntimeK8s      = "kubernetes"
 	DefaultVersion  = "2.0.0"
-	DefaultRegistry = "ghcr.io/your-org"
+	DefaultRegistry = "ghcr.io/swofty-developments"
 )
 
 var (

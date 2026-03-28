@@ -140,7 +140,7 @@ The repository now builds images from source instead of downloading your own JAR
 Set your registry:
 
 ```bash
-export REGISTRY=ghcr.io/your-org
+export REGISTRY=ghcr.io/swofty-developments
 ```
 
 Build and push the proxy image:
@@ -223,7 +223,7 @@ docker push $REGISTRY/hypixel-service-punishment:latest
 
 ## 8. Edit the Image Names
 
-Open these files and replace `ghcr.io/your-org/...` with your real registry paths:
+Open these files and replace `ghcr.io/swofty-developments/...` if you are publishing to a different registry:
 
 - `k8s/proxy.yaml`
 - `k8s/services.yaml`

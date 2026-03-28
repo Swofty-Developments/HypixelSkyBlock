@@ -53,7 +53,7 @@ func RunWizard(p profile.Profile) (string, profile.Profile, error) {
 			huh.NewConfirm().Title("Expose MongoDB and Redis to the host").Description("Compose only. Keeps them isolated when disabled.").Value(&p.ExposeDBPorts),
 		),
 		huh.NewGroup(
-			huh.NewInput().Title("Container registry").Description("Example: ghcr.io/your-org").Value(&p.Registry),
+			huh.NewInput().Title("Container registry").Description("Example: ghcr.io/swofty-developments").Value(&p.Registry),
 			huh.NewInput().Title("Image tag").Description("Applied to proxy, service, and game images.").Value(&p.ImageTag),
 			huh.NewInput().Title("Kubernetes namespace").Description("Generated manifests target this namespace.").Value(&p.KubernetesNamespace),
 			huh.NewInput().Title("kubectl context").Description("Optional. Leave blank for the current context.").Value(&p.KubeContext),
