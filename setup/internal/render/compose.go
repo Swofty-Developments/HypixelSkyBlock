@@ -85,6 +85,11 @@ func composeYAML(p profile.Profile) string {
 	var b strings.Builder
 	b.WriteString("x-forwarding-env: &forwarding_env\n")
 	b.WriteString("  FORWARDING_SECRET: ${FORWARDING_SECRET}\n")
+	b.WriteString("x-game-server-base: &game_server_base\n")
+	b.WriteString("  image: hypixel-game:compose\n")
+	b.WriteString("  build:\n")
+	b.WriteString(fmt.Sprintf("    context: %q\n", p.RepoRoot))
+	b.WriteString("    dockerfile: DockerFiles/Dockerfile.game_server\n")
 	b.WriteString("services:\n")
 	b.WriteString("  mongodb:\n")
 	b.WriteString("    image: mongo:8.0.9\n")
@@ -144,9 +149,7 @@ func composeYAML(p profile.Profile) string {
 	for _, serverName := range p.SelectedServers {
 		server := spec.ServerByType(serverName)
 		b.WriteString(fmt.Sprintf("  %s:\n", server.DeploymentName))
-		b.WriteString("    build:\n")
-		b.WriteString(fmt.Sprintf("      context: %q\n", p.RepoRoot))
-		b.WriteString("      dockerfile: DockerFiles/Dockerfile.game_server\n")
+		b.WriteString("    <<: *game_server_base\n")
 		b.WriteString(fmt.Sprintf("    container_name: %s\n", server.DeploymentName))
 		b.WriteString("    environment:\n")
 		b.WriteString("      <<: *forwarding_env\n")

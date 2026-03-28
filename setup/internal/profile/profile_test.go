@@ -26,6 +26,12 @@ func TestDefaultUsesComposeForLocalInstalls(t *testing.T) {
 	if p.SharedSecret == "" {
 		t.Fatal("expected default shared secret to be populated")
 	}
+	if p.KubernetesTarget != KubernetesTargetStandard {
+		t.Fatalf("expected default kubernetes target %q, got %q", KubernetesTargetStandard, p.KubernetesTarget)
+	}
+	if p.MinikubeProfile != "minikube" {
+		t.Fatalf("expected default minikube profile %q, got %q", "minikube", p.MinikubeProfile)
+	}
 }
 
 func TestFilterSelected(t *testing.T) {

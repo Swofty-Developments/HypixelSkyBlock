@@ -22,5 +22,9 @@ func ComposeNotes(p profile.Profile) string {
 }
 
 func KubernetesNotes(p profile.Profile) string {
-	return fmt.Sprintf("# Generated Kubernetes Profile\n\n- Namespace: %s\n- Image tag: %s\n- Servers: %s\n- Services: %s\n- Prometheus: %s\n- Autoscaling: %t\n\nRendered manifests:\n\n```bash\nkubectl apply -f %s\n```\n\nFull setup:\n\n```bash\n%s/install.sh --dir %s --action k8s-full\n```\n", p.KubernetesNamespace, p.ImageTag, strings.Join(p.SelectedServers, ", "), strings.Join(p.SelectedServices, ", "), p.PrometheusAddress, p.EnableAutoscaling, filepath.Join(p.InstallDir, K8sDirName), filepath.Join(p.RepoRoot, "setup"), p.InstallDir)
+	targetDetails := "containerd / nerdctl"
+	if p.KubernetesTarget == profile.KubernetesTargetMinikube {
+		targetDetails = "minikube image load"
+	}
+	return fmt.Sprintf("# Generated Kubernetes Profile\n\n- Target: %s\n- Image handling: %s\n- Namespace: %s\n- Image tag: %s\n- Servers: %s\n- Services: %s\n- Prometheus: %s\n- Autoscaling: %t\n\nRendered manifests:\n\n```bash\nkubectl apply -f %s\n```\n\nFull setup:\n\n```bash\n%s/install.sh --dir %s --action k8s-full\n```\n", p.KubernetesTarget, targetDetails, p.KubernetesNamespace, p.ImageTag, strings.Join(p.SelectedServers, ", "), strings.Join(p.SelectedServices, ", "), p.PrometheusAddress, p.EnableAutoscaling, filepath.Join(p.InstallDir, K8sDirName), filepath.Join(p.RepoRoot, "setup"), p.InstallDir)
 }

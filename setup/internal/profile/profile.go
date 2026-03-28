@@ -12,10 +12,12 @@ import (
 )
 
 const (
-	StateFileName  = ".state.json"
-	RuntimeCompose = "compose"
-	RuntimeK8s     = "kubernetes"
-	DefaultVersion = "2.0.0"
+	StateFileName            = ".state.json"
+	RuntimeCompose           = "compose"
+	RuntimeK8s               = "kubernetes"
+	KubernetesTargetStandard = "standard"
+	KubernetesTargetMinikube = "minikube"
+	DefaultVersion           = "2.0.0"
 )
 
 var (
@@ -80,6 +82,8 @@ type Profile struct {
 	SharedSecret            string   `json:"shared_secret"`
 	ManagedByInstaller      bool     `json:"managed_by_installer"`
 	ImageTag                string   `json:"image_tag"`
+	KubernetesTarget        string   `json:"kubernetes_target"`
+	MinikubeProfile         string   `json:"minikube_profile"`
 	KubernetesNamespace     string   `json:"kubernetes_namespace"`
 	KubeContext             string   `json:"kube_context"`
 	ProxyServiceType        string   `json:"proxy_service_type"`
@@ -111,6 +115,8 @@ func Default(repoRoot, installDir string) Profile {
 		SharedSecret:            RandomSecret(),
 		ManagedByInstaller:      true,
 		ImageTag:                "latest",
+		KubernetesTarget:        KubernetesTargetStandard,
+		MinikubeProfile:         "minikube",
 		KubernetesNamespace:     "hypixel",
 		ProxyServiceType:        "LoadBalancer",
 		InstallMonitoring:       true,
@@ -142,6 +148,12 @@ func (p *Profile) Normalize() {
 	if p.APIPort == 0 {
 		p.APIPort = 8080
 	}
+	if strings.TrimSpace(p.KubernetesTarget) == "" {
+		p.KubernetesTarget = KubernetesTargetStandard
+	}
+	if strings.TrimSpace(p.MinikubeProfile) == "" {
+		p.MinikubeProfile = "minikube"
+	}
 }
 
 func (p Profile) Validate() error {
@@ -162,6 +174,9 @@ func (p Profile) Validate() error {
 	}
 	if p.ImageTag == "" {
 		return errors.New("image tag is required for Kubernetes")
+	}
+	if p.KubernetesTarget != KubernetesTargetStandard && p.KubernetesTarget != KubernetesTargetMinikube {
+		return fmt.Errorf("unsupported kubernetes target %q", p.KubernetesTarget)
 	}
 	if p.KubernetesNamespace == "" {
 		return errors.New("kubernetes namespace is required")

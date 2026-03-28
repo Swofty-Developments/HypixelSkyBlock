@@ -3,6 +3,7 @@ package ops
 import (
 	"fmt"
 	"path/filepath"
+	"strings"
 
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/profile"
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/render"
@@ -10,32 +11,70 @@ import (
 )
 
 func BuildImages(p profile.Profile) error {
-	if err := Require("docker"); err != nil {
+	builder, builderArgsPrefix, err := kubernetesBuilder(p)
+	if err != nil {
+		return err
+	}
+	if err := Require(builder); err != nil {
 		return err
 	}
 
 	proxyImage := render.ImageRef("hypixel-proxy", p.ImageTag)
-	if err := Run(p.RepoRoot, nil, "docker", "build", "-f", "DockerFiles/Dockerfile.proxy", "-t", proxyImage, "."); err != nil {
+	if err := Run(p.RepoRoot, nil, builder, append(builderArgsPrefix, "build", "-f", "DockerFiles/Dockerfile.proxy", "-t", proxyImage, ".")...); err != nil {
 		return err
 	}
 
 	gameImage := render.ImageRef("hypixel-game", p.ImageTag)
-	if err := Run(p.RepoRoot, nil, "docker", "build", "-f", "DockerFiles/Dockerfile.game_server", "-t", gameImage, "."); err != nil {
+	if err := Run(p.RepoRoot, nil, builder, append(builderArgsPrefix, "build", "-f", "DockerFiles/Dockerfile.game_server", "-t", gameImage, ".")...); err != nil {
 		return err
 	}
 
 	for _, serviceName := range p.SelectedServices {
 		svc := spec.ServiceByName(serviceName)
 		image := render.ImageRef(svc.ImageName, p.ImageTag)
-		if err := Run(p.RepoRoot, nil, "docker", "build", "-f", "DockerFiles/Dockerfile.service",
+		args := append(builderArgsPrefix,
+			"build", "-f", "DockerFiles/Dockerfile.service",
 			"--build-arg", "SERVICE_MODULE="+svc.Module,
 			"--build-arg", "SERVICE_JAR="+svc.Jar,
 			"-t", image, ".",
-		); err != nil {
+		)
+		if err := Run(p.RepoRoot, nil, builder, args...); err != nil {
+			return err
+		}
+	}
+	if p.KubernetesTarget == profile.KubernetesTargetMinikube {
+		if err := loadImagesIntoMinikube(p); err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+func kubernetesBuilder(p profile.Profile) (string, []string, error) {
+	switch p.KubernetesTarget {
+	case profile.KubernetesTargetMinikube:
+		return "docker", nil, nil
+	case profile.KubernetesTargetStandard:
+		return "nerdctl", []string{"--namespace", "k8s.io"}, nil
+	default:
+		return "", nil, fmt.Errorf("unsupported kubernetes target %q", p.KubernetesTarget)
+	}
+}
+
+func loadImagesIntoMinikube(p profile.Profile) error {
+	if err := Require("minikube"); err != nil {
+		return err
+	}
+	images := []string{
+		render.ImageRef("hypixel-proxy", p.ImageTag),
+		render.ImageRef("hypixel-game", p.ImageTag),
+	}
+	for _, serviceName := range p.SelectedServices {
+		images = append(images, render.ImageRef(spec.ServiceByName(serviceName).ImageName, p.ImageTag))
+	}
+	args := []string{"-p", strings.TrimSpace(p.MinikubeProfile), "image", "load"}
+	args = append(args, images...)
+	return Run("", nil, "minikube", args...)
 }
 
 func InstallMonitoring(p profile.Profile) error {
