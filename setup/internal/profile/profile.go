@@ -12,11 +12,10 @@ import (
 )
 
 const (
-	StateFileName   = ".state.json"
-	RuntimeCompose  = "compose"
-	RuntimeK8s      = "kubernetes"
-	DefaultVersion  = "2.0.0"
-	DefaultRegistry = "ghcr.io/swofty-developments"
+	StateFileName  = ".state.json"
+	RuntimeCompose = "compose"
+	RuntimeK8s     = "kubernetes"
+	DefaultVersion = "2.0.0"
 )
 
 var (
@@ -78,10 +77,8 @@ type Profile struct {
 	SelectedServices        []string `json:"selected_services"`
 	ExposeDBPorts           bool     `json:"expose_db_ports"`
 	APIPort                 int      `json:"api_port"`
-	ForwardingSecret        string   `json:"forwarding_secret"`
-	VelocitySecret          string   `json:"velocity_secret"`
+	SharedSecret            string   `json:"shared_secret"`
 	ManagedByInstaller      bool     `json:"managed_by_installer"`
-	Registry                string   `json:"registry"`
 	ImageTag                string   `json:"image_tag"`
 	KubernetesNamespace     string   `json:"kubernetes_namespace"`
 	KubeContext             string   `json:"kube_context"`
@@ -104,17 +101,15 @@ func Default(repoRoot, installDir string) Profile {
 		Version:                 DefaultVersion,
 		RepoRoot:                repoRoot,
 		InstallDir:              installDir,
-		Runtime:                 RuntimeK8s,
+		Runtime:                 RuntimeCompose,
 		BindIP:                  "0.0.0.0",
 		OnlineMode:              true,
 		SelectedServers:         []string{"PROTOTYPE_LOBBY", "SKYBLOCK_HUB", "SKYBLOCK_ISLAND"},
 		SelectedServices:        []string{"ServiceDataMutex", "ServiceParty", "ServiceAPI", "ServiceAuctionHouse", "ServiceBazaar", "ServiceItemTracker", "ServiceOrchestrator"},
 		ExposeDBPorts:           false,
 		APIPort:                 8080,
-		ForwardingSecret:        RandomSecret(),
-		VelocitySecret:          RandomSecret(),
+		SharedSecret:            RandomSecret(),
 		ManagedByInstaller:      true,
-		Registry:                DefaultRegistry,
 		ImageTag:                "latest",
 		KubernetesNamespace:     "hypixel",
 		ProxyServiceType:        "LoadBalancer",
@@ -141,11 +136,8 @@ func (p *Profile) Normalize() {
 	p.InstallDir = ExpandHome(strings.TrimSpace(p.InstallDir))
 	p.SelectedServers = normalizeWithRequired(RequiredServers, p.SelectedServers)
 	p.SelectedServices = normalizeWithRequired(RequiredServices, p.SelectedServices)
-	if strings.TrimSpace(p.ForwardingSecret) == "" {
-		p.ForwardingSecret = RandomSecret()
-	}
-	if strings.TrimSpace(p.VelocitySecret) == "" {
-		p.VelocitySecret = RandomSecret()
+	if strings.TrimSpace(p.SharedSecret) == "" {
+		p.SharedSecret = RandomSecret()
 	}
 	if p.APIPort == 0 {
 		p.APIPort = 8080
@@ -162,20 +154,17 @@ func (p Profile) Validate() error {
 	if p.Runtime != RuntimeCompose && p.Runtime != RuntimeK8s {
 		return fmt.Errorf("unsupported runtime %q", p.Runtime)
 	}
-	if p.ForwardingSecret == "" {
-		return errors.New("forwarding secret is required")
+	if p.SharedSecret == "" {
+		return errors.New("shared secret is required")
 	}
 	if p.Runtime != RuntimeK8s {
 		return nil
-	}
-	if p.Registry == "" {
-		return errors.New("registry is required for Kubernetes")
 	}
 	if p.ImageTag == "" {
 		return errors.New("image tag is required for Kubernetes")
 	}
 	if p.KubernetesNamespace == "" {
-		return errors.New("Kubernetes namespace is required")
+		return errors.New("kubernetes namespace is required")
 	}
 	if p.ProxyServiceType == "" {
 		return errors.New("proxy service type is required")

@@ -22,7 +22,6 @@ Before you start, make sure you have:
 - Docker or another OCI image builder
 - Kubernetes 1.29 or newer
 - `kubectl`
-- a container registry you can push to
 - Prometheus installed in the cluster
 - KEDA installed in the cluster
 - Redis and MongoDB available inside the cluster
@@ -135,99 +134,82 @@ These files deploy:
 
 ## 7. Build the Images
 
-The repository now builds images from source instead of downloading your own JARs during image build.
+The Kubernetes flow uses images built locally on the target machine. The manifests reference local tags such as
+`hypixel-proxy:latest`, `hypixel-game:latest`, and `hypixel-service-...:latest`, with `imagePullPolicy: Never`.
 
-Set your registry:
-
-```bash
-export REGISTRY=ghcr.io/swofty-developments
-```
-
-Build and push the proxy image:
+Build the proxy image:
 
 ```bash
-docker build -f DockerFiles/Dockerfile.proxy -t $REGISTRY/hypixel-proxy:latest .
-docker push $REGISTRY/hypixel-proxy:latest
+docker build -f DockerFiles/Dockerfile.proxy -t hypixel-proxy:latest .
 ```
 
-Build and push the game server image:
+Build the game server image:
 
 ```bash
-docker build -f DockerFiles/Dockerfile.game_server -t $REGISTRY/hypixel-game:latest .
-docker push $REGISTRY/hypixel-game:latest
+docker build -f DockerFiles/Dockerfile.game_server -t hypixel-game:latest .
 ```
 
-Build and push service images:
+Build service images:
 
 ```bash
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.api \
   --build-arg SERVICE_JAR=ServiceAPI.jar \
-  -t $REGISTRY/hypixel-service-api:latest .
-docker push $REGISTRY/hypixel-service-api:latest
+  -t hypixel-service-api:latest .
 
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.auctionhouse \
   --build-arg SERVICE_JAR=ServiceAuctionHouse.jar \
-  -t $REGISTRY/hypixel-service-auctionhouse:latest .
-docker push $REGISTRY/hypixel-service-auctionhouse:latest
+  -t hypixel-service-auctionhouse:latest .
 
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.bazaar \
   --build-arg SERVICE_JAR=ServiceBazaar.jar \
-  -t $REGISTRY/hypixel-service-bazaar:latest .
-docker push $REGISTRY/hypixel-service-bazaar:latest
+  -t hypixel-service-bazaar:latest .
 
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.darkauction \
   --build-arg SERVICE_JAR=ServiceDarkAuction.jar \
-  -t $REGISTRY/hypixel-service-darkauction:latest .
-docker push $REGISTRY/hypixel-service-darkauction:latest
+  -t hypixel-service-darkauction:latest .
 
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.datamutex \
   --build-arg SERVICE_JAR=ServiceDataMutex.jar \
-  -t $REGISTRY/hypixel-service-datamutex:latest .
-docker push $REGISTRY/hypixel-service-datamutex:latest
+  -t hypixel-service-datamutex:latest .
 
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.friend \
   --build-arg SERVICE_JAR=ServiceFriend.jar \
-  -t $REGISTRY/hypixel-service-friend:latest .
-docker push $REGISTRY/hypixel-service-friend:latest
+  -t hypixel-service-friend:latest .
 
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.itemtracker \
   --build-arg SERVICE_JAR=ServiceItemTracker.jar \
-  -t $REGISTRY/hypixel-service-itemtracker:latest .
-docker push $REGISTRY/hypixel-service-itemtracker:latest
+  -t hypixel-service-itemtracker:latest .
 
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.orchestrator \
   --build-arg SERVICE_JAR=ServiceOrchestrator.jar \
-  -t $REGISTRY/hypixel-service-orchestrator:latest .
-docker push $REGISTRY/hypixel-service-orchestrator:latest
+  -t hypixel-service-orchestrator:latest .
 
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.party \
   --build-arg SERVICE_JAR=ServiceParty.jar \
-  -t $REGISTRY/hypixel-service-party:latest .
-docker push $REGISTRY/hypixel-service-party:latest
+  -t hypixel-service-party:latest .
 
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.punishment \
   --build-arg SERVICE_JAR=ServicePunishment.jar \
-  -t $REGISTRY/hypixel-service-punishment:latest .
-docker push $REGISTRY/hypixel-service-punishment:latest
+  -t hypixel-service-punishment:latest .
 ```
 
-## 8. Edit the Image Names
+## 8. Verify the Image Names
 
-Open these files and replace `ghcr.io/swofty-developments/...` if you are publishing to a different registry:
+The shipped manifests already reference local image tags:
 
-- `k8s/proxy.yaml`
-- `k8s/services.yaml`
-- `k8s/game-servers.yaml`
+- `hypixel-proxy:latest`
+- `hypixel-game:latest`
+- `hypixel-service-...:latest`
 
 ## 9. Create the Namespace and Base Configuration
 
@@ -258,8 +240,7 @@ kubectl apply -f /tmp/hypixel-secret.yaml
 ```
 
 :::alert warning
-Use a long random value for `HYPIXEL_VELOCITY_SECRET` and `FORWARDING_SECRET`. The proxy and game servers must use the
-same forwarding secret.
+Use a long random value for `HYPIXEL_VELOCITY_SECRET` and `FORWARDING_SECRET`. They should be the same value.
 :::
 
 ## 10. Deploy the Proxy and Services
@@ -394,14 +375,12 @@ env:
 After a code change:
 
 1. rebuild the changed image
-2. push it to your registry
-3. restart the deployment
+2. restart the deployment
 
 Example:
 
 ```bash
-docker build -f DockerFiles/Dockerfile.game_server -t $REGISTRY/hypixel-game:latest .
-docker push $REGISTRY/hypixel-game:latest
+docker build -f DockerFiles/Dockerfile.game_server -t hypixel-game:latest .
 kubectl rollout restart deployment/bedwars-game -n hypixel
 ```
 
@@ -457,7 +436,7 @@ kubectl delete namespace hypixel
 
 The Kubernetes flow is:
 
-1. build and push the images
+1. build the images locally
 2. configure secrets and cluster services
 3. deploy proxy and Java services
 4. deploy game-server workloads

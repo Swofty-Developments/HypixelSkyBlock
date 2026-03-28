@@ -9,38 +9,29 @@ import (
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/spec"
 )
 
-func BuildAndPushImages(p profile.Profile) error {
+func BuildImages(p profile.Profile) error {
 	if err := Require("docker"); err != nil {
 		return err
 	}
 
-	proxyImage := render.ImageRef(p.Registry, "hypixel-proxy", p.ImageTag)
+	proxyImage := render.ImageRef("hypixel-proxy", p.ImageTag)
 	if err := Run(p.RepoRoot, nil, "docker", "build", "-f", "DockerFiles/Dockerfile.proxy", "-t", proxyImage, "."); err != nil {
 		return err
 	}
-	if err := Run(p.RepoRoot, nil, "docker", "push", proxyImage); err != nil {
-		return err
-	}
 
-	gameImage := render.ImageRef(p.Registry, "hypixel-game", p.ImageTag)
+	gameImage := render.ImageRef("hypixel-game", p.ImageTag)
 	if err := Run(p.RepoRoot, nil, "docker", "build", "-f", "DockerFiles/Dockerfile.game_server", "-t", gameImage, "."); err != nil {
-		return err
-	}
-	if err := Run(p.RepoRoot, nil, "docker", "push", gameImage); err != nil {
 		return err
 	}
 
 	for _, serviceName := range p.SelectedServices {
 		svc := spec.ServiceByName(serviceName)
-		image := render.ImageRef(p.Registry, svc.ImageName, p.ImageTag)
+		image := render.ImageRef(svc.ImageName, p.ImageTag)
 		if err := Run(p.RepoRoot, nil, "docker", "build", "-f", "DockerFiles/Dockerfile.service",
 			"--build-arg", "SERVICE_MODULE="+svc.Module,
 			"--build-arg", "SERVICE_JAR="+svc.Jar,
 			"-t", image, ".",
 		); err != nil {
-			return err
-		}
-		if err := Run(p.RepoRoot, nil, "docker", "push", image); err != nil {
 			return err
 		}
 	}
@@ -124,7 +115,7 @@ func FullKubernetesSetup(p profile.Profile) error {
 			return err
 		}
 	}
-	if err := BuildAndPushImages(p); err != nil {
+	if err := BuildImages(p); err != nil {
 		return err
 	}
 	if err := DeployKubernetes(p); err != nil {

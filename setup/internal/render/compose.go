@@ -59,7 +59,7 @@ management:
     enabled: true
     host-name: 0.0.0.0
     port: 9090
-`, p.VelocitySecret)
+`, p.SharedSecret)
 	if err := os.WriteFile(configPath, []byte(configContent), 0o644); err != nil {
 		return err
 	}
@@ -77,7 +77,7 @@ management:
 }
 
 func writeEnvFile(p profile.Profile) error {
-	content := fmt.Sprintf("FORWARDING_SECRET=%s\nHYPIXEL_PROFILE_DIR=%s\nHYPIXEL_REPO_ROOT=%s\n", p.ForwardingSecret, p.InstallDir, p.RepoRoot)
+	content := fmt.Sprintf("FORWARDING_SECRET=%s\nHYPIXEL_PROFILE_DIR=%s\nHYPIXEL_REPO_ROOT=%s\n", p.SharedSecret, p.InstallDir, p.RepoRoot)
 	return os.WriteFile(filepath.Join(p.InstallDir, ".env"), []byte(content), 0o600)
 }
 

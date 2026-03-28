@@ -19,8 +19,8 @@ spec:
     spec:
       containers:
         - name: service
-          image: ghcr.io/your-org/hypixel-service-auctionhouse:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-service-auctionhouse:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -59,8 +59,8 @@ spec:
     spec:
       containers:
         - name: service
-          image: ghcr.io/your-org/hypixel-service-orchestrator:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-service-orchestrator:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -106,8 +106,8 @@ spec:
     spec:
       containers:
         - name: service
-          image: ghcr.io/your-org/hypixel-service-api:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-service-api:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -153,8 +153,8 @@ spec:
     spec:
       containers:
         - name: service
-          image: ghcr.io/your-org/hypixel-service-darkauction:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-service-darkauction:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -193,8 +193,8 @@ spec:
     spec:
       containers:
         - name: service
-          image: ghcr.io/your-org/hypixel-service-datamutex:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-service-datamutex:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -233,8 +233,8 @@ spec:
     spec:
       containers:
         - name: service
-          image: ghcr.io/your-org/hypixel-service-friend:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-service-friend:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -273,8 +273,8 @@ spec:
     spec:
       containers:
         - name: service
-          image: ghcr.io/your-org/hypixel-service-itemtracker:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-service-itemtracker:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -313,8 +313,8 @@ spec:
     spec:
       containers:
         - name: service
-          image: ghcr.io/your-org/hypixel-service-bazaar:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-service-bazaar:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -353,8 +353,8 @@ spec:
     spec:
       containers:
         - name: service
-          image: ghcr.io/your-org/hypixel-service-party:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-service-party:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -393,8 +393,8 @@ spec:
     spec:
       containers:
         - name: service
-          image: ghcr.io/your-org/hypixel-service-punishment:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-service-punishment:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config

@@ -22,13 +22,16 @@ kubectl apply -f k8s/keda-scaledobjects.yaml
 Build examples:
 
 ```bash
-docker build -f DockerFiles/Dockerfile.proxy -t ghcr.io/your-org/hypixel-proxy:latest .
-docker build -f DockerFiles/Dockerfile.game_server -t ghcr.io/your-org/hypixel-game:latest .
+docker build -f DockerFiles/Dockerfile.proxy -t hypixel-proxy:latest .
+docker build -f DockerFiles/Dockerfile.game_server -t hypixel-game:latest .
 docker build -f DockerFiles/Dockerfile.service \
   --build-arg SERVICE_MODULE=service.orchestrator \
   --build-arg SERVICE_JAR=ServiceOrchestrator.jar \
-  -t ghcr.io/your-org/hypixel-service-orchestrator:latest .
+  -t hypixel-service-orchestrator:latest .
 ```
+
+These manifests reference local images and use `imagePullPolicy: Never`, so build them on the machine running the
+cluster.
 
 Autoscaling model:
 

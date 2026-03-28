@@ -17,6 +17,17 @@ func TestNormalizeAddsRequiredSelections(t *testing.T) {
 	}
 }
 
+func TestDefaultUsesComposeForLocalInstalls(t *testing.T) {
+	p := Default("/repo", "/tmp/install")
+
+	if p.Runtime != RuntimeCompose {
+		t.Fatalf("expected default runtime %q, got %q", RuntimeCompose, p.Runtime)
+	}
+	if p.SharedSecret == "" {
+		t.Fatal("expected default shared secret to be populated")
+	}
+}
+
 func TestFilterSelected(t *testing.T) {
 	got := FilterSelected([]string{"A", "B", "C"}, []string{"B", "C", "D"})
 	if len(got) != 2 || got[0] != "B" || got[1] != "C" {

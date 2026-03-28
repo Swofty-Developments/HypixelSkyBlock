@@ -28,8 +28,8 @@ spec:
               app: prototype-lobby
       containers:
         - name: game-server
-          image: ghcr.io/your-org/hypixel-game:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-game:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -93,8 +93,8 @@ spec:
               app: bedwars-lobby
       containers:
         - name: game-server
-          image: ghcr.io/your-org/hypixel-game:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-game:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -158,8 +158,8 @@ spec:
               app: bedwars-game
       containers:
         - name: game-server
-          image: ghcr.io/your-org/hypixel-game:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-game:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -223,8 +223,8 @@ spec:
               app: skyblock-hub
       containers:
         - name: game-server
-          image: ghcr.io/your-org/hypixel-game:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-game:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config

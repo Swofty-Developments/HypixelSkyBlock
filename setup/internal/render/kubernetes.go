@@ -90,7 +90,7 @@ stringData:
   HYPIXEL_REDIS_URI: "%s"
   HYPIXEL_VELOCITY_SECRET: "%s"
   FORWARDING_SECRET: "%s"
-`, p.KubernetesNamespace, mongoURI, redisURI, p.VelocitySecret, p.ForwardingSecret)
+`, p.KubernetesNamespace, mongoURI, redisURI, p.SharedSecret, p.SharedSecret)
 }
 
 func datastoresYAML(p profile.Profile) string {
@@ -279,7 +279,7 @@ spec:
       containers:
         - name: proxy
           image: %s
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -324,7 +324,7 @@ spec:
     - name: management
       port: 9090
       targetPort: management
-`, p.KubernetesNamespace, ImageRef(p.Registry, "hypixel-proxy", p.ImageTag), p.KubernetesNamespace, p.ProxyServiceType)
+`, p.KubernetesNamespace, ImageRef("hypixel-proxy", p.ImageTag), p.KubernetesNamespace, p.ProxyServiceType)
 }
 
 func servicesYAML(p profile.Profile) string {
@@ -363,7 +363,7 @@ spec:
       containers:
         - name: service
           image: {{ .Image }}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -391,7 +391,7 @@ spec:
 			"Name":          svc.DeploymentName,
 			"Namespace":     p.KubernetesNamespace,
 			"Replicas":      svc.Replicas,
-			"Image":         ImageRef(p.Registry, svc.ImageName, p.ImageTag),
+			"Image":         ImageRef(svc.ImageName, p.ImageTag),
 			"RequestCPU":    quote(svc.RequestCPU),
 			"RequestMemory": quote(svc.RequestMemory),
 			"LimitCPU":      quote(svc.LimitCPU),
@@ -439,7 +439,7 @@ spec:
       containers:
         - name: game-server
           image: {{ .Image }}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -477,7 +477,7 @@ spec:
 			"Namespace":     p.KubernetesNamespace,
 			"Replicas":      server.Replicas,
 			"ServerType":    serverType,
-			"Image":         ImageRef(p.Registry, "hypixel-game", p.ImageTag),
+			"Image":         ImageRef("hypixel-game", p.ImageTag),
 			"RequestCPU":    quote(server.RequestCPU),
 			"RequestMemory": quote(server.RequestMemory),
 			"LimitCPU":      quote(server.LimitCPU),

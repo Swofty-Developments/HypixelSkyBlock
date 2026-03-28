@@ -15,7 +15,7 @@ func ApplyCompose(p profile.Profile) error {
 		return errors.New("docker compose v2 is required")
 	}
 	return Run(p.InstallDir, []string{
-		"FORWARDING_SECRET=" + p.ForwardingSecret,
+		"FORWARDING_SECRET=" + p.SharedSecret,
 		"HYPIXEL_PROFILE_DIR=" + p.InstallDir,
 		"HYPIXEL_REPO_ROOT=" + p.RepoRoot,
 	}, "docker", "compose", "--env-file", filepath.Join(p.InstallDir, ".env"), "up", "-d", "--build", "--remove-orphans")

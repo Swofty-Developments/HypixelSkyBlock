@@ -19,8 +19,8 @@ spec:
     spec:
       containers:
         - name: proxy
-          image: ghcr.io/your-org/hypixel-proxy:latest
-          imagePullPolicy: IfNotPresent
+          image: hypixel-proxy:latest
+          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: hypixel-config

@@ -32,7 +32,7 @@ func RunWizard(p profile.Profile) (string, profile.Profile, error) {
 		huh.NewGroup(
 			huh.NewNote().
 				Title("Hypixel Setup").
-				Description("This installer uses the Charmbracelet Bubble Tea stack for a persistent profile-driven setup flow. It can edit previous server and service selections, render Docker Compose or Kubernetes assets, and run the documented Kubernetes flow including monitoring and autoscaling."),
+				Description("This installer uses the Charmbracelet Bubble Tea stack for a persistent profile-driven setup flow. Docker Compose is the default for local installs; Kubernetes builds images locally on the target machine."),
 		),
 		huh.NewGroup(
 			huh.NewInput().Title("Install directory").Description("State, rendered assets, and local configuration live here.").Value(&p.InstallDir),
@@ -42,8 +42,7 @@ func RunWizard(p profile.Profile) (string, profile.Profile, error) {
 			).Value(&p.Runtime),
 			huh.NewInput().Title("Proxy bind IP").Description("Used by local Docker Compose proxy binding.").Value(&p.BindIP),
 			huh.NewConfirm().Title("Enable Mojang authentication").Description("Sets Velocity online-mode.").Value(&p.OnlineMode),
-			huh.NewInput().Title("Forwarding secret").Description("Shared by proxy and backend servers.").Value(&p.ForwardingSecret),
-			huh.NewInput().Title("Velocity secret").Description("Stored in generated secrets for Kubernetes.").Value(&p.VelocitySecret),
+			huh.NewInput().Title("Shared secret").Description("Used for both Velocity and backend forwarding.").Value(&p.SharedSecret),
 		),
 		huh.NewGroup(
 			huh.NewMultiSelect[string]().Title("SkyBlock servers").Description("PROTOTYPE_LOBBY is always included.").Options(stringOptions(profile.SkyBlockServers)...).Value(&skyblockSelected),
@@ -53,7 +52,6 @@ func RunWizard(p profile.Profile) (string, profile.Profile, error) {
 			huh.NewConfirm().Title("Expose MongoDB and Redis to the host").Description("Compose only. Keeps them isolated when disabled.").Value(&p.ExposeDBPorts),
 		),
 		huh.NewGroup(
-			huh.NewInput().Title("Container registry").Description("Example: ghcr.io/swofty-developments").Value(&p.Registry),
 			huh.NewInput().Title("Image tag").Description("Applied to proxy, service, and game images.").Value(&p.ImageTag),
 			huh.NewInput().Title("Kubernetes namespace").Description("Generated manifests target this namespace.").Value(&p.KubernetesNamespace),
 			huh.NewInput().Title("kubectl context").Description("Optional. Leave blank for the current context.").Value(&p.KubeContext),
@@ -101,7 +99,7 @@ func actionOptions(runtime string) []huh.Option[string] {
 		return []huh.Option[string]{
 			huh.NewOption("Save profile only", ActionSave),
 			huh.NewOption("Render Kubernetes assets", ActionK8sRender),
-			huh.NewOption("Build and push Kubernetes images", ActionK8sBuild),
+			huh.NewOption("Build Kubernetes images locally", ActionK8sBuild),
 			huh.NewOption("Deploy rendered Kubernetes assets", ActionK8sDeploy),
 			huh.NewOption("Run full Kubernetes setup", ActionK8sFull),
 			huh.NewOption("Show environment status", ActionStatus),
@@ -128,7 +126,7 @@ func summary(p profile.Profile, skyblockSelected, minigameSelected []string) str
 	if p.Runtime == profile.RuntimeK8s {
 		lines = append(lines,
 			"Namespace: "+p.KubernetesNamespace,
-			"Registry: "+strings.TrimRight(p.Registry, "/")+":"+p.ImageTag,
+			"Local images: *:"+p.ImageTag,
 			"Proxy exposure: "+p.ProxyServiceType,
 		)
 	}

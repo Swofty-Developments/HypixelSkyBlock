@@ -92,7 +92,7 @@ func Run() error {
 	case tui.ActionK8sRender:
 		return render.GenerateKubernetesAssets(p)
 	case tui.ActionK8sBuild:
-		return ops.BuildAndPushImages(p)
+		return ops.BuildImages(p)
 	case tui.ActionK8sDeploy:
 		if err := render.GenerateKubernetesAssets(p); err != nil {
 			return err
