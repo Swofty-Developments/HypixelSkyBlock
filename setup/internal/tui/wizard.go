@@ -30,11 +30,6 @@ func RunWizard(p profile.Profile) (string, profile.Profile, error) {
 
 	if err := huh.NewForm(
 		huh.NewGroup(
-			huh.NewNote().
-				Title("Hypixel Setup").
-				Description("This installer uses the Charmbracelet Bubble Tea stack for a persistent profile-driven setup flow. Docker Compose is the default for local installs; Kubernetes builds images locally on the target machine."),
-		),
-		huh.NewGroup(
 			huh.NewInput().Title("Install directory").Description("State, rendered assets, and local configuration live here.").Value(&p.InstallDir),
 			huh.NewSelect[string]().Title("Deployment runtime").Description("Choose Docker Compose or Kubernetes.").Options(
 				huh.NewOption("Docker Compose", profile.RuntimeCompose),
