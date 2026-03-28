@@ -54,8 +54,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p dist
-          GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o dist/hypixel-setup-linux-amd64 ./cmd/hypixel-setup
-          GOOS=linux GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o dist/hypixel-setup-linux-arm64 ./cmd/hypixel-setup
+          GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o dist/hypixel-setup-linux-amd64 .
+          GOOS=linux GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o dist/hypixel-setup-linux-arm64 .
           tar -C dist -czf dist/hypixel-setup-linux-amd64.tar.gz hypixel-setup-linux-amd64 --transform 's/hypixel-setup-linux-amd64/hypixel-setup/'
           tar -C dist -czf dist/hypixel-setup-linux-arm64.tar.gz hypixel-setup-linux-arm64 --transform 's/hypixel-setup-linux-arm64/hypixel-setup/'
 
