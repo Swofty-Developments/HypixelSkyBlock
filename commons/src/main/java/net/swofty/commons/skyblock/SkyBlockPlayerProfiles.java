@@ -3,7 +3,12 @@ package net.swofty.commons.skyblock;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 @Setter
@@ -17,7 +22,7 @@ public class SkyBlockPlayerProfiles {
             "Potato", "Onion", "Garlic", "Celery",
             "Broccoli", "Cauliflower", "Spinach", "Asparagus"
     };
-    private static final Map<UUID, SkyBlockPlayerProfiles> profilesCache = new HashMap<>();
+    private static final Map<UUID, SkyBlockPlayerProfiles> profilesCache = new ConcurrentHashMap<>();
 
     UUID currentlySelected = null;
     ArrayList<UUID> profiles = new ArrayList<>();

@@ -42,13 +42,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class SkyBlockDataHandler extends DataHandler {
 
     // SkyBlock specific cache
-    public static final Map<UUID, SkyBlockDataHandler> skyBlockCache = new HashMap<>();
+    public static final Map<UUID, SkyBlockDataHandler> skyBlockCache = new ConcurrentHashMap<>();
 
     @Getter
     private UUID currentProfileId;
