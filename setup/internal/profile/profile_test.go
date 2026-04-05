@@ -1,6 +1,9 @@
 package profile
 
-import "testing"
+import (
+	"path/filepath"
+	"testing"
+)
 
 func TestNormalizeAddsRequiredSelections(t *testing.T) {
 	p := Profile{
@@ -38,5 +41,16 @@ func TestFilterSelected(t *testing.T) {
 	got := FilterSelected([]string{"A", "B", "C"}, []string{"B", "C", "D"})
 	if len(got) != 2 || got[0] != "B" || got[1] != "C" {
 		t.Fatalf("unexpected selection filter result: %v", got)
+	}
+}
+
+func TestExpandHomeExpandsTildePaths(t *testing.T) {
+	homeDir := t.TempDir()
+	t.Setenv("HOME", homeDir)
+
+	got := ExpandHome("~/.kube/config")
+	want := filepath.Join(homeDir, ".kube", "config")
+	if got != want {
+		t.Fatalf("expected %q, got %q", want, got)
 	}
 }

@@ -31,11 +31,12 @@ func Run() error {
 	var (
 		installDir = flag.String("dir", defaultInstallDir, "Install directory")
 		action     = flag.String("action", "", "Action to run")
+		kubeconfig = flag.String("kubeconfig", "", "Optional kubeconfig path override for Kubernetes actions")
 		status     = flag.Bool("status", false, "Show current environment status")
 		watch      = flag.Bool("watch", false, "Watch current environment status")
 	)
 	flag.Usage = func() {
-		fmt.Println("Usage: hypixel-setup [--dir PATH] [--action ACTION] [--status] [--watch]")
+		fmt.Println("Usage: hypixel-setup [--dir PATH] [--action ACTION] [--kubeconfig PATH] [--status] [--watch]")
 		fmt.Println()
 		fmt.Println("Actions:")
 		fmt.Printf("  %s, %s, %s\n", tui.ActionSave, tui.ActionComposeRender, tui.ActionComposeApply)
@@ -71,11 +72,21 @@ func Run() error {
 		p = updated
 		runAction = nextAction
 	}
+	if trimmed := profile.ExpandHome(*kubeconfig); trimmed != "" {
+		p.KubeconfigPath = trimmed
+	}
 
 	p.Normalize()
 	p.Touch(runAction)
 	if err := profile.Save(p); err != nil {
 		return err
+	}
+	if warnings, err := ops.Preflight(runAction, p); err != nil {
+		return err
+	} else {
+		for _, warning := range warnings {
+			fmt.Printf("note: %s\n", warning)
+		}
 	}
 
 	switch runAction {

@@ -86,6 +86,7 @@ type Profile struct {
 	MinikubeProfile         string   `json:"minikube_profile"`
 	KubernetesNamespace     string   `json:"kubernetes_namespace"`
 	KubeContext             string   `json:"kube_context"`
+	KubeconfigPath          string   `json:"kubeconfig_path"`
 	ProxyServiceType        string   `json:"proxy_service_type"`
 	InstallMonitoring       bool     `json:"install_monitoring"`
 	EnableAutoscaling       bool     `json:"enable_autoscaling"`
@@ -140,6 +141,19 @@ func DefaultInstallDir() (string, error) {
 
 func (p *Profile) Normalize() {
 	p.InstallDir = ExpandHome(strings.TrimSpace(p.InstallDir))
+	p.ImageTag = strings.TrimSpace(p.ImageTag)
+	p.KubernetesTarget = strings.TrimSpace(p.KubernetesTarget)
+	p.MinikubeProfile = strings.TrimSpace(p.MinikubeProfile)
+	p.KubernetesNamespace = strings.TrimSpace(p.KubernetesNamespace)
+	p.KubeContext = strings.TrimSpace(p.KubeContext)
+	p.KubeconfigPath = ExpandHome(strings.TrimSpace(p.KubeconfigPath))
+	p.ProxyServiceType = strings.TrimSpace(p.ProxyServiceType)
+	p.MongoURI = strings.TrimSpace(p.MongoURI)
+	p.RedisURI = strings.TrimSpace(p.RedisURI)
+	p.PrometheusAddress = strings.TrimSpace(p.PrometheusAddress)
+	p.MongoStorageSize = strings.TrimSpace(p.MongoStorageSize)
+	p.RedisStorageSize = strings.TrimSpace(p.RedisStorageSize)
+	p.StorageClassName = strings.TrimSpace(p.StorageClassName)
 	p.SelectedServers = normalizeWithRequired(RequiredServers, p.SelectedServers)
 	p.SelectedServices = normalizeWithRequired(RequiredServices, p.SelectedServices)
 	if strings.TrimSpace(p.SharedSecret) == "" {
@@ -211,7 +225,12 @@ func ExpandHome(path string) string {
 	if err != nil {
 		return path
 	}
-	return filepath.Join(home, strings.TrimPrefix(path, "~"))
+	suffix := strings.TrimPrefix(path, "~")
+	suffix = strings.TrimPrefix(suffix, "/")
+	if suffix == "" {
+		return home
+	}
+	return filepath.Join(home, suffix)
 }
 
 func FilterSelected(selected, allowed []string) []string {
