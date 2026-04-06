@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class SkywarsLobbyScoreboard {
+public class SkyWarsLobbyScoreboard {
 	private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
 	private static Integer animationFrame = 0;
 
@@ -65,7 +65,7 @@ public class SkywarsLobbyScoreboard {
 				List<String> lines = new ArrayList<>();
 				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.skywars_lobby.your_level_label", l) + " " + SkywarsLevelColor.getLevelDisplay(level));
+				lines.add(I18n.string("scoreboard.skywars_lobby.your_level_label", l) + " " + SkyWarsLevelColor.getLevelDisplay(level));
 				lines.add("§7 ");
 				lines.add(I18n.string("scoreboard.skywars_lobby.solo_kills_label", l) + soloKills);
 				lines.add(I18n.string("scoreboard.skywars_lobby.solo_wins_label", l) + soloWins);
