@@ -6,7 +6,6 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.resps.Tuple;
 
-import java.net.URI;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,8 @@ import java.util.UUID;
 
 public class LeaderboardService {
     private static final String PREFIX = "leaderboard:";
+    private static final int MAX_CONNECT_ATTEMPTS = 10;
+    private static final Duration CONNECT_RETRY_DELAY = Duration.ofMillis(500);
     private static JedisPool jedisPool;
     private static volatile boolean initialized = false;
     private static volatile boolean connecting = false;
@@ -31,29 +32,47 @@ public class LeaderboardService {
         connecting = true;
 
         try {
-            JedisPoolConfig poolConfig = new JedisPoolConfig();
-            poolConfig.setMaxTotal(20);
-            poolConfig.setMaxIdle(5);
-            poolConfig.setMinIdle(1);
-            poolConfig.setMaxWait(Duration.ofSeconds(2));
-            poolConfig.setTestOnBorrow(true);
-            poolConfig.setTestWhileIdle(true);
-            poolConfig.setBlockWhenExhausted(false);
+            for (int attempt = 1; attempt <= MAX_CONNECT_ATTEMPTS; attempt++) {
+                try {
+                    JedisPoolConfig poolConfig = new JedisPoolConfig();
+                    poolConfig.setMaxTotal(20);
+                    poolConfig.setMaxIdle(5);
+                    poolConfig.setMinIdle(1);
+                    poolConfig.setMaxWait(Duration.ofSeconds(2));
+                    poolConfig.setTestOnBorrow(true);
+                    poolConfig.setTestWhileIdle(true);
+                    poolConfig.setBlockWhenExhausted(false);
 
-            URI uri = URI.create(redisUri);
-            jedisPool = new JedisPool(poolConfig, uri);
+                    RedisEndpoint endpoint = parseRedisEndpoint(redisUri);
+                    jedisPool = new JedisPool(poolConfig, endpoint.host(), endpoint.port());
 
-            // Test connection
-            try (Jedis jedis = jedisPool.getResource()) {
-                jedis.ping();
+                    try (Jedis jedis = jedisPool.getResource()) {
+                        jedis.ping();
+                    }
+
+                    initialized = true;
+                    Logger.info("LeaderboardService connected to Redis");
+                    return;
+                } catch (Exception exception) {
+                    initialized = false;
+                    if (jedisPool != null && !jedisPool.isClosed()) {
+                        jedisPool.close();
+                    }
+                    jedisPool = null;
+
+                    if (attempt == MAX_CONNECT_ATTEMPTS) {
+                        Logger.warn("LeaderboardService: Redis not available, leaderboards disabled");
+                        return;
+                    }
+
+                    try {
+                        Thread.sleep(CONNECT_RETRY_DELAY.toMillis());
+                    } catch (InterruptedException interruptedException) {
+                        Thread.currentThread().interrupt();
+                        return;
+                    }
+                }
             }
-
-            initialized = true;
-            Logger.info("LeaderboardService connected to Redis");
-        } catch (Exception e) {
-            Logger.warn("LeaderboardService: Redis not available, leaderboards disabled");
-            initialized = false;
-            jedisPool = null;
         } finally {
             connecting = false;
         }
@@ -289,6 +308,24 @@ public class LeaderboardService {
         }
     }
 
+    private static RedisEndpoint parseRedisEndpoint(String redisUri) {
+        String sanitized = redisUri;
+        if (sanitized.startsWith("redis://")) {
+            sanitized = sanitized.substring("redis://".length());
+        }
+
+        int slashIndex = sanitized.indexOf('/');
+        if (slashIndex >= 0) {
+            sanitized = sanitized.substring(0, slashIndex);
+        }
+
+        String[] hostAndPort = sanitized.split(":", 2);
+        String host = hostAndPort[0];
+        int port = hostAndPort.length > 1 ? Integer.parseInt(hostAndPort[1]) : 6379;
+
+        return new RedisEndpoint(host, port);
+    }
+
     /**
      * Represents an entry on a leaderboard.
      */
@@ -306,5 +343,8 @@ public class LeaderboardService {
         public int scoreAsInt() {
             return (int) score;
         }
+    }
+
+    private record RedisEndpoint(String host, int port) {
     }
 }

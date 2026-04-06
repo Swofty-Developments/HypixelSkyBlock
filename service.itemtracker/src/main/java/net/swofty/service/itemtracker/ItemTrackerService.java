@@ -9,9 +9,9 @@ import java.util.List;
 
 public class ItemTrackerService implements SkyBlockService {
     static void main(String[] args) {
-        SkyBlockService.init(new ItemTrackerService());
-
         TrackedItemsDatabase.connect(ConfigProvider.settings().getMongodb());
+
+        SkyBlockService.init(new ItemTrackerService());
     }
 
     @Override

@@ -95,8 +95,9 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
 
     @Override
     public void updateNPC() {
-        Pos npcPosition = config.position(viewer);
+        Pos npcPosition = config.resolvedPosition(viewer);
         if (!getPosition().asVec().equals(npcPosition.asVec())) {
+            teleport(npcPosition);
             String[] holograms = config.holograms(viewer);
 
             boolean overflowing = holograms[holograms.length - 1].length() > 16;

@@ -4,23 +4,19 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y jq curl && apt-get clean
 
-# Download all JARs in a single layer
-RUN curl -fSL -o HypixelCore.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/HypixelCore.jar" && \
-    curl -fSL -o ServiceAPI.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAPI.jar" && \
-    curl -fSL -o ServiceAuctionHouse.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAuctionHouse.jar" && \
-    curl -fSL -o ServiceBazaar.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceBazaar.jar" && \
-    curl -fSL -o ServiceItemTracker.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceItemTracker.jar" && \
-    curl -fSL -o ServiceDataMutex.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDataMutex.jar" && \
-    curl -fSL -o ServiceParty.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceParty.jar" && \
-    curl -fSL -o ServiceDarkAuction.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDarkAuction.jar" && \
-    curl -fSL -o ServiceOrchestrator.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceOrchestrator.jar" && \
-    curl -fSL -o ServiceFriend.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceFriend.jar"
+COPY ./loader/build/libs/HypixelCore.jar /app/HypixelCore.jar
+COPY ./service.api/build/libs/ServiceAPI.jar /app/ServiceAPI.jar
+COPY ./service.auctionhouse/build/libs/ServiceAuctionHouse.jar /app/ServiceAuctionHouse.jar
+COPY ./service.bazaar/build/libs/ServiceBazaar.jar /app/ServiceBazaar.jar
+COPY ./service.itemtracker/build/libs/ServiceItemTracker.jar /app/ServiceItemTracker.jar
+COPY ./service.datamutex/build/libs/ServiceDataMutex.jar /app/ServiceDataMutex.jar
+COPY ./service.party/build/libs/ServiceParty.jar /app/ServiceParty.jar
 
 # Copy configuration data
 COPY ./configuration /app/configuration_files
 
 RUN mkdir -p configuration && \
-    cp configuration_files/config.yml ./configuration/config.yml
+    cp configuration_files/config.docker.yml ./configuration/config.yml
 
 RUN curl -fSL -o /tmp/worlds.tar.gz "https://files.catbox.moe/9uas8z.gz" && \
     tar -xzf /tmp/worlds.tar.gz -C ./configuration && \

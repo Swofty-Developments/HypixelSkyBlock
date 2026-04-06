@@ -13,9 +13,10 @@ public class PunishmentService implements SkyBlockService {
     static void main(String[] args) {
         String mongoUri = ConfigProvider.settings().getMongodb();
         new PunishmentDatabase(null).connect(mongoUri);
-        SkyBlockService.init(new PunishmentService());
         PunishmentRedis.connect(ConfigProvider.settings().getRedisUri());
         ProxyRedis.connect(ConfigProvider.settings().getRedisUri());
+
+        SkyBlockService.init(new PunishmentService());
     }
 
     @Override

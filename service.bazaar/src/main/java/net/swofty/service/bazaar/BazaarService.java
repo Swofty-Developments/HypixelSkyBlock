@@ -10,8 +10,6 @@ import java.util.List;
 public class BazaarService implements SkyBlockService {
 
     static void main(String[] args) {
-        SkyBlockService.init(new BazaarService());
-
         // Connect to MongoDB for orders
         OrderDatabase.connect(ConfigProvider.settings().getMongodb());
 
@@ -19,6 +17,8 @@ public class BazaarService implements SkyBlockService {
         BazaarMarket.get();
         // load persisted orders
         OrderRepository.loadAll();
+
+        SkyBlockService.init(new BazaarService());
     }
 
     @Override

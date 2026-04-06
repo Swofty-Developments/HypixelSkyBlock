@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.event.actions.player;
 
-import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.block.Block;
@@ -21,6 +20,19 @@ import java.util.UUID;
 
 public class ActionPlayerTravel implements HypixelEventClass {
     public static List<UUID> delay = new ArrayList<>();
+    private static final double[][] PORTAL_CHECK_OFFSETS = {
+            {0, 0, 0},
+            {0, -1, 0},
+            {0, 1, 0},
+            {0.3, 0, 0},
+            {-0.3, 0, 0},
+            {0, 0, 0.3},
+            {0, 0, -0.3},
+            {0.3, 1, 0},
+            {-0.3, 1, 0},
+            {0, 1, 0.3},
+            {0, 1, -0.3}
+    };
 
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
     public void run(PlayerMoveEvent event) {
@@ -28,8 +40,7 @@ public class ActionPlayerTravel implements HypixelEventClass {
 
         if (delay.contains(player.getUuid())) return;
 
-        Key block = player.getInstance().getBlock(player.getPosition()).key();
-        if (block == Block.NETHER_PORTAL.key()) {
+        if (isTouchingBlock(player, Block.NETHER_PORTAL)) {
             MissionData data = player.getMissionData();
 
             delay.add(player.getUuid());
@@ -46,9 +57,10 @@ public class ActionPlayerTravel implements HypixelEventClass {
             }
 
             player.sendTo(HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_HUB ? ServerType.SKYBLOCK_DUNGEON_HUB : ServerType.SKYBLOCK_HUB);
+            return;
         }
 
-        if (block == Block.END_PORTAL.key()) {
+        if (isTouchingBlock(player, Block.END_PORTAL)) {
             player.sendTo(ServerType.SKYBLOCK_ISLAND);
             delay.add(player.getUuid());
 
@@ -56,5 +68,15 @@ public class ActionPlayerTravel implements HypixelEventClass {
                     .delay(Duration.ofMillis(500))
                     .schedule();
         }
+    }
+
+    private boolean isTouchingBlock(SkyBlockPlayer player, Block expectedBlock) {
+        for (double[] offset : PORTAL_CHECK_OFFSETS) {
+            Block block = player.getInstance().getBlock(player.getPosition().add(offset[0], offset[1], offset[2]));
+            if (block.key().equals(expectedBlock.key())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

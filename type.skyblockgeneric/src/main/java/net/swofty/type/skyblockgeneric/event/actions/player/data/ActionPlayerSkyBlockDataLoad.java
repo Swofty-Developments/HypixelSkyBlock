@@ -65,8 +65,15 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
                 ProfilesDatabase temp = new ProfilesDatabase(profileId.toString());
                 Document doc = temp.getDocument();
                 if (doc != null) {
-                    islandUUID = SkyBlockDataHandler.createFromProfileOnly(doc)
+                    SkyBlockDataHandler existingHandler = SkyBlockDataHandler.createFromProfileOnly(doc);
+                    islandUUID = existingHandler
                             .get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue();
+                    if (islandUUID == null) {
+                        islandUUID = profileId;
+                        existingHandler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class)
+                                .setValue(islandUUID);
+                        temp.saveDocument(existingHandler.toProfileDocument());
+                    }
                 } else {
                     // Profile doesn't exist in database yet
                     islandUUID = profileId;

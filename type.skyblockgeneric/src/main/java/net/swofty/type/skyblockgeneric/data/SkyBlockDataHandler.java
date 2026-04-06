@@ -194,6 +194,7 @@ public class SkyBlockDataHandler extends DataHandler {
     public static SkyBlockDataHandler initUserWithDefaultData(UUID uuid, UUID profileId) {
         SkyBlockDataHandler h = new SkyBlockDataHandler(uuid, profileId);
         h.initSkyBlockDefaults();
+        h.get(Data.ISLAND_UUID, DatapointUUID.class).setValue(profileId);
         return h;
     }
 

@@ -99,7 +99,7 @@ public abstract class HypixelNPC {
                     if (!config.visible(player)) return;
 
                     String[] holograms = config.holograms(player);
-                    Pos position = config.position(player);
+                    Pos position = config.resolvedPosition(player);
 
                     String username = holograms[holograms.length - 1];
                     boolean overflowing = username.length() > 16;
@@ -146,7 +146,7 @@ public abstract class HypixelNPC {
                     return;
                 }
 
-                Pos npcPosition = config.position(player);
+                Pos npcPosition = config.resolvedPosition(player);
                 if (!(entity instanceof NPCViewable npcViewable)) {
                     Logger.error("Entity for NPC {} does not implement NPCViewable, skipping update", npc.getName());
                     return;

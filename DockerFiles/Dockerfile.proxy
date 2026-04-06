@@ -20,7 +20,7 @@ RUN rm -f velocity.toml && \
 
 # Set up config.yml template
 RUN mkdir -p configuration && \
-    cp configuration_files/config.example.yml ./configuration/config.yml
+    cp configuration_files/config.docker.yml ./configuration/config.yml
 
 EXPOSE 25565
 

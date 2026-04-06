@@ -123,9 +123,12 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
 
     @Override
     public void updateNPC() {
-        Pos npcPosition = config.position(viewer);
-        if (!getPosition().asVec().equals(npcPosition.asVec()) && config.shouldDisplayHolograms(viewer)) {
-            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getEyeHeight() + 0.1f, 0));
+        Pos npcPosition = config.resolvedPosition(viewer);
+        if (!getPosition().asVec().equals(npcPosition.asVec())) {
+            teleport(npcPosition);
+            if (config.shouldDisplayHolograms(viewer)) {
+                PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getEyeHeight() + 0.1f, 0));
+            }
         }
 
         if (!getPose().equals(config.pose(viewer))) {

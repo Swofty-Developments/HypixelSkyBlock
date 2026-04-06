@@ -11,11 +11,11 @@ public class DarkAuctionService implements SkyBlockService {
     private static DarkAuctionState currentAuction = null;
 
     static void main(String[] args) {
-        SkyBlockService.init(new DarkAuctionService());
-
         // Start the scheduler that checks SkyBlock time
         DarkAuctionScheduler.start();
         Logger.info("DarkAuctionService started with scheduler");
+
+        SkyBlockService.init(new DarkAuctionService());
     }
 
     @Override

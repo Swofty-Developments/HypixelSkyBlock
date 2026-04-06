@@ -45,16 +45,17 @@ public class NPCBaker extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                List<CalendarEvent> events = SkyBlockCalendar.getCurrentEvents();
-                if (!events.contains(CalendarEvent.NEW_YEAR)) {
-                    return new Pos(-6.5, 0, -47.5, 180, 0);
-                }
                 return new Pos(-6.5, 70, -47.5, 180, 0);
             }
 
             @Override
             public boolean looking(HypixelPlayer player) {
                 return true;
+            }
+
+            @Override
+            public boolean visible(HypixelPlayer player) {
+                return SkyBlockCalendar.getCurrentEvents().contains(CalendarEvent.NEW_YEAR);
             }
         });
     }

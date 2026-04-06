@@ -14,8 +14,21 @@ printf '%s' "$secret" > ./forwarding.secret
 # Ensure configuration/config.yml exists
 mkdir -p ./configuration
 if [ ! -f ./configuration/config.yml ]; then
-    cp configuration_files/config.example.yml ./configuration/config.yml
+    if [ -f ./configuration_files/config.docker.yml ]; then
+        cp ./configuration_files/config.docker.yml ./configuration/config.yml
+    else
+        cp ./configuration_files/config.example.yml ./configuration/config.yml
+    fi
 fi
+
+# Mirror any packaged configuration directories the runtime expects
+for source_dir in ./configuration_files/*/; do
+    [ -d "$source_dir" ] || continue
+    dir_name=$(basename "$source_dir")
+    if [ ! -d "./configuration/$dir_name" ]; then
+        cp -a "$source_dir" "./configuration/$dir_name"
+    fi
+done
 
 # Update config.yml with the forwarding secret (velocity-secret)
 sed -i "s/velocity-secret: .*/velocity-secret: '$secret'/" ./configuration/config.yml

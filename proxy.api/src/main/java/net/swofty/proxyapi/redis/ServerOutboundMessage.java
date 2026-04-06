@@ -14,9 +14,13 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 public class ServerOutboundMessage {
+    private static final long REDIS_READY_TIMEOUT_MS = 5000;
+    private static final long RESPONSE_TIMEOUT_MS = 10000;
     private static final Map<UUID, Consumer<String>> redisMessageListeners = new HashMap<>();
     public static final Map<String, ProtocolObject> protocolObjects = new HashMap<>();
 
@@ -27,21 +31,31 @@ public class ServerOutboundMessage {
             String[] split = messageWithoutFilter.split("}=-=-=\\{");
             UUID uuid = UUID.fromString(split[0]);
 
-            redisMessageListeners.get(uuid).accept(split[1]);
-            redisMessageListeners.remove(uuid);
+            Consumer<String> listener = redisMessageListeners.remove(uuid);
+            if (listener == null) {
+                return;
+            }
+
+            listener.accept(split[1]);
         });
     }
 
     public static void sendMessageToProxy(ToProxyChannels channel, JSONObject message, Consumer<JSONObject> response) {
+        RedisAPI redis = awaitRedis(true);
+        if (redis == null) {
+            Logger.warn("Redis API was not ready for proxy message {}", channel.getChannelName());
+            return;
+        }
+
         UUID uuid = UUID.randomUUID();
-        UUID filterID = UUID.fromString(RedisAPI.getInstance().getFilterId());
+        UUID filterID = UUID.fromString(redis.getFilterId());
 
         Consumer<String> consumer = (s) -> {
             response.accept(new JSONObject(s));
         };
         redisMessageListeners.put(uuid, consumer);
 
-        RedisAPI.getInstance().publishMessage("proxy",
+        redis.publishMessage("proxy",
                 ChannelRegistry.getFromName(channel.getChannelName()),
                 message.toString() + "}=-=-={" + uuid + "}=-=-={" + filterID);
     }
@@ -73,15 +87,23 @@ public class ServerOutboundMessage {
                                             ProtocolObject specification,
                                             Object rawMessage,
                                             Consumer<String> response) {
+        RedisAPI redis = awaitRedis(true);
+        if (redis == null) {
+            Logger.warn("Redis API was not ready for service message {}", specification.channel());
+            return;
+        }
+
         UUID requestId = UUID.randomUUID();
-        String callbackId = RedisAPI.getInstance().getFilterId();
+        String callbackId = redis.getFilterId();
         if (callbackId == null) return;
 
         redisMessageListeners.put(requestId, response);
+        CompletableFuture.delayedExecutor(RESPONSE_TIMEOUT_MS, TimeUnit.MILLISECONDS)
+                .execute(() -> redisMessageListeners.remove(requestId));
 
         String message = specification.translateToString(rawMessage);
 
-        RedisAPI.getInstance().publishMessage(service.name(),
+        redis.publishMessage(service.name(),
                 ChannelRegistry.getFromName(specification.channel()),
                 new ServiceProxyRequest(requestId, callbackId,
                         specification.channel(), message).toJSON().toString());
@@ -93,15 +115,21 @@ public class ServerOutboundMessage {
     public static void sendMessageToServiceFireAndForget(ServiceType service,
                                                          ProtocolObject specification,
                                                          Object rawMessage) {
+        RedisAPI redis = awaitRedis(false);
+        if (redis == null) {
+            Logger.warn("Redis API was not ready for fire-and-forget service message {}", specification.channel());
+            return;
+        }
+
         UUID requestId = UUID.randomUUID();
         String callback = null;
         try {
-            callback = RedisAPI.getInstance().getFilterId();
+            callback = redis.getFilterId();
         } catch (Exception ignored) {
         }
 
         String message = specification.translateToString(rawMessage);
-        RedisAPI.getInstance().publishMessage(
+        redis.publishMessage(
                 service.name(),
                 ChannelRegistry.getFromName(specification.channel()),
                 new ServiceProxyRequest(
@@ -141,5 +169,28 @@ public class ServerOutboundMessage {
         }
 
         throw new IllegalArgumentException("Could not determine the type T for the given ProtocolObject");
+    }
+
+    private static RedisAPI awaitRedis(boolean requireFilterId) {
+        long deadline = System.currentTimeMillis() + REDIS_READY_TIMEOUT_MS;
+
+        while (System.currentTimeMillis() < deadline) {
+            try {
+                RedisAPI redis = RedisAPI.getInstance();
+                if (redis != null && (!requireFilterId || redis.getFilterId() != null)) {
+                    return redis;
+                }
+            } catch (Exception ignored) {
+            }
+
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException interruptedException) {
+                Thread.currentThread().interrupt();
+                return null;
+            }
+        }
+
+        return null;
     }
 }

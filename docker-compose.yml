@@ -68,6 +68,7 @@ services:
       dockerfile: "./DockerFiles/Dockerfile.game_server"
     image: game_server_prepared
     container_name: game_server_builder
+    command: ["sh", "-c", "while true; do sleep 3600; done"]
     volumes:
       - ./configuration:/app/configuration_files
     networks:
@@ -84,6 +85,12 @@ services:
       proxy:
         condition: service_healthy
       game_server_builder:
+        condition: service_started
+      service_auctionhouse:
+        condition: service_started
+      service_itemtracker:
+        condition: service_started
+      service_datamutex:
         condition: service_started
     volumes:
       - ./configuration:/app/configuration_files
@@ -102,6 +109,14 @@ services:
         condition: service_healthy
       game_server_builder:
         condition: service_started
+      service_auctionhouse:
+        condition: service_started
+      service_bazaar:
+        condition: service_started
+      service_itemtracker:
+        condition: service_started
+      service_datamutex:
+        condition: service_started
     volumes:
       - ./configuration:/app/configuration_files
     networks:
@@ -118,6 +133,8 @@ services:
       proxy:
         condition: service_healthy
       game_server_builder:
+        condition: service_started
+      service_datamutex:
         condition: service_started
     volumes:
       - ./configuration:/app/configuration_files
@@ -247,6 +264,23 @@ services:
     environment:
       <<: *forwarding_env
       SERVICE_CMD: java -jar ServiceItemTracker.jar
+    depends_on:
+      proxy:
+        condition: service_healthy
+      game_server_builder:
+        condition: service_started
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+
+  service_datamutex:
+    image: game_server_prepared
+    container_name: service_datamutex
+    restart: "unless-stopped"
+    environment:
+      <<: *forwarding_env
+      SERVICE_CMD: java -jar ServiceDataMutex.jar
     depends_on:
       proxy:
         condition: service_healthy

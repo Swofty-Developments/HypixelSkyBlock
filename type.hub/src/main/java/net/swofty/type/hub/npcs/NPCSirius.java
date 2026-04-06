@@ -39,10 +39,6 @@ public class NPCSirius extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                if (DarkAuctionHandler.getLocalState() == null)
-                    return new Pos(0, 3, 0, 0, 0);
-
-
                 switch (DarkAuctionHandler.getLocalState().getPhase()) {
                     case QUEUE -> {
                         return new Pos(91, 75, 176, 180, 0);
@@ -56,6 +52,11 @@ public class NPCSirius extends HypixelNPC {
             @Override
             public boolean looking(HypixelPlayer player) {
                 return true;
+            }
+
+            @Override
+            public boolean visible(HypixelPlayer player) {
+                return DarkAuctionHandler.getLocalState() != null;
             }
         });
     }
