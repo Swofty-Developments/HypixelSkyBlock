@@ -4,6 +4,8 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class CastVoteProtocolObject
@@ -44,16 +46,24 @@ public class CastVoteProtocolObject
             public String serialize(CastVoteResponse value) {
                 JSONObject json = new JSONObject();
                 json.put("success", value.success());
-                json.put("talliesJson", value.talliesJson());
+                json.put("tallies", value.tallies() == null ? null : new JSONObject(value.tallies()));
                 return json.toString();
             }
 
             @Override
             public CastVoteResponse deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
+                Map<String, Long> tallies = null;
+                if (!obj.isNull("tallies")) {
+                    tallies = new HashMap<>();
+                    JSONObject talliesObject = obj.getJSONObject("tallies");
+                    for (String key : talliesObject.keySet()) {
+                        tallies.put(key, talliesObject.getLong(key));
+                    }
+                }
                 return new CastVoteResponse(
                         obj.getBoolean("success"),
-                        obj.optString("talliesJson", null)
+                    tallies
                 );
             }
 
@@ -66,5 +76,6 @@ public class CastVoteProtocolObject
 
     public record CastVoteMessage(UUID accountId, String candidateName) {}
 
-    public record CastVoteResponse(boolean success, String talliesJson) {}
+    public record CastVoteResponse(boolean success, Map<String, Long> tallies) {
+    }
 }

@@ -15,8 +15,6 @@ public class CastVoteEndpoint implements ServiceEndpoint
         <CastVoteProtocolObject.CastVoteMessage,
                 CastVoteProtocolObject.CastVoteResponse> {
 
-    private static final Gson GSON = new Gson();
-
     @Override
     public ProtocolObject<CastVoteProtocolObject.CastVoteMessage,
             CastVoteProtocolObject.CastVoteResponse> associatedProtocolObject() {
@@ -34,7 +32,7 @@ public class CastVoteEndpoint implements ServiceEndpoint
                 return new CastVoteProtocolObject.CastVoteResponse(false, null);
             }
 
-            Map<String, Object> data = GSON.fromJson(rawData, Map.class);
+            Map<String, Object> data = new Gson().fromJson(rawData, Map.class);
             Boolean electionOpen = (Boolean) data.get("electionOpen");
             if (electionOpen == null || !electionOpen) {
                 return new CastVoteProtocolObject.CastVoteResponse(false, null);
@@ -60,7 +58,7 @@ public class CastVoteEndpoint implements ServiceEndpoint
             );
 
             Map<String, Long> tallies = ElectionDatabase.getTallies(electionYear);
-            return new CastVoteProtocolObject.CastVoteResponse(true, GSON.toJson(tallies));
+            return new CastVoteProtocolObject.CastVoteResponse(true, tallies);
         } catch (Exception e) {
             Logger.error(e, "Failed to cast vote");
             return new CastVoteProtocolObject.CastVoteResponse(false, null);

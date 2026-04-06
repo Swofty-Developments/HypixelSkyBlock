@@ -13,7 +13,7 @@ public class GetElectionDataProtocolObject
         return new Serializer<>() {
             @Override
             public String serialize(GetElectionDataMessage value) {
-                return new JSONObject().put("_", true).toString();
+                return "";
             }
 
             @Override

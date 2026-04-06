@@ -1,7 +1,6 @@
 package net.swofty.type.skyblockgeneric.elections;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.TaskSchedule;
@@ -143,12 +142,8 @@ public class ElectionManager {
         ).thenAccept(response -> {
             if (response.success()) {
                 playerVoteCache.put(accountId, candidateName);
-                if (response.talliesJson() != null) {
-                    Map<String, Long> tallies = GSON.fromJson(
-                        response.talliesJson(),
-                        new TypeToken<Map<String, Long>>(){}.getType()
-                    );
-                    electionData.updateTallies(tallies);
+                if (response.tallies() != null) {
+                    electionData.updateTallies(response.tallies());
                 }
             }
         }).exceptionally(e -> {

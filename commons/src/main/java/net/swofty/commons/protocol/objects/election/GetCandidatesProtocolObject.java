@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class GetCandidatesProtocolObject
         return new Serializer<>() {
             @Override
             public String serialize(GetCandidatesMessage value) {
-                return new JSONObject().put("_", true).toString();
+                return "";
             }
 
             @Override
@@ -41,7 +42,7 @@ public class GetCandidatesProtocolObject
             public String serialize(GetCandidatesResponse value) {
                 JSONObject json = new JSONObject();
                 json.put("electionOpen", value.electionOpen());
-                json.put("candidates", gson.toJson(value.candidates()));
+                json.put("candidates", value.candidates() == null ? null : new JSONArray(gson.toJson(value.candidates())));
                 return json.toString();
             }
 
@@ -52,7 +53,7 @@ public class GetCandidatesProtocolObject
                 List<CandidateInfo> candidates = List.of();
                 if (!obj.isNull("candidates")) {
                     candidates = gson.fromJson(
-                            obj.getString("candidates"),
+                        obj.getJSONArray("candidates").toString(),
                             new TypeToken<List<CandidateInfo>>() {}.getType()
                     );
                 }
