@@ -5,7 +5,7 @@ plugins {
     application
     `maven-publish`
     id("com.gradleup.shadow") version "9.3.2"
-    id("org.jetbrains.gradle.plugin.idea-ext") version "1.3"
+    id("org.jetbrains.gradle.plugin.idea-ext") version "1.4.1"
 }
 
 java {
