@@ -142,6 +142,12 @@ func composeYAML(p profile.Profile) string {
 	b.WriteString("    healthcheck:\n")
 	b.WriteString("      test: [\"CMD\", \"nc\", \"-z\", \"localhost\", \"25565\"]\n")
 	b.WriteString("      interval: 10s\n      timeout: 5s\n      retries: 5\n      start_period: 10s\n")
+	b.WriteString("  picolimbo:\n")
+	b.WriteString("    image: ghcr.io/ariksquad/picolimbo:master\n")
+	b.WriteString("    container_name: picolimbo\n")
+	b.WriteString("    environment:\n      <<: *forwarding_env\n")
+	b.WriteString(fmt.Sprintf("    volumes:\n      - %q\n", filepath.Join(p.InstallDir, "configuration")+":/app/configuration_files"))
+	b.WriteString("    networks:\n      - hypixel_network\n")
 
 	for _, serviceName := range p.SelectedServices {
 		svc := spec.ServiceByName(serviceName)

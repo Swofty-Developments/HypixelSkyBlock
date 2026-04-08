@@ -36,6 +36,9 @@ func TestComposeYAMLUsesSingleSharedGameServerImageBuild(t *testing.T) {
 	if strings.Count(yaml, "dockerfile: DockerFiles/Dockerfile.service") != len(p.SelectedServices) {
 		t.Fatalf("expected each selected service to use the per-service Dockerfile, got:\n%s", yaml)
 	}
+	if !strings.Contains(yaml, "  picolimbo:\n") {
+		t.Fatalf("expected compose output to include the PicoLimbo service, got:\n%s", yaml)
+	}
 	if strings.Contains(yaml, "java $JAVA_OPTS") {
 		t.Fatalf("expected runtime JAVA_OPTS references to be escaped for compose, got:\n%s", yaml)
 	}

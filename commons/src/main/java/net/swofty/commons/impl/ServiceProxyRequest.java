@@ -15,13 +15,19 @@ public class ServiceProxyRequest {
     private String requestServer;
     private String endpoint;
     private String message;
+    private boolean expectsResponse;
+
+    public ServiceProxyRequest(UUID requestId, String requestServer, String endpoint, String message) {
+        this(requestId, requestServer, endpoint, message, true);
+    }
 
     public JSONObject toJSON() {
         return new JSONObject()
                 .put("requestId", requestId.toString())
                 .put("requestServer", requestServer)
                 .put("endpoint", endpoint)
-                .put("message", message);
+            .put("message", message)
+            .put("expectsResponse", expectsResponse);
     }
 
     public static ServiceProxyRequest fromJSON(JSONObject json) {
@@ -29,7 +35,8 @@ public class ServiceProxyRequest {
                 UUID.fromString(json.getString("requestId")),
                 json.getString("requestServer"),
                 json.getString("endpoint"),
-                json.getString("message")
+            json.getString("message"),
+            json.optBoolean("expectsResponse", true)
         );
     }
 }

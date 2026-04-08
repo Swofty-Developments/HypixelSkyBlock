@@ -60,6 +60,10 @@ public class ServiceInitializer {
 
                 Thread.startVirtualThread(() -> {
                     Object rawResponse = endpoint.onMessage(request, messageData);
+                    if (!request.isExpectsResponse()) {
+                        return;
+                    }
+
                     String response = protocolObject.translateReturnToString(rawResponse);
 
                     RedisAPI.getInstance().publishMessage(request.getRequestServer(),

@@ -399,8 +399,12 @@ public class SkyBlockVelocity {
 			return;
 		}
 
-		// Send the player to the limbo
 		RegisteredServer originalServer = event.getServer();
+		if (originalServer.equals(limboServer)) {
+			new TransferHandler(event.getPlayer()).forceRemoveFromLimbo();
+			return;
+		}
+
 		Component reason = event.getServerKickReason().orElse(Component.text(
 				"§cYour connection to the server was lost. Please try again later."
 		));
@@ -412,8 +416,6 @@ public class SkyBlockVelocity {
 		));
 
 		TransferHandler transferHandler = new TransferHandler(event.getPlayer());
-		transferHandler.transferTo(serverType);
-
 		CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
 				.execute(() -> {
 					// Determine if the registeredServer disconnect was due to a crash
@@ -430,7 +432,7 @@ public class SkyBlockVelocity {
 
 					try {
 						ServerType serverTypeToTry = serverType;
-						if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
+						if (serverTypeToTry == null || !GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
 							serverTypeToTry = ServerType.PROTOTYPE_LOBBY;
 						}
 
