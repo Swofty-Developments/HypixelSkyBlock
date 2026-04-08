@@ -76,3 +76,33 @@ func TestGenerateKubernetesAssetsRemovesStaleOptionalFiles(t *testing.T) {
 		}
 	}
 }
+
+func TestGenerateComposeAssetsMakesRuntimeScriptsExecutable(t *testing.T) {
+	repoRoot := t.TempDir()
+	installDir := t.TempDir()
+	configDir := filepath.Join(repoRoot, "configuration")
+	if err := os.MkdirAll(configDir, 0o755); err != nil {
+		t.Fatalf("MkdirAll returned error: %v", err)
+	}
+	for _, name := range []string{"entrypoint.sh", "bootstrap-config.sh", "mongo-init.sh", "velocity.toml"} {
+		if err := os.WriteFile(filepath.Join(configDir, name), []byte("#!/bin/sh\n"), 0o644); err != nil {
+			t.Fatalf("WriteFile returned error: %v", err)
+		}
+	}
+	p := profile.Default(repoRoot, installDir)
+	p.Normalize()
+
+	if err := GenerateComposeAssets(p); err != nil {
+		t.Fatalf("GenerateComposeAssets returned error: %v", err)
+	}
+
+	for _, name := range []string{"entrypoint.sh", "bootstrap-config.sh", "mongo-init.sh"} {
+		info, err := os.Stat(filepath.Join(installDir, "configuration", name))
+		if err != nil {
+			t.Fatalf("Stat returned error for %s: %v", name, err)
+		}
+		if info.Mode().Perm()&0o111 == 0 {
+			t.Fatalf("expected %s to be executable, got mode %o", name, info.Mode().Perm())
+		}
+	}
+}

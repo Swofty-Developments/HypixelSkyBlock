@@ -22,6 +22,9 @@ func GenerateComposeAssets(p profile.Profile) error {
 	if err := files.CopyDir(filepath.Join(p.RepoRoot, "configuration"), filepath.Join(p.InstallDir, "configuration")); err != nil {
 		return err
 	}
+	if err := ensureComposeScriptPermissions(filepath.Join(p.InstallDir, "configuration")); err != nil {
+		return err
+	}
 	if err := writeComposeConfig(p); err != nil {
 		return err
 	}
@@ -32,6 +35,20 @@ func GenerateComposeAssets(p profile.Profile) error {
 		return err
 	}
 	return os.WriteFile(filepath.Join(p.InstallDir, "README.generated.md"), []byte(ComposeNotes(p)), 0o644)
+}
+
+func ensureComposeScriptPermissions(configurationDir string) error {
+	for _, name := range []string{"entrypoint.sh", "bootstrap-config.sh", "mongo-init.sh"} {
+		path := filepath.Join(configurationDir, name)
+		info, err := os.Stat(path)
+		if err != nil {
+			return err
+		}
+		if err := os.Chmod(path, info.Mode().Perm()|0o111); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func writeComposeConfig(p profile.Profile) error {

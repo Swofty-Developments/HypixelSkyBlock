@@ -34,6 +34,10 @@ func CopyFile(source, target string) error {
 		return err
 	}
 	defer src.Close()
+	info, err := src.Stat()
+	if err != nil {
+		return err
+	}
 
 	if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
 		return err
@@ -44,6 +48,8 @@ func CopyFile(source, target string) error {
 	}
 	defer dst.Close()
 
-	_, err = io.Copy(dst, src)
-	return err
+	if _, err := io.Copy(dst, src); err != nil {
+		return err
+	}
+	return os.Chmod(target, info.Mode().Perm())
 }
