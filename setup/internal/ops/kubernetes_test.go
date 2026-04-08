@@ -23,6 +23,23 @@ func TestKubernetesBuilderForStandardTarget(t *testing.T) {
 	}
 }
 
+func TestKubernetesBuilderForK3dTarget(t *testing.T) {
+	p := profile.Default("/repo", "/tmp/install")
+	p.Runtime = profile.RuntimeK8s
+	p.KubernetesTarget = profile.KubernetesTargetK3d
+
+	name, args, err := kubernetesBuilder(p)
+	if err != nil {
+		t.Fatalf("kubernetesBuilder returned error: %v", err)
+	}
+	if name != "docker" {
+		t.Fatalf("expected docker, got %q", name)
+	}
+	if len(args) != 0 {
+		t.Fatalf("expected no args, got %v", args)
+	}
+}
+
 func TestKubernetesBuilderForMinikubeTarget(t *testing.T) {
 	p := profile.Default("/repo", "/tmp/install")
 	p.Runtime = profile.RuntimeK8s
@@ -37,5 +54,18 @@ func TestKubernetesBuilderForMinikubeTarget(t *testing.T) {
 	}
 	if len(args) != 0 {
 		t.Fatalf("expected no args, got %v", args)
+	}
+}
+
+func TestRequiresKubernetesAccessForLocalFullSetup(t *testing.T) {
+	p := profile.Default("/repo", "/tmp/install")
+	p.Runtime = profile.RuntimeK8s
+	p.KubernetesTarget = profile.KubernetesTargetK3d
+
+	if !requiresKubernetesAccess("k8s-deploy", p) {
+		t.Fatal("expected deploy to require kubernetes access")
+	}
+	if requiresKubernetesAccess("k8s-full", p) {
+		t.Fatal("expected full setup to bootstrap local targets before checking kubernetes access")
 	}
 }

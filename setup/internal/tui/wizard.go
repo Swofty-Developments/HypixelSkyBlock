@@ -48,11 +48,13 @@ func RunWizard(p profile.Profile) (string, profile.Profile, error) {
 		),
 		huh.NewGroup(
 			huh.NewInput().Title("Image tag").Description("Applied to proxy, service, and game images.").Value(&p.ImageTag),
-			huh.NewSelect[string]().Title("Kubernetes target").Description("Choose standard Kubernetes or Minikube. Standard Kubernetes builds into containerd via nerdctl; Minikube is only for local test installations.").Options(
-				huh.NewOption("Official Kubernetes", profile.KubernetesTargetStandard),
-				huh.NewOption("Minikube (local testing only)", profile.KubernetesTargetMinikube),
+			huh.NewSelect[string]().Title("Kubernetes target").Description("Choose a single-host k3d cluster, an existing Kubernetes cluster, or Minikube. k3d is the recommended turnkey option on one machine.").Options(
+				huh.NewOption("k3d (recommended single-host cluster)", profile.KubernetesTargetK3d),
+				huh.NewOption("Existing Kubernetes cluster", profile.KubernetesTargetStandard),
+				huh.NewOption("Minikube", profile.KubernetesTargetMinikube),
 			).Value(&p.KubernetesTarget),
-			huh.NewInput().Title("Minikube profile").Description("Used for `minikube image load`.").Value(&p.MinikubeProfile),
+			huh.NewInput().Title("k3d cluster name").Description("Used when the setup creates or reuses a local k3d cluster.").Value(&p.KubernetesClusterName),
+			huh.NewInput().Title("Minikube profile").Description("Used when the setup creates or reuses a Minikube cluster.").Value(&p.MinikubeProfile),
 			huh.NewInput().Title("Kubernetes namespace").Description("Generated manifests target this namespace.").Value(&p.KubernetesNamespace),
 			huh.NewInput().Title("kubectl context").Description("Optional. Leave blank for the current context.").Value(&p.KubeContext),
 			huh.NewSelect[string]().Title("Proxy service type").Description("How the proxy is exposed to players.").Options(
@@ -124,8 +126,14 @@ func summary(p profile.Profile, skyblockSelected, minigameSelected []string) str
 		"Services: " + strings.Join(profile.FilterSelected(p.SelectedServices, profile.AllServices), ", "),
 	}
 	if p.Runtime == profile.RuntimeK8s {
+		lines = append(lines, "Target: "+p.KubernetesTarget)
+		if p.KubernetesTarget == profile.KubernetesTargetK3d {
+			lines = append(lines, "k3d cluster: "+p.KubernetesClusterName)
+		}
+		if p.KubernetesTarget == profile.KubernetesTargetMinikube {
+			lines = append(lines, "Minikube profile: "+p.MinikubeProfile)
+		}
 		lines = append(lines,
-			"Target: "+p.KubernetesTarget,
 			"Namespace: "+p.KubernetesNamespace,
 			"Local images: *:"+p.ImageTag,
 			"Proxy exposure: "+p.ProxyServiceType,

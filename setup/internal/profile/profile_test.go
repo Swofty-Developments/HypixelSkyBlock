@@ -29,11 +29,26 @@ func TestDefaultUsesComposeForLocalInstalls(t *testing.T) {
 	if p.SharedSecret == "" {
 		t.Fatal("expected default shared secret to be populated")
 	}
-	if p.KubernetesTarget != KubernetesTargetStandard {
-		t.Fatalf("expected default kubernetes target %q, got %q", KubernetesTargetStandard, p.KubernetesTarget)
+	if p.KubernetesTarget != KubernetesTargetK3d {
+		t.Fatalf("expected default kubernetes target %q, got %q", KubernetesTargetK3d, p.KubernetesTarget)
 	}
-	if p.MinikubeProfile != "minikube" {
-		t.Fatalf("expected default minikube profile %q, got %q", "minikube", p.MinikubeProfile)
+	if p.KubernetesClusterName != "hypixel" {
+		t.Fatalf("expected default kubernetes cluster name %q, got %q", "hypixel", p.KubernetesClusterName)
+	}
+	if p.MinikubeProfile != "hypixel" {
+		t.Fatalf("expected default minikube profile %q, got %q", "hypixel", p.MinikubeProfile)
+	}
+	if len(p.SelectedServers) != 1 || p.SelectedServers[0] != "PROTOTYPE_LOBBY" {
+		t.Fatalf("expected only the required default server, got %v", p.SelectedServers)
+	}
+	if len(p.SelectedServices) != 2 || p.SelectedServices[0] != "ServiceDataMutex" || p.SelectedServices[1] != "ServiceParty" {
+		t.Fatalf("expected only the required default services, got %v", p.SelectedServices)
+	}
+	if p.InstallMonitoring {
+		t.Fatal("expected monitoring to be disabled by default")
+	}
+	if p.EnableAutoscaling {
+		t.Fatal("expected autoscaling to be disabled by default")
 	}
 }
 

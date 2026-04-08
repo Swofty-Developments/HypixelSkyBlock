@@ -32,11 +32,11 @@ func GenerateKubernetesAssets(p profile.Profile) error {
 		"datastores.yaml":   datastoresYAML(p),
 	}
 
+	if err := removeUnknownRenderedFiles(renderDir, filesToWrite); err != nil {
+		return err
+	}
 	for name, content := range filesToWrite {
-		if strings.TrimSpace(content) == "" {
-			continue
-		}
-		if err := os.WriteFile(filepath.Join(renderDir, name), []byte(content), 0o644); err != nil {
+		if err := writeRenderedFile(filepath.Join(renderDir, name), content); err != nil {
 			return err
 		}
 	}
@@ -153,11 +153,11 @@ spec:
             periodSeconds: 10
           resources:
             requests:
-              cpu: "250m"
-              memory: "512Mi"
+              cpu: "150m"
+              memory: "256Mi"
             limits:
-              cpu: "2"
-              memory: "4Gi"
+              cpu: "1"
+              memory: "2Gi"
           volumeMounts:
             - name: data
               mountPath: /data/db
@@ -225,11 +225,11 @@ spec:
             periodSeconds: 10
           resources:
             requests:
-              cpu: "100m"
-              memory: "256Mi"
+              cpu: "75m"
+              memory: "128Mi"
             limits:
-              cpu: "1"
-              memory: "1Gi"
+              cpu: "500m"
+              memory: "512Mi"
           volumeMounts:
             - name: data
               mountPath: /data
@@ -255,7 +255,7 @@ metadata:
   labels:
     app.kubernetes.io/managed-by: hypixel-setup
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hypixel-proxy
@@ -300,11 +300,11 @@ spec:
               port: management
           resources:
             requests:
-              cpu: "500m"
-              memory: "768Mi"
+              cpu: "250m"
+              memory: "384Mi"
             limits:
-              cpu: "2"
-              memory: "2Gi"
+              cpu: "1"
+              memory: "1Gi"
 ---
 apiVersion: v1
 kind: Service
@@ -538,4 +538,37 @@ func execute(tpl string, data any) string {
 
 func quote(v string) string {
 	return fmt.Sprintf("%q", v)
+}
+
+func writeRenderedFile(path, content string) error {
+	if strings.TrimSpace(content) == "" {
+		if err := os.Remove(path); err != nil && !os.IsNotExist(err) {
+			return err
+		}
+		return nil
+	}
+	return os.WriteFile(path, []byte(content), 0o644)
+}
+
+func removeUnknownRenderedFiles(renderDir string, keep map[string]string) error {
+	entries, err := os.ReadDir(renderDir)
+	if err != nil {
+		return err
+	}
+	for _, entry := range entries {
+		if entry.IsDir() {
+			continue
+		}
+		name := entry.Name()
+		if filepath.Ext(name) != ".yaml" {
+			continue
+		}
+		if _, ok := keep[name]; ok {
+			continue
+		}
+		if err := os.Remove(filepath.Join(renderDir, name)); err != nil && !os.IsNotExist(err) {
+			return err
+		}
+	}
+	return nil
 }

@@ -22,7 +22,10 @@ func ComposeNotes(p profile.Profile) string {
 }
 
 func KubernetesNotes(p profile.Profile) string {
-	targetDetails := "containerd / nerdctl"
+	targetDetails := "existing cluster / nerdctl"
+	if p.KubernetesTarget == profile.KubernetesTargetK3d {
+		targetDetails = "docker build + k3d image import"
+	}
 	if p.KubernetesTarget == profile.KubernetesTargetMinikube {
 		targetDetails = "minikube image load"
 	}

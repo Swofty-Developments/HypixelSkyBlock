@@ -20,6 +20,8 @@ type kubeconfigResolution struct {
 }
 
 func Preflight(action string, p profile.Profile) ([]string, error) {
+	warnings := kubernetesCapacityWarnings(p)
+
 	required := requiredTools(action, p)
 	missing := make([]string, 0, len(required))
 	for _, tool := range required {
@@ -50,7 +52,7 @@ func Preflight(action string, p profile.Profile) ([]string, error) {
 		}
 	}
 
-	return nil, nil
+	return warnings, nil
 }
 
 func requiredTools(action string, p profile.Profile) []string {
@@ -74,6 +76,9 @@ func requiredTools(action string, p profile.Profile) []string {
 		if err == nil {
 			add(builder)
 		}
+		if p.KubernetesTarget == profile.KubernetesTargetK3d {
+			add("k3d")
+		}
 		if p.KubernetesTarget == profile.KubernetesTargetMinikube {
 			add("minikube")
 		}
@@ -87,6 +92,9 @@ func requiredTools(action string, p profile.Profile) []string {
 		builder, _, err := kubernetesBuilder(p)
 		if err == nil {
 			add(builder)
+		}
+		if p.KubernetesTarget == profile.KubernetesTargetK3d {
+			add("k3d")
 		}
 		if p.KubernetesTarget == profile.KubernetesTargetMinikube {
 			add("minikube")
@@ -116,12 +124,16 @@ func requiresDockerCompose(action string, p profile.Profile) bool {
 func requiresKubernetesAccess(action string, p profile.Profile) bool {
 	switch action {
 	case tui.ActionK8sDeploy, tui.ActionK8sFull:
-		return true
+		return action == tui.ActionK8sDeploy || !isLocalBootstrapTarget(p)
 	case tui.ActionStatus, tui.ActionWatch:
 		return p.Runtime == profile.RuntimeK8s
 	default:
 		return false
 	}
+}
+
+func isLocalBootstrapTarget(p profile.Profile) bool {
+	return p.KubernetesTarget == profile.KubernetesTargetK3d || p.KubernetesTarget == profile.KubernetesTargetMinikube
 }
 
 func resolveKubeconfig(p profile.Profile, inheritedEnv string, candidates []string) (kubeconfigResolution, error) {

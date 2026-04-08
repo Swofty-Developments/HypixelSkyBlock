@@ -48,11 +48,18 @@ func BuildImages(p profile.Profile) error {
 			return err
 		}
 	}
+	if p.KubernetesTarget == profile.KubernetesTargetK3d {
+		if err := loadImagesIntoK3d(p); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
 func kubernetesBuilder(p profile.Profile) (string, []string, error) {
 	switch p.KubernetesTarget {
+	case profile.KubernetesTargetK3d:
+		return "docker", nil, nil
 	case profile.KubernetesTargetMinikube:
 		return "docker", nil, nil
 	case profile.KubernetesTargetStandard:
@@ -76,6 +83,22 @@ func loadImagesIntoMinikube(p profile.Profile) error {
 	args := []string{"-p", strings.TrimSpace(p.MinikubeProfile), "image", "load"}
 	args = append(args, images...)
 	return Run("", nil, "minikube", args...)
+}
+
+func loadImagesIntoK3d(p profile.Profile) error {
+	if err := Require("k3d"); err != nil {
+		return err
+	}
+	images := []string{
+		render.ImageRef("hypixel-proxy", p.ImageTag),
+		render.ImageRef("hypixel-game", p.ImageTag),
+	}
+	for _, serviceName := range p.SelectedServices {
+		images = append(images, render.ImageRef(spec.ServiceByName(serviceName).ImageName, p.ImageTag))
+	}
+	args := []string{"image", "import", "-c", strings.TrimSpace(p.KubernetesClusterName)}
+	args = append(args, images...)
+	return Run("", nil, "k3d", args...)
 }
 
 func InstallMonitoring(p profile.Profile) error {
@@ -162,6 +185,9 @@ func KubernetesStatus(p profile.Profile) error {
 }
 
 func FullKubernetesSetup(p profile.Profile) error {
+	if err := EnsureKubernetesCluster(p); err != nil {
+		return err
+	}
 	if p.InstallMonitoring {
 		if err := InstallMonitoring(p); err != nil {
 			return err
@@ -192,4 +218,60 @@ func KubernetesEnv(p profile.Profile) ([]string, error) {
 		return nil, missingKubeconfigError()
 	}
 	return resolution.env, nil
+}
+
+func EnsureKubernetesCluster(p profile.Profile) error {
+	switch p.KubernetesTarget {
+	case profile.KubernetesTargetK3d:
+		return ensureK3dCluster(p)
+	case profile.KubernetesTargetMinikube:
+		return ensureMinikubeCluster(p)
+	default:
+		return nil
+	}
+}
+
+func ensureK3dCluster(p profile.Profile) error {
+	clusterName := strings.TrimSpace(p.KubernetesClusterName)
+	if clusterName == "" {
+		return fmt.Errorf("k3d cluster name is required")
+	}
+	if err := Require("k3d"); err != nil {
+		return err
+	}
+	if err := Require("docker"); err != nil {
+		return err
+	}
+	if runQuiet("", nil, "k3d", "cluster", "get", clusterName) == nil {
+		if err := runQuiet("", nil, "k3d", "cluster", "start", clusterName); err != nil && !strings.Contains(err.Error(), "already running") {
+			return err
+		}
+		return nil
+	}
+	return Run("", nil, "k3d", "cluster", "create", clusterName,
+		"--wait",
+		"--kubeconfig-switch-context",
+		"-p", "25565:25565@loadbalancer",
+		"--k3s-arg", "--disable=traefik@server:0",
+	)
+}
+
+func ensureMinikubeCluster(p profile.Profile) error {
+	minikubeProfile := strings.TrimSpace(p.MinikubeProfile)
+	if minikubeProfile == "" {
+		return fmt.Errorf("minikube profile is required")
+	}
+	if err := Require("minikube"); err != nil {
+		return err
+	}
+	if Run("", nil, "minikube", "-p", minikubeProfile, "status") == nil {
+		return nil
+	}
+	return Run("", nil, "minikube", "start",
+		"-p", minikubeProfile,
+		"--driver=docker",
+		"--cpus=4",
+		"--memory=8192",
+		"--disk-size=50g",
+	)
 }
