@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7
 FROM eclipse-temurin:25-jdk AS builder
 
 WORKDIR /workspace
@@ -54,7 +55,8 @@ COPY type.theend ./type.theend
 COPY type.thefarmingislands ./type.thefarmingislands
 COPY type.thepark ./type.thepark
 
-RUN chmod +x ./gradlew && ./gradlew --no-daemon assembleDeploymentArtifacts
+RUN --mount=type=cache,target=/root/.gradle \
+    chmod +x ./gradlew && ./gradlew --no-daemon assembleDeploymentArtifacts
 
 FROM eclipse-temurin:25-jre
 

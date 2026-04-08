@@ -166,12 +166,21 @@ func resolveRepoRootFrom(wd, installDir string, bootstrap func(string) error) (s
 		return repoRoot, nil
 	}
 
+	bootstrappedRoot := filepath.Join(installDir, bootstrapRepoDir)
 	if saved, err := profile.Load(installDir); err == nil && isRepoRoot(saved.RepoRoot) {
+		if samePath(saved.RepoRoot, bootstrappedRoot) {
+			if err := bootstrap(bootstrappedRoot); err != nil {
+				return "", fmt.Errorf("could not refresh managed repository checkout in %s: %w", bootstrappedRoot, err)
+			}
+			return bootstrappedRoot, nil
+		}
 		return saved.RepoRoot, nil
 	}
 
-	bootstrappedRoot := filepath.Join(installDir, bootstrapRepoDir)
 	if isRepoRoot(bootstrappedRoot) {
+		if err := bootstrap(bootstrappedRoot); err != nil {
+			return "", fmt.Errorf("could not refresh managed repository checkout in %s: %w", bootstrappedRoot, err)
+		}
 		return bootstrappedRoot, nil
 	}
 
@@ -242,4 +251,8 @@ func isRepoRoot(dir string) bool {
 func exists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil
+}
+
+func samePath(a, b string) bool {
+	return filepath.Clean(a) == filepath.Clean(b)
 }

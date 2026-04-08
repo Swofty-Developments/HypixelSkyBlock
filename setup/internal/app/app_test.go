@@ -85,6 +85,65 @@ func TestResolveRepoRootFromBootstrapsMissingCheckout(t *testing.T) {
 	}
 }
 
+func TestResolveRepoRootFromRefreshesExistingBootstrappedCheckout(t *testing.T) {
+	t.Parallel()
+
+	baseDir := t.TempDir()
+	installDir := filepath.Join(baseDir, "install")
+	bootstrappedRepo := filepath.Join(installDir, bootstrapRepoDir)
+	makeRepoRoot(t, bootstrappedRepo)
+
+	called := false
+	got, err := resolveRepoRootFrom(baseDir, installDir, func(target string) error {
+		called = true
+		if target != bootstrappedRepo {
+			t.Fatalf("expected bootstrap target %q, got %q", bootstrappedRepo, target)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("resolveRepoRootFrom returned error: %v", err)
+	}
+	if !called {
+		t.Fatal("expected existing managed checkout to be refreshed")
+	}
+	if got != bootstrappedRepo {
+		t.Fatalf("expected refreshed repo root %q, got %q", bootstrappedRepo, got)
+	}
+}
+
+func TestResolveRepoRootFromRefreshesSavedManagedCheckout(t *testing.T) {
+	t.Parallel()
+
+	baseDir := t.TempDir()
+	installDir := filepath.Join(baseDir, "install")
+	bootstrappedRepo := filepath.Join(installDir, bootstrapRepoDir)
+	makeRepoRoot(t, bootstrappedRepo)
+
+	p := profile.Default(bootstrappedRepo, installDir)
+	if err := profile.Save(p); err != nil {
+		t.Fatalf("profile.Save returned error: %v", err)
+	}
+
+	called := false
+	got, err := resolveRepoRootFrom(baseDir, installDir, func(target string) error {
+		called = true
+		if target != bootstrappedRepo {
+			t.Fatalf("expected bootstrap target %q, got %q", bootstrappedRepo, target)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("resolveRepoRootFrom returned error: %v", err)
+	}
+	if !called {
+		t.Fatal("expected saved managed checkout to be refreshed")
+	}
+	if got != bootstrappedRepo {
+		t.Fatalf("expected refreshed repo root %q, got %q", bootstrappedRepo, got)
+	}
+}
+
 func makeRepoRoot(t *testing.T, dir string) {
 	t.Helper()
 	if err := os.MkdirAll(filepath.Join(dir, "configuration"), 0o755); err != nil {

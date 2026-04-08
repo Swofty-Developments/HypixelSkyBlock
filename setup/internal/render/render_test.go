@@ -20,17 +20,24 @@ func TestAutoscalingYAMLDisabled(t *testing.T) {
 func TestComposeYAMLUsesSingleSharedGameServerImageBuild(t *testing.T) {
 	p := profile.Default("/repo", "/tmp/install")
 	p.SelectedServers = []string{"PROTOTYPE_LOBBY", "SKYBLOCK_HUB", "BEDWARS_GAME"}
+	p.SelectedServices = []string{"ServiceDataMutex", "ServiceParty", "ServiceAPI"}
 	p.Normalize()
 
 	yaml := composeYAML(p)
 	if strings.Count(yaml, "dockerfile: DockerFiles/Dockerfile.game_server") != 1 {
-		t.Fatalf("expected one shared game server build definition, got:\n%s", yaml)
+		t.Fatalf("expected one shared deployable build definition, got:\n%s", yaml)
 	}
-	if strings.Count(yaml, "image: hypixel-game:compose") != 1 {
-		t.Fatalf("expected one shared game server image definition, got:\n%s", yaml)
+	if strings.Count(yaml, "image: hypixel-deployable:compose") != 1 {
+		t.Fatalf("expected one shared deployable image definition, got:\n%s", yaml)
 	}
-	if strings.Count(yaml, "<<: *game_server_base") != len(p.SelectedServers) {
-		t.Fatalf("expected each game server to reuse shared base, got:\n%s", yaml)
+	if strings.Count(yaml, "<<: *deployable_base") != len(p.SelectedServers)+len(p.SelectedServices) {
+		t.Fatalf("expected each service and game server to reuse shared base, got:\n%s", yaml)
+	}
+	if strings.Contains(yaml, "DockerFiles/Dockerfile.service") {
+		t.Fatalf("expected compose profile not to build per-service images, got:\n%s", yaml)
+	}
+	if strings.Contains(yaml, "java $JAVA_OPTS") {
+		t.Fatalf("expected runtime JAVA_OPTS references to be escaped for compose, got:\n%s", yaml)
 	}
 }
 
