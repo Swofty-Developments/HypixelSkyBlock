@@ -26,6 +26,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
     @Override
     public ViewConfiguration<RecipeCategoryState> configuration() {
         return ViewConfiguration.withString(
-                (state, ctx) -> I18n.string("gui_sbmenu.recipe.category.title", Map.of("page", String.valueOf(state.page() + 1), "max_page", String.valueOf(Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length))), "category_name", StringUtility.toNormalCase(type.name()))),
+                (state, ctx) -> I18n.string("gui_sbmenu.recipe.category.title", ctx.player().getLocale(), Map.of("page", String.valueOf(state.page() + 1), "max_page", String.valueOf(Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length))), "category_name", StringUtility.toNormalCase(type.name()))),
                 InventoryType.CHEST_6_ROW
         );
     }
@@ -61,6 +62,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
     @Override
     protected ItemStack.Builder renderItem(SkyBlockRecipe<?> item, int index, HypixelPlayer p) {
         SkyBlockPlayer player = (SkyBlockPlayer) p;
+        Locale l = player.getLocale();
         SkyBlockRecipe.CraftingResult result = item.getCanCraft().apply(player);
         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
                 player, item.getResult().getItemStack()
@@ -71,7 +73,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
                     Objects.requireNonNull(itemStack.build().get(DataComponents.LORE)).stream().map(StringUtility::getTextFromComponent).toList()
             );
             lore.add("§e ");
-            lore.add(I18n.string("gui_sbmenu.recipe.category.click_to_view"));
+            lore.add(I18n.string("gui_sbmenu.recipe.category.click_to_view", l));
 
             return itemStack.set(DataComponents.LORE,
                     lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
@@ -79,7 +81,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
         } else {
             List<String> lore = Arrays.asList(result.errorMessage());
             lore = lore.stream().map(line -> "§7" + line).toList();
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.locked"), Material.GRAY_DYE, 1, lore);
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.locked", l), Material.GRAY_DYE, 1, lore);
         }
     }
 
@@ -91,7 +93,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
         if (result.allowed()) {
             ctx.push(new GUIRecipe(item.getResult().getAttributeHandler().getPotentialType()));
         } else {
-            player.sendMessage(I18n.string("gui_sbmenu.recipe.category.msg.not_unlocked"));
+            player.sendMessage(I18n.string("gui_sbmenu.recipe.category.msg.not_unlocked", player.getLocale()));
         }
     }
 
@@ -112,6 +114,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
         // Title item
         layout.slot(4, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            Locale l = player.getLocale();
 
             ArrayList<SkyBlockRecipe<?>> typeRecipes = new ArrayList<>();
             ArrayList<SkyBlockRecipe<?>> allowedRecipes = new ArrayList<>();
@@ -143,9 +146,9 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
             ));
             String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.info", Map.of("category_name", categoryName)),
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.info", l, Map.of("category_name", categoryName)),
                     type.getMaterial(), 1,
-                    I18n.lore("gui_sbmenu.recipe.category.info.lore", Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
+                    I18n.lore("gui_sbmenu.recipe.category.info.lore", l, Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
         });
     }
 

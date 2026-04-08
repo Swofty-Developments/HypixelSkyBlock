@@ -12,6 +12,7 @@ import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtoc
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -26,6 +27,7 @@ import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -67,7 +69,7 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
         items = data.getDisplayHandler().getItemsAtSlot(display, position);
 
         if (items.isEmpty()) {
-            player.sendMessage(I18n.string("gui_museum.display.no_items"));
+            player.sendMessage(I18n.string("gui_museum.display.no_items", player.getLocale()));
             player.closeInventory();
             return;
         }
@@ -76,11 +78,11 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
         if (items.size() == 1) {
             setTitle(items.getFirst().getAttributeHandler().getPotentialType().getDisplayName());
         } else {
-            setTitle(I18n.string("gui_museum.display.title_with_count", Map.of("count", String.valueOf(items.size()))));
+            setTitle(I18n.string("gui_museum.display.title_with_count", player.getLocale(), Map.of("count", String.valueOf(items.size()))));
         }
 
         if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_museum.display.item_tracker_offline"));
+            player.sendMessage(I18n.string("gui_museum.display.item_tracker_offline", player.getLocale()));
             player.closeInventory();
             return;
         }
@@ -98,11 +100,12 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_museum.display.remove_button"),
+                Locale l = player.getLocale();
+                return ItemStackCreator.getStack(I18n.string("gui_museum.display.remove_button", l),
                         Material.BEDROCK, 1,
                         items.size() == 1
-                                ? I18n.lore("gui_museum.display.remove_single.lore")
-                                : I18n.lore("gui_museum.display.remove_multiple.lore", Map.of("count", String.valueOf(items.size()))));
+                                ? I18n.lore("gui_museum.display.remove_single.lore", l)
+                                : I18n.lore("gui_museum.display.remove_multiple.lore", l, Map.of("count", String.valueOf(items.size()))));
             }
         });
 
@@ -148,26 +151,27 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
         ArrayList<String> lore = new ArrayList<>(item.getLore());
         UUID trackedItemUUID = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());
 
+        Locale l = player.getLocale();
         lore.add("§8§m---------------------");
-        lore.add(I18n.string("gui_museum.display.item_donated_label"));
+        lore.add(I18n.string("gui_museum.display.item_donated_label", l));
         lore.add("§b" + StringUtility.formatAsDate(data.getInsertionTimes().get(trackedItemUUID)));
         lore.add(" ");
 
         if (trackedItem != null) {
-            lore.add(I18n.string("gui_museum.display.item_created_label"));
+            lore.add(I18n.string("gui_museum.display.item_created_label", l));
             lore.add("§a" + StringUtility.formatAsDate(trackedItem.getCreated()));
             lore.add("§6  " + StringUtility.commaifyAndTh(trackedItem.getNumberMade()) + " §7created");
             lore.add(" ");
         }
 
-        lore.add(I18n.string("gui_museum.display.item_clean_value_label"));
+        lore.add(I18n.string("gui_museum.display.item_clean_value_label", l));
         lore.add("§6" + StringUtility.commaify(new ItemPriceCalculator(item).calculateCleanPrice()) + " Coins");
         lore.add(" ");
-        lore.add(I18n.string("gui_museum.display.item_value_label"));
+        lore.add(I18n.string("gui_museum.display.item_value_label", l));
         if (data.getCalculatedPrices().containsKey(trackedItemUUID)) {
             lore.add("§6" + StringUtility.commaify(data.getCalculatedPrices().get(trackedItemUUID)) + " Coins");
         } else {
-            lore.add(I18n.string("gui_museum.category.uncalculated"));
+            lore.add(I18n.string("gui_museum.category.uncalculated", l));
         }
 
         return ItemStackCreator.updateLore(stack, lore);

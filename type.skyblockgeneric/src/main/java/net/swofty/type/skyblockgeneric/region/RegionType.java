@@ -45,6 +45,7 @@ public enum RegionType {
 	BUILDERS_HOUSE("Builder's House"),
 	THAUMATURGIST("Thaumaturgist", "§6"),
 	TRADE_CENTER("Trade Center"),
+	ELECTION_ROOM("Election Room"),
 	MOUNTAIN("Mountain"),
 	WILDERNESS("Wilderness", "§2", Songs.WILDERNESS),
 	PLAYER_MUSEUM("%s's Museum", "§3"),

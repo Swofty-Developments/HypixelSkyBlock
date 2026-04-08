@@ -56,5 +56,6 @@ listOf(
     ":service.darkauction",
     ":service.friend",
     ":service.punishment",
+    ":service.elections",
     ":anticheat"
 ).forEach(::includeIfPresent)

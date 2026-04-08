@@ -19,13 +19,14 @@ import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.util.Locale;
 import java.util.Map;
 
 public class GUIStorage extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.storage.title"), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.storage.title", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -34,11 +35,17 @@ public class GUIStorage extends StatelessView {
         Components.back(layout, 48, ctx);
         Components.close(layout, 49);
 
-        layout.slot(4, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.ender_chest"), Material.ENDER_CHEST, 1,
-                I18n.lore("gui_sbmenu.storage.ender_chest.lore")));
+        layout.slot(4, (s, c) -> {
+            Locale l = c.player().getLocale();
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.ender_chest", l), Material.ENDER_CHEST, 1,
+                I18n.lore("gui_sbmenu.storage.ender_chest.lore", l));
+        });
 
-        layout.slot(22, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.backpacks"), Material.CHEST, 1,
-                I18n.lore("gui_sbmenu.storage.backpacks.lore")));
+        layout.slot(22, (s, c) -> {
+            Locale l = c.player().getLocale();
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.backpacks", l), Material.CHEST, 1,
+                I18n.lore("gui_sbmenu.storage.backpacks.lore", l));
+        });
 
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
         DatapointStorage.PlayerStorage storage = player.getSkyblockDataHandler().get(
@@ -55,19 +62,20 @@ public class GUIStorage extends StatelessView {
 
             layout.slot(enderSlot, (s, c) -> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
+                Locale l = p.getLocale();
                 DatapointStorage.PlayerStorage playerStorage = p.getSkyblockDataHandler().get(
                         SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class
                 ).getValue();
 
                 if (!playerStorage.hasPage(page))
-                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.locked_page"), Material.RED_STAINED_GLASS_PANE, 1,
-                            I18n.lore("gui_sbmenu.storage.locked_page.lore"));
+                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.locked_page", l), Material.RED_STAINED_GLASS_PANE, 1,
+                            I18n.lore("gui_sbmenu.storage.locked_page.lore", l));
 
                 Material material = playerStorage.getPage(page).display;
 
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.ender_chest_page", Map.of("page", String.valueOf(page))),
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.ender_chest_page", l, Map.of("page", String.valueOf(page))),
                         material, page,
-                        I18n.lore("gui_sbmenu.storage.ender_chest_page.lore"));
+                        I18n.lore("gui_sbmenu.storage.ender_chest_page.lore", l));
             }, (click, c) -> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                 DatapointStorage.PlayerStorage playerStorage = p.getSkyblockDataHandler().get(
@@ -94,16 +102,22 @@ public class GUIStorage extends StatelessView {
             int slot = backpackSlot - 26;
 
             if (backpacks.getUnlockedSlots() < slot) {
-                layout.slot(backpackSlot, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.locked_backpack", Map.of("slot", String.valueOf(slot))),
+                layout.slot(backpackSlot, (s, c) -> {
+                    Locale l = c.player().getLocale();
+                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.locked_backpack", l, Map.of("slot", String.valueOf(slot))),
                         Material.GRAY_DYE, 1,
-                        I18n.lore("gui_sbmenu.storage.locked_backpack.lore")));
+                        I18n.lore("gui_sbmenu.storage.locked_backpack.lore", l));
+                });
                 continue;
             }
 
             if (!backpackItems.containsKey(slot)) {
-                layout.slot(backpackSlot, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.empty_backpack", Map.of("slot", String.valueOf(slot))),
+                layout.slot(backpackSlot, (s, c) -> {
+                            Locale l = c.player().getLocale();
+                            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.empty_backpack", l, Map.of("slot", String.valueOf(slot))),
                                 Material.BROWN_STAINED_GLASS_PANE, slot,
-                                I18n.lore("gui_sbmenu.storage.empty_backpack.lore")),
+                                I18n.lore("gui_sbmenu.storage.empty_backpack.lore", l));
+                        },
                         (click, c) -> handleEmptyBackpackSlotClick(click, c, slot));
                 continue;
             }
@@ -112,12 +126,13 @@ public class GUIStorage extends StatelessView {
 
             layout.slot(backpackSlot, (s, c) -> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
+                Locale l = p.getLocale();
                 String itemName = item.getAttributeHandler().getRarity().getColor() +
                         item.getAttributeHandler().getPotentialType().getDisplayName();
                 String slots = String.valueOf(item.getComponent(BackpackComponent.class).getRows() * 9);
-                return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.storage.backpack_slot", Map.of("slot", String.valueOf(slot))),
+                return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.storage.backpack_slot", l, Map.of("slot", String.valueOf(slot))),
                         item.getComponent(SkullHeadComponent.class).getSkullTexture(item), slot,
-                        I18n.lore("gui_sbmenu.storage.backpack_slot.lore", Map.of(
+                        I18n.lore("gui_sbmenu.storage.backpack_slot.lore", l, Map.of(
                                 "item_name", itemName,
                                 "slots", slots
                         )));
@@ -134,11 +149,11 @@ public class GUIStorage extends StatelessView {
                             && !backpackItem.getAttributeHandler().getBackpackData().items()
                             .stream()
                             .map(SkyBlockItem::new).allMatch(SkyBlockItem::isNA)) {
-                        p.sendMessage(I18n.string("gui_sbmenu.storage.msg.not_empty", Map.of("slot", String.valueOf(slot))));
+                        p.sendMessage(I18n.string("gui_sbmenu.storage.msg.not_empty", p.getLocale(), Map.of("slot", String.valueOf(slot))));
                         return;
                     }
 
-                    p.sendMessage(I18n.string("gui_sbmenu.storage.msg.removed", Map.of("slot", String.valueOf(slot))));
+                    p.sendMessage(I18n.string("gui_sbmenu.storage.msg.removed", p.getLocale(), Map.of("slot", String.valueOf(slot))));
                     p.getInventory().setCursorItem(PlayerItemUpdater.playerUpdate(p, backpackItem.getItemStack()).build());
 
                     playerBackpackItems.remove(slot);
@@ -168,8 +183,9 @@ public class GUIStorage extends StatelessView {
                 new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.getUnlockedSlots())
         );
 
-        player.sendMessage(I18n.string("gui_sbmenu.storage.msg.placing", Map.of("slot", String.valueOf(slot))));
-        player.sendMessage(I18n.string("gui_sbmenu.storage.msg.success"));
+        Locale l = player.getLocale();
+        player.sendMessage(I18n.string("gui_sbmenu.storage.msg.placing", l, Map.of("slot", String.valueOf(slot))));
+        player.sendMessage(I18n.string("gui_sbmenu.storage.msg.success", l));
         player.getInventory().setCursorItem(ItemStack.AIR);
 
         ctx.session(DefaultState.class).refresh();

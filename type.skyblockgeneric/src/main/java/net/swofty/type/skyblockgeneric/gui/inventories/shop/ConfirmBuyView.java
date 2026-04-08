@@ -6,6 +6,7 @@ import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.View;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
@@ -16,13 +17,14 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 public final class ConfirmBuyView implements View<ConfirmBuyView.State> {
 
     @Override
     public ViewConfiguration<State> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_shop.confirm_buy.title"), InventoryType.CHEST_3_ROW);
+        return ViewConfiguration.translatable("gui_shop.confirm_buy.title", InventoryType.CHEST_3_ROW);
     }
 
     @Override
@@ -30,33 +32,35 @@ public final class ConfirmBuyView implements View<ConfirmBuyView.State> {
         Components.fill(layout);
 
         layout.slot(12,
-                (_, __) -> {
-                    ArrayList<String> lore = new ArrayList<>(I18n.lore("gui_shop.confirm_buy.confirm_button.lore", Map.of(
+                (s, c) -> {
+                    Locale l = c.player().getLocale();
+                    ArrayList<String> lore = new ArrayList<>(I18n.lore("gui_shop.confirm_buy.confirm_button.lore", l, Map.of(
                             "item_name", state.item.getDisplayName(),
                             "cost", StringUtility.commaify(state.price)
                     )));
-                    return ItemStackCreator.getStack(I18n.string("gui_shop.confirm_buy.confirm_button"), Material.LIME_TERRACOTTA, 1, lore);
+                    return ItemStackCreator.getStack(I18n.string("gui_shop.confirm_buy.confirm_button", l), Material.LIME_TERRACOTTA, 1, lore);
                 },
                 (click, c) -> {
                     if (!(click.click() instanceof Click.Left || click.click() instanceof Click.Right)) return;
 
                     SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+                    Locale l = player.getLocale();
                     if (player.getCoins() >= state.price) {
                         player.addAndUpdateItem(state.item);
                         player.removeCoins(state.price);
-                        player.sendMessage(I18n.string("gui_shop.confirm_buy.bought_message", Map.of(
+                        player.sendMessage(I18n.string("gui_shop.confirm_buy.bought_message", l, Map.of(
                                 "item_name", state.item.getDisplayName(),
                                 "cost", String.valueOf(state.price)
                         )));
                     } else {
-                        player.sendMessage(I18n.string("gui_shop.confirm_buy.not_enough_coins"));
+                        player.sendMessage(I18n.string("gui_shop.confirm_buy.not_enough_coins", l));
                     }
                     player.closeInventory();
                 }
         );
 
         layout.slot(16,
-                (_, __) -> ItemStackCreator.getStack(I18n.string("gui_shop.confirm_buy.cancel_button"), Material.RED_TERRACOTTA, 1),
+                (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_shop.confirm_buy.cancel_button", Material.RED_TERRACOTTA, 1),
                 (_, c) -> c.player().closeInventory()
         );
     }

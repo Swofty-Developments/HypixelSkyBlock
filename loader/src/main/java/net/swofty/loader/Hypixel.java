@@ -49,6 +49,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -165,23 +166,31 @@ public class Hypixel {
             System.exit(0);
             return;
         }
-        HypixelTypeLoader typeLoader = subTypes.stream().filter(clazz -> {
-            try {
-                ServerType type = clazz.getDeclaredConstructor().newInstance().getType();
-                Logger.info("Found TypeLoader: " + type.name());
-                return type == serverType;
-            } catch (Exception e) {
-                return false;
-            }
-        }).findFirst().orElseThrow(() ->
+
+        HypixelTypeLoader typeLoader = subTypes.stream()
+            .map(clazz -> {
+                try {
+                    HypixelTypeLoader instance = clazz.getDeclaredConstructor().newInstance();
+                    Logger.info("Found TypeLoader: " + instance.getType().name());
+                    return instance;
+                } catch (Exception e) {
+                    return null;
+                }
+            })
+            .filter(Objects::nonNull)
+            .filter(instance -> instance.getType() == serverType)
+            .findFirst()
+            .orElseThrow(() ->
                 new IllegalStateException("No TypeLoader found for server type " + serverType)
-        ).getDeclaredConstructor().newInstance();
+            );
 
         new HypixelGenericLoader(typeLoader).initialize(minecraftServer);
 
         // Initialize TypeLoader
+        SkyBlockGenericLoader skyblockLoader = null;
         if (typeLoader instanceof SkyBlockTypeLoader) {
-            new SkyBlockGenericLoader(typeLoader).initialize(minecraftServer);
+            skyblockLoader = new SkyBlockGenericLoader(typeLoader);
+            skyblockLoader.initialize(minecraftServer);
         }
         if (typeLoader instanceof RavengardTypeLoader) {
             new RavengardGenericLoader(typeLoader).initialize(minecraftServer);
@@ -231,6 +240,9 @@ public class Hypixel {
                     }
                 })));
         typeLoader.afterInitialize(minecraftServer);
+        if (skyblockLoader != null) {
+            skyblockLoader.afterInitialize();
+        }
 
         MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION = true;
         HypixelTranslator translator = new HypixelTranslator();

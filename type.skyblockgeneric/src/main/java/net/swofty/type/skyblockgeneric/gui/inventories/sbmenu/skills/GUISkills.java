@@ -12,6 +12,7 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class GUISkills extends StatelessView {
     private static final int[] DISPLAY_SLOTS = {
@@ -21,7 +22,7 @@ public class GUISkills extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.skills.main.title"), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.skills.main.title", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -30,8 +31,11 @@ public class GUISkills extends StatelessView {
         Components.close(layout, 49);
         Components.back(layout, 48, ctx);
 
-        layout.slot(4, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.skills.main.info"), Material.DIAMOND_SWORD, 1,
-                I18n.lore("gui_sbmenu.skills.main.info.lore")));
+        layout.slot(4, (s, c) -> {
+            Locale l = c.player().getLocale();
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.skills.main.info", l), Material.DIAMOND_SWORD, 1,
+                I18n.lore("gui_sbmenu.skills.main.info.lore", l));
+        });
 
         SkillCategories[] allCategories = SkillCategories.values();
         for (int i = 0; i < DISPLAY_SLOTS.length && i < allCategories.length; i++) {
@@ -41,10 +45,11 @@ public class GUISkills extends StatelessView {
 
             layout.slot(slot, (s, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+                Locale l = player.getLocale();
                 ArrayList<String> lore = new ArrayList<>();
 
                 if (category == SkillCategories.CARPENTRY && !player.getMissionData().hasCompleted("give_wool_to_carpenter")) {
-                    lore.addAll(I18n.lore("gui_sbmenu.skills.main.carpentry_locked.lore"));
+                    lore.addAll(I18n.lore("gui_sbmenu.skills.main.carpentry_locked.lore", l));
                 } else {
                     lore.addAll(skillCategory.getDescription());
                     lore.add(" ");
@@ -61,11 +66,11 @@ public class GUISkills extends StatelessView {
 
                         reward.getDisplay(lore);
                     } else {
-                        lore.add(I18n.string("gui_sbmenu.skills.main.max_level"));
+                        lore.add(I18n.string("gui_sbmenu.skills.main.max_level", l));
                     }
 
                     lore.add(" ");
-                    lore.add(I18n.string("gui_sbmenu.skills.main.click_to_view"));
+                    lore.add(I18n.string("gui_sbmenu.skills.main.click_to_view", l));
                 }
 
                 return ItemStackCreator.getStack(

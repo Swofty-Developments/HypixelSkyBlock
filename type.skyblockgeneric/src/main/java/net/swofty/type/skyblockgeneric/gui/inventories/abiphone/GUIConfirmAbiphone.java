@@ -6,11 +6,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 
+import java.util.Locale;
 import java.util.Map;
 
 public class GUIConfirmAbiphone extends HypixelInventoryGUI {
@@ -34,8 +36,8 @@ public class GUIConfirmAbiphone extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStackCreator.getStack(I18n.string("gui_abiphone.confirm.confirm_button"), Material.GREEN_TERRACOTTA, 1,
-						I18n.lore("gui_abiphone.confirm.confirm_button.lore", Map.of("npc_name", npc.getName())));
+				return TranslatableItemStackCreator.getStack(player, "gui_abiphone.confirm.confirm_button", Material.GREEN_TERRACOTTA, 1,
+						"gui_abiphone.confirm.confirm_button.lore", Map.of("npc_name", npc.getName()));
 			}
 		});
 		set(new GUIClickableItem(15) {
@@ -46,7 +48,8 @@ public class GUIConfirmAbiphone extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, I18n.string("gui_abiphone.confirm.cancel_button"));
+				Locale l = player.getLocale();
+				return ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, I18n.string("gui_abiphone.confirm.cancel_button", l));
 			}
 		});
 		updateItemStacks(getInventory(), getPlayer());

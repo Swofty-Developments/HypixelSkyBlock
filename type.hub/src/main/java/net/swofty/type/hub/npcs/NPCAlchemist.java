@@ -6,7 +6,6 @@ import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -63,7 +62,7 @@ public class NPCAlchemist extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("hello", "npcs_hub.alchemist.dialogue.hello", Map.of("player", player.getUsername()))
+                DialogueSet.ofTranslation("hello", "npcs_hub.alchemist.dialogue.hello", player, Map.of("player", player.getUsername()))
         };
     }
 }

@@ -38,7 +38,7 @@ public class GUIStorageIconSelection extends PaginatedView<Material, GUIStorageI
         return ViewConfiguration.withString(
                 (state, ctx) -> {
                     int totalPages = Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length));
-                    return I18n.string("gui_sbmenu.storage.icon.title", Map.of("page", String.valueOf(state.page() + 1), "max_page", String.valueOf(totalPages)));
+                    return I18n.string("gui_sbmenu.storage.icon.title", ctx.player().getLocale(), Map.of("page", String.valueOf(state.page() + 1), "max_page", String.valueOf(totalPages)));
                 },
                 InventoryType.CHEST_6_ROW
         );
@@ -72,11 +72,12 @@ public class GUIStorageIconSelection extends PaginatedView<Material, GUIStorageI
 
     @Override
     protected ItemStack.Builder renderItem(Material item, int index, HypixelPlayer player) {
+        java.util.Locale l = player.getLocale();
         return ItemStackCreator.getStack(
-                (item == Material.BARRIER ? I18n.string("gui_sbmenu.storage.icon.reset") :
+                (item == Material.BARRIER ? I18n.string("gui_sbmenu.storage.icon.reset", l) :
                         StringUtility.toNormalCase(item.name().replace("minecraft:", ""))),
                 item, 1,
-                I18n.lore("gui_sbmenu.storage.icon.lore"));
+                I18n.lore("gui_sbmenu.storage.icon.lore", l));
     }
 
     @Override
