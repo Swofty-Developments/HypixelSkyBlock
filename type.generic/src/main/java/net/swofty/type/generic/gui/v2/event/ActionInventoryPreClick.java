@@ -13,6 +13,9 @@ public class ActionInventoryPreClick implements HypixelEventClass {
     public void onActionPlayerInventoryPreClick(InventoryPreClickEvent event) {
         HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         ViewNavigator.find(player).ifPresent(navigator -> {
+            if (navigator.getCurrentSession() == null) {
+                return;
+            }
             navigator.getCurrentSession().onPreClickEvent(event);
         });
     }

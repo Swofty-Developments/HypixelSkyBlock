@@ -7,6 +7,7 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.gui.v2.ViewNavigator;
 import net.swofty.type.generic.user.HypixelPlayer;
+import org.tinylog.Logger;
 
 public class ActionInventoryOpen implements HypixelEventClass {
 
@@ -14,7 +15,13 @@ public class ActionInventoryOpen implements HypixelEventClass {
     public void onPlayerInventoryOpen(InventoryOpenEvent event) {
         MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
             HypixelPlayer player = (HypixelPlayer) event.getPlayer();
-            ViewNavigator.find(player).ifPresent(navigator -> navigator.getCurrentSession().onOpenEvent(event));
+            ViewNavigator.find(player).ifPresent(navigator -> {
+                if (navigator.getCurrentSession() == null) {
+                    Logger.warn("Current session is null for player {} when opening inventory, this should not happen.", player.getUsername());
+                    return;
+                }
+                navigator.getCurrentSession().onOpenEvent(event);
+            });
         });
 
     }
