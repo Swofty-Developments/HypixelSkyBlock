@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/ops"
@@ -32,14 +33,15 @@ func Run() error {
 		installDir = flag.String("dir", defaultInstallDir, "Install directory")
 		action     = flag.String("action", "", "Action to run")
 		kubeconfig = flag.String("kubeconfig", "", "Optional kubeconfig path override for Kubernetes actions")
+		staffUser  = flag.String("staff-user", "", "Username to promote when using compose-make-staff")
 		status     = flag.Bool("status", false, "Show current environment status")
 		watch      = flag.Bool("watch", false, "Watch current environment status")
 	)
 	flag.Usage = func() {
-		fmt.Println("Usage: hypixel-setup [--dir PATH] [--action ACTION] [--kubeconfig PATH] [--status] [--watch]")
+		fmt.Println("Usage: hypixel-setup [--dir PATH] [--action ACTION] [--kubeconfig PATH] [--staff-user USERNAME] [--status] [--watch]")
 		fmt.Println()
 		fmt.Println("Actions:")
-		fmt.Printf("  %s, %s, %s\n", tui.ActionSave, tui.ActionComposeRender, tui.ActionComposeApply)
+		fmt.Printf("  %s, %s, %s, %s\n", tui.ActionSave, tui.ActionComposeRender, tui.ActionComposeApply, tui.ActionComposeStaff)
 		fmt.Printf("  %s, %s, %s, %s\n", tui.ActionK8sRender, tui.ActionK8sBuild, tui.ActionK8sDeploy, tui.ActionK8sFull)
 		fmt.Printf("  %s, %s\n", tui.ActionStatus, tui.ActionWatch)
 		fmt.Println()
@@ -58,6 +60,7 @@ func Run() error {
 	}
 
 	runAction := *action
+	actionArg := strings.TrimSpace(*staffUser)
 	if *status {
 		runAction = tui.ActionStatus
 	}
@@ -65,15 +68,19 @@ func Run() error {
 		runAction = tui.ActionWatch
 	}
 	if runAction == "" {
-		nextAction, updated, err := tui.RunWizard(p)
+		nextAction, nextArg, updated, err := tui.RunWizard(p)
 		if err != nil {
 			return err
 		}
 		p = updated
 		runAction = nextAction
+		actionArg = nextArg
 	}
 	if trimmed := profile.ExpandHome(*kubeconfig); trimmed != "" {
 		p.KubeconfigPath = trimmed
+	}
+	if runAction == tui.ActionComposeStaff && actionArg == "" {
+		return errors.New("staff username is required for compose-make-staff")
 	}
 
 	p.Normalize()
@@ -100,6 +107,8 @@ func Run() error {
 			return err
 		}
 		return ops.ApplyCompose(p)
+	case tui.ActionComposeStaff:
+		return ops.PromoteComposeUserToStaff(p, actionArg)
 	case tui.ActionK8sRender:
 		return render.GenerateKubernetesAssets(p)
 	case tui.ActionK8sBuild:

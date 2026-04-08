@@ -34,6 +34,17 @@ func TestComposeYAMLUsesSingleSharedGameServerImageBuild(t *testing.T) {
 	}
 }
 
+func TestComposeYAMLQuotesBindMounts(t *testing.T) {
+	p := profile.Default("/repo", "/tmp/install")
+	p.SelectedServices = []string{"ServiceDataMutex", "ServiceParty"}
+	p.Normalize()
+
+	yaml := composeYAML(p)
+	if !strings.Contains(yaml, `- "/tmp/install/configuration:/app/configuration_files"`) {
+		t.Fatalf("expected bind mount to be fully quoted, got:\n%s", yaml)
+	}
+}
+
 func TestGenerateKubernetesAssetsRemovesStaleOptionalFiles(t *testing.T) {
 	repoRoot := t.TempDir()
 	installDir := t.TempDir()

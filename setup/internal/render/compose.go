@@ -120,7 +120,7 @@ func composeYAML(p profile.Profile) string {
 	b.WriteString("    environment:\n      <<: *forwarding_env\n")
 	b.WriteString("    ports:\n      - \"25565:25565\"\n")
 	b.WriteString("    depends_on:\n      mongodb:\n        condition: service_healthy\n      redis:\n        condition: service_healthy\n")
-	b.WriteString(fmt.Sprintf("    volumes:\n      - %q:/app/configuration_files\n", filepath.Join(p.InstallDir, "configuration")))
+	b.WriteString(fmt.Sprintf("    volumes:\n      - %q\n", filepath.Join(p.InstallDir, "configuration")+":/app/configuration_files"))
 	b.WriteString("    networks:\n      - hypixel_network\n")
 	b.WriteString("    healthcheck:\n")
 	b.WriteString("      test: [\"CMD\", \"nc\", \"-z\", \"localhost\", \"25565\"]\n")
@@ -142,7 +142,7 @@ func composeYAML(p profile.Profile) string {
 			b.WriteString(fmt.Sprintf("    ports:\n      - \"%d:%d\"\n", p.APIPort, p.APIPort))
 		}
 		b.WriteString("    depends_on:\n      proxy:\n        condition: service_healthy\n")
-		b.WriteString(fmt.Sprintf("    volumes:\n      - %q:/app/configuration_files\n", filepath.Join(p.InstallDir, "configuration")))
+		b.WriteString(fmt.Sprintf("    volumes:\n      - %q\n", filepath.Join(p.InstallDir, "configuration")+":/app/configuration_files"))
 		b.WriteString("    networks:\n      - hypixel_network\n")
 	}
 
@@ -155,7 +155,7 @@ func composeYAML(p profile.Profile) string {
 		b.WriteString("      <<: *forwarding_env\n")
 		b.WriteString(fmt.Sprintf("      SERVICE_CMD: java $JAVA_OPTS -jar HypixelCore.jar %s\n", serverName))
 		b.WriteString("    depends_on:\n      proxy:\n        condition: service_healthy\n")
-		b.WriteString(fmt.Sprintf("    volumes:\n      - %q:/app/configuration_files\n", filepath.Join(p.InstallDir, "configuration")))
+		b.WriteString(fmt.Sprintf("    volumes:\n      - %q\n", filepath.Join(p.InstallDir, "configuration")+":/app/configuration_files"))
 		b.WriteString("    networks:\n      - hypixel_network\n")
 	}
 

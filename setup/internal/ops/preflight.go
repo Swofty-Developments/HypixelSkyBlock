@@ -69,7 +69,7 @@ func requiredTools(action string, p profile.Profile) []string {
 	}
 
 	switch action {
-	case tui.ActionComposeApply:
+	case tui.ActionComposeApply, tui.ActionComposeStaff:
 		add("docker")
 	case tui.ActionK8sBuild:
 		builder, _, err := kubernetesBuilder(p)
@@ -112,7 +112,7 @@ func requiredTools(action string, p profile.Profile) []string {
 
 func requiresDockerCompose(action string, p profile.Profile) bool {
 	switch action {
-	case tui.ActionComposeApply:
+	case tui.ActionComposeApply, tui.ActionComposeStaff:
 		return true
 	case tui.ActionStatus, tui.ActionWatch:
 		return p.Runtime == profile.RuntimeCompose

@@ -1,6 +1,7 @@
 package tui
 
 import (
+	"errors"
 	"strconv"
 	"strings"
 
@@ -12,6 +13,7 @@ const (
 	ActionSave          = "save"
 	ActionComposeRender = "compose-render"
 	ActionComposeApply  = "compose-apply"
+	ActionComposeStaff  = "compose-make-staff"
 	ActionK8sRender     = "k8s-render"
 	ActionK8sBuild      = "k8s-build"
 	ActionK8sDeploy     = "k8s-deploy"
@@ -20,13 +22,14 @@ const (
 	ActionWatch         = "watch"
 )
 
-func RunWizard(p profile.Profile) (string, profile.Profile, error) {
+func RunWizard(p profile.Profile) (string, string, profile.Profile, error) {
 	theme := Theme()
 
 	skyblockSelected := profile.FilterSelected(p.SelectedServers, profile.SkyBlockServers)
 	minigameSelected := profile.FilterSelected(p.SelectedServers, profile.MinigameServers)
 	apiPort := strconv.Itoa(p.APIPort)
 	action := ActionSave
+	staffUsername := ""
 
 	if err := huh.NewForm(
 		huh.NewGroup(
@@ -73,11 +76,16 @@ func RunWizard(p profile.Profile) (string, profile.Profile, error) {
 			huh.NewInput().Title("Storage class").Description("Optional. Leave blank for the default class.").Value(&p.StorageClassName),
 		).WithHideFunc(func() bool { return p.Runtime != profile.RuntimeK8s }),
 		huh.NewGroup(
-			huh.NewNote().Title("Summary").Description(summary(p, skyblockSelected, minigameSelected)),
 			huh.NewSelect[string]().Title("Next action").Description("The profile is saved before execution.").Options(actionOptions(p.Runtime)...).Value(&action),
+			huh.NewNote().Title("Summary").Description(summary(p, skyblockSelected, minigameSelected)),
 		),
+		huh.NewGroup(
+			huh.NewInput().Title("User to promote").Description("Compose only. Enter an existing username to set its rank to STAFF in MongoDB.").Value(&staffUsername),
+		).WithHideFunc(func() bool {
+			return action != ActionComposeStaff
+		}),
 	).WithTheme(theme).Run(); err != nil {
-		return "", p, err
+		return "", "", p, err
 	}
 
 	p.SelectedServers = append(skyblockSelected, minigameSelected...)
@@ -85,7 +93,13 @@ func RunWizard(p profile.Profile) (string, profile.Profile, error) {
 	if parsed, err := strconv.Atoi(strings.TrimSpace(apiPort)); err == nil && parsed > 0 {
 		p.APIPort = parsed
 	}
-	return action, p, p.Validate()
+	if action == ActionComposeStaff {
+		staffUsername = strings.TrimSpace(staffUsername)
+		if staffUsername == "" {
+			return "", "", p, errors.New("username is required for compose-make-staff")
+		}
+	}
+	return action, staffUsername, p, p.Validate()
 }
 
 func stringOptions(items []string) []huh.Option[string] {
@@ -112,6 +126,7 @@ func actionOptions(runtime string) []huh.Option[string] {
 		huh.NewOption("Save profile only", ActionSave),
 		huh.NewOption("Render Docker Compose assets", ActionComposeRender),
 		huh.NewOption("Render and apply Docker Compose", ActionComposeApply),
+		huh.NewOption("Promote user to STAFF", ActionComposeStaff),
 		huh.NewOption("Show environment status", ActionStatus),
 		huh.NewOption("Watch environment status", ActionWatch),
 	}
