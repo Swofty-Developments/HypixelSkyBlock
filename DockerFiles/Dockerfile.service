@@ -30,6 +30,7 @@ FROM eclipse-temurin:25-jre
 
 WORKDIR /app
 
+ARG SERVICE_MODULE=service.orchestrator
 ARG SERVICE_JAR=ServiceOrchestrator.jar
 
 RUN apt-get update \
