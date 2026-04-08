@@ -31,6 +31,17 @@ copy_config_dir "skyblock"
 copy_config_dir "achievements"
 copy_config_dir "quests"
 copy_config_dir "i18n"
+copy_config_dir "bedwars"
+copy_config_dir "murdermystery"
+copy_config_dir "skywars"
+
+for world_dir in ./configuration_files/hypixel_*; do
+    if [ -d "$world_dir" ]; then
+        world_name="$(basename "$world_dir")"
+        mkdir -p "./configuration/$world_name"
+        cp -a "$world_dir/." "./configuration/$world_name/"
+    fi
+done
 
 if [ -n "${WORLD_ARCHIVE_URL:-}" ] && [ ! -f ./configuration/.worlds_loaded ]; then
     curl -fsSL "$WORLD_ARCHIVE_URL" -o /tmp/worlds.tar.gz
