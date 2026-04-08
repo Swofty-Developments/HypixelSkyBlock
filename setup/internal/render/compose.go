@@ -102,8 +102,8 @@ func composeYAML(p profile.Profile) string {
 	var b strings.Builder
 	b.WriteString("x-forwarding-env: &forwarding_env\n")
 	b.WriteString("  FORWARDING_SECRET: ${FORWARDING_SECRET}\n")
-	b.WriteString("x-deployable-base: &deployable_base\n")
-	b.WriteString("  image: hypixel-deployable:compose\n")
+	b.WriteString("x-game-server-base: &game_server_base\n")
+	b.WriteString("  image: hypixel-game:compose\n")
 	b.WriteString("  build:\n")
 	b.WriteString(fmt.Sprintf("    context: %q\n", p.RepoRoot))
 	b.WriteString("    dockerfile: DockerFiles/Dockerfile.game_server\n")
@@ -146,14 +146,17 @@ func composeYAML(p profile.Profile) string {
 	for _, serviceName := range p.SelectedServices {
 		svc := spec.ServiceByName(serviceName)
 		b.WriteString(fmt.Sprintf("  %s:\n", svc.DeploymentName))
-		b.WriteString("    <<: *deployable_base\n")
+		b.WriteString("    build:\n")
+		b.WriteString(fmt.Sprintf("      context: %q\n", p.RepoRoot))
+		b.WriteString("      dockerfile: DockerFiles/Dockerfile.service\n")
+		b.WriteString("      args:\n")
+		b.WriteString(fmt.Sprintf("        SERVICE_MODULE: %s\n", svc.Module))
+		b.WriteString(fmt.Sprintf("        SERVICE_JAR: %s\n", svc.Jar))
 		b.WriteString(fmt.Sprintf("    container_name: %s\n", svc.DeploymentName))
 		b.WriteString("    environment:\n      <<: *forwarding_env\n")
 		if serviceName == "ServiceAPI" {
-			b.WriteString(fmt.Sprintf("      SERVICE_CMD: java $$JAVA_OPTS -jar %s --port=%d\n", svc.Jar, p.APIPort))
+			b.WriteString(fmt.Sprintf("      SERVICE_CMD: java $$JAVA_OPTS -jar /app/service.jar --port=%d\n", p.APIPort))
 			b.WriteString(fmt.Sprintf("    ports:\n      - \"%d:%d\"\n", p.APIPort, p.APIPort))
-		} else {
-			b.WriteString(fmt.Sprintf("      SERVICE_CMD: java $$JAVA_OPTS -jar %s\n", svc.Jar))
 		}
 		b.WriteString("    depends_on:\n      proxy:\n        condition: service_healthy\n")
 		b.WriteString(fmt.Sprintf("    volumes:\n      - %q\n", filepath.Join(p.InstallDir, "configuration")+":/app/configuration_files"))
@@ -163,7 +166,7 @@ func composeYAML(p profile.Profile) string {
 	for _, serverName := range p.SelectedServers {
 		server := spec.ServerByType(serverName)
 		b.WriteString(fmt.Sprintf("  %s:\n", server.DeploymentName))
-		b.WriteString("    <<: *deployable_base\n")
+		b.WriteString("    <<: *game_server_base\n")
 		b.WriteString(fmt.Sprintf("    container_name: %s\n", server.DeploymentName))
 		b.WriteString("    environment:\n")
 		b.WriteString("      <<: *forwarding_env\n")

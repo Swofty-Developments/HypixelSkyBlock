@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1.7
 FROM eclipse-temurin:25-jdk AS builder
 
 WORKDIR /workspace
@@ -6,58 +5,12 @@ WORKDIR /workspace
 COPY gradlew gradlew.bat settings.gradle.kts build.gradle.kts gradle.properties ./
 COPY configuration ./configuration
 COPY gradle ./gradle
-COPY anticheat ./anticheat
 COPY commons ./commons
-COPY dungeons ./dungeons
-COPY loader ./loader
 COPY packer ./packer
 COPY proxy.api ./proxy.api
-COPY pvp ./pvp
-COPY service.api ./service.api
-COPY service.auctionhouse ./service.auctionhouse
-COPY service.bazaar ./service.bazaar
-COPY service.darkauction ./service.darkauction
-COPY service.datamutex ./service.datamutex
-COPY service.friend ./service.friend
-COPY service.generic ./service.generic
-COPY service.itemtracker ./service.itemtracker
-COPY service.orchestrator ./service.orchestrator
-COPY service.party ./service.party
-COPY service.punishment ./service.punishment
-COPY spark ./spark
-COPY type.backwaterbayou ./type.backwaterbayou
-COPY type.bedwarsconfigurator ./type.bedwarsconfigurator
-COPY type.bedwarsgame ./type.bedwarsgame
-COPY type.bedwarslobby ./type.bedwarslobby
-COPY type.crimsonisle ./type.crimsonisle
-COPY type.deepcaverns ./type.deepcaverns
-COPY type.dungeonhub ./type.dungeonhub
-COPY type.dwarvenmines ./type.dwarvenmines
-COPY type.galatea ./type.galatea
-COPY type.generic ./type.generic
-COPY type.goldmine ./type.goldmine
-COPY type.hub ./type.hub
-COPY type.island ./type.island
-COPY type.jerrysworkshop ./type.jerrysworkshop
-COPY type.lobby ./type.lobby
-COPY type.murdermysteryconfigurator ./type.murdermysteryconfigurator
-COPY type.murdermysterygame ./type.murdermysterygame
-COPY type.murdermysterylobby ./type.murdermysterylobby
-COPY type.prototypelobby ./type.prototypelobby
-COPY type.ravengardgeneric ./type.ravengardgeneric
-COPY type.ravengardlobby ./type.ravengardlobby
-COPY type.skyblockgeneric ./type.skyblockgeneric
-COPY type.skywarsconfigurator ./type.skywarsconfigurator
-COPY type.skywarsgame ./type.skywarsgame
-COPY type.skywarslobby ./type.skywarslobby
-COPY type.spidersden ./type.spidersden
-COPY type.theend ./type.theend
-COPY type.thefarmingislands ./type.thefarmingislands
-COPY type.thepark ./type.thepark
 COPY velocity.extension ./velocity.extension
 
-RUN --mount=type=cache,target=/root/.gradle \
-    chmod +x ./gradlew && ./gradlew --no-daemon assembleDeploymentArtifacts
+RUN chmod +x ./gradlew && ./gradlew --no-daemon :velocity.extension:shadowJar
 
 FROM eclipse-temurin:25-jre
 
@@ -71,7 +24,7 @@ RUN apt-get update \
 
 RUN curl -fsSL -o /app/velocity.jar "${VELOCITY_BUILD_URL}"
 
-COPY --from=builder /workspace/build/deployment/SkyBlockProxy.jar /app/plugins/SkyBlockProxy.jar
+COPY --from=builder /workspace/velocity.extension/build/libs/SkyBlockProxy.jar /app/plugins/SkyBlockProxy.jar
 COPY ./configuration /app/configuration_files
 
 RUN chmod +x /app/configuration_files/bootstrap-config.sh
