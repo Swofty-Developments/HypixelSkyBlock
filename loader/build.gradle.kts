@@ -4,7 +4,7 @@ import java.util.*
 plugins {
     java
     application
-    id("com.gradleup.shadow") version "9.3.2"
+    id("com.gradleup.shadow") version "9.4.1"
 }
 
 group = "net.swofty"
