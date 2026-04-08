@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MurderMysteryLobbyScoreboard {
 	private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
@@ -36,6 +37,7 @@ public class MurderMysteryLobbyScoreboard {
 				if (player.getDataHandler() == null) {
 					continue;
 				}
+				Locale l = player.getLocale();
 
 				MurderMysteryDataHandler handler = MurderMysteryDataHandler.getUser(player);
 				long totalKills = 0;
@@ -57,24 +59,24 @@ public class MurderMysteryLobbyScoreboard {
 				}
 
 				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
+				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_kills_label") + totalKills);
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_wins_label") + totalWins);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_kills_label", l) + totalKills);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_wins_label", l) + totalWins);
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_detective_label") + detectiveWins);
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_murderer_label") + murdererWins);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_detective_label", l) + detectiveWins);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_murderer_label", l) + murdererWins);
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.tokens_label") + tokens);
+				lines.add(I18n.string("scoreboard.murdermystery_lobby.tokens_label", l) + tokens);
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.common.footer"));
+				lines.add(I18n.string("scoreboard.common.footer", l));
 
 				if (!scoreboard.hasScoreboard(player)) {
-					scoreboard.createScoreboard(player, getSidebarName(animationFrame));
+					scoreboard.createScoreboard(player, getSidebarName(animationFrame, l));
 				}
 
 				scoreboard.updateLines(player, lines);
-				scoreboard.updateTitle(player, getSidebarName(animationFrame));
+				scoreboard.updateTitle(player, getSidebarName(animationFrame, l));
 			}
 			return TaskSchedule.tick(4);
 		});
@@ -84,8 +86,8 @@ public class MurderMysteryLobbyScoreboard {
 		scoreboard.removeScoreboard(player);
 	}
 
-	private static String getSidebarName(int counter) {
-		String baseText = I18n.string("scoreboard.murdermystery_lobby.title_base");
+	private static String getSidebarName(int counter, Locale locale) {
+		String baseText = I18n.string("scoreboard.murdermystery_lobby.title_base", locale);
 		String[] colors = {"§f§l", "§6§l", "§e§l"};
 		String endColor = "§a§l";
 

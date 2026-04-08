@@ -12,6 +12,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class SkyBlockPlayersOnlineModule extends TablistModule {
@@ -23,10 +24,11 @@ public class SkyBlockPlayersOnlineModule extends TablistModule {
 
 
     public List<TablistEntry> getEntries(SkyBlockPlayer player) {
+        Locale l = player.getLocale();
         List<SkyBlockPlayer> players = SkyBlockGenericLoader.getLoadedPlayers();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered(I18n.string("tablist.module.players", Map.of("count", String.valueOf(players.size())))), TablistSkinRegistry.GREEN)
+                new TablistEntry(getCentered(I18n.string("tablist.module.players", l, Map.of("count", String.valueOf(players.size())))), TablistSkinRegistry.GREEN)
         ));
 
         List<SkyBlockPlayer> toShow = new ArrayList<>();

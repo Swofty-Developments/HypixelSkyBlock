@@ -4,6 +4,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
@@ -24,7 +25,7 @@ public class GUIQuiver implements StatefulView<GUIQuiver.QuiverState> {
 
     @Override
     public ViewConfiguration<QuiverState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.bags.quiver.title"), InventoryType.CHEST_5_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.bags.quiver.title", InventoryType.CHEST_5_ROW);
     }
 
     @Override
@@ -50,8 +51,8 @@ public class GUIQuiver implements StatefulView<GUIQuiver.QuiverState> {
                 for (int i = 0; i < entry.getValue(); i++) {
                     int slotIndex = i + rawAmountOfSlots;
                     if (slotIndex < 36) {
-                        layout.slot(slotIndex, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.bags.quiver.locked_slot"), Material.RED_STAINED_GLASS_PANE, 1,
-                                I18n.lore("gui_sbmenu.bags.quiver.locked_slot.lore", Map.of("upgrade_name", entry.getKey().getDisplay()))));
+                        layout.slot(slotIndex, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.bags.quiver.locked_slot", Material.RED_STAINED_GLASS_PANE, 1,
+                                "gui_sbmenu.bags.quiver.locked_slot.lore", Map.of("upgrade_name", entry.getKey().getDisplay())));
                     }
                 }
                 rawAmountOfSlots += entry.getValue();
@@ -74,7 +75,7 @@ public class GUIQuiver implements StatefulView<GUIQuiver.QuiverState> {
             }, (slot, oldItem, newItem, s) -> {
                 SkyBlockItem newSkyBlockItem = new SkyBlockItem(newItem);
                 if (!isItemAllowed(newSkyBlockItem)) {
-                    ctx.player().sendMessage(I18n.string("gui_sbmenu.bags.quiver.msg.cannot_put"));
+                    ctx.player().sendMessage(I18n.string("gui_sbmenu.bags.quiver.msg.cannot_put", ctx.player().getLocale()));
                 }
             });
         }

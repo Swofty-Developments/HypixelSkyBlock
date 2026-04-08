@@ -7,7 +7,6 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.friend.FriendManager;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
@@ -48,7 +47,7 @@ public class FriendCommand extends HypixelCommand {
             pendingCommands.add(player.getUuid());
 
             if (!friendService.isOnline().join()) {
-                sender.sendMessage(I18n.string("commands.common.service_offline_friend"));
+                player.sendTranslated("commands.common.service_offline_friend");
                 pendingCommands.remove(player.getUuid());
                 return;
             }
@@ -80,7 +79,7 @@ public class FriendCommand extends HypixelCommand {
             pendingCommands.add(player.getUuid());
 
             if (!friendService.isOnline().join()) {
-                sender.sendMessage(I18n.string("commands.common.service_offline_friend"));
+                player.sendTranslated("commands.common.service_offline_friend");
                 pendingCommands.remove(player.getUuid());
                 return;
             }
@@ -106,7 +105,7 @@ public class FriendCommand extends HypixelCommand {
                     int page = parsePageNumber(arg);
                     FriendManager.listRequests(player, page);
                 }
-                default -> player.sendMessage(I18n.string("commands.common.unknown_command_use_help", Map.of("command", "friend")));
+                default -> player.sendTranslated("commands.common.unknown_command_use_help", Map.of("command", "friend"));
             }
 
             pendingCommands.remove(player.getUuid());
@@ -124,7 +123,7 @@ public class FriendCommand extends HypixelCommand {
             pendingCommands.add(player.getUuid());
 
             if (!friendService.isOnline().join()) {
-                sender.sendMessage(I18n.string("commands.common.service_offline_friend"));
+                player.sendTranslated("commands.common.service_offline_friend");
                 pendingCommands.remove(player.getUuid());
                 return;
             }
@@ -136,7 +135,7 @@ public class FriendCommand extends HypixelCommand {
             if (sub.equalsIgnoreCase("nickname")) {
                 FriendManager.setNickname(player, target, extra);
             } else {
-                player.sendMessage(I18n.string("commands.common.unknown_command_use_help", Map.of("command", "friend")));
+                player.sendTranslated("commands.common.unknown_command_use_help", Map.of("command", "friend"));
             }
 
             pendingCommands.remove(player.getUuid());
@@ -144,20 +143,20 @@ public class FriendCommand extends HypixelCommand {
     }
 
     private void showHelp(HypixelPlayer player) {
-        player.sendMessage(I18n.string("commands.common.separator"));
-        player.sendMessage(I18n.string("commands.friend.help_header"));
-        player.sendMessage(I18n.string("commands.friend.help_add"));
-        player.sendMessage(I18n.string("commands.friend.help_accept"));
-        player.sendMessage(I18n.string("commands.friend.help_deny"));
-        player.sendMessage(I18n.string("commands.friend.help_remove"));
-        player.sendMessage(I18n.string("commands.friend.help_removeall"));
-        player.sendMessage(I18n.string("commands.friend.help_best"));
-        player.sendMessage(I18n.string("commands.friend.help_nickname"));
-        player.sendMessage(I18n.string("commands.friend.help_list"));
-        player.sendMessage(I18n.string("commands.friend.help_requests"));
-        player.sendMessage(I18n.string("commands.friend.help_toggle"));
-        player.sendMessage(I18n.string("commands.friend.help_notifications"));
-        player.sendMessage(I18n.string("commands.common.separator"));
+        player.sendTranslated("commands.common.separator");
+        player.sendTranslated("commands.friend.help_header");
+        player.sendTranslated("commands.friend.help_add");
+        player.sendTranslated("commands.friend.help_accept");
+        player.sendTranslated("commands.friend.help_deny");
+        player.sendTranslated("commands.friend.help_remove");
+        player.sendTranslated("commands.friend.help_removeall");
+        player.sendTranslated("commands.friend.help_best");
+        player.sendTranslated("commands.friend.help_nickname");
+        player.sendTranslated("commands.friend.help_list");
+        player.sendTranslated("commands.friend.help_requests");
+        player.sendTranslated("commands.friend.help_toggle");
+        player.sendTranslated("commands.friend.help_notifications");
+        player.sendTranslated("commands.common.separator");
     }
 
     private int parsePageNumber(String arg) {
