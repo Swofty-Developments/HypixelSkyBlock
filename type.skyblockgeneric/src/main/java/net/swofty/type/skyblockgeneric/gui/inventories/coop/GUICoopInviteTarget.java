@@ -45,7 +45,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
     );
 
     public GUICoopInviteTarget(CoopDatabase.Coop coop) {
-        super(I18n.string("gui_coop.target.title"), InventoryType.CHEST_5_ROW);
+        super(I18n.t("gui_coop.target.title"), InventoryType.CHEST_5_ROW);
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
 
@@ -96,7 +96,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                 coop.removeInvite(player.getUuid());
                 coop.save();
                 Locale l = p.getLocale();
-                player.sendMessage(I18n.string("gui_coop.target.denied_message", l));
+                player.sendMessage(I18n.t("gui_coop.target.denied_message"));
                 player.closeInventory();
 
                 SkyBlockPlayer target = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
@@ -108,7 +108,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_coop.target.deny_button", Material.BARRIER, 1);
+                return TranslatableItemStackCreator.getStack("gui_coop.target.deny_button", Material.BARRIER, 1);
             }
         });
 
@@ -169,7 +169,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_coop.target.accept_button", Material.GREEN_TERRACOTTA, 1,
+                return TranslatableItemStackCreator.getStack("gui_coop.target.accept_button", Material.GREEN_TERRACOTTA, 1,
                         "gui_coop.target.accept_button.lore", Map.of(
                                 "profile_count", String.valueOf(player.getProfiles().getProfiles().size())));
             }

@@ -7,7 +7,6 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -211,12 +210,12 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
-                p.sendMessage(I18n.string("gui_bazaar.order_options.cancel_message", l));
+                p.sendMessage(I18n.t("gui_bazaar.order_options.cancel_message"));
 
                 player.getBazaarConnector().cancelOrder(order.orderId())
                         .thenAccept(success -> {
                             if (success) {
-                                p.sendMessage(I18n.string("gui_bazaar.order_options.cancel_success", l));
+                                p.sendMessage(I18n.t("gui_bazaar.order_options.cancel_success"));
 
                                 if (isSell) {
                                     SkyBlockItem item = new SkyBlockItem(order.getItemType());
@@ -231,7 +230,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
                                 new GUIBazaarOrders().open(p);
                             } else {
-                                p.sendMessage(I18n.string("gui_bazaar.order_options.cancel_failed", l));
+                                p.sendMessage(I18n.t("gui_bazaar.order_options.cancel_failed"));
                             }
                         });
             }
@@ -293,7 +292,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                 if (!unclaimedForThisOrder.isEmpty()) {
                     new GUIBazaarOrderCompletedOptions(unclaimedForThisOrder, order).open(p);
                 } else {
-                    p.sendMessage(I18n.string("gui_bazaar.order_options.no_completed_message", p.getLocale()));
+                    p.sendMessage(I18n.t("gui_bazaar.order_options.no_completed_message"));
                 }
             }
 

@@ -30,7 +30,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
     private static final DecimalFormat FORMATTER = new DecimalFormat("#,###.##");
 
     public GUIBazaarOrders() {
-        super(I18n.string("gui_bazaar.orders.title"), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_bazaar.orders.title"), InventoryType.CHEST_4_ROW);
         fill(ItemStackCreator.createNamedItemStack(Material.GRAY_STAINED_GLASS_PANE));
 
         set(new GUIItem(4) {

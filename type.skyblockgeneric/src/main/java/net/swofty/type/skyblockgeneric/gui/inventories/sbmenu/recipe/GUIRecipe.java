@@ -8,7 +8,11 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -120,7 +124,7 @@ public class GUIRecipe extends StatelessView {
                         List<Component> existingLore = builder.build().get(DataComponents.LORE);
                         ArrayList<Component> lore = existingLore != null ? new ArrayList<>(existingLore) : new ArrayList<>();
                         lore.add(Component.text(" "));
-                        lore.add(Component.text(I18n.string("gui_sbmenu.recipe.view.click_to_view", player.getLocale())));
+                        lore.add(I18n.t("gui_sbmenu.recipe.view.click_to_view"));
                         builder.set(DataComponents.LORE, lore);
                     }
 

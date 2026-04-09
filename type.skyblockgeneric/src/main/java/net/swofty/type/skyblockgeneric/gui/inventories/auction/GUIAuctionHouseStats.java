@@ -22,7 +22,7 @@ import static java.util.Map.entry;
 
 public class GUIAuctionHouseStats extends HypixelInventoryGUI {
     public GUIAuctionHouseStats() {
-        super(I18n.string("gui_auction.stats.title"), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_auction.stats.title"), InventoryType.CHEST_4_ROW);
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(31, new GUIAuctionHouse()));
@@ -36,7 +36,7 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
                         DatapointAuctionStatistics.class
                 ).getValue();
 
-                return TranslatableItemStackCreator.getStack(p, "gui_auction.stats.seller_stats", Material.PAPER, 1,
+                return TranslatableItemStackCreator.getStack("gui_auction.stats.seller_stats", Material.PAPER, 1,
                         "gui_auction.stats.seller_stats.lore", Map.ofEntries(
                                 entry("auctions_created", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_CREATED))),
                                 entry("completed_without_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITHOUT_BIDS))),
@@ -64,7 +64,7 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
                         DatapointAuctionStatistics.class
                 ).getValue();
 
-                return TranslatableItemStackCreator.getStack(p, "gui_auction.stats.buyer_stats", Material.FILLED_MAP, 1,
+                return TranslatableItemStackCreator.getStack("gui_auction.stats.buyer_stats", Material.FILLED_MAP, 1,
                         "gui_auction.stats.buyer_stats.lore", Map.ofEntries(
                                 entry("auctions_won", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_WON))),
                                 entry("total_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_BIDS))),

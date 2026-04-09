@@ -5,7 +5,11 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.levels.LevelsGuide;
@@ -51,7 +55,7 @@ public class GUILevelsGuide extends StatelessView {
         }
 
         // Guide info
-        layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.guide.info", Material.REDSTONE_TORCH, 1,
+        layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.levels.guide.info", Material.REDSTONE_TORCH, 1,
                 "gui_sbmenu.levels.guide.info.lore"));
 
         // Task items

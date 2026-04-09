@@ -28,7 +28,7 @@ import java.util.Map;
 public class GUIBankerDeposit extends HypixelInventoryGUI {
 
     public GUIBankerDeposit() {
-        super(I18n.string("gui_banker.deposit.title"), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_banker.deposit.title"), InventoryType.CHEST_4_ROW);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
-                return TranslatableItemStackCreator.getStack(p, "gui_banker.deposit.whole_purse", Material.CHEST, 64,
+                return TranslatableItemStackCreator.getStack("gui_banker.deposit.whole_purse", Material.CHEST, 64,
                         List.of(
                                 I18n.string("gui_banker.deposit.whole_purse_subtitle", l),
                                 " ",
@@ -70,7 +70,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
-                return TranslatableItemStackCreator.getStack(p, "gui_banker.deposit.half_purse", Material.CHEST, 32,
+                return TranslatableItemStackCreator.getStack("gui_banker.deposit.half_purse", Material.CHEST, 32,
                         List.of(
                                 I18n.string("gui_banker.deposit.whole_purse_subtitle", l),
                                 " ",
@@ -102,18 +102,18 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
                 try {
                     double amount = Double.parseDouble(query);
                     if (amount > player.getCoins()) {
-                        player.sendMessage(I18n.string("gui_banker.deposit.not_enough_coins", l));
+                        player.sendMessage(I18n.t("gui_banker.deposit.not_enough_coins"));
                         return null;
                     }
                     if (amount <= 0) {
-                        player.sendMessage(I18n.string("gui_banker.deposit.invalid_amount", l));
+                        player.sendMessage(I18n.t("gui_banker.deposit.invalid_amount"));
                         return null;
                     }
 
                     player.closeInventory();
                     attemptDeposit(player, amount);
                 } catch (NumberFormatException ex) {
-                    player.sendMessage(I18n.string("gui_banker.deposit.invalid_number", l));
+                    player.sendMessage(I18n.t("gui_banker.deposit.invalid_number"));
                 }
                 return null;
             }
@@ -122,7 +122,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
-                return TranslatableItemStackCreator.getStack(p, "gui_banker.deposit.custom_amount", Material.OAK_SIGN, 1,
+                return TranslatableItemStackCreator.getStack("gui_banker.deposit.custom_amount", Material.OAK_SIGN, 1,
                         List.of(
                                 I18n.string("gui_banker.deposit.whole_purse_subtitle", l),
                                 " ",
@@ -163,7 +163,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
             return;
         }
 
-        player.sendMessage(I18n.string("gui_banker.deposit.depositing", l));
+        player.sendMessage(I18n.t("gui_banker.deposit.depositing"));
         player.removeCoins(amount);
         if (!player.isCoop()) {
             bankData.addAmount(amount);
@@ -210,7 +210,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
                     return latestBankData;
                 },
                 () -> {
-                    player.sendMessage(I18n.string("gui_banker.deposit.coop_busy", l));
+                    player.sendMessage(I18n.t("gui_banker.deposit.coop_busy"));
                 }
         );
     }

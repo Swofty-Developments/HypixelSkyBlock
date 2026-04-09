@@ -7,7 +7,6 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
@@ -26,15 +25,15 @@ import java.util.Map;
 
 public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIBanker() {
-        super(I18n.string("gui_banker.main.title"), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_banker.main.title"), InventoryType.CHEST_4_ROW);
     }
 
     @Override
     public void setItems(InventoryGUIOpenEvent e) {
         Locale l = e.player().getLocale();
         if (((SkyBlockPlayer) e.player()).isBankDelayed) {
-            e.player().sendMessage(I18n.string("gui_banker.main.processing_transactions", l));
-            e.player().sendMessage(I18n.string("gui_banker.main.processing_wait", l));
+            e.player().sendMessage(I18n.t("gui_banker.main.processing_transactions"));
+            e.player().sendMessage(I18n.t("gui_banker.main.processing_wait"));
             e.player().closeInventory();
             return;
         }
@@ -60,7 +59,7 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIItem(32) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return TranslatableItemStackCreator.getStack(p, "gui_banker.main.information", Material.REDSTONE_TORCH, 1,
+                return TranslatableItemStackCreator.getStack("gui_banker.main.information", Material.REDSTONE_TORCH, 1,
                         "gui_banker.main.information.lore", Map.of(
                                 "limit", StringUtility.commaify(bankData.getBalanceLimit()),
                                 "hours", String.valueOf(SkyBlockCalendar.getHoursUntilNextInterest())
@@ -77,7 +76,7 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return TranslatableItemStackCreator.getStack(p, "gui_banker.main.deposit", Material.CHEST, 1,
+                return TranslatableItemStackCreator.getStack("gui_banker.main.deposit", Material.CHEST, 1,
                         "gui_banker.main.deposit.lore", Map.of(
                                 "balance", StringUtility.decimalify(bankData.getAmount(), 1),
                                 "hours", String.valueOf(SkyBlockCalendar.getHoursUntilNextInterest())
@@ -94,7 +93,7 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return TranslatableItemStackCreator.getStack(p, "gui_banker.main.withdraw", Material.DISPENSER, 1,
+                return TranslatableItemStackCreator.getStack("gui_banker.main.withdraw", Material.DISPENSER, 1,
                         "gui_banker.main.withdraw.lore", Map.of(
                                 "balance", StringUtility.decimalify(bankData.getAmount(), 1)
                         ));
@@ -125,7 +124,7 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
                     }
                 }
 
-                return TranslatableItemStackCreator.getStack(p, "gui_banker.main.recent_transactions",
+                return TranslatableItemStackCreator.getStack("gui_banker.main.recent_transactions",
                         Material.FILLED_MAP, 1, lore);
             }
         });

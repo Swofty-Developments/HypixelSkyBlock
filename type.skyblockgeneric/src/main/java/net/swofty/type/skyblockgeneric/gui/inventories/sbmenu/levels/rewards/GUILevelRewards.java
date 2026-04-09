@@ -2,9 +2,12 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.rewards;
 
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
@@ -56,7 +59,7 @@ public class GUILevelRewards extends StatelessView {
             lore.add(" ");
             lore.add(I18n.string("gui_sbmenu.levels.rewards.click_to_view", l));
 
-            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.rewards.feature", Material.NETHER_STAR, 1, lore);
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.levels.rewards.feature", Material.NETHER_STAR, 1, lore);
         }, (click, c) -> c.player().openView(new GUILevelFeatureRewards()));
 
         // Prefix Color Rewards
@@ -84,7 +87,7 @@ public class GUILevelRewards extends StatelessView {
             lore.add(" ");
             lore.add(I18n.string("gui_sbmenu.levels.rewards.click_to_view", l));
 
-            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.rewards.prefix", Material.GRAY_DYE, 1, lore);
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.levels.rewards.prefix", Material.GRAY_DYE, 1, lore);
         }, (click, c) -> c.player().openView(new GUILevelPrefixRewards()));
 
         // Emblem Rewards
@@ -119,7 +122,7 @@ public class GUILevelRewards extends StatelessView {
             lore.add(" ");
             lore.add(I18n.string("gui_sbmenu.levels.rewards.click_to_view", l));
 
-            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.rewards.emblem", Material.NAME_TAG, 1, lore);
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.levels.rewards.emblem", Material.NAME_TAG, 1, lore);
         }, (click, c) -> c.player().openView(new GUILevelEmblemRewards()));
 
         // Statistic Rewards
@@ -127,7 +130,7 @@ public class GUILevelRewards extends StatelessView {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             SkyBlockLevelRequirement nextLevel = player.getSkyBlockExperience().getLevel().getNextLevel();
 
-            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.rewards.statistic", Material.DIAMOND_HELMET, 1,
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.levels.rewards.statistic", Material.DIAMOND_HELMET, 1,
                     "gui_sbmenu.levels.rewards.statistic.lore", Map.of("next_level", nextLevel == null ? "§cMAX" : String.valueOf(nextLevel.asInt())));
         });
     }

@@ -38,7 +38,7 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
 
     public GUIBazaarOrderCompletedOptions(List<DatapointCompletedBazaarTransactions.CompletedBazaarTransaction> completions,
                                           BazaarConnector.BazaarOrder activeOrder) {
-        super(I18n.string("gui_bazaar.order_completed.title"), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_bazaar.order_completed.title"), InventoryType.CHEST_4_ROW);
         this.completions = completions;
         this.activeOrder = activeOrder;
         this.summary = calculateSummary(completions);
@@ -228,7 +228,7 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_bazaar.order_completed.view_unfilled", Material.COMPASS, 1,
+                return TranslatableItemStackCreator.getStack("gui_bazaar.order_completed.view_unfilled", Material.COMPASS, 1,
                         "gui_bazaar.order_completed.view_unfilled.lore", Map.of("amount", String.valueOf((int) activeOrder.amount()), "price", FORMATTER.format(activeOrder.price())));
             }
         });
@@ -237,7 +237,7 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
     private void claimRewards(SkyBlockPlayer player) {
         Locale l = player.getLocale();
         if (completions == null || completions.isEmpty()) {
-            player.sendMessage(I18n.string("gui_bazaar.order_completed.no_rewards", l));
+            player.sendMessage(I18n.t("gui_bazaar.order_completed.no_rewards"));
             return;
         }
 
@@ -271,7 +271,7 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
 
             completedTransactions.claimTransactions(transactionIds);
 
-            player.sendMessage(I18n.string("gui_bazaar.order_completed.all_claimed", l));
+            player.sendMessage(I18n.t("gui_bazaar.order_completed.all_claimed"));
             player.playSuccessSound();
 
             new GUIBazaarOrders().open(player);

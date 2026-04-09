@@ -48,7 +48,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
     private CoopDatabase.Coop coop;
 
     public GUICoopInviteSender(CoopDatabase.Coop coopTemp) {
-        super(I18n.string("gui_coop.sender.title"), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_coop.sender.title"), InventoryType.CHEST_6_ROW);
 
         this.coop = coopTemp;
 
@@ -110,7 +110,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return TranslatableItemStackCreator.getStack(p, "gui_coop.sender.confirm_button", Material.GREEN_TERRACOTTA, 1,
+                return TranslatableItemStackCreator.getStack("gui_coop.sender.confirm_button", Material.GREEN_TERRACOTTA, 1,
                         "gui_coop.sender.confirm_button.lore");
             }
         });
@@ -124,12 +124,12 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                 coop.removeInvite(player.getUuid());
                 coop.save();
                 player.closeInventory();
-                player.sendMessage(I18n.string("gui_coop.sender.cancelled_message", l));
+                player.sendMessage(I18n.t("gui_coop.sender.cancelled_message"));
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return TranslatableItemStackCreator.getStack(p, "gui_coop.sender.cancel_button", Material.RED_TERRACOTTA, 1,
+                return TranslatableItemStackCreator.getStack("gui_coop.sender.cancel_button", Material.RED_TERRACOTTA, 1,
                         "gui_coop.sender.cancel_button.lore");
             }
         });

@@ -98,7 +98,7 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int count = player.getStash().getItemStashCount();
-                return TranslatableItemStackCreator.getStack(p, "gui_stash.item.fill_inventory", Material.EMERALD, 1,
+                return TranslatableItemStackCreator.getStack("gui_stash.item.fill_inventory", Material.EMERALD, 1,
                         "gui_stash.item.fill_inventory.lore", Map.of("count", String.valueOf(count)));
             }
         });
@@ -157,7 +157,7 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
                     player.sendMessage(I18n.string("gui_stash.item.from_stash", l, Map.of("item_name", removed.getDisplayName())));
 
                     if (player.getStash().getItemStashCount() == 0) {
-                        player.sendMessage(I18n.string("gui_stash.item.all_picked_up", l));
+                        player.sendMessage(I18n.t("gui_stash.item.all_picked_up"));
                     } else {
                         player.sendMessage(I18n.string("gui_stash.item.remaining", l, Map.of("count", String.valueOf(player.getStash().getItemStashCount()))));
                     }

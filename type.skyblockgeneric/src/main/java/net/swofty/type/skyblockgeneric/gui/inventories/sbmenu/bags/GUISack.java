@@ -8,13 +8,16 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.StatefulView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.SackComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
@@ -84,7 +87,7 @@ public class GUISack implements StatefulView<GUISack.SackState> {
         };
 
         if (!closeGUIButton) {
-            layout.slot(backSlot, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.bags.sack.go_back", Material.ARROW, 1,
+            layout.slot(backSlot, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.bags.sack.go_back", Material.ARROW, 1,
                             "gui_sbmenu.bags.sack.go_back.lore"),
                     (click, c) -> c.player().openView(new GUISackOfSacks()));
         } else {

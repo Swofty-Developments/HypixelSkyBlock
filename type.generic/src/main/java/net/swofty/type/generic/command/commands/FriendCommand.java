@@ -1,5 +1,6 @@
 package net.swofty.type.generic.command.commands;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.commons.ServiceType;
@@ -12,7 +13,6 @@ import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @CommandParameters(aliases = "f",
@@ -105,7 +105,7 @@ public class FriendCommand extends HypixelCommand {
                     int page = parsePageNumber(arg);
                     FriendManager.listRequests(player, page);
                 }
-                default -> player.sendTranslated("commands.common.unknown_command_use_help", Map.of("command", "friend"));
+                default -> player.sendTranslated("commands.common.unknown_command_use_help", Component.text("friend"));
             }
 
             pendingCommands.remove(player.getUuid());
@@ -135,7 +135,7 @@ public class FriendCommand extends HypixelCommand {
             if (sub.equalsIgnoreCase("nickname")) {
                 FriendManager.setNickname(player, target, extra);
             } else {
-                player.sendTranslated("commands.common.unknown_command_use_help", Map.of("command", "friend"));
+                player.sendTranslated("commands.common.unknown_command_use_help", Component.text("friend"));
             }
 
             pendingCommands.remove(player.getUuid());

@@ -280,14 +280,6 @@ public abstract class HypixelNPC {
             return new DialogueSet(key, I18n.dialogueLines(translationKey), sound);
         }
 
-        public static DialogueSet ofTranslation(String key, String translationKey, Map<String, String> placeholders) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, placeholders), null);
-        }
-
-        public static DialogueSet ofTranslation(String key, String translationKey, Map<String, String> placeholders, Sound sound) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, placeholders), sound);
-        }
-
         public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player) {
             Locale locale = player != null ? player.getLocale() : Locale.US;
             return new DialogueSet(key, I18n.dialogueLines(translationKey, locale), null);
@@ -298,14 +290,5 @@ public abstract class HypixelNPC {
             return new DialogueSet(key, I18n.dialogueLines(translationKey, locale), sound);
         }
 
-        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Map<String, String> placeholders) {
-            Locale locale = player != null ? player.getLocale() : Locale.US;
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale, placeholders), null);
-        }
-
-        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Map<String, String> placeholders, Sound sound) {
-            Locale locale = player != null ? player.getLocale() : Locale.US;
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale, placeholders), sound);
-        }
     }
 }

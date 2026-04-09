@@ -21,7 +21,7 @@ public class GUIConfirmAbiphone extends HypixelInventoryGUI {
 	private final Runnable onAccept;
 
 	public GUIConfirmAbiphone(AbiphoneNPC npc, Runnable onAccept) {
-		super(I18n.string("gui_abiphone.confirm.title"), InventoryType.CHEST_3_ROW);
+		super(I18n.t("gui_abiphone.confirm.title"), InventoryType.CHEST_3_ROW);
 		this.npc = npc;
 		this.onAccept = onAccept;
 	}
@@ -36,7 +36,7 @@ public class GUIConfirmAbiphone extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return TranslatableItemStackCreator.getStack(player, "gui_abiphone.confirm.confirm_button", Material.GREEN_TERRACOTTA, 1,
+				return TranslatableItemStackCreator.getStack("gui_abiphone.confirm.confirm_button", Material.GREEN_TERRACOTTA, 1,
 						"gui_abiphone.confirm.confirm_button.lore", Map.of("npc_name", npc.getName()));
 			}
 		});

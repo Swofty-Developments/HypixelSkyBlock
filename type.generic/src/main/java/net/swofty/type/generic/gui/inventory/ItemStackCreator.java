@@ -14,7 +14,11 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -111,6 +115,19 @@ public class ItemStackCreator {
 	}
 
 	/**
+	 * Creates an {@link ItemStack.Builder} with specified name, material, amount, and lore.
+	 *
+	 * @param name     the name of the item stack
+	 * @param material the material of the item stack
+	 * @param amount   the amount of items in the stack
+	 * @param lore     the lore of the item stack
+	 * @return an {@link ItemStack.Builder} with the specified properties
+	 */
+	public static ItemStack.Builder getStack(Component name, Material material, int amount, Component... lore) {
+		return getStack(name, material, amount, Arrays.asList(lore));
+	}
+
+	/**
 	 * Updates the lore of the given {@link ItemStack.Builder} with the specified lore lines.
 	 *
 	 * @param builder the {@link ItemStack.Builder} to update
@@ -120,7 +137,7 @@ public class ItemStackCreator {
 	public static ItemStack.Builder updateLore(ItemStack.Builder builder, List<String> lore) {
 		List<String> copiedLore = new ArrayList<>();
 		for (String s : lore) {
-			copiedLore.add(color(s));
+			copiedLore.add(replaceColorCodes(s));
 		}
 
 		return clearAttributes(builder.set(DataComponents.LORE, copiedLore.stream()
@@ -139,7 +156,7 @@ public class ItemStackCreator {
 	public static ItemStack.Builder appendLore(ItemStack.Builder builder, List<String> lore) {
 		List<Component> existingLore = new ArrayList<>(builder.build().get(DataComponents.LORE));
 		for (String s : lore) {
-			existingLore.add(Component.text(color(s)).decoration(TextDecoration.ITALIC, false));
+			existingLore.add(Component.text(replaceColorCodes(s)).decoration(TextDecoration.ITALIC, false));
 		}
 
 		return clearAttributes(builder.set(DataComponents.LORE, existingLore)
@@ -192,16 +209,26 @@ public class ItemStackCreator {
 	 * @return an {@link ItemStack.Builder} with the specified properties
 	 */
 	public static ItemStack.Builder getStack(String name, Material material, int amount, List<String> lore) {
-		List<String> copiedLore = new ArrayList<>();
-		for (String s : lore) {
-			copiedLore.add(color(s));
-		}
+		return getStack(Component.text(name), material, amount, literalLoreComponents(lore));
+	}
+
+	/**
+	 * Creates an {@link ItemStack.Builder} with the specified name, material, amount, and lore list.
+	 *
+	 * @param name     the name of the item stack
+	 * @param material the material of the item stack
+	 * @param amount   the amount of items in the stack
+	 * @param lore     the list of lore lines for the item stack
+	 * @return an {@link ItemStack.Builder} with the specified properties
+	 */
+	public static ItemStack.Builder getStack(Component name, Material material, int amount, List<Component> lore) {
+		List<Component> copiedLore = new ArrayList<>(lore);
 
 		return clearAttributes(ItemStack.builder(material).amount(amount).set(DataComponents.LORE, copiedLore.stream()
-						.map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
-						.collect(Collectors.toList()))
-				.set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
-				.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
+				.map(line -> line.decoration(TextDecoration.ITALIC, false))
+				.collect(Collectors.toList()))
+			.set(DataComponents.CUSTOM_NAME, name.decoration(TextDecoration.ITALIC, false))
+			.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
 	}
 
 	/**
@@ -214,6 +241,10 @@ public class ItemStackCreator {
 	 * @return an {@link ItemStack.Builder} for a player head with the specified properties
 	 */
 	public static ItemStack.Builder getStackHead(String name, String texture, int amount, String... lore) {
+		return getStackHead(name, texture, amount, Arrays.asList(lore));
+	}
+
+	public static ItemStack.Builder getStackHead(Component name, String texture, int amount, Component... lore) {
 		return getStackHead(name, texture, amount, Arrays.asList(lore));
 	}
 
@@ -251,6 +282,10 @@ public class ItemStackCreator {
 		return getStackHead(name, skin, amount, Arrays.asList(lore));
 	}
 
+	public static ItemStack.Builder getStackHead(Component name, PlayerSkin skin, int amount, Component... lore) {
+		return getStackHead(name, skin, amount, Arrays.asList(lore));
+	}
+
 	/**
 	 * Creates an {@link ItemStack.Builder} for a player head with a specified name, texture, amount, and lore list.
 	 *
@@ -263,7 +298,7 @@ public class ItemStackCreator {
 	public static ItemStack.Builder getStackHead(String name, String texture, int amount, List<String> lore) {
 		List<String> copiedLore = new ArrayList<>();
 		for (String s : lore) {
-			copiedLore.add(color(s));
+			copiedLore.add(replaceColorCodes(s));
 		}
 
 		JSONObject json = new JSONObject();
@@ -281,6 +316,25 @@ public class ItemStackCreator {
 				.set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
 				.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY)
 				.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)))
+			.amount(amount);
+	}
+
+	public static ItemStack.Builder getStackHead(Component name, String texture, int amount, List<Component> lore) {
+		JSONObject json = new JSONObject();
+		json.put("isPublic", true);
+		json.put("signatureRequired", false);
+		json.put("textures", new JSONObject().put("SKIN",
+			new JSONObject().put("url", "http://textures.minecraft.net/texture/" + texture).put("metadata", new JSONObject().put("model", "slim"))));
+
+		String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
+
+		return ItemStack.builder(Material.PLAYER_HEAD)
+			.set(DataComponents.LORE, new ArrayList<>(lore).stream()
+				.map(line -> line.decoration(TextDecoration.ITALIC, false))
+				.collect(Collectors.toList()))
+			.set(DataComponents.CUSTOM_NAME, name.decoration(TextDecoration.ITALIC, false))
+			.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY)
+			.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)))
 				.amount(amount);
 	}
 
@@ -296,7 +350,7 @@ public class ItemStackCreator {
 	public static ItemStack.Builder getStackHead(String name, PlayerSkin skin, int amount, List<String> lore) {
 		List<String> copiedLore = new ArrayList<>();
 		for (String s : lore) {
-			copiedLore.add(color(s));
+			copiedLore.add(replaceColorCodes(s));
 		}
 
 		return clearAttributes(ItemStack.builder(Material.PLAYER_HEAD)
@@ -311,6 +365,22 @@ public class ItemStackCreator {
 						DataComponents.UNBREAKABLE
 				)))
 				.set(DataComponents.PROFILE, new ResolvableProfile(skin))
+			.amount(amount));
+	}
+
+	public static ItemStack.Builder getStackHead(Component name, PlayerSkin skin, int amount, List<Component> lore) {
+		return clearAttributes(ItemStack.builder(Material.PLAYER_HEAD)
+			.set(DataComponents.LORE, new ArrayList<>(lore).stream()
+				.map(line -> line.decoration(TextDecoration.ITALIC, false))
+				.collect(Collectors.toList()))
+			.set(DataComponents.CUSTOM_NAME, name.decoration(TextDecoration.ITALIC, false))
+			.set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of(
+				DataComponents.CONSUMABLE,
+				DataComponents.DAMAGE,
+				DataComponents.BASE_COLOR,
+				DataComponents.UNBREAKABLE
+			)))
+			.set(DataComponents.PROFILE, new ResolvableProfile(skin))
 				.amount(amount));
 	}
 
@@ -332,8 +402,15 @@ public class ItemStackCreator {
 	 * @param string the input string with color codes
 	 * @return the string with color codes replaced
 	 */
-	public static String color(String string) {
+	public static String replaceColorCodes(String string) {
 		return string.replace("&", "§");
 	}
-}
 
+	public static List<Component> literalLoreComponents(List<String> lore) {
+		List<Component> loreComponents = new ArrayList<>();
+		for (String line : lore) {
+			loreComponents.add(Component.text(replaceColorCodes(line)));
+		}
+		return loreComponents;
+	}
+}

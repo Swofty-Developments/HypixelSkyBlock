@@ -96,9 +96,9 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
                 }
 
                 if (pickedUp == 0) {
-                    player.sendMessage(I18n.string("gui_stash.material.inventory_full", l));
+                    player.sendMessage(I18n.t("gui_stash.material.inventory_full"));
                 } else if (stash.getMaterialStashCount() == 0) {
-                    player.sendMessage(I18n.string("gui_stash.material.all_picked_up", l));
+                    player.sendMessage(I18n.t("gui_stash.material.all_picked_up"));
                 } else {
                     player.sendMessage(I18n.string("gui_stash.material.remaining", l, Map.of(
                             "count", String.valueOf(stash.getMaterialStashCount()),
@@ -113,7 +113,7 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int count = player.getStash().getMaterialStashCount();
                 int types = player.getStash().getMaterialTypeCount();
-                return TranslatableItemStackCreator.getStack(p, "gui_stash.material.fill_inventory", Material.EMERALD, 1,
+                return TranslatableItemStackCreator.getStack("gui_stash.material.fill_inventory", Material.EMERALD, 1,
                         "gui_stash.material.fill_inventory.lore", Map.of(
                                 "count", StringUtility.commaify(count),
                                 "types", String.valueOf(types)));
@@ -142,9 +142,9 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
                 }
 
                 if (inserted > 0) {
-                    player.sendMessage(I18n.string("gui_stash.material.transferred_to_sacks", l));
+                    player.sendMessage(I18n.t("gui_stash.material.transferred_to_sacks"));
                 } else {
-                    player.sendMessage(I18n.string("gui_stash.material.no_transfer", l));
+                    player.sendMessage(I18n.t("gui_stash.material.no_transfer"));
                 }
 
                 new GUIStashMaterial().open(player, query, 1);
@@ -152,7 +152,7 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return TranslatableItemStackCreator.getStack(p, "gui_stash.material.insert_into_sacks", Material.CHEST, 1,
+                return TranslatableItemStackCreator.getStack("gui_stash.material.insert_into_sacks", Material.CHEST, 1,
                         "gui_stash.material.insert_into_sacks.lore");
             }
         });
@@ -200,7 +200,7 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
 
                 // Check if player has inventory space
                 if (!player.hasEmptySlots(1)) {
-                    player.sendMessage(I18n.string("gui_stash.material.inventory_full", l));
+                    player.sendMessage(I18n.t("gui_stash.material.inventory_full"));
                     return;
                 }
 
@@ -213,7 +213,7 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
                     player.sendMessage(I18n.string("gui_stash.material.from_stash", l, Map.of("item_name", itemType.getDisplayName(), "amount", String.valueOf(removed))));
 
                     if (player.getStash().getMaterialStashCount() == 0) {
-                        player.sendMessage(I18n.string("gui_stash.material.all_picked_up", l));
+                        player.sendMessage(I18n.t("gui_stash.material.all_picked_up"));
                     } else {
                         player.sendMessage(I18n.string("gui_stash.material.remaining", l, Map.of(
                                 "count", String.valueOf(player.getStash().getMaterialStashCount()),

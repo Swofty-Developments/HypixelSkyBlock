@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUIAuctionDuration extends HypixelInventoryGUI {
     public GUIAuctionDuration() {
-        super(I18n.string("gui_auction.duration.title"), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_auction.duration.title"), InventoryType.CHEST_4_ROW);
     }
 
     @Override
@@ -46,15 +46,15 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
                 try {
                     val = Long.parseLong(query);
                 } catch (NumberFormatException ex) {
-                    player.sendMessage(I18n.string("gui_auction.duration.number_parse_error", loc));
+                    player.sendMessage(I18n.t("gui_auction.duration.number_parse_error"));
                     return null;
                 }
                 if (val <= 1) {
-                    player.sendMessage(I18n.string("gui_auction.duration.invalid_time", loc));
+                    player.sendMessage(I18n.t("gui_auction.duration.invalid_time"));
                     return null;
                 }
                 if (val >= 336 && !right.get()) {
-                    player.sendMessage(I18n.string("gui_auction.duration.max_exceeded", loc));
+                    player.sendMessage(I18n.t("gui_auction.duration.max_exceeded"));
                     return null;
                 }
 
@@ -73,7 +73,7 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_auction.duration.custom", Material.COMPASS, 1,
+                return TranslatableItemStackCreator.getStack("gui_auction.duration.custom", Material.COMPASS, 1,
                         "gui_auction.duration.custom.lore");
             }
         });

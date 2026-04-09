@@ -59,7 +59,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_bazaar.main.manage_orders_button",
+                return TranslatableItemStackCreator.getStack("gui_bazaar.main.manage_orders_button",
                         Material.BOOK, 1,
                         "gui_bazaar.main.manage_orders_button.lore");
             }
@@ -124,7 +124,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return TranslatableItemStackCreator.getStack(p, "gui_bazaar.main.loading", Material.GRAY_STAINED_GLASS_PANE, 1);
+                    return TranslatableItemStackCreator.getStack("gui_bazaar.main.loading", Material.GRAY_STAINED_GLASS_PANE, 1);
                 }
             });
         }
@@ -215,7 +215,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                                 @Override
                                 public ItemStack.Builder getItem(HypixelPlayer p) {
                                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                                    return TranslatableItemStackCreator.getStack(p, "gui_bazaar.main.error_loading", Material.BARRIER, 1,
+                                    return TranslatableItemStackCreator.getStack("gui_bazaar.main.error_loading", Material.BARRIER, 1,
                                             "gui_bazaar.main.error_loading.lore");
                                 }
                             });
@@ -288,7 +288,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
         SkyBlockPlayer player = (SkyBlockPlayer) p;
         player.getBazaarConnector().isOnline().thenAccept(online -> {
             if (!online) {
-                player.sendMessage(I18n.string("gui_bazaar.main.offline_message", player.getLocale()));
+                player.sendMessage(I18n.t("gui_bazaar.main.offline_message"));
                 player.closeInventory();
             } else {
                 player.getBazaarConnector().processAllPendingTransactions();

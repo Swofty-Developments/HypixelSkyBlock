@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.museum;
 
 import lombok.SneakyThrows;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -12,7 +13,6 @@ import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtoc
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -50,7 +50,7 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
     private List<SkyBlockItem> items;
 
     public GUIMuseumNonEmptyDisplay(MuseumDisplays display, int position) {
-        super(I18n.string("gui_museum.display.title"), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_museum.display.title"), InventoryType.CHEST_4_ROW);
 
         this.display = display;
         this.position = position;
@@ -69,7 +69,7 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
         items = data.getDisplayHandler().getItemsAtSlot(display, position);
 
         if (items.isEmpty()) {
-            player.sendMessage(I18n.string("gui_museum.display.no_items", player.getLocale()));
+            player.sendMessage(I18n.t("gui_museum.display.no_items"));
             player.closeInventory();
             return;
         }
@@ -78,11 +78,11 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
         if (items.size() == 1) {
             setTitle(items.getFirst().getAttributeHandler().getPotentialType().getDisplayName());
         } else {
-            setTitle(I18n.string("gui_museum.display.title_with_count", player.getLocale(), Map.of("count", String.valueOf(items.size()))));
+            setTitle(I18n.t("gui_museum.display.title_with_count", Component.text(String.valueOf(items.size()))));
         }
 
         if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_museum.display.item_tracker_offline", player.getLocale()));
+            player.sendMessage(I18n.t("gui_museum.display.item_tracker_offline"));
             player.closeInventory();
             return;
         }

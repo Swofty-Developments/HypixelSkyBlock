@@ -126,7 +126,7 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
         set(new GUIItem(50) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                return TranslatableItemStackCreator.getStack(player, "gui_rusty.submenu.janitor_info", Material.REDSTONE_TORCH, 1,
+                return TranslatableItemStackCreator.getStack("gui_rusty.submenu.janitor_info", Material.REDSTONE_TORCH, 1,
                         "gui_rusty.submenu.janitor_info.lore");
             }
         });
@@ -199,7 +199,7 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
                             "price", String.valueOf(price)
                     )));
                 } else {
-                    skyblockPlayer.sendMessage(I18n.string("gui_rusty.submenu.not_enough_coins", l));
+                    skyblockPlayer.sendMessage(I18n.t("gui_rusty.submenu.not_enough_coins"));
                 }
             }
 

@@ -35,14 +35,14 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
     );
 
     public GUIYourMuseum() {
-        super(I18n.string("gui_museum.main.title"), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_museum.main.title"), InventoryType.CHEST_6_ROW);
     }
 
     @SneakyThrows
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline().join()) {
-            e.player().sendMessage(I18n.string("gui_museum.main.item_tracker_offline", e.player().getLocale()));
+            e.player().sendMessage(I18n.t("gui_museum.main.item_tracker_offline"));
             e.player().closeInventory();
             return;
         }
@@ -62,7 +62,7 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_museum.main.rewards_button", Material.GOLD_BLOCK, 1,
+                return TranslatableItemStackCreator.getStack("gui_museum.main.rewards_button", Material.GOLD_BLOCK, 1,
                         "gui_museum.main.rewards_button.lore");
             }
         });
@@ -70,7 +70,7 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_museum.main.edit_npc_tags", Material.NAME_TAG, 1,
+                return TranslatableItemStackCreator.getStack("gui_museum.main.edit_npc_tags", Material.NAME_TAG, 1,
                         "gui_museum.main.edit_npc_tags.lore");
             }
         });

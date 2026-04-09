@@ -6,7 +6,6 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.DefaultState;
 import net.swofty.type.generic.gui.v2.StatelessView;
@@ -68,7 +67,7 @@ public class GUIMissionLog extends StatelessView {
         // Fairy Souls
         layout.slot(10, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
-            return TranslatableItemStackCreator.getStackHead(c.player(), "gui_sbmenu.questlog.fairy_souls",
+            return TranslatableItemStackCreator.getStackHead("gui_sbmenu.questlog.fairy_souls",
                     "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387", 1,
                     "gui_sbmenu.questlog.fairy_souls.lore", Map.of("found", String.valueOf(player.getFairySoulHandler().getTotalFoundFairySouls()), "total", String.valueOf(FairySoulDatabase.getAllSouls().size())));
         }, (_, c) -> {
@@ -77,13 +76,13 @@ public class GUIMissionLog extends StatelessView {
 
         // Toggle completed/ongoing
         if (showCompleted) {
-            layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.questlog.ongoing_quests", Material.BOOK, 1,
+            layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.questlog.ongoing_quests", Material.BOOK, 1,
                             "gui_sbmenu.questlog.ongoing_quests.lore"),
                     (click, c) -> c.replace(new GUIMissionLog(false)));
         } else {
             layout.slot(50, (s, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
-                return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.questlog.completed_quests", Material.BOOK, 1,
+                return TranslatableItemStackCreator.getStack("gui_sbmenu.questlog.completed_quests", Material.BOOK, 1,
                         "gui_sbmenu.questlog.completed_quests.lore", Map.of("count", String.valueOf(player.getMissionData().getCompletedMissions().size())));
             }, (_, c) -> c.replace(new GUIMissionLog(true)));
         }

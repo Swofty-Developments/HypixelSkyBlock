@@ -32,7 +32,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 	private final SkyBlockPlayer viewedPlayer;
 
 	public GUIViewPlayerProfile(SkyBlockPlayer viewedPlayer) {
-		super(I18n.string("gui_profile.title", Map.of("player_name", viewedPlayer.getUsername())), InventoryType.CHEST_6_ROW);
+		super(I18n.t("gui_profile.title", I18n.legacy(viewedPlayer.getUsername())), InventoryType.CHEST_6_ROW);
 		this.viewedPlayer = viewedPlayer;
 	}
 
@@ -129,7 +129,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage(I18n.string("gui_profile.feature_not_added", player.getLocale()));
+				player.sendMessage(I18n.t("gui_profile.feature_not_added"));
 			}
 
 			@Override
@@ -156,12 +156,12 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage(I18n.string("gui_profile.feature_not_added", player.getLocale()));
+				player.sendMessage(I18n.t("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				return TranslatableItemStackCreator.getStack(p, "gui_profile.visit_island", Material.FEATHER, 1,
+				return TranslatableItemStackCreator.getStack("gui_profile.visit_island", Material.FEATHER, 1,
 						"gui_profile.visit_island.lore");
 			}
 		});
@@ -169,12 +169,12 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage(I18n.string("gui_profile.feature_not_added", player.getLocale()));
+				player.sendMessage(I18n.t("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				return TranslatableItemStackCreator.getStack(p, "gui_profile.trade_request", Material.EMERALD, 1,
+				return TranslatableItemStackCreator.getStack("gui_profile.trade_request", Material.EMERALD, 1,
 						"gui_profile.trade_request.lore");
 			}
 		});
@@ -182,12 +182,12 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage(I18n.string("gui_profile.feature_not_added", player.getLocale()));
+				player.sendMessage(I18n.t("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				return TranslatableItemStackCreator.getStack(p, "gui_profile.invite_to_island", Material.POPPY, 1,
+				return TranslatableItemStackCreator.getStack("gui_profile.invite_to_island", Material.POPPY, 1,
 						"gui_profile.invite_to_island.lore");
 			}
 		});
@@ -195,12 +195,12 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage(I18n.string("gui_profile.feature_not_added", player.getLocale()));
+				player.sendMessage(I18n.t("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				return TranslatableItemStackCreator.getStack(p, "gui_profile.coop_request", Material.DIAMOND, 1,
+				return TranslatableItemStackCreator.getStack("gui_profile.coop_request", Material.DIAMOND, 1,
 						"gui_profile.coop_request.lore");
 			}
 		});
@@ -208,12 +208,12 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage(I18n.string("gui_profile.feature_not_added", player.getLocale()));
+				player.sendMessage(I18n.t("gui_profile.feature_not_added"));
 			}
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				return TranslatableItemStackCreator.getStack(p, "gui_profile.personal_vault", Material.ENDER_CHEST, 1,
+				return TranslatableItemStackCreator.getStack("gui_profile.personal_vault", Material.ENDER_CHEST, 1,
 						"gui_profile.personal_vault.lore");
 			}
 		});
@@ -221,7 +221,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
-				player.sendMessage(I18n.string("gui_profile.feature_not_added", player.getLocale()));
+				player.sendMessage(I18n.t("gui_profile.feature_not_added"));
 			}
 
 			@Override

@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.shop;
 
-import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.Material;
@@ -60,7 +59,7 @@ public final class ConfirmBuyView implements View<ConfirmBuyView.State> {
         );
 
         layout.slot(16,
-                (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_shop.confirm_buy.cancel_button", Material.RED_TERRACOTTA, 1),
+            (s, c) -> TranslatableItemStackCreator.getStack("gui_shop.confirm_buy.cancel_button", Material.RED_TERRACOTTA, 1),
                 (_, c) -> c.player().closeInventory()
         );
     }

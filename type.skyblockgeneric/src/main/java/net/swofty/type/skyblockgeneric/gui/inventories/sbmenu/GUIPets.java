@@ -10,7 +10,10 @@ import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.PaginatedView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -155,13 +158,13 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
         layout.slot(4, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             String selectedPet = player.getPetData().getEnabledPet() == null ? "§cNone" : player.getPetData().getEnabledPet().getDisplayName();
-            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.pets.info", Material.BONE, 1,
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.pets.info", Material.BONE, 1,
                     "gui_sbmenu.pets.info.lore", Map.of("selected_pet", selectedPet));
         });
 
         layout.slot(47, (s, c) -> {
             String status = s.convertToItem() ? "§aEnabled" : "§cDisabled";
-            ItemStack.Builder itemStack = TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.pets.convert_to_item", Material.DIAMOND, 1,
+            ItemStack.Builder itemStack = TranslatableItemStackCreator.getStack("gui_sbmenu.pets.convert_to_item", Material.DIAMOND, 1,
                     "gui_sbmenu.pets.convert_to_item.lore", Map.of("status", status));
             if (s.convertToItem())
                 ItemStackCreator.enchant(itemStack);
@@ -189,7 +192,7 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
             lore.add(I18n.string("gui_sbmenu.pets.sort.right_click", l));
             lore.add(I18n.string("gui_sbmenu.pets.sort.click", l));
 
-            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.pets.sort", Material.HOPPER, 1, lore);
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.pets.sort", Material.HOPPER, 1, lore);
         }, (click, c) -> {
             boolean isRightClick = click.click() instanceof Click.Right;
 

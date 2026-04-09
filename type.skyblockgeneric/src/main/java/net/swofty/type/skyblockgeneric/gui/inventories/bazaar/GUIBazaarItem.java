@@ -52,7 +52,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_bazaar.item.manage_orders_button", Material.BOOK, 1,
+                return TranslatableItemStackCreator.getStack("gui_bazaar.item.manage_orders_button", Material.BOOK, 1,
                         "gui_bazaar.item.manage_orders_button.lore");
             }
         });
@@ -67,7 +67,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStackHead(p, "gui_bazaar.item.go_back_bazaar", "c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7", 1,
+                return TranslatableItemStackCreator.getStackHead("gui_bazaar.item.go_back_bazaar", "c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7", 1,
                         "gui_bazaar.item.go_back_bazaar.lore");
             }
         });
@@ -97,13 +97,13 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (stats.bestAsk() <= 0) {
-                    p.sendMessage(I18n.string("gui_bazaar.item.buy_no_offers_message", p.getLocale()));
+                    p.sendMessage(I18n.t("gui_bazaar.item.buy_no_offers_message"));
                     return;
                 }
 
                 int maxSpace = player.maxItemFit(itemType);
                 if (maxSpace <= 0) {
-                    p.sendMessage(I18n.string("gui_bazaar.item.buy_inventory_full", p.getLocale()));
+                    p.sendMessage(I18n.t("gui_bazaar.item.buy_inventory_full"));
                     return;
                 }
 
@@ -161,7 +161,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 }
 
                 if (stats.bestBid() <= 0) {
-                    p.sendMessage(I18n.string("gui_bazaar.item.sell_no_orders_message", p.getLocale()));
+                    p.sendMessage(I18n.t("gui_bazaar.item.sell_no_orders_message"));
                     return;
                 }
 
@@ -285,7 +285,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                                 var items = player.takeItem(itemType, amount);
                                 Locale l = p.getLocale();
                                 if (items == null) {
-                                    p.sendMessage(I18n.string("gui_bazaar.item.sell_order_remove_fail", l));
+                                    p.sendMessage(I18n.t("gui_bazaar.item.sell_order_remove_fail"));
                                     new GUIBazaarItem(itemType).open(p);
                                     return;
                                 }
@@ -299,7 +299,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                                                 p.closeInventory();
                                             } else {
                                                 player.addAndUpdateItem(items);
-                                                p.sendMessage(I18n.string("gui_bazaar.item.sell_order_failed", l));
+                                                p.sendMessage(I18n.t("gui_bazaar.item.sell_order_failed"));
                                                 new GUIBazaarItem(itemType).open(p);
                                             }
                                         });

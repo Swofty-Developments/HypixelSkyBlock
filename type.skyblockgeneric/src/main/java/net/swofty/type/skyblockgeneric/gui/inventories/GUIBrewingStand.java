@@ -14,7 +14,6 @@ import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -50,7 +49,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
     private SkyBlockItem[] potionItems = new SkyBlockItem[3];
 
     public GUIBrewingStand(Instance instance, Point position, SkyBlockBlock block) {
-        super(I18n.string("gui_misc.brewing_stand.title"), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_misc.brewing_stand.title"), InventoryType.CHEST_6_ROW);
         this.instance = instance;
         this.blockPosition = position;
         this.block = block;

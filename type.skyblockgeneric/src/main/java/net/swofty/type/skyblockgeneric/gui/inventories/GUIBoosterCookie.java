@@ -7,7 +7,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -16,7 +15,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIBoosterCookie extends HypixelInventoryGUI {
     public GUIBoosterCookie() {
-        super(I18n.string("gui_misc.booster_cookie.title"), InventoryType.CHEST_3_ROW);
+        super(I18n.t("gui_misc.booster_cookie.title"), InventoryType.CHEST_3_ROW);
     }
 
     @Override
@@ -25,8 +24,7 @@ public class GUIBoosterCookie extends HypixelInventoryGUI {
         set(new GUIClickableItem(15) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_misc.booster_cookie.cancel_button", Material.RED_CONCRETE, 1,
+                return TranslatableItemStackCreator.getStack("gui_misc.booster_cookie.cancel_button", Material.RED_CONCRETE, 1,
                         "gui_misc.booster_cookie.cancel_button.lore");
             }
 
@@ -57,7 +55,7 @@ public class GUIBoosterCookie extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_misc.booster_cookie.consume_button", Material.COOKIE, 1,
+                return TranslatableItemStackCreator.getStack("gui_misc.booster_cookie.consume_button", Material.COOKIE, 1,
                         "gui_misc.booster_cookie.consume_button.lore");
             }
         });

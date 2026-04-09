@@ -11,12 +11,11 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
-import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -64,7 +63,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
         if (data.getItemInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
-            player.sendMessage(I18n.string("gui_museum.category.already_in_museum", player.getLocale(), Map.of("item_name", skyBlockItem.getDisplayName())));
+            player.sendMessage(I18n.t("gui_museum.category.already_in_museum", Map.of("item_name", skyBlockItem.getDisplayName())));
             return;
         }
 
@@ -76,7 +75,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
             );
 
             if (!trackedItemUUID.equals(previouslyInMuseumUUID)) {
-                player.sendMessage(I18n.string("gui_museum.category.can_only_readd", player.getLocale()));
+                player.sendMessage(I18n.t("gui_museum.category.can_only_read"));
                 return;
             }
         }
@@ -90,7 +89,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
             MuseumDisplays.updateDisplay(player);
 
             new GUIMuseumCategory(category).open(player);
-            player.sendMessage(I18n.string("gui_museum.category.donated", player.getLocale(), Map.of("item_name", skyBlockItem.getDisplayName())));
+            player.sendMessage(I18n.t("gui_museum.category.donated", Map.of("item_name", skyBlockItem.getDisplayName())));
         }
     }
 
@@ -180,8 +179,8 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
                     return;
                 }
 
-                player.sendMessage(I18n.string("gui_museum.category.retrieved_message", player.getLocale(), Map.of("item_name", item.getDisplayName())));
-                player.sendMessage(I18n.string("gui_museum.category.retrieved_return_message", player.getLocale()));
+                player.sendMessage(I18n.t("gui_museum.category.retrieved_message", Map.of("item_name", item.getDisplayName())));
+                player.sendMessage(I18n.t("gui_museum.category.retrieved_return_message"));
 
                 data.moveToRetrieved(skyBlockItem);
                 player.setMuseumData(data);

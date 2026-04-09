@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.bazaar.selections;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
@@ -74,7 +75,7 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
         addButton(11, Math.min(64, maxAmount), "Stack",
                 "Buy a stack!", Math.min(64, maxAmount), p);
         addButton(13, maxAmount, "All", "Fill my inventory!", maxAmount, p);
-        addCustom(15, p);
+        addCustom(15);
     }
 
     private void buildLimitUI(SkyBlockPlayer p) {
@@ -86,7 +87,7 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
         addLimitButton(9, small, "Buy a stack!",      "Amount: " + small + "×", p);
         addLimitButton(11, medium, "Buy a big stack!","Amount: " + medium + "×", p);
         addLimitButton(13, large, "Buy a thousand!",  "Amount: " + large + "×", p);
-        addCustom(15, p);
+        addCustom(15);
     }
 
     private void addButton(int slot, int qty, String title, String subtitle, int amount, SkyBlockPlayer p) {
@@ -104,7 +105,7 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                 Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
                 lore.add("§7" + subtitle);
-                lore.add(I18n.string("gui_bazaar.amount_selection.per_unit", l, Map.of("price", F.format(unitPrice))));
+                lore.add(I18n.string("gui_bazaar.amount_selection.per_unit", l, Component.text(F.format(unitPrice))));
                 lore.add(isBuy
                         ? I18n.string("gui_bazaar.amount_selection.total_cost", l, Map.of("amount", F.format(unitPrice * qty)))
                         : I18n.string("gui_bazaar.amount_selection.total_rev", l, Map.of("amount", F.format(unitPrice * qty))));
@@ -131,7 +132,6 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
                 lore.add(I18n.string("gui_bazaar.amount_selection.limit_subtitle", l));
@@ -148,7 +148,7 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
         });
     }
 
-    private void addCustom(int slot, SkyBlockPlayer p) {
+    private void addCustom(int slot) {
         set(new GUIQueryItem(slot) {
             @Override
             public HypixelInventoryGUI onQueryFinish(String q, HypixelPlayer pl) {
@@ -161,14 +161,13 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                     }
                     future.complete(v);
                 } catch (NumberFormatException ex) {
-                    pl.sendMessage(I18n.string("gui_bazaar.amount_selection.invalid_number", l));
+                    pl.sendMessage(I18n.t("gui_bazaar.amount_selection.invalid_number"));
                 }
                 return null;
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
                 lore.add(isInstant

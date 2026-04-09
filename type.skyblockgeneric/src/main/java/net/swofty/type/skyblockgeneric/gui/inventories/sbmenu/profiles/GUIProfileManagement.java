@@ -3,16 +3,20 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.profiles;
 import lombok.SneakyThrows;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
-import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -50,7 +54,7 @@ public class GUIProfileManagement extends StatelessView {
 
             if (profileIds.size() <= profileCount) {
                 // Empty profile slot
-                layout.slot(slot, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profiles.empty_slot", Material.OAK_BUTTON, 1,
+                layout.slot(slot, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.profiles.empty_slot", Material.OAK_BUTTON, 1,
                                 "gui_sbmenu.profiles.empty_slot.lore"),
                         (click, c) -> c.player().openView(new GUIProfileSelectMode()));
                 continue;
@@ -88,8 +92,8 @@ public class GUIProfileManagement extends StatelessView {
                     SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                     Locale l = p.getLocale();
                     String profileName = finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
-                    p.sendMessage(I18n.string("gui_sbmenu.profiles.msg.playing_on", l, java.util.Map.of("profile_name", profileName)));
-                    p.sendMessage(I18n.string("gui_sbmenu.profiles.msg.switch_first", l));
+                    p.sendMessage(I18n.t("gui_sbmenu.profiles.msg.playing_on", java.util.Map.of("profile_name", profileName)));
+                    p.sendMessage(I18n.t("gui_sbmenu.profiles.msg.switch_first"));
                 });
             } else {
                 layout.slot(slot, (s, c) -> {

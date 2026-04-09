@@ -27,7 +27,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class GUIReforge extends HypixelInventoryGUI {
@@ -46,7 +45,7 @@ public class GUIReforge extends HypixelInventoryGUI {
     }
 
     public GUIReforge() {
-        super(I18n.string("gui_reforge.title"), InventoryType.CHEST_5_ROW);
+        super(I18n.t("gui_reforge.title"), InventoryType.CHEST_5_ROW);
     }
 
     @Override
@@ -90,13 +89,13 @@ public class GUIReforge extends HypixelInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    player.sendMessage(I18n.string("gui_reforge.place_item_message", player.getLocale()));
+                    player.sendMessage(I18n.t("gui_reforge.place_item_message"));
                 }
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return TranslatableItemStackCreator.getStack(p, "gui_reforge.reforge_button_empty", Material.ANVIL, 1,
+                    return TranslatableItemStackCreator.getStack("gui_reforge.reforge_button_empty", Material.ANVIL, 1,
                             "gui_reforge.reforge_button_empty.lore");
                 }
             });
@@ -134,7 +133,7 @@ public class GUIReforge extends HypixelInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return TranslatableItemStackCreator.getStack(p, "gui_reforge.error_cannot_reforge", Material.BARRIER, 1,
+                    return TranslatableItemStackCreator.getStack("gui_reforge.error_cannot_reforge", Material.BARRIER, 1,
                             "gui_reforge.error_cannot_reforge.lore");
                 }
             });
@@ -151,7 +150,7 @@ public class GUIReforge extends HypixelInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return TranslatableItemStackCreator.getStack(p, "gui_reforge.error_no_reforges", Material.BARRIER, 1,
+                    return TranslatableItemStackCreator.getStack("gui_reforge.error_no_reforges", Material.BARRIER, 1,
                             "gui_reforge.error_no_reforges.lore");
                 }
             });
@@ -167,7 +166,7 @@ public class GUIReforge extends HypixelInventoryGUI {
                 int cost = COST_MAP.get(item.getAttributeHandler().getRarity());
 
                 if (player.getCoins() - cost < 0) {
-                    player.sendMessage(I18n.string("gui_reforge.not_enough_coins", player.getLocale()));
+                    player.sendMessage(I18n.t("gui_reforge.not_enough_coins"));
                     return;
                 }
 
@@ -177,7 +176,7 @@ public class GUIReforge extends HypixelInventoryGUI {
                 List<Reforge> availableReforges = ReforgeLoader.getReforgesForType(itemReforgeType);
 
                 if (availableReforges.isEmpty()) {
-                    player.sendMessage(I18n.string("gui_reforge.no_reforges_available", player.getLocale()));
+                    player.sendMessage(I18n.t("gui_reforge.no_reforges_available"));
                     return;
                 }
 
@@ -196,7 +195,7 @@ public class GUIReforge extends HypixelInventoryGUI {
 
                 String itemName = StringUtility.toNormalCase(item.getAttributeHandler().getTypeAsString());
 
-                player.sendMessage(I18n.string("gui_reforge.success_message", player.getLocale(), Map.of(
+                player.sendMessage(I18n.t("gui_reforge.success_message", Map.of(
                         "old_name", item.getAttributeHandler().getRarity().getColor() + oldPrefix,
                         "item_name", itemName,
                         "new_name", item.getAttributeHandler().getRarity().getColor() + " " + selectedReforge.getPrefix()
@@ -208,7 +207,7 @@ public class GUIReforge extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_reforge.reforge_button", Material.ANVIL, 1,
+                return TranslatableItemStackCreator.getStack("gui_reforge.reforge_button", Material.ANVIL, 1,
                         "gui_reforge.reforge_button.lore", Map.of(
                                 "cost", String.valueOf(COST_MAP.get(item.getAttributeHandler().getRarity()))
                         ));

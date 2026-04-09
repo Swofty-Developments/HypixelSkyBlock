@@ -43,7 +43,7 @@ public class ViewConfiguration<S> {
     }
 
     public static <S> ViewConfiguration<S> translatable(String titleKey, InventoryType type) {
-        return new ViewConfiguration<>((StringTitle<S>) (s, ctx) -> I18n.string(titleKey, ctx.player().getLocale()), type);
+        return new ViewConfiguration<>((Title<S>) (_, _) -> I18n.t(titleKey), type);
     }
 
     @FunctionalInterface

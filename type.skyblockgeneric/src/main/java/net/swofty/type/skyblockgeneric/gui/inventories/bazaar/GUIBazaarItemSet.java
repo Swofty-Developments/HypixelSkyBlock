@@ -65,7 +65,7 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_bazaar.item_set.manage_orders_button", Material.BOOK, 1,
+                return TranslatableItemStackCreator.getStack("gui_bazaar.item_set.manage_orders_button", Material.BOOK, 1,
                         "gui_bazaar.item_set.manage_orders_button.lore");
             }
         });
@@ -207,7 +207,7 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
         }
         player.getBazaarConnector().isOnline().thenAccept(online -> {
             if (!online) {
-                player.sendMessage(I18n.string("gui_bazaar.item_set.offline_message", player.getLocale()));
+                player.sendMessage(I18n.t("gui_bazaar.item_set.offline_message"));
                 player.closeInventory();
             }
         });
@@ -238,4 +238,3 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
         else return builder;
     }
 }
-

@@ -7,13 +7,11 @@ import net.kyori.adventure.translation.GlobalTranslator;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class I18n {
 
     private static final LegacyComponentSerializer LEGACY =
             LegacyComponentSerializer.legacySection();
-
     private static final String DIALOGUE_SEPARATOR = "\\|";
 
     private static HypixelTranslator translator;
@@ -38,9 +36,19 @@ public class I18n {
         return Component.translatable(key, args);
     }
 
+    public static Component legacy(String text) {
+        return LEGACY.deserialize(text);
+    }
+
     public static String string(String key, Locale locale) {
         requireKey(key);
         Component rendered = GlobalTranslator.render(Component.translatable(key), locale);
+        return LEGACY.serialize(rendered);
+    }
+
+    public static String string(String key, Locale locale, Component... args) {
+        requireKey(key);
+        Component rendered = GlobalTranslator.render(Component.translatable(key, args), locale);
         return LEGACY.serialize(rendered);
     }
 
@@ -48,20 +56,8 @@ public class I18n {
         return string(key, HypixelTranslator.defaultLocale);
     }
 
-    public static String string(String key, Map<String, String> placeholders) {
-        String result = string(key);
-        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-            result = result.replace("{" + entry.getKey() + "}", entry.getValue());
-        }
-        return result;
-    }
-
-    public static String string(String key, Locale locale, Map<String, String> placeholders) {
-        String result = string(key, locale);
-        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-            result = result.replace("{" + entry.getKey() + "}", entry.getValue());
-        }
-        return result;
+    public static String string(String key, Component... args) {
+        return string(key, HypixelTranslator.defaultLocale, args);
     }
 
     public static List<String> lore(String key) {
@@ -70,14 +66,6 @@ public class I18n {
 
     public static List<String> lore(String key, Locale locale) {
         return List.of(string(key, locale).split("\n"));
-    }
-
-    public static List<String> lore(String key, Map<String, String> placeholders) {
-        return List.of(string(key, placeholders).split("\n"));
-    }
-
-    public static List<String> lore(String key, Locale locale, Map<String, String> placeholders) {
-        return List.of(string(key, locale, placeholders).split("\n"));
     }
 
     public static String[] dialogueLines(String key) {
@@ -89,13 +77,4 @@ public class I18n {
         return resolved.split(DIALOGUE_SEPARATOR);
     }
 
-    public static String[] dialogueLines(String key, Map<String, String> placeholders) {
-        String resolved = string(key, placeholders);
-        return resolved.split(DIALOGUE_SEPARATOR);
-    }
-
-    public static String[] dialogueLines(String key, Locale locale, Map<String, String> placeholders) {
-        String resolved = string(key, locale, placeholders);
-        return resolved.split(DIALOGUE_SEPARATOR);
-    }
 }

@@ -11,12 +11,11 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
-import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -62,7 +61,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
         if (data.getItemInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
-            player.sendMessage(I18n.string("gui_museum.armor_category.already_in_museum", player.getLocale(), Map.of("item_name", skyBlockItem.getAttributeHandler().getPotentialType().getDisplayName())));
+            player.sendMessage(I18n.t("gui_museum.armor_category.already_in_museum", Map.of("item_name", skyBlockItem.getAttributeHandler().getPotentialType().getDisplayName())));
             return;
         }
 
@@ -79,7 +78,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
             UUID uuidOfNew = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
 
             if (!uuidOfAlreadyInMuseum.equals(uuidOfNew)) {
-                player.sendMessage(I18n.string("gui_museum.armor_category.can_only_readd", player.getLocale()));
+                player.sendMessage(I18n.t("gui_museum.armor_category.can_only_read"));
                 return;
             }
         }
@@ -130,7 +129,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
             }
 
             if (missing != 0) {
-                player.sendMessage(I18n.string("gui_museum.armor_category.missing_items", player.getLocale(), Map.of("set_name", armorSetRegistry.getDisplayName(), "count", String.valueOf(4 - missing))));
+                player.sendMessage(I18n.t("gui_museum.armor_category.missing_items", Map.of("set_name", armorSetRegistry.getDisplayName(), "count", String.valueOf(4 - missing))));
                 return;
             }
 
@@ -145,7 +144,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
             MuseumDisplays.updateDisplay(player);
 
             new GUIMuseumArmorCategory().open(player);
-            player.sendMessage(I18n.string("gui_museum.armor_category.donated", player.getLocale(), Map.of("set_name", armorSetRegistry.getDisplayName())));
+            player.sendMessage(I18n.t("gui_museum.armor_category.donated", Map.of("set_name", armorSetRegistry.getDisplayName())));
         }
     }
 
@@ -259,12 +258,12 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
                 }
 
                 if (!player.hasEmptySlots(4)) {
-                    player.sendMessage(I18n.string("gui_museum.armor_category.need_empty_slots", player.getLocale()));
+                    player.sendMessage(I18n.t("gui_museum.armor_category.need_empty_slots"));
                     return;
                 }
 
-                player.sendMessage(I18n.string("gui_museum.armor_category.retrieved_message", player.getLocale(), Map.of("set_name", armorSet.getDisplayName())));
-                player.sendMessage(I18n.string("gui_museum.armor_category.retrieved_return_message", player.getLocale()));
+                player.sendMessage(I18n.t("gui_museum.armor_category.retrieved_message", Map.of("set_name", armorSet.getDisplayName())));
+                player.sendMessage(I18n.t("gui_museum.armor_category.retrieved_return_message"));
 
                 List<SkyBlockItem> set = List.of(helmet, chestplate, leggings, boots);
                 set.forEach(item -> {

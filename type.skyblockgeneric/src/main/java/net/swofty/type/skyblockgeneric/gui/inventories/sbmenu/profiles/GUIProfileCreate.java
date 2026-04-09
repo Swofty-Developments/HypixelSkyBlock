@@ -11,7 +11,11 @@ import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.actions.data.ActionPlayerDataSave;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -36,7 +40,7 @@ public class GUIProfileCreate extends StatelessView {
 
         String profileName = SkyBlockPlayerProfiles.getRandomName();
 
-        layout.slot(11, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profiles.create.confirm", Material.GREEN_TERRACOTTA, 1,
+        layout.slot(11, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.profiles.create.confirm", Material.GREEN_TERRACOTTA, 1,
                         "gui_sbmenu.profiles.create.confirm.lore", Map.of("profile_name", profileName)),
                 (click, c) -> {
                     SkyBlockPlayer player = (SkyBlockPlayer) c.player();
