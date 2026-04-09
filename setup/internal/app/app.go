@@ -23,20 +23,90 @@ const (
 	bootstrapRepoDir  = "repo"
 )
 
+type cliOptions struct {
+	installDir string
+	action     string
+	kubeconfig string
+	staffUser  string
+	status     bool
+	watch      bool
+}
+
 func Run() error {
 	defaultInstallDir, err := profile.DefaultInstallDir()
 	if err != nil {
 		return err
 	}
 
-	var (
-		installDir = flag.String("dir", defaultInstallDir, "Install directory")
-		action     = flag.String("action", "", "Action to run")
-		kubeconfig = flag.String("kubeconfig", "", "Optional kubeconfig path override for Kubernetes actions")
-		staffUser  = flag.String("staff-user", "", "Username to promote when using compose-make-staff")
-		status     = flag.Bool("status", false, "Show current environment status")
-		watch      = flag.Bool("watch", false, "Watch current environment status")
-	)
+	opts := parseFlags(defaultInstallDir)
+
+	selectedDir := profile.ExpandHome(opts.installDir)
+	repoRoot, err := resolveRepoRoot(selectedDir)
+	if err != nil {
+		return err
+	}
+	p, err := profile.LoadOrDefault(repoRoot, selectedDir)
+	if err != nil {
+		return err
+	}
+
+	runAction, actionArg, updatedProfile, err := selectAction(p, opts)
+	if err != nil {
+		return err
+	}
+	p = updatedProfile
+	if runAction == "" {
+		return errors.New("no action selected")
+	}
+
+	if trimmed := profile.ExpandHome(opts.kubeconfig); trimmed != "" {
+		p.KubeconfigPath = trimmed
+	}
+	if runAction == tui.ActionComposeStaff && actionArg == "" {
+		return errors.New("staff username is required for compose-make-staff")
+	}
+
+	if err := persistProfile(&p, runAction); err != nil {
+		return err
+	}
+	if warnings, err := ops.Preflight(runAction, p); err != nil {
+		return err
+	} else {
+		for _, warning := range warnings {
+			fmt.Printf("note: %s\n", warning)
+		}
+	}
+
+	return executeAction(runAction, actionArg, p)
+}
+
+func showStatus(p profile.Profile) error {
+	if p.Runtime == profile.RuntimeK8s {
+		return ops.KubernetesStatus(p)
+	}
+	return ops.ComposeStatus(p)
+}
+
+func watchStatus(p profile.Profile) error {
+	for {
+		fmt.Print("\033[H\033[2J")
+		fmt.Printf("Watching %s status at %s\n\n", p.Runtime, time.Now().Format(time.RFC3339))
+		if err := showStatus(p); err != nil {
+			return err
+		}
+		time.Sleep(3 * time.Second)
+	}
+}
+
+func parseFlags(defaultInstallDir string) cliOptions {
+	var opts cliOptions
+
+	flag.StringVar(&opts.installDir, "dir", defaultInstallDir, "Install directory")
+	flag.StringVar(&opts.action, "action", "", "Action to run")
+	flag.StringVar(&opts.kubeconfig, "kubeconfig", "", "Optional kubeconfig path override for Kubernetes actions")
+	flag.StringVar(&opts.staffUser, "staff-user", "", "Username to promote when using compose-make-staff")
+	flag.BoolVar(&opts.status, "status", false, "Show current environment status")
+	flag.BoolVar(&opts.watch, "watch", false, "Watch current environment status")
 	flag.Usage = func() {
 		fmt.Println("Usage: hypixel-setup [--dir PATH] [--action ACTION] [--kubeconfig PATH] [--staff-user USERNAME] [--status] [--watch]")
 		fmt.Println()
@@ -49,54 +119,39 @@ func Run() error {
 	}
 	flag.Parse()
 
-	selectedDir := profile.ExpandHome(*installDir)
-	repoRoot, err := resolveRepoRoot(selectedDir)
-	if err != nil {
-		return err
-	}
-	p, err := profile.LoadOrDefault(repoRoot, selectedDir)
-	if err != nil {
-		return err
+	return opts
+}
+
+func selectAction(p profile.Profile, opts cliOptions) (string, string, profile.Profile, error) {
+	action := strings.TrimSpace(opts.action)
+	argument := strings.TrimSpace(opts.staffUser)
+
+	switch {
+	case opts.status:
+		action = tui.ActionStatus
+	case opts.watch:
+		action = tui.ActionWatch
 	}
 
-	runAction := *action
-	actionArg := strings.TrimSpace(*staffUser)
-	if *status {
-		runAction = tui.ActionStatus
-	}
-	if *watch {
-		runAction = tui.ActionWatch
-	}
-	if runAction == "" {
-		nextAction, nextArg, updated, err := tui.RunWizard(p)
-		if err != nil {
-			return err
-		}
-		p = updated
-		runAction = nextAction
-		actionArg = nextArg
-	}
-	if trimmed := profile.ExpandHome(*kubeconfig); trimmed != "" {
-		p.KubeconfigPath = trimmed
-	}
-	if runAction == tui.ActionComposeStaff && actionArg == "" {
-		return errors.New("staff username is required for compose-make-staff")
+	if action != "" {
+		return action, argument, p, nil
 	}
 
+	nextAction, nextArg, updated, err := tui.RunWizard(p)
+	if err != nil {
+		return "", "", p, err
+	}
+	return nextAction, nextArg, updated, nil
+}
+
+func persistProfile(p *profile.Profile, action string) error {
 	p.Normalize()
-	p.Touch(runAction)
-	if err := profile.Save(p); err != nil {
-		return err
-	}
-	if warnings, err := ops.Preflight(runAction, p); err != nil {
-		return err
-	} else {
-		for _, warning := range warnings {
-			fmt.Printf("note: %s\n", warning)
-		}
-	}
+	p.Touch(action)
+	return profile.Save(*p)
+}
 
-	switch runAction {
+func executeAction(action, argument string, p profile.Profile) error {
+	switch action {
 	case tui.ActionSave:
 		fmt.Printf("Profile saved to %s\n", filepath.Join(p.InstallDir, profile.StateFileName))
 		return nil
@@ -108,7 +163,7 @@ func Run() error {
 		}
 		return ops.ApplyCompose(p)
 	case tui.ActionComposeStaff:
-		return ops.PromoteComposeUserToStaff(p, actionArg)
+		return ops.PromoteComposeUserToStaff(p, argument)
 	case tui.ActionK8sRender:
 		return render.GenerateKubernetesAssets(p)
 	case tui.ActionK8sBuild:
@@ -131,25 +186,7 @@ func Run() error {
 	case tui.ActionWatch:
 		return watchStatus(p)
 	default:
-		return fmt.Errorf("unknown action %q", runAction)
-	}
-}
-
-func showStatus(p profile.Profile) error {
-	if p.Runtime == profile.RuntimeK8s {
-		return ops.KubernetesStatus(p)
-	}
-	return ops.ComposeStatus(p)
-}
-
-func watchStatus(p profile.Profile) error {
-	for {
-		fmt.Print("\033[H\033[2J")
-		fmt.Printf("Watching %s status at %s\n\n", p.Runtime, time.Now().Format(time.RFC3339))
-		if err := showStatus(p); err != nil {
-			return err
-		}
-		time.Sleep(3 * time.Second)
+		return fmt.Errorf("unknown action %q", action)
 	}
 }
 
