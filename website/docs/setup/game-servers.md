@@ -17,10 +17,6 @@ gameserver/
 ├── configuration/
 │   ├── config.yml
 │   ├── skyblock/
-│   │   ├── islands/
-│   │   │   ├── hypixel_skyblock_hub/
-│   │   │   ├── hypixel_skyblock_island_template/
-│   │   │   └── ... (other islands)
 │   │   ├── collections/
 │   │   ├── items/
 │   │   ├── levels/
@@ -30,9 +26,10 @@ gameserver/
 │   │   └── songs/            # Optional
 │   ├── bedwars/              # BedWars maps (.polar)
 │   ├── murdermystery/        # Murder Mystery maps (.polar)
-│   ├── hypixel_prototype_lobby/
-│   ├── hypixel_bedwars_lobby/
-│   └── hypixel_murder_mystery_lobby/
+│   ├── world/
+│   │   ├── hypixel_bedwars_lobby.polar
+│   │   ├── hypixel_murder_mystery_lobby.polar
+│   │   └── ... (other worlds)
 ```
 
 ## Setup Steps
@@ -40,7 +37,7 @@ gameserver/
 ### 1. Create Directory Structure
 
 ```bash
-mkdir -p gameserver/configuration/worldbac
+mkdir -p gameserver/configuration/world
 ```
 
 ### 2. Configure config.yml
