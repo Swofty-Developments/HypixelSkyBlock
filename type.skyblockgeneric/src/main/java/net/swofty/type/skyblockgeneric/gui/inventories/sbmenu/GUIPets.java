@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
@@ -27,7 +28,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
     private static final int[] PAGINATED_SLOTS = {
@@ -40,10 +40,7 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
     @Override
     public ViewConfiguration<PetsState> configuration() {
         return ViewConfiguration.withString(
-                (state, ctx) -> I18n.string("gui_sbmenu.pets.title", ctx.player().getLocale(), Map.of(
-                        "page", String.valueOf(state.page() + 1),
-                        "max_page", String.valueOf(Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length)))
-                )),
+            (state, ctx) -> I18n.string("gui_sbmenu.pets.title", ctx.player().getLocale(), Component.text(String.valueOf(state.page() + 1)), Component.text(String.valueOf(Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length))))),
                 InventoryType.CHEST_6_ROW
         );
     }
@@ -127,7 +124,7 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
             player.getPetData().deselectCurrent();
             player.getPetData().updatePetEntityImpl(player);
             ctx.session(PetsState.class).update(s -> (PetsState) s.withItems(getPetsFromPlayer(player)));
-            player.sendMessage(I18n.string("gui_sbmenu.pets.msg.deselected", l, Map.of("pet_name", item.getDisplayName())));
+            player.sendMessage(I18n.string("gui_sbmenu.pets.msg.deselected", l, Component.text(item.getDisplayName())));
             return;
         }
 
@@ -141,7 +138,7 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
 
         player.getPetData().setEnabled(item.getAttributeHandler().getPotentialType(), true);
         player.getPetData().updatePetEntityImpl(player);
-        player.sendMessage(I18n.string("gui_sbmenu.pets.msg.selected", l, Map.of("pet_name", item.getDisplayName())));
+        player.sendMessage(I18n.string("gui_sbmenu.pets.msg.selected", l, Component.text(item.getDisplayName())));
         ctx.session(PetsState.class).update(s -> (PetsState) s.withItems(getPetsFromPlayer(player)));
     }
 
@@ -159,13 +156,13 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             String selectedPet = player.getPetData().getEnabledPet() == null ? "§cNone" : player.getPetData().getEnabledPet().getDisplayName();
             return TranslatableItemStackCreator.getStack("gui_sbmenu.pets.info", Material.BONE, 1,
-                    "gui_sbmenu.pets.info.lore", Map.of("selected_pet", selectedPet));
+                "gui_sbmenu.pets.info.lore", Component.text(selectedPet));
         });
 
         layout.slot(47, (s, c) -> {
             String status = s.convertToItem() ? "§aEnabled" : "§cDisabled";
             ItemStack.Builder itemStack = TranslatableItemStackCreator.getStack("gui_sbmenu.pets.convert_to_item", Material.DIAMOND, 1,
-                    "gui_sbmenu.pets.convert_to_item.lore", Map.of("status", status));
+                "gui_sbmenu.pets.convert_to_item.lore", Component.text(status));
             if (s.convertToItem())
                 ItemStackCreator.enchant(itemStack);
             return itemStack;
@@ -173,7 +170,7 @@ public class GUIPets extends PaginatedView<SkyBlockItem, GUIPets.PetsState> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             Locale l = player.getLocale();
             String status = !click.state().convertToItem() ? "§aENABLED" : "§cDISABLED";
-            player.sendMessage(I18n.string("gui_sbmenu.pets.msg.conversion_toggle", l, Map.of("status", status)));
+            player.sendMessage(I18n.string("gui_sbmenu.pets.msg.conversion_toggle", l, Component.text(status)));
             c.session(PetsState.class).update(s -> s.withConvertToItem(!s.convertToItem()));
         });
 

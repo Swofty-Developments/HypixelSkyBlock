@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.Material;
@@ -72,7 +73,7 @@ public class GUISkyBlockMenu extends StatelessView {
             return TranslatableItemStackCreator.getStackHead("gui_sbmenu.main.your_profile",
                     player.getPlayerSkin(), 1,
                 I18n.lore("gui_sbmenu.main.your_profile.lore", l,
-                    Map.of("stats_display", statsDisplay.toString()))
+                    Component.text(statsDisplay.toString()))
             );
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -190,7 +191,7 @@ public class GUISkyBlockMenu extends StatelessView {
         boolean multipleEvents = currentEvents.size() > 1;
 
         String date = StringUtility.ntify(SkyBlockCalendar.getDay()) + " " + SkyBlockCalendar.getMonthName() + " " + SkyBlockCalendar.getYear();
-        List<String> lore = new ArrayList<>(I18n.lore("gui_sbmenu.main.calendar.lore_header", l, Map.of("date", date)));
+        List<String> lore = new ArrayList<>(I18n.lore("gui_sbmenu.main.calendar.lore_header", l, Component.text(date)));
         lore.add("");
 
         if (multipleEvents) {
@@ -200,9 +201,9 @@ public class GUISkyBlockMenu extends StatelessView {
             }
         } else if (currentEvents.size() == 1) {
             CalendarEvent currentEvent = currentEvents.getFirst();
-            lore.add(I18n.string("gui_sbmenu.main.calendar.current_event", l, Map.of("event_name", currentEvent.getDisplayName(SkyBlockCalendar.getYear()))));
+            lore.add(I18n.string("gui_sbmenu.main.calendar.current_event", l, Component.text(currentEvent.getDisplayName(SkyBlockCalendar.getYear()))));
             long ticksRemaining = getTicksRemaining(currentEvent);
-            lore.add(I18n.string("gui_sbmenu.main.calendar.event_ends_in", l, Map.of("time_left", StringUtility.formatTimeLeft(ticksRemaining * 50L))));
+            lore.add(I18n.string("gui_sbmenu.main.calendar.event_ends_in", l, Component.text(StringUtility.formatTimeLeft(ticksRemaining * 50L))));
         } else {
             lore.add(I18n.string("gui_sbmenu.main.calendar.no_current_events", l));
         }
@@ -221,8 +222,8 @@ public class GUISkyBlockMenu extends StatelessView {
             SkyBlockCalendar.EventInfo info = entry.getKey();
             CalendarEvent event = entry.getValue();
 
-            lore.add(I18n.string("gui_sbmenu.main.calendar.next_event", l, Map.of("event_name", event.getDisplayName(info.year()))));
-            lore.add(I18n.string("gui_sbmenu.main.calendar.next_event_starting", l, Map.of("time_left", StringUtility.formatTimeLeft(info.timeUntilBegin() * 50L))));
+            lore.add(I18n.string("gui_sbmenu.main.calendar.next_event", l, Component.text(event.getDisplayName(info.year()))));
+            lore.add(I18n.string("gui_sbmenu.main.calendar.next_event_starting", l, Component.text(StringUtility.formatTimeLeft(info.timeUntilBegin() * 50L))));
         } else {
             lore.add(I18n.string("gui_sbmenu.main.calendar.no_upcoming_events", l));
         }

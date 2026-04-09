@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.bazaar;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -255,17 +256,17 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             lore.add(I18n.string("gui_bazaar.orders.completed_label", l));
             lore.add(I18n.string("gui_bazaar.orders.completed_ready", l));
             lore.add(" ");
-            lore.add(I18n.string("gui_bazaar.orders.completed_amount", l, Map.of("amount", String.valueOf((int)totalQuantity))));
-            lore.add(I18n.string("gui_bazaar.orders.completed_value", l, Map.of("amount", FORMATTER.format(Math.abs(totalValue)))));
+            lore.add(I18n.string("gui_bazaar.orders.completed_amount", l, Component.text(String.valueOf((int) totalQuantity))));
+            lore.add(I18n.string("gui_bazaar.orders.completed_value", l, Component.text(FORMATTER.format(Math.abs(totalValue)))));
             lore.add(" ");
 
             lore.add(I18n.string("gui_bazaar.orders.completed_receive", l));
             if (isSell) {
-                lore.add("  " + I18n.string("gui_bazaar.orders.completed_receive_coins", l, Map.of("amount", FORMATTER.format(Math.abs(totalValue)))));
+                lore.add("  " + I18n.string("gui_bazaar.orders.completed_receive_coins", l, Component.text(FORMATTER.format(Math.abs(totalValue)))));
             } else {
-                lore.add("  " + I18n.string("gui_bazaar.orders.completed_receive_items", l, Map.of("amount", String.valueOf((int)totalQuantity), "item_name", itemType.getDisplayName())));
+                lore.add("  " + I18n.string("gui_bazaar.orders.completed_receive_items", l, Component.text(String.valueOf((int) totalQuantity)), Component.text(itemType.getDisplayName())));
                 if (totalValue > 0) {
-                    lore.add("  " + I18n.string("gui_bazaar.orders.completed_receive_refund", l, Map.of("amount", FORMATTER.format(totalRefund))));
+                    lore.add("  " + I18n.string("gui_bazaar.orders.completed_receive_refund", l, Component.text(FORMATTER.format(totalRefund))));
                 }
             }
 
@@ -285,11 +286,11 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
             boolean isSell = activeOrder.side() == BazaarConnector.OrderSide.SELL;
             ItemType itemType = activeOrder.getItemType();
 
-            lore.add(I18n.string("gui_bazaar.orders.active_worth", l, Map.of("amount", FORMATTER.format(activeOrder.getTotalValue()))));
+            lore.add(I18n.string("gui_bazaar.orders.active_worth", l, Component.text(FORMATTER.format(activeOrder.getTotalValue()))));
             lore.add(" ");
-            lore.add(I18n.string("gui_bazaar.orders.active_order_amount", l, Map.of("amount", String.valueOf((int)activeOrder.amount()))));
+            lore.add(I18n.string("gui_bazaar.orders.active_order_amount", l, Component.text(String.valueOf((int) activeOrder.amount()))));
             lore.add(" ");
-            lore.add(I18n.string("gui_bazaar.orders.active_price_per_unit", l, Map.of("price", FORMATTER.format(activeOrder.price()))));
+            lore.add(I18n.string("gui_bazaar.orders.active_price_per_unit", l, Component.text(FORMATTER.format(activeOrder.price()))));
             lore.add(" ");
             lore.add(I18n.string("gui_bazaar.orders.active_click", l));
 

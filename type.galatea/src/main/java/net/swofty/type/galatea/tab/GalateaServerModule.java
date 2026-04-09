@@ -1,5 +1,6 @@
 package net.swofty.type.galatea.tab;
 
+import net.kyori.adventure.text.Component;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.tab.TablistModule;
@@ -9,7 +10,6 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GalateaServerModule extends TablistModule {
     @Override
@@ -20,7 +20,7 @@ public class GalateaServerModule extends TablistModule {
         ));
 
         entries.add(new TablistEntry(I18n.string("tablist.server_info.area.galatea", l), TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(I18n.string("tablist.server_info.server_label", l, Map.of("server_name", HypixelConst.getServerName())), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.string("tablist.server_info.server_label", l, Component.text(HypixelConst.getServerName())), TablistSkinRegistry.GRAY));
 
         fillRestWithGray(entries);
 

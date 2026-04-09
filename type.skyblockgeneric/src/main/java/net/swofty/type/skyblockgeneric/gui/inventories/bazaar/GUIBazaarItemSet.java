@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.bazaar;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -48,7 +49,7 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
     private final BazaarItemSet itemSet;
 
     public GUIBazaarItemSet(BazaarCategories category, BazaarItemSet itemSet) {
-        super(I18n.string("gui_bazaar.item_set.title", Map.of("category", StringUtility.toNormalCase(category.name()), "set_name", itemSet.displayName)), InventoryType.CHEST_4_ROW);
+        super(I18n.string("gui_bazaar.item_set.title", Component.text(StringUtility.toNormalCase(category.name())), Component.text(itemSet.displayName)), InventoryType.CHEST_4_ROW);
 
         this.itemSet = itemSet;
 
@@ -93,12 +94,12 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                                 Locale l = p.getLocale();
                                 List<String> lore = new ArrayList<>();
-                                lore.add(I18n.string("gui_bazaar.item_set.commodity_label", l, Map.of("rarity", StringUtility.toNormalCase(itemType.rarity.name()))));
+                                lore.add(I18n.string("gui_bazaar.item_set.commodity_label", l, Component.text(StringUtility.toNormalCase(itemType.rarity.name()))));
                                 lore.add(" ");
 
                                 if (stats.bestAsk() > 0) {
-                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price", l, Map.of("price", new DecimalFormat("#,###").format(stats.bestAsk()))));
-                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price_best", l, Map.of("price", StringUtility.shortenNumber(stats.bestAsk()))));
+                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price", l, Component.text(new DecimalFormat("#,###").format(stats.bestAsk()))));
+                                    lore.add(I18n.string("gui_bazaar.item_set.buy_price_best", l, Component.text(StringUtility.shortenNumber(stats.bestAsk()))));
                                 } else {
                                     lore.add(I18n.string("gui_bazaar.item_set.buy_price_none", l));
                                     lore.add(I18n.string("gui_bazaar.item_set.buy_price_none_desc", l));
@@ -107,8 +108,8 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                                 lore.add(" ");
 
                                 if (stats.bestBid() > 0) {
-                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price", l, Map.of("price", new DecimalFormat("#,###").format(stats.bestBid()))));
-                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price_best", l, Map.of("price", StringUtility.shortenNumber(stats.bestBid()))));
+                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price", l, Component.text(new DecimalFormat("#,###").format(stats.bestBid()))));
+                                    lore.add(I18n.string("gui_bazaar.item_set.sell_price_best", l, Component.text(StringUtility.shortenNumber(stats.bestBid()))));
                                 } else {
                                     lore.add(I18n.string("gui_bazaar.item_set.sell_price_none", l));
                                     lore.add(I18n.string("gui_bazaar.item_set.sell_price_none_desc", l));
@@ -137,7 +138,7 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                                 Locale l = p.getLocale();
                                 List<String> lore = new ArrayList<>();
-                                lore.add(I18n.string("gui_bazaar.item_set.commodity_label", l, Map.of("rarity", StringUtility.toNormalCase(itemType.rarity.name()))));
+                                lore.add(I18n.string("gui_bazaar.item_set.commodity_label", l, Component.text(StringUtility.toNormalCase(itemType.rarity.name()))));
                                 lore.add(" ");
                                 lore.add(I18n.string("gui_bazaar.item_set.error_loading", l));
                                 lore.add(I18n.string("gui_bazaar.item_set.error_try_again", l));

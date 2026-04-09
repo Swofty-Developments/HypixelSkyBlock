@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.rewards;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
@@ -50,7 +51,7 @@ public class GUILevelRewards extends StatelessView {
                 lore.add(I18n.string("gui_sbmenu.levels.rewards.no_more", l));
             } else {
                 nextAward.getValue().forEach(award -> lore.add("§7" + award.getDisplay()));
-                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", l, Map.of("level", String.valueOf(nextAward.getKey()))));
+                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", l, Component.text(String.valueOf(nextAward.getKey()))));
             }
 
             lore.add(" ");
@@ -77,7 +78,7 @@ public class GUILevelRewards extends StatelessView {
                 lore.add(I18n.string("gui_sbmenu.levels.rewards.no_more", l));
             } else {
                 lore.add(nextPrefix.getValue() + nextPrefix.getKey().getPrefixDisplay());
-                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", l, Map.of("level", String.valueOf(nextPrefix.getKey().asInt()))));
+                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", l, Component.text(String.valueOf(nextPrefix.getKey().asInt()))));
             }
             lore.add(" ");
             lore.addAll(getAsDisplay(
@@ -111,7 +112,7 @@ public class GUILevelRewards extends StatelessView {
                 lore.add(I18n.string("gui_sbmenu.levels.rewards.no_more", l));
             } else {
                 lore.add("§f" + nextEmblem.displayName() + " " + nextEmblem.emblem());
-                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", l, Map.of("level", String.valueOf(((LevelCause) nextEmblem.cause()).getLevel()))));
+                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", l, Component.text(String.valueOf(((LevelCause) nextEmblem.cause()).getLevel()))));
             }
 
             lore.add(" ");
@@ -155,7 +156,7 @@ public class GUILevelRewards extends StatelessView {
         List<String> toReturn = new ArrayList<>();
 
         String unlockedPercentage = String.format("%.2f", (unlocked / (double) total) * 100);
-        toReturn.add(I18n.string("gui_sbmenu.levels.rewards.unlocked", Map.of("percent", unlockedPercentage)));
+        toReturn.add(I18n.string("gui_sbmenu.levels.rewards.unlocked", Component.text(unlockedPercentage)));
 
         String baseLoadingBar = "─────────────────";
         int maxBarLength = baseLoadingBar.length();

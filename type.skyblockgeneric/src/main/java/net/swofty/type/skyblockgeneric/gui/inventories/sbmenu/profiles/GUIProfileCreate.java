@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.profiles;
 
 import lombok.SneakyThrows;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
@@ -23,7 +24,6 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUID;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.bson.Document;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class GUIProfileCreate extends StatelessView {
@@ -41,7 +41,7 @@ public class GUIProfileCreate extends StatelessView {
         String profileName = SkyBlockPlayerProfiles.getRandomName();
 
         layout.slot(11, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.profiles.create.confirm", Material.GREEN_TERRACOTTA, 1,
-                        "gui_sbmenu.profiles.create.confirm.lore", Map.of("profile_name", profileName)),
+                "gui_sbmenu.profiles.create.confirm.lore", Component.text(profileName)),
                 (click, c) -> {
                     SkyBlockPlayer player = (SkyBlockPlayer) c.player();
                     SkyBlockPlayerProfiles profiles = player.getProfiles();

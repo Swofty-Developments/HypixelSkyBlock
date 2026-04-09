@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -55,7 +56,7 @@ public class GUIQuiver implements StatefulView<GUIQuiver.QuiverState> {
                     int slotIndex = i + rawAmountOfSlots;
                     if (slotIndex < 36) {
                         layout.slot(slotIndex, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.bags.quiver.locked_slot", Material.RED_STAINED_GLASS_PANE, 1,
-                                "gui_sbmenu.bags.quiver.locked_slot.lore", Map.of("upgrade_name", entry.getKey().getDisplay())));
+                            "gui_sbmenu.bags.quiver.locked_slot.lore", Component.text(entry.getKey().getDisplay())));
                     }
                 }
                 rawAmountOfSlots += entry.getValue();

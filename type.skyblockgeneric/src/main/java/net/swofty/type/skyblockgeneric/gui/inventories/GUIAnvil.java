@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -22,7 +23,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIAnvil extends HypixelInventoryGUI {
 
@@ -354,7 +354,7 @@ public class GUIAnvil extends HypixelInventoryGUI {
         if (levelCost > 0) {
             lore.add("");
             lore.add(I18n.string("gui_anvil.cost_label", l));
-            lore.add(I18n.string("gui_anvil.cost_exp_levels", l, Map.of("cost", String.valueOf(levelCost))));
+            lore.add(I18n.string("gui_anvil.cost_exp_levels", l, Component.text(String.valueOf(levelCost))));
         }
 
         lore.add("");

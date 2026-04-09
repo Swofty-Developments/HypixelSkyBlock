@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.stash;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
@@ -84,7 +85,7 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
                             SkyBlockItem newItem = new SkyBlockItem(type);
                             newItem.setAmount(removed);
                             player.addAndUpdateItem(newItem);
-                            player.sendMessage(I18n.string("gui_stash.material.from_stash", l, Map.of("item_name", type.getDisplayName(), "amount", String.valueOf(removed))));
+                            player.sendMessage(I18n.string("gui_stash.material.from_stash", l, Component.text(type.getDisplayName()), Component.text(String.valueOf(removed))));
                             pickedUp += removed;
                             amount -= removed;
                         } else {
@@ -100,9 +101,7 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
                 } else if (stash.getMaterialStashCount() == 0) {
                     player.sendMessage(I18n.t("gui_stash.material.all_picked_up"));
                 } else {
-                    player.sendMessage(I18n.string("gui_stash.material.remaining", l, Map.of(
-                            "count", String.valueOf(stash.getMaterialStashCount()),
-                            "types", String.valueOf(stash.getMaterialTypeCount()))));
+                    player.sendMessage(I18n.string("gui_stash.material.remaining", l, Component.text(String.valueOf(stash.getMaterialStashCount())), Component.text(String.valueOf(stash.getMaterialTypeCount()))));
                 }
 
                 player.closeInventory();
@@ -173,7 +172,7 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
         if (maxPage <= 1) {
             return I18n.string("gui_stash.material.title", l);
         }
-        return I18n.string("gui_stash.material.title_paged", l, Map.of("page", String.valueOf(page), "max_page", String.valueOf(maxPage)));
+        return I18n.string("gui_stash.material.title_paged", l, Component.text(String.valueOf(page)), Component.text(String.valueOf(maxPage)));
     }
 
     @Override
@@ -210,14 +209,12 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
                     SkyBlockItem newItem = new SkyBlockItem(itemType);
                     newItem.setAmount(removed);
                     player.addAndUpdateItem(newItem);
-                    player.sendMessage(I18n.string("gui_stash.material.from_stash", l, Map.of("item_name", itemType.getDisplayName(), "amount", String.valueOf(removed))));
+                    player.sendMessage(I18n.string("gui_stash.material.from_stash", l, Component.text(itemType.getDisplayName()), Component.text(String.valueOf(removed))));
 
                     if (player.getStash().getMaterialStashCount() == 0) {
                         player.sendMessage(I18n.t("gui_stash.material.all_picked_up"));
                     } else {
-                        player.sendMessage(I18n.string("gui_stash.material.remaining", l, Map.of(
-                                "count", String.valueOf(player.getStash().getMaterialStashCount()),
-                                "types", String.valueOf(player.getStash().getMaterialTypeCount()))));
+                        player.sendMessage(I18n.string("gui_stash.material.remaining", l, Component.text(String.valueOf(player.getStash().getMaterialStashCount())), Component.text(String.valueOf(player.getStash().getMaterialTypeCount()))));
                     }
                 }
 
@@ -236,7 +233,7 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
                 ItemStack.Builder stack = new NonPlayerItemUpdater(item.getItemStack()).getUpdatedItem();
                 ArrayList<String> lore = new ArrayList<>(item.getLore());
                 lore.add("");
-                lore.add(I18n.string("gui_stash.material.amount_label", l, Map.of("amount", StringUtility.commaify(currentAmount))));
+                lore.add(I18n.string("gui_stash.material.amount_label", l, Component.text(StringUtility.commaify(currentAmount))));
                 lore.add("");
                 lore.add(I18n.string("gui_stash.material.click_to_pickup", l));
                 return ItemStackCreator.updateLore(stack, lore);

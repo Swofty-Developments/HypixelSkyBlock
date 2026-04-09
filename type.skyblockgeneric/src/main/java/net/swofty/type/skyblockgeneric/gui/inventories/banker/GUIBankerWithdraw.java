@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.banker;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -22,7 +23,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIBankerWithdraw extends HypixelInventoryGUI {
 
@@ -45,12 +45,8 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                         List.of(
                                 I18n.string("gui_banker.withdraw.everything_subtitle", l),
                                 " ",
-                                I18n.string("gui_banker.withdraw.current_balance", l, Map.of(
-                                        "balance", StringUtility.decimalify(bankBalance, 1)
-                                )),
-                                I18n.string("gui_banker.withdraw.amount_to_withdraw", l, Map.of(
-                                        "amount", StringUtility.decimalify(bankBalance, 1)
-                                )),
+                            I18n.string("gui_banker.withdraw.current_balance", l, Component.text(StringUtility.decimalify(bankBalance, 1))),
+                            I18n.string("gui_banker.withdraw.amount_to_withdraw", l, Component.text(StringUtility.decimalify(bankBalance, 1))),
                                 " ",
                                 I18n.string("gui_banker.withdraw.click", l)
                         ));
@@ -72,12 +68,8 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                         List.of(
                                 I18n.string("gui_banker.withdraw.everything_subtitle", l),
                                 " ",
-                                I18n.string("gui_banker.withdraw.current_balance", l, Map.of(
-                                        "balance", StringUtility.decimalify(bankBalance, 1)
-                                )),
-                                I18n.string("gui_banker.withdraw.amount_to_withdraw", l, Map.of(
-                                        "amount", StringUtility.decimalify(bankBalance / 2, 1)
-                                )),
+                            I18n.string("gui_banker.withdraw.current_balance", l, Component.text(StringUtility.decimalify(bankBalance, 1))),
+                            I18n.string("gui_banker.withdraw.amount_to_withdraw", l, Component.text(StringUtility.decimalify(bankBalance / 2, 1))),
                                 " ",
                                 I18n.string("gui_banker.withdraw.click", l)
                         ));
@@ -106,12 +98,8 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                         List.of(
                                 I18n.string("gui_banker.withdraw.everything_subtitle", l),
                                 " ",
-                                I18n.string("gui_banker.withdraw.current_balance", l, Map.of(
-                                        "balance", StringUtility.decimalify(bankBalance, 1)
-                                )),
-                                I18n.string("gui_banker.withdraw.amount_to_withdraw", l, Map.of(
-                                        "amount", StringUtility.decimalify(bankBalance / 5, 1)
-                                )),
+                            I18n.string("gui_banker.withdraw.current_balance", l, Component.text(StringUtility.decimalify(bankBalance, 1))),
+                            I18n.string("gui_banker.withdraw.amount_to_withdraw", l, Component.text(StringUtility.decimalify(bankBalance / 5, 1))),
                                 " ",
                                 I18n.string("gui_banker.withdraw.click", l)
                         ));
@@ -150,10 +138,8 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                         List.of(
                                 I18n.string("gui_banker.withdraw.everything_subtitle", l),
                                 " ",
-                                I18n.string("gui_banker.withdraw.current_balance", l, Map.of(
-                                        "balance", StringUtility.decimalify(
-                                                player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1)
-                                )),
+                            I18n.string("gui_banker.withdraw.current_balance", l, Component.text(StringUtility.decimalify(
+                                player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1))),
                                 " ",
                                 I18n.string("gui_banker.withdraw.click", l)
                         ));
@@ -189,10 +175,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                     System.currentTimeMillis(), -amount, player.getUsername()));
 
             player.addCoins(amount);
-            player.sendMessage(I18n.string("gui_banker.withdraw.success", l, Map.of(
-                    "amount", StringUtility.decimalify(amount, 1),
-                    "balance", StringUtility.decimalify(bankData.getAmount(), 1)
-            )));
+            player.sendMessage(I18n.string("gui_banker.withdraw.success", l, Component.text(StringUtility.decimalify(amount, 1)), Component.text(StringUtility.decimalify(bankData.getAmount(), 1))));
             return;
         }
 
@@ -217,10 +200,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                             System.currentTimeMillis(), -amount, player.getUsername()));
 
                     player.addCoins(amount);
-                    player.sendMessage(I18n.string("gui_banker.withdraw.success", l, Map.of(
-                            "amount", StringUtility.decimalify(amount, 1),
-                            "balance", StringUtility.decimalify(latestBankData.getAmount(), 1)
-                    )));
+                    player.sendMessage(I18n.string("gui_banker.withdraw.success", l, Component.text(StringUtility.decimalify(amount, 1)), Component.text(StringUtility.decimalify(latestBankData.getAmount(), 1))));
 
                     return latestBankData;
                 },

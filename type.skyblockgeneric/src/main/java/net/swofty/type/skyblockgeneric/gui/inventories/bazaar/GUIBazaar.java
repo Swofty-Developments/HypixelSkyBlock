@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.bazaar;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -42,7 +43,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
     private final BazaarCategories category;
 
     public GUIBazaar(BazaarCategories category) {
-        super(I18n.string("gui_bazaar.main.title", Map.of("category", StringUtility.toNormalCase(category.name()))),
+        super(I18n.string("gui_bazaar.main.title", Component.text(StringUtility.toNormalCase(category.name()))),
                 InventoryType.CHEST_6_ROW);
         this.category = category;
 
@@ -177,7 +178,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                         BazaarItemSet set = sets.get(i);
 
                         List<String> lore = new ArrayList<>();
-                        lore.add(I18n.string("gui_bazaar.main.item_set_products", l, Map.of("count", String.valueOf(set.items.size()))));
+                        lore.add(I18n.string("gui_bazaar.main.item_set_products", l, Component.text(String.valueOf(set.items.size()))));
                         lore.add(" ");
 
                         // Add price data for each item in the set

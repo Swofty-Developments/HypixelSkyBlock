@@ -61,7 +61,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
         if (data.getItemInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
-            player.sendMessage(I18n.t("gui_museum.armor_category.already_in_museum", Map.of("item_name", skyBlockItem.getAttributeHandler().getPotentialType().getDisplayName())));
+            player.sendMessage(I18n.t("gui_museum.armor_category.already_in_museum", Component.text(skyBlockItem.getAttributeHandler().getPotentialType().getDisplayName())));
             return;
         }
 
@@ -129,7 +129,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
             }
 
             if (missing != 0) {
-                player.sendMessage(I18n.t("gui_museum.armor_category.missing_items", Map.of("set_name", armorSetRegistry.getDisplayName(), "count", String.valueOf(4 - missing))));
+                player.sendMessage(I18n.t("gui_museum.armor_category.missing_items", Component.text(armorSetRegistry.getDisplayName()), Component.text(String.valueOf(4 - missing))));
                 return;
             }
 
@@ -144,7 +144,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
             MuseumDisplays.updateDisplay(player);
 
             new GUIMuseumArmorCategory().open(player);
-            player.sendMessage(I18n.t("gui_museum.armor_category.donated", Map.of("set_name", armorSetRegistry.getDisplayName())));
+            player.sendMessage(I18n.t("gui_museum.armor_category.donated", Component.text(armorSetRegistry.getDisplayName())));
         }
     }
 
@@ -262,7 +262,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
                     return;
                 }
 
-                player.sendMessage(I18n.t("gui_museum.armor_category.retrieved_message", Map.of("set_name", armorSet.getDisplayName())));
+                player.sendMessage(I18n.t("gui_museum.armor_category.retrieved_message", Component.text(armorSet.getDisplayName())));
                 player.sendMessage(I18n.t("gui_museum.armor_category.retrieved_return_message"));
 
                 List<SkyBlockItem> set = List.of(helmet, chestplate, leggings, boots);
@@ -283,7 +283,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!inMuseum) {
                     Locale l = player.getLocale();
-                    return ItemStackCreator.getStack(I18n.string("gui_museum.armor_category.not_in_museum", l, Map.of("set_name", armorSet.getDisplayName())),
+                    return ItemStackCreator.getStack(I18n.string("gui_museum.armor_category.not_in_museum", l, Component.text(armorSet.getDisplayName())),
                             Material.GRAY_DYE, 1,
                             I18n.lore("gui_museum.armor_category.not_in_museum.lore", l));
                 }

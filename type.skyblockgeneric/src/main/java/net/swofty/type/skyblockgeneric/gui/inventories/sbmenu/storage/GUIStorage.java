@@ -1,12 +1,17 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.storage;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -73,7 +78,7 @@ public class GUIStorage extends StatelessView {
 
                 Material material = playerStorage.getPage(page).display;
 
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.ender_chest_page", l, Map.of("page", String.valueOf(page))),
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.ender_chest_page", l, Component.text(String.valueOf(page))),
                         material, page,
                         I18n.lore("gui_sbmenu.storage.ender_chest_page.lore", l));
             }, (click, c) -> {
@@ -104,7 +109,7 @@ public class GUIStorage extends StatelessView {
             if (backpacks.getUnlockedSlots() < slot) {
                 layout.slot(backpackSlot, (s, c) -> {
                     Locale l = c.player().getLocale();
-                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.locked_backpack", l, Map.of("slot", String.valueOf(slot))),
+                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.locked_backpack", l, Component.text(String.valueOf(slot))),
                         Material.GRAY_DYE, 1,
                         I18n.lore("gui_sbmenu.storage.locked_backpack.lore", l));
                 });
@@ -114,7 +119,7 @@ public class GUIStorage extends StatelessView {
             if (!backpackItems.containsKey(slot)) {
                 layout.slot(backpackSlot, (s, c) -> {
                             Locale l = c.player().getLocale();
-                            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.empty_backpack", l, Map.of("slot", String.valueOf(slot))),
+                        return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.empty_backpack", l, Component.text(String.valueOf(slot))),
                                 Material.BROWN_STAINED_GLASS_PANE, slot,
                                 I18n.lore("gui_sbmenu.storage.empty_backpack.lore", l));
                         },
@@ -130,12 +135,9 @@ public class GUIStorage extends StatelessView {
                 String itemName = item.getAttributeHandler().getRarity().getColor() +
                         item.getAttributeHandler().getPotentialType().getDisplayName();
                 String slots = String.valueOf(item.getComponent(BackpackComponent.class).getRows() * 9);
-                return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.storage.backpack_slot", l, Map.of("slot", String.valueOf(slot))),
+                return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.storage.backpack_slot", l, Component.text(String.valueOf(slot))),
                         item.getComponent(SkullHeadComponent.class).getSkullTexture(item), slot,
-                        I18n.lore("gui_sbmenu.storage.backpack_slot.lore", l, Map.of(
-                                "item_name", itemName,
-                                "slots", slots
-                        )));
+                    I18n.lore("gui_sbmenu.storage.backpack_slot.lore", l, Component.text(itemName), Component.text(slots)));
             }, (click, c) -> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                 DatapointBackpacks.PlayerBackpacks playerBackpacks = p.getSkyblockDataHandler().get(
@@ -149,11 +151,11 @@ public class GUIStorage extends StatelessView {
                             && !backpackItem.getAttributeHandler().getBackpackData().items()
                             .stream()
                             .map(SkyBlockItem::new).allMatch(SkyBlockItem::isNA)) {
-                        p.sendMessage(I18n.string("gui_sbmenu.storage.msg.not_empty", p.getLocale(), Map.of("slot", String.valueOf(slot))));
+                        p.sendMessage(I18n.string("gui_sbmenu.storage.msg.not_empty", p.getLocale(), Component.text(String.valueOf(slot))));
                         return;
                     }
 
-                    p.sendMessage(I18n.string("gui_sbmenu.storage.msg.removed", p.getLocale(), Map.of("slot", String.valueOf(slot))));
+                    p.sendMessage(I18n.string("gui_sbmenu.storage.msg.removed", p.getLocale(), Component.text(String.valueOf(slot))));
                     p.getInventory().setCursorItem(PlayerItemUpdater.playerUpdate(p, backpackItem.getItemStack()).build());
 
                     playerBackpackItems.remove(slot);
@@ -184,7 +186,7 @@ public class GUIStorage extends StatelessView {
         );
 
         Locale l = player.getLocale();
-        player.sendMessage(I18n.string("gui_sbmenu.storage.msg.placing", l, Map.of("slot", String.valueOf(slot))));
+        player.sendMessage(I18n.string("gui_sbmenu.storage.msg.placing", l, Component.text(String.valueOf(slot))));
         player.sendMessage(I18n.string("gui_sbmenu.storage.msg.success", l));
         player.getInventory().setCursorItem(ItemStack.AIR);
 

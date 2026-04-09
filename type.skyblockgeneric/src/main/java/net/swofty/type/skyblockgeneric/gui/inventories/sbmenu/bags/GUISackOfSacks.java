@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
@@ -88,7 +89,7 @@ public class GUISackOfSacks implements StatefulView<GUISackOfSacks.SackOfSacksSt
             CustomCollectionAward nextUpgrade = getUpgradeNeededForSlotIndex(i);
             if (nextUpgrade != null) {
                 layout.slot(i, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.bags.sack_of_sacks.locked_slot", Material.RED_STAINED_GLASS_PANE, 1,
-                        "gui_sbmenu.bags.sack_of_sacks.locked_slot.lore", Map.of("upgrade_name", nextUpgrade.getDisplay())));
+                    "gui_sbmenu.bags.sack_of_sacks.locked_slot.lore", Component.text(nextUpgrade.getDisplay())));
             }
         }
 

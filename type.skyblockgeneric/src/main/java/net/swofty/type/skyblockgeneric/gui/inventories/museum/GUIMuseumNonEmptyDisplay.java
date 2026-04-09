@@ -105,7 +105,7 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
                         Material.BEDROCK, 1,
                         items.size() == 1
                                 ? I18n.lore("gui_museum.display.remove_single.lore", l)
-                                : I18n.lore("gui_museum.display.remove_multiple.lore", l, Map.of("count", String.valueOf(items.size()))));
+                            : I18n.lore("gui_museum.display.remove_multiple.lore", l, Component.text(String.valueOf(items.size()))));
             }
         });
 

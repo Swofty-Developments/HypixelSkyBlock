@@ -19,7 +19,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
@@ -41,8 +40,8 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
             double unitPrice
     ) {
         super(isInstant
-                        ? (isBuy ? I18n.string("gui_bazaar.amount_selection.title_instant_buy") : I18n.string("gui_bazaar.amount_selection.title_instant_sell"))
-                        : (isBuy ? I18n.string("gui_bazaar.amount_selection.title_buy") : I18n.string("gui_bazaar.amount_selection.title_sell")),
+                ? (isBuy ? I18n.t("gui_bazaar.amount_selection.title_instant_buy") : I18n.t("gui_bazaar.amount_selection.title_instant_sell"))
+                : (isBuy ? I18n.t("gui_bazaar.amount_selection.title_buy") : I18n.t("gui_bazaar.amount_selection.title_sell")),
                 InventoryType.CHEST_4_ROW);
 
         this.isBuy = isBuy;
@@ -107,8 +106,8 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                 lore.add("§7" + subtitle);
                 lore.add(I18n.string("gui_bazaar.amount_selection.per_unit", l, Component.text(F.format(unitPrice))));
                 lore.add(isBuy
-                        ? I18n.string("gui_bazaar.amount_selection.total_cost", l, Map.of("amount", F.format(unitPrice * qty)))
-                        : I18n.string("gui_bazaar.amount_selection.total_rev", l, Map.of("amount", F.format(unitPrice * qty))));
+                    ? I18n.string("gui_bazaar.amount_selection.total_cost", l, Component.text(F.format(unitPrice * qty)))
+                    : I18n.string("gui_bazaar.amount_selection.total_rev", l, Component.text(F.format(unitPrice * qty))));
                 lore.add(" ");
                 lore.add(isBuy
                         ? I18n.string("gui_bazaar.amount_selection.click_buy", l)
@@ -136,7 +135,7 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                 List<String> lore = new ArrayList<>();
                 lore.add(I18n.string("gui_bazaar.amount_selection.limit_subtitle", l));
                 lore.add("§7" + amountLine);
-                lore.add(I18n.string("gui_bazaar.amount_selection.per_unit", l, Map.of("price", F.format(unitPrice))));
+                lore.add(I18n.string("gui_bazaar.amount_selection.per_unit", l, Component.text(F.format(unitPrice))));
                 lore.add(" ");
                 lore.add(I18n.string("gui_bazaar.amount_selection.limit_click", l));
                 return ItemStackCreator.getStack(
@@ -156,7 +155,7 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                 try {
                     int v = Integer.parseInt(q);
                     if (v < 1 || v > maxAmount) {
-                        pl.sendMessage(I18n.string("gui_bazaar.amount_selection.invalid_range", l, Map.of("max", String.valueOf(maxAmount))));
+                        pl.sendMessage(I18n.t("gui_bazaar.amount_selection.invalid_range", Component.text(maxAmount)));
                         return null;
                     }
                     future.complete(v);
@@ -173,7 +172,7 @@ public class GUIBazaarOrderAmountSelection extends HypixelInventoryGUI {
                 lore.add(isInstant
                         ? I18n.string("gui_bazaar.amount_selection.custom_instant", l)
                         : I18n.string("gui_bazaar.amount_selection.custom_limit", l));
-                lore.add(I18n.string("gui_bazaar.amount_selection.custom_max", l, Map.of("max", String.valueOf(maxAmount))));
+                lore.add(I18n.string("gui_bazaar.amount_selection.custom_max", l, Component.text(maxAmount)));
                 lore.add(" ");
                 lore.add(I18n.string("gui_bazaar.amount_selection.custom_click", l));
                 return ItemStackCreator.getStack(

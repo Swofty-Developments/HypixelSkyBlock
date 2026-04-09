@@ -34,7 +34,6 @@ import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class GUIEnchantmentTable extends HypixelInventoryGUI {
     private static final int[] PAGINATED_SLOTS_LIST_ENCHANTS = new int[]{
@@ -210,9 +209,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                     public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
                         if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
-                            player.sendMessage(I18n.t("gui_enchantment.requires_bookshelf_message", Map.of(
-                                    "power", String.valueOf(enchantmentType.getEnchFromTable().getRequiredBookshelfPower())
-                            )));
+                            player.sendMessage(I18n.t("gui_enchantment.requires_bookshelf_message", Component.text(String.valueOf(enchantmentType.getEnchFromTable().getRequiredBookshelfPower()))));
                             return;
                         }
 
@@ -240,9 +237,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                         lore.add("§a ");
 
                         if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
-                            lore.add(I18n.string("gui_enchantment.requires_bookshelf", player.getLocale(), Map.of(
-                                    "power", String.valueOf(enchantmentType.getEnchFromTable().getRequiredBookshelfPower())
-                            )));
+                            lore.add(I18n.string("gui_enchantment.requires_bookshelf", player.getLocale(), Component.text(String.valueOf(enchantmentType.getEnchFromTable().getRequiredBookshelfPower()))));
                         } else {
                             lore.add(I18n.string("gui_enchantment.click_to_view", player.getLocale()));
                         }
@@ -290,9 +285,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                     if (selected.getEnch() instanceof ConflictingEnch conflictingEnch) {
                         for (EnchantmentType ench : conflictingEnch.getConflictingEnchantments()) {
                             if (item.getAttributeHandler().hasEnchantment(ench)) {
-                                lore.add(I18n.string("gui_enchantment.warning_remove_conflicting", player.getLocale(), Map.of(
-                                        "enchantment", StringUtility.toNormalCase(ench.name())
-                                )));
+                                lore.add(I18n.string("gui_enchantment.warning_remove_conflicting", player.getLocale(), Component.text(StringUtility.toNormalCase(ench.name()))));
                                 break;
                             }
                         }
@@ -307,8 +300,9 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
 
                     if (finalHasLevel > finalLevel) {
                         if (levelCost > player.getLevel())
-                            lore.add(I18n.string("gui_enchantment.cost_exp_levels_fail", player.getLocale(), Map.of("cost", String.valueOf(levelCost))));
-                        else lore.add(I18n.string("gui_enchantment.cost_exp_levels_pass", player.getLocale(), Map.of("cost", String.valueOf(levelCost))));
+                            lore.add(I18n.string("gui_enchantment.cost_exp_levels_fail", player.getLocale(), Component.text(String.valueOf(levelCost))));
+                        else
+                            lore.add(I18n.string("gui_enchantment.cost_exp_levels_pass", player.getLocale(), Component.text(String.valueOf(levelCost))));
 
                         lore.add("§a ");
                         lore.add(I18n.string("gui_enchantment.higher_level_present", player.getLocale()));
@@ -320,11 +314,11 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                     }
 
                     if (levelCost > player.getLevel()) {
-                        lore.add(I18n.string("gui_enchantment.cost_exp_levels_fail", player.getLocale(), Map.of("cost", String.valueOf(levelCost))));
+                        lore.add(I18n.string("gui_enchantment.cost_exp_levels_fail", player.getLocale(), Component.text(String.valueOf(levelCost))));
                         lore.add("§a ");
                         lore.add(I18n.string("gui_enchantment.insufficient_levels", player.getLocale()));
                     } else {
-                        lore.add(I18n.string("gui_enchantment.cost_exp_levels_pass", player.getLocale(), Map.of("cost", String.valueOf(levelCost))));
+                        lore.add(I18n.string("gui_enchantment.cost_exp_levels_pass", player.getLocale(), Component.text(String.valueOf(levelCost))));
                         lore.add("§a ");
                         if (finalHasLevel >= finalLevel) {
                             lore.add(I18n.string("gui_enchantment.click_to_remove", player.getLocale()));
@@ -370,11 +364,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                         }
 
                         player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel));
-                        player.sendMessage(I18n.t("gui_enchantment.enchanted_message", Map.of(
-                                "item_name", itemName,
-                                "enchantment", StringUtility.toNormalCase(selected.name()),
-                                "level", StringUtility.getAsRomanNumeral(finalLevel)
-                        )));
+                        player.sendMessage(I18n.t("gui_enchantment.enchanted_message", Component.text(itemName), Component.text(StringUtility.toNormalCase(selected.name())), Component.text(StringUtility.getAsRomanNumeral(finalLevel))));
                     } else {
                         int difference = finalHasLevel - finalLevel;
 
@@ -385,10 +375,7 @@ public class GUIEnchantmentTable extends HypixelInventoryGUI {
                         }
 
                         player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel));
-                        player.sendMessage(I18n.t("gui_enchantment.removed_message", Map.of(
-                                "enchantment", StringUtility.toNormalCase(selected.name()),
-                                "item_name", itemName
-                        )));
+                        player.sendMessage(I18n.t("gui_enchantment.removed_message", Component.text(StringUtility.toNormalCase(selected.name())), Component.text(itemName)));
                     }
 
                     updateFromItem(item, selected);

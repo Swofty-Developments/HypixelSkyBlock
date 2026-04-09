@@ -18,7 +18,6 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIContactManagement extends HypixelInventoryGUI {
 
@@ -53,7 +52,7 @@ public class GUIContactManagement extends HypixelInventoryGUI {
 					abiphone.getAttributeHandler().removeAbiphoneNPC(npc);
 					player.closeInventory();
 					new GUIAbiphone(abiphone).open(player);
-					player.sendMessage(I18n.string("gui_abiphone.management.removed_message", l, Map.of("npc_name", npc.getName())));
+					player.sendMessage(I18n.string("gui_abiphone.management.removed_message", l, Component.text(npc.getName())));
 				}).open(player);
 			}
 

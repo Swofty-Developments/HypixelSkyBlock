@@ -1,5 +1,6 @@
 package net.swofty.type.island.tab;
 
+import net.kyori.adventure.text.Component;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.i18n.I18n;
@@ -15,7 +16,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class IslandServerModule extends TablistModule {
 
@@ -34,11 +34,11 @@ public class IslandServerModule extends TablistModule {
         ));
 
         entries.add(new TablistEntry(I18n.string("tablist.server_info.area.private_island", l), TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(I18n.string("tablist.server_info.server_label", l, Map.of("server_name", HypixelConst.getServerName())), TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(I18n.string("tablist.island.minions_label", l, Map.of("current", String.valueOf(minions.size()), "max", String.valueOf(data.getSlots()))), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.string("tablist.server_info.server_label", l, Component.text(HypixelConst.getServerName())), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.string("tablist.island.minions_label", l, Component.text(String.valueOf(minions.size())), Component.text(String.valueOf(data.getSlots()))), TablistSkinRegistry.GRAY));
 
         entries.add(getGrayEntry());
-        entries.add(new TablistEntry(I18n.string("tablist.module.minions", l, Map.of("count", String.valueOf(minions.size()))), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.string("tablist.module.minions", l, Component.text(String.valueOf(minions.size()))), TablistSkinRegistry.GRAY));
 
         minions.forEach(minion -> {
             String content = " " + minion.getMinion().getDisplay().replace(" Minion", "");

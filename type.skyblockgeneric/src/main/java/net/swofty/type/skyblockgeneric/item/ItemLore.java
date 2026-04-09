@@ -13,12 +13,12 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeHotPotatoBookData;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.commons.skyblock.item.reforge.Reforge;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.gems.GemRarity;
@@ -139,7 +139,7 @@ public class ItemLore {
 
 		// Handle Item Statistics
 		if (handler.isMiningTool()) {
-			addLoreLine(I18n.string("items.lore.breaking_power", l, Map.of("value", String.valueOf(handler.getBreakingPower()))));
+			addLoreLine(I18n.string("items.lore.breaking_power", l, Component.text(String.valueOf(handler.getBreakingPower()))));
 			addLoreLine(null);
 		}
 
@@ -160,7 +160,7 @@ public class ItemLore {
 
 		if (item.hasComponent(ShortBowComponent.class)) {
 			ShortBowComponent shortBowComponent = item.getComponent(ShortBowComponent.class);
-			addLoreLine(I18n.string("items.lore.shot_cooldown", l, Map.of("cooldown", String.valueOf(shortBowComponent.getCooldown()))));
+			addLoreLine(I18n.string("items.lore.shot_cooldown", l, Component.text(String.valueOf(shortBowComponent.getCooldown()))));
 			addNextLine = true;
 		}
 
@@ -294,7 +294,7 @@ public class ItemLore {
 			AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
 
 			abilityComponent.getAbilities().forEach(ability -> {
-				addLoreLine(I18n.string("items.lore.ability_label", l, Map.of("name", ability.getName(), "activation", ability.getActivation().getDisplay())));
+				addLoreLine(I18n.string("items.lore.ability_label", l, Component.text(ability.getName()), Component.text(ability.getActivation().getDisplay())));
 				for (String line : StringUtility.splitByWordAndLength(ability.getDescription().apply(player, item), 40))
 					addLoreLine("§7" + line);
 
@@ -302,7 +302,7 @@ public class ItemLore {
 				if (costDisplay != null) addLoreLine(costDisplay);
 
 				if (ability.getCooldownTicks() > 20) {
-					addLoreLine(I18n.string("items.lore.ability_cooldown", l, Map.of("cooldown", StringUtility.decimalify((double) ability.getCooldownTicks() / 20, 1))));
+					addLoreLine(I18n.string("items.lore.ability_cooldown", l, Component.text(StringUtility.decimalify((double) ability.getCooldownTicks() / 20, 1))));
 				}
 
 				addLoreLine(null);
@@ -335,7 +335,7 @@ public class ItemLore {
 				}
 			}
 			int totalPieces = ArmorSetRegistry.getPieceCount(ArmorSetRegistry.getArmorSet(armorSet.getClass()));
-			addLoreLine(I18n.string("items.lore.full_set_bonus", l, Map.of("name", armorSet.getName(), "wearing", String.valueOf(wearingAmount), "total", String.valueOf(totalPieces))));
+			addLoreLine(I18n.string("items.lore.full_set_bonus", l, Component.text(armorSet.getName()), Component.text(String.valueOf(wearingAmount)), Component.text(String.valueOf(totalPieces))));
 			armorSet.getDescription().forEach(line -> addLoreLine("§7" + line));
 			addLoreLine(null);
 		}
@@ -357,7 +357,7 @@ public class ItemLore {
 
 		ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();
 		if (bound != null)
-			addLoreLine(I18n.string("items.lore.soulbound", l, Map.of("prefix", bound.isCoopAllowed() ? I18n.string("items.lore.soulbound_coop_prefix", l) : "")));
+			addLoreLine(I18n.string("items.lore.soulbound", l, Component.text(bound.isCoopAllowed() ? I18n.string("items.lore.soulbound_coop_prefix", l) : "")));
 
 		if (item.hasComponent(ArrowComponent.class)) {
 			addLoreLine(I18n.string("items.lore.stats_when_shot", l));

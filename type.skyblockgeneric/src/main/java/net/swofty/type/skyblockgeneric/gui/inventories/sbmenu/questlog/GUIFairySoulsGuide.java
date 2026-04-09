@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.questlog;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
@@ -9,13 +10,10 @@ import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
-
-import java.util.Locale;
-import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
 
-import java.util.Map;
+import java.util.Locale;
 
 public class GUIFairySoulsGuide extends StatelessView {
     private static final int[] LOCATION_SLOTS = {
@@ -51,12 +49,12 @@ public class GUIFairySoulsGuide extends StatelessView {
                     player.getFairySoulHandler().getMax(FairySoulZone.MISC_GLACITE_MINESHAFTS);
             return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.questlog.fairy_souls_guide.miscellaneous", l),
                     "126ec1ca185b47aad39f931db8b0a8500ded86a127a204886ed4b3783ad1775c", 1,
-                    I18n.string("gui_sbmenu.questlog.fairy_souls_guide.fairy_souls_count", l, Map.of("found", String.valueOf(obtainedSouls), "total", String.valueOf(totalSouls))),
-                    I18n.string("gui_sbmenu.questlog.fairy_souls_guide.dungeons", l, Map.of("count", String.valueOf(player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS)))),
-                    I18n.string("gui_sbmenu.questlog.fairy_souls_guide.fishing", l, Map.of("count", String.valueOf(player.getFairySoulHandler().getMax(FairySoulZone.MISC_FISHING)))),
-                    I18n.string("gui_sbmenu.questlog.fairy_souls_guide.garden", l, Map.of("count", String.valueOf(player.getFairySoulHandler().getMax(FairySoulZone.MISC_GARDEN)))),
-                    I18n.string("gui_sbmenu.questlog.fairy_souls_guide.placeable", l, Map.of("count", String.valueOf(player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE)))),
-                    I18n.string("gui_sbmenu.questlog.fairy_souls_guide.glacite_mineshafts", l, Map.of("count", String.valueOf(player.getFairySoulHandler().getMax(FairySoulZone.MISC_GLACITE_MINESHAFTS)))));
+                I18n.string("gui_sbmenu.questlog.fairy_souls_guide.fairy_souls_count", l, Component.text(String.valueOf(obtainedSouls)), Component.text(String.valueOf(totalSouls))),
+                I18n.string("gui_sbmenu.questlog.fairy_souls_guide.dungeons", l, Component.text(String.valueOf(player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS)))),
+                I18n.string("gui_sbmenu.questlog.fairy_souls_guide.fishing", l, Component.text(String.valueOf(player.getFairySoulHandler().getMax(FairySoulZone.MISC_FISHING)))),
+                I18n.string("gui_sbmenu.questlog.fairy_souls_guide.garden", l, Component.text(String.valueOf(player.getFairySoulHandler().getMax(FairySoulZone.MISC_GARDEN)))),
+                I18n.string("gui_sbmenu.questlog.fairy_souls_guide.placeable", l, Component.text(String.valueOf(player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE)))),
+                I18n.string("gui_sbmenu.questlog.fairy_souls_guide.glacite_mineshafts", l, Component.text(String.valueOf(player.getFairySoulHandler().getMax(FairySoulZone.MISC_GLACITE_MINESHAFTS)))));
         });
 
         FairySouls[] allFairySouls = FairySouls.values();

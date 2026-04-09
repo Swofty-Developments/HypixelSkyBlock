@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.coop;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -84,7 +85,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                     String status = accepted ? I18n.string("gui_coop.sender.accepted_yes", l) : I18n.string("gui_coop.sender.accepted_no", l);
                     return ItemStackCreator.getStackHead(
                             displayName, PlayerSkin.fromUuid(String.valueOf(target)), 1,
-                            List.of(" ", I18n.string("gui_coop.sender.player_accepted", l, Map.of("status", status))));
+                        List.of(" ", I18n.string("gui_coop.sender.player_accepted", l, Component.text(status))));
                 }
             });
         }
@@ -102,7 +103,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                 SkyBlockPlayer target = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
                 if (target != null &&
                         (coop.memberInvites().contains(target.getUuid()) || coop.members().contains(target.getUuid())))
-                    target.sendMessage(I18n.string("gui_coop.target.denied_notify", target.getLocale(), Map.of("player_name", player.getUsername())));
+                    target.sendMessage(I18n.t("gui_coop.target.denied_notify", Component.text(player.getUsername())));
             }
 
             @Override
@@ -163,15 +164,14 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
                 SkyBlockPlayer target = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
                 if (target != null &&
                         (coop.memberInvites().contains(target.getUuid()) || coop.members().contains(target.getUuid())))
-                    target.sendMessage(I18n.string("gui_coop.target.accepted_notify", target.getLocale(), Map.of("player_name", player.getUsername())));
+                    target.sendMessage(I18n.string("gui_coop.target.accepted_notify", target.getLocale(), Component.text(player.getUsername())));
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return TranslatableItemStackCreator.getStack("gui_coop.target.accept_button", Material.GREEN_TERRACOTTA, 1,
-                        "gui_coop.target.accept_button.lore", Map.of(
-                                "profile_count", String.valueOf(player.getProfiles().getProfiles().size())));
+                    "gui_coop.target.accept_button.lore", Component.text(String.valueOf(player.getProfiles().getProfiles().size())));
             }
         });
     }

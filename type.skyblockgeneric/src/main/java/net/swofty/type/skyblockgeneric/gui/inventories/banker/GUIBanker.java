@@ -60,9 +60,8 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 return TranslatableItemStackCreator.getStack("gui_banker.main.information", Material.REDSTONE_TORCH, 1,
-                        "gui_banker.main.information.lore", Map.of(
-                                "limit", StringUtility.commaify(bankData.getBalanceLimit()),
-                                "hours", String.valueOf(SkyBlockCalendar.getHoursUntilNextInterest())
+                    "gui_banker.main.information.lore", Component.text(StringUtility.commaify(bankData.getBalanceLimit())),
+                    Component.text(String.valueOf(SkyBlockCalendar.getHoursUntilNextInterest())
                         ));
             }
         });
@@ -77,9 +76,8 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 return TranslatableItemStackCreator.getStack("gui_banker.main.deposit", Material.CHEST, 1,
-                        "gui_banker.main.deposit.lore", Map.of(
-                                "balance", StringUtility.decimalify(bankData.getAmount(), 1),
-                                "hours", String.valueOf(SkyBlockCalendar.getHoursUntilNextInterest())
+                    "gui_banker.main.deposit.lore", Component.text(StringUtility.decimalify(bankData.getAmount(), 1)),
+                    Component.text(String.valueOf(SkyBlockCalendar.getHoursUntilNextInterest())
                         ));
             }
         });
@@ -115,12 +113,7 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
                         boolean isNegative = transaction.amount < 0;
                         String amount = StringUtility.decimalify(Math.abs(transaction.amount), 1);
 
-                        lore.add(I18n.string("gui_banker.main.transaction_entry", l, Map.of(
-                                "sign", isNegative ? "§c-" : "§a+",
-                                "amount", amount,
-                                "time_ago", StringUtility.formatTimeAsAgo(transaction.timestamp),
-                                "originator", transaction.originator
-                        )));
+                        lore.add(I18n.string("gui_banker.main.transaction_entry", l, Component.text(isNegative ? "§c-" : "§a+"), Component.text(amount), Component.text(StringUtility.formatTimeAsAgo(transaction.timestamp)), Component.text(transaction.originator)));
                     }
                 }
 

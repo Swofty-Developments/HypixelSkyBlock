@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeMinionData;
@@ -35,7 +36,7 @@ public class GUIMinionRecipes extends StatelessView {
     @Override
     public ViewConfiguration<DefaultState> configuration() {
         return ViewConfiguration.withString(
-                (state, ctx) -> I18n.string("gui_sbmenu.recipe.minion.title", ctx.player().getLocale(), Map.of("minion_name", StringUtility.toNormalCase(minionRegistry.toString()))),
+            (state, ctx) -> I18n.string("gui_sbmenu.recipe.minion.title", ctx.player().getLocale(), Component.text(StringUtility.toNormalCase(minionRegistry.toString()))),
                 InventoryType.CHEST_6_ROW);
     }
 

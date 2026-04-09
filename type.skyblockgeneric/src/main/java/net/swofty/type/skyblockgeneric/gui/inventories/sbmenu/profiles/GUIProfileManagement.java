@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.profiles;
 
 import lombok.SneakyThrows;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -87,12 +88,12 @@ public class GUIProfileManagement extends StatelessView {
                     lore.add(I18n.string("gui_sbmenu.profiles.selected.playing", l));
 
                     String profileName = finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
-                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.selected", l, java.util.Map.of("profile_name", profileName)), Material.EMERALD_BLOCK, 1, lore);
+                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.selected", l, Component.text(profileName)), Material.EMERALD_BLOCK, 1, lore);
                 }, (click, c) -> {
                     SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                     Locale l = p.getLocale();
                     String profileName = finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
-                    p.sendMessage(I18n.t("gui_sbmenu.profiles.msg.playing_on", java.util.Map.of("profile_name", profileName)));
+                    p.sendMessage(I18n.t("gui_sbmenu.profiles.msg.playing_on", Component.text(profileName)));
                     p.sendMessage(I18n.t("gui_sbmenu.profiles.msg.switch_first"));
                 });
             } else {
@@ -105,7 +106,7 @@ public class GUIProfileManagement extends StatelessView {
                     lore.add(I18n.string("gui_sbmenu.profiles.unselected.click", l));
 
                     String profileName = finalDataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
-                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.unselected", l, java.util.Map.of("profile_name", profileName)), Material.GRASS_BLOCK, 1, lore);
+                    return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.unselected", l, Component.text(profileName)), Material.GRASS_BLOCK, 1, lore);
                 }, (click, c) -> c.player().openView(new GUIProfileSelect(profileId)));
             }
         }
@@ -129,12 +130,12 @@ public class GUIProfileManagement extends StatelessView {
 
         Double coins = handler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
         if (coins > 0) {
-            lore.add(I18n.string("gui_sbmenu.profiles.purse_coins", java.util.Map.of("coins", String.valueOf(coins))));
+            lore.add(I18n.string("gui_sbmenu.profiles.purse_coins", Component.text(String.valueOf(coins))));
         }
 
         Long createdTime = handler.get(SkyBlockDataHandler.Data.CREATED, DatapointLong.class).getValue();
         String age = StringUtility.profileAge(System.currentTimeMillis() - createdTime);
-        lore.add(I18n.string("gui_sbmenu.profiles.age", java.util.Map.of("age", age)));
+        lore.add(I18n.string("gui_sbmenu.profiles.age", Component.text(age)));
 
         return lore;
     }

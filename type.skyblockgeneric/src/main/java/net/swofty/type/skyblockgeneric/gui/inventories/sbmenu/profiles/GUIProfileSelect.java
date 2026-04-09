@@ -87,8 +87,7 @@ public class GUIProfileSelect extends StatelessView {
 
                     try {
                         SkyBlockDataHandler handler = SkyBlockDataHandler.createFromProfileOnly(new ProfilesDatabase(profileUuid.toString()).getDocument());
-                        player.sendMessage(I18n.t("gui_sbmenu.profiles.select.msg.deleted", Map.of("profile_name",
-                                handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue())));
+                        player.sendMessage(I18n.t("gui_sbmenu.profiles.select.msg.deleted", Component.text(handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue())));
                     } catch (Exception e) {
                         player.sendMessage(I18n.t("gui_sbmenu.profiles.select.msg.deleted_generic"));
                     }

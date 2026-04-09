@@ -50,10 +50,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
     private final IslandMinionData.IslandMinion minion;
 
     public GUIMinion(IslandMinionData.IslandMinion minion) {
-        super(I18n.string("gui_minion.title", Map.of(
-                "minion_name", minion.getMinion().getDisplay(),
-                "tier", StringUtility.getAsRomanNumeral(minion.getTier())
-        )), InventoryType.CHEST_6_ROW);
+        super(I18n.string("gui_minion.title", Component.text(minion.getMinion().getDisplay()), Component.text(StringUtility.getAsRomanNumeral(minion.getTier()))), InventoryType.CHEST_6_ROW);
 
         this.minion = minion;
     }
@@ -100,12 +97,9 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                 minion.removeMinion();
                 player.getSkyBlockIsland().getMinionData().getMinions().remove(minion);
 
-                player.sendMessage(I18n.t("gui_minion.pickup_message", Map.of(
-                        "current", String.valueOf(player.getSkyBlockIsland().getMinionData().getMinions().size()),
-                        "max", String.valueOf(player.getSkyblockDataHandler().get(
+                player.sendMessage(I18n.t("gui_minion.pickup_message", Component.text(String.valueOf(player.getSkyBlockIsland().getMinionData().getMinions().size())), Component.text(String.valueOf(player.getSkyblockDataHandler().get(
                                 SkyBlockDataHandler.Data.MINION_DATA,
-                                DatapointMinionData.class).getValue().getSlots())
-                )));
+                    DatapointMinionData.class).getValue().getSlots()))));
             }
 
             @Override

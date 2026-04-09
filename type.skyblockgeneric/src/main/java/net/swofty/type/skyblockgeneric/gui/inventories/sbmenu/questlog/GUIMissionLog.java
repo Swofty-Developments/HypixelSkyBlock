@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.questlog;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -48,7 +49,7 @@ public class GUIMissionLog extends StatelessView {
     @Override
     public ViewConfiguration<DefaultState> configuration() {
         return ViewConfiguration.withString(
-                (state, ctx) -> I18n.string("gui_sbmenu.questlog.title", ctx.player().getLocale(), Map.of("suffix", showCompleted ? "(Completed)" : "")),
+            (state, ctx) -> I18n.string("gui_sbmenu.questlog.title", ctx.player().getLocale(), Component.text(showCompleted ? "(Completed)" : "")),
                 InventoryType.CHEST_6_ROW);
     }
 
@@ -60,7 +61,7 @@ public class GUIMissionLog extends StatelessView {
 
         layout.slot(4, (s, c) -> {
             Locale l = c.player().getLocale();
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.questlog.info", l, Map.of("suffix", showCompleted ? "(Completed)" : "")),
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.questlog.info", l, Component.text(showCompleted ? "(Completed)" : "")),
                 Material.WRITABLE_BOOK, 1, I18n.lore("gui_sbmenu.questlog.info.lore", l));
         });
 
@@ -69,7 +70,7 @@ public class GUIMissionLog extends StatelessView {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             return TranslatableItemStackCreator.getStackHead("gui_sbmenu.questlog.fairy_souls",
                     "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387", 1,
-                    "gui_sbmenu.questlog.fairy_souls.lore", Map.of("found", String.valueOf(player.getFairySoulHandler().getTotalFoundFairySouls()), "total", String.valueOf(FairySoulDatabase.getAllSouls().size())));
+                "gui_sbmenu.questlog.fairy_souls.lore", Component.text(String.valueOf(player.getFairySoulHandler().getTotalFoundFairySouls())), Component.text(String.valueOf(FairySoulDatabase.getAllSouls().size())));
         }, (_, c) -> {
             c.push(new GUIFairySoulsGuide());
         });
@@ -83,7 +84,7 @@ public class GUIMissionLog extends StatelessView {
             layout.slot(50, (s, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
                 return TranslatableItemStackCreator.getStack("gui_sbmenu.questlog.completed_quests", Material.BOOK, 1,
-                        "gui_sbmenu.questlog.completed_quests.lore", Map.of("count", String.valueOf(player.getMissionData().getCompletedMissions().size())));
+                    "gui_sbmenu.questlog.completed_quests.lore", Component.text(String.valueOf(player.getMissionData().getCompletedMissions().size())));
             }, (_, c) -> c.replace(new GUIMissionLog(true)));
         }
 

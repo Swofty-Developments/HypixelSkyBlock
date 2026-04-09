@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -26,7 +27,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 	private final SkyBlockPlayer viewedPlayer;
@@ -116,9 +116,9 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 
 				lore.add("§7 ");
 				Locale l = p.getLocale();
-				lore.add(I18n.string("gui_profile.skyblock_level", l, Map.of("level", viewedPlayer.getSkyBlockExperience().getLevel().getColor() + viewedPlayer.getSkyBlockExperience().getLevel().toString())));
+				lore.add(I18n.string("gui_profile.skyblock_level", l, Component.text(viewedPlayer.getSkyBlockExperience().getLevel().getColor() + viewedPlayer.getSkyBlockExperience().getLevel().toString())));
 				lore.add("§7 ");
-				lore.add(I18n.string("gui_profile.oldest_profile", l, Map.of("age", age)));
+				lore.add(I18n.string("gui_profile.oldest_profile", l, Component.text(age)));
 
 				return ItemStackCreator.getStackHead(viewedPlayer.getShortenedDisplayName(),
 						PlayerSkin.fromUuid(viewedPlayer.getUuid().toString()), 1,
@@ -140,7 +140,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 				String name;
 				Material material;
 				if (dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem() != null) {
-					name = I18n.string("gui_profile.emblem_selected", l, Map.of("emblem", dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem().toString()));
+					name = I18n.string("gui_profile.emblem_selected", l, Component.text(dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem().toString()));
 					material = dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getEmblem().displayMaterial();
 				} else {
 					name = I18n.string("gui_profile.no_emblem", l);
@@ -228,7 +228,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			public ItemStack.Builder getItem(HypixelPlayer p) {
 				SkyBlockDataHandler dataHandler = viewedPlayer.getSkyblockDataHandler();
 				String profileName = dataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
-				List<String> lore = new ArrayList<>(I18n.lore("gui_profile.museum.lore", p.getLocale(), Map.of("profile_name", profileName)));
+				List<String> lore = new ArrayList<>(I18n.lore("gui_profile.museum.lore", p.getLocale(), Component.text(profileName)));
 				return ItemStackCreator.getStackHead(viewedPlayer.getUsername() + "'s Museum",
 						PlayerSkin.fromUuid(viewedPlayer.getUuid().toString()), 1,
 						lore);

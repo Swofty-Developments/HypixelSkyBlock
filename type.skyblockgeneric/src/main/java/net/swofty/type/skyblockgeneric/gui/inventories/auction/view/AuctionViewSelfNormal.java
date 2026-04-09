@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.auction.view;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
 
 public class AuctionViewSelfNormal implements AuctionView {
@@ -29,10 +29,9 @@ public class AuctionViewSelfNormal implements AuctionView {
         gui.set(new GUIItem(33) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
-                lore.add(I18n.string("gui_auction.view_self_normal.bid_history_total", l, Map.of("count", String.valueOf(item.getBids().size()))));
+                lore.add(I18n.string("gui_auction.view_self_normal.bid_history_total", l, Component.text(String.valueOf(item.getBids().size()))));
 
                 List<AuctionItem.Bid> bids = new ArrayList<>(item.getBids());
                 bids.sort(Comparator.comparingLong(AuctionItem.Bid::value).reversed());
@@ -43,8 +42,8 @@ public class AuctionViewSelfNormal implements AuctionView {
                     AuctionItem.Bid bid = bids.get(i);
 
                     lore.add(I18n.string("gui_auction.view_self_normal.bid_separator", l));
-                    lore.add(I18n.string("gui_auction.view_self_normal.bid_value", l, Map.of("value", String.valueOf(bid.value()))));
-                    lore.add(I18n.string("gui_auction.view_self_normal.bid_by", l, Map.of("player_name", SkyBlockPlayer.getDisplayName(bid.uuid()))));
+                    lore.add(I18n.string("gui_auction.view_self_normal.bid_value", l, Component.text(String.valueOf(bid.value()))));
+                    lore.add(I18n.string("gui_auction.view_self_normal.bid_by", l, Component.text(SkyBlockPlayer.getDisplayName(bid.uuid()))));
                     lore.add("§b" + StringUtility.formatTimeAsAgo(bid.timestamp()));
                 }
 
@@ -75,7 +74,7 @@ public class AuctionViewSelfNormal implements AuctionView {
                         public ItemStack.Builder getItem(HypixelPlayer p) {
                             SkyBlockPlayer player = (SkyBlockPlayer) p;
                             return TranslatableItemStackCreator.getStack("gui_auction.view_self_normal.collect_auction", Material.GOLD_BLOCK, 1,
-                                    "gui_auction.view_self_normal.collect_no_bids.lore");
+                                "gui_auction.view_self_normal.collect_no_bids.lore");
                         }
                     });
                 } else {
@@ -93,17 +92,15 @@ public class AuctionViewSelfNormal implements AuctionView {
                             ownedInactive.add(item.getUuid());
                             player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedInactive);
 
-                            player.sendMessage(I18n.t("gui_auction.view_self_normal.collected_coins", Map.of("amount", String.valueOf(highestBid))));
+                            player.sendMessage(I18n.t("gui_auction.view_self_normal.collected_coins", Component.text(String.valueOf(highestBid))));
                             player.closeInventory();
                         }
 
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                            SkyBlockPlayer player = (SkyBlockPlayer) p;
                             return TranslatableItemStackCreator.getStack("gui_auction.view_self_normal.collect_auction", Material.GOLD_BLOCK, 1,
-                                    "gui_auction.view_self_normal.collect_with_bids.lore", Map.of(
-                                            "amount", String.valueOf(item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L))
-                                    ));
+                                "gui_auction.view_self_normal.collect_with_bids.lore", Component.text(String.valueOf(item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L))
+                                ));
                         }
                     });
                 }
@@ -111,11 +108,9 @@ public class AuctionViewSelfNormal implements AuctionView {
                 gui.set(new GUIItem(29) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                        SkyBlockPlayer player = (SkyBlockPlayer) p;
                         return TranslatableItemStackCreator.getStack("gui_auction.view_self_normal.auction_ended", Material.BARRIER, 1,
-                                "gui_auction.view_self_normal.auction_ended_claimed.lore", Map.of(
-                                        "amount", String.valueOf(item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L))
-                                ));
+                            "gui_auction.view_self_normal.auction_ended_claimed.lore",
+                            Component.text(String.valueOf(item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L))));
                     }
                 });
             }
@@ -125,9 +120,8 @@ public class AuctionViewSelfNormal implements AuctionView {
         gui.set(new GUIItem(29) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return TranslatableItemStackCreator.getStack("gui_auction.view_self_normal.own_auction", Material.BEDROCK, 1,
-                        "gui_auction.view_self_normal.own_auction.lore");
+                    "gui_auction.view_self_normal.own_auction.lore");
             }
         });
     }

@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -45,10 +46,7 @@ public class GUIAccessoryBag implements StatefulView<GUIAccessoryBag.AccessoryBa
                     SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
                     int totalSlots = getTotalSlots(player);
                     int totalPages = Math.max(1, (int) Math.ceil((double) totalSlots / 45));
-                    return I18n.string("gui_sbmenu.bags.accessory.title", ctx.player().getLocale(), Map.of(
-                            "page", String.valueOf(state.page() + 1),
-                            "max_page", String.valueOf(totalPages)
-                    ));
+                    return I18n.string("gui_sbmenu.bags.accessory.title", ctx.player().getLocale(), Component.text(String.valueOf(state.page() + 1)), Component.text(String.valueOf(totalPages)));
                 },
                 InventoryType.CHEST_6_ROW
         );

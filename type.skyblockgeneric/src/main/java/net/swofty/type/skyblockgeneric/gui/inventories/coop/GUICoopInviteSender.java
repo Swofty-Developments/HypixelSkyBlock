@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.coop;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -167,12 +168,11 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
             set(new GUIItem(slots[i + 1]) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     Locale l = p.getLocale();
                     String status = accepted ? I18n.string("gui_coop.sender.accepted_yes", l) : I18n.string("gui_coop.sender.accepted_no", l);
                     return ItemStackCreator.getStackHead(
                             displayName, PlayerSkin.fromUuid(String.valueOf(target)), 1,
-                            List.of(" ", I18n.string("gui_coop.sender.player_accepted", l, Map.of("status", status))));
+                        List.of(" ", I18n.string("gui_coop.sender.player_accepted", l, Component.text(status))));
                 }
             });
         }

@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.auction;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -16,8 +17,6 @@ import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import java.util.Map;
 
 public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIAuctionHouse() {
@@ -88,8 +87,7 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     return TranslatableItemStackCreator.getStack("gui_auction.house.manage_button", Material.GOLDEN_HORSE_ARMOR, 1,
-                            "gui_auction.house.manage_button.lore", Map.of(
-                                    "count", String.valueOf(player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size())
+                        "gui_auction.house.manage_button.lore", Component.text(String.valueOf(player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size())
                             ));
                 }
             });

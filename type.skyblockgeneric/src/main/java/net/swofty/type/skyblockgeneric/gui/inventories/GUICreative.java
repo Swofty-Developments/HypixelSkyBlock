@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.gui.inventories;
 
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
@@ -28,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.CreativeState> {
 
@@ -38,10 +38,7 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
                 (state, ctx) -> {
                     int totalPages = Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / DEFAULT_SLOTS.length));
                     Locale l = ctx.player().getLocale();
-                    return I18n.string("gui_misc.creative.title", l, Map.of(
-                            "page", String.valueOf(state.page() + 1),
-                            "total_pages", String.valueOf(totalPages)
-                    ));
+                    return I18n.string("gui_misc.creative.title", l, Component.text(String.valueOf(state.page() + 1)), Component.text(String.valueOf(totalPages)));
                 },
                 InventoryType.CHEST_6_ROW
         );
@@ -136,12 +133,12 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
             toGive.setAmount(64);
             player.addAndUpdateItem(toGive);
             player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-            player.sendMessage(I18n.t("gui_misc.creative.given_stack", Map.of("item_name", toGive.getDisplayName())));
+            player.sendMessage(I18n.t("gui_misc.creative.given_stack", Component.text(toGive.getDisplayName())));
         } else {
             toGive.setAmount(1);
             player.addAndUpdateItem(toGive);
             player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-            player.sendMessage(I18n.t("gui_misc.creative.given_single", Map.of("item_name", toGive.getDisplayName())));
+            player.sendMessage(I18n.t("gui_misc.creative.given_single", Component.text(toGive.getDisplayName())));
         }
     }
 

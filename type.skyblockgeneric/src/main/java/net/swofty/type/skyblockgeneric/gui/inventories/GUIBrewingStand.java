@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -30,7 +31,6 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGUI {
 
@@ -204,7 +204,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
         if (brewingData.isBrewing()) {
             paneMaterial = animationToggle ? Material.RED_STAINED_GLASS_PANE : Material.ORANGE_STAINED_GLASS_PANE;
             long remainingSeconds = brewingData.getRemainingTimeMs() / 1000;
-            paneName = I18n.string("gui_misc.brewing_stand.remaining_time", l, Map.of("seconds", String.valueOf(remainingSeconds)));
+            paneName = I18n.string("gui_misc.brewing_stand.remaining_time", l, Component.text(String.valueOf(remainingSeconds)));
             paneLore = new String[0];
         } else {
             paneMaterial = Material.LIGHT_BLUE_STAINED_GLASS_PANE;

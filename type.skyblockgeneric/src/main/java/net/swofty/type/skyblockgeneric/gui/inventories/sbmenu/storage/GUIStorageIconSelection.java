@@ -1,23 +1,26 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.storage;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.PaginatedView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStorage;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GUIStorageIconSelection extends PaginatedView<Material, GUIStorageIconSelection.IconSelectionState> {
     private static final int[] PAGINATED_SLOTS = {
@@ -38,7 +41,7 @@ public class GUIStorageIconSelection extends PaginatedView<Material, GUIStorageI
         return ViewConfiguration.withString(
                 (state, ctx) -> {
                     int totalPages = Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length));
-                    return I18n.string("gui_sbmenu.storage.icon.title", ctx.player().getLocale(), Map.of("page", String.valueOf(state.page() + 1), "max_page", String.valueOf(totalPages)));
+                    return I18n.string("gui_sbmenu.storage.icon.title", ctx.player().getLocale(), Component.text(String.valueOf(state.page() + 1)), Component.text(String.valueOf(totalPages)));
                 },
                 InventoryType.CHEST_6_ROW
         );

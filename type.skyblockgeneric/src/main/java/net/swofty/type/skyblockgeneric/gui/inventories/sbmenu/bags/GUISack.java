@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
@@ -24,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUISack implements StatefulView<GUISack.SackState> {
     private final ItemType itemTypeLinker;
@@ -122,11 +122,7 @@ public class GUISack implements StatefulView<GUISack.SackState> {
                     Integer amount = p.getSackItems().getAmount(linker);
                     String color = (amount == finalMaxStorage) ? "§a" : "§e";
                     lore.add("");
-                    lore.add(I18n.string("gui_sbmenu.bags.sack.stored", l, Map.of(
-                            "color", color,
-                            "amount", String.valueOf(amount),
-                            "max", StringUtility.shortenNumber(StringUtility.roundTo(finalMaxStorage, 0))
-                    )));
+                    lore.add(I18n.string("gui_sbmenu.bags.sack.stored", l, Component.text(color), Component.text(String.valueOf(amount)), Component.text(StringUtility.shortenNumber(StringUtility.roundTo(finalMaxStorage, 0)))));
                     lore.add("");
                     if (amount != 0) {
                         lore.add(I18n.string("gui_sbmenu.bags.sack.right_click_stack", l));

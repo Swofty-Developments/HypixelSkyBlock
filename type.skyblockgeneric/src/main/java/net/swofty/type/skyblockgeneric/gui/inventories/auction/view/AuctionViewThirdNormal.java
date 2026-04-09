@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
 
 public class AuctionViewThirdNormal implements AuctionView {
@@ -57,7 +56,7 @@ public class AuctionViewThirdNormal implements AuctionView {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
-                lore.add(I18n.string("gui_auction.view_third_normal.bid_history_total", l, Map.of("count", String.valueOf(item.getBids().size()))));
+                lore.add(I18n.string("gui_auction.view_third_normal.bid_history_total", l, Component.text(String.valueOf(item.getBids().size()))));
 
                 List<AuctionItem.Bid> bids = new ArrayList<>(item.getBids());
                 bids.sort(Comparator.comparingLong(AuctionItem.Bid::value).reversed());
@@ -68,8 +67,8 @@ public class AuctionViewThirdNormal implements AuctionView {
                     AuctionItem.Bid bid = bids.get(i);
 
                     lore.add(I18n.string("gui_auction.view_third_normal.bid_separator", l));
-                    lore.add(I18n.string("gui_auction.view_third_normal.bid_value", l, Map.of("value", String.valueOf(bid.value()))));
-                    lore.add(I18n.string("gui_auction.view_third_normal.bid_by", l, Map.of("player_name", SkyBlockPlayer.getDisplayName(bid.uuid()))));
+                    lore.add(I18n.string("gui_auction.view_third_normal.bid_value", l, Component.text(String.valueOf(bid.value()))));
+                    lore.add(I18n.string("gui_auction.view_third_normal.bid_by", l, Component.text(SkyBlockPlayer.getDisplayName(bid.uuid()))));
                     lore.add("§b" + StringUtility.formatTimeAsAgo(bid.timestamp()));
                 }
 
@@ -100,15 +99,14 @@ public class AuctionViewThirdNormal implements AuctionView {
                                 add(item.getUuid());
                             }});
 
-                            player.sendMessage(I18n.t("gui_auction.view_third_normal.coins_returned", Map.of("amount", String.valueOf(highestBidMadeByPlayer.value()))));
+                            player.sendMessage(I18n.t("gui_auction.view_third_normal.coins_returned", Component.text(String.valueOf(highestBidMadeByPlayer.value()))));
                             player.closeInventory();
                         }
 
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
                             return TranslatableItemStackCreator.getStack("gui_auction.view_third_normal.auction_ended_lost", Material.BARRIER, 1,
-                                    "gui_auction.view_third_normal.auction_ended_lost_claim.lore", Map.of(
-                                            "amount", String.valueOf(highestBidMadeByPlayer.value())
+                                "gui_auction.view_third_normal.auction_ended_lost_claim.lore", Component.text(String.valueOf(highestBidMadeByPlayer.value())
                                     ));
                         }
                     });
@@ -173,7 +171,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                     return gui;
                 }
                 if (val < gui.minimumBidAmount) {
-                    player.sendMessage(I18n.t("gui_auction.view_third_normal.bid_too_low", Map.of("minimum", String.valueOf(gui.minimumBidAmount))));
+                    player.sendMessage(I18n.t("gui_auction.view_third_normal.bid_too_low", Component.text(String.valueOf(gui.minimumBidAmount))));
                     return gui;
                 }
 
@@ -187,7 +185,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return TranslatableItemStackCreator.getStack(
                     "gui_auction.view_third_normal.bid_amount", Material.GOLD_INGOT, 1,
-                        "gui_auction.view_third_normal.bid_amount.lore", Map.of("minimum", String.valueOf(gui.minimumBidAmount), "amount", String.valueOf(gui.bidAmount)));
+                    "gui_auction.view_third_normal.bid_amount.lore", Component.text(String.valueOf(gui.minimumBidAmount)), Component.text(String.valueOf(gui.bidAmount)));
             }
         });
         gui.set(new GUIClickableItem(29) {
@@ -196,7 +194,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 if (gui.bidAmount < gui.minimumBidAmount) {
-                    player.sendMessage(I18n.t("gui_auction.view_third_normal.bid_too_low", Map.of("minimum", String.valueOf(gui.minimumBidAmount))));
+                    player.sendMessage(I18n.t("gui_auction.view_third_normal.bid_too_low", Component.text(String.valueOf(gui.minimumBidAmount))));
                     return;
                 }
 
@@ -265,7 +263,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                                     item, category);
                     new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message).join();
 
-                    player.sendMessage(I18n.t("gui_auction.view_third_normal.bid_placed", Map.of("amount", String.valueOf(gui.bidAmount))));
+                    player.sendMessage(I18n.t("gui_auction.view_third_normal.bid_placed", Component.text(String.valueOf(gui.bidAmount))));
                     new GUIAuctionViewItem(gui.auctionID, gui.previousGUI).open(player);
 
                     DatapointUUIDList activeBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
@@ -307,7 +305,7 @@ public class AuctionViewThirdNormal implements AuctionView {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 return TranslatableItemStackCreator.getStack("gui_auction.view_third_normal.submit_bid", Material.GOLD_NUGGET, 1,
-                        "gui_auction.view_third_normal.submit_bid.lore", Map.of("amount", String.valueOf(gui.bidAmount)));
+                    "gui_auction.view_third_normal.submit_bid.lore", Component.text(String.valueOf(gui.bidAmount)));
             }
         });
     }

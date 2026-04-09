@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -195,21 +196,15 @@ public class GUIReforge extends HypixelInventoryGUI {
 
                 String itemName = StringUtility.toNormalCase(item.getAttributeHandler().getTypeAsString());
 
-                player.sendMessage(I18n.t("gui_reforge.success_message", Map.of(
-                        "old_name", item.getAttributeHandler().getRarity().getColor() + oldPrefix,
-                        "item_name", itemName,
-                        "new_name", item.getAttributeHandler().getRarity().getColor() + " " + selectedReforge.getPrefix()
-                )));
+                player.sendMessage(I18n.t("gui_reforge.success_message", Component.text(item.getAttributeHandler().getRarity().getColor() + oldPrefix), Component.text(itemName), Component.text(item.getAttributeHandler().getRarity().getColor() + " " + selectedReforge.getPrefix())));
 
                 updateFromItem(item);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return TranslatableItemStackCreator.getStack("gui_reforge.reforge_button", Material.ANVIL, 1,
-                        "gui_reforge.reforge_button.lore", Map.of(
-                                "cost", String.valueOf(COST_MAP.get(item.getAttributeHandler().getRarity()))
+                    "gui_reforge.reforge_button.lore", Component.text(String.valueOf(COST_MAP.get(item.getAttributeHandler().getRarity()))
                         ));
             }
         });

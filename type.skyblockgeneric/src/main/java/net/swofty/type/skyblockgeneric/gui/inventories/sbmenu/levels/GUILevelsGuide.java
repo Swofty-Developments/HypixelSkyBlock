@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -18,7 +19,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUILevelsGuide extends StatelessView {
     private final LevelsGuide guide;
@@ -40,7 +40,7 @@ public class GUILevelsGuide extends StatelessView {
     @Override
     public ViewConfiguration<DefaultState> configuration() {
         return ViewConfiguration.withString(
-                (state, ctx) -> I18n.string("gui_sbmenu.levels.guide.title", ctx.player().getLocale(), Map.of("guide_name", StringUtility.toNormalCase(guide.name()))),
+            (state, ctx) -> I18n.string("gui_sbmenu.levels.guide.title", ctx.player().getLocale(), Component.text(StringUtility.toNormalCase(guide.name()))),
                 InventoryType.CHEST_6_ROW);
     }
 
@@ -70,7 +70,7 @@ public class GUILevelsGuide extends StatelessView {
                 List<String> lore = new ArrayList<>();
 
                 if (task.getCauses().size() > 1) {
-                    lore.add(I18n.string("gui_sbmenu.levels.guide.tasks", l, Map.of("count", String.valueOf(task.getCauses().size()))));
+                    lore.add(I18n.string("gui_sbmenu.levels.guide.tasks", l, Component.text(String.valueOf(task.getCauses().size()))));
                     lore.add("");
                 }
 

@@ -48,7 +48,7 @@ public class GUIRecipe extends StatelessView {
         ItemType type = item.getAttributeHandler().getPotentialType();
         String name = type != null ? type.getDisplayName() : "Unknown";
         return ViewConfiguration.withString(
-                (state, ctx) -> I18n.string("gui_sbmenu.recipe.view.title", ctx.player().getLocale(), java.util.Map.of("item_name", name)),
+            (state, ctx) -> I18n.string("gui_sbmenu.recipe.view.title", ctx.player().getLocale(), Component.text(name)),
                 InventoryType.CHEST_6_ROW);
     }
 

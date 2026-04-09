@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.rusty;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
@@ -23,7 +24,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -119,7 +119,7 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
                 String toggleAction = player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION) ? "disable" : "enable";
                 return ItemStackCreator.getStack(I18n.string("gui_rusty.submenu.shop_confirmations", l),
                         player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION) ? Material.LIME_DYE : Material.LIGHT_GRAY_DYE, 1,
-                        I18n.lore("gui_rusty.submenu.shop_confirmations.lore", l, Map.of("toggle_action", toggleAction)));
+                    I18n.lore("gui_rusty.submenu.shop_confirmations.lore", l, Component.text(toggleAction)));
             }
         });
 
@@ -146,7 +146,7 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
                 Locale l = player.getLocale();
                 String status = player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_SORT_BY_RARITY) ? "§aYES" : "§cNO";
                 return ItemStackCreator.getStack(I18n.string("gui_rusty.submenu.sort_by_rarity", l), Material.ENDER_EYE, 1,
-                        I18n.lore("gui_rusty.submenu.sort_by_rarity.lore", l, Map.of("status", status)));
+                    I18n.lore("gui_rusty.submenu.sort_by_rarity.lore", l, Component.text(status)));
             }
         });
 
@@ -194,10 +194,7 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
                 if (skyblockPlayer.getCoins() >= price) {
                     skyblockPlayer.addAndUpdateItem(item);
                     skyblockPlayer.removeCoins(price);
-                    skyblockPlayer.sendMessage(I18n.string("gui_rusty.submenu.bought_message", l, Map.of(
-                            "item_name", item.getDisplayName(),
-                            "price", String.valueOf(price)
-                    )));
+                    skyblockPlayer.sendMessage(I18n.string("gui_rusty.submenu.bought_message", l, Component.text(item.getDisplayName()), Component.text(String.valueOf(price))));
                 } else {
                     skyblockPlayer.sendMessage(I18n.t("gui_rusty.submenu.not_enough_coins"));
                 }

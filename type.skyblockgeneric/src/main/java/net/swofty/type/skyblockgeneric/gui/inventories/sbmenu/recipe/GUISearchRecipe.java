@@ -10,7 +10,11 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.Layouts;
+import net.swofty.type.generic.gui.v2.PaginatedView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -25,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchRecipe.SearchState> {
@@ -107,7 +110,7 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
             layout.slot(22, (searchState, c) -> {
                 Locale l = c.player().getLocale();
                 return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.search.no_results", l), Material.BARRIER, 1,
-                    I18n.lore("gui_sbmenu.recipe.search.no_results.lore", l, Map.of("query", searchState.query())));
+                    I18n.lore("gui_sbmenu.recipe.search.no_results.lore", l, Component.text(searchState.query())));
             });
         }
     }
@@ -119,7 +122,7 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
 
     @Override
     public ViewConfiguration<SearchState> configuration() {
-        return ViewConfiguration.withString((state, ctx) -> I18n.string("gui_sbmenu.recipe.search.title", ctx.player().getLocale(), Map.of("query", state.query(), "page", String.valueOf(state.page() + 1), "max_page", String.valueOf(Math.max(1, (int) Math.ceil((double) state.items().size() / DEFAULT_SLOTS.length))))), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.withString((state, ctx) -> I18n.string("gui_sbmenu.recipe.search.title", ctx.player().getLocale(), Component.text(state.query()), Component.text(String.valueOf(state.page() + 1)), Component.text(String.valueOf(Math.max(1, (int) Math.ceil((double) state.items().size() / DEFAULT_SLOTS.length))))), InventoryType.CHEST_6_ROW);
     }
 
     public static SearchState createInitialState(String query) {

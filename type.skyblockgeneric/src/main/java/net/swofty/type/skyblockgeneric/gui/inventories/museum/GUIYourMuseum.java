@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.museum;
 
 import lombok.SneakyThrows;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -87,7 +88,7 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
                 double percentageUnlocked = (double) unlockedItems / (double) maxAmountOfItems * 100;
                 double percentageUnlockedToTwoDecimalPlaces = Math.round(percentageUnlocked * 100) / 100.0;
 
-                lore.add(I18n.string("gui_museum.main.items_donated", l, Map.of("percentage", String.valueOf(percentageUnlockedToTwoDecimalPlaces))));
+                lore.add(I18n.string("gui_museum.main.items_donated", l, Component.text(String.valueOf(percentageUnlockedToTwoDecimalPlaces))));
                 lore.add(getAsDisplay(unlockedItems, maxAmountOfItems));
 
                 Map<UUID, Double> calculatedPrices = data.getCalculatedPrices();
@@ -134,14 +135,14 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     Locale l = p.getLocale();
                     List<String> lore = new ArrayList<>(I18n.lore("gui_museum.main.category_button.lore_prefix", l,
-                            Map.of("color", category.getColor(), "category", category.getCategory())));
+                        Component.text(category.getColor()), Component.text(category.getCategory())));
 
                     int maxAmountOfItems = MuseumableItemCategory.getMuseumableItemCategorySize(category);
                     int unlockedItems = data.getItemsByCategory(category).size();
                     double percentage = (double) unlockedItems / (double) maxAmountOfItems * 100;
                     double percentageToTwoDecimalPlaces = Math.round(percentage * 100) / 100.0;
 
-                    lore.add(I18n.string("gui_museum.main.category_items_donated", l, Map.of("percentage", String.valueOf(percentageToTwoDecimalPlaces))));
+                    lore.add(I18n.string("gui_museum.main.category_items_donated", l, Component.text(String.valueOf(percentageToTwoDecimalPlaces))));
                     lore.add(getAsDisplay(unlockedItems, maxAmountOfItems));
                     lore.add(" ");
                     lore.add(I18n.string("gui_museum.main.category_click", l));

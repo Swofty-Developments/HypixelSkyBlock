@@ -17,7 +17,6 @@ import net.swofty.type.skyblockgeneric.item.components.SoulflowComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIConsumeSoulflow implements View<GUIConsumeSoulflow.State> {
 
@@ -62,10 +61,7 @@ public class GUIConsumeSoulflow implements View<GUIConsumeSoulflow.State> {
 
 					data.get(SkyBlockDataHandler.Data.SOULFLOW, DatapointInteger.class).setValue(soulflow + addition);
 					Locale l = player.getLocale();
-                    player.sendMessage(I18n.t("gui_misc.consume_soulflow.consumed_message", Map.of(
-							"addition", String.valueOf(addition),
-							"total", String.valueOf(soulflow + addition)
-					)));
+                    player.sendMessage(I18n.t("gui_misc.consume_soulflow.consumed_message", Component.text(String.valueOf(addition)), Component.text(String.valueOf(soulflow + addition))));
 
 					player.getInventory().setItemStack(player.getHeldSlot(), ItemStack.AIR);
 					player.closeInventory();

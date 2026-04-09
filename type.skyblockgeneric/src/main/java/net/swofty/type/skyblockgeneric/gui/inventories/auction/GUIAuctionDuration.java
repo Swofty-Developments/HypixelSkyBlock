@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.auction;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -18,8 +19,6 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionEscrow;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Locale;
-import java.util.Map;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUIAuctionDuration extends HypixelInventoryGUI {
@@ -110,7 +109,7 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 ItemStack.Builder stack = ItemStackCreator.getStack(
-                        I18n.string("gui_auction.duration.hours", l, Map.of("hours", String.valueOf(hours))),
+                    I18n.string("gui_auction.duration.hours", l, Component.text(String.valueOf(hours))),
                         color, 1,
                         " ",
                         I18n.string("gui_auction.duration.hours_click", l));

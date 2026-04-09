@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
@@ -140,7 +141,7 @@ public class GUISkyBlockLevels extends StatelessView {
                 }
                 lore.add(I18n.string("gui_sbmenu.levels.main.click_to_view", l));
 
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.main.level", l, Map.of("level", String.valueOf(level.asInt()))), material, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.main.level", l, Component.text(String.valueOf(level.asInt()))), material, 1, lore);
             }, (click, c) -> c.player().openView(new GUISkyBlockLevel(level)));
         }
 
@@ -156,13 +157,11 @@ public class GUISkyBlockLevels extends StatelessView {
                 lore.add(I18n.string("gui_sbmenu.levels.main.rewards", l));
                 currentMilestone.getUnlocks().forEach(unlock -> lore.addAll(unlock.getDisplay(p, currentMilestone.asInt())));
                 lore.add(" ");
-                lore.add(I18n.string("gui_sbmenu.levels.main.xp_left", l, Map.of(
-                        "xp", String.valueOf((long) (currentMilestone.getCumulativeExperience() - p.getSkyBlockExperience().getTotalXP())),
-                        "percent", String.valueOf((int) (p.getSkyBlockExperience().getTotalXP() / currentMilestone.getCumulativeExperience() * 100)))));
+                lore.add(I18n.string("gui_sbmenu.levels.main.xp_left", l, Component.text(String.valueOf((long) (currentMilestone.getCumulativeExperience() - p.getSkyBlockExperience().getTotalXP()))), Component.text(String.valueOf((int) (p.getSkyBlockExperience().getTotalXP() / currentMilestone.getCumulativeExperience() * 100)))));
                 lore.add(" ");
                 lore.add(I18n.string("gui_sbmenu.levels.main.click_to_view", l));
 
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.main.level", l, Map.of("level", String.valueOf(currentMilestone.asInt()))), Material.PURPLE_STAINED_GLASS_PANE, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.main.level", l, Component.text(String.valueOf(currentMilestone.asInt()))), Material.PURPLE_STAINED_GLASS_PANE, 1, lore);
             }, (click, c) -> c.player().openView(new GUISkyBlockLevel(currentMilestone)));
         }
     }
