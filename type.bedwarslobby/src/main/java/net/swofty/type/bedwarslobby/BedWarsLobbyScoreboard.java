@@ -1,5 +1,6 @@
 package net.swofty.type.bedwarslobby;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
@@ -51,7 +52,8 @@ public class BedWarsLobbyScoreboard {
 
 				double percentage = Math.min(1.0, (double) progress / maxExperience);
 				int filledSquares = (int) Math.round(percentage * 10);
-				StringBuilder progressBar = new StringBuilder(" " + I18n.string("scoreboard.bedwars_lobby.progress_bar_open", l));
+				String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
+				StringBuilder progressBar = new StringBuilder();
 				for (int i = 0; i < 10; i++) {
 					if (i < filledSquares) {
 						progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_filled", l));
@@ -59,33 +61,36 @@ public class BedWarsLobbyScoreboard {
 						progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_empty", l));
 					}
 				}
-				progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_close", l));
 
 				long tokens = bwDataHandler.get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class).getValue();
 				long tickets = bwDataHandler.get(BedWarsDataHandler.Data.SLUMBER_TICKETS, DatapointLeaderboardLong.class).getValue();
 
-				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.level_label", l) + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)));
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.progress_label", l) + suffix(progress) + I18n.string("scoreboard.bedwars_lobby.progress_separator", l) + suffix(maxExperience));
-				lines.add(progressBar.toString());
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.tokens_label", l) + tokens);
-				lines.add(I18n.string("scoreboard.bedwars_lobby.tickets_label", l) + tickets + I18n.string("scoreboard.bedwars_lobby.tickets_max", l));
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.total_kills_label", l));
-				lines.add(I18n.string("scoreboard.bedwars_lobby.total_wins_label", l));
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.common.footer", l));
+				List<Component> lines = new ArrayList<>();
+				lines.add(I18n.t("scoreboard.common.date_line", Component.text(date), Component.text(HypixelConst.getServerName())));
+				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.bedwars_lobby.level_line",
+					Component.text(BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)))));
+				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.bedwars_lobby.progress_line",
+					Component.text(suffix(progress)),
+					Component.text(suffix(maxExperience))));
+				lines.add(Component.space().append(I18n.t("scoreboard.bedwars_lobby.progress_bar",
+					Component.text(progressBar.toString()))));
+				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.bedwars_lobby.tokens_line", Component.text(String.valueOf(tokens))));
+				lines.add(I18n.t("scoreboard.bedwars_lobby.tickets_line", Component.text(String.valueOf(tickets))));
+				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.bedwars_lobby.total_kills_label"));
+				lines.add(I18n.t("scoreboard.bedwars_lobby.total_wins_label"));
+				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.common.footer"));
 
 				if (!scoreboard.hasScoreboard(player)) {
-					scoreboard.createScoreboard(player, getSidebarName(prototypeName, l));
+					scoreboard.createScoreboard(player, Component.text(getSidebarName(prototypeName, l)));
 				}
 
 				scoreboard.updateLines(player, lines);
-				scoreboard.updateTitle(player, getSidebarName(prototypeName, l));
+				scoreboard.updateTitle(player, Component.text(getSidebarName(prototypeName, l)));
 			}
 			return TaskSchedule.tick(4);
 		});

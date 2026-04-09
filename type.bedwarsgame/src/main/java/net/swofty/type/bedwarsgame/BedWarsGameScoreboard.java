@@ -1,12 +1,14 @@
 package net.swofty.type.bedwarsgame;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
@@ -49,18 +51,23 @@ public class BedWarsGameScoreboard {
 					continue;
 				}
 
-				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
-				lines.add("§7 ");
+				String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
+
+				List<Component> lines = new ArrayList<>();
+				lines.add(I18n.t("scoreboard.common.date_line", Component.text(date), Component.text(HypixelConst.getServerName())));
+				lines.add(Component.text("§7 "));
 
 				if (game.getGameStatus() == GameStatus.WAITING) {
-					lines.add(I18n.string("scoreboard.bedwars_game.map_label", l) + game.getMapEntry().getName());
-					lines.add(I18n.string("scoreboard.bedwars_game.players_label", l) + game.getPlayers().size() + "/" + game.getMapEntry().getConfiguration().getTeams().size());
-					lines.add("§7 ");
-					lines.add(I18n.string("scoreboard.bedwars_game.starting_in_label", l) + game.getCountdown().getRemainingSeconds() + I18n.string("scoreboard.bedwars_game.starting_in_suffix", l));
-					lines.add("§7 ");
-					lines.add(I18n.string("scoreboard.bedwars_game.mode_label", l) + game.getBedwarsGameType().getDisplayName());
-					lines.add(I18n.string("scoreboard.bedwars_game.version_label", l));
+					lines.add(I18n.t("scoreboard.bedwars_game.map_line", Component.text(game.getMapEntry().getName())));
+					lines.add(I18n.t("scoreboard.bedwars_game.players_line",
+						Component.text(String.valueOf(game.getPlayers().size())),
+						Component.text(String.valueOf(game.getMapEntry().getConfiguration().getTeams().size()))));
+					lines.add(Component.text("§7 "));
+					lines.add(I18n.t("scoreboard.bedwars_game.starting_in_line",
+						Component.text(String.valueOf(game.getCountdown().getRemainingSeconds()))));
+					lines.add(Component.text("§7 "));
+					lines.add(I18n.t("scoreboard.bedwars_game.mode_line", Component.text(game.getBedwarsGameType().getDisplayName())));
+					lines.add(I18n.t("scoreboard.bedwars_game.version_label"));
 				} else {
 					String eventName = game.getEventManager().getNextEvent() != null
 							? game.getEventManager().getNextEvent().getDisplayName()
@@ -69,28 +76,33 @@ public class BedWarsGameScoreboard {
 					long minutesPart = seconds / 60;
 					long secondsPart = seconds % 60;
 					String timeLeft = String.format("%d:%02d", minutesPart, secondsPart);
-					lines.add(I18n.string("scoreboard.bedwars_game.event_in_label", l, Map.of("event_name", eventName, "time_left", timeLeft)));
-					lines.add("§7 ");
-					for (Map.Entry<TeamKey, net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
+					lines.add(I18n.t("scoreboard.bedwars_game.event_in_line",
+						Component.text(eventName),
+						Component.text(timeLeft)));
+					lines.add(Component.text("§7 "));
+					for (Map.Entry<TeamKey, BedWarsMapsConfig.MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
 						TeamKey teamKey = entry.getKey();
 						String teamName = teamKey.getName();
 						String teamInitial = teamName.substring(0, 1).toUpperCase();
 
-						String bedStatus = game.getTeamManager().isBedAlive(teamKey)
-								? I18n.string("scoreboard.bedwars_game.bed_alive", l)
-								: I18n.string("scoreboard.bedwars_game.bed_dead", l);
-						lines.add(String.format("%s%s §f%s %s", teamKey.chatColor(), teamInitial, teamName, bedStatus));
+						Component bedStatus = game.getTeamManager().isBedAlive(teamKey)
+							? I18n.t("scoreboard.bedwars_game.bed_alive")
+							: I18n.t("scoreboard.bedwars_game.bed_dead");
+						lines.add(I18n.t("scoreboard.bedwars_game.team_status_line",
+							Component.text(teamKey.chatColor() + teamInitial),
+							Component.text(teamName),
+							bedStatus));
 					}
 				}
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.common.footer", l));
+				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.common.footer"));
 
 				if (!scoreboard.hasScoreboard(player)) {
-					scoreboard.createScoreboard(player, getSidebarName(prototypeName, l));
+					scoreboard.createScoreboard(player, Component.text(getSidebarName(prototypeName, l)));
 				}
 
 				scoreboard.updateLines(player, lines);
-				scoreboard.updateTitle(player, getSidebarName(prototypeName, l));
+				scoreboard.updateTitle(player, Component.text(getSidebarName(prototypeName, l)));
 			}
 			return TaskSchedule.tick(4);
 		});
