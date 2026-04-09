@@ -1,11 +1,11 @@
 package net.swofty.type.island.events.traditional;
 
 import net.minestom.server.event.player.PlayerSpawnEvent;
-import net.minestom.server.instance.SharedInstance;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 public class ActionPlayerTeleport implements HypixelEventClass {
 
@@ -16,8 +16,15 @@ public class ActionPlayerTeleport implements HypixelEventClass {
         if (!event.isFirstSpawn()) return;
         if (!player.hasAuthenticated) return;
 
-        SharedInstance instance = player.getSkyBlockIsland().getSharedInstance().join();
-        player.setInstance(instance, player.getRespawnPoint());
-        player.teleport(player.getRespawnPoint());
+        player.getSkyBlockIsland().getSharedInstance()
+            .thenCompose(instance -> player.setInstance(instance, player.getRespawnPoint()))
+            .thenRun(() -> {
+                player.teleport(player.getRespawnPoint());
+                player.setReadyForEvents();
+            })
+            .exceptionally(throwable -> {
+                Logger.error(throwable, "Failed to place player {} on island {}", player.getUsername(), player.getSkyBlockIsland().getIslandID());
+                return null;
+            });
     }
 }

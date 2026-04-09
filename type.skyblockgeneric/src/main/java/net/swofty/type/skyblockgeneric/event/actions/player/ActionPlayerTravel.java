@@ -11,6 +11,7 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.MissionSet;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionUseTeleporter;
@@ -43,7 +44,7 @@ public class ActionPlayerTravel implements HypixelEventClass {
             if (!MissionSet.GETTING_STARTED.hasCompleted(player)
                 && !data.isCurrentlyActive(MissionUseTeleporter.class)
             ) {
-                player.sendMessage("§cYou must complete your starting missions!");
+                player.sendMessage(I18n.t("commands.hub.must_complete_missions"));
                 return;
             }
 
