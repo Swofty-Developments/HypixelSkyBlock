@@ -6,13 +6,13 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import net.hollowcube.polar.PolarLoader;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
-import net.minestom.server.instance.anvil.AnvilLoader;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
@@ -85,7 +85,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
             } else {
                 temporaryInstance = instanceManager.createInstanceContainer();
             }
-            temporaryInstance.setChunkLoader(new AnvilLoader(loader.getMainInstance().getFolderName()));
+            temporaryInstance.setChunkLoader(new PolarLoader(loader.getMainInstance().getPath()));
 
             HypixelConst.setInstanceContainer(instanceManager.createSharedInstance(temporaryInstance));
         }
