@@ -40,7 +40,7 @@ gameserver/
 ### 1. Create Directory Structure
 
 ```bash
-mkdir -p gameserver/configuration/skyblock/islands
+mkdir -p gameserver/configuration/worldbac
 ```
 
 ### 2. Configure config.yml
