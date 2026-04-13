@@ -32,7 +32,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 	private final SkyBlockPlayer viewedPlayer;
 
 	public GUIViewPlayerProfile(SkyBlockPlayer viewedPlayer) {
-		super(I18n.t("gui_profile.title", I18n.legacy(viewedPlayer.getUsername())), InventoryType.CHEST_6_ROW);
+		super(I18n.t("gui_profile.title", Component.text(viewedPlayer.getUsername())), InventoryType.CHEST_6_ROW);
 		this.viewedPlayer = viewedPlayer;
 	}
 
@@ -44,7 +44,6 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 		set(new GUIItem(2) { //Held Item
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				SkyBlockPlayer player = (SkyBlockPlayer) p;
 				if (!viewedPlayer.getItemInMainHand().isAir()) {
 					return ItemStackCreator.getFromStack(viewedPlayer.getItemInMainHand());
 				} else {
@@ -55,7 +54,6 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 		set(new GUIItem(11) { //Helmet
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				SkyBlockPlayer player = (SkyBlockPlayer) p;
 				if (!viewedPlayer.getHelmet().isAir()) {
 					return ItemStackCreator.getFromStack(viewedPlayer.getHelmet());
 				} else {
@@ -66,7 +64,6 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 		set(new GUIItem(20) { //Chestplate
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				SkyBlockPlayer player = (SkyBlockPlayer) p;
 				if (!viewedPlayer.getChestplate().isAir()) {
 					return ItemStackCreator.getFromStack(viewedPlayer.getChestplate());
 				} else {
@@ -77,7 +74,6 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 		set(new GUIItem(29) { //Leggings
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				SkyBlockPlayer player = (SkyBlockPlayer) p;
 				if (!viewedPlayer.getLeggings().isAir()) {
 					return ItemStackCreator.getFromStack(viewedPlayer.getLeggings());
 				} else {

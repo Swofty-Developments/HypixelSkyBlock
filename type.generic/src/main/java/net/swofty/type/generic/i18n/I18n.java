@@ -5,6 +5,7 @@ import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.translation.GlobalTranslator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -12,7 +13,6 @@ public class I18n {
 
     private static final LegacyComponentSerializer LEGACY =
             LegacyComponentSerializer.legacySection();
-    private static final String DIALOGUE_SEPARATOR = "\\|";
 
     private static HypixelTranslator translator;
 
@@ -34,10 +34,6 @@ public class I18n {
     public static TranslatableComponent t(String key, Component... args) {
         requireKey(key);
         return Component.translatable(key, args);
-    }
-
-    public static Component legacy(String text) {
-        return LEGACY.deserialize(text);
     }
 
     public static String string(String key, Locale locale) {
@@ -76,22 +72,34 @@ public class I18n {
         return List.of(string(key, locale, args).split("\n"));
     }
 
-    public static String[] dialogueLines(String key) {
-        return dialogueLines(key, HypixelTranslator.defaultLocale);
+    public static Component[] dialogue(String key) {
+        return dialogue(key, new Component[0]);
     }
 
-    public static String[] dialogueLines(String key, Component... args) {
-        return dialogueLines(key, HypixelTranslator.defaultLocale, args);
-    }
+    public static Component[] dialogue(String key, Component... args) {
+        if (translator == null) {
+            throw new IllegalStateException("Translator not initialized");
+        }
 
-    public static String[] dialogueLines(String key, Locale locale) {
-        String resolved = string(key, locale);
-        return resolved.split(DIALOGUE_SEPARATOR);
-    }
+        List<Component> lines = new ArrayList<>();
+        int index = 1;
+        while (true) {
+            String numberedKey = key + "." + index;
+            if (!translator.hasKey(numberedKey)) {
+                break;
+            }
 
-    public static String[] dialogueLines(String key, Locale locale, Component... args) {
-        String resolved = string(key, locale, args);
-        return resolved.split(DIALOGUE_SEPARATOR);
+            lines.add(args.length == 0
+                ? Component.translatable(numberedKey)
+                : Component.translatable(numberedKey, args));
+            index++;
+        }
+
+        if (lines.isEmpty()) {
+            throw new IllegalStateException("Missing dialogue translation key in en_US: " + key + ".1");
+        }
+
+        return lines.toArray(new Component[0]);
     }
 
 }
