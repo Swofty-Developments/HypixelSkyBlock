@@ -1,12 +1,13 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.tag.Tag;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.event.HypixelEventHandler;
@@ -36,6 +37,8 @@ import java.util.stream.Collectors;
 public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
     private static final int[] CRAFT_SLOTS = new int[]{10, 11, 12, 19, 20, 21, 28, 29, 30};
     private static final int RESULT_SLOT = 23;
+    private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.legacySection();
+    private static final String[] DEFAULT_CRAFT_ERROR = new String[]{"§cYou cannot craft this item right now."};
 
     @Override
     public ViewConfiguration<CraftingState> configuration() {
@@ -58,6 +61,7 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
 
         boolean hasValidRecipe = recipe != null;
         SkyBlockRecipe.CraftingResult result = hasValidRecipe ? recipe.getCanCraft().apply(player) : null;
+        String[] craftErrorMessages = getCraftErrorMessages(result);
         boolean canCraft = hasValidRecipe && result != null && result.allowed();
 
         Material borderMaterial = canCraft ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE;
@@ -81,9 +85,9 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
         if (!hasValidRecipe) {
             layout.slot(RESULT_SLOT, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.crafting.recipe_required", Material.BARRIER, 1, "gui_sbmenu.crafting.recipe_required.lore"));
         } else if (!canCraft) {
-            layout.slot(RESULT_SLOT, (s, c) -> ItemStackCreator.getStack(result.errorMessage()[0],
+            layout.slot(RESULT_SLOT, (s, c) -> ItemStackCreator.getStack(craftErrorMessages[0],
                     Material.BEDROCK, 1,
-                    Arrays.copyOfRange(result.errorMessage(), 1, result.errorMessage().length)));
+                Arrays.copyOfRange(craftErrorMessages, 1, craftErrorMessages.length)));
         } else {
             int amount = recipe.getAmount();
             layout.slot(RESULT_SLOT, (s, c) -> {
@@ -97,7 +101,7 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
                 }
                 Locale l = c.player().getLocale();
                 lore.addAll(I18n.lore("gui_sbmenu.crafting.crafting_item.lore", l));
-                builder.set(DataComponents.LORE, lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+                builder.set(DataComponents.LORE, lore.stream().map(line -> LEGACY_SERIALIZER.deserialize(line).decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()));
 
                 return builder;
@@ -114,14 +118,22 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
     }
 
     private int computeGridHash(ViewContext ctx) {
-        // Stable & cheap hash: material id + amount per slot (no streams/allocations beyond the 9 reads).
         int hash = 1;
         for (int slot : CRAFT_SLOTS) {
             ItemStack item = ctx.inventory().getItemStack(slot);
-            int mat = item.material().id();
-            hash = 31 * hash + (mat * 37 + item.amount());
+            hash = 31 * hash + item.material().id();
+            hash = 31 * hash + item.amount();
+            String itemType = item.getTag(Tag.String("item_type"));
+            hash = 31 * hash + (itemType != null ? itemType.hashCode() : 0);
         }
         return hash;
+    }
+
+    private String[] getCraftErrorMessages(SkyBlockRecipe.CraftingResult result) {
+        if (result == null || result.errorMessage() == null || result.errorMessage().length == 0) {
+            return DEFAULT_CRAFT_ERROR;
+        }
+        return result.errorMessage();
     }
 
     private SkyBlockRecipe<?> parseCurrentRecipe(ViewContext ctx) {
@@ -135,6 +147,11 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
         ItemType cursorItemType = cursorItem.getAttributeHandler().getPotentialType();
         ItemType resultItemType = recipe.getResult().getAttributeHandler().getPotentialType();
         boolean isShift = click.click() instanceof Click.LeftShift || click.click() instanceof Click.RightShift;
+
+        SkyBlockRecipe.CraftingResult permissionResult = recipe.getCanCraft().apply(player);
+        if (permissionResult == null || !permissionResult.allowed()) {
+            return;
+        }
 
         if (!cursorItemStack.isAir() && (cursorItemType == null || !cursorItemType.equals(resultItemType))) {
             return;
@@ -182,13 +199,20 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
             if (newAmount > maxStackSize) {
                 return;
             }
+
+            SkyBlockItem[] currentItems = getCurrentRecipeAsItems(ctx);
+            SkyBlockItem[] toReplace;
+            try {
+                toReplace = recipe.consume(currentItems);
+            } catch (Exception e) {
+                return;
+            }
+            applyConsumedGrid(player, ctx, toReplace);
+
             ItemStack newCursorItem = craftedItem.withAmount(newAmount);
             player.getInventory().setCursorItem(newCursorItem);
 
             HypixelEventHandler.callCustomEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), recipe));
-            SkyBlockItem[] currentItems = getCurrentRecipeAsItems(ctx);
-            SkyBlockItem[] toReplace = recipe.consume(currentItems);
-            applyConsumedGrid(player, ctx, toReplace);
         }
 
         player.getInventory().update();

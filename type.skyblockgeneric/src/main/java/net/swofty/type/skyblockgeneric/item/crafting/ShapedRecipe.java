@@ -8,7 +8,12 @@ import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Getter
@@ -232,6 +237,13 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                     return false;
                 }
             }
+
+            if (symbolHasExtraReq[sym & 0xFF]) {
+                Function<SkyBlockItem, Boolean> req = extraReqByChar[sym & 0xFF];
+                if (req != null && !req.apply(actualItem)) {
+                    return false;
+                }
+            }
         }
 
         return true;
@@ -302,7 +314,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
         Map<Character, ItemQuantifiable> ingredientMapCopy = new HashMap<>();
         for (int i = 0; i < CHAR_SPACE; i++) {
             ItemQuantifiable iq = ingredientByChar[i];
-            if (iq != null) ingredientMapCopy.put((char) i, iq);
+            if (iq != null) ingredientMapCopy.put((char) i, iq.clone());
         }
 
         ShapedRecipe cloned = new ShapedRecipe(recipeType, result.clone(), ingredientMapCopy, patternCopy, canCraft);
