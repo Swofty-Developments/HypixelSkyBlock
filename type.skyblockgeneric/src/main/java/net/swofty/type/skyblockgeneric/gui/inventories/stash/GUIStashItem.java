@@ -20,7 +20,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
 
@@ -100,7 +99,7 @@ public class GUIStashItem extends HypixelPaginatedGUI<SkyBlockItem> {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int count = player.getStash().getItemStashCount();
                 return TranslatableItemStackCreator.getStack("gui_stash.item.fill_inventory", Material.EMERALD, 1,
-                        "gui_stash.item.fill_inventory.lore", Map.of("count", String.valueOf(count)));
+                    "gui_stash.item.fill_inventory.lore", Component.text(String.valueOf(count)));
             }
         });
 

@@ -23,7 +23,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUISkyBlockLevels extends StatelessView {
 
@@ -48,7 +47,7 @@ public class GUISkyBlockLevels extends StatelessView {
                     player.getToggles().get(DatapointToggles.Toggles.ToggleType.SKYBLOCK_LEVELS_IN_CHAT)
                             ? Material.LIME_DYE : Material.GRAY_DYE,
                     1,
-                    "gui_sbmenu.levels.main.chat_toggle.lore", Map.of("status", status));
+                "gui_sbmenu.levels.main.chat_toggle.lore", Component.text(status));
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             Locale l = player.getLocale();
@@ -71,7 +70,7 @@ public class GUISkyBlockLevels extends StatelessView {
                 if (j < displayList.size() - 1) display.append("\n");
             }
             return TranslatableItemStackCreator.getStack("gui_sbmenu.levels.main.level_rewards", Material.CHEST, 1,
-                    "gui_sbmenu.levels.main.level_rewards.lore", Map.of("display", display.toString()));
+                "gui_sbmenu.levels.main.level_rewards.lore", Component.text(display.toString()));
         }, (click, c) -> c.player().openView(new GUILevelRewards()));
 
         // Your SkyBlock Level Ranking
@@ -83,10 +82,10 @@ public class GUISkyBlockLevels extends StatelessView {
 
             return TranslatableItemStackCreator.getStack("gui_sbmenu.levels.main.ranking",
                     Material.PAINTING, 1,
-                    "gui_sbmenu.levels.main.ranking.lore", Map.of(
-                            "level_display", level.getColor() + level.toString(),
-                            "xp", String.valueOf(Math.round(player.getSkyBlockExperience().getTotalXP())),
-                            "percent", new java.text.DecimalFormat("##.##").format((double) completedChallenges / totalChallenges * 100)));
+                "gui_sbmenu.levels.main.ranking.lore",
+                Component.text(level.getColor() + level.toString()),
+                Component.text(String.valueOf(Math.round(player.getSkyBlockExperience().getTotalXP()))),
+                Component.text(new java.text.DecimalFormat("##.##").format((double) completedChallenges / totalChallenges * 100)));
         });
 
         // SkyBlock Guide

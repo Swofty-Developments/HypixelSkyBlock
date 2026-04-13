@@ -125,11 +125,11 @@ public class ElectionViewStatsView extends StatelessView {
                         return;
                     }
                     ElectionManager.castVote(c.player().getUuid(), candidateName);
-                    c.player().sendMessage(I18n.string("gui_election.view.vote_divider", l));
-                    c.player().sendMessage(I18n.string("gui_election.view.vote_cast", l, Component.text(candidate.getColoredName()), Component.text(String.valueOf(data.getElectionYear()))));
+                    c.player().sendMessage(I18n.t("gui_election.view.vote_divider"));
+                    c.player().sendMessage(I18n.t("gui_election.view.vote_cast", Component.text(candidate.getColoredName()), Component.text(String.valueOf(data.getElectionYear()))));
                     c.player().sendMessage("  " + I18n.string("gui_election.view.vote_fame", l));
-                    c.player().sendMessage(I18n.string("gui_election.view.vote_result", l, Component.text(candidate.getColoredName()), Component.text(pctStr), Component.text(voteStr)));
-                    c.player().sendMessage(I18n.string("gui_election.view.vote_divider", l));
+                    c.player().sendMessage(I18n.t("gui_election.view.vote_result", Component.text(candidate.getColoredName()), Component.text(pctStr), Component.text(voteStr)));
+                    c.player().sendMessage(I18n.t("gui_election.view.vote_divider"));
                     c.replace(new ElectionViewStatsView());
                 });
             }

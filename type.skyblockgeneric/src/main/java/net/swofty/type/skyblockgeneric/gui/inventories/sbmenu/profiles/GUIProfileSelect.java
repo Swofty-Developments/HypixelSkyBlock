@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.profiles;
 
 import com.mongodb.client.model.Filters;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
@@ -21,7 +22,6 @@ import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class GUIProfileSelect extends StatelessView {
@@ -54,7 +54,9 @@ public class GUIProfileSelect extends StatelessView {
             }
 
             return TranslatableItemStackCreator.getStack("gui_sbmenu.profiles.select.switch", Material.GRASS_BLOCK, 1,
-                    "gui_sbmenu.profiles.select.switch.lore", Map.of("current", currentProfile, "switching_to", switchingTo));
+                "gui_sbmenu.profiles.select.switch.lore",
+                Component.text(currentProfile),
+                Component.text(switchingTo));
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             SkyBlockPlayerProfiles profiles = player.getProfiles();

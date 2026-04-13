@@ -21,7 +21,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIBanker() {
@@ -92,9 +91,7 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 return TranslatableItemStackCreator.getStack("gui_banker.main.withdraw", Material.DISPENSER, 1,
-                        "gui_banker.main.withdraw.lore", Map.of(
-                                "balance", StringUtility.decimalify(bankData.getAmount(), 1)
-                        ));
+                    "gui_banker.main.withdraw.lore", Component.text(StringUtility.decimalify(bankData.getAmount(), 1)));
             }
         });
 

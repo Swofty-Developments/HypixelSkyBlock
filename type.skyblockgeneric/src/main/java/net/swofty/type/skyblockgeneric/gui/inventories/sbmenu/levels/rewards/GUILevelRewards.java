@@ -132,7 +132,8 @@ public class GUILevelRewards extends StatelessView {
             SkyBlockLevelRequirement nextLevel = player.getSkyBlockExperience().getLevel().getNextLevel();
 
             return TranslatableItemStackCreator.getStack("gui_sbmenu.levels.rewards.statistic", Material.DIAMOND_HELMET, 1,
-                    "gui_sbmenu.levels.rewards.statistic.lore", Map.of("next_level", nextLevel == null ? "§cMAX" : String.valueOf(nextLevel.asInt())));
+                "gui_sbmenu.levels.rewards.statistic.lore",
+                Component.text(nextLevel == null ? "§cMAX" : String.valueOf(nextLevel.asInt())));
         });
     }
 

@@ -25,7 +25,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
     private final List<DatapointCompletedBazaarTransactions.CompletedBazaarTransaction> completions;
@@ -230,7 +229,9 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return TranslatableItemStackCreator.getStack("gui_bazaar.order_completed.view_unfilled", Material.COMPASS, 1,
-                        "gui_bazaar.order_completed.view_unfilled.lore", Map.of("amount", String.valueOf((int) activeOrder.amount()), "price", FORMATTER.format(activeOrder.price())));
+                    "gui_bazaar.order_completed.view_unfilled.lore",
+                    Component.text(String.valueOf((int) activeOrder.amount())),
+                    Component.text(FORMATTER.format(activeOrder.price())));
             }
         });
     }

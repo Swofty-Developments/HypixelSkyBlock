@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
@@ -272,17 +273,14 @@ public abstract class HypixelNPC {
     public record DialogueSet(String key, String[] lines, Sound sound) {
         public static final DialogueSet[] EMPTY = new DialogueSet[0];
 
-        public static DialogueSet ofTranslation(String key, String translationKey) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey), null);
-        }
-
-        public static DialogueSet ofTranslation(String key, String translationKey, Sound sound) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey), sound);
-        }
-
         public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player) {
             Locale locale = player != null ? player.getLocale() : Locale.US;
             return new DialogueSet(key, I18n.dialogueLines(translationKey, locale), null);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Component... args) {
+            Locale locale = player != null ? player.getLocale() : Locale.US;
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale, args), null);
         }
 
         public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Sound sound) {

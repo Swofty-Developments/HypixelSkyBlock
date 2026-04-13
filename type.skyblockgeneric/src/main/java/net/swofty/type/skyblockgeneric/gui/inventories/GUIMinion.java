@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
     private static final int[] SLOTS = new int[]{
@@ -183,12 +182,11 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                 final DecimalFormat formatter = new DecimalFormat("#.##");
 
                 return TranslatableItemStackCreator.getStack("gui_minion.next_tier", Material.GOLD_INGOT, 1,
-                        "gui_minion.next_tier.lore", Map.of(
-                                "current_time", formatter.format(minionTiers.get(minion.getTier() - 1).timeBetweenActions() / (1. + speedPercentage / 100.)),
-                                "next_time", formatter.format(minionTiers.get(minion.getTier()).timeBetweenActions() / (1. + speedPercentage / 100.)),
-                                "current_storage", String.valueOf(minionTiers.get(minion.getTier() - 1).storage()),
-                                "next_storage", String.valueOf(minionTiers.get(minion.getTier()).storage())
-                        ));
+                    "gui_minion.next_tier.lore",
+                    Component.text(formatter.format(minionTiers.get(minion.getTier() - 1).timeBetweenActions() / (1. + speedPercentage / 100.))),
+                    Component.text(formatter.format(minionTiers.get(minion.getTier()).timeBetweenActions() / (1. + speedPercentage / 100.))),
+                    Component.text(String.valueOf(minionTiers.get(minion.getTier() - 1).storage())),
+                    Component.text(String.valueOf(minionTiers.get(minion.getTier()).storage())));
             }
         });
 

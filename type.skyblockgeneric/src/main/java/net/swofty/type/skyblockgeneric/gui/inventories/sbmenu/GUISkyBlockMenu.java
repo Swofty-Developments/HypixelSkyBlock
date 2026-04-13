@@ -87,11 +87,10 @@ public class GUISkyBlockMenu extends StatelessView {
 
             return TranslatableItemStackCreator.getStackHead("gui_sbmenu.main.skyblock_leveling",
                     "3255327dd8e90afad681a19231665bea2bd06065a09d77ac1408837f9e0b242", 1,
-                    "gui_sbmenu.main.skyblock_leveling.lore", Map.of(
-                            "level_display", levelRequirement.getColor() + String.valueOf(levelRequirement),
-                            "next_level", nextLevel == null ? "§cMAX" : String.valueOf(nextLevel),
-                            "next_level_display", player.getSkyBlockExperience().getNextLevelDisplay()
-                    )
+                "gui_sbmenu.main.skyblock_leveling.lore",
+                Component.text(levelRequirement.getColor() + String.valueOf(levelRequirement)),
+                Component.text(nextLevel == null ? "§cMAX" : String.valueOf(nextLevel)),
+                Component.text(player.getSkyBlockExperience().getNextLevelDisplay())
             );
         }, (click, c) -> c.push(new GUISkyBlockLevels()));
 
@@ -106,7 +105,7 @@ public class GUISkyBlockMenu extends StatelessView {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             String selectedPet = player.getPetData().getEnabledPet() == null ? "§cNone" : player.getPetData().getEnabledPet().getDisplayName();
             return TranslatableItemStackCreator.getStack("gui_sbmenu.main.pets", Material.BONE, 1,
-                    "gui_sbmenu.main.pets.lore", Map.of("selected_pet", selectedPet)
+                "gui_sbmenu.main.pets.lore", Component.text(selectedPet)
             );
         }, (click, c) -> c.push(new GUIPets(), GUIPets.createInitialState((SkyBlockPlayer) c.player())));
 
@@ -121,7 +120,7 @@ public class GUISkyBlockMenu extends StatelessView {
             }
 
             return TranslatableItemStackCreator.getStack("gui_sbmenu.main.recipe_book", Material.BOOK, 1,
-                    "gui_sbmenu.main.recipe_book.lore", Map.of("mission_display", missionDisplayStr.toString()));
+                "gui_sbmenu.main.recipe_book.lore", Component.text(missionDisplayStr.toString()));
         }, (click, c) -> {
             c.push(new GUIRecipeBook());
         });
@@ -152,7 +151,7 @@ public class GUISkyBlockMenu extends StatelessView {
             }
 
             return TranslatableItemStackCreator.getStack("gui_sbmenu.main.collections", Material.PAINTING, 1,
-                    "gui_sbmenu.main.collections.lore", Map.of("collection_display", collectionDisplayStr.toString()));
+                "gui_sbmenu.main.collections.lore", Component.text(collectionDisplayStr.toString()));
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             player.openView(new GUICollections());
@@ -178,9 +177,8 @@ public class GUISkyBlockMenu extends StatelessView {
         layout.slot(48, (s, c) -> {
             HypixelPlayer player = c.player();
             return TranslatableItemStackCreator.getStack("gui_sbmenu.main.profile_management", Material.NAME_TAG, 1,
-                    "gui_sbmenu.main.profile_management.lore", Map.of(
-                            "profile_count", String.valueOf(((SkyBlockPlayer) player).getProfiles().getProfiles().size())
-                    )
+                "gui_sbmenu.main.profile_management.lore",
+                Component.text(String.valueOf(((SkyBlockPlayer) player).getProfiles().getProfiles().size()))
             );
         }, (click, c) -> c.push(new GUIProfileManagement()));
     }

@@ -113,9 +113,9 @@ public class GUIStashMaterial extends HypixelPaginatedGUI<Map.Entry<ItemType, In
                 int count = player.getStash().getMaterialStashCount();
                 int types = player.getStash().getMaterialTypeCount();
                 return TranslatableItemStackCreator.getStack("gui_stash.material.fill_inventory", Material.EMERALD, 1,
-                        "gui_stash.material.fill_inventory.lore", Map.of(
-                                "count", StringUtility.commaify(count),
-                                "types", String.valueOf(types)));
+                    "gui_stash.material.fill_inventory.lore",
+                    Component.text(StringUtility.commaify(count)),
+                    Component.text(String.valueOf(types)));
             }
         });
 

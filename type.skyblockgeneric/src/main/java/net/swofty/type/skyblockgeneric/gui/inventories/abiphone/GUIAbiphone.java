@@ -24,7 +24,6 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIAbiphone extends HypixelPaginatedGUI<AbiphoneNPC> {
 	@Setter
@@ -73,9 +72,9 @@ public class GUIAbiphone extends HypixelPaginatedGUI<AbiphoneNPC> {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
 				return TranslatableItemStackCreator.getStack("gui_abiphone.contacts_directory", Material.BOOK, 1,
-						"gui_abiphone.contacts_directory.lore", Map.of(
-								"contact_count", String.valueOf(contacts.size()),
-								"total_contacts", String.valueOf(AbiphoneRegistry.getRegisteredContactNPCs().size())));
+					"gui_abiphone.contacts_directory.lore",
+					Component.text(String.valueOf(contacts.size())),
+					Component.text(String.valueOf(AbiphoneRegistry.getRegisteredContactNPCs().size())));
 			}
 		});
 

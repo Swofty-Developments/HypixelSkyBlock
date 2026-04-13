@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.abiphone;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -13,7 +14,6 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIConfirmAbiphone extends HypixelInventoryGUI {
 
@@ -37,7 +37,7 @@ public class GUIConfirmAbiphone extends HypixelInventoryGUI {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
 				return TranslatableItemStackCreator.getStack("gui_abiphone.confirm.confirm_button", Material.GREEN_TERRACOTTA, 1,
-						"gui_abiphone.confirm.confirm_button.lore", Map.of("npc_name", npc.getName()));
+                    "gui_abiphone.confirm.confirm_button.lore", Component.text(npc.getName()));
 			}
 		});
 		set(new GUIClickableItem(15) {

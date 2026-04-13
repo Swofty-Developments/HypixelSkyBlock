@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.auction;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -16,9 +17,6 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionStatistics;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import java.util.Map;
-import static java.util.Map.entry;
 
 public class GUIAuctionHouseStats extends HypixelInventoryGUI {
     public GUIAuctionHouseStats() {
@@ -37,22 +35,21 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
                 ).getValue();
 
                 return TranslatableItemStackCreator.getStack("gui_auction.stats.seller_stats", Material.PAPER, 1,
-                        "gui_auction.stats.seller_stats.lore", Map.ofEntries(
-                                entry("auctions_created", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_CREATED))),
-                                entry("completed_without_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITHOUT_BIDS))),
-                                entry("completed_with_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITH_BIDS))),
-                                entry("highest_auction", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.HIGHEST_AUCTION_HELD))),
-                                entry("total_earned", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_COINS_EARNED))),
-                                entry("fees_spent", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COINS_SPENT_ON_FEES))),
-                                entry("common_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COMMON_SOLD))),
-                                entry("uncommon_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.UNCOMMON_SOLD))),
-                                entry("rare_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.RARE_SOLD))),
-                                entry("epic_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.EPIC_SOLD))),
-                                entry("legendary_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.LEGENDARY_SOLD))),
-                                entry("mythic_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.MYTHIC_SOLD))),
-                                entry("special_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.SPECIAL_SOLD))),
-                                entry("ultimate_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.ULTIMATE_SOLD)))
-                        ));
+                    "gui_auction.stats.seller_stats.lore",
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_CREATED))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITHOUT_BIDS))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITH_BIDS))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.HIGHEST_AUCTION_HELD))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_COINS_EARNED))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COINS_SPENT_ON_FEES))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COMMON_SOLD))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.UNCOMMON_SOLD))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.RARE_SOLD))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.EPIC_SOLD))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.LEGENDARY_SOLD))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.MYTHIC_SOLD))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.SPECIAL_SOLD))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.ULTIMATE_SOLD))));
             }
         });
         set(new GUIItem(15) {
@@ -65,20 +62,19 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
                 ).getValue();
 
                 return TranslatableItemStackCreator.getStack("gui_auction.stats.buyer_stats", Material.FILLED_MAP, 1,
-                        "gui_auction.stats.buyer_stats.lore", Map.ofEntries(
-                                entry("auctions_won", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_WON))),
-                                entry("total_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_BIDS))),
-                                entry("highest_bid", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.HIGHEST_BID_MADE))),
-                                entry("total_spent", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_COINS_SPENT))),
-                                entry("common_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COMMON_BOUGHT))),
-                                entry("uncommon_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.UNCOMMON_BOUGHT))),
-                                entry("rare_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.RARE_BOUGHT))),
-                                entry("epic_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.EPIC_BOUGHT))),
-                                entry("legendary_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.LEGENDARY_BOUGHT))),
-                                entry("mythic_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.MYTHIC_BOUGHT))),
-                                entry("special_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.SPECIAL_BOUGHT))),
-                                entry("ultimate_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.ULTIMATE_BOUGHT)))
-                        ));
+                    "gui_auction.stats.buyer_stats.lore",
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_WON))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_BIDS))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.HIGHEST_BID_MADE))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_COINS_SPENT))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.COMMON_BOUGHT))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.UNCOMMON_BOUGHT))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.RARE_BOUGHT))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.EPIC_BOUGHT))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.LEGENDARY_BOUGHT))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.MYTHIC_BOUGHT))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.SPECIAL_BOUGHT))),
+                    Component.text(String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.ULTIMATE_BOUGHT))));
             }
         });
     }

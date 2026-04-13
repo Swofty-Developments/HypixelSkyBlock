@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -20,7 +21,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 
 import java.util.List;
-import java.util.Map;
 
 public class GUISkyBlockProfile extends StatelessView {
 
@@ -172,7 +172,7 @@ public class GUISkyBlockProfile extends StatelessView {
             });
 
             return TranslatableItemStackCreator.getStack("gui_sbmenu.profile.combat_stats", Material.DIAMOND_SWORD, 1,
-                    "gui_sbmenu.profile.combat_stats.lore", Map.of("stats_display", statsDisplay.toString()));
+                "gui_sbmenu.profile.combat_stats.lore", Component.text(statsDisplay.toString()));
         }, (click, c) -> {
             //c.player().openView(new GUICombatStats()))
         });
@@ -198,7 +198,7 @@ public class GUISkyBlockProfile extends StatelessView {
             });
 
             return TranslatableItemStackCreator.getStack("gui_sbmenu.profile.gathering_stats", Material.IRON_PICKAXE, 1,
-                    "gui_sbmenu.profile.gathering_stats.lore", Map.of("stats_display", statsDisplay.toString()));
+                "gui_sbmenu.profile.gathering_stats.lore", Component.text(statsDisplay.toString()));
         }, (click, c) -> {
             // c.player().openView(new GUIGatheringStats());
         });
@@ -221,7 +221,7 @@ public class GUISkyBlockProfile extends StatelessView {
             });
 
             return TranslatableItemStackCreator.getStack("gui_sbmenu.profile.wisdom_stats", Material.BOOK, 1,
-                    "gui_sbmenu.profile.wisdom_stats.lore", Map.of("stats_display", statsDisplay.toString()));
+                "gui_sbmenu.profile.wisdom_stats.lore", Component.text(statsDisplay.toString()));
         }, (click, c) -> {
             //c.player().openView(new GUIWisdomStats())
         });
@@ -244,7 +244,7 @@ public class GUISkyBlockProfile extends StatelessView {
             });
 
             return TranslatableItemStackCreator.getStack("gui_sbmenu.profile.misc_stats", Material.CLOCK, 1,
-                    "gui_sbmenu.profile.misc_stats.lore", Map.of("stats_display", statsDisplay.toString()));
+                "gui_sbmenu.profile.misc_stats.lore", Component.text(statsDisplay.toString()));
         }, (click, c) -> {
             //c.player().openView(new GUIMiscStats())
         });

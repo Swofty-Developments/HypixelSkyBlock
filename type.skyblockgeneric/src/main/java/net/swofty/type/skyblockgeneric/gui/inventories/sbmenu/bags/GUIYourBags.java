@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -12,8 +13,6 @@ import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import java.util.Map;
 
 public class GUIYourBags extends StatelessView {
 
@@ -78,9 +77,8 @@ public class GUIYourBags extends StatelessView {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                 return TranslatableItemStackCreator.getStackHead("gui_sbmenu.bags.accessory_bag.unlocked",
                         "396ce13ff6155fdf3235d8d22174c5de4bf5512f1adeda1afa3fc28180f3f7", 1,
-                        "gui_sbmenu.bags.accessory_bag.unlocked.lore", Map.of(
-                                "magical_power", StringUtility.commaify(p.getMagicalPower())
-                        ));
+                    "gui_sbmenu.bags.accessory_bag.unlocked.lore",
+                    Component.text(StringUtility.commaify(p.getMagicalPower())));
             }, (click, c) -> c.player().openView(new GUIAccessoryBag()));
         } else {
             layout.slot(24, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.bags.accessory_bag.locked", Material.GRAY_DYE, 1,

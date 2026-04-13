@@ -94,7 +94,7 @@ public class GUIAccessoryBag implements StatefulView<GUIAccessoryBag.AccessoryBa
             CustomCollectionAward nextUpgrade = getUpgradeNeededForSlotIndex(slotIndex);
             if (nextUpgrade != null) {
                 layout.slot(i, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.bags.accessory.locked", Material.RED_STAINED_GLASS_PANE, 1,
-                        "gui_sbmenu.bags.accessory.locked.lore", Map.of("upgrade_name", nextUpgrade.getDisplay())));
+                    "gui_sbmenu.bags.accessory.locked.lore", Component.text(nextUpgrade.getDisplay())));
             }
         }
 

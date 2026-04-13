@@ -68,12 +68,29 @@ public class I18n {
         return List.of(string(key, locale).split("\n"));
     }
 
+    public static List<String> lore(String key, Component... args) {
+        return lore(key, HypixelTranslator.defaultLocale, args);
+    }
+
+    public static List<String> lore(String key, Locale locale, Component... args) {
+        return List.of(string(key, locale, args).split("\n"));
+    }
+
     public static String[] dialogueLines(String key) {
         return dialogueLines(key, HypixelTranslator.defaultLocale);
     }
 
+    public static String[] dialogueLines(String key, Component... args) {
+        return dialogueLines(key, HypixelTranslator.defaultLocale, args);
+    }
+
     public static String[] dialogueLines(String key, Locale locale) {
         String resolved = string(key, locale);
+        return resolved.split(DIALOGUE_SEPARATOR);
+    }
+
+    public static String[] dialogueLines(String key, Locale locale, Component... args) {
+        String resolved = string(key, locale, args);
         return resolved.split(DIALOGUE_SEPARATOR);
     }
 
