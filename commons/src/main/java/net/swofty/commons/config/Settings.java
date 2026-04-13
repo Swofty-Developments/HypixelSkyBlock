@@ -62,7 +62,7 @@ public class Settings {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class ManagementSettings {
         @Comment("Whether to expose HTTP management endpoints such as /healthz, /readyz and /metrics")
-        private boolean enabled = true;
+        private boolean enabled = false;
 
         @Comment("The host name or IP address to bind management endpoints to")
         private String hostName = "0.0.0.0";
