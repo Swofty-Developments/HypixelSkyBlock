@@ -12,6 +12,17 @@ COPY loader ./loader
 COPY packer ./packer
 COPY proxy.api ./proxy.api
 COPY pvp ./pvp
+COPY service.api ./service.api
+COPY service.auctionhouse ./service.auctionhouse
+COPY service.bazaar ./service.bazaar
+COPY service.darkauction ./service.darkauction
+COPY service.datamutex ./service.datamutex
+COPY service.friend ./service.friend
+COPY service.generic ./service.generic
+COPY service.itemtracker ./service.itemtracker
+COPY service.orchestrator ./service.orchestrator
+COPY service.party ./service.party
+COPY service.punishment ./service.punishment
 COPY spark ./spark
 COPY type.backwaterbayou ./type.backwaterbayou
 COPY type.bedwarsconfigurator ./type.bedwarsconfigurator
@@ -42,8 +53,9 @@ COPY type.spidersden ./type.spidersden
 COPY type.theend ./type.theend
 COPY type.thefarmingislands ./type.thefarmingislands
 COPY type.thepark ./type.thepark
+COPY velocity.extension ./velocity.extension
 
-RUN chmod +x ./gradlew && ./gradlew --no-daemon --parallel :loader:shadowJar
+RUN chmod +x ./gradlew && ./gradlew --no-daemon --parallel assembleDeploymentArtifacts
 
 FROM eclipse-temurin:25-jre
 
@@ -53,7 +65,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends bash curl jq ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /workspace/loader/build/libs/HypixelCore.jar /app/HypixelCore.jar
+COPY --from=builder /workspace/build/deployment/ /app/
 COPY ./configuration /app/configuration_files
 
 RUN chmod +x /app/configuration_files/bootstrap-config.sh /app/configuration_files/entrypoint.sh

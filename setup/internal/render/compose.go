@@ -149,23 +149,17 @@ func composeYAML(p profile.Profile) string {
 	b.WriteString(fmt.Sprintf("    volumes:\n      - %q\n", filepath.Join(p.InstallDir, "configuration")+":/app/configuration_files"))
 	b.WriteString("    networks:\n      - hypixel_network\n")
 
-	serviceBuildTasks := composeServiceBuildTasks(p.SelectedServices)
-
 	for _, serviceName := range p.SelectedServices {
 		svc := spec.ServiceByName(serviceName)
 		b.WriteString(fmt.Sprintf("  %s:\n", svc.DeploymentName))
-		b.WriteString("    build:\n")
-		b.WriteString(fmt.Sprintf("      context: %q\n", p.RepoRoot))
-		b.WriteString("      dockerfile: DockerFiles/Dockerfile.service\n")
-		b.WriteString("      args:\n")
-		b.WriteString(fmt.Sprintf("        SERVICE_BUILD_TASKS: %q\n", serviceBuildTasks))
-		b.WriteString(fmt.Sprintf("        SERVICE_MODULE: %s\n", svc.Module))
-		b.WriteString(fmt.Sprintf("        SERVICE_JAR: %s\n", svc.Jar))
+		b.WriteString("    <<: *game_server_base\n")
 		b.WriteString(fmt.Sprintf("    container_name: %s\n", svc.DeploymentName))
 		b.WriteString("    environment:\n      <<: *forwarding_env\n")
 		if serviceName == "ServiceAPI" {
-			b.WriteString(fmt.Sprintf("      SERVICE_CMD: java $$JAVA_OPTS -jar /app/service.jar --port=%d\n", p.APIPort))
+			b.WriteString(fmt.Sprintf("      SERVICE_CMD: java $$JAVA_OPTS -jar %s --port=%d\n", svc.Jar, p.APIPort))
 			b.WriteString(fmt.Sprintf("    ports:\n      - \"%d:%d\"\n", p.APIPort, p.APIPort))
+		} else {
+			b.WriteString(fmt.Sprintf("      SERVICE_CMD: java $$JAVA_OPTS -jar %s\n", svc.Jar))
 		}
 		b.WriteString("    depends_on:\n      proxy:\n        condition: service_healthy\n")
 		b.WriteString(fmt.Sprintf("    volumes:\n      - %q\n", filepath.Join(p.InstallDir, "configuration")+":/app/configuration_files"))
@@ -184,22 +178,7 @@ func composeYAML(p profile.Profile) string {
 		b.WriteString(fmt.Sprintf("    volumes:\n      - %q\n", filepath.Join(p.InstallDir, "configuration")+":/app/configuration_files"))
 		b.WriteString("    networks:\n      - hypixel_network\n")
 	}
-
 	b.WriteString("volumes:\n  mongodb-data:\n    driver: local\n")
 	b.WriteString("networks:\n  hypixel_network:\n    driver: bridge\n")
 	return b.String()
-}
-
-func composeServiceBuildTasks(serviceNames []string) string {
-	tasks := make([]string, 0, len(serviceNames))
-	seen := make(map[string]struct{}, len(serviceNames))
-	for _, serviceName := range serviceNames {
-		task := ":" + spec.ServiceByName(serviceName).Module + ":shadowJar"
-		if _, ok := seen[task]; ok {
-			continue
-		}
-		seen[task] = struct{}{}
-		tasks = append(tasks, task)
-	}
-	return strings.Join(tasks, " ")
 }
