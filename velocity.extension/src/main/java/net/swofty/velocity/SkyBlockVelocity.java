@@ -226,7 +226,7 @@ public class SkyBlockVelocity {
 		GameManager.loopServers(server);
         ManagementServer.start(
             "proxy",
-            ConfigProvider.settings().getManagement(),
+            ConfigProvider.settings().getKubernetes(),
             () -> true,
             READY::get,
             this::proxyMetrics

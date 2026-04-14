@@ -29,7 +29,7 @@ public class ServiceInitializer {
         ItemAttribute.registerItemAttributes();
         ManagementServer.start(
             "service-" + service.getType().name().toLowerCase(),
-            ConfigProvider.settings().getManagement(),
+            ConfigProvider.settings().getKubernetes(),
             () -> true,
             ready::get,
             () -> ManagementServer.metricLine(

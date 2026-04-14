@@ -26,12 +26,11 @@ public final class ManagementServer {
     }
 
     public static ManagementServer start(String componentName,
-                                         Settings.ManagementSettings settings,
+                                         Settings.KubernetesSettings settings,
                                          BooleanSupplier liveSupplier,
                                          BooleanSupplier readySupplier,
                                          Supplier<String> metricsSupplier) {
         if (!settings.isEnabled()) {
-            Logger.info("Management endpoints disabled for {}", componentName);
             return null;
         }
 
