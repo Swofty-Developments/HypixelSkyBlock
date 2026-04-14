@@ -1,8 +1,8 @@
 package tui
 
 import (
-	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/profile"
 	"charm.land/huh/v2"
+	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/profile"
 )
 
 const (

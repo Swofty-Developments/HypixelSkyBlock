@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"charm.land/huh/v2"
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/profile"
 )
 
