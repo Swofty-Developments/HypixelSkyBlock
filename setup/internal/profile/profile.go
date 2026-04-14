@@ -83,6 +83,8 @@ type Profile struct {
 	SharedSecret            string   `json:"shared_secret"`
 	ManagedByInstaller      bool     `json:"managed_by_installer"`
 	ImageTag                string   `json:"image_tag"`
+	ImageRegistry           string   `json:"image_registry"`
+	ImagePullPolicy         string   `json:"image_pull_policy"`
 	KubernetesTarget        string   `json:"kubernetes_target"`
 	KubernetesClusterName   string   `json:"kubernetes_cluster_name"`
 	MinikubeProfile         string   `json:"minikube_profile"`
@@ -118,6 +120,8 @@ func Default(repoRoot, installDir string) Profile {
 		SharedSecret:            RandomSecret(),
 		ManagedByInstaller:      true,
 		ImageTag:                "latest",
+		ImageRegistry:           "",
+		ImagePullPolicy:         "Never",
 		KubernetesTarget:        KubernetesTargetK3d,
 		KubernetesClusterName:   "hypixel",
 		MinikubeProfile:         "hypixel",
@@ -145,6 +149,8 @@ func DefaultInstallDir() (string, error) {
 func (p *Profile) Normalize() {
 	p.InstallDir = ExpandHome(strings.TrimSpace(p.InstallDir))
 	p.ImageTag = strings.TrimSpace(p.ImageTag)
+	p.ImageRegistry = strings.TrimSuffix(strings.TrimSpace(p.ImageRegistry), "/")
+	p.ImagePullPolicy = strings.TrimSpace(p.ImagePullPolicy)
 	p.KubernetesTarget = strings.TrimSpace(p.KubernetesTarget)
 	p.KubernetesClusterName = strings.TrimSpace(p.KubernetesClusterName)
 	p.MinikubeProfile = strings.TrimSpace(p.MinikubeProfile)
@@ -168,6 +174,9 @@ func (p *Profile) Normalize() {
 	}
 	if strings.TrimSpace(p.KubernetesTarget) == "" {
 		p.KubernetesTarget = KubernetesTargetK3d
+	}
+	if p.ImagePullPolicy == "" {
+		p.ImagePullPolicy = defaultImagePullPolicy(p.KubernetesTarget)
 	}
 	if strings.TrimSpace(p.KubernetesClusterName) == "" {
 		p.KubernetesClusterName = "hypixel"
@@ -202,8 +211,16 @@ func (p Profile) Validate() error {
 	if p.ImageTag == "" {
 		return errors.New("image tag is required for Kubernetes")
 	}
+	switch p.ImagePullPolicy {
+	case "Never", "IfNotPresent", "Always":
+	default:
+		return fmt.Errorf("unsupported image pull policy %q", p.ImagePullPolicy)
+	}
 	if p.KubernetesTarget != KubernetesTargetK3d && p.KubernetesTarget != KubernetesTargetStandard && p.KubernetesTarget != KubernetesTargetMinikube {
 		return fmt.Errorf("unsupported kubernetes target %q", p.KubernetesTarget)
+	}
+	if p.KubernetesTarget == KubernetesTargetStandard && p.ImagePullPolicy != "Never" && p.ImageRegistry == "" {
+		return errors.New("image registry is required for standard target when image pull policy is IfNotPresent or Always")
 	}
 	if p.KubernetesNamespace == "" {
 		return errors.New("kubernetes namespace is required")
@@ -305,4 +322,13 @@ func allowedServers() []string {
 	allowed = append(allowed, SkyBlockServers...)
 	allowed = append(allowed, MinigameServers...)
 	return allowed
+}
+
+func defaultImagePullPolicy(target string) string {
+	switch target {
+	case KubernetesTargetK3d, KubernetesTargetMinikube:
+		return "Never"
+	default:
+		return "IfNotPresent"
+	}
 }

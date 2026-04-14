@@ -1,30 +1,19 @@
 # Kubernetes Setup on Linux
 
-This guide explains how to run the full server stack on Kubernetes on a Linux machine or Linux-based cluster.
+This guide explains the supported Kubernetes workflow for Linux hosts and Linux-based clusters.
 
-It covers:
-
-- building the container images
-- preparing Redis and MongoDB
-- deploying the proxy, services, and game servers
-- enabling autoscaling based on player load
-
-:::alert note
-This setup is for infrastructure orchestration only. Kubernetes starts and scales the proxy, services, and game server
-pods. It does not replace the in-game logic handled by the Java services.
-:::
+The canonical flow is the Go setup tool in `setup/`.
+It renders profile-driven manifests into `k8s-rendered`, installs missing dependencies on fresh hosts (with
+confirmation),
+and executes staged deployment.
 
 ## 1. Requirements
 
 Before you start, make sure you have:
 
 - Linux with `bash`
-- Docker or another OCI image builder
 - Kubernetes 1.29 or newer
-- `kubectl`
-- Prometheus installed in the cluster
-- KEDA installed in the cluster
-- Redis and MongoDB available inside the cluster
+- access to a target cluster (`k3d`, `minikube`, or existing cluster)
 
 Recommended minimum for a real test cluster:
 
@@ -39,301 +28,128 @@ git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git
 cd HypixelSkyBlock
 ```
 
-## 3. Prepare the Linux Host
+## 3. Run the Guided Kubernetes Setup
 
-Install Java 25 and basic tooling:
-
-```bash
-sudo apt update
-sudo apt install -y git curl jq unzip ca-certificates
-```
-
-If you build with Docker on Ubuntu or Debian:
+Run full setup:
 
 ```bash
-sudo apt install -y docker.io
-sudo systemctl enable --now docker
-sudo usermod -aG docker "$USER"
-newgrp docker
+./setup/install.sh --action k8s-full
 ```
 
-Install `kubectl` if it is not already present:
+Disable stage-level progress UI when needed:
 
 ```bash
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install -m 0755 kubectl /usr/local/bin/kubectl
-rm kubectl
+./setup/install.sh --action k8s-full --k8s-stage-progress-ui=false
 ```
 
-Check that your cluster is reachable:
+What happens during `k8s-full`:
+
+1. profile and target selection (wizard)
+2. dependency check and optional auto-install on Linux
+3. staged execution:
+   - ensure cluster
+   - install monitoring (optional)
+   - build/load images
+   - render and apply manifests
+   - rollout and status checks
+
+If a staged run fails, rerunning `k8s-full` resumes from the last successful stage when profile-critical inputs did not
+change.
+
+Dependency bootstrap uses Bubble Tea/Bubbles progress bars for missing tool installation.
+
+## 4. Dependency Installation Behavior
+
+Missing dependencies are detected from selected action and runtime target.
+
+For Linux hosts, the setup tool can install missing tools after confirmation:
+
+- `docker`
+- `kubectl`
+- `helm`
+- `k3d` (when target is `k3d`)
+- `minikube` (when target is `minikube`)
+- `nerdctl` (when target is `standard` and local build path needs it)
+
+If you want check-only behavior:
 
 ```bash
-kubectl get nodes
+./setup/install.sh --action k8s-full --auto-install-deps=false
 ```
 
-## 4. Install Prometheus and KEDA
+## 5. Manifest Generation and Apply
 
-The Kubernetes manifests in this repository expect:
-
-- Prometheus at `http://prometheus-operated.monitoring.svc.cluster.local:9090`
-- KEDA CRDs available in the cluster
-
-If you use Helm, one common setup is:
+Render only:
 
 ```bash
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo add kedacore https://kedacore.github.io/charts
-helm repo update
+./setup/install.sh --action k8s-render
 ```
 
-Install Prometheus:
+Rendered output is written to:
+
+- `~/.hypixel-skyblock/k8s-rendered` (default install dir)
+
+Apply rendered output manually:
 
 ```bash
-helm install kube-prometheus prometheus-community/kube-prometheus-stack \
-  --namespace monitoring \
-  --create-namespace
+kubectl apply -f ~/.hypixel-skyblock/k8s-rendered
 ```
 
-Install KEDA:
+The setup tool manages:
 
-```bash
-helm install keda kedacore/keda \
-  --namespace keda \
-  --create-namespace
-```
+- namespace
+- config map
+- secret
+- proxy deployment/service
+- service deployments
+- game-server deployments
+- autoscaling manifests (when enabled)
+- managed datastore manifests (when enabled)
 
-## 5. Prepare Redis and MongoDB
+## 6. Image Strategy
 
-You can run Redis and MongoDB inside or outside Kubernetes. The application only needs reachable connection strings.
+Image behavior is profile-driven:
 
-Example internal service addresses:
+- `image_tag` controls generated image tags.
+- `image_registry` controls registry prefix for all generated images.
+- `image_pull_policy` controls pull behavior.
 
-- `redis://redis.hypixel.svc.cluster.local:6379`
-- `mongodb://mongodb.hypixel.svc.cluster.local:27017`
+Defaults:
 
-If you already run them elsewhere, use your own DNS names instead.
+- `k3d` and `minikube`: `Never` (local build and import workflow)
+- `standard` cluster target: `IfNotPresent`
 
-## 6. Review the Kubernetes Files
+For `standard` target with pull-based policies (`IfNotPresent` or `Always`), `image_registry` is required.
 
-The manifests are in the `k8s/` folder:
+You can override pull policy in the setup wizard.
 
-- `namespace.yaml`
-- `configmap.yaml`
-- `secret.example.yaml`
-- `proxy.yaml`
-- `services.yaml`
-- `game-servers.yaml`
-- `keda-scaledobjects.yaml`
+## 7. Monitoring and Autoscaling
 
-These files deploy:
+When `install_monitoring` is enabled, setup installs:
 
-- the Velocity proxy
-- the Java microservices
-- example game-server deployments
-- KEDA scaled objects for player-based scaling
+- `kube-prometheus-stack`
+- `keda`
 
-## 7. Build the Images
+When `enable_autoscaling` is enabled, setup renders KEDA `ScaledObject` resources that query proxy metrics through the
+configured Prometheus address.
 
-The Kubernetes flow uses images built locally on the target machine. The manifests reference local tags such as
-`hypixel-proxy:latest`, `hypixel-game:latest`, and `hypixel-service-...:latest`, with `imagePullPolicy: Never`.
-
-Build the proxy image:
-
-```bash
-docker build -f DockerFiles/Dockerfile.proxy -t hypixel-proxy:latest .
-```
-
-Build the game server image:
-
-```bash
-docker build -f DockerFiles/Dockerfile.game_server -t hypixel-game:latest .
-```
-
-Build service images:
-
-```bash
-docker build -f DockerFiles/Dockerfile.service \
-  --build-arg SERVICE_MODULE=service.api \
-  --build-arg SERVICE_JAR=ServiceAPI.jar \
-  -t hypixel-service-api:latest .
-
-docker build -f DockerFiles/Dockerfile.service \
-  --build-arg SERVICE_MODULE=service.auctionhouse \
-  --build-arg SERVICE_JAR=ServiceAuctionHouse.jar \
-  -t hypixel-service-auctionhouse:latest .
-
-docker build -f DockerFiles/Dockerfile.service \
-  --build-arg SERVICE_MODULE=service.bazaar \
-  --build-arg SERVICE_JAR=ServiceBazaar.jar \
-  -t hypixel-service-bazaar:latest .
-
-docker build -f DockerFiles/Dockerfile.service \
-  --build-arg SERVICE_MODULE=service.darkauction \
-  --build-arg SERVICE_JAR=ServiceDarkAuction.jar \
-  -t hypixel-service-darkauction:latest .
-
-docker build -f DockerFiles/Dockerfile.service \
-  --build-arg SERVICE_MODULE=service.datamutex \
-  --build-arg SERVICE_JAR=ServiceDataMutex.jar \
-  -t hypixel-service-datamutex:latest .
-
-docker build -f DockerFiles/Dockerfile.service \
-  --build-arg SERVICE_MODULE=service.friend \
-  --build-arg SERVICE_JAR=ServiceFriend.jar \
-  -t hypixel-service-friend:latest .
-
-docker build -f DockerFiles/Dockerfile.service \
-  --build-arg SERVICE_MODULE=service.itemtracker \
-  --build-arg SERVICE_JAR=ServiceItemTracker.jar \
-  -t hypixel-service-itemtracker:latest .
-
-docker build -f DockerFiles/Dockerfile.service \
-  --build-arg SERVICE_MODULE=service.orchestrator \
-  --build-arg SERVICE_JAR=ServiceOrchestrator.jar \
-  -t hypixel-service-orchestrator:latest .
-
-docker build -f DockerFiles/Dockerfile.service \
-  --build-arg SERVICE_MODULE=service.party \
-  --build-arg SERVICE_JAR=ServiceParty.jar \
-  -t hypixel-service-party:latest .
-
-docker build -f DockerFiles/Dockerfile.service \
-  --build-arg SERVICE_MODULE=service.punishment \
-  --build-arg SERVICE_JAR=ServicePunishment.jar \
-  -t hypixel-service-punishment:latest .
-```
-
-## 8. Verify the Image Names
-
-The shipped manifests already reference local image tags:
-
-- `hypixel-proxy:latest`
-- `hypixel-game:latest`
-- `hypixel-service-...:latest`
-
-## 9. Create the Namespace and Base Configuration
-
-Apply the namespace and config map:
-
-```bash
-kubectl apply -f k8s/namespace.yaml
-kubectl apply -f k8s/configmap.yaml
-```
-
-Copy the example secret file and set real values:
-
-```bash
-cp k8s/secret.example.yaml /tmp/hypixel-secret.yaml
-```
-
-Edit these values:
-
-- `HYPIXEL_MONGODB`
-- `HYPIXEL_REDIS_URI`
-- `HYPIXEL_VELOCITY_SECRET`
-- `FORWARDING_SECRET`
-
-Apply the secret:
-
-```bash
-kubectl apply -f /tmp/hypixel-secret.yaml
-```
-
-:::alert warning
-Use a long random value for `HYPIXEL_VELOCITY_SECRET` and `FORWARDING_SECRET`. They should be the same value.
-:::
-
-## 10. Deploy the Proxy and Services
-
-Apply the proxy:
-
-```bash
-kubectl apply -f k8s/proxy.yaml
-```
-
-Apply the services:
-
-```bash
-kubectl apply -f k8s/services.yaml
-```
-
-Check the rollout:
-
-```bash
-kubectl get pods -n hypixel
-kubectl rollout status deployment/hypixel-proxy -n hypixel
-kubectl rollout status deployment/service-orchestrator -n hypixel
-```
-
-## 11. Deploy the Game Servers
-
-Apply the example game deployments:
-
-```bash
-kubectl apply -f k8s/game-servers.yaml
-```
-
-This file already includes example deployments for:
-
-- `PROTOTYPE_LOBBY`
-- `BEDWARS_LOBBY`
-- `BEDWARS_GAME`
-- `SKYBLOCK_HUB`
-
-Check the rollout:
-
-```bash
-kubectl get deployments -n hypixel
-kubectl get pods -n hypixel -l app=bedwars-game
-```
-
-## 12. Enable Autoscaling
-
-Apply the KEDA scaled objects:
-
-```bash
-kubectl apply -f k8s/keda-scaledobjects.yaml
-```
-
-These scaled objects use proxy metrics exported on port `9090`.
-
-The current model is simple:
-
-- the proxy reports player counts per `ServerType`
-- Prometheus scrapes those metrics
-- KEDA queries Prometheus
-- deployments scale up when player load increases
-
-Check that KEDA created HPAs:
+Check autoscaling objects:
 
 ```bash
 kubectl get scaledobjects -n hypixel
 kubectl get hpa -n hypixel
 ```
 
-## 13. Expose the Proxy
+## 8. Health and Verification
 
-For local testing, port-forward the proxy:
+Quick checks:
 
 ```bash
-kubectl port-forward -n hypixel svc/hypixel-proxy 25565:25565
+kubectl get pods -n hypixel
+kubectl get deployments -n hypixel
 ```
 
-For a real environment, change the proxy service to use:
-
-- `LoadBalancer`, or
-- `NodePort`, or
-- an Ingress or TCP load balancer provided by your platform
-
-## 14. Check Health and Metrics
-
-Every pod exposes:
-
-- `/healthz`
-- `/readyz`
-- `/metrics`
-
-Example checks:
+Proxy health endpoints:
 
 ```bash
 kubectl port-forward -n hypixel deployment/hypixel-proxy 9090:9090
@@ -342,49 +158,26 @@ curl http://127.0.0.1:9090/readyz
 curl http://127.0.0.1:9090/metrics
 ```
 
-For a game server pod:
+Expose proxy for local testing:
 
 ```bash
-kubectl get pods -n hypixel -l app=bedwars-game
-kubectl port-forward -n hypixel <pod-name> 9090:9090
-curl http://127.0.0.1:9090/metrics
+kubectl port-forward -n hypixel svc/hypixel-proxy 25565:25565
 ```
 
-## 15. Add More Server Types
+## 9. Day-2 Changes
 
-To add another game-server deployment:
+After code changes:
 
-1. Copy one deployment from `k8s/game-servers.yaml`
-2. Change `metadata.name`
-3. Change `app`
-4. Change `hypixel/server-type`
-5. Change the `SERVICE_CMD` value to the new `ServerType`
-6. Adjust CPU and memory limits
-7. Add a matching `ScaledObject` if you want autoscaling
+1. rerun full setup, or
+2. rebuild/redeploy specific components and run rollout restart.
 
-Example:
-
-```yaml
-env:
-  - name: SERVICE_CMD
-    value: java $JAVA_OPTS -jar HypixelCore.jar SKYWARS_GAME
-```
-
-## 16. Update the Deployment
-
-After a code change:
-
-1. rebuild the changed image
-2. restart the deployment
-
-Example:
+Typical command:
 
 ```bash
-docker build -f DockerFiles/Dockerfile.game_server -t hypixel-game:latest .
-kubectl rollout restart deployment/bedwars-game -n hypixel
+kubectl rollout restart deployment/hypixel-proxy -n hypixel
 ```
 
-## 17. Troubleshooting
+## 10. Troubleshooting
 
 If pods do not become ready:
 
@@ -393,55 +186,30 @@ kubectl describe pod -n hypixel <pod-name>
 kubectl logs -n hypixel <pod-name>
 ```
 
-If the proxy cannot see game servers:
+If autoscaling does not react:
 
-- confirm the game pods have `HYPIXEL_ADVERTISED_HOST` set to the pod IP
-- confirm port `25565` is open inside the pod
-- confirm Redis is reachable
-- confirm the forwarding secret matches on both sides
+- confirm Prometheus can scrape proxy metrics
+- confirm KEDA can reach the configured Prometheus address
+- confirm `enable_autoscaling` is enabled in the profile
 
-If autoscaling does not work:
+If dependency auto-install fails:
 
-- confirm Prometheus is scraping `/metrics`
-- confirm KEDA can reach Prometheus
-- confirm the metric names in `k8s/keda-scaledobjects.yaml` match the proxy output
+- rerun as root, or
+- configure passwordless sudo for non-interactive install mode, or
+- rerun with `--auto-install-deps=false` and install tools manually
 
-## 18. Useful Commands
+If setup stops mid-run:
 
-List all Hypixel resources:
-
-```bash
-kubectl get all -n hypixel
-```
-
-Watch pod changes:
-
-```bash
-kubectl get pods -n hypixel -w
-```
-
-Restart a deployment:
-
-```bash
-kubectl rollout restart deployment/hypixel-proxy -n hypixel
-```
-
-Delete everything from this namespace:
-
-```bash
-kubectl delete namespace hypixel
-```
+- rerun `./setup/install.sh --action k8s-full`
+- verify the profile still matches your intended cluster and image settings
 
 ## Summary
 
-The Kubernetes flow is:
+The supported Kubernetes flow is now setup-driven:
 
-1. build the images locally
-2. configure secrets and cluster services
-3. deploy proxy and Java services
-4. deploy game-server workloads
-5. enable KEDA autoscaling
-6. expose the proxy to players
+1. run setup (`k8s-full`)
+2. let setup render and apply generated manifests
+3. verify rollout and metrics
+4. use profile-driven updates for future changes
 
-Once that is done, Kubernetes manages the process lifecycle, restarts unhealthy pods, and scales selected server types
-from live player metrics.
+This keeps Kubernetes deployment consistent, scalable, and maintainable across fresh VPS and local cluster environments.

@@ -22,7 +22,7 @@ type kubeconfigResolution struct {
 func Preflight(action string, p profile.Profile) ([]string, error) {
 	warnings := kubernetesCapacityWarnings(p)
 
-	required := requiredTools(action, p)
+	required := RequiredTools(action, p)
 	missing := make([]string, 0, len(required))
 	for _, tool := range required {
 		if err := Require(tool); err != nil {
@@ -55,7 +55,7 @@ func Preflight(action string, p profile.Profile) ([]string, error) {
 	return warnings, nil
 }
 
-func requiredTools(action string, p profile.Profile) []string {
+func RequiredTools(action string, p profile.Profile) []string {
 	seen := map[string]struct{}{}
 	tools := make([]string, 0, 4)
 	add := func(names ...string) {

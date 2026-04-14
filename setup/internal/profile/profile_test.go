@@ -69,3 +69,44 @@ func TestExpandHomeExpandsTildePaths(t *testing.T) {
 		t.Fatalf("expected %q, got %q", want, got)
 	}
 }
+
+func TestNormalizeDefaultsImagePullPolicyByTarget(t *testing.T) {
+	standard := Profile{KubernetesTarget: KubernetesTargetStandard}
+	standard.Normalize()
+	if standard.ImagePullPolicy != "IfNotPresent" {
+		t.Fatalf("expected IfNotPresent for standard target, got %q", standard.ImagePullPolicy)
+	}
+
+	local := Profile{KubernetesTarget: KubernetesTargetK3d}
+	local.Normalize()
+	if local.ImagePullPolicy != "Never" {
+		t.Fatalf("expected Never for k3d target, got %q", local.ImagePullPolicy)
+	}
+}
+
+func TestValidateRejectsUnsupportedImagePullPolicy(t *testing.T) {
+	p := Default("/repo", "/tmp/install")
+	p.Runtime = RuntimeK8s
+	p.ImagePullPolicy = "sometimes"
+
+	if err := p.Validate(); err == nil {
+		t.Fatal("expected unsupported image pull policy validation error")
+	}
+}
+
+func TestValidateRequiresRegistryForStandardPullBasedDeployments(t *testing.T) {
+	p := Default("/repo", "/tmp/install")
+	p.Runtime = RuntimeK8s
+	p.KubernetesTarget = KubernetesTargetStandard
+	p.ImagePullPolicy = "IfNotPresent"
+	p.ImageRegistry = ""
+
+	if err := p.Validate(); err == nil {
+		t.Fatal("expected validation error when registry is missing for standard pull-based deployment")
+	}
+
+	p.ImageRegistry = "ghcr.io/swofty"
+	if err := p.Validate(); err != nil {
+		t.Fatalf("expected profile to validate after registry is set, got %v", err)
+	}
+}

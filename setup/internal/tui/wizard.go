@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/profile"
-	"github.com/charmbracelet/huh"
+	"charm.land/huh/v2"
 )
 
 type wizardState struct {
@@ -75,6 +75,12 @@ func (s *wizardState) workloadGroup() *huh.Group {
 func (s *wizardState) kubernetesGroup() *huh.Group {
 	return huh.NewGroup(
 		huh.NewInput().Title("Image tag").Description("Applied to proxy, service, and game images.").Value(&s.profile.ImageTag),
+		huh.NewInput().Title("Image registry").Description("Optional for local targets. Required for standard clusters with pull-based policies, for example ghcr.io/swofty-developments.").Value(&s.profile.ImageRegistry),
+		huh.NewSelect[string]().Title("Image pull policy").Description("Never for local image workflows, IfNotPresent for registry-backed clusters.").Options(
+			huh.NewOption("Never", "Never"),
+			huh.NewOption("IfNotPresent", "IfNotPresent"),
+			huh.NewOption("Always", "Always"),
+		).Value(&s.profile.ImagePullPolicy),
 		huh.NewSelect[string]().Title("Kubernetes target").Description("Choose a single-host k3d cluster, an existing Kubernetes cluster, or Minikube. k3d is the recommended turnkey option on one machine.").Options(
 			huh.NewOption("k3d (recommended single-host cluster)", profile.KubernetesTargetK3d),
 			huh.NewOption("Kubernetes cluster", profile.KubernetesTargetStandard),
@@ -162,7 +168,9 @@ func (s *wizardState) summary() string {
 		}
 		lines = append(lines,
 			"Namespace: "+s.profile.KubernetesNamespace,
-			"Local images: *:"+s.profile.ImageTag,
+			"Image tag: "+s.profile.ImageTag,
+			"Image registry: "+s.profile.ImageRegistry,
+			"Image pull policy: "+s.profile.ImagePullPolicy,
 			"Proxy exposure: "+s.profile.ProxyServiceType,
 		)
 	}

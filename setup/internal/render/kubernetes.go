@@ -279,7 +279,7 @@ spec:
       containers:
         - name: proxy
           image: %s
-          imagePullPolicy: Never
+          imagePullPolicy: %s
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -324,7 +324,7 @@ spec:
     - name: management
       port: 9090
       targetPort: management
-`, p.KubernetesNamespace, ImageRef("hypixel-proxy", p.ImageTag), p.KubernetesNamespace, p.ProxyServiceType)
+`, p.KubernetesNamespace, ImageRefForProfile(p, "hypixel-proxy"), p.ImagePullPolicy, p.KubernetesNamespace, p.ProxyServiceType)
 }
 
 func servicesYAML(p profile.Profile) string {
@@ -363,7 +363,7 @@ spec:
       containers:
         - name: service
           image: {{ .Image }}
-          imagePullPolicy: Never
+          imagePullPolicy: {{ .ImagePullPolicy }}
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -387,15 +387,16 @@ spec:
             limits:
               cpu: {{ .LimitCPU }}
               memory: {{ .LimitMemory }}
-`, map[string]any{
-			"Name":          svc.DeploymentName,
-			"Namespace":     p.KubernetesNamespace,
-			"Replicas":      svc.Replicas,
-			"Image":         ImageRef(svc.ImageName, p.ImageTag),
-			"RequestCPU":    quote(svc.RequestCPU),
-			"RequestMemory": quote(svc.RequestMemory),
-			"LimitCPU":      quote(svc.LimitCPU),
-			"LimitMemory":   quote(svc.LimitMemory),
+    `, map[string]any{
+			"Name":            svc.DeploymentName,
+			"Namespace":       p.KubernetesNamespace,
+			"Replicas":        svc.Replicas,
+			"Image":           ImageRefForProfile(p, svc.ImageName),
+			"ImagePullPolicy": p.ImagePullPolicy,
+			"RequestCPU":      quote(svc.RequestCPU),
+			"RequestMemory":   quote(svc.RequestMemory),
+			"LimitCPU":        quote(svc.LimitCPU),
+			"LimitMemory":     quote(svc.LimitMemory),
 		}))
 	}
 	return strings.Join(parts, "---\n")
@@ -439,7 +440,7 @@ spec:
       containers:
         - name: game-server
           image: {{ .Image }}
-          imagePullPolicy: Never
+          imagePullPolicy: {{ .ImagePullPolicy }}
           envFrom:
             - configMapRef:
                 name: hypixel-config
@@ -472,16 +473,17 @@ spec:
             limits:
               cpu: {{ .LimitCPU }}
               memory: {{ .LimitMemory }}
-`, map[string]any{
-			"Name":          server.DeploymentName,
-			"Namespace":     p.KubernetesNamespace,
-			"Replicas":      server.Replicas,
-			"ServerType":    serverType,
-			"Image":         ImageRef("hypixel-game", p.ImageTag),
-			"RequestCPU":    quote(server.RequestCPU),
-			"RequestMemory": quote(server.RequestMemory),
-			"LimitCPU":      quote(server.LimitCPU),
-			"LimitMemory":   quote(server.LimitMemory),
+    `, map[string]any{
+			"Name":            server.DeploymentName,
+			"Namespace":       p.KubernetesNamespace,
+			"Replicas":        server.Replicas,
+			"ServerType":      serverType,
+			"Image":           ImageRefForProfile(p, "hypixel-game"),
+			"ImagePullPolicy": p.ImagePullPolicy,
+			"RequestCPU":      quote(server.RequestCPU),
+			"RequestMemory":   quote(server.RequestMemory),
+			"LimitCPU":        quote(server.LimitCPU),
+			"LimitMemory":     quote(server.LimitMemory),
 		}))
 	}
 	return strings.Join(parts, "---\n")
