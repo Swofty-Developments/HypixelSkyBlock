@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.block.placement.states.state;
 
+import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.utils.Direction;
@@ -19,6 +20,7 @@ public enum Facing implements State<Facing> {
 
     private final int x, y, z;
     private final BlockFace blockFace;
+    @Getter
     private final int packetIndex;
 
     Facing(int x, int y, int z, BlockFace face, int packetIndex) {
@@ -27,10 +29,6 @@ public enum Facing implements State<Facing> {
         this.z = z;
         this.blockFace = face;
         this.packetIndex = packetIndex;
-    }
-
-    public int getPacketIndex() {
-        return packetIndex;
     }
 
     public int getRelativeX() {
