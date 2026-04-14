@@ -144,6 +144,32 @@ func TestResolveRepoRootFromRefreshesSavedManagedCheckout(t *testing.T) {
 	}
 }
 
+func TestValidateWizardDimensionsAcceptsMinimum(t *testing.T) {
+	t.Parallel()
+
+	if err := validateWizardDimensions(wizardMinWidth, wizardMinHeight); err != nil {
+		t.Fatalf("validateWizardDimensions returned error: %v", err)
+	}
+}
+
+func TestValidateWizardDimensionsRejectsSmallWidth(t *testing.T) {
+	t.Parallel()
+
+	err := validateWizardDimensions(wizardMinWidth-1, wizardMinHeight)
+	if err == nil {
+		t.Fatal("expected error for undersized width")
+	}
+}
+
+func TestValidateWizardDimensionsRejectsSmallHeight(t *testing.T) {
+	t.Parallel()
+
+	err := validateWizardDimensions(wizardMinWidth, wizardMinHeight-1)
+	if err == nil {
+		t.Fatal("expected error for undersized height")
+	}
+}
+
 func makeRepoRoot(t *testing.T, dir string) {
 	t.Helper()
 	if err := os.MkdirAll(filepath.Join(dir, "configuration"), 0o755); err != nil {

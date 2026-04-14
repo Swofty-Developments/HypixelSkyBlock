@@ -17,12 +17,15 @@ import (
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/profile"
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/render"
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/tui"
+	"github.com/charmbracelet/x/term"
 )
 
 const (
 	defaultRepoURL    = "https://github.com/Swofty-Developments/HypixelSkyBlock.git"
 	defaultRepoBranch = "master"
 	bootstrapRepoDir  = "repo"
+	wizardMinWidth    = 80
+	wizardMinHeight   = 24
 )
 
 type cliOptions struct {
@@ -149,6 +152,9 @@ func selectAction(p profile.Profile, opts cliOptions) (string, string, profile.P
 	if action != "" {
 		return action, argument, p, nil
 	}
+	if err := validateWizardTerminalSize(); err != nil {
+		return "", "", p, err
+	}
 
 	nextAction, nextArg, updated, err := tui.RunWizard(p)
 	if err != nil {
@@ -261,6 +267,32 @@ func stdinIsTTY() bool {
 		return false
 	}
 	return (info.Mode() & os.ModeCharDevice) != 0
+}
+
+func stdoutIsTTY() bool {
+	info, err := os.Stdout.Stat()
+	if err != nil {
+		return false
+	}
+	return (info.Mode() & os.ModeCharDevice) != 0
+}
+
+func validateWizardTerminalSize() error {
+	if !stdinIsTTY() || !stdoutIsTTY() {
+		return errors.New("interactive terminal is required for setup wizard; pass --action to run non-interactively")
+	}
+	width, height, err := term.GetSize(os.Stdout.Fd())
+	if err != nil {
+		return fmt.Errorf("could not determine terminal size: %w", err)
+	}
+	return validateWizardDimensions(width, height)
+}
+
+func validateWizardDimensions(width, height int) error {
+	if width < wizardMinWidth || height < wizardMinHeight {
+		return fmt.Errorf("terminal too small for setup wizard: got %dx%d, need at least %dx%d", width, height, wizardMinWidth, wizardMinHeight)
+	}
+	return nil
 }
 
 func resolveRepoRoot(installDir string) (string, error) {

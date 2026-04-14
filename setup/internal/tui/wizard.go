@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/Swofty-Developments/HypixelSkyBlock/setup/internal/profile"
-	"charm.land/huh/v2"
 )
 
 type wizardState struct {
@@ -20,8 +19,24 @@ type wizardState struct {
 
 func RunWizard(p profile.Profile) (string, string, profile.Profile, error) {
 	state := newWizardState(p)
-	if err := state.form().WithTheme(Theme()).Run(); err != nil {
+	if err := runWizardGroup(state.installGroup()); err != nil {
 		return "", "", p, err
+	}
+	if err := runWizardGroup(state.workloadGroup()); err != nil {
+		return "", "", p, err
+	}
+	if state.profile.Runtime == profile.RuntimeK8s {
+		if err := runWizardGroup(state.kubernetesGroup()); err != nil {
+			return "", "", p, err
+		}
+	}
+	if err := runWizardGroup(state.actionGroup()); err != nil {
+		return "", "", p, err
+	}
+	if SupportsStaffPromotion(state.action) {
+		if err := runWizardGroup(state.staffPromotionGroup()); err != nil {
+			return "", "", p, err
+		}
 	}
 	if err := state.apply(); err != nil {
 		return "", "", p, err
@@ -38,17 +53,6 @@ func newWizardState(p profile.Profile) *wizardState {
 		action:           ActionSave,
 	}
 }
-
-func (s *wizardState) form() *huh.Form {
-	return huh.NewForm(
-		s.installGroup(),
-		s.workloadGroup(),
-		s.kubernetesGroup(),
-		s.actionGroup(),
-		s.staffPromotionGroup(),
-	)
-}
-
 func (s *wizardState) installGroup() *huh.Group {
 	return huh.NewGroup(
 		huh.NewInput().Title("Install directory").Description("State, rendered assets, and local configuration live here.").Value(&s.profile.InstallDir),
@@ -67,7 +71,7 @@ func (s *wizardState) workloadGroup() *huh.Group {
 		huh.NewMultiSelect[string]().Title("SkyBlock servers").Description("PROTOTYPE_LOBBY is always included.").Options(stringOptions(profile.SkyBlockServers)...).Value(&s.skyblockSelected),
 		huh.NewMultiSelect[string]().Title("Minigame servers").Description("Optional game-server workloads.").Options(stringOptions(profile.MinigameServers)...).Value(&s.minigameSelected),
 		huh.NewMultiSelect[string]().Title("Services").Description("ServiceDataMutex and ServiceParty remain enabled.").Options(stringOptions(profile.AllServices)...).Value(&s.profile.SelectedServices),
-		huh.NewInput().Title("API port").Description("Used by ServiceAPI in Compose mode.").Value(&s.apiPort),
+		huh.NewInput().Title("API port").Description("Used by ServiceAPI in Compose mode.").Value(&s.apiPort).Validate(validateAPIPort),
 		huh.NewConfirm().Title("Expose MongoDB and Redis to the host").Description("Compose only. Keeps them isolated when disabled.").Value(&s.profile.ExposeDBPorts),
 	)
 }
@@ -127,11 +131,12 @@ func (s *wizardState) staffPromotionGroup() *huh.Group {
 func (s *wizardState) apply() error {
 	selectedServers := s.selectedServers()
 	s.profile.SelectedServers = append([]string(nil), selectedServers...)
-	s.profile.Normalize()
-
-	if parsed, err := strconv.Atoi(strings.TrimSpace(s.apiPort)); err == nil && parsed > 0 {
-		s.profile.APIPort = parsed
+	if err := validateAPIPort(s.apiPort); err != nil {
+		return err
 	}
+	parsedPort, _ := strconv.Atoi(strings.TrimSpace(s.apiPort))
+	s.profile.APIPort = parsedPort
+	s.profile.Normalize()
 
 	if SupportsStaffPromotion(s.action) {
 		s.staffUsername = strings.TrimSpace(s.staffUsername)
@@ -141,6 +146,10 @@ func (s *wizardState) apply() error {
 	}
 
 	return s.profile.Validate()
+}
+
+func runWizardGroup(group *huh.Group) error {
+	return huh.NewForm(group).WithTheme(Theme()).Run()
 }
 
 func (s *wizardState) selectedServers() []string {
@@ -184,4 +193,19 @@ func stringOptions(items []string) []huh.Option[string] {
 		options = append(options, huh.NewOption(item, item))
 	}
 	return options
+}
+
+func validateAPIPort(value string) error {
+	trimmed := strings.TrimSpace(value)
+	if trimmed == "" {
+		return errors.New("API port is required")
+	}
+	parsed, err := strconv.Atoi(trimmed)
+	if err != nil {
+		return errors.New("API port must be a valid integer")
+	}
+	if parsed < 1 || parsed > 65535 {
+		return errors.New("API port must be between 1 and 65535")
+	}
+	return nil
 }
