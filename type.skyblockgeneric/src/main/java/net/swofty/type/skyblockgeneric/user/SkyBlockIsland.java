@@ -2,8 +2,6 @@ package net.swofty.type.skyblockgeneric.user;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.hollowcube.polar.AnvilPolar;
-import net.hollowcube.polar.ChunkSelector;
 import net.hollowcube.polar.PolarLoader;
 import net.hollowcube.polar.PolarReader;
 import net.hollowcube.polar.PolarWorld;
@@ -21,6 +19,7 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
@@ -45,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 public class SkyBlockIsland {
-    private static final String ISLAND_TEMPLATE_NAME = CustomWorlds.SKYBLOCK_ISLAND_TEMPLATE.getFolderName();
+    private static final Path ISLAND_TEMPLATE_PATH = CustomWorlds.SKYBLOCK_ISLAND_TEMPLATE.getPath();
     private static final Map<UUID, SkyBlockIsland> loadedIslands = new ConcurrentHashMap<>();
 
     // Internal Island Data
@@ -172,7 +171,7 @@ public class SkyBlockIsland {
             if (!database.exists()) {
                 islandVersion = HypixelConst.getCurrentIslandVersion();
                 try {
-                    world = AnvilPolar.anvilToPolar(Path.of(ISLAND_TEMPLATE_NAME), ChunkSelector.radius(3));
+                    world = new PolarLoader(ISLAND_TEMPLATE_PATH).world();
                 } catch (IOException e) {
                     Logger.error("Failed to create island world", e);
                     throw new RuntimeException("Failed to create island world", e);
@@ -190,7 +189,7 @@ public class SkyBlockIsland {
                     case 0:
                         lastSaved = System.currentTimeMillis();
                         try {
-                            world = AnvilPolar.anvilToPolar(Path.of(ISLAND_TEMPLATE_NAME), ChunkSelector.radius(3));
+                            world = new PolarLoader(ISLAND_TEMPLATE_PATH).world();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

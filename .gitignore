@@ -36,6 +36,7 @@ build/
 
 
 ### Worlds / Maps ###
+/configuration/world/
 /configuration/skyblock/islands/
 /configuration/hypixel_prototype_lobby/
 /configuration/hypixel_bedwars_lobby/
@@ -60,5 +61,3 @@ build/
 /server/forwarding.secret
 /configuration/config.yml
 /server/proxy/configuration/config.yml
-
-### Resource pack build output ###
