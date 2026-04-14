@@ -2,7 +2,7 @@ FROM eclipse-temurin:25-jdk AS builder
 
 WORKDIR /workspace
 
-ARG SERVICE_MODULE=service.orchestrator
+ARG SERVICE_BUILD_TASKS=":service.orchestrator:shadowJar"
 
 COPY gradlew gradlew.bat settings.gradle.kts build.gradle.kts gradle.properties ./
 COPY configuration ./configuration
@@ -24,7 +24,7 @@ COPY service.punishment ./service.punishment
 COPY type.generic ./type.generic
 COPY type.skyblockgeneric ./type.skyblockgeneric
 
-RUN chmod +x ./gradlew && ./gradlew --no-daemon ":${SERVICE_MODULE}:shadowJar"
+RUN chmod +x ./gradlew && ./gradlew --no-daemon --parallel ${SERVICE_BUILD_TASKS}
 
 FROM eclipse-temurin:25-jre
 
