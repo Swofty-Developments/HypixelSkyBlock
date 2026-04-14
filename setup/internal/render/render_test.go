@@ -30,11 +30,8 @@ func TestComposeYAMLUsesSingleSharedGameServerImageBuild(t *testing.T) {
 	if strings.Count(yaml, "image: hypixel-game:compose") != 1 {
 		t.Fatalf("expected one shared game server image definition, got:\n%s", yaml)
 	}
-	if strings.Count(yaml, "<<: *game_server_base") != len(p.SelectedServers) {
-		t.Fatalf("expected each game server to reuse shared base, got:\n%s", yaml)
-	}
-	if strings.Count(yaml, "dockerfile: DockerFiles/Dockerfile.service") != len(p.SelectedServices) {
-		t.Fatalf("expected each selected service to use the per-service Dockerfile, got:\n%s", yaml)
+	if strings.Count(yaml, "<<: *game_server_base") != len(p.SelectedServers)+len(p.SelectedServices) {
+		t.Fatalf("expected each selected service and game server to reuse shared base, got:\n%s", yaml)
 	}
 	if !strings.Contains(yaml, "  picolimbo:\n") {
 		t.Fatalf("expected compose output to include the PicoLimbo service, got:\n%s", yaml)
