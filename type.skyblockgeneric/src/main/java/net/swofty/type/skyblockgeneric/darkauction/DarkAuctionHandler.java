@@ -8,12 +8,13 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.protocol.objects.darkauction.PlayerLeftAuctionProtocol;
 import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.commons.protocol.objects.darkauction.PlayerLeftAuctionProtocol;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.proxyapi.ProxyService;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -145,6 +146,7 @@ public class DarkAuctionHandler {
 
         for (UUID playerId : playersInAuction) {
             SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(playerId);
+            player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_VISITED_DARK_AUCTION, true);
             if (player != null) {
                 player.sendMessage(NPC_PREFIX + "Come on down to the basement, the auction is about to begin!");
                 player.teleport(new Pos(91, 75, 182, 0, 0));

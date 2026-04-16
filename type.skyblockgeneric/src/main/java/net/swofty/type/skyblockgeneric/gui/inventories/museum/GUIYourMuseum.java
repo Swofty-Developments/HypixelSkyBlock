@@ -10,6 +10,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -21,6 +22,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -40,7 +42,7 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline().join()) {
-            e.player().sendMessage(I18n.string("gui_museum.main.item_tracker_offline"));
+            e.player().sendMessage(I18n.string("gui_museum.main.item_tracker_offline", e.player().getLocale()));
             e.player().closeInventory();
             return;
         }
@@ -60,23 +62,24 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_museum.main.rewards_button"), Material.GOLD_BLOCK, 1,
-                        I18n.lore("gui_museum.main.rewards_button.lore"));
+                return TranslatableItemStackCreator.getStack(p, "gui_museum.main.rewards_button", Material.GOLD_BLOCK, 1,
+                        "gui_museum.main.rewards_button.lore");
             }
         });
         set(new GUIItem(45) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_museum.main.edit_npc_tags"), Material.NAME_TAG, 1,
-                        I18n.lore("gui_museum.main.edit_npc_tags.lore"));
+                return TranslatableItemStackCreator.getStack(p, "gui_museum.main.edit_npc_tags", Material.NAME_TAG, 1,
+                        "gui_museum.main.edit_npc_tags.lore");
             }
         });
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                List<String> lore = new ArrayList<>(I18n.lore("gui_museum.main.museum_info.lore"));
+                Locale l = p.getLocale();
+                List<String> lore = new ArrayList<>(I18n.lore("gui_museum.main.museum_info.lore", l));
 
                 int maxAmountOfItems = MuseumableItemCategory.getMuseumableItemCategorySize();
                 int unlockedItems = data.getAllItems().size();
@@ -84,13 +87,13 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
                 double percentageUnlocked = (double) unlockedItems / (double) maxAmountOfItems * 100;
                 double percentageUnlockedToTwoDecimalPlaces = Math.round(percentageUnlocked * 100) / 100.0;
 
-                lore.add(I18n.string("gui_museum.main.items_donated", Map.of("percentage", String.valueOf(percentageUnlockedToTwoDecimalPlaces))));
+                lore.add(I18n.string("gui_museum.main.items_donated", l, Map.of("percentage", String.valueOf(percentageUnlockedToTwoDecimalPlaces))));
                 lore.add(getAsDisplay(unlockedItems, maxAmountOfItems));
 
                 Map<UUID, Double> calculatedPrices = data.getCalculatedPrices();
                 if (!calculatedPrices.isEmpty()) {
                     lore.add(" ");
-                    lore.add(I18n.string("gui_museum.main.top_items"));
+                    lore.add(I18n.string("gui_museum.main.top_items", l));
 
                     AtomicInteger index = new AtomicInteger(1);
                     calculatedPrices.entrySet().stream()
@@ -105,7 +108,7 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
                             });
                 }
 
-                return ItemStackCreator.getStackHead(I18n.string("gui_museum.main.museum_info"),
+                return ItemStackCreator.getStackHead(I18n.string("gui_museum.main.museum_info", l),
                         "597e4e27a04afa5f06108265a9bfb797630391c7f3d880d244f610bb1ff393d8",
                         1, lore);
             }
@@ -129,7 +132,8 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    List<String> lore = new ArrayList<>(I18n.lore("gui_museum.main.category_button.lore_prefix",
+                    Locale l = p.getLocale();
+                    List<String> lore = new ArrayList<>(I18n.lore("gui_museum.main.category_button.lore_prefix", l,
                             Map.of("color", category.getColor(), "category", category.getCategory())));
 
                     int maxAmountOfItems = MuseumableItemCategory.getMuseumableItemCategorySize(category);
@@ -137,10 +141,10 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
                     double percentage = (double) unlockedItems / (double) maxAmountOfItems * 100;
                     double percentageToTwoDecimalPlaces = Math.round(percentage * 100) / 100.0;
 
-                    lore.add(I18n.string("gui_museum.main.category_items_donated", Map.of("percentage", String.valueOf(percentageToTwoDecimalPlaces))));
+                    lore.add(I18n.string("gui_museum.main.category_items_donated", l, Map.of("percentage", String.valueOf(percentageToTwoDecimalPlaces))));
                     lore.add(getAsDisplay(unlockedItems, maxAmountOfItems));
                     lore.add(" ");
-                    lore.add(I18n.string("gui_museum.main.category_click"));
+                    lore.add(I18n.string("gui_museum.main.category_click", l));
 
                     return ItemStackCreator.getStack("§a" + category.getCategory(),
                             category.getMaterial(), 1,

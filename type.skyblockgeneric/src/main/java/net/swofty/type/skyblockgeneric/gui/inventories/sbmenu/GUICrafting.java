@@ -11,12 +11,8 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.Components;
-import net.swofty.type.generic.gui.v2.Layouts;
-import net.swofty.type.generic.gui.v2.StatefulView;
-import net.swofty.type.generic.gui.v2.ViewConfiguration;
-import net.swofty.type.generic.gui.v2.ViewLayout;
-import net.swofty.type.generic.gui.v2.ViewSession;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -28,18 +24,17 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
-    private static final ItemStack.Builder RECIPE_REQUIRED = ItemStackCreator.getStack(I18n.string("gui_sbmenu.crafting.recipe_required"), Material.BARRIER, 1,
-            I18n.lore("gui_sbmenu.crafting.recipe_required.lore"));
     private static final int[] CRAFT_SLOTS = new int[]{10, 11, 12, 19, 20, 21, 28, 29, 30};
     private static final int RESULT_SLOT = 23;
 
     @Override
     public ViewConfiguration<CraftingState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.crafting.title"), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.crafting.title", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -79,7 +74,7 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
         );
 
         if (!hasValidRecipe) {
-            layout.slot(RESULT_SLOT, (s, c) -> RECIPE_REQUIRED);
+            layout.slot(RESULT_SLOT, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.crafting.recipe_required", Material.BARRIER, 1, "gui_sbmenu.crafting.recipe_required.lore"));
         } else if (!canCraft) {
             layout.slot(RESULT_SLOT, (s, c) -> ItemStackCreator.getStack(result.errorMessage()[0],
                     Material.BEDROCK, 1,
@@ -95,7 +90,8 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
                 if (existingLore != null) {
                     existingLore.stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);
                 }
-                lore.addAll(I18n.lore("gui_sbmenu.crafting.crafting_item.lore"));
+                Locale l = c.player().getLocale();
+                lore.addAll(I18n.lore("gui_sbmenu.crafting.crafting_item.lore", l));
                 builder.set(DataComponents.LORE, lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()));
 

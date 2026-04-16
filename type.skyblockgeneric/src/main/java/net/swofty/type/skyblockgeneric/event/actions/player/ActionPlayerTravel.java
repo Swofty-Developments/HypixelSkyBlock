@@ -1,6 +1,8 @@
 package net.swofty.type.skyblockgeneric.event.actions.player;
 
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.block.Block;
@@ -13,6 +15,7 @@ import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.MissionSet;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionUseTeleporter;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.utility.WarpPortal;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -27,19 +30,18 @@ public class ActionPlayerTravel implements HypixelEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (delay.contains(player.getUuid())) return;
+        delay.add(player.getUuid());
+
+        MinecraftServer.getSchedulerManager().buildTask(() -> delay.remove(player.getUuid()))
+            .delay(Duration.ofMillis(500))
+            .schedule();
 
         Key block = player.getInstance().getBlock(player.getPosition()).key();
         if (block == Block.NETHER_PORTAL.key()) {
             MissionData data = player.getMissionData();
 
-            delay.add(player.getUuid());
-
-            MinecraftServer.getSchedulerManager().buildTask(() -> delay.remove(player.getUuid()))
-                    .delay(Duration.ofMillis(500))
-                    .schedule();
-
             if (!MissionSet.GETTING_STARTED.hasCompleted(player)
-                    && !data.isCurrentlyActive(MissionUseTeleporter.class)
+                && !data.isCurrentlyActive(MissionUseTeleporter.class)
             ) {
                 player.sendMessage("§cYou must complete your starting missions!");
                 return;
@@ -50,11 +52,21 @@ public class ActionPlayerTravel implements HypixelEventClass {
 
         if (block == Block.END_PORTAL.key()) {
             player.sendTo(ServerType.SKYBLOCK_ISLAND);
-            delay.add(player.getUuid());
-
-            MinecraftServer.getSchedulerManager().buildTask(() -> delay.remove(player.getUuid()))
-                    .delay(Duration.ofMillis(500))
-                    .schedule();
         }
+
+        WarpPortal.getWarpPortals().forEach(warp -> {
+            // distanceSquared is a micro-optimization
+            if (event.getNewPosition().distanceSquared(warp.vector().asPos()) < 2) {
+                player.teleport(warp.pos());
+                player.playSound(
+                    Sound.sound(
+                        Key.key("minecraft:entity.enderman.teleport"),
+                        Sound.Source.PLAYER,
+                        1f, 1f
+                    )
+                );
+                player.sendMessage("§dWarped to §b" + LegacyComponentSerializer.legacySection().serialize(warp.text()) + "§d!");
+            }
+        });
     }
 }

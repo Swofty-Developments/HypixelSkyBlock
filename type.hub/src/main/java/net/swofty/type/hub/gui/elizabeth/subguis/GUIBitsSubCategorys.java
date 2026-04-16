@@ -32,7 +32,7 @@ public class GUIBitsSubCategorys extends HypixelInventoryGUI {
     private final String guiName;
     private final HypixelInventoryGUI previousGUI;
 
-public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, HypixelInventoryGUI previousGUI) {
+    public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, HypixelInventoryGUI previousGUI) {
         super("Bits Shop - " + guiName, InventoryType.CHEST_5_ROW);
         this.items = items;
         this.guiName = guiName;

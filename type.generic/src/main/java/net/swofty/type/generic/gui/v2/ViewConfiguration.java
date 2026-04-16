@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 
 import java.util.function.BiFunction;
 
@@ -39,6 +40,10 @@ public class ViewConfiguration<S> {
 
     public static <S> ViewConfiguration<S> withString(StringTitle<S> title, InventoryType type) {
         return new ViewConfiguration<>(title, type);
+    }
+
+    public static <S> ViewConfiguration<S> translatable(String titleKey, InventoryType type) {
+        return new ViewConfiguration<>((StringTitle<S>) (s, ctx) -> I18n.string(titleKey, ctx.player().getLocale()), type);
     }
 
     @FunctionalInterface

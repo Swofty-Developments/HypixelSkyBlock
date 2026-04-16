@@ -12,6 +12,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
@@ -67,7 +69,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                 if (net.swofty.type.generic.gui.inventory.HypixelInventoryGUI.GUI_MAP.containsKey(member.getUuid())) {
                     if (net.swofty.type.generic.gui.inventory.HypixelInventoryGUI.GUI_MAP.get(member.getUuid()) instanceof GUIMinion) {
                         e.player().closeInventory();
-                        e.player().sendMessage(I18n.string("gui_minion.coop_member_open"));
+                        e.player().sendMessage(I18n.string("gui_minion.coop_member_open", e.player().getLocale()));
                     }
                 }
             });
@@ -99,7 +101,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                 minion.removeMinion();
                 player.getSkyBlockIsland().getMinionData().getMinions().remove(minion);
 
-                player.sendMessage(I18n.string("gui_minion.pickup_message", Map.of(
+                player.sendMessage(I18n.string("gui_minion.pickup_message", player.getLocale(), Map.of(
                         "current", String.valueOf(player.getSkyBlockIsland().getMinionData().getMinions().size()),
                         "max", String.valueOf(player.getSkyblockDataHandler().get(
                                 SkyBlockDataHandler.Data.MINION_DATA,
@@ -109,8 +111,9 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack(I18n.string("gui_minion.pickup_button"), Material.BEDROCK, 1,
-                        I18n.lore("gui_minion.pickup_button.lore"));
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                return TranslatableItemStackCreator.getStack(p, "gui_minion.pickup_button", Material.BEDROCK, 1,
+                        "gui_minion.pickup_button.lore");
             }
         });
 
@@ -119,7 +122,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (minion.getItemsInMinion().isEmpty()) {
-                    player.sendMessage(I18n.string("gui_minion.no_items_stored"));
+                    player.sendMessage(I18n.string("gui_minion.no_items_stored", player.getLocale()));
                     return;
                 }
 
@@ -137,8 +140,8 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_minion.collect_all_button"), Material.CHEST, 1,
-                        I18n.lore("gui_minion.collect_all_button.lore"));
+                return TranslatableItemStackCreator.getStack(p, "gui_minion.collect_all_button", Material.CHEST, 1,
+                        "gui_minion.collect_all_button.lore");
             }
         });
 
@@ -151,8 +154,8 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_minion.ideal_layout"), Material.REDSTONE_TORCH, 1,
-                        I18n.lore("gui_minion.ideal_layout.lore"));
+                return TranslatableItemStackCreator.getStack(p, "gui_minion.ideal_layout", Material.REDSTONE_TORCH, 1,
+                        "gui_minion.ideal_layout.lore");
             }
         });
 
@@ -186,13 +189,13 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                 int speedPercentage = minion.getSpeedPercentage();
                 final DecimalFormat formatter = new DecimalFormat("#.##");
 
-                return ItemStackCreator.getStack(I18n.string("gui_minion.next_tier"), Material.GOLD_INGOT, 1,
-                        I18n.lore("gui_minion.next_tier.lore", Map.of(
+                return TranslatableItemStackCreator.getStack(p, "gui_minion.next_tier", Material.GOLD_INGOT, 1,
+                        "gui_minion.next_tier.lore", Map.of(
                                 "current_time", formatter.format(minionTiers.get(minion.getTier() - 1).timeBetweenActions() / (1. + speedPercentage / 100.)),
                                 "next_time", formatter.format(minionTiers.get(minion.getTier()).timeBetweenActions() / (1. + speedPercentage / 100.)),
                                 "current_storage", String.valueOf(minionTiers.get(minion.getTier() - 1).storage()),
                                 "next_storage", String.valueOf(minionTiers.get(minion.getTier()).storage())
-                        )));
+                        ));
             }
         });
 
@@ -255,7 +258,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (!p.getInventory().getCursorItem().isAir()) {
-                        player.sendMessage(I18n.string("gui_minion.cant_put_items"));
+                        player.sendMessage(I18n.string("gui_minion.cant_put_items", p.getLocale()));
 
                         e.setCancelled(true);
                         return;

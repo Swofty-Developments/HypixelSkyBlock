@@ -13,7 +13,7 @@ import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -25,15 +25,14 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class AuctionViewThirdBin implements AuctionView {
     @Override
     public void open(GUIAuctionViewItem gui, AuctionItem item, SkyBlockPlayer player) {
-        // Check if the BIN item has already been bought
         if (!item.getBids().isEmpty()) {
-            // Check if the bidder is the player
             if (item.getBids().getFirst().uuid().equals(player.getUuid())) {
                 DatapointUUIDList activeBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
                 DatapointUUIDList inactiveBids = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_INACTIVE_BIDS, DatapointUUIDList.class);
@@ -43,7 +42,8 @@ public class AuctionViewThirdBin implements AuctionView {
                         @Override
                         public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                             SkyBlockPlayer player = (SkyBlockPlayer) p;
-                            player.sendMessage(I18n.string("gui_auction.view_third_bin.claiming_item"));
+                            Locale l = p.getLocale();
+                            player.sendMessage(I18n.string("gui_auction.view_third_bin.claiming_item", l));
                             activeBids.setValue(new ArrayList<>(activeBids.getValue()) {{
                                 remove(item.getUuid());
                             }});
@@ -53,28 +53,28 @@ public class AuctionViewThirdBin implements AuctionView {
 
                             player.addAndUpdateItem(item.getItem());
 
-                            player.sendMessage(I18n.string("gui_auction.view_third_bin.claimed_item"));
+                            player.sendMessage(I18n.string("gui_auction.view_third_bin.claimed_item", l));
                             player.closeInventory();
                         }
 
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                            return ItemStackCreator.getStack(I18n.string("gui_auction.view_third_bin.claim_item"), Material.GOLD_BLOCK, 1,
-                                    I18n.lore("gui_auction.view_third_bin.claim_sold.lore", Map.of(
+                            return TranslatableItemStackCreator.getStack(p, "gui_auction.view_third_bin.claim_item", Material.GOLD_BLOCK, 1,
+                                    "gui_auction.view_third_bin.claim_sold.lore", Map.of(
                                             "buyer_name", SkyBlockPlayer.getDisplayName(item.getBids().getFirst().uuid()),
                                             "price", String.valueOf(item.getBids().getFirst().value())
-                                    )));
+                                    ));
                         }
                     });
                 } else {
                     gui.set(new GUIItem(31) {
                         @Override
                         public ItemStack.Builder getItem(HypixelPlayer p) {
-                            return ItemStackCreator.getStack(I18n.string("gui_auction.view_third_bin.item_sold"), Material.BEDROCK, 1,
-                                    I18n.lore("gui_auction.view_third_bin.item_sold_claimed.lore", Map.of(
+                            return TranslatableItemStackCreator.getStack(p, "gui_auction.view_third_bin.item_sold", Material.BEDROCK, 1,
+                                    "gui_auction.view_third_bin.item_sold_claimed.lore", Map.of(
                                             "buyer_name", SkyBlockPlayer.getDisplayName(item.getBids().getFirst().uuid()),
                                             "price", String.valueOf(item.getBids().getFirst().value())
-                                    )));
+                                    ));
                         }
                     });
                 }
@@ -84,11 +84,11 @@ public class AuctionViewThirdBin implements AuctionView {
             gui.set(new GUIItem(31) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    return ItemStackCreator.getStack(I18n.string("gui_auction.view_third_bin.item_sold"), Material.BEDROCK, 1,
-                            I18n.lore("gui_auction.view_third_bin.item_sold_other.lore", Map.of(
+                    return TranslatableItemStackCreator.getStack(p, "gui_auction.view_third_bin.item_sold", Material.BEDROCK, 1,
+                            "gui_auction.view_third_bin.item_sold_other.lore", Map.of(
                                     "buyer_name", SkyBlockPlayer.getDisplayName(item.getBids().getFirst().uuid()),
                                     "price", String.valueOf(item.getBids().getFirst().value())
-                            )));
+                            ));
                 }
             });
             return;
@@ -98,26 +98,26 @@ public class AuctionViewThirdBin implements AuctionView {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 double coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
                 if (coins < item.getStartingPrice()) {
-                    player.sendMessage(I18n.string("gui_auction.view_third_bin.not_enough_coins"));
+                    player.sendMessage(I18n.string("gui_auction.view_third_bin.not_enough_coins", l));
                     return;
                 }
 
-                player.sendMessage(I18n.string("gui_auction.view_third_bin.escrow_message"));
+                player.sendMessage(I18n.string("gui_auction.view_third_bin.escrow_message", l));
                 player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins - item.getStartingPrice());
 
-                player.sendMessage(I18n.string("gui_auction.view_third_bin.processing"));
+                player.sendMessage(I18n.string("gui_auction.view_third_bin.processing", l));
 
-                // Check that it is still available, by checking it has 0 bids
                 CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse> future = new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(
                         new AuctionFetchItemProtocolObject.AuctionFetchItemMessage(item.getUuid())
                 );
                 AuctionItem item = future.join().item();
 
                 if (!item.getBids().isEmpty()) {
-                    player.sendMessage(I18n.string("gui_auction.view_third_bin.already_sold"));
-                    player.sendMessage(I18n.string("gui_auction.view_third_bin.returning_escrow"));
+                    player.sendMessage(I18n.string("gui_auction.view_third_bin.already_sold", l));
+                    player.sendMessage(I18n.string("gui_auction.view_third_bin.returning_escrow", l));
                     player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + item.getStartingPrice());
                     return;
                 }
@@ -125,8 +125,8 @@ public class AuctionViewThirdBin implements AuctionView {
                 CoopDatabase.Coop originatorCoop = CoopDatabase.getFromMember(item.getOriginator());
                 CoopDatabase.Coop purchaserCoop = CoopDatabase.getFromMember(player.getUuid());
                 if (originatorCoop != null && purchaserCoop != null && originatorCoop.isSameAs(purchaserCoop)) {
-                    player.sendMessage(I18n.string("gui_auction.view_third_bin.same_coop"));
-                    player.sendMessage(I18n.string("gui_auction.view_third_bin.returning_escrow"));
+                    player.sendMessage(I18n.string("gui_auction.view_third_bin.same_coop", l));
+                    player.sendMessage(I18n.string("gui_auction.view_third_bin.returning_escrow", l));
                     player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(coins + item.getStartingPrice());
                     return;
                 }
@@ -137,7 +137,6 @@ public class AuctionViewThirdBin implements AuctionView {
                 }});
                 player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).setValue(activeBids.getValue());
 
-                // Add player bid to item and update it
                 item.setBids(new ArrayList<>(item.getBids()) {{
                     add(new AuctionItem.Bid(System.currentTimeMillis(), player.getUuid(), item.getStartingPrice().longValue()));
                 }});
@@ -149,14 +148,14 @@ public class AuctionViewThirdBin implements AuctionView {
 
                 new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message).join();
 
-                player.sendMessage(I18n.string("gui_auction.view_third_bin.purchased", Map.of(
+                player.sendMessage(I18n.string("gui_auction.view_third_bin.purchased", l, Map.of(
                         "item_name", new SkyBlockItem(item.getItem()).getDisplayName(),
                         "price", String.valueOf(item.getStartingPrice())
                 )));
 
                 ProxyPlayer owner = new ProxyPlayer(item.getOriginator());
                 if (owner.isOnline().join()) {
-                    owner.sendMessage(Component.text(I18n.string("gui_auction.view_third_bin.owner_notification", Map.of(
+                    owner.sendMessage(Component.text(I18n.string("gui_auction.view_third_bin.owner_notification", l, Map.of(
                             "buyer_name", player.getFullDisplayName(),
                             "item_name", new SkyBlockItem(item.getItem()).getDisplayName()
                     ))).clickEvent(
@@ -167,10 +166,10 @@ public class AuctionViewThirdBin implements AuctionView {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack(I18n.string("gui_auction.view_third_bin.buy_now"), Material.GOLD_NUGGET, 1,
-                        I18n.lore("gui_auction.view_third_bin.buy_now.lore", Map.of(
+                return TranslatableItemStackCreator.getStack(p, "gui_auction.view_third_bin.buy_now", Material.GOLD_NUGGET, 1,
+                        "gui_auction.view_third_bin.buy_now.lore", Map.of(
                                 "price", String.valueOf(item.getStartingPrice())
-                        )));
+                        ));
             }
         });
     }

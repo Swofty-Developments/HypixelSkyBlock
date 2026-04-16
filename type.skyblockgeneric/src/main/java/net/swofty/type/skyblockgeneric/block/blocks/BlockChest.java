@@ -15,7 +15,11 @@ import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
 import net.swofty.type.skyblockgeneric.block.impl.BlockBreakable;
 import net.swofty.type.skyblockgeneric.block.impl.BlockInteractable;
 import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
-import net.swofty.type.skyblockgeneric.chest.*;
+import net.swofty.type.skyblockgeneric.chest.Chest;
+import net.swofty.type.skyblockgeneric.chest.ChestAnimationType;
+import net.swofty.type.skyblockgeneric.chest.ChestType;
+import net.swofty.type.skyblockgeneric.chest.DoubleChest;
+import net.swofty.type.skyblockgeneric.chest.SingleChest;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIChest;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -47,7 +51,6 @@ public class BlockChest implements CustomSkyBlockBlock, BlockInteractable, Block
         Point position = event.getBlockPosition();
 
         Chest chest;
-
         ChestType chestType = ChestType.from(instance, position);
 
         if (chestType == ChestType.DOUBLE) {
@@ -72,7 +75,6 @@ public class BlockChest implements CustomSkyBlockBlock, BlockInteractable, Block
         Point position = event.getBlockPosition();
 
         ChestType chestType = ChestType.from(instance, position);
-
         List<ItemStack> items;
 
         if (chestType == ChestType.DOUBLE) {

@@ -31,7 +31,9 @@ public class GUISkyBlockLevel extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.levels.level.title", Map.of("level", String.valueOf(levelRequirement.asInt()))), InventoryType.CHEST_4_ROW);
+        return ViewConfiguration.withString(
+                (state, ctx) -> I18n.string("gui_sbmenu.levels.level.title", ctx.player().getLocale(), Map.of("level", String.valueOf(levelRequirement.asInt()))),
+                InventoryType.CHEST_4_ROW);
     }
 
     @Override

@@ -16,10 +16,10 @@ public class ActionPlayerSpawnFirstMinion implements HypixelEventClass {
     public void run(IslandFirstCreatedEvent event) {
         ScheduleUtility.delay(() -> {
             IslandMinionData.IslandMinion minion = event.getIsland().getMinionData().initializeMinion(
-                    new Pos(-4, 100, 28), // Default Cobble Minion position
-                    MinionRegistry.COBBLESTONE,
-                    new ItemAttributeMinionData.MinionData(1, 0),
-                    false
+                new Pos(3, 100, 36), // Default Cobble Minion position
+                MinionRegistry.COBBLESTONE,
+                new ItemAttributeMinionData.MinionData(1, 0),
+                false
             );
 
             event.getIsland().getMinionData().spawn(minion);

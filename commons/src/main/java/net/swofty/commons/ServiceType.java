@@ -12,5 +12,6 @@ public enum ServiceType {
     FRIEND,
     REPLAY,
     PUNISHMENT,
+    ELECTION,
     ;
 }

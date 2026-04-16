@@ -9,17 +9,16 @@ import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 public record TransferHandler(Player player) {
-	public static final Map<Player, ServerType> playersGoalServerType = new HashMap<>();
-	private static final Map<Player, RegisteredServer> playersOriginServer = new HashMap<>();
-	private static final List<Player> disregard = new ArrayList<>();
+	public static final Map<Player, ServerType> playersGoalServerType = new ConcurrentHashMap<>();
+	private static final Map<Player, RegisteredServer> playersOriginServer = new ConcurrentHashMap<>();
+	private static final Set<Player> disregard = ConcurrentHashMap.newKeySet();
 
 	public boolean isInLimbo() {
 		return playersGoalServerType.containsKey(player);
@@ -37,6 +36,13 @@ public record TransferHandler(Player player) {
 		CompletableFuture<Boolean> future = new CompletableFuture<>();
 
 		new Thread(() -> {
+			if (isInLimbo() && player.getCurrentServer()
+				.map(server -> server.getServer().equals(SkyBlockVelocity.getLimboServer()))
+				.orElse(false)) {
+				future.complete(true);
+				return;
+			}
+
 			if (player.getCurrentServer().isPresent()) {
 				RegisteredServer previousServer = player.getCurrentServer().get().getServer();
 				playersOriginServer.put(player, previousServer);
@@ -81,17 +87,28 @@ public record TransferHandler(Player player) {
 
 	public void previousServerIsFinished() {
 		new Thread(() -> {
-			if (disregard.contains(player)) return;
+			if (disregard.contains(player) || !isInLimbo()) return;
 
 			ServerType type = playersGoalServerType.get(player);
+			if (type == null) {
+				playersGoalServerType.remove(player);
+				playersOriginServer.remove(player);
+				return;
+			}
 			GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
 
 			if (server == null) {
+				playersGoalServerType.remove(player);
+				playersOriginServer.remove(player);
 				player.disconnect(Component.text("§cThere are no Hypixel (type=" + type.name() + ") servers available at the moment."));
 				return;
 			}
 
 			RegisteredServer originServer = playersOriginServer.get(player);
+			if (originServer == null) {
+				playersGoalServerType.remove(player);
+				return;
+			}
 			UUID originServerUUID = UUID.fromString(originServer.getServerInfo().getName());
 			UUID sendingToServerUUID = server.internalID();
 			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
@@ -116,33 +133,8 @@ public record TransferHandler(Player player) {
 
 	public void transferTo(ServerType type) {
 		new Thread(() -> {
-			RegisteredServer originServer = playersOriginServer.get(player);
-			if (originServer == null) {
-				player.getCurrentServer().ifPresent(conn -> playersOriginServer.put(player, conn.getServer()));
-				originServer = playersOriginServer.get(player);
-			}
-			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
-
-			playersGoalServerType.remove(player);
-			playersOriginServer.remove(player);
-
-			GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
-
-			if (server == null) {
-				player.disconnect(Component.text("§cThere are no Hypixel (type=" + type.name() + ") servers available at the moment."));
-				return;
-			}
-
-			if (originServer != null && originServerType != null) {
-				RedisMessage.sendMessageToServer(server.internalID(),
-						FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
-						new JSONObject().put("uuid", player.getUniqueId().toString())
-								.put("origin-type", originServerType.name())
-				);
-			}
-
-			player.sendMessage(Component.text("§7Sending to server " + server.displayName() + "..."));
-			player.createConnectionRequest(server.registeredServer()).connectWithIndication();
+			playersGoalServerType.put(player, type);
+			sendToLimbo().join();
 		}).start();
 	}
 

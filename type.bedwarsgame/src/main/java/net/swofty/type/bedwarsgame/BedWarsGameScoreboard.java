@@ -11,6 +11,7 @@ import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGameEventManager;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.game.game.GameState;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
@@ -130,10 +131,10 @@ public class BedWarsGameScoreboard {
         scoreboard.removeScoreboard(player);
     }
 
-    private static String getSidebarName(int counter) {
-        String baseText = "BED WARS";
-        String[] colors = {"§f§l", "§6§l", "§e§l"};
-        String endColor = "§a§l";
+	private static String getSidebarName(int counter, Locale locale) {
+		String baseText = I18n.string("scoreboard.bedwars_game.title_base", locale);
+		String[] colors = {"§f§l", "§6§l", "§e§l"};
+		String endColor = "§a§l";
 
         if (counter > 0 && counter <= 8) {
             return colors[0] + baseText.substring(0, counter - 1) +

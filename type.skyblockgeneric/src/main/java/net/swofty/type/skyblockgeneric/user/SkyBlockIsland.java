@@ -2,8 +2,6 @@ package net.swofty.type.skyblockgeneric.user;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.hollowcube.polar.AnvilPolar;
-import net.hollowcube.polar.ChunkSelector;
 import net.hollowcube.polar.PolarLoader;
 import net.hollowcube.polar.PolarReader;
 import net.hollowcube.polar.PolarWorld;
@@ -45,7 +43,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Getter
 public class SkyBlockIsland {
-    private static final String ISLAND_TEMPLATE_NAME = CustomWorlds.SKYBLOCK_ISLAND_TEMPLATE.getFolderName();
+    private static final Path ISLAND_TEMPLATE_PATH = CustomWorlds.SKYBLOCK_ISLAND_TEMPLATE.getPath();
     private static final Map<UUID, SkyBlockIsland> loadedIslands = new HashMap<>();
 
     // Internal Island Data
@@ -105,7 +103,7 @@ public class SkyBlockIsland {
             if (!database.exists()) {
                 islandVersion = HypixelConst.getCurrentIslandVersion();
                 try {
-                    world = AnvilPolar.anvilToPolar(Path.of(ISLAND_TEMPLATE_NAME), ChunkSelector.radius(3));
+                    world = new PolarLoader(ISLAND_TEMPLATE_PATH).world();
                 } catch (IOException e) {
                     Logger.error("Failed to create island world", e);
                     throw new RuntimeException("Failed to create island world", e);
@@ -123,7 +121,7 @@ public class SkyBlockIsland {
                     case 0:
                         lastSaved = System.currentTimeMillis();
                         try {
-                            world = AnvilPolar.anvilToPolar(Path.of(ISLAND_TEMPLATE_NAME), ChunkSelector.radius(3));
+                            world = new PolarLoader(ISLAND_TEMPLATE_PATH).world();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

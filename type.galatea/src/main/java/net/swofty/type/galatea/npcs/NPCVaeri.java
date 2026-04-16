@@ -5,6 +5,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class NPCVaeri extends HypixelNPC {
 
@@ -39,6 +40,21 @@ public class NPCVaeri extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent event) {
-        event.player().notImplemented();
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        if (isInDialogue(player)) return;
+        setDialogue(player, "idle");
+    }
+
+    @Override
+    protected DialogueSet[] dialogues(HypixelPlayer player) {
+        return new DialogueSet[]{
+            DialogueSet.builder().key("idle").lines(new String[]{
+                "How do you do! Are you from §2Galatea§f?",
+                "Wonderful pl-",
+                "Did you just say \"Gala-tee\"?",
+                "No, no! It's §oGala-té-à§f!",
+                "A lot of folks get it wrong but now you know better!"
+            }).build()
+        };
     }
 }

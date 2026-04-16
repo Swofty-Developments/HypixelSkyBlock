@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -35,8 +36,8 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
                         DatapointAuctionStatistics.class
                 ).getValue();
 
-                return ItemStackCreator.getStack(I18n.string("gui_auction.stats.seller_stats"), Material.PAPER, 1,
-                        I18n.lore("gui_auction.stats.seller_stats.lore", Map.ofEntries(
+                return TranslatableItemStackCreator.getStack(p, "gui_auction.stats.seller_stats", Material.PAPER, 1,
+                        "gui_auction.stats.seller_stats.lore", Map.ofEntries(
                                 entry("auctions_created", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_CREATED))),
                                 entry("completed_without_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITHOUT_BIDS))),
                                 entry("completed_with_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_COMPLETED_WITH_BIDS))),
@@ -51,7 +52,7 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
                                 entry("mythic_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.MYTHIC_SOLD))),
                                 entry("special_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.SPECIAL_SOLD))),
                                 entry("ultimate_sold", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.ULTIMATE_SOLD)))
-                        )));
+                        ));
             }
         });
         set(new GUIItem(15) {
@@ -63,8 +64,8 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
                         DatapointAuctionStatistics.class
                 ).getValue();
 
-                return ItemStackCreator.getStack(I18n.string("gui_auction.stats.buyer_stats"), Material.FILLED_MAP, 1,
-                        I18n.lore("gui_auction.stats.buyer_stats.lore", Map.ofEntries(
+                return TranslatableItemStackCreator.getStack(p, "gui_auction.stats.buyer_stats", Material.FILLED_MAP, 1,
+                        "gui_auction.stats.buyer_stats.lore", Map.ofEntries(
                                 entry("auctions_won", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.AUCTIONS_WON))),
                                 entry("total_bids", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.TOTAL_BIDS))),
                                 entry("highest_bid", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.HIGHEST_BID_MADE))),
@@ -77,7 +78,7 @@ public class GUIAuctionHouseStats extends HypixelInventoryGUI {
                                 entry("mythic_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.MYTHIC_BOUGHT))),
                                 entry("special_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.SPECIAL_BOUGHT))),
                                 entry("ultimate_bought", String.valueOf(stats.get(DatapointAuctionStatistics.AuctionStatistics.AuctionStat.ULTIMATE_BOUGHT)))
-                        )));
+                        ));
             }
         });
     }

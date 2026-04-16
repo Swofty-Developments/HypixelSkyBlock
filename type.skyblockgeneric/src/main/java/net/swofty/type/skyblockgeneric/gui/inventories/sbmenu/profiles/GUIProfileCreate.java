@@ -29,7 +29,7 @@ public class GUIProfileCreate extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.profiles.create.title"), InventoryType.CHEST_3_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.profiles.create.title", InventoryType.CHEST_3_ROW);
     }
 
     @SneakyThrows
@@ -39,8 +39,8 @@ public class GUIProfileCreate extends StatelessView {
 
         String profileName = SkyBlockPlayerProfiles.getRandomName();
 
-        layout.slot(11, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.create.confirm"), Material.GREEN_TERRACOTTA, 1,
-                        I18n.lore("gui_sbmenu.profiles.create.confirm.lore", Map.of("profile_name", profileName))),
+        layout.slot(11, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profiles.create.confirm", Material.GREEN_TERRACOTTA, 1,
+                        "gui_sbmenu.profiles.create.confirm.lore", Map.of("profile_name", profileName)),
                 (click, c) -> {
                     SkyBlockPlayer player = (SkyBlockPlayer) c.player();
                     SkyBlockPlayerProfiles profiles = player.getProfiles();
@@ -66,7 +66,7 @@ public class GUIProfileCreate extends StatelessView {
                     player.sendTo(ServerType.SKYBLOCK_ISLAND, true);
                 });
 
-        layout.slot(15, (s, c) -> ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, I18n.string("gui_sbmenu.profiles.create.cancel")),
+        layout.slot(15, (s, c) -> ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, I18n.string("gui_sbmenu.profiles.create.cancel", c.player().getLocale())),
                 (click, c) -> c.player().openView(new GUIProfileSelectMode()));
     }
 }

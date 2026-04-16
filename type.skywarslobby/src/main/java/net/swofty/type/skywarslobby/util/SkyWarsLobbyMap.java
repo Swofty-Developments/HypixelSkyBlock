@@ -3,7 +3,7 @@ package net.swofty.type.skywarslobby.util;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.utility.AbstractMapSystem;
 
-public class SkywarsLobbyMap extends AbstractMapSystem {
+public class SkyWarsLobbyMap extends AbstractMapSystem {
 
     @Override
     protected MapConfiguration getConfiguration() {

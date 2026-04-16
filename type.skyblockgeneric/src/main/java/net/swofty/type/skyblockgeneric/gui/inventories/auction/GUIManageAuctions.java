@@ -16,6 +16,7 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -47,8 +48,8 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_auction.manage.create_button"), Material.GOLDEN_HORSE_ARMOR, 1,
-                        I18n.lore("gui_auction.manage.create_button.lore"));
+                return TranslatableItemStackCreator.getStack(p, "gui_auction.manage.create_button", Material.GOLDEN_HORSE_ARMOR, 1,
+                        "gui_auction.manage.create_button.lore");
             }
         });
     }
@@ -146,7 +147,7 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_auction.manage.offline_message"));
+            player.sendMessage(I18n.string("gui_auction.manage.offline_message", player.getLocale()));
             player.closeInventory();
             return;
         }

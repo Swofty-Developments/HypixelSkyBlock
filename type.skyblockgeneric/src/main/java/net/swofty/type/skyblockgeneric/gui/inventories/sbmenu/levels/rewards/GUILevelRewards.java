@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.rewards;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -15,13 +16,14 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GUILevelRewards extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.levels.rewards.title"), InventoryType.CHEST_4_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.levels.rewards.title", InventoryType.CHEST_4_ROW);
     }
 
     @Override
@@ -33,44 +35,46 @@ public class GUILevelRewards extends StatelessView {
         // Feature Rewards
         layout.slot(11, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            Locale l = player.getLocale();
             DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
             List<String> lore = new ArrayList<>();
-            lore.addAll(I18n.lore("gui_sbmenu.levels.rewards.feature.lore"));
+            lore.addAll(I18n.lore("gui_sbmenu.levels.rewards.feature.lore", l));
             lore.add(" ");
-            lore.add(I18n.string("gui_sbmenu.levels.rewards.next_reward"));
+            lore.add(I18n.string("gui_sbmenu.levels.rewards.next_reward", l));
 
             Map.Entry<Integer, List<CustomLevelAward>> nextAward = CustomLevelAward.getNextReward(experience.getLevel().asInt());
             if (nextAward == null) {
-                lore.add(I18n.string("gui_sbmenu.levels.rewards.no_more"));
+                lore.add(I18n.string("gui_sbmenu.levels.rewards.no_more", l));
             } else {
                 nextAward.getValue().forEach(award -> lore.add("§7" + award.getDisplay()));
-                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", Map.of("level", String.valueOf(nextAward.getKey()))));
+                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", l, Map.of("level", String.valueOf(nextAward.getKey()))));
             }
 
             lore.add(" ");
             lore.addAll(getAsDisplay(CustomLevelAward.getFromLevel(experience.getLevel().asInt()).size(),
                     CustomLevelAward.getTotalLevelAwards()));
             lore.add(" ");
-            lore.add(I18n.string("gui_sbmenu.levels.rewards.click_to_view"));
+            lore.add(I18n.string("gui_sbmenu.levels.rewards.click_to_view", l));
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.rewards.feature"), Material.NETHER_STAR, 1, lore);
+            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.rewards.feature", Material.NETHER_STAR, 1, lore);
         }, (click, c) -> c.player().openView(new GUILevelFeatureRewards()));
 
         // Prefix Color Rewards
         layout.slot(12, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            Locale l = player.getLocale();
             List<String> lore = new ArrayList<>();
-            lore.addAll(I18n.lore("gui_sbmenu.levels.rewards.prefix.lore"));
+            lore.addAll(I18n.lore("gui_sbmenu.levels.rewards.prefix.lore", l));
             lore.add(" ");
-            lore.add(I18n.string("gui_sbmenu.levels.rewards.next_reward"));
+            lore.add(I18n.string("gui_sbmenu.levels.rewards.next_reward", l));
 
             Map.Entry<SkyBlockLevelRequirement, String> nextPrefix = player.getSkyBlockExperience()
                     .getLevel().getNextPrefixChange();
             if (nextPrefix == null) {
-                lore.add(I18n.string("gui_sbmenu.levels.rewards.no_more"));
+                lore.add(I18n.string("gui_sbmenu.levels.rewards.no_more", l));
             } else {
                 lore.add(nextPrefix.getValue() + nextPrefix.getKey().getPrefixDisplay());
-                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", Map.of("level", String.valueOf(nextPrefix.getKey().asInt()))));
+                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", l, Map.of("level", String.valueOf(nextPrefix.getKey().asInt()))));
             }
             lore.add(" ");
             lore.addAll(getAsDisplay(
@@ -78,18 +82,19 @@ public class GUILevelRewards extends StatelessView {
                     SkyBlockLevelRequirement.getAllPrefixChanges().size()
             ));
             lore.add(" ");
-            lore.add(I18n.string("gui_sbmenu.levels.rewards.click_to_view"));
+            lore.add(I18n.string("gui_sbmenu.levels.rewards.click_to_view", l));
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.rewards.prefix"), Material.GRAY_DYE, 1, lore);
+            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.rewards.prefix", Material.GRAY_DYE, 1, lore);
         }, (click, c) -> c.player().openView(new GUILevelPrefixRewards()));
 
         // Emblem Rewards
         layout.slot(13, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            Locale l = player.getLocale();
             List<String> lore = new ArrayList<>();
-            lore.addAll(I18n.lore("gui_sbmenu.levels.rewards.emblem.lore"));
+            lore.addAll(I18n.lore("gui_sbmenu.levels.rewards.emblem.lore", l));
             lore.add(" ");
-            lore.add(I18n.string("gui_sbmenu.levels.rewards.next_reward"));
+            lore.add(I18n.string("gui_sbmenu.levels.rewards.next_reward", l));
 
             List<SkyBlockEmblems.SkyBlockEmblem> levelEmblems = SkyBlockEmblems.getEmblemsWithLevelCause();
             SkyBlockEmblems.SkyBlockEmblem nextEmblem = null;
@@ -100,10 +105,10 @@ public class GUILevelRewards extends StatelessView {
             }
 
             if (nextEmblem == null) {
-                lore.add(I18n.string("gui_sbmenu.levels.rewards.no_more"));
+                lore.add(I18n.string("gui_sbmenu.levels.rewards.no_more", l));
             } else {
                 lore.add("§f" + nextEmblem.displayName() + " " + nextEmblem.emblem());
-                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", Map.of("level", String.valueOf(((LevelCause) nextEmblem.cause()).getLevel()))));
+                lore.add(I18n.string("gui_sbmenu.levels.rewards.at_level", l, Map.of("level", String.valueOf(((LevelCause) nextEmblem.cause()).getLevel()))));
             }
 
             lore.add(" ");
@@ -112,9 +117,9 @@ public class GUILevelRewards extends StatelessView {
                     levelEmblems.size()
             ));
             lore.add(" ");
-            lore.add(I18n.string("gui_sbmenu.levels.rewards.click_to_view"));
+            lore.add(I18n.string("gui_sbmenu.levels.rewards.click_to_view", l));
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.rewards.emblem"), Material.NAME_TAG, 1, lore);
+            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.rewards.emblem", Material.NAME_TAG, 1, lore);
         }, (click, c) -> c.player().openView(new GUILevelEmblemRewards()));
 
         // Statistic Rewards
@@ -122,8 +127,8 @@ public class GUILevelRewards extends StatelessView {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             SkyBlockLevelRequirement nextLevel = player.getSkyBlockExperience().getLevel().getNextLevel();
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.rewards.statistic"), Material.DIAMOND_HELMET, 1,
-                    I18n.lore("gui_sbmenu.levels.rewards.statistic.lore", Map.of("next_level", nextLevel == null ? "§cMAX" : String.valueOf(nextLevel.asInt()))));
+            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.rewards.statistic", Material.DIAMOND_HELMET, 1,
+                    "gui_sbmenu.levels.rewards.statistic.lore", Map.of("next_level", nextLevel == null ? "§cMAX" : String.valueOf(nextLevel.asInt())));
         });
     }
 
