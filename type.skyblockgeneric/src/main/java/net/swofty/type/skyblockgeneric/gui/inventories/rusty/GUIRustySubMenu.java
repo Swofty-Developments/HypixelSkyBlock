@@ -115,11 +115,10 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                Locale l = player.getLocale();
                 String toggleAction = player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION) ? "disable" : "enable";
-                return ItemStackCreator.getStack(I18n.string("gui_rusty.submenu.shop_confirmations", l),
+                return ItemStackCreator.getStack(I18n.t("gui_rusty.submenu.shop_confirmations"),
                         player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_PURCHASE_CONFIRMATION) ? Material.LIME_DYE : Material.LIGHT_GRAY_DYE, 1,
-                    I18n.lore("gui_rusty.submenu.shop_confirmations.lore", l, Component.text(toggleAction)));
+                    I18n.iterable("gui_rusty.submenu.shop_confirmations.lore", Component.text(toggleAction)));
             }
         });
 
@@ -146,7 +145,7 @@ public class GUIRustySubMenu<T extends GUIRustySubMenu.ShopEntry>
                 Locale l = player.getLocale();
                 String status = player.getToggles().get(DatapointToggles.Toggles.ToggleType.RUSTY_SORT_BY_RARITY) ? "§aYES" : "§cNO";
                 return ItemStackCreator.getStack(I18n.string("gui_rusty.submenu.sort_by_rarity", l), Material.ENDER_EYE, 1,
-                    I18n.lore("gui_rusty.submenu.sort_by_rarity.lore", l, Component.text(status)));
+                    I18n.iterable("gui_rusty.submenu.sort_by_rarity.lore", Component.text(status)));
             }
         });
 

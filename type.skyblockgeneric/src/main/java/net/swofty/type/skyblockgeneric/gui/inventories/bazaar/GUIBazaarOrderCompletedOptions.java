@@ -106,7 +106,6 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
         set(new GUIItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
 
@@ -192,9 +191,8 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
-                List<String> lore = new ArrayList<>(I18n.lore("gui_bazaar.order_completed.claim_rewards_header", l));
+                List<Object> lore = new ArrayList<>(List.of(I18n.iterable("gui_bazaar.order_completed.claim_rewards_header")));
                 lore.add(" ");
 
                 boolean isSell = isSellOrder();
@@ -221,13 +219,11 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUIBazaarOrderOptions(activeOrder).open(p);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return TranslatableItemStackCreator.getStack("gui_bazaar.order_completed.view_unfilled", Material.COMPASS, 1,
                     "gui_bazaar.order_completed.view_unfilled.lore",
                     Component.text(String.valueOf((int) activeOrder.amount())),

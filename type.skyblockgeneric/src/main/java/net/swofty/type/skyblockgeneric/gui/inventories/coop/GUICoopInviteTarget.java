@@ -64,11 +64,9 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
         set(new GUIItem(slots[0]) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                Locale l = p.getLocale();
                 return ItemStackCreator.getStackHead(
                         SkyBlockPlayer.getDisplayName(coop.originator()), PlayerSkin.fromUuid(String.valueOf(coop.originator())), 1,
-                        I18n.lore("gui_coop.target.originator_head.lore", l));
+                    I18n.iterable("gui_coop.target.originator_head.lore"));
             }
         });
 

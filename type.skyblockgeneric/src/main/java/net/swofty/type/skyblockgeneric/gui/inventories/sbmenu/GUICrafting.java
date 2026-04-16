@@ -94,14 +94,14 @@ public class GUICrafting implements StatefulView<GUICrafting.CraftingState> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                 ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(p, recipe.getResult().getItemStack()).amount(amount);
 
-                ArrayList<String> lore = new ArrayList<>();
+                ArrayList<Object> lore = new ArrayList<>();
                 var existingLore = builder.build().get(DataComponents.LORE);
                 if (existingLore != null) {
                     existingLore.stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);
                 }
                 Locale l = c.player().getLocale();
-                lore.addAll(I18n.lore("gui_sbmenu.crafting.crafting_item.lore", l));
-                builder.set(DataComponents.LORE, lore.stream().map(line -> LEGACY_SERIALIZER.deserialize(line).decoration(TextDecoration.ITALIC, false))
+                lore.addAll(Arrays.asList(I18n.iterable("gui_sbmenu.crafting.crafting_item.lore")));
+                builder.set(DataComponents.LORE, ItemStackCreator.literalLoreComponents(lore).stream().map(line -> line.decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()));
 
                 return builder;

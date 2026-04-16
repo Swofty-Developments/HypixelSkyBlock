@@ -49,7 +49,7 @@ public class MessageCommand extends HypixelCommand {
 
             String joinedMessage = String.join(" ", message);
             player.sendTranslated("commands.message.outgoing", Component.text(targetName), Component.text(joinedMessage));
-            target.sendMessage(I18n.string("commands.message.incoming", Component.text(ourName), Component.text(joinedMessage)));
+            target.sendMessage(I18n.t("commands.message.incoming", Component.text(ourName), Component.text(joinedMessage)));
         }, playerArgument, messageArgument);
     }
 }

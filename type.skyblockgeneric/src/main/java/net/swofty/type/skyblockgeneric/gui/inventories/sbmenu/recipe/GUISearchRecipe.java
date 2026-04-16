@@ -94,7 +94,7 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
         layout.slot(50, (_, c) -> {
             Locale l = c.player().getLocale();
             return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.search", l), Material.OAK_SIGN, 1,
-                I18n.lore("gui_sbmenu.recipe.book.search.lore", l));
+                I18n.iterable("gui_sbmenu.recipe.book.search.lore"));
         }, (_, c) -> {
             new HypixelSignGUI(c.player()).open(new String[]{I18n.string("gui_sbmenu.recipe.search.sign_prompt", c.player().getLocale())}).thenAccept(line -> {
                 if (line == null) {
@@ -110,7 +110,7 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
             layout.slot(22, (searchState, c) -> {
                 Locale l = c.player().getLocale();
                 return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.search.no_results", l), Material.BARRIER, 1,
-                    I18n.lore("gui_sbmenu.recipe.search.no_results.lore", l, Component.text(searchState.query())));
+                    I18n.iterable("gui_sbmenu.recipe.search.no_results.lore", Component.text(searchState.query())));
             });
         }
     }

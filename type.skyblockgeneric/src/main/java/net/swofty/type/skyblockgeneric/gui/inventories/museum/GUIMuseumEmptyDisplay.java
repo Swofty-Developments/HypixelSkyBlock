@@ -132,7 +132,7 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
                     Locale l = player.getLocale();
                     return ItemStackCreator.getStack(I18n.string("gui_museum.empty_display.no_items", l, Component.text(display.toString()), Component.text(String.valueOf(position + 1))),
                             Material.BARRIER, 1,
-                            I18n.lore("gui_museum.empty_display.no_items.lore", l));
+                        I18n.iterable("gui_museum.empty_display.no_items.lore"));
                 }
             });
         }

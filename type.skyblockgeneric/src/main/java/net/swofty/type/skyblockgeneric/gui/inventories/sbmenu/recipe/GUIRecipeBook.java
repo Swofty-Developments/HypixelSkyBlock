@@ -46,7 +46,7 @@ public class GUIRecipeBook extends StatelessView {
         layout.slot(51, (_, c) -> {
             Locale l = c.player().getLocale();
             return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.search", l), Material.OAK_SIGN, 1,
-                I18n.lore("gui_sbmenu.recipe.book.search.lore", l));
+                I18n.iterable("gui_sbmenu.recipe.book.search.lore"));
         }, (_, c) -> {
             new HypixelSignGUI(c.player()).open(new String[]{"Enter query", ""}).thenAccept(line -> {
                 if (line == null) {
@@ -68,7 +68,7 @@ public class GUIRecipeBook extends StatelessView {
                 if (j < missionLore.size() - 1) missionDisplay.append("\n");
             }
             return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.info", l), Material.BOOK, 1,
-                I18n.lore("gui_sbmenu.recipe.book.info.lore", l, Component.text(missionDisplay.toString())));
+                I18n.iterable("gui_sbmenu.recipe.book.info.lore", Component.text(missionDisplay.toString())));
         });
 
         for (int i = 0; i < CATEGORY_SLOTS.length && i < SkyBlockRecipe.RecipeType.values().length; i++) {
@@ -107,7 +107,7 @@ public class GUIRecipeBook extends StatelessView {
                 String categoryName = StringUtility.toNormalCase(type.name());
                 return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", l, Component.text(categoryName)),
                         type.getMaterial(), 1,
-                    I18n.lore("gui_sbmenu.recipe.book.category.lore", l, Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
+                    I18n.iterable("gui_sbmenu.recipe.book.category.lore", Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
             }, (_, c) -> c.push(new GUIRecipeCategory(type), GUIRecipeCategory.createInitialState((SkyBlockPlayer) c.player(), type)));
         }
 
@@ -153,7 +153,7 @@ public class GUIRecipeBook extends StatelessView {
 
             return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", l, Component.text(categoryName)),
                     type.getMaterial(), 1,
-                I18n.lore("gui_sbmenu.recipe.book.category.lore", l, Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
+                I18n.iterable("gui_sbmenu.recipe.book.category.lore", Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
         }, (click, c) -> c.push(new GUIRecipeSlayers()));
     }
 }

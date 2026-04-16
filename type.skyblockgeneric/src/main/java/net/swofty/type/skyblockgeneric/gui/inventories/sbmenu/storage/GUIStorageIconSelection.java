@@ -80,7 +80,7 @@ public class GUIStorageIconSelection extends PaginatedView<Material, GUIStorageI
                 (item == Material.BARRIER ? I18n.string("gui_sbmenu.storage.icon.reset", l) :
                         StringUtility.toNormalCase(item.name().replace("minecraft:", ""))),
                 item, 1,
-                I18n.lore("gui_sbmenu.storage.icon.lore", l));
+            I18n.iterable("gui_sbmenu.storage.icon.lore"));
     }
 
     @Override

@@ -35,7 +35,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
     private BazaarConnector.BazaarStatistics currentStats;
 
     public GUIBazaarItem(ItemType itemType) {
-        super(I18n.string("gui_bazaar.item.title", Component.text(BazaarCategories.getFromItem(itemType).getValue().displayName), Component.text(itemType.getDisplayName())), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_bazaar.item.title", Component.text(BazaarCategories.getFromItem(itemType).getValue().displayName), Component.text(itemType.getDisplayName())), InventoryType.CHEST_4_ROW);
         this.itemType = itemType;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));

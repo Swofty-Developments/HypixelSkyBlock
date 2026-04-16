@@ -197,7 +197,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
                     Locale l = player.getLocale();
                     return ItemStackCreator.getStack(I18n.string("gui_museum.category.item_not_in_museum", l, Component.text(item.getDisplayName())),
                             Material.GRAY_DYE, 1,
-                            I18n.lore("gui_museum.category.item_not_in_museum.lore", l));
+                        I18n.iterable("gui_museum.category.item_not_in_museum.lore"));
                 }
 
                 UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
@@ -206,7 +206,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
                         .handleRequest(message).join()).trackedItem();
 
                 Locale l = player.getLocale();
-                List<String> lore = new ArrayList<>(skyBlockItem.getLore());
+                List<Object> lore = new ArrayList<>(skyBlockItem.getLore());
                 lore.add("§8§m---------------------");
                 lore.add(I18n.string("gui_museum.category.item_donated_label", l));
                 lore.add("§b" + StringUtility.formatAsDate(data.getInsertionTimes().get(trackedItemUUID)));
@@ -235,7 +235,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
                 }
                 if (hasTakenItOut) {
                     lore.add("§8§m---------------------");
-                    lore.addAll(I18n.lore("gui_museum.category.retrieved_from_museum.lore", l));
+                    lore.addAll(List.of(I18n.iterable("gui_museum.category.retrieved_from_museum.lore")));
                 } else {
                     lore.add(" ");
                     lore.add(I18n.string("gui_museum.category.click_to_retrieve", l));

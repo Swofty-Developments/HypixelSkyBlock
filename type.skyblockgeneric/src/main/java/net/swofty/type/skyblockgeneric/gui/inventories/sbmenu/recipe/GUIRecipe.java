@@ -47,8 +47,8 @@ public class GUIRecipe extends StatelessView {
     public ViewConfiguration<DefaultState> configuration() {
         ItemType type = item.getAttributeHandler().getPotentialType();
         String name = type != null ? type.getDisplayName() : "Unknown";
-        return ViewConfiguration.withString(
-            (state, ctx) -> I18n.string("gui_sbmenu.recipe.view.title", ctx.player().getLocale(), Component.text(name)),
+        return ViewConfiguration.withTitle(
+            (_, _) -> I18n.t("gui_sbmenu.recipe.view.title", Component.text(name)),
                 InventoryType.CHEST_6_ROW);
     }
 
@@ -59,11 +59,8 @@ public class GUIRecipe extends StatelessView {
         Components.close(layout, 49);
         Components.back(layout, 48, ctx);
 
-        layout.slot(23, (s, c) -> {
-            java.util.Locale l = c.player().getLocale();
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.view.crafting_table", l), Material.CRAFTING_TABLE, 1,
-                I18n.lore("gui_sbmenu.recipe.view.crafting_table.lore", l));
-        });
+        layout.slot(23, (s, c) -> ItemStackCreator.getStack(I18n.t("gui_sbmenu.recipe.view.crafting_table"), Material.CRAFTING_TABLE, 1,
+            I18n.iterable("gui_sbmenu.recipe.view.crafting_table.lore")));
 
         ItemType itemTypeLinker = item.getAttributeHandler().getPotentialType();
         if (item.toConfigurableItem() == null) {
@@ -81,9 +78,8 @@ public class GUIRecipe extends StatelessView {
         // Next recipe button
         if (recipes.size() > actualRecipeIndex + 1) {
             layout.slot(32, (s, c) -> {
-                        java.util.Locale l = c.player().getLocale();
-                        return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.view.next", l), Material.ARROW, 1,
-                            I18n.lore("gui_sbmenu.recipe.view.next.lore", l));
+                    return ItemStackCreator.getStack(I18n.t("gui_sbmenu.recipe.view.next"), Material.ARROW, 1,
+                        I18n.iterable("gui_sbmenu.recipe.view.next.lore"));
                     },
                     (click, c) -> {
                         c.push(new GUIRecipe(item, actualRecipeIndex + 1));
@@ -93,9 +89,8 @@ public class GUIRecipe extends StatelessView {
         // Previous recipe button
         if (actualRecipeIndex > 0) {
             layout.slot(14, (s, c) -> {
-                        java.util.Locale l = c.player().getLocale();
-                        return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.view.previous", l), Material.ARROW, 1,
-                            I18n.lore("gui_sbmenu.recipe.view.previous.lore", l));
+                    return ItemStackCreator.getStack(I18n.t("gui_sbmenu.recipe.view.previous"), Material.ARROW, 1,
+                        I18n.iterable("gui_sbmenu.recipe.view.previous.lore"));
                     },
                     (click, c) -> {
                         c.push(new GUIRecipe(item, actualRecipeIndex - 1));

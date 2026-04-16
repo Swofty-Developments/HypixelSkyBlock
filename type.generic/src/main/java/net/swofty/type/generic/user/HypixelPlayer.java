@@ -15,6 +15,7 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
+import net.swofty.type.generic.data.datapoints.DatapointLocale;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
@@ -187,6 +188,11 @@ public class HypixelPlayer extends Player {
         ));*/
 
 		player.transferTo(type);
+	}
+
+	public void updateLocale(DatapointLocale.SupportedLocale locale) {
+		getDataHandler().get(HypixelDataHandler.Data.LOCALE, DatapointLocale.class).getValue().switchTo(locale);
+		super.setLocale(locale.getLocale());
 	}
 
 }

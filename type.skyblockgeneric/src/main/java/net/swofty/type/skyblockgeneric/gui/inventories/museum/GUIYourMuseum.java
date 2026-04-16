@@ -78,9 +78,8 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
-                List<String> lore = new ArrayList<>(I18n.lore("gui_museum.main.museum_info.lore", l));
+                List<Object> lore = new ArrayList<>(List.of(I18n.iterable("gui_museum.main.museum_info.lore")));
 
                 int maxAmountOfItems = MuseumableItemCategory.getMuseumableItemCategorySize();
                 int unlockedItems = data.getAllItems().size();
@@ -134,8 +133,8 @@ public class GUIYourMuseum extends HypixelInventoryGUI {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     Locale l = p.getLocale();
-                    List<String> lore = new ArrayList<>(I18n.lore("gui_museum.main.category_button.lore_prefix", l,
-                        Component.text(category.getColor()), Component.text(category.getCategory())));
+                    List<Object> lore = new ArrayList<>(List.of(I18n.iterable("gui_museum.main.category_button.lore_prefix",
+                        Component.text(category.getColor()), Component.text(category.getCategory()))));
 
                     int maxAmountOfItems = MuseumableItemCategory.getMuseumableItemCategorySize(category);
                     int unlockedItems = data.getItemsByCategory(category).size();

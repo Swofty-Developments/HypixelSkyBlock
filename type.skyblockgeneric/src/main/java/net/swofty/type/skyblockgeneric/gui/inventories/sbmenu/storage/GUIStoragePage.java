@@ -56,7 +56,7 @@ public class GUIStoragePage extends StatelessView {
         layout.slot(1, (s, c) -> {
                     java.util.Locale l = c.player().getLocale();
                     return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.page.go_back", l), Material.ARROW, 1,
-                        I18n.lore("gui_sbmenu.storage.page.go_back.lore", l));
+                        I18n.iterable("gui_sbmenu.storage.page.go_back.lore"));
                 },
                 (_, c) -> c.player().openView(new GUIStorage()));
 

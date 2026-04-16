@@ -43,7 +43,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
     private final BazaarCategories category;
 
     public GUIBazaar(BazaarCategories category) {
-        super(I18n.string("gui_bazaar.main.title", Component.text(StringUtility.toNormalCase(category.name()))),
+        super(I18n.t("gui_bazaar.main.title", Component.text(StringUtility.toNormalCase(category.name()))),
                 InventoryType.CHEST_6_ROW);
         this.category = category;
 

@@ -145,10 +145,9 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                Locale l = p.getLocale();
                 return ItemStackCreator.getStackHead(
                         player.getFullDisplayName(), PlayerSkin.fromUuid(String.valueOf(player.getUuid())), 1,
-                        I18n.lore("gui_coop.sender.player_head_self.lore", l));
+                    I18n.iterable("gui_coop.sender.player_head_self.lore"));
             }
         });
 

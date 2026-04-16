@@ -20,7 +20,6 @@ import net.swofty.type.generic.entity.npc.impl.NPCVillagerEntityImpl;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -308,20 +307,20 @@ public abstract class HypixelNPC {
             }
         }
 
-        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player) {
-            return new DialogueSet(key, I18n.dialogue(translationKey), null);
+        public static DialogueSet ofTranslation(String key, String translationKey) {
+            return new DialogueSet(key, I18n.iterable(translationKey), null);
         }
 
-        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Component... args) {
-            return new DialogueSet(key, I18n.dialogue(translationKey, args), null);
+        public static DialogueSet ofTranslation(String key, String translationKey, Component... args) {
+            return new DialogueSet(key, I18n.iterable(translationKey, args), null);
         }
 
-        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Sound sound) {
-            return new DialogueSet(key, I18n.dialogue(translationKey), sound);
+        public static DialogueSet ofTranslation(String key, String translationKey, Sound sound) {
+            return new DialogueSet(key, I18n.iterable(translationKey), sound);
         }
 
-        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Sound sound, Component... args) {
-            return new DialogueSet(key, I18n.dialogue(translationKey, args), sound);
+        public static DialogueSet ofTranslation(String key, String translationKey, Sound sound, Component... args) {
+            return new DialogueSet(key, I18n.iterable(translationKey, args), sound);
         }
 
     }

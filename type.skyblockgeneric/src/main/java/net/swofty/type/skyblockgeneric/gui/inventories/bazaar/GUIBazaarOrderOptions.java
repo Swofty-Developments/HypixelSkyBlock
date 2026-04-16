@@ -32,7 +32,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             .withZone(ZoneId.systemDefault());
 
     public GUIBazaarOrderOptions(BazaarConnector.BazaarOrder order) {
-        super(I18n.string("gui_bazaar.order_options.title", Component.text(order.getItemType().getDisplayName())), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_bazaar.order_options.title", Component.text(order.getItemType().getDisplayName())), InventoryType.CHEST_4_ROW);
         this.order = order;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
@@ -237,9 +237,8 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
-                List<String> lore = new ArrayList<>(I18n.lore("gui_bazaar.order_options.cancel_order.lore_header", l));
+                List<Object> lore = new ArrayList<>(List.of(I18n.iterable("gui_bazaar.order_options.cancel_order.lore_header")));
                 lore.add(" ");
 
                 if (isSell) {
@@ -250,7 +249,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
                 lore.add(" ");
                 lore.add(I18n.string("gui_bazaar.order_options.cancel_undone", l));
-                lore.addAll(I18n.lore("gui_bazaar.order_options.cancel_completed_remain", l));
+                lore.addAll(List.of(I18n.iterable("gui_bazaar.order_options.cancel_completed_remain")));
                 lore.add(" ");
                 lore.add(I18n.string("gui_bazaar.order_options.cancel_click", l));
 
@@ -261,16 +260,14 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
         set(new GUIClickableItem(24) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUIBazaarItem(itemType).open(p);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.view_market", l), Material.EMERALD, 1,
-                    I18n.lore("gui_bazaar.order_options.view_market.lore", l, Component.text(itemType.getDisplayName())));
+                    I18n.iterable("gui_bazaar.order_options.view_market.lore", Component.text(itemType.getDisplayName())));
             }
         });
     }
@@ -311,14 +308,14 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
 
                 if (unclaimedForThisOrder.isEmpty()) {
                     return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.no_completed", l), Material.GRAY_DYE, 1,
-                            I18n.lore("gui_bazaar.order_options.no_completed.lore", l));
+                        I18n.iterable("gui_bazaar.order_options.no_completed.lore"));
                 } else {
                     double totalValue = unclaimedForThisOrder.stream()
                             .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getTotalValue)
                             .sum();
 
                     return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.view_completed", l), Material.CHEST, 1,
-                        I18n.lore("gui_bazaar.order_options.view_completed.lore", l, Component.text(String.valueOf(unclaimedForThisOrder.size())), Component.text(unclaimedForThisOrder.size() == 1 ? "" : "s"), Component.text(FORMATTER.format(Math.abs(totalValue)))));
+                        I18n.iterable("gui_bazaar.order_options.view_completed.lore", Component.text(String.valueOf(unclaimedForThisOrder.size())), Component.text(unclaimedForThisOrder.size() == 1 ? "" : "s"), Component.text(FORMATTER.format(Math.abs(totalValue)))));
                 }
             }
         });

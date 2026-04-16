@@ -37,20 +37,18 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 return ItemStackCreator.getStack(I18n.string("gui_bazaar.orders.sell_orders_header", l), Material.GOLD_INGOT, 1,
-                        I18n.lore("gui_bazaar.orders.sell_orders_header.lore", l));
+                    I18n.iterable("gui_bazaar.orders.sell_orders_header.lore"));
             }
         });
 
         set(new GUIItem(31) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 return ItemStackCreator.getStack(I18n.string("gui_bazaar.orders.buy_orders_header", l), Material.EMERALD, 1,
-                        I18n.lore("gui_bazaar.orders.buy_orders_header.lore", l));
+                    I18n.iterable("gui_bazaar.orders.buy_orders_header.lore"));
             }
         });
     }
@@ -124,7 +122,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     Locale l = p.getLocale();
                     return ItemStackCreator.getStack(I18n.string("gui_bazaar.orders.no_sell_orders", l), Material.BARRIER, 1,
-                            I18n.lore("gui_bazaar.orders.no_sell_orders.lore", l));
+                        I18n.iterable("gui_bazaar.orders.no_sell_orders.lore"));
                 }
             });
         }
@@ -136,7 +134,7 @@ public class GUIBazaarOrders extends HypixelInventoryGUI {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     Locale l = p.getLocale();
                     return ItemStackCreator.getStack(I18n.string("gui_bazaar.orders.no_buy_orders", l), Material.BARRIER, 1,
-                            I18n.lore("gui_bazaar.orders.no_buy_orders.lore", l));
+                        I18n.iterable("gui_bazaar.orders.no_buy_orders.lore"));
                 }
             });
         }

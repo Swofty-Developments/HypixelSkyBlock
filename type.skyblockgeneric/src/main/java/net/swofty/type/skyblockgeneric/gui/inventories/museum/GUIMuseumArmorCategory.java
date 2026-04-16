@@ -285,7 +285,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
                     Locale l = player.getLocale();
                     return ItemStackCreator.getStack(I18n.string("gui_museum.armor_category.not_in_museum", l, Component.text(armorSet.getDisplayName())),
                             Material.GRAY_DYE, 1,
-                            I18n.lore("gui_museum.armor_category.not_in_museum.lore", l));
+                        I18n.iterable("gui_museum.armor_category.not_in_museum.lore"));
                 }
 
                 Locale l = player.getLocale();
@@ -309,7 +309,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
                 int leggingsValue = new ItemPriceCalculator(leggings).calculateCleanPrice().intValue();
                 int bootsValue = new ItemPriceCalculator(boots).calculateCleanPrice().intValue();
 
-                List<String> lore = new ArrayList<>();
+                List<Object> lore = new ArrayList<>();
                 lore.add("§8§m---------------------");
                 lore.add(I18n.string("gui_museum.armor_category.set_donated_label", l));
                 lore.add("§b" + StringUtility.formatAsDate(data.getInsertionTimes().get(helmetUUID)));
@@ -343,7 +343,7 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
 
                 if (hasTakenItOut) {
                     lore.add("§8§m---------------------");
-                    lore.addAll(I18n.lore("gui_museum.armor_category.retrieved_from_museum.lore", l));
+                    lore.addAll(List.of(I18n.iterable("gui_museum.armor_category.retrieved_from_museum.lore")));
                 } else {
                     lore.add(" ");
                     lore.add(I18n.string("gui_museum.armor_category.click_to_retrieve", l));

@@ -46,7 +46,7 @@ public class ElectionViewStatsView extends StatelessView {
                     I18n.string("gui_election.view.no_election", l),
                     Material.BARRIER,
                     1,
-                    I18n.lore("gui_election.view.no_election.lore", l)
+                    I18n.iterable("gui_election.view.no_election.lore")
                 );
             });
             return;

@@ -130,25 +130,24 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer p) {
-				List<String> lore = new ArrayList<>(List.of());
+                List<Component> lore = new ArrayList<>(List.of());
 				SkyBlockDataHandler dataHandler = viewedPlayer.getSkyblockDataHandler();
-				Locale l = p.getLocale();
-				String name;
+                Component name;
 				Material material;
 				if (dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem() != null) {
-					name = I18n.string("gui_profile.emblem_selected", l, Component.text(dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem().toString()));
+                    name = I18n.t("gui_profile.emblem_selected", Component.text(dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem().toString()));
 					material = dataHandler.get(SkyBlockDataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getEmblem().displayMaterial();
 				} else {
-					name = I18n.string("gui_profile.no_emblem", l);
+                    name = I18n.t("gui_profile.no_emblem");
 					material = Material.BARRIER;
-					lore.addAll(I18n.lore("gui_profile.no_emblem.lore", l));
+                    lore.addAll(List.of(I18n.iterable("gui_profile.no_emblem.lore")));
 				}
-				lore.add(" ");
-				lore.add(I18n.string("gui_profile.click_view_emblems", l));
+                lore.add(Component.space());
+                lore.add(I18n.t("gui_profile.click_view_emblems"));
 				return ItemStackCreator.getStack(name, material, 1, lore);
 			}
 		});
-		set(new GUIClickableItem(15) { //Visit Island
+        set(new GUIClickableItem(15) { // Visit Island
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer p) {
 				SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -224,7 +223,7 @@ public class GUIViewPlayerProfile extends HypixelInventoryGUI {
 			public ItemStack.Builder getItem(HypixelPlayer p) {
 				SkyBlockDataHandler dataHandler = viewedPlayer.getSkyblockDataHandler();
 				String profileName = dataHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue();
-				List<String> lore = new ArrayList<>(I18n.lore("gui_profile.museum.lore", p.getLocale(), Component.text(profileName)));
+                List<Object> lore = new ArrayList<>(List.of(I18n.iterable("gui_profile.museum.lore", Component.text(profileName))));
 				return ItemStackCreator.getStackHead(viewedPlayer.getUsername() + "'s Museum",
 						PlayerSkin.fromUuid(viewedPlayer.getUuid().toString()), 1,
 						lore);

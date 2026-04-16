@@ -6,12 +6,15 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocolObject;
 import net.swofty.commons.punishment.ActivePunishment;
 import net.swofty.commons.punishment.PunishmentMessages;
+import net.swofty.commons.punishment.PunishmentReason;
+import net.swofty.commons.punishment.PunishmentTag;
 import net.swofty.commons.punishment.PunishmentType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ActionPlayerMute implements HypixelEventClass {
@@ -27,12 +30,11 @@ public class ActionPlayerMute implements HypixelEventClass {
                     .join();
 
             if (response instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse(
-                boolean found, String type, String banId, net.swofty.commons.punishment.PunishmentReason reason,
-                long expiresAt, java.util.List<net.swofty.commons.punishment.PunishmentTag> tags
+                boolean found, String type, String banId, PunishmentReason reason,
+                long expiresAt, List<PunishmentTag> tags
             ) && found) {
                 event.setCancelled(true);
-                ActivePunishment punishment = new ActivePunishment(
-                    type, banId, reason, expiresAt, tags);
+                ActivePunishment punishment = new ActivePunishment(type, banId, reason, expiresAt, tags);
                 player.sendMessage(PunishmentMessages.muteMessage(punishment));
             }
         } catch (Exception ignored) {

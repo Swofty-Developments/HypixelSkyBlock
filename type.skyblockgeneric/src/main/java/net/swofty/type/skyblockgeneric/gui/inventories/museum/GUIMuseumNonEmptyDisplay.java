@@ -104,8 +104,8 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
                 return ItemStackCreator.getStack(I18n.string("gui_museum.display.remove_button", l),
                         Material.BEDROCK, 1,
                         items.size() == 1
-                                ? I18n.lore("gui_museum.display.remove_single.lore", l)
-                            : I18n.lore("gui_museum.display.remove_multiple.lore", l, Component.text(String.valueOf(items.size()))));
+                            ? I18n.iterable("gui_museum.display.remove_single.lore")
+                            : I18n.iterable("gui_museum.display.remove_multiple.lore", Component.text(String.valueOf(items.size()))));
             }
         });
 

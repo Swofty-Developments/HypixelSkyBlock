@@ -19,6 +19,7 @@ import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
@@ -93,20 +94,19 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     Locale l = p.getLocale();
-                    List<String> lore = new java.util.ArrayList<>();
-                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell", l) : I18n.string("gui_bazaar.price_selection.offer_setup_buy", l));
-                    lore.add(" ");
-                    lore.addAll(I18n.lore("gui_bazaar.price_selection.best_offer_beat", l));
-                    lore.add(" ");
-                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.selling_amount", l, Component.text(amount)) : I18n.string("gui_bazaar.price_selection.buying_amount", l, Component.text(amount)));
-                    lore.add(I18n.string("gui_bazaar.price_selection.unit_price", l, Component.text(incrementedOffer)));
-                    lore.add(" ");
-                    lore.add(I18n.string("gui_bazaar.price_selection.total", l, Component.text(incrementedOffer * amount)));
-                    lore.add(" ");
-                    lore.add(I18n.string("gui_bazaar.price_selection.click_to_use", l));
-                    return ItemStackCreator.getStack(isSellOrder ? I18n.string("gui_bazaar.price_selection.best_offer_minus", l) : I18n.string("gui_bazaar.price_selection.best_offer_plus", l),
+                    List<Component> lore = new ArrayList<>();
+                    lore.add(isSellOrder ? I18n.t("gui_bazaar.price_selection.offer_setup_sell") : I18n.t("gui_bazaar.price_selection.offer_setup_buy"));
+                    lore.add(Component.space());
+                    lore.addAll(List.of(I18n.iterable("gui_bazaar.price_selection.best_offer_beat")));
+                    lore.add(Component.space());
+                    lore.add(isSellOrder ? I18n.t("gui_bazaar.price_selection.selling_amount", Component.text(amount)) : I18n.t("gui_bazaar.price_selection.buying_amount", Component.text(amount)));
+                    lore.add(I18n.t("gui_bazaar.price_selection.unit_price", Component.text(incrementedOffer)));
+                    lore.add(Component.space());
+                    lore.add(I18n.t("gui_bazaar.price_selection.total", Component.text(incrementedOffer * amount)));
+                    lore.add(Component.space());
+                    lore.add(I18n.t("gui_bazaar.price_selection.click_to_use"));
+                    return ItemStackCreator.getStack(isSellOrder ? I18n.t("gui_bazaar.price_selection.best_offer_minus") : I18n.t("gui_bazaar.price_selection.best_offer_plus"),
                             Material.GOLD_NUGGET, 1, lore);
                 }
             });
@@ -121,12 +121,11 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     Locale l = p.getLocale();
-                    List<String> lore = new java.util.ArrayList<>();
+                    List<Object> lore = new java.util.ArrayList<>();
                     lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell", l) : I18n.string("gui_bazaar.price_selection.offer_setup_buy", l));
                     lore.add(" ");
-                    lore.addAll(I18n.lore("gui_bazaar.price_selection.same_as_best.lore", l));
+                    lore.addAll(List.of(I18n.iterable("gui_bazaar.price_selection.same_as_best.lore")));
                     lore.add(" ");
                     lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.selling_amount", l, Component.text(amount)) : I18n.string("gui_bazaar.price_selection.buying_amount", l, Component.text(amount)));
                     lore.add(I18n.string("gui_bazaar.price_selection.unit_price", l, Component.text(bestOffer)));
@@ -156,12 +155,11 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
 
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
                     Locale l = p.getLocale();
-                    List<String> lore = new java.util.ArrayList<>();
+                    List<Object> lore = new java.util.ArrayList<>();
                     lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell", l) : I18n.string("gui_bazaar.price_selection.offer_setup_buy", l));
                     lore.add(" ");
-                    lore.addAll(I18n.lore("gui_bazaar.price_selection.custom_price.lore", l));
+                    lore.addAll(List.of(I18n.iterable("gui_bazaar.price_selection.custom_price.lore")));
                     lore.add(" ");
                     lore.add(I18n.string("gui_bazaar.price_selection.ordering_amount", l, Component.text(amount)));
                     lore.add(" ");

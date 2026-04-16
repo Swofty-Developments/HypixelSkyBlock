@@ -1,6 +1,7 @@
 package net.swofty.type.generic.i18n;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.translation.GlobalTranslator;
@@ -11,9 +12,7 @@ import java.util.Locale;
 
 public class I18n {
 
-    private static final LegacyComponentSerializer LEGACY =
-            LegacyComponentSerializer.legacySection();
-
+    private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacySection();
     private static HypixelTranslator translator;
 
     public static void init(HypixelTranslator instance) {
@@ -31,7 +30,7 @@ public class I18n {
         return Component.translatable(key);
     }
 
-    public static TranslatableComponent t(String key, Component... args) {
+    public static TranslatableComponent t(String key, ComponentLike... args) {
         requireKey(key);
         return Component.translatable(key, args);
     }
@@ -48,35 +47,15 @@ public class I18n {
         return LEGACY.serialize(rendered);
     }
 
-    public static String string(String key) {
-        return string(key, HypixelTranslator.defaultLocale);
-    }
-
     public static String string(String key, Component... args) {
         return string(key, HypixelTranslator.defaultLocale, args);
     }
 
-    public static List<String> lore(String key) {
-        return List.of(string(key).split("\n"));
+    public static Component[] iterable(String key) {
+        return iterable(key, new Component[0]);
     }
 
-    public static List<String> lore(String key, Locale locale) {
-        return List.of(string(key, locale).split("\n"));
-    }
-
-    public static List<String> lore(String key, Component... args) {
-        return lore(key, HypixelTranslator.defaultLocale, args);
-    }
-
-    public static List<String> lore(String key, Locale locale, Component... args) {
-        return List.of(string(key, locale, args).split("\n"));
-    }
-
-    public static Component[] dialogue(String key) {
-        return dialogue(key, new Component[0]);
-    }
-
-    public static Component[] dialogue(String key, Component... args) {
+    public static Component[] iterable(String key, ComponentLike... args) {
         if (translator == null) {
             throw new IllegalStateException("Translator not initialized");
         }

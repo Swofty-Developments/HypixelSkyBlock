@@ -41,8 +41,8 @@ public class GUILevelRewards extends StatelessView {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             Locale l = player.getLocale();
             DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
-            List<String> lore = new ArrayList<>();
-            lore.addAll(I18n.lore("gui_sbmenu.levels.rewards.feature.lore", l));
+            List<Object> lore = new ArrayList<>();
+            lore.addAll(List.of(I18n.iterable("gui_sbmenu.levels.rewards.feature.lore")));
             lore.add(" ");
             lore.add(I18n.string("gui_sbmenu.levels.rewards.next_reward", l));
 
@@ -67,8 +67,8 @@ public class GUILevelRewards extends StatelessView {
         layout.slot(12, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             Locale l = player.getLocale();
-            List<String> lore = new ArrayList<>();
-            lore.addAll(I18n.lore("gui_sbmenu.levels.rewards.prefix.lore", l));
+            List<Object> lore = new ArrayList<>();
+            lore.addAll(List.of(I18n.iterable("gui_sbmenu.levels.rewards.prefix.lore")));
             lore.add(" ");
             lore.add(I18n.string("gui_sbmenu.levels.rewards.next_reward", l));
 
@@ -95,8 +95,8 @@ public class GUILevelRewards extends StatelessView {
         layout.slot(13, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             Locale l = player.getLocale();
-            List<String> lore = new ArrayList<>();
-            lore.addAll(I18n.lore("gui_sbmenu.levels.rewards.emblem.lore", l));
+            List<Object> lore = new ArrayList<>();
+            lore.addAll(List.of(I18n.iterable("gui_sbmenu.levels.rewards.emblem.lore")));
             lore.add(" ");
             lore.add(I18n.string("gui_sbmenu.levels.rewards.next_reward", l));
 

@@ -49,7 +49,7 @@ public class GUIMinion extends HypixelInventoryGUI implements RefreshingGUI {
     private final IslandMinionData.IslandMinion minion;
 
     public GUIMinion(IslandMinionData.IslandMinion minion) {
-        super(I18n.string("gui_minion.title", Component.text(minion.getMinion().getDisplay()), Component.text(StringUtility.getAsRomanNumeral(minion.getTier()))), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_minion.title", Component.text(minion.getMinion().getDisplay()), Component.text(StringUtility.getAsRomanNumeral(minion.getTier()))), InventoryType.CHEST_6_ROW);
 
         this.minion = minion;
     }

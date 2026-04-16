@@ -61,7 +61,7 @@ public class NPCAlchemist extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-            DialogueSet.ofTranslation("hello", "npcs_hub.alchemist.dialogue.hello", player, Component.text(player.getUsername()))
+            DialogueSet.ofTranslation("hello", "npcs_hub.alchemist.dialogue.hello", Component.text(player.getUsername()))
         };
     }
 }

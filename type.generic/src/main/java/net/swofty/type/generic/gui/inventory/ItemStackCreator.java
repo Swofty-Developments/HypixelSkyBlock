@@ -2,6 +2,7 @@ package net.swofty.type.generic.gui.inventory;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.item.ItemStack;
@@ -29,6 +30,7 @@ public class ItemStackCreator {
 	private static final TooltipDisplay DEFAULT_TOOLTIP_DISPLAY = new TooltipDisplay(false, Set.of(
 			DataComponents.UNBREAKABLE
 	));
+	private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.legacySection();
 
 	/**
 	 * Creates an {@link ItemStack.Builder} with a specified material and custom name.
@@ -41,6 +43,19 @@ public class ItemStackCreator {
 		return clearAttributes(ItemStack.builder(material)
 				.set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
 				.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
+	}
+
+	/**
+	 * Creates an {@link ItemStack.Builder} with a specified material and custom name.
+	 *
+	 * @param material the material of the item stack
+	 * @param name     the custom name of the item stack
+	 * @return an {@link ItemStack.Builder} with the specified properties
+	 */
+	public static ItemStack.Builder createNamedItemStack(Material material, Component name) {
+		return clearAttributes(ItemStack.builder(material)
+			.set(DataComponents.CUSTOM_NAME, name.decoration(TextDecoration.ITALIC, false))
+			.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
 	}
 
 	/**
@@ -112,6 +127,14 @@ public class ItemStackCreator {
 	 */
 	public static ItemStack.Builder getStack(String name, Material material, int amount, String... lore) {
 		return getStack(name, material, amount, Arrays.asList(lore));
+	}
+
+	public static ItemStack.Builder getStack(String name, Material material, int amount) {
+		return getStack(name, material, amount, new String[0]);
+	}
+
+	public static ItemStack.Builder getStack(String name, Material material, int amount, Component... lore) {
+		return getStack(Component.text(name), material, amount, Arrays.asList(lore));
 	}
 
 	/**
@@ -208,7 +231,7 @@ public class ItemStackCreator {
 	 * @param lore     the list of lore lines for the item stack
 	 * @return an {@link ItemStack.Builder} with the specified properties
 	 */
-	public static ItemStack.Builder getStack(String name, Material material, int amount, List<String> lore) {
+	public static ItemStack.Builder getStack(String name, Material material, int amount, List<?> lore) {
 		return getStack(Component.text(name), material, amount, literalLoreComponents(lore));
 	}
 
@@ -242,6 +265,14 @@ public class ItemStackCreator {
 	 */
 	public static ItemStack.Builder getStackHead(String name, String texture, int amount, String... lore) {
 		return getStackHead(name, texture, amount, Arrays.asList(lore));
+	}
+
+	public static ItemStack.Builder getStackHead(String name, String texture, int amount) {
+		return getStackHead(name, texture, amount, new String[0]);
+	}
+
+	public static ItemStack.Builder getStackHead(String name, String texture, int amount, Component... lore) {
+		return getStackHead(Component.text(name), texture, amount, Arrays.asList(lore));
 	}
 
 	public static ItemStack.Builder getStackHead(Component name, String texture, int amount, Component... lore) {
@@ -282,6 +313,14 @@ public class ItemStackCreator {
 		return getStackHead(name, skin, amount, Arrays.asList(lore));
 	}
 
+	public static ItemStack.Builder getStackHead(String name, PlayerSkin skin, int amount) {
+		return getStackHead(name, skin, amount, new String[0]);
+	}
+
+	public static ItemStack.Builder getStackHead(String name, PlayerSkin skin, int amount, Component... lore) {
+		return getStackHead(Component.text(name), skin, amount, Arrays.asList(lore));
+	}
+
 	public static ItemStack.Builder getStackHead(Component name, PlayerSkin skin, int amount, Component... lore) {
 		return getStackHead(name, skin, amount, Arrays.asList(lore));
 	}
@@ -295,12 +334,7 @@ public class ItemStackCreator {
 	 * @param lore    the list of lore lines for the item stack
 	 * @return an {@link ItemStack.Builder} for a player head with the specified properties
 	 */
-	public static ItemStack.Builder getStackHead(String name, String texture, int amount, List<String> lore) {
-		List<String> copiedLore = new ArrayList<>();
-		for (String s : lore) {
-			copiedLore.add(replaceColorCodes(s));
-		}
-
+	public static ItemStack.Builder getStackHead(String name, String texture, int amount, List<?> lore) {
 		JSONObject json = new JSONObject();
 		json.put("isPublic", true);
 		json.put("signatureRequired", false);
@@ -310,8 +344,8 @@ public class ItemStackCreator {
 		String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
 		return ItemStack.builder(Material.PLAYER_HEAD)
-				.set(DataComponents.LORE, copiedLore.stream()
-						.map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+			.set(DataComponents.LORE, literalLoreComponents(lore).stream()
+				.map(line -> line.decoration(TextDecoration.ITALIC, false))
 						.collect(Collectors.toList()))
 				.set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
 				.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY)
@@ -347,15 +381,10 @@ public class ItemStackCreator {
 	 * @param lore   the list of lore lines for the item stack
 	 * @return an {@link ItemStack.Builder} for a player head with the specified properties
 	 */
-	public static ItemStack.Builder getStackHead(String name, PlayerSkin skin, int amount, List<String> lore) {
-		List<String> copiedLore = new ArrayList<>();
-		for (String s : lore) {
-			copiedLore.add(replaceColorCodes(s));
-		}
-
+	public static ItemStack.Builder getStackHead(String name, PlayerSkin skin, int amount, List<?> lore) {
 		return clearAttributes(ItemStack.builder(Material.PLAYER_HEAD)
-				.set(DataComponents.LORE, copiedLore.stream()
-						.map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+			.set(DataComponents.LORE, literalLoreComponents(lore).stream()
+				.map(line -> line.decoration(TextDecoration.ITALIC, false))
 						.collect(Collectors.toList()))
 				.set(DataComponents.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
 				.set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of(
@@ -384,7 +413,7 @@ public class ItemStackCreator {
 				.amount(amount));
 	}
 
-	public static ItemStack.Builder getUsingGUIMaterial(String name, GUIMaterial material, int amount, List<String> lore) {
+	public static ItemStack.Builder getUsingGUIMaterial(String name, GUIMaterial material, int amount, List<?> lore) {
 		if (material.hasTexture()) {
 			return ItemStackCreator.getStackHead(name, material.texture(), amount, lore);
 		} else {
@@ -406,10 +435,19 @@ public class ItemStackCreator {
 		return string.replace("&", "§");
 	}
 
-	public static List<Component> literalLoreComponents(List<String> lore) {
+	public static List<Component> literalLoreComponents(List<?> lore) {
 		List<Component> loreComponents = new ArrayList<>();
-		for (String line : lore) {
-			loreComponents.add(Component.text(replaceColorCodes(line)));
+		for (Object line : lore) {
+			if (line == null) {
+				continue;
+			}
+
+			if (line instanceof Component component) {
+				loreComponents.add(component);
+				continue;
+			}
+
+			loreComponents.add(LEGACY_SERIALIZER.deserialize(replaceColorCodes(String.valueOf(line))));
 		}
 		return loreComponents;
 	}

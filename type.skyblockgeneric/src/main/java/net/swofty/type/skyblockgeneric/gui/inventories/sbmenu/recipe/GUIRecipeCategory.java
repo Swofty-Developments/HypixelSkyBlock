@@ -147,7 +147,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
 
             return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.info", l, Component.text(categoryName)),
                     type.getMaterial(), 1,
-                I18n.lore("gui_sbmenu.recipe.category.info.lore", l, Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
+                I18n.iterable("gui_sbmenu.recipe.category.info.lore", Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
         });
     }
 

@@ -62,7 +62,7 @@ public class GUIMissionLog extends StatelessView {
         layout.slot(4, (s, c) -> {
             Locale l = c.player().getLocale();
             return ItemStackCreator.getStack(I18n.string("gui_sbmenu.questlog.info", l, Component.text(showCompleted ? "(Completed)" : "")),
-                Material.WRITABLE_BOOK, 1, I18n.lore("gui_sbmenu.questlog.info.lore", l));
+                Material.WRITABLE_BOOK, 1, I18n.iterable("gui_sbmenu.questlog.info.lore"));
         });
 
         // Fairy Souls

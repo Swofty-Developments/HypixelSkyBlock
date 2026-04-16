@@ -49,7 +49,7 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
     private final BazaarItemSet itemSet;
 
     public GUIBazaarItemSet(BazaarCategories category, BazaarItemSet itemSet) {
-        super(I18n.string("gui_bazaar.item_set.title", Component.text(StringUtility.toNormalCase(category.name())), Component.text(itemSet.displayName)), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_bazaar.item_set.title", Component.text(StringUtility.toNormalCase(category.name())), Component.text(itemSet.displayName)), InventoryType.CHEST_4_ROW);
 
         this.itemSet = itemSet;
 

@@ -277,10 +277,10 @@ public class GUIAnvil extends HypixelInventoryGUI {
                 : Material.RED_STAINED_GLASS_PANE;
 
         ItemStack.Builder upgradeIndicator = ItemStackCreator.getStack(I18n.string("gui_anvil.item_to_upgrade", l), upgradeMaterial, 1,
-                I18n.lore("gui_anvil.item_to_upgrade.lore", l));
+            I18n.iterable("gui_anvil.item_to_upgrade.lore"));
 
         ItemStack.Builder sacrificeIndicator = ItemStackCreator.getStack(I18n.string("gui_anvil.item_to_sacrifice", l), sacrificeMaterial, 1,
-                I18n.lore("gui_anvil.item_to_sacrifice.lore", l));
+            I18n.iterable("gui_anvil.item_to_sacrifice.lore"));
 
         for (int slot : UPGRADE_INDICATOR_SLOTS) {
             set(slot, upgradeIndicator);
@@ -349,7 +349,7 @@ public class GUIAnvil extends HypixelInventoryGUI {
                 .applyCostLevels(upgradeItem, sacrificeItem, (SkyBlockPlayer) getPlayer());
 
         Locale l = getPlayer().getLocale();
-        List<String> lore = new ArrayList<>(I18n.lore("gui_anvil.combine_items.lore", l));
+        List<Object> lore = new ArrayList<>(List.of(I18n.iterable("gui_anvil.combine_items.lore")));
 
         if (levelCost > 0) {
             lore.add("");
