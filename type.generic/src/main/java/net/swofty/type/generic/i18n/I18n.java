@@ -35,18 +35,36 @@ public class I18n {
         return Component.translatable(key, args);
     }
 
+    /**
+     * Fetches a translation with a key and a locale
+     *
+     * @param key    string representing the locale key
+     * @param locale locale for player
+     * @return the translation for the locale
+     * @apiNote <h1>Please do your best to trying not to use this.</h1>
+     */
     public static String string(String key, Locale locale) {
         requireKey(key);
         Component rendered = GlobalTranslator.render(Component.translatable(key), locale);
         return LEGACY.serialize(rendered);
     }
 
+    /**
+     * Fetches a translation with a key and a locale with optional Components
+     *
+     * @param key    string representing the locale key
+     * @param locale locale for player
+     * @param args   arguments
+     * @return the translation for the locale
+     * @apiNote <h1>Please do your best to trying not to use this.</h1>
+     */
     public static String string(String key, Locale locale, Component... args) {
         requireKey(key);
         Component rendered = GlobalTranslator.render(Component.translatable(key, args), locale);
         return LEGACY.serialize(rendered);
     }
 
+    @Deprecated
     public static String string(String key, Component... args) {
         return string(key, HypixelTranslator.defaultLocale, args);
     }
