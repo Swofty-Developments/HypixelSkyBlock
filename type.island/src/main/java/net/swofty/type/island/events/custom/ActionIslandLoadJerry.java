@@ -36,7 +36,7 @@ public class ActionIslandLoadJerry implements HypixelEventClass {
             );
         } else {
             jerryInformation.setJerryPosition(
-                    new Pos(2.5, 100, 24.5, 145, 0)
+                new Pos(9.5, 100, 33.5, 145, 0)
             );
         }
 
@@ -53,7 +53,7 @@ public class ActionIslandLoadJerry implements HypixelEventClass {
         ServerHolograms.ExternalHologram hologram = ServerHolograms.ExternalHologram.builder()
                 .text(new String[]{"§6§lNEW UPDATE", "Jerry", "§e§lCLICK"})
                 .instance(event.getIsland().getIslandInstance())
-                .pos(jerryInformation.getJerryPosition().add(0, 1, 0))
+            .pos(jerryInformation.getJerryPosition().add(0, 1.8, 0))
                 .build();
 
         ServerHolograms.addExternalHologram(hologram);
