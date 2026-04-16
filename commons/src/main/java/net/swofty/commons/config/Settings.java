@@ -26,6 +26,7 @@ public class Settings {
     @Comment("The secret key used to authenticate with Velocity proxy")
     private String velocitySecret = "ixmSUgWOgvs7";
 
+    @Comment("Whether to require player authentication on initial connection")
     private boolean requireAuth = false;
 
     @Comment("Whether to enable sandbox features (such as editing items)")
