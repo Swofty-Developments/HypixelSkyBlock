@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TypeIslandLoader implements SkyBlockTypeLoader {
+    public static final Pos SPAWN_POS = new Pos(7.5, 100, 7.5);
+
     @Override
     public ServerType getType() {
         return ServerType.SKYBLOCK_ISLAND;
@@ -52,7 +54,7 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     @Override
     public HypixelTypeLoader.LoaderValues getLoaderValues() {
         return new HypixelTypeLoader.LoaderValues(
-            (type) -> new Pos(7.5, 100, 7.5), // Spawn position
+            (_) -> SPAWN_POS, // Spawn position
                 true // Announce death messages
         );
     }
