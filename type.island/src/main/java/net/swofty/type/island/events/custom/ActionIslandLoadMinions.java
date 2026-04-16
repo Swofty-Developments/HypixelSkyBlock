@@ -47,7 +47,7 @@ public class ActionIslandLoadMinions implements HypixelEventClass {
             long timeBetweenActions = (long) tier.timeBetweenActions();
             ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
 
-            //Handle percentage speed increase from both fuels and minion upgrades
+            // Handle percentage speed increase from both fuels and minion upgrades
             double percentageSpeedIncrease = data.getSpeedPercentage();
 
             // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster

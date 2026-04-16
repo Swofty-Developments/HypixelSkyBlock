@@ -12,13 +12,13 @@ public class VillagerJerry extends HypixelNPC {
     public VillagerJerry() {
         super(new VillagerConfiguration() {
             @Override
-            public VillagerProfession profession() {
-                return VillagerProfession.NITWIT;
+            public String[] holograms(HypixelPlayer player) {
+                return new String[]{"Jerry", "§e§lCLICK"};
             }
 
             @Override
-            public String[] holograms(HypixelPlayer player) {
-                return new String[]{"Jerry", "§e§lCLICK"};
+            public VillagerProfession profession() {
+                return VillagerProfession.NITWIT;
             }
 
             @Override
