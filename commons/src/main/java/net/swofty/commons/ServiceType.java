@@ -12,5 +12,6 @@ public enum ServiceType {
     FRIEND,
     PUNISHMENT,
     ELECTION,
+    GUILD,
     ;
 }
