@@ -75,6 +75,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             DISABLE_DROP_MESSAGES(false),
             HAS_SPOKEN_TO_BEA(false),
             HAS_SPOKEN_TO_GAVIN(false),
+            HAS_VISITED_DARK_AUCTION(false),
             HAS_SPOKEN_TO_TIA(false),
             HAS_SPOKEN_TO_LIFT_OPERATOR(false),
             HAS_SPOKEN_TO_LAZY_MINER(false),

@@ -156,9 +156,6 @@ ${jar_downloads}
 COPY ./configuration /app/configuration_files
 RUN mkdir -p configuration && \\
     cp configuration_files/config.yml ./configuration/config.yml
-RUN curl -fSL -o /tmp/worlds.tar.gz "${worlds_url}" && \\
-    tar -xzf /tmp/worlds.tar.gz -C ./configuration && \\
-    rm /tmp/worlds.tar.gz
 EXPOSE 25565 65535 8080 20000
 RUN cp configuration_files/server.toml ./server.toml && \\
     cp -a configuration_files/skyblock/. configuration/skyblock/ && \\

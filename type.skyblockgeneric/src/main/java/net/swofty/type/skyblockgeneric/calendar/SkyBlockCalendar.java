@@ -7,7 +7,9 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.skyblockgeneric.commands.MinionGenerationCommand;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,10 +131,74 @@ public final class SkyBlockCalendar {
                     }
 
                     long timeUntilBegin = eventElapsed - currentElapsed;
-                    int eventYear = targetYear;
 
-                    EventInfo info = new EventInfo(timeUntilBegin, event.duration(), eventYear);
+                    EventInfo info = new EventInfo(timeUntilBegin, event.duration(), targetYear);
                     result.put(info, event);
+                    foundEvents++;
+                }
+            }
+            yearsAhead++;
+
+            // Safety check to prevent infinite loops
+            if (yearsAhead > 100) break;
+        }
+
+        return result;
+    }
+
+    public static long ticksUntilEvent(CalendarEvent event) {
+        long currentElapsed = getElapsed();
+        int currentYear = getYear();
+
+        for (int yearsAhead = 0; yearsAhead <= 100; yearsAhead++) {
+            int targetYear = currentYear + yearsAhead;
+            long yearStartElapsed = (long) (targetYear - 1) * YEAR;
+
+            List<Long> sortedTimes = new ArrayList<>(event.times());
+            Collections.sort(sortedTimes);
+
+            for (Long eventTime : sortedTimes) {
+                long eventElapsed = yearStartElapsed + eventTime;
+
+                if (eventElapsed > currentElapsed) {
+                    return eventElapsed - currentElapsed;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    public static Map<EventInfo, CalendarEvent> getEventsWithDurationUntilSkipSpecific(int amount, List<CalendarEvent> event) {
+        Map<EventInfo, CalendarEvent> result = new LinkedHashMap<>();
+        long currentElapsed = getElapsed();
+        int currentYear = getYear();
+
+        int foundEvents = 0;
+        int yearsAhead = 0;
+
+        while (foundEvents < amount) {
+            int targetYear = currentYear + yearsAhead;
+            long yearStartElapsed = (long) (targetYear - 1) * YEAR;
+
+            for (CalendarEvent e : CalendarEvent.getAllEvents()) {
+                if (event.contains(e)) continue; // Skip specified events
+                if (foundEvents >= amount) break;
+
+                for (Long eventTime : e.times()) {
+                    if (foundEvents >= amount) break;
+
+                    long eventElapsed = yearStartElapsed + eventTime;
+
+                    // Skip events that have already passed (including currently ongoing ones that started)
+                    if (eventElapsed <= currentElapsed) {
+                        continue;
+                    }
+
+                    long timeUntilBegin = eventElapsed - currentElapsed;
+
+                    EventInfo info = new EventInfo(timeUntilBegin, e.duration(), targetYear);
+                    result.put(info, e);
                     foundEvents++;
                 }
             }

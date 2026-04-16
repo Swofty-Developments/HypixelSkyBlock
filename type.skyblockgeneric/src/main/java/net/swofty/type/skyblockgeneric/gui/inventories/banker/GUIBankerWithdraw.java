@@ -9,6 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -20,6 +21,7 @@ import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GUIBankerWithdraw extends HypixelInventoryGUI {
@@ -38,19 +40,19 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
         set(new GUIClickableItem(10) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_banker.withdraw.everything"), Material.DISPENSER, 64,
+                Locale l = p.getLocale();
+                return TranslatableItemStackCreator.getStack(p, "gui_banker.withdraw.everything", Material.DISPENSER, 64,
                         List.of(
-                                I18n.string("gui_banker.withdraw.everything_subtitle"),
+                                I18n.string("gui_banker.withdraw.everything_subtitle", l),
                                 " ",
-                                I18n.string("gui_banker.withdraw.current_balance", Map.of(
+                                I18n.string("gui_banker.withdraw.current_balance", l, Map.of(
                                         "balance", StringUtility.decimalify(bankBalance, 1)
                                 )),
-                                I18n.string("gui_banker.withdraw.amount_to_withdraw", Map.of(
+                                I18n.string("gui_banker.withdraw.amount_to_withdraw", l, Map.of(
                                         "amount", StringUtility.decimalify(bankBalance, 1)
                                 )),
                                 " ",
-                                I18n.string("gui_banker.withdraw.click")
+                                I18n.string("gui_banker.withdraw.click", l)
                         ));
             }
 
@@ -65,19 +67,19 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
         set(new GUIClickableItem(12) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_banker.withdraw.half_account"), Material.DISPENSER, 32,
+                Locale l = p.getLocale();
+                return TranslatableItemStackCreator.getStack(p, "gui_banker.withdraw.half_account", Material.DISPENSER, 32,
                         List.of(
-                                I18n.string("gui_banker.withdraw.everything_subtitle"),
+                                I18n.string("gui_banker.withdraw.everything_subtitle", l),
                                 " ",
-                                I18n.string("gui_banker.withdraw.current_balance", Map.of(
+                                I18n.string("gui_banker.withdraw.current_balance", l, Map.of(
                                         "balance", StringUtility.decimalify(bankBalance, 1)
                                 )),
-                                I18n.string("gui_banker.withdraw.amount_to_withdraw", Map.of(
+                                I18n.string("gui_banker.withdraw.amount_to_withdraw", l, Map.of(
                                         "amount", StringUtility.decimalify(bankBalance / 2, 1)
                                 )),
                                 " ",
-                                I18n.string("gui_banker.withdraw.click")
+                                I18n.string("gui_banker.withdraw.click", l)
                         ));
             }
 
@@ -99,19 +101,19 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_banker.withdraw.twenty_percent"), Material.DISPENSER, 1,
+                Locale l = p.getLocale();
+                return TranslatableItemStackCreator.getStack(p, "gui_banker.withdraw.twenty_percent", Material.DISPENSER, 1,
                         List.of(
-                                I18n.string("gui_banker.withdraw.everything_subtitle"),
+                                I18n.string("gui_banker.withdraw.everything_subtitle", l),
                                 " ",
-                                I18n.string("gui_banker.withdraw.current_balance", Map.of(
+                                I18n.string("gui_banker.withdraw.current_balance", l, Map.of(
                                         "balance", StringUtility.decimalify(bankBalance, 1)
                                 )),
-                                I18n.string("gui_banker.withdraw.amount_to_withdraw", Map.of(
+                                I18n.string("gui_banker.withdraw.amount_to_withdraw", l, Map.of(
                                         "amount", StringUtility.decimalify(bankBalance / 5, 1)
                                 )),
                                 " ",
-                                I18n.string("gui_banker.withdraw.click")
+                                I18n.string("gui_banker.withdraw.click", l)
                         ));
             }
         });
@@ -120,21 +122,22 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
             @Override
             public HypixelInventoryGUI onQueryFinish(String query, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 try {
                     double amount = Double.parseDouble(query);
                     if (amount > bankBalance) {
-                        player.sendMessage(I18n.string("gui_banker.withdraw.not_enough_coins"));
+                        player.sendMessage(I18n.string("gui_banker.withdraw.not_enough_coins", l));
                         return null;
                     }
                     if (amount <= 0) {
-                        player.sendMessage(I18n.string("gui_banker.withdraw.invalid_amount"));
+                        player.sendMessage(I18n.string("gui_banker.withdraw.invalid_amount", l));
                         return null;
                     }
 
                     player.closeInventory();
                     attemptWithdrawal(player, amount);
                 } catch (NumberFormatException ex) {
-                    player.sendMessage(I18n.string("gui_banker.withdraw.invalid_number"));
+                    player.sendMessage(I18n.string("gui_banker.withdraw.invalid_number", l));
                 }
                 return null;
             }
@@ -142,16 +145,17 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_banker.withdraw.custom_amount"), Material.OAK_SIGN, 1,
+                Locale l = p.getLocale();
+                return TranslatableItemStackCreator.getStack(p, "gui_banker.withdraw.custom_amount", Material.OAK_SIGN, 1,
                         List.of(
-                                I18n.string("gui_banker.withdraw.everything_subtitle"),
+                                I18n.string("gui_banker.withdraw.everything_subtitle", l),
                                 " ",
-                                I18n.string("gui_banker.withdraw.current_balance", Map.of(
+                                I18n.string("gui_banker.withdraw.current_balance", l, Map.of(
                                         "balance", StringUtility.decimalify(
                                                 player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1)
                                 )),
                                 " ",
-                                I18n.string("gui_banker.withdraw.click")
+                                I18n.string("gui_banker.withdraw.click", l)
                         ));
             }
         });
@@ -170,12 +174,13 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
     }
 
     private void attemptWithdrawal(SkyBlockPlayer player, double amount) {
-        player.sendMessage(I18n.string("gui_banker.withdraw.withdrawing"));
+        Locale l = player.getLocale();
+        player.sendMessage(I18n.string("gui_banker.withdraw.withdrawing", l));
 
         if (!player.isCoop()) {
             DatapointBankData.BankData bankData = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
             if (amount > bankData.getAmount()) {
-                player.sendMessage(I18n.string("gui_banker.withdraw.not_enough_coins"));
+                player.sendMessage(I18n.string("gui_banker.withdraw.not_enough_coins", l));
                 return;
             }
 
@@ -184,14 +189,13 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                     System.currentTimeMillis(), -amount, player.getUsername()));
 
             player.addCoins(amount);
-            player.sendMessage(I18n.string("gui_banker.withdraw.success", Map.of(
+            player.sendMessage(I18n.string("gui_banker.withdraw.success", l, Map.of(
                     "amount", StringUtility.decimalify(amount, 1),
                     "balance", StringUtility.decimalify(bankData.getAmount(), 1)
             )));
             return;
         }
 
-        // Coop scenario - use mutex service
         CoopDatabase.Coop coop = player.getCoop();
         String lockKey = "bank_data:" + player.getSkyBlockIsland().getIslandID().toString();
 
@@ -204,7 +208,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
 
                 (DatapointBankData.BankData latestBankData) -> {
                     if (amount > latestBankData.getAmount()) {
-                        player.sendMessage(I18n.string("gui_banker.withdraw.not_enough_coins"));
+                        player.sendMessage(I18n.string("gui_banker.withdraw.not_enough_coins", l));
                         return null;
                     }
 
@@ -213,7 +217,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                             System.currentTimeMillis(), -amount, player.getUsername()));
 
                     player.addCoins(amount);
-                    player.sendMessage(I18n.string("gui_banker.withdraw.success", Map.of(
+                    player.sendMessage(I18n.string("gui_banker.withdraw.success", l, Map.of(
                             "amount", StringUtility.decimalify(amount, 1),
                             "balance", StringUtility.decimalify(latestBankData.getAmount(), 1)
                     )));
@@ -221,7 +225,7 @@ public class GUIBankerWithdraw extends HypixelInventoryGUI {
                     return latestBankData;
                 },
                 () -> {
-                    player.sendMessage(I18n.string("gui_banker.withdraw.coop_busy"));
+                    player.sendMessage(I18n.string("gui_banker.withdraw.coop_busy", l));
                 }
         );
     }

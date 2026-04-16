@@ -10,6 +10,7 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -21,6 +22,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -57,9 +59,9 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_bazaar.main.manage_orders_button"),
+                return TranslatableItemStackCreator.getStack(p, "gui_bazaar.main.manage_orders_button",
                         Material.BOOK, 1,
-                        I18n.lore("gui_bazaar.main.manage_orders_button.lore"));
+                        "gui_bazaar.main.manage_orders_button.lore");
             }
         });
     }
@@ -98,13 +100,14 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    Locale l = p.getLocale();
                     var b = ItemStackCreator.getStack(
                             cat.getColor() + StringUtility.toNormalCase(cat.name()),
                             cat.getDisplayItem(), 1,
-                            I18n.string("gui_bazaar.main.category_subtitle"), " ",
+                            I18n.string("gui_bazaar.main.category_subtitle", l), " ",
                             category == cat
-                                    ? I18n.string("gui_bazaar.main.category_viewing")
-                                    : I18n.string("gui_bazaar.main.category_click")
+                                    ? I18n.string("gui_bazaar.main.category_viewing", l)
+                                    : I18n.string("gui_bazaar.main.category_click", l)
                     );
                     if (category == cat) b = ItemStackCreator.enchant(b);
                     return b;
@@ -121,7 +124,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.main.loading"), Material.GRAY_STAINED_GLASS_PANE, 1);
+                    return TranslatableItemStackCreator.getStack(p, "gui_bazaar.main.loading", Material.GRAY_STAINED_GLASS_PANE, 1);
                 }
             });
         }
@@ -166,16 +169,15 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
         // When all price data is collected, build the cache entry
         CompletableFuture.allOf(allFutures.toArray(new CompletableFuture[0]))
                 .thenRun(() -> {
+                    Locale l = player.getLocale();
                     List<CacheEntry.CachedSlot> slotData = new ArrayList<>();
 
-                    // Build slot records
                     for (int i = 0; i < sets.size() && i < SLOTS.length; i++) {
                         int slot = SLOTS[i];
                         BazaarItemSet set = sets.get(i);
 
-                        // Build lore safely
                         List<String> lore = new ArrayList<>();
-                        lore.add(I18n.string("gui_bazaar.main.item_set_products", Map.of("count", String.valueOf(set.items.size()))));
+                        lore.add(I18n.string("gui_bazaar.main.item_set_products", l, Map.of("count", String.valueOf(set.items.size()))));
                         lore.add(" ");
 
                         // Add price data for each item in the set
@@ -191,7 +193,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                         }
 
                         lore.add(" ");
-                        lore.add(I18n.string("gui_bazaar.main.item_set_click"));
+                        lore.add(I18n.string("gui_bazaar.main.item_set_click", l));
                         slotData.add(new CacheEntry.CachedSlot(slot, set, lore));
                     }
 
@@ -213,8 +215,8 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                                 @Override
                                 public ItemStack.Builder getItem(HypixelPlayer p) {
                                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.main.error_loading"), Material.BARRIER, 1,
-                                            I18n.lore("gui_bazaar.main.error_loading.lore"));
+                                    return TranslatableItemStackCreator.getStack(p, "gui_bazaar.main.error_loading", Material.BARRIER, 1,
+                                            "gui_bazaar.main.error_loading.lore");
                                 }
                             });
                         }
@@ -286,7 +288,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
         SkyBlockPlayer player = (SkyBlockPlayer) p;
         player.getBazaarConnector().isOnline().thenAccept(online -> {
             if (!online) {
-                player.sendMessage(I18n.string("gui_bazaar.main.offline_message"));
+                player.sendMessage(I18n.string("gui_bazaar.main.offline_message", player.getLocale()));
                 player.closeInventory();
             } else {
                 player.getBazaarConnector().processAllPendingTransactions();

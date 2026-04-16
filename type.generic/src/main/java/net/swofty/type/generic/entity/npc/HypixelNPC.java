@@ -18,10 +18,12 @@ import net.swofty.type.generic.entity.npc.impl.NPCVillagerEntityImpl;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
+import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -40,13 +42,8 @@ public abstract class HypixelNPC {
     @Getter
     private final NPCConfiguration parameters;
     private final DialogueController dialogueController;
-    @Getter
-    private final String name;
-
     public HypixelNPC(NPCConfiguration configuration) {
         this.parameters = configuration;
-        String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
-        this.name = parameters.chatName() != null ? parameters.chatName() : className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
         this.dialogueController = new DialogueController(this);
     }
 
@@ -198,6 +195,11 @@ public abstract class HypixelNPC {
         sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
     }
 
+    public String getName() {
+        String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
+        return parameters.chatName() != null ? parameters.chatName() : className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+    }
+
     public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
         player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
         player.playSound(sound);
@@ -284,6 +286,26 @@ public abstract class HypixelNPC {
 
         public static DialogueSet ofTranslation(String key, String translationKey, Map<String, String> placeholders, Sound sound) {
             return new DialogueSet(key, I18n.dialogueLines(translationKey, placeholders), sound);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player) {
+            Locale locale = player != null ? player.getLocale() : Locale.US;
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale), null);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Sound sound) {
+            Locale locale = player != null ? player.getLocale() : Locale.US;
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale), sound);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Map<String, String> placeholders) {
+            Locale locale = player != null ? player.getLocale() : Locale.US;
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale, placeholders), null);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Map<String, String> placeholders, Sound sound) {
+            Locale locale = player != null ? player.getLocale() : Locale.US;
+            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale, placeholders), sound);
         }
     }
 }

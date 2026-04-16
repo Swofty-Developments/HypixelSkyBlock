@@ -24,6 +24,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -46,6 +47,7 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
     @Override
     protected ItemStack.Builder renderItem(SkyBlockRecipe<?> item, int index, HypixelPlayer p) {
         SkyBlockPlayer player = (SkyBlockPlayer) p;
+        Locale l = player.getLocale();
         SkyBlockRecipe.CraftingResult result = item.getCanCraft().apply(player);
         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
                 player, item.getResult().getItemStack()
@@ -56,7 +58,7 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
                     itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList()
             );
             lore.add("§e ");
-            lore.add(I18n.string("gui_sbmenu.recipe.category.click_to_view"));
+            lore.add(I18n.string("gui_sbmenu.recipe.category.click_to_view", l));
 
             return itemStack.set(DataComponents.LORE,
                     lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
@@ -64,7 +66,7 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
         } else {
             List<String> lore = Arrays.asList(result.errorMessage());
             lore = lore.stream().map(line -> "§7" + line).toList();
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.locked"), Material.GRAY_DYE, 1, lore);
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.locked", l), Material.GRAY_DYE, 1, lore);
         }
     }
 
@@ -76,7 +78,7 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
         if (result.allowed()) {
             ctx.push(new GUIRecipe(item.getResult().getAttributeHandler().getPotentialType()));
         } else {
-            player.sendMessage(I18n.string("gui_sbmenu.recipe.category.msg.not_unlocked"));
+            player.sendMessage(I18n.string("gui_sbmenu.recipe.category.msg.not_unlocked", player.getLocale()));
         }
     }
 
@@ -86,9 +88,12 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
         Components.back(layout, 48, ctx);
         Components.close(layout, 49);
 
-        layout.slot(50, (_, _) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.search"), Material.OAK_SIGN, 1,
-                I18n.lore("gui_sbmenu.recipe.book.search.lore")), (_, c) -> {
-            new HypixelSignGUI(c.player()).open(new String[]{I18n.string("gui_sbmenu.recipe.search.sign_prompt")}).thenAccept(line -> {
+        layout.slot(50, (_, c) -> {
+            Locale l = c.player().getLocale();
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.search", l), Material.OAK_SIGN, 1,
+                I18n.lore("gui_sbmenu.recipe.book.search.lore", l));
+        }, (_, c) -> {
+            new HypixelSignGUI(c.player()).open(new String[]{I18n.string("gui_sbmenu.recipe.search.sign_prompt", c.player().getLocale())}).thenAccept(line -> {
                 if (line == null) {
                     return;
                 }
@@ -99,8 +104,11 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
 
         // if no results
         if (state.items().isEmpty()) {
-            layout.slot(22, (searchState, _) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.search.no_results"), Material.BARRIER, 1,
-                    I18n.lore("gui_sbmenu.recipe.search.no_results.lore", Map.of("query", searchState.query()))));
+            layout.slot(22, (searchState, c) -> {
+                Locale l = c.player().getLocale();
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.search.no_results", l), Material.BARRIER, 1,
+                    I18n.lore("gui_sbmenu.recipe.search.no_results.lore", l, Map.of("query", searchState.query())));
+            });
         }
     }
 
@@ -111,7 +119,7 @@ public class GUISearchRecipe extends PaginatedView<SkyBlockRecipe<?>, GUISearchR
 
     @Override
     public ViewConfiguration<SearchState> configuration() {
-        return ViewConfiguration.withString((state, ctx) -> I18n.string("gui_sbmenu.recipe.search.title", Map.of("query", state.query(), "page", String.valueOf(state.page() + 1), "max_page", String.valueOf(Math.max(1, (int) Math.ceil((double) state.items().size() / DEFAULT_SLOTS.length))))), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.withString((state, ctx) -> I18n.string("gui_sbmenu.recipe.search.title", ctx.player().getLocale(), Map.of("query", state.query(), "page", String.valueOf(state.page() + 1), "max_page", String.valueOf(Math.max(1, (int) Math.ceil((double) state.items().size() / DEFAULT_SLOTS.length))))), InventoryType.CHEST_6_ROW);
     }
 
     public static SearchState createInitialState(String query) {

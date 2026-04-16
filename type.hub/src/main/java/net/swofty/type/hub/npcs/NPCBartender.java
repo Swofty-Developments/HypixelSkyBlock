@@ -4,7 +4,6 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopBartender;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionKillZombies;
@@ -70,9 +69,9 @@ public class NPCBartender extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("quest-hello", "npcs_hub.bartender.dialogue.quest_hello"),
-                DialogueSet.ofTranslation("quest-talk", "npcs_hub.bartender.dialogue.quest_talk"),
-                DialogueSet.ofTranslation("quest-complete", "npcs_hub.bartender.dialogue.quest_complete")
+                DialogueSet.ofTranslation("quest-hello", "npcs_hub.bartender.dialogue.quest_hello", player),
+                DialogueSet.ofTranslation("quest-talk", "npcs_hub.bartender.dialogue.quest_talk", player),
+                DialogueSet.ofTranslation("quest-complete", "npcs_hub.bartender.dialogue.quest_complete", player)
         };
     }
 }

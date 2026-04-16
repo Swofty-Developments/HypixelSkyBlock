@@ -24,6 +24,9 @@ public class ListenerServerFinishedWithPlayer extends RedisListener {
 
         Player player = potentialPlayer.get();
         TransferHandler handler = new TransferHandler(player);
+        if (!handler.isInLimbo()) {
+            return new JSONObject();
+        }
         handler.previousServerIsFinished();
 
         return new JSONObject();

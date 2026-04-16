@@ -11,16 +11,20 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
+import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
-import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.*;
+import net.swofty.type.lobby.events.LobbyBlockBreak;
+import net.swofty.type.lobby.events.LobbyItemEvents;
+import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
+import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
+import net.swofty.type.lobby.events.LobbyPlayerMove;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
 import net.swofty.type.lobby.item.impl.HidePlayers;
@@ -32,14 +36,14 @@ import net.swofty.type.lobby.parkour.LobbyParkourManager;
 import net.swofty.type.lobby.parkour.Parkour;
 import net.swofty.type.skywarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.skywarslobby.hologram.SoulWellHologramManager;
-import net.swofty.type.skywarslobby.parkour.SkywarsLobbyParkour;
 import net.swofty.type.skywarslobby.item.SkywarsMenuItem;
 import net.swofty.type.skywarslobby.kit.SkywarsKitRegistry;
 import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
+import net.swofty.type.skywarslobby.parkour.SkywarsLobbyParkour;
 import net.swofty.type.skywarslobby.perk.SkywarsPerkRegistry;
 import net.swofty.type.skywarslobby.soulwell.SoulWellParticleManager;
 import net.swofty.type.skywarslobby.soulwell.SoulWellUpgradeRegistry;
-import net.swofty.type.skywarslobby.util.SkywarsLobbyMap;
+import net.swofty.type.skywarslobby.util.SkyWarsLobbyMap;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -47,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TypeSkywarsLobbyLoader implements LobbyTypeLoader {
+public class TypeSkyWarsLobbyLoader implements LobbyTypeLoader {
     @Getter
     private final LobbyItemHandler itemHandler = new LobbyItemHandler();
     @Getter
@@ -73,10 +77,10 @@ public class TypeSkywarsLobbyLoader implements LobbyTypeLoader {
         SoulWellUpgradeRegistry.initialize();
         Logger.info("Initialized SkyWars kit, perk, level, and soul well upgrade registries");
 
-        SkywarsLobbyScoreboard.start();
+        SkyWarsLobbyScoreboard.start();
 
         // Place map item frames in the lobby
-        SkywarsLobbyMap skywarsLobbyMap = new SkywarsLobbyMap();
+        SkyWarsLobbyMap skywarsLobbyMap = new SkyWarsLobbyMap();
         skywarsLobbyMap.placeItemFrames(HypixelConst.getInstanceContainer());
 
         // Initialize parkour manager

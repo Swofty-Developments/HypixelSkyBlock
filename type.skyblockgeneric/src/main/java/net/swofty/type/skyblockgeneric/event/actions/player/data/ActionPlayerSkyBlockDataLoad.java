@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.event.actions.player.data;
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
+import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.EventNodes;
@@ -15,6 +16,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.bson.Document;
 import org.tinylog.Logger;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
@@ -26,7 +28,6 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
 
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         UUID playerUuid = player.getUuid();
-        UUID islandUUID;
 
         // Check if player has ever joined SkyBlock before
         SkyBlockPlayerProfiles profiles = new UserDatabase(playerUuid).getProfiles();
@@ -37,8 +38,6 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
             Logger.info("New SkyBlock player detected: " + player.getUsername() + " - initializing...");
 
             profileId = UUID.randomUUID();
-            islandUUID = profileId; // Use profile ID as island ID for new players
-
             // Create new profiles object
             profiles = new SkyBlockPlayerProfiles(playerUuid);
             profiles.setCurrentlySelected(profileId);
@@ -53,49 +52,54 @@ public class ActionPlayerSkyBlockDataLoad implements HypixelEventClass {
             if (profileId == null) {
                 // Player has profiles but no selected profile - create new one
                 profileId = UUID.randomUUID();
-                islandUUID = profileId;
                 profiles.setCurrentlySelected(profileId);
                 profiles.addProfile(profileId);
 
                 // Save updated profiles
                 UserDatabase userDb = new UserDatabase(playerUuid);
                 userDb.saveProfiles(profiles);
-            } else {
-                // Load existing profile's island UUID
-                ProfilesDatabase temp = new ProfilesDatabase(profileId.toString());
-                Document doc = temp.getDocument();
-                if (doc != null) {
-                    islandUUID = SkyBlockDataHandler.createFromProfileOnly(doc)
-                            .get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue();
-                } else {
-                    // Profile doesn't exist in database yet
-                    islandUUID = profileId;
-                }
             }
         }
-
-
-        // Set up the island
-        SkyBlockIsland island = (SkyBlockIsland.getIsland(islandUUID) == null)
-                ? new SkyBlockIsland(islandUUID, profileId)
-                : SkyBlockIsland.getIsland(islandUUID);
-        player.setSkyBlockIsland(island);
 
         // Load SkyBlock profile data
         ProfilesDatabase profileDb = new ProfilesDatabase(profileId.toString());
         SkyBlockDataHandler handler;
+        boolean shouldPersistProfile = false;
 
         if (profileDb.exists()) {
             Document profileDocument = profileDb.getDocument();
             handler = SkyBlockDataHandler.createFromProfile(playerUuid, profileId, profileDocument);
         } else {
             handler = SkyBlockDataHandler.initUserWithDefaultData(playerUuid, profileId);
-            // Save the new profile
-            profileDb.saveDocument(handler.toProfileDocument());
+            shouldPersistProfile = true;
+        }
+
+        DatapointUUID islandDatapoint = handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class);
+        UUID islandUUID = islandDatapoint.getValue();
+        if (islandUUID == null) {
+            islandUUID = profileId;
+            islandDatapoint.setValue(islandUUID);
+            shouldPersistProfile = true;
+        }
+
+        DatapointString profileNameDatapoint = handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class);
+        if (Objects.equals(profileNameDatapoint.getValue(), "null")) {
+            profileNameDatapoint.setValue(SkyBlockPlayerProfiles.getRandomName());
+            shouldPersistProfile = true;
         }
 
         // Put in SkyBlock cache
         SkyBlockDataHandler.skyBlockCache.put(playerUuid, handler);
+
+        if (shouldPersistProfile) {
+            profileDb.saveDocument(handler.toProfileDocument());
+        }
+
+        // Set up the island after the cache is populated so island init can see the player as loaded
+        SkyBlockIsland island = (SkyBlockIsland.getIsland(islandUUID) == null)
+            ? new SkyBlockIsland(islandUUID, profileId)
+            : SkyBlockIsland.getIsland(islandUUID);
+        player.setSkyBlockIsland(island);
 
         Logger.info("Successfully loaded SkyBlock (profile " + profileId + ") for: " + player.getUsername());
     }

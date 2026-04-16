@@ -11,6 +11,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class IslandMemberModule extends TablistModule {
@@ -18,6 +19,7 @@ public class IslandMemberModule extends TablistModule {
     @Override
     public List<TablistEntry> getEntries(HypixelPlayer p) {
         SkyBlockPlayer player = (SkyBlockPlayer) p;
+        Locale l = player.getLocale();
         ArrayList<SkyBlockPlayer> toShow;
         if (player.isCoop())
             toShow = new ArrayList<>(player.getSkyBlockIsland().getCoop().getOnlineMembers());
@@ -25,7 +27,7 @@ public class IslandMemberModule extends TablistModule {
             toShow = new ArrayList<>(Collections.singletonList(player));
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered(I18n.string("tablist.module.island", Map.of("count", String.valueOf(toShow.size())))), TablistSkinRegistry.CYAN)
+                new TablistEntry(getCentered(I18n.string("tablist.module.island", l, Map.of("count", String.valueOf(toShow.size())))), TablistSkinRegistry.CYAN)
         ));
 
         // Sort players by their rank ordinal in reverse
