@@ -11,14 +11,14 @@ import org.tinylog.Logger;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public class ServerOutboundMessage {
-    private static final Map<UUID, Consumer<String>> redisMessageListeners = new HashMap<>();
-    public static final Map<String, ProtocolObject> protocolObjects = new HashMap<>();
+    private static final Map<UUID, Consumer<String>> redisMessageListeners = new ConcurrentHashMap<>();
+    public static final Map<String, ProtocolObject> protocolObjects = new ConcurrentHashMap<>();
 
     public static void registerServerToProxy(ToProxyChannels channel) {
         RedisAPI.getInstance().registerChannel(channel.getChannelName(), (event) -> {
@@ -27,8 +27,13 @@ public class ServerOutboundMessage {
             String[] split = messageWithoutFilter.split("}=-=-=\\{");
             UUID uuid = UUID.fromString(split[0]);
 
-            redisMessageListeners.get(uuid).accept(split[1]);
-            redisMessageListeners.remove(uuid);
+            Consumer<String> listener = redisMessageListeners.remove(uuid);
+            if (listener == null) {
+                Logger.error("Received proxy response for unknown request " + uuid + " on channel " + channel.getChannelName());
+                return;
+            }
+
+            listener.accept(split[1]);
         });
     }
 
@@ -61,8 +66,13 @@ public class ServerOutboundMessage {
             } else message = "";
 
             try {
-                redisMessageListeners.get(uuid).accept(message);
-                redisMessageListeners.remove(uuid);
+                Consumer<String> listener = redisMessageListeners.remove(uuid);
+                if (listener == null) {
+                    Logger.error("Received service response for unknown request " + uuid + " on channel " + object.channel());
+                    return;
+                }
+
+                listener.accept(message);
             } catch (Exception e) {
                 Logger.error("Failed to handle message from " + uuid + ": " + e.getMessage());
             }
@@ -108,7 +118,8 @@ public class ServerOutboundMessage {
                         requestId,
                         callback != null ? callback : "proxy",
                         specification.channel(),
-                        message
+                    message,
+                    false
                 ).toJSON().toString()
         );
     }

@@ -1,55 +1,61 @@
 rootProject.name = "HypixelSkyBlock"
-include(":packer")
-include(":commons")
-include(":dungeons")
 
-include(":velocity.extension")
-include(":proxy.api")
+fun includeIfPresent(projectPath: String) {
+    val relativeDir = projectPath.removePrefix(":")
+    if (file(relativeDir).isDirectory) {
+        include(projectPath)
+    }
+}
 
-include(":service.generic")
-include(":type.generic")
-include(":type.skyblockgeneric")
-include(":type.lobby")
-include(":spark")
-include(":loader")
-include(":pvp")
-
-include(":type.prototypelobby")
-include(":type.thefarmingislands")
-include(":type.spidersden")
-include(":type.theend")
-include(":type.crimsonisle")
-include(":type.goldmine")
-include(":type.deepcaverns")
-include(":type.dwarvenmines")
-include(":type.thepark")
-include(":type.galatea")
-include(":type.backwaterbayou")
-include(":type.jerrysworkshop")
-include(":type.island")
-include(":type.hub")
-include(":type.dungeonhub")
-include(":type.bedwarslobby")
-include(":type.bedwarsgame")
-include(":type.bedwarsconfigurator")
-include(":type.murdermysterylobby")
-include(":type.murdermysterygame")
-include(":type.murdermysteryconfigurator")
-include(":type.skywarslobby")
-include(":type.skywarsgame")
-include(":type.skywarsconfigurator")
-include(":type.ravengardgeneric")
-include(":type.ravengardlobby")
-
-include(":service.auctionhouse")
-include(":service.bazaar")
-include(":service.itemtracker")
-include(":service.api")
-include(":service.datamutex")
-include(":service.party")
-include(":service.orchestrator")
-include(":service.darkauction")
-include(":service.friend")
-include(":service.punishment")
-include(":service.elections")
-include(":anticheat")
+listOf(
+    ":packer",
+    ":commons",
+    ":dungeons",
+    ":velocity.extension",
+    ":proxy.api",
+    ":service.generic",
+    ":type.generic",
+    ":type.skyblockgeneric",
+    ":type.lobby",
+    ":spark",
+    ":loader",
+    ":pvp",
+    ":type.prototypelobby",
+    ":type.thefarmingislands",
+    ":type.spidersden",
+    ":type.theend",
+    ":type.crimsonisle",
+    ":type.goldmine",
+    ":type.deepcaverns",
+    ":type.dwarvenmines",
+    ":type.thepark",
+    ":type.galatea",
+    ":type.backwaterbayou",
+    ":type.jerrysworkshop",
+    ":type.island",
+    ":type.hub",
+    ":type.dungeonhub",
+    ":type.bedwarslobby",
+    ":type.bedwarsgame",
+    ":type.bedwarsconfigurator",
+    ":type.murdermysterylobby",
+    ":type.murdermysterygame",
+    ":type.murdermysteryconfigurator",
+    ":type.skywarslobby",
+    ":type.skywarsgame",
+    ":type.skywarsconfigurator",
+    ":type.ravengardgeneric",
+    ":type.ravengardlobby",
+    ":service.auctionhouse",
+    ":service.bazaar",
+    ":service.itemtracker",
+    ":service.api",
+    ":service.datamutex",
+    ":service.party",
+    ":service.orchestrator",
+    ":service.darkauction",
+    ":service.friend",
+    ":service.punishment",
+    ":service.elections",
+    ":anticheat"
+).forEach(::includeIfPresent)

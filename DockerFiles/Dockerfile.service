@@ -1,0 +1,50 @@
+FROM eclipse-temurin:25-jdk AS builder
+
+WORKDIR /workspace
+
+ARG SERVICE_MODULE=service.orchestrator
+
+COPY gradlew gradlew.bat settings.gradle.kts build.gradle.kts gradle.properties ./
+COPY configuration ./configuration
+COPY gradle ./gradle
+COPY commons ./commons
+COPY packer ./packer
+COPY proxy.api ./proxy.api
+COPY service.api ./service.api
+COPY service.auctionhouse ./service.auctionhouse
+COPY service.bazaar ./service.bazaar
+COPY service.darkauction ./service.darkauction
+COPY service.datamutex ./service.datamutex
+COPY service.friend ./service.friend
+COPY service.generic ./service.generic
+COPY service.itemtracker ./service.itemtracker
+COPY service.orchestrator ./service.orchestrator
+COPY service.party ./service.party
+COPY service.punishment ./service.punishment
+COPY type.generic ./type.generic
+COPY type.skyblockgeneric ./type.skyblockgeneric
+
+RUN chmod +x ./gradlew && ./gradlew --no-daemon ":${SERVICE_MODULE}:shadowJar"
+
+FROM eclipse-temurin:25-jre
+
+WORKDIR /app
+
+ARG SERVICE_MODULE=service.orchestrator
+ARG SERVICE_JAR=ServiceOrchestrator.jar
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends bash ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /workspace/${SERVICE_MODULE}/build/libs/${SERVICE_JAR} /app/service.jar
+COPY ./configuration /app/configuration_files
+
+RUN chmod +x /app/configuration_files/bootstrap-config.sh
+
+ENV HYPIXEL_MANAGEMENT_PORT=9090
+ENV JAVA_OPTS="-XX:+UseG1GC -XX:+UseStringDeduplication -XX:MaxRAMPercentage=70 -XX:InitialRAMPercentage=25 -Dfile.encoding=UTF-8"
+
+EXPOSE 9090
+
+CMD ["bash", "-lc", "mkdir -p /app/configuration; /app/configuration_files/bootstrap-config.sh /app/configuration; java $JAVA_OPTS -jar /app/service.jar"]

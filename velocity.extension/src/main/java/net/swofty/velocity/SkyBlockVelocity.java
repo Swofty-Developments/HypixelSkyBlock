@@ -39,6 +39,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.config.Settings;
+import net.swofty.commons.management.ManagementServer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocolObject;
 import net.swofty.commons.proxy.FromProxyChannels;
@@ -79,6 +80,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -102,6 +104,7 @@ public class SkyBlockVelocity {
 	private static boolean shouldAuthenticate = false;
 	@Getter
 	private static boolean supportCrossVersion = false;
+    private static final AtomicBoolean READY = new AtomicBoolean(false);
 	@Inject
 	private ProxyServer proxy;
 
@@ -221,6 +224,72 @@ public class SkyBlockVelocity {
 
 		// Setup GameManager
 		GameManager.loopServers(server);
+        ManagementServer.start(
+            "proxy",
+            ConfigProvider.settings().getKubernetes(),
+            () -> true,
+            READY::get,
+            this::proxyMetrics
+        );
+        READY.set(true);
+    }
+
+    private String proxyMetrics() {
+        StringBuilder metrics = new StringBuilder();
+        metrics.append(ManagementServer.metricLine(
+            "hypixel_proxy_connected_players",
+            server.getPlayerCount(),
+            java.util.Map.of()
+        ));
+
+        GameManager.getServers().forEach((serverType, gameServers) -> {
+            int typePlayers = 0;
+            int typeCapacity = 0;
+
+            for (GameManager.GameServer gameServer : gameServers) {
+                int players = gameServer.registeredServer().getPlayersConnected().size();
+                typePlayers += players;
+                typeCapacity += gameServer.maxPlayers();
+                metrics.append(ManagementServer.metricLine(
+                    "hypixel_proxy_server_players",
+                    players,
+                    java.util.Map.of(
+                        "server_type", serverType.name(),
+                        "server_name", gameServer.displayName(),
+                        "server_short_name", gameServer.shortDisplayName(),
+                        "server_uuid", gameServer.internalID().toString()
+                    )
+                ));
+                metrics.append(ManagementServer.metricLine(
+                    "hypixel_proxy_server_capacity",
+                    gameServer.maxPlayers(),
+                    java.util.Map.of(
+                        "server_type", serverType.name(),
+                        "server_name", gameServer.displayName(),
+                        "server_short_name", gameServer.shortDisplayName(),
+                        "server_uuid", gameServer.internalID().toString()
+                    )
+                ));
+            }
+
+            metrics.append(ManagementServer.metricLine(
+                "hypixel_proxy_server_type_players",
+                typePlayers,
+                java.util.Map.of("server_type", serverType.name())
+            ));
+            metrics.append(ManagementServer.metricLine(
+                "hypixel_proxy_server_type_capacity",
+                typeCapacity,
+                java.util.Map.of("server_type", serverType.name())
+            ));
+            metrics.append(ManagementServer.metricLine(
+                "hypixel_proxy_server_type_replicas",
+                gameServers.size(),
+                java.util.Map.of("server_type", serverType.name())
+            ));
+        });
+
+        return metrics.toString();
 	}
 
 	private boolean checkPunished(Player player) {
@@ -330,8 +399,12 @@ public class SkyBlockVelocity {
 			return;
 		}
 
-		// Send the player to the limbo
 		RegisteredServer originalServer = event.getServer();
+		if (originalServer.equals(limboServer)) {
+			new TransferHandler(event.getPlayer()).forceRemoveFromLimbo();
+			return;
+		}
+
 		Component reason = event.getServerKickReason().orElse(Component.text(
 				"§cYour connection to the server was lost. Please try again later."
 		));
@@ -343,8 +416,6 @@ public class SkyBlockVelocity {
 		));
 
 		TransferHandler transferHandler = new TransferHandler(event.getPlayer());
-		transferHandler.transferTo(serverType);
-
 		CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
 				.execute(() -> {
 					// Determine if the registeredServer disconnect was due to a crash
@@ -361,7 +432,7 @@ public class SkyBlockVelocity {
 
 					try {
 						ServerType serverTypeToTry = serverType;
-						if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
+						if (serverTypeToTry == null || !GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
 							serverTypeToTry = ServerType.PROTOTYPE_LOBBY;
 						}
 

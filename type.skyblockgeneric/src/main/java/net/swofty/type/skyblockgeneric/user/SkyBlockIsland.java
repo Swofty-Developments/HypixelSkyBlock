@@ -35,22 +35,25 @@ import org.tinylog.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 public class SkyBlockIsland {
     private static final Path ISLAND_TEMPLATE_PATH = CustomWorlds.SKYBLOCK_ISLAND_TEMPLATE.getPath();
-    private static final Map<UUID, SkyBlockIsland> loadedIslands = new HashMap<>();
+    private static final Map<UUID, SkyBlockIsland> loadedIslands = new ConcurrentHashMap<>();
 
     // Internal Island Data
+    private final Object lifecycleLock = new Object();
     private final IslandDatabase database;
     private final CoopDatabase.Coop coop;
     private final UUID islandID;
-    private Boolean created = false;
+    private volatile boolean created = false;
+    private volatile CompletableFuture<SharedInstance> loadingFuture;
     private SharedInstance islandInstance;
     private PolarWorld world;
 
@@ -73,31 +76,96 @@ public class SkyBlockIsland {
     }
 
     public CompletableFuture<SharedInstance> getSharedInstance() {
-        InstanceManager manager = MinecraftServer.getInstanceManager();
-        CompletableFuture<SharedInstance> future = new CompletableFuture<>();
+        synchronized (lifecycleLock) {
+            if (created && islandInstance != null) {
+                return CompletableFuture.completedFuture(islandInstance);
+            }
+            if (loadingFuture != null && !loadingFuture.isDone()) {
+                return loadingFuture;
+            }
 
-        new Thread(() -> {
-            if (created) {
-                future.complete(islandInstance);
+            loadingFuture = new CompletableFuture<>();
+        }
+
+        CompletableFuture<SharedInstance> future = loadingFuture;
+        Thread.startVirtualThread(() -> loadSharedInstance(future));
+        return future;
+    }
+
+    public void runVacantCheck() {
+        SharedInstance instanceSnapshot;
+        PolarWorld worldSnapshot;
+
+        synchronized (lifecycleLock) {
+            if (islandInstance == null || !created) return;
+            if (loadingFuture != null && !loadingFuture.isDone()) return;
+            if (!islandInstance.getPlayers().isEmpty()) return;
+
+            instanceSnapshot = islandInstance;
+            worldSnapshot = world;
+        }
+
+        HypixelEventHandler.callCustomEvent(new IslandSavedIntoDatabaseEvent(
+            this, coop != null, coop != null ? coop.memberProfiles() : List.of(islandID)
+        ));
+
+        save(worldSnapshot, instanceSnapshot);
+
+        synchronized (lifecycleLock) {
+            if (islandInstance != instanceSnapshot || !instanceSnapshot.getPlayers().isEmpty()) {
                 return;
             }
+
+            this.created = false;
+            this.islandInstance = null;
+            this.world = null;
+            this.loadingFuture = null;
+        }
+
+        instanceSnapshot.getChunks().forEach(instanceSnapshot::unloadChunk);
+        loadedIslands.remove(islandID, this);
+    }
+
+    private void save(PolarWorld worldToSave, SharedInstance instanceToSave) {
+        if (worldToSave == null || instanceToSave == null) return;
+
+        new PolarLoader(worldToSave).saveInstance(instanceToSave);
+        database.insertOrUpdate("data", new Binary(PolarWriter.write(worldToSave)));
+        database.insertOrUpdate("lastSaved", System.currentTimeMillis());
+        database.insertOrUpdate("version", islandVersion);
+    }
+
+    public static boolean hasIsland(UUID islandID) {
+        return loadedIslands.containsKey(islandID);
+    }
+
+    public static @Nullable SkyBlockIsland getIsland(UUID islandID) {
+        if (!loadedIslands.containsKey(islandID)) return null;
+        return loadedIslands.get(islandID);
+    }
+
+    public static void runVacantLoop(Scheduler scheduler) {
+        scheduler.submitTask(() -> {
+            new ArrayList<>(loadedIslands.values()).forEach(SkyBlockIsland::runVacantCheck);
+            return TaskSchedule.tick(4);
+        }, ExecutionType.TICK_END);
+    }
+
+    private void loadSharedInstance(CompletableFuture<SharedInstance> future) {
+        try {
+            InstanceManager manager = MinecraftServer.getInstanceManager();
             RegistryKey<DimensionType> dimensionTypeKey = MinecraftServer.getDimensionTypeRegistry().getKey(
                     Key.key("skyblock:island")
             );
             InstanceContainer temporaryInstance = manager.createInstanceContainer(dimensionTypeKey);
-            islandInstance = manager.createSharedInstance(temporaryInstance);
+            SharedInstance sharedInstance = manager.createSharedInstance(temporaryInstance);
 
             List<SkyBlockPlayer> onlinePlayers;
             if (coop != null) {
                 onlinePlayers = coop.getOnlineMembers();
             } else {
-                // Island ID will be the same as the profile ID if the island is not a coop
-                try {
-                    onlinePlayers = List.of(SkyBlockGenericLoader.getPlayerFromProfileUUID(islandID));
-                } catch (NullPointerException e) {
-                    // Player doesn't have their data loaded yet
-                    onlinePlayers = List.of();
-                }
+                SkyBlockPlayer islandOwner = SkyBlockGenericLoader.getPlayerFromProfileUUID(islandID);
+                onlinePlayers = islandOwner == null ? List.of() : List.of(islandOwner);
             }
 
             if (!database.exists()) {
@@ -130,6 +198,8 @@ public class SkyBlockIsland {
                         world = PolarReader.read(((Binary) database.get("data", Binary.class)).getData());
                         lastSaved = (long) database.get("lastSaved", Long.class);
                         break;
+                    default:
+                        throw new IllegalStateException("Unsupported island version " + islandVersion + " for island " + islandID);
                 }
 
                 int oldVersion = islandVersion;
@@ -142,62 +212,28 @@ public class SkyBlockIsland {
                     islandVersion = HypixelConst.getCurrentIslandVersion();
                 }
             }
+
             temporaryInstance.setChunkLoader(new PolarLoader(world));
 
-            this.created = true;
+            synchronized (lifecycleLock) {
+                this.islandInstance = sharedInstance;
+                this.created = true;
+            }
 
             HypixelEventHandler.callCustomEvent(new IslandFetchedFromDatabaseEvent(
                     this, coop != null, onlinePlayers, coop != null ? coop.memberProfiles() : List.of(islandID))
             );
 
-            future.complete(islandInstance);
-            onlinePlayers.forEach(HypixelPlayer::setReadyForEvents);
-        }).start();
-
-        return future;
-    }
-
-    public void runVacantCheck() {
-        if (islandInstance == null) return;
-
-        if (islandInstance.getPlayers().isEmpty()) {
-            HypixelEventHandler.callCustomEvent(new IslandSavedIntoDatabaseEvent(
-                    this, coop != null, coop != null ? coop.memberProfiles() : List.of(islandID)
-            ));
-
-            save();
-            this.created = false;
-            islandInstance.getChunks().forEach(chunk -> {
-                islandInstance.unloadChunk(chunk);
-            });
-            this.islandInstance = null;
-            this.world = null;
+            future.complete(sharedInstance);
+        } catch (Throwable throwable) {
+            Logger.error(throwable, "Failed to load island {}", islandID);
+            future.completeExceptionally(throwable);
+        } finally {
+            synchronized (lifecycleLock) {
+                if (loadingFuture == future) {
+                    loadingFuture = null;
+                }
+            }
         }
-    }
-
-    private void save() {
-        new PolarLoader(world).saveInstance(islandInstance);
-        database.insertOrUpdate("data", new Binary(PolarWriter.write(world)));
-        database.insertOrUpdate("lastSaved", System.currentTimeMillis());
-        database.insertOrUpdate("version", islandVersion);
-    }
-
-    public static boolean hasIsland(UUID islandID) {
-        return loadedIslands.containsKey(islandID);
-    }
-
-    public static @Nullable SkyBlockIsland getIsland(UUID islandID) {
-        if (!loadedIslands.containsKey(islandID)) return null;
-        return loadedIslands.get(islandID);
-    }
-
-    public static void runVacantLoop(Scheduler scheduler) {
-        scheduler.submitTask(() -> {
-            SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
-                if (player.isOnIsland())
-                    player.getSkyBlockIsland().runVacantCheck();
-            });
-            return TaskSchedule.tick(4);
-        }, ExecutionType.TICK_END);
     }
 }

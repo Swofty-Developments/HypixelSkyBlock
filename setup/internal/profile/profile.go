@@ -1,0 +1,334 @@
+package profile
+
+import (
+	"crypto/rand"
+	"encoding/hex"
+	"errors"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
+)
+
+const (
+	StateFileName            = ".state.json"
+	RuntimeCompose           = "compose"
+	RuntimeK8s               = "kubernetes"
+	KubernetesTargetK3d      = "k3d"
+	KubernetesTargetStandard = "standard"
+	KubernetesTargetMinikube = "minikube"
+	DefaultVersion           = "2.0.0"
+)
+
+var (
+	RequiredServices = []string{"ServiceDataMutex", "ServiceParty"}
+	RequiredServers  = []string{"PROTOTYPE_LOBBY"}
+
+	SkyBlockServers = []string{
+		"SKYBLOCK_HUB",
+		"SKYBLOCK_ISLAND",
+		"SKYBLOCK_SPIDERS_DEN",
+		"SKYBLOCK_THE_END",
+		"SKYBLOCK_CRIMSON_ISLE",
+		"SKYBLOCK_DUNGEON_HUB",
+		"SKYBLOCK_THE_FARMING_ISLANDS",
+		"SKYBLOCK_GOLD_MINE",
+		"SKYBLOCK_DEEP_CAVERNS",
+		"SKYBLOCK_DWARVEN_MINES",
+		"SKYBLOCK_THE_PARK",
+		"SKYBLOCK_GALATEA",
+		"SKYBLOCK_BACKWATER_BAYOU",
+		"SKYBLOCK_JERRYS_WORKSHOP",
+	}
+
+	MinigameServers = []string{
+		"BEDWARS_LOBBY",
+		"BEDWARS_GAME",
+		"BEDWARS_CONFIGURATOR",
+		"MURDER_MYSTERY_LOBBY",
+		"MURDER_MYSTERY_GAME",
+		"MURDER_MYSTERY_CONFIGURATOR",
+		"SKYWARS_LOBBY",
+		"SKYWARS_GAME",
+		"SKYWARS_CONFIGURATOR",
+		"RAVENGARD_LOBBY",
+	}
+
+	AllServices = []string{
+		"ServiceDataMutex",
+		"ServiceParty",
+		"ServiceAPI",
+		"ServiceAuctionHouse",
+		"ServiceBazaar",
+		"ServiceItemTracker",
+		"ServiceDarkAuction",
+		"ServiceOrchestrator",
+		"ServiceFriend",
+		"ServicePunishment",
+	}
+)
+
+type Profile struct {
+	Version                 string   `json:"version"`
+	RepoRoot                string   `json:"repo_root"`
+	InstallDir              string   `json:"install_dir"`
+	Runtime                 string   `json:"runtime"`
+	BindIP                  string   `json:"bind_ip"`
+	OnlineMode              bool     `json:"online_mode"`
+	SelectedServers         []string `json:"selected_servers"`
+	SelectedServices        []string `json:"selected_services"`
+	ExposeDBPorts           bool     `json:"expose_db_ports"`
+	APIPort                 int      `json:"api_port"`
+	SharedSecret            string   `json:"shared_secret"`
+	ManagedByInstaller      bool     `json:"managed_by_installer"`
+	ImageTag                string   `json:"image_tag"`
+	ImageRegistry           string   `json:"image_registry"`
+	ImagePullPolicy         string   `json:"image_pull_policy"`
+	KubernetesTarget        string   `json:"kubernetes_target"`
+	KubernetesClusterName   string   `json:"kubernetes_cluster_name"`
+	MinikubeProfile         string   `json:"minikube_profile"`
+	KubernetesNamespace     string   `json:"kubernetes_namespace"`
+	KubeContext             string   `json:"kube_context"`
+	KubeconfigPath          string   `json:"kubeconfig_path"`
+	ProxyServiceType        string   `json:"proxy_service_type"`
+	InstallMonitoring       bool     `json:"install_monitoring"`
+	EnableAutoscaling       bool     `json:"enable_autoscaling"`
+	InstallManagedDatastore bool     `json:"install_managed_datastore"`
+	MongoURI                string   `json:"mongo_uri"`
+	RedisURI                string   `json:"redis_uri"`
+	PrometheusAddress       string   `json:"prometheus_address"`
+	MongoStorageSize        string   `json:"mongo_storage_size"`
+	RedisStorageSize        string   `json:"redis_storage_size"`
+	StorageClassName        string   `json:"storage_class_name"`
+	LastAction              string   `json:"last_action"`
+	UpdatedAt               string   `json:"updated_at"`
+}
+
+func Default(repoRoot, installDir string) Profile {
+	return Profile{
+		Version:                 DefaultVersion,
+		RepoRoot:                repoRoot,
+		InstallDir:              installDir,
+		Runtime:                 RuntimeCompose,
+		BindIP:                  "0.0.0.0",
+		OnlineMode:              true,
+		SelectedServers:         []string{"PROTOTYPE_LOBBY"},
+		SelectedServices:        []string{"ServiceDataMutex", "ServiceParty"},
+		ExposeDBPorts:           false,
+		APIPort:                 8080,
+		SharedSecret:            RandomSecret(),
+		ManagedByInstaller:      true,
+		ImageTag:                "latest",
+		ImageRegistry:           "",
+		ImagePullPolicy:         "Never",
+		KubernetesTarget:        KubernetesTargetK3d,
+		KubernetesClusterName:   "hypixel",
+		MinikubeProfile:         "hypixel",
+		KubernetesNamespace:     "hypixel",
+		ProxyServiceType:        "LoadBalancer",
+		InstallMonitoring:       false,
+		EnableAutoscaling:       false,
+		InstallManagedDatastore: true,
+		MongoURI:                "mongodb://mongodb.hypixel.svc.cluster.local:27017",
+		RedisURI:                "redis://redis.hypixel.svc.cluster.local:6379",
+		PrometheusAddress:       "http://prometheus-operated.monitoring.svc.cluster.local:9090",
+		MongoStorageSize:        "20Gi",
+		RedisStorageSize:        "5Gi",
+	}
+}
+
+func DefaultInstallDir() (string, error) {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(home, ".hypixel-skyblock"), nil
+}
+
+func (p *Profile) Normalize() {
+	p.InstallDir = ExpandHome(strings.TrimSpace(p.InstallDir))
+	p.ImageTag = strings.TrimSpace(p.ImageTag)
+	p.ImageRegistry = strings.TrimSuffix(strings.TrimSpace(p.ImageRegistry), "/")
+	p.ImagePullPolicy = strings.TrimSpace(p.ImagePullPolicy)
+	p.KubernetesTarget = strings.TrimSpace(p.KubernetesTarget)
+	p.KubernetesClusterName = strings.TrimSpace(p.KubernetesClusterName)
+	p.MinikubeProfile = strings.TrimSpace(p.MinikubeProfile)
+	p.KubernetesNamespace = strings.TrimSpace(p.KubernetesNamespace)
+	p.KubeContext = strings.TrimSpace(p.KubeContext)
+	p.KubeconfigPath = ExpandHome(strings.TrimSpace(p.KubeconfigPath))
+	p.ProxyServiceType = strings.TrimSpace(p.ProxyServiceType)
+	p.MongoURI = strings.TrimSpace(p.MongoURI)
+	p.RedisURI = strings.TrimSpace(p.RedisURI)
+	p.PrometheusAddress = strings.TrimSpace(p.PrometheusAddress)
+	p.MongoStorageSize = strings.TrimSpace(p.MongoStorageSize)
+	p.RedisStorageSize = strings.TrimSpace(p.RedisStorageSize)
+	p.StorageClassName = strings.TrimSpace(p.StorageClassName)
+	p.SelectedServers = normalizeWithRequired(RequiredServers, p.SelectedServers)
+	p.SelectedServices = normalizeWithRequired(RequiredServices, p.SelectedServices)
+	if strings.TrimSpace(p.SharedSecret) == "" {
+		p.SharedSecret = RandomSecret()
+	}
+	if p.APIPort == 0 {
+		p.APIPort = 8080
+	}
+	if strings.TrimSpace(p.KubernetesTarget) == "" {
+		p.KubernetesTarget = KubernetesTargetK3d
+	}
+	if p.ImagePullPolicy == "" {
+		p.ImagePullPolicy = defaultImagePullPolicy(p.KubernetesTarget)
+	}
+	if strings.TrimSpace(p.KubernetesClusterName) == "" {
+		p.KubernetesClusterName = "hypixel"
+	}
+	if strings.TrimSpace(p.MinikubeProfile) == "" {
+		p.MinikubeProfile = "hypixel"
+	}
+}
+
+func (p Profile) Validate() error {
+	if p.InstallDir == "" {
+		return errors.New("install directory is required")
+	}
+	if p.BindIP == "" {
+		return errors.New("bind IP is required")
+	}
+	if p.Runtime != RuntimeCompose && p.Runtime != RuntimeK8s {
+		return fmt.Errorf("unsupported runtime %q", p.Runtime)
+	}
+	if p.SharedSecret == "" {
+		return errors.New("shared secret is required")
+	}
+	if err := validateSelections(p.SelectedServers, allowedServers(), "server"); err != nil {
+		return err
+	}
+	if err := validateSelections(p.SelectedServices, AllServices, "service"); err != nil {
+		return err
+	}
+	if p.Runtime != RuntimeK8s {
+		return nil
+	}
+	if p.ImageTag == "" {
+		return errors.New("image tag is required for Kubernetes")
+	}
+	switch p.ImagePullPolicy {
+	case "Never", "IfNotPresent", "Always":
+	default:
+		return fmt.Errorf("unsupported image pull policy %q", p.ImagePullPolicy)
+	}
+	if p.KubernetesTarget != KubernetesTargetK3d && p.KubernetesTarget != KubernetesTargetStandard && p.KubernetesTarget != KubernetesTargetMinikube {
+		return fmt.Errorf("unsupported kubernetes target %q", p.KubernetesTarget)
+	}
+	if p.KubernetesTarget == KubernetesTargetStandard && p.ImagePullPolicy != "Never" && p.ImageRegistry == "" {
+		return errors.New("image registry is required for standard target when image pull policy is IfNotPresent or Always")
+	}
+	if p.KubernetesNamespace == "" {
+		return errors.New("kubernetes namespace is required")
+	}
+	switch p.ProxyServiceType {
+	case "LoadBalancer", "NodePort", "ClusterIP":
+	default:
+		return fmt.Errorf("unsupported proxy service type %q", p.ProxyServiceType)
+	}
+	if !p.InstallManagedDatastore && (p.MongoURI == "" || p.RedisURI == "") {
+		return errors.New("mongo and redis URIs are required when managed datastores are disabled")
+	}
+	if p.InstallManagedDatastore && (p.MongoStorageSize == "" || p.RedisStorageSize == "") {
+		return errors.New("mongo and redis storage sizes are required when managed datastores are enabled")
+	}
+	if p.EnableAutoscaling && strings.TrimSpace(p.PrometheusAddress) == "" {
+		return errors.New("prometheus address is required when autoscaling is enabled")
+	}
+	return nil
+}
+
+func (p *Profile) Touch(action string) {
+	p.LastAction = action
+	p.UpdatedAt = time.Now().UTC().Format(time.RFC3339)
+}
+
+func RandomSecret() string {
+	var buf [24]byte
+	if _, err := rand.Read(buf[:]); err != nil {
+		return fmt.Sprintf("%d", time.Now().UnixNano())
+	}
+	return hex.EncodeToString(buf[:])
+}
+
+func ExpandHome(path string) string {
+	if !strings.HasPrefix(path, "~") {
+		return path
+	}
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return path
+	}
+	suffix := strings.TrimPrefix(path, "~")
+	suffix = strings.TrimPrefix(suffix, "/")
+	if suffix == "" {
+		return home
+	}
+	return filepath.Join(home, suffix)
+}
+
+func FilterSelected(selected, allowed []string) []string {
+	allowedSet := make(map[string]struct{}, len(allowed))
+	for _, item := range allowed {
+		allowedSet[item] = struct{}{}
+	}
+	result := make([]string, 0, len(selected))
+	for _, item := range selected {
+		if _, ok := allowedSet[item]; ok {
+			result = append(result, item)
+		}
+	}
+	return result
+}
+
+func normalizeWithRequired(required, selected []string) []string {
+	seen := make(map[string]struct{}, len(required)+len(selected))
+	result := make([]string, 0, len(required)+len(selected))
+	for _, item := range append(append([]string{}, required...), selected...) {
+		item = strings.TrimSpace(item)
+		if item == "" {
+			continue
+		}
+		if _, ok := seen[item]; ok {
+			continue
+		}
+		seen[item] = struct{}{}
+		result = append(result, item)
+	}
+	return result
+}
+
+func validateSelections(selected, allowed []string, kind string) error {
+	allowedSet := make(map[string]struct{}, len(allowed))
+	for _, item := range allowed {
+		allowedSet[item] = struct{}{}
+	}
+	for _, item := range selected {
+		if _, ok := allowedSet[item]; ok {
+			continue
+		}
+		return fmt.Errorf("unsupported %s selection %q", kind, item)
+	}
+	return nil
+}
+
+func allowedServers() []string {
+	allowed := make([]string, 0, len(RequiredServers)+len(SkyBlockServers)+len(MinigameServers))
+	allowed = append(allowed, RequiredServers...)
+	allowed = append(allowed, SkyBlockServers...)
+	allowed = append(allowed, MinigameServers...)
+	return allowed
+}
+
+func defaultImagePullPolicy(target string) string {
+	switch target {
+	case KubernetesTargetK3d, KubernetesTargetMinikube:
+		return "Never"
+	default:
+		return "IfNotPresent"
+	}
+}

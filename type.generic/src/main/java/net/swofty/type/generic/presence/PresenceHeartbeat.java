@@ -45,13 +45,17 @@ public final class PresenceHeartbeat {
                     System.currentTimeMillis()
             );
 
-            ServerOutboundMessage.sendMessageToService(
+            try {
+                ServerOutboundMessage.sendMessageToService(
                     ServiceType.FRIEND,
                     new UpdatePresenceProtocolObject(),
                     new UpdatePresenceProtocolObject.UpdatePresenceMessage(info),
-                    (ignored) -> {}
-            );
+                    (ignored) -> {
+                    }
+                );
+            } catch (IllegalStateException | NullPointerException ignored) {
+                // Redis-backed messaging is not ready yet during early startup.
+            }
         }
     }
 }
-

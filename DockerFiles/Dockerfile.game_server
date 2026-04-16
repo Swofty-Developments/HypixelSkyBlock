@@ -1,32 +1,79 @@
-FROM eclipse-temurin:25-jdk
+FROM eclipse-temurin:25-jdk AS builder
+
+WORKDIR /workspace
+
+COPY gradlew gradlew.bat settings.gradle.kts build.gradle.kts gradle.properties ./
+COPY configuration ./configuration
+COPY gradle ./gradle
+COPY anticheat ./anticheat
+COPY commons ./commons
+COPY dungeons ./dungeons
+COPY loader ./loader
+COPY packer ./packer
+COPY proxy.api ./proxy.api
+COPY pvp ./pvp
+COPY service.api ./service.api
+COPY service.auctionhouse ./service.auctionhouse
+COPY service.bazaar ./service.bazaar
+COPY service.darkauction ./service.darkauction
+COPY service.datamutex ./service.datamutex
+COPY service.friend ./service.friend
+COPY service.generic ./service.generic
+COPY service.itemtracker ./service.itemtracker
+COPY service.orchestrator ./service.orchestrator
+COPY service.party ./service.party
+COPY service.punishment ./service.punishment
+COPY spark ./spark
+COPY type.backwaterbayou ./type.backwaterbayou
+COPY type.bedwarsconfigurator ./type.bedwarsconfigurator
+COPY type.bedwarsgame ./type.bedwarsgame
+COPY type.bedwarslobby ./type.bedwarslobby
+COPY type.crimsonisle ./type.crimsonisle
+COPY type.deepcaverns ./type.deepcaverns
+COPY type.dungeonhub ./type.dungeonhub
+COPY type.dwarvenmines ./type.dwarvenmines
+COPY type.galatea ./type.galatea
+COPY type.generic ./type.generic
+COPY type.goldmine ./type.goldmine
+COPY type.hub ./type.hub
+COPY type.island ./type.island
+COPY type.jerrysworkshop ./type.jerrysworkshop
+COPY type.lobby ./type.lobby
+COPY type.murdermysteryconfigurator ./type.murdermysteryconfigurator
+COPY type.murdermysterygame ./type.murdermysterygame
+COPY type.murdermysterylobby ./type.murdermysterylobby
+COPY type.prototypelobby ./type.prototypelobby
+COPY type.ravengardgeneric ./type.ravengardgeneric
+COPY type.ravengardlobby ./type.ravengardlobby
+COPY type.skyblockgeneric ./type.skyblockgeneric
+COPY type.skywarsconfigurator ./type.skywarsconfigurator
+COPY type.skywarsgame ./type.skywarsgame
+COPY type.skywarslobby ./type.skywarslobby
+COPY type.spidersden ./type.spidersden
+COPY type.theend ./type.theend
+COPY type.thefarmingislands ./type.thefarmingislands
+COPY type.thepark ./type.thepark
+COPY velocity.extension ./velocity.extension
+
+RUN chmod +x ./gradlew && ./gradlew --no-daemon --parallel assembleDeploymentArtifacts
+
+FROM eclipse-temurin:25-jre
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y jq curl && apt-get clean
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends bash curl jq ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-# Download all JARs in a single layer
-RUN curl -fSL -o HypixelCore.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/HypixelCore.jar" && \
-    curl -fSL -o ServiceAPI.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAPI.jar" && \
-    curl -fSL -o ServiceAuctionHouse.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAuctionHouse.jar" && \
-    curl -fSL -o ServiceBazaar.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceBazaar.jar" && \
-    curl -fSL -o ServiceItemTracker.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceItemTracker.jar" && \
-    curl -fSL -o ServiceDataMutex.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDataMutex.jar" && \
-    curl -fSL -o ServiceParty.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceParty.jar" && \
-    curl -fSL -o ServiceDarkAuction.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDarkAuction.jar" && \
-    curl -fSL -o ServiceOrchestrator.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceOrchestrator.jar" && \
-    curl -fSL -o ServiceFriend.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceFriend.jar"
-
-# Copy configuration data
+COPY --from=builder /workspace/build/deployment/ /app/
 COPY ./configuration /app/configuration_files
 
-RUN mkdir -p configuration && \
-    cp configuration_files/config.yml ./configuration/config.yml
+RUN chmod +x /app/configuration_files/bootstrap-config.sh /app/configuration_files/entrypoint.sh
 
-EXPOSE 25565 65535 8080 20000
+ENV MANAGEMENT_PORT=9090
+ENV JAVA_OPTS="-XX:+UseG1GC -XX:+UseStringDeduplication -XX:MaxRAMPercentage=70 -XX:InitialRAMPercentage=25 -Dfile.encoding=UTF-8"
+ENV SERVICE_CMD="java ${JAVA_OPTS} -jar HypixelCore.jar PROTOTYPE_LOBBY"
 
-RUN cp configuration_files/server.toml ./server.toml && \
-    cp -a configuration_files/skyblock/. configuration/skyblock/ && \
-    cp configuration_files/entrypoint.sh ./entrypoint.sh && \
-    chmod +x entrypoint.sh
+EXPOSE 25565 9090
 
-CMD ["sh", "entrypoint.sh"]
+ENTRYPOINT ["/app/configuration_files/entrypoint.sh"]

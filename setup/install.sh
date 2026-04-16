@@ -1,166 +1,58 @@
 #!/usr/bin/env bash
-set -uo pipefail
+set -euo pipefail
 
-# ─── curl | bash safety ──────────────────────────────────────────────────────
-if [ ! -t 0 ]; then
-    TMPDIR=$(mktemp -d /tmp/hypixel-install-XXXXXX)
-    cat > "$TMPDIR/install.sh"
-    chmod +x "$TMPDIR/install.sh"
+REPO="Swofty-Developments/HypixelSkyBlock"
+APP_NAME="hypixel-setup"
+RELEASE_BASE_URL="${HYPIXEL_SETUP_RELEASE_BASE_URL:-https://github.com/${REPO}/releases/latest/download}"
+TMP_DIR=""
 
-    REPO_RAW="https://raw.githubusercontent.com/Swofty-Developments/HypixelSkyBlock/master/setup/lib"
-    mkdir -p "$TMPDIR/lib"
-    for mod in ui.sh deps.sh config.sh setup.sh docker.sh; do
-        curl -fsSL "$REPO_RAW/$mod" -o "$TMPDIR/lib/$mod" 2>/dev/null || true
-    done
-
-    exec bash "$TMPDIR/install.sh" "$@" </dev/tty
-fi
-
-# ─── Resolve script directory ────────────────────────────────────────────────
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# ─── Constants ────────────────────────────────────────────────────────────────
-readonly VERSION="1.0.0"
-readonly GITHUB_REPO="Swofty-Developments/HypixelSkyBlock"
-readonly GITHUB_API="https://api.github.com/repos/${GITHUB_REPO}"
-readonly DEFAULT_INSTALL_DIR="$HOME/.hypixel-skyblock"
-readonly STATE_FILE=".state.json"
-readonly GUM_VERSION="0.14.5"
-
-# ─── Source library modules ──────────────────────────────────────────────────
-for lib in ui deps config setup docker; do
-    source "${SCRIPT_DIR}/lib/${lib}.sh"
-done
-
-# ─── Global error trap (safety net for uncaught errors) ──────────────────────
-trap 'on_error ${LINENO}' ERR
-
-generate_forwarding_secret() {
-    if command -v openssl >/dev/null 2>&1; then
-        openssl rand -hex 24
-    else
-        cat /proc/sys/kernel/random/uuid | tr -d '-'
-    fi
+detect_os() {
+  local os
+  os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+  case "$os" in
+    linux) echo "linux" ;;
+    *) echo "unsupported" ;;
+  esac
 }
 
-setup_forwarding_secret() {
-    local env_file="${INSTALL_DIR}/.env"
-    local secret=""
-
-    if [[ -f "$env_file" ]]; then
-        secret=$(grep -E '^FORWARDING_SECRET=' "$env_file" | tail -n1 | cut -d'=' -f2- || true)
-    fi
-
-    if [[ -z "$secret" && -f "${INSTALL_DIR}/configuration/forwarding.secret" ]]; then
-        secret=$(cat "${INSTALL_DIR}/configuration/forwarding.secret")
-    fi
-
-    if [[ -z "$secret" ]]; then
-        secret=$(generate_forwarding_secret)
-    fi
-
-    mkdir -p "$INSTALL_DIR" "${INSTALL_DIR}/configuration"
-
-    {
-        [[ -f "$env_file" ]] && grep -vE '^FORWARDING_SECRET=' "$env_file" || true
-        echo "FORWARDING_SECRET=${secret}"
-    } > "${env_file}.tmp"
-    mv "${env_file}.tmp" "$env_file"
-
-    printf '%s' "$secret" > "${INSTALL_DIR}/configuration/forwarding.secret"
-    export FORWARDING_SECRET="$secret"
-    log_ok "Forwarding secret configured"
-}
-
-# ─── Re-run detection ────────────────────────────────────────────────────────
-handle_existing_install() {
-    local state_file="${1}/${STATE_FILE}"
-    if [[ -f "$state_file" ]]; then
-        echo ""
-        log_warn "Existing installation detected at $1"
-        echo ""
-        log_info "Performing clean reinstall..."
-        cd "$1"
-        docker compose down --rmi all --volumes 2>&1 || true
-        cd "$HOME"
-        rm -rf "$1"
-        log_ok "Previous installation removed"
-    fi
-}
-
-# ─── Main flows ──────────────────────────────────────────────────────────────
-main_install() {
-    set_stage "Welcome"
-    show_splash
-    system_check
-
-    set_stage "Configuration"
-    configure_install
-
-    set_stage "Cleanup"
-    handle_existing_install "$INSTALL_DIR"
-
-    set_stage "Secrets"
-    setup_forwarding_secret
-
-    set_stage "Setup"
-    do_setup
-
-    set_stage "Launch"
-    do_launch
+detect_arch() {
+  local arch
+  arch="$(uname -m)"
+  case "$arch" in
+    x86_64|amd64) echo "amd64" ;;
+    aarch64|arm64) echo "arm64" ;;
+    *) echo "unsupported" ;;
+  esac
 }
 
 main() {
-    local manage=false
-    local watch=false
-    local install_dir_override=""
+  local os arch asset_url bin_path
+  os="$(detect_os)"
+  arch="$(detect_arch)"
 
-    while [[ $# -gt 0 ]]; do
-        case "$1" in
-            --manage|-m)   manage=true ;;
-            --watch|-w)    watch=true ;;
-            --dir)         shift; install_dir_override="$1" ;;
-            --help|-h)
-                echo "Usage: install.sh [OPTIONS]"
-                echo ""
-                echo "Options:"
-                echo "  --manage, -m    Open management dashboard"
-                echo "  --watch, -w     Start health monitoring mode"
-                echo "  --dir PATH      Specify install directory"
-                echo "  --help, -h      Show this help"
-                exit 0
-                ;;
-            *) ;;
-        esac
-        shift
-    done
+  if [[ "$os" == "unsupported" || "$arch" == "unsupported" ]]; then
+    echo "Unsupported platform: $(uname -s)/$(uname -m)" >&2
+    exit 1
+  fi
 
-    set_stage "Dependency Check"
-    check_dependencies
-    install_gum
-    install_figlet
+  asset_url="${RELEASE_BASE_URL}/${APP_NAME}-${os}-${arch}.tar.gz"
+  TMP_DIR="$(mktemp -d /tmp/${APP_NAME}-XXXXXX)"
+  trap 'rm -rf "$TMP_DIR"' EXIT
 
-    if [[ -n "$install_dir_override" ]]; then
-        INSTALL_DIR="$install_dir_override"
-    else
-        INSTALL_DIR="$DEFAULT_INSTALL_DIR"
-    fi
+  if ! curl -fsSL "$asset_url" -o "$TMP_DIR/${APP_NAME}.tar.gz"; then
+    echo "Failed to download ${asset_url}" >&2
+    echo "The latest release may not contain ${APP_NAME}-${os}-${arch}.tar.gz yet." >&2
+    exit 1
+  fi
+  tar -xzf "$TMP_DIR/${APP_NAME}.tar.gz" -C "$TMP_DIR"
 
-    if $watch; then
-        local sf="${INSTALL_DIR}/${STATE_FILE}"
-        [[ -f "$sf" ]] && INSTALL_DIR=$(jq -r '.install_dir' "$sf")
-        cd "$INSTALL_DIR"
-        do_watch
-        exit 0
-    fi
+  bin_path="$TMP_DIR/${APP_NAME}"
+  if [[ ! -x "$bin_path" ]]; then
+    echo "Release artifact did not contain ${APP_NAME}" >&2
+    exit 1
+  fi
 
-    if $manage; then
-        set_stage "Management"
-        management_dashboard
-        exit 0
-    fi
-
-    main_install
+  exec "$bin_path" "$@"
 }
 
 main "$@"

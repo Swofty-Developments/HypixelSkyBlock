@@ -12,7 +12,6 @@ import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -42,10 +41,10 @@ public class IslandCheck extends BalanceConfiguration {
     private static AtomicReference<GameManager.GameServer> getGameServerAtomicReference(UUID islandUUID) {
         AtomicReference<GameManager.GameServer> toSendTo = new AtomicReference<>(null);
 
-        for (Map.Entry<ServerType, ArrayList<GameManager.GameServer>> entry : GameManager.getServers().entrySet()) {
+        for (Map.Entry<ServerType, ? extends List<GameManager.GameServer>> entry : GameManager.getServers().entrySet()) {
             ServerType serverType = entry.getKey();
             if (serverType == ServerType.SKYBLOCK_ISLAND) {
-                ArrayList<GameManager.GameServer> gameServers = entry.getValue();
+                List<GameManager.GameServer> gameServers = entry.getValue();
 
                 gameServers.forEach(gameServer -> {
                     JSONObject jsonResponse = RedisMessage.sendMessageToServer(

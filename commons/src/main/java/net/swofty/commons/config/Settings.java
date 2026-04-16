@@ -37,6 +37,9 @@ public class Settings {
     @Comment("Settings related to configuration of Limbo server connections")
     private LimboSettings limbo = new LimboSettings();
 
+    @Comment("Management endpoint settings used for Kubernetes probes and metrics scraping")
+    private KubernetesSettings kubernetes = new KubernetesSettings();
+
     @Comment("Resource pack settings keyed by pack name (e.g. testingpack, bedwarspack)")
     private Map<String, ResourcePackSettings> resourcePacks = new HashMap<>();
 
@@ -46,6 +49,26 @@ public class Settings {
     public static class LimboSettings {
         private String hostName = "127.0.0.1";
         private int port = 65535;
+    }
+
+    @Getter
+    @Configuration
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class KubernetesSettings {
+        @Comment("Whether to expose HTTP management endpoints such as /healthz, /readyz and /metrics and enable Kubernetes advertising")
+        private boolean enabled = false;
+
+        @Comment("The host name or IP address to bind management endpoints to")
+        private String hostName = "0.0.0.0";
+
+        @Comment("The TCP port to bind management endpoints to")
+        private int port = 9090;
+
+        @Comment("The host or IP address this server should advertise back to the proxy. Leave blank to auto-detect")
+        private String advertisedHost = "";
+
+        @Comment("The port this server should advertise back to the proxy")
+        private int advertisedPort = 25565;
     }
 
     @Getter

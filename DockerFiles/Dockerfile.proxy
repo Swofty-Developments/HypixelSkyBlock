@@ -1,27 +1,37 @@
-FROM eclipse-temurin:25-jdk
+FROM eclipse-temurin:25-jdk AS builder
+
+WORKDIR /workspace
+
+COPY gradlew gradlew.bat settings.gradle.kts build.gradle.kts gradle.properties ./
+COPY configuration ./configuration
+COPY gradle ./gradle
+COPY commons ./commons
+COPY packer ./packer
+COPY proxy.api ./proxy.api
+COPY velocity.extension ./velocity.extension
+
+RUN chmod +x ./gradlew && ./gradlew --no-daemon :velocity.extension:shadowJar
+
+FROM eclipse-temurin:25-jre
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y jq netcat-traditional curl && apt-get clean
+ARG VELOCITY_BUILD_URL="https://fill-data.papermc.io/v1/objects/ef1a852bfae7397e84907837925e7ad21c6312066290edaae401b77f6f423ac3/velocity-3.4.0-SNAPSHOT-558.jar"
 
-# Download Velocity proxy JAR
-RUN curl -fSL -o velocity.jar "https://fill-data.papermc.io/v1/objects/ef1a852bfae7397e84907837925e7ad21c6312066290edaae401b77f6f423ac3/velocity-3.4.0-SNAPSHOT-558.jar"
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends bash curl netcat-traditional ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-# Download SkyBlockProxy.jar
-RUN mkdir -p plugins && \
-    curl -fSL -o plugins/SkyBlockProxy.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/SkyBlockProxy.jar"
+RUN curl -fsSL -o /app/velocity.jar "${VELOCITY_BUILD_URL}"
 
-# Copy configuration data
+COPY --from=builder /workspace/velocity.extension/build/libs/SkyBlockProxy.jar /app/plugins/SkyBlockProxy.jar
 COPY ./configuration /app/configuration_files
 
-# Replace generated velocity.toml with our own
-RUN rm -f velocity.toml && \
-    cp configuration_files/velocity.toml velocity.toml
+RUN chmod +x /app/configuration_files/bootstrap-config.sh
 
-# Set up config.yml template
-RUN mkdir -p configuration && \
-    cp configuration_files/config.example.yml ./configuration/config.yml
+EXPOSE 25565 9090
 
-EXPOSE 25565
+ENV HYPIXEL_MANAGEMENT_PORT=9090
+ENV JAVA_OPTS="-XX:+UseG1GC -XX:+UseStringDeduplication -XX:MaxRAMPercentage=70 -XX:InitialRAMPercentage=25 -Dfile.encoding=UTF-8"
 
-CMD ["sh", "-c", "[ -n \"$FORWARDING_SECRET\" ] || { echo 'FORWARDING_SECRET is required' >&2; exit 1; }; printf '%s' \"$FORWARDING_SECRET\" > /app/forwarding.secret; sed -i \"s/velocity-secret: .*/velocity-secret: '$FORWARDING_SECRET'/\" /app/configuration/config.yml; java -jar velocity.jar"]
+CMD ["bash", "-lc", "[ -n \"$FORWARDING_SECRET\" ] || { echo 'FORWARDING_SECRET is required' >&2; exit 1; }; printf '%s' \"$FORWARDING_SECRET\" > /app/forwarding.secret; mkdir -p /app/configuration; /app/configuration_files/bootstrap-config.sh /app/configuration; cp /app/configuration_files/velocity.toml /app/velocity.toml; java $JAVA_OPTS -jar /app/velocity.jar"]
