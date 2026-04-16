@@ -103,24 +103,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
             for (int startCol = 0; startCol < offsetCols; startCol++) {
                 int offsetIndex = offsetIndex(startRow, startCol, offsetCols);
 
-                int airMask = 0;
-                for (int gr = 0; gr < 3; gr++) {
-                    for (int gc = 0; gc < 3; gc++) {
-                        int idx = gr * 3 + gc;
-                        int pr = gr - startRow;
-                        int pc = gc - startCol;
-                        if (pr < 0 || pr >= height || pc < 0 || pc >= width) {
-                            airMask |= (1 << idx);
-                            continue;
-                        }
-
-                        char sym = patternArray[pr][pc];
-                        ItemQuantifiable iq = ingredientByChar[sym & 0xFF];
-                        if (sym == 'O' || iq == null || iq.getItem().getMaterial() == Material.AIR) {
-                            airMask |= (1 << idx);
-                        }
-                    }
-                }
+                int airMask = getAirMask(startRow, startCol);
                 airMaskByOffset[offsetIndex] = airMask;
 
                 int[] reqGrid = new int[requiredPatternIdx.length]; // upper bound
@@ -141,6 +124,28 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
         }
 
         this.recipeSize = height * width;
+    }
+
+    private int getAirMask(int startRow, int startCol) {
+        int airMask = 0;
+        for (int gr = 0; gr < 3; gr++) {
+            for (int gc = 0; gc < 3; gc++) {
+                int idx = gr * 3 + gc;
+                int pr = gr - startRow;
+                int pc = gc - startCol;
+                if (pr < 0 || pr >= height || pc < 0 || pc >= width) {
+                    airMask |= (1 << idx);
+                    continue;
+                }
+
+                char sym = patternArray[pr][pc];
+                ItemQuantifiable iq = ingredientByChar[sym & 0xFF];
+                if (sym == 'O' || iq == null || iq.getItem().getMaterial() == Material.AIR) {
+                    airMask |= (1 << idx);
+                }
+            }
+        }
+        return airMask;
     }
 
     public ShapedRecipe(RecipeType type,
@@ -421,11 +426,11 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
             if (!matchesAtPosition(stacks, startRow, startCol)) continue;
 
             for (int i = 0; i < reqIdx.length; i++) {
-                positions.computeIfAbsent(reqSym[i], k -> new ArrayList<>()).add(reqIdx[i]);
+                positions.computeIfAbsent(reqSym[i], _ -> new ArrayList<>()).add(reqIdx[i]);
             }
         }
 
-        positions.replaceAll((k, v) -> new ArrayList<>(new LinkedHashSet<>(v)));
+        positions.replaceAll((_, v) -> new ArrayList<>(new LinkedHashSet<>(v)));
         return positions;
     }
 
